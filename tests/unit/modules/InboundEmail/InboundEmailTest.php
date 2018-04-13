@@ -2385,1884 +2385,1884 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        //$state->popErrorLevel();
 //    }
 //
-//    public function testgetMessageTextFromSingleMimePart()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->getMessageTextFromSingleMimePart(1, 1, null);
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testaddBreadCrumbOffset()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        //test with empty offset string
-//        $result = $inboundEmail->addBreadCrumbOffset('1.1.1', '');
-//        $this->assertEquals('1.1.1', $result);
-//
-//        //test with empty bread crumb string
-//        $result = $inboundEmail->addBreadCrumbOffset('', '1.1.1');
-//        $this->assertEquals('1.1.1', $result);
-//
-//        //test with shorter bread crumb string
-//        $result = $inboundEmail->addBreadCrumbOffset('1.1.1', '2.2.2.2');
-//        $this->assertEquals('3.3.3.2', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetMessageText()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->getMessageText(1, 'PLAIN', null, null);
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testdecodeHeader()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $expected = array(
-//            'From' => 'Media Temple user (mt.kb.user@gmail.com)',
-//            'Subject' => 'article: How to Trace a Email',
-//            'Date' => 'January 25, 2011 3:30:58 PM PDT',
-//            'To' => 'user@example.com',
-//            'Return-Path' => '<mt.kb.user@gmail.com>',
-//            'Envelope-To' => 'user@example.com',
-//            'Delivery-Date' => 'Tue, 25 Jan 2011 15:31:01 -0700',
-//        );
-//        $header = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
-//
-//        $result = $inboundEmail->decodeHeader($header);
-//        $this->assertEquals($expected, $result);
-//        
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testhandleCharsetTranslation()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        //test with default
-//        $result = $inboundEmail->handleCharsetTranslation('sample text', 'default');
-//        $this->assertEquals('sample text', $result);
-//
-//        //test with ISO-8859-8
-//        $result = $inboundEmail->handleCharsetTranslation('sample text', 'ISO-8859-8');
-//        $this->assertEquals('sample text', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testbuildBreadCrumbs()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->buildBreadCrumbs(array(), 'ALTERNATIVE', '1');
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testbuildBreadCrumbsHTML()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->buildBreadCrumbsHTML(array());
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testconvertImapToSugarEmailAddress()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX';
-//        $inboundEmail->host = 'mail.google.com';
-//
-//        $result = $inboundEmail->convertImapToSugarEmailAddress(array($inboundEmail));
-//        $this->assertEquals('INBOX@mail.google.com', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testhandleEncodedFilename()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->handleEncodedFilename('attachment1.pdf');
-//        $this->assertEquals('attachment1.pdf', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetMimeType()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $this->assertEquals('text/plain', $inboundEmail->getMimeType(0, 'plain'));
-//        $this->assertEquals('multipart/binary', $inboundEmail->getMimeType(1, 'binary'));
-//        $this->assertEquals('other/subtype', $inboundEmail->getMimeType('test', 'subtype'));
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testsaveAttachments()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->saveAttachments('1', array(), '1', '0', true);
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetNoteBeanForAttachment()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->getNoteBeanForAttachment('1');
-//
-//        $this->assertInstanceOf('Note', $result);
-//        $this->assertAttributeEquals('1', 'parent_id', $result);
-//        $this->assertAttributeEquals('Emails', 'parent_type', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testretrieveAttachmentNameFromStructure()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test with filename attribute
-//        $part = (Object)array(
-//            'dparameters' => array(
-//                (Object)array('attribute' => 'filename', 'value' => 'test1.txt'),
-//                (Object)array('attribute' => 'filename', 'value' => 'test2.txt')
-//            ),
-//            'parameters' => array(
-//                (Object)array('attribute' => 'name', 'value' => 'test1'),
-//                (Object)array('attribute' => 'name', 'value' => 'test2')
-//            ),
-//        );
-//
-//        $result = $inboundEmail->retrieveAttachmentNameFromStructure($part);
-//        $this->assertEquals('test1.txt', $result);
-//
-//        //test with no filename attribute
-//        $part = (Object)array(
-//            'dparameters' => array((Object)array('attribute' => 'name', 'value' => 'test1.txt')),
-//            'parameters' => array(
-//                (Object)array('attribute' => 'name', 'value' => 'test1'),
-//                (Object)array('attribute' => 'name', 'value' => 'test2')
-//            ),
-//
-//        );
-//
-//        $result = $inboundEmail->retrieveAttachmentNameFromStructure($part);
-//        $this->assertEquals('test1', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testsaveAttachmentBinaries()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $part = (Object)array('disposition' => 'multipart', 'subtype' => 10);
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->saveAttachmentBinaries(new Note(), '1', '1.1', $part, 1);
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testhandleTranserEncoding()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $this->assertEquals('test', $inboundEmail->handleTranserEncoding('test'));
-//        $this->assertEquals('test', $inboundEmail->handleTranserEncoding('dGVzdA==', 3));
-//        $this->assertEquals('test', $inboundEmail->handleTranserEncoding('test', 4));
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetMessageId()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $header = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
-//
-//        $result = $inboundEmail->getMessageId($header);
-//
-//        $this->assertEquals('21c65f7db176f0bd93768214b00ae397', $result);
-//        
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testimportDupeCheck()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $textHeader = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
-//
-//        $result = $inboundEmail->importDupeCheck('1', $textHeader, $textHeader);
-//        $this->assertEquals(true, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testhandleMimeHeaderDecode()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->handleMimeHeaderDecode('Subject: article: How to Trace a Email');
-//
-//        $this->assertEquals('Subject: article: How to Trace a Email', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetUnixHeaderDate()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->handleMimeHeaderDecode('Date: January 25, 2011 3:30:58 PM PDT');
-//
-//        $this->assertEquals('Date: January 25, 2011 3:30:58 PM PDT', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetDuplicateEmailId()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('inbound_email');
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->getDuplicateEmailId('1', '1');
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        $state->popTable('inbound_email');
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testimportOneEmail()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX';
-//        $inboundEmail->id = 1;
-//
-//        self::assertEquals($inboundEmail->getMessageId(null), 'd41d8cd98f00b204e9800998ecf8427e');
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//
-//    }
-//
-//    public function testisUuencode()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $this->assertEquals(false, $inboundEmail->isUuencode('test'));
-//
-//        $this->assertEquals(false,
-//            $inboundEmail->isUuencode("begin 0744 odt_uuencoding_file.dat\r+=&5S=\"!S=')I;F<`\r`\rend"));
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//
-//    }
-//
-//    public function testhandleUUEncodedEmailBody()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $raw = 'Message Body: This is a KnowledgeBase article that provides information on how to find email headers and use the data to trace a email.';
-//
-//        $result = $inboundEmail->handleUUEncodedEmailBody($raw, 1);
-//
-//        $this->assertEquals("\n" . $raw, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testhandleUUDecode()
-//    {
-//
-//        /*
-//        //unset and reconnect Db to resolve mysqli fetch exeception
-//        $db = DBManagerFactory::getInstance();
-//        unset ($db->database);
-//        $db->checkConnection();
-//
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $raw = "\nMessage Body: This is a KnowledgeBase article that provides information on how to find email headers and use the data to trace a email.";
-//
-//        $inboundEmail->handleUUDecode("1", "handleUUDecode_test", $raw);
-//
-//        */
-//        $this->markTestIncomplete('Uncaught require_once(include/PHP_Compat/convert_uudecode.php)');
-//    }
-//
-//    public function testcheckFilterDomain()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $email = new Email();
-//        $email->reply_to_email = 'reply@gmail.com';
-//        $email->from_addr = 'from@gmail.com';
-//
-//        $result = $inboundEmail->checkFilterDomain($email);
-//        $this->assertEquals(true, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcheckOutOfOffice()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $this->assertEquals(false, $inboundEmail->checkOutOfOffice('currently Out of Office, will reply later'));
-//        $this->assertEquals(true, $inboundEmail->checkOutOfOffice('test subject'));
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testsetAndgetAutoreplyStatus()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('inbound_email_autoreply');
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //execute the setAutoreplyStatus method to set an auto reply status for email
-//        $inboundEmail->setAutoreplyStatus('auto_reply_test@email.com');
-//
-//        //test with and invalid email. it will return true as well because it's stil under max limit.
-//        $result = $inboundEmail->getAutoreplyStatus('invalid@email.com');
-//        $this->assertEquals(true, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        $state->popTable('inbound_email_autoreply');
-//    }
-//
-//    public function testsaveInboundEmailSystemSettings()
-//    {
-//        self::markTestIncomplete('Needs to fix touch() in StateSaver');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        global $sugar_config;
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method to save the setting
-//        $inboundEmail->saveInboundEmailSystemSettings('test', 'test_macro');
-//
-//        //verify the key created
-//        $this->assertEquals('test_macro', $sugar_config['inbound_email_test_subject_macro']);
-//        
-//        // clean up
-//
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetSystemSettingsForm()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $expected = "<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\"><input type=\"hidden\" name=\"module\" value=\"InboundEmail\"><input type=\"hidden\" name=\"action\" value=\"ListView\"><input type=\"hidden\" name=\"save\" value=\"true\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td><input title=\"Save\"accessKey=\"a\"class=\"button\"onclick=\"this.form.return_module.value='InboundEmail'; this.form.return_action.value='ListView';\"type=\"submit\" name=\"Edit\" value=\" Save \"></td></tr></table><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"detail view\"><tr><td valign=\"top\" width='10%' NOWRAP scope=\"row\"><span><b>:</b></span></td><td valign=\"top\" width='20%'><span><input name=\"inbound_email_case_macro\" type=\"text\" value=\"[CASE:%1]\"></span></td><td valign=\"top\" width='70%'><span><br/><i></i></span></td></tr></table></form>";
-//        $result = $inboundEmail->getSystemSettingsForm();
-//        $expected = trim($expected);
-//        $expected = str_replace(' ', '', $expected);
-//        $expected = str_replace("\n", '', $expected);
-//        $expected = str_replace("\r", '', $expected);
-//        $expected = str_replace("\t", '', $expected);
-//
-//        $actual = trim($result);
-//        $actual = str_replace(' ', '', $actual);
-//        $actual = str_replace("\n", '', $actual);
-//        $actual = str_replace("\r", '', $actual);
-//        $actual = str_replace("\t", '', $actual);
-//        $this->assertSame($expected, $actual);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetCaseIdFromCaseNumber()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->getCaseIdFromCaseNumber('test', new aCase());
-//        $this->assertEquals(false, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testget_stored_options()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->get_stored_options('test', '');
-//        $this->assertEquals('', $result);
-//
-//        $result = $inboundEmail->get_stored_options('test', 'default_option');
-//        $this->assertEquals('default_option', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetRelatedId()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        //test with Users module
-//        $result = $inboundEmail->getRelatedId('getRelatedId@email.com', 'Users');
-//        $this->assertEquals(false, $result);
-//
-//        //test with Contacts module
-//        $result = $inboundEmail->getRelatedId('getRelatedId@email.com', 'Contacts');
-//        $this->assertEquals(false, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetNewMessageIds()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->getNewMessageIds();
-//
-//        $this->assertEquals(null, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetConnectString()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $this->assertEquals('{:/service=}', $inboundEmail->getConnectString()); //test with default options
-//        $this->assertEquals('{:/service=mail.google.com}INBOX',
-//            $inboundEmail->getConnectString('mail.google.com', 'INBOX'));//test with includeMbox true
-//        $this->assertEquals('{:/service=mail.google.com}',
-//            $inboundEmail->getConnectString('mail.google.com', 'INBOX', false));//test with includeMbox false
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testdisconnectMailserver()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->disconnectMailserver();
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testconnectMailserver()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        return ;
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test with default parameters
-//        $result = $inboundEmail->connectMailserver();
-//        $this->assertEquals('false', $result);
-//
-//        //test with test and force true
-//        $result = $inboundEmail->connectMailserver(true, true);
-//        $this->assertEquals("Can't open mailbox {:/service=}: invalid remote specification<p><p><p>", $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//    }
-//
-//    public function testcheckImap()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->checkImap();
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testget_summary_text()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test without setting name
-//        $this->assertEquals(null, $inboundEmail->get_summary_text());
-//
-//        //test with name set
-//        $inboundEmail->name = 'test';
-//        $this->assertEquals('test', $inboundEmail->get_summary_text());
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcreate_export_query()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test with empty string params
-//        $expected = " SELECT  inbound_email.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod FROM inbound_email   LEFT JOIN  users jt0 ON jt0.id=inbound_email.created_by AND jt0.deleted=0\n AND jt0.deleted=0 where inbound_email.deleted=0";
-//        $actual = $inboundEmail->create_export_query('', '');
-//        $this->assertSame($expected, $actual);
-//
-//        //test with valid string params
-//        $expected = " SELECT  inbound_email.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod FROM inbound_email   LEFT JOIN  users jt0 ON jt0.id=inbound_email.created_by AND jt0.deleted=0\n AND jt0.deleted=0 where (jt0.user_name=\"\") AND inbound_email.deleted=0 ORDER BY inbound_email.id";
-//        $actual = $inboundEmail->create_export_query('id', 'jt0.user_name=""');
-//        $this->assertSame($expected, $actual);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testget_list_view_data()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox_type = 'INBOX';
-//        $inboundEmail->status = 'Active';
-//
-//        $result = $inboundEmail->get_list_view_data();
-//
-//        $expected = array(
-//            'DELETED' => '0',
-//            'STATUS' => null,
-//            'DELETE_SEEN' => '0',
-//            'MAILBOX_TYPE' => 'INBOX',
-//            'IS_PERSONAL' => '0',
-//            'MAILBOX_TYPE_NAME' => null,
-//            'GLOBAL_PERSONAL_STRING' => null,
-//        );
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertEquals($expected, $result);
-//
-//        $result = $inboundEmail->get_list_view_data();
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testfill_in_additional_list_fields()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->service = 'tls::ca::ssl::protocol';
-//
-//        $result = $inboundEmail->fill_in_additional_list_fields();
-//
-//        $this->assertEquals($inboundEmail->tls, 'tls');
-//        $this->assertEquals($inboundEmail->ca, 'ca');
-//        $this->assertEquals($inboundEmail->ssl, 'ssl');
-//        $this->assertEquals($inboundEmail->protocol, 'protocol');
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testfill_in_additional_detail_fields()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->service = 'tls::ca::ssl::protocol';
-//
-//        $result = $inboundEmail->fill_in_additional_detail_fields();
-//
-//        $this->assertEquals($inboundEmail->tls, 'tls');
-//        $this->assertEquals($inboundEmail->ca, 'ca');
-//        $this->assertEquals($inboundEmail->ssl, 'ssl');
-//        $this->assertEquals($inboundEmail->protocol, 'protocol');
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testisAutoImport()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $user = new User();
-//
-//        //test with invalid user
-//        $result = $inboundEmail->isAutoImport($user);
-//        $this->assertEquals(false, $result);
-//
-//        //test with default user
-//        $user->retrieve('1');
-//        $result = $inboundEmail->isAutoImport($user);
-//        $this->assertEquals(false, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcleanOutCache()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->cleanOutCache();
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcopyEmails()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->copyEmails(1, 'INBOX', 1, 'TRASH', array(1));
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testmoveEmails()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        $result = $inboundEmail->moveEmails(1, 'INBOX', 1, 'TRASH', array(1));
-//        $this->assertEquals(false, $result);
-//
-//        $result = $inboundEmail->moveEmails(1, 'INBOX', 2, 'TRASH', array(1));
-//        $this->assertEquals(false, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetTempFilename()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->compoundMessageId = 'cmid';
-//
-//        //test with default false
-//        $result = $inboundEmail->getTempFilename();
-//        $this->assertEquals('cmid0', $result);
-//
-//        //test with true
-//        $result = $inboundEmail->getTempFilename(true);
-//        $this->assertEquals('cmid', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testdeleteMessageOnMailServer()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->deleteMessageOnMailServer('1');
-//
-//        $this->assertEquals(false, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testdeleteMessageOnMailServerForPop3()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->deleteMessageOnMailServerForPop3('1');
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testisPop3Protocol()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test without setting protocol
-//        $this->assertEquals(false, $inboundEmail->isPop3Protocol());
-//
-//        //test with pop3 protocol
-//        $inboundEmail->protocol = 'pop3';
-//        $this->assertEquals(true, $inboundEmail->isPop3Protocol());
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testSetAndGetUsersDefaultOutboundServerId()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $user = new User();
-//        $user->retrieve(1);
-//        
-//        $this->markTestIncomplete('testSetAndGetUsersDefaultOutboundServerId is incomplete');
-//
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testsetEmailForDisplay()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->setEmailForDisplay('');
-//        $this->assertEquals('NOOP', $result);
-//
-//        //test with pop3 protocol and default parameters
-//        $inboundEmail->protocol = 'pop3';
-//        $result = $inboundEmail->setEmailForDisplay('1');
-//        $this->assertEquals('error', $result);
-//
-//        //test with pop3 protocol and all parameters true
-//        $result = $inboundEmail->setEmailForDisplay('1', true, true, true);
-//        $this->assertEquals('error', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testdisplayOneEmail()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//        $inboundEmail->mailbox = 'INBOX';
-//        $inboundEmail->email = new Email();
-//
-//        $inboundEmail->email->name = 'test';
-//        $inboundEmail->email->from_addr_name = 'from';
-//        $inboundEmail->email->to_addrs_names = 'to';
-//        $inboundEmail->email->cc_addrs_names = 'cc';
-//        $inboundEmail->email->reply_to_addr = 'reply';
-//
-//        $expected = array(
-//            'meta' => array(
-//                'type' => 'archived',
-//                'uid' => 1,
-//                'ieId' => 1,
-//                'email' => array(
-//                    'name' => 'test',
-//                    'from_name' => '',
-//                    'from_addr' => 'from',
-//                    'date_start' => ' ',
-//                    'time_start' => '',
-//                    'message_id' => '',
-//                    'cc_addrs' => 'cc',
-//                    'attachments' => '',
-//                    'toaddrs' => 'to',
-//                    'description' => '',
-//                    'reply_to_addr' => 'reply'
-//                ),
-//                'mbox' => 'INBOX',
-//                'cc' => '',
-//                'is_sugarEmail' => false
-//            ),
-//        );
-//        $result = $inboundEmail->displayOneEmail(1, 'INBOX');
-//
-//        $this->assertEquals($expected, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcollapseLongMailingList()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $emails = 'one@email.com,two@email.com,three@email.com,four@email.com,five@email.com,six@email.com';
-//
-//        $expected = "<span onclick='javascript:SUGAR.email2.detailView.showFullEmailList(this);' style='cursor:pointer;'>one@email.com, two@email.com [...4 More]</span><span onclick='javascript:SUGAR.email2.detailView.showCroppedEmailList(this)' style='cursor:pointer; display:none;'>one@email.com, two@email.com, three@email.com, four@email.com, five@email.com, six@email.com [ less ]</span>";
-//
-//        $actual = $inboundEmail->collapseLongMailingList($emails);
-//
-//        $this->assertEquals($expected, $actual);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testsortFetchedOverview()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//        $inboundEmail->mailbox = 'INBOX';
-//
-//        $overview1 = new Overview();
-//        $overview1->subject = 'subject 1';
-//        $overview1->from = 'from 1';
-//        $overview1->flagged = '1';
-//        $overview1->answered = '1';
-//        $overview1->date = '2016-01-01';
-//
-//        $overview2 = new Overview();
-//        $overview2->subject = 'subject 2';
-//        $overview2->from = 'from 2';
-//        $overview2->flagged = '2';
-//        $overview2->answered = '2';
-//        $overview2->date = '2016-01-02';
-//
-//        $arr = array();
-//        $arr[] = $overview1;
-//        $arr[] = $overview2;
-//
-//        //execute the method to sort the objects array descending and verify the order
-//        $result = $inboundEmail->sortFetchedOverview($arr, 3, 'DESC');
-//        $this->assertEquals('subject 2', $result['retArr'][0]->subject);
-//
-//        //execute the method to sort the objects array ascending and verify the order
-//        $result = $inboundEmail->sortFetchedOverview($arr, 3, 'ASC');
-//        $this->assertEquals('subject 1', $result['retArr'][0]->subject);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testdisplayFolderContents()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $expected = array('mbox' => 'INBOX', 'ieId' => 1, 'name' => 'test', 'fromCache' => 0, 'out' => array());
-//        $inboundEmail->id = 1;
-//        $inboundEmail->name = 'test';
-//
-//        $result = $inboundEmail->displayFolderContents('INBOX', 'false', 1);
-//
-//        $this->assertEquals($expected, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcreateUserSubscriptionsForGroupAccount()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        //$inboundEmail->createUserSubscriptionsForGroupAccount();
-//
-//        $this->markTestIncomplete("Fatal error: Class 'Team' not found");
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcreateAutoImportSugarFolder()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->name = 'test';
-//
-//        $result = $inboundEmail->createAutoImportSugarFolder();
-//
-//        //test for record ID to verify that record is saved
-//        $this->assertTrue(isset($result));
-//        $this->assertEquals(36, strlen($result));
-//        
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetMailboxes()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailboxarray = array('INBOX.TRASH', 'OUTBOX.TRASH');
-//        $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
-//
-//        //test with justRaw default/false
-//        $result = $inboundEmail->getMailboxes();
-//        $this->assertEquals($expected, $result);
-//
-//        //test with justRaw true
-//        $result = $inboundEmail->getMailboxes(true);
-//        $this->assertEquals($inboundEmail->mailboxarray, $result);
-//        
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetMailBoxesForGroupAccount()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 1;
-//        $inboundEmail->mailbox = 'INBOX.TRASH,OUTBOX.TRASH';
-//        $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
-//
-//        $result = $inboundEmail->getMailBoxesForGroupAccount();
-//
-//        $this->assertEquals($expected, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testretrieveMailBoxFolders()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX,TRASH';
-//
-//        $inboundEmail->retrieveMailBoxFolders();
-//
-//        $this->assertEquals(array('INBOX', 'OUTBOX', 'TRASH'), $inboundEmail->mailboxarray);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testinsertMailBoxFolders()
-//    {
-//        self::markTestIncomplete('environment dependency');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('config');
-//        $state->pushGlobals();
-//        
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = '101';
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->insertMailBoxFolders(array('INBOX', 'OUTBOX'));
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        $state->popTable('config');
-//    }
-//
-//    public function testretrieveDelimiter()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->retrieveDelimiter();
-//
-//        $this->assertEquals('.', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgenerateFlatArrayFromMultiDimArray()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $arraymbox = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
-//
-//        $expected = array('INBOX', 'INBOX.TRASH', 'OUTBOX', 'OUTBOX.TRASH');
-//
-//        $result = $inboundEmail->generateFlatArrayFromMultiDimArray($arraymbox, '.');
-//
-//        $this->assertEquals($expected, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgenerateMultiDimArrayFromFlatArray()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
-//
-//        $result = $inboundEmail->generateMultiDimArrayFromFlatArray(array('INBOX.TRASH', 'OUTBOX.TRASH'), '.');
-//
-//        $this->assertEquals($expected, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgenerateArrayData()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = array();
-//        $arraymbox = array('INBOX' => array('TRASH' => 'TRASH'));
-//        $expected = array('MAIN', 'MAIN.INBOX', 'MAIN.INBOX.TRASH');
-//
-//        $inboundEmail->generateArrayData('MAIN', $arraymbox, $result, '.');
-//
-//        $this->assertEquals($expected, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testsortMailboxes()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->sortMailboxes('INBOX.TRASH', array());
-//
-//        $expected = array('INBOX' => array('TRASH' => 'TRASH'));
-//
-//        $this->assertEquals($expected, $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetServiceString()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->service = 'tls::ca::ssl::protocol';
-//
-//        $result = $inboundEmail->getServiceString();
-//
-//        $this->assertEquals('/tls/ca/ssl/protocol', $result);
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetNewEmailsForSyncedMailbox()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        $state->pushGlobals();
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->getNewEmailsForSyncedMailbox();
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        $state->popGlobals();
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testimportMessages()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->protocol = 'pop3';
-//            $inboundEmail->importMessages();
-//
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testOverview()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//
-//        //execute the contructor and check for the Object type and  attributes
-//        $overview = new Overview();
-//
-//        $this->assertInstanceOf('Overview', $overview);
-//
-//        $this->assertTrue(is_array($overview->fieldDefs));
-//        $this->assertTrue(is_array($overview->indices));
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
+    public function testgetMessageTextFromSingleMimePart()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->getMessageTextFromSingleMimePart(1, 1, null);
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testaddBreadCrumbOffset()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        //test with empty offset string
+        $result = $inboundEmail->addBreadCrumbOffset('1.1.1', '');
+        $this->assertEquals('1.1.1', $result);
+
+        //test with empty bread crumb string
+        $result = $inboundEmail->addBreadCrumbOffset('', '1.1.1');
+        $this->assertEquals('1.1.1', $result);
+
+        //test with shorter bread crumb string
+        $result = $inboundEmail->addBreadCrumbOffset('1.1.1', '2.2.2.2');
+        $this->assertEquals('3.3.3.2', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetMessageText()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->getMessageText(1, 'PLAIN', null, null);
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testdecodeHeader()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $expected = array(
+            'From' => 'Media Temple user (mt.kb.user@gmail.com)',
+            'Subject' => 'article: How to Trace a Email',
+            'Date' => 'January 25, 2011 3:30:58 PM PDT',
+            'To' => 'user@example.com',
+            'Return-Path' => '<mt.kb.user@gmail.com>',
+            'Envelope-To' => 'user@example.com',
+            'Delivery-Date' => 'Tue, 25 Jan 2011 15:31:01 -0700',
+        );
+        $header = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
+
+        $result = $inboundEmail->decodeHeader($header);
+        $this->assertEquals($expected, $result);
+        
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testhandleCharsetTranslation()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        //test with default
+        $result = $inboundEmail->handleCharsetTranslation('sample text', 'default');
+        $this->assertEquals('sample text', $result);
+
+        //test with ISO-8859-8
+        $result = $inboundEmail->handleCharsetTranslation('sample text', 'ISO-8859-8');
+        $this->assertEquals('sample text', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testbuildBreadCrumbs()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->buildBreadCrumbs(array(), 'ALTERNATIVE', '1');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testbuildBreadCrumbsHTML()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->buildBreadCrumbsHTML(array());
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testconvertImapToSugarEmailAddress()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX';
+        $inboundEmail->host = 'mail.google.com';
+
+        $result = $inboundEmail->convertImapToSugarEmailAddress(array($inboundEmail));
+        $this->assertEquals('INBOX@mail.google.com', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testhandleEncodedFilename()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->handleEncodedFilename('attachment1.pdf');
+        $this->assertEquals('attachment1.pdf', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetMimeType()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $this->assertEquals('text/plain', $inboundEmail->getMimeType(0, 'plain'));
+        $this->assertEquals('multipart/binary', $inboundEmail->getMimeType(1, 'binary'));
+        $this->assertEquals('other/subtype', $inboundEmail->getMimeType('test', 'subtype'));
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testsaveAttachments()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->saveAttachments('1', array(), '1', '0', true);
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetNoteBeanForAttachment()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->getNoteBeanForAttachment('1');
+
+        $this->assertInstanceOf('Note', $result);
+        $this->assertAttributeEquals('1', 'parent_id', $result);
+        $this->assertAttributeEquals('Emails', 'parent_type', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testretrieveAttachmentNameFromStructure()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        //test with filename attribute
+        $part = (Object)array(
+            'dparameters' => array(
+                (Object)array('attribute' => 'filename', 'value' => 'test1.txt'),
+                (Object)array('attribute' => 'filename', 'value' => 'test2.txt')
+            ),
+            'parameters' => array(
+                (Object)array('attribute' => 'name', 'value' => 'test1'),
+                (Object)array('attribute' => 'name', 'value' => 'test2')
+            ),
+        );
+
+        $result = $inboundEmail->retrieveAttachmentNameFromStructure($part);
+        $this->assertEquals('test1.txt', $result);
+
+        //test with no filename attribute
+        $part = (Object)array(
+            'dparameters' => array((Object)array('attribute' => 'name', 'value' => 'test1.txt')),
+            'parameters' => array(
+                (Object)array('attribute' => 'name', 'value' => 'test1'),
+                (Object)array('attribute' => 'name', 'value' => 'test2')
+            ),
+
+        );
+
+        $result = $inboundEmail->retrieveAttachmentNameFromStructure($part);
+        $this->assertEquals('test1', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testsaveAttachmentBinaries()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $part = (Object)array('disposition' => 'multipart', 'subtype' => 10);
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->saveAttachmentBinaries(new Note(), '1', '1.1', $part, 1);
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testhandleTranserEncoding()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $this->assertEquals('test', $inboundEmail->handleTranserEncoding('test'));
+        $this->assertEquals('test', $inboundEmail->handleTranserEncoding('dGVzdA==', 3));
+        $this->assertEquals('test', $inboundEmail->handleTranserEncoding('test', 4));
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetMessageId()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $header = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
+
+        $result = $inboundEmail->getMessageId($header);
+
+        $this->assertEquals('21c65f7db176f0bd93768214b00ae397', $result);
+        
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testimportDupeCheck()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $textHeader = "From: Media Temple user (mt.kb.user@gmail.com)\r\nSubject: article: How to Trace a Email\r\nDate: January 25, 2011 3:30:58 PM PDT\r\nTo: user@example.com\r\nReturn-Path: <mt.kb.user@gmail.com>\r\nEnvelope-To: user@example.com\r\nDelivery-Date: Tue, 25 Jan 2011 15:31:01 -0700";
+
+        $result = $inboundEmail->importDupeCheck('1', $textHeader, $textHeader);
+        $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testhandleMimeHeaderDecode()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->handleMimeHeaderDecode('Subject: article: How to Trace a Email');
+
+        $this->assertEquals('Subject: article: How to Trace a Email', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetUnixHeaderDate()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->handleMimeHeaderDecode('Date: January 25, 2011 3:30:58 PM PDT');
+
+        $this->assertEquals('Date: January 25, 2011 3:30:58 PM PDT', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetDuplicateEmailId()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email');
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->getDuplicateEmailId('1', '1');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        //$state->popErrorLevel();
+    }
+
+    public function testimportOneEmail()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX';
+        $inboundEmail->id = 1;
+
+        self::assertEquals($inboundEmail->getMessageId(null), 'd41d8cd98f00b204e9800998ecf8427e');
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+
+    }
+
+    public function testisUuencode()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $this->assertEquals(false, $inboundEmail->isUuencode('test'));
+
+        $this->assertEquals(false,
+            $inboundEmail->isUuencode("begin 0744 odt_uuencoding_file.dat\r+=&5S=\"!S=')I;F<`\r`\rend"));
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+
+    }
+
+    public function testhandleUUEncodedEmailBody()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $raw = 'Message Body: This is a KnowledgeBase article that provides information on how to find email headers and use the data to trace a email.';
+
+        $result = $inboundEmail->handleUUEncodedEmailBody($raw, 1);
+
+        $this->assertEquals("\n" . $raw, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testhandleUUDecode()
+    {
+
+        /*
+        //unset and reconnect Db to resolve mysqli fetch exeception
+        $db = DBManagerFactory::getInstance();
+        unset ($db->database);
+        $db->checkConnection();
+
+
+        $inboundEmail = new InboundEmail();
+
+        $raw = "\nMessage Body: This is a KnowledgeBase article that provides information on how to find email headers and use the data to trace a email.";
+
+        $inboundEmail->handleUUDecode("1", "handleUUDecode_test", $raw);
+
+        */
+        $this->markTestIncomplete('Uncaught require_once(include/PHP_Compat/convert_uudecode.php)');
+    }
+
+    public function testcheckFilterDomain()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $email = new Email();
+        $email->reply_to_email = 'reply@gmail.com';
+        $email->from_addr = 'from@gmail.com';
+
+        $result = $inboundEmail->checkFilterDomain($email);
+        $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testcheckOutOfOffice()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $this->assertEquals(false, $inboundEmail->checkOutOfOffice('currently Out of Office, will reply later'));
+        $this->assertEquals(true, $inboundEmail->checkOutOfOffice('test subject'));
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testsetAndgetAutoreplyStatus()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email_autoreply');
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //execute the setAutoreplyStatus method to set an auto reply status for email
+        $inboundEmail->setAutoreplyStatus('auto_reply_test@email.com');
+
+        //test with and invalid email. it will return true as well because it's stil under max limit.
+        $result = $inboundEmail->getAutoreplyStatus('invalid@email.com');
+        $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email_autoreply');
+    }
+
+    public function testsaveInboundEmailSystemSettings()
+    {
+        self::markTestIncomplete('Needs to fix touch() in StateSaver');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        global $sugar_config;
+
+        $inboundEmail = new InboundEmail();
+
+        //execute the method to save the setting
+        $inboundEmail->saveInboundEmailSystemSettings('test', 'test_macro');
+
+        //verify the key created
+        $this->assertEquals('test_macro', $sugar_config['inbound_email_test_subject_macro']);
+        
+        // clean up
+
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetSystemSettingsForm()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $expected = "<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\"><input type=\"hidden\" name=\"module\" value=\"InboundEmail\"><input type=\"hidden\" name=\"action\" value=\"ListView\"><input type=\"hidden\" name=\"save\" value=\"true\"><table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr><td><input title=\"Save\"accessKey=\"a\"class=\"button\"onclick=\"this.form.return_module.value='InboundEmail'; this.form.return_action.value='ListView';\"type=\"submit\" name=\"Edit\" value=\" Save \"></td></tr></table><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"detail view\"><tr><td valign=\"top\" width='10%' NOWRAP scope=\"row\"><span><b>:</b></span></td><td valign=\"top\" width='20%'><span><input name=\"inbound_email_case_macro\" type=\"text\" value=\"[CASE:%1]\"></span></td><td valign=\"top\" width='70%'><span><br/><i></i></span></td></tr></table></form>";
+        $result = $inboundEmail->getSystemSettingsForm();
+        $expected = trim($expected);
+        $expected = str_replace(' ', '', $expected);
+        $expected = str_replace("\n", '', $expected);
+        $expected = str_replace("\r", '', $expected);
+        $expected = str_replace("\t", '', $expected);
+
+        $actual = trim($result);
+        $actual = str_replace(' ', '', $actual);
+        $actual = str_replace("\n", '', $actual);
+        $actual = str_replace("\r", '', $actual);
+        $actual = str_replace("\t", '', $actual);
+        $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetCaseIdFromCaseNumber()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->getCaseIdFromCaseNumber('test', new aCase());
+        $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testget_stored_options()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->get_stored_options('test', '');
+        $this->assertEquals('', $result);
+
+        $result = $inboundEmail->get_stored_options('test', 'default_option');
+        $this->assertEquals('default_option', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetRelatedId()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        //test with Users module
+        $result = $inboundEmail->getRelatedId('getRelatedId@email.com', 'Users');
+        $this->assertEquals(false, $result);
+
+        //test with Contacts module
+        $result = $inboundEmail->getRelatedId('getRelatedId@email.com', 'Contacts');
+        $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetNewMessageIds()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->getNewMessageIds();
+
+        $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetConnectString()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $this->assertEquals('{:/service=}', $inboundEmail->getConnectString()); //test with default options
+        $this->assertEquals('{:/service=mail.google.com}INBOX',
+            $inboundEmail->getConnectString('mail.google.com', 'INBOX'));//test with includeMbox true
+        $this->assertEquals('{:/service=mail.google.com}',
+            $inboundEmail->getConnectString('mail.google.com', 'INBOX', false));//test with includeMbox false
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testdisconnectMailserver()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->disconnectMailserver();
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testconnectMailserver()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        return ;
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //test with default parameters
+        $result = $inboundEmail->connectMailserver();
+        $this->assertEquals('false', $result);
+
+        //test with test and force true
+        $result = $inboundEmail->connectMailserver(true, true);
+        $this->assertEquals("Can't open mailbox {:/service=}: invalid remote specification<p><p><p>", $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+    }
+
+    public function testcheckImap()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->checkImap();
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testget_summary_text()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        //test without setting name
+        $this->assertEquals(null, $inboundEmail->get_summary_text());
+
+        //test with name set
+        $inboundEmail->name = 'test';
+        $this->assertEquals('test', $inboundEmail->get_summary_text());
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testcreate_export_query()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        //test with empty string params
+        $expected = " SELECT  inbound_email.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod FROM inbound_email   LEFT JOIN  users jt0 ON jt0.id=inbound_email.created_by AND jt0.deleted=0\n AND jt0.deleted=0 where inbound_email.deleted=0";
+        $actual = $inboundEmail->create_export_query('', '');
+        $this->assertSame($expected, $actual);
+
+        //test with valid string params
+        $expected = " SELECT  inbound_email.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod FROM inbound_email   LEFT JOIN  users jt0 ON jt0.id=inbound_email.created_by AND jt0.deleted=0\n AND jt0.deleted=0 where (jt0.user_name=\"\") AND inbound_email.deleted=0 ORDER BY inbound_email.id";
+        $actual = $inboundEmail->create_export_query('id', 'jt0.user_name=""');
+        $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testget_list_view_data()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox_type = 'INBOX';
+        $inboundEmail->status = 'Active';
+
+        $result = $inboundEmail->get_list_view_data();
+
+        $expected = array(
+            'DELETED' => '0',
+            'STATUS' => null,
+            'DELETE_SEEN' => '0',
+            'MAILBOX_TYPE' => 'INBOX',
+            'IS_PERSONAL' => '0',
+            'MAILBOX_TYPE_NAME' => null,
+            'GLOBAL_PERSONAL_STRING' => null,
+        );
+
+        $this->assertTrue(is_array($result));
+        $this->assertEquals($expected, $result);
+
+        $result = $inboundEmail->get_list_view_data();
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testfill_in_additional_list_fields()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->service = 'tls::ca::ssl::protocol';
+
+        $result = $inboundEmail->fill_in_additional_list_fields();
+
+        $this->assertEquals($inboundEmail->tls, 'tls');
+        $this->assertEquals($inboundEmail->ca, 'ca');
+        $this->assertEquals($inboundEmail->ssl, 'ssl');
+        $this->assertEquals($inboundEmail->protocol, 'protocol');
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testfill_in_additional_detail_fields()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->service = 'tls::ca::ssl::protocol';
+
+        $result = $inboundEmail->fill_in_additional_detail_fields();
+
+        $this->assertEquals($inboundEmail->tls, 'tls');
+        $this->assertEquals($inboundEmail->ca, 'ca');
+        $this->assertEquals($inboundEmail->ssl, 'ssl');
+        $this->assertEquals($inboundEmail->protocol, 'protocol');
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testisAutoImport()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $user = new User();
+
+        //test with invalid user
+        $result = $inboundEmail->isAutoImport($user);
+        $this->assertEquals(false, $result);
+
+        //test with default user
+        $user->retrieve('1');
+        $result = $inboundEmail->isAutoImport($user);
+        $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testcleanOutCache()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->cleanOutCache();
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testcopyEmails()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->copyEmails(1, 'INBOX', 1, 'TRASH', array(1));
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testmoveEmails()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        $result = $inboundEmail->moveEmails(1, 'INBOX', 1, 'TRASH', array(1));
+        $this->assertEquals(false, $result);
+
+        $result = $inboundEmail->moveEmails(1, 'INBOX', 2, 'TRASH', array(1));
+        $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetTempFilename()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->compoundMessageId = 'cmid';
+
+        //test with default false
+        $result = $inboundEmail->getTempFilename();
+        $this->assertEquals('cmid0', $result);
+
+        //test with true
+        $result = $inboundEmail->getTempFilename(true);
+        $this->assertEquals('cmid', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testdeleteMessageOnMailServer()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->deleteMessageOnMailServer('1');
+
+        $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testdeleteMessageOnMailServerForPop3()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->deleteMessageOnMailServerForPop3('1');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testisPop3Protocol()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //test without setting protocol
+        $this->assertEquals(false, $inboundEmail->isPop3Protocol());
+
+        //test with pop3 protocol
+        $inboundEmail->protocol = 'pop3';
+        $this->assertEquals(true, $inboundEmail->isPop3Protocol());
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testSetAndGetUsersDefaultOutboundServerId()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $user = new User();
+        $user->retrieve(1);
+        
+        $this->markTestIncomplete('testSetAndGetUsersDefaultOutboundServerId is incomplete');
+
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testsetEmailForDisplay()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->setEmailForDisplay('');
+        $this->assertEquals('NOOP', $result);
+
+        //test with pop3 protocol and default parameters
+        $inboundEmail->protocol = 'pop3';
+        $result = $inboundEmail->setEmailForDisplay('1');
+        $this->assertEquals('error', $result);
+
+        //test with pop3 protocol and all parameters true
+        $result = $inboundEmail->setEmailForDisplay('1', true, true, true);
+        $this->assertEquals('error', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testdisplayOneEmail()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+        $inboundEmail->mailbox = 'INBOX';
+        $inboundEmail->email = new Email();
+
+        $inboundEmail->email->name = 'test';
+        $inboundEmail->email->from_addr_name = 'from';
+        $inboundEmail->email->to_addrs_names = 'to';
+        $inboundEmail->email->cc_addrs_names = 'cc';
+        $inboundEmail->email->reply_to_addr = 'reply';
+
+        $expected = array(
+            'meta' => array(
+                'type' => 'archived',
+                'uid' => 1,
+                'ieId' => 1,
+                'email' => array(
+                    'name' => 'test',
+                    'from_name' => '',
+                    'from_addr' => 'from',
+                    'date_start' => ' ',
+                    'time_start' => '',
+                    'message_id' => '',
+                    'cc_addrs' => 'cc',
+                    'attachments' => '',
+                    'toaddrs' => 'to',
+                    'description' => '',
+                    'reply_to_addr' => 'reply'
+                ),
+                'mbox' => 'INBOX',
+                'cc' => '',
+                'is_sugarEmail' => false
+            ),
+        );
+        $result = $inboundEmail->displayOneEmail(1, 'INBOX');
+
+        $this->assertEquals($expected, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testcollapseLongMailingList()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $emails = 'one@email.com,two@email.com,three@email.com,four@email.com,five@email.com,six@email.com';
+
+        $expected = "<span onclick='javascript:SUGAR.email2.detailView.showFullEmailList(this);' style='cursor:pointer;'>one@email.com, two@email.com [...4 More]</span><span onclick='javascript:SUGAR.email2.detailView.showCroppedEmailList(this)' style='cursor:pointer; display:none;'>one@email.com, two@email.com, three@email.com, four@email.com, five@email.com, six@email.com [ less ]</span>";
+
+        $actual = $inboundEmail->collapseLongMailingList($emails);
+
+        $this->assertEquals($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testsortFetchedOverview()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+        $inboundEmail->mailbox = 'INBOX';
+
+        $overview1 = new Overview();
+        $overview1->subject = 'subject 1';
+        $overview1->from = 'from 1';
+        $overview1->flagged = '1';
+        $overview1->answered = '1';
+        $overview1->date = '2016-01-01';
+
+        $overview2 = new Overview();
+        $overview2->subject = 'subject 2';
+        $overview2->from = 'from 2';
+        $overview2->flagged = '2';
+        $overview2->answered = '2';
+        $overview2->date = '2016-01-02';
+
+        $arr = array();
+        $arr[] = $overview1;
+        $arr[] = $overview2;
+
+        //execute the method to sort the objects array descending and verify the order
+        $result = $inboundEmail->sortFetchedOverview($arr, 3, 'DESC');
+        $this->assertEquals('subject 2', $result['retArr'][0]->subject);
+
+        //execute the method to sort the objects array ascending and verify the order
+        $result = $inboundEmail->sortFetchedOverview($arr, 3, 'ASC');
+        $this->assertEquals('subject 1', $result['retArr'][0]->subject);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testdisplayFolderContents()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $expected = array('mbox' => 'INBOX', 'ieId' => 1, 'name' => 'test', 'fromCache' => 0, 'out' => array());
+        $inboundEmail->id = 1;
+        $inboundEmail->name = 'test';
+
+        $result = $inboundEmail->displayFolderContents('INBOX', 'false', 1);
+
+        $this->assertEquals($expected, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testcreateUserSubscriptionsForGroupAccount()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        //$inboundEmail->createUserSubscriptionsForGroupAccount();
+
+        $this->markTestIncomplete("Fatal error: Class 'Team' not found");
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testcreateAutoImportSugarFolder()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->name = 'test';
+
+        $result = $inboundEmail->createAutoImportSugarFolder();
+
+        //test for record ID to verify that record is saved
+        $this->assertTrue(isset($result));
+        $this->assertEquals(36, strlen($result));
+        
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetMailboxes()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailboxarray = array('INBOX.TRASH', 'OUTBOX.TRASH');
+        $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
+
+        //test with justRaw default/false
+        $result = $inboundEmail->getMailboxes();
+        $this->assertEquals($expected, $result);
+
+        //test with justRaw true
+        $result = $inboundEmail->getMailboxes(true);
+        $this->assertEquals($inboundEmail->mailboxarray, $result);
+        
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetMailBoxesForGroupAccount()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 1;
+        $inboundEmail->mailbox = 'INBOX.TRASH,OUTBOX.TRASH';
+        $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
+
+        $result = $inboundEmail->getMailBoxesForGroupAccount();
+
+        $this->assertEquals($expected, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testretrieveMailBoxFolders()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX,TRASH';
+
+        $inboundEmail->retrieveMailBoxFolders();
+
+        $this->assertEquals(array('INBOX', 'OUTBOX', 'TRASH'), $inboundEmail->mailboxarray);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testinsertMailBoxFolders()
+    {
+        self::markTestIncomplete('environment dependency');
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('config');
+        $state->pushGlobals();
+        
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = '101';
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->insertMailBoxFolders(array('INBOX', 'OUTBOX'));
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('config');
+    }
+
+    public function testretrieveDelimiter()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->retrieveDelimiter();
+
+        $this->assertEquals('.', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgenerateFlatArrayFromMultiDimArray()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $arraymbox = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
+
+        $expected = array('INBOX', 'INBOX.TRASH', 'OUTBOX', 'OUTBOX.TRASH');
+
+        $result = $inboundEmail->generateFlatArrayFromMultiDimArray($arraymbox, '.');
+
+        $this->assertEquals($expected, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgenerateMultiDimArrayFromFlatArray()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $expected = array('INBOX' => array('TRASH' => 'TRASH'), 'OUTBOX' => array('TRASH' => 'TRASH'));
+
+        $result = $inboundEmail->generateMultiDimArrayFromFlatArray(array('INBOX.TRASH', 'OUTBOX.TRASH'), '.');
+
+        $this->assertEquals($expected, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgenerateArrayData()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = array();
+        $arraymbox = array('INBOX' => array('TRASH' => 'TRASH'));
+        $expected = array('MAIN', 'MAIN.INBOX', 'MAIN.INBOX.TRASH');
+
+        $inboundEmail->generateArrayData('MAIN', $arraymbox, $result, '.');
+
+        $this->assertEquals($expected, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testsortMailboxes()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->sortMailboxes('INBOX.TRASH', array());
+
+        $expected = array('INBOX' => array('TRASH' => 'TRASH'));
+
+        $this->assertEquals($expected, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetServiceString()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->service = 'tls::ca::ssl::protocol';
+
+        $result = $inboundEmail->getServiceString();
+
+        $this->assertEquals('/tls/ca/ssl/protocol', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testgetNewEmailsForSyncedMailbox()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        $state->pushGlobals();
+        
+
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->getNewEmailsForSyncedMailbox();
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        $state->popGlobals();
+        //$state->popErrorLevel();
+    }
+
+    public function testimportMessages()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->protocol = 'pop3';
+            $inboundEmail->importMessages();
+
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testOverview()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+
+        //execute the contructor and check for the Object type and  attributes
+        $overview = new Overview();
+
+        $this->assertInstanceOf('Overview', $overview);
+
+        $this->assertTrue(is_array($overview->fieldDefs));
+        $this->assertTrue(is_array($overview->indices));
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
 }
