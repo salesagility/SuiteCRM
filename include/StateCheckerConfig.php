@@ -172,7 +172,7 @@ class StateCheckerConfig
      *
      * @var array
      */
-    protected $phpConfigOptionKeys = ['max_execution_time', 'display_errors', 'display_startup_errors'];
+    protected static $phpConfigOptionKeys = ['max_execution_time', 'display_errors', 'display_startup_errors'];
     
     
     /**
@@ -239,6 +239,11 @@ class StateCheckerConfig
             isset($sugar_config['state_checker']['tests_failure_exclude_keys']) ?
                 $sugar_config['state_checker']['tests_failure_exclude_keys'] :
                 self::$testsFailureExcludeKeys;
+        
+        self::$phpConfigOptionKeys =
+            isset($sugar_config['state_checker']['php_configuration_option_keys']) ?
+                $sugar_config['state_checker']['php_configuration_option_keys'] :
+                self::$phpConfigOptionKeys;
         
         self::$retrieved = true;
     }

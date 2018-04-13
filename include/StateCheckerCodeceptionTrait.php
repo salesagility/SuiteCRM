@@ -13,7 +13,7 @@ namespace SuiteCRM;
  *
  * @author SalesAgility
  */
-class StateCheckerCodeceptionTrait {
+trait StateCheckerCodeceptionTrait {
 
     
     /**
