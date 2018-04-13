@@ -113,238 +113,238 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        
 //    }
 //
-//    public function getSingularRelatedId()
-//    {
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->getSingularRelatedId('test', 'inbound_email');
-//        $this->assertEquals(false, $result);
-//
-//        $result = $inboundEmail->getSingularRelatedId('invalid test', 'inbound_email');
-//        $this->assertEquals(null, $result);
-//    }
-//
-//    public function getCorrectMessageNoForPop3($id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->retrieve($id);
-//
-//        $result = $inboundEmail->getCorrectMessageNoForPop3('100');
-//        $this->assertEquals(-1, $result);
-//
-//        $result = $inboundEmail->getCorrectMessageNoForPop3('1');
-//        $this->assertEquals(-1, $result);
-//    }
-//
-//    public function retrieve($id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->retrieve($id);
-//
-//        $this->assertEquals('test', $inboundEmail->name);
-//        $this->assertEquals('Active', $inboundEmail->status);
-//        $this->assertEquals('testuser', $inboundEmail->email_user);
-//        $this->assertEquals('testpass', $inboundEmail->email_password);
-//    }
-//
-//    public function retrieveByGroupId($group_id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->retrieveByGroupId($group_id);
-//
-//        $this->assertTrue(is_array($result));
-//
-//        foreach ($result as $ie) {
-//            $this->assertInstanceOf('InboundEmail', $ie);
-//        }
-//    }
-//
-//    public function retrieveAllByGroupId($group_id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->retrieveAllByGroupId($group_id);
-//
-//        $this->assertTrue(is_array($result));
-//
-//        foreach ($result as $ie) {
-//            $this->assertInstanceOf('InboundEmail', $ie);
-//        }
-//    }
-//
-//    public function retrieveAllByGroupIdWithGroupAccounts($group_id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->retrieveAllByGroupIdWithGroupAccounts($group_id);
-//
-//        $this->assertTrue(is_array($result));
-//
-//        foreach ($result as $ie) {
-//            $this->assertInstanceOf('InboundEmail', $ie);
-//        }
-//    }
-//
-//    public function renameFolder($id)
-//    {
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->retrieve($id);
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->renameFolder('mailbox1', 'new_mailbox');
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function search($id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->retrieve($id);
-//
-//        $result = $inboundEmail->search($id);
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertEquals('Search Results', $result['mbox']);
-//        $this->assertEquals($id, $result['ieId']);
-//    }
-//
-//    public function saveMailBoxFolders($id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->retrieve($id);
-//
-//        //execute he method and verify attributes
-//        $inboundEmail->saveMailBoxFolders('INBOX,TRASH');
-//        $this->assertEquals(array('INBOX', 'TRASH'), $inboundEmail->mailboxarray);
-//
-//        //retrieve it back and verify the updates
-//        $inboundEmail->retrieve($id);
-//        $this->assertEquals('INBOX,TRASH', $inboundEmail->mailbox);
-//    }
-//
-//    public function saveMailBoxValueOfInboundEmail($id)
-//    {
-//        $this->markTestSkipped('saveMailBoxValueOfInboundEmail skipped - method looks suspect. Should likely be removed.');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->email_user = 'TEST';
-//
-//        $inboundEmail->saveMailBoxValueOfInboundEmail();
-//
-//        //retrieve it back and verify the updates
-//        $inboundEmail->retrieve($id);
-//        $this->assertEquals('TEST', $inboundEmail->mailbox);
-//    }
-//
-//    public function mark_deleted($id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mark_deleted($id);
-//
-//        $result = $inboundEmail->retrieve($id);
-//        $this->assertEquals(null, $result);
-//    }
-//
-//    public function hardDelete($id)
-//    {
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->hardDelete($id);
-//
-//        $result = $inboundEmail->retrieve($id);
-//        $this->assertEquals(null, $result);
-//    }
-//
-//    public function testcustomGetMessageText()
-//    {
-//        self::markTestIncomplete('Test change the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        $state->pushTable('tracker');
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->customGetMessageText('some message');
-//        $this->assertEquals('some message', $result);
-//        
-//        // clean up
-//        
-//        $state->popTable('tracker');
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testgetFormattedRawSource()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test without ID
-//        $result = $inboundEmail->getFormattedRawSource('1');
-//        $this->assertEquals('This information is not available', $result);
-//
-//        //test with ID
-//        $inboundEmail->id = 1;
-//        $result = $inboundEmail->getFormattedRawSource('1');
-//        $this->assertEquals('', $result);
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testfilterMailBoxFromRaw()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test with array having common element
-//        $result = $inboundEmail->filterMailBoxFromRaw(array('mailbox1', 'mailbox2', 'mailbox3'), array('mailbox1'));
-//        $this->assertSame(array('mailbox1'), $result);
-//
-//        //test with array having nothing common
-//        $result = $inboundEmail->filterMailBoxFromRaw(array('mailbox1', 'mailbox2'), array('mailbox4'));
-//        $this->assertSame(array(), $result);
-//        
-//        
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
+    public function getSingularRelatedId()
+    {
+
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->getSingularRelatedId('test', 'inbound_email');
+        $this->assertEquals(false, $result);
+
+        $result = $inboundEmail->getSingularRelatedId('invalid test', 'inbound_email');
+        $this->assertEquals(null, $result);
+    }
+
+    public function getCorrectMessageNoForPop3($id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->retrieve($id);
+
+        $result = $inboundEmail->getCorrectMessageNoForPop3('100');
+        $this->assertEquals(-1, $result);
+
+        $result = $inboundEmail->getCorrectMessageNoForPop3('1');
+        $this->assertEquals(-1, $result);
+    }
+
+    public function retrieve($id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->retrieve($id);
+
+        $this->assertEquals('test', $inboundEmail->name);
+        $this->assertEquals('Active', $inboundEmail->status);
+        $this->assertEquals('testuser', $inboundEmail->email_user);
+        $this->assertEquals('testpass', $inboundEmail->email_password);
+    }
+
+    public function retrieveByGroupId($group_id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->retrieveByGroupId($group_id);
+
+        $this->assertTrue(is_array($result));
+
+        foreach ($result as $ie) {
+            $this->assertInstanceOf('InboundEmail', $ie);
+        }
+    }
+
+    public function retrieveAllByGroupId($group_id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->retrieveAllByGroupId($group_id);
+
+        $this->assertTrue(is_array($result));
+
+        foreach ($result as $ie) {
+            $this->assertInstanceOf('InboundEmail', $ie);
+        }
+    }
+
+    public function retrieveAllByGroupIdWithGroupAccounts($group_id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->retrieveAllByGroupIdWithGroupAccounts($group_id);
+
+        $this->assertTrue(is_array($result));
+
+        foreach ($result as $ie) {
+            $this->assertInstanceOf('InboundEmail', $ie);
+        }
+    }
+
+    public function renameFolder($id)
+    {
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->retrieve($id);
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->renameFolder('mailbox1', 'new_mailbox');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function search($id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->retrieve($id);
+
+        $result = $inboundEmail->search($id);
+
+        $this->assertTrue(is_array($result));
+        $this->assertEquals('Search Results', $result['mbox']);
+        $this->assertEquals($id, $result['ieId']);
+    }
+
+    public function saveMailBoxFolders($id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->retrieve($id);
+
+        //execute he method and verify attributes
+        $inboundEmail->saveMailBoxFolders('INBOX,TRASH');
+        $this->assertEquals(array('INBOX', 'TRASH'), $inboundEmail->mailboxarray);
+
+        //retrieve it back and verify the updates
+        $inboundEmail->retrieve($id);
+        $this->assertEquals('INBOX,TRASH', $inboundEmail->mailbox);
+    }
+
+    public function saveMailBoxValueOfInboundEmail($id)
+    {
+        $this->markTestSkipped('saveMailBoxValueOfInboundEmail skipped - method looks suspect. Should likely be removed.');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->email_user = 'TEST';
+
+        $inboundEmail->saveMailBoxValueOfInboundEmail();
+
+        //retrieve it back and verify the updates
+        $inboundEmail->retrieve($id);
+        $this->assertEquals('TEST', $inboundEmail->mailbox);
+    }
+
+    public function mark_deleted($id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mark_deleted($id);
+
+        $result = $inboundEmail->retrieve($id);
+        $this->assertEquals(null, $result);
+    }
+
+    public function hardDelete($id)
+    {
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->hardDelete($id);
+
+        $result = $inboundEmail->retrieve($id);
+        $this->assertEquals(null, $result);
+    }
+
+    public function testcustomGetMessageText()
+    {
+        self::markTestIncomplete('Test change the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        $state->pushTable('tracker');
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->customGetMessageText('some message');
+        $this->assertEquals('some message', $result);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testgetFormattedRawSource()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        $inboundEmail = new InboundEmail();
+
+        //test without ID
+        $result = $inboundEmail->getFormattedRawSource('1');
+        $this->assertEquals('This information is not available', $result);
+
+        //test with ID
+        $inboundEmail->id = 1;
+        $result = $inboundEmail->getFormattedRawSource('1');
+        $this->assertEquals('', $result);
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testfilterMailBoxFromRaw()
+    {
+        self::markTestIncomplete('This test changes the error level');
+
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        $inboundEmail = new InboundEmail();
+
+        //test with array having common element
+        $result = $inboundEmail->filterMailBoxFromRaw(array('mailbox1', 'mailbox2', 'mailbox3'), array('mailbox1'));
+        $this->assertSame(array('mailbox1'), $result);
+
+        //test with array having nothing common
+        $result = $inboundEmail->filterMailBoxFromRaw(array('mailbox1', 'mailbox2'), array('mailbox4'));
+        $this->assertSame(array(), $result);
+        
+        
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+// --------------------------------------- [OK]
     public function testconvertToUtf8()
     {
         self::markTestIncomplete('This test changes the error level');
@@ -815,7 +815,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('inbound_email');
         $state->popTable('aod_index');
     }
-// --------------------------------------- [OK]
+
     public function testdeletePop3Cache()
     {
         self::markTestIncomplete('This test changes the error level');
