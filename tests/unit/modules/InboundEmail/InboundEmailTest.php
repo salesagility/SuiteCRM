@@ -52,67 +52,68 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $this->assertAttributeEquals(0, 'attachmentCount', $inboundEmail);
 //    }
 //
-//    public function testsaveAndOthers()
-//    {
-//        $state = new SuiteCRM\StateSaver();
-//
-//        
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->name = 'test';
-//        $inboundEmail->group_id = 1;
-//        $inboundEmail->status = 'Active';
-//        $inboundEmail->email_user = 'testuser';
-//        $inboundEmail->email_password = 'testpass';
-//        $inboundEmail->mailbox = 'mailbox1,mailbox2,mailbox3';
-//
-//        $inboundEmail->save();
-//
-//        //test for record ID to verify that record is saved
-//        $this->assertTrue(isset($inboundEmail->id));
-//        $this->assertEquals(36, strlen($inboundEmail->id));
-//
-//        //test getCorrectMessageNoForPop3 method
-//        $this->getCorrectMessageNoForPop3($inboundEmail->id);
-//
-//        //test retrieve method
-//        $this->retrieve($inboundEmail->id);
-//
-//        //test retrieveByGroupId method
-//        $this->retrieveByGroupId($inboundEmail->group_id);
-//
-//        //test retrieveAllByGroupId method
-//        $this->retrieveAllByGroupId($inboundEmail->group_id);
-//
-//        //test retrieveAllByGroupIdWithGroupAccounts method
-//        $this->retrieveAllByGroupIdWithGroupAccounts($inboundEmail->group_id);
-//
-//        //test getSingularRelatedId method
-//        $this->getSingularRelatedId();
-//
-//        //test renameFolder method
-//        $this->renameFolder($inboundEmail->id);
-//
-//        //test search method
-//        $this->search($inboundEmail->id);
-//
-//        //test saveMailBoxFolders method
-//        $this->saveMailBoxFolders($inboundEmail->id);
-//
-//        //test saveMailBoxValueOfInboundEmail method
-//        $this->saveMailBoxValueOfInboundEmail($inboundEmail->id);
-//
-//        //test mark_deleted method
-//        $this->mark_deleted($inboundEmail->id);
-//
-//        //test hardDelete method
-//        $this->hardDelete($inboundEmail->id);
-//        
-//        // clean up
-//        
-//    }
-//
+    public function testsaveAndOthers()
+    {
+        $state = new SuiteCRM\StateSaver();
+
+        
+
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->name = 'test';
+        $inboundEmail->group_id = 1;
+        $inboundEmail->status = 'Active';
+        $inboundEmail->email_user = 'testuser';
+        $inboundEmail->email_password = 'testpass';
+        $inboundEmail->mailbox = 'mailbox1,mailbox2,mailbox3';
+
+        $inboundEmail->save();
+
+        //test for record ID to verify that record is saved
+        $this->assertTrue(isset($inboundEmail->id));
+        $this->assertEquals(36, strlen($inboundEmail->id));
+
+        //test getCorrectMessageNoForPop3 method
+        $this->getCorrectMessageNoForPop3($inboundEmail->id);
+
+        //test retrieve method
+        $this->retrieve($inboundEmail->id);
+
+        //test retrieveByGroupId method
+        $this->retrieveByGroupId($inboundEmail->group_id);
+
+        //test retrieveAllByGroupId method
+        $this->retrieveAllByGroupId($inboundEmail->group_id);
+
+        //test retrieveAllByGroupIdWithGroupAccounts method
+        $this->retrieveAllByGroupIdWithGroupAccounts($inboundEmail->group_id);
+
+        //test getSingularRelatedId method
+        $this->getSingularRelatedId();
+
+        //test renameFolder method
+        $this->renameFolder($inboundEmail->id);
+
+        //test search method
+        $this->search($inboundEmail->id);
+
+        //test saveMailBoxFolders method
+        $this->saveMailBoxFolders($inboundEmail->id);
+
+        //test saveMailBoxValueOfInboundEmail method
+        $this->saveMailBoxValueOfInboundEmail($inboundEmail->id);
+
+        //test mark_deleted method
+        $this->mark_deleted($inboundEmail->id);
+
+        //test hardDelete method
+        $this->hardDelete($inboundEmail->id);
+        
+        // clean up
+        
+    }
+
+// --------------------------------------- [OK]
     public function getSingularRelatedId()
     {
 
@@ -344,7 +345,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('inbound_email');
         $state->popTable('aod_index');
     }
-// --------------------------------------- [OK]
+    
+    
     public function testconvertToUtf8()
     {
         self::markTestIncomplete('This test changes the error level');
