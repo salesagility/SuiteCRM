@@ -155,12 +155,6 @@ class StateCheckerConfig
      * @var boolean
      */
     protected static $testsUseAssertionFailureOnError = true;
-    
-    /**
-     *
-     * @var boolean 
-     */
-    protected static $retrieved = false;
         
     /**
      * Tests won't checking hash at these keys so won't failing
@@ -171,6 +165,12 @@ class StateCheckerConfig
     protected static $testsFailureExcludeKeys = [
         //'errlevel',
     ];
+    
+    /**
+     *
+     * @var boolean 
+     */
+    protected static $retrieved = false;
     
     /**
      * Retrieve from sugar_config
@@ -225,6 +225,11 @@ class StateCheckerConfig
             isset($sugar_config['state_checker']['tests_use_assertion_failure_on_error']) ?
                 $sugar_config['state_checker']['tests_use_assertion_failure_on_error'] :
                 self::$testsUseAssertionFailureOnError;
+        
+        self::$testsFailureExcludeKeys =
+            isset($sugar_config['state_checker']['tests_failure_exclude_keys']) ?
+                $sugar_config['state_checker']['tests_failure_exclude_keys'] :
+                self::$testsFailureExcludeKeys;
         
         self::$retrieved = true;
     }
