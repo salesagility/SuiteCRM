@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Description of StateSaver
+ * StateSaver
  *
  * @author SalesAgility
  */

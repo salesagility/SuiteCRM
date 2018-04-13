@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Description of JsonApiErrorObjectTest
+ * JsonApiErrorObjectTest
  *
  * @author gyula
  */

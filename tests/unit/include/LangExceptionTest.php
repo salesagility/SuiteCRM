@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
- * Description of LangExceptionTest
+ * LangExceptionTest
  *
  * @author gyula
  */
