@@ -2,12 +2,14 @@
 
 include_once __DIR__ . '/../vendor/autoload.php';
 
+echo "Checkin State Hash after tests..\n";
+
 $stateChecker = new \SuiteCRM\StateChecker();
 $afterhash = $stateChecker->getStateHash();
 $beforeHash = file_get_contents('state.hash');
 
 if($afterhash != $beforeHash) {
-    echo 'wrong!';
+    echo 'Error: STATE DOESNT MATCH!';
     exit(1);
 }
 
