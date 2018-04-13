@@ -166,6 +166,15 @@ class StateCheckerConfig
         //'errlevel',
     ];
     
+    
+    /**
+     * Sate saver needs to know which PHP configuration option needs to save/restore.
+     *
+     * @var array
+     */
+    protected $phpConfigOptionKeys = ['max_execution_time', 'display_errors', 'display_startup_errors'];
+    
+    
     /**
      *
      * @var boolean 

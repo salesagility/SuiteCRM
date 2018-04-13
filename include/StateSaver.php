@@ -42,7 +42,6 @@
 namespace SuiteCRM;
 
 use DBManagerFactory;
-use Exception;
 use LoggerManager;
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -399,4 +398,24 @@ class StateSaver
         }
         return true;
     }
+    
+    // ------------------ PHP CONFIGURATION OPTIONS
+    
+    public function pushPHPConfigOptions($key = 'all', $namespace = 'php_config_options') {
+        $configOptions = [];
+        $configOptionKeys = StateCheckerConfig::get('phpConfigOptionKeys');
+        foreach ($configOptionKeys as $name) {
+            $configOptions[$name] = ini_get($name);
+        }
+        $this->push($configOptions, $key, $namespace);
+    }
+    
+    public function popPHPConfigOptions($key = 'all', $namespace = 'php_config_options') {
+        $configOptions = $this->pop($key, $namespace);
+        $configOptionKeys = StateCheckerConfig::get('phpConfigOptionKeys');
+        foreach ($configOptionKeys as $name) {
+            
+        }
+    }
+    
 }
