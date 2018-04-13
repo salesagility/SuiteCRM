@@ -1,7 +1,7 @@
 <?php
 
 
-class SugarAutoLoaderTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testautoload()
     {

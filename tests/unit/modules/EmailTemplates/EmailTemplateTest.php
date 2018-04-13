@@ -1,6 +1,6 @@
 <?php
 
-class EmailTemplateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

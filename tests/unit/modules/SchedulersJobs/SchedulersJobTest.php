@@ -1,6 +1,6 @@
 <?php
 
-class SchedulersJobTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

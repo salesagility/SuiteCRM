@@ -1,6 +1,6 @@
 <?php
 
-class DocumentRevisionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

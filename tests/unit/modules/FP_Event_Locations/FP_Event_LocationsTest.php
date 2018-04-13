@@ -1,6 +1,6 @@
 <?PHP
 
-class FP_Event_LocationsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class FP_Event_LocationsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testFP_Event_Locations()
     {

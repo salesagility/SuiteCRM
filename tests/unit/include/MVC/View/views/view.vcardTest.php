@@ -1,7 +1,7 @@
 <?php
 
 
-class ViewVcardTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class ViewVcardTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

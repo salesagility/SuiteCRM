@@ -1,6 +1,6 @@
 <?PHP
 
-class SugarFeedTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

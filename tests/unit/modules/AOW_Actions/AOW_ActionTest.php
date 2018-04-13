@@ -1,7 +1,7 @@
 <?php
 
 
-class AOW_ActionTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

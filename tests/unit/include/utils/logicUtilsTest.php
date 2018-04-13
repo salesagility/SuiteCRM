@@ -4,7 +4,7 @@ use org\bovigo\vfs\vfsStream;
 
 require_once 'include/utils/logic_utils.php';
 
-class logic_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class logic_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testget_hook_array()
     {

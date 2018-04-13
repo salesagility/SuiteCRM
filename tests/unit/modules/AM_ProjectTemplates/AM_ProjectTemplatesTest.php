@@ -1,7 +1,7 @@
 <?PHP
 
 
-class AM_ProjectTemplatesTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class AM_ProjectTemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAM_ProjectTemplates()
     {

@@ -1,7 +1,7 @@
 <?php
 
 /** @noinspection PhpUndefinedClassInspection */
-class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
     /**

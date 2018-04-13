@@ -1,6 +1,6 @@
 <?php
 
-class UserPreferenceTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

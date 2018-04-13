@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Description of StateChecker_PHPUnit_Framework_TestCase
+ * StateCheckerPHPUnitTestCaseAbstract
  *
  * @author SalesAgility
  */

@@ -1,6 +1,6 @@
 <?php
 
-class MergeRecordTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

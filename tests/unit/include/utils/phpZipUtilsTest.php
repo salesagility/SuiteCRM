@@ -3,7 +3,7 @@
 
 require_once 'include/upload_file.php';
 require_once 'include/utils/php_zip_utils.php';
-class php_zip_utilsTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class php_zip_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testunzip()
     {

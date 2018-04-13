@@ -1,6 +1,6 @@
 <?php
 
-class ViewQuickcreateTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

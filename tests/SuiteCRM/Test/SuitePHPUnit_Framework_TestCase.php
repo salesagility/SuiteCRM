@@ -5,7 +5,7 @@ use User;
 use DBManagerFactory;
 
 /** @noinspection PhpUndefinedClassInspection */
-abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
     /**

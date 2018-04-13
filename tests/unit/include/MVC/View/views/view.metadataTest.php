@@ -1,6 +1,6 @@
 <?php
 
-class ViewMetadataTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testdisplayCheckBoxes()
     {

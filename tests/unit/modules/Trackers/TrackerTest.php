@@ -1,6 +1,6 @@
 <?php
 
-class TrackerTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

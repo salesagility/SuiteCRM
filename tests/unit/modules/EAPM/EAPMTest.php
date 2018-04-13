@@ -1,6 +1,6 @@
 <?PHP
 
-class EAPMTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEAPM()
     {

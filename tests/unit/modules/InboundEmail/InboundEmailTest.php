@@ -1,7 +1,7 @@
 <?php
 
 
-class InboundEmailTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

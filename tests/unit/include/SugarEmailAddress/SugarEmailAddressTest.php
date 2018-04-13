@@ -3,7 +3,7 @@
 use SuiteCRM\Test\TestLogger;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SugarEmailAddressTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-class CurrencyTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

@@ -1,6 +1,6 @@
 <?php
 
-class ViewPopupTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

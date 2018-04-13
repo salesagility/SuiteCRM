@@ -1,6 +1,6 @@
 <?php
 
-class vCalTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

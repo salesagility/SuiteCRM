@@ -1,6 +1,6 @@
 <?php
 
-class LeadTest extends SuiteCRM\StateChecker_PHPUnit_Framework_TestCase
+class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {
