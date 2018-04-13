@@ -71,6 +71,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushFile('modules/AOD_Index/Index/Index/segments_7h');
         $state->pushFile('modules/AOD_Index/Index/Index/segments_7i');
         $state->pushGlobals();
+        $state->pushPHPConfigOptions();
         
         
         $aor_Report = new AOR_Report();
@@ -113,6 +114,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popPHPConfigOptions();
         $state->popGlobals();
         $state->popFile('modules/AOD_Index/Index/Index/segments_7i');
         $state->popFile('modules/AOD_Index/Index/Index/segments_7h');
