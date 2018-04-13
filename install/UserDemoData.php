@@ -126,6 +126,7 @@ class UserDemoData {
 		$u->user_name = $user_name;
 		$u->title = $title;
 		$u->status = 'Active';
+                $u->language_c = 'en';
 		$u->employee_status = 'Active';
 		$u->is_admin = $is_admin;
 		$u->user_hash = User::getPasswordHash($user_name);

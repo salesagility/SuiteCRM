@@ -70,8 +70,11 @@ echo getClassicModuleTitle(
 $cfg = new Configurator();
 $sugar_smarty = new Sugar_Smarty();
 $errors = array();
+$lang = $app_list_strings['language_dom'];
+$lang = array_merge( array( "default" => "Default" ), $lang );
 
 if (!array_key_exists('aop', $cfg->config)) {
+
     $cfg->config['aop'] = array(
         'enable_aop' => 1,
         'enable_portal' => '',
@@ -80,15 +83,21 @@ if (!array_key_exists('aop', $cfg->config)) {
         'distribution_method' => '',
         'distribution_options' => '',
         'distribution_user_id' => '',
-        'user_email_template_id' => '',
-        'contact_email_template_id' => '',
-        'case_creation_email_template_id' => '',
-        'case_closure_email_template_id' => '',
-        'joomla_account_creation_email_template_id' => '',
-        'support_from_address' => '',
-        'support_from_name' => '',
         'case_status_changes' => json_encode(array()),
     );
+    foreach( $lang as $key => $valor ){
+       $cfg->config['aop'][$key] = array ( 'user_email_template_id' => '',
+                                           'contact_email_template_id' => '',
+                                           'case_creation_email_template_id' => '',
+                                           'case_closure_email_template_id' => '',
+                                           'joomla_account_creation_email_template_id' => '',
+                                           'support_from_address' => '',
+                                           'support_from_name' => '',
+                                           'add_delimiter' => 0,
+                                           'email_reply_delimiter' => '',
+                                           'use_default_configuration' => 1,
+                                           'use_delimiter_in_case_closure' => 0 );
+    }
 }
 if (!array_key_exists('enable_aop', $cfg->config['aop'])) {
     $cfg->config['aop']['enable_aop'] = 1;
@@ -107,14 +116,20 @@ if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     $cfg->config['aop']['distribution_method'] = $_REQUEST['distribution_method'];
     $cfg->config['aop']['distribution_user_id'] = $_REQUEST['distribution_user_id'];
     $cfg->config['aop']['distribution_options'] = $_REQUEST['distribution_options'];
-    $cfg->config['aop']['user_email_template_id'] = $_REQUEST['user_email_template_id'];
-    $cfg->config['aop']['contact_email_template_id'] = $_REQUEST['contact_email_template_id'];
-    $cfg->config['aop']['case_creation_email_template_id'] = $_REQUEST['case_creation_email_template_id'];
-    $cfg->config['aop']['case_closure_email_template_id'] = $_REQUEST['case_closure_email_template_id'];
-    $cfg->config['aop']['joomla_account_creation_email_template_id'] =
-        $_REQUEST['joomla_account_creation_email_template_id'];
-    $cfg->config['aop']['support_from_address'] = $_REQUEST['support_from_address'];
-    $cfg->config['aop']['support_from_name'] = $_REQUEST['support_from_name'];
+
+    foreach( $lang as $key => $valor ){
+       $cfg->config['aop'][$key]['user_email_template_id'] = $_REQUEST['user_email_template_id_'.$key];
+       $cfg->config['aop'][$key]['contact_email_template_id'] = $_REQUEST['contact_email_template_id_'.$key];
+       $cfg->config['aop'][$key]['case_creation_email_template_id'] = $_REQUEST['case_creation_email_template_id_'.$key];
+       $cfg->config['aop'][$key]['case_closure_email_template_id'] = $_REQUEST['case_closure_email_template_id_'.$key];
+       $cfg->config['aop'][$key]['joomla_account_creation_email_template_id'] = $_REQUEST['joomla_account_creation_email_template_id_'.$key];
+       $cfg->config['aop'][$key]['support_from_address'] = $_REQUEST['support_from_address_'.$key];
+       $cfg->config['aop'][$key]['support_from_name'] = $_REQUEST['support_from_name_'.$key];
+       $cfg->config['aop'][$key]['add_delimiter'] = !empty( $_REQUEST['add_delimiter_'.$key] );
+       $cfg->config['aop'][$key]['email_reply_delimiter'] = $_REQUEST['email_reply_delimiter_'.$key];
+       $cfg->config['aop'][$key]['use_default_configuration'] = !empty( $_REQUEST['use_default_configuration_'.$key] );
+       $cfg->config['aop'][$key]['use_delimiter_in_case_closure'] = !empty( $_REQUEST['use_delimiter_in_case_closure_'.$key] );
+    }
     /*
      * We save the case_status_changes array as json since the way config changes are persisted to config.php
      * means that removing entries is tricky. json simplifies this.
@@ -138,24 +153,67 @@ if (!empty($cfg->config['aop']['distribution_user_id'])) {
 $sugar_smarty->assign('distribution_user_name', $distributionUserName);
 
 $emailTemplateList = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
+$jsv = "var templateFields = [";
+$jsf = "";
+$jdaop = "";
+$i = 0;
+foreach( $lang as $key => $valor ){
+   if ( $i>0 ) $jsv .= ",";
+   $userEmailTemplateDropdown =
+       get_select_options_with_id($emailTemplateList, $cfg->config['aop'][$key]['user_email_template_id']);
+   $contactEmailTemplateDropdown =
+       get_select_options_with_id($emailTemplateList, $cfg->config['aop'][$key]['contact_email_template_id']);
+   $creationEmailTemplateDropdown =
+       get_select_options_with_id($emailTemplateList, $cfg->config['aop'][$key]['case_creation_email_template_id']);
+   $closureEmailTemplateDropdown =
+       get_select_options_with_id($emailTemplateList, $cfg->config['aop'][$key]['case_closure_email_template_id']);
+   $joomlaEmailTemplateDropdown =
+       get_select_options_with_id($emailTemplateList, $cfg->config['aop'][$key]['joomla_account_creation_email_template_id']);
 
-$userEmailTemplateDropdown =
-    get_select_options_with_id($emailTemplateList, $cfg->config['aop']['user_email_template_id']);
-$contactEmailTemplateDropdown =
-    get_select_options_with_id($emailTemplateList, $cfg->config['aop']['contact_email_template_id']);
-$creationEmailTemplateDropdown =
-    get_select_options_with_id($emailTemplateList, $cfg->config['aop']['case_creation_email_template_id']);
-$closureEmailTemplateDropdown =
-    get_select_options_with_id($emailTemplateList, $cfg->config['aop']['case_closure_email_template_id']);
-$joomlaEmailTemplateDropdown =
-    get_select_options_with_id($emailTemplateList, $cfg->config['aop']['joomla_account_creation_email_template_id']);
+   $usetd[$key] = $userEmailTemplateDropdown;
+   $coetd[$key] = $contactEmailTemplateDropdown;
+   $cretd[$key] = $creationEmailTemplateDropdown;
+   $cletd[$key] = $closureEmailTemplateDropdown;
+   $joetd[$key] = $joomlaEmailTemplateDropdown; 
+   $jsv .= "'user_email_template_id_{$key}_select', 'contact_email_template_id_{$key}_select', 'case_creation_email_template_id_{$key}_select', 'case_closure_email_template_id_{$key}_select', 'joomla_account_creation_email_template_id_{$key}_select'";
+   $i++;
+   $jsf .= "$('#add_delimiter_{$key}').change(function (){
+      if($('#add_delimiter_{$key}').is(':checked') && $('#enable_aop').is(':checked')){
+         addToValidate('ConfigureSettings','email_reply_delimiter_{$key}','text',true,'{$mod_strings['LBL_AOP_EMAIL_REPLY_ADD_DELIMITER']}');
+         $('#truse_delimiter_in_case_closure_{$key}').show();
+         $('#tremail_reply_delimiter_{$key}').show();
+      } else {
+         removeFromValidate('ConfigureSettings','email_reply_delimiter_{$key}');
+         $('#truse_delimiter_in_case_closure_{$key}').hide();
+         $('#tremail_reply_delimiter_{$key}').hide();
+      }
+   });$('#add_delimiter_{$key}').change();";
 
-$sugar_smarty->assign('USER_EMAIL_TEMPLATES', $userEmailTemplateDropdown);
-$sugar_smarty->assign('CONTACT_EMAIL_TEMPLATES', $contactEmailTemplateDropdown);
-$sugar_smarty->assign('CREATION_EMAIL_TEMPLATES', $creationEmailTemplateDropdown);
-$sugar_smarty->assign('CLOSURE_EMAIL_TEMPLATES', $closureEmailTemplateDropdown);
-$sugar_smarty->assign('JOOMLA_EMAIL_TEMPLATES', $joomlaEmailTemplateDropdown);
+   $jdaop .= "$('#add_delimiter_{$key}').attr('checked', false);
+              removeFromValidate('ConfigureSettings','email_reply_delimiter_{$key}');
+              $('#add_delimiter_{$key}').change();";
 
+   if ( $key != "default" ){
+      $jsf .= "$('#use_default_configuration_{$key}').change(function (){
+         if($('#use_default_configuration_{$key}').is(':checked') && $('#enable_aop').is(':checked')) {
+           $('#e_settings_detail_{$key}').hide();
+           $('#add_delimiter_{$key}').attr('checked', false);
+           removeFromValidate('ConfigureSettings','email_reply_delimiter_{$key}');
+           $('#add_delimiter_{$key}').change();
+         } else {
+           $('#e_settings_detail_{$key}').show();
+           $('#add_delimiter_{$key}').change();
+         }
+      });$('#use_default_configuration_{$key}').change();";
+   }
+}
+$jsv .= "];";
+
+$sugar_smarty->assign('USER_EMAIL_TEMPLATES', $usetd );
+$sugar_smarty->assign('CONTACT_EMAIL_TEMPLATES', $coetd );
+$sugar_smarty->assign('CREATION_EMAIL_TEMPLATES', $cretd );
+$sugar_smarty->assign('CLOSURE_EMAIL_TEMPLATES', $cletd );
+$sugar_smarty->assign('JOOMLA_EMAIL_TEMPLATES', $joetd );
 $sugar_smarty->assign('DISTRIBUTION_METHOD', $distributionMethod);
 $sugar_smarty->assign('DISTRIBUTION_OPTIONS', $distributionOptions);
 $sugar_smarty->assign('MOD', $mod_strings);
@@ -165,6 +223,10 @@ $sugar_smarty->assign('LANGUAGES', get_languages());
 $sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
 $sugar_smarty->assign('config', $cfg->config['aop']);
 $sugar_smarty->assign('error', $errors);
+$sugar_smarty->assign('AOP_JSF', $jsf);
+$sugar_smarty->assign('AOP_JDAOP', $jdaop);
+
+$sugar_smarty->assign('CONTACT_LANGUAGES', $lang);
 
 $cBean = BeanFactory::getBean('Cases');
 $statusDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']], '');
@@ -286,7 +348,10 @@ echo $javascript->getScript();
         refresh_template_list(template_id, template_name, currentEmailSelect);
       }
 
-      var templateFields = ['user_email_template_id_select', 'contact_email_template_id_select', 'case_creation_email_template_id_select', 'case_closure_email_template_id_select', 'joomla_account_creation_email_template_id_select'];
+// templateFields definition variable
+<?php
+ echo $jsv;
+?>
 
       function refreshEditVisibility() {
         for (var x = 0; x < templateFields.length; x++) {

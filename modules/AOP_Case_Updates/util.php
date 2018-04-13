@@ -85,20 +85,53 @@ function isAOPEnabled()
 }
 
 /**
+ * @return bool
+ */
+function isAOPDefaultConfEnabled( $lang )
+{
+    global $sugar_config;
+
+    if (array_key_exists('aop', $sugar_config) && array_key_exists( $lang, $sugar_config['aop'] ) 
+        && array_key_exists('use_default_configuration', $sugar_config['aop'][$lang])) {
+        return !empty($sugar_config['aop'][$lang]['use_default_configuration']);
+    }
+
+    //Defaults to enabled.
+    return true;
+}
+
+/**
+ * @return bool
+ */
+function isAOPValidConfTemplate( $template_name, $lang = "default" )
+{
+    global $sugar_config;
+
+    if (array_key_exists('aop', $sugar_config) && array_key_exists( $lang, $sugar_config['aop'] ) 
+        && array_key_exists( $template_name, $sugar_config['aop'][$lang])) {
+        return !empty($sugar_config['aop'][$lang][$template_name]);
+    }
+
+    return false;
+}
+
+/**
  * @return array
  */
-function getPortalEmailSettings()
+function getPortalEmailSettings( $lang = "default" )
 {
     global $sugar_config;
     $settings = array('from_name' => '', 'from_address' => '');
 
     if (array_key_exists('aop', $sugar_config)) {
-        if (array_key_exists('support_from_address', $sugar_config['aop'])) {
-            $settings['from_address'] = $sugar_config['aop']['support_from_address'];
-        }
-        if (array_key_exists('support_from_name', $sugar_config['aop'])) {
-            $settings['from_name'] = $sugar_config['aop']['support_from_name'];
-        }
+        if (array_key_exists( $lang, $sugar_config['aop'])) {
+           if (array_key_exists('support_from_address', $sugar_config['aop'][$lang])) {
+               $settings['from_address'] = $sugar_config['aop'][$lang]['support_from_address'];
+           }
+           if (array_key_exists('support_from_name', $sugar_config['aop'][$lang])) {
+               $settings['from_name'] = $sugar_config['aop'][$lang]['support_from_name'];
+           }
+       }
     }
     if ($settings['from_name'] && $settings['from_address']) {
         return $settings;

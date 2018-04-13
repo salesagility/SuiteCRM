@@ -166,5 +166,15 @@ $mod_strings = array(
     'LBL_SERVICE' => 'Service',
     'LBL_STORED_OPTIONS' => 'Stored Options',
     'LBL_GROUP_ID' => 'Group ID',
+
+    'LBL_CREATE_CONTACT' => 'Create Contact from Email',
+    'LBL_CREATE_CONTACT_HELP' => 'Select to automatically create a contact record in SuiteCRM from incoming emails.',
+    'LBL_CONTACT_DEFAULT_LANGUAGE' => 'Default Contact Language',
+    'LBL_FILL_CONTACT_NAME' => 'Fill Contact\'s Name',
+    'LBL_FILL_CONTACT_NAME_HELP' => 'Select to automatically fill the first name and last name of the new contact created, from incoming emails.',
+    'LBL_CONTACT_DEFAULT_SOURCE' => 'New Contact Source',
+    'LBL_NEW_CASE_STATUS' => 'Status for the Created Case',
+    'LBL_NEW_CASE_PRIORITY' => 'Priority for the Created Case',
+    'LBL_NEW_CASE_TYPE' => 'Type for the Created Case',
 );
 

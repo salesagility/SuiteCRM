@@ -175,6 +175,22 @@ if(!empty($focus->stored_options)) {
 	} else {
 		$leaveMessagesOnMailServer = 0;
 	} // else
+        if(!isset($storedOptions['createContactFromMail']) || $storedOptions['createContactFromMail'] == 1) {
+                $createContactFromMail = 1;
+                $default_contact_language = '';
+        } else {
+                $createContactFromMail = 0;
+        }
+	$default_contact_language = (isset($storedOptions['default_contact_language'])) ? $storedOptions['default_contact_language'] : "";
+        if(!isset($storedOptions['fill_contact_name']) || $storedOptions['fill_contact_name'] == 1) {
+                $fill_contact_name = 1;
+        } else {
+                $fill_contact_name = 0;
+        }
+	$default_contact_source = (isset($storedOptions['default_contact_source'])) ? $storedOptions['default_contact_source'] : "";
+	$default_new_case_type = (isset($storedOptions['default_new_case_type'])) ? $storedOptions['default_new_case_type'] : "";
+	$default_new_case_status = (isset($storedOptions['default_new_case_status'])) ? $storedOptions['default_new_case_status'] : "";
+	$default_new_case_priority = (isset($storedOptions['default_new_case_priority'])) ? $storedOptions['default_new_case_priority'] : "";
 } else { // initialize empty vars for template
 	$from_name = $current_user->name;
 	$from_addr = $current_user->email1;
@@ -185,11 +201,18 @@ if(!empty($focus->stored_options)) {
 	$trashFolder = '';
 	$sentFolder = '';
 	$distrib_method ='';
-    $distribution_user_id = '';
-    $distribution_user_name = '';
+        $distribution_user_id = '';
+        $distribution_user_name = '';
 	$create_case_email_template='';
 	$leaveMessagesOnMailServer = 1;
-    $distributionAssignOptions = array();
+        $createContactFromMail = 1;
+        $default_contact_language = '';
+        $fill_contact_name = 1;
+        $default_contact_source = '';
+        $default_new_case_type = 'User';
+        $default_new_case_status = 'New';
+        $default_new_case_priority = 'P1';
+        $distributionAssignOptions = array();
 	$email_num_autoreplies_24_hours = $focus->defaultEmailNumAutoreplies24Hours;
 } // else
 
@@ -304,6 +327,7 @@ $xtpl->assign('DEFAULT_FROM_ADDR', $default_from_addr);
 $xtpl->assign('REPLY_TO_NAME', $reply_to_name);
 $xtpl->assign('REPLY_TO_ADDR', $reply_to_addr);
 $createCaseRowStyle = "display:none";
+$createContactStyle = "display:none";
 if($focus->template_id) {
 	$xtpl->assign("EDIT_TEMPLATE","visibility:inline");
 } else {
@@ -347,7 +371,11 @@ if($focus->is_personal) {
 
 	if ($focus->isMailBoxTypeCreateCase())
 		$createCaseRowStyle = "display:''";
-
+        if ($createContactFromMail){
+           $createContactStyle = "display:''"; 
+           $xtpl->assign("IS_CREATE_CONTACT", 'checked');
+        }
+        if ($fill_contact_name) $xtpl->assign("FILL_CONTACT_NAME", 'checked');
 }
 
 
@@ -371,6 +399,12 @@ if(!empty($create_case_email_template)) {
 	$xtpl->assign("CREATE_CASE_EDIT_TEMPLATE","visibility:hidden");
 }
 
+$xtpl->assign('DEFAULT_CONTACT_LANGUAGE', get_select_options_with_id($app_list_strings['language_dom'], $default_contact_language ));
+$xtpl->assign('CREATE_CONTACT_STYLE', $createContactStyle);
+$xtpl->assign('DEFAULT_CONTACT_SOURCE', get_select_options_with_id($app_list_strings['lead_source_dom'], $default_contact_source ));
+$xtpl->assign('NEW_CASE_STATUS', get_select_options_with_id($app_list_strings['case_status_dom'], $default_new_case_status ));
+$xtpl->assign('NEW_CASE_TYPE', get_select_options_with_id($app_list_strings['case_type_dom'], $default_new_case_type ));
+$xtpl->assign('NEW_CASE_PRIORITY', get_select_options_with_id($app_list_strings['case_priority_dom'], $default_new_case_priority ));
 $quicksearch_js = "";
 
 //$javascript = get_set_focus_js(). $javascript->getScript() . $quicksearch_js;
@@ -388,6 +422,8 @@ $tipsStrings = array(
     'LBL_AUTOREPLY_HELP',
     'LBL_FILTER_DOMAIN_DESC',
     'LBL_MAX_AUTO_REPLIES_DESC',
+    'LBL_CREATE_CONTACT_HELP',
+    'LBL_FILL_CONTACT_NAME_HELP',
 );
 $smarty = null;
 $tips = array();

@@ -193,7 +193,11 @@ array (
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
           ),
-          1 => '',
+          1 =>
+          array (
+            'name' => 'language',
+            'label' => 'LBL_LANGUAGE',
+          ),
         ),
         7 => 
         array (

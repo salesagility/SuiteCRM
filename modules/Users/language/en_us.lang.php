@@ -679,4 +679,5 @@ $mod_strings = array(
     'ERR_USER_FACTOR_SMTP_REQUIRED' => 'SMTP server settings required first.',
     'ERR_USER_FACTOR_CHANGE_DISABLED' => 'Current user is not able to change two factor authentication settings.',
     'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
+    'LBL_LANGUAGE' => 'Language',
 ); // END STRINGS DEFS

@@ -831,6 +831,10 @@ $mod_strings = array(
     'LBL_AOP_ASSIGNMENT_USER' => 'Distribution user',
     'LBL_AOP_ASSIGNMENT_OPTIONS' => 'Distribution target',
 
+    'LBL_AOP_ADD_DELIMITER' => 'Add a Reply Delimiter in Emails?',
+    'LBL_AOP_EMAIL_REPLY_ADD_DELIMITER' => 'Email Reply Delimiter',
+    'LBL_AOP_USE_DELIMITER_CASE_CLOSURE' => 'Use Delimiter in the Email of Case Closure?',
+    'LBL_AOP_USE_DEF_CONF' => 'Use Default Configuration',
     'LBL_AOP_EMAIL_SETTINGS' => 'Email Settings',
     'LBL_AOP_CONTACT_EMAIL_TEMPLATE' => 'Contact Email Template',
     'LBL_AOP_USER_EMAIL_TEMPLATE' => 'User Email Template',

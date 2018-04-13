@@ -67,6 +67,7 @@
                     $('#distribution_settings').hide();
                     $('#enable_portal_row').hide();
                     $('#enable_portal').change();
+                    {/literal}{$AOP_JDAOP}{literal}
                 }
             });
             $('#enable_aop').change();
@@ -80,6 +81,9 @@
                 }
             });
             $('#enable_portal').change();
+        {/literal}
+        {$AOP_JSF}
+        {literal}
         });
         {/literal}
     </script>
@@ -184,49 +188,67 @@
         <tr><td><button type='button' id="addStatusButton">{$MOD.LBL_AOP_ADD_STATUS}</button></td></tr>
     </table>
     <table id='email_settings' width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-        <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_EMAIL_SETTINGS}</h4></th>
-        </tr>
-        <tr>
-            <td  scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_ADDRESS}: </td>
-            <td  >
-                <input type="text" name="support_from_address" id="support_from_address" value="{$config.support_from_address}">
-            </td>
-        </tr>
-        <tr>
-            <td  scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_NAME}: </td>
-            <td  >
-                <input type="text" name="support_from_name" id="support_from_name" value="{$config.support_from_name}">
-            </td>
-        </tr>
-        <tr id="user_email_template_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_USER_EMAIL_TEMPLATE}: </td>
-            <td  >
-                <select id='user_email_template_id_select' name='user_email_template_id' onchange='show_edit_template_link(this);'>{$USER_EMAIL_TEMPLATES}</select>
-
-                <a href='javascript:open_email_template_form("user_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
-                <span name='edit_template' id='user_email_template_id_edit_template_link' style='visibility: hidden;'>
-                <a href='javascript:edit_email_template_form("user_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
-            </td>
-        </tr>
+        <tr><th align="left" scope="row" ><h4>{$MOD.LBL_AOP_EMAIL_SETTINGS}</h4></th> </tr>
+        <tr><td>
+        {foreach from=$CONTACT_LANGUAGES key=code item=lang}
+           <table id='email_settings_{$code}' width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+              <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_EMAIL_SETTINGS} for {$lang}</h4></th></tr>
+              {if $code!="default"}
+              <tr>
+                <td scope="row" width="200">{$MOD.LBL_AOP_USE_DEF_CONF}: </td>
+                <td><input type="checkbox" name="use_default_configuration_{$code}" id="use_default_configuration_{$code}" {if $config.$code.use_default_configuration}checked='checked'{/if}></td>
+              </tr>
+              {/if}
+              <tr><td colspan=4>
+              <table id='e_settings_detail_{$code}' width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+              <tr>
+                <td scope="row" width="200" style="line-height: 16px;valign: middle">{$MOD.LBL_AOP_ADD_DELIMITER}: </td>
+                <td><input type="checkbox" name="add_delimiter_{$code}" id="add_delimiter_{$code}" {if $config.$code.add_delimiter}checked='checked'{/if}></td>
+              </tr>
+              <tr id='truse_delimiter_in_case_closure_{$code}'>
+                <td scope="row" width="200" style="line-height: 16px;valign: middle">{$MOD.LBL_AOP_USE_DELIMITER_CASE_CLOSURE}: </td>
+                <td><input type="checkbox" name="use_delimiter_in_case_closure_{$code}" id="use_delimiter_in_case_closure_{$code}" {if $config.$code.use_delimiter_in_case_closure}checked='checked'{/if}></td>
+              </tr>
+              <tr id='tremail_reply_delimiter_{$code}'>
+                <td scope="row" width="200">{$MOD.LBL_AOP_EMAIL_REPLY_ADD_DELIMITER}: </td>
+                <td><input size="45" type="text" name="email_reply_delimiter_{$code}" id="email_reply_delimiter_{$code}" value="{$config.$code.email_reply_delimiter}"></td>
+              </tr>
+              <tr>
+                <td scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_ADDRESS}: </td>
+                <td><input size="45" type="text" name="support_from_address_{$code}" id="support_from_address_{$code}" value="{$config.$code.support_from_address}"></td>
+              </tr>
+              <tr>
+                <td scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_NAME}: </td>
+                <td> <input size="45" type="text" name="support_from_name_{$code}" id="support_from_name_{$code}" value="{$config.$code.support_from_name}"></td>
+              </tr>
+              <tr id="user_email_template_row">
+                <td scope="row" width="200">{$MOD.LBL_AOP_USER_EMAIL_TEMPLATE}: </td>
+                <td>
+                  <select id='user_email_template_id_{$code}_select' name='user_email_template_id_{$code}' onchange='show_edit_template_link(this);'>{$USER_EMAIL_TEMPLATES.$code}</select>
+                  <a href='javascript:open_email_template_form("user_email_template_id_{$code}")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                  <span name='edit_template' id='user_email_template_id_{$code}_edit_template_link' style='visibility: hidden;'>
+                  <a href='javascript:edit_email_template_form("user_email_template_id_{$code}")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+                </td>
+              </tr>
 
         <tr id="contact_email_template_row">
             <td  scope="row" width="200">{$MOD.LBL_AOP_CONTACT_EMAIL_TEMPLATE}: </td>
             <td  >
-                <select id='contact_email_template_id_select' name='contact_email_template_id' onchange='show_edit_template_link(this);'>{$CONTACT_EMAIL_TEMPLATES}</select>
+                <select id='contact_email_template_id_{$code}_select' name='contact_email_template_id_{$code}' onchange='show_edit_template_link(this);'>{$CONTACT_EMAIL_TEMPLATES.$code}</select>
 
-                <a href='javascript:open_email_template_form("contact_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
-                <span name='edit_template' id='contact_email_template_id_edit_template_link' style='visibility: hidden;'>
-                <a href='javascript:edit_email_template_form("contact_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+                <a href='javascript:open_email_template_form("contact_email_template_id_{$code}")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='contact_email_template_id_{$code}_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("contact_email_template_id_{$code}")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
             </td>
         </tr>
         <tr id="case_creation_email_template_row">
             <td  scope="row" width="200">{$MOD.LBL_AOP_CASE_CREATION_EMAIL_TEMPLATE}: </td>
             <td  >
-                <select id='case_creation_email_template_id_select' name='case_creation_email_template_id' onchange='show_edit_template_link(this);'>{$CREATION_EMAIL_TEMPLATES}</select>
+                <select id='case_creation_email_template_id_{$code}_select' name='case_creation_email_template_id_{$code}' onchange='show_edit_template_link(this);'>{$CREATION_EMAIL_TEMPLATES.$code}</select>
 
-                <a href='javascript:open_email_template_form("case_creation_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
-                <span name='edit_template' id='case_creation_email_template_id_edit_template_link' style='visibility: hidden;'>
-                <a href='javascript:edit_email_template_form("case_creation_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+                <a href='javascript:open_email_template_form("case_creation_email_template_id_{$code}")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='case_creation_email_template_id_{$code}_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("case_creation_email_template_id_{$code}")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
             </td>
         </tr>
 
@@ -234,27 +256,28 @@
         <tr id="case_closure_email_template_row">
             <td  scope="row" width="200">{$MOD.LBL_AOP_CASE_CLOSURE_EMAIL_TEMPLATE}: </td>
             <td  >
-                <select id='case_closure_email_template_id_select' name='case_closure_email_template_id' onchange='show_edit_template_link(this);'>{$CLOSURE_EMAIL_TEMPLATES}</select>
+                <select id='case_closure_email_template_id_{$code}_select' name='case_closure_email_template_id_{$code}' onchange='show_edit_template_link(this);'>{$CLOSURE_EMAIL_TEMPLATES.$code}</select>
 
-                <a href='javascript:open_email_template_form("case_closure_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
-                <span name='edit_template' id='case_closure_email_template_id_edit_template_link' style='visibility: hidden;'>
-                <a href='javascript:edit_email_template_form("case_closure_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+                <a href='javascript:open_email_template_form("case_closure_email_template_id_{$code}")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='case_closure_email_template_id_{$code}_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("case_closure_email_template_id_{$code}")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
             </td>
         </tr>
 
-        <tr id="joomla_account_creation_email_template_row">
-            <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE}: </td>
-            <td  >
-                <select id='joomla_account_creation_email_template_id_select' name='joomla_account_creation_email_template_id' onchange='show_edit_template_link(this);'>{$JOOMLA_EMAIL_TEMPLATES}</select>
+        <tr valign="middle" id="joomla_account_creation_email_template_row">
+            <td scope="row" width="200" style="line-height: 16px;valign: middle">{$MOD.LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE}: </td>
+            <td>
+                <select id='joomla_account_creation_email_template_id_{$code}_select' name='joomla_account_creation_email_template_id_{$code}' onchange='show_edit_template_link(this);'>{$JOOMLA_EMAIL_TEMPLATES.$code}</select>
 
-                <a href='javascript:open_email_template_form("joomla_account_creation_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
-                <span name='edit_template' id='joomla_account_creation_email_template_id_edit_template_link' style='visibility: hidden;'>
-                <a href='javascript:edit_email_template_form("joomla_account_creation_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+                <a href='javascript:open_email_template_form("joomla_account_creation_email_template_id_{$code}")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='joomla_account_creation_email_template_id_{$code}_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("joomla_account_creation_email_template_id_{$code}")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
             </td>
         </tr>
-
+    </td></tr></table>
     </table>
-
+    {/foreach}
+    </td></tr></table>
     <div style="padding-top: 2px;">
         {$BUTTONS}
     </div>

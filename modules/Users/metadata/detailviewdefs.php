@@ -115,6 +115,11 @@ $viewdefs['Users']['DetailView'] = array (
                     2 =>
                         array (
                             0 => 'photo',
+                            1 =>
+                                array (
+                                    'name' => 'language_c',
+                                    'label' => 'LBL_LANGUAGE',
+                                ),
                         ),
                 ),
             'LBL_EMPLOYEE_INFORMATION' =>

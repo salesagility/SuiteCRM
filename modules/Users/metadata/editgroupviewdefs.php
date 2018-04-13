@@ -64,6 +64,11 @@ $viewdefs['Users']['EditView'] = array(
                       'customCode'=>'{if $IS_ADMIN}{$USER_TYPE_DROPDOWN}{else}{$USER_TYPE_READONLY}{/if}',
                   ),
             ),
+           array(array(
+                      'name' => 'language_c',
+                      'label' => 'LBL_LANGUAGE',
+                  ),
+            ),
         ),
     ),
 );

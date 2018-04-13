@@ -44,12 +44,10 @@
 function install_aop()
 {
     require_once __DIR__ . '/../../modules/EmailTemplates/EmailTemplate.php';
-    global $sugar_config;
+    global $sugar_config, $app_list_strings;
     $sugar_config['aop']['enable_portal'] = false;
     $sugar_config['aop']['joomla_url'] = '';
     $sugar_config['aop']['distribution_user_id'] = '';
-    $sugar_config['aop']['support_from_address'] = '';
-    $sugar_config['aop']['support_from_name'] = '';
     $sugar_config['aop'] = array('distribution_method' => 'roundRobin');
     $templates = getTemplates();
     foreach ($templates as $configKey => $templateData) {
@@ -58,7 +56,15 @@ function install_aop()
             $template->$field = $value;
         }
         $template->save();
-        $sugar_config['aop'][$configKey . "_id"] = $template->id;
+        $sugar_config['aop']['default'][$configKey . "_id"] = $template->id;
+    }
+    $sugar_config['aop']['default']['support_from_address'] = '';
+    $sugar_config['aop']['default']['support_from_name'] = '';
+    $sugar_config['aop']['default']['add_delimiter'] = 1;
+    $sugar_config['aop']['default']['email_reply_delimiter'] = '========== Please reply above this line ==========';
+    $sugar_config['aop']['default']['use_delimiter_in_case_closure'] = 0;
+    foreach ( $app_list_strings['language_dom'] as $key => $val ){
+       $sugar_config['aop'][$key]['use_default_configuration'] = 1;
     }
     ksort($sugar_config);
     write_array_to_file('sugar_config', $sugar_config, 'config.php');

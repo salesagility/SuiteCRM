@@ -73,6 +73,7 @@ class ViewWizard extends SugarView
 		$css = $themeObject->getCSS();
 		$this->ss->assign('SUGAR_CSS', $css);
         $favicon = $themeObject->getImageURL('sugar_icon.ico',false);
+                if (empty($current_user->language_c)) $current_user->language_c='en';
         $this->ss->assign('FAVICON_URL',getJSPath($favicon));
         $this->ss->assign('CSS', '<link rel="stylesheet" type="text/css" href="'.SugarThemeRegistry::current()->getCSSURL('wizard.css').'" />');
 	    $this->ss->assign('JAVASCRIPT',user_get_validate_record_js().user_get_chooser_js().user_get_confsettings_js());
@@ -87,6 +88,10 @@ class ViewWizard extends SugarView
 		$this->ss->assign('DEPARTMENT', $current_user->department);
 		$this->ss->assign('REPORTS_TO_ID', $current_user->reports_to_id);
 		$this->ss->assign('REPORTS_TO_NAME', $current_user->reports_to_name);
+		$lang = '<select tabindex="4" name="language_c">';
+                $lang .= get_select_options_with_id( $app_list_strings['language_dom'], $current_user->language_c);
+                $lang .= '</select>';
+		$this->ss->assign('LANGUAGE_OPTIONS', $lang);
 		$this->ss->assign('PHONE_HOME', $current_user->phone_home);
 		$this->ss->assign('PHONE_MOBILE', $current_user->phone_mobile);
 		$this->ss->assign('PHONE_WORK', $current_user->phone_work);

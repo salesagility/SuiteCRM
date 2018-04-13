@@ -63,6 +63,11 @@ $viewdefs['Users']['DetailView'] = array(
                       'customCode'=>'{$USER_TYPE_READONLY}',
                   ),
             ),
+            array(array(
+                      'name'=>'language_c',
+                      'label' => 'LBL_LANGUAGE',
+                  ),
+            ),
         ),
     ),
 );

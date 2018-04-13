@@ -107,7 +107,7 @@ foreach ($focus->field_defs as $fieldName => $field) {
 
 
 $portal = array("user_name", "last_name", "status", "portal_only");
-$group = array("user_name", "last_name", "status", "is_group");
+$group = array("user_name", "last_name", "status", "is_group", "language_c");
 if (isset($_POST['portal_only']) && ($_POST['portal_only'] == '1' || $focus->portal_only)) {
     foreach ($portal as $field) {
         if (isset($_POST[$field])) {

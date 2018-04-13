@@ -210,6 +210,15 @@ $app_list_strings = array(
         'Campaign' => 'Campaign',
         'Other' => 'Other',
     ),
+    'language_dom' => array(
+        'es' => 'Castellano',
+        'ca' => 'Català',
+        'de' => 'Deutsch',
+        'en' => 'English',
+        'fr' => 'Français',
+        'it' => 'Italiano',
+        'other' => 'Other',
+    ),
     'opportunity_type_dom' => array(
         '' => '',
         'Existing Business' => 'Existing Business',
@@ -1406,6 +1415,7 @@ $app_strings = array(
     'LBL_ASSIGNED_TO' => 'Assigned to:',
     'LBL_BACK' => 'Back',
     'LBL_BILLING_ADDRESS' => 'Billing Address',
+    'LBL_QUICK_CREATE' => 'Create ',
     'LBL_BROWSER_TITLE' => 'SuiteCRM - Open Source CRM',
     'LBL_BUGS' => 'Bugs',
     'LBL_BY' => 'by',

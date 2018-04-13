@@ -281,6 +281,30 @@
 				</span>
 			</td>
 		</tr>
+                <tr id="createCaseRow3" style="{CREATE_CASE_ROW_STYLE}">
+			<td valign="top" scope="row">
+				<span>{MOD.LBL_NEW_CASE_TYPE}:&nbsp;</span></td>
+			<td valign="middle"  width="35%">
+                                <select id='new_case_type' name='new_case_type' tabindex='331'>{NEW_CASE_TYPE}</select>
+			<td valign="top" scope="row" width="15%" NOWRAP>
+				&nbsp;
+			</td>
+			<td valign="middle"  width="35%">
+                               &nbsp;
+			</td>
+                </tr>
+                <tr id="createCaseRow2" style="{CREATE_CASE_ROW_STYLE}">
+			<td valign="top" scope="row">
+				<span>{MOD.LBL_NEW_CASE_STATUS}:&nbsp;</span></td>
+			<td valign="middle"  width="35%">
+                                <select id='new_case_status' name='new_case_status' tabindex='333'>{NEW_CASE_STATUS}</select>
+			<td valign="top" scope="row" width="15%" NOWRAP>
+				{MOD.LBL_NEW_CASE_PRIORITY}:&nbsp;
+			</td>
+			<td valign="middle"  width="35%">
+                                <select id='new_case_priority' name='new_case_priority' tabindex='335'>{NEW_CASE_PRIORITY}</select>
+			</td>
+                </tr>
 		<tr>
 			<td valign="top" scope="row">
 				<span>&nbsp;</span></td>
@@ -335,6 +359,28 @@
 				<span>&nbsp;</span></td>
 			<td valign="top"  width="35%"><span>
 				&nbsp;</span></td>
+		</tr>
+		<tr>
+			<td valign="top" scope="row">
+				<slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_CREATE_CONTACT}:&nbsp;{TIPS.LBL_CREATE_CONTACT_HELP}</span></td>
+			<td valign="middle"  width="35%"><slot style="{MAILBOX_TYPE_STYLE}">
+			     <input name='is_create_contact' id='is_create_contact' onclick="showCreateContactField();"tabindex='45' type='checkbox' {IS_CREATE_CONTACT} {IE_DISABLED}></span></td>
+			<td valign="top" scope="row" width="15%" NOWRAP id="ContactDefaultLangLabel" style="{CREATE_CONTACT_STYLE}">
+				 <slot style="{MAILBOX_TYPE_STYLE}">{MOD.LBL_CONTACT_DEFAULT_LANGUAGE}:&nbsp;</span>
+			</td>
+			<td valign="middle"  width="35%" id="ContactDefaultLangValue" style="{CREATE_CONTACT_STYLE}"><slot style="{MAILBOX_TYPE_STYLE}">
+                                <select id='default_contact_language' name='default_contact_language' tabindex='241'>{DEFAULT_CONTACT_LANGUAGE}</select></span>
+			</td>
+		</tr>
+		<tr id="contact_properties" style="{CREATE_CONTACT_STYLE}">
+			<td valign="top" scope="row">
+				{MOD.LBL_FILL_CONTACT_NAME}:&nbsp;{TIPS.LBL_FILL_CONTACT_NAME_HELP}</td>
+			<td valign="middle"  width="35%">
+			     <input name='fill_contact_name' id='fill_contact_name' "tabindex='45' type='checkbox' {FILL_CONTACT_NAME} {IE_DISABLED}></td>
+			<td valign="top" scope="row" width="15%" NOWRAP>{MOD.LBL_CONTACT_DEFAULT_SOURCE}:&nbsp; </td>
+			<td valign="middle"  width="35%">
+                                <select id='default_contact_source' name='default_contact_source' tabindex='251'>{DEFAULT_CONTACT_SOURCE}</select>
+			</td>
 		</tr>
 	</table>
 	</div>
@@ -395,19 +441,42 @@ function checkTrashFolder()
 	} // else
 } // fn
 
+function showCreateContactField(){
+  var isCreateContact = document.getElementById('is_create_contact').checked;
+  var cdll = document.getElementById('ContactDefaultLangLabel'); 
+  var cdlv = document.getElementById('ContactDefaultLangValue'); 
+  var cpro = document.getElementById('contact_properties');
+
+  if (isCreateContact) {
+     cdll.style.display = '';
+     cdlv.style.display = '';
+     cpro.style.display = '';
+  } else {
+     cdll.style.display = 'none';
+     cdlv.style.display = 'none';
+     cpro.style.display = 'none';
+  }
+}
+
 function showCreateCaseRow() {
 	var createCaseRow = document.getElementById('createCaseRow');
 	var createCaseRow1 = document.getElementById('createCaseRow1');
+	var createCaseRow2 = document.getElementById('createCaseRow2');
+	var createCaseRow3 = document.getElementById('createCaseRow3');
 	var isCreateCase = document.getElementById('is_create_case').checked;
 	var autoImportEl = document.getElementById('is_auto_import');
 
 	if (isCreateCase) {
 		createCaseRow.style.display = '';
 		createCaseRow1.style.display = '';
+		createCaseRow2.style.display = '';
+		createCaseRow3.style.display = '';
 		autoImportEl.checked = true;
 	} else {
 		createCaseRow.style.display = 'none';
 		createCaseRow1.style.display = 'none';
+		createCaseRow2.style.display = 'none';
+		createCaseRow3.style.display = 'none';
 		possibleActionChange();
 	} // else
 } // fn

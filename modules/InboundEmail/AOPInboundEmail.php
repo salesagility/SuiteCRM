@@ -52,7 +52,6 @@ class AOPInboundEmail extends InboundEmail {
         return $string;
     }
 
-
     function handleCreateCase($email, $userId) {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
@@ -76,22 +75,29 @@ class AOPInboundEmail extends InboundEmail {
             }else{
                 $c->description = $email->description;
             }
+
+            if(!empty($this->stored_options)) {
+                $storedOptions = unserialize(base64_decode($this->stored_options));
+            }
+
             $c->assigned_user_id = $userId;
             $c->name = $email->name;
-            $c->status = 'New';
-            $c->priority = 'P1';
+            $c->type = isset( $storedOptions['default_new_case_type'] ) ? $storedOptions['default_new_case_type'] : "User";
+            $c->status = isset( $storedOptions['default_new_case_status'] ) ? $storedOptions['default_new_case_status'] : "New";
+            $c->priority = isset( $storedOptions['default_new_case_priority'] ) ? $storedOptions['default_new_case_priority'] : "P1";
 
             if(!empty($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
+                $contactName = $email->reply_to_name;
             } else {
                 $contactAddr = $email->from_addr;
+                $contactName = $email->from_name;
             }
 
             $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
             if($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
                 if (sizeof($accountIds) == 1) {
                     $c->account_id = $accountIds[0];
-
                     $acct = new Account();
                     $acct->retrieve($c->account_id);
                     $c->account_name = $acct->name;
@@ -100,6 +106,34 @@ class AOPInboundEmail extends InboundEmail {
             $contactIds = $this->getRelatedId($contactAddr, 'contacts');
             if(!empty($contactIds)) {
                 $c->contact_created_by_id = $contactIds[0];
+            } else {
+                if ( isset( $storedOptions['createContactFromMail'] ) && $storedOptions['createContactFromMail'] == 1 ){
+                   $GLOBALS['log']->debug('InboundEmail::handleCreateCase Create new Contact with Email::' . $contactAddr );
+                   $contacte = new Contact();
+                   $contacte->email1 = $contactAddr;
+                   $contacte->language = isset( $storedOptions['default_contact_language'] ) ? $storedOptions['default_contact_language'] : "";
+                   $contacte->lead_source = isset( $storedOptions['default_contact_source'] ) ? $storedOptions['default_contact_source'] : "";
+                   if ( isset( $storedOptions['fill_contact_name'] ) && $storedOptions['fill_contact_name'] == 1 ){
+                      $first_name = "";
+                      $last_name = "";
+                      if ( $contactName != "" ){
+                         $match = explode( " ", $contactName );
+                         $w = sizeof( $match );
+                         if ( $w > 1 ){
+                            $first_name = $match[0];
+                            $w--;
+                            for ( $i=1; $i<$w; $i++ ) {
+                                $last_name .= $match[$i] . " ";
+                            }
+                            $last_name = trim( $last_name );
+                         }
+                         $contacte->first_name = $first_name;
+                         $contacte->last_name = $last_name;
+                      }
+                   }
+                   $contacte->save( false );
+                   $contactIds[0] = $contacte->id;
+                }
             }
 
             $c->save(true);
@@ -143,9 +177,6 @@ class AOPInboundEmail extends InboundEmail {
             $email->save();
             $GLOBALS['log']->debug('InboundEmail created one case with number: '.$c->case_number);
             $createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
-            if(!empty($this->stored_options)) {
-                $storedOptions = unserialize(base64_decode($this->stored_options));
-            }
             if(!empty($createCaseTemplateId)) {
                 $fromName = "";
                 $fromAddress = "";

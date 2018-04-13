@@ -138,6 +138,9 @@ if ( $focus->isMailBoxTypeCreateCase() || ($focus->mailbox_type == 'createcase' 
 {
 	$stored_options['distrib_method'] = (isset($_REQUEST['distrib_method'])) ? $_REQUEST['distrib_method'] : "";
 	$stored_options['create_case_email_template'] = (isset($_REQUEST['create_case_template_id'])) ? $_REQUEST['create_case_template_id'] : "";
+	$stored_options['default_new_case_type'] = (isset($_REQUEST['new_case_type'])) ? $_REQUEST['new_case_type'] : "";
+	$stored_options['default_new_case_status'] = (isset($_REQUEST['new_case_status'])) ? $_REQUEST['new_case_status'] : "";
+	$stored_options['default_new_case_priority'] = (isset($_REQUEST['new_case_priority'])) ? $_REQUEST['new_case_priority'] : "";
     switch($stored_options['distrib_method']){
         case 'singleUser':
             $stored_options['distribution_user_name'] = !empty($_REQUEST['distribution_user_name']) ? $_REQUEST['distribution_user_name'] : '';
@@ -167,6 +170,21 @@ if (!isset($focus->id)) {
 	$focus->group_id = $groupId;
 }
 
+if( isset($_REQUEST['is_create_contact']) && $_REQUEST['is_create_contact'] == 'on' ){
+  $stored_options['createContactFromMail'] = true;
+  $stored_options['default_contact_language'] = $_REQUEST['default_contact_language'];
+  $stored_options['default_contact_source'] = $_REQUEST['default_contact_source'];
+  if( isset($_REQUEST['fill_contact_name']) && $_REQUEST['fill_contact_name'] == 'on' ){
+     $stored_options['fill_contact_name'] = true;
+  } else {
+     $stored_options['fill_contact_name'] = false;
+  }
+} else{
+  $stored_options['createContactFromMail'] = false;
+  $stored_options['default_contact_language'] = '';
+  $stored_options['default_contact_source'] = '';
+  $stored_options['fill_contact_name'] = false;
+}
 
 if( isset($_REQUEST['is_auto_import']) && $_REQUEST['is_auto_import'] == 'on' )
 {

@@ -224,15 +224,28 @@ class AOP_Case_Updates extends Basic
 
         return array();
     }
+    /**
+     * @return array
+     */
+    public function getInformationForUser()
+    {
+        $user = $this->getUser();
+        if ($user) {
+            return array("lang" => $user->language_c, "emails" => array( $user->emailAddress->getPrimaryAddress($user)));
+        }
+
+        return array();
+    }
 
     /**
      * @param EmailTemplate $template
      * @param bool          $addDelimiter
      * @param null          $contactId
+     * @param string        $txtDelimiter
      *
      * @return array
      */
-    private function populateTemplate(EmailTemplate $template, $addDelimiter = true, $contactId = null)
+    private function populateTemplate(EmailTemplate $template, $addDelimiter = true, $contactId = null, $txtDelimiter = "" )
     {
         global $app_strings, $sugar_config;
 
@@ -246,8 +259,9 @@ class AOP_Case_Updates extends Basic
         $body = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html), $beans);
         $bodyAlt = aop_parse_template(str_replace('$sugarurl', $sugar_config['site_url'], $template->body), $beans);
         if ($addDelimiter) {
-            $body = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'].$body;
-            $bodyAlt = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'].$bodyAlt;
+            if ( $txtDelimiter === "" ) $txtDelimiter = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER']; 
+            $body = $txtDelimiter.$body;
+            $bodyAlt = $txtDelimiter.$bodyAlt;
         }
         $ret['body'] = from_html($body);
         $ret['body_alt'] = strip_tags(from_html($bodyAlt));
@@ -271,7 +285,9 @@ class AOP_Case_Updates extends Basic
         $signature = array(),
         $caseId = null,
         $addDelimiter = true,
-        $contactId = null
+        $contactId = null,
+        $txtDelimiter = "",
+        $lang = "default"
     ) {
         $GLOBALS['log']->info('AOPCaseUpdates: sendEmail called');
         require_once 'include/SugarPHPMailer.php';
@@ -290,8 +306,8 @@ class AOP_Case_Updates extends Basic
         if ($signature && array_key_exists('signature', $signature)) {
             $signaturePlain = $signature['signature'];
         }
-        $emailSettings = getPortalEmailSettings();
-        $text = $this->populateTemplate($template, $addDelimiter, $contactId);
+        $emailSettings = getPortalEmailSettings( $lang );
+        $text = $this->populateTemplate($template, $addDelimiter, $contactId, $txtDelimiter);
         $mailer->Subject = $text['subject'];
         $mailer->Body = $text['body'] . $signatureHTML;
         $mailer->isHTML(true);

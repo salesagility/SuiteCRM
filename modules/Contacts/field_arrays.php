@@ -85,6 +85,7 @@ $fields_array['Contact'] = array ('column_fields' => Array("id"
 		,"description"
 		,'invalid_email'
 		,"campaign_id"
+                ,'language'
 		),
         'list_fields' => Array('id', 'first_name', 'last_name', 'account_name', 'account_id', 'title', 'phone_work', 'assigned_user_name', 'assigned_user_id', "case_role", 'case_rel_id', 'opportunity_role', 'opportunity_rel_id'
     ,'invalid_email'

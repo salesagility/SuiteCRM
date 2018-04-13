@@ -126,6 +126,8 @@ $distributionMethod = '';
 $create_case_email_template='';
 $create_case_email_template_name = $mod_strings['LBL_NONE'];
 $leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
+$createContactFromMail = $app_list_strings['checkbox_dom']['2'];
+$default_contact_language = '';
 
 //$fromNameAddr = $fromName.' &lt;'.$from['email'].'&gt; <br><em>('.$mod_strings['LBL_SYSTEM_DEFAULT'].')</em>';
 //$replyNameAddr = $mod_strings['LBL_SAME_AS_ABOVE'];
@@ -176,12 +178,35 @@ if(!empty($focus->stored_options)) {
 		$leaveMessagesOnMailServer = $app_strings['LBL_EMAIL_NO'];
 	} // else
 	$distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : "";
+	$new_case_type = (isset($storedOptions['default_new_case_type'])) ? $storedOptions['default_new_case_type'] : "";
+	$new_case_status = (isset($storedOptions['default_new_case_status'])) ? $storedOptions['default_new_case_status'] : "";
+	$new_case_priority = (isset($storedOptions['default_new_case_priority'])) ? $storedOptions['default_new_case_priority'] : "";
+        $new_case_type = $app_list_strings['case_type_dom'][$new_case_type];
+        $new_case_status = $app_list_strings['case_status_dom'][$new_case_status];
+        $new_case_priority = $app_list_strings['case_priority_dom'][$new_case_priority];
 	$create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
 	$email_num_autoreplies_24_hours = (isset($storedOptions['email_num_autoreplies_24_hours'])) ? $storedOptions['email_num_autoreplies_24_hours'] : $focus->defaultEmailNumAutoreplies24Hours;
     
 	if( isset($storedOptions['allow_outbound_group_usage']) && $storedOptions['allow_outbound_group_usage'] == 1) 
 	   $allow_outbound_group_usage = $app_list_strings['dom_email_bool']['bool_true'];
 	
+        if( isset($storedOptions['createContactFromMail']) && $storedOptions['createContactFromMail'] == 1) {
+                $createContactFromMail = $app_list_strings['checkbox_dom']['1'];
+	        $default_contact_language = (isset($storedOptions['default_contact_language'])) ? $storedOptions['default_contact_language'] : "";
+                if( isset($storedOptions['fill_contact_name']) && $storedOptions['fill_contact_name'] == 1) {
+                    $fill_contact_name = $app_list_strings['checkbox_dom']['1'];
+                } else {
+                    $fill_contact_name = $app_list_strings['checkbox_dom']['2'];
+                }
+	        $default_contact_source = (isset($storedOptions['default_contact_source'])) ? $storedOptions['default_contact_source'] : "";
+        } else {
+                $createContactFromMail = $app_list_strings['checkbox_dom']['2'];
+                $default_contact_language = '';
+                $fill_contact_name = $app_list_strings['checkbox_dom']['2'];
+                $default_contact_source = '';
+        }
+        $default_contact_language = $app_list_strings['language_dom'][$default_contact_language];
+        $default_contact_source = $app_list_strings['lead_source_dom'][$default_contact_source];
 }
 
 if(!empty($create_case_email_template)) {
@@ -234,6 +259,8 @@ $createCaseRowStyle = "display:none";
 $leaveMessagesOnMailServerStyle = "display:none";
 if ($focus->is_personal) {
 	$xtpl->assign('EDIT_GROUP_FOLDER_STYLE', "display:none");
+        $createContactStyle = "display:none";
+        $createContactStyle2 = "display:none";
 } else {
 	$is_auto_import = $app_list_strings['checkbox_dom']['2'];
 	
@@ -246,13 +273,33 @@ if ($focus->is_personal) {
 	if ($focus->isMailBoxTypeCreateCase()) {
 		$createCaseRowStyle = "display:''";
 	}
-
+        if ($createContactFromMail == $app_list_strings['checkbox_dom']['2']){
+           $default_contact_language = '';
+           $label_contact_default_language = '';
+           $createContactStyle2 = "display:none";
+        } else {
+           $label_contact_default_language = $mod_strings['LBL_CONTACT_DEFAULT_LANGUAGE'] . ':';
+           $createContactStyle2 = "display:''";
+        }
+        $createContactStyle = "display:''";
 }
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER', $leaveMessagesOnMailServer);
 $xtpl->assign('CREATE_CASE_ROW_STYLE', $createCaseRowStyle);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
 $xtpl->assign('CREATE_CASE_EMAIL_TEMPLATE', $create_case_email_template_name);
+$xtpl->assign('NEW_CASE_TYPE', $new_case_type);
+$xtpl->assign('NEW_CASE_STATUS', $new_case_status);
+$xtpl->assign('NEW_CASE_PRIORITY', $new_case_priority);
+
+$xtpl->assign('CREATE_CONTACT', $createContactFromMail );
+$xtpl->assign('LBL_CONTACT_DEFAULT_LANGUAGE', $label_contact_default_language );
+$xtpl->assign('CONTACT_DEFAULT_LANGUAGE', $default_contact_language );
+$xtpl->assign('CREATE_CONTACT_STYLE', $createContactStyle);
+$xtpl->assign('CONTACT_DEFAULT_SOURCE', $default_contact_source );
+$xtpl->assign('FILL_CONTACT_NAME', $fill_contact_name );
+$xtpl->assign('CREATE_CONTACT_STYLE2', $createContactStyle2);
+
 if ($focus->isPop3Protocol()) {
 	$xtpl->assign('TRASH_SENT_FOLDER_STYLE', "display:none");
 } else {

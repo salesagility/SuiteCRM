@@ -125,8 +125,8 @@
                                 {$MOD.LBL_EMAIL}: {if $REQUIRED_EMAIL_ADDRESS}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>{/if}
                             </td>
                             <td width="33%"><span><input name='email1' tabindex='3' size='30' maxlength='100' value='{$EMAIL1}' id='email1' /></span></td>
-                            <td scope="row" nowrap="nowrap"><span>&nbsp;</span></td>
-                            <td><span>&nbsp;</span></td>
+                            <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_LANGUAGE}</span></td>
+                            <td width="33%"><span>{$LANGUAGE_OPTIONS}</span></td>
                         </tr>
                         <tr>
                             <td width="17%" scope="row" nowrap="nowrap"><span>{$MOD.LBL_OFFICE_PHONE}:</span></td>

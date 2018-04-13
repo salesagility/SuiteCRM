@@ -57,20 +57,27 @@ class updatePortal
         if (isset($bean->joomla_account_access) && $bean->joomla_account_access !== '') {
             global $sugar_config;
             $aop_config = $sugar_config['aop'];
+            
+            $language = $bean->language;
+            if (( $language != "" && isAOPDefaultConfEnabled( $language )) || ($language == "" )) $language = "default";
+            if ( isAOPValidConfTemplate( 'joomla_account_creation_email_template_id', $language )) {
+            
+               $template = BeanFactory::getBean('EmailTemplates',$aop_config[$language]['joomla_account_creation_email_template_id']);
+               
+               if ( $template->id ){
+                  $search = array("\$joomla_pass", "\$portal_address");
+                  $replace = array($bean->joomla_account_access, $aop_config['joomla_url']);
+ 
+                  $object_arr['Contacts'] = $bean->id;
+                  $body_html = aop_parse_template($template->body_html, $object_arr);
+                  $body_html = str_replace($search, $replace, $body_html);
 
-            $template = BeanFactory::getBean('EmailTemplates',$aop_config['joomla_account_creation_email_template_id']);
+                  $body_plain = aop_parse_template($template->body, $object_arr);
+                  $body_plain = str_replace($search, $replace, $body_plain);
 
-            $search = array("\$joomla_pass", "\$portal_address");
-            $replace = array($bean->joomla_account_access, $aop_config['joomla_url']);
-
-            $object_arr['Contacts'] = $bean->id;
-            $body_html = aop_parse_template($template->body_html, $object_arr);
-            $body_html = str_replace($search, $replace, $body_html);
-
-            $body_plain = aop_parse_template($template->body, $object_arr);
-            $body_plain = str_replace($search, $replace, $body_plain);
-
-            $this->sendEmail($bean->email1, $template->subject, $body_html, $body_plain, $bean);
+                  $this->sendEmail($bean->email1, $template->subject, $body_html, $body_plain, $bean, $language);
+               }
+            }
         }
     }
 
@@ -81,13 +88,13 @@ class updatePortal
      * @param $altEmailBody
      * @param SugarBean|null $relatedBean
      */
-    public function sendEmail($emailTo, $emailSubject, $emailBody, $altEmailBody, SugarBean $relatedBean = null)
+    public function sendEmail($emailTo, $emailSubject, $emailBody, $altEmailBody, SugarBean $relatedBean = null, $lang = "default" )
     {
         require_once 'modules/Emails/Email.php';
         require_once 'include/SugarPHPMailer.php';
 
         $emailObj = new Email();
-        $emailSettings = getPortalEmailSettings();
+        $emailSettings = getPortalEmailSettings( $lang );
 
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();

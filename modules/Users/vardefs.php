@@ -293,6 +293,19 @@ $dictionary['User'] = array(
             'type' => 'varchar',
             'len' => '50',
         ),
+        'language_c' => array(
+            'name' => 'language_c',
+            'vname' => 'LBL_LANGUAGE',
+            'massupdate' => true,
+            'type' => 'enum',
+            'required' => true,
+            'options' => 'language_dom',
+            'len' => '255',
+            'comment' => 'The language of the user',
+            'duplicate_merge' => 'disabled',
+            'default' => 'en',
+        ),
+
         'phone_home' => array(
             'name' => 'phone_home',
             'vname' => 'LBL_HOME_PHONE',
