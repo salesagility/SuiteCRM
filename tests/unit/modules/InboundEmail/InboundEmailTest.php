@@ -816,553 +816,553 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $state->popTable('aod_index');
 //    }
 //
-//    public function testdeletePop3Cache()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->deletePop3Cache();
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testpop3_open()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->pop3_open();
-//
-//        $this->assertEquals(false, $result);
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testpop3_cleanUp()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->pop3_cleanUp();
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . ' Trace: ' . $e->getTraceAsString());
-//        }
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testpop3_sendCommand()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->pop3_sendCommand('get');
-//
-//        $this->assertEquals('', $result);
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testgetPop3NewMessagesToDownload()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->getPop3NewMessagesToDownload();
-//
-//        $this->assertTrue(is_array($result));
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testgetPop3NewMessagesToDownloadForCron()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        $state->pushErrorLevel();
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->getPop3NewMessagesToDownloadForCron();
-//
-//        $this->assertTrue(is_array($result));
-//        
-//        
-//        //clean up
-//        
-//        $state->popErrorLevel();
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testpop3_getUIDL()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        $state->pushErrorLevel();
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//        $inboundEmail->protocol = 'pop3';
-//
-//        $result = $inboundEmail->getPop3NewMessagesToDownloadForCron();
-//
-//        $this->assertTrue(is_array($result));
-//        
-//        
-//        //clean up
-//        
-//        $state->popErrorLevel();
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testpop3_checkPartialEmail()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        $state->pushErrorLevel();
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//        $inboundEmail->protocol = 'pop3';
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->pop3_checkPartialEmail();
-//            $this->assertEquals('could not open socket connection to POP3 server', $result);
-//
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        //clean up
-//        $state->popErrorLevel();
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testpop3_checkEmail()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//        $inboundEmail->protocol = 'pop3';
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->pop3_checkEmail();
-//            $this->assertEquals(false, $result);
-//
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetMessagesInEmailCache()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        //test for IMAP
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->getMessagesInEmailCache(0, 1);
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . ' Trace: ' . $e->getTraceAsString());
-//        }
-//
-//        //test for pop3
-//        $inboundEmail->protocol = 'pop3';
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $result = $inboundEmail->getMessagesInEmailCache(1, 0);
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcheckEmailOneMailbox()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('inbound_email_cache_ts');
-//        //$state->pushErrorLevel();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->checkEmailOneMailbox('INBOX');
-//        $this->assertEquals(1, $result);
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//        $state->popTable('inbound_email_cache_ts');
-//    }
-//
-//    public function testcheckEmailOneMailboxPartial()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('inbound_email_cache_ts');
-//        //$state->pushErrorLevel();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->checkEmailOneMailboxPartial('INBOX');
-//
-//        $this->assertEquals(array('status' => 'done'), $result);
-//        
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//        $state->popTable('inbound_email_cache_ts');
-//    }
-//
-//    public function testgetCachedIMAPSearch()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->getCachedIMAPSearch('test');
-//
-//        $this->assertTrue(is_array($result));
-//        
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcheckEmailIMAPPartial()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->checkEmailIMAPPartial();
-//
-//        $this->assertTrue(is_array($result));
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcheckEmail2_meta()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->mailbox = 'INBOX,OUTBOX';
-//
-//        $result = $inboundEmail->checkEmail2_meta();
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertEquals(array('mailboxes' => array('INBOX' => 0), 'processCount' => 0), $result);
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testgetMailboxProcessCount()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $result = $inboundEmail->getMailboxProcessCount('INBOX');
-//
-//        $this->assertEquals(0, $result);
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testcheckEmail()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test for IMAP
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->checkEmail('INBOX');
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//
-//        //test for pop3
-//        $inboundEmail->protocol = 'pop3';
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->checkEmail('INBOX');
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testsyncEmail()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//
-//        
-//        
-//        global $current_user;
-//        $current_user = new User('1');
-//
-//        $inboundEmail = new InboundEmail();
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->syncEmail();
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
-//    public function testdeleteCachedMessages()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        //$state->pushErrorLevel();
-//        
-//
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //execute the method and test if it works and does not throws an exception.
-//        try {
-//            $inboundEmail->deleteCachedMessages('1,2', 'test');
-//            $this->assertTrue(true);
-//        } catch (Exception $e) {
-//            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
-//        }
-//        
-//        // clean up
-//        
-//        //$state->popErrorLevel();
-//    }
-//
+    public function testdeletePop3Cache()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->deletePop3Cache();
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testpop3_open()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->pop3_open();
+
+        $this->assertEquals(false, $result);
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testpop3_cleanUp()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->pop3_cleanUp();
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . ' Trace: ' . $e->getTraceAsString());
+        }
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testpop3_sendCommand()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->pop3_sendCommand('get');
+
+        $this->assertEquals('', $result);
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testgetPop3NewMessagesToDownload()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->getPop3NewMessagesToDownload();
+
+        $this->assertTrue(is_array($result));
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testgetPop3NewMessagesToDownloadForCron()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        $state->pushErrorLevel();
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->getPop3NewMessagesToDownloadForCron();
+
+        $this->assertTrue(is_array($result));
+        
+        
+        //clean up
+        
+        $state->popErrorLevel();
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testpop3_getUIDL()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        $state->pushErrorLevel();
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+        $inboundEmail->protocol = 'pop3';
+
+        $result = $inboundEmail->getPop3NewMessagesToDownloadForCron();
+
+        $this->assertTrue(is_array($result));
+        
+        
+        //clean up
+        
+        $state->popErrorLevel();
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testpop3_checkPartialEmail()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        $state->pushErrorLevel();
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+        $inboundEmail->protocol = 'pop3';
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->pop3_checkPartialEmail();
+            $this->assertEquals('could not open socket connection to POP3 server', $result);
+
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        //clean up
+        $state->popErrorLevel();
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testpop3_checkEmail()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+        $inboundEmail->protocol = 'pop3';
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->pop3_checkEmail();
+            $this->assertEquals(false, $result);
+
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testgetMessagesInEmailCache()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        //test for IMAP
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->getMessagesInEmailCache(0, 1);
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . ' Trace: ' . $e->getTraceAsString());
+        }
+
+        //test for pop3
+        $inboundEmail->protocol = 'pop3';
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $result = $inboundEmail->getMessagesInEmailCache(1, 0);
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testcheckEmailOneMailbox()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email_cache_ts');
+        //$state->pushErrorLevel();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->checkEmailOneMailbox('INBOX');
+        $this->assertEquals(1, $result);
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+        $state->popTable('inbound_email_cache_ts');
+    }
+
+    public function testcheckEmailOneMailboxPartial()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email_cache_ts');
+        //$state->pushErrorLevel();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->checkEmailOneMailboxPartial('INBOX');
+
+        $this->assertEquals(array('status' => 'done'), $result);
+        
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+        $state->popTable('inbound_email_cache_ts');
+    }
+
+    public function testgetCachedIMAPSearch()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->getCachedIMAPSearch('test');
+
+        $this->assertTrue(is_array($result));
+        
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testcheckEmailIMAPPartial()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->checkEmailIMAPPartial();
+
+        $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testcheckEmail2_meta()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->mailbox = 'INBOX,OUTBOX';
+
+        $result = $inboundEmail->checkEmail2_meta();
+
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(array('mailboxes' => array('INBOX' => 0), 'processCount' => 0), $result);
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testgetMailboxProcessCount()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+        $inboundEmail = new InboundEmail();
+
+        $result = $inboundEmail->getMailboxProcessCount('INBOX');
+
+        $this->assertEquals(0, $result);
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testcheckEmail()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //test for IMAP
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->checkEmail('INBOX');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+
+        //test for pop3
+        $inboundEmail->protocol = 'pop3';
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->checkEmail('INBOX');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testsyncEmail()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+
+        
+        
+        global $current_user;
+        $current_user = new User('1');
+
+        $inboundEmail = new InboundEmail();
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->syncEmail();
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+
+    public function testdeleteCachedMessages()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        //$state->pushErrorLevel();
+        
+
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //execute the method and test if it works and does not throws an exception.
+        try {
+            $inboundEmail->deleteCachedMessages('1,2', 'test');
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage() . "\nTrace\n" . $e->getTraceAsString());
+        }
+        
+        // clean up
+        
+        //$state->popErrorLevel();
+    }
+// --------------------------------[OK]
     public function testgetOverviewsFromCacheFile()
     {
 
