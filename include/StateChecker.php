@@ -209,7 +209,7 @@ class StateChecker
         $this->lastHash = $hash;
         
         if (!$this->checkHash($hash, $key)) {
-            if($key != 'errlevel') { // TODO: temporary remove the error level check from state
+            if ($key != 'errlevel') { // TODO: temporary remove the error level check from state
                 throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
             }
         }
@@ -360,6 +360,15 @@ class StateChecker
         return $hash;
     }
     
+    // ------------- PHP CONFIGURATION OPTIONS ---------------
+    
+    protected function getPHPConfigOptionsHash()
+    {
+        $configOptions = StateSaver::getPHPConfigOptions();
+        $hash = $this->getHash($configOptions, 'phpconfopt');
+        return $hash;
+    }
+    
     // -------------- ALL ----------------------
     
     /**
@@ -373,6 +382,7 @@ class StateChecker
         $hashes['filesys'] = $this->getFilesystemHash();
         $hashes['globals'] = $this->getSuperGlobalsHash();
         $hashes['errlevel'] = $this->getErrorLevelHash();
+        $hashes['phpconf'] = $this->getPHPConfigOptionsHash();
         $hash = $this->getHash($hashes, 'state');
         return $hash;
     }

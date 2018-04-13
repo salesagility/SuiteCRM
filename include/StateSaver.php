@@ -401,21 +401,36 @@ class StateSaver
     
     // ------------------ PHP CONFIGURATION OPTIONS
     
-    public function pushPHPConfigOptions($key = 'all', $namespace = 'php_config_options') {
+    public static function getPHPConfigOptions()
+    {
         $configOptions = [];
         $configOptionKeys = StateCheckerConfig::get('phpConfigOptionKeys');
         foreach ($configOptionKeys as $name) {
             $configOptions[$name] = ini_get($name);
         }
-        $this->push($configOptions, $key, $namespace);
+        
+        return $configOptions;
     }
     
-    public function popPHPConfigOptions($key = 'all', $namespace = 'php_config_options') {
-        $configOptions = $this->pop($key, $namespace);
+    public static function setPHPConfigOptions($configOptions)
+    {
         $configOptionKeys = StateCheckerConfig::get('phpConfigOptionKeys');
         foreach ($configOptionKeys as $name) {
-            
+            if (ini_set($name, $configOptions[$name]) === false) {
+                throw new StateSaverException('Error to restore PHP Configuration Option: "' . $name . '"');
+            }
         }
     }
     
+    public function pushPHPConfigOptions($key = 'all', $namespace = 'php_config_options')
+    {
+        $configOptions = self::getPHPConfigOptions();
+        $this->push($configOptions, $key, $namespace);
+    }
+    
+    public function popPHPConfigOptions($key = 'all', $namespace = 'php_config_options')
+    {
+        $configOptions = $this->pop($key, $namespace);
+        self::setPHPConfigOptions($configOptions);
+    }
 }
