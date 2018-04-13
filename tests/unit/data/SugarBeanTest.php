@@ -537,6 +537,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertNotTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
 
+        
+        // FAKE ERROR!! 
+        $_POST['foo'] = 'bar';
     }
 
     /**
