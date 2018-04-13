@@ -3497,7 +3497,7 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
                 $halt_script = false;
                 $type = 'Notice';
             } else {
-                return;
+                break;
             }
             break;
         case E_USER_WARNING:
