@@ -345,477 +345,477 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        $state->popTable('aod_index');
 //    }
 //
-//    public function testconvertToUtf8()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//        $result = $inboundEmail->convertToUtf8('some text with non UTF8 chars');
-//        $this->assertSame('some text with non UTF8 chars', $result);
-//        
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testgetFormattedHeaders()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test for default/imap
-//        $result = $inboundEmail->getFormattedHeaders(1);
-//        $this->assertSame(null, $result);
-//
-//        //test for pop3
-//        $inboundEmail->protocol = 'pop3';
-//        $result = $inboundEmail->getFormattedHeaders(1);
-//        $this->assertSame(null, $result);
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testsetAndgetCacheTimestamp()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('inbound_email_cache_ts');
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //test setCacheTimestamp method
-//        $inboundEmail->setCacheTimestamp('INBOX');
-//
-//        //test getCacheTimestamp method
-//        $result = $inboundEmail->getCacheTimestamp('INBOX');
-//        $this->assertGreaterThan(0, strlen($result));
-//        
-//        // clean up
-//        
-//        $state->popTable('inbound_email_cache_ts');
-//    }
-//
-//    public function testsetCacheValue()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        $inserts = array();
-//
-//        $overview = new Overview();
-//        $overview->imap_uid = 1;
-//        $overview->subject = 'subject';
-//        $overview->from = 'from';
-//        $overview->fromaddr = 'from@email.com';
-//        $overview->to = 'to';
-//        $overview->toaddr = 'to@email.com';
-//        $overview->size = 0;
-//        $overview->message_id = 1;
-//
-//        $inserts[] = $overview;
-//
-//        //execute the method to populate email cache
-//        $inboundEmail->setCacheValue('INBOX', $inserts);
-//        $inboundEmail->setCacheValue('INBOX.Trash', $inserts);
-//
-//        //retrieve back to verify the records created
-//        $result = $inboundEmail->getCacheValue('INBOX');
-//
-//        $this->assertGreaterThan(0, count($result['retArr'][0]));
-//        $this->assertEquals(1, $result['retArr'][0]->message_id);
-//    }
-//
-//    public function testgetCacheValueForUIDs()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test wih default protocol
-//        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1, 2, 3, 4, 5));
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertTrue(is_array($result['uids']));
-//        $this->assertTrue(is_array($result['retArr']));
-//
-//        //test wih pop3 protocol
-//        $inboundEmail->protocol = 'pop3';
-//        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1, 2, 3, 4, 5));
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertTrue(is_array($result['uids']));
-//        $this->assertTrue(is_array($result['retArr']));
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testgetCacheValue()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //test wih default protocol
-//        $result = $inboundEmail->getCacheValue('INBOX');
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertTrue(is_array($result['uids']));
-//        $this->assertTrue(is_array($result['retArr']));
-//
-//        //test wih pop3 protocol
-//        $inboundEmail->protocol = 'pop3';
-//        $result = $inboundEmail->getCacheValue('INBOX');
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertTrue(is_array($result['uids']));
-//        $this->assertTrue(is_array($result['retArr']));
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testvalidCacheExists()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        //test without a valid id
-//        $result = $inboundEmail->validCacheExists('');
-//        $this->assertEquals(false, $result);
-//
-//        //test with a valid id set
-//        $inboundEmail->id = 1;
-//        $result = $inboundEmail->validCacheExists('');
-//        $this->assertEquals(true, $result);
-//    }
-//
-//    public function testdisplayFetchedSortedListXML()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        //get the cache values array first
-//        $inboundEmail->id = 1;
-//        $ret = $inboundEmail->getCacheValue('INBOX');
-//
-//        //use the cache values array as parameter and verify that it returns an array
-//        $result = $inboundEmail->displayFetchedSortedListXML($ret, 'INBOX');
-//        $this->assertTrue(is_array($result));
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testgetCacheUnreadCount()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //test with invalid mailbox
-//        $result = $inboundEmail->getCacheUnreadCount('OUTBOX');
-//        $this->assertEquals(0, $result);
-//
-//        //test with valid mailbox
-//        $result = $inboundEmail->getCacheUnreadCount('INBOX');
-//        $this->assertGreaterThanOrEqual(1, $result);
-//    }
-//
-//    public function testgetCacheCount()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //test with invalid mailbox
-//        $result = $inboundEmail->getCacheCount('OUTBOX');
-//        $this->assertEquals(0, $result);
-//
-//        //test with valid mailbox
-//        $result = $inboundEmail->getCacheCount('INBOX');
-//        $this->assertGreaterThanOrEqual(1, $result);
-//    }
-//
-//    public function testgetCacheUnread()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //test with invalid mailbox
-//        $result = $inboundEmail->getCacheUnread('OUTBOX');
-//        $this->assertEquals(0, $result);
-//
-//        //test with valid mailbox
-//        $result = $inboundEmail->getCacheUnread('INBOX');
-//        $this->assertGreaterThanOrEqual(1, $result);
-//    }
-//
-//    public function testmark_answered()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //execute the method to populate answered field
-//        $inboundEmail->mark_answered(1, 'pop3');
-//
-//        //retrieve back to verify the records updated
-//        $result = $inboundEmail->getCacheValue('INBOX');
-//
-//        $this->assertEquals(1, $result['retArr'][0]->answered);
-//    }
-//
-//    public function testpop3_shiftCache()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        $result = $inboundEmail->pop3_shiftCache(array('1' => '1'), array('1'));
-//
-//        //retrieve back to verify the records updated
-//        $result = $inboundEmail->getCacheValue('INBOX');
-//
-//        $this->assertEquals(1, $result['retArr'][0]->imap_uid);
-//        $this->assertEquals(1, $result['retArr'][0]->msgno);
-//    }
-//
-//    public function testgetUIDLForMessage()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //test with invalid msgNo
-//        $result = $inboundEmail->getUIDLForMessage('2');
-//        $this->assertEquals('', $result);
-//
-//        //test with valid msgNo
-//        $result = $inboundEmail->getUIDLForMessage('1');
-//        $this->assertEquals('1', $result);
-//    }
-//
-//    public function testgetMsgnoForMessageID()
-//    {
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        //test with invalid msgNo
-//        $result = $inboundEmail->getMsgnoForMessageID('2');
-//        $this->assertEquals('', $result);
-//
-//        //test with valid msgNo but most probably it will never work because of wrong column name in return statement
-//        $result = $inboundEmail->getMsgnoForMessageID('1');
-//        $this->assertEquals('', $result);
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
-//    public function testpop3_getCacheUidls()
-//    {
-//        $this->markTestIncomplete('Breaks on php 7.1');
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        $result = $inboundEmail->pop3_getCacheUidls();
-//
-//        $this->assertEquals(array('1' => '1'), $result);
-//    }
-//
-//    /**
-//     * @todo: NEEDS REVISION
-//     */
-//    public function testsetStatuses()
-//    {
-//        /*
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//        $inboundEmail->mailbox = 'INBOX';
-//
-//        //execute the method
-//        $inboundEmail->setStatuses('1', 'message_id', '123');
-//
-//        //retrieve back to verify the records created
-//        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1));
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertEquals('123', $result['retArr'][0]->message_id);
-//        */
-//        $this->markTestIncomplete("Different results for php5 and php7");
-//    }
-//
-//    /**
-//     * @todo: NEEDS REVISION
-//     */
-//    public function testdeleteMessageFromCache()
-//    {
-//        /*
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//        $inboundEmail->mailbox = 'INBOX';
-//        $inboundEmail->protocol = 'pop3';
-//
-//        $inboundEmail->deleteMessageFromCache('123');
-//
-//        //retrieve back to verify the records deleted
-//        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1));
-//
-//        $this->assertTrue(is_array($result));
-//        $this->assertEquals(0, count($result['retArr']));
-//        */
-//        $this->markTestIncomplete("Unable to test until testsetStatuses is re-enabled");
-//    }
-//
-//    public function testemptyTrash()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//	// save state
-//
-//        $state = new \SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//
-//	// test
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        $inboundEmail->emptyTrash();
-//
-//        $result = $inboundEmail->getCacheValue('INBOX.Trash');
-//        $this->assertEquals(0, count($result['retArr']));
-//        
-//        
-//        // clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//
-//    }
-//
-//    public function testdeleteCache()
-//    {
-//
-//        self::markTestIncomplete('This test changes the error level');
-//        
-//        // save state 
-//        
-//        $state = new SuiteCRM\StateSaver();
-//        $state->pushTable('aod_index');
-//        $state->pushTable('inbound_email');
-//        
-//        // test
-//        
-//        
-//        $inboundEmail = new InboundEmail();
-//
-//        $inboundEmail->id = 1;
-//
-//        $inboundEmail->deleteCache();
-//
-//        $result = $inboundEmail->getCacheValue('INBOX');
-//        $this->assertEquals(0, count($result['retArr']));
-//        
-//        
-//        //clean up
-//        
-//        $state->popTable('inbound_email');
-//        $state->popTable('aod_index');
-//    }
-//
+    public function testconvertToUtf8()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        
+        $inboundEmail = new InboundEmail();
+        $result = $inboundEmail->convertToUtf8('some text with non UTF8 chars');
+        $this->assertSame('some text with non UTF8 chars', $result);
+        
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testgetFormattedHeaders()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //test for default/imap
+        $result = $inboundEmail->getFormattedHeaders(1);
+        $this->assertSame(null, $result);
+
+        //test for pop3
+        $inboundEmail->protocol = 'pop3';
+        $result = $inboundEmail->getFormattedHeaders(1);
+        $this->assertSame(null, $result);
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testsetAndgetCacheTimestamp()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email_cache_ts');
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //test setCacheTimestamp method
+        $inboundEmail->setCacheTimestamp('INBOX');
+
+        //test getCacheTimestamp method
+        $result = $inboundEmail->getCacheTimestamp('INBOX');
+        $this->assertGreaterThan(0, strlen($result));
+        
+        // clean up
+        
+        $state->popTable('inbound_email_cache_ts');
+    }
+
+    public function testsetCacheValue()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        $inserts = array();
+
+        $overview = new Overview();
+        $overview->imap_uid = 1;
+        $overview->subject = 'subject';
+        $overview->from = 'from';
+        $overview->fromaddr = 'from@email.com';
+        $overview->to = 'to';
+        $overview->toaddr = 'to@email.com';
+        $overview->size = 0;
+        $overview->message_id = 1;
+
+        $inserts[] = $overview;
+
+        //execute the method to populate email cache
+        $inboundEmail->setCacheValue('INBOX', $inserts);
+        $inboundEmail->setCacheValue('INBOX.Trash', $inserts);
+
+        //retrieve back to verify the records created
+        $result = $inboundEmail->getCacheValue('INBOX');
+
+        $this->assertGreaterThan(0, count($result['retArr'][0]));
+        $this->assertEquals(1, $result['retArr'][0]->message_id);
+    }
+
+    public function testgetCacheValueForUIDs()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //test wih default protocol
+        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1, 2, 3, 4, 5));
+
+        $this->assertTrue(is_array($result));
+        $this->assertTrue(is_array($result['uids']));
+        $this->assertTrue(is_array($result['retArr']));
+
+        //test wih pop3 protocol
+        $inboundEmail->protocol = 'pop3';
+        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1, 2, 3, 4, 5));
+
+        $this->assertTrue(is_array($result));
+        $this->assertTrue(is_array($result['uids']));
+        $this->assertTrue(is_array($result['retArr']));
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testgetCacheValue()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //test wih default protocol
+        $result = $inboundEmail->getCacheValue('INBOX');
+
+        $this->assertTrue(is_array($result));
+        $this->assertTrue(is_array($result['uids']));
+        $this->assertTrue(is_array($result['retArr']));
+
+        //test wih pop3 protocol
+        $inboundEmail->protocol = 'pop3';
+        $result = $inboundEmail->getCacheValue('INBOX');
+
+        $this->assertTrue(is_array($result));
+        $this->assertTrue(is_array($result['uids']));
+        $this->assertTrue(is_array($result['retArr']));
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testvalidCacheExists()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        //test without a valid id
+        $result = $inboundEmail->validCacheExists('');
+        $this->assertEquals(false, $result);
+
+        //test with a valid id set
+        $inboundEmail->id = 1;
+        $result = $inboundEmail->validCacheExists('');
+        $this->assertEquals(true, $result);
+    }
+
+    public function testdisplayFetchedSortedListXML()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        //get the cache values array first
+        $inboundEmail->id = 1;
+        $ret = $inboundEmail->getCacheValue('INBOX');
+
+        //use the cache values array as parameter and verify that it returns an array
+        $result = $inboundEmail->displayFetchedSortedListXML($ret, 'INBOX');
+        $this->assertTrue(is_array($result));
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testgetCacheUnreadCount()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //test with invalid mailbox
+        $result = $inboundEmail->getCacheUnreadCount('OUTBOX');
+        $this->assertEquals(0, $result);
+
+        //test with valid mailbox
+        $result = $inboundEmail->getCacheUnreadCount('INBOX');
+        $this->assertGreaterThanOrEqual(1, $result);
+    }
+
+    public function testgetCacheCount()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //test with invalid mailbox
+        $result = $inboundEmail->getCacheCount('OUTBOX');
+        $this->assertEquals(0, $result);
+
+        //test with valid mailbox
+        $result = $inboundEmail->getCacheCount('INBOX');
+        $this->assertGreaterThanOrEqual(1, $result);
+    }
+
+    public function testgetCacheUnread()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //test with invalid mailbox
+        $result = $inboundEmail->getCacheUnread('OUTBOX');
+        $this->assertEquals(0, $result);
+
+        //test with valid mailbox
+        $result = $inboundEmail->getCacheUnread('INBOX');
+        $this->assertGreaterThanOrEqual(1, $result);
+    }
+
+    public function testmark_answered()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //execute the method to populate answered field
+        $inboundEmail->mark_answered(1, 'pop3');
+
+        //retrieve back to verify the records updated
+        $result = $inboundEmail->getCacheValue('INBOX');
+
+        $this->assertEquals(1, $result['retArr'][0]->answered);
+    }
+
+    public function testpop3_shiftCache()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        $result = $inboundEmail->pop3_shiftCache(array('1' => '1'), array('1'));
+
+        //retrieve back to verify the records updated
+        $result = $inboundEmail->getCacheValue('INBOX');
+
+        $this->assertEquals(1, $result['retArr'][0]->imap_uid);
+        $this->assertEquals(1, $result['retArr'][0]->msgno);
+    }
+
+    public function testgetUIDLForMessage()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //test with invalid msgNo
+        $result = $inboundEmail->getUIDLForMessage('2');
+        $this->assertEquals('', $result);
+
+        //test with valid msgNo
+        $result = $inboundEmail->getUIDLForMessage('1');
+        $this->assertEquals('1', $result);
+    }
+
+    public function testgetMsgnoForMessageID()
+    {
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        //test with invalid msgNo
+        $result = $inboundEmail->getMsgnoForMessageID('2');
+        $this->assertEquals('', $result);
+
+        //test with valid msgNo but most probably it will never work because of wrong column name in return statement
+        $result = $inboundEmail->getMsgnoForMessageID('1');
+        $this->assertEquals('', $result);
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+
+    public function testpop3_getCacheUidls()
+    {
+        $this->markTestIncomplete('Breaks on php 7.1');
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        $result = $inboundEmail->pop3_getCacheUidls();
+
+        $this->assertEquals(array('1' => '1'), $result);
+    }
+
+    /**
+     * @todo: NEEDS REVISION
+     */
+    public function testsetStatuses()
+    {
+        /*
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+        $inboundEmail->mailbox = 'INBOX';
+
+        //execute the method
+        $inboundEmail->setStatuses('1', 'message_id', '123');
+
+        //retrieve back to verify the records created
+        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1));
+
+        $this->assertTrue(is_array($result));
+        $this->assertEquals('123', $result['retArr'][0]->message_id);
+        */
+        $this->markTestIncomplete("Different results for php5 and php7");
+    }
+
+    /**
+     * @todo: NEEDS REVISION
+     */
+    public function testdeleteMessageFromCache()
+    {
+        /*
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+        $inboundEmail->mailbox = 'INBOX';
+        $inboundEmail->protocol = 'pop3';
+
+        $inboundEmail->deleteMessageFromCache('123');
+
+        //retrieve back to verify the records deleted
+        $result = $inboundEmail->getCacheValueForUIDs('INBOX', array(1));
+
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(0, count($result['retArr']));
+        */
+        $this->markTestIncomplete("Unable to test until testsetStatuses is re-enabled");
+    }
+
+    public function testemptyTrash()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+
+	// test
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        $inboundEmail->emptyTrash();
+
+        $result = $inboundEmail->getCacheValue('INBOX.Trash');
+        $this->assertEquals(0, count($result['retArr']));
+        
+        
+        // clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+
+    }
+
+    public function testdeleteCache()
+    {
+
+        self::markTestIncomplete('This test changes the error level');
+        
+        // save state 
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('inbound_email');
+        
+        // test
+        
+        
+        $inboundEmail = new InboundEmail();
+
+        $inboundEmail->id = 1;
+
+        $inboundEmail->deleteCache();
+
+        $result = $inboundEmail->getCacheValue('INBOX');
+        $this->assertEquals(0, count($result['retArr']));
+        
+        
+        //clean up
+        
+        $state->popTable('inbound_email');
+        $state->popTable('aod_index');
+    }
+// --------------------------------------- [OK]
     public function testdeletePop3Cache()
     {
         self::markTestIncomplete('This test changes the error level');
@@ -1362,7 +1362,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         //$state->popErrorLevel();
     }
-// --------------------------------[OK]
+
+    
     public function testgetOverviewsFromCacheFile()
     {
 
