@@ -26,7 +26,9 @@ script:
   - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
   - php tests/testinstall.php
   - echo "track_errors = On" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - php before.php
   - ./vendor/bin/codecept run -f unit --steps -vvv --debug 
+  - php after.php
 
 after_script:
   - cat suitecrm.log

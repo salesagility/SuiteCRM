@@ -258,14 +258,14 @@ class StateCheckerConfig
         if (!self::$retrieved) {
             self::retrieve();
         }
-        //if (inDeveloperMode()) {
+        if (inDeveloperMode()) {
             if (in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
                 return true;
             }
             if (in_array($key, ['testStateCheckMode'])) {
                 return self::RUN_PER_TESTS;
             }
-        //}
+        }
         return self::$$key;
     }
 }
