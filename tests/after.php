@@ -4,6 +4,10 @@ include_once __DIR__ . '/../vendor/autoload.php';
 
 echo "Checkin State Hash after tests..\n";
 
+if (!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
+
 $stateChecker = new \SuiteCRM\StateChecker();
 $afterhash = $stateChecker->getStateHash();
 $beforeHash = file_get_contents('state.hash');
