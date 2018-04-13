@@ -118,7 +118,7 @@ class Reminder extends Basic
                 $reminderBean->related_event_module,
                 $reminderBean->related_event_module_id
             );
-            $db->query("UPDATE `alerts` SET `deleted` = 1 WHERE `url_redirect` = '$url'");
+            $db->query("UPDATE alerts SET deleted = 1 WHERE url_redirect = '$url'");
 
             // And delete cached Reminders/Alerts
             unset($_SESSION['alerts_output']);
