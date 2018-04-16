@@ -830,7 +830,8 @@ function getRelatedEmailableFields($module){
                 if(!isset($field['module']) || !in_array($field['module'],$emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")){
                     continue;
                 }
-                $relEmailFields[$field['name']] = translate($field['module']).": ".trim(translate($field['vname'],$mod->module_name),":");
+                $relEmailFields[$field['name']] = translate($field['module']) . ": "
+                    . trim(translate($field['vname'], $mod->module_name), ":");
             }
 
             foreach($mod->get_linked_fields() as $field){
