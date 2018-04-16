@@ -301,6 +301,7 @@ class StateChecker
      */
     protected function getFiles($path = '.')
     {
+        clearstatcache(true);
         $realpath = realpath($path);
         if (!$realpath) {
             throw new StateCheckerException('Real path can not resolved for: ' . $path);

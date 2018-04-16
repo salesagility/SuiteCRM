@@ -18,6 +18,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aod_index);
         $this->assertAttributeEquals(false, 'importable', $aod_index);
         $this->assertAttributeEquals(false, 'tracker_visibility', $aod_index);
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testisEnabled()
@@ -36,6 +41,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popErrorLevel();
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testfind()
@@ -48,6 +58,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
          //execute the method with parameters and verify that it returns true
          $hits = $aod_index->find('/');
         $this->assertTrue(is_array($hits));
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testoptimise()
@@ -72,6 +87,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('tracker');
 
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
 
     }
 
@@ -83,6 +103,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method and verify it returns a different instance of samme type 
         $this->assertInstanceOf('AOD_Index', $result);
         $this->assertNotSame($aod_index, $result);
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testgetDocumentForBean()
@@ -97,6 +122,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //verify that returned array has a valid Zend_Search_Lucene_Document instance
         $this->assertInstanceOf('Zend_Search_Lucene_Document', $result['document']);
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testcommit()
@@ -122,6 +152,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popErrorLevel();
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testisModuleSearchable()
@@ -143,6 +178,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse(AOD_Index::isModuleSearchable('AOW_Processed', 'AOW_Processed'));
         $this->assertFalse(AOD_Index::isModuleSearchable('SchedulersJobs', 'SchedulersJob'));
         $this->assertFalse(AOD_Index::isModuleSearchable('Users', 'User'));
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testindex()
@@ -158,6 +198,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with a searchable module but invalid bean id, it will still index it
         $result = $aod_index->index('Accounts', 1);
         $this->assertEquals(null, $result);
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testremove()
@@ -183,6 +228,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popErrorLevel();
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 
     public function testgetIndexableModules()
@@ -233,5 +283,10 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method and verify that it retunrs expected results
         $actual = $aod_index->getIndexableModules();
         $this->assertSame($expected, $actual);
+        
+        $cnt = new Contact();
+        $cnt->name = 'foo'.rand(1,10000000);
+        $cnt->save();
+        file_put_contents('fake_error_file', 'fooo'.rand(1,100000));
     }
 }
