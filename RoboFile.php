@@ -209,16 +209,16 @@ export INSTANCE_CLIENT_SECRET={$opts['instance_client_secret']};";
     private function installWindowsEnvironmentVariables($opts)
     {
         $windows_environment_variables = "
-setx DATABASE_DRIVER={$opts['database_driver']}
-setx DATABASE_NAME={$opts['database_name']}
-setx DATABASE_HOST={$opts['database_host']}
-setx DATABASE_USER={$opts['database_user']}
-setx DATABASE_PASSWORD={$opts['database_password']}
-setx INSTANCE_URL={$opts['instance_url']}
-setx INSTANCE_ADMIN_USER={$opts['instance_admin_user']}
-setx INSTANCE_ADMIN_PASSWORD={$opts['instance_admin_password']}
-setx INSTANCE_CLIENT_ID={$opts['instance_client_id']}
-setx INSTANCE_CLIENT_SECRET={$opts['instance_client_secret']}";
+setx DATABASE_DRIVER {$opts['database_driver']}
+setx DATABASE_NAME {$opts['database_name']}
+setx DATABASE_HOST {$opts['database_host']}
+setx DATABASE_USER {$opts['database_user']}
+setx DATABASE_PASSWORD {$opts['database_password']}
+setx INSTANCE_URL {$opts['instance_url']}
+setx INSTANCE_ADMIN_USER {$opts['instance_admin_user']}
+setx INSTANCE_ADMIN_PASSWORD {$opts['instance_admin_password']}
+setx INSTANCE_CLIENT_ID {$opts['instance_client_id']}
+setx INSTANCE_CLIENT_SECRET {$opts['instance_client_secret']}";
         $this->writeln("Generate Script");
         $this->writeln($windows_environment_variables);
 
