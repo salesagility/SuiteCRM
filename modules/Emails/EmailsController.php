@@ -963,8 +963,21 @@ class EmailsController extends SugarController
             $isFromAddressTheSame = true;
         }
 
-        return $hasAccessToInboundEmailAccount === true &&
-            $isFromAddressTheSame === true &&
-            $isAllowedToUseOutboundEmail === true;
+        $error = false;
+        if ($hasAccessToInboundEmailAccount !== true) {
+            $error = 'Email Error: Not authorized to use Inbound Account "' . $requestedInboundEmail->name . '"';
+        }
+        if ($isFromAddressTheSame !== true) {
+            $error = 'Email Error: Requested From address mismatch "'
+                . $requestedInboundEmail->name . '" / "' . $requestedEmail->from_addr . '"';
+        }
+        if ($isAllowedToUseOutboundEmail !== true) {
+            $error = 'Email Error: Not authorized to use Outbound Account "' . $outboundEmailAccount->name . '"';
+        }
+        if ($error !== false) {
+            $GLOBALS['log']->security($error);
+            return false;
+        }
+        return true;
     }
 }
