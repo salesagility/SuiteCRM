@@ -206,8 +206,6 @@ class EmailsController extends SugarController
                 'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
             );
             echo json_encode($response);
-            // log out the user
-            session_destroy();
         }
     }
 
