@@ -14,7 +14,7 @@
                    onclick="toggleSubpanelCookie('{$subpanel_tab}');">
             {else}
                     <a id="subpanel_title_{$subpanel_tab}"
-                       class="{if isset($subpanel_tabs_properties.$i.collapsed_override)}in{else}collapsed{/if}"
+                       class="collapsed{if isset($subpanel_tabs_properties.$i.collapsed_override)} collapsed-override{/if}"
                        role="button" data-toggle="collapse"
                        href="#subpanel_{$subpanel_tab}" aria-expanded="false"
                        onclick="showSubPanel('{$subpanel_tab}'); toggleSubpanelCookie('{$subpanel_tab}');">
