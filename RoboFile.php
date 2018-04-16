@@ -44,6 +44,7 @@ class RoboFile extends \Robo\Tasks
         $this->askDefaultOptionWhenEmpty('Instance OAuth2 Client Secret:', 'secret', $opts['instance_client_secret']);
 
         if ($this->isOsWindows()) {
+            $this->say('Windows detected');
             $this->installWindowsEnvironmentVariables($opts);
         } elseif ($this->isOsLinux()) {
             $this->say('Linux detected');
