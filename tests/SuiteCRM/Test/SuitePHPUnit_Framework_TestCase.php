@@ -35,11 +35,11 @@ abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHP
 
     public static function setUpBeforeClass()
     {
+        parent::setUpBeforeClass();
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();
-        parent::setUpBeforeClass();
     }
 
     /**

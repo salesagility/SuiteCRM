@@ -76,7 +76,8 @@ trait StateCheckerTrait {
     {
         if (StateCheckerConfig::get('testsUseStateChecker') && self::$stateChecker) {
             try {
-                self::$stateChecker->getStateHash();
+                $hash = self::$stateChecker->getStateHash();
+                return $hash;
             } catch (StateCheckerException $e) {
                 $message = 'Incorrect state hash (in PHPUnitTest): ' . $e->getMessage() . (StateCheckerConfig::get('saveTraces') ? "\nTrace:\n" . $e->getTraceAsString() . "\n" : '');
                 if (StateCheckerConfig::get('testsUseAssertionFailureOnError')) {

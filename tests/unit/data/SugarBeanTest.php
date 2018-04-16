@@ -566,7 +566,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         // test
         $results = $bean->bean_implements('test');
         self::assertEquals(false, $results);
-        $_POST['adsasd'] = 'fooooo';
     }
 
     /**

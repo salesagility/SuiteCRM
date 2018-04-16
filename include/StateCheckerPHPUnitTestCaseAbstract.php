@@ -56,38 +56,64 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
 {
     use StateCheckerTrait;
     
-//    /**
-//     * 
-//     */
-//    public static function setUpBeforeClass()
-//    {
-//        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
-//            self::saveStates();
-//        }
-//    
-//        parent::setUpBeforeClass();
-//    }
-//    
-//    /**
-//     * 
-//     */
-//    public static function tearDownAfterClass()
-//    {
-//        parent::tearDownAfterClass();
-//           
-//        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
-//            self::checkStates();
-//        }
-//    }
     
+    protected static $testCounters = [];
+    
+    /**
+     * 
+     * @return string
+     */
+    protected static function getClassName()
+    {
+        $class = get_called_class();
+        return $class;
+    }
+    
+    /**
+     * 
+     * @return int
+     */
+    protected static function getTestMethodsCount()
+    {
+        $count = 0;
+        $class = get_called_class();
+        $methods = get_class_methods($class);
+        foreach ($methods as $method) {
+            if (preg_match('/^test/', $method)) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+
     /**
      * Collect state information and storing a hash
      */
     public function setUp()
     {
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
-            self::saveStates();
+        $mode = StateCheckerConfig::get('testStateCheckMode');
+        
+        switch ($mode) {
+            
+            case StateCheckerConfig::RUN_PER_TESTS:
+                self::saveStates();
+                break;
+            
+            case StateCheckerConfig::RUN_PER_CLASSES:
+                if (!isset(self::$testCounters[$this::getClassName()]) || !self::$testCounters[$this::getClassName()]) {
+                    self::$testCounters[$this::getClassName()] = $this->getTestMethodsCount();
+                    self::saveStates();
+                }
+                break;
+            
+            case StateCheckerConfig::RUN_NEVER:
+                break;
+            
+            default:
+                throw new StateCheckerException('Incorect state check mode: ' . $mode);
         }
+        
         
         parent::setUp();
     }
@@ -98,9 +124,27 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
     public function tearDown()
     {
         parent::tearDown();
-           
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
-            self::checkStates();
+        
+        $mode = StateCheckerConfig::get('testStateCheckMode');
+        
+        switch ($mode) {
+            
+            case StateCheckerConfig::RUN_PER_TESTS:
+                self::checkStates();
+                break;
+            
+            case StateCheckerConfig::RUN_PER_CLASSES:
+                self::$testCounters[$this::getClassName()]--;
+                if (self::$testCounters[$this::getClassName()] <= 0) {
+                    self::checkStates();
+                }
+                break;
+            
+            case StateCheckerConfig::RUN_NEVER:
+                break;
+            
+            default:
+                throw new StateCheckerException('Incorect state check mode: ' . $mode);
         }
     }
 }

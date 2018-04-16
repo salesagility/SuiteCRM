@@ -41,6 +41,8 @@
 
 namespace SuiteCRM;
 
+use Exception;
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }

@@ -371,6 +371,13 @@ class StateChecker
     
     // -------------- ALL ----------------------
     
+    
+    protected $lashHashAll = null;
+    
+    public function getLastHashAll() {
+        return $this->lashHashAll;
+    }
+    
     /**
      * Retrieve a hash of all 
      * 
@@ -383,7 +390,7 @@ class StateChecker
         $hashes['globals'] = $this->getSuperGlobalsHash();
         $hashes['errlevel'] = $this->getErrorLevelHash();
         $hashes['phpconf'] = $this->getPHPConfigOptionsHash();
-        $hash = $this->getHash($hashes, 'state');
-        return $hash;
+        $this->lashHashAll = $this->getHash($hashes, 'state');
+        return $this->lashHashAll;
     }
 }
