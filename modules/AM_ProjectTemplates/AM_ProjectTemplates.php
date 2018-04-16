@@ -174,7 +174,7 @@ function save($check_notify = FALSE) {
 			////	END REBUILD INVITEE RELATIONSHIPS
 			///////////////////////////////////////////////////////////////////////////
 		}
-	
+	  return $return_id;
 	}
 
 }

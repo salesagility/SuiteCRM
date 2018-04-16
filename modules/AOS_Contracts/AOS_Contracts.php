@@ -89,7 +89,7 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 
         perform_aos_save($this);
 
-		parent::save($check_notify);
+		    $return_id = parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
         $productQuoteGroup = new AOS_Line_Item_Groups();
@@ -98,6 +98,7 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 		if(isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])){
 			$this->createLink();
 		}
+        return $return_id;
 
 	}
 

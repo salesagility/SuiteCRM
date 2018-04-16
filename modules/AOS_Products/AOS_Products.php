@@ -77,7 +77,7 @@ class AOS_Products extends AOS_Products_sugar {
 
         perform_aos_save($this);
 
-	    parent::save($check_notify);
+        return parent::save($check_notify);
     }
 
 	public function getCustomersPurchasedProductsQuery() {

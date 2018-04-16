@@ -657,6 +657,7 @@ class Project extends SugarBean {
 		}
 		/// End Template Selection handling
 		////////////////////////////////////////////////////////////
+        return $return_id;
 	
 	}
 

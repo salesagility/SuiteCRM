@@ -139,7 +139,7 @@ class OAuthToken extends SugarBean
             $this->new_with_id = true;
             $this->id = $this->token;
         }
-        parent::save();
+        return parent::save();
     }
 
     /**

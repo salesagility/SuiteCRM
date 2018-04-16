@@ -108,7 +108,7 @@ class AOR_Report extends Basic
             unset($_POST['aor_fields_id']);
         }
 
-        parent::save($check_notify);
+        $return_id = parent::save($check_notify);
 
         require_once('modules/AOR_Fields/AOR_Field.php');
         $field = new AOR_Field();
@@ -121,6 +121,8 @@ class AOR_Report extends Basic
         require_once('modules/AOR_Charts/AOR_Chart.php');
         $chart = new AOR_Chart();
         $chart->save_lines($_POST, $this, 'aor_chart_');
+
+        return $return_id;
     }
 
     /**
