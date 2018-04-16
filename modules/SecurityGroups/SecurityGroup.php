@@ -39,7 +39,7 @@ class SecurityGroup extends SecurityGroup_sugar
      * @param string $user_id
      * @return string
      */
-    public function getGroupWhere($table_name, $module, $user_id)
+    public static function getGroupWhere($table_name, $module, $user_id)
     {
 
         //need a different query if doing a securitygroups check

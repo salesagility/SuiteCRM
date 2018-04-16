@@ -63,7 +63,7 @@ function installerHook($function_name, $options = array()){
             $GLOBALS['customInstallHooksExist'] = true;
         }
         else{
-            installLog("installerHook: Could not find custom/install/install_hooks.php");
+            installLog("installerHook: Info: custom/install/install_hooks.php not present, no custom hooks to execute");
             $GLOBALS['customInstallHooksExist'] = false;
         }
     }

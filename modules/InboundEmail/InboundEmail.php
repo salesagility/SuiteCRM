@@ -414,9 +414,11 @@ class InboundEmail extends SugarBean
                 }
             }
             $firstMsg = $firstMsg < 1 ? 1 : $firstMsg;
+            $firstMsg = $firstMsg > $totalMsgs ? $totalMsgs : $firstMsg;
             $lastMsg = $lastMsg < $firstMsg ? $firstMsg : $lastMsg;
+            $lastMsg = $lastMsg > $totalMsgs ? $totalMsgs : $lastMsg;
 
-            $sequence  = $firstMsg . ':' . $lastMsg;
+            $sequence = $firstMsg . ':' . $lastMsg;
             $emailSortedHeaders = imap_fetch_overview(
                 $this->conn,
                 $sequence
@@ -2676,11 +2678,23 @@ class InboundEmail extends SugarBean
             $mailerId = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : "";
 
             $oe = new OutboundEmail();
-            $oe->getSystemMailerSettings($focusUser, $mailerId);
+            if($mailerId != ""){
+                $oe->retrieve($mailerId);
+            }
+            else{
+                $oe->getSystemMailerSettings();
+            }
 
             $stored_options = array();
-            $stored_options['from_name'] = trim($_REQUEST['from_name']);
-            $stored_options['from_addr'] = trim($_REQUEST['from_addr']);
+
+            if($oe->id != ""){
+                $stored_options['from_name'] = trim($oe->smtp_from_name);
+                $stored_options['from_addr'] = trim($oe->smtp_from_addr);
+            }
+            else{
+                $stored_options['from_name'] = trim($_REQUEST['from_name']);
+                $stored_options['from_addr'] = trim($_REQUEST['from_addr']);
+            }
             $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr']);
 
             if (!$this->isPop3Protocol()) {
@@ -2743,8 +2757,8 @@ class InboundEmail extends SugarBean
             } else {
                 // Update folders
                 $foldersFound = $this->db->query(
-                    'SELECT * FROM folders WHERE folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
-                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '"'
+                    'SELECT * FROM folders WHERE deleted = 0 AND (folders.id LIKE "' . $this->db->quote($this->id) . '" OR ' .
+                    'folders.parent_folder LIKE "' . $this->db->quote($this->id) . '")'
                 );
                 $inboxNames = array_splice($inboxFolders, 1);
                 while ($row = $this->db->fetchRow($foldersFound)) {
@@ -5324,7 +5338,7 @@ class InboundEmail extends SugarBean
             if(empty($email->date_entered)) {
 
                 $possibleFormats = [
-                    \DateTime::RFC2822,
+                    \DateTime::RFC2822.'+',
                     str_replace(['D, '], '', \DateTime::RFC2822), // day-of-week is optional
                     str_replace([':s'], '', \DateTime::RFC2822), // seconds are optional
                     str_replace(['D, ', ':s'], '', \DateTime::RFC2822), // day-of-week is optional, seconds are optional
@@ -5964,6 +5978,22 @@ class InboundEmail extends SugarBean
             }
         } else {
             $service = $this->getServiceString();
+        }
+
+        if($_REQUEST['folder'] === 'sent') {
+            $inboundEmail->mailbox = $this->get_stored_options('sentFolder');
+        }
+
+        if($_REQUEST['folder'] === 'inbound') {
+            if (!empty($_REQUEST['folder_name'])) {
+                $this->mailbox = $_REQUEST['folder_name'];
+            }
+            elseif (count($this->mailboxarray)) {
+                $this->mailbox = $this->mailboxarray[0];
+            }
+            else {
+                $this->mailbox = 'INBOX';
+            }
         }
 
         $connectString = $this->getConnectString($service, $this->mailbox);

@@ -46,12 +46,12 @@ use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\RelationshipRepository;
 use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
+use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowedException;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\Conflict;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ConflictException;
 
 /**
  * Class SuiteBeanResource
@@ -66,7 +66,7 @@ class SuiteBeanResource extends Resource
      * @param \SugarBean $sugarBean
      * @param string $source rfc6901
      * @return SuiteBeanResource
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws ApiException
@@ -106,7 +106,7 @@ class SuiteBeanResource extends Resource
 
             // Skip the reserved keywords which can be safely skipped
             if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
-                $exception = new ReservedKeywordNotAllowed();
+                $exception = new ReservedKeywordNotAllowedException();
                 $logMessage =
                     ' Code: [' . $exception->getCode() . ']' .
                     ' Status: [' . $exception->getHttpStatus() . ']' .
@@ -173,7 +173,7 @@ class SuiteBeanResource extends Resource
                 $definition['required'] === true &&
                 !isset($this->attributes[$fieldName])
             ) {
-                $exception = new BadRequest('[Missing Required Field] "' . $fieldName . '"');
+                $exception = new BadRequestException('[Missing Required Field] "' . $fieldName . '"');
                 $exception->setSource($this->source . '/attributes/' . $fieldName);
                 throw $exception;
             }
@@ -191,9 +191,9 @@ class SuiteBeanResource extends Resource
     /**
      * SugarBean will save try to save the SugarBean and update any relationships which have a data key
      * @return \SugarBean
-     * @throws BadRequest
+     * @throws BadRequestException
      * @throws ApiException
-     * @throws Conflict
+     * @throws ConflictException
      */
     public function toSugarBean()
     {
@@ -202,6 +202,9 @@ class SuiteBeanResource extends Resource
 
         if (empty($sugarBean)) {
             $sugarBean = \BeanFactory::newBean($this->type);
+            if(!$sugarBean) {
+                throw new \Exception('Bean factory can not retrieve a bean. type was: ' . $this->type);
+            }
 
             if (!empty($this->id)) {
                 $sugarBean->new_with_id = true;
@@ -284,7 +287,7 @@ class SuiteBeanResource extends Resource
                 !isset($this->attributes[$fieldName]) &&
                 empty($this->attributes[$fieldName])
             ) {
-                $exception = new BadRequest('[Missing Required Field] "' . $fieldName . '"');
+                $exception = new BadRequestException('[Missing Required Field] "' . $fieldName . '"');
                 $exception->setSource($this->source . '/attributes/' . $fieldName);
                 throw $exception;
             }
@@ -318,7 +321,7 @@ class SuiteBeanResource extends Resource
                 }
 
                 if ($sugarBean->load_relationship($relationshipName) === false) {
-                    throw new Conflict('[Relationship does not exist] '. $relationshipName);
+                    throw new ConflictException('[Relationship does not exist] '. $relationshipName);
                 }
 
                 if (empty($relationship['data'])) {
@@ -335,7 +338,7 @@ class SuiteBeanResource extends Resource
                         /** @var \Link2 $toManySugarBeanLink */
                         $toManySugarBeanLink = $sugarBean->{$relationshipName};
                         if ($toManySugarBeanLink->getType() !== 'many') {
-                            throw new Conflict(
+                            throw new ConflictException(
                                 '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
                                 'expected to many relationship from '.
                                 $relationshipName
@@ -370,7 +373,7 @@ class SuiteBeanResource extends Resource
                             // add new relationships
                             $added = $toManySugarBeanLink->add($relatedResourceIdsToAdd, $middleTableFields);
                             if($added !== true) {
-                                throw new Conflict(
+                                throw new ConflictException(
                                     '[SugarBeanResource] [Unable to add relationships (to many)] while converting toSugarBean()'.
                                     json_encode($added)
                                 );
@@ -382,7 +385,7 @@ class SuiteBeanResource extends Resource
                         if(empty($relatedResourceIdsToRemove)  === false)  {
                             $removed = $toManySugarBeanLink->remove($relatedResourceIdsToRemove);
                             if($removed !== true) {
-                                throw new Conflict(
+                                throw new ConflictException(
                                     '[SugarBeanResource] [Unable to remove relationships (to many)] while converting toSugarBean()'.
                                     json_encode($removed)
                                 );
@@ -395,7 +398,7 @@ class SuiteBeanResource extends Resource
                         /** @var \Link2 $toOneSugarBeanLink */
                         $toOneSugarBeanLink = $sugarBean->{$relationshipName};
                         if ($toOneSugarBeanLink->getType() !== 'one') {
-                            throw new Conflict(
+                            throw new ConflictException(
                                 '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
                                 'expected to one relationship from'.
                                 $relationshipName
@@ -404,7 +407,7 @@ class SuiteBeanResource extends Resource
                         // add relationship
                         $relatedBean = \BeanFactory::getBean($toOneRelationship['type'], $toOneRelationship['id']);
                         if ($relatedBean->new_with_id === true) {
-                            $exception = new NotFound('["id" does not exist] "' . $toOneRelationship['id']. '"');
+                            $exception = new NotFoundException('["id" does not exist] "' . $toOneRelationship['id']. '"');
                             $exception->setSource('/data/relationships/'.$relationshipName.'/id');
                             throw $exception;
                         }
@@ -416,7 +419,7 @@ class SuiteBeanResource extends Resource
 
                         $added = $toOneSugarBeanLink->add($relatedBean, $middleTableFields);
                         if($added !== true) {
-                            throw new Conflict(
+                            throw new ConflictException(
                                 '[SugarBeanResource] [Unable to add relationships (to one}] while converting toSugarBean()'.
                                 json_encode($added)
                             );
@@ -433,8 +436,8 @@ class SuiteBeanResource extends Resource
      * @param array $data
      * @param string $source
      * @return SuiteBeanResource
-     * @throws BadRequest
-     * @throws Conflict
+     * @throws BadRequestException
+     * @throws ConflictException
      */
     public function fromJsonApiRequest(array $data, $source = ResourceEnum::DEFAULT_SOURCE)
     {
