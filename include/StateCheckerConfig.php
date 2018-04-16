@@ -127,13 +127,13 @@ class StateCheckerConfig
     
     /**
      * Enum specified that tests needs to check system state,
-     * for Test Cases behaviour, possible values: [RUN_NEVER | RUN_PER_TESTS | RUN_NEVER].
+     * for Test Cases behaviour, possible values: [RUN_NEVER | RUN_PER_TESTS | RUN_PER_CLASSES].
      * RUN_NEVER: State check and save never run.
      * RUN_PER_TEST: State check runs after each test methods.
      * RUN_PER_CLASSES: State check runs after each test class.
      * 
      * Note: Mode RUN_PER_CLASSES affects only PHPUnit Test Cases
-     * Note: developer mode override this value
+     * Note: developer mode overrides this value
      * 
      * @var integer
      */
