@@ -223,7 +223,7 @@ setx INSTANCE_CLIENT_SECRET {$opts['instance_client_secret']}";
         $this->writeln($windows_environment_variables);
 
         if ($this->confirm('May I overwrite the environment variables?')) {
-            $this->say('Overwriting environment variables' . $bashAliasesPath);
+            $this->say('Overwriting environment variables');
             $environment_variables = explode(PHP_EOL, $windows_environment_variables);
             foreach ($environment_variables as $command) {
                 $this->_exec($command);
