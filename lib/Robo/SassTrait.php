@@ -3,7 +3,7 @@ namespace SuiteCRM\Robo;
 
 trait SassTrait
 {
-    use PathTrait;
+    use \SuiteCRM\Robo\PathTrait;
     /**
      * @param string $colorScheme eg Dawn
      */

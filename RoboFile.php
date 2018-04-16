@@ -9,7 +9,7 @@ class RoboFile extends \Robo\Tasks
 {
     use \SuiteCRM\Robo\OperatingSystemTrait;
     use \SuiteCRM\Robo\EnvironmentVariablesTrait;
-    use \SuiteCRM\Robo\PathTrait;
+    use \SuiteCRM\Robo\SassTrait;
     // define public methods as commands
 
     /**
@@ -85,18 +85,6 @@ class RoboFile extends \Robo\Tasks
         } else {
             $this->buildSuitePColorScheme($opts['color_scheme']);
         }
-    }
-
-    /**
-     * @param string $colorScheme eg Dawn
-     */
-    private function buildSuitePColorScheme($colorScheme)
-    {
-        $this->_exec(
-            $this->toOsPath(
-                "./vendor/bin/pscss -f compressed themes/SuiteP/css/{$colorScheme}/style.scss > themes/SuiteP/css/{$colorScheme}/style.css"
-            )
-        );
     }
 
     /**
