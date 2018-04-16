@@ -133,6 +133,7 @@ class AOPInboundEmail extends InboundEmail {
                    }
                    $contacte->save( false );
                    $contactIds[0] = $contacte->id;
+				   $c->contact_id = $contacte->id;
                 }
             }
 
