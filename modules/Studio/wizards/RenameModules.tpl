@@ -125,11 +125,11 @@
                 <table style="margin-left:15px;">
                     <tr>
                         <td align="right">{$MOD.LBL_SINGULAR}</td>
-                        <td align="left"><input id='slot{$rowCounter}_stext' value='{$value.singular}' onchange='setSingularDropDownValue({$rowCounter});' type='text'></td>
+                        <td align="left"><input id='slot{$rowCounter}_stext' value="{$value.singular}" onchange='setSingularDropDownValue({$rowCounter});' type='text'></td>
                     </tr>
                     <tr>
                         <td align="right">{$MOD.LBL_PLURAL}</td>
-                        <td align="left"><input id='slot{$rowCounter}_text' value='{$value.lang}' type='text'  onchange='setDropDownValue({$rowCounter}, this.value, true)' ></td>
+                        <td align="left"><input id='slot{$rowCounter}_text' value="{$value.lang}" type='text'  onchange='setDropDownValue({$rowCounter}, this.value, true)' ></td>
                     </tr>
                 </table>
                 <input name='slot_{$rowCounter}' id='slot_{$rowCounter}' value='{$rowCounter}' type = 'hidden'>
