@@ -194,7 +194,7 @@ export INSTANCE_CLIENT_SECRET={$opts['instance_client_secret']};";
         if ($this->confirm('May I overwrite '.$bashAliasesPath .'?')) {
             $this->say('Exporting variables to ' . $bashAliasesPath);
             // write current file to backup file
-            file_put_contents($bashAliasesPath . '~', $bashAliasesPath);
+            file_put_contents($bashAliasesPath . '~', $bashAliasesFile);
             // write new file to abash_aliases
             file_put_contents($bashAliasesPath, $newBashAliasesFile);
             $this->writeln('Please restart your terminal or run `bash`');
