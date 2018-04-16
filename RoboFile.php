@@ -73,7 +73,7 @@ class RoboFile extends \Robo\Tasks
     public function buildSuitep(array $opts = ['color_scheme' => ''])
     {
         $this->say('Compile SuiteP Theme (SASS)');
-        if (empty('color_scheme')) {
+        if (empty($opts['color_scheme'])) {
             $this->buildSuitePColorScheme('Dawn');
             $this->buildSuitePColorScheme('Day');
             $this->buildSuitePColorScheme('Dusk');
