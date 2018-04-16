@@ -2124,6 +2124,28 @@ $app_list_strings['project_priority_options'] = array(
     'Low' => 'Low',
 );
 
+//GDPR lawful basis options
+$app_list_strings['lawful_basiss'] = array(
+    'consent' => 'Consent',
+    'contract' => 'Contract',
+    'legal_obligation' => 'Legal obligation',
+    'protection_of_interest' => 'Protection of interest',
+    'public_interest' => 'Public interest',
+    'legitimate_interest' => 'Legitimate interest',
+    'withdrawn' => 'Withdrawn',
+);
+//End GDPR lawful basis options
+
+//GDPR lawful basis source options
+$app_list_strings['lawful_basis_sources'] = array(
+    'website' => 'Website',
+    'phone' => 'Phone',
+    'given_to_user' => 'Given to User',
+    'email' => 'Email',
+    'third_party' => 'Third Party',
+);
+//End GDPR lawful basis source options
+
 $app_list_strings['moduleList']['KBDocuments'] = 'Knowledge Base';
 
 $app_list_strings['countries_dom'] = array(
