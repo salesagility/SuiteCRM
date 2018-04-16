@@ -123,7 +123,7 @@ class StateCheckerConfig
      * 
      * @var boolean 
      */
-    protected static $storeDetails = false;
+    protected static $storeDetails = true;
     
     /**
      * Enum specified that tests needs to check system state,
@@ -137,7 +137,7 @@ class StateCheckerConfig
      * 
      * @var integer
      */
-    protected static $testStateCheckMode = self::RUN_NEVER;
+    protected static $testStateCheckMode = self::RUN_PER_TESTS;
     
     /**
      * Test using StateChecker
@@ -145,7 +145,7 @@ class StateCheckerConfig
      *
      * @var boolean
      */
-    protected static $testsUseStateChecker = false;
+    protected static $testsUseStateChecker = true;
     
     /**
      * Test shows up an assertion failure when hash-mismatch,
@@ -258,14 +258,14 @@ class StateCheckerConfig
         if (!self::$retrieved) {
             self::retrieve();
         }
-        if (inDeveloperMode()) {
-            if (in_array($key, ['storeDetails', 'testsUseStateChecker', 'testsUseAssertionFailureOnError'])) {
-                return true;
-            }
-            if (in_array($key, ['testStateCheckMode'])) {
-                return self::RUN_PER_TESTS;
-            }
-        }
+        //if (inDeveloperMode()) {
+            //if (in_array($key, ['storeDetails'/*, 'testsUseStateChecker', 'testsUseAssertionFailureOnError'*/])) {
+            //    return true;
+            //}
+            //if (in_array($key, ['testStateCheckMode'])) {
+            //    return self::RUN_PER_TESTS;
+            //}
+        //}
         return self::$$key;
     }
 }

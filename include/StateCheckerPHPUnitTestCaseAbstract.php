@@ -56,29 +56,29 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
 {
     use StateCheckerTrait;
     
-    /**
-     * 
-     */
-    public static function setUpBeforeClass()
-    {
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
-            self::saveStates();
-        }
-        
-        parent::setUpBeforeClass();
-    }
-    
-    /**
-     * 
-     */
-    public static function tearDownAfterClass()
-    {
-        parent::tearDownAfterClass();
-           
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
-            self::checkStates();
-        }
-    }
+//    /**
+//     * 
+//     */
+//    public static function setUpBeforeClass()
+//    {
+//        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
+//            self::saveStates();
+//        }
+//    
+//        parent::setUpBeforeClass();
+//    }
+//    
+//    /**
+//     * 
+//     */
+//    public static function tearDownAfterClass()
+//    {
+//        parent::tearDownAfterClass();
+//           
+//        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_CLASSES) {
+//            self::checkStates();
+//        }
+//    }
     
     /**
      * Collect state information and storing a hash
