@@ -1,7 +1,7 @@
 <?php
 namespace SuiteCRM\Robo;
 
-trait OperatingSystem
+trait OperatingSystemTrait
 {
     /**
      * @return bool true when operating system is BSD

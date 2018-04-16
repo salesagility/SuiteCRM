@@ -1,7 +1,7 @@
 <?php
 namespace SuiteCRM\Robo;
 
-trait EnvironmentVariables
+trait EnvironmentVariablesTrait
 {
 
     /**

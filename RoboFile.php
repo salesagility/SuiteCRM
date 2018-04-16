@@ -7,9 +7,9 @@ require_once __DIR__.'/vendor/autoload.php';
  */
 class RoboFile extends \Robo\Tasks
 {
-    use \SuiteCRM\Robo\OperatingSystem;
-    use \SuiteCRM\Robo\EnvironmentVariables;
-    use \SuiteCRM\Robo\Path;
+    use \SuiteCRM\Robo\OperatingSystemTrait;
+    use \SuiteCRM\Robo\EnvironmentVariablesTrait;
+    use \SuiteCRM\Robo\PathTrait;
     // define public methods as commands
 
     /**

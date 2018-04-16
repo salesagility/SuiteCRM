@@ -1,7 +1,7 @@
 <?php
 namespace SuiteCRM\Robo;
 
-trait Path
+trait PathTrait
 {
     /**
      * @param string $path

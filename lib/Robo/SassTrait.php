@@ -1,9 +1,9 @@
 <?php
 namespace SuiteCRM\Robo;
 
-trait Sass
+trait SassTrait
 {
-    use Path;
+    use PathTrait;
     /**
      * @param string $colorScheme eg Dawn
      */
