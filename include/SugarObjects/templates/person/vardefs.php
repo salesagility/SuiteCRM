@@ -269,11 +269,11 @@ $vardefs = array(
             'audited' => true,
         ),
         'date_reviewed' => array(
-           'name' => 'date_reviewed',
-           'vname' => 'LBL_DATE_REVIEWED',
-           'type' => 'date',
-           'massupdate' => true,
-           'audited' => true,
+            'name' => 'date_reviewed',
+            'vname' => 'LBL_DATE_REVIEWED',
+            'type' => 'date',
+            'massupdate' => true,
+            'audited' => true,
         ),
         'lawful_basis_source' => array(
             'name' => 'lawful_basis_source',
