@@ -196,7 +196,20 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetEAPMExternalApiDropDown()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
+        // test
+        
+
         $result = getEAPMExternalApiDropDown();
         $this->assertEquals(array('' => ''), $result);
+        
+        
+        // clean up
+        
+        $state->popTable('aod_index');
     }
 }
