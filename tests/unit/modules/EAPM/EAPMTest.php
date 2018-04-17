@@ -201,9 +201,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
-        
         //error_reporting(E_ERROR | E_PARSE);
         
         
