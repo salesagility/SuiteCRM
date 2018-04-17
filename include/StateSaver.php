@@ -325,7 +325,7 @@ class StateSaver
     {
         $rows = $this->pop($table, $namespace);
         
-        DBManagerFactory::getInstance()->query("DELETE FROM " . DBManagerFactory::getInstance()->quote($table));
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE " . DBManagerFactory::getInstance()->quote($table));
         
         if(!is_array($rows)) {
             throw new StateSaverException('Table information is not an array. Are you sure you pushed this table previously?');
@@ -334,7 +334,7 @@ class StateSaver
             $query = "INSERT INTO $table (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = $value ? "'$value'" : 'NULL';
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
