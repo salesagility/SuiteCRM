@@ -148,28 +148,28 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('aod_index');
     }
 
-    public function testreloadPreferences()
-    {
-	// save state
-
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-
-	// test
-        
-        $user = new User();
-        $user->retrieve('1');
-
-        $userPreference = new UserPreference($user);
-
-        $result = $userPreference->reloadPreferences();
-        $this->assertTrue($result, 'Result was: ' . var_dump($result, true));
-
-        // clean up
-        
-        $state->popGlobals();
-
-    }
+//    public function testreloadPreferences()
+//    {
+//	// save state
+//
+//        $state = new \SuiteCRM\StateSaver();
+//        $state->pushGlobals();
+//
+//	// test
+//        
+//        $user = new User();
+//        $user->retrieve('1');
+//
+//        $userPreference = new UserPreference($user);
+//
+//        $result = $userPreference->reloadPreferences();
+//        $this->assertTrue($result, 'Result was: ' . var_dump($result, true));
+//
+//        // clean up
+//        
+//        $state->popGlobals();
+//
+//    }
     
     
     public function testloadPreferences()
