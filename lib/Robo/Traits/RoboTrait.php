@@ -20,6 +20,11 @@ trait RoboTrait
         }
     }
 
+    /**
+     * @param string sugar config key eg db_config.db_name
+     * @default string failback value
+     * @return config value or fallback when config is not available
+     */
     private function chooseConfigOrDefault($configKey, $default)
     {
         if (empty($configKey)) {
