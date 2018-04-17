@@ -312,6 +312,7 @@ class StateSaver
         }
         
         $this->push($rows, $table, $namespace);
+        return $rows;
     }
     
     /**
@@ -330,7 +331,7 @@ class StateSaver
             throw new StateSaverException('Table information is not an array. Are you sure you pushed this table previously?');
         }
         foreach ($rows as $row) {
-            $query = "INSERT  INTO $table (";
+            $query = "INSERT INTO $table (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
                 $quoteds[] = "'$value'";
@@ -338,6 +339,8 @@ class StateSaver
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
+        
+        return $rows;
     }
     
     // --- Files ---
