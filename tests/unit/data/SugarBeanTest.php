@@ -1513,6 +1513,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                 'size' => '20',
                 'options' => 'lawful_basiss',
                 'audited' => true,
+                'importable' => true,
             ),
             'date_reviewed' => array(
                 'name' => 'date_reviewed',
@@ -1520,6 +1521,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                 'type' => 'date',
                 'massupdate' => true,
                 'audited' => true,
+                'importable' => true,
             ),
             'lawful_basis_source' => array(
                 'name' => 'lawful_basis_source',
@@ -1535,6 +1537,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                 'size' => '20',
                 'options' => 'lawful_basis_sources',
                 'audited' => true,
+                'importable' => true,
             ),
         ), $results);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
