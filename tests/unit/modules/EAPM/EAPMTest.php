@@ -200,6 +200,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
+        $state->pushTable('eapm');
         
         // test
         
@@ -210,6 +211,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('eapm');
         $state->popTable('aod_index');
     }
 }
