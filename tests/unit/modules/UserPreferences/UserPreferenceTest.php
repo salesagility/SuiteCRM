@@ -163,7 +163,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $userPreference = new UserPreference($user);
 
         $result = $userPreference->reloadPreferences();
-        $this->assertEquals(false, $result, 'Result was: ' . var_dump($result, true));
+        $this->assertTrue($result, 'Result was: ' . var_dump($result, true));
 
         // clean up
         
@@ -188,7 +188,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $userPreference->loadPreferences();
 
-        $this->assertEquals(false, $result);
+        $this->assertEquals(true, $result, 'Result was: ' . $result);
         
         // clean up
         
