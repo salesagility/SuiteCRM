@@ -26,6 +26,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
+        $state->pushTable('aod_index');
         
         // test 
         
@@ -47,6 +48,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
         
+        $state->popTable('aod_index');
         $state->popTable('tracker');
         $state->popTable('email_addresses');
     }
