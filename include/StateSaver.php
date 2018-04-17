@@ -332,7 +332,8 @@ class StateSaver
         }
         foreach ($rows as $row) {
             $query = "INSERT INTO $table (";
-            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            $query .= (implode(', ', array_keys($row)) . ') VALUES (');
+            $quoteds = [];
             foreach ($row as $value) {
                 $quoteds[] = $value ? "'$value'" : 'NULL';
             }

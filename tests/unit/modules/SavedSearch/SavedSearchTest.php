@@ -57,36 +57,36 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($result));
     }
 
-    public function testMain()
-    {
-        $savedSearch = new SavedSearch();
-
-        $savedSearch->name = 'test';
-        $savedSearch->search_module = 'Leads';
-        $savedSearch->save();
-
-        //test for record ID to verify that record is saved
-        $this->assertTrue(isset($savedSearch->id));
-        $this->assertEquals(36, strlen($savedSearch->id));
-
-
-        // Where is the unit test?
-        // Where is the main method?
-        // Why is this combined?
-        // TODO: TASK: UNDEFINED - build the tests for the following methods.
-        $this->markTestIncomplete('');
-//        //test handleSave method
-//        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
+//    public function testMain()
+//    {
+//        $savedSearch = new SavedSearch();
 //
-//        //test returnSavedSearch method
-//        $this->returnSavedSearch($savedSearch->id);
+//        $savedSearch->name = 'test';
+//        $savedSearch->search_module = 'Leads';
+//        $savedSearch->save();
 //
-//        //test returnSavedSearchContents method
-//        $this->returnSavedSearchContents($savedSearch->id);
+//        //test for record ID to verify that record is saved
+//        $this->assertTrue(isset($savedSearch->id));
+//        $this->assertEquals(36, strlen($savedSearch->id));
 //
-//        //test handleDelete method
-//        $this->handleDelete($savedSearch->id);
-    }
+//
+//        // Where is the unit test?
+//        // Where is the main method?
+//        // Why is this combined?
+//        // TODO: TASK: UNDEFINED - build the tests for the following methods.
+//        $this->markTestIncomplete('');
+////        //test handleSave method
+////        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
+////
+////        //test returnSavedSearch method
+////        $this->returnSavedSearch($savedSearch->id);
+////
+////        //test returnSavedSearchContents method
+////        $this->returnSavedSearchContents($savedSearch->id);
+////
+////        //test handleDelete method
+////        $this->handleDelete($savedSearch->id);
+//    }
 
     public function handleSaveAndRetrieveSavedSearch($id)
     {
