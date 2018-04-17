@@ -115,6 +115,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushErrorLevel();
         $state->pushTable('eapm');
         $state->pushTable('tracker');
+        $state->pushTable('aod_index');
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -131,6 +132,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('aod_index');
         $state->popTable('tracker');
         $state->popTable('eapm');
         $state->popErrorLevel();
