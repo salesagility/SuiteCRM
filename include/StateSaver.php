@@ -187,9 +187,7 @@ class StateSaver
      */
     public function pushGlobal($key, $namespace = 'GLOBALS')
     {
-        if (isset($GLOBALS[$key])) {
-            $this->push($GLOBALS[$key] ? $GLOBALS[$key] : self::UNDEFINED, $key, $namespace);
-        }
+        $this->push(isset($GLOBALS[$key]) ? $GLOBALS[$key] : self::UNDEFINED, $key, $namespace);
     }
     
     /**
