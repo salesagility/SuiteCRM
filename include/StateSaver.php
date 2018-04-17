@@ -78,7 +78,7 @@ class StateSaver
     /**
      *
      */
-    public function __conatruct()
+    public function __construct()
     {
         $this->clearErrors();
     }
@@ -188,7 +188,7 @@ class StateSaver
     public function pushGlobal($key, $namespace = 'GLOBALS')
     {
         if (isset($GLOBALS[$key])) {
-            $this->push(isset($GLOBALS[$key]) ? $GLOBALS[$key] : self::UNDEFINED, $key, $namespace);
+            $this->push($GLOBALS[$key] ? $GLOBALS[$key] : self::UNDEFINED, $key, $namespace);
         }
     }
     
@@ -328,7 +328,7 @@ class StateSaver
         
         DBManagerFactory::getInstance()->query("DELETE FROM " . DBManagerFactory::getInstance()->quote($table));
         foreach ($rows as $row) {
-            $query = "INSERT $table INTO (";
+            $query = "INSERT  INTO $table (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
             foreach ($row as $value) {
                 $quoteds[] = "'$value'";
@@ -401,6 +401,12 @@ class StateSaver
     
     // ------------------ PHP CONFIGURATION OPTIONS
     
+    /**
+     * Getter for PHP Configuration Options
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     * 
+     * @return array
+     */
     public static function getPHPConfigOptions()
     {
         $configOptions = [];
@@ -412,6 +418,13 @@ class StateSaver
         return $configOptions;
     }
     
+    /**
+     * Setter for PHP Configuration Options
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     * 
+     * @param array $configOptions
+     * @throws StateSaverException
+     */
     public static function setPHPConfigOptions($configOptions)
     {
         $configOptionKeys = StateCheckerConfig::get('phpConfigOptionKeys');
@@ -422,12 +435,26 @@ class StateSaver
         }
     }
     
+    /**
+     * Store PHP Configuration Options
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     * 
+     * @param string $key
+     * @param string $namespace
+     */
     public function pushPHPConfigOptions($key = 'all', $namespace = 'php_config_options')
     {
         $configOptions = self::getPHPConfigOptions();
         $this->push($configOptions, $key, $namespace);
     }
     
+    /**
+     * Restore PHP Configuration Options
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     * 
+     * @param string $key
+     * @param string $namespace
+     */
     public function popPHPConfigOptions($key = 'all', $namespace = 'php_config_options')
     {
         $configOptions = $this->pop($key, $namespace);

@@ -47,6 +47,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateCheckerCestAbstract
+ * 
+ * Implementation of state checker Codeception tests.
  *
  * @author SalesAgility
  */
