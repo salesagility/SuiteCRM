@@ -150,7 +150,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
      * Install windows environment variables for the testing framework
      * @param array $opts optional command line arguments
      */
-    private function installWindowsEnvironmentVariables($opts)
+    private function installWindowsEnvironmentVariables(array $opts)
     {
         $windows_environment_variables = $this->toWindowsEnvironmentVariables($opts);
 
@@ -175,7 +175,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
      * @param string $format sprintf format
      * @return string environment variables script
      */
-    private function toEnvironmentVariables($opts, $format)
+    private function toEnvironmentVariables(array $opts, $format)
     {
         $script = '';
         foreach ($opts as $optionKey => $optionValue) {
@@ -191,7 +191,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
      * @param array $opts optional command line arguments
      * @return string environment variables script
      */
-    private function toWindowsEnvironmentVariables($opts)
+    private function toWindowsEnvironmentVariables(array $opts)
     {
         return $this->toEnvironmentVariables($opts, 'setx %s %s' . PHP_EOL);
     }
@@ -200,7 +200,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
      * @param array $opts optional command line arguments
      * @return string environment variables script
      */
-    private function toUnixEnvironmentVariables($opts)
+    private function toUnixEnvironmentVariables(array $opts)
     {
         return $this->toEnvironmentVariables($opts, 'export %s=%s;' . PHP_EOL);
     }
