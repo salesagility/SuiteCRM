@@ -377,15 +377,15 @@ class CaseUpdatesHook
         $language = "default";
         $aop_config = $this->getAOPConfig();
 
-        if ( isAOPValidConfTemplate( 'case_closure_email_template_id', $language )) {
-            $email_template_def = $email_template_def->retrieve( $aop_config['default']['case_closure_email_template_id'] );
-            $add_delimiter_def = $aop_config['default']['add_delimiter'] && $aop_config['default']['use_delimiter_in_case_closure'];
-            $txtDelimiter_def = $aop_config['default']['email_reply_delimiter'];
+        if (isAOPValidConfTemplate( 'case_closure_email_template_id', $language)) {
+           $email_template_def = $email_template_def->retrieve( $aop_config['default']['case_closure_email_template_id'] );
+           $add_delimiter_def = $aop_config['default']['add_delimiter'] && $aop_config['default']['use_delimiter_in_case_closure'];
+           $txtDelimiter_def = $aop_config['default']['email_reply_delimiter'];
         }
 
-        if ( !$email_template_def->id) {
-            $GLOBALS['log']->warn('CaseUpdatesHook: sendClosureEmail default template is empty');
-            return false;
+        if (!$email_template_def->id) {
+           $GLOBALS['log']->warn('CaseUpdatesHook: sendClosureEmail default template is empty');
+           return false;
         }
 
         $contacts = $case->get_linked_beans('contacts', 'Contact');
@@ -394,15 +394,21 @@ class CaseUpdatesHook
            if ( !isAOPDefaultConfEnabled( $contact->language )){
               if ( isAOPValidConfTemplate( 'case_closure_email_template_id', $contact->language )){
                  $email_template_lang = $email_template_lang->retrieve( $aop_config[$contact->language]['case_closure_email_template_id'] );
-                 if ( $email_template_lang->id ) $email_template = $email_template_lang;
+                 if ( $email_template_lang->id ){
+                    $email_template = $email_template_lang;
+                 } 
                  else {
                     $GLOBALS['log']->fatal("CaseUpdatesHook: Unable to find configured AOP Case Closure Email Template id::{$aop_config[$contact->language]['case_closure_email_template_id']} for language {$contact->language}");
                     continue;
                  }
                  $addDelimiter = $aop_config[$contact->language]['add_delimiter'] && $aop_config[$contact->language]['use_delimiter_in_case_closure'];
                  $txtDelimiter = $aop_config[$contact->language]['email_reply_delimiter'];
-              } else continue;
-           } else {
+              } 
+              else {
+                 continue;
+              }
+           } 
+           else {
               $language = "default";
               $email_template = $email_template_def;
               $addDelimiter = $add_delimiter_def;
@@ -412,7 +418,9 @@ class CaseUpdatesHook
            $emails = array();
            $emails[] = $contact->emailAddress->getPrimaryAddress( $contact );
            $emailSettings = getPortalEmailSettings( $language );
-           $text = $this->populateTemplate( $email_template, $case, $contact, $addDelimiter, $txtDelimiter );
+           $email_template->addDelimiter = $addDelimiter;
+           $email_template->txtDelimiter = $txtDelimiter;
+           $text = $this->populateTemplate($email_template, $case, $contact);
            $mailer = new SugarPHPMailer();
            $mailer->prepForOutbound();
            $mailer->setMailerForSystem();
@@ -469,12 +477,10 @@ class CaseUpdatesHook
      * @param EmailTemplate $template
      * @param aCase $bean
      * @param $contact
-     * @param $addDelimiter
-     * @param $txtDelimiter
      *
      * @return array
      */
-    private function populateTemplate( EmailTemplate $template, aCase $bean, $contact, $addDelimiter = true, $txtDelimiter = "" )
+    private function populateTemplate(EmailTemplate $template, aCase $bean, $contact)
     {
         global $app_strings, $sugar_config;
         //Order of beans seems to matter here so we place contact first.
@@ -483,7 +489,9 @@ class CaseUpdatesHook
             'Cases'    => $bean->id,
             'Users'    => $bean->assigned_user_id,
         );
-        if ( $addDelimiter && !$txtDelimiter ) $txtDelimiter = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'];
+        if ($template->addDelimiter && !$template->txtDelimiter){
+           $template->txtDelimiter = $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'];
+        }
         $ret = array();
         $ret['subject'] = from_html(aop_parse_template($template->subject, $beans));
         $ret['body'] = from_html(
@@ -508,9 +516,9 @@ class CaseUpdatesHook
                 )
             )
         );
-        if ( $addDelimiter ){
-           $ret['body'] = $txtDelimiter . $ret['body'];
-           $ret['body_alt'] = strip_tags( $txtDelimiter ) .  $ret['body_alt'];
+        if ( $template->addDelimiter ){
+           $ret['body'] = $template->txtDelimiter . $ret['body'];
+           $ret['body_alt'] = strip_tags( $template->txtDelimiter ) .  $ret['body_alt'];
         }
         return $ret;
     }
@@ -551,16 +559,19 @@ class CaseUpdatesHook
 
         $aop_config = $this->getAOPConfig();
         $language = $contact->language;
-        if (( $language != "" && isAOPDefaultConfEnabled( $language )) || ($language == "" )) $language = "default";
+        if (( $language != "" && isAOPDefaultConfEnabled( $language )) || ($language == "" )){
+           $language = "default";
+        }
         if ( isAOPValidConfTemplate( 'case_creation_email_template_id', $language )) {
            $emailTemplate->retrieve( $aop_config[$language]['case_creation_email_template_id']);
            if ( !$emailTemplate->id ) {
               $GLOBALS['log']->warn("CaseUpdatesHook: sendCreationEmail template id::{$aop_config[$language]['case_creation_email_template_id']} is empty. Language {$language}");
               return false;
            }
-
            $emailSettings = getPortalEmailSettings( $language );
-           $text = $this->populateTemplate( $emailTemplate, $bean, $contact, $aop_config[$language]['add_delimiter'], $aop_config[$language]['email_reply_delimiter'] );
+           $emailTemplate->addDelimiter = $aop_config[$language]['add_delimiter'];
+           $emailTemplate->txtDelimiter = $aop_config[$language]['email_reply_delimiter'];
+           $text = $this->populateTemplate( $emailTemplate, $bean, $contact );
            $mailer->Subject = $text['subject'];
            $mailer->Body = $text['body'];
            $mailer->isHTML(true);
@@ -674,15 +685,15 @@ class CaseUpdatesHook
                     $GLOBALS['log']->info('AOPCaseUpdates: Calling send email Template Name::'.$email_template->name.' adddelimiter::'.$addDelimiter.' txtDelimiter::'.$txtDelimiter );
                     $emails = array();
                     $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
+                    $email_template->txtDelimiter = $txtDelimiter;
+                    $email_template->lang = $language;
                     $caseUpdate->sendEmail(
                         $emails,
                         $email_template,
                         $signature,
                         $caseUpdate->case_id,
                         $addDelimiter,
-                        $contact->id,
-                        $txtDelimiter,
-                        $language
+                        $contact->id
                     );
                 }
             }
@@ -697,15 +708,15 @@ class CaseUpdatesHook
                   $addDelimiter = false;
                   if ( $emails && $email_template_lang) {
                       $GLOBALS['log']->info('AOPCaseUpdates: Calling send email');
+                      $email_template_lang->txtDelimiter = "";
+                      $email_template_lang->lang = $language;
                       $caseUpdate->sendEmail(
                           $emails,
                           $email_template_lang,
                           $signature,
                           $caseUpdate->case_id,
                           $addDelimiter,
-                          $caseUpdate->contact_id,
-                          "",
-                          $language
+                          $caseUpdate->contact_id
                       );
                   }
                }

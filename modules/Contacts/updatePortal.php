@@ -59,7 +59,9 @@ class updatePortal
             $aop_config = $sugar_config['aop'];
             
             $language = $bean->language;
-            if (( $language != "" && isAOPDefaultConfEnabled( $language )) || ($language == "" )) $language = "default";
+            if (( $language != "" && isAOPDefaultConfEnabled( $language )) || ($language == "" )){
+               $language = "default";
+            }
             if ( isAOPValidConfTemplate( 'joomla_account_creation_email_template_id', $language )) {
             
                $template = BeanFactory::getBean('EmailTemplates',$aop_config[$language]['joomla_account_creation_email_template_id']);

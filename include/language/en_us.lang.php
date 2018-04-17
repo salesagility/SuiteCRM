@@ -211,12 +211,13 @@ $app_list_strings = array(
         'Other' => 'Other',
     ),
     'language_dom' => array(
-        'es' => 'Castellano',
-        'ca' => 'Català',
-        'de' => 'Deutsch',
         'en' => 'English',
-        'fr' => 'Français',
-        'it' => 'Italiano',
+        'ca' => 'Catalan',
+        'fr' => 'French',
+        'de' => 'German',
+        'it' => 'Italian',
+        'pt' => 'Portuguese',
+        'es' => 'Spanish',
         'other' => 'Other',
     ),
     'opportunity_type_dom' => array(

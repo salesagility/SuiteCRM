@@ -158,7 +158,9 @@ $jsf = "";
 $jdaop = "";
 $i = 0;
 foreach( $lang as $key => $valor ){
-   if ( $i>0 ) $jsv .= ",";
+   if ( $i>0 ) {
+      $jsv .= ",";
+   }
    $userEmailTemplateDropdown =
        get_select_options_with_id($emailTemplateList, $cfg->config['aop'][$key]['user_email_template_id']);
    $contactEmailTemplateDropdown =
@@ -196,13 +198,14 @@ foreach( $lang as $key => $valor ){
    if ( $key != "default" ){
       $jsf .= "$('#use_default_configuration_{$key}').change(function (){
          if($('#use_default_configuration_{$key}').is(':checked') && $('#enable_aop').is(':checked')) {
-           $('#e_settings_detail_{$key}').hide();
-           $('#add_delimiter_{$key}').attr('checked', false);
-           removeFromValidate('ConfigureSettings','email_reply_delimiter_{$key}');
-           $('#add_delimiter_{$key}').change();
-         } else {
-           $('#e_settings_detail_{$key}').show();
-           $('#add_delimiter_{$key}').change();
+            $('#e_settings_detail_{$key}').hide();
+            $('#add_delimiter_{$key}').attr('checked', false);
+            removeFromValidate('ConfigureSettings','email_reply_delimiter_{$key}');
+            $('#add_delimiter_{$key}').change();
+         } 
+         else {
+            $('#e_settings_detail_{$key}').show();
+            $('#add_delimiter_{$key}').change();
          }
       });$('#use_default_configuration_{$key}').change();";
    }
