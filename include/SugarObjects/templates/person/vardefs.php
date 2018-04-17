@@ -266,12 +266,14 @@ $vardefs = array(
             'len' => 100,
             'size' => '20',
             'options' => 'lawful_basiss',
+            'audited' => true,
         ),
         'date_reviewed' => array(
           'name' => 'date_reviewed',
           'vname' => 'LBL_DATE_REVIEWED',
           'type' => 'date',
           'massupdate' => false,
+          'audited' => true,
         ),
         'lawful_basis_source' => array(
             'name' => 'lawful_basis_source',
@@ -286,6 +288,7 @@ $vardefs = array(
             'len' => 100,
             'size' => '20',
             'options' => 'lawful_basis_sources',
+            'audited' => true,
         ),
         'primary_address_street' => array(
             'name' => 'primary_address_street',
