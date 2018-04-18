@@ -137,12 +137,16 @@ class JsonApiErrorObjectTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
             'meta' => [
                 'about' => 'Exception',
                 'class' => 'SuiteCRM\\LangException',
-                'code' => '123',
+                'code' => 123,
                 'langMessage' => 'Test text with variable bar.',
             ],
-            'code' => '123',
+            'code' => 123,
         ];
         $actual = $error->export();
+        
+        if(inDeveloperMode()) {
+            unset($actual['meta']['debug']);
+        }
 
         $this->assertEquals($expected, $actual, 'API Error Object retrive error from exception.');
     }
