@@ -9,7 +9,7 @@ use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\Utility\Paths;
 
-class FilterParserTest extends SuiteCRM\StateCheckerUnitAbstract
+class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -31,8 +31,9 @@ class FilterParserTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     private static $operator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $container = $this->tester->getContainerInterface();
         if(self::$filterParser === null) {
             // load PSR 11 interface
@@ -49,9 +50,7 @@ class FilterParserTest extends SuiteCRM\StateCheckerUnitAbstract
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testSplitKeysWithEmptyArray()
     {

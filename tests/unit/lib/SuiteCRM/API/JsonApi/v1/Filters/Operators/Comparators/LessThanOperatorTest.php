@@ -10,15 +10,14 @@ class LessThanOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 
     private static $operator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators\LessThanOperator($containers);
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testIsValidTagWithInvalidType()
     {

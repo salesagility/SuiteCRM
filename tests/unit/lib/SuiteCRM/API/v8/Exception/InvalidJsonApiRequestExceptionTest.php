@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiRequestException;
 
-class InvalidJsonApiRequestExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
+class InvalidJsonApiRequestExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -23,16 +23,15 @@ class InvalidJsonApiRequestExceptionTest extends SuiteCRM\StateCheckerUnitAbstra
         $this->assertEquals('[SuiteCRM] [API] [InvalidJsonApiRequest] ', self::$exception->getMessage());
     }
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$exception === null) {
             self::$exception = new InvalidJsonApiRequestException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetSetDetail()
     {

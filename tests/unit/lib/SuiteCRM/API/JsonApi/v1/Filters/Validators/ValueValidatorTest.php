@@ -11,16 +11,14 @@ class ValueValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
     /** @var \SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator $valueValidator */
     private static $valueValidator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$valueValidator === null) {
             self::$valueValidator = new \SuiteCRM\API\JsonApi\v1\Filters\Validators\ValueValidator();
         }
     }
 
-    protected function _after()
-    {
-    }
 
     public function testIsValidWithWrongDataType()
     {

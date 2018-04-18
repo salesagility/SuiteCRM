@@ -14,16 +14,15 @@ class CurrentLanguageTest extends SuiteCRM\StateCheckerUnitAbstract
     private static $language;
 
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if (self::$language === null) {
             self::$language = new \SuiteCRM\Utility\CurrentLanguage();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetCurrentLanguage()
     {

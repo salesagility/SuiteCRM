@@ -18,8 +18,9 @@ class PathsTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     private static $projectPath;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if (self::$paths === null) {
             self::$paths = new \SuiteCRM\Utility\Paths();
         }
@@ -29,9 +30,7 @@ class PathsTest extends SuiteCRM\StateCheckerUnitAbstract
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetProjectPath()
     {

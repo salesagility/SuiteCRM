@@ -9,15 +9,7 @@ class StringValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     protected $tester;
 
-    protected function _before()
-    {
 
-    }
-
-    protected function _after()
-    {
-
-    }
 
     public function testStartsWith()
     {

@@ -18,8 +18,9 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     private static $logger;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if (self::$logger === null) {
             self::$logger = new \SuiteCRM\Utility\SuiteLogger();
         }
@@ -32,10 +33,11 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerUnitAbstract
         $loggerManager::setLogLevel('debug');
     }
 
-    protected function _after()
+    public function _after()
     {
         $loggerManager = LoggerManager::getLogger();
         $loggerManager::setLogLevel(self::$oldLogLevel);
+        parent::_after();
     }
 
     public function testLogEmergency()

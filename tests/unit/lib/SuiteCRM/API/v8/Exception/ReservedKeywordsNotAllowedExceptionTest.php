@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowedException;
 
-class ReservedKeywordsNotAllowedExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
+class ReservedKeywordsNotAllowedExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -18,16 +18,15 @@ class ReservedKeywordsNotAllowedExceptionTest extends SuiteCRM\StateCheckerUnitA
      */
     private static $exception;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$exception === null) {
             self::$exception = new ReservedKeywordNotAllowedException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetMessage()
     {

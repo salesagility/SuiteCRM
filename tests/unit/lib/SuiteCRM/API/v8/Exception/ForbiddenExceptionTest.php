@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\ForbiddenException;
 
-class ForbiddenExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
+class ForbiddenExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -23,16 +23,15 @@ class ForbiddenExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals('[SuiteCRM] [API] [Forbidden] ', self::$exception->getMessage());
     }
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$exception === null) {
             self::$exception = new ForbiddenException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetSetDetail()
     {

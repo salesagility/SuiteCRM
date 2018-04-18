@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
 
-class UnsupportedMediaTypeExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
+class UnsupportedMediaTypeExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -18,16 +18,15 @@ class UnsupportedMediaTypeExceptionTest extends SuiteCRM\StateCheckerUnitAbstrac
      */
     private static $exception;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$exception === null) {
             self::$exception = new UnsupportedMediaTypeException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetMessage()
     {

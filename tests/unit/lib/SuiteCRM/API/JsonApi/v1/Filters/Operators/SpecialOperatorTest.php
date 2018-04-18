@@ -10,17 +10,16 @@ class SpecialOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 
     private static $specialOperator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         if(self::$specialOperator === null) {
             self::$specialOperator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\SpecialOperator($containers);
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testToFilterOperator()
     {

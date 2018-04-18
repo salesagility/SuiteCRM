@@ -19,8 +19,9 @@ class FieldValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
     /** @var  \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator $fieldOperator */
     private static $fieldOperator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         if(self::$fieldValidator === null) {
             self::$fieldValidator = new \SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator($containers);
@@ -31,9 +32,7 @@ class FieldValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testIsValidWithWrongDataType()
     {

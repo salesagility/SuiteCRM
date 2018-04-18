@@ -13,8 +13,9 @@ class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     private static $interpreter;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$interpreter === null) {
 
             // load PSR 11 interface
@@ -23,9 +24,6 @@ class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
         }
     }
 
-    protected function _after()
-    {
-    }
 
     public function testIsFilterByPreMadeWithByPreMadeFilterCase()
     {

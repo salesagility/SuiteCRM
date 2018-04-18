@@ -13,17 +13,16 @@ class OperatorsTest extends SuiteCRM\StateCheckerUnitAbstract
      */
     private static $operator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$operator === null) {
             $containers = $this->tester->getContainerInterface();
             self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator($containers);
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testToFilterOperator()
     {
