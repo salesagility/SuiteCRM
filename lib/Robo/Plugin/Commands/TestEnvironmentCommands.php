@@ -170,13 +170,13 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $this->writeln($newBashAliasesFile);
 
         if ($this->confirm('May I overwrite '.$bashAliasesPath .'?')) {
-            $this->say('Exporting variables to ' . $bashAliasesPath);
 
             // write current file to backup file
             $this->say('Saving existing copy of .bash_aliases to ' . $bashAliasesPath . '~');
             file_put_contents($bashAliasesPath . '~', $bashAliasesFile);
 
             // write new file to .bash_aliases
+            $this->say('Exporting variables to ' . $bashAliasesPath);
             file_put_contents($bashAliasesPath, $newBashAliasesFile);
             $this->writeln('Please restart your terminal or run `bash`');
         } else {
