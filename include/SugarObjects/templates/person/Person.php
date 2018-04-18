@@ -52,6 +52,10 @@ class Person extends Basic
     public $phone_fax;
     public $phone_work;
     public $phone_other;
+    public $lawful_basis;
+    public $date_reviewed;
+    public $lawful_basis_source;
+
 
     /**
      * @var bool controls whether or not to invoke the getLocalFormattedName method with title and salutation

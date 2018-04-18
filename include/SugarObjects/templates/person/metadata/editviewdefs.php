@@ -68,8 +68,6 @@ $viewdefs[$module_name]['EditView'] = array(
                 'title',
                 'phone_home',
             ),
-
-
             array(
                 array(
                     'name'=>'lawful_basiss',
@@ -137,5 +135,4 @@ $viewdefs[$module_name]['EditView'] = array(
         ),
 
     )
-
 );
