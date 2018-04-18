@@ -224,6 +224,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('tracker');
+        $state->pushTable('email_addresses');
 
 	// test
         
@@ -280,6 +281,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('email_addresses');
         $state->popTable('tracker');
         $state->popGlobals();
 
