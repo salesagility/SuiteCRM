@@ -40,6 +40,7 @@ class SuiteLoggerTest extends \Codeception\Test\Unit
 
     public function testLogEmergency()
     {
+        self::markTestIncomplete();
         self::$logger->emergency('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[EMERGENCY\] test/', $lastLine, $matches);
