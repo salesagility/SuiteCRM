@@ -1,7 +1,7 @@
 <?php
 
 
-class GreaterThanOrEqualsOperatorTest extends \Codeception\Test\Unit
+class GreaterThanOrEqualsOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

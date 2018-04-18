@@ -6,7 +6,7 @@
  * Tests that the fields comply with the JSON Api Spec.
  * @see http://jsonapi.org/format/1.0/#document-member-names
  */
-class FieldValidatorTest extends \Codeception\Test\Unit
+class FieldValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

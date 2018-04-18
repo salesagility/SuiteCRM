@@ -290,7 +290,7 @@ class StateSaver
     {
         LoggerManager::getLogger()->warn('Pop error level. Try to remove the error_reporting() function from your code.');
         $level = $this->pop($key, $namespace);
-        error_reporting($level);
+        //error_reporting($level);
     }
     
     /**

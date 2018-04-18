@@ -2,7 +2,7 @@
 
 use SuiteCRM\Utility\StringValidator;
 
-class StringValidatorTest extends \Codeception\Test\Unit
+class StringValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

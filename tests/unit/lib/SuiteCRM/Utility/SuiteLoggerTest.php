@@ -1,7 +1,7 @@
 <?php
 
 
-class SuiteLoggerTest extends \Codeception\Test\Unit
+class SuiteLoggerTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

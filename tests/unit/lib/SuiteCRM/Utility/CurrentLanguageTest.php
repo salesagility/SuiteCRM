@@ -1,7 +1,7 @@
 <?php
 
 
-class CurrentLanguageTest extends \Codeception\Test\Unit
+class CurrentLanguageTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

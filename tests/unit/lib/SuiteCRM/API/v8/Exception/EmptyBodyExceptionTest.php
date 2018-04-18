@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\EmptyBodyException;
 
-class EmptyBodyExceptionTest extends \Codeception\Test\Unit
+class EmptyBodyExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

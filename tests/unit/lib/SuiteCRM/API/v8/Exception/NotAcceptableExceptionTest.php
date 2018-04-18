@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\NotAcceptableException;
 
-class NotAcceptableExceptionTest extends \Codeception\Test\Unit
+class NotAcceptableExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

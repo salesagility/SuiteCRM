@@ -1,7 +1,7 @@
 <?php
 
 
-class SugarBeanRelationshipType extends \Codeception\Test\Unit
+class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

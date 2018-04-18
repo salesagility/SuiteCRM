@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowedException;
 
-class ReservedKeywordsNotAllowedExceptionTest extends \Codeception\Test\Unit
+class ReservedKeywordsNotAllowedExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

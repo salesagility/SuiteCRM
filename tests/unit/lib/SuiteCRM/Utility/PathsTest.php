@@ -1,7 +1,7 @@
 <?php
 
 
-class PathsTest extends \Codeception\Test\Unit
+class PathsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

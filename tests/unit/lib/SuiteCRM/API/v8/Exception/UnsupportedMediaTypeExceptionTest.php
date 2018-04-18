@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\UnsupportedMediaTypeException;
 
-class UnsupportedMediaTypeExceptionTest extends \Codeception\Test\Unit
+class UnsupportedMediaTypeExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

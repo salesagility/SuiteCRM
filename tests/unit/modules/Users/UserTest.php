@@ -1,7 +1,7 @@
 <?php
 
 
-class UserTest extends \Codeception\Test\Unit
+class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 {
 
 
@@ -69,6 +69,15 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testgetDefaultSignature()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('email_addresses');
+        
+        // test
+        
+
 //        self::markTestIncomplete('environment dependency');
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
@@ -81,6 +90,11 @@ class UserTest extends \Codeception\Test\Unit
 
         $result = $user->getDefaultSignature();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popGlobals();
     }
 
 
@@ -465,7 +479,8 @@ class UserTest extends \Codeception\Test\Unit
         // $this->assertEquals($id, $result['id']);
     }
 
-
+// --- OK
+ 
     public function authenticate_user($id)
     {
         $user = new User();
@@ -689,6 +704,15 @@ class UserTest extends \Codeception\Test\Unit
 
     public function testget_list_view_data()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('email_addresses');
+        
+        // test
+        
+
         global $mod_strings;
         $mod_strings['LBL_CHECKMARK'] = "";
 
@@ -698,6 +722,13 @@ class UserTest extends \Codeception\Test\Unit
 
         $result = $user->get_list_view_data();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popGlobals();
+
+
     }
 
     public function testlist_view_parse_additional_sections()

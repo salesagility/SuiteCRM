@@ -9,7 +9,7 @@ use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
 use SuiteCRM\Utility\Paths;
 
-class FilterParserTest extends \Codeception\Test\Unit
+class FilterParserTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester

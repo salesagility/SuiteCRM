@@ -2,12 +2,11 @@
 
 namespace SuiteCRM\Exception;
 
-use Codeception\Test\Unit;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\LangText;
 use UnitTester;
 
-class ApiExceptionTest extends Unit
+class ApiExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var UnitTester

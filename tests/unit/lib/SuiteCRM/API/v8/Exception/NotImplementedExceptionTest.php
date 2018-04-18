@@ -2,13 +2,12 @@
 
 namespace SuiteCRM\Exception;
 
-use Codeception\Test\Unit;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\LangText;
 use UnitTester;
 
-class NotImplementedExceptionTest extends Unit
+class NotImplementedExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var UnitTester

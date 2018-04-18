@@ -4,7 +4,7 @@ namespace SuiteCRM\Exception;
 
 use Psr\Log\LogLevel;
 
-class ExceptionTest extends \Codeception\Test\Unit
+class ExceptionTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
