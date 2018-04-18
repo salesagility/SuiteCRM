@@ -105,6 +105,15 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
 
     public function testis_valid_lat()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('email_addresses');
+        
+        // test
+        
+
         $jjwgAddressCache = new jjwg_Address_Cache();
 
         //test with invalid values
@@ -115,5 +124,11 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         //test with valid values
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(90));
         $this->assertEquals(true, $jjwgAddressCache->is_valid_lat(-90));
+
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popGlobals();
     }
 }
