@@ -41,7 +41,7 @@ namespace SuiteCRM\Robo\Traits;
 require_once dirname(__DIR__) . '/config.php';
 
 /**
- * Reusable methods which extent \Robo\Tasks
+ * Reusable methods for Robo commands which extends \Robo\Tasks
  */
 trait RoboTrait
 {
