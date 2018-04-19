@@ -2126,6 +2126,7 @@ $app_list_strings['project_priority_options'] = array(
 
 //GDPR lawful basis options
 $app_list_strings['lawful_basiss'] = array(
+    '' => '',
     'consent' => 'Consent',
     'contract' => 'Contract',
     'legal_obligation' => 'Legal obligation',
@@ -2138,6 +2139,7 @@ $app_list_strings['lawful_basiss'] = array(
 
 //GDPR lawful basis source options
 $app_list_strings['lawful_basis_sources'] = array(
+    '' => '',
     'website' => 'Website',
     'phone' => 'Phone',
     'given_to_user' => 'Given to User',
