@@ -26,15 +26,40 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testViewDetail()
     {
+        
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('email_addresses');
+        
+        // test
+        
         //execute the contructor and check for the Object type and type attribute
         $view = new ViewDetail();
         $this->assertInstanceOf('ViewDetail', $view);
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('detail', 'type', $view);
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popGlobals();
+
     }
 
     public function testpreDisplay()
     {
+        
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('email_addresses');
+        
+        // test
+        
+
         //execute the method with required attributes preset, it will initialize the dv(detail view) attribute. 
         $view = new ViewDetail();
         $view->module = 'Users';
@@ -52,6 +77,12 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view->preDisplay();
         $this->assertInstanceOf('DetailView2', $view->dv);
         $this->asserttrue(is_array($view->dv->defs));
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popGlobals();
+
     }
 
     public function testdisplay()
