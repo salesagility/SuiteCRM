@@ -30,7 +30,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsetState()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -41,7 +41,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testsetConsumer()
@@ -220,7 +220,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -235,7 +235,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testcheckNonce()
@@ -248,7 +248,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdeleteByConsumer()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -263,13 +263,13 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testdeleteByUser()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -284,7 +284,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testdisplayDateFromTs()

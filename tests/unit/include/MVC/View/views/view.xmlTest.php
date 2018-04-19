@@ -16,7 +16,7 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdisplay()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -40,6 +40,6 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 }

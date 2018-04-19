@@ -32,7 +32,7 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testMain()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('tracker');
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -58,7 +58,7 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('tracker');
-        $state->popErrorLevel();
+        
     }
 
     public function getByKey($key)

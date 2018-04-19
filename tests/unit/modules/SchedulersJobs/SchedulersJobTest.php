@@ -40,7 +40,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcheck_date_relationships_load()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -53,7 +53,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testhandleDateFormat()
@@ -107,7 +107,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -124,7 +124,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testfailJob()
@@ -190,7 +190,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testonFailureRetry()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -209,13 +209,13 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testOnFinalFailure()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         ////error_reporting(E_ERROR | E_PARSE);
         
@@ -234,7 +234,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testresolveJob()
@@ -242,7 +242,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
@@ -275,7 +275,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('tracker');
         $state->popTable('aod_index');
-        $state->popErrorLevel();
+        
         
     }
 

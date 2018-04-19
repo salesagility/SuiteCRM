@@ -222,7 +222,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testsavePreferencesToDB()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -241,7 +241,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
 
@@ -348,7 +348,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         self::markTestIncomplete('environment dependency');
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -417,7 +417,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function retrieve($id)
@@ -1150,7 +1150,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testafterImportSave()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ALL);
 
@@ -1166,7 +1166,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
 

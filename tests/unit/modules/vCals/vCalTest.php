@@ -31,7 +31,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_summary_text()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -47,13 +47,13 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -72,13 +72,13 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testfill_in_additional_detail_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -97,13 +97,13 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testget_list_view_data()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -122,7 +122,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testget_freebusy_lines_cache()
@@ -194,7 +194,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcache_sugar_vcal()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('tracker');
         $state->pushTable('vcals');
         $state->pushTable('aod_index');
@@ -221,13 +221,13 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('aod_index');
         $state->popTable('vcals');
         $state->popTable('tracker');
-        $state->popErrorLevel();
+        
     }
 
     public function testcache_sugar_vcal_freebusy()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('tracker');
         $state->pushTable('vcals');
         $state->pushGlobals();
@@ -251,7 +251,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popGlobals();
         $state->popTable('vcals');
         $state->popTable('tracker');
-        $state->popErrorLevel();
+        
     }
 
     public function testfold_ical_lines()

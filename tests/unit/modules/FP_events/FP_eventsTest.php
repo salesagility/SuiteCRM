@@ -22,7 +22,7 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testemail_templates()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -37,6 +37,6 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-        $state->popErrorLevel();
+        
     }
 }

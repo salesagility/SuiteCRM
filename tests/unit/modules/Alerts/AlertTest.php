@@ -32,7 +32,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testbean_implements()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -44,6 +44,6 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 }

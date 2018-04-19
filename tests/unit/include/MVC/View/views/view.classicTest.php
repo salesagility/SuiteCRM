@@ -37,7 +37,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         ////error_reporting(E_ERROR | E_PARSE);
 
@@ -79,7 +79,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
         
         if(isset($session)) {
             $_SESSION = $session;

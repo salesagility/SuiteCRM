@@ -31,7 +31,7 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndMark_deleted()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('aos_invoices');
         $state->pushTable('tracker');
         
@@ -56,6 +56,6 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('tracker');
         $state->popTable('aos_invoices');
-        $state->popErrorLevel();
+        
     }
 }

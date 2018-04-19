@@ -45,7 +45,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     public function testsave_lines()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('aos_products_quotes');
         $state->pushTable('tracker');
         $state->pushGlobals();
@@ -78,7 +78,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $state->popGlobals();
         $state->popTable('tracker');
         $state->popTable('aos_products_quotes');
-        $state->popErrorLevel();
+        
     }
     
     

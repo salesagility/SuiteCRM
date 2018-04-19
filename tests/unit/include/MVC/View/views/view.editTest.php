@@ -33,7 +33,7 @@
         }
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
          ////error_reporting(E_ERROR | E_PARSE);
 
@@ -53,7 +53,7 @@
          
         // clean up
         
-        $state->popErrorLevel();
+        
         
         if(isset($session)) {
             $_SESSION = $session;
@@ -66,7 +66,7 @@
      {
 
          $state = new SuiteCRM\StateSaver();
-         $state->pushErrorLevel();
+         
          
          ////error_reporting(E_ERROR | E_PARSE);
          
@@ -83,6 +83,6 @@
          ob_end_clean();
          $this->assertGreaterThan(0, strlen($renderedContent));
          
-         $state->popErrorLevel();
+         
      }
  }

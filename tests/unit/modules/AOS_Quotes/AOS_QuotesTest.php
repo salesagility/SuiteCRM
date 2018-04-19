@@ -32,7 +32,7 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndMark_deleted()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('aos_quotes');
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -57,6 +57,6 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('aos_quotes');
-        $state->popErrorLevel();
+        
     }
 }

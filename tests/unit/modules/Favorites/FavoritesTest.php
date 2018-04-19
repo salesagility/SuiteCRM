@@ -20,7 +20,7 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdeleteFavorite()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -32,7 +32,7 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testgetFavoriteID()

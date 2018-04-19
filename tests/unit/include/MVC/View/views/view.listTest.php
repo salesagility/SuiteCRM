@@ -102,7 +102,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -134,7 +134,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
          
         // clean up
         
-        $state->popErrorLevel();
+        
         
         if(isset($request)) {
             $_REQUEST = $request;

@@ -31,7 +31,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	public function testfill_in_additional_detail_fields()
 	{
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
 		//error_reporting(E_ERROR | E_PARSE);
 
@@ -49,7 +49,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
 
 	}
 
@@ -75,7 +75,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushGlobals();
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -99,7 +99,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-        $state->popErrorLevel();
+        
 
     }
 

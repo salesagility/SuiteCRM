@@ -31,7 +31,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsave()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('tasks');
@@ -65,7 +65,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('tasks');
         $state->popTable('aod_indexevent');
         $state->popTable('aod_index');
-        $state->popErrorLevel();
+        
     }
 
     public function testget_summary_text()
@@ -98,7 +98,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -117,13 +117,13 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testfill_in_additional_detail_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -141,13 +141,13 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testfill_in_additional_parent_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -166,7 +166,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testget_list_view_data()

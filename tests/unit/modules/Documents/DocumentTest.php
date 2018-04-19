@@ -31,7 +31,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndGet_document_name()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
         $state->pushTable('documents');
@@ -72,7 +72,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('documents');
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
-        $state->popErrorLevel();
+        
     }
 
     public function testget_summary_text()
@@ -121,7 +121,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_list_fields()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('aod_indexevent');
         $state->pushTable('cron_remove_documents');
         $state->pushGlobals();
@@ -146,7 +146,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
         
-        $state->popErrorLevel();
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -181,7 +181,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlist_view_parse_additional_sections()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('cron_remove_documents');
         
         //error_reporting(E_ERROR | E_PARSE);
@@ -203,7 +203,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('cron_remove_documents');
-        $state->popErrorLevel();
+        
     }
 
     public function testcreate_export_query()
@@ -272,7 +272,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testmark_relationships_deleted()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -289,7 +289,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testbean_implements()

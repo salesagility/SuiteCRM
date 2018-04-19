@@ -33,7 +33,7 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsaveAndDelete()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         $state->pushTable('aod_indexevent');
         $state->pushTable('aos_contracts');
         $state->pushTable('tracker');
@@ -63,7 +63,7 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('tracker');
         $state->popTable('aos_contracts');
         $state->popTable('aod_indexevent');
-        $state->popErrorLevel();
+        
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()

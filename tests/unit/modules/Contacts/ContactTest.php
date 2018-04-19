@@ -32,7 +32,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	public function testadd_list_count_joins()
 	{
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         $this->markTestIncomplete('Breaks on php 7.1');
 		//error_reporting(E_ERROR | E_PARSE);
@@ -63,7 +63,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
 	}
 
 	public function testlistviewACLHelper()
@@ -172,7 +172,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	public function testload_contacts_users_relationship(){
 
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -190,7 +190,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
 
 	}
 
@@ -294,7 +294,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	public function testsave_relationship_changes() {
 
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -313,7 +313,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
 
 	}
 
@@ -346,7 +346,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testprocess_sync_to_outlook()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
         
@@ -376,7 +376,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
 
 	}
 

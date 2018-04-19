@@ -58,7 +58,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         
         
@@ -82,7 +82,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
+        
         
         if(isset($_session)) {
             $_SESSION = $_session;

@@ -72,7 +72,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 	public function testbean_implements(){
             
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
 
 		//error_reporting(E_ERROR | E_PARSE);
@@ -84,7 +84,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         
         // clean up
         
-        $state->popErrorLevel();
+        
 
     }
 

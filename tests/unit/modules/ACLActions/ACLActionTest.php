@@ -78,7 +78,7 @@ $_POST['foo'] = 'bar123ase';
     public function testAccessName()
     {
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        
         
         //error_reporting(E_ERROR | E_PARSE);
 
@@ -87,7 +87,7 @@ $_POST['foo'] = 'bar123ase';
         
         // clean up
         
-        $state->popErrorLevel();
+        
     }
 
     public function testgetDefaultActions()
