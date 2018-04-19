@@ -823,7 +823,8 @@ class UserTest extends \Codeception\Test\Unit
 
         //test with contacts module
         $contact = new Contact();
-        $contact->name = "test";
+        // Contact name auto populate from first name and last name, so we need set value for first name or last name to test insteard set value for name
+        $contact->first_name = "test";
 
         /** @var SugarEmailAddress $emailAddress*/
         $emailAddress =& $contact->emailAddress;
@@ -860,7 +861,8 @@ class UserTest extends \Codeception\Test\Unit
 
         //test with contacts module
         $contact = new Contact();
-        $contact->name = "test";
+         // Contact name auto populate from first name and last name, so we need set value for first name or last name to test insteard set value for name
+        $contact->first_name = "test";
 
         $expected =
             '<a href="javascript:void(0);"'

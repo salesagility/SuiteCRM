@@ -2737,11 +2737,23 @@ class InboundEmail extends SugarBean
             $mailerId = (isset($_REQUEST['outbound_email'])) ? $_REQUEST['outbound_email'] : "";
 
             $oe = new OutboundEmail();
-            $oe->getSystemMailerSettings($focusUser, $mailerId);
+            if($mailerId != ""){
+                $oe->retrieve($mailerId);
+            }
+            else{
+                $oe->getSystemMailerSettings();
+            }
 
             $stored_options = array();
-            $stored_options['from_name'] = trim($_REQUEST['from_name']);
-            $stored_options['from_addr'] = trim($_REQUEST['from_addr']);
+
+            if($oe->id != ""){
+                $stored_options['from_name'] = trim($oe->smtp_from_name);
+                $stored_options['from_addr'] = trim($oe->smtp_from_addr);
+            }
+            else{
+                $stored_options['from_name'] = trim($_REQUEST['from_name']);
+                $stored_options['from_addr'] = trim($_REQUEST['from_addr']);
+            }
             $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr']);
 
             if (!$this->isPop3Protocol()) {
