@@ -2,6 +2,9 @@
 
 class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    
+    protected $stateSaver;
+    
     public function setUp()
     {
         parent::setUp();
