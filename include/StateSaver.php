@@ -335,7 +335,7 @@ class StateSaver
             $query .= (implode(', ', array_keys($row)) . ') VALUES (');
             $quoteds = [];
             foreach ($row as $value) {
-                $quoteds[] = $value ? "'$value'" : 'NULL';
+                $quoteds[] = (null === $value) ? 'NULL' : "'$value'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
