@@ -60,10 +60,7 @@ trait StateCheckerCodeceptionTrait {
      */
     public function _before()
     {
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
-            self::saveStates();
-        }
-        
+        $this->beforeStateCheck();
         parent::_before();
     }
     
@@ -73,9 +70,6 @@ trait StateCheckerCodeceptionTrait {
     public function _after()
     {
         parent::_after();
-           
-        if (StateCheckerConfig::get('testStateCheckMode') == StateCheckerConfig::RUN_PER_TESTS) {
-            self::checkStates();
-        }
+        $this->afterStateCheck();
     }
 }

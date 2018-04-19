@@ -103,6 +103,8 @@ class StateCheckerConfig
         '/\/vardefs.ext.php$/',
         '/\/modules\/AOD_Index\/Index\/Index\//',
         '/\/travis\/build\//',
+        '/\/\.idea\//',
+        '/\/\nbproject\//',
     ];
     
     /**
