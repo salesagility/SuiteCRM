@@ -114,19 +114,4 @@ $listViewDefs[$module_name] = array(
         'width' => '10',
         'label' => 'LBL_CREATED'
     ),
-    'LAWFUL_BASIS' => array(
-        'width' => '10',
-        'label' => 'LBL_LAWFUL_BASIS',
-        'default' => true,
-    ),
-    'DATE_REVIEWED' => array(
-        'width' => '10',
-        'label' => 'LBL_DATE_REVIEWED',
-        'default' => true,
-    ),
-    'LAWFUL_BASIS_SOURCE' => array(
-        'width' => '10',
-        'label' => 'LBL_LAWFUL_BASIS_SOURCE',
-        'default' => true,
-    ),
 );
