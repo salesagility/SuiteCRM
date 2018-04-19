@@ -3,7 +3,20 @@
 
 class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    
+    protected $stateSaver;
 
+    public function setUp() {
+        parent::setUp();
+        $this->stateSaver = new SuiteCRM\StateSaver();
+        $this->stateSaver->pushTable('email_addresses');
+    }
+    
+    public function tearDown() {
+        $this->stateSaver->popTable('email_addresses');
+        parent::tearDown();
+    }
+    
     public function testinitialize()
     {
         //execute the method and test if it returns correct class instances
