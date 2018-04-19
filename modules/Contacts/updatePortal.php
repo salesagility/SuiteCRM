@@ -58,7 +58,7 @@ class updatePortal
             global $sugar_config;
             $aop_config = $sugar_config['aop'];
             
-            $language = $bean->language;
+            $language = $bean->language_c;
             if (( $language != "" && isAOPDefaultConfEnabled( $language )) || ($language == "" )){
                $language = "default";
             }

@@ -16,6 +16,9 @@ write_array_to_file('sugar_config', $sugar_config, 'config.php');
 require_once('modules/Administration/updater_utils.php');
 set_CheckUpdates_config_setting('manual');
 
+installLog("Suite Install: install MultiLanguage");
+require_once('install/suite_install/MultiLanguage.php');
+install_multilanguage();
 
 require_once('install/suite_install/AdvancedOpenSales.php');
 install_aos();

@@ -272,7 +272,7 @@ array (
           ),
           1 =>
           array (
-            'name' => 'language',
+            'name' => 'language_c',
             'label' => 'LBL_LANGUAGE',
           ),
         ),

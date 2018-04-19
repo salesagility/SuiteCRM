@@ -244,7 +244,7 @@ class AOP_Case_Updates extends Basic
      *
      * @return array
      */
-    private function populateTemplate(EmailTemplate $template, $addDelimiter = true, $contactId = null )
+    private function populateTemplate(EmailTemplate $template, $addDelimiter = true, $contactId = null)
     {
         global $app_strings, $sugar_config;
 

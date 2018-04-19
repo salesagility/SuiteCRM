@@ -390,19 +390,19 @@ class CaseUpdatesHook
 
         $contacts = $case->get_linked_beans('contacts', 'Contact');
         foreach ( $contacts as $contact ){
-           $language = $contact->language;
-           if ( !isAOPDefaultConfEnabled( $contact->language )){
-              if ( isAOPValidConfTemplate( 'case_closure_email_template_id', $contact->language )){
-                 $email_template_lang = $email_template_lang->retrieve( $aop_config[$contact->language]['case_closure_email_template_id'] );
+           $language = $contact->language_c;
+           if ( !isAOPDefaultConfEnabled( $contact->language_c )){
+              if ( isAOPValidConfTemplate( 'case_closure_email_template_id', $contact->language_c )){
+                 $email_template_lang = $email_template_lang->retrieve( $aop_config[$contact->language_c]['case_closure_email_template_id'] );
                  if ( $email_template_lang->id ){
                     $email_template = $email_template_lang;
                  } 
                  else {
-                    $GLOBALS['log']->fatal("CaseUpdatesHook: Unable to find configured AOP Case Closure Email Template id::{$aop_config[$contact->language]['case_closure_email_template_id']} for language {$contact->language}");
+                    $GLOBALS['log']->fatal("CaseUpdatesHook: Unable to find configured AOP Case Closure Email Template id::{$aop_config[$contact->language_c]['case_closure_email_template_id']} for language {$contact->language_c}");
                     continue;
                  }
-                 $addDelimiter = $aop_config[$contact->language]['add_delimiter'] && $aop_config[$contact->language]['use_delimiter_in_case_closure'];
-                 $txtDelimiter = $aop_config[$contact->language]['email_reply_delimiter'];
+                 $addDelimiter = $aop_config[$contact->language_c]['add_delimiter'] && $aop_config[$contact->language_c]['use_delimiter_in_case_closure'];
+                 $txtDelimiter = $aop_config[$contact->language_c]['email_reply_delimiter'];
               } 
               else {
                  continue;
@@ -558,7 +558,7 @@ class CaseUpdatesHook
         $emailTemplate = new EmailTemplate();
 
         $aop_config = $this->getAOPConfig();
-        $language = $contact->language;
+        $language = $contact->language_c;
         if (( $language != "" && isAOPDefaultConfEnabled( $language )) || ($language == "" )){
            $language = "default";
         }
@@ -664,17 +664,17 @@ class CaseUpdatesHook
             }
             if ($email_template_def->id) {
                 foreach ($caseUpdate->getContacts() as $contact) {
-                    $language = $contact->language;
-                    if ( !isAOPDefaultConfEnabled( $contact->language )){
-                       if ( isAOPValidConfTemplate( 'contact_email_template_id', $contact->language )){
-                          $email_template_lang = $email_template_lang->retrieve( $aop_config[$contact->language]['contact_email_template_id'] );
+                    $language = $contact->language_c;
+                    if ( !isAOPDefaultConfEnabled( $contact->language_c )){
+                       if ( isAOPValidConfTemplate( 'contact_email_template_id', $contact->language_c )){
+                          $email_template_lang = $email_template_lang->retrieve( $aop_config[$contact->language_c]['contact_email_template_id'] );
                           if ( $email_template_lang->id ) $email_template = $email_template_lang;
                           else {
-                             $GLOBALS['log']->fatal("AOPCaseUpdates: Unable to find configured AOP Contact Email Template id::{$aop_config[$contact->language]['contact_email_template_id']} for language {$contact->language}");
+                             $GLOBALS['log']->fatal("AOPCaseUpdates: Unable to find configured AOP Contact Email Template id::{$aop_config[$contact->language_c]['contact_email_template_id']} for language {$contact->language_c}");
                              continue;
                           }
-                          $addDelimiter = $aop_config[$contact->language]['add_delimiter'];
-                          $txtDelimiter = $aop_config[$contact->language]['email_reply_delimiter'];
+                          $addDelimiter = $aop_config[$contact->language_c]['add_delimiter'];
+                          $txtDelimiter = $aop_config[$contact->language_c]['email_reply_delimiter'];
                        } else continue;
                     } else {
                        $language = "default";

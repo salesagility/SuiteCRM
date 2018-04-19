@@ -109,10 +109,10 @@ class AOPInboundEmail extends InboundEmail {
             } else {
                 if ( isset( $storedOptions['createContactFromMail'] ) && $storedOptions['createContactFromMail'] == 1 ){
                    $GLOBALS['log']->debug('InboundEmail::handleCreateCase Create new Contact with Email::' . $contactAddr );
-                   $contacte = new Contact();
-                   $contacte->email1 = $contactAddr;
-                   $contacte->language = isset( $storedOptions['default_contact_language'] ) ? $storedOptions['default_contact_language'] : "";
-                   $contacte->lead_source = isset( $storedOptions['default_contact_source'] ) ? $storedOptions['default_contact_source'] : "";
+                   $contact = new Contact();
+                   $contact->email1 = $contactAddr;
+                   $contact->language_c = isset( $storedOptions['default_contact_language'] ) ? $storedOptions['default_contact_language'] : "";
+                   $contact->lead_source = isset( $storedOptions['default_contact_source'] ) ? $storedOptions['default_contact_source'] : "";
                    if ( isset( $storedOptions['fill_contact_name'] ) && $storedOptions['fill_contact_name'] == 1 ){
                       $first_name = "";
                       $last_name = "";
@@ -127,13 +127,13 @@ class AOPInboundEmail extends InboundEmail {
                             }
                             $last_name = trim( $last_name );
                          }
-                         $contacte->first_name = $first_name;
-                         $contacte->last_name = $last_name;
+                         $contact->first_name = $first_name;
+                         $contact->last_name = $last_name;
                       }
                    }
-                   $contacte->save( false );
-                   $contactIds[0] = $contacte->id;
-                   $c->contact_id = $contacte->id;
+                   $contact->save( false );
+                   $contactIds[0] = $contact->id;
+                   $c->contact_id = $contact->id;
                 }
             }
 
