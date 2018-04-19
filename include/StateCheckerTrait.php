@@ -46,6 +46,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateCheckerTrait
+ * 
+ * Using in state checker tests.
  *
  * @author SalesAgility
  */

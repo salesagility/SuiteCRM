@@ -53,6 +53,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateChecker
+ * 
+ * Save and check the system state and reports you about any state change in the following: 
+ * 
+ * - Database 
+ * - File system 
+ * - Super globals 
+ * - PHP error reporting level 
+ * - PHP configuration options
+ * 
+ * See more about the StateChecker configuration at the StateCheckerConfig class.
  *
  * @author SalesAgility
  */

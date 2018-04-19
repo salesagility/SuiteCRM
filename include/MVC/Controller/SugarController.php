@@ -660,7 +660,7 @@ class SugarController
                 }
             }
             if ($sf != null) {
-                $sf->save($this->bean, $_POST, $field, $properties);
+                $sf->save($this->bean, isset($_POST) ? $_POST : null, $field, $properties);
             }
         }
 

@@ -44,13 +44,15 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdisplay()
     {
         
-        if(isset($_SESSION)) {
-            $session = $_SESSION;
-        }
+        // store state
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushErrorLevel();
+        $state->pushGlobals();
+        $state->pushTable('email_addresses');
         
+        // test
+        
+
         //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with essential parameters set. it should return some html.
@@ -69,12 +71,9 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popErrorLevel();
-        
-        if(isset($session)) {
-            $_SESSION = $session;
-        } else {
-            unset($_SESSION);
-        }
+        $state->popTable('email_addresses');
+        $state->popGlobals();
+
+
     }
 }

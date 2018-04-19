@@ -151,7 +151,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         try {
             $SugarController->pre_save();
         } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
+            $this->assertStringStartsWith('mysqli_query()', $e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->assertTrue(true);
@@ -243,6 +243,13 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheckEntryPointRequiresAuth()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $SugarController = new SugarController();
 
         //check with a invalid value
@@ -256,5 +263,9 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //cehck with a valid False value
         $result = $SugarController->checkEntryPointRequiresAuth('GeneratePassword');
         $this->assertFalse($result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }

@@ -78,7 +78,7 @@ class StateSaver
     /**
      *
      */
-    public function __conatruct()
+    public function __construct()
     {
         $this->clearErrors();
     }
@@ -187,9 +187,7 @@ class StateSaver
      */
     public function pushGlobal($key, $namespace = 'GLOBALS')
     {
-        if (isset($GLOBALS[$key])) {
-            $this->push(isset($GLOBALS[$key]) ? $GLOBALS[$key] : self::UNDEFINED, $key, $namespace);
-        }
+        $this->push(isset($GLOBALS[$key]) ? $GLOBALS[$key] : self::UNDEFINED, $key, $namespace);
     }
     
     /**
@@ -292,7 +290,7 @@ class StateSaver
     {
         LoggerManager::getLogger()->warn('Pop error level. Try to remove the error_reporting() function from your code.');
         $level = $this->pop($key, $namespace);
-        error_reporting($level);
+        //error_reporting($level);
     }
     
     /**
@@ -314,6 +312,7 @@ class StateSaver
         }
         
         $this->push($rows, $table, $namespace);
+        return $rows;
     }
     
     /**
@@ -326,16 +325,23 @@ class StateSaver
     {
         $rows = $this->pop($table, $namespace);
         
-        DBManagerFactory::getInstance()->query("DELETE FROM " . DBManagerFactory::getInstance()->quote($table));
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE " . DBManagerFactory::getInstance()->quote($table));
+        
+        if(!is_array($rows)) {
+            throw new StateSaverException('Table information is not an array. Are you sure you pushed this table previously?');
+        }
         foreach ($rows as $row) {
-            $query = "INSERT $table INTO (";
-            $query .= (implode(',', array_keys($row)) . ') VALUES (');
+            $query = "INSERT INTO $table (";
+            $query .= (implode(', ', array_keys($row)) . ') VALUES (');
+            $quoteds = [];
             foreach ($row as $value) {
-                $quoteds[] = "'$value'";
+                $quoteds[] = $value ? "'$value'" : 'NULL';
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
+        
+        return $rows;
     }
     
     // --- Files ---
@@ -401,6 +407,12 @@ class StateSaver
     
     // ------------------ PHP CONFIGURATION OPTIONS
     
+    /**
+     * Getter for PHP Configuration Options
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     * 
+     * @return array
+     */
     public static function getPHPConfigOptions()
     {
         $configOptions = [];
@@ -412,6 +424,13 @@ class StateSaver
         return $configOptions;
     }
     
+    /**
+     * Setter for PHP Configuration Options
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     * 
+     * @param array $configOptions
+     * @throws StateSaverException
+     */
     public static function setPHPConfigOptions($configOptions)
     {
         $configOptionKeys = StateCheckerConfig::get('phpConfigOptionKeys');
@@ -422,12 +441,26 @@ class StateSaver
         }
     }
     
+    /**
+     * Store PHP Configuration Options
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     * 
+     * @param string $key
+     * @param string $namespace
+     */
     public function pushPHPConfigOptions($key = 'all', $namespace = 'php_config_options')
     {
         $configOptions = self::getPHPConfigOptions();
         $this->push($configOptions, $key, $namespace);
     }
     
+    /**
+     * Restore PHP Configuration Options
+     * @see more at StateCheckerConfig::$phpConfigOptionKeys
+     * 
+     * @param string $key
+     * @param string $namespace
+     */
     public function popPHPConfigOptions($key = 'all', $namespace = 'php_config_options')
     {
         $configOptions = $this->pop($key, $namespace);

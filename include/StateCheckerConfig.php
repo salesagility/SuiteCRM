@@ -46,6 +46,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 /**
  * StateCheckerConfig
+ * 
+ * Configuration of SuiteCRM\StateChecker and StateChecker Tests classes such as 
+ * 
+ *  - SuiteCRM\StateCheckerPHPUnitTestCaseAbstract, 
+ *  - SuiteCRM\StateCheckerUnitAbstract, 
+ *  - SuiteCRM\StateCheckerCestAbstract. 
+ * 
+ * SuiteCRM\StateCheckerConfig configuration options have default values 
+ * and each available in $sugar_config['state_checker'][$key].
+ * 
+ * Each configuration value available with a getter method: SuiteCRM\StateCheckerConfig::get($key)
  *
  * @author SalesAgility
  */
@@ -66,7 +77,7 @@ class StateCheckerConfig
      * Tests check state after each test class (PHPUnit only)
      */
     const RUN_PER_CLASSES = 2;
-    
+     
     /**
      * SuperGlobals Collection
      * (DO NOT CHANGE!)
@@ -127,13 +138,13 @@ class StateCheckerConfig
     
     /**
      * Enum specified that tests needs to check system state,
-     * for Test Cases behaviour, possible values: [RUN_NEVER | RUN_PER_TESTS | RUN_NEVER].
+     * for Test Cases behaviour, possible values: [RUN_NEVER | RUN_PER_TESTS | RUN_PER_CLASSES].
      * RUN_NEVER: State check and save never run.
      * RUN_PER_TEST: State check runs after each test methods.
      * RUN_PER_CLASSES: State check runs after each test class.
      * 
      * Note: Mode RUN_PER_CLASSES affects only PHPUnit Test Cases
-     * Note: developer mode override this value
+     * Note: developer mode overrides this value
      * 
      * @var integer
      */
@@ -158,13 +169,11 @@ class StateCheckerConfig
         
     /**
      * Tests won't checking hash at these keys so won't failing
-     *
-     * @todo "errlevel" Temporary added to exclusions but it should be empty
+     * (It should be empty)
+     * 
      * @var array
      */
-    protected static $testsFailureExcludeKeys = [
-        //'errlevel',
-    ];
+    protected static $testsFailureExcludeKeys = [];
     
     
     /**
@@ -259,9 +268,6 @@ class StateCheckerConfig
             self::retrieve();
         }
         if (inDeveloperMode()) {
-            //if (in_array($key, ['storeDetails'/*, 'testsUseStateChecker', 'testsUseAssertionFailureOnError'*/])) {
-            //    return true;
-            //}
             if (in_array($key, ['testStateCheckMode'])) {
                 return self::RUN_PER_TESTS;
             }
