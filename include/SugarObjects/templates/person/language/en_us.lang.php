@@ -95,7 +95,7 @@ $mod_strings = array(
 
     //GDPR labels
     'LBL_LAWFUL_BASIS' => 'Lawful Basis',
-    'LBL_DATE_REVIEWED' => 'Date Reviewed',
+    'LBL_DATE_REVIEWED' => 'Lawful Basis Date Reviewed',
     'LBL_LAWFUL_BASIS_SOURCE' => 'Lawful Basis Source',
     //End GDPR labels
 );
