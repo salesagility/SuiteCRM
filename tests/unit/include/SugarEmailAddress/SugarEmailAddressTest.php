@@ -10,6 +10,8 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      * @var SugarEmailAddress
      */
     protected $ea;
+    
+    protected $stateSaver;
 
 
     /**
@@ -19,6 +21,9 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function setUp()
     {
         parent::setUp();
+        
+        $this->stateSaver = new SuiteCRM\StateSaver();
+        $this->stateSaver->pushTable('contact');
 
         global $current_user;
         get_sugar_config_defaults();
@@ -46,6 +51,9 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $query = /** @lang sql */
             "DELETE FROM sugarfeed WHERE related_id = 'test_contact_1'";
         $db->query($query);
+        
+        
+        $this->stateSaver->popTable('contact');
         
         parent::tearDown();
     }

@@ -5,10 +5,20 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function setUp()
     {
         parent::setUp();
+        
+        $this->stateSaver = new SuiteCRM\StateSaver();
+        $this->stateSaver->pushTable('email_addresses');
 
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
+    }
+    
+    public function tearDown()
+    {   
+        $this->stateSaver->popTable('email_addresses');
+        
+        parent::tearDown();
     }
 
     public function testViewDetail()
