@@ -264,6 +264,16 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSaveEmail()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('tracker');
+        $state->pushTable('email_addresses');
+
+	// test
+        
+        
         
         if(isset($_REQUEST)) {
             $_request = $_REQUEST;
@@ -473,6 +483,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popTable('tracker');
+        $state->popGlobals();
     }
 
     /**
@@ -480,6 +496,16 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetCountEmailAddressByBean()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('tracker');
+        $state->pushTable('email_addresses');
+
+	// test
+        
+        
         
         $query = "SELECT * FROM email_addresses";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -552,6 +578,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popTable('tracker');
+        $state->popGlobals();
     }
 
     /**
@@ -935,6 +967,15 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testAddAddress()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('tracker');
+        $state->pushTable('email_addresses');
+
+	// test
+        
         
         $query = "SELECT * FROM email_addr_bean_rel";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -1018,6 +1059,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popTable('tracker');
+        $state->popGlobals();
     }
 
     /**
@@ -1178,6 +1225,16 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetEmailGUID()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('tracker');
+        $state->pushTable('email_addresses');
+
+	// test
+        
+        
         
         $query = "SELECT * FROM email_addr_bean_rel";
         $resource = DBManagerFactory::getInstance()->query($query);
@@ -1273,6 +1330,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
+        $state->popTable('tracker');
+        $state->popGlobals();
     }
 
     /**
