@@ -58,7 +58,7 @@ require_once "data/Relationships/RelationshipFactory.php";
  * a bean should be plural (e.g. contacts).
  * @api
  */
-abstract class SugarBean
+class SugarBean
 {
     /**
      * Blowfish encryption key
