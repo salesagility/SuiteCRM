@@ -58,7 +58,7 @@
                         <tr>
                             <td align="center">
                                 <div class="login">
-                                    <form action="index.php" method="post" name="DetailView" id="form" onsubmit="return document.getElementById('cant_login').value == ''">
+                                    <form action="index.php" method="post" name="DetailView" id="form" onsubmit="return document.getElementById('cant_login').value == ''" autocomplete="off">
                                         <table cellpadding="0" cellspacing="2" border="0" align="center" width="100%">
                                             <td scope="row" colspan="2">
 						    	    <span class="error" id="browser_warning" style="display:none">
@@ -105,11 +105,11 @@
                                             {/if}
                                             <tr>
                                                 <td scope="row" width="30%"><label for="user_name">{sugar_translate module="Users" label="LBL_USER_NAME"}:</label></td>
-                                                <td width="70%"><input type="text" size='35' tabindex="1" id="user_name" name="user_name"  value='{$LOGIN_USER_NAME}' /></td>
+                                                <td width="70%"><input type="text" size='35' tabindex="1" id="user_name" name="user_name"  value='{$LOGIN_USER_NAME}' autocomplete="off"></td>
                                             </tr>
                                             <tr>
                                                 <td scope="row"><label for="username_password">{sugar_translate module="Users" label="LBL_PASSWORD"}:</label></td>
-                                                <td width="30%"><input type="password" size='26' tabindex="2" id="username_password" name="username_password" value='{$LOGIN_PASSWORD}' /></td>
+                                                <td width="30%"><input type="password" size='26' tabindex="2" id="username_password" name="username_password" value='{$LOGIN_PASSWORD}' autocomplete="off"></td>
                                             </tr>
 
                                             <tr>
