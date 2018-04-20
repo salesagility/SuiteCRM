@@ -373,6 +373,7 @@ $mod_strings = array(
     'LBL_MARK_UNFLAGGED' => 'Mark As Unflagged',
     'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Opt In Email Sent',
     'LBL_CONFIRM_OPT_IN_FAIL_DATE' => 'Opt In Email Failed',
+    'LBL_CONFIRM_OPT_IN_TOKEN' => 'Confirm Opt In Token',
 
     'ERR_NO_RETURN_ID' => 'Attachment not found.',
 

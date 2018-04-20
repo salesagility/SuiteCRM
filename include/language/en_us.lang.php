@@ -88,8 +88,8 @@ $app_list_strings = array(
         'Prospects' => 'Targets',
         'Queues' => 'Queues',
         'EmailMarketing' => 'Email Marketing',
-        'EmailTemplates' => 'Email Templates',
-        'ProspectLists' => 'Target Lists',
+        'EmailTemplates' => 'Email - Templates',
+        'ProspectLists' => 'Targets - Lists',
         'SavedSearch' => 'Saved Searches',
         'UpgradeWizard' => 'Upgrade Wizard',
         'Trackers' => 'Trackers',
@@ -144,7 +144,7 @@ $app_list_strings = array(
         '2' => 'No',
     ),
 
-    //e.g. en franï¿½ais 'Analyst'=>'Analyste',
+    //e.g. en français 'Analyst'=>'Analyste',
     'account_type_dom' => array(
         '' => '',
         'Analyst' => 'Analyst',
@@ -158,7 +158,7 @@ $app_list_strings = array(
         'Reseller' => 'Reseller',
         'Other' => 'Other',
     ),
-    //e.g. en espaï¿½ol 'Apparel'=>'Ropa',
+    //e.g. en español 'Apparel'=>'Ropa',
     'industry_dom' => array(
         '' => '',
         'Apparel' => 'Apparel',
@@ -1406,6 +1406,7 @@ $app_strings = array(
     'LBL_ASSIGNED_TO' => 'Assigned to:',
     'LBL_BACK' => 'Back',
     'LBL_BILLING_ADDRESS' => 'Billing Address',
+    'LBL_QUICK_CREATE' => 'Create ',
     'LBL_BROWSER_TITLE' => 'SuiteCRM - Open Source CRM',
     'LBL_BUGS' => 'Bugs',
     'LBL_BY' => 'by',
@@ -2091,16 +2092,12 @@ $app_strings = array(
     'LBL_CONFIRM_OPT_IN_DATE' => 'Confirmed Opt In Date',
     'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Confirmed Opt In Sent Date',
     'LBL_CONFIRM_OPT_IN_FAIL_DATE' => 'Confirmed Opt In Fail Date',
+    'LBL_CONFIRM_OPT_IN_TOKEN' => 'Confirm Opt In Token',
     'ERR_OPT_IN_TPL_NOT_SET' => 'Opt In Email Template is not configured. Please set up in email settings.',
     'ERR_OPT_IN_RELATION_INCORRECT' => 'Opt In requires the email to be related to Account/Contact/Lead/Target',
 
     'LBL_SECURITYGROUP_NONINHERITABLE' => 'Non-Inheritable Group',
     'LBL_PRIMARY_GROUP' => "Primary Group",
-
-    'LBL_CONFIRM_DISREGARD_DRAFT_TITLE' => 'Disregard draft',
-    'LBL_CONFIRM_DISREGARD_DRAFT_BODY' => 'This operation will delete this email, do you want to continue?',
-    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE' => 'Apply an Email Template',
-    'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
 
     // footer
     'LBL_SUITE_TOP' => 'Back to top',
@@ -2818,7 +2815,7 @@ $app_list_strings ['emailTemplates_type_list_no_workflow'] = array(
 
 // knowledge base
 $app_list_strings['moduleList']['AOK_KnowledgeBase'] = 'Knowledge Base';
-$app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB Categories';
+$app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB - Categories';
 $app_list_strings['aok_status_list']['Draft'] = 'Draft';
 $app_list_strings['aok_status_list']['Expired'] = 'Expired';
 $app_list_strings['aok_status_list']['In_Review'] = 'In Review';
@@ -2980,8 +2977,8 @@ $app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
 //aos
 $app_list_strings['moduleList']['AOS_Contracts'] = 'Contracts';
 $app_list_strings['moduleList']['AOS_Invoices'] = 'Invoices';
-$app_list_strings['moduleList']['AOS_PDF_Templates'] = 'PDF Templates';
-$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Product Categories';
+$app_list_strings['moduleList']['AOS_PDF_Templates'] = 'PDF - Templates';
+$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Products - Categories';
 $app_list_strings['moduleList']['AOS_Products'] = 'Products';
 $app_list_strings['moduleList']['AOS_Products_Quotes'] = 'Line Items';
 $app_list_strings['moduleList']['AOS_Line_Item_Groups'] = 'Line Item Groups';
@@ -3130,7 +3127,7 @@ $app_list_strings['aow_run_when_list']['On_Save'] = 'Only On Save';
 $app_list_strings['aow_run_when_list']['In_Scheduler'] = 'Only In The Scheduler';
 
 //gant
-$app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Project Templates';
+$app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Projects - Templates';
 $app_list_strings['moduleList']['AM_TaskTemplates'] = 'Project Task Templates';
 $app_list_strings['relationship_type_list']['FS'] = 'Finish to Start';
 $app_list_strings['relationship_type_list']['SS'] = 'Start to Start';
@@ -3149,9 +3146,9 @@ $app_strings['LBL_JJWG_MAPS_GEOCODE_STATUS'] = 'Geocode Status';
 $app_strings['LBL_JJWG_MAPS_ADDRESS'] = 'Address';
 
 $app_list_strings['moduleList']['jjwg_Maps'] = 'Maps';
-$app_list_strings['moduleList']['jjwg_Markers'] = 'Map Markers';
-$app_list_strings['moduleList']['jjwg_Areas'] = 'Map Areas';
-$app_list_strings['moduleList']['jjwg_Address_Cache'] = 'Map Address Cache';
+$app_list_strings['moduleList']['jjwg_Markers'] = 'Maps - Markers';
+$app_list_strings['moduleList']['jjwg_Areas'] = 'Maps - Areas';
+$app_list_strings['moduleList']['jjwg_Address_Cache'] = 'Maps - Address Cache';
 
 $app_list_strings['moduleList']['jjwp_Partners'] = 'JJWP Partners';
 
@@ -3592,7 +3589,11 @@ $app_strings['RESPONSE_SEND_CONFIRM_OPT_IN_EMAIL_MISSING_EMAIL_ADDRESS_ID'] = '%
 
 $app_strings['ERR_TWO_FACTOR_FAILED'] = 'Two Factor Authentication failed';
 $app_strings['ERR_TWO_FACTOR_CODE_SENT'] = 'Two Factor Authentication code sent.';
+$app_strings['ERR_TWO_FACTOR_CODE_FAILED'] = 'Two Factor Authentication code failed to send.';
 $app_strings['LBL_THANKS_FOR_SUBMITTING'] = 'Thank you for submitting your interest.';
+
+$app_strings['ERR_IP_CHANGE'] = 'Your session was terminated due to a significant change in your IP address';
+$app_strings['ERR_RETURN'] = 'Return to Home';
 
 
 $app_list_strings['oauth2_grant_type_dom'] = array(
@@ -3609,3 +3610,16 @@ $app_list_strings['oauth2_duration_units'] = [
     'week' => 'weeks',
     'month' => 'months',
 ];
+
+
+
+$app_strings['LBL_DEFAULT_API_ERROR_TITLE'] = 'JSON API Error';
+$app_strings['LBL_DEFAULT_API_ERROR_DETAIL'] = 'JSON API Error occured.';
+$app_strings['LBL_API_EXCEPTION_DETAIL'] = 'Api Version: 8';
+$app_strings['LBL_BAD_REQUEST_EXCEPTION_DETAIL'] = 'Please ensure you fill in the fields required';
+$app_strings['LBL_EMPTY_BODY_EXCEPTION_DETAIL'] = 'Json API expects body of the request to be JSON';
+$app_strings['LBL_INVALID_JSON_API_REQUEST_EXCEPTION_DETAIL'] = 'Unable to validate the Json Api Payload Request';
+$app_strings['LBL_INVALID_JSON_API_RESPONSE_EXCEPTION_DETAIL'] = 'Unable to validate the Json Api Payload Response';
+$app_strings['LBL_MODULE_NOT_FOUND_EXCEPTION_DETAIL'] = 'Json API cannot find resource';
+$app_strings['LBL_NOT_ACCEPTABLE_EXCEPTION_DETAIL'] = 'Json API expects the "Accept" header to be application/vnd.api+json';
+$app_strings['LBL_UNSUPPORTED_MEDIA_TYPE_EXCEPTION_DETAIL'] = 'Json API expects the "Content-Type" header to be application/vnd.api+json';

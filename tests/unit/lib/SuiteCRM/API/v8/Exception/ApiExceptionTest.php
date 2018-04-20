@@ -2,13 +2,15 @@
 
 namespace SuiteCRM\Exception;
 
-use Psr\Log\LogLevel;
+use Codeception\Test\Unit;
 use SuiteCRM\API\v8\Exception\ApiException;
+use SuiteCRM\LangText;
+use UnitTester;
 
-class ApiExceptionTest extends \Codeception\Test\Unit
+class ApiExceptionTest extends Unit
 {
     /**
-     * @var \UnitTester
+     * @var UnitTester
      */
     protected $tester;
 
@@ -36,7 +38,9 @@ class ApiExceptionTest extends \Codeception\Test\Unit
 
     public function testGetSetDetail()
     {
-        self::$exception->setDetail('test');
+        global $app_strings;
+        $app_strings['LBL_API_TEST_1'] = 'test';
+        self::$exception->setDetail(new LangText('LBL_API_TEST_1'));
         $this->assertEquals('test', self::$exception->getDetail());
     }
 

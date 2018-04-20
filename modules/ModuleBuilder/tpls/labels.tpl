@@ -70,7 +70,7 @@
 	{html_options name='selected_lang' options=$available_languages selected=$selected_lang onchange='this.form.action.value="EditLabels";ModuleBuilder.handleSave("editlabels")'}
         </td>
 	</tr>
-    {foreach from=$MOD item='label' key='key'}
+    {foreach from=$MOD_LABELS item='label' key='key'}
     <tr>
         <td align="right" style="padding: 0 1em 0 0">{$key}:</td>
         <td><input type='hidden' name='label_{$key}' id='label_{$key}' value='no_change'><input id='input_{$key}' onchange='document.getElementById("label_{$key}").value = this.value; ModuleBuilder.state.isDirty=true;' value='{$label}' size='60'></td>
