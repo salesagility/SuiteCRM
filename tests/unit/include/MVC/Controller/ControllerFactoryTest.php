@@ -1,7 +1,7 @@
 <?php
 
 
-class ControllerFactoryTest  extends PHPUnit_Framework_TestCase
+class ControllerFactoryTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testgetController()
     {

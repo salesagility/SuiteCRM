@@ -2,11 +2,13 @@
 
 require_once 'include/utils/activity_utils.php';
 
-class activity_utilsTest extends PHPUnit_Framework_TestCase
+class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         $current_user = new User();
         get_sugar_config_defaults();
@@ -14,7 +16,11 @@ class activity_utilsTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_related_list_by_user_id()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns true
 
@@ -28,5 +34,9 @@ class activity_utilsTest extends PHPUnit_Framework_TestCase
         $bean = new Meeting();
         $list = build_related_list_by_user_id($bean, '1', '');
         $this->assertTrue(is_array($list));
+        
+        // clean up
+        
+        
     }
 }

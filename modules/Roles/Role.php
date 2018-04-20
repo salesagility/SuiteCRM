@@ -201,7 +201,8 @@ class Role extends SugarBean {
 
 		$query = "SELECT user_id as id FROM roles_users WHERE role_id='$this->id' AND deleted=0";
 
-		return $this->build_related_list($query, new User());
+                $user =  new User();
+		return $this->build_related_list($query,$user);
 	}
 
 	function check_user_role_count($user_id)

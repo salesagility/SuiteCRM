@@ -101,7 +101,16 @@ class AOR_Field extends Basic
         $line_count = count($post_data[$key . 'field']);
         for ($i = 0; $i < $line_count; ++$i) {
 
-            if ($post_data[$key . 'deleted'][$i] == 1) {
+            
+            if (!isset($post_data[$key . 'deleted'][$i])) {
+                LoggerManager::getLogger()->warn('AOR field save line error: Post data deleted key not found at index. Key and index were: [' . $key . '], [' . $i . ']');
+                $postDataKeyDeleted = null;
+            }
+            else {
+                $postDataKeyDeleted = $post_data[$key . 'deleted'][$i];
+            }
+            
+            if ($postDataKeyDeleted == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $field = new AOR_Field();

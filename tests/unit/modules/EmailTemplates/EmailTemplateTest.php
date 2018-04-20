@@ -1,9 +1,11 @@
 <?php
 
-class EmailTemplateTest extends PHPUnit_Framework_TestCase
+class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -27,7 +29,10 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
 
     public function testgenerateFieldDefsJS()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $emailTemplate = new EmailTemplate();
 
@@ -37,6 +42,10 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
         //$this->assertSame($expected,$actual);
 
         $this->assertGreaterThan(0, strlen($actual));
+        
+        // clean up
+        
+        
     }
 
     public function testget_summary_text()
@@ -53,6 +62,16 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
 
     public function testcreate_export_query()
     {
+
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //test with empty string params
@@ -64,10 +83,21 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
         $expected = " SELECT  email_templates.*  , jt0.user_name assigned_user_name , jt0.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM email_templates   LEFT JOIN  users jt0 ON email_templates.assigned_user_id=jt0.id AND jt0.deleted=0\n\n AND jt0.deleted=0 where (email_templates.name=\"\") AND email_templates.deleted=0";
         $actual = $emailTemplate->create_export_query('email_templates.id', 'email_templates.name=""');
         $this->assertSame($expected, $actual);
+        
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -75,8 +105,12 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
             $emailTemplate->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -100,6 +134,12 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_parent_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -107,8 +147,12 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
             $emailTemplate->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testget_list_view_data()

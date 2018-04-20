@@ -1,9 +1,11 @@
 <?php
 
-class AOS_InvoicesTest extends PHPUnit_Framework_TestCase
+class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -28,7 +30,12 @@ class AOS_InvoicesTest extends PHPUnit_Framework_TestCase
 
     public function testSaveAndMark_deleted()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('aos_invoices');
+        $state->pushTable('tracker');
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aosInvoices = new AOS_Invoices();
         $aosInvoices->name = 'test';
@@ -44,5 +51,11 @@ class AOS_InvoicesTest extends PHPUnit_Framework_TestCase
         $aosInvoices->mark_deleted($aosInvoices->id);
         $result = $aosInvoices->retrieve($aosInvoices->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aos_invoices');
+        
     }
 }

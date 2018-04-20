@@ -559,7 +559,7 @@ class quicksearchQuery
      */
     protected function getNonPrivateTeamsWhere(&$args)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $where = array();
         $teams_filtered = false;

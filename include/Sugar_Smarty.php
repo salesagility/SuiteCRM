@@ -158,8 +158,8 @@ class Sugar_Smarty extends Smarty
      */
     public function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
-        parent::trigger_error($error_msg, $error_type);
-
+        $error_msg = htmlentities($error_msg);
+        
         switch ($error_type)
         {
             case E_USER_ERROR:

@@ -1,7 +1,7 @@
 <?php
 
 
-class SugarBeanRelationshipType extends \Codeception\Test\Unit
+class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -13,15 +13,12 @@ class SugarBeanRelationshipType extends \Codeception\Test\Unit
      */
     private static $sugarBeanRelationShipType;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$sugarBeanRelationShipType === null) {
             self::$sugarBeanRelationShipType = new \SuiteCRM\API\JsonApi\v1\Enumerator\SugarBeanRelationshipType();
         }
-    }
-
-    protected function _after()
-    {
     }
 
     public function testFromSugarBeanLinkToOne()

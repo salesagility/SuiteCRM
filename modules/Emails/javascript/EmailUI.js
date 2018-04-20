@@ -707,9 +707,18 @@
       document.getElementById('ie_id').value = o.id;
       document.getElementById('ie_name').value = o.name;
       if (o.stored_options != null) {
-        document.getElementById('ie_from_name').value = o.stored_options.from_name == 'undefined' ? '' : o.stored_options.from_name;
-        document.getElementById('ie_from_addr').value = o.stored_options.from_addr == 'undefined' ? '' : o.stored_options.from_addr;
-        document.getElementById('reply_to_addr').value = typeof(o.stored_options.reply_to_addr) == 'undefined' ? '' : o.stored_options.reply_to_addr;
+        if (document.getElementById('ie_from_name')) {
+          document.getElementById('ie_from_name').value =
+            o.stored_options.from_name == 'undefined' ? '' : o.stored_options.from_name;
+        }
+        if (document.getElementById('ie_from_addr')) {
+          document.getElementById('ie_from_addr').value =
+            o.stored_options.from_addr == 'undefined' ? '' : o.stored_options.from_addr;
+        }
+        if (document.getElementById('reply_to_addr')) {
+          document.getElementById('reply_to_addr').value =
+            typeof(o.stored_options.reply_to_addr) == 'undefined' ? '' : o.stored_options.reply_to_addr;
+        }
         if (o.stored_options.trashFolder != null) {
           document.getElementById('trashFolder').value = o.stored_options.trashFolder;
         }

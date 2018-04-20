@@ -93,7 +93,7 @@ class Administration extends SugarBean
         $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
 
         if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
-            if ($this->settings['notify_on']) {
+            if (isset($this->settings['notify_on']) && $this->settings['notify_on']) {
                 $smtp_error = true;
             }
         }
