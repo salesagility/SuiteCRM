@@ -293,6 +293,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             72 => 'securitygroup_primary_group',
             73 => 'factor_auth',
             74 => 'factor_auth_interface',
+			75 => 'language_c',
         ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
@@ -409,6 +410,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             72 => 'securitygroup_primary_group',
             73 => 'factor_auth',
             74 => 'factor_auth_interface',
+			75 => 'language_c',
         ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
@@ -525,6 +527,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             72 => 'securitygroup_primary_group',
             73 => 'factor_auth',
             74 => 'factor_auth_interface',
+			75 => 'language_c',
         ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
