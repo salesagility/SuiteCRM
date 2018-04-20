@@ -315,6 +315,7 @@ class UserTest extends \Codeception\Test\Unit
 
         $user->first_name = "firstn";
         $user->last_name = "lastn";
+		$user->language_c = "ca";
 
         $user->email1 = "one@email.com";
         $user->email2 = "two@email.com";
@@ -376,6 +377,7 @@ class UserTest extends \Codeception\Test\Unit
 
         $this->assertEquals("firstn", $user->first_name);
         $this->assertEquals("lastn", $user->last_name);
+		$this->assertEquals("ca", $user->language_c);
 
         $this->assertEquals("one@email.com", $user->email1);
         $this->assertEquals("two@email.com", $user->email2);
