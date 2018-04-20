@@ -1177,7 +1177,6 @@ function create_default_users(){
     $user->user_name = $setup_site_admin_user_name;
     $user->title = "Administrator";
     $user->status = 'Active';
-    $user->language_c = 'en';
     $user->is_admin = true;
     $user->employee_status = 'Active';
     $user->user_hash = User::getPasswordHash($setup_site_admin_password);
@@ -1194,7 +1193,6 @@ function create_default_users(){
         $default_user->last_name = $sugar_config['default_user_name'];
         $default_user->user_name = $sugar_config['default_user_name'];
         $default_user->status = 'Active';
-        $default_user->language_c = 'en';
         if( isset($sugar_config['default_user_is_admin']) && $sugar_config['default_user_is_admin'] ){
             $default_user->is_admin = true;
         }

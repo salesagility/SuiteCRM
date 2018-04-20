@@ -298,7 +298,6 @@ for($i=0; $i<$number_contacts; $i++) {
 	$contact->primary_address_city = $sugar_demodata['city_array'][$key];
 	$contact->lead_source = array_rand($app_list_strings['lead_source_dom']);
 	$contact->title = $titles[array_rand($titles)];
-        $contact->language_c = 'en';
 	$contact->phone_work = create_phone_number();
 	$contact->phone_home = create_phone_number();
 	$contact->phone_mobile = create_phone_number();

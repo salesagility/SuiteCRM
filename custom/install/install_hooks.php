@@ -51,25 +51,29 @@ function post_installFileRequire($options)
     $users = BeanFactory::getBean('Users');
     $userslist = $users->get_full_list();
 
-    foreach( $userslist as $user ){
-       $user->setupCustomFields($user->module_dir);
-       $user->language_c = 'en';
-       $user->field_defs["language_c"] = array( "name" => "language_c", "type" => "enum", "source" => "custom_fields");
-       $user->custom_fields->bean = $user;
-       $user->custom_fields->save( false );
+    if (!empty($contactslist)){
+       foreach( $userslist as $user ){
+          $user->setupCustomFields($user->module_dir);
+          $user->language_c = 'en';
+          $user->field_defs["language_c"] = array( "name" => "language_c", "type" => "enum", "source" => "custom_fields");
+          $user->custom_fields->bean = $user;
+          $user->custom_fields->save( false );
+       }
     }
 
     installLog("post_installFileRequire: update Contacts");
     $contacts = BeanFactory::getBean('Contacts');
     $contactslist = $contacts->get_full_list();
 
-    foreach( $contactslist as $contact ){
-       $contact->setupCustomFields($contact->module_dir);
-       $contact->language_c = 'en';
-       $contact->field_defs["language_c"] = array( "name" => "language_c", "type" => "enum", "source" => "custom_fields");
-       $contact->custom_fields->bean = $contact;
-       $contact->custom_fields->save( false );
-    }
+    if (!empty($contactslist)){
+       foreach( $contactslist as $contact ){
+          $contact->setupCustomFields($contact->module_dir);
+          $contact->language_c = 'en';
+          $contact->field_defs["language_c"] = array( "name" => "language_c", "type" => "enum", "source" => "custom_fields");
+          $contact->custom_fields->bean = $contact;
+          $contact->custom_fields->save( false );
+       }
+   }
 }
 
 
