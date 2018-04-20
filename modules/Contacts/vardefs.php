@@ -162,19 +162,6 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
                     'type' => 'date',
                     'comment' => 'The birthdate of the contact'
                 ),
-            'language' =>
-                array(
-                    'name' => 'language',
-                    'vname' => 'LBL_LANGUAGE',
-                    'massupdate' => true,
-                    'type' => 'enum',
-                    'required' => true,
-                    'options' => 'language_dom',
-                    'len' => '255',
-                    'comment' => 'The language of the contact',
-                    'duplicate_merge' => 'disabled',
-                    'default' => 'en',
-                ),
             'accounts' =>
                 array(
                     'name' => 'accounts',

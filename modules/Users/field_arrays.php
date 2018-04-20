@@ -60,7 +60,6 @@ $fields_array['User'] = array (
 		, 'created_by'
 		,'title'
 		,'department'
-                ,'language_c'
 		,'is_admin'
 		,'phone_home'
 		,'phone_mobile'
@@ -90,7 +89,6 @@ $fields_array['User'] = array (
 		'user_name', 
 		'status', 
 		'department', 
-                'language_c',
 		'is_admin', 
 		'email1', 
 		'phone_work', 
@@ -112,7 +110,6 @@ $fields_array['User'] = array (
 		,'created_by'
 		,'title'
 		,'department'
-                ,'language_c'
 		,'is_admin'
 		,'phone_home'
 		,'phone_mobile'
