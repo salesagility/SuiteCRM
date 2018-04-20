@@ -5544,5 +5544,5 @@ function isValidId($id)
 function displayAdminError($errorString)
 {
     $output = '<p class="error">' . $errorString . '</p>';
-    echo $output;
+    SugarApplication::appendErrorMessage($output);
 }
