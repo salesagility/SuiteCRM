@@ -98,6 +98,7 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
             'DELETED' => 0,
             'PORTAL_ONLY' => '0',
             'SHOW_ON_EMPLOYEES' => '1',
+			'LANGUAGE_C' => 'English',
             'ENCODED_NAME' => ' ',
             'EMAIL1' => '',
             'EMAIL1_LINK' =>
