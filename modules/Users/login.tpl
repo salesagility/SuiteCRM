@@ -129,7 +129,7 @@
                 <div class="password">
 
                     <form action="index.php" method="post" name="fp_form" id="fp_form" >
-                        <table cellpadding="0" cellspacing="2" border="0" align="center" width="100%">
+                        <table cellpadding="0" cellspacing="2" border="0" align="center" width="100%" autocomplete="off">
                             <tr>
                                 <td colspan="2" class="login_more">
                                     <div  style="cursor: hand; cursor: pointer; display:{$DISPLAY_FORGOT_PASSWORD_FEATURE};" onclick='toggleDisplay("forgot_password_dialog");'>
@@ -145,16 +145,16 @@
                                             </tr>
                                             <tr>
                                                 <td scope="row" width="30%"><label for="fp_user_name">{sugar_translate module="Users" label="LBL_USER_NAME"}:</label></td>
-                                                <td width="70%"><input type="text" size='26' id="fp_user_name" name="fp_user_name"  value='{$LOGIN_USER_NAME}' autocomplete="false"></td>
+                                                <td width="70%"><input type="text" size='26' id="fp_user_name" name="fp_user_name"  value='{$LOGIN_USER_NAME}' autocomplete="off"></td>
                                             </tr>
                                             <tr>
                                                 <td scope="row" width="30%"><label for="fp_user_mail">{sugar_translate module="Users" label="LBL_EMAIL"}:</label></td>
-                                                <td width="70%"><input type="text" size='26' id="fp_user_mail" name="fp_user_mail"  value='' autocomplete="false"></td>
+                                                <td width="70%"><input type="text" size='26' id="fp_user_mail" name="fp_user_mail"  value='' autocomplete="off"></td>
                                             </tr>
                                             {$CAPTCHA}
                                             <tr>
                                                 <td scope="row" width="30%"><div id='wait_pwd_generation'></div></td>
-                                                <td width="70%"><input title="Email Temp Password" class="button" type="button" style="display:inline" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}" autocomplete="false"></td>
+                                                <td width="70%"><input title="Email Temp Password" class="button" type="button" style="display:inline" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}" autocomplete="off"></td>
                                             </tr>
                                         </table>
                                     </div>
