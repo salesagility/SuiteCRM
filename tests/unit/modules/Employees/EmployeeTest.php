@@ -183,6 +183,6 @@ class EmployeeTest extends PHPUnit_Framework_TestCase
     {
         $employee = new Employee();
         $result = $employee->hasCustomFields();
-        $this->assertEquals(false, $result);
+        $this->assertEquals(true, $result);
     }
 }
