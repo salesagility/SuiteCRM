@@ -1462,7 +1462,7 @@ EOQ;
             'modified_by_name' => 1,
         );
         foreach ($this->sugarbean->field_defs as $field) {
-            if (!isset($banned[$field['name']]) && (!isset($field['massupdate']) || !empty($field['massupdate']))) {
+            if (!isset($banned[isset($field['name']) ? $field['name'] : null]) && (!isset($field['massupdate']) || !empty($field['massupdate']))) {
                 if (isset($field['type']) && $field['type'] == 'relate' && isset($field['id_name']) && $field['id_name'] == 'assigned_user_id') {
                     $field['type'] = 'assigned_user_name';
                 }

@@ -1,7 +1,7 @@
 <?php
 
 
-class LikeOperatorTest extends \Codeception\Test\Unit
+class LikeOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -10,8 +10,9 @@ class LikeOperatorTest extends \Codeception\Test\Unit
 
     private static $operator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings\LikeOperator($containers);
     }
@@ -27,9 +28,7 @@ class LikeOperatorTest extends \Codeception\Test\Unit
         );
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testIsValidTagWithInvalidName()
     {

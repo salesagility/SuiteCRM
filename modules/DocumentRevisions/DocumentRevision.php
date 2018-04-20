@@ -112,6 +112,7 @@ class DocumentRevision extends SugarBean {
 
 	var $required_fields = Array("revision");
 
+        public $authenticated = null;
 
 
     public function __construct() {

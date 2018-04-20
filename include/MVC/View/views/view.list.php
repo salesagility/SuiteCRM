@@ -126,7 +126,12 @@ class ViewList extends SugarView
      */
     public function listViewPrepare()
     {
-        $module = $GLOBALS['module'];
+        $module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
+        
+        if(!isset($module)) {
+            LoggerManager::getLogger()->fatal('Undefined module for list view prepare');
+            return false;
+        }
 
         $metadataFile = $this->getMetaDataFile();
 
@@ -210,9 +215,13 @@ class ViewList extends SugarView
                     $displayColumns[$col] = $this->listViewDefs[$module][$col];
             }
         } else {
-            foreach ($this->listViewDefs[$module] as $col => $this->params) {
-                if (!empty($this->params['default']) && $this->params['default'])
-                    $displayColumns[$col] = $this->params;
+            if(!isset($this->listViewDefs[$module])) {
+                LoggerManager::getLogger()->warn('Listview definition is not set for module: ' . $module);
+            } else {
+                foreach ($this->listViewDefs[$module] as $col => $this->params) {
+                    if (!empty($this->params['default']) && $this->params['default'])
+                        $displayColumns[$col] = $this->params;
+                }
             }
         }
         $this->params = array('massupdate' => true);
@@ -220,6 +229,9 @@ class ViewList extends SugarView
             $this->params['orderBy'] = $_REQUEST['orderBy'];
             $this->params['overrideOrder'] = true;
             if (!empty($_REQUEST['sortOrder'])) $this->params['sortOrder'] = $_REQUEST['sortOrder'];
+        }
+        if(!isset($this->lv) || !$this->lv) {
+            $this->lv = new stdClass();
         }
         $this->lv->displayColumns = $displayColumns;
 
@@ -314,7 +326,7 @@ class ViewList extends SugarView
             $GLOBALS['log']->info("List View Where Clause: $this->where");
         }
         if ($this->use_old_search) {
-            switch ($view) {
+            switch (isset($view) ? $view : null) {
                 case 'basic_search':
                     $this->searchForm->setup();
                     $this->searchForm->displayBasic($this->headers);
