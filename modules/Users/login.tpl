@@ -145,16 +145,16 @@
                                             </tr>
                                             <tr>
                                                 <td scope="row" width="30%"><label for="fp_user_name">{sugar_translate module="Users" label="LBL_USER_NAME"}:</label></td>
-                                                <td width="70%"><input type="text" size='26' id="fp_user_name" name="fp_user_name"  value='{$LOGIN_USER_NAME}' /></td>
+                                                <td width="70%"><input type="text" size='26' id="fp_user_name" name="fp_user_name"  value='{$LOGIN_USER_NAME}' autocomplete="false"></td>
                                             </tr>
                                             <tr>
                                                 <td scope="row" width="30%"><label for="fp_user_mail">{sugar_translate module="Users" label="LBL_EMAIL"}:</label></td>
-                                                <td width="70%"><input type="text" size='26' id="fp_user_mail" name="fp_user_mail"  value='' ></td>
+                                                <td width="70%"><input type="text" size='26' id="fp_user_mail" name="fp_user_mail"  value='' autocomplete="false"></td>
                                             </tr>
                                             {$CAPTCHA}
                                             <tr>
                                                 <td scope="row" width="30%"><div id='wait_pwd_generation'></div></td>
-                                                <td width="70%"><input title="Email Temp Password" class="button" type="button" style="display:inline" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}"></td>
+                                                <td width="70%"><input title="Email Temp Password" class="button" type="button" style="display:inline" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}" autocomplete="false"></td>
                                             </tr>
                                         </table>
                                     </div>
