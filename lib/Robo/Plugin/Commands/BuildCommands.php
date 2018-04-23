@@ -81,7 +81,8 @@ class BuildCommands extends \Robo\Tasks
     {
         $os = new OperatingSystem();
         $command =
-            "./vendor/bin/pscss -f compressed "
+            $os->toOsPath("./vendor/bin/pscss")
+            . " -f compressed "
             . $os->toOsPath("themes/SuiteP/css/{$colorScheme}/style.scss")
             . " > "
             . $os->toOsPath("themes/SuiteP/css/{$colorScheme}/style.css");
