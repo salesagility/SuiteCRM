@@ -33,7 +33,7 @@
     "fzaninotto/Faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
     "browserstack/browserstack-local": "dev-master",
-    "consolidation/robo": "^1.0.0"
+    "mockery/mockert": "^0.9.9"
   },
   "scripts": {},
   "prefer-stable": true,
