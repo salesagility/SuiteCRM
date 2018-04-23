@@ -337,4 +337,40 @@ class Person extends Basic
         return $query;
     }
 
+    /**
+     * Set Lawful Basis
+     * @param string $basis
+     * @param string $source
+     * @return int
+     * @throw InvalidArgumentException
+     */
+    public function setLawfulBasis($basis, $source)
+    {
+        global $app_list_strings;
+        /**
+         * This function will update the lawful basis, source and date of the change.
+         * Will take the parameters of email id and possible the module?
+         */
+
+        if (!is_string($basis)) {
+            throw new InvalidArgumentException('basis must be a string');
+        }
+
+        if (!array_key_exists($basis, $app_list_strings['lawful_basiss'])) {
+            throw new InvalidArgumentException('invalid lawful basis');
+        }
+
+        if (!is_string($source)) {
+            throw new InvalidArgumentException('source for lawful basis must be a string');
+        }
+
+        if (!array_key_exists($source, $app_list_strings['lawful_basis_sources'])) {
+            throw new InvalidArgumentException('invalid lawful basis source');
+        }
+
+        $this->lawful_basis = $basis;
+        $this->lawful_basis_source = $source;
+        return 0;
+
+    }
 }

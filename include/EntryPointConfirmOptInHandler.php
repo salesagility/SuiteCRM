@@ -161,11 +161,30 @@ class EntryPointConfirmOptInHandler
         if ($this->emailAddress) {
             $this->emailAddress->confirmOptIn();
             $this->emailAddress->save();
+
+            // TODO
+            $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Contacts'), 'Contacts');
+            $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Leads'), 'Leads');
+            $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Prospects'), 'Prospects');
+
+
         }
 
         $template = new Sugar_Smarty();
         $template->assign('FOCUS', $this->emailAddress);
 
         return $template->fetch('include/EntryPointConfirmOptIn.tpl');
+    }
+
+    /**
+     * @param array $people
+     */
+    private function setLawfulBasisForEachPerson(array $people, $module) {
+        /** @var Person $person */
+        foreach ($people as $person) {
+            // todo
+            $bean = BeanFactory::getBean($module, $person['bean_id']);
+            $bean->setLawfulBasis('consent', 'email');
+        }
     }
 }
