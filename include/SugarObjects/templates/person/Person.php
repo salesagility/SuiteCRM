@@ -342,7 +342,7 @@ class Person extends Basic
      * @param string $basis
      * @param string $source
      * @return int
-     * @throw InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setLawfulBasis($basis, $source)
     {
