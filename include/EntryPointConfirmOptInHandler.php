@@ -163,16 +163,16 @@ class EntryPointConfirmOptInHandler
             $this->emailAddress->confirmOptIn();
             $this->emailAddress->save();
 
-            $people = $this->getID($this->emailAddress->email_address, 'Contacts');
+            $people = $this->getIDs($this->emailAddress->email_address, 'Contacts');
             if ($people) {
                 $this->setLawfulBasisForEachPerson($people, 'Contacts');
             }
-            $people = $this->getID($this->emailAddress->email_address, 'Leads');
+            $people = $this->getIDs($this->emailAddress->email_address, 'Leads');
             if ($people) {
                 $this->setLawfulBasisForEachPerson($people, 'Leads');
             }
 
-            $people = $this->getID($this->emailAddress->email_address, 'Prospects');
+            $people = $this->getIDs($this->emailAddress->email_address, 'Prospects');
             if ($people) {
                 $this->setLawfulBasisForEachPerson($people,  'Prospects');
             }
@@ -189,7 +189,7 @@ class EntryPointConfirmOptInHandler
      *
      * @return array|bool
      */
-    private function getID($email, $module) {
+    private function getIDs($email, $module) {
         $people = $this->emailAddress->getRelatedId($email, $module);
         return $people;
     }
