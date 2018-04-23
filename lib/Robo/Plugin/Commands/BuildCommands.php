@@ -80,9 +80,11 @@ class BuildCommands extends \Robo\Tasks
     private function buildSuitePColorScheme($colorScheme)
     {
         $os = new OperatingSystem();
-        $command = $os->toOsPath(
-            "./vendor/bin/pscss -f compressed themes/SuiteP/css/{$colorScheme}/style.scss > themes/SuiteP/css/{$colorScheme}/style.css"
-        );
+        $command =
+            "./vendor/bin/pscss -f compressed "
+            . $os->toOsPath("themes/SuiteP/css/{$colorScheme}/style.scss")
+            . " > "
+            . $os->toOsPath("themes/SuiteP/css/{$colorScheme}/style.css");
         $this->_exec($command);
     }
 }
