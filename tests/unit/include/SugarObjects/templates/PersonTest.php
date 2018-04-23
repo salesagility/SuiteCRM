@@ -67,14 +67,14 @@ class PersonTest extends \Codeception\Test\Unit
         );
 
         // test valid basis
-        $this->assertEquals(0, $person->setLawfulBasis('', ''));
-        $this->assertEquals(0, $person->setLawfulBasis('consent', ''));
-        $this->assertEquals(0, $person->setLawfulBasis('contract', ''));
-        $this->assertEquals(0, $person->setLawfulBasis('legal_obligation', ''));
-        $this->assertEquals(0, $person->setLawfulBasis('protection_of_interest', ''));
-        $this->assertEquals(0, $person->setLawfulBasis('public_interest', ''));
-        $this->assertEquals(0, $person->setLawfulBasis('legitimate_interest', ''));
-        $this->assertEquals(0, $person->setLawfulBasis('withdrawn', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('consent', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('contract', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('legal_obligation', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('protection_of_interest', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('public_interest', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('legitimate_interest', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('withdrawn', ''));
 
         // test lawful basis has been set
         $person->setLawfulBasis('consent', '');
@@ -97,12 +97,12 @@ class PersonTest extends \Codeception\Test\Unit
         );
 
         // test lawful sources
-        $this->assertEquals(0, $person->setLawfulBasis('', ''));
-        $this->assertEquals(0, $person->setLawfulBasis('', 'website'));
-        $this->assertEquals(0, $person->setLawfulBasis('', 'phone'));
-        $this->assertEquals(0, $person->setLawfulBasis('', 'given_to_user'));
-        $this->assertEquals(0, $person->setLawfulBasis('', 'email'));
-        $this->assertEquals(0, $person->setLawfulBasis('', 'third_party'));
+        $this->assertEquals(1, $person->setLawfulBasis('', ''));
+        $this->assertEquals(1, $person->setLawfulBasis('', 'website'));
+        $this->assertEquals(1, $person->setLawfulBasis('', 'phone'));
+        $this->assertEquals(1, $person->setLawfulBasis('', 'given_to_user'));
+        $this->assertEquals(1, $person->setLawfulBasis('', 'email'));
+        $this->assertEquals(1, $person->setLawfulBasis('', 'third_party'));
 
         // test that source is being set
         $this->assertEquals('third_party', $person->lawful_basis_source);
