@@ -55,7 +55,7 @@ if (isset($_SESSION['rebuild_extensions'])) {
     displayAdminError(translate('MSG_REBUILD_EXTENSIONS', 'Administration'));
 }
 
-if ((strpos((string) $_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')
+if ((strpos((string) (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : null), 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')
 ) {
     displayAdminError(translate('LBL_FASTCGI_LOGGING', 'Administration'));
 }

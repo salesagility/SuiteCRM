@@ -164,14 +164,19 @@
         if (targetCount > 0) {
           targetList = targetList + ',';
         }
-        if (populateModuleName == '') {
+        if (populateModuleName === '') {
           populateModuleName = populateEmailAddress;
         }
         targetList = targetList + populateModuleName + ' <' + populateEmailAddress + '>';
         targetCount++;
       });
       if (targetCount > 0) {
-        $(self.emailComposeView).find('#to_addrs_names').val(targetList);
+        if (populateEmailAddress !== '') {
+          $(self.emailComposeView).find('#to_addrs_names').val(targetList);
+        }
+        else {
+          $(self.emailComposeView).find('#name').val(populateModuleName);
+        }
         if (targetCount < 2) {
           $(self.emailComposeView).find('#parent_type').val(populateModule);
           $(self.emailComposeView).find('#parent_name').val(populateModuleName);

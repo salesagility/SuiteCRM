@@ -438,7 +438,7 @@ class Reminder extends Basic
 
     private static function getEventPersonAcceptStatus(SugarBean $event, SugarBean $person)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $rel_person_table_Key = "rel_{$person->table_name}_table";
         $rel_person_table_Value = "{$event->table_name}_{$person->table_name}";
         if (isset($event->$rel_person_table_Key) && $event->$rel_person_table_Key == $rel_person_table_Value) {
@@ -550,7 +550,7 @@ class Reminder extends Basic
                 $invitee->save();
             }
         }
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $q = "UPDATE reminders SET deleted = 0";
         $db->query($q);
         $q = "UPDATE reminders_invitees SET deleted = 0";
@@ -580,7 +580,7 @@ class Reminder extends Basic
 	 */
     private static function upgradeEventReminders($eventModule)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $eventBean = BeanFactory::getBean($eventModule);
         $events = $eventBean->get_full_list('', "{$eventBean->table_name}.date_start >  {$db->convert('', 'today')} AND ({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
@@ -625,7 +625,7 @@ class Reminder extends Basic
 
     private static function getOldEventInvitees(SugarBean $event)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $ret = array();
         $persons = array('users', 'contacts', 'leads');
         foreach ($persons as $person) {
