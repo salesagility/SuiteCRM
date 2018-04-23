@@ -3,6 +3,8 @@
 
 class OperatingSystemTest extends \Codeception\Test\Unit
 {
+    use \SuiteCRM\StateCheckerTrait;
+    use \SuiteCRM\StateCheckerCodeceptionTrait;
     /**
      * @var \UnitTester
      */
