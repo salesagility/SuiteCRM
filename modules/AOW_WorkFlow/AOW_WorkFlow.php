@@ -483,6 +483,7 @@ class AOW_WorkFlow extends Basic
             //handle like conditions
             Switch($condition->operator) {
                 case 'Contains':
+                case 'Not_Contains':
                     $value = "CONCAT('%', ".$value." ,'%')";
                     break;
                 case 'Starts_With':
@@ -737,6 +738,7 @@ class AOW_WorkFlow extends Basic
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
             case "Contains" : return strpos($var1,$var2);
+            case "Not_Contains" : return strpos($var1,$var2) === FALSE;
             case "Starts_With" : return strrpos($var1,$var2, -strlen($var1));
             case "Ends_With" : return strpos($var1,$var2,strlen($var1) - strlen($var2));
             case "is_null": return $var1 == '';
