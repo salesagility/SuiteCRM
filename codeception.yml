@@ -8,17 +8,34 @@ paths:
 settings:
     bootstrap: _bootstrap.php
     colors: true
-    memory_limit: 1024M
+    memory_limit: 16000M
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
 coverage:
     enabled: true
     remote: false
-    low_limit: 30
-    high_limit: 60
+    low_limit: 50
+    high_limit: 90
     exclude:
         - cache/*
+        - cache/*/*
+        - cache/*/*/*
+        - cache/*/*/*/*
+        - XTemplate/*
+        - Zend/*
+        - Zend/*/*
+        - Zend/*/*/*
+        - Zend/*/*/*/*
+        - tests/*
+        - tests/*/*
+        - tests/*/*/*
+        - tests/*/*/*/*
+        - tests/*/*/*/*/*
+        - tests/*/*/*/*/*/*
+        - tests/*/*/*/*/*/*/*
+        - tests/*/*/*/*/*/*/*/*
+        - tests/*/*/*/*/*/*/*/*/*
         # Exclude 3rd party libraries
         - include/timezone/*
         - include/SuiteGraphs/*
@@ -37,6 +54,15 @@ coverage:
         - include/fonts/*
         # Exclude composer vendor
         - vendor/*
+        - vendor/*/*
+        - vendor/*/*/*
+        - vendor/*/*/*/*
+        - vendor/*/*/*/*/*
+        - vendor/*/*/*/*/*/*
+        - vendor/*/*/*/*/*/*/*
+        - vendor/*/*/*/*/*/*/*/*
+        - vendor/*/*/*/*/*/*/*/*/*
+        - vendor/*/*/*/*/*/*/*/*/*/*
 params:
     - env
 
