@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-class PersonTest extends \Codeception\Test\Unit
+class PersonTest extends StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
