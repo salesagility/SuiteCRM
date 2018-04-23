@@ -50,7 +50,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
-        $state->pushTable('person_test');
+        $state->pushTable('contacts');
 
         $person = new Contact();
         $person->last_name = 'Smith';
@@ -112,7 +112,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         // test that source is being set
         $this->assertEquals('third_party', $person->lawful_basis_source);
 
-        $state->popTable('person_test');
+        $state->popTable('contacts');
         $state->popGlobals();
     }
 }
