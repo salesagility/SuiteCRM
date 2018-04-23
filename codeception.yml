@@ -17,52 +17,18 @@ coverage:
     remote: false
     low_limit: 50
     high_limit: 90
-    exclude:
-        - cache/*
-        - cache/*/*
-        - cache/*/*/*
-        - cache/*/*/*/*
-        - XTemplate/*
-        - Zend/*
-        - Zend/*/*
-        - Zend/*/*/*
-        - Zend/*/*/*/*
-        - tests/*
-        - tests/*/*
-        - tests/*/*/*
-        - tests/*/*/*/*
-        - tests/*/*/*/*/*
-        - tests/*/*/*/*/*/*
-        - tests/*/*/*/*/*/*/*
-        - tests/*/*/*/*/*/*/*/*
-        - tests/*/*/*/*/*/*/*/*/*
-        # Exclude 3rd party libraries
-        - include/timezone/*
-        - include/SuiteGraphs/*
-        - include/social/*
-        - include/Smarty/*
-        - include/reCaptcha/*
-        - include/phpmailer/*
-        - include/Pear/*
-        - include/pclzip/*
-        - include/nusoap/*
-        - include/HTTP_WebDAV_Server/*
-        - include/HTMLPurifier/*
-        # Exclude non php folders
-        - include/javascript/*
-        - include/images/*
-        - include/fonts/*
-        # Exclude composer vendor
-        - vendor/*
-        - vendor/*/*
-        - vendor/*/*/*
-        - vendor/*/*/*/*
-        - vendor/*/*/*/*/*
-        - vendor/*/*/*/*/*/*
-        - vendor/*/*/*/*/*/*/*
-        - vendor/*/*/*/*/*/*/*/*
-        - vendor/*/*/*/*/*/*/*/*/*
-        - vendor/*/*/*/*/*/*/*/*/*/*
+    include:
+        - ModuleInstall/*.php
+        - data/*.php
+        - include/*.php
+        - install/*.php
+        - jssource/*.php
+        - lib/*.php
+        - metadata/*.php
+        - modules/*.php
+        - service/*.php
+        - soap/*.php
+        - themes/*.php
 params:
     - env
 
