@@ -85,11 +85,27 @@ class OperatingSystem
 
     /**
      * @param string $path
-     * @return string path converted for operating system eg Linux, Mac OS, Windows
+     * @param string $ds separator to convert to (used for testing purposes)
+     * @return string path converted for the current operating system eg Linux, Mac OS, Windows
      */
-    public function toOsPath($path)
+    public function toOsPath($path, $ds = DIRECTORY_SEPARATOR)
     {
-        return str_replace('/', DIRECTORY_SEPARATOR, $path);
-    }
+        // strip " - windows can use double quotes instead of escaping strings
+        $trimmedPath = trim($path, '"');
 
+        $removeEscapedSpace = str_replace('\ ', ' ', $trimmedPath);
+        $removeEscapedTab = str_replace('\	', '	', $removeEscapedSpace);
+
+        $replaceSeparator = preg_replace('/[\\\\\/]/', $ds, $removeEscapedTab);
+
+        if ($ds === '/') {
+            $addEscapedSpace = str_replace(' ', '\\ ', $replaceSeparator);
+            $addEscapedTab = str_replace('	', '\\	', $addEscapedSpace);
+            $newPath = $addEscapedTab;
+        } else {
+            $newPath = $replaceSeparator;
+        }
+
+        return $newPath;
+    }
 }
