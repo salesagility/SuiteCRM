@@ -153,7 +153,6 @@ class EntryPointConfirmOptInHandler
      */
     private function methodConfirmOptInUser($request)
     {
-        global $people;
 
         $emailAddress = BeanFactory::getBean('EmailAddresses');
         $this->emailAddress = $emailAddress->retrieve_by_string_fields([
@@ -201,7 +200,6 @@ class EntryPointConfirmOptInHandler
     private function setLawfulBasisForEachPerson(array $people, $module) {
         /** @var Person $person */
         foreach ($people as $person) {
-            // todo
             $bean = BeanFactory::getBean($module, $person);
             if($bean) {
                 $bean->setLawfulBasis('consent', 'email');
