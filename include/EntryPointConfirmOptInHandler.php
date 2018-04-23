@@ -166,8 +166,6 @@ class EntryPointConfirmOptInHandler
             $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Contacts'), 'Contacts');
             $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Leads'), 'Leads');
             $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Prospects'), 'Prospects');
-
-
         }
 
         $template = new Sugar_Smarty();
