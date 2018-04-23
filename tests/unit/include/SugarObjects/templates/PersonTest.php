@@ -50,7 +50,11 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        $state->pushTable('aod_indexevent');
         $state->pushTable('contacts');
+        $state->pushTable('contacts_cstm');
+        $state->pushTable('sugarfeed');
+
 
         $person = new Contact();
         $person->last_name = 'Smith';
@@ -112,7 +116,10 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         // test that source is being set
         $this->assertEquals('third_party', $person->lawful_basis_source);
 
+        $state->popTable('aod_indexevent');
         $state->popTable('contacts');
+        $state->popTable('contacts_cstm');
+        $state->popTable('sugarfeed');
         $state->popGlobals();
     }
 }
