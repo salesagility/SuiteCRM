@@ -920,7 +920,7 @@ class Importer
 
         if ($isFatal)
         {
-            exit(1);
+            throw new Exception('Handle import error' . ($message ? ": $message" : ''));
         }
     }
 

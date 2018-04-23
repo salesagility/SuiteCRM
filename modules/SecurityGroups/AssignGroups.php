@@ -71,8 +71,8 @@ function popup_onload($event, $arguments)
 */
 	global $sugar_config;
 
-	$module = $_REQUEST['module'];
-	$action = $_REQUEST['action'];
+	$module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
 	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;  
 
@@ -118,8 +118,8 @@ EOQ;
 
 function mass_assign($event, $arguments)
 {
-    $action = $_REQUEST['action'];
-    $module = $_REQUEST['module'];
+    $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+    $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
   
   	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
     //check if security suite enabled

@@ -63,37 +63,37 @@ class SugarWidgetFieldVarchar extends SugarWidgetReportField
 
  function queryFilterEquals($layout_def)
  {
-		return $this->_get_column_select($layout_def)."='".$GLOBALS['db']->quote($layout_def['input_name0'])."'\n";
+		return $this->_get_column_select($layout_def)."='".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
  }
 
  function queryFilterNot_Equals_Str($layout_def)
  {
-		return $this->_get_column_select($layout_def)."!='".$GLOBALS['db']->quote($layout_def['input_name0'])."'\n";
+		return $this->_get_column_select($layout_def)."!='".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
  }
 
  function queryFilterContains(&$layout_def)
  {
-		return $this->_get_column_select($layout_def)." LIKE '%".$GLOBALS['db']->quote($layout_def['input_name0'])."%'\n";
+		return $this->_get_column_select($layout_def)." LIKE '%".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."%'\n";
  }
   function queryFilterdoes_not_contain(&$layout_def)
  {
-		return $this->_get_column_select($layout_def)." NOT LIKE '%".$GLOBALS['db']->quote($layout_def['input_name0'])."%'\n";
+		return $this->_get_column_select($layout_def)." NOT LIKE '%".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."%'\n";
  }
 
  function queryFilterStarts_With(&$layout_def)
  {
-		return $this->_get_column_select($layout_def)." LIKE '".$GLOBALS['db']->quote($layout_def['input_name0'])."%'\n";
+		return $this->_get_column_select($layout_def)." LIKE '".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."%'\n";
  }
 
  function queryFilterEnds_With(&$layout_def)
  {
-		return $this->_get_column_select($layout_def)." LIKE '%".$GLOBALS['db']->quote($layout_def['input_name0'])."'\n";
+		return $this->_get_column_select($layout_def)." LIKE '%".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
  }
 
  function queryFilterone_of(&$layout_def)
  {
     foreach($layout_def['input_name0'] as $key => $value) {
-        $layout_def['input_name0'][$key] = $GLOBALS['db']->quote($value);
+        $layout_def['input_name0'][$key] = DBManagerFactory::getInstance()->quote($value);
     }
     return $this->_get_column_select($layout_def) . " IN ('" . implode("','", $layout_def['input_name0']) . "')\n";
  }

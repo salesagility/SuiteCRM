@@ -2,22 +2,14 @@
 
 use SuiteCRM\Utility\StringValidator;
 
-class StringValidatorTest extends \Codeception\Test\Unit
+class StringValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
      */
     protected $tester;
 
-    protected function _before()
-    {
 
-    }
-
-    protected function _after()
-    {
-
-    }
 
     public function testStartsWith()
     {

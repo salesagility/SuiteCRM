@@ -56,7 +56,7 @@ function handleSubs($subs, $email, $json, $user = null)
 {
 
     // flows into next case statement
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $current_user;
     
     if(!$user) {
@@ -300,7 +300,7 @@ if (isset($_REQUEST['emailUIAction'])) {
     	break;
     case 'getTemplateAttachments':
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
-        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {global $db;
+        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {$db = DBManagerFactory::getInstance();
 
 
             $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
@@ -1714,7 +1714,7 @@ eoq;
                 $time = microtime(true);
                 $r = $ie->db->query($countq);
                 $GLOBALS['log']->debug("***QUERY counted in " . (microtime(true) - $time) . " milisec\n");
-                if ($row = $GLOBALS['db']->fetchByAssoc($r)) {
+                if ($row = DBManagerFactory::getInstance()->fetchByAssoc($r)) {
                     $count = $row['c'];
                 }
                 $time = microtime(true);

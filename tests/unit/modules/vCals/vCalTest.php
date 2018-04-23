@@ -1,9 +1,11 @@
 <?php
 
-class vCalTest extends PHPUnit_Framework_TestCase
+class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -28,7 +30,11 @@ class vCalTest extends PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $vcal = new vCal();
 
@@ -38,10 +44,20 @@ class vCalTest extends PHPUnit_Framework_TestCase
         //test with name set
         $vcal->name = 'test';
         $this->assertEquals('', $vcal->get_summary_text());
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
 
         //execute the method and test if it works and does not throws an exception.
@@ -49,14 +65,24 @@ class vCalTest extends PHPUnit_Framework_TestCase
             $vcal->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
 
         //execute the method and test if it works and does not throws an exception.
@@ -64,14 +90,24 @@ class vCalTest extends PHPUnit_Framework_TestCase
             $vcal->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testget_list_view_data()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
 
         //execute the method and test if it works and does not throws an exception.
@@ -79,14 +115,20 @@ class vCalTest extends PHPUnit_Framework_TestCase
             $vcal->get_list_view_data();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testget_freebusy_lines_cache()
     {
+        self::markTestIncomplete('Asserting String Start Width is imposible if expected is empty srting');
+        
         $vcal = new vCal();
         $user_bean = new User('1');
 
@@ -101,6 +143,13 @@ class vCalTest extends PHPUnit_Framework_TestCase
 
     public function testcreate_sugar_freebusy()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         global $locale, $timedate;
 
         $vcal = new vCal();
@@ -112,10 +161,20 @@ class vCalTest extends PHPUnit_Framework_TestCase
 
         $result = $vcal->create_sugar_freebusy($user_bean, $start_date_time, $end_date_time);
         $this->assertGreaterThanOrEqual(0, strlen($result));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_vcal_freebusy()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -126,10 +185,25 @@ class vCalTest extends PHPUnit_Framework_TestCase
 
         $this->assertStringStartsWith($expectedStart, $result);
         $this->assertStringEndsWith($expectedEnd, $result);
+
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testcache_sugar_vcal()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('tracker');
+        $state->pushTable('vcals');
+        $state->pushTable('aod_index');
+        $state->pushGlobals();
+
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -138,12 +212,29 @@ class vCalTest extends PHPUnit_Framework_TestCase
             $vcal->cache_sugar_vcal($user_focus);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_index');
+        $state->popTable('vcals');
+        $state->popTable('tracker');
+        
     }
 
     public function testcache_sugar_vcal_freebusy()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('tracker');
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -152,8 +243,15 @@ class vCalTest extends PHPUnit_Framework_TestCase
             $vcal->cache_sugar_vcal_freebusy($user_focus);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
+        $state->popTable('tracker');
+        
     }
 
     public function testfold_ical_lines()

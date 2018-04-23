@@ -50,8 +50,11 @@ class CalendarViewGetGR extends SugarView {
 	}
 	
 	function display(){
-		error_reporting(0);
+		$state = new \SuiteCRM\StateSaver();
+                $state->pushErrorLevel();
+                error_reporting(0);
 		require_once('include/json_config.php');
+                $state->popErrorLevel();
 		global $json;
         	$json = getJSONobj();
         	$json_config = new json_config();

@@ -864,6 +864,7 @@ class SugarEmailAddress extends SugarBean
 
             if (empty($widget_id)) {
                 $GLOBALS['log']->debug('Widget not found, so it should be an update and not a create');
+                $widget_id = null;
             }
 
 
@@ -998,8 +999,8 @@ class SugarEmailAddress extends SugarBean
                                     $email_id = (array_key_exists($k, $email_ids)) ? $email_ids[$k] : null;
                                     $primary = ($k == $primaryValue) ? true : false;
                                     $replyTo = ($k == $replyToField) ? true : false;
-                                    $invalid = (in_array($k, $invalidValues)) ? true : false;
-                                    $optOut = (in_array($k, $optOutValues)) ? true : false;
+                                    $invalid = (in_array($k, (array)$invalidValues)) ? true : false;
+                                    $optOut = (in_array($k, (array)$optOutValues)) ? true : false;
                                     $optIn = (in_array($k, $optInValues)) ? true : false;
                                     $this->addAddress(
                                         trim($new_addrs[$k]),

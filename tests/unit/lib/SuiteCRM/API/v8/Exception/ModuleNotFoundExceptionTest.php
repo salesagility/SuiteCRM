@@ -5,7 +5,7 @@ namespace SuiteCRM\Exception;
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 
-class ModuleNotFoundExceptionTest extends \Codeception\Test\Unit
+class ModuleNotFoundExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -18,16 +18,15 @@ class ModuleNotFoundExceptionTest extends \Codeception\Test\Unit
     private static $exception;
 
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$exception === null) {
             self::$exception = new \SuiteCRM\API\v8\Exception\ModuleNotFoundException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetMessage()
     {

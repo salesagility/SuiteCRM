@@ -107,7 +107,7 @@ EOQ;
 		$dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb();
     $dateTimeNow = $timedate->getNow()->modify("-60 seconds")->asDb();
 
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		$dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
 		$dateTimeMax = $db->convert($db->quoted($dateTimeMax), 'datetime');
 		$desc = $db->convert("description", "text2char");

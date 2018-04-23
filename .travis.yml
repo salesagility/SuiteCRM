@@ -25,7 +25,7 @@ before_script:
 script:
   - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
   - php tests/testinstall.php
-  - ./vendor/bin/codecept run -f unit --steps -vvv --debug
+  - ./vendor/bin/codecept run -f unit --steps -vvv --debug 
 
 after_script:
   - cat suitecrm.log

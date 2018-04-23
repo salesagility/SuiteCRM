@@ -183,6 +183,7 @@ class AOR_Report extends Basic
         $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
         if (!$linkedCharts) {
             //No charts to display
+            LoggerManager::getLogger()->warn('No charts to display to build report chart for AOR Report.');
             return '';
         }
 
@@ -631,7 +632,7 @@ class AOR_Report extends Basic
           // Fix #5427
         $report_style = '';
         $thead_style = '';
-        if ($_REQUEST['action'] == 'DownloadPDF') {
+        if ((isset($_REQUEST['action']) ? $_REQUEST['action'] : null) == 'DownloadPDF') {
             $report_style = 'margin-top: 0px;';
             $thead_style = 'background: #919798; color: #fff';
         }
@@ -918,7 +919,7 @@ class AOR_Report extends Basic
             }
             if ($field['total']) {
                 $showTotal = true;
-                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][$field['total']];
+                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][isset($field['total']) ? $field['total'] : null];
                 $html .= "<th>{$totalLabel}</td>";
             } else {
                 $html .= '<th></th>';
@@ -939,8 +940,17 @@ class AOR_Report extends Basic
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
                 // Customise display based on the field type
-                $moduleBean = BeanFactory::newBean($field['module']);
-                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $moduleBean = BeanFactory::newBean(isset($field['module']) ? $field['module'] : null);
+                if (!is_object($moduleBean)) {
+                    LoggerManager::getLogger()->warn('Unable to create new module bean when trying to build report html. Module bean was: ' . (isset($field['module']) ? $field['module'] : 'NULL'));
+                    $moduleBeanFieldDefs = null;
+                } elseif (!isset($moduleBean->field_defs)) {
+                    LoggerManager::getLogger()->warn('File definition not found for module when trying to build report html. Module bean was: ' . get_class($moduleBean));
+                    $moduleBeanFieldDefs = null;
+                } else {
+                    $moduleBeanFieldDefs = $moduleBean->field_defs;
+                }
+                $fieldDefinition = $moduleBeanFieldDefs[isset($field['field']) ? $field['field'] : null];
                 $fieldDefinitionType = $fieldDefinition['type'];
                 switch ($fieldDefinitionType) {
                     case "currency":
@@ -1103,8 +1113,12 @@ class AOR_Report extends Basic
         }
         $query_array = $this->build_report_query_where($query_array);
 
-        foreach ($query_array['select'] as $select) {
-            $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+        if(!isset($query_array['select'])) {
+            LoggerManager::getLogger()->warn('Trying to build report query without database select definition.');
+        } else {
+            foreach ($query_array['select'] as $select) {
+                $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+            }
         }
 
         if (empty($query_array['group_by'])) {
