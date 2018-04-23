@@ -35,6 +35,8 @@ coverage:
         - include/javascript/*
         - include/images/*
         - include/fonts/*
+        # Exclude composer vendor
+        - vendor/*
 params:
     - env
 
