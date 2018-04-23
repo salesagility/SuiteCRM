@@ -78,7 +78,7 @@ class PersonTest extends \Codeception\Test\Unit
 
         // test lawful basis has been set
         $person->setLawfulBasis('consent', '');
-        $this->assertEquals($person->lawful_basis, 'consent');
+        $this->assertEquals($person->lawful_basis, '^consent^');
 
         // Test when source is not a string
         $this->tester->expectException(
