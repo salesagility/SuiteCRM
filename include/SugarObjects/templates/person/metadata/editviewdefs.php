@@ -73,7 +73,10 @@ $viewdefs[$module_name]['EditView'] = array(
                     'name'=>'lawful_basiss',
                     'label'=>'LBL_LAWFUL_BASIS',
                 ),
-
+                array(
+                    'name'=>'lawful_basis_sources',
+                    'label'=>'LBL_LAWFUL_BASIS_SOURCE',
+                ),
             ),
             array(
                 array(
@@ -81,12 +84,7 @@ $viewdefs[$module_name]['EditView'] = array(
                     'label'=>'LBL_DATE_REVIEWED',
                 ),
             ),
-            array(
-                array(
-                    'name'=>'lawful_basis_sources',
-                    'label'=>'LBL_LAWFUL_BASIS_SOURCE',
-                ),
-            ),
+
             array(
                 'department',
                 'phone_other',
