@@ -376,6 +376,6 @@ class Person extends Basic
         $this->date_reviewed = $date_test;
         $this->save();
 
-        return 0;
+        return 1;
     }
 }
