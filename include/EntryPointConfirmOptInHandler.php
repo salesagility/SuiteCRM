@@ -153,6 +153,8 @@ class EntryPointConfirmOptInHandler
      */
     private function methodConfirmOptInUser($request)
     {
+        global $people;
+
         $emailAddress = BeanFactory::getBean('EmailAddresses');
         $this->emailAddress = $emailAddress->retrieve_by_string_fields([
             'confirm_opt_in_token' => $request['from']
@@ -162,16 +164,35 @@ class EntryPointConfirmOptInHandler
             $this->emailAddress->confirmOptIn();
             $this->emailAddress->save();
 
-            // TODO
-            $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Contacts'), 'Contacts');
-            $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Leads'), 'Leads');
-            $this->setLawfulBasisForEachPerson($this->emailAddress->getRelatedId($this->id, 'Prospects'), 'Prospects');
-        }
+            $people = $this->getID($this->emailAddress->email_address, 'Contacts');
+            if ($people) {
+                $this->setLawfulBasisForEachPerson($people, 'Contacts');
+            }
+            $people = $this->getID($this->emailAddress->email_address, 'Leads');
+            if ($people) {
+                $this->setLawfulBasisForEachPerson($people, 'Leads');
+            }
 
+            $people = $this->getID($this->emailAddress->email_address, 'Prospects');
+            if ($people) {
+                $this->setLawfulBasisForEachPerson($people,  'Prospects');
+            }
+        }
         $template = new Sugar_Smarty();
         $template->assign('FOCUS', $this->emailAddress);
 
         return $template->fetch('include/EntryPointConfirmOptIn.tpl');
+    }
+
+    /**
+     * @param String $email
+     * @param String $module
+     *
+     * @return array|bool
+     */
+    private function getID($email, $module) {
+        $people = $this->emailAddress->getRelatedId($email, $module);
+        return $people;
     }
 
     /**
@@ -181,8 +202,11 @@ class EntryPointConfirmOptInHandler
         /** @var Person $person */
         foreach ($people as $person) {
             // todo
-            $bean = BeanFactory::getBean($module, $person['bean_id']);
-            $bean->setLawfulBasis('consent', 'email');
+            $bean = BeanFactory::getBean($module, $person);
+            if($bean) {
+                $bean->setLawfulBasis('consent', 'email');
+                $bean->save();
+            }
         }
     }
 }

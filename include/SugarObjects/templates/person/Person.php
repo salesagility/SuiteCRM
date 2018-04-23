@@ -346,7 +346,7 @@ class Person extends Basic
      */
     public function setLawfulBasis($basis, $source)
     {
-        global $app_list_strings;
+        global $app_list_strings,$timedate;
         /**
          * This function will update the lawful basis, source and date of the change.
          * Will take the parameters of email id and possible the module?
@@ -368,9 +368,14 @@ class Person extends Basic
             throw new InvalidArgumentException('invalid lawful basis source');
         }
 
-        $this->lawful_basis = $basis;
+        //Set lawful basis, lawful basis source and date reviewed
+        $this->lawful_basis = '^'.$basis.'^';
         $this->lawful_basis_source = $source;
-        return 0;
+        $date = TimeDate::getInstance()->nowDb();
+        $date_test = $timedate->to_display_date($date,false);
+        $this->date_reviewed = $date_test;
+        $this->save();
 
+        return 0;
     }
 }
