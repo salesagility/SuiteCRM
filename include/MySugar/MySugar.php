@@ -138,14 +138,13 @@ class MySugar{
 		    array_unshift($pages[$_SESSION['current_tab']]['columns'][0]['dashlets'], $guid);
 
 		    $current_user->setPreference('dashlets', $dashlets, 0, $this->type);
-
-
-		    echo $guid;
+			
+		    return $guid;
 		}
-		else {
-		    echo 'ofdaops';
-		}
+		
+					 
 	}
+  
 
 	function displayDashlet(){
 		global $current_user, $mod_strings, $app_strings;
