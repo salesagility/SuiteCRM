@@ -508,3 +508,8 @@ foreach($sugar_demodata['project_seed_data']['audit']['project_tasks'] as $v){
 
     $project_task_id_counter++;
 }
+
+
+require_once('install/suite_install/MultiLanguage.php');
+installLog("Suite Install: post install MultiLanguage");
+postInstallMultiLanguage();

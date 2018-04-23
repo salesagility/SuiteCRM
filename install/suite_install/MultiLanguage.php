@@ -56,3 +56,38 @@ function getMultiLanguageCustomFields()
 
     return $custom_fields;
 }
+
+function postInstallMultiLanguage()
+{
+    $GLOBALS['dictionary']['User']['custom_fields'] = true;
+    $GLOBALS['dictionary']['Contact']['custom_fields'] = true;
+
+    installLog("postInstallMultiLanguage: update Users");
+    $users = BeanFactory::getBean('Users');
+    $userslist = $users->get_full_list();
+
+    if (!empty($userslist)){
+       foreach( $userslist as $user ){
+          $user->setupCustomFields($user->module_dir);
+          $user->language_c = 'en';
+          $user->field_defs["language_c"] = array( "name" => "language_c", "type" => "enum", "source" => "custom_fields");
+          $user->custom_fields->bean = $user;
+          $user->custom_fields->save( false );
+       }
+    }
+
+    installLog("postInstallMultiLanguage: update Contacts");
+    $contacts = BeanFactory::getBean('Contacts');
+    $contactslist = $contacts->get_full_list();
+
+    if (!empty($contactslist)){
+       foreach( $contactslist as $contact ){
+          $contact->setupCustomFields($contact->module_dir);
+          $contact->language_c = 'en';
+          $contact->field_defs["language_c"] = array( "name" => "language_c", "type" => "enum", "source" => "custom_fields");
+          $contact->custom_fields->bean = $contact;
+          $contact->custom_fields->save( false );
+       }
+   }
+}
+
