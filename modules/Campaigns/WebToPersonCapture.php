@@ -248,6 +248,8 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                             } else {
                                 $sea->confirm_opt_in_sent_date = $now;
                             }
+                        }
+                        if($configurator->isOptInEnabled()) {
                             $timedate;
                             $date = TimeDate::getInstance()->nowDb();
                             $date_test = $timedate->to_display_date($date,false);
@@ -256,6 +258,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                             $person->lawful_basis_source = 'website';
                             $person->save();
                         }
+
                         $savedRequest = $_REQUEST;
                         $_REQUEST['action'] = 'ConvertLead';
                         $sea->saveEmail($person->id, $moduleDir);
