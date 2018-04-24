@@ -70,11 +70,11 @@ $viewdefs[$module_name]['EditView'] = array(
             ),
             array(
                 array(
-                    'name'=>'lawful_basiss',
+                    'name'=>'lawful_basis',
                     'label'=>'LBL_LAWFUL_BASIS',
                 ),
                 array(
-                    'name'=>'lawful_basis_sources',
+                    'name'=>'lawful_basis_source',
                     'label'=>'LBL_LAWFUL_BASIS_SOURCE',
                 ),
             ),
