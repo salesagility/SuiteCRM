@@ -29,6 +29,18 @@ coverage:
         - service/*.php
         - soap/*.php
         - themes/*.php
+    exclude:
+        - include/timezone/*
+        - include/SuiteGraphs/*
+        - include/social/*
+        - include/Smarty/*
+        - include/reCaptcha/*
+        - include/phpmailer/*
+        - include/Pear/*
+        - include/pclzip/*
+        - include/nusoap/*
+        - include/HTTP_WebDAV_Server/*
+        - include/HTMLPurifier/*
 params:
     - env
 
