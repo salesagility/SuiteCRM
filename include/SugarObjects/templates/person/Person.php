@@ -374,8 +374,7 @@ class Person extends Basic
         $date = TimeDate::getInstance()->nowDb();
         $date_test = $timedate->to_display_date($date,false);
         $this->date_reviewed = $date_test;
-        $this->save();
 
-        return 1;
+        return (bool)$this->save();
     }
 }
