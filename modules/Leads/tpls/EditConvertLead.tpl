@@ -141,14 +141,14 @@ var formatSelect = function(el, rec, col, data)
     el.innerHTML = ret;
 }
 var getEditButton = function(el, rec, col, data){
-    var out = {/literal}"<img alt='{$mod_strings.LBL_EDIT_INLINE}' name='edit_inline' src='{sugar_getimagepath file='edit_inline.gif'}' />";{literal}
+    var out = {/literal}"<span class='suitepicon suitepicon-action-edit' alt='{$mod_strings.LBL_EDIT_INLINE}' name='edit_inline'></span>";{literal}
 	el.innerHTML = out;
 	YAHOO.util.Event.addListener(el, "click", function(){editLayout(grid.getRecord(el).getData());});
 }
 var getRemoveButton = function(el, rec, col, data){
 	if (rec.getData().module =="Contacts")
 	   return;
-    var out = {/literal}"<img alt='{$mod_strings.LBL_EDIT_INLINE}' name='delete_inline' src='{sugar_getimagepath file='delete_inline.gif'}' />";{literal}
+    var out = {/literal}"<span class='suitepicon suitepicon-action-clear' alt='{$mod_strings.LBL_EDIT_INLINE}' name='delete_inline' />";{literal}
     el.innerHTML = out;
     YAHOO.util.Event.addListener(el, "click", function(){removeLayout(grid.getRecord(el).getData());});
 }

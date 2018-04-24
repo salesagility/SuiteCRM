@@ -59,8 +59,8 @@ var emailAddressWidgetLoaded = false;
 <div class="col-xs-12">
 	<div class="col-xs-12 email-address-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
 		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','', false);"{/capture}
-		<button type="button" class="btn btn-info email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD_EMAIL} " {$other_attributes}>
-			<span class="glyphicon glyphicon-plus"></span><span></span>
+		<button type="button" class="btn btn-danger email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD_EMAIL} " {$other_attributes}>
+			<span class="suitepicon suitepicon-action-plus"></span><span></span>
 		</button>
 	</div>
 	<div class="col-xs-12 email-address-lines-container">
@@ -85,7 +85,7 @@ var emailAddressWidgetLoaded = false;
 					<input type=hidden id='emailAddressWidget' name='emailAddressWidget' value='1'>
 					<span class="input-group-btn">
 					<button type="button" id="email-address-remove-button" class="btn btn-danger email-address-remove-button" name="" title="{$app_strings.LBL_ID_FF_REMOVE_EMAIL}">
-						<span class="glyphicon glyphicon-minus"></span>
+						<span class="suitepicon suitepicon-action-minus"></span>
 					</button>
 				</span>
 				</div>
@@ -115,9 +115,20 @@ var emailAddressWidgetLoaded = false;
 				{if $useInvalid == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_INVALID}</label>
-					<div><input type="checkbox" name="" title="{$app_strings.LBL_ID_FF_INVALID}" id="email-address-invalid-flag" class="email-address-invalid-flag" value="" enabled="true"></div>
+					<div><input type="checkbox" name="" title="{$app_strings.LBL_EMAIL_INVALID}" id="email-address-invalid-flag" class="email-address-invalid-flag" value="" enabled="true"></div>
 				</div>
 				{/if}
+
+                {if $useOptIn == true}
+					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+						<label class="text-sm col-xs-12">{$app_strings.LBL_OPT_IN}</label>
+						<div>
+                                                    <input type="hidden" name="shouldSaveOptInFlag" value="1">
+                                                    <input type="checkbox" name="" title="{$app_strings.LBL_OPT_IN}" 
+                                                           id="email-address-opted-in-flag" class="email-address-opted-in-flag" value="" enabled="true">
+                                                </div>
+					</div>
+                {/if}
 			</div>
 		</div>
 

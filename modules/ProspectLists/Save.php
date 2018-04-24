@@ -107,4 +107,3 @@ else
 	handleRedirect($return_id, $return_module);
 
 }
-?>

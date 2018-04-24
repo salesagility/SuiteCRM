@@ -151,16 +151,14 @@ class Viewpackage extends SugarView
  		global $mod_strings;
  		$this->buttons[$mod_strings['LBL_NEW_PACKAGE']] = array(
  										'action' => "module=ModuleBuilder&action=package&new=1",
- 										'imageTitle' => 'package_create',
- 										'size' => '64',
 										'help' => 'newPackage',
-                                        'linkId' => 'newPackageLink'
+                                        'linkId' => 'newPackageLink',
+                                        'icon' => 'new-package'
  										);
  		foreach($packages as $package) {
  			$this->buttons[$package] = array(
  										'action' =>"module=ModuleBuilder&action=package&package={$package}",
-										'imageTitle' => 'package',
-										'size' => '64',
+                                        'icon' => 'existing-package'
  										);
  		}
  	}

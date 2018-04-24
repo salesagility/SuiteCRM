@@ -108,8 +108,8 @@ class EmailAuthenticateUser extends SugarAuthenticateUser {
      */
     function sendEmailPassword($user_id, $password){
 
-	    $result = $GLOBALS['db']->query("SELECT email1, email2, first_name, last_name FROM users WHERE id='$user_id'");
-	    $row = $GLOBALS['db']->fetchByAssoc($result);
+	    $result = DBManagerFactory::getInstance()->query("SELECT email1, email2, first_name, last_name FROM users WHERE id='$user_id'");
+	    $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
 
 	    global $sugar_config;
 	    if(empty($row['email1']) && empty($row['email2'])){
@@ -150,5 +150,3 @@ class EmailAuthenticateUser extends SugarAuthenticateUser {
 
 
 }
-
-?>

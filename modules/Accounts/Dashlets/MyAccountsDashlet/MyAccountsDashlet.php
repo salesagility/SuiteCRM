@@ -83,7 +83,7 @@ class MyAccountsDashlet extends DashletGeneric {
      * @param array $lvsParams
      */
 
-	function process($lvsParams = array(), $id = NULL) {
+	function process($lvsParams = array(), $id = null) {
     	if (isset($this->displayColumns) && array_search('email1', $this->displayColumns) !== false) {
 	    	$lvsParams['custom_select'] = ', email_address as email1';
 	    	$lvsParams['custom_from'] = ' LEFT JOIN email_addr_bean_rel eabr ON eabr.deleted = 0 AND bean_module = \'Accounts\''
@@ -99,5 +99,3 @@ class MyAccountsDashlet extends DashletGeneric {
     	parent::process($lvsParams);
     }
 }
-
-?>

@@ -227,7 +227,7 @@ FieldComputer.prototype = {
   },
 
   addParameterLine: function (fieldName, fieldType, fieldTypeLabel, label, id) {
-    $deleteButton = $('<button type="button" class="button" onclick="computers[' + this.line + '].removeParameter(\'' + fieldName + '\', \'' + fieldType + '\');"><img src="themes/default/images/id-ff-remove-nobg.png"></button>');
+    $deleteButton = $('<button type="button" class="button" onclick="computers[' + this.line + '].removeParameter(\'' + fieldName + '\', \'' + fieldType + '\');"><span class="suitepicon suitepicon-action-minus"></span></button>');
 
     $tr = $("<tr></tr>")
       .append($deleteButton)
@@ -249,7 +249,7 @@ FieldComputer.prototype = {
   },
 
   addFormulaLine: function (fieldName, label, id, formula) {
-    $deleteButton = $('<button type="button" class="button" onclick="computers[' + this.line + '].removeFormula(\'' + fieldName + '\');"><img src="themes/default/images/id-ff-remove-nobg.png"></button>');
+    $deleteButton = $('<button type="button" class="button" onclick="computers[' + this.line + '].removeFormula(\'' + fieldName + '\');"><span class="suitepicon suitepicon-action-minus"></span></button>');
 
     $tr = $("<tr></tr>")
       .append($deleteButton)
@@ -285,7 +285,7 @@ FieldComputer.prototype = {
   },
 
   addRelationParameterLine: function (relationName, relationLabel, id, fieldName, fieldLabel, fieldType, fieldTypeLabel) {
-    $deleteButton = $('<button type="button" class="button" onclick="computers[' + this.line + '].removeRelationParameter(\'' + relationName + '\', \'' + fieldName + '\', \'' + fieldType + '\');"><img src="themes/default/images/id-ff-remove-nobg.png"></button>');
+    $deleteButton = $('<button type="button" class="button" onclick="computers[' + this.line + '].removeRelationParameter(\'' + relationName + '\', \'' + fieldName + '\', \'' + fieldType + '\');"><span class="suitepicon suitepicon-action-minus"></span></button>');
 
     $tr = $("<tr></tr>")
       .append($deleteButton)

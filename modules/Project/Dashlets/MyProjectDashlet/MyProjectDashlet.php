@@ -72,5 +72,3 @@ class MyProjectDashlet extends DashletGeneric {
 
 
 }
-
-?>

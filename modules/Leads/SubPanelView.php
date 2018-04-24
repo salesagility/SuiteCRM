@@ -76,5 +76,3 @@ $ListView->initNewXTemplate( 'modules/Leads/SubPanelView.html',$current_module_s
 $ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME'] . $header_text);
 //$ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "LEAD");
- 
-?>

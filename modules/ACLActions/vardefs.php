@@ -154,4 +154,3 @@ $dictionary['ACLAction'] = array('table' => 'acl_actions', 'comment' => 'Determi
        array('name' =>'idx_category_name', 'type' =>'index', 'fields'=>array('category', 'name')),                                                   )
 
                             );
-?>

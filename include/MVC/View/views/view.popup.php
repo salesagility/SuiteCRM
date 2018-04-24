@@ -37,6 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+include_once __DIR__ . '/../../../../include/utils/layout_utils.php';
+
 class ViewPopup extends SugarView{
     /**
      * @var string
@@ -233,4 +235,3 @@ class ViewPopup extends SugarView{
 		}
 	}
 }
-?>

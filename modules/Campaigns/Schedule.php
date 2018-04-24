@@ -101,7 +101,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 	{
 		$where_clauses = Array();
 
-		if(!empty($campaign_id)) array_push($where_clauses, "campaign_id = '".$GLOBALS['db']->quote($campaign_id)."'");
+		if(!empty($campaign_id)) array_push($where_clauses, "campaign_id = '".DBManagerFactory::getInstance()->quote($campaign_id)."'");
 
 		$where = "";
 		foreach($where_clauses as $clause)
@@ -184,4 +184,3 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 		$ListView->processListView($focus, "main", "EMAILMARKETING");
 	}
 }
-?>

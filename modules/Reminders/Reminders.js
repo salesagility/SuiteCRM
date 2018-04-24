@@ -64,10 +64,10 @@ var Reminders = {
         if(!id) id = '';
         // TODO: add a template for this
         if(!Reminders.disabled) {
-            var inviteeView = '<!-- enabled --><li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" onclick="Reminders.onInviteeClick(this);"><img src=index.php?entryPoint=getImage&themeName=SuiteR&imageName=' + module + '.gif><span class="related-value">' + relatedValue + '</span></button></li>';
+            var inviteeView = '<!-- enabled --><li class="invitees_item"><button class="invitee_btn btn btn-danger" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" onclick="Reminders.onInviteeClick(this);"><span class="suitepicon suitepicon-module-' + module.toLowerCase().replace('_', '-') + '"></span><span class="related-value">' + relatedValue + '</span></button></li>';
         }
         else {
-            var inviteeView = '<!-- disabled --><li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" disabled="disabled"><img src=index.php?entryPoint=getImage&themeName=SuiteR&imageName=' + module + '.gif><span class="related-value">' + relatedValue + '</span></button></li>';
+            var inviteeView = '<!-- disabled --><li class="invitees_item"><button class="invitee_btn btn btn-danger" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" disabled="disabled"><span class="suitepicon suitepicon-module-' + module.toLowerCase().replace('_', '-') + '"></span></span></button></li>';
         }
         return inviteeView;
     },

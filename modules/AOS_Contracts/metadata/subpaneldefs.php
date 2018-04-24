@@ -74,4 +74,3 @@ $layout_defs['AOS_Contracts'] = array(
 		),
 	),
 );
-?>

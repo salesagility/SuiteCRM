@@ -386,4 +386,4 @@ class CsvAutoDetect {
     }
 
 }
-?>
+

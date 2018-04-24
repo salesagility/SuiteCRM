@@ -195,7 +195,7 @@ var markerClusterer = null;
 var markerClustererToggle = null;
 var clusterControlDiv = null;
 // Clusterer Images - Protocol Independent
-MarkerClusterer.IMAGE_PATH = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+MarkerClusterer.IMAGE_PATH = "//raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/images/m";
 
 // Drawing Controls
 var drawingManager = null;
@@ -695,7 +695,43 @@ function setODataTable() {
             "bStateSave": true,
             "bProcessing": true,
             "sDom": '<Tlfrtip>',
-            "oTableTools": {"sSwfPath": "//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.4/swf/copy_csv_xls_pdf.swf"},
+            "oTableTools": {
+                //Define the buttons beneath the Map
+                "aButtons": [
+                    {
+                        //Copy Column Data.
+                        "sExtends": "copy",
+                        "sButtonText": "Copy",
+                        "mColumns": "all"
+
+                    },
+                    {
+                        //Export columns to CSV
+                        "sExtends": "csv",
+                        "sButtonText": "CSV",
+                        "mColumns": "all"
+                    },
+                    {
+                        //Export Columns to XLS
+                        "sExtends": "xls",
+                        "sButtonText": "XLS",
+                        "mColumns": "all"
+                    },
+                    {
+                        //Export Visible columns to PDF
+                        "sExtends": "pdf",
+                        "sButtonText": "PDF",
+                        "mColumns": [1,2,3,4,5,6],
+                    },
+                    {
+                        //Move to "Print" page.
+                        "sExtends": "print",
+                        "sButtonText": "Print",
+                        "mColumns": "all"
+                    },
+                ],
+                "sSwfPath": "http://cdn.datatables.net/tabletools/2.2.2/swf/copy_csv_xls_pdf.swf"
+            },
             "fnDrawCallback": function(oSettings) {
                 if (typeof window.parent.resizeDataTables == 'function') {
                     window.parent.resizeDataTables();
@@ -870,9 +906,11 @@ $(document).ready(function(){
             var formData = $(this).serializeArray();
             var formUrl = $(this).attr("action");
             // Add oDataTableShownIds
-            for (var i=0, mLen=oDataTableShownIds.length; i<mLen; i++) {
-                var valId = oDataTableShownIds[i];
-                formData.push({ name: "selected_ids[]", value: valId });
+            if (oDataTableShownIds !== null) {
+                for (var i=0, mLen=oDataTableShownIds.length; i<mLen; i++) {
+                    var valId = oDataTableShownIds[i];
+                    formData.push({ name: "selected_ids[]", value: valId });
+                }
             }
 
             $.ajax({
@@ -984,6 +1022,9 @@ $(document).ready(function(){
         <input type="hidden" name="display_module" value="<?php echo htmlspecialchars($this->bean->display_object->module_name); ?>">
         <input type="hidden" name="action" value="add_to_target_list" />
         <input type="hidden" name="to_pdf" value="1" />
+        <?php if (array_key_exists('uid', $_GET)) { ?>
+            <input type="hidden" name="selected_ids" value="<?php echo $_GET['uid'] ?>" />
+        <?php } ?>
         <select id="list_id" tabindex="3" name="list_id" title="">
             <?php foreach ($this->bean->list_array as $key=>$value) { ?>
                 <option value="<?php echo htmlspecialchars($key); ?>"><?php echo htmlspecialchars($value); ?></option>

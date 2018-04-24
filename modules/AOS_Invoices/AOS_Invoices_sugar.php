@@ -122,4 +122,3 @@ class AOS_Invoices_sugar extends Basic {
 }
 
 }
-?>

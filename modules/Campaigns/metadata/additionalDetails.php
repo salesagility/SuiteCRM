@@ -71,7 +71,3 @@ function additionalDetailsCampaign($fields) {
 				 'editLink' => "index.php?action=EditView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}", 
 				 'viewLink' => "index.php?action=DetailView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}");
 }
- 
- ?>
- 
- 

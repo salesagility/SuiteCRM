@@ -283,8 +283,8 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
 function server_save_relationships($list, $from_date, $to_date){
 	require_once('include/utils/db_utils.php');
 	global  $beanList, $beanFiles;
-	$from_date = db_convert("'".$GLOBALS['db']->quote($from_date)."'", 'datetime');
-	$to_date = db_convert("'".$GLOBALS['db']->quote($to_date)."'", 'datetime');
+	$from_date = db_convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime');
+	$to_date = db_convert("'".DBManagerFactory::getInstance()->quote($to_date)."'", 'datetime');
 	global $sugar_config;
 	$db = DBManagerFactory::getInstance();
 
@@ -307,12 +307,12 @@ function server_save_relationships($list, $from_date, $to_date){
 		$resolve = 1;
 
 		foreach($record['name_value_list'] as $name_value){
-			$name = $GLOBALS['db']->quote($name_value['name']);
+			$name = DBManagerFactory::getInstance()->quote($name_value['name']);
 
 			if($name == 'date_modified'){
                 $value = $to_date;
 			}else{
-                $value = db_convert("'".$GLOBALS['db']->quote($name_value['value'])."'", 'varchar');
+                $value = db_convert("'".DBManagerFactory::getInstance()->quote($name_value['value'])."'", 'varchar');
 			}
 			if($name != 'resolve'){
 			if(empty($insert)){
@@ -354,8 +354,8 @@ function server_save_relationships($list, $from_date, $to_date){
 		$insert = "INSERT INTO $table_name $insert) VALUES $insert_values)";
 		$update = "UPDATE $table_name SET $update WHERE id=";
 		$delete = "DELETE FROM $table_name WHERE id=";
-		$select_by_id_date = "SELECT id FROM $table_name WHERE id ='".$GLOBALS['db']->quote($id)."' AND date_modified > $from_date AND date_modified<= $to_date";
-		$select_by_id = "SELECT id FROM $table_name WHERE id ='".$GLOBALS['db']->quote($id)."'";
+		$select_by_id_date = "SELECT id FROM $table_name WHERE id ='".DBManagerFactory::getInstance()->quote($id)."' AND date_modified > $from_date AND date_modified<= $to_date";
+		$select_by_id = "SELECT id FROM $table_name WHERE id ='".DBManagerFactory::getInstance()->quote($id)."'";
 		$select_by_values = "SELECT id FROM $table_name WHERE $select_values";
 		$updated = false;
 
@@ -371,7 +371,7 @@ function server_save_relationships($list, $from_date, $to_date){
 				$result = $db->query($select_by_id);
 				if($row = $db->fetchByAssoc($result)){
 
-					$db->query($update ."'".$GLOBALS['db']->quote($row['id'])."'" );
+					$db->query($update ."'".DBManagerFactory::getInstance()->quote($row['id'])."'" );
 					$ids[] = $row['id'];
 					$modify++;
 				}else{
@@ -509,5 +509,3 @@ function get_linked_records($get_module, $from_module, $get_id) {
 
 	return $id_arr;
 }
-
-?>

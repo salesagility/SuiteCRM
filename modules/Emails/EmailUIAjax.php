@@ -56,7 +56,7 @@ function handleSubs($subs, $email, $json, $user = null)
 {
 
     // flows into next case statement
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $current_user;
     
     if(!$user) {
@@ -300,7 +300,7 @@ if (isset($_REQUEST['emailUIAction'])) {
     	break;
     case 'getTemplateAttachments':
         $GLOBALS['log']->debug("********** EMAIL 2.0 - Asynchronous - at: getTemplateAttachments");
-        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {global $db;
+        if(isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id'])) {$db = DBManagerFactory::getInstance();
 
 
             $where = "parent_id='{$db->quote($_REQUEST['parent_id'])}'";
@@ -1276,11 +1276,14 @@ eoq;
             $oe->type = $type;
             $oe->user_id = $current_user->id;
             $oe->mail_sendtype = "SMTP";
-            $oe->mail_smtptype = $_REQUEST['mail_smtptype'];
+
+            $oe->smtp_from_name = $_REQUEST['smtp_from_name'];
+            $oe->smtp_from_addr = $_REQUEST['smtp_from_addr'];
             $oe->mail_smtpserver = $_REQUEST['mail_smtpserver'];
             $oe->mail_smtpport = $_REQUEST['mail_smtpport'];
             $oe->mail_smtpssl = $_REQUEST['mail_smtpssl'];
             $oe->mail_smtpauth_req = isset($_REQUEST['mail_smtpauth_req']) ? 1 : 0;
+            $oe->mail_smtpuser = $_REQUEST['mail_smtpuser'];
             $oe->mail_smtpuser = $_REQUEST['mail_smtpuser'];
             if (!empty($_REQUEST['mail_smtppass'])) {
                 $oe->mail_smtppass = $_REQUEST['mail_smtppass'];
@@ -1711,7 +1714,7 @@ eoq;
                 $time = microtime(true);
                 $r = $ie->db->query($countq);
                 $GLOBALS['log']->debug("***QUERY counted in " . (microtime(true) - $time) . " milisec\n");
-                if ($row = $GLOBALS['db']->fetchByAssoc($r)) {
+                if ($row = DBManagerFactory::getInstance()->fetchByAssoc($r)) {
                     $count = $row['c'];
                 }
                 $time = microtime(true);

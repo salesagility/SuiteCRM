@@ -83,5 +83,3 @@ function get_body(&$ss, $vardef){
 	$ss->assign('defaultTime', $defaultTime);
 	return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/datetimecombo.tpl');
 }
-
-?>

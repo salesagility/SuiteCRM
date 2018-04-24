@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,9 +39,8 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-	die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
-
 
 /**
  * Implodes some parts of version with specified delimiter, beta & rc parts are removed all time
@@ -1031,7 +1030,7 @@ eoq;
  * @return bool true on success
  */
 function updateVersions($version) {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	global $sugar_config;
 	global $path;
 
@@ -1097,7 +1096,7 @@ function getModuleLanguagePack($lang, $module) {
 function checkSystemCompliance() {
 	global $sugar_config;
 	global $current_language;
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	global $mod_strings;
 	global $app_strings;
 
@@ -1179,15 +1178,6 @@ function checkSystemCompliance() {
 		$ret['error_found'] = true;
 	} else {
 		$ret['safeModeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
-	}
-
-
-	// call time pass by ref
-	if('1' == ini_get('allow_call_time_pass_reference')) {
-		$ret['callTimeStatus'] = "<b><span class=stop>{$installer_mod_strings['ERR_CHECKSYS_CALL_TIME']}</span></b>";
-		//continue upgrading
-	} else {
-		$ret['callTimeStatus'] = "<b><span class=go>{$installer_mod_strings['LBL_CHECKSYS_OK']}</span></b>";
 	}
 
 	// memory limit
@@ -2220,20 +2210,6 @@ if ( !function_exists('validate_manifest') ) {
 			}
 		}
 
-		if(isset($manifest['acceptable_sugar_flavors']) && sizeof($manifest['acceptable_sugar_flavors']) > 0) {
-			$flavor_ok = false;
-			foreach($manifest['acceptable_sugar_flavors'] as $match) {
-				if($match == $sugar_flavor) {
-					$flavor_ok = true;
-				}
-			}
-			if(!$flavor_ok) {
-				return $mod_strings['ERROR_FLAVOR_INCOMPATIBLE']."<br />".
-				$mod_strings['ERR_UW_FLAVOR'].$sugar_flavor."<br />".
-				$mod_strings['ERR_UW_FLAVOR_2'].$manifest['acceptable_sugar_flavors'][0];
-			}
-		}
-
 		return '';
 	}
 
@@ -2396,7 +2372,7 @@ function UWrebuild() {
 }
 
 function getCustomTables() {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	return $db->tablesLike('%_cstm');
 }
@@ -2407,7 +2383,7 @@ function alterCustomTables($customTables)
 }
 
 function getAllTables() {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	return $db->getTablesArray();
 }
 
@@ -2423,7 +2399,7 @@ function printAlterTableSql($tables)
 
 function executeConvertTablesSql($tables)
 {
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	foreach($tables as $table){
 		$query = "ALTER TABLE " . $table . " CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
@@ -3352,7 +3328,7 @@ function upgradeModulesForTeamsets($filter=array()) {
 			continue;
 		}
 
-		$FieldArray = $GLOBALS['db']->helper->get_columns($bean->table_name);
+		$FieldArray = DBManagerFactory::getInstance()->helper->get_columns($bean->table_name);
 		if(!isset($FieldArray['team_id'])) {
 			continue;
 		}
@@ -3364,8 +3340,8 @@ function upgradeModulesForTeamsets($filter=array()) {
 	//Upgrade users table
 	$bean = loadBean('Users');
 	upgradeTeamColumn($bean, 'default_team');
-	$result = $GLOBALS['db']->query("SELECT id FROM teams where deleted=0");
-	while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+	$result = DBManagerFactory::getInstance()->query("SELECT id FROM teams where deleted=0");
+	while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
 		$teamset = new TeamSet();
 		$teamset->addTeams($row['id']);
 	}
@@ -3441,11 +3417,11 @@ function upgradeTeamColumn($bean, $column_name) {
 
 	if(isset($bean->field_defs['team_set_id'])) {
 		//Create the team_set_id column
-		$FieldArray = $GLOBALS['db']->helper->get_columns($bean->table_name);
+		$FieldArray = DBManagerFactory::getInstance()->helper->get_columns($bean->table_name);
 		if(!isset($FieldArray['team_set_id'])) {
-			$GLOBALS['db']->addColumn($bean->table_name, $bean->field_defs['team_set_id']);
+			DBManagerFactory::getInstance()->addColumn($bean->table_name, $bean->field_defs['team_set_id']);
 		}
-		$indexArray =  $GLOBALS['db']->helper->get_indices($bean->table_name);
+		$indexArray =  DBManagerFactory::getInstance()->helper->get_indices($bean->table_name);
 
 		$indexName = getValidDBName('idx_'.strtolower($bean->table_name).'_tmst_id', true, 34);
 		$indexDef = array(
@@ -3456,11 +3432,11 @@ function upgradeTeamColumn($bean, $column_name) {
 			)
 		);
 		if(!isset($indexArray[$indexName])) {
-			$GLOBALS['db']->addIndexes($bean->table_name, $indexDef);
+			DBManagerFactory::getInstance()->addIndexes($bean->table_name, $indexDef);
 		}
 
 		//Update the table's team_set_id column to have the same values as team_id
-		$GLOBALS['db']->query("UPDATE {$bean->table_name} SET team_set_id = {$column_name}");
+		DBManagerFactory::getInstance()->query("UPDATE {$bean->table_name} SET team_set_id = {$column_name}");
 	}
 }
 
@@ -3473,7 +3449,7 @@ function upgradeFolderSubscriptionsTeamSetId()
 {
 	logThis("In upgradeFolderSubscriptionsTeamSetId()");
 	$query = "UPDATE folders SET team_set_id = team_id";
-	$result = $GLOBALS['db']->query($query);
+	$result = DBManagerFactory::getInstance()->query($query);
 	logThis("Finished upgradeFolderSubscriptionsTeamSetId()");
 }
 
@@ -3486,12 +3462,12 @@ function upgradeFolderSubscriptionsTeamSetId()
  */
 function upgradeModulesForTeam() {
 	logThis("In upgradeModulesForTeam()");
-	$result = $GLOBALS['db']->query("SELECT id, user_name, first_name, last_name FROM users where deleted=0");
+	$result = DBManagerFactory::getInstance()->query("SELECT id, user_name, first_name, last_name FROM users where deleted=0");
 
-	while($row = $GLOBALS['db']->fetchByAssoc($result)) {
-		$results2 = $GLOBALS['db']->query("SELECT id FROM teams WHERE name = '({$row['user_name']})'");
+	while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
+		$results2 = DBManagerFactory::getInstance()->query("SELECT id FROM teams WHERE name = '({$row['user_name']})'");
 		$assoc = '';
-		if(!$assoc = $GLOBALS['db']->fetchByAssoc($results2)) {
+		if(!$assoc = DBManagerFactory::getInstance()->fetchByAssoc($results2)) {
 			//if team does not exist, then lets create the team for this user
 			$team = new Team();
 			$user = new User();
@@ -3515,7 +3491,7 @@ function upgradeModulesForTeam() {
 		}
 
 		$query = "UPDATE teams SET name = '{$name}', name_2 = '{$name_2}', associated_user_id = '{$associated_user_id}' WHERE id = '{$team_id}'";
-		$GLOBALS['db']->query($query);
+		DBManagerFactory::getInstance()->query($query);
 	} //while
 
 	//Update the team_set_id and default_team columns
@@ -3523,8 +3499,8 @@ function upgradeModulesForTeam() {
 
 	//Update team_set_id
 	if($ce_to_pro_or_ent) {
-		$GLOBALS['db']->query("update users set team_set_id = (select teams.id from teams where teams.associated_user_id = users.id)");
-		$GLOBALS['db']->query("update users set default_team = (select teams.id from teams where teams.associated_user_id = users.id)");
+		DBManagerFactory::getInstance()->query("update users set team_set_id = (select teams.id from teams where teams.associated_user_id = users.id)");
+		DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.associated_user_id = users.id)");
 	}
 
 }
@@ -3670,9 +3646,9 @@ function fix_dropdown_list() {
 			if(isset($GLOBALS['app_list_strings']) && is_array($GLOBALS['app_list_strings'])) {
 				foreach($GLOBALS['app_list_strings'] as $key=>$entry) {
 					if(preg_match('/([^A-Za-z_])/', $key, $matches) && is_array($entry)) {
-						$result = $GLOBALS['db']->query("SELECT custom_module FROM fields_meta_data WHERE ext1 = '{$key}'");
+						$result = DBManagerFactory::getInstance()->query("SELECT custom_module FROM fields_meta_data WHERE ext1 = '{$key}'");
 						if(!empty($result)) {
-							while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+							while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
 								$custom_module = $row['custom_module'];
 								if(!empty($GLOBALS['beanList'][$custom_module])) {
 									$affected_modules[$custom_module] = $GLOBALS['beanList'][$custom_module];
@@ -3784,7 +3760,7 @@ function fix_dropdown_list() {
 		//Update db entries (the order matters here... need to process database changes first)
 		if(!empty($affected_keys)) {
 			foreach($affected_keys as $old_key=>$new_key) {
-				$GLOBALS['db']->query("UPDATE fields_meta_data SET ext1 = '{$new_key}' WHERE ext1 = '{$old_key}'");
+				DBManagerFactory::getInstance()->query("UPDATE fields_meta_data SET ext1 = '{$new_key}' WHERE ext1 = '{$old_key}'");
 			}
 		}
 
@@ -3815,7 +3791,7 @@ function update_iframe_dashlets(){
 		if(!empty($content['dashlets']) && !empty($content['pages'])){
 			$originalDashlets = $content['dashlets'];
 			foreach($originalDashlets as $key => $ds){
-				if(!empty($ds['options']['url']) && stristr($ds['options']['url'],'https://www.sugarcrm.com/crm/product/gopro')){
+				if(!empty($ds['options']['url']) && stristr($ds['options']['url'],'https://suitecrm.com/')){
 					unset($originalDashlets[$key]);
 				}
 			}
@@ -3833,28 +3809,28 @@ function update_iframe_dashlets(){
  */
 function convertImageToText($table_name,$column_name){
 	$set_lang = "SET LANGUAGE us_english";
-	$GLOBALS['db']->query($set_lang);
-	if($GLOBALS['db']->lastError()){
+	DBManagerFactory::getInstance()->query($set_lang);
+	if(DBManagerFactory::getInstance()->lastError()){
 		logThis('An error occurred when performing this query-->'.$set_lang);
 	}
 	$q="SELECT data_type
         FROM INFORMATION_SCHEMA.Tables T JOIN INFORMATION_SCHEMA.Columns C
         ON T.TABLE_NAME = C.TABLE_NAME where T.TABLE_NAME = '$table_name' and C.COLUMN_NAME = '$column_name'";
-	$res= $GLOBALS['db']->query($q);
-	if($GLOBALS['db']->lastError()){
+	$res= DBManagerFactory::getInstance()->query($q);
+	if(DBManagerFactory::getInstance()->lastError()){
 		logThis('An error occurred when performing this query-->'.$q);
 	}
-	$row= $GLOBALS['db']->fetchByAssoc($res);
+	$row= DBManagerFactory::getInstance()->fetchByAssoc($res);
 
 	if(trim(strtolower($row['data_type'])) == 'image'){
 		$addContent_temp = "alter table {$table_name} add {$column_name}_temp text null";
-		$GLOBALS['db']->query($addContent_temp);
-		if($GLOBALS['db']->lastError()){
+		DBManagerFactory::getInstance()->query($addContent_temp);
+		if(DBManagerFactory::getInstance()->lastError()){
 			logThis('An error occurred when performing this query-->'.$addContent_temp);
 		}
 		$qN = "select count=datalength({$column_name}), id, {$column_name} from {$table_name}";
-		$result = $GLOBALS['db']->query($qN);
-		while($row = $GLOBALS['db']->fetchByAssoc($result)){
+		$result = DBManagerFactory::getInstance()->query($qN);
+		while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)){
 			if($row['count'] >8000){
 				$contentLength = $row['count'];
 				$start = 1;
@@ -3862,11 +3838,11 @@ function convertImageToText($table_name,$column_name){
 				$convertedContent = '';
 				while($contentLength >0){
 					$stepsQuery = "select cont=convert(varchar(max), convert(varbinary(8000), substring({$column_name},{$start},{$next}))) from {$table_name} where id= '{$row['id']}'";
-					$steContQ = $GLOBALS['db']->query($stepsQuery);
-					if($GLOBALS['db']->lastError()){
+					$steContQ = DBManagerFactory::getInstance()->query($stepsQuery);
+					if(DBManagerFactory::getInstance()->lastError()){
 						logThis('An error occurred when performing this query-->'.$stepsQuery);
 					}
-					$stepCont = $GLOBALS['db']->fetchByAssoc($steContQ);
+					$stepCont = DBManagerFactory::getInstance()->fetchByAssoc($steContQ);
 					if(isset($stepCont['cont'])){
 						$convertedContent = $convertedContent.$stepCont['cont'];
 					}
@@ -3874,29 +3850,29 @@ function convertImageToText($table_name,$column_name){
 					$contentLength = $contentLength - $next;
 				}
 				$addContentDataText="update {$table_name} set {$column_name}_temp = '{$convertedContent}' where id= '{$row['id']}'";
-				$GLOBALS['db']->query($addContentDataText);
-				if($GLOBALS['db']->lastError()){
+				DBManagerFactory::getInstance()->query($addContentDataText);
+				if(DBManagerFactory::getInstance()->lastError()){
 					logThis('An error occurred when performing this query-->'.$addContentDataText);
 				}
 			}
 			else{
 				$addContentDataText="update {$table_name} set {$column_name}_temp =
                 convert(varchar(max), convert(varbinary(8000), {$column_name})) where id= '{$row['id']}'";
-				$GLOBALS['db']->query($addContentDataText);
-				if($GLOBALS['db']->lastError()){
+				DBManagerFactory::getInstance()->query($addContentDataText);
+				if(DBManagerFactory::getInstance()->lastError()){
 					logThis('An error occurred when performing this query-->'.$addContentDataText);
 				}
 			}
 		}
 		//drop the contents now and change contents_temp to contents
 		$dropColumn = "alter table {$table_name} drop column {$column_name}";
-		$GLOBALS['db']->query($dropColumn);
-		if($GLOBALS['db']->lastError()){
+		DBManagerFactory::getInstance()->query($dropColumn);
+		if(DBManagerFactory::getInstance()->lastError()){
 			logThis('An error occurred when performing this query-->'.$dropColumn);
 		}
 		$changeColumnName = "EXEC sp_rename '{$table_name}.[{$column_name}_temp]','{$column_name}','COLUMN'";
-		$GLOBALS['db']->query($changeColumnName);
-		if($GLOBALS['db']->lastError()){
+		DBManagerFactory::getInstance()->query($changeColumnName);
+		if(DBManagerFactory::getInstance()->lastError()){
 			logThis('An error occurred when performing this query-->'.$changeColumnName);
 		}
 	}
@@ -3933,7 +3909,7 @@ function clearHelpFiles(){
 function upgradeDateTimeFields($path)
 {
 	//bug: 39757
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	$meetingsSql = "UPDATE meetings SET date_end = ".$db->convert("date_start", 'add_time', array('duration_hours', 'duration_minutes'));
 	$callsSql = "UPDATE calls SET date_end = ".$db->convert("date_start", 'add_time', array('duration_hours', 'duration_minutes'));
 	logThis('upgradeDateTimeFields Meetings SQL:' . $meetingsSql, $path);
@@ -3949,7 +3925,7 @@ function upgradeDateTimeFields($path)
  */
 function upgradeDocumentTypeFields($path){
 	//bug: 39757
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
 	$documentsSql = "UPDATE documents SET doc_type = 'Sugar' WHERE doc_type IS NULL";
 	$meetingsSql = "UPDATE meetings SET type = 'Sugar' WHERE type IS NULL";
@@ -4690,13 +4666,13 @@ function repairUpgradeHistoryTable()
 	global $sugar_config;
 
 	//Now upgrade the upgrade_history table entries
-	$results = $GLOBALS['db']->query('SELECT id, filename FROM upgrade_history');
+	$results = DBManagerFactory::getInstance()->query('SELECT id, filename FROM upgrade_history');
 	$upload_dir = $sugar_config['cache_dir'].'upload/';
 
 	//Create regular expression string to
 	$match = '/^' . str_replace('/', '\/', $upload_dir) . '(.*?)$/';
 
-	while(($row = $GLOBALS['db']->fetchByAssoc($results)))
+	while(($row = DBManagerFactory::getInstance()->fetchByAssoc($results)))
 	{
 		$file = str_replace('//', '/', $row['filename']); //Strip out double-paths that may exist
 
@@ -4704,7 +4680,7 @@ function repairUpgradeHistoryTable()
 		{
 			//Update new file location to use the new $sugar_config['upload_dir'] value
 			$new_file_location = $sugar_config['upload_dir'] . $matches[1];
-			$GLOBALS['db']->query("UPDATE upgrade_history SET filename = '{$new_file_location}' WHERE id = '{$row['id']}'");
+			DBManagerFactory::getInstance()->query("UPDATE upgrade_history SET filename = '{$new_file_location}' WHERE id = '{$row['id']}'");
 		}
 	}
 

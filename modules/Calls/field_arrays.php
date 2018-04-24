@@ -69,4 +69,3 @@ $fields_array['Call'] = array ('column_fields' => Array("id"
 		),
         'required_fields' => array("name"=>1, "date_start"=>2, "time_start"=>3,),
 );
-?>

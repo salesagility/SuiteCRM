@@ -69,7 +69,7 @@ class ListViewPackages extends ListViewSmarty{
      * @param data  the data to display on the page
      * @param file  the template file to parse
      */
-    function setup($data, $file, $where, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id'){
+    function setup($data, $file, $where, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id', $id=NULL) {
         $this->data = $data;
         $this->tpl = $file;
     }
@@ -87,4 +87,3 @@ class ListViewPackages extends ListViewSmarty{
         return $this->ss->fetch($this->tpl);
     }
 }
-?>

@@ -91,4 +91,3 @@ function get_new_record_form () {
 	$accountForm = new ProspectListFormBase();
 	return $accountForm->getForm('','ProspectLists');
 }
-?>

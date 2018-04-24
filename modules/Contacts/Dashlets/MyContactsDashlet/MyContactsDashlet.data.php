@@ -66,7 +66,7 @@ $dashletData['MyContactsDashlet']['columns'] = array('name' => array('width'   =
                                                      'email1' => array('width' => '10',
                                                                     'label' => 'LBL_EMAIL_ADDRESS',
                                                                     'sortable' => false,
-                                                                    'customCode' => '{$EMAIL1_LINK}{$EMAIL1}</a>',),
+                                                                    'customCode' => '{$EMAIL1_LINK}',),
                                                      'phone_work' => array('width'   => '15',
                                                                            'label'   => 'LBL_OFFICE_PHONE',
                                                                            'default' => true),
@@ -87,4 +87,4 @@ $dashletData['MyContactsDashlet']['columns'] = array('name' => array('width'   =
                                                                                    'label'   => 'LBL_LIST_ASSIGNED_USER',
                                                                                    'default' => true),
                                                                              );
-?>
+

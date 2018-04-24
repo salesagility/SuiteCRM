@@ -79,7 +79,7 @@ array (
     'label' => 'LBL_EMAIL_ADDRESS',
     'sortable' => false,
     'link' => true,
-    'customCode' => '{$EMAIL1_LINK}{$EMAIL1}</a>',
+    'customCode' => '{$EMAIL1_LINK}',
     'default' => true,
   ),
   'DATE_ENTERED' => 
@@ -221,4 +221,3 @@ array (
     'default' => false,
   ),
 );
-?>

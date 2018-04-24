@@ -477,6 +477,7 @@ CAL.change_activity_type = function (mod_name) {
   CAL.load_create_form(CAL.current_params);
 }
 CAL.load_create_form = function (params) {
+  CAL.reset_edit_dialog();
   CAL.disable_buttons();
   ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
   CAL.repeat_tab_handle(CAL.current_params.module_name);
@@ -1051,7 +1052,7 @@ $($.fullCalendar).ready(function () {
           + '</div>';
         var body = SUGAR.language.translate('app_strings', 'LBL_LOADING_PAGE');
 
-        if ($('#cal_module').val() != "Home") {
+        if ($('#cal_module').val() != "Home" && typeof(event.id) !== 'undefined') {
           element.qtip({
             content: {
               title: {

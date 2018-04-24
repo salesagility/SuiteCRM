@@ -54,4 +54,3 @@ $listViewDefs['SavedSearch'] = array(
 		'width' => '10%', 
 		'label' => 'LBL_LIST_ASSIGNED_USER')
 );
-?>

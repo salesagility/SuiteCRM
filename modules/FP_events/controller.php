@@ -10,7 +10,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasinvited()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -48,7 +48,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasattended()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -86,7 +86,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasnotattended()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -124,7 +124,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasnotinvited()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -162,7 +162,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasaccepted()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -200,7 +200,7 @@ class FP_eventsController extends SugarController
     }
     public function action_markasdeclined()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -353,7 +353,7 @@ class FP_eventsController extends SugarController
     }
 
     public function action_sendinvitemails(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
         global $sugar_config;
         global $mod_strings;
 
@@ -616,7 +616,7 @@ class FP_eventsController extends SugarController
         $mail->AddAddress($emailTo);
 
         //now create email
-        if (@$mail->Send()) {
+        if ($mail->send()) {
             $emailObj->to_addrs= '';
             $emailObj->type= 'out';
             $emailObj->deleted = '0';

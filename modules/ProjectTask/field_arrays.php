@@ -86,4 +86,3 @@ $fields_array['ProjectTask'] = array ('column_fields' => array(
 	),
     'required_fields' =>  array('name'=>1, 'project_id'=>2, 'project_task_id'=>3, 'duration'=>4, 'duration_unit'=>5),
 );
-?>

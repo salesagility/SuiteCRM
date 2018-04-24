@@ -108,7 +108,3 @@ class SecurityGroupUserRelationship extends SugarBean {
         return $query;
     }
 }
-
-
-
-?>

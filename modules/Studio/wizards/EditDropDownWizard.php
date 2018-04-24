@@ -85,5 +85,3 @@ class EditDropDownWizard extends StudioWizard {
 	}
 	
 }
-
-?>
