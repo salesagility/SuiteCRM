@@ -791,7 +791,7 @@ class EmailTemplate extends SugarBean
                  $mVals = unencodeMultienum($value);
                  $translatedVals = array();
                  foreach($mVals as $mVal){
-                     $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
+                     $translatedVals[] = translate($field_def['options'], '', $mVal);
                  }
                  $value = implode(", ", $translatedVals);
             }
