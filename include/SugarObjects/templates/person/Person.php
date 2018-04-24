@@ -356,7 +356,7 @@ class Person extends Basic
             throw new InvalidArgumentException('basis must be a string');
         }
 
-        if (!array_key_exists($basis, $app_list_strings['lawful_basiss'])) {
+        if (!array_key_exists($basis, $app_list_strings['lawful_basis_dom'])) {
             throw new InvalidArgumentException('invalid lawful basis');
         }
 
@@ -364,7 +364,7 @@ class Person extends Basic
             throw new InvalidArgumentException('source for lawful basis must be a string');
         }
 
-        if (!array_key_exists($source, $app_list_strings['lawful_basis_sources'])) {
+        if (!array_key_exists($source, $app_list_strings['lawful_basis_source_dom'])) {
             throw new InvalidArgumentException('invalid lawful basis source');
         }
 
