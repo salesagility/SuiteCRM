@@ -149,6 +149,7 @@ function getConditionsAsParameters($report, $override = array())
         $disp = getDisplayForField($path, $condition->field, $report->report_module);
         $conditions[] = array(
             'id' => $condition->id,
+            'key' => $key,
             'operator' => $condition->operator,
             'operator_display' => $app_list_strings['aor_operator_list'][$condition->operator],
             'value_type' => $condition->value_type,
