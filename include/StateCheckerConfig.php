@@ -207,8 +207,8 @@ class StateCheckerConfig
                 self::$globalKeys;
         
         self::$fileExludeRegexes =
-            isset($sugar_config['state_checker']['file_exclude_regexes']) ?
-                $sugar_config['state_checker']['file_exclude_regexes'] :
+            isset($sugar_config['state_checker']['file_exlude_regexes']) ?
+                $sugar_config['state_checker']['file_exlude_regexes'] :
                 self::$fileExludeRegexes;
         
         self::$autoRun =
