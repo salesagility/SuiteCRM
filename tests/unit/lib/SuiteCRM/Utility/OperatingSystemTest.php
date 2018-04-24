@@ -1,10 +1,8 @@
 <?php
 
 
-class OperatingSystemTest extends \Codeception\Test\Unit
+class OperatingSystemTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
-    use \SuiteCRM\StateCheckerTrait;
-    use \SuiteCRM\StateCheckerCodeceptionTrait;
     /**
      * @var \UnitTester
      */
