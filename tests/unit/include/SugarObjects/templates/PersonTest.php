@@ -106,12 +106,12 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         );
 
         // test lawful sources
-        $this->assertEquals(1, $person->setLawfulBasis('', ''));
-        $this->assertEquals(1, $person->setLawfulBasis('', 'website'));
-        $this->assertEquals(1, $person->setLawfulBasis('', 'phone'));
-        $this->assertEquals(1, $person->setLawfulBasis('', 'given_to_user'));
-        $this->assertEquals(1, $person->setLawfulBasis('', 'email'));
-        $this->assertEquals(1, $person->setLawfulBasis('', 'third_party'));
+        $this->assertEquals(true, $person->setLawfulBasis('', ''));
+        $this->assertEquals(true, $person->setLawfulBasis('', 'website'));
+        $this->assertEquals(true, $person->setLawfulBasis('', 'phone'));
+        $this->assertEquals(true, $person->setLawfulBasis('', 'given_to_user'));
+        $this->assertEquals(true, $person->setLawfulBasis('', 'email'));
+        $this->assertEquals(true, $person->setLawfulBasis('', 'third_party'));
 
         // test that source is being set
         $this->assertEquals('third_party', $person->lawful_basis_source);
