@@ -90,20 +90,23 @@ $viewdefs[$module_name]['DetailView'] = array(
                 'label' => 'LBL_OTHER_PHONE',
             ),
         ),
-        array(
+        'lbl_consent' => array(
             array(
-                'name' => 'lawful_basis',
-                'label' => 'LBL_LAWFUL_BASIS',
+                array(
+                    'name' => 'lawful_basis',
+                    'label' => 'LBL_LAWFUL_BASIS',
+                ),
+                array(
+                    'name' => 'lawful_basis_source',
+                    'label' => 'LBL_LAWFUL_BASIS_SOURCE',
+                ),
             ),
             array(
-                'name' => 'lawful_basis_source',
-                'label' => 'LBL_LAWFUL_BASIS_SOURCE',
-            ),
-        ),
-        array(
-            array(
-                'name' => 'date_reviewed',
-                'label' => 'LBL_DATE_REVIEWED',
+                array(
+                    'name' => 'date_reviewed',
+                    'label' => 'LBL_DATE_REVIEWED',
+                ),
+                null,
             ),
         ),
         array(
