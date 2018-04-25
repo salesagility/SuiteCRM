@@ -68,22 +68,7 @@ $viewdefs[$module_name]['EditView'] = array(
                 'title',
                 'phone_home',
             ),
-            array(
-                array(
-                    'name'=>'lawful_basis',
-                    'label'=>'LBL_LAWFUL_BASIS',
-                ),
-                array(
-                    'name'=>'lawful_basis_source',
-                    'label'=>'LBL_LAWFUL_BASIS_SOURCE',
-                ),
-            ),
-            array(
-                array(
-                    'name'=>'date_reviewed',
-                    'label'=>'LBL_DATE_REVIEWED',
-                ),
-            ),
+
 
             array(
                 'department',
@@ -104,6 +89,25 @@ $viewdefs[$module_name]['EditView'] = array(
                 'description',
             ),
 
+        ),
+        'lbl_consent' => array(
+            array(
+                array(
+                    'name'=>'lawful_basis',
+                    'label'=>'LBL_LAWFUL_BASIS',
+                ),
+                array(
+                    'name'=>'lawful_basis_source',
+                    'label'=>'LBL_LAWFUL_BASIS_SOURCE',
+                ),
+            ),
+            array(
+                array(
+                    'name'=>'date_reviewed',
+                    'label'=>'LBL_DATE_REVIEWED',
+                ),
+                null,
+            ),
         ),
         'lbl_email_addresses' => array(
             array('email1')
