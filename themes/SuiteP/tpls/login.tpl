@@ -115,7 +115,7 @@
                 <a href='javascript:void(0)'>{sugar_translate module="Users" label="LBL_LOGIN_FORGOT_PASSWORD"}</a>
             </div>
         </form>
-        
+
         <form class="form-signin passform" role="form" action="index.php" method="post" name="DetailView" id="form" name="fp_form" id="fp_form" autocomplete="off">
             <div id="forgot_password_dialog" style="display:none">
                 <input type="hidden" name="entryPoint" value="GeneratePassword">
