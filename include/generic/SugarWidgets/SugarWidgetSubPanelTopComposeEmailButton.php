@@ -71,8 +71,10 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         } else {
             $client = $defaultPref;
         }
+        /** @var Person|Company $bean */
+        $bean = $defines['focus'];
+
         if ($client != 'sugar') {
-            $bean = $defines['focus'];
             // awu: Not all beans have emailAddress property, we must account for this
             if (isset($bean->emailAddress)) {
                 $to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
@@ -86,12 +88,13 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 
             $emailUI = new EmailUI();
             $emailUI->appendTick = false;
-            $button = $emailUI->populateComposeViewFields(
-                $defines['focus'],
-                'email1',
-                true,
-                $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
-            );
+            $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'
+            . $bean->module_name . '" data-record-id="'
+            . $bean->id . '" data-module-name="'
+            . $bean->name .'" data-email-address="'
+            . $bean->email1 .'">'
+            . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
+            . '</a>';
         }
 
         return $button;
