@@ -847,6 +847,7 @@ class SugarEmailAddress extends SugarBean
         $post_from_email_address_widget = (isset($_REQUEST[$module . '_email_widget_id']));
         $primaryValue = $primary;
         $widgetCount = 0;
+        $widget_id = '';
         $hasEmailValue = false;
         $email_ids = array();
 
