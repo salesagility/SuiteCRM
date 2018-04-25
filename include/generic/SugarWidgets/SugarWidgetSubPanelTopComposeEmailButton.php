@@ -71,7 +71,7 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         } else {
             $client = $defaultPref;
         }
-        /** @var Person|Company $bean */
+        /** @var Person|Company|Opportunity $bean */
         $bean = $defines['focus'];
 
         if ($client != 'sugar') {
@@ -85,6 +85,19 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         } else {
             // Generate the compose package for the quick create options.
             require_once 'modules/Emails/EmailUI.php';
+
+
+            // Opportunities does not have an email1 field
+            // we need to use the related account email instead
+            if ($bean->module_name === 'Opportunities') {
+                $relatedAccountId = $bean->account_id;
+                /** @var Account $relatedAccountBean */
+                $relatedAccountBean = BeanFactory::getBean('Accounts', $relatedAccountId);
+                if(!empty($relatedAccountBean) && !empty($relatedAccountBean->email1)) {
+                    $bean->email1 = $relatedAccountBean->email1;
+                    $bean->name = $relatedAccountBean->name;
+                }
+            }
 
             $emailUI = new EmailUI();
             $emailUI->appendTick = false;
