@@ -156,9 +156,21 @@
       var populateEmailAddress = '';
       var populateModule = '';
       var populateModuleRecord = '';
+      var dataEmailName = $(source).attr('data-module-name');
+      var dataEmailAddress = $(source).attr('data-email-address');
+
       $('.email-compose-view-to-list').each(function () {
         populateModuleName = $(this).attr('data-record-name');
+        if (dataEmailName !== '') {
+            populateModuleName = dataEmailName;
+        }
+
         populateEmailAddress = $(this).attr('data-record-email');
+
+        if (dataEmailAddress !== '') {
+            populateEmailAddress = dataEmailAddress;
+        }
+
         populateModule = $(this).attr('data-record-module');
         populateModuleRecord = $(this).attr('data-record-id');
         if (targetCount > 0) {
