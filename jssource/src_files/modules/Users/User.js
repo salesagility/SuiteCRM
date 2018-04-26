@@ -205,3 +205,5 @@ function setDefaultSigId(id) {
 		default_sig.value = "";
 	}
 }
+
+// todo: disabled/enabled factor_auth_interface select when check/unchecked facto_auth checkbox

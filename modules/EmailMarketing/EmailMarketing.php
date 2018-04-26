@@ -104,9 +104,12 @@ class EmailMarketing extends SugarBean
 		}
 
 		$timedate = TimeDate::getInstance();
-		$timedate->setUser($current_user);
-		if($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start)) {
-			$dateStart = $timedate->asDb($dateTime);
+
+        $userTimeZone = $current_user->getPreference('timezone');
+        $timeZone = new DateTimeZone($userTimeZone);
+
+        if($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start,$timeZone)) {
+            $dateStart = $timedate->asDb($dateTime);
 			$this->date_start = $dateStart;
 		}
 
@@ -122,6 +125,7 @@ class EmailMarketing extends SugarBean
 			$this->time_start = $date_start_array[1];
         	$this->date_start = $date_start_array[0];
         }
+
         return $this;
 	}
 
@@ -139,8 +143,21 @@ class EmailMarketing extends SugarBean
 
 		$temp_array = $this->get_list_view_array();
 
-		$id = $temp_array['ID'];
-		$template_id = $temp_array['TEMPLATE_ID'];
+                if (!isset($temp_array['ID'])) {
+                    LoggerManager::getLogger()->warn('EmailMarketing get list view data error: list view array has not ID.');
+                    $id = null;
+                } else {
+                    $id = $temp_array['ID'];
+                }
+                
+
+                if (!isset($temp_array['ID'])) {
+                    LoggerManager::getLogger()->warn('EmailMarketing get list view data error: list view array has not Template ID.');
+                    $template_id = null;
+                } else {
+                    $template_id = $temp_array['TEMPLATE_ID'];
+                }
+		
 
 		//mode is set by schedule.php from campaigns module.
 		if (!isset($this->mode) or empty($this->mode) or $this->mode!='test') {
@@ -242,4 +259,3 @@ class EmailMarketing extends SugarBean
 		return $errors;
 	}
 }
-?>

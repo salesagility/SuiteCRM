@@ -49,7 +49,7 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
         return '&nbsp;';
     }
 
-    function displayList($layout_def)
+    function displayList(&$layout_def)
     {
 
         global $app_strings;
@@ -60,48 +60,50 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
         $parent_record_id = $_REQUEST['record'];
         $parent_module = $_REQUEST['module'];
 
-        $action = 'DeleteRelationship';
-        $record = $layout_def['fields']['ID'];
-        $current_module = $layout_def['module'];
-        //in document revisions subpanel ,users are now allowed to
-        //delete the latest revsion of a document. this will be tested here
-        //and if the condition is met delete button will be removed.
-        $hideremove = false;
-        if ($current_module === 'DocumentRevisions') {
-            if ($layout_def['fields']['ID'] === $layout_def['fields']['LATEST_REVISION_ID']) {
-                $hideremove = true;
-            }
-        } elseif ($_REQUEST['module'] === 'Teams' && $current_module === 'Users') {
-            // Implicit Team-memberships are not "removeable"
-            if ($layout_def['fields']['UPLINE'] !== translate('LBL_TEAM_UPLINE_EXPLICIT', 'Users')) {
-                $hideremove = true;
-            }
+		$action = 'DeleteRelationship';
+		$record = $layout_def['fields']['ID'];
+		$current_module=$layout_def['module'];
+		//in document revisions subpanel ,users are now allowed to 
+		//delete the latest revsion of a document. this will be tested here
+		//and if the condition is met delete button will be removed.
+		$hideremove=false;
+		if ($current_module==='DocumentRevisions') {
+			if ($layout_def['fields']['ID']===$layout_def['fields']['LATEST_REVISION_ID']) {
+				$hideremove=true;
+			}
+		}elseif ($_REQUEST['module'] === 'Teams' && $current_module === 'Users') {
+		// Implicit Team-memberships are not "removeable"
 
-            //We also cannot remove the user whose private team is set to the parent_record_id value
-            $user = new User();
-            $user->retrieve($layout_def['fields']['ID']);
-            if ($parent_record_id === $user->getPrivateTeamID()) {
-                $hideremove = true;
-            }
-        } elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
+			if($layout_def['fields']['UPLINE'] !== translate('LBL_TEAM_UPLINE_EXPLICIT', 'Users')) {
+				$hideremove = true;
+			}
+
+			//We also cannot remove the user whose private team is set to the parent_record_id value
+			$user = new User();
+			$user->retrieve($layout_def['fields']['ID']);
+			if($parent_record_id === $user->getPrivateTeamID()){
+
+			    $hideremove = true;
+			}} elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
             $hideremove = true;
-        }
-
-
-        $return_module = $_REQUEST['module'];
-        $return_action = 'SubPanelViewer';
-        $subpanel = $layout_def['subpanel_id'];
-        $return_id = $_REQUEST['record'];
-        if (isset($layout_def['linked_field_set']) && !empty($layout_def['linked_field_set'])) {
-            $linked_field = $layout_def['linked_field_set'];
-        } else {
-            $linked_field = $layout_def['linked_field'];
-        }
-        $refresh_page = 0;
-        if (!empty($layout_def['refresh_page'])) {
-            $refresh_page = 1;
-        }
-        $return_url = "index.php?module=$return_module&action=$return_action&subpanel=$subpanel&record=$return_id&sugar_body_only=1&inline=1";
+		}elseif ($current_module === 'ACLRoles' && (!ACLController::checkAccess($current_module, 'edit', true))) {
+            $hideremove = true;
+		}
+		
+		$return_module = $_REQUEST['module'];
+		$return_action = 'SubPanelViewer';
+		$subpanel = $layout_def['subpanel_id'];
+		$return_id = $_REQUEST['record'];
+		if (isset($layout_def['linked_field_set']) && !empty($layout_def['linked_field_set'])) {
+			$linked_field= $layout_def['linked_field_set'] ;
+		} else {
+			$linked_field = $layout_def['linked_field'];
+		}
+		$refresh_page = 0;
+		if(!empty($layout_def['refresh_page'])){
+			$refresh_page = 1;
+		}
+		$return_url = "index.php?module=$return_module&action=$return_action&subpanel=$subpanel&record=$return_id&sugar_body_only=1&inline=1";
 
         $icon_remove_text = $app_strings['LBL_ID_FF_REMOVE'];
 

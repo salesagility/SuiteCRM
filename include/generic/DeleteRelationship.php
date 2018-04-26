@@ -62,36 +62,42 @@ ARGS:
 
 require_once('include/formbase.php');
 
-global $beanFiles, $beanList;
-$bean_name = $beanList[$_REQUEST['module']];
-require_once($beanFiles[$bean_name]);
-$focus = new $bean_name();
-if (empty($_REQUEST['linked_id']) || empty($_REQUEST['linked_field']) || empty($_REQUEST['record'])) {
-    die("need linked_field, linked_id and record fields");
-}
-$linked_field = $_REQUEST['linked_field'];
-$record = $_REQUEST['record'];
-$linked_id = $_REQUEST['linked_id'];
+ global $beanFiles,$beanList;
+ $bean_name = $beanList[$_REQUEST['module']];
+ require_once($beanFiles[$bean_name]);
+ $focus = new $bean_name();
+ if (  empty($_REQUEST['linked_id']) || empty($_REQUEST['linked_field'])  || empty($_REQUEST['record'])){
 
-if ($linked_field === 'aclroles') {
+	die("need linked_field, linked_id and record fields");
+ }
+ $linked_field = $_REQUEST['linked_field'];
+ $record = $_REQUEST['record'];
+ $linked_id = $_REQUEST['linked_id'];
+ if ($linked_field === 'aclroles') {
     if (!ACLController::checkAccess($bean_name, 'edit', true)) {
         ACLController::displayNoAccess();
         sugar_cleanup(true);
     }
+}if($linked_field === 'aclroles') {
+    if (!ACLController::checkAccess($bean_name , 'edit', true)) {
+ ACLController::displayNoAccess();
+        sugar_cleanup(true);
+    }
 }
 
-if ($bean_name === 'Team') {
-    $focus->retrieve($record);
-    $focus->remove_user_from_team($linked_id);
-} else {
-    // cut it off:
-    $focus->load_relationship($linked_field);
-    if ($focus->$linked_field->_relationship->relationship_name === 'quotes_contacts_shipto') {
-        unset($focus->$linked_field->_relationship->relationship_role_column);
-    }
-    $focus->$linked_field->delete($record, $linked_id);
-}
-if ($bean_name === 'Campaign' and $linked_field === 'prospectlists') {
+if ($bean_name === 'Team'){
+ 	$focus->retrieve($record);
+ 	$focus->remove_user_from_team($linked_id);
+ }
+ else{
+
+ 	// cut it off:
+ 	$focus->load_relationship($linked_field);
+ 	if($focus->$linked_field->_relationship->relationship_name === 'quotes_contacts_shipto'){
+ 		unset($focus->$linked_field->_relationship->relationship_role_column);}
+ 	$focus->$linked_field->delete($record,$linked_id);
+ }
+ if ($bean_name === 'Campaign' and $linked_field==='prospectlists' ) {
 
     $query = "SELECT email_marketing_prospect_lists.id from email_marketing_prospect_lists ";
     $query .= " left join email_marketing on email_marketing.id=email_marketing_prospect_lists.email_marketing_id";

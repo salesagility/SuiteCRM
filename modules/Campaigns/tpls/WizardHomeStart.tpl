@@ -73,6 +73,7 @@
 									<input type="radio"  id="wizardtype_nl" name="wizardtype" value='1'checked ><label for='wizardtype_nl'>{$MOD.LBL_NEWSLETTER}</label><br>
 									<input type="radio"  id="wizardtype_em" name="wizardtype" value='2'><label for='wizardtype_em'>{$MOD.LBL_EMAIL}</label><br>
 									<input type="radio"  id="wizardtype_ot" name='wizardtype' value='3'><label for='wizardtype_ot'>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</label><br>
+									<input type="radio"  id="wizardtype_survey" name='wizardtype' value='4'><label for='wizardtype_survey'>{$MOD.LBL_CAMPAIGN_SURVEY}</label><br>
 								</p>
 
 
@@ -80,7 +81,7 @@
 								<ul class="icon-btn-lst">
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_nl').click(); $(this).closest('form').submit();" title="{$MOD.LBL_NEWSLETTER_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-newsletter.png"}" />
+											<span class="suitepicon suitepicon-action-view-news"></span>
 											<br />
 											<span>{$MOD.LBL_NEWSLETTER}</span>
 										</a>
@@ -88,7 +89,7 @@
 
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_em').click(); $(this).closest('form').submit();" title="{$MOD.LBL_EMAIL_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-email.png"}" />
+											<span class="suitepicon suitepicon-module-emails"></span>
 											<br />
 											<span>{$MOD.LBL_EMAIL}</span>
 										</a>
@@ -96,9 +97,16 @@
 
 									<li class="icon-btn">
 										<a href="javascript:" onclick="$('#wizardtype_ot').click(); $(this).closest('form').submit();" title="{$MOD.LBL_NON_EMAIL_TITLE}">
-											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-nonemail.png"}" />
+											<span class="suitepicon suitepicon-action-megaphone"></span>
 											<br />
 											<span>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</span>
+										</a>
+									</li>
+									<li class="icon-btn">
+										<a href="javascript:" onclick="$('#wizardtype_survey').click(); $(this).closest('form').submit();" title="{$MOD.LBL_CAMPAIGN_SURVEY}">
+											<span class="suitepicon suitepicon-module-surveys"></span>
+											<br />
+											<span>{$MOD.LBL_CAMPAIGN_SURVEY}</span>
 										</a>
 									</li>
 								</ul>

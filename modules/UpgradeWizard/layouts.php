@@ -55,6 +55,11 @@ if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)
 	$curr_lang = $GLOBALS['current_language'];
 
 return_module_language($curr_lang, 'UpgradeWizard');
+
+$state = new \SuiteCRM\StateSaver();
+$state->pushErrorLevel();
+$state->pushPHPConfigOptions();
+
 error_reporting(E_ERROR);
 set_time_limit(0);
 set_upgrade_progress('layouts','in_progress');
@@ -129,6 +134,9 @@ $showRecheck = FALSE;
 $showNext = TRUE;
 
 set_upgrade_progress('layouts','done');
+
+$state->popErrorLevel();
+$state->popPHPConfigOptions();
 
 /**
  * Clean the merge data results, removing any emptys or blanks that should not be displayed 
@@ -228,7 +236,7 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
             else if( preg_match('/quickcreatedefs.php/i', $layoutPath) )
                 $label = $module_builder_language['LBL_QUICKCREATE'];
             else if( preg_match('/searchdefs.php/i', $layoutPath) )
-                $label = $module_builder_language['LBL_SEARCH'];
+                $label = $module_builder_language['LBL_SEARCH_BUTTON'];
             else 
                 continue;
 

@@ -208,6 +208,3 @@ class TemplateEnum extends TemplateText{
         parent::delete($df);
     }
 }
-
-
-?>

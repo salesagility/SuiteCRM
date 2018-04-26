@@ -63,10 +63,22 @@ class templateParser
                 } else if (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
                     $repl_arr[$key . "_" . $fieldName] = translate($field_def['options'], $focus->module_dir, $focus->$fieldName);
                 } else if ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
-                    $repl_arr[$key . "_" . $fieldName] = implode(', ', unencodeMultienum($focus->$fieldName));
+                    $mVals = unencodeMultienum($focus->$fieldName);
+                    $translatedVals = array();
+                    foreach($mVals as $mVal){
+                        $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
+                    }
+                    $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
                 } //Fix for Windows Server as it needed to be converted to a string.
                 else if ($field_def['type'] == 'int') {
                     $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
+                } else if ($field_def['type'] == 'bool') {
+                    if($focus->$fieldName == "1"){
+                        $repl_arr[$key . "_" . $fieldName] = "true";
+                    }else{
+                        $repl_arr[$key . "_" . $fieldName] = "false";
+                    }
+
                 } else if ($field_def['type'] == 'image') {
                     $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
                     $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
@@ -112,7 +124,8 @@ class templateParser
                 $sep = get_number_seperators();
                 $value = rtrim(rtrim(format_number($value), '0'), $sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
             }
-            if (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0) {
+            if ($focus->field_defs[$name][dbType] == 'datetime' &&
+                (strpos($name, 'date') > 0 || strpos($name, 'expiration') > 0) ) {
                 if ($value != '') {
                     $dt = explode(' ', $value);
                     $value = $dt[0];
@@ -134,5 +147,3 @@ class templateParser
         return $string;
     }
 }
-
-?>

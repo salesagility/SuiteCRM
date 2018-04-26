@@ -69,7 +69,7 @@ $listViewDefs['Employees'] = array(
         'width' => '15', 
         'label' => 'LBL_LIST_EMAIL', 
         'link' => true,
-        'customCode' => '{$EMAIL1_LINK}{$EMAIL1}</a>',
+        'customCode' => '{$EMAIL1_LINK}',
         'default' => true,
         'sortable' => false),
     'PHONE_WORK' => array(
@@ -87,4 +87,4 @@ $listViewDefs['Employees'] = array(
 	    'label' => 'LBL_DATE_ENTERED',
 	    'default' => true),
 );
-?>
+

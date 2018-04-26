@@ -308,4 +308,3 @@ class UpgradeHistory extends SugarBean
     }
 
 }
-?>

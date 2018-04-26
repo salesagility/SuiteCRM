@@ -56,4 +56,3 @@
 						'advanced_search' => array(),
 					),
  			   );
-?>

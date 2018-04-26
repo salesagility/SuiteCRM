@@ -100,4 +100,3 @@ class LeadsController extends SugarController{
         }
 	}
 }
-?>

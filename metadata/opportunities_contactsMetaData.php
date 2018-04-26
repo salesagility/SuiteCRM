@@ -61,8 +61,4 @@ $dictionary['opportunities_contacts'] = array ( 'table' => 'opportunities_contac
 							  'join_table'=> 'opportunities_contacts', 'join_key_lhs'=>'opportunity_id', 'join_key_rhs'=>'contact_id',
 							  ))
  
- )
- 
- 
- 
-?>
+ );

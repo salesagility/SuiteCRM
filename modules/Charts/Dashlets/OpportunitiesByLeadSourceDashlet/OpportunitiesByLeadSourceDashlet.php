@@ -99,6 +99,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         $chartHeight    = 500;
 
         $jsonData = json_encode($chartReadyData['data']);
+        $jsonKeys = json_encode($chartReadyData['keys']);
         $jsonLabels = json_encode($chartReadyData['labels']);
         $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
@@ -128,6 +129,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         <input type='hidden' class='searchFormTab' value='$searchFormTab' />
         $autoRefresh
         <script>
+           window["chartHBarKeys$canvasId"] = $jsonKeys;
            var pie = new RGraph.Pie({
                 id: '$canvasId',
                 data: $jsonData,
@@ -203,33 +205,38 @@ EOD;
     function getChartData($query)
     {
         global $app_list_strings, $db;
-        $dataSet = array();
+        $dataSet = [];
         $result = $db->query($query);
 
         $row = $db->fetchByAssoc($result);
 
-        while ($row != null){
+        while ($row != null) {
+            if (isset($row['lead_source']) && $app_list_strings['lead_source_dom'][$row['lead_source']]) {
+                $row['lead_source_key'] = $row['lead_source'];
+                $row['lead_source'] = $app_list_strings['lead_source_dom'][$row['lead_source']];
+            }
             $dataSet[] = $row;
             $row = $db->fetchByAssoc($result);
         }
         return $dataSet;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //return $data;
-        $chart['labels']=array();
-        $chart['data']=array();
+        $chart['labels'] = [];
+        $chart['data'] = [];
+        $chart['keys'] = [];
         $total = 0;
-        foreach($data as $i)
-        {
-            $chart['labelsAndValues'][]=$i['lead_source'].' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
+        foreach ($data as $i) {
+            $chart['labelsAndValues'][] = $i['lead_source'] . ' (' . $currency_symbol . (int)$i['total'] . $thousands_symbol . ')';
             //$chart['labelsAndValues'][]=$currency_symbol.(int)$i['total'].$thousands_symbol;
-            $chart['labels'][]=$i['lead_source'];
-            $chart['data'][]=(int)$i['total'];
-            $total+=(int)$i['total'];
+            $chart['labels'][] = $i['lead_source'];
+            $chart['keys'][] = $i['lead_source_key'];
+            $chart['data'][] = (int)$i['total'];
+            $total += (int)$i['total'];
         }
-        $chart['total']=$total;
+        $chart['total'] = $total;
         return $chart;
     }
 

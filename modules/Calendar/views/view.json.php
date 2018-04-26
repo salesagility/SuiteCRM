@@ -55,5 +55,3 @@ class CalendarViewJson extends SugarView
         echo json_encode($jsonData);
     }
 }
-
-?>

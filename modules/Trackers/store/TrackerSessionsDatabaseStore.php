@@ -49,7 +49,7 @@ require_once('modules/Trackers/store/Store.php');
 class TrackerSessionsDatabaseStore implements Store {
 
     public function flush($monitor) {
-        global $db;
+        $db = DBManagerFactory::getInstance();
        $metrics = $monitor->getMetrics();
 
        if(isset($monitor->client_ip) && strlen($monitor->client_ip) > 45)
@@ -89,9 +89,7 @@ class TrackerSessionsDatabaseStore implements Store {
                $date_end = 'NULL';
            }
        	  $query = "UPDATE $monitor->table_name SET date_end = $date_end , seconds = $monitor->seconds, active = $monitor->active, round_trips = $monitor->round_trips WHERE session_id = '{$monitor->session_id}'";
-       	  $GLOBALS['db']->query($query);
+       	  DBManagerFactory::getInstance()->query($query);
        }
     }
 }
-
-?>

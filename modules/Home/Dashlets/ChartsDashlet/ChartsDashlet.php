@@ -207,4 +207,3 @@ class ChartsDashlet extends Dashlet {
     }
 }
 
-?>

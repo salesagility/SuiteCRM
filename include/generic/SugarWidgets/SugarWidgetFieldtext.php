@@ -87,7 +87,7 @@ class SugarWidgetFieldText extends SugarWidgetFieldVarchar
         return "($column IS NULL OR ".$this->reporter->db->convert($column, "length")." = 0)";
     }
 
-    function displayList($layout_def) {
+    function displayList(&$layout_def) {
         return nl2br(parent::displayListPlain($layout_def));
     }
 }

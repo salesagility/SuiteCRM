@@ -60,4 +60,3 @@ $ListView->initNewXTemplate( 'modules/Leads/MyLeads.html',$current_module_string
 $ListView->setHeaderTitle($current_module_strings['LBL_LIST_MY_LEADS'] . $header_text);
 $ListView->setQuery($where, "", "leads.date_entered desc", "LEAD");
 $ListView->processListView($seedLeads, "main", "LEAD");
-?>

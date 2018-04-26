@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -108,7 +108,7 @@ $mod_strings = array(
     'LBL_CASE_INFORMATION' => 'OVERVIEW',
 
     // SNIP
-    'LBL_UPDATE_TEXT' => 'Update Text',
+    'LBL_UPDATE_TEXT' => 'Updates - Text', //Field for Case updates with text only
     'LBL_INTERNAL' => 'Internal Update',
     'LBL_AOP_CASE_UPDATES' => 'Case Updates',
     'LBL_AOP_CASE_UPDATES_THREADED' => 'Case Updates Threaded',
@@ -126,7 +126,6 @@ $mod_strings = array(
     'LBL_SELECT_EXTERNAL_CASE_DOCUMENT' => 'External file',
     'LBL_CONTACT_CREATED_BY_NAME' => 'Created by contact',
     'LBL_CONTACT_CREATED_BY' => 'Created by',
-    'LBL_CASE_UPDATE_FORM' => 'Update attachment form',
+    'LBL_CASE_UPDATE_FORM' => 'Updates - Attachment form', //Form for attachments on case updates
 );
 
-?>

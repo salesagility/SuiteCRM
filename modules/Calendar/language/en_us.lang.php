@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,6 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $mod_strings = array(
 
+    'LBL_SHAREDWEEK' => 'Shared Week',
+    'LBL_SHAREDMONTH' => 'Shared Month',
+
     'LBL_MODULE_NAME' => 'Calendar',
     'LBL_MODULE_TITLE' => 'Calendar',
     'LNK_NEW_CALL' => 'Schedule Call',
@@ -60,34 +63,60 @@ $mod_strings = array(
     'LNK_IMPORT_CALLS' => 'Import Calls',
     'LNK_IMPORT_MEETINGS' => 'Import Meetings',
     'LNK_IMPORT_TASKS' => 'Import Tasks',
+    'LBL_MONTH' => 'Month',
+    'LBL_AGENDADAY' => 'Day',
     'LBL_YEAR' => 'Year',
+
+    'LBL_AGENDAWEEK' => 'Week',
+    'LBL_PREVIOUS_MONTH' => 'Previous Month',
+    'LBL_PREVIOUS_DAY' => 'Previous Day',
+    'LBL_PREVIOUS_YEAR' => 'Previous Year',
+    'LBL_PREVIOUS_WEEK' => 'Previous Week',
     'LBL_NEXT_MONTH' => 'Next Month',
+    'LBL_NEXT_DAY' => 'Next Day',
     'LBL_NEXT_YEAR' => 'Next Year',
     'LBL_NEXT_WEEK' => 'Next Week',
+    'LBL_AM' => 'AM',
+    'LBL_PM' => 'PM',
+    'LBL_SCHEDULED' => 'Scheduled',
+    'LBL_BUSY' => 'Busy',
+    'LBL_CONFLICT' => 'Conflict',
+    'LBL_USER_CALENDARS' => 'User Calendars',
+    'LBL_SHARED' => 'Shared',
+    'LBL_PREVIOUS_SHARED' => 'Previous',
+    'LBL_NEXT_SHARED' => 'Next',
+    'LBL_SHARED_CAL_TITLE' => 'Shared Calendar',
     'LBL_USERS' => 'Users',
     'LBL_REFRESH' => 'Refresh',
     'LBL_EDIT_USERLIST' => 'User List',
     'LBL_SELECT_USERS' => 'Select users for calendar display',
+    'LBL_FILTER_BY_TEAM' => 'Filter user list by team:',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_DATE' => 'Start Date & Time',
     'LBL_CREATE_MEETING' => 'Schedule Meeting',
     'LBL_CREATE_CALL' => 'Log Call',
     'LBL_HOURS_ABBREV' => 'h',
+    'LBL_MINS_ABBREV' => 'm',
+
 
     'LBL_YES' => 'Yes',
     'LBL_NO' => 'No',
     'LBL_SETTINGS' => 'Settings',
     'LBL_CREATE_NEW_RECORD' => 'Create Activity',
-    'LBL_LOADING' => 'Loading ......',
-    'LBL_SAVING' => 'Saving ......',
-    'LBL_SENDING_INVITES' => 'Saving & Sending Invites .....',
+    'LBL_LOADING' => 'Loading...',
+    'LBL_SAVING' => 'Saving...',
+    'LBL_SENDING_INVITES' => 'Saving & Sending Invites...',
     'LBL_CONFIRM_REMOVE' => 'Are you sure you want to remove the record?',
     'LBL_CONFIRM_REMOVE_ALL_RECURRING' => 'Are you sure you want to remove all recurring records?',
     'LBL_EDIT_RECORD' => 'Edit Activity',
     'LBL_ERROR_SAVING' => 'Error while saving',
     'LBL_ERROR_LOADING' => 'Error while loading',
+    'LBL_GOTO_DATE' => 'Go to Date',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
+    'LBL_STYLE_BASIC' => 'BASIC',
+    'LBL_STYLE_ADVANCED' => 'ADVANCED',
 
+    'LBL_NO_USER' => 'No match for field: Assigned to',
     'LBL_SUBJECT' => 'Subject',
     'LBL_DURATION' => 'Duration',
     'LBL_STATUS' => 'Status',
@@ -107,6 +136,11 @@ $mod_strings = array(
     'LBL_APPLY_BUTTON' => 'Apply',
     'LBL_SEND_INVITES' => 'Save & Send Invites',
     'LBL_CANCEL_BUTTON' => 'Cancel',
+    'LBL_CLOSE_BUTTON' => 'Close',
+
+    'LBL_GENERAL_TAB' => 'Details',
+    'LBL_PARTICIPANTS_TAB' => 'Invitees',
+    'LBL_REPEAT_TAB' => 'Recurrence',
 
     'LBL_REPEAT_TYPE' => 'Repeat',
     'LBL_REPEAT_INTERVAL' => 'Every',
@@ -136,7 +170,7 @@ $mod_strings = array(
 
 
 $mod_list_strings = array(
-    'dom_cal_weekdays'=>
+    'dom_cal_weekdays' =>
         array(
             '0' => "Sun",
             '1' => "Mon",
@@ -146,7 +180,7 @@ $mod_list_strings = array(
             '5' => "Fri",
             '6' => "Sat",
         ),
-    'dom_cal_weekdays_long'=>
+    'dom_cal_weekdays_long' =>
         array(
             '0' => "Sunday",
             '1' => "Monday",
@@ -156,7 +190,7 @@ $mod_list_strings = array(
             '5' => "Friday",
             '6' => "Saturday",
         ),
-    'dom_cal_month'=>
+    'dom_cal_month' =>
         array(
             '0' => "",
             '1' => "Jan",
@@ -172,7 +206,7 @@ $mod_list_strings = array(
             '11' => "Nov",
             '12' => "Dec",
         ),
-    'dom_cal_month_long'=>
+    'dom_cal_month_long' =>
         array(
             '0' => "",
             '1' => "January",
@@ -189,4 +223,4 @@ $mod_list_strings = array(
             '12' => "December",
         ),
 );
-?>
+

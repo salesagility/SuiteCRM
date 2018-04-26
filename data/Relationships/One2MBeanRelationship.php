@@ -187,7 +187,7 @@ class One2MBeanRelationship extends One2MRelationship
         if ($link->getSide() == REL_RHS)
         {
             $rhsID = $this->def['rhs_key'];
-            $id = $link->getFocus()->$rhsID;
+            $id = isset($link->getFocus()->$rhsID) ? $link->getFocus()->$rhsID : '';
             if (!empty($id))
             {
                 $rows[$id] = array('id' => $id);
@@ -228,7 +228,15 @@ class One2MBeanRelationship extends One2MRelationship
             $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
             $relatedSeed = BeanFactory::getBean($this->getRHSModule());
             $deleted = !empty($params['deleted']) ? 1 : 0;
-            $where = "WHERE $rhsTableKey = '{$link->getFocus()->$lhsKey}' AND {$rhsTable}.deleted=$deleted";
+            
+            if (!isset($link->getFocus()->$lhsKey)) {
+                LoggerManager::getLogger()->warn('One2MBeanRelationship getQuery: Trying to get property of non-object');
+                $linkFocusLhsKey = null;
+            } else {
+                $linkFocusLhsKey = $link->getFocus()->$lhsKey;
+            }
+            
+            $where = "WHERE $rhsTableKey = '{$linkFocusLhsKey}' AND {$rhsTable}.deleted=$deleted";
             $order_by = '';
 
             //Check for role column
@@ -324,7 +332,7 @@ class One2MBeanRelationship extends One2MRelationship
         $query = '';
 
         $alias = empty($params['join_table_alias']) ? "{$link->name}_rel": $params['join_table_alias'];
-        $alias = $GLOBALS['db']->getValidDBName($alias, false, 'alias');
+        $alias = DBManagerFactory::getInstance()->getValidDBName($alias, false, 'alias');
 
         $tableInRoleFilter = "";
         if (

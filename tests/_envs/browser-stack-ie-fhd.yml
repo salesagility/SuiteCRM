@@ -1,0 +1,13 @@
+modules:
+  enabled:
+    - \SuiteCRM\Test\Driver\WebDriver
+  config:
+    \SuiteCRM\Test\Driver\WebDriver:
+      width: 1920
+      height: 1080
+      capabilities:
+        'os': 'Windows'
+        'os_version': '10'
+        'browser': 'IE'
+        'browser_version': '11.0'
+        'resolution': '1920x1080'

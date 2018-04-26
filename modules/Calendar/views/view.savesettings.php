@@ -93,5 +93,3 @@ class CalendarViewSaveSettings extends SugarView {
 	
 
 }
-
-?>

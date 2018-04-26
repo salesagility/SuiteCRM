@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -52,36 +54,37 @@ require_once('modules/EmailMan/Forms.php');
 class ViewConfig extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
+     * @see SugarView::_getModuleTitleParams()
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
 
-    	return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
-    	   translate('LBL_MASS_EMAIL_CONFIG_TITLE','Administration'),
-    	   );
+        return array(
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
+           translate('LBL_MASS_EMAIL_CONFIG_TITLE', 'Administration'),
+           );
     }
 
     /**
-	 * @see SugarView::preDisplay()
-	 */
-	public function preDisplay()
- 	{
- 	    global $current_user;
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
+        global $current_user;
 
- 	    if ( !is_admin($current_user)
- 	            && !is_admin_for_module($GLOBALS['current_user'],'Emails')
- 	            && !is_admin_for_module($GLOBALS['current_user'],'Campaigns') )
- 	        sugar_die("Unauthorized access to administration.");
+        if (!is_admin($current_user)
+                && !is_admin_for_module($GLOBALS['current_user'], 'Emails')
+                && !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
+            sugar_die("Unauthorized access to administration.");
+        }
     }
 
     /**
-	 * @see SugarView::display()
-	 */
-	public function display()
-	{
+     * @see SugarView::display()
+     */
+    public function display()
+    {
         global $mod_strings;
         global $app_list_strings;
         global $app_strings;
@@ -121,11 +124,10 @@ class ViewConfig extends SugarView
         //Assign the current users email for the test send dialogue.
         $this->ss->assign("CURRENT_USER_EMAIL", $current_user->email1);
 
-        $showSendMail = FALSE;
+        $showSendMail = false;
         $outboundSendTypeCSSClass = "yui-hidden";
-        if(isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'])
-        {
-            $showSendMail = TRUE;
+        if (isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound']) {
+            $showSendMail = true;
             $app_list_strings['notifymail_sendtype']['sendmail'] = 'sendmail';
             $outboundSendTypeCSSClass = "";
         }
@@ -133,21 +135,56 @@ class ViewConfig extends SugarView
         $this->ss->assign("OUTBOUND_TYPE_CLASS", $outboundSendTypeCSSClass);
         $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
 
+        $configurator = new Configurator();
+
+        $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','name',true);
+        if (empty($email_templates_arr)) {
+            throw new RuntimeException('System Email templates are missing');
+        }
+
+        $email_templates_options =  get_select_options_with_id($email_templates_arr, $configurator->config['email_confirm_opt_in_email_template_id']);
+        $this->ss->assign('EMAIL_OPT_IN_TEMPLATES', $email_templates_options);
+
+        if (!isset($configurator->config['email_enable_auto_send_opt_in'])) {
+            throw new RuntimeException('email_enable_auto_send_opt_in is missing in the config. Please repair config.');
+        }
+
+        $isEmailEnableAutoSendConfirmOptIn = isset($configurator->config['email_enable_auto_send_opt_in']) ?
+            $configurator->config['email_enable_auto_send_opt_in'] :
+            false;
+
+        $emailEnableAutoSendConfirmOptIn = $isEmailEnableAutoSendConfirmOptIn ? 'checked' : '';
+
+        $this->ss->assign('EMAIL_ENABLE_AUTO_SEND_OPT_IN', $emailEnableAutoSendConfirmOptIn);
+
         ///////////////////////////////////////////////////////////////////////////////
         ////	USER EMAIL DEFAULTS
         // editors
         $editors = $app_list_strings['dom_email_editor_option'];
         $newEditors = array();
-        foreach($editors as $k => $v) {
-            if($k != "") { $newEditors[$k] = $v; }
+        foreach ($editors as $k => $v) {
+            if ($k != "") {
+                $newEditors[$k] = $v;
+            }
         }
 
         // preserve attachments
         $preserveAttachments = '';
-        if(isset($sugar_config['email_default_delete_attachments']) && $sugar_config['email_default_delete_attachments'] == true) {
+        if (isset($sugar_config['email_default_delete_attachments']) && $sugar_config['email_default_delete_attachments'] == true) {
             $preserveAttachments = 'CHECKED';
         }
         $this->ss->assign('DEFAULT_EMAIL_DELETE_ATTACHMENTS', $preserveAttachments);
+
+        $emailEnableConfirmOptIn = isset($configurator->config['email_enable_confirm_opt_in']) ? $configurator->config['email_enable_confirm_opt_in'] : '';
+
+        $this->ss->assign(
+            'EMAIL_ENABLE_CONFIRM_OPT_IN',
+            get_select_options_with_id(
+                $app_list_strings['email_settings_opt_in_dom'],
+                $emailEnableConfirmOptIn
+            )
+        );
+        
         ////	END USER EMAIL DEFAULTS
         ///////////////////////////////////////////////////////////////////////////////
 
@@ -159,11 +196,11 @@ class ViewConfig extends SugarView
 
         //////////////////////////////////////////////////////////////////////////////
         ////	EMAIL SECURITY
-        if(!isset($sugar_config['email_xss']) || empty($sugar_config['email_xss'])) {
+        if (!isset($sugar_config['email_xss']) || empty($sugar_config['email_xss'])) {
             $sugar_config['email_xss'] = getDefaultXssTags();
         }
 
-        foreach(unserialize(base64_decode($sugar_config['email_xss'])) as $k => $v) {
+        foreach (unserialize(base64_decode($sugar_config['email_xss'])) as $k => $v) {
             $this->ss->assign($k."Checked", 'CHECKED');
         }
 
@@ -175,7 +212,7 @@ class ViewConfig extends SugarView
         $this->ss->assign('ROLLOVER', $email->rolloverStyle);
         $this->ss->assign('THEME', $GLOBALS['theme']);
 
-        $this->ss->assign("JAVASCRIPT",get_validate_record_js());
+        $this->ss->assign("JAVASCRIPT", get_validate_record_js());
         $this->ss->display('modules/EmailMan/tpls/config.tpl');
     }
 }

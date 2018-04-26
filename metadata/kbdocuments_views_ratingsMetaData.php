@@ -54,4 +54,3 @@ $dictionary['kbdocuments_viwes_ratings'] = array (
        , array('name' =>'idx_kbvr_kbdoc', 'type' =>'index', 'fields'=>array('kbdocument_id'))                  
 	),		
 );
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -81,32 +81,62 @@ class ListViewSmarty extends ListViewDisplay
     }
 
     /**
+     *
+     * @return string|boolean
+     */
+    public function buildSendConfirmOptInEmailToPersonAndCompany()
+    {
+        $configurator = new Configurator();
+        if (!$configurator->isConfirmOptInEnabled()) {
+            return false;
+        }
+
+        $linkTpl = new Sugar_Smarty();
+        $linkTpl->assign('module_name', $this->seed->module_name);
+        $linkHTML = $linkTpl->fetch('include/ListView/ListViewBulkActionSendOptInLink.tpl');
+
+        return $linkHTML;
+    }
+
+    /**
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
      * This is called from ListViewDisplay
      *
-     * @param file file Template file to use
-     * @param data array from ListViewData
-     * @param html_public string the corresponding html public in xtpl per row
+     * @param file $file Template file to use
+     * @param array $data from ListViewData
+     * @param string $htmlVar the corresponding html public in xtpl per row
      *
      */
     function process($file, $data, $htmlpublic) {
         global $mod_strings;
         if(!$this->should_process)return;
         global $odd_bg, $even_bg, $hilite_bg, $app_strings, $sugar_config;
+        
+        $seedClass = get_parent_class($this->seed);
+        if (in_array($seedClass, array('Company', 'Person'), true)) {
+            $configurator = new Configurator();
+            if ($configurator->isConfirmOptInEnabled()) {
+                $sendConfirmOptInEmailToPersonAndCompany = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+                if (!in_array($sendConfirmOptInEmailToPersonAndCompany, $this->actionsMenuExtraItems, true)) {
+                    $this->actionsMenuExtraItems[] = $this->buildSendConfirmOptInEmailToPersonAndCompany();
+                }
+            }
+        }
+
         parent::process($file, $data, $htmlpublic);
 
         $this->tpl = $file;
         $this->data = $data;
 
         $totalWidth = 0;
-        foreach($this->displayColumns as $name => $params) {
-            $totalWidth += $params['width'];
+        foreach((array)$this->displayColumns as $name => $params) {
+            $totalWidth += (int)$params['width'];
         }
         $adjustment = $totalWidth / 100;
 
         $contextMenuObjectsTypes = array();
-        foreach($this->displayColumns as $name => $params) {
-            $this->displayColumns[$name]['width'] = floor($this->displayColumns[$name]['width'] / $adjustment);
+        foreach((array)$this->displayColumns as $name => $params) {
+            $this->displayColumns[$name]['width'] = floor(((int)$this->displayColumns[$name]['width']) / $adjustment);
             // figure out which contextMenu objectsTypes are required
             if(!empty($params['contextMenu']['objectType']))
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
@@ -131,7 +161,7 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('MOD',$mod_strings);
 
         $this->ss->assign('bgHilite', $hilite_bg);
-        $this->ss->assign('colCount', count($this->displayColumns) + 10);
+        $this->ss->assign('colCount', count((array)$this->displayColumns) + 10);
         $this->ss->assign('htmlpublic', strtoupper($htmlpublic));
         $this->ss->assign('moduleString', $this->moduleString);
         $this->ss->assign('editLinkString', $app_strings['LBL_EDIT_BUTTON']);
@@ -207,8 +237,9 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('contextMenuScript', $script);
         }
 
-        $this->ss->assign('showFilterIcon', !in_array($_REQUEST['module'], isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
-	}
+        $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+        $this->ss->assign('showFilterIcon', !in_array($module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array()));
+    }
 
     /**
      * Assigns the sort arrows in the tpl
@@ -304,5 +335,3 @@ class ListViewSmarty extends ListViewDisplay
         return $str;
     }
 }
-
-?>

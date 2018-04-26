@@ -69,10 +69,10 @@ $viewdefs [$module_name] =
                                     ),
                                 3 =>
                                     array (
-                                        0 => 'description',
+                                        0 => 'email_recipients',
+                                        1 => 'description',
                                     ),
                             ),
                     ),
             ),
     );
-?>

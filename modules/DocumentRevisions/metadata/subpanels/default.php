@@ -80,4 +80,3 @@ $subpanel_layout = array(
 		)
 	),
 );
-?>

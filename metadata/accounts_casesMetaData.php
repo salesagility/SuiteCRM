@@ -50,5 +50,4 @@ $dictionary['accounts_cases'] = array ( 'table' => 'accounts_cases'
        , array('name' =>'idx_acc_case_acc', 'type' =>'index', 'fields'=>array('account_id'))
       , array('name' =>'idx_acc_acc_case', 'type' =>'index', 'fields'=>array('case_id'))
                                                       )
-                                  )
-?>
+                                  );

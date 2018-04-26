@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,19 +42,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-$mod_strings = array (
-'LBL_ROLE'=>'Role',
-'LBL_NAME'=>'Name',
-'LBL_DESCRIPTION'=>'Description',
-'LIST_ROLES'=>'List Roles',
-'LBL_USERS_SUBPANEL_TITLE'=>'Users',
-'LIST_ROLES_BY_USER'=>'List Roles By User',
-'LBL_ROLES_SUBPANEL_TITLE'=>'User Roles',
-'LBL_SEARCH_FORM_TITLE'=>'Search',
-'LBL_NO_ACCESS'=>'You do not have access to this area. Contact your site administrator to obtain access.',
-'LBL_REDIRECT_TO_HOME'=>'Redirect to Home in',
-'LBL_SECONDS'=>'seconds',
-'LBL_ADDING'=>'Adding for ',
+$mod_strings = array(
+    'LBL_ROLE' => 'Role',
+    'LBL_NAME' => 'Name',
+    'LBL_DESCRIPTION' => 'Description',
+    'LIST_ROLES' => 'List Roles',
+    'LBL_USERS_SUBPANEL_TITLE' => 'Users',
+    'LIST_ROLES_BY_USER' => 'List Roles By User',
+    'LBL_ROLES_SUBPANEL_TITLE' => 'User Roles',
+    'LBL_SEARCH_FORM_TITLE' => 'Search',
+    'LBL_NO_ACCESS' => 'You do not have access to this area. Contact your site administrator to obtain access.',
+    'LBL_REDIRECT_TO_HOME' => 'Redirect to Home in',
+    'LBL_SECONDS' => 'seconds',
+    'LBL_ADDING' => 'Adding for ',
 
-)
-?>
+);
+

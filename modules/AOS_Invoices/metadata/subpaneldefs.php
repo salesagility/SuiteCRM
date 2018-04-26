@@ -53,4 +53,3 @@ $layout_defs['AOS_Invoices'] = array(
 		),
 	),
 );
-?>

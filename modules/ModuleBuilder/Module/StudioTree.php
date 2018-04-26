@@ -67,4 +67,3 @@ class StudioTree extends MBPackageTree{
 	}
 
 }
-?>

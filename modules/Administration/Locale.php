@@ -63,8 +63,8 @@ if(isset($_REQUEST['process']) && $_REQUEST['process'] == 'true') {
 	if(isset($_REQUEST['collation']) && !empty($_REQUEST['collation'])) {
 		//kbrill Bug #14922
 		if(array_key_exists('collation', $sugar_config['dbconfigoption']) && $_REQUEST['collation'] != $sugar_config['dbconfigoption']['collation']) {
-			$GLOBALS['db']->disconnect();
-			$GLOBALS['db']->connect();
+			DBManagerFactory::getInstance()->disconnect();
+			DBManagerFactory::getInstance()->connect();
 		}
 
 		$cfg->config['dbconfigoption']['collation'] = $_REQUEST['collation'];
@@ -79,10 +79,10 @@ if(isset($_REQUEST['process']) && $_REQUEST['process'] == 'true') {
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	DB COLLATION
-$collationOptions = $GLOBALS['db']->getCollationList();
+$collationOptions = DBManagerFactory::getInstance()->getCollationList();
 if(!empty($collationOptions)) {
 	if(!isset($sugar_config['dbconfigoption']['collation'])) {
-		$sugar_config['dbconfigoption']['collation'] = $GLOBALS['db']->getDefaultCollation();
+		$sugar_config['dbconfigoption']['collation'] = DBManagerFactory::getInstance()->getDefaultCollation();
 	}
 	$sugar_smarty->assign('collationOptions', get_select_options_with_id(array_combine($collationOptions, $collationOptions), $sugar_config['dbconfigoption']['collation']));
 }
@@ -113,5 +113,3 @@ if ($locale->invalidLocaleNameFormatUpgrade()) {
 $sugar_smarty->assign('getNameJs', $locale->getNameJs());
 
 $sugar_smarty->display('modules/Administration/Locale.tpl');
-
-?>
