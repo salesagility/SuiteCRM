@@ -71,7 +71,7 @@ $standardErrorLevel = error_reporting();
 logThis('Setting error_reporting() to E_ERROR while running upgrade');
 error_reporting(E_ERROR);
 
-set_time_limit(0);
+//set_time_limit(0);
 /*
  * [unzip_dir] => /Users/curisu/www/head/cache/upload//upgrades/temp/QSugp3
  * [zip_from_dir]  => SugarEnt-Upgrade-4.0.1-to-4.2.1

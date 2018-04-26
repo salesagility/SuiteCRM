@@ -284,8 +284,8 @@ $errors = array();
 	   //if being used for internal upgrades avoid admin user verification
 	   $user_name = $argv[4];
 	   $q = "select id from users where user_name = '" . $user_name . "' and is_admin=1";
-	   $result = $GLOBALS['db']->query($q, false);
-	   $logged_user = $GLOBALS['db']->fetchByAssoc($result);
+	   $result = DBManagerFactory::getInstance()->query($q, false);
+	   $logged_user = DBManagerFactory::getInstance()->fetchByAssoc($result);
 	   if(isset($logged_user['id']) && $logged_user['id'] != null){
 		//do nothing
 	    $current_user->retrieve($logged_user['id']);
@@ -429,7 +429,7 @@ foreach ($beanFiles as $bean => $file) {
 		if (($focus instanceOf SugarBean)) {
 			if(!isset($repairedTables[$focus->table_name]))
 			{
-				$sql = $GLOBALS['db']->repairTable($focus, true);
+				$sql = DBManagerFactory::getInstance()->repairTable($focus, true);
                 if(trim($sql) != '')
                 {
 				    logThis('Running sql:' . $sql, $path);
@@ -457,7 +457,7 @@ foreach ($dictionary as $meta) {
 
 	$fielddefs = $meta['fields'];
 	$indices = $meta['indices'];
-	$sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
+	$sql = DBManagerFactory::getInstance()->repairTableParams($tablename, $fielddefs, $indices, true);
 	if(!empty($sql)) {
 	    logThis($sql, $path);
 	    $repairedTables[$tablename] = true;
@@ -507,7 +507,7 @@ if($ce_to_pro_ent) {
         logThis(" Finish modules/Administration/upgradeTeams.php", $path);
 
     if(check_FTS()){
-    	$GLOBALS['db']->full_text_indexing_setup();
+    	DBManagerFactory::getInstance()->full_text_indexing_setup();
     }
 }
 

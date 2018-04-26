@@ -187,7 +187,9 @@
  	}
 
  	static function erase($module){
+            if(isset($_SESSION) && isset($_SESSION[$module. 'QUERY_ARRAY'])) {
  		unset($_SESSION[$module. 'QUERY_ARRAY']);
+            }
  	}
 
  }

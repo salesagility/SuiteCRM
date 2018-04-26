@@ -1,9 +1,22 @@
 <?php
 
 
-class LogicHookTest extends PHPUnit_Framework_TestCase
+class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    
+    protected $stateSaver;
 
+    public function setUp() {
+        parent::setUp();
+        $this->stateSaver = new SuiteCRM\StateSaver();
+        $this->stateSaver->pushTable('email_addresses');
+    }
+    
+    public function tearDown() {
+        $this->stateSaver->popTable('email_addresses');
+        parent::tearDown();
+    }
+    
     public function testinitialize()
     {
         //execute the method and test if it returns correct class instances
@@ -13,14 +26,24 @@ class LogicHookTest extends PHPUnit_Framework_TestCase
 
     public function testLogicHook()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
         try {
             $LogicHook = new LogicHook();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
+        
+        // clean up
+        
+        
     }
 
     public function testsetBean()
@@ -56,7 +79,11 @@ class LogicHookTest extends PHPUnit_Framework_TestCase
 
     public function testscanHooksDir()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns expected contents
 
@@ -161,19 +188,33 @@ class LogicHookTest extends PHPUnit_Framework_TestCase
             $this->assertTrue(empty($hookscan));
         }
 
+        
+        // clean up
+        
+        
 
     }
 
     public function testrefreshHooks()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
 
         try {
             LogicHook::refreshHooks();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testloadHooks()
@@ -471,6 +512,12 @@ class LogicHookTest extends PHPUnit_Framework_TestCase
 
     public function testcall_custom_logic()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
 
         $LogicHook = new LogicHook();
@@ -480,14 +527,24 @@ class LogicHookTest extends PHPUnit_Framework_TestCase
             $LogicHook->call_custom_logic('', 'after_ui_footer');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
+        
+        // clean up
+        
+        
     }
 
 
     public function testprocess_hooks()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it doesn't throws an exception
 
         $LogicHook = new LogicHook();
@@ -498,9 +555,13 @@ class LogicHookTest extends PHPUnit_Framework_TestCase
             $LogicHook->process_hooks($hooks, 'after_ui_footer', array());
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
+        
+        // clean up
+        
+        
     }
 
 }

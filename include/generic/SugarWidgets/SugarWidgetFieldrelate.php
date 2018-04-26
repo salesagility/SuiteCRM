@@ -194,7 +194,7 @@ class SugarWidgetFieldRelate extends SugarWidgetReportField
 		return $cell;
 	}
 
-    function displayList($layout_def) {
+    function displayList(&$layout_def) {
         $reporter = $this->layout_manager->getAttribute("reporter");
         $field_def = $reporter->all_fields[$layout_def['column_key']];
         $display = strtoupper($field_def['secondary_table'].'_name');

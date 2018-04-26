@@ -1,6 +1,6 @@
 <?php
 
-class AOR_ConditionTest extends PHPUnit_Framework_TestCase
+class AOR_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOR_Condition()
     {
@@ -22,7 +22,14 @@ class AOR_ConditionTest extends PHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aod_index');
+        $state->pushTable('aor_conditions');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aor_Condition = new AOR_Condition();
 
@@ -40,7 +47,15 @@ class AOR_ConditionTest extends PHPUnit_Framework_TestCase
             $aor_Condition->save_lines($post_data, new AOR_Report());
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('aor_conditions');
+        $state->popTable('aod_index');
+        $state->popTable('aod_indexevent');
     }
 }

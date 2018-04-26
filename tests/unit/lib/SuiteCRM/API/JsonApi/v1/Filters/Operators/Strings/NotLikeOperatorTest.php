@@ -1,7 +1,7 @@
 <?php
 
 
-class NotLikeOperatorTest extends \Codeception\Test\Unit
+class NotLikeOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -10,15 +10,13 @@ class NotLikeOperatorTest extends \Codeception\Test\Unit
 
     private static $operator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Strings\NotLikeOperator($containers);
     }
 
-    protected function _after()
-    {
-    }
 
     public function testIsValidTagWithInvalidType()
     {

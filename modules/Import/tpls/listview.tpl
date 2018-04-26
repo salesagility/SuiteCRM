@@ -58,7 +58,7 @@
             {else}
                 {foreach from=$displayColumns key=colHeader item=label}
                     <th scope='col' nowrap="nowrap">
-                        <div style='white-space: nowrap;'width='100%' align='left' >
+                        <div style='white-space: nowrap; width:100%; text-align:left;'>
                         {$label}
                         </div>
                     </th>

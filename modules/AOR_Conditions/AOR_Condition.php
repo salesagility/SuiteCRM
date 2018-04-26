@@ -100,7 +100,7 @@ class AOR_Condition extends Basic
         }
         foreach ($post_data[$key . 'field'] as $i => $field) {
 
-            if ($post_data[$key . 'deleted'][$i] == 1) {
+            if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $condition = new AOR_Condition();

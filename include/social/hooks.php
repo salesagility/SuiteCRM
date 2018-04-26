@@ -43,7 +43,7 @@ class hooks{
     function load_js($event, $arguments){
         $mapping = '';
 
-        if($_REQUEST['action'] == 'DetailView'){
+        if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'DetailView'){
 	    include("modules/Connectors/connectors/sources/ext/rest/facebook/mapping.php");
 	    if (file_exists("custom/modules/Connectors/connectors/sources/ext/rest/facebook/mapping.php")) {
 	        include("custom/modules/Connectors/connectors/sources/ext/rest/facebook/mapping.php");
