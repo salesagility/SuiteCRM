@@ -56,85 +56,86 @@ $viewdefs[$module_name]['DetailView'] = array(
         ),
     ),
     'panels' => array(
-
-        array(
+        'lbl_contact_information' => array(
             array(
-                'name' => 'full_name',
-                'label' => 'LBL_NAME',
+                array(
+                    'name' => 'full_name',
+                    'label' => 'LBL_NAME',
+                ),
+                array(
+                    'name' => 'phone_work',
+                ),
             ),
-            array(
-                'name' => 'phone_work',
-            ),
-        ),
-
-        array(
-            'title',
-            array(
-                'name' => 'phone_mobile',
-            ),
-        ),
-
-        array(
-            'department',
 
             array(
-                'name' => 'phone_home',
-                'label' => 'LBL_HOME_PHONE',
+                'title',
+                array(
+                    'name' => 'phone_mobile',
+                ),
             ),
-        ),
 
-        array(
-            null,
             array(
-                'name' => 'phone_other',
-                'label' => 'LBL_OTHER_PHONE',
+                'department',
+
+                array(
+                    'name' => 'phone_home',
+                    'label' => 'LBL_HOME_PHONE',
+                ),
             ),
-        ),
-        array(
+
             array(
-                'name' => 'date_entered',
-                'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-                'label' => 'LBL_DATE_ENTERED',
-            ),
-            array(
-                'name' => 'phone_fax',
-                'label' => 'LBL_FAX_PHONE',
-            ),
-        ),
-
-        array(
-            array(
-                'name' => 'date_modified',
-                'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-                'label' => 'LBL_DATE_MODIFIED',
-            ),
-            'do_not_call',
-        ),
-        array('assigned_user_name', ''),
-
-
-
-        array(
-            'email1'
-        ),
-
-        array(
-            array(
-                'name' => 'primary_address_street',
-                'label' => 'LBL_PRIMARY_ADDRESS',
-                'type' => 'address',
-                'displayParams' => array('key' => 'primary'),
+                null,
+                array(
+                    'name' => 'phone_other',
+                    'label' => 'LBL_OTHER_PHONE',
+                ),
             ),
             array(
-                'name' => 'alt_address_street',
-                'label' => 'LBL_ALT_ADDRESS',
-                'type' => 'address',
-                'displayParams' => array('key' => 'alt'),
+                array(
+                    'name' => 'date_entered',
+                    'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                    'label' => 'LBL_DATE_ENTERED',
+                ),
+                array(
+                    'name' => 'phone_fax',
+                    'label' => 'LBL_FAX_PHONE',
+                ),
             ),
-        ),
 
-        array(
-            'description',
+            array(
+                array(
+                    'name' => 'date_modified',
+                    'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                    'label' => 'LBL_DATE_MODIFIED',
+                ),
+                'do_not_call',
+            ),
+            array('assigned_user_name', ''),
+
+
+
+            array(
+                'email1'
+            ),
+
+            array(
+                array(
+                    'name' => 'primary_address_street',
+                    'label' => 'LBL_PRIMARY_ADDRESS',
+                    'type' => 'address',
+                    'displayParams' => array('key' => 'primary'),
+                ),
+                array(
+                    'name' => 'alt_address_street',
+                    'label' => 'LBL_ALT_ADDRESS',
+                    'type' => 'address',
+                    'displayParams' => array('key' => 'alt'),
+                ),
+            ),
+
+            array(
+                'description',
+            ),
         ),
 
         'lbl_consent' => array(
@@ -156,7 +157,5 @@ $viewdefs[$module_name]['DetailView'] = array(
                 null,
             ),
         ),
-
     )
-
 );
