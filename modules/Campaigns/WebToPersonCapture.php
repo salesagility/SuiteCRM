@@ -250,7 +250,6 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                             }
                         }
                         if($configurator->isOptInEnabled()) {
-                            $timedate;
                             $date = TimeDate::getInstance()->nowDb();
                             $date_test = $timedate->to_display_date($date,false);
                             $person->lawful_basis = '^consent^';
