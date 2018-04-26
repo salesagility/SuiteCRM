@@ -55,4 +55,3 @@ if(isset($_POST['timezone']) || isset($_GET['timezone'])) {
 	   header('Location: index.php?action=index&module=Home');
    exit();
 }
-?>

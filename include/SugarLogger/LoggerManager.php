@@ -51,6 +51,9 @@ class LoggerManager
 	protected static $_loggers = array();
 
 	//this is the instance of the LoggerManager
+    /**
+     * @var null|LoggerManager
+     */
 	private static $_instance = NULL;
 
 	//these are the mappings for levels to different log types
@@ -98,7 +101,9 @@ class LoggerManager
  		if($method == $this->_level
                 //otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
                 || (!empty(self::$_levelMapping[$method])
-                    && self::$_levelMapping[$this->_level] >= self::$_levelMapping[$method]) ) {
+                    && (
+                            (isset(self::$_levelMapping[$this->_level]) ? self::$_levelMapping[$this->_level] : null) >= 
+                            (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null) ) ) ) {
  			//now we get the logger type this allows for having a file logger an email logger, a firebug logger or any other logger you wish you can set different levels to log differently
  			$logger = (!empty(self::$_logMapping[$method])) ?
  			    self::$_logMapping[$method] : self::$_logMapping['default'];
@@ -160,6 +165,7 @@ class LoggerManager
 
  	/**
  	 * Returns a logger instance
+     * @return LoggerManager
  	 */
  	public static function getLogger()
 	{
@@ -222,4 +228,14 @@ class LoggerManager
 
  	    return $loggerLevels;
  	}
+
+ 	public static function setLogLevel($level)
+    {
+        self::$_instance->_level = $level;
+    }
+
+    public static function getLogLevel()
+    {
+        return self::$_instance->_level;
+    }
 }

@@ -141,6 +141,9 @@ class UserViewHelper {
         $edit_self = $current_user->id == $this->bean->id;
         $admin_edit_self = is_admin($current_user) && $edit_self;
 
+        if(isset($_REQUEST['showEmailSettingsPopup']) && $_REQUEST['showEmailSettingsPopup']) {
+            $this->ss->assign('showEmailSettingsPopup', true);
+        }
 
         $this->ss->assign('IS_FOCUS_ADMIN', is_admin($this->bean));
 
@@ -510,6 +513,10 @@ class UserViewHelper {
         }
         $this->ss->assign("USE_GROUP_TABS",($useGroupTabs=='gm')?'checked':'');
 
+        if ($this->bean->getPreference('sort_modules_by_name')) {
+            $this->ss->assign('SORT_MODULES_BY_NAME', ' checked');
+        }
+
         $user_subpanel_tabs = $this->bean->getPreference('subpanel_tabs');
         if(isset($user_subpanel_tabs)) {
             $this->ss->assign("SUBPANEL_TABS", $user_subpanel_tabs?'checked':'');
@@ -718,7 +725,6 @@ class UserViewHelper {
         /////////////////////////////////////////////
         /// Handle email account selections for users
         /////////////////////////////////////////////
-        $hide_if_can_use_default = true;
         if( !($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY') ) {
             // email smtp
             $systemOutboundEmail = new OutboundEmail();
@@ -757,8 +763,6 @@ class UserViewHelper {
             $this->ss->assign('MAIL_SMTPPORT',$mail_smtpport);
             $this->ss->assign('MAIL_SMTPSSL',$mail_smtpssl);
         }
-        $this->ss->assign('HIDE_IF_CAN_USE_DEFAULT_OUTBOUND',$hide_if_can_use_default );
-
     }
 
 

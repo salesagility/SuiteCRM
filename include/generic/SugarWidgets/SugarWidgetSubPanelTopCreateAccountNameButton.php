@@ -85,4 +85,3 @@ class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelT
 		return $button;
 	}
 }
-?>

@@ -45,21 +45,33 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 class SearchViewMetaDataParser extends ListLayoutMetaDataParser
 {
+    /**
+     * @var array $variableMap
+     */
     static $variableMap = array (
     						MB_BASICSEARCH => 'basic_search' ,
     						MB_ADVANCEDSEARCH => 'advanced_search' ,
     						) ;
-    // Columns is used by the view to construct the listview - each column is built by calling the named function
+
+    /**
+     * Columns is used by the view to construct the listview - each column is built by calling the named function
+     * @var array $columns
+     */
     public $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
+
+    /**
+     * @var bool $allowParent
+     */
     protected $allowParent = true;
 
-    /*
-     * Constructor
+    /**
+     * SearchViewMetaDataParser constructor.
      * Must set:
      * $this->columns   Array of 'Column LBL'=>function_to_retrieve_fields_for_this_column() - expected by the view
-     * @param string searchLayout	The type of search layout, e.g., MB_BASICSEARCH or MB_ADVANCEDSEARCH
-     * @param string moduleName     The name of the module to which this listview belongs
-     * @param string packageName    If not empty, the name of the package to which this listview belongs
+     * @param string $searchLayout	The type of search layout, e.g., MB_BASICSEARCH or MB_ADVANCEDSEARCH
+     * @param string $moduleName     The name of the module to which this listview belongs
+     * @param string $packageName    If not empty, the name of the package to which this listview belongs
+     * @throws Exception
      */
     function __construct ($searchLayout, $moduleName , $packageName = '')
     {
@@ -115,6 +127,11 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
 
     }
 
+    /**
+     * @param string $key
+     * @param array $def
+     * @return bool
+     */
     public function isValidField($key, $def)
     {
 		if(isset($def['type']) && $def['type'] == "assigned_user_name")
@@ -152,11 +169,12 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
        return true;
     }
 
-    /*
+    /**
      * Save the modified searchLayout
      * Have to preserve the original layout format, which is array('metadata'=>array,'layouts'=>array('basic'=>array,'advanced'=>array))
+     * @param bool $populate
      */
-    function handleSave ($populate = true)
+    public function handleSave ($populate = true)
     {
         if ($populate)
             $this->_populateFromRequest() ;
@@ -195,7 +213,11 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
     }
 
 
-    function normalizeDefs($defs) {
+    /**
+     * @param $defs
+     * @return array
+     */
+    public function normalizeDefs($defs) {
         $out = array();
         foreach ($defs as $def)
         {
@@ -207,7 +229,10 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
         return $out;
     }
 
-    function getOriginalViewDefs() {
+    /**
+     * @return array
+     */
+    public function getOriginalViewDefs() {
         $defs = $this->implementation->getOriginalViewdefs ();
         $out = array();
         if (!empty($defs) && !empty($defs['layout']) && !empty($defs['layout'][$this->_searchLayout]))
@@ -222,4 +247,3 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
         return $out;
     }
 }
-?>

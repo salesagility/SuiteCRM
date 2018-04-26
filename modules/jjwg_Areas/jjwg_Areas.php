@@ -110,7 +110,7 @@ class jjwg_Areas extends jjwg_Areas_sugar {
                 }
             }
         }
-        if (count($this->polygon) > 0) {
+        if (count((array)$this->polygon) > 0) {
             return $this->polygon;
         } else {
             return false;

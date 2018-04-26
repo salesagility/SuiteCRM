@@ -55,7 +55,10 @@ function getPrintLink()
     {
         return "javascript:SUGAR.ajaxUI.print();";
     }
-    return "javascript:void window.open('index.php?{$GLOBALS['request_string']}',"
+    
+    $requestString = isset($GLOBALS['request_string']) ? $GLOBALS['request_string'] : null;
+    
+    return "javascript:void window.open('index.php?{$requestString}',"
          . "'printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
 }
 
@@ -101,7 +104,8 @@ function ajaxBannedModules(){
         'Relationships',
         'Employees',
         'Import',
-        'OAuthKeys'
+        'OAuthKeys',
+        'Surveys',
     );
 
     if(!empty($GLOBALS['sugar_config']['addAjaxBannedModules'])){
@@ -138,5 +142,3 @@ function ajaxLink($url)
         return "?action=ajaxui#ajaxUILoc=" . urlencode($url);
     }
 }
-
-?>

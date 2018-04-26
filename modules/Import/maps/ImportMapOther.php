@@ -155,6 +155,3 @@ class ImportMapOther
 		return array();
 	}
 }
-
-
-?>

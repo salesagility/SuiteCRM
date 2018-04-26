@@ -81,7 +81,3 @@ function additionalDetailsAccount($fields) {
 				 'editLink' => "index.php?action=EditView&module=Accounts&return_module=Accounts&record={$fields['ID']}", 
 				 'viewLink' => "index.php?action=DetailView&module=Accounts&return_module=Accounts&record={$fields['ID']}");
 }
- 
- ?>
- 
- 

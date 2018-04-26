@@ -99,4 +99,3 @@ EOQ;
  		parent::display();
  	}
 }
-?>

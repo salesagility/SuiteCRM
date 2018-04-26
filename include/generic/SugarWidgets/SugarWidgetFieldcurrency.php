@@ -90,7 +90,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
 
 
-    function & displayList($layout_def)
+    function & displayList(&$layout_def)
         {
             global $locale;
             $symbol = $locale->getPrecedentPreference('default_currency_symbol');
@@ -152,26 +152,26 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
     }
  function queryFilterEquals(&$layout_def)
  {
-     return $this->_get_column_select($layout_def)."=".$GLOBALS['db']->quote(unformat_number($layout_def['input_name0']))."\n";
+     return $this->_get_column_select($layout_def)."=".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
  }
 
  function queryFilterNot_Equals(&$layout_def)
  {
-     return $this->_get_column_select($layout_def)."!=".$GLOBALS['db']->quote(unformat_number($layout_def['input_name0']))."\n";
+     return $this->_get_column_select($layout_def)."!=".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
  }
 
  function queryFilterGreater(&$layout_def)
  {
-     return $this->_get_column_select($layout_def)." > ".$GLOBALS['db']->quote(unformat_number($layout_def['input_name0']))."\n";
+     return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
  }
 
  function queryFilterLess(&$layout_def)
  {
-     return $this->_get_column_select($layout_def)." < ".$GLOBALS['db']->quote(unformat_number($layout_def['input_name0']))."\n";
+     return $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
  }
 
  function queryFilterBetween(&$layout_def){
-     return $this->_get_column_select($layout_def)." > ".$GLOBALS['db']->quote(unformat_number($layout_def['input_name0'])). " AND ". $this->_get_column_select($layout_def)." < ".$GLOBALS['db']->quote(unformat_number($layout_def['input_name1']))."\n";
+     return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])). " AND ". $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name1']))."\n";
  }
 
  function isSystemCurrency(&$layout_def)
@@ -220,12 +220,12 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
         $add_currency_id = false;
         if(!empty($table)) {
-            $cols = $GLOBALS['db']->getHelper()->get_columns($real_table);
+            $cols = DBManagerFactory::getInstance()->getHelper()->get_columns($real_table);
             $add_currency_id = isset($cols['currency_id']) ? true : false;
 
             if(!$add_currency_id && preg_match('/.*?_cstm$/i', $real_table)) {
                 $table = str_replace('_cstm', '', $table);
-                $cols = $GLOBALS['db']->getHelper()->get_columns($table);
+                $cols = DBManagerFactory::getInstance()->getHelper()->get_columns($table);
                 $add_currency_id = isset($cols['currency_id']) ? true : false;
             }
             if($add_currency_id) {
@@ -277,4 +277,4 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
         return array('currency_symbol' => $currency_symbol, 'currency_id' => $currency_id);
     }
 }
-?>
+

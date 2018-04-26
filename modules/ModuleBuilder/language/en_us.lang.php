@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -46,7 +46,6 @@ $mod_strings = array(
     'LBL_LOADING' => 'Loading' /*for 508 compliance fix*/,
     'LBL_HIDEOPTIONS' => 'Hide Options' /*for 508 compliance fix*/,
     'LBL_DELETE' => 'Delete' /*for 508 compliance fix*/,
-    'LBL_POWERED_BY_SUGAR' => 'Powered By SugarCRM' /*for 508 compliance fix*/,
     'help' => array(
         'package' => array(
             'create' => 'Provide a <b>Name</b> for the package. The name you enter must be alphanumeric and contain no spaces. (Example: HR_Management)<br/><br/> You can provide <b>Author</b> and <b>Description</b> information for package. <br/><br/>Click <b>Save</b> to create the package.',
@@ -139,7 +138,7 @@ $mod_strings = array(
         ),
         'layoutEditor' => array(
             'defaultdetailview' => 'The <b>Layout</b> area contains the fields that are currently displayed within the <b>DetailView</b>.<br/><br/>The <b>Toolbox</b> contains the <b>Recycle Bin</b> and the fields and layout elements that can be added to the layout.<br><br>Make changes to the layout by dragging and dropping elements and fields between the <b>Toolbox</b> and the <b>Layout</b> and within the layout itself.<br><br>To remove a field from the layout, drag the field to the <b>Recycle Bin</b>. The field will then be available in the Toolbox to add to the layout.',
-        'defaultquickcreate' => 'The <b>Layout</b> area contains the fields that are currently displayed within the <b>QuickCreate</b> form.<br><br>The QuickCreate form appears in the subpanels for the module when the Create button is clicked.<br/><br/>The <b>Toolbox</b> contains the <b>Recycle Bin</b> and the fields and layout elements that can be added to the layout.<br><br>Make changes to the layout by dragging and dropping elements and fields between the <b>Toolbox</b> and the <b>Layout</b> and within the layout itself.<br><br>To remove a field from the layout, drag the field to the <b>Recycle Bin</b>. The field will then be available in the Toolbox to add to the layout.',
+            'defaultquickcreate' => 'The <b>Layout</b> area contains the fields that are currently displayed within the <b>QuickCreate</b> form.<br><br>The QuickCreate form appears in the subpanels for the module when the Create button is clicked.<br/><br/>The <b>Toolbox</b> contains the <b>Recycle Bin</b> and the fields and layout elements that can be added to the layout.<br><br>Make changes to the layout by dragging and dropping elements and fields between the <b>Toolbox</b> and the <b>Layout</b> and within the layout itself.<br><br>To remove a field from the layout, drag the field to the <b>Recycle Bin</b>. The field will then be available in the Toolbox to add to the layout.',
             //this default will be used for edit view
             'default' => 'The <b>Layout</b> area contains the fields that are currently displayed within the <b>EditView</b>.<br/><br/>The <b>Toolbox</b> contains the <b>Recycle Bin</b> and the fields and layout elements that can be added to the layout.<br><br>Make changes to the layout by dragging and dropping elements and fields between the <b>Toolbox</b> and the <b>Layout</b> and within the layout itself.<br><br>To remove a field from the layout, drag the field to the <b>Recycle Bin</b>. The field will then be available in the Toolbox to add to the layout.',
             'saveBtn' => 'Click <b>Save</b> to preserve the changes you made to the layout since the last time you saved it.<br><br>The changes will not be displayed in the module until you Deploy the saved changes.',
@@ -180,7 +179,7 @@ $mod_strings = array(
             'fieldsBtn' => 'Create and customize <b>Fields</b> to store information in the module.',
             'labelsBtn' => 'Edit the <b>Labels</b> that display for the fields and other titles in the module.',
             'relationshipsBtn' => 'Add new or view existing <b>Relationships</b> for the module.',
-            'layoutsBtn' => 'Customize the module <b>Layouts</b>. The layouts are the different views of the module contaning fields.<br><br>You can determine which fields appear and how they are organized in each layout.',
+            'layoutsBtn' => 'Customize the module <b>Layouts</b>. The layouts are the different views of the module containing fields.<br><br>You can determine which fields appear and how they are organized in each layout.',
             'subpanelBtn' => 'Determine which fields appear in the <b>Subpanels</b> in the module.',
             'portalBtn' => 'Customize the module <b>Layouts</b> that appear in the <b>SuiteCRM Portal</b>.',
             'layoutsHelp' => 'The module <b>Layouts</b> that can be customized appear here.<br><br>The layouts display fields and field data.<br><br>Click an icon to select the layout to edit.',
@@ -229,7 +228,7 @@ $mod_strings = array(
         ),
         'relationshipsHelp' => array(
             'default' => 'The <b>Relationships</b> that have been created between the module and other modules appear here.<br><br>The relationship <b>Name</b> is the system-generated name for the relationship.<br><br>The <b>Primary Module</b> is the module that owns the relationships. The relationship properties are stored in the database tables belonging to the primary module.<br><br>The <b>Type</b> is the type of relationship exists between the Primary module and the <b>Related Module</b>.<br><br>Click a column title to sort by the column.<br><br>Click a row in the relationship table to view and edit the properties associated with the relationship.<br><br>Click <b>Add Relationship</b> to create a new relationship.',
-            'addrelbtn' => 'mouse over help for add relationship..',
+            'addrelbtn' => 'mouse over help for add relationship...',
             'addRelationship' => '<b>Relationships</b> can be created between the module and another custom module or a deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
         ),
         'labelsHelp' => array(
@@ -262,7 +261,7 @@ $mod_strings = array(
             'editView' => 'Here you can edit the existing fields. You can remove any of the existing fields or add available fields in the left panel.',
             'create' => 'When choosing the type of <b>Type</b> of module that you wish to create, keep in mind the types of fields you would like to have within the module. <br/><br/>Each module template contains a set of fields pertaining to the type of module described by the title.<br/><br/><b>Basic</b> - Provides basic fields that appear in standard modules, such as the Name, Assigned to, Team, Date Created and Description fields.<br/><br/> <b>Company</b> - Provides organization-specific fields, such as Company Name, Industry and Billing Address. Use this template to create modules that are similar to the standard Accounts module.<br/><br/> <b>Person</b> - Provides individual-specific fields, such as Salutation, Title, Name, Address and Phone Number. Use this template to create modules that are similar to the standard Contacts and Leads modules.<br/><br/><b>Issue</b> - Provides case- and bug-specific fields, such as Number, Status, Priority and Description. Use this template to create modules that are similar to the standard Cases and Bugs modules.<br/><br/>Note: After you create the module, you can edit the labels of the fields provided by the template, as well as create custom fields to add to the module layouts.',
             'afterSave' => 'Customize the module to suit your needs by editing and creating fields, establishing relationships with other modules and arranging the fields within the layouts.<br/><br/>To view the template fields and manage custom fields within the module, click <b>View Fields</b>.<br/><br/>To create and manage relationships between the module and other modules, whether modules already in the application or other custom modules within the same package, click <b>View Relationships</b>.<br/><br/>To edit the module layouts, click <b>View Layouts</b>. You can change the Detail View, Edit View and List View layouts for the module just as you would for modules already in the application within Studio.<br/><br/> To create a module with the same properties as the current module, click <b>Duplicate</b>. You can further customize the new module.',
-            'viewfields' => 'The fields in the module can be customized to suit your needs.<br/><br/>You can not delete standard fields, but you can remove them from the appropriate layouts within the Layouts pages. <br/><br/>You can quickly create new fields that have similar properties to existing fields by clicking <b>Clone</b> in the <b>Properties</b> form. Enter any new properties, and then click <b>Save</b>.<br/><br/>It is recommended that you set all of the properties for the standard fields and custom fields before you publish and install the package containing the custom module.',
+            'viewfields' => 'The fields in the module can be customized to suit your needs.<br/><br/>You cannot delete standard fields, but you can remove them from the appropriate layouts within the Layouts pages. <br/><br/>You can quickly create new fields that have similar properties to existing fields by clicking <b>Clone</b> in the <b>Properties</b> form. Enter any new properties, and then click <b>Save</b>.<br/><br/>It is recommended that you set all of the properties for the standard fields and custom fields before you publish and install the package containing the custom module.',
             'viewrelationships' => 'You can create many-to-many relationships between the current module and other modules in the package, and/or between the current module and modules already installed in the application.<br><br> To create one-to-many and one-to-one relationships, create <b>Relate</b> and <b>Flex Relate</b> fields for the modules.',
             'viewlayouts' => 'You can control what fields are available for capturing data within the <b>Edit View</b>. You can also control what data displays within the <b>Detail View</b>. The views do not have to match. <br/><br/>The Quick Create form is displayed when the <b>Create</b> is clicked in a module subpanel. By default, the <b>Quick Create</b> form layout is the same as the default <b>Edit View</b> layout. You can customize the Quick Create form so that it contains less and/or different fields than the Edit View layout. <br><br>You can determine the module security using Layout customization along with <b>Role Management</b>.<br><br>',
             'existingModule' => 'After creating and customizing this module, you can create additional modules or return to the package to <b>Publish</b> or <b>Deploy</b> the package.<br><br>To create additional modules, click <b>Duplicate</b> to create a module with the same properties as the current module, or navigate back to the package, and click <b>New Module</b>.<br><br> If you are ready to <b>Publish</b> or <b>Deploy</b> the package containing this module, navigate back to the package to perform these functions. You can publish and deploy packages containing at least one module.',
@@ -302,7 +301,7 @@ $mod_strings = array(
             'description' => 'The <b>Description</b> of the package will be displayed in Module Loader after the package is uploaded for installation in Studio.',
         ),
         'studioWizard' => array(
-            'mainHelp' => 'Welcome to the <b>Developer Tools</b1> area. <br/><br/>Use the tools within this area to create and manage standard and custom modules and fields.',
+            'mainHelp' => 'Welcome to the <b>Developer Tools</b> area. <br/><br/>Use the tools within this area to create and manage standard and custom modules and fields.',
             'studioBtn' => 'Use <b>Studio</b> to customize installed modules by changing the field arrangement, selecting what fields are available and creating custom data fields.',
             'mbBtn' => 'Use <b>Module Builder</b> to create new modules.',
             'appBtn' => 'Use Application mode to customize various properties of the program, such as how many TPS reports are displayed on the homepage',
@@ -314,7 +313,7 @@ $mod_strings = array(
             'labelsBtn' => 'Click <b>Save</b> to save your custom labels.',
             'layoutsBtn' => 'Customize the <b>Layouts</b> of the Edit, Detail, List and search views.',
             'subpanelBtn' => 'Edit what information is shown in this modules subpanels.',
-            'layoutsHelp' => 'Select a <b>Layout to edit</b>.<br/<br/>To change the layout that contains data fields for entering data, click <b>Edit View</b>.<br/><br/>To change the layout that displays the data entered into the fields in the Edit View, click <b>Detail View</b>.<br/><br/>To change the columns which appear in the default list, click <b>List View</b>.<br/><br/>To change the Basic and Advanced search form layouts, click <b>Search</b>.',
+            'layoutsHelp' => 'Select a <b>Layout to edit</b>.<br/><br/>To change the layout that contains data fields for entering data, click <b>Edit View</b>.<br/><br/>To change the layout that displays the data entered into the fields in the Edit View, click <b>Detail View</b>.<br/><br/>To change the columns which appear in the default list, click <b>List View</b>.<br/><br/>To change the Basic and Advanced search form layouts, click <b>Search</b>.',
             'subpanelHelp' => 'Select a <b>Subpanel</b> to edit.',
             'searchHelp' => 'Select a <b>Search</b> layout to edit.',
             'newPackage' => 'Click <b>New Package</b> to create a new package.',
@@ -323,31 +322,21 @@ $mod_strings = array(
         ),
 
 
-
     ),
 //HOME
     'LBL_HOME_EDIT_DROPDOWNS' => 'Dropdown Editor',
-
-//ASSISTANT
-    'LBL_AS_SHOW' => 'Show Assistant in future.',
-    'LBL_AS_IGNORE' => 'Ignore Assistant in future.',
-    'LBL_AS_SAYS' => 'Assistant Says:',
-
 
 //STUDIO2
     'LBL_MODULEBUILDER' => 'Module Builder',
     'LBL_STUDIO' => 'Studio',
     'LBL_DROPDOWNEDITOR' => 'Dropdown Editor',
-    'LBL_EDIT_DROPDOWN' => 'Edit Dropdown',
     'LBL_DEVELOPER_TOOLS' => 'Developer Tools',
     'LBL_SUGARPORTAL' => 'SuiteCRM Portal Editor',
-    'LBL_SYNCPORTAL' => 'Sync Portal',
     'LBL_PACKAGE_LIST' => 'Package List',
     'LBL_HOME' => 'Home',
     'LBL_NONE' => '-None-',
     'LBL_DEPLOYE_COMPLETE' => 'Deploy complete',
     'LBL_DEPLOY_FAILED' => 'An error has occurred during deploy process, your package may not have installed correctly',
-    'LBL_ADD_FIELDS' => 'Add Custom Fields',
     'LBL_AVAILABLE_SUBPANELS' => 'Available Subpanels',
     'LBL_ADVANCED' => 'Advanced',
     'LBL_ADVANCED_SEARCH' => 'Advanced Filter',
@@ -355,26 +344,18 @@ $mod_strings = array(
     'LBL_BASIC_SEARCH' => 'Quick Filter',
     'LBL_CURRENT_LAYOUT' => 'Layout',
     'LBL_CURRENCY' => 'Currency',
-    'LBL_CUSTOM' => 'Custom',
     'LBL_DASHLET' => 'SuiteCRM Dashlet',
     'LBL_DASHLETLISTVIEW' => 'SuiteCRM Dashlet ListView',
-    'LBL_DASHLETSEARCH' => 'SuiteCRM Dashlet Search',
-    'LBL_POPUP' => 'PopupView',
-    'LBL_POPUPLIST' => 'Popup ListView',
+    'LBL_POPUP' => 'Popup View',
     'LBL_POPUPLISTVIEW' => 'Popup ListView',
     'LBL_POPUPSEARCH' => 'Popup Search',
     'LBL_DASHLETSEARCHVIEW' => 'SuiteCRM Dashlet Search',
-    'LBL_DISPLAY_HTML' => 'Display HTML Code',
-    'LBL_DETAILVIEW' => 'DetailView',
+    'LBL_DETAILVIEW' => 'Detail View',
     'LBL_DROP_HERE' => '[Drop Here]',
     'LBL_EDIT' => 'Edit',
     'LBL_EDIT_LAYOUT' => 'Edit Layout',
-    'LBL_EDIT_ROWS' => 'Edit Rows',
-    'LBL_EDIT_COLUMNS' => 'Edit Columns',
-    'LBL_EDIT_LABELS' => 'Edit Labels',
-    'LBL_EDIT_PORTAL' => 'Edit Portal for ',
     'LBL_EDIT_FIELDS' => 'Edit Fields',
-    'LBL_EDITVIEW' => 'EditView',
+    'LBL_EDITVIEW' => 'Edit View',
     'LBL_FILLER' => '(filler)',
     'LBL_FIELDS' => 'Fields',
     'LBL_FAILED_TO_SAVE' => 'Failed To Save',
@@ -382,37 +363,29 @@ $mod_strings = array(
     'LBL_HOMEPAGE_PREFIX' => 'My',
     'LBL_LAYOUT_PREVIEW' => 'Layout Preview',
     'LBL_LAYOUTS' => 'Layouts',
-    'LBL_LISTVIEW' => 'ListView',
+    'LBL_LISTVIEW' => 'List View',
     'LBL_MODULES' => 'Modules',
     'LBL_MODULE_TITLE' => 'Studio',
     'LBL_NEW_PACKAGE' => 'New Package',
     'LBL_NEW_PANEL' => 'New Panel',
     'LBL_NEW_ROW' => 'New Row',
     'LBL_PACKAGE_DELETED' => 'Package Deleted',
-    'LBL_PUBLISHING' => 'Publishing ...',
+    'LBL_PUBLISHING' => 'Publishing...',
     'LBL_PUBLISHED' => 'Published',
     'LBL_SELECT_FILE' => 'Select File',
-    'LBL_SAVE_LAYOUT' => 'Save Layout',
-    'LBL_SELECT_A_SUBPANEL' => 'Select a Subpanel',
-    'LBL_SELECT_SUBPANEL' => 'Select Subpanel',
     'LBL_SUBPANELS' => 'Subpanels',
     'LBL_SUBPANEL' => 'Subpanel',
     'LBL_SUBPANEL_TITLE' => 'Title:',
     'LBL_SEARCH_FORMS' => 'Filter',
+    'LBL_SEARCH' => 'Search',
+    'LBL_SEARCH_BUTTON' => 'Search',
     'LBL_FILTER' => 'Filter',
-    'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
-    'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
-    'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
     'LBL_TOOLBOX' => 'Toolbox',
-    'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
-    'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
-    'LBL_QUICKCREATE' => 'QuickCreate',
+    'LBL_QUICKCREATE' => 'Quick Create',
     'LBL_EDIT_DROPDOWNS' => 'Edit a Global Dropdown',
     'LBL_ADD_DROPDOWN' => 'Add a new Global Dropdown',
     'LBL_BLANK' => '-blank-',
     'LBL_TAB_ORDER' => 'Tab Order',
-    'LBL_TAB_PANELS' => 'Enable tabs',
-    'LBL_TAB_PANELS_HELP' => 'When tabs are enabled, use the "type" dropdown box<br />for each section to define how it will be displayed (tab or panel)',
     'LBL_TABDEF_TYPE' => 'Display Type',
     'LBL_TABDEF_TYPE_HELP' => 'Select how this section should be displayed. This option only has effect if you have enabled tabs on this view.',
     'LBL_TABDEF_TYPE_OPTION_TAB' => 'Tab',
@@ -425,7 +398,7 @@ $mod_strings = array(
     'LBL_DROPDOWN_ITEMS' => 'List Items',
     'LBL_DROPDOWN_ITEM_NAME' => 'Item Name',
     'LBL_DROPDOWN_ITEM_LABEL' => 'Display Label',
-    'LBL_SYNC_TO_DETAILVIEW' => 'Sync to DetailView',
+    'LBL_SYNC_TO_DETAILVIEW' => 'Sync to Detail View',
     'LBL_SYNC_TO_DETAILVIEW_HELP' => 'Select this option to sync this EditView layout to the corresponding DetailView layout. Fields and field placement in the EditView<br>will be sync\'d and saved to the DetailView automatically upon clicking Save or Save & Deploy in the EditView. <br>Layout changes will not be able to be made in the DetailView.',
     'LBL_SYNC_TO_DETAILVIEW_NOTICE' => 'This DetailView is sync\'d with the corresponding EditView.<br> Fields and field placement in this DetailView reflect the fields and field placement in the EditView.<br> Changes to the DetailView cannot be saved or deployed within this page. Make changes or un-sync the layouts in the EditView. ',
     'LBL_COPY_FROM_EDITVIEW' => 'Copy from EditView',
@@ -458,8 +431,6 @@ $mod_strings = array(
 
 
 //STUDIO QUESTIONS
-    'LBL_QUESTION_FUNCTION' => 'Select a function or component.',
-    'LBL_QUESTION_MODULE1' => 'Select a module.',
     'LBL_QUESTION_EDIT' => 'Select a module to edit.',
     'LBL_QUESTION_LAYOUT' => 'Select a layout to edit.',
     'LBL_QUESTION_SUBPANEL' => 'Select a subpanel to edit.',
@@ -467,16 +438,12 @@ $mod_strings = array(
     'LBL_QUESTION_MODULE' => 'Select a module component to edit.',
     'LBL_QUESTION_PACKAGE' => 'Select a package to edit, or create a new package.',
     'LBL_QUESTION_EDITOR' => 'Select a tool.',
-    'LBL_QUESTION_DROPDOWN' => 'Select a dropdown to edit, or create a new dropdown.',
     'LBL_QUESTION_DASHLET' => 'Select a dashlet layout to edit.',
     'LBL_QUESTION_POPUP' => 'Select a popup layout to edit.',
 //CUSTOM FIELDS
-    'LBL_RELATE_TO' => 'Relate To',
     'LBL_NAME' => 'Name',
     'LBL_LABELS' => 'Labels',
     'LBL_MASS_UPDATE' => 'Mass Update',
-    'LBL_AUDITED' => 'Audit',
-    'LBL_CUSTOM_MODULE' => 'Module',
     'LBL_DEFAULT_VALUE' => 'Default Value',
     'LBL_REQUIRED' => 'Required',
     'LBL_DATA_TYPE' => 'Type',
@@ -490,32 +457,27 @@ $mod_strings = array(
     'LBL_SECTION_PACKAGES' => 'Packages',
     'LBL_SECTION_PACKAGE' => 'Package',
     'LBL_SECTION_MODULES' => 'Modules',
-    'LBL_SECTION_PORTAL' => 'Portal',
     'LBL_SECTION_DROPDOWNS' => 'Dropdowns',
     'LBL_SECTION_PROPERTIES' => 'Properties',
     'LBL_SECTION_DROPDOWNED' => 'Edit Dropdown',
     'LBL_SECTION_HELP' => 'Help',
-    'LBL_SECTION_ACTION' => 'Action',
     'LBL_SECTION_MAIN' => 'Main',
-    'LBL_SECTION_EDPANELLABEL' => 'Edit Panel Label',
     'LBL_SECTION_FIELDEDITOR' => 'Edit Field',
     'LBL_SECTION_DEPLOY' => 'Deploy',
     'LBL_SECTION_MODULE' => 'Module',
-    'LBL_SECTION_VISIBILITY_EDITOR' => 'Edit Visibility',
 //WIZARDS
 
 //LIST VIEW EDITOR
     'LBL_DEFAULT' => 'Default',
     'LBL_HIDDEN' => 'Hidden',
     'LBL_AVAILABLE' => 'Available',
-    'LBL_LISTVIEW_DESCRIPTION' => 'There are three columns displayed below. The <b>Default</b> column contains fields that are displayed in a list view by default. The <b>Additional</b> column contains fields that a user can choose to use for creating a custom view. The <b>Available</b> column displays fields availabe for you as an admin to add to the Default or Additional columns for use by users.',
+    'LBL_LISTVIEW_DESCRIPTION' => 'There are three columns displayed below. The <b>Default</b> column contains fields that are displayed in a list view by default. The <b>Additional</b> column contains fields that a user can choose to use for creating a custom view. The <b>Available</b> column displays fields available for you as an admin to add to the Default or Additional columns for use by users.',
     'LBL_LISTVIEW_EDIT' => 'List View Editor',
 
 //Manager Backups History
     'LBL_MB_PREVIEW' => 'Preview',
     'LBL_MB_RESTORE' => 'Restore',
     'LBL_MB_DELETE' => 'Delete',
-    'LBL_MB_COMPARE' => 'Compare',
     'LBL_MB_DEFAULT_LAYOUT' => 'Default Layout',
 
 //END WIZARDS
@@ -528,10 +490,7 @@ $mod_strings = array(
     'LBL_BTN_CANCEL' => 'Cancel',
     'LBL_BTN_CLOSE' => 'Close',
     'LBL_BTN_SAVEPUBLISH' => 'Save & Deploy',
-    'LBL_BTN_NEXT' => 'Next',
-    'LBL_BTN_BACK' => 'Back',
     'LBL_BTN_CLONE' => 'Clone',
-    'LBL_BTN_ADDCOLS' => 'Add Columns',
     'LBL_BTN_ADDROWS' => 'Add Rows',
     'LBL_BTN_ADDFIELD' => 'Add Field',
     'LBL_BTN_ADDDROPDOWN' => 'Add Dropdown',
@@ -552,7 +511,6 @@ $mod_strings = array(
     'LBL_BTN_VIEW_RELATIONSHIPS' => 'View Relationships',
     'LBL_BTN_ADD_RELATIONSHIP' => 'Add Relationship',
     'LBL_BTN_RENAME_MODULE' => 'Change Module Name',
-    'LBL_BTN_INSERT' => 'Insert',
 //TABS
 
 
@@ -563,7 +521,6 @@ $mod_strings = array(
     'ERROR_MINIMUM_FIELDS' => 'The layout must contain at least one field',
     'ERROR_GENERIC_TITLE' => 'An error has occurred',
     'ERROR_REQUIRED_FIELDS' => 'Are you sure you wish to continue? The following required fields are missing from the layout:  ',
-    'ERROR_ARE_YOU_SURE' => 'Are you sure you wish to continue?',
 
 
 //PACKAGE AND MODULE BUILDER
@@ -580,18 +537,10 @@ $mod_strings = array(
     'LBL_WIDTH' => 'Width',
     'LBL_PACKAGE' => 'Package:',
     'LBL_TYPE' => 'Type:',
-    'LBL_TEAM_SECURITY' => 'Team Security',
-    'LBL_ASSIGNABLE' => 'Assignable',
-    'LBL_PERSON' => 'Person',
-    'LBL_COMPANY' => 'Company',
-    'LBL_ISSUE' => 'Issue',
-    'LBL_SALE' => 'Sale',
-    'LBL_FILE' => 'File',
     'LBL_NAV_TAB' => 'Navigation Tab',
     'LBL_CREATE' => 'Create',
     'LBL_LIST' => 'List',
     'LBL_VIEW' => 'View',
-    'LBL_LIST_VIEW' => 'List View',
     'LBL_HISTORY' => 'View History',
     'LBL_RESTORE_DEFAULT' => 'Restore Default',
     'LBL_ACTIVITIES' => 'Activities',
@@ -607,8 +556,6 @@ $mod_strings = array(
     'LBL_MB_IMPORTABLE' => 'Importing',
 
 // VISIBILITY EDITOR
-    'LBL_VE_VISIBLE' => 'visible',
-    'LBL_VE_HIDDEN' => 'hidden',
     'LBL_PACKAGE_WAS_DELETED' => '[[package]] was deleted',
 
 //EXPORT CUSTOMS
@@ -616,7 +563,6 @@ $mod_strings = array(
     'LBL_EC_NAME' => 'Package Name:',
     'LBL_EC_AUTHOR' => 'Author:',
     'LBL_EC_DESCRIPTION' => 'Description:',
-    'LBL_EC_KEY' => 'Key:',
     'LBL_EC_CHECKERROR' => 'Please select a module.',
     'LBL_EC_CUSTOMFIELD' => 'customized field(s)',
     'LBL_EC_CUSTOMLAYOUT' => 'customized layout(s)',
@@ -625,20 +571,26 @@ $mod_strings = array(
     'LBL_EC_EXPORTBTN' => 'Export',
     'LBL_MODULE_DEPLOYED' => 'Module has been deployed.',
     'LBL_UNDEFINED' => 'undefined',
+    'LBL_EC_VIEWS' => 'customized view(s)',
+    'LBL_EC_SUGARFEEDS' => 'customized Feed(s)',
+    'LBL_EC_DASHLETS' => 'customized Dashlet(s)',
+    'LBL_EC_CSS' => 'customized css(s)',
+    'LBL_EC_TPLS' => 'customized tpls(s)',
+    'LBL_EC_IMAGES' => 'customized image(s)',
+    'LBL_EC_JS' => 'customized js(s)',
+    'LBL_EC_QTIP' => 'customized qtip(s)',
 
 //AJAX STATUS
     'LBL_AJAX_FAILED_DATA' => 'Failed to retrieve data',
-    'LBL_AJAX_TIME_DEPENDENT' => 'A time dependent action is in progress. Please wait and try again in a few seconds.',
     'LBL_AJAX_LOADING' => 'Loading...',
     'LBL_AJAX_DELETING' => 'Deleting...',
     'LBL_AJAX_BUILDPROGRESS' => 'Build In Progress...',
     'LBL_AJAX_DEPLOYPROGRESS' => 'Deploy In Progress...',
-    'LBL_AJAX_FIELD_EXISTS' => 'The field name you entered already exists. Please enter a new field name.',
 
     'LBL_AJAX_RESPONSE_TITLE' => 'Result',
     'LBL_AJAX_RESPONSE_MESSAGE' => 'This operation is completed successfully',
-    'LBL_AJAX_LOADING_TITLE' => 'In Progress..',
-    'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading..',
+    'LBL_AJAX_LOADING_TITLE' => 'In Progress...',
+    'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading...',
 
 //JS
     'LBL_JS_REMOVE_PACKAGE' => 'Are you sure you wish to remove this package? This will permanently delete all files associated with this package.',
@@ -651,26 +603,18 @@ $mod_strings = array(
     'LBL_JS_VALIDATE_KEY' => 'Key - Must be alphanumeric, begin with a letter and contain no spaces.',
     'LBL_JS_VALIDATE_LABEL' => 'Please enter a label that will be used as the Display Name for this module',
     'LBL_JS_VALIDATE_TYPE' => 'Please select the type of module you wish to build from the list above',
-    'LBL_JS_VALIDATE_REL_NAME' => 'Name - Must be alphanumeric with no spaces',
     'LBL_JS_VALIDATE_REL_LABEL' => 'Label - please add a label that will be displayed above the subpanel',
 
 //CONFIRM
     'LBL_CONFIRM_FIELD_DELETE' => 'Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts. \\n\\nDo you wish to continue?',
 
     'LBL_CONFIRM_RELATIONSHIP_DELETE' => 'Are you sure you wish to delete this relationship?',
-    'LBL_CONFIRM_RELATIONSHIP_DEPLOY' => 'This will make this relationship permanent. Are you sure you wish to deploy this relationship?',
     'LBL_CONFIRM_DONT_SAVE' => 'Changes have been made since you last saved, would you like to save?',
     'LBL_CONFIRM_DONT_SAVE_TITLE' => 'Save Changes?',
     'LBL_CONFIRM_LOWER_LENGTH' => 'Data may be truncated and this cannot be undone, are you sure you wish to continue?',
 
 //POPUP HELP
     'LBL_POPHELP_FIELD_DATA_TYPE' => 'Select the appropriate data type based on the type of data that will be entered into the field.',
-    'LBL_POPHELP_SEARCHABLE' => 'Select the boost level for this field. <br />Fields with a higher boost level will be given greater weight when the search is performed. <br />When a search is performed, matching records containing fields with a greater weight will be appear higher in the search results.<br /> If you change the boost level for a field from one level to another, perform a system index to apply the change. <br/> Be sure to select to delete the existing data at the time that the system index is performed.',
-    'LBL_POPHELP_IMPORTABLE' => '<b>Yes</b>: The field will be included in an import operation.<br><b>No</b>: The field will not be included in an import.<br><b>Required</b>: A value for the field must be provided in any import.',
-    'LBL_POPHELP_IMAGE_WIDTH' => 'Enter a number for Width, as measured in pixels.<br> The uploaded image will be scaled to this Width.',
-    'LBL_POPHELP_IMAGE_HEIGHT' => 'Enter a number for the Height, as measured in pixels.<br> The uploaded image will be scaled to this Height.',
-    'LBL_POPHELP_DUPLICATE_MERGE' => '<b>Enabled</b>: The field will appear in the Merge Duplicates feature, but will not be available to use for the filter conditions in the Find Duplicates feature.<br><b>Disabled</b>: The field will not appear in the Merge Duplicates feature, and will not be available to use for the filter conditions in the Find Duplicates feature.',
-    'LBL_POPHELP_GLOBAL_SEARCH' => 'Select to use this field when searching for records using the Global Search on this module.',
 
 //Revert Module labels
     'LBL_RESET' => 'Reset',
@@ -683,18 +627,6 @@ $mod_strings = array(
     'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
     'LBL_HISTORY_TIMESTAMP' => 'TimeStamp',
     'LBL_HISTORY_TITLE' => ' history',
-
-
-    'LBL_ADD_LAYOUT' => 'Add Layout',
-    'LBL_ADD_LAYOUTS' => 'Add Layout',
-    'LBL_QUESTION_ADD_LAYOUT' => 'Select a Group Layout to Add.',
-    'LBL_REMOVE_LAYOUT' => 'Remove Group Layout',
-
-    'LBL_SECURITYGROUP' => 'Security Group:',
-    'LBL_COPY_FROM' => 'Copy From:',
-    'LBL_ADDLAYOUTDONE' => 'Layout Saved',
-    'LBL_REMOVELAYOUTDONE' => 'Layout Removed',
-    'LBL_REMOVE_CONFIRM' => 'Are you really sure?',
 
     'fieldTypes' => array(
         'varchar' => 'TextField',
@@ -725,11 +657,7 @@ $mod_strings = array(
 
     'parent' => 'Flex Relate',
 
-    'LBL_ILLEGAL_FIELD_VALUE' => "Drop down key cannot contain quotes.",
     'LBL_CONFIRM_SAVE_DROPDOWN' => "You are selecting this item for removal from the dropdown list. Any dropdown fields using this list with this item as a value will no longer display the value, and the value will no longer be able to be selected from the dropdown fields. Are you sure you want to continue?",
-    'LBL_POPHELP_VALIDATE_US_PHONE' => 'Select to validate this field for the entry of a 10-digit phone number,<br>with allowance for the country code 1,<br>and to apply a U.S. format to the phone number when the record is saved.<br> The following format will be applied: (xxx) xxx-xxxx.',
-
-
 
     'LBL_ALL_MODULES' => 'All Modules',
     'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',

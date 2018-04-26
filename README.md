@@ -1,6 +1,6 @@
-## SuiteCRM 7.9.1
+## SuiteCRM 7.10.4
 
-[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=develop)](https://travis-ci.org/salesagility/SuiteCRM)
 
 
 ### What's in this repository ###
@@ -31,11 +31,19 @@ The Contributor Agreement only needs to be signed once for all pull requests and
 
 Once signed and confirmed, any pull requests will be considered for inclusion in the SuiteCRM project.
 
+
+### Translations ###
+SuiteCRM in your language: [ Download and install language packs from][suitecrm_languages]
+
+[suitecrm_languages]: https://crowdin.com/project/suitecrmtranslations
+
+
 ### Code of Conduct ###
 
 See our [Code of Conduct][code_of_conduct] on our Wiki.
 
 [code_of_conduct]: https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Code_of_Conduct
+
 
 ### Helpful links for the community ###
 
@@ -49,9 +57,9 @@ The following links offer various ways to view, contribute and collaborate to th
 + [SuiteCRM Extensions Directory - An extensions directory where community members can submit extensions built for SuiteCRM][suitecrm_ext]
 
 [suitecrm_demo]: https://suitecrm.com/demo
-[suitecrm_forums]: https://suitecrm.com/forum/index
-[suitecrm_docs]: https://suitecrm.com/wiki
-[suitecrm_partners]: https://suitecrm.com/community/partners
+[suitecrm_forums]: https://suitecrm.com/suitecrm/forum/suite-forum
+[suitecrm_docs]: https://docs.suitecrm.com/
+[suitecrm_partners]: https://suitecrm.com/about/about-us/partners
 [suitecrm_ext]: https://store.suitecrm.com/
 
 ### Development Roadmap ###

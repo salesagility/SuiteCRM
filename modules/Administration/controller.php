@@ -138,6 +138,7 @@ class AdministrationController extends SugarController
         $cfg = new Configurator();
         $disabled = json_decode(html_entity_decode  ($_REQUEST['disabled_modules'], ENT_QUOTES));
         $cfg->config['addAjaxBannedModules'] = empty($disabled) ? FALSE : $disabled;
+        $cfg->addKeyToIgnoreOverride('addAjaxBannedModules', $disabled);
         $cfg->handleOverride();
         $this->view = "configureajaxui";
     }

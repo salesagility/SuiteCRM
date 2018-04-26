@@ -78,8 +78,8 @@ if(!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
 		
 		//Set random account and contact ids
 		$sql = 'SELECT * FROM accounts WHERE deleted = 0';
-		$result = $GLOBALS['db']->limitQuery($sql,0,10,true,"Error retrieving Accounts");
-	    while ($row = $GLOBALS['db']->fetchByAssoc($result)) {
+		$result = DBManagerFactory::getInstance()->limitQuery($sql,0,10,true,"Error retrieving Accounts");
+	    while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
 	    	$focus->billing_account_id = $row['id'];
 	    	$focus->name = str_replace('[account name]', $row['name'], $focus->name);
 	    	$focus->billing_address_street = $row['billing_address_street'];
@@ -108,8 +108,8 @@ if(!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
             //Save the products
             foreach($bundle['products'] as $product_key=>$products) {
             	$sql = 'SELECT * FROM product_templates WHERE name = \'' . $products['name'] . '\'';
-	            $result = $GLOBALS['db']->query($sql);
-	            while ($row = $GLOBALS['db']->fetchByAssoc($result)) {
+	            $result = DBManagerFactory::getInstance()->query($sql);
+	            while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
 	                $product = new Product();
 	                
 	            	foreach($product->column_fields as $field) {
@@ -172,6 +172,3 @@ if(!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
 		$focus->save();
    } //foreach
 }
-
-
-?>

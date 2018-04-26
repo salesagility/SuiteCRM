@@ -430,7 +430,22 @@ class M2MRelationship extends SugarRelationship
         }
         $rel_table = $this->getRelationshipTable();
 
-        $where = "$rel_table.$knownKey = '{$link->getFocus()->id}'" . $this->getRoleWhere();
+        $tmpFocus = $link->getFocus();
+        if(!isset($tmpFocus->id)) {
+            if (is_object($tmpFocus)) {
+                $focusInfo = get_class($tmpFocus);
+            } elseif(is_bool($tmpFocus)) {
+                $focusInfo = ' (bool)' . ($tmpFocus ? 'TRUE' : 'FALSE');
+            } else {
+                $focusInfo = ' (' . gettype($tmpFocus) . ')' . $tmpFocus;
+            }
+            LoggerManager::getLogger()->warn('No focus from link when M2MRelationship get query. Focus was: ' . $focusInfo);
+            $tmpId = null;
+        } else {
+            $tmpId = $tmpFocus->id;
+        }
+        
+        $where = "$rel_table.$knownKey = '{$tmpId}'" . $this->getRoleWhere();
         $order_by = '';
 
         //Add any optional where clause
@@ -456,8 +471,21 @@ class M2MRelationship extends SugarRelationship
             $where .= " AND $rel_table.$targetKey=$whereTable.id";
         }
 
+        $SelectIncludedMiddleTableFields = '';
+        if (isset($params['include_middle_table_fields']) && $params['include_middle_table_fields'] === true) {
+             $middle_table_field_defs = $this->def['fields'];
+             $middle_table = array();
+             foreach($middle_table_field_defs as $field_def) {
+                if($field_def['name'] === 'id') {
+                     continue;
+                }
+                $middle_table[] = $field_def['name'];
+             }
+             $SelectIncludedMiddleTableFields = ', ' . implode(',', $middle_table);
+        }
+
         if (empty($params['return_as_array'])) {
-            $query = "SELECT $targetKey id FROM $from WHERE $where AND $rel_table.deleted=$deleted";
+            $query = "SELECT $targetKey id $SelectIncludedMiddleTableFields FROM $from WHERE $where AND $rel_table.deleted=$deleted";
             if(!empty($order_by)) $query .= ' ORDER BY '.$order_by;
             //Limit is not compatible with return_as_array
             if (!empty($params['limit']) && $params['limit'] > 0) {
@@ -619,7 +647,7 @@ class M2MRelationship extends SugarRelationship
         //Roles can allow for multiple links between two records with different roles
         $query .= $this->getRoleWhere() . " and deleted = 0";
 
-        return $GLOBALS['db']->getOne($query);
+        return DBManagerFactory::getInstance()->getOne($query);
     }
 
     /**

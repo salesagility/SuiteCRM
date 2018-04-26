@@ -63,32 +63,5 @@
                 </select>
             </div>
         </div>
-        {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-            <div id="mail_smtpserver_tr">
-                <div width="20%" scope="row"><span id="mail_smtpserver_label">{$MOD.LBL_EMAIL_PROVIDER}</span></div>
-                <div width="30%" >{$mail_smtpdisplay}<input id='mail_smtpserver' name='mail_smtpserver' type="hidden" value='{$mail_smtpserver}' /></div>
-                <div>&nbsp;</div>
-                <div >&nbsp;</div>
-            </div>
-            {if !empty($mail_smtpauth_req) }
-
-                <div id="mail_smtpuser_tr">
-                    <div width="20%" scope="row" nowrap="nowrap"><span id="mail_smtpuser_label">{$MOD.LBL_MAIL_SMTPUSER}</span></div>
-                    <div width="30%" ><input type="text" id="mail_smtpuser" name="mail_smtpuser" size="25" maxlength="64" value="{$mail_smtpuser}" tabindex='1' ></div>
-
-                </div>
-                <div id="mail_smtppass_tr">
-                    <div width="20%" scope="row" nowrap="nowrap"><span id="mail_smtppass_label">{$MOD.LBL_MAIL_SMTPPASS}</span></div>
-                    <div width="30%" >
-                            <input type="password" id="mail_smtppass" name="mail_smtppass" size="25" maxlength="64" value="{$mail_smtppass}" tabindex='1'>
-                            <a href="javascript:void(0)" id='mail_smtppass_link' onClick="SUGAR.util.setEmailPasswordEdit('mail_smtppass')" style="display: none">{$APP.LBL_CHANGE_PASSWORD}</a>
-                        </div>
-                </div>
-            {/if}
-
-            <div id="test_outbound_settings_tr">
-                <div  scope="row"><input type="button" class="button" value="{$APP.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}" onclick="startOutBoundEmailSettingsTest();"></div>
-            </div>
-        {/if}
     </div>
 </table>

@@ -109,7 +109,8 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
 	<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
 		<td nowrap="nowrap"><input name='date_due' id='jscal_field' onblur="parseDate(this, '{$USER_DATEFORMAT}');" tabindex='2' maxlength='10' size='11' {$READONLY} type="text" value="{$DATE_DUE}">
-			{sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="jscal_trigger" '}&nbsp;</td>
+			<span id="jscal_trigger" class="suitepicon suitepicon-module-calendar" title="{$APP.LBL_ENTER_DATE}"></span>
+		</td>
 		<td nowrap="nowrap"><input name='time_due' size='5' maxlength='5' tabindex='2' {$READONLY} type="text" value='{$TIME_DUE}'>{$DUE_TIME_MERIDIEM} </td>
 		{if $TIME_MERIDIEM}
         <td><select name='due_meridiem' tabindex="2">{$TIME_MERIDIEM}</select></td>
@@ -128,7 +129,7 @@ CL: Bug fix for 9291 and 9427 - parent_id should be parent_type, not the module 
 	<td  nowrap="nowrap"><span>
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-		<td nowrap="nowrap"><input name='date_start' id='date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" tabindex='2' maxlength='10' size='11' {$READONLY} type="text" value="{$DATE_START}"> {sugar_getimage name="jscalendar" ext=".gif" alt=$APP.LBL_ENTER_DATE other_attributes='align="absmiddle" id="date_start_trigger" '}&nbsp;</td>
+			<td nowrap="nowrap"><input name='date_start' id='date_start' onblur="parseDate(this, '{$CALENDAR_DATEFORMAT}');" tabindex='2' maxlength='10' size='11' {$READONLY} type="text" value="{$DATE_START}"> <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar" title="{$APP.LBL_ENTER_DATE}""></span>&nbsp;</td>
 		<td nowrap="nowrap"><input name='time_start' size='5' maxlength='5' tabindex='2' {$READONLY} type="text" value='{$TIME_START}'>{$START_TIME_MERIDIEM} </td>
 		{if $TIME_MERIDIEM}
         <td><select name='start_meridiem' tabindex="2">{$TIME_MERIDIEM}</select></td>

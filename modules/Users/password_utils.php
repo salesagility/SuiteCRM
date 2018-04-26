@@ -83,12 +83,9 @@ function  hasPasswordExpired($username){
     $current_user= new user();
     $usr_id=$current_user->retrieve_user_id($username);
 	$current_user->retrieve($usr_id);
-	$type = '';
-	if ($current_user->system_generated_password == '1'){
-        $type='syst';
-    }
+    $type='syst';
 
-    if ($current_user->portal_only=='0'){
+    if ( ($current_user->portal_only=='0') && ($current_user->system_generated_password=='1') ){
 	    global $mod_strings, $timedate;
 	    $res=$GLOBALS['sugar_config']['passwordsetting'];
 	  	if ($type != '') {
@@ -102,7 +99,14 @@ function  hasPasswordExpired($username){
 		    		}
 
 		        $expireday = $res[$type.'expirationtype']*$res[$type.'expirationtime'];
-		        $expiretime = $timedate->fromUser($current_user->pwd_last_changed)->get("+{$expireday} days")->ts;
+
+		    	$timeFromUser = $timedate->fromUser($current_user->pwd_last_changed);
+
+		    	if ($timeFromUser === null) {
+		    	    return false;
+                }
+
+		        $expiretime = $timeFromUser->get("+{$expireday} days")->ts;
 
 			    if ($timedate->getNow()->ts < $expiretime)
 			    	return false;

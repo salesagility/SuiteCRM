@@ -71,7 +71,7 @@ class SuiteEditorTinyMCE implements SuiteEditorInterface
     public function getHtml() {
         $smarty = new Sugar_Smarty();
         $smarty->assign((array)$this->settings);
-        return $smarty->fetch('include/SuiteEditor/tpls/SuiteEditorTinyMCE.tpl');
+        return $smarty->fetch(get_custom_file_if_exists('include/SuiteEditor/tpls/SuiteEditorTinyMCE.tpl'));
     }
 
 }
