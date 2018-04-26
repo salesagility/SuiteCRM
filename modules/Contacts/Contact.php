@@ -446,6 +446,7 @@ class Contact extends Person
         if (!empty($this->contacts_users_id)) {
             $this->sync_contact = true;
         }
+      
 
         if (!empty($this->portal_active) && $this->portal_active == 1) {
             $this->portal_active = true;
@@ -470,8 +471,31 @@ class Contact extends Person
         global $current_user;
 
         $this->load_relationship("user_sync");
+    }
 
-        $beanIDs = $this->user_sync->get();
+    /**
+     * loads the contacts_users relationship to populate a checkbox
+     * where a user can select if they would like to sync a particular
+     * contact to Outlook
+     */
+    function load_contacts_users_relationship()
+    {
+        global $current_user;
+
+        $this->load_relationship("user_sync");
+
+        if(!isset($this->user_sync)) {
+            $GLOBALS['log']->fatal('Contact::$user_sync is not set');
+            $beanIDs = null;
+        } elseif(!is_object($this->user_sync)) {
+            $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
+            $beanIDs = null;
+        } elseif(!method_exists($this->user_sync, 'get')) {
+            $GLOBALS['log']->fatal('Contact::$user_sync::get() is not a function');
+            $beanIDs = null;
+        } else {
+            $beanIDs = $this->user_sync->get();
+        }
 
         if (in_array($current_user->id, $beanIDs)) {
             $this->contacts_users_id = $current_user->id;
@@ -618,7 +642,16 @@ class Contact extends Person
             $sql = "SELECT id FROM users WHERE deleted=0 AND is_group=0 AND portal_only=0";
             $result = $this->db->query($sql);
             while ($hash = $this->db->fetchByAssoc($result)) {
-                $this->user_sync->add($hash['id']);
+
+                if(!isset($this->user_sync)) {
+                    $GLOBALS['log']->fatal('Contact::$user_sync is not set');
+                } elseif(!is_object($this->user_sync)) {
+                    $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
+                } elseif(!method_exists($this->user_sync, 'add')) {
+                    $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
+                } else {
+                    $this->user_sync->add($hash['id']);
+                }
             }
         } else {
             $theList = explode(",", $list_of_users);
@@ -627,7 +660,16 @@ class Contact extends Person
                     || $focus_user->retrieve($eachItem)
                 ) {
                     // it is a user, add user
-                    $this->user_sync->add($user_id ? $user_id : $focus_user->id);
+
+                    if(!isset($this->user_sync)) {
+                        $GLOBALS['log']->fatal('Contact::$user_sync is not set');
+                    } elseif(!is_object($this->user_sync)) {
+                        $GLOBALS['log']->fatal('Contact::$user_sync is not an object');
+                    } elseif(!method_exists($this->user_sync, 'add')) {
+                        $GLOBALS['log']->fatal('Contact::$user_sync::add() is not a function');
+                    } else {
+                        $this->user_sync->add($user_id ? $user_id : $focus_user->id);
+                    }
 
                     return;
                 }

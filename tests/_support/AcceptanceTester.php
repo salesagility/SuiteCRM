@@ -30,20 +30,34 @@ class AcceptanceTester extends \Codeception\Actor
     public function login($username, $password)
     {
         $I = $this;
-
-        // if snapshot exists - skipping login
         if ($I->loadSessionSnapshot('login')) {
             return;
         }
-
-        // Loggin In
-        $I->seeInTitle('SuiteCRM');
+        // Log In
         $I->seeElement('#loginform');
         $I->fillField('#user_name', $username);
         $I->fillField('#user_password', $password);
         $I->click('Log In');
-
-        // Saving snapshot
+        $I->waitForElementNotVisible('#loginform', 120);
         $I->saveSessionSnapshot('login');
+    }
+
+    public function loginAsAdmin()
+    {
+        $I = $this;
+
+        $I->login(
+            $I->getAdminUser(),
+            $I->getAdminPassword()
+        );
+    }
+
+    /**
+     * Clicks the logout link in the users menu
+     */
+    public function logout()
+    {
+        $I = $this;
+        $I->clickUserMenuItem('#logout_link');
     }
 }

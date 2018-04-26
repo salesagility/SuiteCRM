@@ -1,7 +1,7 @@
-# `firefox` environment config goes here
 modules:
   enabled:
     - \SuiteCRM\Test\Driver\WebDriver
   config:
     \SuiteCRM\Test\Driver\WebDriver:
-      browser: firefox
+      url: "http://localhost:8080/"
+      wait: 10

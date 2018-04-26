@@ -207,7 +207,7 @@ class ModuleBuilderViewWizard extends SugarView
 			case 'search':
 				//MB Select Search Layout page.
 				$this->generateMBSearchButtons () ;
-				$this->title = $this->editModule . " " . translate( 'LBL_SEARCH' ) ;
+				$this->title = $this->editModule . " " . translate( 'LBL_SEARCH_BUTTON' ) ;
 				$this->question = translate( 'LBL_QUESTION_SEARCH' ) ;
 				$ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), 'ModuleBuilder.getContent("module=ModuleBuilder&MB=true&action=wizard&view_module=' . $this->editModule . '&view_package=' . $this->package . '")' ) ;
 				$ajax->addCrumb ( translate( 'LBL_SEARCH_FORMS' ), '' ) ;
@@ -292,11 +292,11 @@ class ModuleBuilderViewWizard extends SugarView
 		      'imageTitle' => 'QuickCreate', 
 		      'help'=>'viewBtnQuickCreate' 
 		  ) ;
-		$this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_SEARCH' ] ] = 
+		$this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_SEARCH_FORMS' ] ] =
 		  array (
 		      'action' => "module=ModuleBuilder&MB=true&action=wizard&view=search&view_module={$this->editModule}&view_package={$this->package}" , 
-		      'imageTitle' => 'SearchForm' , 
-		      'help'=> 'searchBtn' 
+		      'imageTitle' => 'BasicSearch' ,
+		      'help'=> 'searchBtn'
 		  ) ;
 		$this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_DASHLET' ] ] = 
 		  array ( 

@@ -1,6 +1,10 @@
 <?php
 
+
 include_once __DIR__ . '/../../../TestLogger.php';
+
+use SuiteCRM\Test\TestLogger;
+
 
 /** @noinspection PhpUndefinedClassInspection */
 class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
@@ -1095,7 +1099,7 @@ class SugarEmailAddressTest extends PHPUnit_Framework_TestCase
         $c->id = "test_contact_{$i}";
         $c->save();
         $result = $this->ea->getPrimaryAddress($c);
-        self::assertEquals('', $result);
+        self::assertEquals('', $result); // or?? self::assertEquals('test@email.com', $result);
 
         // test
         $q = /** @lang sql */

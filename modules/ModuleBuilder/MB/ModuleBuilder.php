@@ -96,6 +96,11 @@ class ModuleBuilder
         return false ;
     }
 
+    /**
+     * @param $package
+     * @param $module
+     * @return mixed
+     */
     function &getPackageModule ($package , $module)
     {
         $this->getPackage ( $package ) ;

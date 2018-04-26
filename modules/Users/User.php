@@ -671,16 +671,23 @@ class User extends Person {
 		$q=<<<EOQ
 
 		select id from users where id in ( SELECT  er.bean_id AS id FROM email_addr_bean_rel er,
-			email_addresses ea WHERE ea.id = er.email_address_id
+			email_addresses ea WHERE ea.id = er.email_address_id AND users.deleted = 0
 		    AND ea.deleted = 0 AND er.deleted = 0 AND er.bean_module = 'Users' AND email_address_caps IN ('{$email1}') )
 EOQ;
 
 
 		$res=$this->db->query($q);
-		$row=$this->db->fetchByAssoc($res);
+		$rows = array();
+		while($row=$this->db->fetchByAssoc($res)) {
+		    $rows[] = $row;
+        }
 
-		if (!empty($row['id'])) {
-			return $this->retrieve($row['id']);
+        if(count($rows) > 1) {
+		    $GLOBALS['log']->fatal('ambiguous user email address');
+        }
+
+		if (!empty($rows[0]['id'])) {
+			return $this->retrieve($rows[0]['id']);
 		}
 		return '';
 	}
@@ -789,12 +796,27 @@ EOQ;
 	 * @param string $password MD5-encoded password
 	 * @param string $where Limiting query
 	 * @param bool $checkPasswordMD5 use md5 check for user_hash before return the user data (default is true)
-	 * @return the matching User of false if not found
+	 * @return bool|array the matching User of false if not found
 	 */
 	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
 	{
+
+        if (!$name) {
+            $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
+            return false;
+        }
+
 	    global $db;
+
+        $before = $name;
+
 		$name = $db->quote($name);
+
+        if ($before && !$name) {
+            $GLOBALS['log']->fatal('DB Quote error: return value is removed, check the Database connection.');
+            return false;
+        }
+
 		$query = "SELECT * from users where user_name='$name'";
 		if(!empty($where)) {
 		    $query .= " AND $where";
