@@ -63,4 +63,3 @@ class FP_Event_Locations extends FP_Event_Locations_sugar {
 
 
 }
-?>

@@ -22,7 +22,7 @@ processSurvey($survey, $trackerId, $contactId, $_REQUEST);
 
 function getCampaignIdFromTracker($trackerId)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
     $trackerId = $db->quote($trackerId);
     $sql = <<<EOF
             SELECT campaign_id 
@@ -143,7 +143,7 @@ function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
         }
     }
     $response->save();
-    header('Location: modules/Surveys/Entry/Thanks.php');
+    header('Location: index.php?entryPoint=surveyThanks&name=' . $survey->name);
 }
 
 function do404()

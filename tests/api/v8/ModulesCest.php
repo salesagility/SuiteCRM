@@ -19,6 +19,10 @@ class ModulesCest
     private static $PRODUCT_CATEGORY_RELATED_RECORD_IDS = array();
     private static $MEETINGS_RESOURCE = '/api/v8/modules/Meetings';
     private static $MEETINGS_RECORD_ID = '11111111-1111-1111-1111-111111111111';
+    private static $NOTES_RESOURCE = '/api/v8/modules/Notes';
+    private static $NOTES_RESOURCE_ID = '11111111-1111-1111-1111-111111111111';
+    private static $DOCUMENTS_RESOURCE = '/api/v8/modules/Documents';
+    private static $DOCUMENTS_RESOURCE_ID = '11111111-1111-1111-1111-111111111111';
     /**
      * @var Faker\Generator $fakeData
      */
@@ -210,6 +214,53 @@ class ModulesCest
         self::$RECORD = $response['data']['id'];
     }
 
+    /**
+     * Create a new entry
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: POST
+     * URL: /api/v8/modules/{module_name} (with id in $_POST)
+     * URL: /api/v8/modules/{module_name}/{id}
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function TestScenarioCreateNewWithClientCredentialsGrant(apiTester $I)
+    {
+        $faker = \Faker\Factory::create();
+        $I->comment('Test create account');
+        $I->loginAsAdminWithClientCredentials();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        $this->fakeData->seed(rand(0, 2148));
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$ACCOUNT_RESOURCE,
+            json_encode(
+                array(
+                    'data' => array(
+                        'id' => '',
+                        'type' => 'Accounts',
+                        'attributes' => array(
+                            'name' => $faker->name()
+                        )
+                    )
+                )
+            )
+        );
+        $I->seeResponseCodeIs(201);
+        $I->seeJsonApiContentNegotiation();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('links', $response);
+        $I->assertArrayHasKey('self', $response['links']);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        $I->assertArrayHasKey('attributes', $response['data']);
+
+        self::$RECORD = $response['data']['id'];
+
+        $I->loginAsAdmin();
+    }
+
      /**
       * Create a existing entry
       * @param apiTester $I
@@ -246,6 +297,184 @@ class ModulesCest
         $I->seeResponseCodeIs(403);
         $I->seeJsonApiContentNegotiation();
         $I->seeJsonApiFailure();
+    }
+
+
+    /**
+     * Create a notes resource and attaches file
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: POST
+     * URL: /api/v8/modules/{Notes} (with id in $_POST)
+     * URL: /api/v8/modules/{Notes}/{id}
+     *
+     * Also:
+     * @see \SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource
+     * @see SugarFieldFile::save()
+     */
+    public function TestScenarioCreateNoteWithAttachment(apiTester $I)
+    {
+        $faker = \Faker\Factory::create();
+
+        // Test create a note with a binary document
+        $I->comment('Create a notes resource and attach binary a document');
+        $filenameBinaryFile = 'testFile.png';
+        $pathToBinaryFile = codecept_data_dir() . $filenameBinaryFile;
+        $binaryFile = file_get_contents($pathToBinaryFile);
+        $binaryFileEncoded = base64_encode($binaryFile);
+
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        $this->fakeData->seed(rand(0, 2148));
+
+
+        $payload = json_encode(
+            array(
+                'data' => array(
+                    'id' => '',
+                    'type' => 'Notes',
+                    'attributes' => array(
+                        'name' => $faker->name(),
+                        'portal_flag' => true,
+                        // The api looks for fields with the type set to file
+                        // file name has the type set to "file" in the vardefs
+                        'filename' => $filenameBinaryFile,
+                        // $prefix . $filed_name . "_file" represents the actual data
+                        'filename_file' => $binaryFileEncoded
+                    )
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$NOTES_RESOURCE,
+            $payload
+        );
+
+        $I->seeResponseCodeIs(201);
+        $I->seeJsonApiContentNegotiation();
+        $I->seeJsonAPISuccess();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        self::$NOTES_RESOURCE_ID = $response['data']['id'];
+
+        // Test retrieve a note with a binary document to validate that the note had been created
+        $I->sendGET(
+            $I->getInstanceURL() . self::$NOTES_RESOURCE . '/' . self::$NOTES_RESOURCE_ID
+        );
+
+        $I->seeResponseCodeIs(200);
+        $I->seeJsonApiContentNegotiation();
+        $I->seeJsonAPISuccess();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        $I->assertEquals(self::$NOTES_RESOURCE_ID, $response['data']['id']);
+        $I->assertEquals('Notes', $response['data']['type']);
+        $I->assertArrayHasKey('attributes', $response['data']);
+        $I->assertArrayHasKey('filename', $response['data']['attributes']);
+        $I->assertArrayHasKey('filename_file', $response['data']['attributes']);
+        $I->assertNotEmpty('filename', $response['data']['attributes']['filename']);
+        $I->assertNotEmpty('filename_file', $response['data']['attributes']['filename_file']);
+        $I->assertEquals($filenameBinaryFile, $response['data']['attributes']['filename']);
+        $I->assertEquals($binaryFileEncoded, $response['data']['attributes']['filename_file']);
+    }
+
+    /**
+     * Create a document resource and attaches a file
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: POST
+     * URL: /api/v8/modules/{Documents} (with id in $_POST)
+     * URL: /api/v8/modules/{Documents}/{id}
+     *
+     * Also:
+     * @see \SuiteCRM\API\JsonApi\v1\Resource\SuiteBeanResource
+     * @see SugarFieldFile::save()
+     */
+    public function TestScenarioCreateDocumentWithAttachment(apiTester $I)
+    {
+        $faker = \Faker\Factory::create();
+
+        // Test create a note with a binary document
+        $I->comment('Create a notes resource and attach binary a document');
+        $filenameBinaryFile = 'testFile.png';
+        $pathToBinaryFile = codecept_data_dir().'/'.$filenameBinaryFile;
+        $binaryFile = file_get_contents($pathToBinaryFile);
+        $binaryFileEncoded = base64_encode($binaryFile);
+
+        $I->loginAsAdmin();
+        $I->sendJwtAuthorisation();
+        $I->sendJsonApiContentNegotiation();
+        $this->fakeData->seed(rand(0, 2148));
+
+        $document_name = $faker->name();
+        // Publish date
+        $active_datetime = new \DateTime();
+        $active_date = $active_datetime->format(DATE_ATOM);
+
+        $payload = json_encode(
+            array(
+                'data' => array(
+                    'id' => '',
+                    'type' => 'Documents',
+                    'attributes' => array(
+                        'name' => $document_name,
+                        'document_name' => $document_name,
+                        'portal_flag' => true,
+                        'active_date' => $active_date,
+                        // The api looks for fields with the type set to file
+                        // file name has the type set to "file" in the vardefs
+                        'filename' => $filenameBinaryFile,
+                        // $prefix . $filed_name . "_file" represents the actual data
+                        'filename_file' => $binaryFileEncoded,
+                        'revision' => 1
+                    )
+                )
+            )
+        );
+
+        $I->sendPOST(
+            $I->getInstanceURL() . self::$DOCUMENTS_RESOURCE,
+            $payload
+        );
+
+        $I->seeResponseCodeIs(201);
+        $I->seeJsonApiContentNegotiation();
+        $I->seeJsonAPISuccess();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        self::$DOCUMENTS_RESOURCE_ID = $response['data']['id'];
+
+        // Test retrieve a note with a binary document to validate that the note had been created
+        $I->sendGET(
+            $I->getInstanceURL() . self::$DOCUMENTS_RESOURCE . '/' . self::$DOCUMENTS_RESOURCE_ID
+        );
+
+        $I->seeResponseCodeIs(200);
+        $I->seeJsonApiContentNegotiation();
+        $I->seeJsonAPISuccess();
+        $response = json_decode($I->grabResponse(), true);
+        $I->assertArrayHasKey('data', $response);
+        $I->assertArrayHasKey('type', $response['data']);
+        $I->assertArrayHasKey('id', $response['data']);
+        $I->assertEquals(self::$DOCUMENTS_RESOURCE_ID, $response['data']['id']);
+        $I->assertEquals('Documents', $response['data']['type']);
+        $I->assertArrayHasKey('attributes', $response['data']);
+        $I->assertArrayHasKey('filename', $response['data']['attributes']);
+        $I->assertArrayHasKey('filename_file', $response['data']['attributes']);
+        $I->assertNotEmpty('filename', $response['data']['attributes']['filename']);
+        $I->assertNotEmpty('filename_file', $response['data']['attributes']['filename_file']);
+        $I->assertEquals($filenameBinaryFile, $response['data']['attributes']['filename']);
+        $I->assertEquals($binaryFileEncoded, $response['data']['attributes']['filename_file']);
     }
 
     /**

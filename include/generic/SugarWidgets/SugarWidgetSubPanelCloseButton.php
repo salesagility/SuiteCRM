@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 //TODO Rename this to close button field
 class SugarWidgetSubPanelCloseButton extends SugarWidgetField
 {
-	function displayList($layout_def)
+	function displayList(&$layout_def)
 	{
 		global $app_strings;
         global $subpanel_item_count;
@@ -74,5 +74,3 @@ class SugarWidgetSubPanelCloseButton extends SugarWidgetField
 
 	}
 }
-
-?>

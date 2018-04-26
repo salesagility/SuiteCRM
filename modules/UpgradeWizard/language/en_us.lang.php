@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -64,7 +64,7 @@ $mod_strings = array(
     'ERR_UW_NO_CREATE_TMP_DIR' => 'Could not create the temp directory. Check file permissions.',
     'ERR_UW_ONLY_PATCHES' => 'You can only upload patches on this page.',
     'ERR_UW_PREFLIGHT_ERRORS' => 'Errors Found During Preflight Check',
-    'ERR_UW_UPLOAD_ERR' => 'There was an error uploading the file, please try again!<br>\n',
+    'ERR_UW_UPLOAD_ERR' => 'There was an error uploading the file, please try again!<br>' . PHP_EOL,
     'ERR_UW_VERSION' => 'SuiteCRM System Version: ',
     'ERR_UW_PHP_VERSION' => 'PHP Version: ',
     'ERR_UW_SUITECRM_VERSION' => 'SuiteCRM System Version: ',
@@ -85,8 +85,8 @@ $mod_strings = array(
     'LBL_UW_CANCEL_DESC' => 'The upgrade has been cancelled. Any temporary files that were copied and any upgrade files that were uploaded have been deleted.',
     'LBL_UW_CHECK_ALL' => 'Check All',
     'LBL_UW_CHECKLIST' => 'Upgrade Steps',
-    'LBL_UW_COMMIT_ADD_TASK_DESC_1' => "Backups of Overwritten Files are in the following directory: \n",
-    'LBL_UW_COMMIT_ADD_TASK_DESC_2' => "Manually merge the following files:\n",
+    'LBL_UW_COMMIT_ADD_TASK_DESC_1' => 'Backups of Overwritten Files are in the following directory: ' . PHP_EOL,
+    'LBL_UW_COMMIT_ADD_TASK_DESC_2' => 'Manually merge the following files: ' . PHP_EOL,
     'LBL_UW_COMMIT_ADD_TASK_NAME' => 'Upgrade Process: Manually Merge Files',
     'LBL_UW_COMMIT_ADD_TASK_OVERVIEW' => 'Please use whichever diff method is most familiar to you to merge these files. Until this is complete, your SuiteCRM installation will be in an uncertain state, and the upgrade incomplete.',
     'LBL_UW_COMPLETE' => 'Complete',
@@ -129,7 +129,7 @@ $mod_strings = array(
     'LBL_UW_END_LOGOUT_PRE2' => 'Click Done to exit the Upgrade Wizard.',
     'LBL_UW_END_LOGOUT' => 'If you plan to apply another upgrade package using the Upgrade Wizard, log out and log back in prior to doing so.',
 
-    'LBL_UW_FILE_DELETED' => " has been removed.<br>",
+    'LBL_UW_FILE_DELETED' => ' has been removed.<br>',
     'LBL_UW_FILE_GROUP' => 'Group',
     'LBL_UW_FILE_ISSUES_PERMS' => 'File Permissions',
     'LBL_UW_FILE_NO_ERRORS' => '<b>All Files Writable</b>',
@@ -138,18 +138,18 @@ $mod_strings = array(
     'LBL_UW_FILE_UPLOADED' => ' has been uploaded',
     'LBL_UW_FILE' => 'File Name',
     'LBL_UW_FILES_QUEUED' => 'The following upgrade packages are ready to be installed:',
-    'LBL_UW_FILES_REMOVED' => "The following files will be removed from the system:<br>\n",
-    'LBL_UW_NEXT_TO_UPLOAD' => "<b>Click Next to upload upgrade packages.</b>",
+    'LBL_UW_FILES_REMOVED' => 'The following files will be removed from the system:<br>' . PHP_EOL,
+    'LBL_UW_NEXT_TO_UPLOAD' => '<b>Click Next to upload upgrade packages.</b>',
     'LBL_UW_FROZEN' => 'Upload a package before continuing.',
     'LBL_UW_HIDE_DETAILS' => 'Hide Details',
     'LBL_UW_IN_PROGRESS' => 'In Progress',
     'LBL_UW_INCLUDING' => 'Including',
     'LBL_UW_INCOMPLETE' => 'Incomplete',
     'LBL_UW_MANUAL_MERGE' => 'File Merge',
-    'LBL_UW_MODULE_READY' => "Module is ready to be installed. Click \"Commit\" to proceed with installation.",
+    'LBL_UW_MODULE_READY' => 'Module is ready to be installed. Click "Commit" to proceed with installation.',
     'LBL_UW_NO_INSTALLED_UPGRADES' => 'No recorded Upgrades detected.',
     'LBL_UW_NONE' => 'None',
-    'LBL_UW_OVERWRITE_DESC' => "All changed files will be overwritten, including any code customizations and template changes you have made. Are you sure you want to proceed?",
+    'LBL_UW_OVERWRITE_DESC' => 'All changed files will be overwritten, including any code customizations and template changes you have made. Are you sure you want to proceed?',
 
     'LBL_UW_PREFLIGHT_ADD_TASK' => 'Create Task Item for Manual Merge?',
     'LBL_UW_PREFLIGHT_EMAIL_REMINDER' => 'Email Yourself a Reminder for Manual Merge?',
@@ -177,7 +177,7 @@ $mod_strings = array(
     'LBL_UW_SKIPPED_FILES_TITLE' => 'Skipped Files',
     'LBL_UW_SQL_RUN' => 'Check when SQL has been manually run',
     'LBL_UW_START_DESC' => 'This wizard will assist you in upgrading this SuiteCRM instance.',
-    'LBL_UW_START_DESC2' => 'Note: We recommend that you backup the SuiteCRM database and the system files (all of the files in the SuiteCRM folder) before upgrading your production system. We highly recommend that you perform a test upgrade on a cloned instance of your production system first.',
+    'LBL_UW_START_DESC2' => 'Note: We highly recommend that you create a copy of the SuiteCRM instance you use in production, and test the upgrade package before deploying the new version. If you have changed the "composer.json" file, please run <pre>composer update</pre>, after the upgrade process has completed.',
     'LBL_UW_START_DESC3' => 'Click Next to perform a check on your system to make sure that the system is ready for the upgrade. The check includes file permissions, database privileges and server settings.',
     'LBL_UW_START_UPGRADED_UW_DESC' => 'The new Upgrade Wizard will now resume the upgrade process. Please continue your upgrade.',
     'LBL_UW_START_UPGRADED_UW_TITLE' => 'Welcome to the new Upgrade Wizard',
@@ -249,7 +249,6 @@ $mod_strings = array(
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
     'ERROR_PHP_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of PHP: ',
     'ERROR_SUITECRM_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
-    'ERROR_FLAVOR_INCOMPATIBLE' => 'The uploaded file is not compatible with this flavor (Community Edition, Professional, or Enterprise) of SuiteCRM: ',
     'LBL_LANGPACKS' => 'Language Packs' /*for 508 compliance fix*/,
     'LBL_MODULELOADER' => 'Module Loader' /*for 508 compliance fix*/,
     'LBL_PATCHUPGRADES' => 'Patch Upgrades' /*for 508 compliance fix*/,
@@ -269,4 +268,6 @@ $mod_strings = array(
         7 => 'Failed to write file to disk.',
         8 => 'File upload stopped by extension.',
     ),
+    'LBL_PASSWORD_EXPIRATON_CHANGED' => 'Warning: password expiration is set to none!',
+    'LBL_PASSWORD_EXPIRATON_REDIRECT' => 'Please update your settings here',
 );

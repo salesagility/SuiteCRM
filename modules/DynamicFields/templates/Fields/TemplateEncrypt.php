@@ -60,5 +60,3 @@ class TemplateEncrypt extends TemplateField{
 		return $vardef;
 	}
 }
-
-?>

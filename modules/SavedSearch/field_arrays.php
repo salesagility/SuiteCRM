@@ -59,4 +59,3 @@ $fields_array['SavedSearch'] = array ('column_fields' => Array(
         'list_fields' =>  Array('id', 'module','name','description'),
     	'required_fields' => array('id' => 1, 'name'=>1, 'module'=>1),
 );
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -293,6 +293,8 @@ function get_sugar_config_defaults()
         'email_default_editor' => 'html',
         'email_default_client' => 'sugar',
         'email_default_delete_attachments' => true,
+        'email_enable_auto_send_opt_in' => false,
+        'email_enable_confirm_opt_in' => SugarEmailAddress::COI_STAT_DISABLED,
         'filter_module_fields' => array(
             'Users' => array(
                 'show_on_employees',
@@ -678,7 +680,7 @@ function get_assigned_user_name($assigned_user_id, $is_group = '')
  */
 function get_user_name($id)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
@@ -1049,7 +1051,7 @@ function _mergeCustomAppListStrings($file, $app_list_strings)
  */
 function return_application_language($language)
 {
-    global $app_strings, $sugar_config;
+    global $app_strings, $sugar_config, $app_list_strings;
 
     $cache_key = 'app_strings.' . $language;
 
@@ -1357,7 +1359,7 @@ function append_where_clause(&$where_clauses, $variable_name, $SQL_name = null)
     }
 
     if (isset($_REQUEST[$variable_name]) && $_REQUEST[$variable_name] != '') {
-        array_push($where_clauses, "$SQL_name like '" . $GLOBALS['db']->quote($_REQUEST[$variable_name]) . "%'");
+        array_push($where_clauses, "$SQL_name like '" . DBManagerFactory::getInstance()->quote($_REQUEST[$variable_name]) . "%'");
     }
 }
 
@@ -3495,7 +3497,7 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
                 $halt_script = false;
                 $type = 'Notice';
             } else {
-                return;
+                break;
             }
             break;
         case E_USER_WARNING:
@@ -3582,9 +3584,9 @@ function return_bytes($val)
 {
     $val = trim($val);
     $last = strtolower($val{strlen($val) - 1});
+    $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
-        // The 'G' modifier is available since PHP 5.1.0
         case 'g':
             $val *= 1024;
         case 'm':
@@ -4268,11 +4270,11 @@ function generate_search_where(
                         if (!empty($field_value)) {
                             $field_value .= ',';
                         }
-                        $field_value .= "'" . $GLOBALS['db']->quote($val) . "'";
+                        $field_value .= "'" . DBManagerFactory::getInstance()->quote($val) . "'";
                     }
                 }
             } else {
-                $field_value = $GLOBALS['db']->quote($values[$field]);
+                $field_value = DBManagerFactory::getInstance()->quote($values[$field]);
             }
             //set db_fields array.
             if (!isset($parms['db_field'])) {
@@ -4280,7 +4282,7 @@ function generate_search_where(
             }
             if (isset($parms['my_items']) and $parms['my_items'] == true) {
                 global $current_user;
-                $field_value = $GLOBALS['db']->quote($current_user->id);
+                $field_value = DBManagerFactory::getInstance()->quote($current_user->id);
                 $operator = '=';
             }
 
@@ -4291,7 +4293,7 @@ function generate_search_where(
                     if (strstr($db_field, '.') === false) {
                         $db_field = $bean->table_name . '.' . $db_field;
                     }
-                    if ($GLOBALS['db']->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
+                    if (DBManagerFactory::getInstance()->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
                         $db_field = 'upper(' . $db_field . ')';
                         $field_value = strtoupper($field_value);
                     }
@@ -4539,7 +4541,7 @@ function get_dashlets_dialog_icon($module = '', $width = '32', $height = '32', $
         return $app_strings['LBL_NO_IMAGE'];
     }
 
-    return SugarThemeRegistry::current()->getImage($iconName, "align=\"$align\" border=\"0\"", $width, $height);
+    return $iconName;
 }
 
 // works nicely to change UTF8 strings that are html entities - good for PDF conversions

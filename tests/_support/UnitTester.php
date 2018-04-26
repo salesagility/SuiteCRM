@@ -29,7 +29,7 @@ class UnitTester extends \Codeception\Actor
         if(isset($GLOBALS['container']) === false) {
             $paths = new \SuiteCRM\Utility\Paths();
             /** @noinspection PhpIncludeInspection */
-            require $paths->getContainersPath();
+            require $paths->getContainersFilePath();
         }
 
         return $GLOBALS['container'];

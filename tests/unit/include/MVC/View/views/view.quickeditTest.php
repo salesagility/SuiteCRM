@@ -1,16 +1,20 @@
 <?php
 
-class ViewQuickeditTest extends PHPUnit_Framework_TestCase
+class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
-        global $current_user;
-        get_sugar_config_defaults();
-        $current_user = new User();
+        parent::setUp();
+
     }
 
     public function testpreDisplay()
     {
+        
+        if(isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
+        
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickedit();
         $view->preDisplay();
@@ -29,10 +33,13 @@ class ViewQuickeditTest extends PHPUnit_Framework_TestCase
         $_REQUEST['record'] = 1;
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
-    }
 
-    public function testdisplay()
-    {
-        $this->markTestIncomplete();
+        // clean up
+
+        if(isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 }

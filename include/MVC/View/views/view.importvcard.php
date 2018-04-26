@@ -47,6 +47,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('include/vCard.php');
+require_once __DIR__ . '/../../../../include/utils/layout_utils.php';
 
 class ViewImportvcard extends SugarView
 {
@@ -90,4 +91,3 @@ class ViewImportvcard extends SugarView
         $this->ss->display($this->getCustomFilePathIfExists('include/MVC/View/tpls/Importvcard.tpl'));
  	}
 }
-?>

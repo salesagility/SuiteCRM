@@ -90,4 +90,3 @@ if(isset($_POST['response_json']) && $_POST['response_json']) {
 else {
 	handleRedirect('', '');
 }
-?>

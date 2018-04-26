@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -46,12 +46,12 @@ use SuiteCRM\API\JsonApi\v1\Enumerator\RelationshipType;
 use SuiteCRM\API\JsonApi\v1\Links;
 use SuiteCRM\API\JsonApi\v1\Repositories\RelationshipRepository;
 use SuiteCRM\API\v8\Controller\ApiController;
-use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowed;
+use SuiteCRM\API\v8\Exception\ReservedKeywordNotAllowedException;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\Conflict;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ConflictException;
 
 /**
  * Class SuiteBeanResource
@@ -60,14 +60,13 @@ use SuiteCRM\API\v8\Exception\Conflict;
  */
 class SuiteBeanResource extends Resource
 {
-
     /**
      * fromSugarBean will try to convert a SugarBean in to a resource object, it will also try to include links
      * to the related items.
      * @param \SugarBean $sugarBean
      * @param string $source rfc6901
      * @return SuiteBeanResource
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws ApiException
@@ -98,7 +97,7 @@ class SuiteBeanResource extends Resource
 
             // Skip the reserved keywords which can be safely skipped
             if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
-                $exception = new ReservedKeywordNotAllowed();
+                $exception = new ReservedKeywordNotAllowedException();
                 $logMessage =
                     ' Code: [' . $exception->getCode() . ']' .
                     ' Status: [' . $exception->getHttpStatus() . ']' .
@@ -111,7 +110,7 @@ class SuiteBeanResource extends Resource
 
             // Throw when the field names match the reserved keywords
             if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
-                $exception = new ReservedKeywordNotAllowed($fieldName);
+                $exception = new ReservedKeywordNotAllowedException($fieldName);
                 $exception->setDetail('Reserved keyword not allowed in attribute field name.');
                 $exception->setSource('/data/attributes/' . $fieldName);
                 throw $exception;
@@ -138,6 +137,8 @@ class SuiteBeanResource extends Resource
                         ExceptionCode::API_DATE_CONVERTION_SUGARBEAN);
                 }
                 $this->attributes[$fieldName] = $datetimeISO8601;
+            } elseif ($sugarBean instanceof \File && $definition['type'] === 'file') {
+                $this->retrieveFileFromBean($sugarBean, $fieldName);
             } elseif  ($definition['type'] === 'link') {
                 /** @var ServerRequestInterface $request; */
                 $request = $this->containers->get(ServerRequestInterface::class);
@@ -171,7 +172,7 @@ class SuiteBeanResource extends Resource
                 $definition['required'] === true &&
                 !isset($this->attributes[$fieldName])
             ) {
-                $exception = new BadRequest('[Missing Required Field] "' . $fieldName . '"');
+                $exception = new BadRequestException('[Missing Required Field] "' . $fieldName . '"');
                 $exception->setSource($this->source . '/attributes/' . $fieldName);
                 throw $exception;
             }
@@ -189,9 +190,9 @@ class SuiteBeanResource extends Resource
     /**
      * SugarBean will save try to save the SugarBean and update any relationships which have a data key
      * @return \SugarBean
-     * @throws BadRequest
+     * @throws BadRequestException
      * @throws ApiException
-     * @throws Conflict
+     * @throws ConflictException
      */
     public function toSugarBean()
     {
@@ -200,6 +201,14 @@ class SuiteBeanResource extends Resource
 
         if (empty($sugarBean)) {
             $sugarBean = \BeanFactory::newBean($this->type);
+            if(!$sugarBean) {
+                throw new \Exception('Bean factory can not retrieve a bean. type was: ' . $this->type);
+            }
+
+            if (!empty($this->id)) {
+                $sugarBean->new_with_id = true;
+                $sugarBean->id = $this->id;
+            }
         }
 
         foreach ($sugarBean->field_defs as $fieldName => $definition) {
@@ -217,7 +226,7 @@ class SuiteBeanResource extends Resource
 
             // Skip the reserved keywords which can be safely skipped
             if (in_array($fieldName, self::$JSON_API_SKIP_RESERVED_KEYWORDS)) {
-                $exception = new ReservedKeywordNotAllowed();
+                $exception = new ReservedKeywordNotAllowedException();
                 $logMessage =
                     ' Code: [' . $exception->getCode() . ']' .
                     ' Status: [' . $exception->getHttpStatus() . ']' .
@@ -263,7 +272,7 @@ class SuiteBeanResource extends Resource
                 !isset($this->attributes[$fieldName]) &&
                 empty($this->attributes[$fieldName])
             ) {
-                $exception = new BadRequest('[Missing Required Field] "' . $fieldName . '"');
+                $exception = new BadRequestException('[Missing Required Field] "' . $fieldName . '"');
                 $exception->setSource($this->source . '/attributes/' . $fieldName);
                 throw $exception;
             }
@@ -271,11 +280,19 @@ class SuiteBeanResource extends Resource
 
         try {
             $sugarBean->save();
+
+            // After save: saveFiles
+            if($sugarBean instanceof \File) {
+                foreach ($sugarBean->field_defs as $fieldName => $definition) {
+                    if ($definition['type'] === 'file') {
+                        $sugarBean = $this->saveFileToBean($sugarBean, $fieldName);
+                    }
+                }
+            }
         } catch (Exception $e) {
             throw new ApiException(
                 '[SugarBeanResource] [Unable to save bean while converting toSugarBean()] ' . $e->getMessage(),
-                $e->getCode(),
-                $e
+                $e->getCode()
             );
         }
 
@@ -289,7 +306,7 @@ class SuiteBeanResource extends Resource
                 }
 
                 if ($sugarBean->load_relationship($relationshipName) === false) {
-                    throw new Conflict('[Relationship does not exist] '. $relationshipName);
+                    throw new ConflictException('[Relationship does not exist] '. $relationshipName);
                 }
 
                 if (empty($relationship['data'])) {
@@ -306,7 +323,7 @@ class SuiteBeanResource extends Resource
                         /** @var \Link2 $toManySugarBeanLink */
                         $toManySugarBeanLink = $sugarBean->{$relationshipName};
                         if ($toManySugarBeanLink->getType() !== 'many') {
-                            throw new Conflict(
+                            throw new ConflictException(
                                 '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
                                 'expected to many relationship from '.
                                 $relationshipName
@@ -341,7 +358,7 @@ class SuiteBeanResource extends Resource
                             // add new relationships
                             $added = $toManySugarBeanLink->add($relatedResourceIdsToAdd, $middleTableFields);
                             if($added !== true) {
-                                throw new Conflict(
+                                throw new ConflictException(
                                     '[SugarBeanResource] [Unable to add relationships (to many)] while converting toSugarBean()'.
                                     json_encode($added)
                                 );
@@ -353,7 +370,7 @@ class SuiteBeanResource extends Resource
                         if(empty($relatedResourceIdsToRemove)  === false)  {
                             $removed = $toManySugarBeanLink->remove($relatedResourceIdsToRemove);
                             if($removed !== true) {
-                                throw new Conflict(
+                                throw new ConflictException(
                                     '[SugarBeanResource] [Unable to remove relationships (to many)] while converting toSugarBean()'.
                                     json_encode($removed)
                                 );
@@ -366,7 +383,7 @@ class SuiteBeanResource extends Resource
                         /** @var \Link2 $toOneSugarBeanLink */
                         $toOneSugarBeanLink = $sugarBean->{$relationshipName};
                         if ($toOneSugarBeanLink->getType() !== 'one') {
-                            throw new Conflict(
+                            throw new ConflictException(
                                 '[SugarBeanResource] [unexpected relationship type] while converting toSugarBean()'.
                                 'expected to one relationship from'.
                                 $relationshipName
@@ -375,7 +392,7 @@ class SuiteBeanResource extends Resource
                         // add relationship
                         $relatedBean = \BeanFactory::getBean($toOneRelationship['type'], $toOneRelationship['id']);
                         if ($relatedBean->new_with_id === true) {
-                            $exception = new NotFound('["id" does not exist] "' . $toOneRelationship['id']. '"');
+                            $exception = new NotFoundException('["id" does not exist] "' . $toOneRelationship['id']. '"');
                             $exception->setSource('/data/relationships/'.$relationshipName.'/id');
                             throw $exception;
                         }
@@ -387,7 +404,7 @@ class SuiteBeanResource extends Resource
 
                         $added = $toOneSugarBeanLink->add($relatedBean, $middleTableFields);
                         if($added !== true) {
-                            throw new Conflict(
+                            throw new ConflictException(
                                 '[SugarBeanResource] [Unable to add relationships (to one}] while converting toSugarBean()'.
                                 json_encode($added)
                             );
@@ -404,8 +421,8 @@ class SuiteBeanResource extends Resource
      * @param array $data
      * @param string $source
      * @return SuiteBeanResource
-     * @throws BadRequest
-     * @throws Conflict
+     * @throws BadRequestException
+     * @throws ConflictException
      */
     public function fromJsonApiRequest(array $data, $source = ResourceEnum::DEFAULT_SOURCE)
     {
@@ -431,9 +448,102 @@ class SuiteBeanResource extends Resource
      * @param Relationship $relationship
      * @return SuiteBeanResource
      */
-    public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship) {
+    public function withRelationship(\SuiteCRM\API\JsonApi\v1\Resource\Relationship $relationship)
+    {
         $relationshipName = $relationship->getRelationshipName();
         $this->relationships[$relationshipName]['data'] = $relationship->toJsonApiResponse();
         return clone $this;
+    }
+
+    /**
+     * Set the attributes to download a base64 encoded file
+     * @param \File|\Note|\Document $bean
+     * @param string $fieldName
+     * @throws \SuiteCRM\API\v8\Exception\ApiException
+     */
+    private function retrieveFileFromBean(\File $bean, $fieldName)
+    {
+        if (empty($bean->{$fieldName})) {
+            // return if a file has not been uploaded
+            return;
+        }
+
+        $fileFieldName = $fieldName . '_file';
+
+        $this->attributes[$fieldName] = $bean->{$fieldName};
+
+
+        if ($bean instanceof \Document) {
+            // Document file
+            $file_path = \UploadStream::getDir() . '/' . $bean->document_revision_id;
+        } else {
+            // File Or Note
+            $file_path = \UploadStream::getDir() . '/' . $bean->id;
+        }
+
+        if (empty($file_path)) {
+            throw new ApiException(
+                '[SugarBeanResource] [retrieveFileFromBean][Unable to find file] File: ' .
+                $bean->id
+            );
+        }
+
+        $file_contents = file_get_contents($file_path);
+
+        if ($file_contents === false) {
+            throw new ApiException(
+                '[SugarBeanResource] [retrieveFileFromBean][Unable to get file contents] FileName: ' .
+                $this->attributes[$fieldName]
+            );
+        }
+
+        $file = base64_encode($file_contents);
+        $this->attributes[$fileFieldName] = $file;
+    }
+
+    /**
+     * POST to upload a base64 encoded file. Expects the file to be assigned to {field}_file attribute
+     * @param \SugarBean $bean
+     * @param string $fieldName
+     * @return \SugarBean
+     */
+    private function saveFileToBean(\SugarBean $bean, $fieldName)
+    {
+        global $current_user;
+
+        $config = $this->containers->get('ConfigurationManager');
+        $hasRevision = $bean instanceof \Document;
+        $dataFieldName = $fieldName . '_file';
+
+        $decodedFile = base64_decode($this->attributes[$dataFieldName]);
+        $uploadFile = new \UploadFile($fieldName);
+        $uploadFile->set_for_soap($this->attributes[$fieldName], $decodedFile);
+
+        $ext_pos = strrpos($uploadFile->stored_file_name, '.');
+        $uploadFile->file_ext = substr($uploadFile->stored_file_name, $ext_pos + 1);
+        if (in_array($uploadFile->file_ext, $config['upload_badext'], true)) {
+            $uploadFile->stored_file_name .= '.txt';
+            $uploadFile->file_ext = 'txt';
+        }
+
+        if($hasRevision) {
+            $revision = new \DocumentRevision();
+            $revision->filename = $uploadFile->get_stored_file_name();
+            $revision->file_mime_type = $uploadFile->getMimeSoap($revision->filename);
+            $revision->file_ext = $uploadFile->file_ext;
+            $revision->revision = $this->attributes['revision'];
+            $revision->document_id = $bean->id;
+            $revision->save();
+
+            $bean->document_revision_id = $revision->id;
+            $uploadFile->final_move($revision->id);
+        } else {
+            $uploadFile->final_move($bean->id);
+        }
+
+        $bean->assigned_user_id = $current_user->id;
+        $bean->save();
+
+        return $bean;
     }
 }

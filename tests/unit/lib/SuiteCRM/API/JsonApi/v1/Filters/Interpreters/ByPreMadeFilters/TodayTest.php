@@ -1,7 +1,7 @@
 <?php
 
 
-class TodayTest extends \Codeception\Test\Unit
+class TodayTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -13,15 +13,12 @@ class TodayTest extends \Codeception\Test\Unit
      */
     private static $filter;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$filter === null) {
             self::$filter = new \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByPreMadeFilters\Today();
         }
-    }
-
-    protected function _after()
-    {
     }
 
     public function testHasByPreMadeFilter()

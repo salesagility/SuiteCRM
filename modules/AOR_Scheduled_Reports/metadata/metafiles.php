@@ -52,4 +52,3 @@ $module_name = 'AOR_Scheduled_Reports';
  	'popupdefs'	      =>    'modules/'. $module_name. '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/'. $module_name. '/metadata/SearchFields.php',
  );
-?>

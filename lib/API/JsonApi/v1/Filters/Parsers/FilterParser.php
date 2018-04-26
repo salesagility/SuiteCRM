@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -48,7 +48,7 @@ use SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator;
 use SuiteCRM\API\JsonApi\v1\Filters\Operators\Operator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator;
 use SuiteCRM\API\JsonApi\v1\Filters\Validators\FilterValidator;
-use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\Exception\Exception;
 use SuiteCRM\Exception\InvalidArgumentException;
 
@@ -62,10 +62,27 @@ class FilterParser
      * @var ContainerInterface
      */
     private $containers;
+
+    /**
+     * @var FieldOperator $fieldOperator
+     */
     private static $fieldOperator;
+
+    /**
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[] $filterOperators
+     */
     private static $filterOperators;
+
+    /**
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]  $filterFieldOperators
+     */
     private static $filterFieldOperators;
+
+    /**
+     * @var \SuiteCRM\API\JsonApi\v1\Filters\Interfaces\OperatorInterface[]  $filterFieldOperators
+     */
     private static $filterSpecialOperators;
+
 
     /**
      * FilterParser constructor.
@@ -142,7 +159,7 @@ class FilterParser
      * @param string $fieldKey
      * @param string $delimiter
      * @return array
-     * @throws BadRequest
+     * @throws BadRequestException
      * @throws Exception
      * @throws InvalidArgumentException
      */
@@ -193,7 +210,7 @@ class FilterParser
 
             $response = $treeDataStructure;
         } else {
-            throw new BadRequest('[JsonApi][v1][Filters][FilterParser][splitFieldKeys][unable to split value] "' . $fieldKey . '"');
+            throw new BadRequestException('[JsonApi][v1][Filters][FilterParser][splitFieldKeys][unable to split value] "' . $fieldKey . '"');
         }
 
 

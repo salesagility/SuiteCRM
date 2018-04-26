@@ -137,7 +137,7 @@ var $selectedCategories = array();
         self::__construct($id, $def);
     }
 
-	function process($lvsParams = array(), $id=NULL) {
+	function process($lvsParams = array(), $id = null) {
         global $current_user;
 
         $currentSearchFields = array();
@@ -594,7 +594,7 @@ enableQS(false);
     }
 
     function check_enabled($type){
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = "SELECT * FROM config where name = 'module_" .$type . "' and value =  1;";
         $results = $db->query($query);
 

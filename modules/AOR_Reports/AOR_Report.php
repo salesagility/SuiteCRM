@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -103,7 +103,7 @@ class AOR_Report extends Basic
         // TODO: process of saveing the fields and conditions is too long so we will have to make some optimization on save_lines functions
         set_time_limit(3600);
 
-        if (empty($this->id)) {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aor_conditions_id']);
             unset($_POST['aor_fields_id']);
         }
@@ -183,6 +183,7 @@ class AOR_Report extends Basic
         $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
         if (!$linkedCharts) {
             //No charts to display
+            LoggerManager::getLogger()->warn('No charts to display to build report chart for AOR Report.');
             return '';
         }
 
@@ -335,7 +336,7 @@ class AOR_Report extends Basic
 
                         return $html;
                     } else {
-                        return $this->build_group_report($offset, $links, array(), create_guid());
+                        return $this->build_group_report($offset, $links, array());
                     }
                 } else {
                     throw new Exception('incorrect results');
@@ -403,9 +404,9 @@ class AOR_Report extends Basic
     }
 
 
-    function build_group_report($offset = -1, $links = true, $extra = array())
+    function build_group_report($offset = -1, $links = true, $extra = array(), $subgroup = '')
     {
-        global $beanList, $timedate;
+        global $beanList, $timedate, $app_strings;
 
         $html = '';
         $query = '';
@@ -419,7 +420,7 @@ class AOR_Report extends Basic
             $query_array['select'][] = $module->table_name . ".id AS '" . $module->table_name . "_id'";
         }
 
-        if ($field_id != '') {
+        if ($field_id != '' && empty($subgroup)) {
             $field = new AOR_Field();
             $field->retrieve($field_id);
 
@@ -451,7 +452,7 @@ class AOR_Report extends Basic
                     '_USD') && isset($field_module->field_defs['currency_id'])
             ) {
                 if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
-                    $query['select'][$table_alias . '_currency_id'] = $table_alias . '_cstm' . ".currency_id AS '" . $table_alias . "_currency_id'";
+                    $query_array['select'][$table_alias . '_currency_id'] = $table_alias . '_cstm' . ".currency_id AS '" . $table_alias . "_currency_id'";
                 } else {
                     $query_array['select'][$table_alias . '_currency_id'] = $table_alias . ".currency_id AS '" . $table_alias . "_currency_id'";
                 }
@@ -461,7 +462,7 @@ class AOR_Report extends Basic
                 $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
                 // Fix for #1251 - added a missing parameter to the function call
                 $query_array = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
-                    $table_alias, $field_module, 'custom', $query);
+                    $table_alias, $field_module, 'custom', $query_array);
             } else {
                 $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
             }
@@ -543,17 +544,49 @@ class AOR_Report extends Basic
             $result = $this->db->query($query);
 
             while ($row = $this->db->fetchByAssoc($result)) {
-                if ($html != '') {
+                if ($html !== '') {
                     $html .= '<br />';
                 }
+                $groupValue = $row[$field_label];
+                $groupDisplay = $this->getModuleFieldByGroupValue($beanList, $groupValue);
+                if (empty(trim($groupValue))) {
+                    $groupValue = '_empty';
+                    $groupDisplay = $app_strings['LBL_NONE'];
+                }
 
-                $html .= $this->build_report_html($offset, $links, $row[$field_label], create_guid(), $extra);
+                 // Fix #5427 If download pdf then not use tab-content and add css inline to work with mpdf
+                $pdf_style = "";
+                $action = $_REQUEST['action'];
+                if ($action == 'DownloadPDF') {
+                    $pdf_style = "background: #333 !important; color: #fff !important; margin-bottom: 0px;";
+                }
+
+                $html .= '<div class="panel panel-default">
+                            <div class="panel-heading" style="' . $pdf_style . '">
+                                <a class="" role="button" data-toggle="collapse" href="#detailpanel_report_group_' . $groupValue . '" aria-expanded="false">
+                                    <div class="col-xs-10 col-sm-11 col-md-11">
+                                        ' . $groupDisplay . '
+                                    </div>
+                                </a>
+                            </div>';
+                if ($action != 'DownloadPDF') {
+                    $html .= '<div class="panel-body panel-collapse collapse in" id="detailpanel_report_group_' . $groupValue . '">
+                                <div class="tab-content">';
+                }
+                else {
+                    $html .= '</div>';
+                }
+
+
+                $html .= $this->build_report_html($offset, $links, $groupValue, create_guid(), $extra);
+                $html .= ($action == 'downloadPDF') ? '' : '</div></div></div>';
+                // End
 
             }
         }
 
         if ($html == '') {
-            $html = $this->build_report_html($offset, $links, '', create_guid(), $extra);
+            $html = $this->build_report_html($offset, $links, $subgroup, create_guid(), $extra);
         }
 
         return $html;
@@ -577,99 +610,42 @@ class AOR_Report extends Basic
             $max_rows = 20;
         }
 
+        // See if the report actually has any fields, if not we don't want to run any queries since we can't show anything
+        $fieldCount = count($this->getReportFields());
+        if(!$fieldCount){
+            $GLOBALS['log']->info('Running report "' . $this->name . '" with 0 fields');
+        }
+
         $total_rows = 0;
-        $count_sql = explode('ORDER BY', $report_sql);
-        $count_query = 'SELECT count(*) c FROM (' . $count_sql[0] . ') as n';
+        if($fieldCount){
+            $count_sql = explode('ORDER BY', $report_sql);
+            $count_query = 'SELECT count(*) c FROM (' . $count_sql[0] . ') as n';
 
-        // We have a count query.  Run it and get the results.
-        $result = $this->db->query($count_query);
-        $assoc = $this->db->fetchByAssoc($result);
-        if (!empty($assoc['c'])) {
-            $total_rows = $assoc['c'];
+            // We have a count query.  Run it and get the results.
+            $result = $this->db->query($count_query);
+            $assoc = $this->db->fetchByAssoc($result);
+            if (!empty($assoc['c'])) {
+                $total_rows = $assoc['c'];
+            }
         }
 
-        $html = "<table class='list aor_reports' id='report_table_" . $tableIdentifier . "' width='100%' cellspacing='0' cellpadding='0' border='0' repeat_header='1'>";
-
-        if ($offset >= 0) {
-            $start = 0;
-            $end = 0;
-            $previous_offset = 0;
-            $next_offset = 0;
-            $last_offset = 0;
-
-            if ($total_rows > 0) {
-                $start = $offset + 1;
-                $end = (($offset + $max_rows) < $total_rows) ? $offset + $max_rows : $total_rows;
-                $previous_offset = ($offset - $max_rows) < 0 ? 0 : $offset - $max_rows;
-                $next_offset = $offset + $max_rows;
-                if (is_int($total_rows / $max_rows)) {
-                    $last_offset = $max_rows * ($total_rows / $max_rows - 1);
-                } else {
-                    $last_offset = $max_rows * floor($total_rows / $max_rows);
-                }
-
-            }
-
-            $html .= "<thead><tr class='pagination'>";
-
-
-            $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
-
-            $html .= "<td colspan='18'>
-                       <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
-                        <td style='text-align:left' ><H3><a href=\"javascript:void(0)\" class=\"collapseLink\" onclick=\"groupedReportToggler.toggleList(this);\"><img border=\"0\" id=\"detailpanel_1_img_hide\" src=\"themes/SuiteR/images/basic_search.gif\"></a>$moduleFieldByGroupValue</H3></td>
-                        <td class='paginationChangeButtons' align='right' nowrap='nowrap' width='1%'>";
-
-            if ($offset == 0) {
-                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' disabled='disabled'>
-                    <img src='" . SugarThemeRegistry::current()->getImageURL('start_off.gif') . "' alt='Start' align='absmiddle' border='0'>
-                </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' disabled='disabled'>
-                    <img src='" . SugarThemeRegistry::current()->getImageURL('previous_off.gif') . "' alt='Previous' align='absmiddle' border='0'>
-                </button>";
-            } else {
-                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' onclick='changeReportPage(\"" . $this->id . "\",0,\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
-                    <img src='" . SugarThemeRegistry::current()->getImageURL('start.gif') . "' alt='Start' align='absmiddle' border='0'>
-                </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' onclick='changeReportPage(\"" . $this->id . "\"," . $previous_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
-                    <img src='" . SugarThemeRegistry::current()->getImageURL('previous.gif') . "' alt='Previous' align='absmiddle' border='0'>
-                </button>";
-            }
-            $html .= " <span class='pageNumbers'>(" . $start . " - " . $end . " of " . $total_rows . ")</span>";
-            if ($next_offset < $total_rows) {
-                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $next_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
-                        <img src='" . SugarThemeRegistry::current()->getImageURL('next.gif') . "' alt='Next' align='absmiddle' border='0'>
-                    </button>
-                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $last_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
-                        <img src='" . SugarThemeRegistry::current()->getImageURL('end.gif') . "' alt='End' align='absmiddle' border='0'>
-                    </button>";
-            } else {
-                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
-                        <img src='" . SugarThemeRegistry::current()->getImageURL('next_off.gif') . "' alt='Next' align='absmiddle' border='0'>
-                    </button>
-                     <button type='button' id='listViewEndButton_top$dashletPaginationButtons' name='listViewEndButton' title='End' class='button'  disabled='disabled'>
-                        <img src='" . SugarThemeRegistry::current()->getImageURL('end_off.gif') . "' alt='End' align='absmiddle' border='0'>
-                    </button>";
-
-            }
-
-            $html .= "</td>
-                       </table>
-                      </td>";
-
-            $html .= "</tr></thead>";
-        } else {
-
-            $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
-
-            $html = "<H3>$moduleFieldByGroupValue</H3>" . $html;
+          // Fix #5427
+        $report_style = '';
+        $thead_style = '';
+        if ((isset($_REQUEST['action']) ? $_REQUEST['action'] : null) == 'DownloadPDF') {
+            $report_style = 'margin-top: 0px;';
+            $thead_style = 'background: #919798; color: #fff';
         }
+        $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';
+        //End
+        
+        $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->query($sql);
 
-        $html .= "<thead>";
-        $html .= "<tr>";
+        $html .= '<thead>';
+        $html .= '<tr>';
 
         $fields = array();
         $i = 0;
@@ -707,29 +683,103 @@ class AOR_Report extends Basic
 
 
             if ($fields[$label]['display']) {
-                $html .= "<th scope='col'>";
-                $html .= "<div style='color:#444;'>";
+                 // Fix #5427
+                $html .= "<th scope='col' style='{$thead_style}'>";
+                // End
+                $html .= "<div>";
                 $html .= $field->label;
                 $html .= "</div></th>";
             }
             ++$i;
         }
 
-        $html .= "</tr>";
-        $html .= "</thead>";
-        $html .= "<tbody>";
+        $html .= '</tr>';
 
         if ($offset >= 0) {
-            $result = $this->db->limitQuery($report_sql, $offset, $max_rows);
-        } else {
-            $result = $this->db->query($report_sql);
+            $start = 0;
+            $end = 0;
+            $previous_offset = 0;
+            $next_offset = 0;
+            $last_offset = 0;
+
+            if ($total_rows > 0) {
+                $start = $offset + 1;
+                $end = (($offset + $max_rows) < $total_rows) ? $offset + $max_rows : $total_rows;
+                $previous_offset = ($offset - $max_rows) < 0 ? 0 : $offset - $max_rows;
+                $next_offset = $offset + $max_rows;
+                if (is_int($total_rows / $max_rows)) {
+                    $last_offset = $max_rows * ($total_rows / $max_rows - 1);
+                } else {
+                    $last_offset = $max_rows * floor($total_rows / $max_rows);
+                }
+
+            }
+
+            $html .= '<tr id="pagination" class="pagination-unique" role="presentation">';
+
+            $html .= "<td colspan='$i'>
+                       <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
+                        <td nowrap=\"nowrap\" class=\"paginationActionButtons\" ></td>";
+
+            $html .= '<td nowrap="nowrap" align="right" class="paginationChangeButtons" width="1%">';
+            if ($offset == 0) {
+                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' disabled='disabled'>
+                    <span class='suitepicon suitepicon-action-first'></span>
+                </button>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' disabled='disabled'>
+                    <span class='suitepicon suitepicon-action-left'></span>
+                </button>";
+            } else {
+                $html .= "<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' onclick='changeReportPage(\"" . $this->id . "\",0,\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                    <span class='suitepicon suitepicon-action-first'></span>
+                </button>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' onclick='changeReportPage(\"" . $this->id . "\"," . $previous_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                    <span class='suitepicon suitepicon-action-left'></span>
+                </button>";
+            }
+            $html .= '</td><td style="vertical-align:middle" nowrap="nowrap" width="1%" class="paginationActionButtons">';
+            $html .= ' <div class="pageNumbers">(' . $start . ' - ' . $end . ' of ' . $total_rows . ')</div>';
+            $html .= '</td><td nowrap="nowrap" align="right" class="paginationActionButtons" width="1%">';
+            if ($next_offset < $total_rows) {
+                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $next_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                       <span class='suitepicon suitepicon-action-right'></span>
+                    </button>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button' onclick='changeReportPage(\"" . $this->id . "\"," . $last_offset . ",\"" . $group_value . "\",\"" . $tableIdentifier . "\")'>
+                        <span class='suitepicon suitepicon-action-last'></span>
+                    </button>";
+            } else {
+                $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
+                        <span class='suitepicon suitepicon-action-next'></span>
+                    </button>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button'  disabled='disabled'>
+                       <span class='suitepicon suitepicon-action-last'></span>
+                    </button>";
+
+            }
+
+            $html .= '</td><td nowrap="nowrap" width="4px" class="paginationActionButtons"></td>
+                       </table>
+                      </td>';
+
+            $html .= '</tr>';
+        }
+
+        $html .= '</thead>';
+        $html .= '<tbody>';
+
+        if($fieldCount){
+            if ($offset >= 0) {
+                $result = $this->db->limitQuery($report_sql, $offset, $max_rows);
+            } else {
+                $result = $this->db->query($report_sql);
+            }
         }
 
         $row_class = 'oddListRowS1';
 
 
         $totals = array();
-        while ($row = $this->db->fetchByAssoc($result)) {
+        while ($fieldCount && $row = $this->db->fetchByAssoc($result)) {
             $html .= "<tr class='" . $row_class . "' height='20'>";
 
             foreach ($fields as $name => $att) {
@@ -774,7 +824,7 @@ class AOR_Report extends Basic
 
         $html .= $this->getTotalHTML($fields, $totals);
 
-        $html .= "</table>";
+        $html .= '</table></div>';
 
         $html .= "    <script type=\"text/javascript\">
                             groupedReportToggler = {
@@ -785,11 +835,11 @@ class AOR_Report extends Basic
                                             $(e).toggle();
                                         }
                                     });
-                                    if($(elem).find('img').first().attr('src') == 'themes/SuiteR/images/basic_search.gif') {
-                                        $(elem).find('img').first().attr('src', 'themes/SuiteR/images/advanced_search.gif');
+                                    if($(elem).find('img').first().attr('src') == '".SugarThemeRegistry::current()->getImagePath('basic_search.gif')."') {
+                                        $(elem).find('img').first().attr('src', '".SugarThemeRegistry::current()->getImagePath('advanced_search.gif')."');
                                     }
                                     else {
-                                        $(elem).find('img').first().attr('src', 'themes/SuiteR/images/basic_search.gif');
+                                        $(elem).find('img').first().attr('src', '".SugarThemeRegistry::current()->getImagePath('basic_search.gif')."');
                                     }
                                 }
 
@@ -811,8 +861,18 @@ class AOR_Report extends Basic
             $field->retrieve($row['id']);
 
             if ($field->field_function != 'COUNT' || $field->format != '') {
-                $moduleFieldByGroupValues[] = $group_value;
+                // Fix grouping on assignment displays ID and not name #5427
+                $report_bean = BeanFactory::getBean($this->report_module);
+                $field_def = $report_bean->field_defs[$field->field];
+                if ($field_def['type'] == 'relate' && isset($field_def['id_name'])) {
+                    $related_bean = BeanFactory::getBean($field_def['module']);
+                    $related_bean->retrieve($group_value);
+                    $moduleFieldByGroupValues[] = ($related_bean instanceof Person) ? $related_bean->full_name : $related_bean->name;
+                } else {
+                    $moduleFieldByGroupValues[] = $group_value;
+                }
                 continue;
+                // End
             }
 
             $path = unserialize(base64_decode($field->module_path));
@@ -849,22 +909,29 @@ class AOR_Report extends Basic
         $currency = new Currency();
         $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
 
+        $showTotal = false;
         $html = '';
-        $html .= "<tbody>";
+        $html .= "<thead class='fc-head'>";
         $html .= "<tr>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
             }
             if ($field['total']) {
-                $totalLabel = $field['label'] . " " . $app_list_strings['aor_total_options'][$field['total']];
-                $html .= "<th>{$totalLabel}</th>";
+                $showTotal = true;
+                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][isset($field['total']) ? $field['total'] : null];
+                $html .= "<th>{$totalLabel}</td>";
             } else {
-                $html .= "<th></th>";
+                $html .= '<th></th>';
             }
         }
-        $html .= "</tr>";
-        $html .= "<tr>";
+        $html .= '</tr></thead>';
+
+        if (!$showTotal) {
+            return '';
+        }
+
+        $html .= "</body><tr class='oddListRowS1'>";
         foreach ($fields as $label => $field) {
             if (!$field['display']) {
                 continue;
@@ -873,8 +940,17 @@ class AOR_Report extends Basic
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
                 // Customise display based on the field type
-                $moduleBean = BeanFactory::newBean($field['module']);
-                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $moduleBean = BeanFactory::newBean(isset($field['module']) ? $field['module'] : null);
+                if (!is_object($moduleBean)) {
+                    LoggerManager::getLogger()->warn('Unable to create new module bean when trying to build report html. Module bean was: ' . (isset($field['module']) ? $field['module'] : 'NULL'));
+                    $moduleBeanFieldDefs = null;
+                } elseif (!isset($moduleBean->field_defs)) {
+                    LoggerManager::getLogger()->warn('File definition not found for module when trying to build report html. Module bean was: ' . get_class($moduleBean));
+                    $moduleBeanFieldDefs = null;
+                } else {
+                    $moduleBeanFieldDefs = $moduleBean->field_defs;
+                }
+                $fieldDefinition = $moduleBeanFieldDefs[isset($field['field']) ? $field['field'] : null];
                 $fieldDefinitionType = $fieldDefinition['type'];
                 switch ($fieldDefinitionType) {
                     case "currency":
@@ -897,13 +973,13 @@ class AOR_Report extends Basic
                     default:
                         break;
                 }
-                $html .= "<td>" . $total . "</td>";
+                $html .= '<td>' . $total . '</td>';
             } else {
-                $html .= "<td></td>";
+                $html .= '<td></td>';
             }
         }
-        $html .= "</tr>";
-        $html .= "</tbody>";
+        $html .= '</tr>';
+        $html .= '</body>';
 
         return $html;
     }
@@ -1037,8 +1113,12 @@ class AOR_Report extends Basic
         }
         $query_array = $this->build_report_query_where($query_array);
 
-        foreach ($query_array['select'] as $select) {
-            $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+        if(!isset($query_array['select'])) {
+            LoggerManager::getLogger()->warn('Trying to build report query without database select definition.');
+        } else {
+            foreach ($query_array['select'] as $select) {
+                $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+            }
         }
 
         if (empty($query_array['group_by'])) {
@@ -1196,6 +1276,7 @@ class AOR_Report extends Basic
                 } else {
                     $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
                 }
+                $select_field_db = $select_field;
 
                 if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
                     if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
@@ -1220,13 +1301,22 @@ class AOR_Report extends Basic
                 }
 
                 if ($field->sort_by != '') {
-                    $query['sort_by'][] = $select_field . " " . $field->sort_by;
+                    // If the field is a date, sort by the natural date and not the user-formatted date
+                    if ($data['type'] == 'date' || $data['type'] == 'datetime') {
+                        $query['sort_by'][] = $select_field_db . " " . $field->sort_by;
+                    } else {
+                        $query['sort_by'][] = $select_field . " " . $field->sort_by;
+                    }
                 }
 
                 $query['select'][] = $select_field . " AS '" . $field->label . "'";
 
                 if ($field->group_display == 1 && $group_value) {
-                    $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
+                    if ($group_value === '_empty') {
+                        $query['where'][] = '(' . $select_field . " = '' OR " . $select_field . ' IS NULL) AND ';
+                    } else {
+                        $query['where'][] = $select_field . " = '" . $group_value . "' AND ";
+                    }
                 }
 
                 ++$i;

@@ -1,7 +1,7 @@
 <?php
 
 
-class PathsTest extends \Codeception\Test\Unit
+class PathsTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -18,8 +18,9 @@ class PathsTest extends \Codeception\Test\Unit
      */
     private static $projectPath;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if (self::$paths === null) {
             self::$paths = new \SuiteCRM\Utility\Paths();
         }
@@ -29,9 +30,7 @@ class PathsTest extends \Codeception\Test\Unit
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetProjectPath()
     {
@@ -50,7 +49,7 @@ class PathsTest extends \Codeception\Test\Unit
     public function testGetContainersPath()
     {
         $expected =  self::$projectPath.'/lib/API/core/containers.php';
-        $actual = self::$paths->getContainersPath();
+        $actual = self::$paths->getContainersFilePath();
         $this->assertEquals($expected, $actual);
     }
 }

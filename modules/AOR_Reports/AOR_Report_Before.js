@@ -61,7 +61,11 @@ $(document).ready(function(){
       }
       $('#module-name').html('(<span title="' + module_path_display + '">' + module_name + '</span>)');
       $('#fieldTreeLeafs').remove();
-      $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox" title="{/literal}{$MOD.LBL_TOOLTIP_DRAG_DROP_ELEMS}{literal}"></div>');
+      $('#detailpanel_fields_select').append(
+        '<div id="fieldTreeLeafs" class="dragbox aor_dragbox" title="'
+        + SUGAR.language.translate('AOR_Reports', 'LBL_TOOLTIP_DRAG_DROP_ELEMS')
+        + '"></div>'
+      );
       $('#fieldTreeLeafs').tree({
         data: treeDataLeafs,
         dragAndDrop: true,
@@ -85,7 +89,7 @@ $(document).ready(function(){
           }
           if(target.closest('#fieldLines').length > 0){
             dropFieldLine(node);
-          }else if(target.closest('#conditionLines').length > 0){
+          }else if(target.closest('#aor_conditionLines').length > 0){
             var conditionLineTarget = ConditionOrderHandler.getConditionLineByPageEvent(e);
             var conditionLineNew = dropConditionLine(node);
             if(conditionLineTarget) {

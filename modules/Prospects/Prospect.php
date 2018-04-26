@@ -47,8 +47,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/EmailInterface.php';
 
-class Prospect extends Person {
+class Prospect extends Person implements EmailInterface {
     var $field_name_map;
 	// Stored fields
 	var $id;
@@ -146,7 +147,7 @@ class Prospect extends Person {
 	function build_generic_where_clause ($the_query_string)
 	{
 		$where_clauses = Array();
-		$the_query_string = $GLOBALS['db']->quote($the_query_string);
+		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
 		array_push($where_clauses, "prospects.last_name like '$the_query_string%'");
 		array_push($where_clauses, "prospects.first_name like '$the_query_string%'");

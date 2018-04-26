@@ -1,9 +1,46 @@
 <?php
+/**
+ *
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-if (!defined('sugarEntry') || !sugarEntry)
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
-
-// modules/jjwg_Maps/jjwg_Maps.php
+}
 
 require_once('modules/jjwg_Maps/jjwg_Maps_sugar.php');
 require_once('modules/Administration/Administration.php');
@@ -354,7 +391,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             }
             // Set Google Maps API Key
             if(!isset($rev['google_maps_api_key'])) {
-                $GLOBALS['log']->fatal('Undefined index: google_maps_api_key');
+                $GLOBALS['log']->warn('Undefined index: google_maps_api_key');
                 $this->settings['google_maps_api_key'] = null;
             } else {
                 $this->settings['google_maps_api_key'] = $rev['google_maps_api_key'];
@@ -443,19 +480,51 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['map_duplicate_marker_adjustment']) && is_numeric(trim($data['map_duplicate_marker_adjustment']))) {
                 $admin->saveSetting($category, 'map_duplicate_marker_adjustment', (float) trim($data['map_duplicate_marker_adjustment']));
             }
-            if (!$this->is_valid_lat($data['map_default_center_latitude'])) $data['map_default_center_latitude'] = 39.5;
+            
+            if (!isset($data['map_default_center_latitude'])) {
+                LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: map_default_center_latitude');
+                $dataMapDefaultCenterLatitude = null;
+            } else {
+                $dataMapDefaultCenterLatitude = $data['map_default_center_latitude'];
+            }
+            
+            if (!$this->is_valid_lat($dataMapDefaultCenterLatitude)) {
+                $data['map_default_center_latitude'] = 39.5;
+            }
+            
             if (isset($data['map_default_center_latitude']) && is_numeric(trim($data['map_default_center_latitude']))) {
                 $admin->saveSetting($category, 'map_default_center_latitude', (float) trim($data['map_default_center_latitude']));
             }
-            if (!$this->is_valid_lng($data['map_default_center_longitude'])) $data['map_default_center_longitude'] = -99.5;
+            
+            if (!isset($data['map_default_center_longitude'])) {
+                LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: map_default_center_longitude');
+                $dataMapDefaultCenterLongitude = null;
+            } else {
+                $dataMapDefaultCenterLongitude = $data['map_default_center_longitude'];
+            }
+            
+            
+            if (!$this->is_valid_lng($dataMapDefaultCenterLongitude)) {
+                $data['map_default_center_longitude'] = -99.5;
+            }
+            
             if (isset($data['map_default_center_longitude']) && is_numeric(trim($data['map_default_center_longitude']))) {
                 $admin->saveSetting($category, 'map_default_center_longitude', (float) trim($data['map_default_center_longitude']));
             }
 
             // Set Geocoding API URL or Proxy URL
-            if (substr($data['geocoding_api_url'], 0, 4) != 'http' && substr($data['geocoding_api_url'], 0, 2) != '//') {
+            
+            if (!isset($data['geocoding_api_url'])) {
+                LoggerManager::getLogger()->warn('jjwg_Maps saveConfiguration: Undefined index: geocoding_api_url ');
+                $dataGeocodingApiUrl = null;
+            } else {
+                $dataGeocodingApiUrl = $data['geocoding_api_url'];
+            }
+            
+            if (substr($dataGeocodingApiUrl, 0, 4) != 'http' && substr($dataGeocodingApiUrl, 0, 2) != '//') {
                 $data['geocoding_api_url'] = $this->settings['geocoding_api_url'];
             }
+            
             if (isset($data['geocoding_api_url'])) {
                 $admin->saveSetting($category, 'geocoding_api_url', trim($data['geocoding_api_url']));
             }
@@ -557,7 +626,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         // Check to see if address info is already set, or redefine
         $bean_data = get_object_vars($bean);
         $aInfo = $this->defineMapsAddress($bean->object_name, $bean_data);
-        $GLOBALS['log']->debug(__METHOD__.' $bean_data: '.$bean_data);
+        $GLOBALS['log']->debug(__METHOD__.' $bean_data: '.print_r($bean_data, true));
         $GLOBALS['log']->debug(__METHOD__.' $aInfo: '.$aInfo);
 
         // If needed, check the Address Cache Module for Geocode Info
@@ -874,6 +943,25 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        // Add proxy option if user enabled proxy
+        $admin_config = new Administration();
+        $admin_config->retrieveSettings('proxy');
+        if(!empty($admin_config->settings['proxy_on'])) {
+            $proxy_host = $admin_config->settings['proxy_host'];
+            $proxy_port = $admin_config->settings['proxy_port'];
+
+            curl_setopt($ch, CURLOPT_PROXY, $proxy_host);
+            curl_setopt($ch, CURLOPT_PROXYPORT, $proxy_port);
+
+            // Check if use proxy auth
+            if(!empty($admin_config->settings['proxy_auth'])) {
+                $proxy_userpwd = $admin_config->settings['proxy_username'] . ':' . $admin_config->settings['proxy_password'];
+                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy_userpwd);
+            }
+        }
+        // End
+        
         $json_contents = curl_exec($ch);
 
         // Debug: Error Handling
@@ -1000,8 +1088,16 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         } elseif (in_array($object_name, array('aCase', 'Case'))) {
 
             // Find Account from Case (account_id field)
+            
+            if (!isset($display['account_id'])) {
+                LoggerManager::getLogger()->warn('jjwg_Maps defineMapsAddress: Undefined index: account_id  ');
+                $displayAccountId = null;
+            } else {
+                $displayAccountId = $display['account_id'];
+            }
+            
             $query = "SELECT accounts.*, accounts_cstm.* FROM accounts LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c " .
-                    " WHERE accounts.deleted = 0 AND id = '" . $display['account_id'] . "'";
+                    " WHERE accounts.deleted = 0 AND id = '" . $displayAccountId . "'";
             $GLOBALS['log']->debug(__METHOD__.' Case to Account');
             $result = $this->db->limitQuery($query, 0, 1);
             $fields = $this->db->fetchByAssoc($result);
@@ -1209,11 +1305,11 @@ class jjwg_Maps extends jjwg_Maps_sugar {
 function getProspectLists()
 {
     $query = "SELECT id, name, list_type FROM prospect_lists WHERE deleted = 0 ORDER BY name ASC";
-    $result = $GLOBALS['db']->query($query, false);
+    $result = DBManagerFactory::getInstance()->query($query, false);
 
     $list = array();
     $list['']='';
-    while (($row = $GLOBALS['db']->fetchByAssoc($result)) != null) {
+    while (($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) != null) {
         $list[$row['id']] = $row['name'];
     }
 

@@ -53,7 +53,7 @@ class SugarWidgetSubPanelEditButton extends SugarWidgetField
 		return '';
 	}
 
-	function displayList($layout_def)
+	function displayList(&$layout_def)
 	{
 		global $app_strings;
         global $subpanel_item_count;
@@ -85,5 +85,3 @@ class SugarWidgetSubPanelEditButton extends SugarWidgetField
     }
 
 }
-
-?>

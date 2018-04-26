@@ -358,7 +358,7 @@ class CalendarUtils {
 		// rather than using relationships framework due to performance issues.
 		// Relationship framework runs very slowly
 
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		$id = $bean->id;
 		$date_modified = $GLOBALS['timedate']->nowDb();
 		$lower_name = strtolower($bean->object_name);
@@ -464,7 +464,7 @@ class CalendarUtils {
 	static function markRepeatDeleted(SugarBean $bean)
 	{
 		// we don't use mark_deleted method here because it runs very slowly
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		$date_modified = $GLOBALS['timedate']->nowDb();
 		if(!empty($GLOBALS['current_user']))
 			$modified_user_id = $GLOBALS['current_user']->id;
@@ -492,7 +492,7 @@ class CalendarUtils {
 	 */
 	static function correctRecurrences(SugarBean $bean, $beanId)
 	{
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		
 		$qu = "SELECT id FROM {$bean->table_name} WHERE repeat_parent_id = '{$beanId}' AND deleted = 0 ORDER BY date_start";
 		$re = $db->query($qu);

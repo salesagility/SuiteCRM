@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -48,9 +48,9 @@ use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
 use SuiteCRM\API\v8\Exception\ApiException;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\Conflict;
-use SuiteCRM\API\v8\Exception\Forbidden;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ConflictException;
+use SuiteCRM\API\v8\Exception\ForbiddenException;
 use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
@@ -100,7 +100,7 @@ class Relationship extends ResourceIdentifier
     /**
      * @param ResourceIdentifier $related
      * @return Resource
-     * @throws Forbidden
+     * @throws ForbiddenException
      * @throws \SuiteCRM\API\v8\Exception\ApiException
      */
     public function withResourceIdentifier(ResourceIdentifier $related) {
@@ -136,7 +136,7 @@ class Relationship extends ResourceIdentifier
         if($this->getType() === null) {
             $this->type = $related->getType();
         } elseif ($this->getType() !== $related->getType()) {
-            throw new Forbidden('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
+            throw new ForbiddenException('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
         }
 
         $this->id = $related->getId();
@@ -155,7 +155,7 @@ class Relationship extends ResourceIdentifier
         if($this->getType() === null) {
             $this->type = $related->getType();
         } elseif ($this->getType() !== $related->getType()) {
-            throw new Forbidden('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
+            throw new ForbiddenException('[Relationship] [Incompatible Resource Type] "'. $related->getType().'"');
         }
 
         return clone $this;

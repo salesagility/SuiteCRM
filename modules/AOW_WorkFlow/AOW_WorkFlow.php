@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -126,8 +126,9 @@ class AOW_WorkFlow extends Basic
         return false;
     }
 
-    function save($check_notify = FALSE){
-        if (empty($this->id)){
+    function save($check_notify = false)
+    {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aow_conditions_id']);
             unset($_POST['aow_actions_id']);
         }
@@ -168,7 +169,7 @@ class AOW_WorkFlow extends Basic
 	public function run_flows()
 		{$flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
-        foreach ($flows as $flow) {
+        foreach ((array)$flows as $flow) {
             $flow->run_flow();
         }
 
@@ -217,7 +218,7 @@ class AOW_WorkFlow extends Basic
     function get_flow_beans(){
         global $beanList;
 
-        if($beanList[$this->flow_module]){
+        if(isset($beanList[$this->flow_module]) && $beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
 
             $query = '';
@@ -284,7 +285,7 @@ class AOW_WorkFlow extends Basic
     function build_flow_query_where($query = array()){
         global $beanList;
 
-        if($beanList[$this->flow_module]){
+        if(isset($beanList[$this->flow_module]) && $beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
 
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
@@ -302,18 +303,29 @@ class AOW_WorkFlow extends Basic
                 switch($this->flow_run_on){
 
                     case'New_Records':
-                        $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" .$this->date_entered."'";
+                        if($module->table_name === 'campaign_log'){
+                            $query['where'][] = $module->table_name . '.' . 'activity_date' . ' > ' . "'" . $this->activity_date . "'";
+                        } else {
+                            $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" . $this->date_entered . "'";
+                        }
                         Break;
 
                     case'Modified_Records':
-                        $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" .$this->date_entered."'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        if($module->table_name === 'campaign_log'){
+                            $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->activity_date . "'" . ' AND ' . $module->table_name . '.' . 'activity_date' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        } else {
+                            $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->date_entered . "'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        }
                         Break;
 
                 }
             }
 
             if(!$this->multiple_runs){
-                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
+                if (!isset($query['where'])) {
+                   $query['where'] = []; 
+                }
+                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".(isset($this->id) ? $this->id : null)."' AND aow_processed.parent_id=".(isset($module->table_name) ? $module->table_name : null).".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
 
             $query['where'][] = $module->table_name.".deleted = 0 ";
@@ -358,7 +370,15 @@ class AOW_WorkFlow extends Basic
 
             switch($condition->value_type) {
                 case 'Field':
-                    $data = $module->field_defs[$condition->value];
+                    
+                    if (!isset($module->field_defs[$condition->value])) {
+                        LoggerManager::getLogger()->warn('Module field definition does not contains a condition value for AOW Work Flow / build query where.');
+                        $moduleFieldDefsConditionLevel = null;
+                    } else {
+                        $moduleFieldDefsConditionLevel = $module->field_defs[$condition->value];
+                    }
+                    
+                    $data = $moduleFieldDefsConditionLevel;
 
                     if($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->value = $data['id_name'];
@@ -375,13 +395,16 @@ class AOW_WorkFlow extends Basic
                     return array();
                 case 'Date':
                     $params =  unserialize(base64_decode($condition->value));
-                    if($params[0] == 'now'){
+                    if (false === $params) {
+                        LoggerManager::getLogger()->fatal('Unable to serialize a condition value for AOW WorkFlow / build quiery where. Condition value was: ' . $condition->value);
+                    }
+                    if(isset($param[0]) && $params[0] == 'now'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             $value  = 'GetUTCDate()';
                         } else {
                             $value = 'UTC_TIMESTAMP()';
                         }
-                    } else if($params[0] == 'today'){
+                    } else if(isset($param[0]) && $params[0] == 'today'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             //$field =
                             $value  = 'CAST(GETDATE() AS DATE)';
@@ -590,7 +613,11 @@ class AOW_WorkFlow extends Basic
                         break;
 
                     case 'Any_Change':
-                        $value = $condition_bean->fetched_row[$condition->field];
+			if($data['type'] == 'relate' && isset($data['name'])) {
+				$value = $condition_bean->rel_fields_before_value[$condition->field];
+			} else {
+				$value = $condition_bean->fetched_row[$condition->field];
+			}
                         if(in_array($data['type'],$dateFields)) {
                             $value = strtotime($value);
                         }
@@ -676,6 +703,8 @@ class AOW_WorkFlow extends Basic
                     default:
                         if(in_array($data['type'],$dateFields) && trim($value) != '') {
                             $value = strtotime($value);
+                        } else if ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')){
+                            $value = 0;
                         }
                         break;
                 }

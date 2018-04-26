@@ -72,7 +72,7 @@ class StudioBrowser{
     }
 		
 	function getNodes(){
-		$this->loadModules();
+        $this->loadModules();
 	    $nodes = array();
 		foreach($this->modules as $module){
 			$nodes[$module->name] = $module->getNodes();
@@ -80,10 +80,4 @@ class StudioBrowser{
 		uksort($nodes,'cmp'); // bug 15103 - order is important - this array is later looped over by foreach to generate the module list
 		return $nodes;
 	}
-
-	
-	
-	
-	
 }
-?>

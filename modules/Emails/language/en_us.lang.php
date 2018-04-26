@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -50,7 +50,7 @@ $mod_strings = array(
     'LBL_BUTTON_CREATE' => 'Create',
     'LBL_BUTTON_EDIT' => 'Edit',
     'LBL_BUTTON_EDIT_EDIT_DRAFT' => 'Edit Draft',
-    'LBL_QS_DISABLED' => '(QuickSearch is not availible for this module. Please use the select button.)',
+    'LBL_QS_DISABLED' => '(QuickSearch is not available for this module. Please use the select button.)',
     'LBL_SIGNATURE_PREPEND' => 'Signature above reply',
     'LBL_IMPORT' => 'Import',
     'LBL_LOADING' => 'Loading',
@@ -86,6 +86,7 @@ $mod_strings = array(
     'LBL_DESCRIPTION' => 'Description',
     'LBL_EDIT_ALT_TEXT' => 'Edit Plain Text',
     'LBL_SEND_IN_PLAIN_TEXT' => 'Send in Plain Text',
+    'LBL_SEND_CONFIRM_OPT_IN' => 'Send Opt In Email',
     'LBL_EMAIL_ATTACHMENT' => 'Email Attachment',
     'LBL_EMAIL_SELECTOR_SELECT' => 'Select',
     'LBL_EMAIL_SELECTOR_CLEAR' => 'Clear',
@@ -309,7 +310,7 @@ $mod_strings = array(
     'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application. A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
 
     // for outbound email dialog
-    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account. Unable to send test email.',
+    'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administrator has not yet configured the default outbound account. Unable to send test email.',
     'LBL_MAIL_SMTPAUTH_REQ' => 'Use SMTP Authentication?',
     'LBL_MAIL_SMTPPASS' => 'SMTP Password:',
     'LBL_MAIL_SMTPPORT' => 'SMTP Port:',
@@ -370,7 +371,13 @@ $mod_strings = array(
     'LBL_MARK_READ' => 'Mark As Read',
     'LBL_MARK_FLAGGED' => 'Mark As Flagged',
     'LBL_MARK_UNFLAGGED' => 'Mark As Unflagged',
-    
-    'ERR_NO_RETURN_ID' => 'Attacment is not found.',
+    'LBL_CONFIRM_OPT_IN_SENT_DATE' => 'Opt In Email Sent',
+    'LBL_CONFIRM_OPT_IN_FAIL_DATE' => 'Opt In Email Failed',
+    'LBL_CONFIRM_OPT_IN_TOKEN' => 'Confirm Opt In Token',
+
+    'ERR_NO_RETURN_ID' => 'Attachment not found.',
+
+    'LBL_LIST_DATE_MODIFIED' => 'Last Modified',
+    'LNK_IMPORT_CAMPAIGNS' => 'Import Campaign',
 );
 

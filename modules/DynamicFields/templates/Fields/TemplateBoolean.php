@@ -125,6 +125,3 @@ function get_xtpl_edit(){
 
 
 }
-
-
-?>

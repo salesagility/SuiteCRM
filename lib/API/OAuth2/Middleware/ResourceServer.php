@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -44,7 +44,7 @@ use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\ResourceServer as OAuthResourceServer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use SuiteCRM\API\v8\Exception\NotAllowed;
+use SuiteCRM\API\v8\Exception\NotAllowedException;
 use SuiteCRM\Enumerator\ExceptionCode;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
@@ -54,6 +54,11 @@ class ResourceServer
      * @var ResourceServer
      */
     private $server;
+
+    private static $ROUTES_EXEMPT_FROM_AUTH = [
+        'oauth/access_token',
+        'v8/swagger.json',
+    ];
 
     /**
      * @param OAuthResourceServer $server
@@ -72,18 +77,11 @@ class ResourceServer
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
     {
-        global $current_user;
         try {
-            if ($request->getUri()->getPath() !== 'oauth/access_token') {
+            if (!in_array($request->getUri()->getPath(), self::$ROUTES_EXEMPT_FROM_AUTH)) {
                 $request = $this->server->validateAuthenticatedRequest($request);
 
-                // validate user is still active
-                $user = new \User();
-                $user->retrieve($request->getAttribute('oauth_user_id'));
-                if($user->status === 'Inactive') {
-                    throw new NotAllowed('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
-                }
-                $current_user  = $user;
+                $this->setCurrentUserGlobal($request);
             }
         } catch (OAuthServerException $exception) {
             $log = new Logger();
@@ -109,5 +107,54 @@ class ResourceServer
 
         // Pass the request and response on to the next responder in the chain
         return $next($request, $response);
+    }
+
+    /**
+     * Suite needs a current_user global for roles, security groups etc.
+     *
+     * @param ServerRequestInterface $request
+     * @throws NotAllowedException
+     */
+    private function setCurrentUserGlobal(ServerRequestInterface $request)
+    {
+        global $current_user;
+
+        $user = $this->getUserFromRequest($request);
+
+        // validate user is still active
+        if($user->status === 'Inactive') {
+            throw new NotAllowedException('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
+        }
+
+        $current_user = $user;
+    }
+
+    /**
+     * @param ServerRequestInterface $request
+     * @return \User
+     *
+     * @throws NotAllowedException
+     */
+    private function getUserFromRequest(ServerRequestInterface $request)
+    {
+        $user = new \User();
+
+        $user->retrieve($request->getAttribute('oauth_user_id'));
+
+        if ($user->id) {
+            return $user;
+        }
+
+        // We need a User to take ownership of actions, so if we are using a grant type that does not have
+        // an associated User we fall back on the User defined in the OAuth2Clients
+        $client = new \OAuth2Clients();
+        $client->retrieve($request->getAttribute('oauth_client_id'));
+
+        $user->retrieve($client->assigned_user_id);
+        if ($user->id) {
+            return $user;
+        }
+
+        throw new NotAllowedException('[User Not Active]', ExceptionCode::API_USER_NOT_ACTIVE);
     }
 }

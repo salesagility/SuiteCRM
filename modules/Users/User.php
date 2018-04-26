@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -43,9 +43,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/SugarObjects/templates/person/Person.php');
+require_once __DIR__ . '/../../include/EmailInterface.php';
 
 // User is used to store customer information.
-class User extends Person
+class User extends Person implements EmailInterface
 {
 
     // Stored fields
@@ -563,7 +564,7 @@ class User extends Person
      */
     public static function getLicensedUsersWhere()
     {
-        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . $GLOBALS['db']->convert('user_name', 'length') . ">0";
+        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . DBManagerFactory::getInstance()->convert('user_name', 'length') . ">0";
 
         return "1<>1";
     }
@@ -587,7 +588,9 @@ class User extends Person
             if ($smtp_error) {
                 $msg .= 'SMTP server settings required first.';
                 $GLOBALS['log']->warn($msg);
-                SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
+                if(isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
+                    SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
+                }
             } else {
                 if ($this->factor_auth != $tmpUser->factor_auth || $this->factor_auth_interface != $tmpUser->factor_auth_interface) {
                     $msg .= 'Current user is not able to change two factor authentication settings.';
@@ -595,8 +598,10 @@ class User extends Person
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
                 }
             }
-            $this->factor_auth = $tmpUser->factor_auth;
-            $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+            if($tmpUser) {
+                $this->factor_auth = $tmpUser->factor_auth;
+                $this->factor_auth_interface = $tmpUser->factor_auth_interface;
+            }
         }
 
         if ($this->factor_auth && $isUpdate && is_admin($current_user)) {
@@ -638,6 +643,11 @@ class User extends Person
 
         parent::save($check_notify);
 
+        // User Profile specific save for Email addresses
+        if(!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
+            $GLOBALS['log']->error('Email address save error');
+            return false;
+        }
 
         // set some default preferences when creating a new user
         if ($setNewUserPreferences) {
@@ -910,7 +920,7 @@ EOQ;
             $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
             return false;
         }
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $before = $name;
         $name = $db->quote($name);
         if ($before && !$name) {
@@ -993,13 +1003,47 @@ EOQ;
         global $sugar_config, $mod_strings;
 
         $messages = array();
+        
+        if (!isset($sugar_config['passwordsetting']['minpwdlength'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: minpwdlength ($sugar_config[passwordsetting][minpwdlength])');
+            $sugar_config['passwordsetting']['minpwdlength'] = null;
+        }
 
         $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['oneupper'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: oneupper ($sugar_config[passwordsetting][oneupper])');
+            $sugar_config['passwordsetting']['oneupper'] = null;
+        }
+
         $oneupper = $sugar_config['passwordsetting']['oneupper'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onelower'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onelower ($sugar_config[passwordsetting][onelower])');
+            $sugar_config['passwordsetting']['onelower'] = null;
+        }
+        
         $onelower = $sugar_config['passwordsetting']['onelower'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onenumber'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onenumber ($sugar_config[passwordsetting][onenumber])');
+            $sugar_config['passwordsetting']['onenumber'] = null;
+        }
+        
         $onenumber = $sugar_config['passwordsetting']['onenumber'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onespecial'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onespecial ($sugar_config[passwordsetting][onespecial])');
+            $sugar_config['passwordsetting']['onespecial'] = null;
+        }
+        
         $onespecial = $sugar_config['passwordsetting']['onespecial'];
 
+        
         if ($minpwdlength && strlen($newPassword) < $minpwdlength) {
             $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
         }
@@ -1009,7 +1053,7 @@ EOQ;
         }
 
         if ($onelower && strtoupper($newPassword) === $newPassword) {
-            $messages[] = $mod_strings['ERR_PASSWORD_ONEUPPER'];
+            $messages[] = $mod_strings['ERR_PASSWORD_ONELOWER'];
         }
 
         if ($onenumber && !preg_match('/[0-9]/', $newPassword)) {
@@ -1148,7 +1192,11 @@ EOQ;
         $user_fields = parent::get_list_view_data();
 
         if ($this->is_admin) {
-            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', $mod_strings['LBL_CHECKMARK']);
+            if(!isset($mod_strings['LBL_CHECKMARK'])) {
+                LoggerManager::getLogger()->warn('A language label not found: LBL_CHECKMARK');
+            }
+            $checkmark = isset($mod_strings['LBL_CHECKMARK']) ? $mod_strings['LBL_CHECKMARK'] : null;
+            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', $checkmark);
         } elseif (!$this->is_admin) {
             $user_fields['IS_ADMIN'] = '';
         }
@@ -1257,7 +1305,8 @@ EOQ;
         // First, get the list of IDs.
         $query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
 
-        return $this->build_related_list($query, new Meeting());
+        $meeting = new Meeting();
+        return $this->build_related_list($query, $meeting);
     }
 
     public function get_calls()
@@ -1479,7 +1528,7 @@ EOQ;
             }
         } else {
             // straight mailto:
-            $emailLink = '<a href="mailto:' . $emailAddress . '" class="' . $class . '">';
+            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $emailAddress);
         }
 
         return $emailLink;
@@ -1522,7 +1571,7 @@ EOQ;
             $emailLink = $emailUI->populateComposeViewFields($focus);
         } else {
             // straight mailto:
-            $emailLink = '<a href="mailto:' . $focus->$attribute . '" class="' . $class . '">';
+            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $focus->$attribute);
         }
 
         return $emailLink;

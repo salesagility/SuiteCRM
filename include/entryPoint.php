@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -66,8 +66,12 @@ if (empty($GLOBALS['installing']) && !file_exists('config.php')) {
 }
 
 $BASE_DIR = realpath(dirname(__DIR__));
-
-require_once $BASE_DIR.'/vendor/autoload.php';
+$autoloader = $BASE_DIR.'/vendor/autoload.php';
+if(file_exists($autoloader)) {
+    require_once $autoloader;
+} else {
+    die('Composer autoloader not found. please run "composer install"');
+}
 
 // config|_override.php
 if (is_file('config.php')) {

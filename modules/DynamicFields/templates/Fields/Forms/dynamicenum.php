@@ -114,4 +114,3 @@ function get_body(&$ss, $vardef){
     $ss->assign('app_list_strings', "''");
     return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/dynamicenum.tpl');
 }
-?>

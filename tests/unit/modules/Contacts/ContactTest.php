@@ -1,9 +1,11 @@
 <?php
 
-class ContactTest extends PHPUnit_Framework_TestCase
+class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -29,8 +31,11 @@ class ContactTest extends PHPUnit_Framework_TestCase
 
 	public function testadd_list_count_joins()
 	{
+        $state = new SuiteCRM\StateSaver();
+        
+        
         $this->markTestIncomplete('Breaks on php 7.1');
-		error_reporting(E_ERROR | E_PARSE);
+		//error_reporting(E_ERROR | E_PARSE);
 
 		$contact = new Contact();
 
@@ -55,16 +60,31 @@ class ContactTest extends PHPUnit_Framework_TestCase
 		$this->assertSame(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ",$query);
 
 
+        
+        // clean up
+        
+        
 	}
 
 	public function testlistviewACLHelper()
 	{
+            self::markTestIncomplete('environment dependency');
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
 		$contact = new Contact();
 
-		$expected = array( "MAIN"=>"a", "ACCOUNT"=>"a");
+		$expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
 		$actual = $contact->listviewACLHelper();
 		$this->assertSame($expected,$actual);
 
+        // clean up
+        
+        $state->popGlobals();
 	}
 
     /**
@@ -151,6 +171,12 @@ class ContactTest extends PHPUnit_Framework_TestCase
 
 	public function testload_contacts_users_relationship(){
 
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
 		$contact = new Contact();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -159,13 +185,25 @@ class ContactTest extends PHPUnit_Framework_TestCase
 			$this->assertTrue(true);
 		}
 		catch (Exception $e) {
-			$this->fail();
+			$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
 		}
+        
+        // clean up
+        
+        
 
 	}
 
 	public function testget_list_view_data() {
 
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        $state->pushTable('tracker');
+
+	// test
+        
 		$contact = new Contact();
 
 		//test with attributes preset and verify attributes are set accordingly
@@ -182,7 +220,7 @@ class ContactTest extends PHPUnit_Framework_TestCase
 					  'PORTAL_USER_TYPE' => 'Single user',
 					  'ENCODED_NAME' => 'first last',
 					  'EMAIL1' => '',
-					  'EMAIL1_LINK' => '<a href=\'javascript:void(0);\' onclick=\'SUGAR.quickCompose.init({"fullComposeUrl":"contact_id=\\u0026parent_type=Contacts\\u0026parent_id=\\u0026parent_name=first+last\\u0026to_addrs_ids=\\u0026to_addrs_names=first+last\\u0026to_addrs_emails=\\u0026to_email_addrs=first+last%26nbsp%3B%26lt%3B%26gt%3B\\u0026return_module=Contacts\\u0026return_action=ListView\\u0026return_id=","composePackage":{"contact_id":"","parent_type":"Contacts","parent_id":"","parent_name":"first last","to_addrs_ids":"","to_addrs_names":"first last","to_addrs_emails":"","to_email_addrs":"first last \\u003C\\u003E","return_module":"Contacts","return_action":"ListView","return_id":""}});\' class=\'\'>',
+					  'EMAIL1_LINK' => '<a href=\'javascript:void(0);\' onclick=\'SUGAR.quickCompose.init({"fullComposeUrl":"contact_id=\\u0026parent_type=Contacts\\u0026parent_id=\\u0026parent_name=first+last\\u0026to_addrs_ids=\\u0026to_addrs_names=first+last\\u0026to_addrs_emails=\\u0026to_email_addrs=first+last%26nbsp%3B%26lt%3B%26gt%3B\\u0026return_module=Contacts\\u0026return_action=ListView\\u0026return_id=","composePackage":{"contact_id":"","parent_type":"Contacts","parent_id":"","parent_name":"first last","to_addrs_ids":"","to_addrs_names":"first last","to_addrs_emails":"","to_email_addrs":"first last \\u003C\\u003E","return_module":"Contacts","return_action":"ListView","return_id":""}});\' class=\'\'></a>',
 					  'EMAIL_AND_NAME1' => 'first last &lt;&gt;',
 					);
 
@@ -195,6 +233,11 @@ class ContactTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
 		$this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
 
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('email_addresses');
 	}
 
 
@@ -250,6 +293,12 @@ class ContactTest extends PHPUnit_Framework_TestCase
 
 	public function testsave_relationship_changes() {
 
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
 		$contact = new Contact();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -259,8 +308,12 @@ class ContactTest extends PHPUnit_Framework_TestCase
 			$this->assertTrue(true);
 		}
 		catch (Exception $e) {
-			$this->fail();
+			$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
 		}
+        
+        // clean up
+        
+        
 
 	}
 
@@ -277,7 +330,13 @@ class ContactTest extends PHPUnit_Framework_TestCase
 		$contact = new Contact();
 
 		//execute the method and verify that it retunrs expected results
-		$expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Contacts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Contacts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id";
+		$expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear
+
+	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Contacts' and
+	eabr.email_address_id = eear.email_address_id and eabr.deleted=0
+	where eear.deleted=0 and eear.email_id not in
+	(select eb.email_id from emails_beans eb where eb.bean_module ='Contacts' and eb.bean_id = '')
+	) derivedemails on derivedemails.email_id = emails.id";
 		$actual = $contact->get_unlinked_email_query();
 		$this->assertSame($expected,$actual);
 
@@ -286,6 +345,12 @@ class ContactTest extends PHPUnit_Framework_TestCase
 
     public function testprocess_sync_to_outlook()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
     	$contact = new Contact();
 
     	//execute the method and test if it works and does not throws an exception.
@@ -294,7 +359,7 @@ class ContactTest extends PHPUnit_Framework_TestCase
     		$this->assertTrue(true);
     	}
     	catch (Exception $e) {
-    		$this->fail();
+    		$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
     	}
 
 
@@ -304,10 +369,14 @@ class ContactTest extends PHPUnit_Framework_TestCase
     		$this->assertTrue(true);
     	}
     	catch (Exception $e) {
-    		$this->fail();
+    		$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
     	}
 
 
+        
+        // clean up
+        
+        
 
 	}
 

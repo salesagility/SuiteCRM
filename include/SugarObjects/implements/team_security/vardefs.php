@@ -75,4 +75,3 @@ $vardefs = array(
 		),
 	)
 );
-?>

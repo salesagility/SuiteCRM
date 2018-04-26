@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -709,6 +709,20 @@ class TimeDate
      */
     public function fromDb($date)
     {
+        
+        if ($date instanceof DateTime) {
+            $date = $date->format(self::DB_DATETIME_FORMAT);
+        }
+        
+        if (null === $date) {
+            $date = '';
+        }
+            
+        if (!is_string($date)) {
+            $msg = 'Date should be a string, ' . gettype($date) . ' given.';
+            LoggerManager::getLogger()->fatal($msg . "\nDate was:\n" . print_r($date, true));
+            throw new InvalidArgumentException($msg);
+        }
         try {
             return SugarDateTime::createFromFormat(self::DB_DATETIME_FORMAT, $date, self::$gmtTimezone);
         } catch (Exception $e) {
@@ -717,7 +731,7 @@ class TimeDate
             return null;
         }
     }
-
+    
     /**
      * Create a date from a certain type of field in DB format
      * The types are: date, time, datatime[combo]

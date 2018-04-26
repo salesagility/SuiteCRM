@@ -95,4 +95,4 @@ print "<BR><BR>";
 print "<a href='?module=$currentModule&action=DetailView&record=$focus->id'>".$app_strings['LBL_MEETING_GO_BACK']."</a><br>";
 sugar_cleanup();
 exit;
-?>
+

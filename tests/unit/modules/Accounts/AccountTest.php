@@ -1,13 +1,47 @@
 <?php
 
 
-class AccountTest extends PHPUnit_Framework_TestCase
+class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
+    }
+
+    public function testgetProductsServicesPurchasedQuery()
+    {
+        $Account = new Account();
+
+        //without account id
+        $expected = "
+			SELECT
+				aos_products_quotes.*
+			FROM
+				aos_products_quotes
+			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0
+			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = ''
+
+			";
+        $actual = $Account->getProductsServicesPurchasedQuery();
+        $this->assertSame($expected, $actual);
+
+        //with account id
+        $expected = "
+			SELECT
+				aos_products_quotes.*
+			FROM
+				aos_products_quotes
+			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0
+			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '1234'
+
+			";
+        $Account->id = '1234';
+        $actual = $Account->getProductsServicesPurchasedQuery();
+        $this->assertSame($expected, $actual);
     }
 
     public function testAccount()
@@ -24,7 +58,10 @@ class AccountTest extends PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //test without name setting attribute
         $Account = new Account();
@@ -35,6 +72,10 @@ class AccountTest extends PHPUnit_Framework_TestCase
         $Account->name = 'test account';
         $name = $Account->get_summary_text();
         $this->assertEquals('test account', $name);
+        
+        // clean up
+        
+        
     }
 
     public function testget_contacts()
@@ -58,6 +99,12 @@ class AccountTest extends PHPUnit_Framework_TestCase
 
     public function testremove_redundant_http()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $Account = new Account();
 
         //this method has no implementation. so test for exceptions only.
@@ -65,12 +112,22 @@ class AccountTest extends PHPUnit_Framework_TestCase
             $Account->remove_redundant_http();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $Account = new Account('');
 
         //execute the method and test if it works and does not throws an exception.
@@ -78,12 +135,22 @@ class AccountTest extends PHPUnit_Framework_TestCase
             $Account->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $Account = new Account('');
 
         //execute the method and test if it works and does not throws an exception.
@@ -91,8 +158,12 @@ class AccountTest extends PHPUnit_Framework_TestCase
             $Account->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testget_list_view_data()
@@ -104,7 +175,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
             'JJWG_MAPS_LNG_C' => '0.00000000',
             'JJWG_MAPS_LAT_C' => '0.00000000',
             'EMAIL1' => '',
-            'EMAIL1_LINK' => '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name=""  data-email-address="">',
+            'EMAIL1_LINK' => '<a class="email-link" href="javascript:void(0);"  onclick="$(document).openComposeViewModal(this);" data-module="Accounts" data-record-id="" data-module-name=""  data-email-address=""></a>',
             'ENCODED_NAME' => null,
             'CITY' => null,
             'BILLING_ADDRESS_STREET' => null,
@@ -201,10 +272,17 @@ WHERE ( accounts.deleted IS NULL
 
     public function testget_unlinked_email_query()
     {
+        
         $Account = new Account();
 
         //without setting type parameter
-        $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id";
+        $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear
+
+	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and
+	eabr.email_address_id = eear.email_address_id and eabr.deleted=0
+	where eear.deleted=0 and eear.email_id not in
+	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')
+	) derivedemails on derivedemails.email_id = emails.id";
         $actual = $Account->get_unlinked_email_query();
         $this->assertSame($expected, $actual);
 
@@ -213,27 +291,17 @@ WHERE ( accounts.deleted IS NULL
             'select' => 'SELECT emails.id ',
             'from' => 'FROM emails ',
             'where' => '',
-            'join' => " JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id",
+            'join' => " JOIN (select DISTINCT email_id from emails_email_addr_rel eear
+
+	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and
+	eabr.email_address_id = eear.email_address_id and eabr.deleted=0
+	where eear.deleted=0 and eear.email_id not in
+	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')
+	) derivedemails on derivedemails.email_id = emails.id",
             'join_tables' => array(''),
         );
 
         $actual = $Account->get_unlinked_email_query(array('return_as_array' => 'true'));
-        $this->assertSame($expected, $actual);
-    }
-
-    public function testgetProductsServicesPurchasedQuery()
-    {
-        $Account = new Account();
-
-        //without account id
-        $expected = "\n			SELECT\n				aos_products_quotes.*\n			FROM\n				aos_products_quotes\n			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0\n			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = ''\n\n			";
-        $actual = $Account->getProductsServicesPurchasedQuery();
-        $this->assertSame($expected, $actual);
-
-        //with account id
-        $expected = "\n			SELECT\n				aos_products_quotes.*\n			FROM\n				aos_products_quotes\n			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0\n			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '1234'\n\n			";
-        $Account->id = '1234';
-        $actual = $Account->getProductsServicesPurchasedQuery();
         $this->assertSame($expected, $actual);
     }
 }

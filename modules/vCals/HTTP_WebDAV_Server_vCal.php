@@ -212,7 +212,6 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                 !$current_user->isAdmin() &&
                 $current_user->user_name !== $this->user_focus->user_name
             ) {
-                $this->user_focus = BeanFactory::newBean('Users');
                 $this->user_focus->last_name = $query_arr['user_name'];
             }
 
@@ -458,6 +457,3 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         }
 
     }
-
-
-?>

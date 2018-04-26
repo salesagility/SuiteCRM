@@ -6,7 +6,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -59,12 +59,9 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
             return $temp;
         }
 
-        global $app_strings, $current_user, $sugar_config, $beanList, $beanFiles;
+        global $app_strings, $current_user, $sugar_config;
         $title = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_TITLE'];
-        //$accesskey = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_KEY'];
         $value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
-        $parent_type = $defines['focus']->module_dir;
-        $parent_id = $defines['focus']->id;
 
         //martin Bug 19660
         $userPref = $current_user->getPreference('email_link_type');
@@ -74,8 +71,10 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         } else {
             $client = $defaultPref;
         }
+        /** @var Person|Company|Opportunity $bean */
+        $bean = $defines['focus'];
+
         if ($client != 'sugar') {
-            $bean = $defines['focus'];
             // awu: Not all beans have emailAddress property, we must account for this
             if (isset($bean->emailAddress)) {
                 $to_addrs = $bean->emailAddress->getPrimaryAddress($bean);
@@ -84,10 +83,31 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
                 $button = "<input class='button' type='button'  value='$value'  id='" . $this->getWidgetId() . "'  name='" . preg_replace('[ ]', '', $value) . "'  title='$title' onclick=\"location.href='mailto:';return false;\" />";
             }
         } else {
-            //Generate the compose package for the quick create options.
+            // Generate the compose package for the quick create options.
             require_once 'modules/Emails/EmailUI.php';
+
+
+            // Opportunities does not have an email1 field
+            // we need to use the related account email instead
+            if ($bean->module_name === 'Opportunities') {
+                $relatedAccountId = $bean->account_id;
+                /** @var Account $relatedAccountBean */
+                $relatedAccountBean = BeanFactory::getBean('Accounts', $relatedAccountId);
+                if(!empty($relatedAccountBean) && !empty($relatedAccountBean->email1)) {
+                    $bean->email1 = $relatedAccountBean->email1;
+                    $bean->name = $relatedAccountBean->name;
+                }
+            }
+
             $emailUI = new EmailUI();
-            $button = $emailUI->populateComposeViewFields() . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
+            $emailUI->appendTick = false;
+            $button = '<a class="email-link" onclick="$(document).openComposeViewModal(this);" data-module="'
+            . $bean->module_name . '" data-record-id="'
+            . $bean->id . '" data-module-name="'
+            . $bean->name .'" data-email-address="'
+            . $bean->email1 .'">'
+            . $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL']
+            . '</a>';
         }
 
         return $button;

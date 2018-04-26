@@ -88,7 +88,7 @@ class MyMeetingsDashlet extends DashletGeneric {
         self::__construct($id, $def);
     }
 
-    function process($lvsParams = array(), $id=NULL) {
+    function process($lvsParams = array(), $id = null) {
         global $current_language, $app_list_strings, $current_user;
         $mod_strings = return_module_language($current_language, 'Meetings');
 
@@ -116,8 +116,8 @@ class MyMeetingsDashlet extends DashletGeneric {
         // grab meeting status
         if(!empty($keys)){
             $query = "SELECT meeting_id, accept_status FROM meetings_users WHERE deleted = 0 AND user_id = '" . $current_user->id . "' AND meeting_id IN ('" . implode("','", $keys) . "')";
-            $result = $GLOBALS['db']->query($query);
-            while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+            $result = DBManagerFactory::getInstance()->query($query);
+            while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
                  $rowNums = $this->lvs->data['pageData']['idIndex'][$row['meeting_id']]; // figure out which rows have this guid
                  foreach($rowNums as $rowNum) {
                     $this->lvs->data['data'][$rowNum]['ACCEPT_STATUS'] = $row['accept_status'];
@@ -208,4 +208,3 @@ class MyMeetingsDashlet extends DashletGeneric {
     }
 }
 
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -101,7 +101,9 @@ class SavedSearch extends SugarBean
     // Saved Search Form
     function getForm($module, $inline = true, $orderBySelectOnly = false)
     {
-        global $db, $current_user, $currentModule, $current_language, $app_strings;
+        global $current_user, $currentModule, $current_language, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $json = getJSONobj();
 
         $saved_search_mod_strings = return_module_language($current_language, 'SavedSearch');
@@ -179,10 +181,18 @@ class SavedSearch extends SugarBean
             }
         } else {
             foreach ($this->columns as $name => $val) {
+                
+                if (!isset($val['label'])) {
+                    LoggerManager::getLogger()->warn("SavedSearch getTemplateGroupChooser: Illegal string offset 'label'");
+                    $valLabel = null;
+                } else {
+                    $valLabel = $val['label'];
+                }
+                
                 if (!empty($val['default']) && $val['default'])
-                    $chooser->args['values_array'][0][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][0][$name] = trim(translate($valLabel, $module), ':');
                 else
-                    $chooser->args['values_array'][1][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][1][$name] = trim(translate($valLabel, $module), ':');
             }
         }
 
@@ -205,7 +215,9 @@ class SavedSearch extends SugarBean
     {
 
 
-        global $db, $current_user, $currentModule, $current_lang, $app_strings;
+        global $current_user, $currentModule, $current_lang, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $saved_search_mod_strings = return_module_language($current_lang, 'SavedSearch');
 
         $query = 'SELECT id, name FROM saved_search
@@ -236,7 +248,7 @@ class SavedSearch extends SugarBean
         $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $selectedSearch));
 
         $savedSearchData['module'] = $module;
-
+        
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchSelects.tpl');
     }
 
@@ -430,5 +442,3 @@ class SavedSearch extends SugarBean
 
     }
 }
-
-?>

@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -41,7 +41,7 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
 
 use Psr\Container\ContainerInterface;
-use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
@@ -159,7 +159,7 @@ class Operator
      * @param array $operands
      * @return string
      * @throws InvalidArgumentException
-     * @throws BadRequest
+     * @throws BadRequestException
      */
     public function toSqlOperands(array $operands)
     {
@@ -175,7 +175,7 @@ class Operator
 
         foreach ($operands as $i => $operand) {
             if ($i >= $this->totalOperands()) {
-               throw new BadRequest('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][operand limit exceeded]');
+               throw new BadRequestException('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][operand limit exceeded]');
             }
 
             if(is_numeric($operand)) {

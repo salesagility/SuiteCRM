@@ -14,7 +14,7 @@ class SurveysViewReports extends SugarView
 
     private function getSurveyStats()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $quotedId = $db->quote($this->bean->id);
         $sentQuery = <<<EOF
 SELECT COUNT(campaign_log.target_id) AS sent, COUNT(DISTINCT campaign_log.target_id) AS distinct_sent 
@@ -171,7 +171,7 @@ EOF;
     private function getChoiceQuestionSkeleton($arr, $options)
     {
         foreach ($options as $option) {
-            $arr['chartLabels'][$option->id] = $option->name;
+            $arr['chartLabels'][$option->id] = html_entity_decode($option->name, ENT_QUOTES | ENT_HTML5);
             $arr['chartData'][$option->id] = 0;
             $arr['responses'][$option->id] = array(
                 'count' => 0,

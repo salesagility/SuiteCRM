@@ -65,4 +65,3 @@ class ViewSerialized extends SugarView{
 		sugar_cleanup(true);
  	}
 }
-?>

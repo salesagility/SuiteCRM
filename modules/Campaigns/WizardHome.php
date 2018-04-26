@@ -162,7 +162,7 @@ global $currentModule;
     }
 
     function getFirstMarketingId($campaignId) {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $campaignId = $db->quote($campaignId);
         $emailMarketings = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '$campaignId'");
         $firstEmailMarketing = $emailMarketings[0];
@@ -538,5 +538,3 @@ function create_wiz_menu_items($type,$mrkt_string,$camp_url,$summ_url){
   
     return $nav_html;
 }
-
-?>

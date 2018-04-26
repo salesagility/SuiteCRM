@@ -9,7 +9,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -71,22 +71,29 @@ class Link2
     protected $rows;   //any additional fields on the relationship
     protected $loaded; //true if this link has been loaded from the database
     protected $relationship_fields = array();
-    //Used to store unsaved beans on this relationship that will be combined with the ones pulled from the DB if getBeans() is called.
+    //Used to store unsaved beans on this relationship that will be combined with the ones pulled from the DB
+    // if getBeans() is called.
     protected $tempBeans = array();
 
     /**
      * @param  $linkName String name of a link field in the module's vardefs
      * @param  $bean SugarBean focus bean for this link (one half of a relationship)
-     * @param  $linkDef array Optional vardef for the link in case it can't be found in the passed in bean for the global dictionary
+     * @param  $linkDef array Optional vardef for the link in case it can't be found in the passed in bean
+     * for the global dictionary
      */
     public function __construct($linkName, $bean, $linkDef = array())
     {
         $this->focus = $bean;
         //Try to load the link vardef from the beans field defs. Otherwise start searching
-        if (empty($bean->field_defs) || empty($bean->field_defs[$linkName]) || empty($bean->field_defs[$linkName]['relationship'])) {
+        if (empty($bean->field_defs) || empty($bean->field_defs[$linkName])
+            || empty($bean->field_defs[$linkName]['relationship'])) {
             if (empty($linkDef)) {
                 //Assume $linkName is really relationship_name, and find the link name with the vardef manager
-                $this->def = VardefManager::getLinkFieldForRelationship($bean->module_dir, $bean->object_name, $linkName);
+                $this->def = VardefManager::getLinkFieldForRelationship(
+                    $bean->module_dir,
+                    $bean->object_name,
+                    $linkName
+                );
             } else {
                 $this->def = $linkDef;
             }
@@ -98,7 +105,7 @@ class Link2
                     $this->def = $this->def[0];
                 } elseif (isset($this->def[1]['side']) && $this->def[1]['side'] == 'left') {
                     $this->def = $this->def[1];
-                } elseif (isset($this->def[0])){
+                } elseif (isset($this->def[0])) {
                     $this->def = $this->def[0];
                 } else {
                     $GLOBALS['log']->fatal('Link definition not found for: ' . $linkName);
@@ -129,7 +136,8 @@ class Link2
             }
             $GLOBALS['log']->$logFunction("{$this->name} for {$this->def['relationship']} failed to load\n");
         }
-        //Following behavior is tied to a property(ignore_role) value in the vardef. It alters the values of 2 properties, ignore_role_filter and add_distinct.
+        //Following behavior is tied to a property(ignore_role) value in the vardef.
+        // It alters the values of 2 properties, ignore_role_filter and add_distinct.
         //the property values can be altered again before any requests are made.
         if (!empty($this->def) && is_array($this->def)) {
             if (isset($this->def['ignore_role'])) {
@@ -172,7 +180,8 @@ class Link2
      *                      operator: The operator to use in the search.
      *                      rhs_value: The value to search for.
      *                      limit: The maximum number of rows
-     *                      deleted: If deleted is set to 1, only deleted records related to the current record will be returned.
+     *                      deleted: If deleted is set to 1, only deleted records related
+ *                          to the current record will be returned.
      *                      Example:
      *                      'where' => array(
      *                      'lhs_field' => 'source',
@@ -182,7 +191,7 @@ class Link2
      */
     public function query($params)
     {
-        if(is_object($this->relationship) && method_exists($this->relationship, 'load')) {
+        if (is_object($this->relationship) && method_exists($this->relationship, 'load')) {
             return $this->relationship->load($this, $params);
         } else {
             $GLOBALS['log']->fatal('load() function is not implemented in a relationship');
@@ -262,6 +271,14 @@ class Link2
     }
 
     /**
+    * @return Array of related fields
+    */
+    public function getRelatedFields()
+    {
+        return $this->relationship_fields;
+    }
+    
+    /**
      * @param $name
      *
      * @return string The value for the relationship field $name
@@ -274,7 +291,7 @@ class Link2
             return null;
         } //For now return null. Later try the relationship object directly.
     }
-
+    
     /**
      * @return SugarRelationship the relationship object this link references
      */
@@ -290,13 +307,25 @@ class Link2
     {
         //First try the relationship
         if ($this->relationship->getLHSLink() == $this->name &&
-            ($this->relationship->getLHSModule() == $this->focus->module_name)
+            ($this->relationship->getLHSModule() == isset($this->focus->module_name) ? $this->focus->module_name : null)
         ) {
             return REL_LHS;
         }
 
-        if ($this->relationship->getRHSLink() == $this->name &&
-            ($this->relationship->getRHSModule() == $this->focus->module_name)
+        $rhsLink = $this->relationship->getRHSLink();
+        $rhsModule = $this->relationship->getRHSModule();
+        if (!isset($this->focus)) {
+            LoggerManager::getLogger()->warn('No focus of Link2 when trying to get side.');
+            $focusModuleName = null;
+        } elseif (!isset($this->focus->module_name)) {
+            LoggerManager::getLogger()->warn('No module name degined in focus of Link2 when trying to get side.');
+            $focusModuleName = null;
+        } else {
+            $focusModuleName = $this->focus->module_name;
+        }
+        
+        if ($rhsLink == $this->name &&
+            ($rhsModule == $focusModuleName)
         ) {
             return REL_RHS;
         }
@@ -305,17 +334,20 @@ class Link2
         if (!empty($this->def['side'])) {
             if ((strtolower($this->def['side']) == 'left' || $this->def['side'] == REL_LHS)
                 //Some relationships make have left in the vardef erroneously if generated by module builder
-                && (empty($this->relationship->def['join_key_lhs']) || $this->name != $this->relationship->def['join_key_lhs'])
+                && (empty($this->relationship->def['join_key_lhs'])
+                    || $this->name != $this->relationship->def['join_key_lhs'])
             ) {
                 return REL_LHS;
             } else {
                 return REL_RHS;
             }
-        } //Next try using the id_name and relationship join keys
-        elseif (!empty($this->def['id_name'])) {
-            if (isset($this->relationship->def['join_key_lhs']) && $this->def['id_name'] == $this->relationship->def['join_key_lhs']) {
+        } elseif (!empty($this->def['id_name'])) {
+            //Next try using the id_name and relationship join keys
+            if (isset($this->relationship->def['join_key_lhs'])
+                && $this->def['id_name'] == $this->relationship->def['join_key_lhs']) {
                 return REL_RHS;
-            } elseif (isset($this->relationship->def['join_key_rhs']) && $this->def['id_name'] == $this->relationship->def['join_key_rhs']) {
+            } elseif (isset($this->relationship->def['join_key_rhs'])
+                && $this->def['id_name'] == $this->relationship->def['join_key_rhs']) {
                 return REL_LHS;
             }
         }
@@ -325,7 +357,8 @@ class Link2
     }
 
     /**
-     * @return bool true if this link represents a relationship where the parent could be one of multiple modules. (ex. Activities parent)
+     * @return bool true if this link represents a relationship where the parent could be one of multiple modules.
+     * (ex. Activities parent)
      */
     public function isParentRelationship()
     {
@@ -386,7 +419,8 @@ class Link2
      *                      operator: The operator to use in the search.
      *                      rhs_value: The value to search for.
      *                      limit: The maximum number of rows
-     *                      deleted: If deleted is set to 1, only deleted records related to the current record will be returned.
+     *                      deleted: If deleted is set to 1, only deleted records related
+     *                      to the current record will be returned.
      *                      Example:
      *                      'where' => array(
      *                      'lhs_field' => 'source',
@@ -430,7 +464,7 @@ class Link2
             }
 
             //now load from the rows
-            if(is_array($rows) || is_object($rows)) {
+            if (is_array($rows) || is_object($rows)) {
                 foreach ((array)$rows as $id => $vals) {
                     if (empty($this->beans[$id])) {
                         $tmpBean = BeanFactory::getBean($rel_module, $id);
@@ -471,10 +505,12 @@ class Link2
      * the function also allows for setting of values for additional field in the table being
      * updated to save the relationship, in case of many-to-many relationships this would be the join table.
      *
-     * @param array $rel_keys          array of ids or SugarBean objects. If you have the bean in memory, pass it in.
-     * @param array $additional_values the values should be passed as key value pairs with column name as the key name and column value as key value.
+     * @param array $rel_keys array of ids or SugarBean objects. If you have the bean in memory, pass it in.
+     * @param array $additional_values the values should be passed as key value pairs with column name
+     * as the key name and column value as key value.
      *
-     * @return bool|array Return true if all relationships were added.  Return an array with the failed keys if any of them failed.
+     * @return bool|array Return true if all relationships were added.
+     * Return an array with the failed keys if any of them failed.
      */
     public function add($rel_keys, $additional_values = array())
     {

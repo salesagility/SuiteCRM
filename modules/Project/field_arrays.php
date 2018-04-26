@@ -77,4 +77,3 @@ $fields_array['Project'] = array ('column_fields' => array(
     ),
     'required_fields' =>  array('name'=>1, 'estimated_start_date'=>2, 'estimated_end_date'=>3),
 );
-?>

@@ -72,4 +72,3 @@ class BugsViewDetail extends ViewDetail {
  		parent::display();
  	}
 }
-?>

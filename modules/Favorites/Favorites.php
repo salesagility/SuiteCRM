@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -88,7 +88,9 @@ class Favorites extends Basic
      */
     public function getFavoriteID($module, $record_id)
     {
-        global $db, $current_user;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
+        
         $query = "SELECT id FROM favorites WHERE parent_id= '" . $record_id . "' AND parent_type = '" . $module . "' AND assigned_user_id = '" . $current_user->id . "' AND deleted = 0 ORDER BY date_entered DESC";
 
         return $db->getOne($query);
@@ -100,7 +102,8 @@ class Favorites extends Basic
      */
     public function getCurrentUserSidebarFavorites($id = null)
     {
-        global $db, $current_user;
+        global $current_user;
+        $db = DBManagerFactory::getInstance();
 
         $return_array = array();
 
@@ -143,7 +146,7 @@ class Favorites extends Basic
      */ 
     public function getCurrentUserFavoritesForModule($module)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         global $current_user;
         global $moduleList;
 

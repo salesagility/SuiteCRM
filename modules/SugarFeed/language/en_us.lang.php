@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -84,8 +84,8 @@ $mod_strings = array(
     'LBL_ROWS' => 'Rows',
     'LBL_CATEGORIES' => 'Modules',
     'LBL_TIME_LAST_WEEK' => 'Last Week',
-    'LBL_TIME_WEEKS' => 'Weeks',
-    'LBL_TIME_DAYS' => 'Days',
+    'LBL_TIME_WEEKS' => 'weeks',
+    'LBL_TIME_DAYS' => 'days',
     'LBL_TIME_YESTERDAY' => 'Yesterday',
     'LBL_TIME_HOURS' => 'Hours',
     'LBL_TIME_HOUR' => 'Hours',
@@ -93,6 +93,7 @@ $mod_strings = array(
     'LBL_TIME_MINUTE' => 'Minute',
     'LBL_TIME_SECONDS' => 'Seconds',
     'LBL_TIME_SECOND' => 'Second',
+    'LBL_TIME_AND' => 'and',
     'LBL_TIME_AGO' => 'ago',
 
     'CREATED_CONTACT' => 'created a <b>NEW</b> {0}',
