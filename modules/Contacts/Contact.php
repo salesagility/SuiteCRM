@@ -446,6 +446,7 @@ class Contact extends Person
         if (!empty($this->contacts_users_id)) {
             $this->sync_contact = true;
         }
+      
 
         if (!empty($this->portal_active) && $this->portal_active == 1) {
             $this->portal_active = true;
@@ -458,6 +459,18 @@ class Contact extends Person
             $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
             $this->campaign_name = $campaign_list[0]->name;
         }
+    }
+
+    /**
+     * loads the contacts_users relationship to populate a checkbox
+     * where a user can select if they would like to sync a particular
+     * contact to Outlook
+     */
+    function load_contacts_users_relationship()
+    {
+        global $current_user;
+
+        $this->load_relationship("user_sync");
     }
 
     /**
@@ -629,6 +642,7 @@ class Contact extends Person
             $sql = "SELECT id FROM users WHERE deleted=0 AND is_group=0 AND portal_only=0";
             $result = $this->db->query($sql);
             while ($hash = $this->db->fetchByAssoc($result)) {
+
                 if(!isset($this->user_sync)) {
                     $GLOBALS['log']->fatal('Contact::$user_sync is not set');
                 } elseif(!is_object($this->user_sync)) {
@@ -646,6 +660,7 @@ class Contact extends Person
                     || $focus_user->retrieve($eachItem)
                 ) {
                     // it is a user, add user
+
                     if(!isset($this->user_sync)) {
                         $GLOBALS['log']->fatal('Contact::$user_sync is not set');
                     } elseif(!is_object($this->user_sync)) {

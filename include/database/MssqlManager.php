@@ -874,6 +874,7 @@ class MssqlManager extends DBManager
 
             // Bug # 44923 - This breaks the query and does not properly filter isnull
             // as there are other functions such as ltrim and rtrim.
+
             /* elseif (strncasecmp($psql, 'isnull', 6) != 0)
                 $alias_beg_pos = strpos($psql, " "); */
 
