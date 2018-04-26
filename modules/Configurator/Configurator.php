@@ -42,7 +42,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
 /**
  * class Configurator
  */
@@ -92,10 +91,16 @@ class Configurator
     public $useAuthenticationClass = false;
     
     /**
+     * @var array
+     */
+    protected $keysToIgnoreLoadedOverrideFile = [];
+  
+    /**
      *
      * @var string|null
      */
     protected $error = null;
+
 
     /**
      * Constructor
@@ -162,13 +167,17 @@ class Configurator
         $diffArray = deepArrayDiff($this->config, $sugar_config);
         $overrideArray = sugarArrayMergeRecursive($overrideArray, $diffArray);
 
-        // To remember checkbox state
-        if (!$this->useAuthenticationClass && !$fromParseLoggerSettings) {
-            if (isset($overrideArray['authenticationClass']) &&
-                    $overrideArray['authenticationClass'] == 'SAMLAuthenticate') {
-                unset($overrideArray['authenticationClass']);
-            }
-        }
+      foreach ($this->keysToIgnoreLoadedOverrideFile as $key => $val) {
+          $overrideArray[$key] = $val;
+      }
+
+		// To remember checkbox state
+		if (!$this->useAuthenticationClass && !$fromParseLoggerSettings) {
+			if (isset($overrideArray['authenticationClass']) &&
+				$overrideArray['authenticationClass'] == 'SAMLAuthenticate') {
+				unset($overrideArray['authenticationClass']);
+			}
+		}
 
         $overrideString = "<?php\n/***CONFIGURATOR***/\n";
 
@@ -223,8 +232,19 @@ class Configurator
 
         return $rets;
     }
+  
 
-    //bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
+    /*
+     * @param mixed $key
+     * @param mixed $value
+     */
+    public function addKeyToIgnoreOverride($key, $value)
+    {
+        $this->keysToIgnoreLoadedOverrideFile[$key] = $value;
+    }
+
+
+	    //bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
     /**
      *
      * @global array $sugar_config
@@ -232,26 +252,21 @@ class Configurator
      * @return null
      */
     public function clearCache()
-    {
-        global $sugar_config, $sugar_version;
-        $currentConfigArray = $this->readOverride();
-        foreach ($currentConfigArray as $key => $val) {
-            if (in_array($key, $this->allow_undefined) || isset($sugar_config[$key])) {
-                if (empty($val)) {
-                    if (!empty($this->previous_sugar_override_config_array['stack_trace_errors']) && $key == 'stack_trace_errors') {
-                        require_once('include/TemplateHandler/TemplateHandler.php');
-                        TemplateHandler::clearAll();
-                        return;
-                    }
-                }
-            }
-        }
-    }
+		global $sugar_config, $sugar_version;
+		$currentConfigArray = $this->readOverride();
+		foreach($currentConfigArray as $key => $val) {
+			if (in_array($key, $this->allow_undefined) || isset ($sugar_config[$key])) {
+				if (empty($val) ) {
+					if(!empty($this->previous_sugar_override_config_array['stack_trace_errors']) && $key == 'stack_trace_errors'){
+						require_once('include/TemplateHandler/TemplateHandler.php');
+						TemplateHandler::clearAll();
+						return;
+					}
+				}
+			}
+		}
+	}
 
-    /**
-     *
-     * @return boolean
-     */
     public function saveConfig()
     {
         if ($this->saveImages() === false) {
@@ -497,7 +512,8 @@ class Configurator
         /** @var null|string $confirmOptInTemplateId */
         $confirmOptInTemplateId = $this->config['email_confirm_opt_in_email_template_id'];
         if (empty($confirmOptInTemplateId)) {
-            $confirmOptInTemplateId = isset($this->config['system_email_templates']['confirm_opt_in_template_id']) ?
+            $confirmOptInTemplateId = 
+                    isset($this->config['system_email_templates']['confirm_opt_in_template_id']) ?
                     $this->config['system_email_templates']['confirm_opt_in_template_id'] : null;
         }
 
@@ -519,4 +535,5 @@ class Configurator
         $ret = isset($this->config['email_enable_confirm_opt_in']) ? $this->config['email_enable_confirm_opt_in'] : SugarEmailAddress::COI_STAT_DISABLED;
         return $ret;
     }
+
 }

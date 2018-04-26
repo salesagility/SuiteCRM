@@ -194,31 +194,6 @@
                 <h4>{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND}</h4>
             </td>
         </tr>
-
-        <tr>
-            <td scope="row">
-                {$app_strings.LBL_EMAIL_SETTINGS_FROM_NAME}:
-                <span class="required">
-						{$app_strings.LBL_REQUIRED_SYMBOL}
-					</span>
-            </td>
-            <td>
-                <input type="text" id="ie_from_name" name="from_name" size="30" maxlength="64" value="">
-            </td>
-        </tr>
-
-        <tr>
-            <td scope="row">
-                {$app_strings.LBL_EMAIL_SETTINGS_FROM_ADDR}:
-                <span class="required">
-						{$app_strings.LBL_REQUIRED_SYMBOL}
-					</span>
-            </td>
-            <td>
-                <input type="text" id="ie_from_addr" name="from_addr" size="30" maxlength="64" value="">
-            </td>
-        </tr>
-
         <tr>
             <td scope="row">
                 {$app_strings.LBL_EMAIL_SETTINGS_REPLY_TO_ADDR}:

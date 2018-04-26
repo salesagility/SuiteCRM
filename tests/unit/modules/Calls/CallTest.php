@@ -153,7 +153,7 @@ class CallTest extends PHPUnit_Framework_TestCase
                 'EMAIL_REMINDER_TIME' => '-1',
                 'EMAIL_REMINDER_SENT' => '0',
                 'REPEAT_INTERVAL' => '1',
-                'SET_COMPLETE' => '<a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Calls","","Held","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a>',
+                'SET_COMPLETE' => '<b><a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Calls","","Held","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a></b>',
                 'DATE_START' => '<font class=\'overdueTask\'></font>',
                 'CONTACT_ID' => null,
                 'CONTACT_NAME' => null,

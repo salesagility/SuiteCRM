@@ -106,7 +106,8 @@ class Company extends Basic
                 '',
                 '',
                 '',
-                $this->in_workflow
+                $this->in_workflow,
+                isset($_REQUEST['shouldSaveOptInFlag']) && $_REQUEST['shouldSaveOptInFlag'] ? true : null
             );
         }
 

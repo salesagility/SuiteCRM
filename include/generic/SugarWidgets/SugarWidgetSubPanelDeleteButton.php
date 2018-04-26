@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelDeleteButton extends SugarWidgetField
 {
-	function displayList($layout_def)
+	function displayList(&$layout_def)
 	{
 		global $app_strings;
         global $subpanel_item_count;
