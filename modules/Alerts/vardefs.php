@@ -73,6 +73,15 @@ $dictionary['Alert'] = array(
                     'type'		=> 'varchar',
                     'massupdate' => false,
                     'studio'=> 'false',
+                ),
+            'reminder_id' =>
+                array(
+                    'name'		=> 'reminder_id',
+                    'type' => 'id',
+                    'required' => false,
+                    'reportable' => false,
+                    'studio'=> 'false',
+                    'comment' => 'The id of the reminder that created this alert',
                 )
 ),
 	'relationships'=>array (
