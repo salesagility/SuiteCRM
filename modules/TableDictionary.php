@@ -127,7 +127,8 @@ include('metadata/securitygroups_defaultsMetaData.php');
 include('metadata/securitygroups_recordsMetaData.php');
 include('metadata/securitygroups_usersMetaData.php');
 
+include 'metadata/surveyquestionoptions_surveyquestionresponsesMetaData.php';
+
 if(file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')){
 	include('custom/application/Ext/TableDictionary/tabledictionary.ext.php');
 }
-?>

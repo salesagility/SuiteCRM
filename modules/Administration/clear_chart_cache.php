@@ -58,4 +58,3 @@ foreach( $all_src_files as $src_file ){
 }
 
 echo "\n--- " . $mod_strings['LBL_DONE'] . "---<br />\n";
-?>

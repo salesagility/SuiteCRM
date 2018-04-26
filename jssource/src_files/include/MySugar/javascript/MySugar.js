@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,8 +33,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -109,9 +109,9 @@ initMySugar = function () {
         // Show new dashlet position
         $('.dashletcontainer').find('.dashletPanel').css('display', 'block');
         // hide placeholder
-        $('.dashletcontainer').find('div').each(function(e,v) {
+        $('.dashletcontainer').find('div').each(function (e, v) {
 
-          if($(v).html() == '' && typeof $(v).attr('id') === 'undefined' && typeof $(v).attr('class') === 'undefined') {
+          if ($(v).html() == '' && typeof $(v).attr('id') === 'undefined' && typeof $(v).attr('class') === 'undefined') {
             $(this).css('display', 'none');
           }
         });
@@ -175,7 +175,7 @@ initMySugar = function () {
         fillInConfigureDiv = function (data) {
           ajaxStatus.hideStatus();
           try {
-            eval(data.responseText);
+            SUGAR.util.globalEval(data.responseText);
           }
           catch (e) {
             result = [];
@@ -468,7 +468,7 @@ initMySugar = function () {
         ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
 
         var success = function (data) {
-          eval(data.responseText);
+          SUGAR.util.globalEval(data.responseText);
 
           if ($('*[id=dashletsList]').length > 1) {
             dashletsListDiv = $('*[id=dashletsList].modal-body');
@@ -485,7 +485,7 @@ initMySugar = function () {
           document.getElementById('dashletsDialog_c').style.display = '';
           SUGAR.mySugar.dashletsDialog.show();
 
-          eval(response['script']);
+          SUGAR.util.globalEval(response['script']);
           ajaxStatus.hideStatus();
         };
 
@@ -633,7 +633,7 @@ initMySugar = function () {
         searchResultsDiv.style.display = '';
 
         var success = function (data) {
-          eval(data.responseText);
+          SUGAR.util.globalEval(data.responseText);
 
           searchResultsDiv.innerHTML = response['html'];
         };

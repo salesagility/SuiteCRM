@@ -42,4 +42,3 @@ require_once('include/SugarFields/Fields/Enum/SugarFieldEnum.php');
 class SugarFieldDynamicenum extends SugarFieldEnum {
 
 }
-?>

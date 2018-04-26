@@ -48,6 +48,3 @@ $popupMeta = array('moduleMain' => 'Project',
 							array('name')
 						);
 
-
-?>
- 

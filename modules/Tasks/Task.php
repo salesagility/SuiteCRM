@@ -158,13 +158,6 @@ class Task extends SugarBean {
 
         }
 
-
-
-	function fill_in_additional_list_fields()
-	{
-
-	}
-
 	function fill_in_additional_detail_fields()
 	{
         parent::fill_in_additional_detail_fields();
@@ -295,7 +288,15 @@ class Task extends SugarBean {
 
 		$today = $timedate->nowDb();
 		$task_fields = $this->get_list_view_array();
-		$dbtime = $timedate->to_db($task_fields['DATE_DUE']);
+                
+                if (!isset($task_fields['DATE_DUE'])) {
+                    LoggerManager::getLogger()->warn('Task get_list_view_data: Undefined index: DATE_DUE');
+                    $taskFieldsDateDue = null;
+                } else {
+                    $taskFieldsDateDue = $task_fields['DATE_DUE'];
+                }
+                
+		$dbtime = $timedate->to_db($taskFieldsDateDue);
 		if($override_date_for_subpanel){
 			$dbtime = $timedate->to_db($task_fields['DATE_START']);
 		}
@@ -313,8 +314,8 @@ class Task extends SugarBean {
 			$task_fields['PARENT_MODULE'] = $this->parent_type;
 		if ($this->status != "Completed" && $this->status != "Deferred" )
 		{
-			$setCompleteUrl = "<a id='{$this->id}' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Completed\",\"listview\",\"1\");'>";
-		    $task_fields['SET_COMPLETE'] = $setCompleteUrl . SugarThemeRegistry::current()->getImage("close_inline","title=".translate('LBL_LIST_CLOSE','Tasks')." border='0'",null,null,'.gif',translate('LBL_LIST_CLOSE','Tasks'))."</a>";
+            $setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_LIST_CLOSE','Tasks')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Completed\",\"listview\",\"1\");'>";
+            $task_fields['SET_COMPLETE'] = $setCompleteUrl . "<span class='suitepicon suitepicon-action-clear'></span></a></b>";
 		}
 
         // make sure we grab the localized version of the contact name, if a contact is provided

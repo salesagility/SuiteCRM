@@ -40,6 +40,10 @@
 *}
 <span class="sugar_field" id="{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}">
 <a href="index.php?entryPoint=download&id={$fields.{{$vardef.fileId}}.value}&type={{$vardef.linkModule}}" class="tabDetailViewDFLink" target='_blank'>{{sugarvar key='value'}}</a>
+&nbsp;
+<a href="index.php?preview=yes&entryPoint=download&id={$fields.{{$vardef.fileId}}.value}&type={{$vardef.linkModule}}" class="tabDetailViewDFLink" target='_blank' style="border-bottom: 0px;">
+	<i class="glyphicon glyphicon-eye-open"></i>
+</a>
 </span>
 {{if isset($vardef) && isset($vardef.allowEapm) && $vardef.allowEapm}}
 {if isset($fields.{{$vardef.docType}}) && !empty($fields.{{$vardef.docType}}.value) && $fields.{{$vardef.docType}}.value != 'SugarCRM' && !empty($fields.{{$vardef.docUrl}}.value) }

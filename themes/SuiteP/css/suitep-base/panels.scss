@@ -1,0 +1,527 @@
+/**** Panels ****/
+
+.panel {
+  margin-top: 7px;
+  margin-bottom: 0px;
+}
+
+.panel-body {
+  padding: 0;
+}
+
+.panel-template {
+  visibility: collapse;
+}
+
+.panel-default > .panel-heading {
+  background: $panel-expanded-bg;
+  color: $panel-expanded-color;
+  padding: 0;
+  height:$panel-header-height;
+  border-color: $panel-bg;//
+}
+
+.panel-default > .panel-heading > div {
+  font-size: 14px ;
+  font-weight: 500;
+  background-color: $panel-expanded-bg;
+  color: $panel-expanded-color;
+  vertical-align: middle;
+}
+
+.panel-default > .panel-body {
+  padding: 0;
+}
+
+.collapse, .collapsing, .collapse.in {
+  transition: none;
+  -webkit-transition: none;
+}
+
+.panel-default > .panel-heading {
+  display: block;
+  text-transform: uppercase;
+}
+
+.panel-default > .panel-heading > a {
+  display: block;
+  font-weight: 500;
+  color: $panel-expanded-color;
+  padding: 0 10px 0 10px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  text-decoration: none;
+}
+
+.sub-panel > .panel-heading {
+  line-height: $panel-header-height;
+  border-bottom-width: 0px;
+}
+
+.subpanel-icon {
+  margin: 0 4px 0 4px;
+  line-height: $panel-header-height;
+}
+
+.panel-default.sub-panel > .panel-heading  > a {
+  display: block;
+  font-size: $panel-header-font-size;
+  font-weight: 500;
+  color: $panel-expanded-color;
+  padding: 0 10px 0 10px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  height: $panel-header-height;
+  text-decoration: none;
+  //background-color: $panel-expanded-bg;
+}
+
+.panel-default > .panel-heading  > a:not(.panel-heading a div) {
+  background-color: $panel-expanded-bg;
+}
+
+.sub-panel  div.tab-content {
+  padding: 0 ;
+  border: none;
+}
+
+
+.panel-default > .panel-heading > a img {
+  margin-right: 15px;
+}
+
+.panel-default > .panel-body {
+  padding: 0 0 0 0;
+}
+
+.panel-heading a.collapsed {
+  background-color: $panel-collapsed-bg ;
+}
+
+
+.panel-heading a.collapsed {
+  @extend .suitepicon;
+  @extend .suitepicon-action-plus;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.panel-heading a {
+  @extend .suitepicon;
+  @extend .suitepicon-action-minus;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  vertical-align: middle;
+  margin: 0;
+}
+
+.panel-heading a:before {
+  line-height: $panel-header-height;
+}
+
+.panel-heading a div {
+  line-height: $panel-header-height - 4px;
+}
+
+
+.sub-panel > .panel-body > .tab-content > div {
+  /*margin-bottom: 25px ;*/
+  border: none;
+}
+
+.sub-panel > .panel-body > .tab-content > div tr:last-child {
+  margin-bottom: 25px ;
+  border-bottom: none;
+}
+
+.h3Row {
+  padding: 0;
+  margin: 0;
+}
+
+div.action_buttons form {
+  float: left;
+}
+
+div.action_buttons .button {
+  background-color: $danger-btn-bg;
+}
+div.action_buttons .button:hover {
+  background-color: $danger-btn-bg-hover;
+}
+
+#subpanel_list .tab-content .list.view.subpanel-table .pagination div.action_buttons .button {
+  padding: 5px 13px;
+  line-height: initial;
+  height: initial;
+  text-transform: capitalize;
+}
+
+div.sub-panel {
+  margin-bottom: 4px;
+}
+
+
+.subpanel-table tr:last-of-type td {
+  border-bottom: 0px solid transparent;
+}
+
+
+.subpanel-table {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.table-responsive.list .pagination,
+.table-responsive.list .pagination tr,
+.table-responsive.list .pagination  td,
+.table-responsive.list .pagination  th {
+  border: 0;
+}
+
+.sub-panel tbody tr td .sugar_action_button > a:link {
+  border-bottom: none;
+  color: $list-view-button-color;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.sub-panel .sugar_action_button > a:hover {
+  border-bottom: none;
+  color: $list-view-button-color;
+}
+
+
+.sub-panel .table-responsive.list > tbody > tr > td ul.subnav a {
+  color: $list-view-button-color;
+  width: 100%;
+}
+
+.sub-panel .table-responsive.list > tbody > tr > td ul.subnav a:hover {
+  color: $list-view-button-color;
+  width: 100%;
+}
+
+.footable-details.table-responsive.list th {
+  font-weight: bold;
+  color: $main-font-color;
+}
+
+.footable-details.table-responsive.list th a:link {
+  font-weight: bold;
+  color: $main-font-color;
+  border-bottom: none;
+}
+
+.subpanel-table .clickMenu > li, .SugarActionMenuIESub li {
+  padding: 0;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.subpanel-table ul.subpanel {
+  background: none;
+  background-color: transparent ;
+  border: none;
+  border-color: transparent ;
+}
+
+.sugar_action_button a {
+  color: $panel-expanded-color;
+}
+
+.subpanel-table .pagination li.sugar_action_button > form > a {
+  width: 100%;
+}
+
+.subpanel-table ul.subpanel > a {
+  background-color: $panel-button-bg;
+  padding: 0 ;
+  padding-right: 4px ;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+.subpanel-table li.sugar_action_button {
+  background-color: $panel-button-bg;
+  padding: 0 ;
+  padding-right: 4px ;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+.subpanel-table .pagination .sugar_action_button {
+  background-color: $panel-button-bg;
+  padding: 0 ;
+  padding-right: 4px ;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+.subpanel-table .pagination li.sugar_action_button > form > a {
+  background-color: $panel-button-bg;
+  padding: 0 ;
+  padding-right: 4px ;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+.subpanel-table .pagination .sugar_action_button > form > a{
+  background-color: $panel-button-bg;
+  padding: 0 ;
+  padding-right: 4px ;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+.subpanel-table .pagination .sugar_action_button > form > a {
+  background-color: $panel-button-bg;
+  padding: 0 ;
+  padding-right: 4px ;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+}
+
+/*calendar popup fix*/
+.calcell > a {
+  background-color: $panel-bg;
+}
+
+
+/* pagination on list view subpanel-table */
+
+.subpanel-table.list tr.pagination span.pageNumbers {
+  position: relative;
+  /*top: 5px;*/
+  top: -7px;
+}
+
+
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"] img,
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"] img,
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"] img,
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"] img {
+  display: none;
+}
+
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"] {
+  padding: 0;
+  margin: 0;
+  width: 26px;
+  height: 26px;
+}
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"]:hover {
+  background-color: $panel-button-bg-hover;
+}
+
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"][disabled],
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled],
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled],
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled] {
+  cursor: default;
+  background-color: $panel-button-bg-disabled;
+}
+
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"],
+.subpanel-table.list tr.pagination button.button[name="listViewStartButton"][disabled]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewPrevButton"][disabled]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewNextButton"][disabled]:hover,
+.subpanel-table.list tr.pagination button.button[name="listViewEndButton"][disabled]:hover {
+  background-color: $panel-button-bg-disabled;
+}
+
+.subpanel-table .pagination button .suitepicon {
+  line-height: 26px;
+}
+
+#actionLinkTop li.sugar_action_button:hover,
+#actionLinkBottom li.sugar_action_button:hover,
+.action-link-top li.sugar_action_button:hover,
+.action-link-bottom li.sugar_action_button:hover,
+.subpanel-table li.sugar_action_button:hover,
+#selectLinkTop li.sugar_action_button:hover,
+#selectLinkBottom li.sugar_action_button:hover,
+.subpanel-table .pagination .sugar_action_button:hover,
+.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover > form > a,
+
+.subpanel-table ul.subpanel a:hover,
+.subpanel-table li.sugar_action_button:hover,
+.subpanel-table .pagination .sugar_action_button:hover,
+.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover > form > a,
+.subpanel-table .pagination .sugar_action_button:hover > form > a,
+.subpanel-table .pagination a,
+.subpanel-table .subnav {
+  background-color: $panel-button-bg-hover;
+}
+
+.subpanel-table .pagination a {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.subpanel-table .pagination .clickMenu li span {
+  margin-left: 0;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+
+
+.subpanelTablist #addPageItem a, .subpanelTablist #addPageItem a:hover {
+  background: transparent;
+  border: none;
+  text-decoration: none;
+}
+
+.tablist li a:link, .tablist li a:visited, .subpanelTablist li a:link, .subpanelTablist li a:visited {
+  text-decoration: none;
+}
+
+.subpanelTabForm td {
+  padding: 15px 0;
+}
+
+table.subpanelTabForm td {
+  padding-top: 0;
+  padding-bottom: 2px;
+}
+
+.subpanelTabForm p {
+  margin-bottom: 0;
+}
+
+.subpanelTabForm h3 {
+  padding-left: 3px;
+}
+
+.subpanelTabForm .h3Row {
+  padding-top: 2px;
+  margin-top: 0;
+}
+
+.subpanelTabForm {
+  margin-bottom: 10px;
+}
+
+#groupTabs {
+  margin-top: 20px;
+}
+
+#groupTabs li, #searchTabs li {
+  margin: 0 -3px 0 0;
+}
+
+table.subpanelTabForm {
+  margin-bottom: 4px;
+  border-top: 0 none;
+}
+
+.collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
+  display: none;
+}
+
+
+.oddListRowS1:hover td ul.clickMenu.subpanel.records li span,
+.evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
+  opacity: 1;
+}
+
+
+@media (max-width: 767px) {
+  .panel-heading a div {
+    width: 94.66%;
+  }
+}
+
+@media (min-width: 768px) {
+  .panel-heading a div {
+    width: 97.66%;
+  }
+}
+
+
+.clickMenu li span.subhover {
+  cursor: pointer;
+}
+
+
+.clickMenu li .subnav,
+.clickMenu .subnav-sub,
+.SugarActionMenuIESub {
+  display: none;
+  position: absolute;
+  top: 20px;
+  padding: 8px 0;
+  margin: 0;
+  border: 1px solid transparent;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  float: left;
+  overflow: hidden;
+  width: auto;
+  z-index: 10;
+  list-style: none;
+}
+
+.clickMenu .subnav-sub,
+.SugarActionMenuIESub {
+  right: 0;
+}
+
+.clickMenu li .subnav {
+  right: auto;
+  margin-top: 4px;
+  min-width: 128px;
+}
+
+.clickMenu li .subnav li, .clickMenu .subnav-sub li, .SugarActionMenuIESub li {
+  padding: 0;
+  margin: 0;
+  clear: both;
+  width: 100%;
+  white-space: nowrap;
+
+}
+
+
+.clickMenu.subpanel.records li .subnav li a span {
+  background-image: none;
+  width: 0;
+  height: 0;
+}
+
+.clickMenu.button li span.ab:hover {
+  background-position: 50% 0;
+
+}
+
+.clickMenu.button li > span a {
+  padding: 0 ;
+}
+
+.clickMenu.button span {
+  padding-right: 5px;
+}
+
+.clickMenu.button li .subnav {
+  width: auto;
+}
+
+.clickMenu li a.disabled {
+  color: $disabled-btn-color ;
+  cursor: default ;
+}

@@ -40,8 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-
-error_reporting(1);
+//error_reporting(1);
 //destroying global variables
 $GLOBALS['studioConfig'] = array();
 $GLOBALS['studioConfig']['parsers']['ListViewParser'] = 'modules/Studio/parsers/ListViewParser.php';
@@ -68,5 +67,3 @@ $GLOBALS['studioConfig']['dynamicFields']['radioenum'] = 'modules/DynamicFields/
 $GLOBALS['studioConfig']['dynamicFields']['text'] = 'modules/DynamicFields/templates/Fields/Forms/text.php';
 $GLOBALS['studioConfig']['dynamicFields']['url'] = 'modules/DynamicFields/templates/Fields/Forms/url.php';
 $GLOBALS['studioConfig']['dynamicFields']['varchar'] = 'modules/DynamicFields/templates/Fields/Forms/varchar.php';
-
-?>

@@ -50,7 +50,7 @@ class SugarWidgetSubPanelLoadSignedButton extends SugarWidgetField
 		return '&nbsp;';
 	}
 
-	function displayList($layout_def)
+	function displayList(&$layout_def)
 	{
 		global $app_strings;
 		
@@ -79,4 +79,3 @@ class SugarWidgetSubPanelLoadSignedButton extends SugarWidgetField
 	}
 		
 }
-?>

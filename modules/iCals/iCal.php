@@ -572,7 +572,7 @@ class iCal extends vCal {
 
         $str .= vCal::create_ical_string_from_array($ical_array,true);
 
-        return $str;
+        return htmlspecialchars_decode(preg_replace("/&#([0-9]+)\\\\;/",'&#$1;',utf8_decode($str)));
     }
 
 }

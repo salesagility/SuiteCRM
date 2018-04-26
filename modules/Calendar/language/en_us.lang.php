@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -66,6 +66,7 @@ $mod_strings = array(
     'LBL_MONTH' => 'Month',
     'LBL_AGENDADAY' => 'Day',
     'LBL_YEAR' => 'Year',
+
     'LBL_AGENDAWEEK' => 'Week',
     'LBL_PREVIOUS_MONTH' => 'Previous Month',
     'LBL_PREVIOUS_DAY' => 'Previous Day',
@@ -102,15 +103,15 @@ $mod_strings = array(
     'LBL_NO' => 'No',
     'LBL_SETTINGS' => 'Settings',
     'LBL_CREATE_NEW_RECORD' => 'Create Activity',
-    'LBL_LOADING' => 'Loading ......',
-    'LBL_SAVING' => 'Saving ......',
-    'LBL_SENDING_INVITES' => 'Saving & Sending Invites .....',
+    'LBL_LOADING' => 'Loading...',
+    'LBL_SAVING' => 'Saving...',
+    'LBL_SENDING_INVITES' => 'Saving & Sending Invites...',
     'LBL_CONFIRM_REMOVE' => 'Are you sure you want to remove the record?',
     'LBL_CONFIRM_REMOVE_ALL_RECURRING' => 'Are you sure you want to remove all recurring records?',
     'LBL_EDIT_RECORD' => 'Edit Activity',
     'LBL_ERROR_SAVING' => 'Error while saving',
     'LBL_ERROR_LOADING' => 'Error while loading',
-    'LBL_GOTO_DATE' => 'Goto Date',
+    'LBL_GOTO_DATE' => 'Go to Date',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
     'LBL_STYLE_BASIC' => 'BASIC',
     'LBL_STYLE_ADVANCED' => 'ADVANCED',
@@ -167,58 +168,59 @@ $mod_strings = array(
     'LBL_TEXT' => 'Text',
 );
 
+
 $mod_list_strings = array(
     'dom_cal_weekdays' =>
         array(
-            "Sun",
-            "Mon",
-            "Tue",
-            "Wed",
-            "Thu",
-            "Fri",
-            "Sat",
+            '0' => "Sun",
+            '1' => "Mon",
+            '2' => "Tue",
+            '3' => "Wed",
+            '4' => "Thu",
+            '5' => "Fri",
+            '6' => "Sat",
         ),
     'dom_cal_weekdays_long' =>
         array(
-            "Sunday",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
+            '0' => "Sunday",
+            '1' => "Monday",
+            '2' => "Tuesday",
+            '3' => "Wednesday",
+            '4' => "Thursday",
+            '5' => "Friday",
+            '6' => "Saturday",
         ),
     'dom_cal_month' =>
         array(
-            "",
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
+            '0' => "",
+            '1' => "Jan",
+            '2' => "Feb",
+            '3' => "Mar",
+            '4' => "Apr",
+            '5' => "May",
+            '6' => "Jun",
+            '7' => "Jul",
+            '8' => "Aug",
+            '9' => "Sep",
+            '10' => "Oct",
+            '11' => "Nov",
+            '12' => "Dec",
         ),
     'dom_cal_month_long' =>
         array(
-            "",
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
+            '0' => "",
+            '1' => "January",
+            '2' => "February",
+            '3' => "March",
+            '4' => "April",
+            '5' => "May",
+            '6' => "June",
+            '7' => "July",
+            '8' => "August",
+            '9' => "September",
+            '10' => "October",
+            '11' => "November",
+            '12' => "December",
         ),
 );
-?>
+

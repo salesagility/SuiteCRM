@@ -147,4 +147,3 @@ class SugarFieldEnum extends SugarFieldBase {
 		}
     }
 }
-?>

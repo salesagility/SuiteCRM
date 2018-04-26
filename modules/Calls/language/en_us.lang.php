@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -42,6 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+
 $mod_strings = array(
     'LBL_BLANK' => ' ',
     'LBL_MODULE_NAME' => 'Calls',
@@ -55,13 +56,10 @@ $mod_strings = array(
     'LBL_LIST_RELATED_TO' => 'Related to',
     'LBL_LIST_RELATED_TO_ID' => 'Related to ID',
     'LBL_LIST_DATE' => 'Start Date',
-    'LBL_LIST_TIME' => 'Start Time',
-    'LBL_LIST_DURATION' => 'Duration',
     'LBL_LIST_DIRECTION' => 'Direction',
     'LBL_SUBJECT' => 'Subject:',
     'LBL_REMINDER' => 'Reminder:',
     'LBL_CONTACT_NAME' => 'Contact:',
-    'LBL_DESCRIPTION_INFORMATION' => 'Description Information',
     'LBL_DESCRIPTION' => 'Description:',
     'LBL_STATUS' => 'Status:',
     'LBL_DIRECTION' => 'Direction:',
@@ -70,7 +68,6 @@ $mod_strings = array(
     'LBL_DURATION_HOURS' => 'Duration Hours:',
     'LBL_DURATION_MINUTES' => 'Duration Minutes:',
     'LBL_HOURS_MINUTES' => '(hours/minutes)',
-    'LBL_CALL' => 'Call:',
     'LBL_DATE_TIME' => 'Start Date & Time:',
     'LBL_TIME' => 'Start Time:',
     'LBL_HOURS_ABBREV' => 'h',
@@ -80,7 +77,6 @@ $mod_strings = array(
     'LNK_CALL_LIST' => 'View Calls',
     'LNK_IMPORT_CALLS' => 'Import Calls',
     'ERR_DELETE_RECORD' => 'A record number must be specified to delete the account.',
-    'NTC_REMOVE_INVITEE' => 'Are you sure you want to remove this invitee from the call?',
     'LBL_INVITEE' => 'Invitees',
     'LBL_RELATED_TO' => 'Related To:',
     'LNK_NEW_APPOINTMENT' => 'Create Appointment',
@@ -92,25 +88,20 @@ $mod_strings = array(
     'LBL_EMAIL' => 'Email',
     'LBL_PHONE' => 'Phone',
     'LBL_REMINDER_POPUP' => 'Popup',
-    'LBL_REMINDER_EMAIL' => 'Email',
     'LBL_REMINDER_EMAIL_ALL_INVITEES' => 'Email all invitees',
     'LBL_EMAIL_REMINDER' => 'Email Reminder',
     'LBL_EMAIL_REMINDER_TIME' => 'Email Reminder Time',
     'LBL_SEND_BUTTON_TITLE' => 'Save & Send Invites',
     'LBL_SEND_BUTTON_LABEL' => 'Save & Send Invites',
     'LBL_DATE_END' => 'End Date',
-    'LBL_TIME_END' => 'Time End',
     'LBL_REMINDER_TIME' => 'Reminder Time',
     'LBL_EMAIL_REMINDER_SENT' => 'Email reminder sent',
     'LBL_SEARCH_BUTTON' => 'Search',
-    'LBL_ACTIVITIES_REPORTS' => 'Activities Report',
     'LBL_ADD_BUTTON' => 'Add',
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Calls',
-    'LBL_LOG_CALL' => 'Log Call',
     'LNK_SELECT_ACCOUNT' => 'Select Account',
     'LNK_NEW_ACCOUNT' => 'New Account',
     'LNK_NEW_OPPORTUNITY' => 'New Opportunity',
-    'LBL_DEL' => 'Del',
     'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_USERS_SUBPANEL_TITLE' => 'Users',
@@ -119,7 +110,6 @@ $mod_strings = array(
     'LBL_HISTORY_SUBPANEL_TITLE' => 'Notes',
     'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_LIST_MY_CALLS' => 'My Calls',
-    'LBL_SELECT_FROM_DROPDOWN' => 'Please make a selection from the Related To dropdown list first.',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ASSIGNED_TO_ID' => 'Assigned User',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
@@ -128,7 +118,7 @@ $mod_strings = array(
     'LBL_ACCEPT_STATUS' => 'Accept Status',
     'LBL_ACCEPT_LINK' => 'Accept Link',
 
-    // create invitee functionallity
+    // create invitee functionality
     'LBL_CREATE_INVITEE' => 'Create an invitee',
     'LBL_CREATE_CONTACT' => 'As Contact',
     'LBL_CREATE_LEAD' => 'As Lead',
@@ -169,8 +159,8 @@ $mod_strings = array(
     'LBL_SAVE' => 'Save',
 
     'LBL_CALLS_RESCHEDULE' => 'Calls Reschedule',
-
+    'LBL_LIST_STATUS'=>'Status',
+    'LBL_LIST_DATE_MODIFIED'=>'Date Modified',
+    'LBL_LIST_DUE_DATE'=>'Due Date',
 );
 
-
-?>

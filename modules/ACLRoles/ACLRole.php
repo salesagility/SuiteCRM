@@ -111,10 +111,10 @@ function getUserRoles($user_id, $getAsNameArray = true){
                 "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
             "WHERE acl_roles.deleted=0 ";
 
-        $result = $GLOBALS['db']->query($query);
+        $result = DBManagerFactory::getInstance()->query($query);
         $user_roles = array();
 
-        while($row = $GLOBALS['db']->fetchByAssoc($result) ){
+        while($row = DBManagerFactory::getInstance()->fetchByAssoc($result) ){
             $role = new ACLRole();
             $role->populateFromRow($row);
             if($getAsNameArray)
@@ -146,10 +146,10 @@ function getUserRoleNames($user_id){
                     "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
                 "WHERE acl_roles.deleted=0 ";
 
-            $result = $GLOBALS['db']->query($query);
+            $result = DBManagerFactory::getInstance()->query($query);
             $user_roles = array();
 
-            while($row = $GLOBALS['db']->fetchByAssoc($result) ){
+            while($row = DBManagerFactory::getInstance()->fetchByAssoc($result) ){
                 $user_roles[] = $row['name'];
             }
 
@@ -302,5 +302,3 @@ function mark_relationships_deleted($id){
         }
     }
 }
-
-?>

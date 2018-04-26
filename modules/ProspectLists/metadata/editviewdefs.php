@@ -56,6 +56,13 @@ function toggle_domain_name(list_type)  {ldelim}
         domain_label.style.display=\'none\';
      {rdelim} 
  {rdelim} 
+ 
+ SUGAR.util.doWhen(function(){ldelim}
+     return  document.getElementById(\'list_type\').length > 0
+ {rdelim}, function() {ldelim}
+    var list_type_ele = document.getElementById(\'list_type\');
+    toggle_domain_name(list_type_ele);
+ {rdelim})
 </script>',
 ),
  'panels' =>array (
@@ -68,9 +75,9 @@ function toggle_domain_name(list_type)  {ldelim}
     ),
     array (
       array('name'=>'description'),
-      array('name' => 'domain_name', 
-            'customLabel' => '<div {if $fields.list_type.value != "exempt_domain"} style=\'display:none\'{/if} id=\'domain_label_div\'>{$MOD.LBL_DOMAIN}</div>', 
-            'customCode' =>  '<div {if $fields.list_type.value != "exempt_domain"} style=\'display:none\'{/if} id=\'domain_name_div\'><input name="domain_name" id="domain_name" maxlength="255" type="text" value="{$fields.domain_name.value}"></div>',),
+      array('name' => 'domain_name',
+            'customLabel' => '<div id="domain_label_div">{$MOD.LBL_DOMAIN}</div>',
+            'customCode' =>  '<div id="domain_name_div"><input name="domain_name" id="domain_name" maxlength="255" type="text" value="{$fields.domain_name.value}"></div>',),
     ),
     
   ),
@@ -87,4 +94,3 @@ function toggle_domain_name(list_type)  {ldelim}
 
 
 );
-?>

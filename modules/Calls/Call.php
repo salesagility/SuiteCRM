@@ -174,18 +174,24 @@ class Call extends SugarBean {
 		}
 		return parent::ACLAccess($view,$is_owner,$in_group);
 	}
+	
     // save date_end by calculating user input
     // this is for calendar
-	function save($check_notify = FALSE) {
-		global $timedate,$current_user;
+    function save($check_notify = false)
+    {
+        global $timedate;
 
-	    if(isset($this->date_start) && isset($this->duration_hours) && isset($this->duration_minutes))
-        {
-    	    $td = $timedate->fromDb($this->date_start);
-    	    if($td)
-    	    {
-	        	$this->date_end = $td->modify("+{$this->duration_hours} hours {$this->duration_minutes} mins")->asDb();
-    	    }
+        if (!empty($this->date_start)) {
+            if (!empty($this->duration_hours) && !empty($this->duration_minutes)) {
+                $td = $timedate->fromDb($this->date_start);
+                if ($td) {
+                    $this->date_end = $td->modify(
+                        "+{$this->duration_hours} hours {$this->duration_minutes} mins"
+                    )->asDb();
+                }
+            } else {
+                $this->date_end = $this->date_start;
+            }
         }
 
 		if(!empty($_REQUEST['send_invites']) && $_REQUEST['send_invites'] == '1') {
@@ -292,7 +298,8 @@ class Call extends SugarBean {
 		// First, get the list of IDs.
 		$query = "SELECT contact_id as id from calls_contacts where call_id='$this->id' AND deleted=0";
 
-		return $this->build_related_list($query, new Contact());
+                $contact = new Contact();
+		return $this->build_related_list($query, $contact);
 	}
 
 
@@ -496,9 +503,9 @@ class Call extends SugarBean {
 			if(empty($action))
 			    $action = "index";
 
-            $setCompleteUrl = "<a id='{$this->id}' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Held\",\"listview\",\"1\");'>";
+            $setCompleteUrl = "<b><a id='{$this->id}' class='list-view-data-icon' title='".translate('LBL_CLOSEINLINE')."' onclick='SUGAR.util.closeActivityPanel.show(\"{$this->module_dir}\",\"{$this->id}\",\"Held\",\"listview\",\"1\");'>";
 			if ($this->ACLAccess('edit')) {
-                $call_fields['SET_COMPLETE'] = $setCompleteUrl . SugarThemeRegistry::current()->getImage("close_inline"," border='0'",null,null,'.gif',translate('LBL_CLOSEINLINE'))."</a>";
+                $call_fields['SET_COMPLETE'] = $setCompleteUrl ."<span class='suitepicon suitepicon-action-clear'></span></a></b>";
             } else {
                 $call_fields['SET_COMPLETE'] = '';
             }
@@ -506,7 +513,10 @@ class Call extends SugarBean {
 		global $timedate;
 		$today = $timedate->nowDb();
 		$nextday = $timedate->asDbDate($timedate->getNow()->modify("+1 day"));
-		$mergeTime = $call_fields['DATE_START']; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
+                if(!isset($call_fields['DATE_START'])) {
+                    LoggerManager::getLogger()->warn('Call has not DATE_START field for list view data.');
+                }
+		$mergeTime = isset($call_fields['DATE_START']) ? $call_fields['DATE_START'] : null; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if( $date_db	< $today){
 			if($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held')   
@@ -515,7 +525,13 @@ class Call extends SugarBean {
 			}   
 			else   
 			{    
-				$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";   
+                            if(!isset($call_fields['DATE_START'])) {
+                                LoggerManager::getLogger()->warn('Call field has not START_DATE when trying to get list view data.');
+                                $dateStart = null;
+                            } else {
+                                $dateStart = $call_fields['DATE_START'];
+                            }
+				$call_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";   
 			}
 		}else if($date_db < $nextday){
 			$call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";

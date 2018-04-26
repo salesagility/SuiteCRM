@@ -241,6 +241,3 @@ class VarDefHandler {
 
 //end class VarDefHandler
 }
-
-
-?>

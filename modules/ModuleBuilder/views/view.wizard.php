@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -207,7 +207,7 @@ class ModuleBuilderViewWizard extends SugarView
 			case 'search':
 				//MB Select Search Layout page.
 				$this->generateMBSearchButtons () ;
-				$this->title = $this->editModule . " " . translate( 'LBL_SEARCH' ) ;
+				$this->title = $this->editModule . " " . translate( 'LBL_SEARCH_BUTTON' ) ;
 				$this->question = translate( 'LBL_QUESTION_SEARCH' ) ;
 				$ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), 'ModuleBuilder.getContent("module=ModuleBuilder&MB=true&action=wizard&view_module=' . $this->editModule . '&view_package=' . $this->package . '")' ) ;
 				$ajax->addCrumb ( translate( 'LBL_SEARCH_FORMS' ), '' ) ;
@@ -260,7 +260,11 @@ class ModuleBuilderViewWizard extends SugarView
 		//$GLOBALS['log']->debug(print_r($nodes,true));
 		foreach ( $nodes as $module )
 		{
-			$this->buttons [ $module [ 'name' ] ] = array ( 'action' => $module [ 'action' ] , 'imageTitle' => ucfirst ( $module [ 'module' ] . "_32" ) , 'size' => '32', 'linkId' => 'studiolink_'.$module [ 'module' ] ) ;
+            $this->buttons[$module['name']] = [
+                'action' => $module['action'],
+                'linkId' => 'studiolink_' . $module['module'],
+                'icon' => $module['icon']
+            ];
 		}
 	}
 
@@ -292,11 +296,11 @@ class ModuleBuilderViewWizard extends SugarView
 		      'imageTitle' => 'QuickCreate', 
 		      'help'=>'viewBtnQuickCreate' 
 		  ) ;
-		$this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_SEARCH' ] ] = 
+		$this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_SEARCH_FORMS' ] ] =
 		  array (
 		      'action' => "module=ModuleBuilder&MB=true&action=wizard&view=search&view_module={$this->editModule}&view_package={$this->package}" , 
-		      'imageTitle' => 'SearchForm' , 
-		      'help'=> 'searchBtn' 
+		      'imageTitle' => 'BasicSearch' ,
+		      'help'=> 'searchBtn'
 		  ) ;
 		$this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_DASHLET' ] ] = 
 		  array ( 

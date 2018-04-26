@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -47,19 +47,22 @@ require_once('modules/MySettings/StoreQuery.php');
 class ViewList extends SugarView
 {
     /**
-     * @var string
+     * @var string $type
      */
     public $type = 'list';
 
     /**
-     * @var ListViewSmartyEmails
+     * @var ListViewSmartyEmails $lv
      */
     public $lv;
 
     /**
-     * @var
+     * @var SearchForm $searchForm
      */
     public $searchForm;
+
+    /** @var  array $savedSearchData */
+    public $savedSearchData;
 
     /**
      * @var
@@ -67,7 +70,7 @@ class ViewList extends SugarView
     public $use_old_search;
 
     /**
-     * @var
+     * @var bool $headers
      */
     public $headers;
 
@@ -77,22 +80,22 @@ class ViewList extends SugarView
     public $seed;
 
     /**
-     * @var array
+     * @var array $params
      */
     public $params;
 
     /**
-     * @var
+     * @var array $listViewDefs
      */
     public $listViewDefs;
 
     /**
-     * @var StoreQuery
+     * @var StoreQuery $storeQuery
      */
     public $storeQuery;
 
     /**
-     * @var string
+     * @var string $where
      */
     public $where = '';
 
@@ -123,7 +126,12 @@ class ViewList extends SugarView
      */
     public function listViewPrepare()
     {
-        $module = $GLOBALS['module'];
+        $module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
+        
+        if(!isset($module)) {
+            LoggerManager::getLogger()->fatal('Undefined module for list view prepare');
+            return false;
+        }
 
         $metadataFile = $this->getMetaDataFile();
 
@@ -187,6 +195,13 @@ class ViewList extends SugarView
         if (!isset($_REQUEST['query'])) {
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
+        } elseif (!empty($_REQUEST['update_stored_query'])) {
+            $updateKey = $_REQUEST['update_stored_query_key'];
+            $updateValue = $_REQUEST[$updateKey];
+            $this->storeQuery->loadQuery($this->module);
+            $this->storeQuery->populateRequest();
+            $_REQUEST[$updateKey] = $updateValue;
+            $this->storeQuery->saveFromRequest($this->module);
         } else {
             $this->storeQuery->saveFromRequest($this->module);
         }
@@ -200,9 +215,13 @@ class ViewList extends SugarView
                     $displayColumns[$col] = $this->listViewDefs[$module][$col];
             }
         } else {
-            foreach ($this->listViewDefs[$module] as $col => $this->params) {
-                if (!empty($this->params['default']) && $this->params['default'])
-                    $displayColumns[$col] = $this->params;
+            if(!isset($this->listViewDefs[$module])) {
+                LoggerManager::getLogger()->warn('Listview definition is not set for module: ' . $module);
+            } else {
+                foreach ($this->listViewDefs[$module] as $col => $this->params) {
+                    if (!empty($this->params['default']) && $this->params['default'])
+                        $displayColumns[$col] = $this->params;
+                }
             }
         }
         $this->params = array('massupdate' => true);
@@ -210,6 +229,9 @@ class ViewList extends SugarView
             $this->params['orderBy'] = $_REQUEST['orderBy'];
             $this->params['overrideOrder'] = true;
             if (!empty($_REQUEST['sortOrder'])) $this->params['sortOrder'] = $_REQUEST['sortOrder'];
+        }
+        if(!isset($this->lv) || !$this->lv) {
+            $this->lv = new stdClass();
         }
         $this->lv->displayColumns = $displayColumns;
 
@@ -304,7 +326,7 @@ class ViewList extends SugarView
             $GLOBALS['log']->info("List View Where Clause: $this->where");
         }
         if ($this->use_old_search) {
-            switch ($view) {
+            switch (isset($view) ? $view : null) {
                 case 'basic_search':
                     $this->searchForm->setup();
                     $this->searchForm->displayBasic($this->headers);
@@ -356,5 +378,3 @@ class ViewList extends SugarView
         return new SearchForm($seed, $module, $action);
     }
 }
-
-?>

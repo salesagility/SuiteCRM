@@ -92,7 +92,6 @@ class ListViewData {
 	function getOrderBy($orderBy = '', $direction = '') {
 		if (!empty($orderBy) || !empty($_REQUEST[$this->var_order_by])) {
             if(!empty($_REQUEST[$this->var_order_by])) {
-    			$direction = 'ASC';
     			$orderBy = $_REQUEST[$this->var_order_by];
     			if(!empty($_REQUEST['lvso']) && (empty($_SESSION['lvd']['last_ob']) || strcmp($orderBy, $_SESSION['lvd']['last_ob']) == 0) ){
     				$direction = $_REQUEST['lvso'];
@@ -182,7 +181,7 @@ class ListViewData {
 	 */
 	function setVariableName($baseName, $where, $listviewName = null, $id = null){
         global $timedate;
-        $module = (!empty($listviewName)) ? $listviewName: $_REQUEST['module'];
+        $module = (!empty($listviewName)) ? $listviewName: isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
         $this->var_name = $module .'2_'. strtoupper($baseName) . ($id?'_'.$id:'');
 
 		$this->var_order_by = $this->var_name .'_ORDER_BY';
@@ -446,7 +445,8 @@ class ListViewData {
                 $additionalDetailsEdit = $editViewAccess;
                 if($additionalDetailsAllow) {
                     if($this->additionalDetailsAjax) {
-					   $ar = $this->getAdditionalDetailsAjax($data[$dataIndex]['ID']);
+                        LoggerManager::getLogger()->warn('Undefined data index ID for list view data.');
+					   $ar = $this->getAdditionalDetailsAjax(isset($data[$dataIndex]['ID']) ? $data[$dataIndex]['ID'] : null);
                     }
                     else {
                         $additionalDetailsFile = 'modules/' . $this->seed->module_dir . '/metadata/additionalDetails.php';
@@ -609,11 +609,11 @@ class ListViewData {
     {
         global $app_strings;
 
-        $jscalendarImage = SugarThemeRegistry::current()->getImageURL('info_inline.gif');
+        $jscalendarImage ='<span class="suitepicon suitepicon-action-info" title="'.$app_strings['LBL_ADDITIONAL_DETAILS'].'"></span>';
 
         $extra = "<span id='adspan_" . $id . "' "
                 . "onclick=\"lvg_dtails('$id')\" "
-				. " style='position: relative;'><!--not_in_theme!--><img vertical-align='middle' class='info' border='0' alt='".$app_strings['LBL_ADDITIONAL_DETAILS']."' src='$jscalendarImage'></span>";
+				. " style='position: relative;'><!--not_in_theme!-->$jscalendarImage</span>";
 
         return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
 	}
@@ -621,9 +621,9 @@ class ListViewData {
     /**
      * generates the additional details values
      *
-     * @param unknown_type $fields
-     * @param unknown_type $adFunction
-     * @param unknown_type $editAccess
+     * @param array $fields
+     * @param callable $adFunction
+     * @param array $editAccess
      * @return array string to attach to field
      */
     function getAdditionalDetails($fields, $adFunction, $editAccess)
@@ -647,19 +647,19 @@ class ListViewData {
 
 	        if($editAccess && !empty($results['editLink']))
 	        {
-	            $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><img style=\'margin-left: 2px;\' border=\'0\' src=\'".SugarThemeRegistry::current()->getImageURL('edit_inline.png')."\'></a>";
+	            $extra .=  "<a title=\'{$app_strings['LBL_EDIT_BUTTON']}\' href={$results['editLink']}><span class=\'suitepicon suitepicon-action-edit\'></span></a>";
 	            $close = true;
 	        }
 	        $close = (!empty($results['viewLink'])) ? true : $close;
-	        $extra .= (!empty($results['viewLink']) ? "<a title=\'{$app_strings['LBL_VIEW_BUTTON']}\' href={$results['viewLink']}><img style=\'margin-left: 2px;\' border=\'0\' src=".SugarThemeRegistry::current()->getImageURL('view_inline.png')."></a>" : '');
+	        $extra .= (!empty($results['viewLink']) ? "<a title=\'{$app_strings['LBL_VIEW_BUTTON']}\' href={$results['viewLink']}> <span class=\'suitepicon suitepicon-action-view-record\'></span></a>" : '');
 
             if($close == true) {
             	$closeVal = "true";
-            	$extra .=  "<a title=\'{$app_strings['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']}\' href=\'javascript: SUGAR.util.closeStaticAdditionalDetails();\'><img style=\'margin-left: 2px;\' border=\'0\' src=\'".SugarThemeRegistry::current()->getImageURL('close.png')."\'></a>";
+            	$extra .=  "<a title=\'{$app_strings['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']}\' href=\'javascript: SUGAR.util.closeStaticAdditionalDetails();\'> <span class=\'suitepicon suitepicon-action-clear\'></span></a>";
             } else {
             	$closeVal = "false";
             }
-            $extra .= "',".$closeVal.")\" src='".SugarThemeRegistry::current()->getImageURL('info_inline.png')."' class='info'>";
+            $extra .= "',".$closeVal.")\"' class='info suitepicon suiteicon-action-info'>";
 
         return array('fieldToAddTo' => $results['fieldToAddTo'], 'string' => $extra);
     }

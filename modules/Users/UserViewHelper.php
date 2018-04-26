@@ -141,6 +141,9 @@ class UserViewHelper {
         $edit_self = $current_user->id == $this->bean->id;
         $admin_edit_self = is_admin($current_user) && $edit_self;
 
+        if(isset($_REQUEST['showEmailSettingsPopup']) && $_REQUEST['showEmailSettingsPopup']) {
+            $this->ss->assign('showEmailSettingsPopup', true);
+        }
 
         $this->ss->assign('IS_FOCUS_ADMIN', is_admin($this->bean));
 
@@ -509,6 +512,10 @@ class UserViewHelper {
             $useGroupTabs = $GLOBALS['sugar_config']['default_navigation_paradigm'];
         }
         $this->ss->assign("USE_GROUP_TABS",($useGroupTabs=='gm')?'checked':'');
+
+        if ($this->bean->getPreference('sort_modules_by_name')) {
+            $this->ss->assign('SORT_MODULES_BY_NAME', ' checked');
+        }
 
         $user_subpanel_tabs = $this->bean->getPreference('subpanel_tabs');
         if(isset($user_subpanel_tabs)) {

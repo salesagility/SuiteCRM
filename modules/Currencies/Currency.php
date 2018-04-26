@@ -174,17 +174,18 @@ class Currency extends SugarBean
 		return $list_form;
 	}
 
-	function retrieve_id_by_name($name) {
-	 	$query = "select id from currencies where name='$name' and deleted=0;";
-	 	$result = $this->db->query($query);
-	 	if($result){
-	 	$row = $this->db->fetchByAssoc($result);
-	 	if($row){
-	 		return $row['id'];
-	 	}
-	 	}
-	 	return '';
-	}
+    function retrieve_id_by_name($name) {
+        $nameQuoted = $this->db->quote($name);
+        $query = "select id from currencies where name='$nameQuoted' and deleted=0;";
+        $result = $this->db->query($query);
+        if ($result) {
+            $row = $this->db->fetchByAssoc($result);
+            if ($row) {
+                return $row['id'];
+            }
+        }
+        return '';
+    }
 
     function retrieve($id = -99, $encode = true, $deleted = true){
      	if($id == '-99'){
@@ -516,13 +517,18 @@ function get_number_seperators($reset_sep = false)
  * toString
  *
  * Utility function to print out some information about Currency instance.
+ * @deprecated since version 7.10.2
  */
 function toString($echo = true) {
-	$s = "\$m_currency_round=$m_currency_round \n" .
-         "\$m_currency_decimal=$m_currency_decimal \n" .
-         "\$m_currency_symbol=$m_currency_symbol \n" .
-         "\$m_currency_iso=$m_currency_iso \n" .
-         "\$m_currency_name=$m_currency_name \n";
+    
+    LoggerManager::getLogger()->fatal('Wrong or incomplete implementation for currency to string convertation.');
+    
+    
+    $s = "\$m_currency_round=" . (isset($m_currency_round) ? $m_currency_round : null) . " \n" .
+     "\$m_currency_decimal=" . (isset($m_currency_decimal) ? $m_currency_decimal : null) . " \n" .
+     "\$m_currency_symbol=" . (isset($m_currency_symbol) ? $m_currency_symbol : null) . " \n" .
+     "\$m_currency_iso=" . (isset($m_currency_iso) ? $m_currency_iso : null) . " \n" .
+     "\$m_currency_name=" . (isset($m_currency_name) ? $m_currency_name : null) . " \n";
 
     if($echo) {
        echo $s;
@@ -546,9 +552,22 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
 		require_once('modules/Currencies/ListCurrency.php');
 		$currency_fields = array();
 		//Bug 18276 - Fix for php 5.1.6
-		$defs=$focus->field_defs;
+                
+                if (!isset($focus)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
+                    $defs = null;
+                } elseif (!isset($focus->field_defs)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Undefined field definition for focus. Focus was: ' . get_class($focus));
+                    $defs = null;
+                } elseif (!is_object($focus)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus is not an object. Given type of focus was: ' . gettype($focus));
+                    $defs = null;
+                } else {
+                    $defs = isset($focus->field_defs) ? $focus->field_defs : null;
+                }
+                
 		//
-		foreach($defs as $name=>$key){
+		foreach((array)$defs as $name=>$key){
 			if($key['type'] == 'currency'){
 				$currency_fields[]= $name;
 			}
@@ -584,9 +603,22 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
 		require_once('modules/Currencies/ListCurrency.php');
 		$currency_fields = array();
 		//Bug 18276 - Fix for php 5.1.6
-		$defs=$focus->field_defs;
+                
+                if (!isset($focus)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
+                    $defs = null;
+                } elseif (!isset($focus->field_defs)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Undefined field definition for focus. Focus was: ' . get_class($focus));
+                    $defs = null;
+                } elseif (!is_object($focus)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus is not an object. Given type of focus was: ' . gettype($focus));
+                    $defs = null;
+                } else {
+                    $defs = isset($focus->field_defs) ? $focus->field_defs : null;
+                }
+                
 		//
-		foreach($defs as $name=>$key){
+		foreach((array)$defs as $name=>$key){
 			if($key['type'] == 'currency'){
 				$currency_fields[]= $name;
 			}
@@ -617,9 +649,22 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
 		require_once('modules/Currencies/ListCurrency.php');
 		$currency_fields = array();
 		//Bug 18276 - Fix for php 5.1.6
-		$defs=$focus->field_defs;
+                
+                if (!isset($focus)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus not defined.');
+                    $defs = null;
+                } elseif (!isset($focus->field_defs)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Undefined field definition for focus. Focus was: ' . get_class($focus));
+                    $defs = null;
+                } elseif (!is_object($focus)) {
+                    LoggerManager::getLogger()->warn('Currency Dorp-down error: Focus is not an object. Given type of focus was: ' . gettype($focus));
+                    $defs = null;
+                } else {
+                    $defs = isset($focus->field_defs) ? $focus->field_defs : null;
+                }
+                
 		//
-		foreach($defs as $name=>$key){
+		foreach((array)$defs as $name=>$key){
 			if($key['type'] == 'currency'){
 				$currency_fields[]= $name;
 			}
@@ -644,4 +689,3 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
 	}
 }
 
-?>

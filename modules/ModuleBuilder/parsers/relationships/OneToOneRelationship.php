@@ -135,5 +135,3 @@ class OneToOneRelationship extends AbstractRelationship
     }
 
 }
-
-?>

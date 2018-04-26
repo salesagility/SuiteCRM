@@ -312,7 +312,7 @@ class UnifiedSearchAdvanced {
                 foreach($innerJoins as $field=>$def) {
                     if (isset($def['db_field'])) {
                       foreach($def['db_field'] as $dbfield)
-                          $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
+                          $where_clauses[] = $dbfield . " LIKE '" . DBManagerFactory::getInstance()->quote($this->query_string) . "%'";
                           $params['custom_select'] .= ", $dbfield";
                           $params['distinct'] = true;
                           //$filterFields[$dbfield] = $dbfield;
@@ -355,6 +355,8 @@ class UnifiedSearchAdvanced {
                 $lv->email = false;
 
                 $lv->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', $where, $params, 0, 10);
+                $lv->ss->assign('showFilterIcon', 0);
+                $lv->ss->assign('hideColumnFilter', 1);
 
                 $module_results[$moduleName] = '<br /><br />' . get_form_header($GLOBALS['app_list_strings']['moduleList'][$seed->module_dir] . ' (' . $lv->data['pageData']['offsets']['total'] . ')', '', false);
                 $module_counts[$moduleName] = $lv->data['pageData']['offsets']['total'];

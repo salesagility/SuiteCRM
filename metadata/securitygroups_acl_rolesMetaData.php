@@ -21,5 +21,3 @@ $dictionary['securitygroups_acl_roles'] = array (
 		),
   	)
 );
-
-?>

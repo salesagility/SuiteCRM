@@ -347,4 +347,3 @@ $dictionary['CampaignLog'] = array ('audited'=>false,
         ),
     )
 );
-?>

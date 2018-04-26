@@ -58,7 +58,7 @@ function show_crModuleFields(ln){
             }
         };
 
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&aow_module="+cr_module[ln],callback);
+        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&override[]=email1&override[]=email2&aow_module="+cr_module[ln],callback);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getModuleRelationships&aow_module="+cr_module[ln],callback2);
 
     }
@@ -228,7 +228,7 @@ function add_crLine(ln){
   x.setAttribute('data-workflow-action-line', '');
 
     var a = x.insertCell(0);
-    a.innerHTML = "<button type='button' id='crLine"+ln+"_delete" + crln[ln]+"' class='button' value='Remove Line' tabindex='116' onclick='clear_crLine(" + ln + ",this);'><img src='themes/default/images/id-ff-remove-nobg.png' alt='Remove Line'></button>";
+    a.innerHTML = "<button type='button' id='crLine"+ln+"_delete" + crln[ln]+"' class='button' value='Remove Line' tabindex='116' onclick='clear_crLine(" + ln + ",this);'><span class='suitepicon suitepicon-action-minus'></span></button>";
 
     var b = x.insertCell(1);
     b.innerHTML = "<select tabindex='116' name='aow_actions_param["+ln+"][field]["+crln[ln]+"]' id='aow_actions_param"+ln+"_field"+crln[ln]+"' onchange='show_crModuleField(" + ln + "," + crln[ln] + ");'>" + cr_fields[ln] + "</select>";
@@ -266,7 +266,7 @@ function add_crRelLine(ln){
     x.id = 'crRelLine'+ln+'_line' + crreln[ln];
 
     var a = x.insertCell(0);
-    a.innerHTML = "<button type='button' id='crRelLine"+ln+"_delete" + crreln[ln]+"' class='button' value='Remove Line' tabindex='116' onclick='clear_crRelLine(" + ln + ",this);'><img src='themes/default/images/id-ff-remove-nobg.png' alt='Remove Line'></button>";
+    a.innerHTML = "<button type='button' id='crRelLine"+ln+"_delete" + crreln[ln]+"' class='button' value='Remove Line' tabindex='116' onclick='clear_crRelLine(" + ln + ",this);'><span class='suitepicon suitepicon-action-minus'></span></button>";
 
     var b = x.insertCell(1);
     b.innerHTML = "<select tabindex='116' name='aow_actions_param["+ln+"][rel]["+crreln[ln]+"]' id='aow_actions_param"+ln+"_rel"+crreln[ln]+"' onchange='show_crRelField(" + ln + "," + crreln[ln] + ");'>" + cr_relationships[ln] + "</select>";
@@ -312,7 +312,7 @@ function show_mrModuleFields(ln){
         };
 
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getRelatedModule&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback);
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback2);
+        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&override[]=email1&override[]=email2&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback2);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getModuleRelationships&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback3);
 
     }

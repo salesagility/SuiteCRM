@@ -197,6 +197,7 @@
                         {eval var=$col.label data1=$col assign='label'}
                         {sugar_translate label=$label module=$language}
                     {else}
+                        {assign var='label' value=$col.label}
 		                {if !empty($current_mod_strings[$label])}
 		                    {$current_mod_strings[$label]}
 		                {elseif !empty($mod[$label])}

@@ -35,7 +35,7 @@ if(isset($_REQUEST['record']) && $_REQUEST['record'] != "")
     if( isset($_POST['primary_group']) && $_POST['primary_group'] == '1') {
         $focus->primary_group = 1;
         //unset all other primary groups for this user
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $query = "update securitygroups_users set primary_group = 0 where user_id = '".$focus->user_id."' and id != '".$focus->id."' and primary_group = 1 and deleted = 0";
         $db->query($query);
     } else {
@@ -52,5 +52,3 @@ $header_URL = "Location: index.php?action={$_REQUEST['return_action']}&module={$
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
 
 header($header_URL);
-?>
-

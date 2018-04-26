@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/DynamicFields/FieldCases.php');
 require_once('modules/DynamicFields/DynamicField.php');
- global $db;
+ $db = DBManagerFactory::getInstance();
  if(!isset($db)){
  	$db = DBManagerFactory::getInstance();
  }
@@ -129,12 +129,3 @@ require_once('modules/DynamicFields/DynamicField.php');
 	if($simulate){
 		echo '<a href="index.php?module=Administration&action=UpgradeFields&run=true">Execute non-simulation mode</a>';	
 	}
-		
-		
- 
- 
- 	
- 
- 
- 
- ?>

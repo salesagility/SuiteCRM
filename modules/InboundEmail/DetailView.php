@@ -303,4 +303,3 @@ else if( $focus->is_personal == '1')
 
 $xtpl->parse('main');
 $xtpl->out('main');
-?>

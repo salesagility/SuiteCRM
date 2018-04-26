@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
 *}
 {php}
@@ -58,8 +59,8 @@ var emailAddressWidgetLoaded = false;
 <div class="col-xs-12">
 	<div class="col-xs-12 email-address-add-line-container emailaddresses" id="{$module}emailAddressesTable{$index}">
 		{capture assign="other_attributes"}id="{$module}{$index}_email_widget_add" onclick="SUGAR.EmailAddressWidget.instances.{$module}{$index}.addEmailAddress('{$module}emailAddressesTable{$index}','', false);"{/capture}
-		<button type="button" class="btn btn-info email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD} " {$other_attributes}>
-			<span class="glyphicon glyphicon-plus"></span><span></span>
+		<button type="button" class="btn btn-danger email-address-add-button" title="{$app_strings.LBL_ID_FF_ADD_EMAIL} " {$other_attributes}>
+			<span class="suitepicon suitepicon-action-plus"></span><span></span>
 		</button>
 	</div>
 	<div class="col-xs-12 email-address-lines-container">
@@ -83,8 +84,8 @@ var emailAddressWidgetLoaded = false;
 					<input type=hidden id="{$module}_email_widget_id" name="{$module}_email_widget_id" value="">
 					<input type=hidden id='emailAddressWidget' name='emailAddressWidget' value='1'>
 					<span class="input-group-btn">
-					<button type="button" id="email-address-remove-button" class="btn btn-danger email-address-remove-button" name="" title="{$app_strings.LBL_ID_FF_REMOVE}" type="button">
-						<span class="glyphicon glyphicon-minus"></span>
+					<button type="button" id="email-address-remove-button" class="btn btn-danger email-address-remove-button" name="" title="{$app_strings.LBL_ID_FF_REMOVE_EMAIL}">
+						<span class="suitepicon suitepicon-action-minus"></span>
 					</button>
 				</span>
 				</div>
@@ -107,16 +108,27 @@ var emailAddressWidgetLoaded = false;
 				{if $useOptOut == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_OPT_OUT}</label>
-					<div><input type="checkbox" name="" id="email-address-opt-out-flag" class="email-address-opt-out-flag" value="" enabled="true"></div>
+					<div><input type="checkbox" name="" title="{$app_strings.LBL_ID_FF_OPT_OUT}" id="email-address-opt-out-flag" class="email-address-opt-out-flag" value="" enabled="true"></div>
 				</div>
 				{/if}
 
 				{if $useInvalid == true}
 				<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
 					<label class="text-sm col-xs-12">{$app_strings.LBL_EMAIL_INVALID}</label>
-					<div><input type="checkbox" name="" id="email-address-invalid-flag" class="email-address-invalid-flag" value="" enabled="true"></div>
+					<div><input type="checkbox" name="" title="{$app_strings.LBL_EMAIL_INVALID}" id="email-address-invalid-flag" class="email-address-invalid-flag" value="" enabled="true"></div>
 				</div>
 				{/if}
+
+                {if $useOptIn == true}
+					<div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 text-center email-address-option">
+						<label class="text-sm col-xs-12">{$app_strings.LBL_OPT_IN}</label>
+						<div>
+                                                    <input type="hidden" name="shouldSaveOptInFlag" value="1">
+                                                    <input type="checkbox" name="" title="{$app_strings.LBL_OPT_IN}" 
+                                                           id="email-address-opted-in-flag" class="email-address-opted-in-flag" value="" enabled="true">
+                                                </div>
+					</div>
+                {/if}
 			</div>
 		</div>
 

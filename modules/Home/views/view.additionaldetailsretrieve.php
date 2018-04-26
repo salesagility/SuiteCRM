@@ -96,10 +96,10 @@ class HomeViewAdditionaldetailsretrieve extends SugarView
             $retArray['caption'] = "<div style='float:left'>{$app_strings['LBL_ADDITIONAL_DETAILS']}</div><div style='float: right'>";
             if(!empty($_REQUEST['show_buttons'])){
 		    if(!empty($results['editLink']))
-		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_EDIT_BUTTON']."' href='".$results['editLink']."'><img border=0 src='".SugarThemeRegistry::current()->getImageURL('edit_inline.png',false)."'></a>";
+		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_EDIT_BUTTON']."' href='".$results['editLink']."'> <span class=\"suitepicon suitepicon-action-edit\"></span></a>";
 		    if(!empty($results['viewLink']))
-		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_VIEW_BUTTON']."' href='".$results['viewLink']."'><img border=0 src='".SugarThemeRegistry::current()->getImageURL('view_inline.png',false)."' style='margin-left:2px;'></a>";
-		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']."' href='javascript: SUGAR.util.closeStaticAdditionalDetails();'><img border=0 src='".SugarThemeRegistry::current()->getImageURL('close.png',false)."' style='margin-left:2px;'></a>";
+		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_VIEW_BUTTON']."' href='".$results['viewLink']."'> <span class=\"suitepicon suitepicon-action-view-record\"></span></a>";
+		    	$retArray['caption'] .= "<a title='".$GLOBALS['app_strings']['LBL_ADDITIONAL_DETAILS_CLOSE_TITLE']."' href='javascript: SUGAR.util.closeStaticAdditionalDetails();'> <span class=\"suitepicon suitepicon-action-clear\"></span></a>";
             }
             $retArray['caption'] .= "";
             $retArray['width'] = (empty($results['width']) ? '300' : $results['width']);

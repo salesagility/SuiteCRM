@@ -167,9 +167,9 @@ else {
         }
         
         $query = $seed->create_new_list_query($order_by, $where_clauses);
-		$result = $GLOBALS['db']->query($query,true);
+		$result = DBManagerFactory::getInstance()->query($query,true);
 		$uids = array();
-		while($val = $GLOBALS['db']->fetchByAssoc($result,false))
+		while($val = DBManagerFactory::getInstance()->fetchByAssoc($result,false))
 		{
 			array_push($uids, $val['id']);
 		}

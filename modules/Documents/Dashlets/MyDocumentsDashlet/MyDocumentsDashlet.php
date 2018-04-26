@@ -85,5 +85,3 @@ class MyDocumentsDashlet extends DashletGeneric {
         return $this->configureSS->fetch($this->configureTpl);
     }
 }
-
-?>
