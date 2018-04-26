@@ -167,4 +167,3 @@ $layout_defs['ProjectTask'] = array(
         ),
     ),
 );
-?>

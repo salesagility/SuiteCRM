@@ -159,7 +159,7 @@ class ViewLabels extends ViewModulefields
         }
         $mod_strings = $mod_bak;
         ksort($formatted_mod_strings);
-		$smarty->assign('MOD', $formatted_mod_strings);
+		$smarty->assign('MOD_LABELS', $formatted_mod_strings);
 		$smarty->assign('view_module', $editModule);
 		$smarty->assign('APP', $GLOBALS['app_strings']);
 		$smarty->assign('selected_lang', $selected_lang);

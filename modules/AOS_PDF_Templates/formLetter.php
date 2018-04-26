@@ -61,7 +61,7 @@ class formLetter
 
     static function getModuleTemplates($module)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $templates = array();
 
         $sql = "SELECT id,name FROM aos_pdf_templates WHERE type = '" . $module . "' AND deleted = 0  AND active = 1 ORDER BY name";

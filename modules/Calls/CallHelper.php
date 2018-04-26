@@ -118,5 +118,3 @@ function getReminderTime($focus, $field, $value, $view) {
        
     return translate('reminder_time_options', '', $reminder_t);    
 }
-
-?>

@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/tabs.php');
 require_once('include/ListView/ListViewSmarty.php');
@@ -289,6 +292,11 @@ class SearchForm
         $searchFormInPopup = !in_array($this->module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
         $this->th->ss->assign('searchFormInPopup', $searchFormInPopup);
 
+        if(!isset($this->seed)) {
+            LoggerManager::getLogger()->warn('Undefined seed for display search form while trying to get module_dir');
+            $this->seed = new stdClass();
+            $this->seed->module_dir = null;
+        }
         $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_' . $this->parsedView, $this->locateFile($this->tpl));
 
         if ($header) {
@@ -321,7 +329,7 @@ class SearchForm
         global $app_strings, $mod_strings;
         $data = array();
         $fields = array_merge($this->fieldDefs, (array)$this->customFieldDefs);
-        $fields = array_merge($fields, $this->searchFields);
+        $fields = array_merge($fields, (array)$this->searchFields);
         foreach ($fields as $name => $defs) {
             if (preg_match('/(.*)_basic$/', $name, $match)) {
                 if (isset($fields[$match[1]]['value']) && $fields[$match[1]]['value'] && (!isset($defs['value']) || !$defs['value'])) {
@@ -334,7 +342,7 @@ class SearchForm
                 }
             }
         }
-        $searchFieldsKeys = array_keys($this->searchFields);
+        $searchFieldsKeys = array_keys((array)$this->searchFields);
         foreach ($fields as $name => $defs) {
             $searchTypeKey = false;
             if (preg_match('/(.*)_basic$/', $name, $match)) {
@@ -494,7 +502,11 @@ class SearchForm
 
     function displaySavedSearchSelect()
     {
-        $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $this->lv->data['pageData']['ordering']['orderBy'], $this->lv->data['pageData']['ordering']['sortOrder']);
+        $savedSearch = new SavedSearch(
+            $this->listViewDefs[$this->module], 
+            isset($this->lv->data['pageData']['ordering']['orderBy']) ? $this->lv->data['pageData']['ordering']['orderBy'] : null, 
+            isset($this->lv->data['pageData']['ordering']['sortOrder']) ? $this->lv->data['pageData']['ordering']['sortOrder'] : null
+        );
         $savedSearchSelect = $savedSearch->getSelect($this->module, $savedSearchData);
         $this->savedSearchData = $savedSearchData;
 
@@ -575,7 +587,7 @@ class SearchForm
                     $this->fieldDefs[$fvName] = array_merge($this->seed->field_defs[$name], $this->fieldDefs[$fvName]);
                 else {
                     $this->fieldDefs[$fvName] = $this->seed->field_defs[$name];
-                    $this->fieldDefs[$fvName]['name'] = $this->fieldDefs[$fvName]['name'] . '_' . $this->parsedView;
+                    $this->fieldDefs[$fvName]['name'] = (isset($this->fieldDefs[$fvName]['name']) ? $this->fieldDefs[$fvName]['name'] : null) . '_' . $this->parsedView;
                 }
 
                 if (isset($this->fieldDefs[$fvName]['type']) && $this->fieldDefs[$fvName]['type'] == 'relate') {

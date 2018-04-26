@@ -104,5 +104,3 @@ $dictionary['InboundEmail_autoreply'] = array ('table' => 'inbound_email_autorep
 	'relationships' => array (
 	), /* end relationships */
 );
-
-?>

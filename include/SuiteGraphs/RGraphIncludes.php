@@ -31,50 +31,38 @@ $chart = <<<EOD
                     if(dataPoints !== undefined && dataPoints.length > 0)
                         largest = Math.max.apply(Math,dataPoints);//http://stackoverflow.com/a/14693622/3894683
 
-                    if(largest === null || largest < maxYForSmallNumbers)
-                        largest = maxYForSmallNumbers;
-                    return(largest);
+                    if (largest === null || largest < maxYForSmallNumbers) {
+                      return maxYForSmallNumbers;
+                    }
+                    return(null);
                 }
 
             function resizeGraph(graph)
             {
-                var maxWidth = 900;
-                var maxHeight = 500;
-                var maxTextSize = 10;
-
-                if($(window).width() * 0.8 > maxWidth)
-                    graph.width  = maxWidth;
-                else
-                    graph.width = $(window).width() * 0.8;
-                if($(window).width() * 0.5 > maxHeight)
-                    graph.height = maxHeight;
-                else
-                    graph.height = $(window).width() * 0.5;
-
-
-
-                var text_size = Math.min(12, ($(window).width() / 1000) * 10 );
-                if(text_size > maxTextSize) text_size = maxTextSize;
-                graph.__object__["properties"]["chart.text.size"] = text_size;
-                graph.__object__["properties"]["chart.key.text.size"] = text_size;
-
-                RGraph.redrawCanvas(graph);
+              var maxHeight = 500;
+              var maxTextSize = 10;
+    
+              graph.width = $(graph).parent().width();
+              graph.height = ($(graph).parent().height() < maxHeight ? $(graph).parent().height() : maxHeight);
+    
+              var text_size = Math.min(maxTextSize, (graph.width / 700) * 10 );
+              graph.__object__["properties"]["chart.text.size"] = text_size;
+              graph.__object__["properties"]["chart.key.text.size"] = text_size;
+                
+              RGraph.redrawCanvas(graph);
             }
 
             function resizeGraphs()
             {
-
-
-             var graphs = $(".resizableCanvas");
-             $.each(graphs,function(i,v){
+              var graphs = $(".resizableCanvas");
+              $.each(graphs,function(i,v){
                 resizeGraph(v);
-
-             });
+              });
             }
 
             $(window).resize(function ()
             {
-                resizeGraphs();
+              resizeGraphs();
             });
 
 
@@ -87,7 +75,6 @@ $chart = <<<EOD
                 &&  bar['object']['properties']['chart.tooltips']!== undefined
                 &&  bar['object']['properties']['chart.tooltips'][bar[5]] !== undefined)
                 {
-                    var stage = encodeURI(bar['object']['properties']['chart.labels'][bar[5]]);
                     var graphId = bar[0]['id'];
                     var divHolder = $("#"+graphId).parent();
                     var module = $(divHolder).find(".module").val();
@@ -97,6 +84,10 @@ $chart = <<<EOD
                     var userId = $(divHolder).find(".userId").val();
                     var startDate = encodeURI($(divHolder).find(".startDate").val());
                     var endDate = encodeURI($(divHolder).find(".endDate").val());
+                    
+                    var keys = window["chartHBarKeys"+graphId];
+                    var stage = encodeURI(keys[bar[5]]);
+                    
                     window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&assigned_user_id[]='+userId+'&date_closed_advanced_range_choice=between&start_range_date_closed_advanced='+startDate+'&end_range_date_closed_advanced='+endDate+'&sales_stage_advanced[]='+stage,'_self');
                 }
             }
@@ -152,7 +143,9 @@ $chart = <<<EOD
                 var searchFormTab = $(divHolder).find(".searchFormTab").val();
 
                 var labels = bar["object"]["properties"]["chart.labels"];
-                var clicked = encodeURI(labels[bar[5]]);
+
+                var keys = window["chartHBarKeys"+graphId];
+                var clicked = encodeURI(keys[bar[5]]);
 
                 window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&lead_source='+clicked,'_self');
             }

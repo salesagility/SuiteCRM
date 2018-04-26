@@ -332,4 +332,4 @@ else {
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
 echo"<script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script>";
 echo"<script> $( '#pageNum_'+ 0).addClass( 'active' );</script>";
-?>
+

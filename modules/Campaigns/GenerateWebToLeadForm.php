@@ -158,12 +158,10 @@ $xtpl->out("main");
 function ifRadioButton($customFieldName){
     $custRow = null;
     $query="select id,type from fields_meta_data where deleted = 0 and name = '$customFieldName'";
-    $result=$GLOBALS['db']->query($query);
-    $row = $GLOBALS['db']->fetchByAssoc($result);
+    $result=DBManagerFactory::getInstance()->query($query);
+    $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
     if($row != null && $row['type'] == 'radioenum'){
         return $custRow = $row;
     }
     return $custRow;
 }
-
-?>

@@ -1,10 +1,11 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2015 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $id = '', $alt_type = '', $currency_id = '')
 {
@@ -305,6 +310,13 @@ function saveField($field, $id, $module, $value)
 {
 
     global $current_user;
+
+    if ($module == 'Users' && $field == 'is_admin' && !$current_user->is_admin) {
+        $err = 'SECURITY: Only admin user can change user type';
+        $GLOBALS['log']->fatal($err);
+        throw new RuntimeException($err);
+    }
+
     $bean = BeanFactory::getBean($module, $id);
 
     if (is_object($bean) && $bean->id != "") {
@@ -340,7 +352,14 @@ function saveField($field, $id, $module, $value)
             }
         }
 
-        if($bean->ACLAccess("edit") || is_admin($current_user)) {
+        $adminOnlyModules = array('Users', 'Employees');
+
+        $enabled = true;
+        if(in_array($module, $adminOnlyModules) && !is_admin($current_user)) {
+            $enabled = false;
+        }
+
+        if(($bean->ACLAccess("edit") || is_admin($current_user)) && $enabled) {
             if(!$bean->save($check_notify)) {
                 $GLOBALS['log']->fatal("Saving probably failed or bean->save() method did not return with a positive result.");
             }
@@ -500,10 +519,11 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value .= "</a>";
         }
     }
-	if($vardef['type'] == "url")
-	{
-		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
-	}
+    if ($vardef['type'] == "url") {
+        $link = (substr($value, 0, 7) == 'http://' || substr($value, 0, 8) == 'https://' ?
+            $value : 'http://' . $value);
+        $value = '<a href=' . $link . ' target="_blank">' . $value . '</a>';
+    }
 	
 	if($vardef['type'] == "currency"){
 		if($_REQUEST['view'] != "DetailView"){			

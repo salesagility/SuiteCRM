@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -154,9 +154,19 @@ HTML;
 					EmailMan.testOutboundDialog.render();
 					EmailMan.testOutboundDialog.show();
 				}
+                
+                                function showFullSmtpLogDialog(headerText, bodyHtml, dialogType) {
+
+                                     var config = { };
+                                     config.type = dialogType;
+                                     config.title = headerText;
+                                     config.msg = bodyHtml;
+                                     config.modal = false;
+                                     config.width = 600;
+                                     YAHOO.SUGAR.MessageBox.show(config);
+                                }
 				
-				function sendTestEmail()
-				{
+				function sendTestEmail() {
 					var toAddress = document.getElementById("outboundtest_to_address").value;
 					
 					if (trim(toAddress) == "") 
@@ -172,15 +182,31 @@ HTML;
 					//Hide the email address window and show a message notifying the user that the test email is being sent.
 					EmailMan.testOutboundDialog.hide();
 					overlay("{$APP['LBL_EMAIL_PERFORMING_TASK']}", "{$APP['LBL_EMAIL_ONE_MOMENT']}", 'alert');
-
+                    
 					var callbackOutboundTest = {
 						success	: function(o) {
 							hideOverlay();
 							var responseObject = YAHOO.lang.JSON.parse(o.responseText);
 							if (responseObject.status)
 								overlay("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}", "{$APP['LBL_EMAIL_TEST_NOTIFICATION_SENT']}", 'alert');
-							else
-								overlay("Send Test Email", responseObject.errorMessage, 'alert');
+       							else {
+                                
+                                                           var dialogBody = 
+                                                            "<div style='padding: 10px'>" +
+                                                               "<div class='well'>" + responseObject.errorMessage + "</div>" +
+                                                               "<div >" +
+                                                                   "<button class='btn btn-primary' type='button' data-toggle='collapse' data-target='#fullSmtpLog' aria-expanded='false' aria-controls='fullSmtpLog'>" + 
+                                                                       "{$APP['LBL_EMAIL_TEST_SEE_FULL_SMTP_LOG']}" +
+                                                                  "</button>" +
+                                                                   "<div class='collapse' id='fullSmtpLog'>" +
+                                                                       "<pre style='height: 300px; overflow: scroll;'>" +
+                                                                           responseObject.fullSmtpLog + 
+                                                                       "</pre>" +
+                                                                   "</div>" +
+                                                               "</div>" +
+                                                           "</div>";
+                                                           showFullSmtpLogDialog("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}", dialogBody, 'alert');
+                                                        }
 						}
 					};
 
@@ -189,6 +215,8 @@ HTML;
 					var smtpssl  = document.getElementById('mail_smtpssl').value;
 					var mailsmtpauthreq = document.getElementById('mail_smtpauth_req');
 					var mail_sendtype = 'SMTP'; 
+                                                                var adminNotifyFromAddress = document.getElementById('smtp_from_addr').value ? document.getElementById('smtp_from_addr').value :'$adminNotifyFromName';
+                                                                var adminNotifyFromName = document.getElementById('smtp_from_name').value ? document.getElementById('smtp_from_name').value : '$adminNotifyFromAddress';
 					var postDataString =
 						'mail_type=system&' +
 						'mail_sendtype=' + mail_sendtype + '&' +
@@ -198,8 +226,8 @@ HTML;
 						"mail_smtpuser=" + trim(document.getElementById('mail_smtpuser').value) + "&" +
 						"mail_smtppass=" + trim(document.getElementById('mail_smtppass').value) + "&" +
 						"outboundtest_to_address=" + toAddress + '&' +
-						'outboundtest_from_address=' + '$adminNotifyFromAddress' + '&' +
-						'mail_from_name=' + '$adminNotifyFromName';
+						'outboundtest_from_address=' + adminNotifyFromAddress + '&' +
+						'mail_from_name=' + adminNotifyFromName;
 					//YAHOO.util.Connect.asyncRequest("POST", "index.php?action=EmailUIAjax&module=Emails&emailUIAction=testOutbound&to_pdf=true&sugar_body_only=true", callbackOutboundTest, postDataString);
 					YAHOO.util.Connect.asyncRequest("POST", "index.php?action=testOutboundEmail&module=EmailMan&to_pdf=true&sugar_body_only=true", callbackOutboundTest, postDataString);
 				}
@@ -235,4 +263,3 @@ HTML;
 	}
 	
 }
-?>

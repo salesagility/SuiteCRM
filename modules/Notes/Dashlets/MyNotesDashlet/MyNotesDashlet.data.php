@@ -126,4 +126,3 @@ $dashletData['MyNotesDashlet']['columns'] = array (
 											    'default' => false,
 											  ),
 											);
-											?>

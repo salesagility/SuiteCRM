@@ -54,8 +54,8 @@ function retrieveErrorReportAttachment($email)
 {
     $contents = "";
     $query = "SELECT description FROM notes WHERE file_mime_type = 'messsage/rfc822' AND parent_type='Emails' AND parent_id = '".$email->id."' AND deleted=0";
-    $rs = $GLOBALS['db']->query($query);
-    while ($row = $GLOBALS['db']->fetchByAssoc($rs)) 
+    $rs = DBManagerFactory::getInstance()->query($query);
+    while ($row = DBManagerFactory::getInstance()->fetchByAssoc($rs)) 
 		$contents .= $row['description'];
 
     return $contents;
@@ -238,4 +238,3 @@ function campaign_process_bounced_emails(&$email, &$email_header)
 	return FALSE;
   }
 }
-?>

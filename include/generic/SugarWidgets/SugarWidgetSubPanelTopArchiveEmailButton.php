@@ -82,4 +82,3 @@ class SugarWidgetSubPanelTopArchiveEmailButton extends SugarWidgetSubPanelTopBut
 		return $button;
 	}
 }
-?>

@@ -49,7 +49,7 @@ class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubP
         return parent::getWidgetId() . '_select_button';
     }
 
-    function display($widget_data)
+    function display($widget_data, $additionalFormFields = null, $nonbutton = false)
     {
         global $app_strings;
         global $mod_strings;

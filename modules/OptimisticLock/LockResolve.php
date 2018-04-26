@@ -83,5 +83,3 @@ if(isset($_SESSION['o_lock_object'])){
 }}else{
 	echo $mod_strings['LBL_NO_LOCKED_OBJECTS'];
 }
-
-?>

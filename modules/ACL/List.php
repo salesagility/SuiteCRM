@@ -45,5 +45,3 @@ if($_REQUEST['submodule'] == 'Roles'){
 if($_REQUEST['submodule'] == 'Users'){
 	require_once('modules/ACL/Roles/ListUsers.php');
 }
-
-?>

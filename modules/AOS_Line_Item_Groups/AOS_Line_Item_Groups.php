@@ -71,7 +71,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
         $j = 0;
         for ($i = 0; $i < $group_count; ++$i) {
 
-            if ($post_data[$key . 'deleted'][$i] == 1) {
+            if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
                 $product_quote_group = new AOS_Line_Item_Groups();
@@ -83,7 +83,10 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
                 }
                 $product_quote_group->number = ++$j;
                 $product_quote_group->assigned_user_id = $parent->assigned_user_id;
-                $product_quote_group->currency_id = $parent->currency_id;
+                if (!isset($parent->currency_id)) {
+                    LoggerManager::getLogger()->warn('AOS Line Item Group saving error: undefined Curency ID');
+                }
+                $product_quote_group->currency_id = isset($parent->currency_id) ? $parent->currency_id : null;
                 $product_quote_group->parent_id = $parent->id;
                 $product_quote_group->parent_type = $parent->object_name;
                 $product_quote_group->save();

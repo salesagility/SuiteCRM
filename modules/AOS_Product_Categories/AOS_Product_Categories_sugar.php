@@ -96,4 +96,3 @@ class AOS_Product_Categories_sugar extends Basic {
 }
 
 }
-?>

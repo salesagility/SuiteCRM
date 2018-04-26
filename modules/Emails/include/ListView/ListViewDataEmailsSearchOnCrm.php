@@ -76,7 +76,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
         if(!empty($where)) {
             $where .= ' AND ';
         }
-        $crmWhere = $where . 'mailbox_id LIKE ' .'"' . $inboundEmail->id . '"';
+        $crmWhere = $where . "mailbox_id LIKE " ."'" . $inboundEmail->id . "'";
 
 
         // Populates CRM fields

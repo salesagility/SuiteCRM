@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry)
 
 require_once ('modules/DynamicFields/DynamicField.php');
 require_once ('modules/DynamicFields/FieldCases.php');
-global $db;
+$db = DBManagerFactory::getInstance();
 
 if (!isset ($db)) {
 	$db = DBManagerFactory:: getInstance();
@@ -131,4 +131,3 @@ echo '<br>Done<br>';
 if ($simulate) {
 	echo '<a href="index.php?module=Administration&action=UpgradeFields&run=true">Execute non-simulation mode</a>';
 }
-?>

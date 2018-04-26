@@ -66,7 +66,3 @@ header("Content-Disposition: attachment; filename=$guid.zip");
 header("Content-Transfer-Encoding: binary");
 header("Content-Length: $filesize");
 readfile($path);
-
-
-
-?>

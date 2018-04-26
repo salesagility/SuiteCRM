@@ -220,4 +220,3 @@ function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.E
     ),
   ),
 );
-?>

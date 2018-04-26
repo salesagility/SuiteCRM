@@ -69,4 +69,3 @@ if(isset($_REQUEST['inpopupwindow']) and $_REQUEST['inpopupwindow'] == true) {
 } else {
 	$form->handleSave('',true, false, true, 'download');
 }
-?>

@@ -51,5 +51,4 @@ $dictionary['users_feeds'] = array ( 'table' => 'users_feeds'
   
        array('name' =>'idx_ud_user_id', 'type' =>'index', 'fields'=>array('user_id', 'feed_id'))                                  
                                                       )
-                                  )
-?>
+                                  );

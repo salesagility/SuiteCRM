@@ -52,4 +52,3 @@ $module_name = 'AOD_IndexEvent';
  	'popupdefs'	      =>    'modules/' . $module_name . '/metadata/popupdefs.php',
  	'searchfields'	  =>    'modules/' . $module_name . '/metadata/SearchFields.php',
  );
-?>

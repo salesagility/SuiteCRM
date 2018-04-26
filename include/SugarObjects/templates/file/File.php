@@ -143,7 +143,10 @@ class File extends Basic
     {
         $ret_val = parent::retrieve($id, $encode, $deleted);
 
-        $this->name = $this->document_name;
+        //If statement added to prevent the 'name' from being overwritten with a null value
+        if ($this->document_name !== null) {
+            $this->name = $this->document_name;
+        }
 
         return $ret_val;
     }
