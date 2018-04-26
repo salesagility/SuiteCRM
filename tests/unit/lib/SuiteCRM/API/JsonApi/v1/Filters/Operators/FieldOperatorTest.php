@@ -1,7 +1,7 @@
 <?php
 
 
-class FieldOperatorTest extends \Codeception\Test\Unit
+class FieldOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -13,17 +13,16 @@ class FieldOperatorTest extends \Codeception\Test\Unit
      */
     private static $fieldOperator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         if(self::$fieldOperator === null) {
             self::$fieldOperator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator($containers);
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testToFilterOperator()
     {

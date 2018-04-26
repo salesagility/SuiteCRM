@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\EmptyBodyException;
 
-class EmptyBodyExceptionTest extends \Codeception\Test\Unit
+class EmptyBodyExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -23,16 +23,15 @@ class EmptyBodyExceptionTest extends \Codeception\Test\Unit
         $this->assertEquals('[SuiteCRM] [API] [EmptyBody] ', self::$exception->getMessage());
     }
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$exception === null) {
             self::$exception = new EmptyBodyException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetSetDetail()
     {

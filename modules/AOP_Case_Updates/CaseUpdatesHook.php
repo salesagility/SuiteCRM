@@ -602,7 +602,7 @@ class CaseUpdatesHook
     {
         global $current_user, $sugar_config;
         $email_template = new EmailTemplate();
-        if ($_REQUEST['module'] === 'Import') {
+        if (isset($_REQUEST['module']) && ($_REQUEST['module'] === 'Import')) {
             //Don't send email on import
             return;
         }

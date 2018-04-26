@@ -43,14 +43,14 @@ require_once('include/generic/SugarWidgets/SugarWidgetField.php');
 
 class SugarWidgetSubPanelEditSecurityGroupUserButton extends SugarWidgetField
 {
-	function displayHeaderCell(&$layout_def)
+	function displayHeaderCell($layout_def)
 	{
 		return '&nbsp;';
 	}
 
-	function displayDetail($layout_def) {
+	function & displayDetail($layout_def) {
 
-		return displayList($layout_def);
+		return $this->displayList($layout_def);
 	}
 
 	function displayList(&$layout_def)
