@@ -90,25 +90,6 @@ $viewdefs[$module_name]['DetailView'] = array(
                 'label' => 'LBL_OTHER_PHONE',
             ),
         ),
-        'lbl_consent' => array(
-            array(
-                array(
-                    'name' => 'lawful_basis',
-                    'label' => 'LBL_LAWFUL_BASIS',
-                ),
-                array(
-                    'name' => 'lawful_basis_source',
-                    'label' => 'LBL_LAWFUL_BASIS_SOURCE',
-                ),
-            ),
-            array(
-                array(
-                    'name' => 'date_reviewed',
-                    'label' => 'LBL_DATE_REVIEWED',
-                ),
-                null,
-            ),
-        ),
         array(
             array(
                 'name' => 'date_entered',
@@ -131,6 +112,26 @@ $viewdefs[$module_name]['DetailView'] = array(
         ),
         array('assigned_user_name', ''),
 
+
+        'lbl_consent' => array(
+            array(
+                array(
+                    'name' => 'lawful_basis',
+                    'label' => 'LBL_LAWFUL_BASIS',
+                ),
+                array(
+                    'name' => 'lawful_basis_source',
+                    'label' => 'LBL_LAWFUL_BASIS_SOURCE',
+                ),
+            ),
+            array(
+                array(
+                    'name' => 'date_reviewed',
+                    'label' => 'LBL_DATE_REVIEWED',
+                ),
+                null,
+            ),
+        ),
         array(
             'email1'
         ),

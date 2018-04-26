@@ -90,7 +90,11 @@ $viewdefs[$module_name]['EditView'] = array(
             ),
 
         ),
-        'lbl_consent' => array(
+
+        'lbl_email_addresses' => array(
+            array(
+                'email1'
+            ),
             array(
                 array(
                     'name'=>'lawful_basis',
@@ -108,9 +112,6 @@ $viewdefs[$module_name]['EditView'] = array(
                 ),
                 null,
             ),
-        ),
-        'lbl_email_addresses' => array(
-            array('email1')
         ),
         'lbl_address_information' => array(
             array(
@@ -135,6 +136,5 @@ $viewdefs[$module_name]['EditView'] = array(
                 ),
             ),
         ),
-
     )
 );
