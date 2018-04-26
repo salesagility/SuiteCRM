@@ -923,6 +923,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'invalid_email' => '0',
                 'opt_out' => '0',
                 'email_address_id' => null,
+                'confirm_opt_in_flag' => '0',
             ),
         ), $this->ea->addresses);
 
@@ -931,13 +932,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db->query($q);
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
         self::assertSame(array(
-            2 => array(
+            0 => array(
                 'email_address' => 'test@email.com',
                 'primary_address' => '0',
                 'reply_to_address' => '0',
                 'invalid_email' => '0',
-                'opt_out' => '1',
+                'opt_out' => '0',
                 'email_address_id' => null,
+                'confirm_opt_in_flag' => '0',
             ),
         ), $this->ea->addresses);
 
