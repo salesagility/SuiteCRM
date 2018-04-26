@@ -203,7 +203,7 @@ class EntryPointConfirmOptInHandler
             $bean = BeanFactory::getBean($module, $person);
             if($bean) {
                 if(!$bean->setLawfulBasis('consent', 'email')){
-                    LoggerManager::getLogger()->warn('Oops, Lawful basis saving failed for record ' . $bean->name);
+                    LoggerManager::getLogger()->warn('Lawful basis saving failed for record ' . $bean->name);
                 }
             }
         }
