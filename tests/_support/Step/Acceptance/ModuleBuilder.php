@@ -68,7 +68,7 @@ class ModuleBuilder extends Administration
             }
 
             $I->wait(1);
-            $I->click(['name' => 'savebtn']);
+            $I->click('Save'); // Will this be an issue with languages?
 
             // Close popup
             $I->closePopupSuccess();
