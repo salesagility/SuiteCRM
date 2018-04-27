@@ -128,6 +128,7 @@ class SaleModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
+        $editView->waitForEditViewVisible();
         $editView->fillField('#name', implode(' ', $this->fakeData->words()));
         $this->fakeData->seed($this->fakeDataSeed);
         $editView->selectOption(strtolower('#test_'.\Page\SaleModule::$NAME.'_type'), 'New Business');

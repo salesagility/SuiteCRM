@@ -20,20 +20,21 @@ before_script:
   - mysql -e "CREATE DATABASE automated_tests;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
-  - sudo apt-get update
-  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  # Install apache - images with PHP 7 or above
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipped"; else sudo apt-get update; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo apt-get install apache2 libapache2-mod-fastcgi; fi
   # Enable php-fpm  - images with PHP 7 or above
-  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
-  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf
-  - sudo a2enmod rewrite actions fastcgi alias
-  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
-  - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
-  - sudo chown -R travis:travis /var/lib/apache2/fastcgi
-  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo a2enmod rewrite actions fastcgi alias; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo chown -R travis:travis /var/lib/apache2/fastcgi; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm; fi
   # Configure apache virtual hosts - images with PHP 7 or above
-  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
-  - sudo service apache2 restart
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo service apache2 restart; fi
   # Optimise build by removing x-debug
   - phpenv config-rm xdebug.ini
   # Install composer
@@ -41,8 +42,10 @@ before_script:
   - ./vendor/bin/codecept build
 
 script:
-  - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
-  - php tests/testinstall.php
+  # Run the silent installer or the wizard installer ?
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then mv -f tests/travis_config_si.php config_si.php; else echo "using install wizard"; fi
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then php tests/testinstall.php; else ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv --debug; fi
+  # Run the unit tests
   - ./vendor/bin/codecept run unit --steps
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
@@ -51,7 +54,9 @@ script:
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # Run API functional tests
-  - ./vendor/bin/codecept run api --steps -vvv
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run api --steps; fi
+  # RUN Basic Acceptance test
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run tests/acceptance/Core/BasicModuleCest.php --env travis-ci-hub -f -vvv --debug; fi
 
 after_script:
   - cat suitecrm.log
