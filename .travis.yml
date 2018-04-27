@@ -71,6 +71,7 @@ script:
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run tests/acceptance/Core/BasicModuleCest.php --env travis-ci-hub -f -vvv --debug; fi
 
 after_script:
+  - ./build/push_output.sh
   - cat suitecrm.log
 
 branches:
