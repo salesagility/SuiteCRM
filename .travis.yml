@@ -20,7 +20,7 @@ env:
 before_install:
   - whereis google-chrome-stable
   - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip
+  - unzip -o chromedriver_linux64.zip
   - ./chromedriver --url-base=/wd/hub &
 
 install:
