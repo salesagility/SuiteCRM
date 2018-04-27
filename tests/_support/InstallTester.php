@@ -129,7 +129,8 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $I->comment('wait for installer progress to finish');
-        $I->waitForElement('[type=submit]',60);
+        $I->waitForElement('[type=submit]',120);
+        $I->seeElement('#loginform',120);
     }
 
     /**
@@ -142,6 +143,11 @@ class InstallTester extends \Codeception\Actor
     }
 
     protected function isOldPhpVersionDetected()
+    {
+        return $this->executeJS('return document.getElementsByName(\'setup_old_php\').length > 0;');
+    }
+
+    protected function didInstallationContainerPhpErrors()
     {
         return $this->executeJS('return document.getElementsByName(\'setup_old_php\').length > 0;');
     }
