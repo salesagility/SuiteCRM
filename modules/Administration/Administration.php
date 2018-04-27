@@ -89,17 +89,21 @@ class Administration extends SugarBean
         $smtp_error = false;
         $this->retrieveSettings();
 
+
         //If sendmail has been configured by setting the config variable ignore this warning
         $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
 
-        if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
-            if (isset($this->settings['notify_on']) && $this->settings['notify_on']) {
-                $smtp_error = true;
+        // remove php notice from installer
+        if (!array_key_exists('mail_smtpserver', $this->settings)) {
+            if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
+                if (isset($this->settings['notify_on']) && $this->settings['notify_on']) {
+                    $smtp_error = true;
+                }
             }
-        }
 
-        if ($displayWarning && $smtp_error) {
-            displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
+            if ($displayWarning && $smtp_error) {
+                displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
+            }
         }
 
         return $smtp_error;
