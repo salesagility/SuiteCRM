@@ -55,7 +55,7 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         try {
             $SugarController->execute();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->assertTrue(true);
@@ -69,7 +69,7 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         try {
             $SugarController->process();
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->assertTrue(true);

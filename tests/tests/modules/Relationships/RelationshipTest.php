@@ -87,7 +87,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             Relationship::delete('test_test', $db);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -216,7 +216,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $relationship->build_relationship_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -240,7 +240,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             Relationship::delete_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 

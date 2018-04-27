@@ -41,7 +41,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $vcal->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -56,7 +56,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $vcal->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -71,7 +71,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $vcal->get_list_view_data();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -130,7 +130,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $vcal->cache_sugar_vcal($user_focus);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -144,7 +144,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $vcal->cache_sugar_vcal_freebusy($user_focus);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 

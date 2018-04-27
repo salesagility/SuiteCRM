@@ -35,7 +35,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->create_export_query('', '');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -49,7 +49,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -63,7 +63,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -77,7 +77,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -91,7 +91,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->get_list_view_data();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');
@@ -105,7 +105,7 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->get_audit_link();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
 
         $this->markTestIncomplete('method has no implementation');

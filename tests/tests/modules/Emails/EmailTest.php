@@ -908,7 +908,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $email->fillPrimaryParentFields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -924,7 +924,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $email->cid2Link('1', 'image/png');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -940,7 +940,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $email->cids2Links();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -953,7 +953,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $email->setFieldNullable('description');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -966,7 +966,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $email->revertFieldNullable('description');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 }
