@@ -29,9 +29,9 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $scenario = $I->getScenario();
-        $version = version_compare(SUITECRM_PHP_REC_VERSION, phpversion());
+        $version = version_compare(phpversion(), SUITECRM_PHP_REC_VERSION);
 
-        if($version < 0) {
+        if(($version >= 0) === false) {
             $scenario->comment('PHP Version '. PHP_VERSION .' does not meet the recommended requirements.');
             $I->see('Old PHP Version Detected');
             $I->dontSeeMissingLabels();
