@@ -55,7 +55,7 @@ before_script:
 
 script:
   # Configure SuiteCRM to show the stack trace in suitecrm.log
-  - echo "\$sugar_config['show_log_trace'] = true;" >> config_override.php
+  - echo "<?php \$sugar_config['show_log_trace'] = true;" >> config_override.php
   # Run the silent installer or the wizard installer ?
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then mv -f tests/travis_config_si.php config_si.php; else echo "using install wizard"; fi
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then php tests/testinstall.php; else ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; fi
