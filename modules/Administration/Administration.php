@@ -164,6 +164,11 @@ class Administration extends SugarBean
             $oe->getSystemMailerSettings();
 
             foreach ($oe->field_defs as $def) {
+                // fixes installer php notice
+                if (!array_key_exists($def, $this->settings)) {
+                    continue;
+                }
+
                 if (strpos($def, "mail_") !== false) {
                     $this->settings[$def] = $oe->$def;
                 }
