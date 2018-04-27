@@ -42,7 +42,6 @@ class UserWizardCest
     {
         $I->wantTo('check the php version meets the recommended requirements.');
         $I->amOnUrl($webDriverHelper->getInstanceURL());
-        $I->waitForText('Setup');
         $I->maySeeOldVersionDetected();
         $I->acceptLicense();
         $I->seeValidSystemEnvironment();

@@ -29,16 +29,17 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $scenario = $I->getScenario();
+        $version = version_compare(phpversion(), SUITECRM_PHP_REC_VERSION, '>=');
 
-        if(version_compare(phpversion(), SUITECRM_PHP_REC_VERSION, '>=')) {
-            $scenario->comment('PHP Version '. PHP_VERSION .' meets the recommended requirements.');
-        } else {
+        if($version == 1) {
             $scenario->comment('PHP Version '. PHP_VERSION .' does not meet the recommended requirements.');
             $I->see('Old PHP Version Detected');
             $I->dontSeeMissingLabels();
             $I->checkOption('setup_old_php');
             $I->click('Next');
             $I->waitForText('GNU AFFERO GENERAL PUBLIC LICENSE');
+        } else {
+            $scenario->comment('PHP Version '. PHP_VERSION .' meets the recommended requirements.');
         }
     }
 

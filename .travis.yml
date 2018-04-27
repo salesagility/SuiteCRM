@@ -57,6 +57,7 @@ script:
   # Run the silent installer or the wizard installer ?
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then mv -f tests/travis_config_si.php config_si.php; else echo "using install wizard"; fi
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then php tests/testinstall.php; else ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv --debug; fi
+  - ./build/push_output.sh
   # Run the unit tests
   - ./vendor/bin/codecept run unit --steps
   # Install OAuth2 demo data
@@ -71,6 +72,7 @@ script:
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run tests/acceptance/Core/BasicModuleCest.php --env travis-ci-hub -f -vvv --debug; fi
 
 after_script:
+  - ./build/push_output.sh
   - cat suitecrm.log
 
 branches:
