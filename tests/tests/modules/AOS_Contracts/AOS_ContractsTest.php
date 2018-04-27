@@ -1,6 +1,6 @@
 <?php
 
-class AOS_ContractsTest extends PHPUnit_Framework_TestCase
+class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOS_Contracts()
     {

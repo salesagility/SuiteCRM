@@ -1,6 +1,6 @@
 <?php
 
-class MeetingTest extends PHPUnit_Framework_TestCase
+class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testMeeting()
     {

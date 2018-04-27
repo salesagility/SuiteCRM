@@ -1,7 +1,7 @@
 <?php
 
 
-class AOR_ReportTest extends PHPUnit_Framework_TestCase
+class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOR_Report()
     {

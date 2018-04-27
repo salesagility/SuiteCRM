@@ -1,7 +1,7 @@
 <?php
 
 require_once 'modules/Audit/Audit.php';
-class AuditTest extends PHPUnit_Framework_TestCase
+class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAudit()
     {

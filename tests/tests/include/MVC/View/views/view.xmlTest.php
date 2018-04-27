@@ -1,7 +1,7 @@
 <?php
 
 
-class ViewXMLTest extends PHPUnit_Framework_TestCase
+class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewXML()
     {

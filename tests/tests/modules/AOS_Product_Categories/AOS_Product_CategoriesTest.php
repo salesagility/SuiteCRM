@@ -1,6 +1,6 @@
 <?PHP
 
-class AOS_Product_CategoriesTest extends PHPUnit_Framework_TestCase
+class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOS_Product_Categories()
     {

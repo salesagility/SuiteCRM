@@ -1,7 +1,7 @@
 <?php
 
 
-class AdministrationTest extends PHPUnit_Framework_TestCase
+class AdministrationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAdministration()
     {

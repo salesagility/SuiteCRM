@@ -2,7 +2,7 @@
 
 require_once 'include/phpmailer/class.smtp.php';
 
-class EmailTest extends PHPUnit_Framework_TestCase
+class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEmail()
     {

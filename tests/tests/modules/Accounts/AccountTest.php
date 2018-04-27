@@ -1,7 +1,7 @@
 <?php
 
 
-class AccountTest extends PHPUnit_Framework_TestCase
+class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAccount()
     {

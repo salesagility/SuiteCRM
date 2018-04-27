@@ -1,6 +1,6 @@
 <?PHP
 
-class AOD_IndexTest extends PHPUnit_Framework_TestCase
+class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOD_Index()
     {

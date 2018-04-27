@@ -1,7 +1,7 @@
 <?php
 
 
-class ACLActionTest extends PHPUnit_Framework_TestCase
+class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testACLAction()
     {

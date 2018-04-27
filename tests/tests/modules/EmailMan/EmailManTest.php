@@ -1,7 +1,7 @@
 <?php
 
 
-class EmailManTest extends PHPUnit_Framework_TestCase
+class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testtoString()
     {

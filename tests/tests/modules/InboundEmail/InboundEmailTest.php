@@ -1,7 +1,7 @@
 <?php
 
 
-class InboundEmailTest extends PHPUnit_Framework_TestCase
+class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testthis_callback()
     {

@@ -1,6 +1,6 @@
 <?php
 
-class ViewDetailTest extends PHPUnit_Framework_TestCase
+class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewDetail()
     {

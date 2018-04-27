@@ -1,6 +1,6 @@
 <?php
 
-class CurrencyTest extends PHPUnit_Framework_TestCase
+class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testCurrency()
     {
@@ -116,8 +116,8 @@ class CurrencyTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('', $currency->getPdfCurrencySymbol());
 
         //test with required attributes set
-        $currency->symbol = '€';
-        $this->assertEquals('€', $currency->getPdfCurrencySymbol());
+        $currency->symbol = 'ï¿½';
+        $this->assertEquals('ï¿½', $currency->getPdfCurrencySymbol());
     }
 
     public function testget_list_view_data()

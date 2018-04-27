@@ -1,6 +1,6 @@
 <?php
 
-class aCaseTest extends PHPUnit_Framework_TestCase
+class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testaCase()
     {

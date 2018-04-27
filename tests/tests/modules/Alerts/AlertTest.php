@@ -1,7 +1,7 @@
 <?php
 
 
-class AlertTest extends PHPUnit_Framework_TestCase
+class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAlert()
     {

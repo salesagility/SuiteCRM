@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/mvc_utils.php';
-class mvc_utilsTest extends PHPUnit_Framework_TestCase
+class mvc_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testloadParentView()
     {

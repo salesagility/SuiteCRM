@@ -1,6 +1,6 @@
 <?php
 
-class OAuthTokenTest extends PHPUnit_Framework_TestCase
+class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function test__construct()
     {

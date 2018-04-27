@@ -1,7 +1,7 @@
 <?php
 
 
-class BugTest extends PHPUnit_Framework_TestCase
+class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testBug()
     {

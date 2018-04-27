@@ -1,6 +1,6 @@
 <?php
 
-class UserPreferenceTest extends PHPUnit_Framework_TestCase
+class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function test__construct()
     {

@@ -1,6 +1,6 @@
 <?php
 
-class TaskTest extends PHPUnit_Framework_TestCase
+class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testTask()
     {

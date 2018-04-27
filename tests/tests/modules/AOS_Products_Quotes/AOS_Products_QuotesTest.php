@@ -1,6 +1,6 @@
 <?php
 
-class AOS_Products_QuotesTest extends PHPUnit_Framework_TestCase
+class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOS_Products_Quotes()
     {

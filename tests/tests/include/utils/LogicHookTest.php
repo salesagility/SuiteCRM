@@ -1,7 +1,7 @@
 <?php
 
 
-class LogicHookTest extends PHPUnit_Framework_TestCase {
+class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testinitialize()
     {

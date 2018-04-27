@@ -1,6 +1,6 @@
 <?php
 
- class ViewEditTest extends PHPUnit_Framework_TestCase
+ class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
  {
      public function testViewEdit()
      {

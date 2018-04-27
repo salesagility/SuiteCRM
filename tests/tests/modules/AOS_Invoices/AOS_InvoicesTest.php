@@ -1,6 +1,6 @@
 <?php
 
-class AOS_InvoicesTest extends PHPUnit_Framework_TestCase
+class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOS_Invoices()
     {

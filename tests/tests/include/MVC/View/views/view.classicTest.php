@@ -1,6 +1,6 @@
 <?php
 
-class ViewClassicTest extends PHPUnit_Framework_TestCase
+class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function test__construct()
     {

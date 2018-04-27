@@ -1,7 +1,7 @@
 <?php
 
 
-class SugarApplicationTest extends PHPUnit_Framework_TestCase
+class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testexecute()
     {

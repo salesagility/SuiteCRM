@@ -1,7 +1,7 @@
 <?php
 
 
-class ViewSugarpdfTest extends PHPUnit_Framework_TestCase
+class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewSugarpdf()
     {

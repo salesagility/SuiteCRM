@@ -1,7 +1,7 @@
 <?php
 
 
-class SecurityGroupTest extends PHPUnit_Framework_TestCase
+class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testSecurityGroup()
     {

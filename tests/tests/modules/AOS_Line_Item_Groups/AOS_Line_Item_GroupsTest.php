@@ -1,6 +1,6 @@
 <?php
 
-class AOS_Line_Item_GroupsTest extends PHPUnit_Framework_TestCase
+class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOS_Line_Item_Groups()
     {

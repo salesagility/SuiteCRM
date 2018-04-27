@@ -1,6 +1,6 @@
 <?php
 
-class ProspectListTest extends PHPUnit_Framework_TestCase {
+class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 
 	public function testProspectList()

@@ -1,6 +1,6 @@
 <?php
 
-class NoteTest extends PHPUnit_Framework_TestCase
+class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testNote()
     {

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/security_utils.php';
-class security_utilsTest extends PHPUnit_Framework_TestCase
+class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testquery_module_access_list()
     {
