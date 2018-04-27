@@ -20,7 +20,6 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetGroupWhere()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $securityGroup = new SecurityGroup();
 
@@ -355,8 +354,6 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $securityGroup->getLinkName('SecurityGroups', 'ACLRoles');
         $this->assertEquals('aclroles', $result);
 
-        error_reporting(E_ALL);
-        //error_reporting(E_ERROR | E_PARSE);
     }
 
     public function testaddGroupToRecord()

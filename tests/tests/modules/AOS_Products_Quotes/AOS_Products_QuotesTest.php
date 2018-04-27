@@ -21,7 +21,6 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
 
     public function testsave_lines()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aosProductsQuotes = new AOS_Products_Quotes();
 

@@ -22,7 +22,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aCase = new aCase();
         $this->assertEquals(null, $aCase->get_summary_text());

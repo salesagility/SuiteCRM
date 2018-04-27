@@ -14,7 +14,6 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetVcalIcal()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $ical = new iCal();
         $user = new User(1);

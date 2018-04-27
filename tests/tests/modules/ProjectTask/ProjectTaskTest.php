@@ -22,7 +22,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testskipParentUpdate()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $projectTask = new ProjectTask();
 

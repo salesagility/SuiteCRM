@@ -19,7 +19,6 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $campaignLog = new CampaignLog();
 

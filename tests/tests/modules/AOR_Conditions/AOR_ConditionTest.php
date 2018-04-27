@@ -22,7 +22,6 @@ class AOR_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aor_Condition = new AOR_Condition();
 

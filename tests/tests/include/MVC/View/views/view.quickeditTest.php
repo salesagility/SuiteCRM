@@ -26,8 +26,6 @@ class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        error_reporting(E_ALL);
-        //error_reporting(E_ERROR | E_PARSE |E_NOTICE);
 
         //execute the method with required child objects and paramerers preset. it will rteturn some html.
         $view = new ViewQuickedit();

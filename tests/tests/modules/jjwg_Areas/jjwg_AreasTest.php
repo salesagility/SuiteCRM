@@ -29,7 +29,6 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconfiguration()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $jjwgAreas = new jjwg_Areas();
         $jjwgAreas->configuration();

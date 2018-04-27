@@ -21,7 +21,6 @@ class BugTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $bug = new Bug();
 

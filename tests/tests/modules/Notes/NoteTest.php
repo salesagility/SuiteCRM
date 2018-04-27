@@ -21,7 +21,6 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsafeAttachmentName()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $note = new Note();
 

@@ -55,7 +55,6 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlogPage()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //test without setting headerDisplayed
         Tracker::logPage();

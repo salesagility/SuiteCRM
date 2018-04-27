@@ -22,7 +22,6 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMark_deleted()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aosQuotes = new AOS_Quotes();
 

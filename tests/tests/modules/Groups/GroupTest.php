@@ -18,7 +18,6 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testmark_deleted()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $group = new Group();
 

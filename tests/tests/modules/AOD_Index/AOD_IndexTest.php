@@ -22,7 +22,6 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testisEnabled()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aod_index = new AOD_Index();
 

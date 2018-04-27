@@ -30,7 +30,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfireQualified()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $scheduler = new Scheduler();
 

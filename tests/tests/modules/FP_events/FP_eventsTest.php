@@ -21,7 +21,6 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testemail_templates()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         global $app_list_strings;
 

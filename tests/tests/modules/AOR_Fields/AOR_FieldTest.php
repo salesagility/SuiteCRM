@@ -23,7 +23,6 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aor_Field = new AOR_Field();
 

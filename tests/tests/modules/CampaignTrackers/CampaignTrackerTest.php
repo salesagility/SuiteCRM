@@ -5,7 +5,6 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testCampaignTracker()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
         $campaignTracker = new CampaignTracker();

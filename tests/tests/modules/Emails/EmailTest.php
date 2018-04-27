@@ -23,7 +23,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testemail2init()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $email = new Email();
         $email->email2init();

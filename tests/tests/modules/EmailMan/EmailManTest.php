@@ -5,7 +5,6 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testtoString()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $emailMan = new EmailMan();
 

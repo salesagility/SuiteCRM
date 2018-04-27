@@ -23,7 +23,6 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aowAction = new AOW_Action();
 
@@ -51,7 +50,6 @@ class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aowAction = new AOW_Action();
         $this->assertEquals(false, $aowAction->bean_implements('')); //test with blank value

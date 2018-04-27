@@ -5,7 +5,6 @@ class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testbuild_related_list_by_user_id()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns true
 

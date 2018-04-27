@@ -365,7 +365,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testsaveAndOthers()
 	{
-		error_reporting(E_ERROR | E_PARSE);
 
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		global $db;
@@ -1092,7 +1091,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testafterImportSave()
     {
-    	error_reporting(E_ALL);
 
     	$user = new User();
 

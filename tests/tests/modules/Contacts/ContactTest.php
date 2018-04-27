@@ -22,7 +22,6 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testadd_list_count_joins()
 	{
-		error_reporting(E_ERROR | E_PARSE);
 
 		$contact = new Contact();
 

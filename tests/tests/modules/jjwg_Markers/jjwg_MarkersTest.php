@@ -24,7 +24,6 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconfiguration()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $jjwgMarkers = new jjwg_Markers();
 

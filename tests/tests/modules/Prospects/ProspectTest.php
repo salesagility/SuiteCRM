@@ -23,7 +23,6 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $prospect = new Prospect();
 

@@ -5,7 +5,6 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
 {
     public function testjjwg_Address_Cache()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
         $jjwgAddressCache = new jjwg_Address_Cache();

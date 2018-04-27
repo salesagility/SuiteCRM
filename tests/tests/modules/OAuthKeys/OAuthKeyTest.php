@@ -22,7 +22,6 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testMain()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $oauthKey = new OAuthKey();
 

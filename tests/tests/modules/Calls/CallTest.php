@@ -25,7 +25,6 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testACLAccess()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $call = new Call();
 

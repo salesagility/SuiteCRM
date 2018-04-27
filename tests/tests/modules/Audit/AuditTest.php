@@ -5,7 +5,6 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAudit()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
         $audit = new Audit();

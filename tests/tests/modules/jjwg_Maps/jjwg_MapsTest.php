@@ -23,7 +23,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconfiguration()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $jjwgMaps = new jjwg_Maps();
 

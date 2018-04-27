@@ -25,7 +25,6 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testget_account()
 	{
-		error_reporting(E_ERROR | E_PARSE);
 
 		$lead = new Lead();
 

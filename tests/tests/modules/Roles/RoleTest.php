@@ -21,7 +21,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $role = new Role();
 

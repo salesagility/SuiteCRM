@@ -44,7 +44,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testmark_relationships_deleted()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aclRole = new ACLRole();
 
@@ -58,7 +57,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUserRoles()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aclRole = new ACLRole();
 

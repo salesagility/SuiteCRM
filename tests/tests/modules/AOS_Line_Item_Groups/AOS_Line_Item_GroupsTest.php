@@ -22,7 +22,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
 
     public function testsave_groups()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aosLineItemGroup = new AOS_Line_Item_Groups();
 

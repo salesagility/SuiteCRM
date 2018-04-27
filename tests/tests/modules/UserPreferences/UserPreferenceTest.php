@@ -22,7 +22,6 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         global $sugar_config;
 
-        error_reporting(E_ERROR | E_PARSE);
 
         $userPreference = new UserPreference();
 

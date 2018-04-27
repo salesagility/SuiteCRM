@@ -21,7 +21,6 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
 
     public function testsave()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aosProductCategories = new AOS_Product_Categories();
         $aosProductCategories->name = 'test';

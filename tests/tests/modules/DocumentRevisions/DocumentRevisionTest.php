@@ -17,7 +17,6 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndRetrieve()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $documentRevision = new DocumentRevision();
 

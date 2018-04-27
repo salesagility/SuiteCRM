@@ -79,7 +79,6 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $view = new ViewMetadata();
 

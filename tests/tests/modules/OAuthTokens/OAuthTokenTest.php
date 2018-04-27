@@ -20,7 +20,6 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetState()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $oauthToken = new OAuthToken();
         $oauthToken->setState($oauthToken->REQUEST);

@@ -21,7 +21,6 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertEquals(false, $aowWorkFlow->bean_implements('')); //test with blank value

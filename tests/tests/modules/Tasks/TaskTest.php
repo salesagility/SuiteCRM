@@ -21,7 +21,6 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $task = new Task();
 

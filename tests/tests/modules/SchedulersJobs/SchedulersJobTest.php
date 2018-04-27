@@ -23,7 +23,6 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheck_date_relationships_load()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $schedulersJob = new SchedulersJob();
         $schedulersJob->execute_time = '2015-01-01 00:00:00';

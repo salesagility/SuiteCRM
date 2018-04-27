@@ -22,7 +22,6 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $alert = new Alert();
 

@@ -21,7 +21,6 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndGet_document_name()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $document = new Document();
 

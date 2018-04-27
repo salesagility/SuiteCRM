@@ -22,7 +22,6 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testfill_in_additional_detail_fields()
 	{
-		error_reporting(E_ERROR | E_PARSE);
 
 		$project = new Project();
 

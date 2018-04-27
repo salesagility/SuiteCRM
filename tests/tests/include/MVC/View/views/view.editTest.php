@@ -18,7 +18,6 @@
 
      public function testpreDisplay()
      {
-         error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with required attributes preset, it will initialize the ev(edit view) attribute.
         $view = new ViewEdit();

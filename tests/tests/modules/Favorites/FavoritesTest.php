@@ -19,7 +19,6 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdeleteFavorite()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $favorites = new Favorites();
 

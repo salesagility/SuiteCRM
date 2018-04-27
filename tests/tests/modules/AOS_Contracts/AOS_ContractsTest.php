@@ -23,7 +23,6 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsaveAndDelete()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';

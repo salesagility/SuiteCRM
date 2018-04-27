@@ -25,7 +25,6 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetForm()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
         $result = $savedSearch->getForm('Leads');

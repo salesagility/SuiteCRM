@@ -22,7 +22,6 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
 	public function testbean_implements(){
 
-		error_reporting(E_ERROR | E_PARSE);
 
 		$aorScheduledReports = new AOR_Scheduled_Reports();
 		$this->assertEquals(false, $aorScheduledReports->bean_implements('')); //test with blank value

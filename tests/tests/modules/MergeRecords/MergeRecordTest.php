@@ -245,7 +245,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_inputs_for_search_params()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         global $db;
@@ -330,6 +329,5 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertSame($expected, $actual);
 
-        //error_reporting(E_ALL);
     }
 }

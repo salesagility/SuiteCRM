@@ -20,7 +20,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlist_view_parse_additional_sections()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $campaign = new Campaign();
 

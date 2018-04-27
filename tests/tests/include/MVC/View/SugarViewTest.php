@@ -4,7 +4,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testinit()
     {
-        error_reporting(E_ERROR | E_WARNING | E_PARSE);
 
         $SugarView = new SugarView();
 
@@ -184,7 +183,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetMenu()
     {
 
-        //error_reporting(E_ALL);
 
         $SugarView = new SugarView();
 

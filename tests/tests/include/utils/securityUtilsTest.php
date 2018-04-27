@@ -53,7 +53,6 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testquery_user_has_roles()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test it it returns expected contents
 

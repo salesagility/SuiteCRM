@@ -21,7 +21,6 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $emailMarketing = new EmailMarketing();
 

@@ -14,7 +14,6 @@ class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     //incomplete test. this method uses exit() so it cannot be tested.
     public function testdisplay()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $view = new ViewImportvcardsave();
 
