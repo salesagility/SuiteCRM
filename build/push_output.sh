@@ -16,6 +16,10 @@ cd $ROOTPATH/tests/_output
 
 # push fail.png
 for filename in *.png; do
-    [ -e "$file" ] || continue
-    push_output $filename
+    if [ -f $filename ]; then
+        push_output $filename;
+    else
+        echo "$filename is not a file";
+        continue;
+    fi;
 done
