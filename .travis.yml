@@ -18,6 +18,7 @@ env:
   - INSTANCE_URL=http://localhost/ DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1
 
 before_install:
+  # Install chrome driver
   - whereis google-chrome-stable
   - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
   - unzip -o chromedriver_linux64.zip
@@ -27,10 +28,6 @@ install:
   - composer self-update && composer --version
 
 before_script:
-  # Install chrome driver
-  - whereis google-chrome-stable
-  - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip
   # Set up MySQL
   - mysql -e "CREATE DATABASE automated_tests;"
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
