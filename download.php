@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $db;
+$db = DBManagerFactory::getInstance();
 
 if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUEST['type']) || !isset($_SESSION['authenticated_user_id'])) {
     die("Not a Valid Entry Point");
@@ -183,8 +183,8 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
         if ($doQuery && isset($query)) {
-            $rs = $GLOBALS['db']->query($query);
-            $row = $GLOBALS['db']->fetchByAssoc($rs);
+            $rs = DBManagerFactory::getInstance()->query($query);
+            $row = DBManagerFactory::getInstance()->fetchByAssoc($rs);
 
             if (empty($row)) {
                 die($app_strings['ERROR_NO_RECORD']);
@@ -236,8 +236,11 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            header("Content-Disposition: attachment; filename=\"" . $name . "\";");
-
+            if($_REQUEST['preview'] === "yes"){ 
+                header( "Content-Disposition: inline; filename=\"".$name."\";"); }
+            else{
+                header("Content-Disposition: attachment; filename=\"" . $name . "\";");
+            }
         }
         // disable content type sniffing in MSIE
         header("X-Content-Type-Options: nosniff");

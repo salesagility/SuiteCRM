@@ -58,7 +58,7 @@ function checkForDuplicates($prefix){
 
 	if(!empty($query)){
 		$rows = array();
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		$result = $db->query($query.')');
 		$i=-1;
 		while(($row=$db->fetchByAssoc($result)) != null) {

@@ -1,7 +1,7 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	 
 	$even_id = $_GET['event'];
 	$delegate_id = $_GET['delegate'];

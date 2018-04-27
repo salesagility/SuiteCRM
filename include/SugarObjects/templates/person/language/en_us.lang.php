@@ -92,4 +92,13 @@ $mod_strings = array(
     'LBL_PHOTO' => 'Photo',
     'LBL_EDIT_BUTTON' => 'Edit',
     'LBL_REMOVE' => 'Remove',
+
+    //Lawful Basis labels
+    'LBL_LAWFUL_BASIS' => 'Lawful Basis',
+    'LBL_DATE_REVIEWED' => 'Lawful Basis Date Reviewed',
+    'LBL_LAWFUL_BASIS_SOURCE' => 'Lawful Basis Source',
+    'LBL_CONSENT' => 'Consent',
+    //End Lawful Basis labels
 );
+
+

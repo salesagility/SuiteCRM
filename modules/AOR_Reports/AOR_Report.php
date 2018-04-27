@@ -183,6 +183,7 @@ class AOR_Report extends Basic
         $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
         if (!$linkedCharts) {
             //No charts to display
+            LoggerManager::getLogger()->warn('No charts to display to build report chart for AOR Report.');
             return '';
         }
 
@@ -553,19 +554,33 @@ class AOR_Report extends Basic
                     $groupDisplay = $app_strings['LBL_NONE'];
                 }
 
+                 // Fix #5427 If download pdf then not use tab-content and add css inline to work with mpdf
+                $pdf_style = "";
+                $action = $_REQUEST['action'];
+                if ($action == 'DownloadPDF') {
+                    $pdf_style = "background: #333 !important; color: #fff !important; margin-bottom: 0px;";
+                }
+
                 $html .= '<div class="panel panel-default">
-                            <div class="panel-heading ">
+                            <div class="panel-heading" style="' . $pdf_style . '">
                                 <a class="" role="button" data-toggle="collapse" href="#detailpanel_report_group_' . $groupValue . '" aria-expanded="false">
                                     <div class="col-xs-10 col-sm-11 col-md-11">
                                         ' . $groupDisplay . '
                                     </div>
                                 </a>
-                            </div>
-                            <div class="panel-body panel-collapse collapse in" id="detailpanel_report_group_' . $groupValue . '">
+                            </div>';
+                if ($action != 'DownloadPDF') {
+                    $html .= '<div class="panel-body panel-collapse collapse in" id="detailpanel_report_group_' . $groupValue . '">
                                 <div class="tab-content">';
+                }
+                else {
+                    $html .= '</div>';
+                }
+
 
                 $html .= $this->build_report_html($offset, $links, $groupValue, create_guid(), $extra);
-                $html .= '</div></div></div>';
+                $html .= ($action == 'downloadPDF') ? '' : '</div></div></div>';
+                // End
 
             }
         }
@@ -614,7 +629,16 @@ class AOR_Report extends Basic
             }
         }
 
-        $html='<div class="list-view-rounded-corners">';
+          // Fix #5427
+        $report_style = '';
+        $thead_style = '';
+        if ((isset($_REQUEST['action']) ? $_REQUEST['action'] : null) == 'DownloadPDF') {
+            $report_style = 'margin-top: 0px;';
+            $thead_style = 'background: #919798; color: #fff';
+        }
+        $html = '<div class="list-view-rounded-corners" style="' . $report_style . '">';
+        //End
+        
         $html.='<table id="report_table_'.$tableIdentifier.$group_value.'" cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table-responsive aor_reports">';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '" . $this->id . "' AND deleted = 0 ORDER BY field_order ASC";
@@ -659,7 +683,9 @@ class AOR_Report extends Basic
 
 
             if ($fields[$label]['display']) {
-                $html .= "<th scope='col'>";
+                 // Fix #5427
+                $html .= "<th scope='col' style='{$thead_style}'>";
+                // End
                 $html .= "<div>";
                 $html .= $field->label;
                 $html .= "</div></th>";
@@ -835,8 +861,18 @@ class AOR_Report extends Basic
             $field->retrieve($row['id']);
 
             if ($field->field_function != 'COUNT' || $field->format != '') {
-                $moduleFieldByGroupValues[] = $group_value;
+                // Fix grouping on assignment displays ID and not name #5427
+                $report_bean = BeanFactory::getBean($this->report_module);
+                $field_def = $report_bean->field_defs[$field->field];
+                if ($field_def['type'] == 'relate' && isset($field_def['id_name'])) {
+                    $related_bean = BeanFactory::getBean($field_def['module']);
+                    $related_bean->retrieve($group_value);
+                    $moduleFieldByGroupValues[] = ($related_bean instanceof Person) ? $related_bean->full_name : $related_bean->name;
+                } else {
+                    $moduleFieldByGroupValues[] = $group_value;
+                }
                 continue;
+                // End
             }
 
             $path = unserialize(base64_decode($field->module_path));
@@ -883,7 +919,7 @@ class AOR_Report extends Basic
             }
             if ($field['total']) {
                 $showTotal = true;
-                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][$field['total']];
+                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][isset($field['total']) ? $field['total'] : null];
                 $html .= "<th>{$totalLabel}</td>";
             } else {
                 $html .= '<th></th>';
@@ -904,8 +940,17 @@ class AOR_Report extends Basic
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
                 // Customise display based on the field type
-                $moduleBean = BeanFactory::newBean($field['module']);
-                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $moduleBean = BeanFactory::newBean(isset($field['module']) ? $field['module'] : null);
+                if (!is_object($moduleBean)) {
+                    LoggerManager::getLogger()->warn('Unable to create new module bean when trying to build report html. Module bean was: ' . (isset($field['module']) ? $field['module'] : 'NULL'));
+                    $moduleBeanFieldDefs = null;
+                } elseif (!isset($moduleBean->field_defs)) {
+                    LoggerManager::getLogger()->warn('File definition not found for module when trying to build report html. Module bean was: ' . get_class($moduleBean));
+                    $moduleBeanFieldDefs = null;
+                } else {
+                    $moduleBeanFieldDefs = $moduleBean->field_defs;
+                }
+                $fieldDefinition = $moduleBeanFieldDefs[isset($field['field']) ? $field['field'] : null];
                 $fieldDefinitionType = $fieldDefinition['type'];
                 switch ($fieldDefinitionType) {
                     case "currency":
@@ -1068,8 +1113,12 @@ class AOR_Report extends Basic
         }
         $query_array = $this->build_report_query_where($query_array);
 
-        foreach ($query_array['select'] as $select) {
-            $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+        if(!isset($query_array['select'])) {
+            LoggerManager::getLogger()->warn('Trying to build report query without database select definition.');
+        } else {
+            foreach ($query_array['select'] as $select) {
+                $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
+            }
         }
 
         if (empty($query_array['group_by'])) {

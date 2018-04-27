@@ -153,8 +153,8 @@ class SugarView
     ) {
         $this->bean = $bean;
         $this->view_object_map = $view_object_map;
-        $this->action = $GLOBALS['action'];
-        $this->module = $GLOBALS['module'];
+        $this->action = isset($GLOBALS['action']) ? $GLOBALS['action'] : null;
+        $this->module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
         $this->_initSmarty();
     }
 
@@ -663,7 +663,7 @@ class SugarView
                 }
 
                 // put the current module at the top of the list
-                if (!empty($moduleTab)) {
+                if (!empty($moduleTab) && isset($tabData['modules'][$moduleTab])) {
                     unset($topTabs[$moduleTab]);
                     $topTabs = array_merge(
                         array($moduleTab => $tabData['modules'][$moduleTab]),
@@ -680,6 +680,26 @@ class SugarView
                 if (count($topTabs) > $max_tabs) {
                     $extraTabs = array_splice($topTabs, $max_tabs);
                 }
+                // Make sure the current module is accessable through one of the top tabs
+                if (!isset($topTabs[$moduleTab])) {
+                    // Nope, we need to add it.
+                    // First, take it out of the extra menu, if it's there
+                    if (isset($extraTabs[$moduleTab])) {
+                        unset($extraTabs[$moduleTab]);
+                    }
+                    if (count($topTabs) >= $max_tabs - 1) {
+                        // We already have the maximum number of tabs, so we need to shuffle the last one
+                        // from the top to the first one of the extras
+                        $lastElem = array_splice($topTabs, $max_tabs - 1);
+                        $extraTabs = $lastElem + $extraTabs;
+                    }
+                    if (!empty($moduleTab)) {
+                        $topTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
+                        if (count($topTabs) >= $max_tabs - 1) {
+                            $extraTabs[$moduleTab] = $app_list_strings['moduleList'][$moduleTab];
+                        }
+                    }
+                }
 
                 // Get a unique list of the top tabs so we can build the popup menus for them
                 foreach ($topTabs as $moduleKey => $module) {
@@ -688,6 +708,14 @@ class SugarView
 
                 $groupTabs[$tabIdx]['modules'] = $topTabs;
                 $groupTabs[$tabIdx]['extra'] = $extraTabs;
+            }
+
+            foreach ($groupTabs as $key => $tabGroup) {
+                if (count($topTabs) >= $max_tabs - 1 && $key !== $app_strings['LBL_TABGROUP_ALL'] && in_array($tabGroup['modules'][$moduleTab],
+                        $tabGroup['extra'])
+                ) {
+                    unset($groupTabs[$key]['modules'][$moduleTab]);
+                }
             }
         }
 
@@ -1121,7 +1149,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                $GLOBALS['server_unique_key'] .
+                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?
@@ -1236,7 +1264,7 @@ EOHTML;
     private function _calculateFooterMetrics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $this->responseTime = number_format(round($deltaTime, 2), 2);
         // Print out the resources used in constructing the page.
         $this->fileResources = count(get_included_files());
@@ -1248,7 +1276,7 @@ EOHTML;
     private function _getStatistics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $response_time_string =
             $GLOBALS['app_strings']['LBL_SERVER_RESPONSE_TIME'] .
             ' ' .

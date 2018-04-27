@@ -67,6 +67,9 @@ foreach($item_ids as $key=>$value)
 	$items[] = $seed;
 }
 
+$state = new \SuiteCRM\StateSaver();
+$state->pushPHPConfigOptions();
+
 ini_set('max_execution_time', 600);
 ini_set('error_reporting', 'E_ALL');
 $dataDir = create_cache_directory("MergedDocuments/");
@@ -79,5 +82,7 @@ $mm->SetFieldList($fields);
 $mm->Template(array($fileName, $outfile));
 $file = $mm->Execute();
 $mm->CleanUp();
+
+$state->popPHPConfigOptions();
 
 header("Location: index.php?module=MailMerge&action=Step4&file=".urlencode($file));

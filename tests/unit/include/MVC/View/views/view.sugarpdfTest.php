@@ -1,10 +1,12 @@
 <?php
 
 
-class ViewSugarpdfTest extends PHPUnit_Framework_TestCase
+class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -12,14 +14,20 @@ class ViewSugarpdfTest extends PHPUnit_Framework_TestCase
 
     public function testViewSugarpdf()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        
+        if(isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
          //execute the method without request parameters and test if it works. it should output some headers and throw headers output exception.
          try {
              $view = new ViewSugarpdf();
              $this->assertEmpty("", $view);
          } catch (Exception $e) {
-             $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
+             $msg = $e->getMessage();
+             $this->assertStringStartsWith('Cannot modify header information', $msg, 'Cannot modify header information? : ' . $msg . "\nTrace\n" . $e->getTraceAsString());
          }
 
 
@@ -32,6 +40,14 @@ class ViewSugarpdfTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('sugarpdf', 'type', $view);
         $this->assertAttributeEquals('someValue', 'sugarpdf', $view);
         $this->assertAttributeEquals(null, 'sugarpdfBean', $view);
+
+        // clean up
+        
+        if(isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 
     //Incomplete test. SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.

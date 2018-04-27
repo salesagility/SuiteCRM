@@ -65,13 +65,13 @@ function display_lines($focus, $field, $value, $view){
 
             while ($row = $focus->db->fetchByAssoc($result)) {
                 $line_item = new AOS_Products_Quotes();
-                $line_item->retrieve($row['id']);
+                $line_item->retrieve($row['id'], false);
                 $line_item = json_encode($line_item->toArray());
 
                 $group_item = 'null';
                 if ($row['group_id'] != null) {
                     $group_item = new AOS_Line_Item_Groups();
-                    $group_item->retrieve($row['group_id']);
+                    $group_item->retrieve($row['group_id'], false);
                     $group_item = json_encode($group_item->toArray());
                 }
                 $html .= "<script>

@@ -1,7 +1,7 @@
 <?php
 
 /** @noinspection PhpUndefinedClassInspection */
-class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
+class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
     /**
@@ -36,7 +36,7 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -48,6 +48,8 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
+        parent::setUp();
+
         global $current_user, $sugar_config;
         $current_user = new User();
         get_sugar_config_defaults();
@@ -123,6 +125,8 @@ class SuitePHPUnit_Framework_TestCase extends PHPUnit_Framework_TestCase
         $GLOBALS['log'] = $this->log;
 
         DBManagerFactory::$instances = $this->dbManagerFactoryInstances;
+        
+        parent::tearDown();
     }
 
 }

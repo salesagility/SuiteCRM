@@ -171,6 +171,7 @@ class AOR_ReportsController extends SugarController
 
     protected function action_export()
     {
+        set_time_limit(0);
         if(!$this->bean->ACLAccess('Export')){
             SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
@@ -188,8 +189,12 @@ class AOR_ReportsController extends SugarController
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
         error_reporting(0);
         require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+        $state->popErrorLevel();
 
         $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $graphs = $_POST["graphsForPDF"];

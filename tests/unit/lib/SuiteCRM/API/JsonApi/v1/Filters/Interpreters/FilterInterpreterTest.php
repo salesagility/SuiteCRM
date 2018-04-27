@@ -1,7 +1,7 @@
 <?php
 
 
-class FilterInterpreterTest extends \Codeception\Test\Unit
+class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -13,8 +13,9 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
      */
     private static $interpreter;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$interpreter === null) {
 
             // load PSR 11 interface
@@ -23,9 +24,6 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
         }
     }
 
-    protected function _after()
-    {
-    }
 
     public function testIsFilterByPreMadeWithByPreMadeFilterCase()
     {
@@ -123,7 +121,7 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
             )
         );
         $expected = 'accounts.date_modified >= "2017-11-17T11:40:00+00:00"';
-        $actual = self::$interpreter->getFilterByAttributes($filter);
+        $actual = self::$interpreter->getFilterByAttributes($filter, array());
         $this->assertEquals($expected, $actual);
     }
 
@@ -142,7 +140,7 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
             )
         );
         $expected = 'accounts.name IN ("a","b","c","d","e")';
-        $actual = self::$interpreter->getFilterByAttributes($filter);
+        $actual = self::$interpreter->getFilterByAttributes($filter, array());
         $this->assertEquals($expected, $actual);
     }
 }

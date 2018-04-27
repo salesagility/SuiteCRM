@@ -50,8 +50,8 @@ var LogicalOperatorHandler = {
             '<select class="logic-select" name="aor_conditions_logic_op[' + (_condln ? _condln : condln) + ']" onchange="LogicalOperatorHandler.onLogicSelectChange(this, ' + (_condln ? _condln : condln) + ');" style="display:none;">' +
 
             (!value && !forcedValue ? ('   <option value=""' + selecteds.none + '></option>') : '')  +
-            '   <option value="AND"' + selecteds.AND + '>AND</option>' +
-            '   <option value="OR"' + selecteds.OR + '>OR</option>' +
+            '   <option value="AND"' + selecteds.AND + '>' + SUGAR.language.get('AOR_Conditions', 'LBL_CONDITION_AND') + '</option>' +
+            '   <option value="OR"' + selecteds.OR + '>' + SUGAR.language.get('AOR_Conditions', 'LBL_CONDITION_OR') + '</option>' +
             '</select>';
 
         //logicSelectCounter++;
@@ -315,10 +315,7 @@ var moduleFieldsPendingFinished = 0;
 var testModuleFieldsPendingFinished = function () {
   moduleFieldsPendingFinished--;
   if (moduleFieldsPendingFinished <= 0) {
-    moduleFieldsPendingFinished = true;
-    if (moduleFieldsPendingFinishedCallback) {
-      moduleFieldsPendingFinishedCallback();
-    }
+    setModuleFieldsPendingFinishedCallback();
   }
 };
 

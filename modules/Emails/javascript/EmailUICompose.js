@@ -892,7 +892,7 @@ SE.composeLayout = {
 
     	 	YAHOO.util.Event.onAvailable('htmleditordiv' + idx, function() {
     	 		SE.composeLayout._createComposeLayout(idx);
-    	 		SE.composeLayout[idx].set('height', 350);
+    	 		SE.composeLayout[idx].set('height', 550);
 	        	SE.composeLayout[idx].render();
            });
         });
@@ -960,7 +960,7 @@ SE.composeLayout = {
         	parent: SE.complexLayout,
         	border:true,
             hideOnLayout: true,
-            height: 400,
+            height: 600,
 			units: [{
 					position: "center",
 	                animate: false,
@@ -1072,7 +1072,7 @@ SE.composeLayout = {
 		if (!SE.composeLayout.isParentTypeValid(idx)) {
 			return;
 		} // if
-		open_popup(document.getElementById('data_parent_type' + idx).value,600,400,'&tree=ProductsProd',true,false,
+		open_popup(document.getElementById('data_parent_type' + idx).value,600,600,'&tree=ProductsProd',true,false,
 		{
 			call_back_function:"SE.composeLayout.popupAddEmail",
 			form_name:formName,
