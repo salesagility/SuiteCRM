@@ -72,6 +72,7 @@ SuiteCRM.kdev4
 #Ignore composer vendor folder
 vendor/
 public/
+composer.lock
 
 
 #Ignore Sass Generated files in SuiteP
