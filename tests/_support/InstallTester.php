@@ -146,9 +146,4 @@ class InstallTester extends \Codeception\Actor
     {
         return $this->executeJS('return document.getElementsByName(\'setup_old_php\').length > 0;');
     }
-
-    protected function didInstallationContainerPhpErrors()
-    {
-        return $this->executeJS('return document.getElementsByName(\'setup_old_php\').length > 0;');
-    }
 }
