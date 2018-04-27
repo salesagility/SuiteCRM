@@ -7,7 +7,7 @@ ROOTPATH=`dirname $SCRIPTPATH`;
 function push_output {
 FILE=$1;
 echo $FILE;
-curl -F "file=@$FILE" https://file.io;
+curl -F "files[]=@$FILE" https://rokket.space/upload\?output\=text;
 echo " ";
 }
 
