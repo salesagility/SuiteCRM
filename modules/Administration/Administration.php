@@ -55,7 +55,7 @@ require_once('include/OutboundEmail/OutboundEmail.php');
 
 class Administration extends SugarBean
 {
-    public $settings;
+    public $settings = array();
     public $table_name = "config";
     public $object_name = "Administration";
     public $new_schema = true;
@@ -93,8 +93,11 @@ class Administration extends SugarBean
         //If sendmail has been configured by setting the config variable ignore this warning
         $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
 
-        // remove php notice from installer
-        if (!array_key_exists('mail_smtpserver', $this->settings)) {
+            // remove php notice from installer
+            if (!array_key_exists('mail_smtpserver', $this->settings)) {
+                $this->settings['mail_smtpserver'] = '';
+            }
+
             if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
                 if (isset($this->settings['notify_on']) && $this->settings['notify_on']) {
                     $smtp_error = true;
@@ -104,7 +107,7 @@ class Administration extends SugarBean
             if ($displayWarning && $smtp_error) {
                 displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
             }
-        }
+
 
         return $smtp_error;
     }
