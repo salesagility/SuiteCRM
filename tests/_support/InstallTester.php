@@ -130,6 +130,9 @@ class InstallTester extends \Codeception\Actor
         $I = $this;
         $I->comment('wait for installer progress to finish');
         $I->waitForElement('[type=submit]',90);
+        $I->dontSee('LBL_');
+        $I->dontSee('Warning');
+        $I->dontSee('PHP');
         $I->waitForElementVisible('#loginform',10);
     }
 
