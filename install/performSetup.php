@@ -716,8 +716,7 @@ installLog('DBG: SugarThemeRegistry::getDefault');
 $_POST['user_theme'] = (string) SugarThemeRegistry::getDefault();
 
 // save and redirect to new view
-$_REQUEST['return_module'] = 'Home';
-$_REQUEST['return_action'] = 'index';
+$_REQUEST['do_not_redirect'] = true;
 installLog('DBG: require modules/Users/Save.php');
 require('modules/Users/Save.php');
 
@@ -751,6 +750,19 @@ $out =<<<EOQ
     <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://docs.suitecrm.com/admin/installation-guide/" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </div>
+
+<!-- redirect -->
+<script>
+(function () {
+    // detect php notices
+    if(document.getElementsByTagName('table').length === 0) {
+        // redirect if no errors detected
+        window.location.href = 'index.php';
+    } else {
+        console.error('PHP Notices detected')
+    }
+})();
+</script>
 </body>
 </html>
 <!--
