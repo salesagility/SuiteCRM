@@ -32,3 +32,14 @@ for filename in *.png; do
         continue;
     fi;
 done
+
+
+# push fail.png
+for filename in *.html; do
+    if [ -f $filename ]; then
+        push_output $filename;
+    else
+        echo "$filename is not a file";
+        continue;
+    fi;
+done
