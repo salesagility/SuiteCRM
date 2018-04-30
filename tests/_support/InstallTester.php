@@ -130,12 +130,9 @@ class InstallTester extends \Codeception\Actor
         $I = $this;
         $I->comment('wait for installer progress to finish');
         $I->waitForElement('[type=submit]',90);
-        $I->dontSee('LBL_');
-        $I->dontSee('Warning');
-        $I->dontSee('Notice');
-        $I->dontSee('Error');
-        $I->dontSee('error');
-        $I->dontSee('PHP');
+        $I->dontSeeMissingLabels();
+        $I->dontSeeErrors();
+
         $I->waitForElementVisible('#loginform',10);
     }
 
@@ -146,6 +143,16 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $I->dontSee('LBL_');
+    }
+
+    public function dontSeeErrors()
+    {
+        $I = $this;
+        $I->dontSee('Warning');
+        $I->dontSee('Notice');
+        $I->dontSee('Error');
+        $I->dontSee('error');
+        $I->dontSee('PHP');
     }
 
     protected function isOldPhpVersionDetected()
