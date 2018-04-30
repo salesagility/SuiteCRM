@@ -4,6 +4,13 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOS_Products()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_products');
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $aosProducts = new AOS_Products();
@@ -17,10 +24,21 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $aosProducts);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProducts);
         $this->assertAttributeEquals(true, 'importable', $aosProducts);
+        
+        // cleanup
+        
+        $state->popTable('aos_products');
     }
 
     public function testsave()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_products');
+        
+        // test
+        
 
         $aosProducts = new AOS_Products();
 
@@ -40,6 +58,10 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosProducts->mark_deleted($aosProducts->id);
         $result = $aosProducts->retrieve($aosProducts->id);
         $this->assertEquals(null, $result);
+        
+        // cleanup
+        
+        $state->popTable('aos_products');
     }
 
     public function testgetCustomersPurchasedProductsQuery()
