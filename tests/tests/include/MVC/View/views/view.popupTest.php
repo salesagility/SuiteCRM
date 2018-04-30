@@ -4,6 +4,13 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewPopup()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and type attribute
         $view = new ViewPopup();
@@ -12,10 +19,21 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('list', 'type', $view);
 
         unset($view);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testdisplay()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
 
         //execute the method with required child objects preset. it should return some html. 
@@ -36,5 +54,9 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
 
         $this->assertGreaterThan(0, strlen($renderedContent));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }
