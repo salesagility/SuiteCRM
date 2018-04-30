@@ -4023,7 +4023,7 @@ class InboundEmail extends SugarBean {
 			///////////////////////////////////////////////////////////////////
 			////	ASSIGN APPROPRIATE ATTRIBUTES TO NEW EMAIL OBJECT
 			// handle UTF-8/charset encoding in the ***headers***
-			global $db;
+			$db = DBManagerFactory::getInstance();
 			$email->name			= $this->handleMimeHeaderDecode($header->subject);
 			$email->type = 'inbound';
 			if(!empty($unixHeaderDate)) {
