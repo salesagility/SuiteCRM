@@ -87,10 +87,12 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with different modules. it always returns true
 
-        $result = $aowWorkFlow->run_bean_flows(new AOS_Quotes());
+        $quotes = new AOS_Quotes();
+        $result = $aowWorkFlow->run_bean_flows($quotes);
         $this->assertTrue($result);
 
-        $result = $aowWorkFlow->run_bean_flows(new Call());
+        $calls = new Call();
+        $result = $aowWorkFlow->run_bean_flows($calls);
         $this->assertTrue($result);
     }
 
