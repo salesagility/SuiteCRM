@@ -328,6 +328,12 @@ class AOW_WorkFlow extends Basic
             }
 
             if(!$this->multiple_runs){
+                
+                if (!isset($query['where'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: where');
+                    $query['where'] = [];
+                } 
+                
                 $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
 
