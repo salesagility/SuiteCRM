@@ -5,6 +5,13 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testsetup()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
         $default_module = $SugarController->module;
 
@@ -17,10 +24,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarController->setup('Users');
         $this->assertAttributeEquals('Users', 'module', $SugarController);
         $this->assertAttributeEquals(null, 'target_module', $SugarController);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testsetModule()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
 
         //first test with empty parameter
@@ -30,10 +48,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //secondly test with module name and check for correct assignment.
         $SugarController->setModule('Users');
         $this->assertAttributeEquals('Users', 'module', $SugarController);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testloadBean()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
 
         //first test with empty parameter and check for null. Default is Home but Home has no bean
@@ -45,10 +74,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarController->setModule('Users');
         $SugarController->loadBean();
         $this->assertInstanceOf('User', $SugarController->bean);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testexecute()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -59,10 +99,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testprocess()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -73,10 +124,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testpre_save()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
         $SugarController->loadBean();
@@ -90,10 +152,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testaction_save()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
         $SugarController->loadBean();
@@ -107,10 +180,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testaction_spot()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
 
         //first check with default value of attribute
@@ -119,10 +203,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //secondly check for attribute value change on method execution.
         $SugarController->action_spot();
         $this->assertAttributeEquals('spot', 'view', $SugarController);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testgetActionFilename()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
 
         //first check with a invalid value
         $action = SugarController::getActionFilename('');
@@ -131,10 +226,21 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //secondly check with a valid value
         $action = SugarController::getActionFilename('editview');
         $this->assertEquals('EditView', $action);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testcheckEntryPointRequiresAuth()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
+        
         $SugarController = new SugarController();
 
         //check with a invalid value
@@ -148,5 +254,9 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //cehck with a valid False value
         $result = $SugarController->checkEntryPointRequiresAuth('GeneratePassword');
         $this->assertFalse($result);
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 }
