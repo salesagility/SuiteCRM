@@ -22,7 +22,7 @@ class ModuleParams extends BaseParam
      */
     public function getId()
     {
-        return $this->parameters['id'];
+        return isset($this->parameters['id']) ? $this->parameters['id'] : null;
     }
 
     /**
@@ -30,7 +30,7 @@ class ModuleParams extends BaseParam
      */
     public function getFields()
     {
-        return $this->parameters['fields'];
+        return isset($this->parameters['fields']) ? $this->parameters['fields'] : null;
     }
 
     /**
@@ -38,7 +38,7 @@ class ModuleParams extends BaseParam
      */
     public function getPage()
     {
-        return $this->parameters['page'];
+        return isset($this->parameters['page']) ? $this->parameters['page'] : null;
     }
     
     /**
