@@ -137,35 +137,35 @@ function createMissingRels(){
 		//assigned_user
 		$guid = create_guid();
 		$query = "SELECT id FROM relationships WHERE relationship_name = '{$relObjName}_assigned_user'";
-		$result= $GLOBALS['db']->query($query, true);
+		$result= DBManagerFactory::getInstance()->query($query, true);
 		$a = null;
-		$a = $GLOBALS['db']->fetchByAssoc($result);
+		$a = DBManagerFactory::getInstance()->fetchByAssoc($result);
 		if(!isset($a['id']) && empty($a['id']) ){
 			$qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_assigned_user','Users','users','id','{$relModName}','{$relObjName}','assigned_user_id',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
-			$GLOBALS['db']->query($qRel);
+			DBManagerFactory::getInstance()->query($qRel);
 		}
 		//modified_user
 		$guid = create_guid();
 		$query = "SELECT id FROM relationships WHERE relationship_name = '{$relObjName}_modified_user'";
-		$result= $GLOBALS['db']->query($query, true);
+		$result= DBManagerFactory::getInstance()->query($query, true);
 		$a = null;
-		$a = $GLOBALS['db']->fetchByAssoc($result);
+		$a = DBManagerFactory::getInstance()->fetchByAssoc($result);
 		if(!isset($a['id']) && empty($a['id']) ){
 			$qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_modified_user','Users','users','id','{$relModName}','{$relObjName}','modified_user_id',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
-			$GLOBALS['db']->query($qRel);
+			DBManagerFactory::getInstance()->query($qRel);
 		}
 		//created_by
 		$guid = create_guid();
 		$query = "SELECT id FROM relationships WHERE relationship_name = '{$relObjName}_created_by'";
-		$result= $GLOBALS['db']->query($query, true);
+		$result= DBManagerFactory::getInstance()->query($query, true);
 		$a = null;
-		$a = $GLOBALS['db']->fetchByAssoc($result);
+		$a = DBManagerFactory::getInstance()->fetchByAssoc($result);
     	if(!isset($a['id']) && empty($a['id']) ){
 			$qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_created_by','Users','users','id','{$relModName}','{$relObjName}','created_by',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
-			$GLOBALS['db']->query($qRel);
+			DBManagerFactory::getInstance()->query($qRel);
     	}
 	}
 	//Also add tracker perf relationship
@@ -216,14 +216,14 @@ function addDefaultModuleRoles($defaultRoles = array()) {
         foreach($role as $category=>$actions){
             foreach($actions as $name=>$access_override){
                     $query = "SELECT * FROM acl_actions WHERE name='$name' AND category = '$category' AND acltype='$roleName' AND deleted=0 ";
-					$result = $GLOBALS['db']->query($query);
+					$result = DBManagerFactory::getInstance()->query($query);
 					//only add if an action with that name and category don't exist
-					$row=$GLOBALS['db']->fetchByAssoc($result);
+					$row=DBManagerFactory::getInstance()->fetchByAssoc($result);
 					if ($row == null) {
 	                	$guid = create_guid();
 	                	$currdate = gmdate('Y-m-d H:i:s');
 	                	$query= "INSERT INTO acl_actions (id,date_entered,date_modified,modified_user_id,name,category,acltype,aclaccess,deleted ) VALUES ('$guid','$currdate','$currdate','1','$name','$category','$roleName','$access_override','0')";
-						$GLOBALS['db']->query($query);
+						DBManagerFactory::getInstance()->query($query);
 	                }
             }
         }
@@ -654,7 +654,7 @@ if($upgradeType == constant('DCE_INSTANCE')){
 
 			$fielddefs = $meta['fields'];
 			$indices = $meta['indices'];
-			$sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
+			$sql = DBManagerFactory::getInstance()->repairTableParams($tablename, $fielddefs, $indices, true);
 			if(!empty($sql)) {
 			    logThis($sql, $path);
 			    $repairedTables[$tablename] = true;
@@ -726,7 +726,7 @@ if($upgradeType == constant('DCE_INSTANCE')){
 
 				//update the users records to have default team
 				logThis('running query to populate default_team on users table',$path);
-				$GLOBALS['db']->query("update users set default_team = (select teams.id from teams where teams.name = concat('(',users.user_name, ')') or team.associated_user_id = users.id)");
+				DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.name = concat('(',users.user_name, ')') or team.associated_user_id = users.id)");
 
 			}
 
