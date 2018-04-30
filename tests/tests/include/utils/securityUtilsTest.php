@@ -82,7 +82,8 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'SecurityGroups' => 'SecurityGroups',
         );
 
-        $allowed = query_module_access_list(new User('1'));
+        $usr = new User('1');
+        $allowed = query_module_access_list($usr);
         $actual = get_user_disallowed_modules('1', $allowed);
 
         $this->assertSame($expected, $actual);
