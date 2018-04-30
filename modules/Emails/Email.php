@@ -223,7 +223,7 @@ class Email extends SugarBean {
         	copy("upload://$guid", sugar_cached("$email_uploads/$guid"));
 			return array(
 					'guid' => $guid,
-					'name' => $GLOBALS['db']->quote($fileName),
+					'name' => DBManagerFactory::getInstance()->quote($fileName),
 					'nameForDisplay' => $fileName
 				);
         } else {
