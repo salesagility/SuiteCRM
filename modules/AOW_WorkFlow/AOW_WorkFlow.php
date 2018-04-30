@@ -216,8 +216,15 @@ class AOW_WorkFlow extends Basic
      */
     function get_flow_beans(){
         global $beanList;
+        
+        $flowModule = null;
+        if (isset($beanList[$this->flow_module])) {
+            $flowModule = $beanList[$this->flow_module];
+        } else {
+            LoggerManager::getLogger()->warn('Undefined flow module in bean list: ' . $this->flow_module);
+        }
 
-        if($beanList[$this->flow_module]){
+        if($flowModule){
             $module = new $beanList[$this->flow_module]();
 
             $query = '';
