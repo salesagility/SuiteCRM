@@ -28,7 +28,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     public function testgetSystemUser()
     {
     	//unset and reconnect Db to resolve mysqli fetch exeception
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -45,7 +45,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testgetDefaultSignature()
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -138,7 +138,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testgetUserPrivGuid()
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -156,7 +156,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testsetUserPrivGuid()
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -177,7 +177,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testSetAndGetAndResetPreference( )
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -209,7 +209,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testsavePreferencesToDB()
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -232,7 +232,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testreloadPreferences()
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -249,7 +249,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testgetUserDateTimePreferences()
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -271,7 +271,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testloadPreferences( )
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -288,7 +288,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     public function testGetETagSeedAndIncrementETag(){
 
     	//unset and reconnect Db to resolve mysqli fetch exeception
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -347,7 +347,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testcheck_role_membership()
 	{
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -367,7 +367,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	{
 
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -792,7 +792,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testdisplayEmailCounts() {
 
 		//unset and reconnect Db to resolve mysqli fetch exeception
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
 		$db->checkConnection();
 
@@ -939,7 +939,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     public function testgetDeveloperModules()
     {
     	//unset and reconnect Db to resolve mysqli fetch exeception
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -954,7 +954,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testisDeveloperForModule()
     {
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -980,7 +980,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     public function testgetAdminModules()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
@@ -995,7 +995,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testisAdminForModule()
     {
-    	global $db;
+    	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
 
