@@ -473,7 +473,7 @@ class User extends Person {
     */
 	public static function getLicensedUsersWhere()
 	{
-		return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND ".$GLOBALS['db']->convert('user_name', 'length').">0";
+		return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND ".DBManagerFactory::getInstance()->convert('user_name', 'length').">0";
 	    return "1<>1";
 	}
 
@@ -622,7 +622,12 @@ class User extends Person {
      */
 	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
-		if ($ret && $_SESSION !== null) {
+                
+                if (!isset($_SESSION)) {
+                    LoggerManager::getLogger()->warn('Undefined variable: _SESSION');
+                }
+                
+		if ($ret && isset($_SESSION) && $_SESSION !== null) {
 				$this->loadPreferences();
 		}
 		return $ret;
@@ -756,7 +761,7 @@ EOQ;
 	 */
 	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
 	{
-	    global $db;
+	    $db = DBManagerFactory::getInstance();
 		$name = $db->quote($name);
 		$query = "SELECT * from users where user_name='$name'";
 		if(!empty($where)) {
@@ -941,12 +946,19 @@ EOQ;
 		global $mod_strings;
 
 		$user_fields = parent::get_list_view_data();
+                
+                $lblCheckmark = null;
+                if (isset($mod_strings['LBL_CHECKMARK'])) {
+                    $lblCheckmark = $mod_strings['LBL_CHECKMARK'];
+                } else {
+                    LoggerManager::getLogger()->warn('Undefined index: LBL_CHECKMARK');
+                }
 
 		if ($this->is_admin)
-			$user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
+			$user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$lblCheckmark);
 		elseif (!$this->is_admin) $user_fields['IS_ADMIN'] = '';
 		if ($this->is_group)
-			$user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
+			$user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$lblCheckmark);
 		else
 			$user_fields['IS_GROUP_IMAGE'] = '';
 
