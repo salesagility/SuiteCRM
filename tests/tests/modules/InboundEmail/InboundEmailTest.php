@@ -47,7 +47,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -107,7 +107,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -287,7 +287,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -943,7 +943,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1044,7 +1044,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1259,7 +1259,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1279,7 +1279,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1300,7 +1300,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1325,7 +1325,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1342,7 +1342,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1366,7 +1366,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1388,7 +1388,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1410,7 +1410,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1427,7 +1427,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1460,7 +1460,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetMessageTextFromSingleMimePart()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1478,7 +1478,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testaddBreadCrumbOffset()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1501,7 +1501,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1520,7 +1520,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1545,7 +1545,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1564,7 +1564,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1583,7 +1583,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1602,7 +1602,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1619,7 +1619,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1632,7 +1632,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetMimeType()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1647,7 +1647,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1699,7 +1699,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1768,7 +1768,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1824,7 +1824,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         /*
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset ($db->database);
         $db->checkConnection();
 
@@ -1843,7 +1843,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1861,7 +1861,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1875,7 +1875,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -1941,7 +1941,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -2318,7 +2318,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -2332,7 +2332,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testcreateAutoImportSugarFolder()
     {
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
