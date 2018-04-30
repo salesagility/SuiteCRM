@@ -99,7 +99,15 @@ class AOW_Condition extends Basic
 
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
-        $line_count = count($post_data[$key . 'field']);
+        $field = $key . 'field';
+        $postedField = null;
+        if (isset($post_data[$field])) {
+            $postedField = $post_data[$field];
+        } else {
+            LoggerManager::getLogger()->warn('Posted field is undefined: ' . $field);
+        }
+        
+        $line_count = count($postedField);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 
