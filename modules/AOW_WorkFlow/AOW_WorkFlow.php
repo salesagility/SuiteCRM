@@ -386,7 +386,13 @@ class AOW_WorkFlow extends Basic
 
             switch($condition->value_type) {
                 case 'Field':
-                    $data = $module->field_defs[$condition->value];
+                    
+                    $data = null;
+                    if (isset($module->field_defs[$condition->value])) {
+                        $data = $module->field_defs[$condition->value];
+                    } else {
+                        LoggerManager::getLogger()->warn('Undefined field def for condition value in module: ' . get_class($module) . '::field_defs[' . $condition->value . ']');
+                    }
 
                     if($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->value = $data['id_name'];
@@ -402,7 +408,14 @@ class AOW_WorkFlow extends Basic
                     //can't detect in scheduler so return
                     return array();
                 case 'Date':
-                    $params =  unserialize(base64_decode($condition->value));
+                    
+                    $params = @unserialize(base64_decode($condition->value));
+                    if ($params === false) {
+                        LoggerManager::getLogger()->error('Unserializable data given');
+                    } else {
+                        $params = [null];
+                    }
+                    
                     if($params[0] == 'now'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             $value  = 'GetUTCDate()';
@@ -418,7 +431,13 @@ class AOW_WorkFlow extends Basic
                             $value = 'Curdate()';
                         }
                     } else {
-                        $data = $module->field_defs[$params[0]];
+                        $data = null;
+                        if (isset($module->field_defs[$params[0]])) {
+                            $data = $module->field_defs[$params[0]];
+                        } else {
+                            LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
+                        }
+                        
                         if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                             $value = $module->table_name.'_cstm.'.$params[0];
                             $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
@@ -450,7 +469,24 @@ class AOW_WorkFlow extends Basic
                                 if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                                     $value = "DATEADD(".$params[3].",  ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2], $value)";
                                 } else {
-                                    $value = "DATE_ADD($value, INTERVAL ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3].")";
+                                    
+                                    if (!isset($params)) {
+                                        LoggerManager::getLogger()->warn('Undefined variable: param');
+                                        $params = [null, null, null, null];
+                                    }
+                                    
+                                    $params1 = $params[1];
+                                    $params2 = $params[2];
+                                    $params3 = $params[3];
+                                    
+                                    $dateOp = null;
+                                    if (isset($app_list_strings['aow_date_operator'][$params1])) {
+                                        $dateOp = $app_list_strings['aow_date_operator'][$params1];
+                                    } else {
+                                        LoggerManager::getLogger()->warn('Date operator is not set in app_list_string[' . $params1 . ']');
+                                    }
+                                    
+                                    $value = "DATE_ADD($value, INTERVAL ".$dateOp." $params2 ".$params3.")";
                                 }
                                 break;
                         }
