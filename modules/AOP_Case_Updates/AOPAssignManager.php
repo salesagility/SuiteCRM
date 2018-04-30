@@ -184,7 +184,7 @@ class AOPAssignManager
         if ($this->leastBusyUsers) {
             return $this->leastBusyUsers;
         }
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $idIn = implode("','", $db->arrayQuote(array_keys($this->assignableUsers)));
         if ($idIn) {
             $idIn = "'".$idIn."'";
