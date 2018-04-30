@@ -44,6 +44,13 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetCustomersPurchasedProductsQuery()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_products');
+        
+        // test
+        
         $aosProducts = new AOS_Products();
         $aosProducts->id = 1;
 
@@ -70,5 +77,9 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 			) AS aos_quotes";
         $actual = $aosProducts->getCustomersPurchasedProductsQuery();
         $this->assertSame(trim($expected), trim($actual));
+        
+        // cleanup
+        
+        $state->popTable('aos_products');
     }
 }
