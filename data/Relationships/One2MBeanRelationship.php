@@ -324,7 +324,7 @@ class One2MBeanRelationship extends One2MRelationship
         $query = '';
 
         $alias = empty($params['join_table_alias']) ? "{$link->name}_rel": $params['join_table_alias'];
-        $alias = $GLOBALS['db']->getValidDBName($alias, false, 'alias');
+        $alias = DBManagerFactory::getInstance()->getValidDBName($alias, false, 'alias');
 
         $tableInRoleFilter = "";
         if (
