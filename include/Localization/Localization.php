@@ -185,7 +185,7 @@ class Localization {
 	 */
 	function loadCurrencies() {
 		// doing it dirty here
-		$db = DBManagerFactory::getInstance();
+		global $db;
 		global $sugar_config;
 
 		if(empty($db)) {
