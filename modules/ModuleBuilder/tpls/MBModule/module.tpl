@@ -109,7 +109,7 @@
 						<script>ModuleBuilder.buttonAdd('type_{$type}', '{$type}', 'type');</script>
 					</td>
                     {else}
-                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span>}<br>{$name}
+                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span><br>{$name}
                     {/if}
                     </td>
                     {/if}
