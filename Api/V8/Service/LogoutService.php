@@ -27,6 +27,7 @@ class LogoutService
      */
     public function logout($accessToken)
     {
+        // same logic in Access and Refresh token repository, refactor this later
         $token = $this->beanManager->newBeanSafe(\OAuth2Tokens::class);
         $token->retrieve_by_string_fields(
             ['access_token' => $accessToken]

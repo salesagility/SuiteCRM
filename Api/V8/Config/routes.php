@@ -22,20 +22,43 @@ $app->group('', function () use ($app) {
         /** @var ParamsMiddlewareFactory $paramsMiddlewareFactory */
         $paramsMiddlewareFactory = $app->getContainer()->get(ParamsMiddlewareFactory::class);
 
+        /**
+         * Logout
+         */
         $this->post('/logout', LogoutController::LOGOUT);
 
+        /**
+         * Get module records
+         */
         $this
             ->get('/module/{moduleName}', ModuleController::GET_MODULE_RECORDS)
             ->add($paramsMiddlewareFactory->bind(ModuleParams::class));
 
+        /**
+         * Get a module record
+         */
         $this
             ->get('/module/{moduleName}/{id}', ModuleController::GET_MODULE_RECORD)
             ->add($paramsMiddlewareFactory->bind(ModuleParams::class));
 
-        $this
-            ->post('/module/{moduleName}', ModuleController::CREATE_MODULE_RECORD)
-            ->add($paramsMiddlewareFactory->bind(ModuleParams::class));
+        /**
+         * Create a module record
+         */
+        $this->post('/module/{moduleName}', ModuleController::CREATE_MODULE_RECORD);
 
+        /**
+         * Update a module record
+         */
+        $this->patch('/module/{moduleName}/{id}', ModuleController::UPDATE_MODULE_RECORD);
+
+        /**
+         * Delete a module record
+         */
+        $this->delete('/module/{moduleName}/{id}', ModuleController::DELETE_MODULE_RECORD);
+
+        /**
+         * Get a relationship
+         */
         $this
             ->get('/relationship/{moduleName}', RelationshipController::GET_RELATIONSHIP)
             ->add($paramsMiddlewareFactory->bind(RelationshipParams::class));

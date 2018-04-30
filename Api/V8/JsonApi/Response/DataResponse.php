@@ -76,7 +76,7 @@ class DataResponse implements \JsonSerializable
     /**
      * @param RelationshipResponse $relationships
      */
-    public function setRelationships($relationships)
+    public function setRelationships(RelationshipResponse $relationships)
     {
         $this->relationships = $relationships;
     }

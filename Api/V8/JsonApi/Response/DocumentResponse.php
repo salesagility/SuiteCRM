@@ -61,7 +61,7 @@ class DocumentResponse implements \JsonSerializable
     /**
      * @param LinksResponse $links
      */
-    public function setLinks($links)
+    public function setLinks(LinksResponse $links)
     {
         $this->links = $links;
     }

@@ -19,8 +19,8 @@ class MetaResponse implements \JsonSerializable
             throw new \InvalidArgumentException('The properties must be an array or sdtClass');
         }
 
-        foreach ($properties as $name => $value) {
-            $this->$name = $value;
+        foreach ($properties as $property => $value) {
+            $this->$property = $value;
         }
     }
 

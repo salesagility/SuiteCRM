@@ -134,6 +134,107 @@ class ModuleService
     }
 
     /**
+     * @param string $module
+     * @param array|null $params
+     *
+     * @return DocumentResponse
+     */
+    public function createRecord($module, $params)
+    {
+        $bean = $this->beanManager->findBean($module);
+
+        if ($params !== null) {
+            foreach ($params as $property => $value) {
+                if (!property_exists($bean, $property)) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Invalid property in %s module: %s', $bean->getObjectName(), $property)
+                    );
+                }
+
+                $bean->$property = $value;
+            }
+        }
+
+        $bean->save();
+
+        $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
+        $attributes = $this->attributeHelper->getAttributes($bean);
+
+        if ($attributes) {
+            $dataResponse->setAttributes(new AttributeResponse($attributes));
+        }
+
+        $response = new DocumentResponse();
+        $response->setData($dataResponse);
+
+        return $response;
+    }
+
+    /**
+     * @param array $args
+     * @param array|null $params
+     *
+     * @return DocumentResponse
+     */
+    public function updateRecord(array $args, $params)
+    {
+        // we need to create a new class for preventing duplication
+        $module = $args['moduleName'];
+        $moduleId = $args['id'];
+
+        $bean = $this->beanManager->getBeanSafe($module, $moduleId);
+
+        if ($params !== null) {
+            foreach ($params as $property => $value) {
+                if (!property_exists($bean, $property)) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Invalid property in %s module: %s', $bean->getObjectName(), $property)
+                    );
+                }
+
+                $bean->$property = $value;
+            }
+        }
+
+        $bean->save();
+
+        // we need to create a new class for preventing duplication
+        $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
+        $attributes = $this->attributeHelper->getAttributes($bean);
+
+        if ($attributes) {
+            $dataResponse->setAttributes(new AttributeResponse($attributes));
+        }
+
+        $response = new DocumentResponse();
+        $response->setData($dataResponse);
+
+        return $response;
+    }
+
+    /**
+     * @param array $args
+     *
+     * @return DocumentResponse
+     */
+    public function deleteRecord(array $args)
+    {
+        // we need to create a new class for preventing duplication
+        $module = $args['moduleName'];
+        $moduleId = $args['id'];
+
+        $bean = $this->beanManager->getBeanSafe($module, $moduleId);
+        $bean->mark_deleted($moduleId);
+
+        $response = new DocumentResponse();
+        $response->setMeta(
+            new MetaResponse(['message' => sprintf('Record with %s id is deleted', $moduleId)])
+        );
+
+        return $response;
+    }
+
+    /**
      * @param \SugarBean $bean
      * @param ModuleParams $params
      * @param string $path
@@ -142,6 +243,7 @@ class ModuleService
      */
     public function getDataResponse(\SugarBean $bean, ModuleParams $params, $path)
     {
+        // this method might go to a separate class later
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
 
         $attributes = $this->attributeHelper->getAttributes($bean, $params->getFields());

@@ -18,7 +18,7 @@ abstract class BaseController
      */
     public function generateResponse(
         HttpResponse $httpResponse,
-        DocumentResponse $response,
+        $response,
         $status
     ) {
         return $httpResponse
