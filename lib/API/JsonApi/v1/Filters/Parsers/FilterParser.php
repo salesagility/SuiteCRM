@@ -341,10 +341,9 @@ class FilterParser
      * @return string
      */
     private function stringDifference($a, $b) {
-        $aArray = str_split($a);
-        $bArray = str_split($b);
-        $arrayDiff = array_diff($aArray, $bArray);
-        return implode('', $arrayDiff);
+        if (substr($a, 0, strlen($b)) == $b) {
+            return substr($a, strlen($b));
+        }
     }
 
     /**
