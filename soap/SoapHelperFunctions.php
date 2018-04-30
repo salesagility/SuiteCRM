@@ -717,7 +717,7 @@ function new_handle_set_entries($module_name, $name_value_lists, $select_fields 
 						//have an object with this outlook_id, if we do
 						//then we can set the id, otherwise this is a new object
 						$order_by = "";
-						$query = $seed->table_name.".outlook_id = '".$GLOBALS['db']->quote($seed->outlook_id)."'";
+						$query = $seed->table_name.".outlook_id = '".DBManagerFactory::getInstance()->quote($seed->outlook_id)."'";
 						$response = $seed->get_list($order_by, $query, 0,-1,-1,0);
 						$list = $response['list'];
 						if(count($list) > 0){
@@ -1004,7 +1004,7 @@ LEFT OUTER JOIN email_addr_bean_rel eabr ON eabr.bean_id = c.id
 WHERE c.first_name = '{$trimmed_first}' AND c.last_name = '{$trimmed_last}' AND c.deleted = 0 AND eabr.id IS NULL";
 
         //Apply the limit query filter to this since we only need the first record
-        $result = $GLOBALS['db']->getOne($query);
+        $result = DBManagerFactory::getInstance()->getOne($query);
         return !empty($result) ? $result : null;
     }
 }
