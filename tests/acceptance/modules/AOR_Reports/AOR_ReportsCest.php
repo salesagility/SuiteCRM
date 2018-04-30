@@ -66,8 +66,8 @@ class AOR_ReportsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\EditView $editView
-     * @param \Step\Acceptance\DetailView $detailView ,
-     * @param \Step\Acceptance\Step\Acceptance\SideBar $sidebar ,
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\Step\Acceptance\SideBar $sidebar
      * @param \Step\Acceptance\Reports $reports
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -109,7 +109,7 @@ class AOR_ReportsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\DetailView $detailView ,
+     * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\Reports $reports
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -267,7 +267,7 @@ class AOR_ReportsCest
      * @param \Step\Acceptance\SideBar $sidebar
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
-     * @param \Step\Acceptance\NavigationBar $navigationBar,
+     * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Step\Acceptance\Reports $reports
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -325,6 +325,80 @@ class AOR_ReportsCest
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
         $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $I->see('Test_Account', '.sugar_field');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to verify the output of a report using text fields
+     */
+    public function testScenarioDateFieldReportOutput(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Verify the output of a report based on date fields');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to reports list-view
+        $I->loginAsAdmin();
+        $listView->waitForListViewVisible();
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Report_Test_Dates');
+        $editView->fillField('#report_module', 'Accounts');
+
+        // Add field
+        $editView->click('Fields', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->click('Date Created', 'jqtree-title jqtree_common');
+
+        // Add condition
+        $editView->click('Conditions', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->click('Date Created', 'jqtree-title jqtree_common');
+        $editView->click('Date Created', 'jqtree-title jqtree_common');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+
+        // Determine users date format
+        global $timedate;
+        $timedate->getInstance()->userTimezone();
+        $CurrentDateTime = $timedate->now();
+
+        $editView->fillField('#aor_conditions_fieldInput1', $CurrentDateTime);
+        $editView->fillField('#aor_conditions_operator[1]', 'Greater Than');
+
+
+        $editView->fillField('#aor_conditions_fieldInput2', $CurrentDateTime);
+        $editView->fillField('#aor_conditions_operator[2]', 'Less Than');
+
+
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
