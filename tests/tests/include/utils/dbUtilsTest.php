@@ -44,7 +44,7 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $table = 'Table1';
         $fields = array('Col1', 'Col2', 'Col3');
-        $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),'',IFNULL(Table1.Col2,''),'',IFNULL(Table1.Col3,''))))";
+        $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),' ',IFNULL(Table1.Col2,''),' ',IFNULL(Table1.Col3,''))))";
         $actual = db_concat($table, $fields);
         $this->assertSame($expected, $actual);
     }
