@@ -33,7 +33,9 @@ class AOD_IndexViewIndexData extends SugarView {
      * display the form
      */
     public function display(){
-        global $db, $timedate, $current_language;
+        global $timedate, $current_language;
+        $db = DBManagerFactory::getInstance();
+        
         parent::display();
 
         $index = BeanFactory::getBean("AOD_Index");
