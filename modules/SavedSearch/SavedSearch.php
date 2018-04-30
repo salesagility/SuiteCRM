@@ -101,7 +101,9 @@ class SavedSearch extends SugarBean
     // Saved Search Form
     function getForm($module, $inline = true, $orderBySelectOnly = false)
     {
-        global $db, $current_user, $currentModule, $current_language, $app_strings;
+        global $current_user, $currentModule, $current_language, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $json = getJSONobj();
 
         $saved_search_mod_strings = return_module_language($current_language, 'SavedSearch');
@@ -205,7 +207,9 @@ class SavedSearch extends SugarBean
     {
 
 
-        global $db, $current_user, $currentModule, $current_lang, $app_strings;
+        global $current_user, $currentModule, $current_lang, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $saved_search_mod_strings = return_module_language($current_lang, 'SavedSearch');
 
         $query = 'SELECT id, name FROM saved_search
@@ -242,7 +246,9 @@ class SavedSearch extends SugarBean
 
     function returnSavedSearch($id, $searchFormTab = 'advanced_search', $showDiv = 'no')
     {
-        global $db, $current_user, $currentModule;
+        global $current_user, $currentModule;
+        $db = DBManagerFactory::getInstance();
+        
         $this->retrieveSavedSearch($id);
 
         $header = 'Location: index.php?action=index&module=';
@@ -262,7 +268,9 @@ class SavedSearch extends SugarBean
 
     function returnSavedSearchContents($id)
     {
-        global $db, $current_user, $currentModule;
+        global $current_user, $currentModule;
+        $db = DBManagerFactory::getInstance();
+        
         $query = 'SELECT id, name, contents, search_module FROM saved_search
 				  WHERE
 				  	id = \'' . $id . '\'';
