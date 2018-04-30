@@ -320,8 +320,16 @@ class SugarBean
             }
 
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
-                $this->field_name_map = $dictionary[$this->object_name]['fields'];
-                $this->field_defs = $dictionary[$this->object_name]['fields'];
+                
+                $dictionaryObjectFields = null;
+                if (isset($dictionary[$this->object_name]['fields'])) {
+                    $dictionaryObjectFields = $dictionary[$this->object_name]['fields'];
+                } else {
+                    LoggerManager::getLogger()->warn("Missing dictionary fields for object: {$this->object_name}");
+                }
+                
+                $this->field_name_map = $dictionaryObjectFields;
+                $this->field_defs = $dictionaryObjectFields;
 
                 if (!empty($dictionary[$this->object_name]['optimistic_locking'])) {
                     $this->optimistic_lock = true;
