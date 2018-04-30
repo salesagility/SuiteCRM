@@ -290,8 +290,15 @@ class AOW_WorkFlow extends Basic
 
     function build_flow_query_where($query = array()){
         global $beanList;
+        
+        $flowModule = null;
+        if (isset($beanList[$this->flow_module])) {
+            $flowModule = $beanList[$this->flow_module];
+        } else {
+            LoggerManager::getLogger()->warn('Undefined flow module in bean list: ' . $this->flow_module);
+        }
 
-        if($beanList[$this->flow_module]){
+        if($flowModule){
             $module = new $beanList[$this->flow_module]();
 
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
