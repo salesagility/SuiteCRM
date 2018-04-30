@@ -21,10 +21,12 @@
     "tuupola/slim-jwt-auth": "^2.0",
     "league/url": "^3.3",
     "psr/log": "^1.0",
-    "league/oauth2-server": "^5.1",
+    "league/oauth2-server": "^6.0",
     "justinrainbow/json-schema": "^5.2",
     "onelogin/php-saml": "3.0.0.x-dev as 3.0.0",
-    "google/recaptcha": "^1.1"
+    "google/recaptcha": "^1.1",
+    "symfony/options-resolver": "^3.4",
+    "symfony/validator": "^3.4"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
@@ -47,7 +49,10 @@
       "SuiteCRM\\Custom\\": [
         "custom/lib"
       ]
-    }
+    },
+    "classmap": [
+      "Api/"
+    ]
   },
   "extra": {}
 }
