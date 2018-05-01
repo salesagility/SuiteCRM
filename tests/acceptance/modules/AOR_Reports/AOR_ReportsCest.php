@@ -382,16 +382,21 @@ class AOR_ReportsCest
         $editView->click('Name', 'jqtree-title jqtree_common');
         $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
 
-        // Determine users date format
-        global $timedate;
-        $timedate->getInstance()->userTimezone();
-        $CurrentDateTime = $timedate->now();
+        // Set users date format
+        $reports->gotoProfile();
+        $reports->setDateTime();
+        $editView->fillField('dateformat', 'd/m/Y');
+        $editView->fillField('timeformat', 'H:i');
+        $editView->fillField('timezone', 'UTC');
 
-        $editView->fillField('#aor_conditions_fieldInput1', $CurrentDateTime);
+        $date1 = strtotime("-1 day", strtotime(date('d/m/Y')));
+        $date2 = strtotime("+1 day", strtotime(date('d/m/Y')));
+
+        $editView->fillField('#aor_conditions_fieldInput1', $date1);
         $editView->fillField('#aor_conditions_operator[1]', 'Greater Than');
 
 
-        $editView->fillField('#aor_conditions_fieldInput2', $CurrentDateTime);
+        $editView->fillField('#aor_conditions_fieldInput2', $date2);
         $editView->fillField('#aor_conditions_operator[2]', 'Less Than');
 
 
