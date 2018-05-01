@@ -11,4 +11,13 @@ class Reports extends \AcceptanceTester
         $I = new NavigationBar($this->getScenario());
         $I ->clickAllMenuItem('Reports');
     }
+
+    /**
+     * Go to user profile
+     */
+    public function gotoProfile()
+    {
+        $I = new NavigationBar($this->getScenario());
+        $I ->clickUserMenuItem('Profile');
+    }
 }
