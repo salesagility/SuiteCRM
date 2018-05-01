@@ -36,7 +36,7 @@ class AOR_ReportsCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\Reports $reports
+     * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Reports $reports
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -56,7 +56,6 @@ class AOR_ReportsCest
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
-        $listView->waitForListViewVisible();
         $reports->gotoReports();
         $listView->waitForListViewVisible();
 
@@ -68,6 +67,7 @@ class AOR_ReportsCest
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Reports $reports
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -79,6 +79,7 @@ class AOR_ReportsCest
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Reports $reports,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
@@ -90,7 +91,6 @@ class AOR_ReportsCest
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
-        $listView->waitForListViewVisible();
         $reports->gotoReports();
         $listView->waitForListViewVisible();
 
@@ -130,7 +130,6 @@ class AOR_ReportsCest
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
-        $listView->waitForListViewVisible();
         $reports->gotoReports();
         $listView->waitForListViewVisible();
 
@@ -164,7 +163,6 @@ class AOR_ReportsCest
 
         // Navigate to a report
         $I->loginAsAdmin();
-        $listView->waitForListViewVisible();
         $reports->gotoReports();
         $listView->waitForListViewVisible();
         $listView->clickNameLink('Report_Test');
@@ -205,7 +203,6 @@ class AOR_ReportsCest
 
         // Navigate to a report
         $I->loginAsAdmin();
-        $listView->waitForListViewVisible();
         $reports->gotoReports();
         $listView->waitForListViewVisible();
         $listView->clickNameLink('Report_Test');
@@ -249,7 +246,6 @@ class AOR_ReportsCest
 
         // Navigate to a report
         $I->loginAsAdmin();
-        $listView->waitForListViewVisible();
         $reports->gotoReports();
         $listView->waitForListViewVisible();
         $listView->clickNameLink('Report_Test');
@@ -290,7 +286,6 @@ class AOR_ReportsCest
 
         // Navigate to Accounts
         $I->loginAsAdmin();
-        $listView->waitForListViewVisible();
         $navigationBar->clickAllMenuItem('Accounts');
         $listView->waitForListViewVisible();
 
@@ -335,6 +330,7 @@ class AOR_ReportsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\Reports $reports
@@ -345,6 +341,7 @@ class AOR_ReportsCest
     public function testScenarioDateFieldReportOutput(
         \AcceptanceTester $I,
         \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\Reports $reports,
@@ -358,7 +355,6 @@ class AOR_ReportsCest
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
-        $listView->waitForListViewVisible();
         $reports->gotoReports();
         $listView->waitForListViewVisible();
 
@@ -404,5 +400,115 @@ class AOR_ReportsCest
 
         // Check Output
         $I->see('Test_Account', '.sugar_field');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to verify the pagination of reports
+     */
+    public function testScenarioPagination(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('verify the pagination of reports');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to reports list-view
+        $I->loginAsAdmin();
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Report_Test_Pagination');
+        $editView->fillField('#report_module', 'Accounts');
+
+        // Add field
+        $editView->click('Fields', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $editView->click('button', 'listViewNextButton_top');
+        $I->see('21 - 40', 'pageNumbers');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to verify the output of a report using text fields
+     */
+    public function testScenarioReportsChartOutput(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Verify the output of a reports chart');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to reports list-view
+        $I->loginAsAdmin();
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Report_Test_Charts');
+        $editView->fillField('#report_module', 'Accounts');
+
+        // Add field
+        $editView->click('Fields', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+
+        // Add Chart
+        $editView->click('Charts', 'tab-toggler');
+        $editView->click('Add chart', 'addChartButton');
+        $editView->fillField('#aor_chart_title[]', 'ChartTitle');
+
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $I->seeInSource('ChartTitle');
     }
 }
