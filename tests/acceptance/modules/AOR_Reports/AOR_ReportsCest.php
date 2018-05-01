@@ -469,6 +469,70 @@ class AOR_ReportsCest
      * @param \Step\Acceptance\Reports $reports
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
+     * As administrative user I want to verify the pagination of reports with parameters
+     */
+    public function testScenarioPaginationParameters(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('verify the pagination of reports with parameters');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to reports list-view
+        $I->loginAsAdmin();
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Report_Test_Pagination_Parameters');
+        $editView->fillField('#report_module', 'Accounts');
+
+        // Add field
+        $editView->click('Fields', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+
+        $editView->click('Conditions', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->fillField('#aor_conditions_operator[0]', 'Not_Equal_To');
+        $editView->fillField('#aor_conditions_operator[1]', 'Not_Equal_To');
+        $editView->fillField('#aor_conditions_value[0]', 'False');
+        $editView->fillField('#aor_conditions_value[1]', 'False');
+        $editView->checkOption('#aor_conditions_parameter[0]');
+        $editView->checkOption('#aor_conditions_parameter[1]');
+
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $editView->click('button', 'listViewNextButton_top');
+        $I->see('21 - 40', 'pageNumbers');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
      * As administrative user I want to verify the output of a report using charts
      */
     public function testScenarioReportsChartOutput(
