@@ -33,7 +33,7 @@ return [
         // Client credentials grant
         $server->enableGrantType(
             new \League\OAuth2\Server\Grant\ClientCredentialsGrant(),
-            new \DateInterval('PT12H')
+            new \DateInterval('PT1H')
         );
 
         // Password credentials grant
@@ -42,7 +42,7 @@ return [
                 new UserRepository($container->get(BeanManager::class)),
                 new RefreshTokenRepository($container->get(BeanManager::class))
             ),
-            new \DateInterval('PT12H')
+            new \DateInterval('PT1H')
         );
 
         return $server;

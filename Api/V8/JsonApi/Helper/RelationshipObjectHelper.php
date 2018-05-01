@@ -22,14 +22,11 @@ class RelationshipObjectHelper
     /**
      * @param \SugarBean $bean
      * @param string $uriPath
-     * @param string $id
      *
      * @return array
      */
-    public function getRelationships(\SugarBean $bean, $uriPath, $id)
+    public function getRelationships(\SugarBean $bean, $uriPath)
     {
-        // if we have module collection, we add id manually to relationship
-        $path = $id === null ? $uriPath . '/' . $bean->id : $uriPath;
         $relationships = $this->varDefHelper->getAllRelationships($bean);
         asort($relationships);
 
@@ -37,7 +34,7 @@ class RelationshipObjectHelper
         foreach (array_unique($relationships) as $module) {
             $linkResponse = new LinksResponse();
             $linkResponse->setRelated(
-                sprintf('/%s/%s/%s', $path, 'relationships', strtolower($module))
+                sprintf('/%s/%s/%s', $uriPath, 'relationships', strtolower($module))
             );
 
             $relationshipsLinks[$module] = ['links' => $linkResponse];

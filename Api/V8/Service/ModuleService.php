@@ -10,7 +10,8 @@ use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
 use Api\V8\JsonApi\Response\PaginationResponse;
 use Api\V8\JsonApi\Response\RelationshipResponse;
-use Api\V8\Param\ModuleParams;
+use Api\V8\Param\GetModuleParams;
+use Api\V8\Param\GetModulesParams;
 use Psr\Http\Message\UriInterface;
 use Slim\Http\Request;
 
@@ -46,12 +47,12 @@ class ModuleService
         $this->relationshipHelper = $relationshipHelper;
     }
     /**
-     * @param ModuleParams $params
+     * @param GetModuleParams $params
      * @param UriInterface $uri
      *
      * @return DocumentResponse
      */
-    public function getRecord(ModuleParams $params, UriInterface $uri)
+    public function getRecord(GetModuleParams $params, UriInterface $uri)
     {
         $bean = $this->beanManager->getBeanSafe(
             $params->getModuleName(),
@@ -66,12 +67,12 @@ class ModuleService
     }
 
     /**
-     * @param ModuleParams $params
+     * @param GetModulesParams $params
      * @param Request $request
      *
      * @return DocumentResponse
      */
-    public function getRecords(ModuleParams $params, Request $request)
+    public function getRecords(GetModulesParams $params, Request $request)
     {
         $bean = $this->beanManager->findBean($params->getModuleName());
         $pageParams = $params->getPage();
@@ -124,7 +125,7 @@ class ModuleService
 
         $data = [];
         foreach ($beanList['list'] as $record) {
-            $dataResponse = $this->getDataResponse($record, $params, $uriPath);
+            $dataResponse = $this->getDataResponse($record, $params, $uriPath . '/' . $record->id);
             $data[] = $dataResponse;
         }
 
@@ -138,13 +139,19 @@ class ModuleService
      * @param array|null $params
      *
      * @return DocumentResponse
+     * @throws \InvalidArgumentException if data or bean's property are invalid
      */
     public function createRecord($module, $params)
     {
         $bean = $this->beanManager->findBean($module);
 
-        if ($params !== null) {
-            foreach ($params as $property => $value) {
+        // this is gonna be replaced with param
+        if (!isset($params['data'])) {
+            throw new \InvalidArgumentException('Data resource object must exist');
+        }
+
+        if (isset($params['data']['attributes'])) {
+            foreach ($params['data']['attributes'] as $property => $value) {
                 if (!property_exists($bean, $property)) {
                     throw new \InvalidArgumentException(
                         sprintf('Invalid property in %s module: %s', $bean->getObjectName(), $property)
@@ -175,6 +182,7 @@ class ModuleService
      * @param array|null $params
      *
      * @return DocumentResponse
+     * @throws \InvalidArgumentException if data or bean's property are invalid
      */
     public function updateRecord(array $args, $params)
     {
@@ -184,8 +192,12 @@ class ModuleService
 
         $bean = $this->beanManager->getBeanSafe($module, $moduleId);
 
-        if ($params !== null) {
-            foreach ($params as $property => $value) {
+        if (!isset($params['data'])) {
+            throw new \InvalidArgumentException('Data resource object must exist');
+        }
+
+        if (isset($params['data']['attributes'])) {
+            foreach ($params['data']['attributes'] as $property => $value) {
                 if (!property_exists($bean, $property)) {
                     throw new \InvalidArgumentException(
                         sprintf('Invalid property in %s module: %s', $bean->getObjectName(), $property)
@@ -194,11 +206,10 @@ class ModuleService
 
                 $bean->$property = $value;
             }
+
+            $bean->save();
         }
 
-        $bean->save();
-
-        // we need to create a new class for preventing duplication
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
         $attributes = $this->attributeHelper->getAttributes($bean);
 
@@ -236,18 +247,18 @@ class ModuleService
 
     /**
      * @param \SugarBean $bean
-     * @param ModuleParams $params
+     * @param GetModuleParams|GetModulesParams $params
      * @param string $path
      *
      * @return DataResponse
      */
-    public function getDataResponse(\SugarBean $bean, ModuleParams $params, $path)
+    public function getDataResponse(\SugarBean $bean, $params, $path)
     {
         // this method might go to a separate class later
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
 
         $attributes = $this->attributeHelper->getAttributes($bean, $params->getFields());
-        $relationships = $this->relationshipHelper->getRelationships($bean, $path, $params->getId());
+        $relationships = $this->relationshipHelper->getRelationships($bean, $path);
 
         if ($attributes) {
             $dataResponse->setAttributes(new AttributeResponse($attributes));

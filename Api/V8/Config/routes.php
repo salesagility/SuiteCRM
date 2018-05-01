@@ -2,7 +2,8 @@
 
 use Api\V8\Controller\LogoutController;
 use Api\V8\Factory\ParamsMiddlewareFactory;
-use Api\V8\Param\ModuleParams;
+use Api\V8\Param\GetModuleParams;
+use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\RelationshipParams;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Middleware\AuthorizationServerMiddleware;
@@ -30,14 +31,14 @@ $app->group('', function () use ($app) {
          */
         $this
             ->get('/module/{moduleName}', 'Api\V8\Controller\ModuleController:getModuleRecords')
-            ->add($paramsMiddlewareFactory->bind(ModuleParams::class));
+            ->add($paramsMiddlewareFactory->bind(GetModulesParams::class));
 
         /**
          * Get a module record
          */
         $this
             ->get('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:getModuleRecord')
-            ->add($paramsMiddlewareFactory->bind(ModuleParams::class));
+            ->add($paramsMiddlewareFactory->bind(GetModuleParams::class));
 
         /**
          * Create a module record
