@@ -144,10 +144,12 @@ class ModuleBuilder extends Administration
     {
         $I = $this;
 
-        // Go to Package
-        $I->click('Module Builder');
-        $I->waitForElement('#Buttons', 60);
-        $I->click($packageName, '#Buttons');
+        $I->gotoAdministration();
+
+        // Go To Module Builder
+        $I->click('#moduleBuilder');
+        $I->waitForElementVisible('.bodywrapper', 30);
+        $I->click($packageName, '.bodywrapper');
         $I->waitForElementVisible('[name="name"]');
         $I->click('Deploy');
 
