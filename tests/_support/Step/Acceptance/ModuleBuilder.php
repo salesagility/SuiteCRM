@@ -146,7 +146,7 @@ class ModuleBuilder extends Administration
 
         // Go to Package
         $I->click('Module Builder');
-        $I->waitForElementVisible('.bodywrapper');
+        $I->waitForElement('#Buttons', 30);
         $I->click($packageName, '.bodywrapper');
         $I->waitForElementVisible('[name="name"]');
         $I->click('Deploy');
