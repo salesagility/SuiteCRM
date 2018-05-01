@@ -46,6 +46,7 @@ class ModuleService
         $this->attributeHelper = $attributeHelper;
         $this->relationshipHelper = $relationshipHelper;
     }
+
     /**
      * @param GetModuleParams $params
      * @param UriInterface $uri
@@ -166,10 +167,7 @@ class ModuleService
 
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
         $attributes = $this->attributeHelper->getAttributes($bean);
-
-        if ($attributes) {
-            $dataResponse->setAttributes(new AttributeResponse($attributes));
-        }
+        $dataResponse->setAttributes(new AttributeResponse($attributes));
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
@@ -212,10 +210,7 @@ class ModuleService
 
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
         $attributes = $this->attributeHelper->getAttributes($bean);
-
-        if ($attributes) {
-            $dataResponse->setAttributes(new AttributeResponse($attributes));
-        }
+        $dataResponse->setAttributes(new AttributeResponse($attributes));
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
@@ -260,13 +255,8 @@ class ModuleService
         $attributes = $this->attributeHelper->getAttributes($bean, $params->getFields());
         $relationships = $this->relationshipHelper->getRelationships($bean, $path);
 
-        if ($attributes) {
-            $dataResponse->setAttributes(new AttributeResponse($attributes));
-        }
-
-        if ($relationships) {
-            $dataResponse->setRelationships(new RelationshipResponse($relationships));
-        }
+        $dataResponse->setAttributes(new AttributeResponse($attributes));
+        $dataResponse->setRelationships(new RelationshipResponse($relationships));
 
         return $dataResponse;
     }

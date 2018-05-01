@@ -4,7 +4,7 @@ use Api\V8\Controller\LogoutController;
 use Api\V8\Factory\ParamsMiddlewareFactory;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
-use Api\V8\Param\RelationshipParams;
+use Api\V8\Param\GetRelationshipParams;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Middleware\AuthorizationServerMiddleware;
 use League\OAuth2\Server\Middleware\ResourceServerMiddleware;
@@ -59,8 +59,8 @@ $app->group('', function () use ($app) {
          * Get a relationship
          */
         $this
-            ->get('/relationship/{moduleName}', 'Api\V8\Controller\RelationshipController:getRelationship')
-            ->add($paramsMiddlewareFactory->bind(RelationshipParams::class));
+            ->get('/module/{moduleName}/{id}/relationships/{relationshipName}', 'Api\V8\Controller\RelationshipController:getRelationship')
+            ->add($paramsMiddlewareFactory->bind(GetRelationshipParams::class));
 
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));
 });

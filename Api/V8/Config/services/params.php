@@ -11,4 +11,7 @@ return [
     Param\GetModulesParams::class => function (Container $container) {
         return new Param\GetModulesParams($container->get(ValidatorFactory::class));
     },
+    Param\GetRelationshipParams::class => function (Container $container) {
+        return new Param\GetRelationshipParams($container->get(ValidatorFactory::class));
+    },
 ];

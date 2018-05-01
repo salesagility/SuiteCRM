@@ -21,7 +21,8 @@ return [
     },
     Service\RelationshipService::class => function (Container $container) {
         return new Service\RelationshipService(
-            $container->get(BeanManager::class)
+            $container->get(BeanManager::class),
+            $container->get(AttributeObjectHelper::class)
         );
     },
 ];
