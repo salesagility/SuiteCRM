@@ -8,12 +8,6 @@ use Slim\Http\Response;
 
 class ModuleController extends BaseController
 {
-    const GET_MODULE_RECORD = self::class . ':getModuleRecord';
-    const GET_MODULE_RECORDS = self::class . ':getModuleRecords';
-    const CREATE_MODULE_RECORD = self::class . ':createModuleRecord';
-    const UPDATE_MODULE_RECORD = self::class . ':updateModuleRecord';
-    const DELETE_MODULE_RECORD = self::class . ':deleteModuleRecord';
-
     /**
      * @var ModuleService
      */

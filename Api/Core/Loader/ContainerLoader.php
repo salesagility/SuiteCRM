@@ -45,6 +45,7 @@ class ContainerLoader
             $configs[] = $config;
         }
 
-        return !$configs ? $configs : array_merge(...$configs);
+        // since we support 5.5.9, we can't use splat op here
+        return !$configs ? $configs : array_reduce($configs, 'array_merge', []);
     }
 }

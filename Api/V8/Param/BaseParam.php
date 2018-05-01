@@ -28,14 +28,12 @@ abstract class BaseParam implements \JsonSerializable
     }
 
     /**
-     * @param array ...$arguments
+     * @param array $arguments
      *
      * @return $this
      */
-    final public function configure(...$arguments)
+    final public function configure(array $arguments)
     {
-        $arguments = array_merge(...$arguments);
-
         $optionsResolver = new OptionsResolver();
         $this->configureParameters($optionsResolver);
         $this->parameters = $optionsResolver->resolve($arguments);

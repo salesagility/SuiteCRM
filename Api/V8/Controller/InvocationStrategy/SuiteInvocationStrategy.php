@@ -20,12 +20,12 @@ class SuiteInvocationStrategy implements InvocationStrategyInterface
             $request = $request->withAttribute($attribute, $value);
         }
 
-        $controllerArgs = [$request, $response, $routeArguments];
-
-        if ($request->getAttribute('params')) {
-            $controllerArgs[] = $request->getAttribute('params');
-        }
-
-        return $callable(...$controllerArgs);
+        // since we support 5.5.9, we can't use splat op here
+        return $callable(
+            $request,
+            $response,
+            $routeArguments,
+            $request->getAttribute('params') ? $request->getAttribute('params') : null
+        );
     }
 }

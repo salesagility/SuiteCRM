@@ -1,8 +1,6 @@
 <?php
 
 use Api\V8\Controller\LogoutController;
-use Api\V8\Controller\ModuleController;
-use Api\V8\Controller\RelationshipController;
 use Api\V8\Factory\ParamsMiddlewareFactory;
 use Api\V8\Param\ModuleParams;
 use Api\V8\Param\RelationshipParams;
@@ -25,42 +23,42 @@ $app->group('', function () use ($app) {
         /**
          * Logout
          */
-        $this->post('/logout', LogoutController::LOGOUT);
+        $this->post('/logout', LogoutController::class);
 
         /**
          * Get module records
          */
         $this
-            ->get('/module/{moduleName}', ModuleController::GET_MODULE_RECORDS)
+            ->get('/module/{moduleName}', 'Api\V8\Controller\ModuleController:getModuleRecords')
             ->add($paramsMiddlewareFactory->bind(ModuleParams::class));
 
         /**
          * Get a module record
          */
         $this
-            ->get('/module/{moduleName}/{id}', ModuleController::GET_MODULE_RECORD)
+            ->get('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:getModuleRecord')
             ->add($paramsMiddlewareFactory->bind(ModuleParams::class));
 
         /**
          * Create a module record
          */
-        $this->post('/module/{moduleName}', ModuleController::CREATE_MODULE_RECORD);
+        $this->post('/module/{moduleName}', 'Api\V8\Controller\ModuleController:createModuleRecord');
 
         /**
          * Update a module record
          */
-        $this->patch('/module/{moduleName}/{id}', ModuleController::UPDATE_MODULE_RECORD);
+        $this->patch('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:updateModuleRecord');
 
         /**
          * Delete a module record
          */
-        $this->delete('/module/{moduleName}/{id}', ModuleController::DELETE_MODULE_RECORD);
+        $this->delete('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:deleteModuleRecord');
 
         /**
          * Get a relationship
          */
         $this
-            ->get('/relationship/{moduleName}', RelationshipController::GET_RELATIONSHIP)
+            ->get('/relationship/{moduleName}', 'Api\V8\Controller\RelationshipController:getRelationship')
             ->add($paramsMiddlewareFactory->bind(RelationshipParams::class));
 
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));

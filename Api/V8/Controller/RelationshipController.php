@@ -5,8 +5,6 @@ use Api\V8\Service\RelationshipService;
 
 class RelationshipController extends BaseController
 {
-    const GET_RELATIONSHIP = self::class . ':getRelationship';
-
     /**
      * @var RelationshipService
      */

@@ -8,8 +8,6 @@ use Slim\Http\Response;
 
 class LogoutController extends BaseController
 {
-    const LOGOUT = self::class . ':logout';
-
     /**
      * @var LogoutService
      */
@@ -33,11 +31,10 @@ class LogoutController extends BaseController
     /**
      * @param Request $request
      * @param Response $response
-     * @param array $args
      *
      * @return Response
      */
-    public function logout(Request $request, Response $response, array $args)
+    public function __invoke(Request $request, Response $response)
     {
         try {
             $accessToken = $this->resourceServer
