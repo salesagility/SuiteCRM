@@ -134,6 +134,12 @@ class ModuleBuilder extends Administration
         $I->click('.container-close');
     }
 
+    /**
+     * @param string $packageName
+     * @param boolean $packageExists
+     *
+     */
+
     public function deployPackage($packageName, $packageExists = false)
     {
         $I = $this;
