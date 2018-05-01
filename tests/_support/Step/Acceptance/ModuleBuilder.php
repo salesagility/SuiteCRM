@@ -74,22 +74,14 @@ class ModuleBuilder extends Administration
             $I->closePopupSuccess();
 
             // Deploy module
+
             $I->waitForElementVisible('[name="name"]');
-            $I->click('Module Builder');
-            $I->waitForElementVisible('.bodywrapper');
-            $I->click($packageName, '.bodywrapper');
-            $I->waitForElementVisible('[name="name"]');
-            $I->click('Deploy');
 
-            if($packageExists) {
-                $I->acceptPopup();
-            }
+            $I->deployPackage($packageName);
+            // Redeploy @TODO seperate this out to new test
+            $I->deployPackage($packageName, true);
 
-            // Close popup
-            $I->closePopupSuccess();
 
-            // Wait for page to refresh and look for new package link
-            $I->waitForElement('#newPackageLink', 360);
 
         } else {
             $I->getScenario()->skip($packageName . ' already exists. Please remove package and module manually.');
@@ -140,5 +132,28 @@ class ModuleBuilder extends Administration
         $I->waitForElementVisible('#sugarMsgWindow_mask', 30);
         $I->waitForText('This operation is completed successfully', 30, '#sugarMsgWindow_c');
         $I->click('.container-close');
+    }
+
+    public function deployPackage($packageName, $packageExists = false)
+    {
+        $I = $this;
+
+        // Go to Package
+        $I->click('Module Builder');
+        $I->waitForElementVisible('.bodywrapper');
+        $I->click($packageName, '.bodywrapper');
+        $I->waitForElementVisible('[name="name"]');
+        $I->click('Deploy');
+
+        if($packageExists) {
+            $I->acceptPopup();
+        }
+
+        // Close popup
+        $I->closePopupSuccess();
+
+        // Wait for page to refresh and look for new package link
+        $I->waitForElement('#newPackageLink', 360);
+
     }
 }
