@@ -12,9 +12,11 @@ NC='\033[0m' # No Color
 
 function push_output {
 FILE=$1;
+# html extension is not supported
+cp $FILE "$FILE.txt"
 echo -n "Error: ScreenShot $FILE: open ";
 echo -ne $BLUE;
-curl -F "files[]=@$FILE" https://rokket.space/upload\?output\=text;
+curl -F "files[]=@$FILE.txt" https://rokket.space/upload\?output\=text;
 echo -en $NC;
 echo " in your favorite web browser";
 echo " "
