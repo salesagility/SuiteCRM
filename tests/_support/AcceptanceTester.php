@@ -60,4 +60,21 @@ class AcceptanceTester extends \Codeception\Actor
         $I = $this;
         $I->clickUserMenuItem('#logout_link');
     }
+
+    public function dontSeeMissingLabels()
+    {
+        $I = $this;
+        $I->dontSee('LBL_');
+    }
+
+    public function dontSeeErrors()
+    {
+        $I = $this;
+        $I->dontSee('Warning');
+        $I->dontSee('Notice');
+        $I->dontSee('Error');
+        $I->dontSee('error');
+        $I->dontSee('PHP');
+    }
+
 }
