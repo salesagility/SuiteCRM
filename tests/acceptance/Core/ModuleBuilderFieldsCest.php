@@ -381,6 +381,7 @@ class ModuleBuilderFieldsCest
         // Create an account to relate to
         $this->fakeData->seed($this->fakeDataSeed);
         $company = $this->fakeData->company;
+        $I->waitForElementVisible('#name', 30);
         $editView->fillField('#name', $company);
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -391,6 +392,7 @@ class ModuleBuilderFieldsCest
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\ModuleFields::$NAME);
 
         // Create an account to relate to
+        $I->waitForElementVisible('#name', 30);
         $editView->fillField('#name', $company);
         $relateFieldId = 'test_relate_field';
         $editView->fillField( '#'.$relateFieldId, $company);
