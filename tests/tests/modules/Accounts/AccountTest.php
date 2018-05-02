@@ -105,6 +105,8 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //execute the method and verify that it retunrs expected results
         $actual = $Account->get_list_view_data();
+        $expected = ksort($expected);
+        $actual = ksort($actual);
         $this->assertSame($expected, $actual);
     }
 
