@@ -225,7 +225,7 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
-        $I->click('EditView', '.bodywrapper');
+        $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
@@ -307,7 +307,7 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
-        $I->click('EditView', '.bodywrapper');
+        $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
