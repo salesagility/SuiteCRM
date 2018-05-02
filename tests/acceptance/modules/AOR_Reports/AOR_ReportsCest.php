@@ -261,6 +261,7 @@ class AOR_ReportsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\NavigationBar $navigationBar
@@ -272,6 +273,7 @@ class AOR_ReportsCest
     public function testScenarioTextFieldReportOutput(
         \AcceptanceTester $I,
         \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\NavigationBar $navigationBar,
