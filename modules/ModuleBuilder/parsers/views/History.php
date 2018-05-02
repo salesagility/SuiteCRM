@@ -174,6 +174,7 @@ class History implements HistoryInterface
         // make sure we don't have a duplicate filename - highly unusual as two people should not be using Studio/MB concurrently, but when testing quite possible to do two appends within one second...
         // because so unlikely in normal use we handle this the naive way by waiting a second so our naming scheme doesn't get overelaborated
         $retries = 0;
+        error_reporting(-1);
 
         $now = TimeDate::getInstance()->getNow();
         $new_file = null;
@@ -183,7 +184,9 @@ class History implements HistoryInterface
             $new_file = $this->getFileByTimestamp($time);
         }
         // now we have a unique filename, copy the file into the history
-        copy($path, $new_file);
+        if(file_exists($path)){
+            copy($path, $new_file);
+        }
         $this->_list [] = $time;
 
         // finally, trim the number of files we're holding in the history to that specified in the configuration
