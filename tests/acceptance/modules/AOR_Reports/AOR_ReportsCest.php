@@ -101,7 +101,7 @@ class AOR_ReportsCest
         // Create a report
         $editView->waitForEditViewVisible();
         $editView->fillField('#name', 'Report_Test');
-        $editView->fillField('#report_module', 'Accounts');
+        $editView->selectOption('#report_module', 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
     }
@@ -308,7 +308,7 @@ class AOR_ReportsCest
         // Create a report
         $editView->waitForEditViewVisible();
         $editView->fillField('#name', 'Report_Test_Text');
-        $editView->fillField('#report_module', 'Accounts');
+        $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
         $editView->click('Fields', 'tab-toggler');
@@ -365,7 +365,7 @@ class AOR_ReportsCest
         // Create a report
         $editView->waitForEditViewVisible();
         $editView->fillField('#name', 'Report_Test_Dates');
-        $editView->fillField('#report_module', 'Accounts');
+        $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
         $editView->click('Fields', 'tab-toggler');
@@ -445,7 +445,7 @@ class AOR_ReportsCest
         // Create a report
         $editView->waitForEditViewVisible();
         $editView->fillField('#name', 'Report_Test_Pagination');
-        $editView->fillField('#report_module', 'Accounts');
+        $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
         $editView->click('Fields', 'tab-toggler');
@@ -498,7 +498,7 @@ class AOR_ReportsCest
         // Create a report
         $editView->waitForEditViewVisible();
         $editView->fillField('#name', 'Report_Test_Pagination_Parameters');
-        $editView->fillField('#report_module', 'Accounts');
+        $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
         $editView->click('Fields', 'tab-toggler');
@@ -562,7 +562,7 @@ class AOR_ReportsCest
         // Create a report
         $editView->waitForEditViewVisible();
         $editView->fillField('#name', 'Report_Test_Charts');
-        $editView->fillField('#report_module', 'Accounts');
+        $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
         $editView->click('Fields', 'tab-toggler');
@@ -631,7 +631,7 @@ class AOR_ReportsCest
         // Create a report
         $editView->waitForEditViewVisible();
         $editView->fillField('#name', 'Report_Test_Contains');
-        $editView->fillField('#report_module', 'Accounts');
+        $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
         $editView->click('Fields', 'tab-toggler');
