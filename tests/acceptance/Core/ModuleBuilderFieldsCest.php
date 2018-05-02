@@ -225,7 +225,7 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
-        $I->click('EditView', '.bodywrapper');
+        $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
@@ -307,7 +307,7 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
-        $I->click('EditView', '.bodywrapper');
+        $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
@@ -336,15 +336,10 @@ class ModuleBuilderFieldsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Deploy Test Module');
-        $moduleBuilder->selectPackage(\Page\ModuleFields::$PACKAGE_NAME);
-        // Save button
-        $I->click(['name' => 'deploybtn']);
-        $I->acceptPopup();
-        // Close popup
-        $moduleBuilder->closePopupSuccess();
 
-        // Wait for page to refresh and look for new package link
-        $I->waitForElement('#newPackageLink', 360);
+        $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
+        $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
+
         $repair->clickQuickRepairAndRebuild();
     }
 
@@ -381,6 +376,7 @@ class ModuleBuilderFieldsCest
         // Create an account to relate to
         $this->fakeData->seed($this->fakeDataSeed);
         $company = $this->fakeData->company;
+        $I->waitForElementVisible('#name', 30);
         $editView->fillField('#name', $company);
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -391,6 +387,7 @@ class ModuleBuilderFieldsCest
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\ModuleFields::$NAME);
 
         // Create an account to relate to
+        $I->waitForElementVisible('#name', 30);
         $editView->fillField('#name', $company);
         $relateFieldId = 'test_relate_field';
         $editView->fillField( '#'.$relateFieldId, $company);
