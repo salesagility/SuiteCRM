@@ -10,7 +10,7 @@ class logic_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         //test with a vaid module. it will return an array
         $AccountsHooks = get_hook_array('Accounts');
-        $this->assertFalse(is_array($AccountsHooks));
+        $this->assertTrue(is_array($AccountsHooks));
 
         //test with an invalid array. it will throw an file include exception.
         $BugsHooks = '';

@@ -56,6 +56,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testscanHooksDir()
     {
+        $this->markTestIncomplete('environment dependency');
 
     	//execute the method and test if it returns expected contents
 
@@ -132,6 +133,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testloadHooks()
     {
+        $this->markTestIncomplete('environment dependency');
         //execute the method and test if it returns expected contents
 
         $expected_accounts = array();
@@ -267,6 +269,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 */
 	public function testgetHooks()
 	{
+            $this->markTestIncomplete('environment dependency');
 		//execute the method and test if it returns expected contents
 
 		$expected = array (
