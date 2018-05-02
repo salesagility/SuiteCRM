@@ -241,8 +241,20 @@ class EmailMan extends SugarBean{
     	global $locale, $current_user;
         $temp_array = parent::get_list_view_array();
 
-        $related_type = $temp_array['RELATED_TYPE'];
-        $related_id = $temp_array['RELATED_ID'];
+        $related_type = null;
+        if (isset($temp_array['RELATED_TYPE'])) {
+            $related_type = $temp_array['RELATED_TYPE'];            
+        } else {
+            LoggerManager::getLogger()->warn('Related type is not defined for EmailMan list view data');
+        }
+        
+        $related_id = null;
+        if (isset($temp_array['RELATED_ID'])) {
+            $related_id = $temp_array['RELATED_ID'];            
+        } else {
+            LoggerManager::getLogger()->warn('Related ID is not defined for EmailMan list view data');
+        }
+        
         $is_person = SugarModule::get($related_type)->moduleImplements('Person');
 
         if($is_person)
@@ -270,7 +282,14 @@ class EmailMan extends SugarBean{
             $temp_array['RECIPIENT_EMAIL']=$row['email_address'];
         }
 
-        $this->email1 = $temp_array['RECIPIENT_EMAIL'];
+        
+        $this->email1 = null;
+        if (isset($temp_array['RECIPIENT_EMAIL'])) {
+            $this->email1 = $temp_array['RECIPIENT_EMAIL'];            
+        } else {
+            LoggerManager::getLogger()->warn('Recipient email is not defined for EmailMan list view data');
+        }
+        
 		$temp_array['EMAIL1_LINK'] = $current_user->getEmailLink('email1', $this, '', '', 'ListView');
 
         return $temp_array;
