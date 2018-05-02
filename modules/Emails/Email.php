@@ -2530,7 +2530,18 @@ class Email extends SugarBean {
 
 		if($this->status != 'replied') {
 			$email_fields['QUICK_REPLY'] = '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record='.$this->id.'&inbound_email_id='.$this->id.'">'.$mod_strings['LNK_QUICK_REPLY'].'</a>';
-			$email_fields['STATUS'] = ($email_fields['REPLY_TO_STATUS'] == 1 ? $mod_strings['LBL_REPLIED'] : $email_fields['STATUS']);
+                        
+                        $replyToStatus = null;
+                        if (isset($email_fields['REPLY_TO_STATUS'])) {
+                            $replyToStatus = $email_fields['REPLY_TO_STATUS'];
+                        } else {
+                            LoggerManager::getLogger()->warn('Reply to status is not defined for email list view data');
+                        }
+                        
+                        if ($replyToStatus == 1) {
+                            $email_fields['STATUS'] = $mod_strings['LBL_REPLIED'];
+                        }
+                        
 		} else {
 			$email_fields['QUICK_REPLY'] = $mod_strings['LBL_REPLIED'];
 		}
