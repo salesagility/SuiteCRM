@@ -556,21 +556,29 @@ class Meeting extends SugarBean {
 		global $timedate;
 		$today = $timedate->nowDb();
 		$nextday = $timedate->asDbDate($timedate->getNow()->get("+1 day"));
-		$mergeTime = $meeting_fields['DATE_START']; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
+                
+                $dateStart = null;
+                if (isset($meeting_fields['DATE_START'])) {
+                    $dateStart = $meeting_fields['DATE_START'];
+                } else {
+                    LoggerManager::getLogger()->warn('Date start is not defined to get meeting list view data');
+                }
+                
+		$mergeTime = $dateStart; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if($date_db	< $today	) {
 			if($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held')
 			{
-				$meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
+				$meeting_fields['DATE_START']= "<font>".$dateStart."</font>";
 			}
 			else
 			{
-				$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meeting_fields['DATE_START']."</font>";
+				$meeting_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";
 			}
 		}else if($date_db	< $nextday) {
-			$meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meeting_fields['DATE_START']."</font>";
+			$meeting_fields['DATE_START'] = "<font class='todaysTask'>".$dateStart."</font>";
 		} else {
-			$meeting_fields['DATE_START'] = "<font class='futureTask'>".$meeting_fields['DATE_START']."</font>";
+			$meeting_fields['DATE_START'] = "<font class='futureTask'>".$dateStart."</font>";
 		}
 		$this->fill_in_additional_detail_fields();
 

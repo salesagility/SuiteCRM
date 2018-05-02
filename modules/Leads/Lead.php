@@ -305,8 +305,21 @@ class Lead extends Person {
 	function get_list_view_data(){
 
 		$temp_array = parent::get_list_view_data();
+                
+                $value = null;
+                if (empty($temp_array['ACC_NAME_FROM_ACCOUNTS'])) {
+                    
+                    if (isset($temp_array['ACCOUNT_NAME'])) {
+                        $value = $temp_array['ACCOUNT_NAME'];
+                    } else {
+                        LoggerManager::getLogger()->warn('Account name is not defined for Lead list view data');
+                    }
+                    
+                } else {
+                    $value = $temp_array['ACC_NAME_FROM_ACCOUNTS'];
+                }
 
-		$temp_array['ACC_NAME_FROM_ACCOUNTS'] = empty($temp_array['ACC_NAME_FROM_ACCOUNTS']) ? ($temp_array['ACCOUNT_NAME']) : ($temp_array['ACC_NAME_FROM_ACCOUNTS']);
+		$temp_array['ACC_NAME_FROM_ACCOUNTS'] = $value;
 
 		return $temp_array;
 	}
