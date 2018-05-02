@@ -716,11 +716,11 @@ class SugarBean
             }
 
             if (file_exists($filename)) {
-                include($filename);
                 // cn: bug 7679 - dictionary entries defined as $GLOBALS['name'] not found
                 if (empty($dictionary) || !empty($GLOBALS['dictionary'][$key])) {
                     $dictionary = $GLOBALS['dictionary'];
                 }
+                include($filename);
             } else {
                 $GLOBALS['log']->debug('createRelationshipMeta: no metadata file found' . $filename);
 
