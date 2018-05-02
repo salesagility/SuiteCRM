@@ -4,6 +4,15 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOW_WorkFlow()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $aowWorkFlow = new AOW_WorkFlow();
@@ -17,19 +26,49 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $aowWorkFlow);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aowWorkFlow);
         $this->assertAttributeEquals(false, 'importable', $aowWorkFlow);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testbean_implements()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
 
         $aowWorkFlow = new AOW_WorkFlow();
         $this->assertEquals(false, $aowWorkFlow->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowWorkFlow->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aowWorkFlow->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testsave()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         $aowWorkFlow->name = 'test';
@@ -45,10 +84,25 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aowWorkFlow->mark_deleted($aowWorkFlow->id);
         $result = $aowWorkFlow->retrieve($aowWorkFlow->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testload_flow_beans()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //execute the method and test if it works and does not throws an exception.
@@ -58,18 +112,48 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testrun_flows()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         $result = $aowWorkFlow->run_flows();
         $this->assertTrue($result);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testrun_flow()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //execute the method and test if it works and does not throws an exception.
@@ -79,10 +163,25 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testrun_bean_flows()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //test with different modules. it always returns true
@@ -94,20 +193,50 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $calls = new Call();
         $result = $aowWorkFlow->run_bean_flows($calls);
         $this->assertTrue($result);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_flow_beans()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //test for AOS_Quotes. it will return null as no test data is available
         $aowWorkFlow->flow_module = 'AOS_Quotes';
         $result = $aowWorkFlow->get_flow_beans();
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testbuild_flow_query_join()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
         $query = array();
 
@@ -127,10 +256,25 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
         $result = $aowWorkFlow->build_flow_query_join('aos_products_quotes', new AOS_Quotes(), 'relationship', array());
         $this->assertSame($expected, $result);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testbuild_flow_query_where()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //test without presetting required object attributes
@@ -156,10 +300,25 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aowWorkFlow->multiple_runs = 1;
         $query = $aowWorkFlow->build_flow_query_where();
         $this->assertSame($expected, $query);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testbuild_query_where()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //populate required values
@@ -220,10 +379,25 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = $aowWorkFlow->build_query_where($aowCondition, $call);
         $this->assertEquals($expected, $query);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testcheck_valid_bean()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
         $aowWorkFlow->flow_run_on = 'New_Records';
 
@@ -231,10 +405,25 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $aowWorkFlow->check_valid_bean($aosQuotes);
         $this->assertTrue($result);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testcompare_condition()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //execute the method and verify that it returns valid values for all operators
@@ -258,19 +447,49 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
         $this->assertEquals(4, $aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testcheck_in_group()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //test with two different modules
         $this->assertFalse($aowWorkFlow->check_in_group(1, 'Users', 1));
         $this->assertFalse($aowWorkFlow->check_in_group(1, 'Calls', 1));
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 
     public function testrun_actions()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aow_processed');
+        $state->pushTable('aow_workflow');
+        
+        // test
+        
         $aowWorkFlow = new AOW_WorkFlow();
 
         //prepare the required objects and variables
@@ -294,5 +513,11 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $processed->mark_deleted($processed->id);
         $result = $processed->retrieve($processed->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aow_workflow');
+        $state->popTable('aow_processed');
+        $state->popTable('aod_indexevent');
     }
 }
