@@ -704,7 +704,11 @@ class Meeting extends SugarBean {
 		require_once("modules/vCals/vCal.php");
 		$content = vCal::get_ical_event($this, $GLOBALS['current_user']);
 
-		if(file_put_contents($path,$content)){
+                if (is_dir($path)) {
+                    LoggerManager::getLogger()->error('failed to open stream: Is a directory: ' . $path);
+                } elseif (!file_exists($path)) {
+                    LoggerManager::getLogger()->error('file not exists: ' . $path);
+                } elseif(file_put_contents($path,$content)){
 			$notify_mail->AddAttachment($path, 'meeting.ics', 'base64', 'text/calendar');
 		}
 		return $notify_mail;
