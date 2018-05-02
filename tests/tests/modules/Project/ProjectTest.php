@@ -162,13 +162,19 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	$project = new Project();
 
     	//test with empty string params
-    	$expected = "SELECT\n				project.*,\n                users.user_name as assigned_user_name ,project_cstm.jjwg_maps_lng_c,project_cstm.jjwg_maps_lat_c,project_cstm.jjwg_maps_geocode_status_c,project_cstm.jjwg_maps_address_c FROM project  LEFT JOIN project_cstm ON project.id = project_cstm.id_c  LEFT JOIN users\n                   	ON project.assigned_user_id=users.id where  project.deleted=0 ";
+    	$expected = "SELECT
+				project.*,
+                users.user_name as assigned_user_name ,project_cstm.jjwg_maps_lat_c,project_cstm.jjwg_maps_address_c,project_cstm.jjwg_maps_geocode_status_c,project_cstm.jjwg_maps_lng_c FROM project  LEFT JOIN project_cstm ON project.id = project_cstm.id_c  LEFT JOIN users
+                   	ON project.assigned_user_id=users.id where  project.deleted=0 ";
     	$actual = $project->create_export_query('','');
     	$this->assertSame($expected,$actual);
 
 
     	//test with valid string params
-    	$expected = "SELECT\n				project.*,\n                users.user_name as assigned_user_name ,project_cstm.jjwg_maps_lng_c,project_cstm.jjwg_maps_lat_c,project_cstm.jjwg_maps_geocode_status_c,project_cstm.jjwg_maps_address_c FROM project  LEFT JOIN project_cstm ON project.id = project_cstm.id_c  LEFT JOIN users\n                   	ON project.assigned_user_id=users.id where (users.user_name) AND  project.deleted=0  ORDER BY project.id";
+    	$expected = "SELECT
+				project.*,
+                users.user_name as assigned_user_name ,project_cstm.jjwg_maps_lat_c,project_cstm.jjwg_maps_address_c,project_cstm.jjwg_maps_geocode_status_c,project_cstm.jjwg_maps_lng_c FROM project  LEFT JOIN project_cstm ON project.id = project_cstm.id_c  LEFT JOIN users
+                   	ON project.assigned_user_id=users.id where (users.user_name) AND  project.deleted=0  ORDER BY project.id";
     	$actual = $project->create_export_query('project.id','users.user_name');
     	$this->assertSame($expected,$actual);
 
