@@ -778,6 +778,15 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             if ($expectedKey == 'CREATE_RELATED') {
                 $this->assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
             } else {
+                
+                if (!isset($expected[$expectedKey])) {
+                    $expected[$expectedKey] = null;
+                }
+                
+                if (!isset($actual[$expectedKey])) {
+                    $actual[$expectedKey] = null;
+                }
+                
                 $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
             }
         }
