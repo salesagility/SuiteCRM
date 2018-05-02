@@ -7,8 +7,6 @@ php:
   - 7.2
 matrix:
   fast_finish: true
-  allow_failures:
-    - php: 7.2
 
 sudo: required
 dist: trusty
