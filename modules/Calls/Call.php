@@ -512,21 +512,30 @@ class Call extends SugarBean {
 		global $timedate;
 		$today = $timedate->nowDb();
 		$nextday = $timedate->asDbDate($timedate->getNow()->modify("+1 day"));
-		$mergeTime = $call_fields['DATE_START']; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
+                
+                
+                $dateStart = null;
+                if (isset($call_fields['DATE_START'])) {
+                    $dateStart = $call_fields['DATE_START'];
+                } else {
+                    LoggerManager::getLogger()->warn('DATE_START is undefined for Call list view data');
+                }
+                
+		$mergeTime = $dateStart; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if( $date_db	< $today){
 			if($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held')   
 			{    
-				$call_fields['DATE_START']= "<font>".$call_fields['DATE_START']."</font>";   
+				$call_fields['DATE_START']= "<font>".$dateStart."</font>";   
 			}   
 			else   
 			{    
-				$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";   
+				$call_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";   
 			}
 		}else if($date_db < $nextday){
-			$call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
+			$call_fields['DATE_START'] = "<font class='todaysTask'>".$dateStart."</font>";
 		}else{
-			$call_fields['DATE_START'] = "<font class='futureTask'>".$call_fields['DATE_START']."</font>";
+			$call_fields['DATE_START'] = "<font class='futureTask'>".$dateStart."</font>";
 		}
 		$this->fill_in_additional_detail_fields();
 
