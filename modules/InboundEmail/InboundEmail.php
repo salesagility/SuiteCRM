@@ -4975,7 +4975,15 @@ eoq;
 		global $mod_strings;
 		global $app_list_strings;
 		$temp_array = $this->get_list_view_array();
-		$temp_array['MAILBOX_TYPE_NAME']= $app_list_strings['dom_mailbox_type'][$this->mailbox_type];
+                
+                $mailboxType = null;
+                if (isset($app_list_strings['dom_mailbox_type'][$this->mailbox_type])) {
+                    $mailboxType = $app_list_strings['dom_mailbox_type'][$this->mailbox_type];
+                } else {
+                    LoggerManager::getLogger()->warn('Mailbox type is not set in $app_list_strings[dom_mailbox_type][' . $this->mailbox_type. ']');
+                }
+                
+		$temp_array['MAILBOX_TYPE_NAME']= $mailboxType;
 		//cma, fix bug 21670.
         $temp_array['GLOBAL_PERSONAL_STRING']= ($this->is_personal ? $mod_strings['LBL_IS_PERSONAL'] : $mod_strings['LBL_IS_GROUP']);
         $temp_array['STATUS'] = ($this->status == 'Active') ? $mod_strings['LBL_STATUS_ACTIVE'] : $mod_strings['LBL_STATUS_INACTIVE'];
