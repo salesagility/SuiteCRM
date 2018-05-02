@@ -348,8 +348,32 @@ class Document extends File {
 		$document_fields['FILE_URL'] = $this->file_url;
 		$document_fields['FILE_URL_NOIMAGE'] = $this->file_url_noimage;
 		$document_fields['LAST_REV_CREATED_BY'] = $this->last_rev_created_name;
-		$document_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $app_list_strings['document_category_dom'][$this->category_id];
-		$document_fields['SUBCATEGORY_ID'] = empty ($this->subcategory_id) ? "" : $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
+                
+                $value = null;
+                if (empty ($this->category_id)) {
+                    $value = '';
+                } else {
+                    if (isset($app_list_strings['document_category_dom'][$this->category_id])) {                    
+                        $value = $app_list_strings['document_category_dom'][$this->category_id];
+                    } else {
+                        LoggerManager::getLogger()->warn('Categori ID is not set for Document list view data in $app_list_strings[document_category_dom]['.$this->category_id.']');
+                    }
+                }
+                
+		$document_fields['CATEGORY_ID'] = $value;
+                
+                $value = null;
+                if (empty ($this->subcategory_id)) {
+                    $value = '';
+                } else {
+                    if (isset($app_list_strings['document_subcategory_dom'][$this->subcategory_id])) {                    
+                        $value = $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
+                    } else {
+                        LoggerManager::getLogger()->warn('Categori ID is not set for Document list view data in $app_list_strings[document_subcategory_dom]['.$this->subcategory_id.']');
+                    }
+                }
+                
+		$document_fields['SUBCATEGORY_ID'] = $value;
         $document_fields['NAME'] = $this->document_name;
 		$document_fields['DOCUMENT_NAME_JAVASCRIPT'] = DBManagerFactory::getInstance()->quote($document_fields['DOCUMENT_NAME']);
 		return $document_fields;
