@@ -612,19 +612,55 @@ class Meeting extends SugarBean {
 
 
 		// cn: bug 9494 - passing a contact breaks this call
-		$notifyUser =($meeting->current_notify_user->object_name == 'User') ? $meeting->current_notify_user : $current_user;
+                
+                $meetingCurrentNotifyUserObjectName = null;
+                if (isset($meeting->current_notify_user->object_name)) {
+                    $meetingCurrentNotifyUserObjectName = $meeting->current_notify_user->object_name;
+                } else {
+                    if (!isset($meeting->current_notify_user->object_name)) {
+                        LoggerManager::getLogger()->warn('Meeting current notify user object name is not set for set notification body');
+                    } elseif (!isset($meeting->current_notify_user)) {
+                        LoggerManager::getLogger()->warn('Meeting current notify user is not set for set notification body');
+                    } elseif (!isset($meeting)) {
+                        LoggerManager::getLogger()->warn('Meeting is not set for set notification body');
+                    }
+                }
+                
+                $meetingCurrentNotificationUser = null;
+                if (isset($meeting->current_notify_user)) {
+                    $meetingCurrentNotificationUser = $meeting->current_notify_user;
+                }
+                
+		$notifyUser =($meetingCurrentNotifyUserObjectName == 'User') ? $meetingCurrentNotificationUser : $current_user;
+                
+                $meetingCurrentNotifyUserId = null;
+                if (isset($meeting->current_notify_user->id)) {
+                    $meetingCurrentNotifyUserId = $meeting->current_notify_user->id;
+                } else {
+                    LoggerManager::getLogger()->wanr('Meeting current notify user id is not set for set notification body');
+                }
+                
 		// cn: bug 8078 - fixed call to $timedate
 		if(strtolower(get_class($meeting->current_notify_user)) == 'contact') {
 			$xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
-							'/index.php?entryPoint=acceptDecline&module=Meetings&contact_id='.$meeting->current_notify_user->id.'&record='.$meeting->id);
+							'/index.php?entryPoint=acceptDecline&module=Meetings&contact_id='.$meetingCurrentNotifyUserId.'&record='.$meeting->id);
 		} elseif(strtolower(get_class($meeting->current_notify_user)) == 'lead') {
 			$xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
-							'/index.php?entryPoint=acceptDecline&module=Meetings&lead_id='.$meeting->current_notify_user->id.'&record='.$meeting->id);
+							'/index.php?entryPoint=acceptDecline&module=Meetings&lead_id='.$meetingCurrentNotifyUserId.'&record='.$meeting->id);
 		} else {
+                    
 			$xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
-							'/index.php?entryPoint=acceptDecline&module=Meetings&user_id='.$meeting->current_notify_user->id.'&record='.$meeting->id);
+							'/index.php?entryPoint=acceptDecline&module=Meetings&user_id='.$meetingCurrentNotifyUserId.'&record='.$meeting->id);
 		}
-		$xtpl->assign("MEETING_TO", $meeting->current_notify_user->new_assigned_user_name);
+                
+                $meetingCurrentNotificationUserNewAssignedUserName = null;
+                if (isset($meeting->current_notify_user->new_assigned_user_name)) {
+                    $meetingCurrentNotificationUserNewAssignedUserName = $meeting->current_notify_user->new_assigned_user_name;
+                } else {
+                    LoggerManager::getLogger()->warn('Meeting current notify user new assigned user name is not set for Meeting set notification body');
+                }
+                
+		$xtpl->assign("MEETING_TO", $meetingCurrentNotificationUserNewAssignedUserName);
 		$xtpl->assign("MEETING_SUBJECT", trim($meeting->name));
 		$xtpl->assign("MEETING_STATUS",(isset($meeting->status)? $app_list_strings['meeting_status_dom'][$meeting->status]:""));
 		$typekey = strtolower($meeting->type);
