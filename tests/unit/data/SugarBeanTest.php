@@ -708,12 +708,12 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null, array(), null, null);
+        SugarBean::createRelationshipMeta(null, null, null, array(), null);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null, array(), null, 'Contacts');
+        SugarBean::createRelationshipMeta(null, null,null, array(), 'Contacts');
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
