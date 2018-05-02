@@ -42,7 +42,14 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $userPreference->getDefaultPreference('timef');
         $this->assertEquals($time_format, $result);
 
-        $email_link_type = $sugar_config['email_link_type'] != '' ? $sugar_config['email_link_type'] : $sugar_config['email_default_client'];
+        $emailLinkType = null;
+        if (isset($sugar_config['email_link_type'])) {
+            $emailLinkType = $sugar_config['email_link_type'];
+        } else {
+            LoggerManager::getLogger()->warn('Email link type is not set, please use $sugar_config[email_link_type]');
+        }
+        
+        $email_link_type = $emailLinkType != '' ? $emailLinkType : $sugar_config['email_default_client'];
         $result = $userPreference->getDefaultPreference('email_link_type');
         $this->assertEquals($email_link_type, $result);
     }
