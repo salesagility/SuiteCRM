@@ -171,7 +171,11 @@ class AOW_WorkFlow extends Basic
         $flows = AOW_WorkFlow::get_full_list('',
             " aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
-        foreach ($flows as $flow) {
+        if (empty($flows)) {
+            LoggerManager::getLogger()->warn('There is no any workflow to run');
+        }
+        
+        foreach ((array)$flows as $flow) {
             $flow->run_flow();
         }
 
