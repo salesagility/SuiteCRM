@@ -154,23 +154,15 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'REVISION' => '1',
                 'LAST_REV_CREATED_NAME' => 'test',
                 'IS_TEMPLATE' => '0',
-                'FILE_URL' => '~'
-                                .'<a href=\'index.php\?entryPoint=download\&id=\&type=Documents\' target=\'_blank\'><img src="themes/\w+/images/def_image_inline\.\w+\?v='
-                                .'~',
+                'FILE_URL' => '<a href=\'index.php?entryPoint=download&id=&type=Documents\' target=\'_blank\'><img src="themes/default/images/def_image_inline.gif?v=fR08Jur0v2m7hjIT7Z3gUg"    border="0" alt="View" /></a>',
                 'FILE_URL_NOIMAGE' => 'index.php?entryPoint=download&type=Documents&id=',
                 'LAST_REV_CREATED_BY' => 'test',
                 'NAME' => 'test',
-                'DOCUMENT_NAME_JAVASCRIPT' => null,
+                'DOCUMENT_NAME_JAVASCRIPT' => 'test',
         );
 
         $actual = $document->get_list_view_data();
-        foreach ($expected as $expectedKey => $expectedVal) {
-            if ($expectedKey == 'FILE_URL') {
-                $this->assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
-            } else {
-                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
-            }
-        }
+        $this->assertSame($expected, $actual);
     }
 
     public function testmark_relationships_deleted()
