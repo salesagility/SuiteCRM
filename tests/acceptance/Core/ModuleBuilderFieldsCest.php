@@ -336,15 +336,10 @@ class ModuleBuilderFieldsCest
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Deploy Test Module');
-        $moduleBuilder->selectPackage(\Page\ModuleFields::$PACKAGE_NAME);
-        // Save button
-        $I->click(['name' => 'deploybtn']);
-        $I->acceptPopup();
-        // Close popup
-        $moduleBuilder->closePopupSuccess();
 
-        // Wait for page to refresh and look for new package link
-        $I->waitForElement('#newPackageLink', 360);
+        $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
+        $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
+
         $repair->clickQuickRepairAndRebuild();
     }
 
