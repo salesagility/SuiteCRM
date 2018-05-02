@@ -729,6 +729,12 @@ foreach($varStack['defined_vars'] as $__key => $__value) $$__key = $__value;
 $endTime = microtime(true);
 $deltaTime = $endTime - $startTime;
 
+if (!is_array($bottle) || !is_object($bottle)) {
+    $bottle = (array)$bottle;
+    LoggerManager::getLogger()->warn('Bottle needs to be an array to perform setup');
+}
+
+
 if( count( $bottle ) > 0 ){
     foreach( $bottle as $bottle_message ){
         $bottleMsg .= "{$bottle_message}\n";
