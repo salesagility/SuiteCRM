@@ -22,7 +22,7 @@
  * smarty-discussion-subscribe@googlegroups.com 
  *
  * @link http://www.smarty.net/
- * @version 2.6.29
+ * @version 2.6.25-dev
  * @copyright Copyright: 2001-2005 New Digital Group, Inc.
  * @author Andrei Zmievski <andrei@php.net>
  * @access public
@@ -238,11 +238,14 @@ class Config_File {
             $config_file = $file_name;
 
         ini_set('track_errors', true);
-        $contents = @sugar_file_get_contents($config_file);
-        if ($contents === false) {
+        $fp = @fopen($config_file, "r");
+        if (!is_resource($fp)) {
             $this->_trigger_error_msg("Could not open config file '$config_file'");
             return false;
         }
+
+        $contents = ($size = filesize($config_file)) ? fread($fp, $size) : '';
+        fclose($fp);
 
         $this->_config_data[$config_file] = $this->parse_contents($contents);
         return true;
