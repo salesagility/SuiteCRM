@@ -293,6 +293,17 @@ class FilterParserTest extends \Codeception\Test\Unit
         );
     }
 
+    public function testParseFieldFilterWithDuplicateCharactersInTheValue()
+    {
+        $expect = array(
+            '[[eq]]',
+            'denver'
+        );
+
+        $actual = self::$filterParser->parseFieldFilterAdapter('[[eq]]denver');
+        $this->assertSame($expect, $actual);
+    }
+
     public function testParseFilter()
     {
 
