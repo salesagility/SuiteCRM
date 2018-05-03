@@ -229,7 +229,7 @@ abstract class AbstractMetaDataImplementation
 
         $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($defs, true));
 
-        return $temp['value']; // 'value' contains the value part of 'key'=>'value' part
+        return array_shift($defs); // 'value' contains the value part of 'key'=>'value' part
     }
 
     /**
