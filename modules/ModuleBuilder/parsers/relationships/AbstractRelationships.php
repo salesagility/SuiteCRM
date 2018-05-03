@@ -94,8 +94,7 @@ class AbstractRelationships
         $browser->loadRelatableModules();
         reset($browser->modules) ;
 
-        while ( list( $moduleName , $module ) = each($browser->modules) )
-        {
+        foreach ($browser->modules as $moduleName => $module) {
             // do not include the submodules of Activities as already have the parent...
             if (! $includeActivitiesSubmodules && in_array ( $module->module, self::$activities ))
                 continue ;

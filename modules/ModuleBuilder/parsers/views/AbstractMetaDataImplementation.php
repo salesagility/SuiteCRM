@@ -226,9 +226,8 @@ abstract class AbstractMetaDataImplementation
         $this->_variables = $variables;
         // now remove the modulename preamble from the loaded defs
         reset($defs);
-        $temp = each($defs);
 
-        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($temp['value'], true));
+        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($defs, true));
 
         return $temp['value']; // 'value' contains the value part of 'key'=>'value' part
     }
