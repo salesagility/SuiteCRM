@@ -53,6 +53,7 @@ class BasicModuleCest
     public function testScenarioCreateBasicModule(
        \AcceptanceTester $I,
        \Step\Acceptance\ModuleBuilder $moduleBuilder,
+       \Step\Acceptance\Repair $repair,
        \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Create a basic module for testing');
@@ -69,6 +70,7 @@ class BasicModuleCest
             \SuiteCRM\Enumerator\SugarObjectType::basic
         );
 
+        $repair->clickQuickRepairAndRebuild();
         $this->lastView = 'ModuleBuilder';
     }
 
