@@ -195,4 +195,15 @@ class SugarFieldFile extends SugarFieldBase {
             }
         }
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col)
+    {
+        global $currentModule;
+        $displayParams['module'] = $currentModule;
+
+        return parent::getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col);
+    }
 }
