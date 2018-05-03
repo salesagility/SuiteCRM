@@ -95,14 +95,9 @@ class OAuth2ClientsViewEdit extends ViewEdit
     /**
      * @inheritdoc
      */
-    public function getEditView()
+    public function display()
     {
-        if(empty($this->ev)) {
-            $this->ev = new EditView();
-        }
-
         $this->ev->formName = $this->formName;
-
-        return $this->ev;
+        parent::display();
     }
 }
