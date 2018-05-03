@@ -50,6 +50,11 @@ class OAuth2ClientsViewEdit extends ViewEdit
     public $bean;
 
     /**
+     * @var string $formName
+     */
+    public $formName;
+
+    /**
      * @see SugarView::preDisplay()
      */
     public function getMetaDataFile()
@@ -64,14 +69,40 @@ class OAuth2ClientsViewEdit extends ViewEdit
     private function setViewType()
     {
         switch ($this->bean->allowed_grant_type) {
-            case 'password': $this->type = 'editpassword'; break;
-            case 'client_credentials': $this->type = 'editcredentials'; break;
+            case 'password':
+                $this->type = 'editpassword';
+                $this->formName = 'EditPassword';
+                break;
+            case 'client_credentials':
+                $this->type = 'editcredentials';
+                $this->formName = 'EditCredentials';
+                break;
         }
         if (!empty($_REQUEST['action'])) {
             switch ($_REQUEST['action']) {
-                case 'EditViewPassword': $this->type = 'editpassword'; break;
-                case 'EditViewCredentials': $this->type = 'editcredentials'; break;
+                case 'EditViewPassword':
+                    $this->type = 'editpassword';
+                    $this->formName = 'EditPassword';
+                    break;
+                case 'EditViewCredentials':
+                    $this->type = 'editcredentials';
+                    $this->formName = 'EditCredentials';
+                    break;
             }
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEditView()
+    {
+        if(empty($this->ev)) {
+            $this->ev = new EditView();
+        }
+
+        $this->ev->formName = $this->formName;
+
+        return $this->ev;
     }
 }
