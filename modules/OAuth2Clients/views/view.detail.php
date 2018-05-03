@@ -50,6 +50,11 @@ class OAuth2ClientsViewDetail extends ViewDetail
     public $bean;
 
     /**
+     * @var string $formName
+     */
+    public $formName;
+
+    /**
      * @see SugarView::preDisplay()
      */
     public function getMetaDataFile()
