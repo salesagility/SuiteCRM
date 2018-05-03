@@ -341,9 +341,11 @@ class FilterParser
      * @return string
      */
     private function stringDifference($a, $b) {
-        if (substr($a, 0, strlen($b)) == $b) {
+        if (substr($a, 0, strlen($b)) === $b) {
             return substr($a, strlen($b));
         }
+        
+        return "";
     }
 
     /**
