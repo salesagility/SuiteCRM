@@ -36,7 +36,7 @@ class BasicModuleCest
         $repair->clickQuickRepairAndRebuild();
 
         if($repairPage->executeSqlButtonExists()) {
-
+            $repair->clickExecuteSqlButton();
         }
     }
 
