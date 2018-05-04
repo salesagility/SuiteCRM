@@ -152,7 +152,6 @@ class InstallTester extends \Codeception\Actor
         $I->dontSee('Notice');
         $I->dontSee('Error');
         $I->dontSee('error');
-        $I->dontSee('PHP');
     }
 
     protected function isOldPhpVersionDetected()
