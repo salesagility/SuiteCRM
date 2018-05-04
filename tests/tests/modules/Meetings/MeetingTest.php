@@ -275,7 +275,8 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $meeting = new Meeting();
 
-        $result = $meeting->get_invite_meetings(new User());
+        $user = new User();
+        $result = $meeting->get_invite_meetings($user);
         $this->assertTrue(is_array($result));
     }
 
@@ -360,6 +361,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetMeetingsExternalApiDropDown()
     {
+        include_once __DIR__ . '/../../../../modules/Meetings/Meeting.php';
         $actual = getMeetingsExternalApiDropDown();
         $expected = array('Sugar' => 'SuiteCRM');
         $this->assertSame($expected, $actual);
@@ -367,6 +369,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetMeetingTypeOptions()
     {
+        include_once __DIR__ . '/../../../../modules/Meetings/Meeting.php';
         global $dictionary, $app_list_strings;
 
         $result = getMeetingTypeOptions($dictionary, $app_list_strings);
