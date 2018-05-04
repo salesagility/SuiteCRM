@@ -5,6 +5,14 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testViewSugarpdf()
     {
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+
 
          //execute the method without request parameters and test if it works. it should output some headers and throw headers output exception.
          try {
@@ -24,6 +32,10 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('sugarpdf', 'type', $view);
         $this->assertAttributeEquals('someValue', 'sugarpdf', $view);
         $this->assertAttributeEquals(null, 'sugarpdfBean', $view);
+         
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     //Incomplete test. SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
@@ -35,6 +47,18 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     //Incomplete test.  SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
     public function testdisplay()
     {
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+
         $this->markTestIncomplete('Can Not be implemented');
+         
+        // cleanup
+        
+        $state->popGlobals();
     }
 }

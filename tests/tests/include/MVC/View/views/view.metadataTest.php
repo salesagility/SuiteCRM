@@ -25,6 +25,13 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplaySelect()
     {
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $view = new ViewMetadata();
 
         //check with empty values array. it should return html sting
@@ -42,6 +49,10 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $renderedContent2 = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(strlen($renderedContent1), strlen($renderedContent2));
+         
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     public function testdisplayTextBoxes()
@@ -79,7 +90,13 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $view = new ViewMetadata();
 
         //test without setting REQUEST parameters
@@ -96,6 +113,10 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
+         
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     public function testgetModules()
