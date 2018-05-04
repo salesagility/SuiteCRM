@@ -95,21 +95,21 @@
                         <table id='type_{$type}' onclick='ModuleBuilder.buttonDown(this,"{$type}", "type"); ModuleBuilder.buttonToForm("CreateModule", "type", "type");' class='wizardButton' onmousedown='return false;' onmouseout='ModuleBuilder.buttonOut(this,"{$type}", "type");'>
 							<tr>
 							  <td  align='center'>
-								  <a href="#">
+								  <a href="javascript:void(0)">
 									  <span class="suitepicon suitepicon-module-{$type}"></span>
 								  </a>
 							  </td>
 							</tr>
 							<tr>
 								<td>
-									<a href="#">{$name}</a>
+									<a href="javascript:void(0)">{$name}</a>
 								</td>
 							</tr>
 					    </table>
 						<script>ModuleBuilder.buttonAdd('type_{$type}', '{$type}', 'type');</script>
 					</td>
                     {else}
-                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span>}<br>{$name}
+                    <td align='center'><span class="suitepicon suitepicon-module-{$type}"></span><br>{$name}
                     {/if}
                     </td>
                     {/if}

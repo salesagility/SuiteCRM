@@ -57,7 +57,7 @@ class SugarLogger implements LoggerTemplate
     /**
      * properties for the SugarLogger
      */
-	protected $logfile = 'sugarcrm';
+	protected $logfile = 'suitecrm';
 	protected $ext = '.log';
 	protected $dateFormat = '%c';
 	protected $logSize = '10MB';
