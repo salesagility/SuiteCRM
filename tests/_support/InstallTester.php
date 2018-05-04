@@ -30,8 +30,8 @@ class InstallTester extends \Codeception\Actor
         $I = $this;
         $scenario = $I->getScenario();
 
-        if(version_compare(phpversion(), SUITECRM_PHP_REC_VERSION, '>=')) {
-            $scenario->skip('PHP Version '. PHP_VERSION .' meets the recommended requirements.');
+        if(!$this->isOldPhpVersionDetected()) {
+            $scenario->comment('PHP Version '. PHP_VERSION .' meets the recommended requirements.');
         } else {
             $scenario->comment('PHP Version '. PHP_VERSION .' does not meet the recommended requirements.');
             $I->see('Old PHP Version Detected');
@@ -129,7 +129,11 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $I->comment('wait for installer progress to finish');
-        $I->waitForElement('#loginform',360);
+        $I->waitForElement('[type=submit]',90);
+        $I->dontSeeMissingLabels();
+        $I->dontSeeErrors();
+
+        $I->click('Next');
     }
 
     /**
@@ -139,5 +143,19 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $I->dontSee('LBL_');
+    }
+
+    public function dontSeeErrors()
+    {
+        $I = $this;
+        $I->dontSee('Warning');
+        $I->dontSee('Notice');
+        $I->dontSee('Error');
+        $I->dontSee('error');
+    }
+
+    protected function isOldPhpVersionDetected()
+    {
+        return $this->executeJS('return document.getElementsByName(\'setup_old_php\').length > 0;');
     }
 }
