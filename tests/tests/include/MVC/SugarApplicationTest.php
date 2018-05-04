@@ -36,6 +36,13 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testACLFilter()
     {
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception.
@@ -46,6 +53,10 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
+        
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     public function testsetupResourceManagement()
@@ -85,6 +96,13 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpreProcess()
     {
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -96,6 +114,10 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
+        
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     public function testhandleOfflineClient()
@@ -206,6 +228,13 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testloadGlobals()
     {
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -217,6 +246,10 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
         $this->assertTrue(true);
+        
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     public function teststartSession()
@@ -293,9 +326,20 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetCookie()
     {
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //execute the method and check that the method adds the key value pair to cookies array.
         SugarApplication::setCookie('key', 'value');
         $this->assertEquals('value', $_COOKIE['key']);
+        
+        // cleanup
+        
+        $state->popGlobals();
     }
 
     public function testcreateLoginVars()
