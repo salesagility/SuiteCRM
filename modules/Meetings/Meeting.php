@@ -721,7 +721,11 @@ class Meeting extends SugarBean {
 		parent::send_assignment_notifications($notify_user, $admin);
 
 		$path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;
-		unlink($path);
+                if (is_dir($path)) {
+                    LoggerManager::getLogger()->warn('Path can not be a directory: ' . $path);
+                } else {
+                    unlink($path);
+                }
 	}
 
 	function get_meeting_users() {
@@ -749,8 +753,8 @@ class Meeting extends SugarBean {
 	function get_invite_meetings(&$user) {
 		$template = $this;
 		// First, get the list of IDs.
-		$GLOBALS['log']->debug("Finding linked records $this->object_name: ".$query);
 		$query = "SELECT meetings_users.required, meetings_users.accept_status, meetings_users.meeting_id from meetings_users where meetings_users.user_id='$user->id' AND( meetings_users.accept_status IS NULL OR	meetings_users.accept_status='none') AND meetings_users.deleted=0";
+		$GLOBALS['log']->debug("Finding linked records $this->object_name: ".$query);
 		$result = $this->db->query($query, true);
 		$list = Array();
 
@@ -813,7 +817,8 @@ class Meeting extends SugarBean {
 			$this->users_arr =	array();
 		}
 
-        if(!is_array($this->leads_arr)) {
+                
+        if(!isset($this->leads_arr) || !is_array($leadsArr)) {
 			$this->leads_arr =	array();
 		}
 
@@ -1004,7 +1009,15 @@ function getMeetingsExternalApiDropDown($focus = null, $name = null, $value = nu
 		$apiList[$value] = $value;
     }
 	//bug 46294: adding list of options to dropdown list (if it is not the default list)
-    if ($dictionary['Meeting']['fields']['type']['options'] != "eapm_list")
+    
+    $opt = null;
+    if (isset($dictionary['Meeting']['fields']['type']['options'])) {
+        $opt = $dictionary['Meeting']['fields']['type']['options'];
+    } else {
+        LoggerManager::getLogger()->warn('Meeting fields type option is not set to Meeting External Api DropDown.');
+    }
+    
+    if ($opt != "eapm_list")
     {
         $apiList = array_merge(getMeetingTypeOptions($dictionary, $app_list_strings), $apiList);
     }
