@@ -77,6 +77,7 @@ after_script:
   - ./build/push_output.sh
   - cat suitecrm.log
   - sudo cat ./cache/themes/SuiteP/modules/Test_BasicTestModule/DetailView.tpl
+  - sudo cat /home/travis/build/gymad/SuiteCRM/cache/smarty/templates_c/%%0D^0D2^0D28DA69%%DetailView.tpl.php
 
 branches:
   only:
