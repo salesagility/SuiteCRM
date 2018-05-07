@@ -53,6 +53,8 @@ before_script:
   # Install composer
   - composer install
   - ./vendor/bin/codecept build
+  # Additional PHP config
+  - phpenv config-add travis.php.ini
 
 script:
   # Run the silent installer or the wizard installer ?
@@ -76,7 +78,7 @@ script:
 after_script:
   - ./build/push_output.sh
   - cat suitecrm.log
-  - cat error.log
+  - sudo cat /var/log/apache2/errors.log
 
 branches:
   only:
