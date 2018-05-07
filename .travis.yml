@@ -78,7 +78,7 @@ script:
 after_script:
   - ./build/push_output.sh
   - cat suitecrm.log
-  - sudo cat /var/log/apache2/errors.log
+  - sudo cat /var/log/apache2/error.log
 
 branches:
   only:
