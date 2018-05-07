@@ -2457,11 +2457,22 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-    return preg_replace_callback('|[^A-Za-z0-9\-]|', create_function(
-                    // single quotes are essential here,
-                    // or alternative escape all $ as \$
-                    '$matches', 'return ord($matches[0]);'
-            ), $string);
+
+
+    $stateSaver = new SuiteCRM\StateSaver();
+    $stateSaver->pushErrorLevel();
+
+    $function = function ($matches) {
+        return ord($matches[0]);
+    };
+
+    if ($function === false) {
+        LoggerManager::getLogger()->warn('Function not created');
+    }
+
+    $stateSaver->popErrorLevel();
+
+    return preg_replace_callback('|[^A-Za-z0-9\-]|', $function, $string);
 }
 
 /**
@@ -5544,5 +5555,5 @@ function isValidId($id)
 function displayAdminError($errorString)
 {
     $output = '<p class="error">' . $errorString . '</p>';
-    echo $output;
+    SugarApplication::appendErrorMessage($output);
 }
