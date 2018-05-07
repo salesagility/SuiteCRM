@@ -70,7 +70,8 @@ script:
   # Run API functional tests
   - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run api --steps; fi
   # RUN Basic Acceptance test
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d; fi
+  - sudo chmod -R 777 .
+  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d; fi
 
 after_script:
   - ./build/push_output.sh
