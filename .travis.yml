@@ -19,7 +19,7 @@ env:
   - INSTANCE_URL=http://localhost/ DATABASE_DRIVER=MYSQL DATABASE_NAME=automated_tests DATABASE_HOST=localhost DATABASE_USER=automated_tests DATABASE_PASSWORD=automated_tests INSTANCE_ADMIN_USER=admin INSTANCE_ADMIN_PASSWORD=admin1
 
 before_install:
-  # Install chrome driver
+  # Install chrome driver#
   - whereis google-chrome-stable
   - wget https://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
   - unzip -o chromedriver_linux64.zip
@@ -34,20 +34,20 @@ before_script:
   - mysql -u root -e "CREATE USER 'automated_tests'@'localhost' IDENTIFIED BY 'automated_tests';"
   - mysql -u root -e "GRANT ALL PRIVILEGES ON automated_tests.* TO 'automated_tests'@'localhost';"
   # Install apache - images with PHP 7 or above
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipped"; else sudo apt-get update; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo apt-get install apache2 libapache2-mod-fastcgi; fi
+  - sudo apt-get update
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
   # Enable php-fpm  - images with PHP 7 or above
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo a2enmod rewrite actions fastcgi alias; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo chown -R travis:travis /var/lib/apache2/fastcgi; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm; fi
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.d/www.conf 2>/dev/null || true
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - sudo sed -i -e "s,www-data,travis,g" /etc/apache2/envvars
+  - sudo chown -R travis:travis /var/lib/apache2/fastcgi
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
   # Configure apache virtual hosts - images with PHP 7 or above
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else sudo service apache2 restart; fi
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  - sudo service apache2 restart
   # Optimise build by removing x-debug
   - phpenv config-rm xdebug.ini
   # Install composer
@@ -58,9 +58,10 @@ before_script:
 
 script:
   # Run the silent installer or the wizard installer ?
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then mv -f tests/travis_config_si.php config_si.php; else echo "using install wizard"; fi
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then php tests/testinstall.php; else ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; fi
+  - echo "using install wizard"
+  - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
   - ./build/push_output.sh
+
   # Run the unit tests
   - ./vendor/bin/codecept run unit --steps
   # Install OAuth2 demo data
@@ -70,10 +71,10 @@ script:
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # Run API functional tests
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run api --steps; fi
+  - ./vendor/bin/codecept run api --steps
   # RUN Basic Acceptance test
   - sudo chmod -R 777 .
-  - if [[ $(phpenv version-name) =~ ^5\.[0-9]$ ]]; then echo "skipping PHP 5.x Images"; else ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d; fi
+  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
 
 after_script:
   - ./build/push_output.sh
