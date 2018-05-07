@@ -136,6 +136,7 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushGlobals();
         
         // test
         
@@ -155,6 +156,7 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popGlobals();
         $state->popTable('users');
     }
 
