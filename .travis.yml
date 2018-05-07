@@ -76,6 +76,7 @@ script:
 after_script:
   - ./build/push_output.sh
   - cat suitecrm.log
+  - sudo cat ./cache/themes/SuiteP/modules/Test_BasicTestModule/DetailView.tpl
 
 branches:
   only:
