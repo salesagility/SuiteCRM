@@ -76,6 +76,7 @@ script:
 after_script:
   - ./build/push_output.sh
   - cat suitecrm.log
+  - cat error.log
 
 branches:
   only:
