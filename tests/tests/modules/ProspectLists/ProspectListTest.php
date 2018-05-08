@@ -88,6 +88,15 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testsave() {
 
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('prospect_lists');
+        $state->pushGlobals();
+        
+        // test
+        
 		$prospectList = new ProspectList();
 
 		$prospectList->name = "test";
@@ -113,6 +122,12 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$result = $prospectList->retrieve($prospectList->id);
 		$this->assertEquals(null,$result);
 
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('prospect_lists');
+        $state->popTable('aod_indexevent');
 	}
 
 
