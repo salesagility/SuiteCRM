@@ -150,7 +150,7 @@ class StateCheckerConfig
      * 
      * @var integer
      */
-    protected static $testStateCheckMode = self::RUN_PER_CLASSES;
+    protected static $testStateCheckMode = self::RUN_PER_TESTS;
     
     /**
      * Test using StateChecker
