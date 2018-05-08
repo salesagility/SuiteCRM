@@ -641,10 +641,15 @@ class Meeting extends SugarBean {
                 }
                 
 		// cn: bug 8078 - fixed call to $timedate
-		if(strtolower(get_class($meeting->current_notify_user)) == 'contact') {
+                
+                if (!is_object($meeting->current_notify_user)) {
+                    LoggerManager::getLogger()->warn('Current notify user is not set for Meeting');
+                }
+                
+		if(is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'contact') {
 			$xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
 							'/index.php?entryPoint=acceptDecline&module=Meetings&contact_id='.$meetingCurrentNotifyUserId.'&record='.$meeting->id);
-		} elseif(strtolower(get_class($meeting->current_notify_user)) == 'lead') {
+		} elseif(is_object($meeting->current_notify_user) && strtolower(get_class($meeting->current_notify_user)) == 'lead') {
 			$xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
 							'/index.php?entryPoint=acceptDecline&module=Meetings&lead_id='.$meetingCurrentNotifyUserId.'&record='.$meeting->id);
 		} else {
