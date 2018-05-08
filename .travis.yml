@@ -83,7 +83,7 @@ after_script:
 
 after_success:
   # Disable state check to make code coverage check faster
-  - echo "\$sugar_config['state_checker']['test_state_check_mode']=0;\n" >> config_override.php;
+  - echo "\$sugar_config['state_checker']['test_state_check_mode']=0;" >> config_override.php;
   # Get Codecoverage
   - vendor/bin/codecept run unit --coverage --coverage-phpunit=coverage.xml
   # upload coverage
