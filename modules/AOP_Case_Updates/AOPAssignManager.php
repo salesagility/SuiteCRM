@@ -87,7 +87,15 @@ class AOPAssignManager
     {
         global $sugar_config;
         if ($this->aopFallback) {
-            return $sugar_config['aop']['distribution_options'];
+            
+            $distributionOptions = null;
+            if (isset($sugar_config['aop']['distribution_options'])) {
+                $distributionOptions = $sugar_config['aop']['distribution_options'];
+            } else {
+                LoggerManager::getLogger()->warn('$sugar_config[aop][distribution_options] is not defined');
+            }
+            
+            return $distributionOptions;
         } else {
             return $this->ieX->get_stored_options('distribution_options', '');
         }
