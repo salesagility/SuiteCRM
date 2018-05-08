@@ -66,6 +66,20 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         $meeting->name = 'test';
@@ -104,6 +118,17 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $meeting->mark_deleted($meeting->id);
         $result = $meeting->retrieve($meeting->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_summary_text()
@@ -135,6 +160,13 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         //preset required attributes
@@ -160,6 +192,11 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(-1, $meeting->email_reminder_time);
         $this->assertEquals(false, $meeting->email_reminder_checked);
         $this->assertEquals('Accounts', $meeting->parent_type);
+        
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testget_list_view_data()

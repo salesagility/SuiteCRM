@@ -87,6 +87,13 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $document = new Document();
         $current_theme = SugarThemeRegistry::current();
         $document->id = 'abcde-12345';
@@ -99,6 +106,10 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertRegExp('~index.php\?entryPoint=download&id=&type=Documents~', $document->file_url);
         //
         $this->assertEquals('index.php?entryPoint=download&type=Documents&id=', $document->file_url_noimage);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testlist_view_parse_additional_sections()
