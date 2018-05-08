@@ -748,6 +748,13 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testget_list_view_data()
 	{
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		global $mod_strings;
 		$mod_strings['LBL_CHECKMARK'] = "";
 
@@ -757,6 +764,10 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$result = $user->get_list_view_data();
 		$this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 

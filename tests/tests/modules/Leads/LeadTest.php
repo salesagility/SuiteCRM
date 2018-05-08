@@ -187,6 +187,13 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testget_list_view_data(){
 
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		$lead = new Lead();
 
 		$expected = array (
@@ -210,6 +217,10 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$this->assertEquals($expected['DO_NOT_CALL'], $actual['DO_NOT_CALL']);
 		$this->assertEquals($expected['EMAIL1_LINK'], $actual['EMAIL1_LINK']);
 
+        
+        // clean up
+        
+        $state->popGlobals();
 	}
 
 

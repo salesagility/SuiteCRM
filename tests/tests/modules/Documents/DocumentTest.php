@@ -142,6 +142,13 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $document = new Document();
         $current_theme = SugarThemeRegistry::current();
         //execute the method and verify that it retunrs expected results
@@ -155,25 +162,29 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $document->document_name = 'test';
 
         $expected = array(
-                'DELETED' => 0,
-                'DOCUMENT_NAME' => 'test',
-                'DOC_TYPE' => 'Sugar',
-                'FILENAME' => 'test',
-                'ACTIVE_DATE' => $document->active_date,
-                'CATEGORY_ID' => null,
-                'SUBCATEGORY_ID' => null,
-                'REVISION' => '1',
-                'LAST_REV_CREATED_NAME' => 'test',
-                'IS_TEMPLATE' => '0',
-                'FILE_URL' => '<a href=\'index.php?entryPoint=download&id=&type=Documents\' target=\'_blank\'><img src="themes/default/images/def_image_inline.gif?v=fR08Jur0v2m7hjIT7Z3gUg"    border="0" alt="View" /></a>',
-                'FILE_URL_NOIMAGE' => 'index.php?entryPoint=download&type=Documents&id=',
-                'LAST_REV_CREATED_BY' => 'test',
-                'NAME' => 'test',
-                'DOCUMENT_NAME_JAVASCRIPT' => 'test',
+            'DELETED' => 0,
+            'DOCUMENT_NAME' => 'test',
+            'DOC_TYPE' => 'Sugar',
+            'FILENAME' => 'test',
+            'ACTIVE_DATE' => '05/08/2018',
+            'CATEGORY_ID' => null,
+            'SUBCATEGORY_ID' => null,
+            'REVISION' => '1',
+            'LAST_REV_CREATED_NAME' => 'test',
+            'IS_TEMPLATE' => '0',
+            'FILE_URL' => '<a href=\'index.php?entryPoint=download&id=&type=Documents\' target=\'_blank\'><img src="themes/default/images/def_image_inline.gif?v=qtRdmWYs1D4iOsi8lLl9Tw"    border="0" alt="View" /></a>',
+            'FILE_URL_NOIMAGE' => 'index.php?entryPoint=download&type=Documents&id=',
+            'LAST_REV_CREATED_BY' => 'test',
+            'NAME' => 'test',
+            'DOCUMENT_NAME_JAVASCRIPT' => 'test',
         );
 
         $actual = $document->get_list_view_data();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testmark_relationships_deleted()

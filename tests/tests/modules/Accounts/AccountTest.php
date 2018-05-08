@@ -89,6 +89,13 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $expected = array(
             'DELETED' => 0,
             'JJWG_MAPS_LNG_C' => '0.00000000',
@@ -108,6 +115,10 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = ksort($expected);
         $actual = ksort($actual);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_generic_where_clause()

@@ -148,6 +148,13 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
 
         $current_theme = SugarThemeRegistry::current();
@@ -193,6 +200,10 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $call->assigned_user_name);
         $this->assertEquals('Administrator', $call->created_by_name);
         $this->assertEquals('Administrator', $call->modified_by_name);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testset_notification_body()

@@ -186,6 +186,13 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testget_list_view_data() {
 
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		$contact = new Contact();
 
 		//test with attributes preset and verify attributes are set accordingly
@@ -215,6 +222,10 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$this->assertEquals($expected['ENCODED_NAME'], $actual['ENCODED_NAME']);
 		$this->assertEquals($expected['EMAIL_AND_NAME1'], $actual['EMAIL_AND_NAME1']);
 
+        
+        // clean up
+        
+        $state->popGlobals();
 	}
 
 

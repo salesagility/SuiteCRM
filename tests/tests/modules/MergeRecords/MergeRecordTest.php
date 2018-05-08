@@ -175,6 +175,13 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Users');
@@ -182,6 +189,10 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $mergeRecord->get_list_view_data();
 
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_generic_where_clause()

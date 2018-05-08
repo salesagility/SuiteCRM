@@ -85,6 +85,13 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testget_list_view_data(){
 
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		$employee = new Employee();
 
 		$expected = array (
@@ -106,6 +113,10 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$actual = $employee->get_list_view_data();
 		$this->assertSame($expected, $actual);
+                
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
