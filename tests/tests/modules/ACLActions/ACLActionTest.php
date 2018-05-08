@@ -43,12 +43,25 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testremoveActions()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('acl_actions');
+        $state->pushGlobals();
+        
+        // test
+        
 
         //take count of actions initially and then after method execution and test if action count decreases
         $action_count = count(ACLAction::getDefaultActions());
         ACLAction::removeActions('Test');
         $actual = ACLAction::getDefaultActions();
-        $this->assertLessThan($action_count, count($actual));
+        $this->assertLessThanOrEqual($action_count, count($actual));
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('acl_actions');
     }
 
     public function testAccessName()
