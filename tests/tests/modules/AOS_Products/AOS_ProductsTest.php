@@ -36,6 +36,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products');
+        $state->pushGlobals();
         
         // test
         
@@ -61,6 +62,7 @@ class AOS_ProductsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // cleanup
         
+        $state->popGlobals();
         $state->popTable('aos_products');
     }
 
