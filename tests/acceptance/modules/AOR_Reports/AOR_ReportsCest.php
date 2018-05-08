@@ -313,7 +313,6 @@ class AOR_ReportsCest
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
-        $editView->click('Fields', 'tab-toggler');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
@@ -370,7 +369,6 @@ class AOR_ReportsCest
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
-        $editView->click('Fields', 'tab-toggler');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
@@ -423,7 +421,6 @@ class AOR_ReportsCest
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
-        $editView->click('Fields', 'tab-toggler');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
@@ -487,7 +484,6 @@ class AOR_ReportsCest
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
-        $editView->click('Fields', 'tab-toggler');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
@@ -556,7 +552,6 @@ class AOR_ReportsCest
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
-        $editView->click('Fields', 'tab-toggler');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
