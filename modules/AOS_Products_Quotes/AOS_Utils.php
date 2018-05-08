@@ -56,7 +56,16 @@ function perform_aos_save($focus){
 
                 $amountToConvert = $fieldValue;
                 if (!amountToConvertIsDatabaseValue($focus, $fieldName)) {
-                    $amountToConvert = unformat_number($focus->$fieldName);
+                    
+                    $amountToConvert = null;
+                    $fieldName = null;
+                    if (isset($focus->$fieldName)) {
+                        $fieldName = $focus->$fieldName;
+                        $amountToConvert = unformat_number($fieldName);
+                    } else {
+                        LoggerManager::getLogger()->error('Filedname is not defined for class ' . get_class($focus));
+                    }
+                    
                 }
 
                 $focus->$fieldNameDollar = $currency->convertToDollar($amountToConvert);
