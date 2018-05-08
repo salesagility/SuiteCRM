@@ -63,7 +63,7 @@ script:
   - ./build/push_output.sh
 
   # Run the unit tests
-  - ./vendor/bin/codecept run unit --steps
+  - ./vendor/bin/codecept run unit --steps --coverage --coverage-phpunit=coverage.xml
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
@@ -82,10 +82,6 @@ after_script:
   - sudo cat /var/log/apache2/error.log
 
 after_success:
-  # Disable state check to make code coverage check faster
-  - echo "\$sugar_config['state_checker']['test_state_check_mode']=0;" >> config_override.php;
-  # Get Codecoverage
-  - vendor/bin/codecept run unit --coverage --coverage-phpunit=coverage.xml
   # upload coverage
   - bash <(curl -s https://codecov.io/bash)
 branches:
