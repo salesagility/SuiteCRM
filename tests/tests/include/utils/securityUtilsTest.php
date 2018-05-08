@@ -91,6 +91,13 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testquery_client_ip()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //test without setting any server parameters
         $this->assertSame(null, query_client_ip());
 
@@ -103,6 +110,10 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $_SERVER['HTTP_CLIENT_IP'] = '1.1.1.1';
         $this->assertSame('1.1.1.1', query_client_ip());
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_val_array()
