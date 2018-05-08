@@ -25,6 +25,13 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testACLAccess()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         $call = new Call();
 
@@ -35,6 +42,10 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with recurring_source attribute set
         $call->recurring_source = 'test';
         $this->assertFalse($call->ACLAccess('edit'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testSaveAndMarkDeleted()

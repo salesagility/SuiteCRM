@@ -207,6 +207,13 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testACLAccess()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $mergeRecord = new MergeRecord();
 
         //test without loading merge bean
@@ -219,6 +226,10 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $mergeRecord->ACLAccess('save'));
         $this->assertEquals(true, $mergeRecord->ACLAccess('editview'));
         $this->assertEquals(true, $mergeRecord->ACLAccess('delete'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testpopulate_search_params()

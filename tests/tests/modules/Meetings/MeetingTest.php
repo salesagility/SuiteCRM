@@ -30,6 +30,13 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testACLAccess()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         //test without recurring_source
@@ -44,6 +51,10 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $meeting->ACLAccess('save'));
         $this->assertEquals(false, $meeting->ACLAccess('editview'));
         $this->assertEquals(false, $meeting->ACLAccess('delete'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testhasIntegratedMeeting()
