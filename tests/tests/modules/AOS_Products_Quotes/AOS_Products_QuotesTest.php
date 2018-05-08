@@ -69,6 +69,15 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
 
     public function testsave()
     {
+
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aos_products_quotes');
+        $state->pushTable('aos_line_item_groups');
+        
+        // test
+        
         $aosProductsQuotes = new AOS_Products_Quotes();
 
         $aosProductsQuotes->name = 'test';
@@ -85,5 +94,10 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $aosProductsQuotes->mark_deleted($aosProductsQuotes->id);
         $result = $aosProductsQuotes->retrieve($aosProductsQuotes->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aos_line_item_groups');
+        $state->popTable('aos_products_quotes');
     }
 }
