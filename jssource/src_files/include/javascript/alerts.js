@@ -76,17 +76,17 @@ Alerts.prototype.enable = function () {
   var alert = new AlertObj();
 
   if (!("Notification" in window)) {
-    alert.title =  "This browser does not support desktop notifications";
+    alert.title = SUGAR.language.translate('app_strings', 'MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED');
     Alerts.prototype.show(alert);
     return;
   }
 
   Notification.requestPermission(function (permission) {
     if (permission === "granted") {
-      alert.title =  "Desktop notifications are now enabled for this web browser.";
+      alert.title = SUGAR.language.translate('app_strings', 'MSG_BROWSER_NOTIFICATIONS_ENABLED');
     }
     else {
-      alert.title = "Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.";
+      alert.title = SUGAR.language.translate('app_strings', 'MSG_BROWSER_NOTIFICATIONS_DISABLED');
     }
 
     Alerts.prototype.show(alert);

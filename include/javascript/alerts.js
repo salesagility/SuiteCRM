@@ -35,9 +35,9 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-var AlertObj=function(){this.title='Alert';this.options={};this.options.body=' ';this.options.url_redirect='';this.options.target_module='';this.options.type='info';};var Alerts=function(){};Alerts.prototype.replaceMessages=[];Alerts.prototype.enable=function(){var alert=new AlertObj();if(!("Notification"in window)){alert.title="This browser does not support desktop notifications";Alerts.prototype.show(alert);return;}
-Notification.requestPermission(function(permission){if(permission==="granted"){alert.title="Desktop notifications are now enabled for this web browser.";}
-else{alert.title="Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.";}
+var AlertObj=function(){this.title='Alert';this.options={};this.options.body=' ';this.options.url_redirect='';this.options.target_module='';this.options.type='info';};var Alerts=function(){};Alerts.prototype.replaceMessages=[];Alerts.prototype.enable=function(){var alert=new AlertObj();if(!("Notification"in window)){alert.title=SUGAR.language.translate('app_strings','MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED');Alerts.prototype.show(alert);return;}
+Notification.requestPermission(function(permission){if(permission==="granted"){alert.title=SUGAR.language.translate('app_strings','MSG_BROWSER_NOTIFICATIONS_ENABLED');}
+else{alert.title=SUGAR.language.translate('app_strings','MSG_BROWSER_NOTIFICATIONS_DISABLED');}
 Alerts.prototype.show(alert);});};Alerts.prototype.requestPermission=function(){if(!("Notification"in window)){return;}
 Notification.requestPermission();};Alerts.prototype.show=function(AlertObj){Alerts.prototype.requestPermission();if(("Notification"in window)){if(Notification.permission==="granted"){if(typeof AlertObj.options!=="undefined"){if(typeof AlertObj.options.target_module!=="undefined"){SUGAR.themes.theme_name=undefined;AlertObj.options.icon='index.php?entryPoint=getImage&themeName='+
 SUGAR.themes.theme_name+'&imageName='+
