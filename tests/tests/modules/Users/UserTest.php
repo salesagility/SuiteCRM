@@ -231,6 +231,13 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testreloadPreferences()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
@@ -242,12 +249,23 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$result = $user->reloadPreferences();
 		$this->assertEquals(true, $result);
+                
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 
 	public function testgetUserDateTimePreferences()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
@@ -265,11 +283,22 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$this->assertTrue(isset($result['userGmt']));
 		$this->assertTrue(isset($result['userGmtOffset']));
 
+                
+        // clean up
+        
+        $state->popGlobals();
 	}
 
 
 	public function testloadPreferences( )
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
@@ -281,6 +310,10 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$result = $user->loadPreferences();
 		$this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 

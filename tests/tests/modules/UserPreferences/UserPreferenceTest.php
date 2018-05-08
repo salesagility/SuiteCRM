@@ -56,6 +56,13 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSetAndGetPreference()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         global $sugar_config;
 
         $user = new User();
@@ -74,10 +81,21 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testloadPreferences()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -86,10 +104,21 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $userPreference->loadPreferences();
 
         $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testreloadPreferences()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -97,10 +126,21 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $userPreference->reloadPreferences();
         $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testgetUserDateTimePreferences()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -108,10 +148,22 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $userPreference->getUserDateTimePreferences();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testSavePreferencesToDBAndResetPreferences()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('user_preferences');
+        $state->pushGlobals();
+        
+        // test
+        
         $user = new User();
         $user->retrieve('1');
 
@@ -135,6 +187,11 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'category' => 'test_category',
         ));
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('user_preferences');
     }
 
     public function testupdateAllUserPrefs()
