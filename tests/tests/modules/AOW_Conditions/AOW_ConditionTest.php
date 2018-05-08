@@ -31,6 +31,14 @@ class AOW_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aow_conditions');
+//        $state->pushGlobals();
+        
+        // test
+        
         $aowCondition = new AOW_Condition();
 
         //populate required values
@@ -55,5 +63,10 @@ class AOW_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         foreach ($aow_conditions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
+        
+        // clean up
+        
+//        $state->popGlobals();
+        $state->popTable('aow_conditions');
     }
 }

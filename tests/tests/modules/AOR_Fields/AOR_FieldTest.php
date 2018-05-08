@@ -23,6 +23,15 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aor_fields');
+        $state->pushGlobals();
+        
+        // test
+        
 
         $aor_Field = new AOR_Field();
 
@@ -47,5 +56,11 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aor_fields');
+        $state->popTable('aod_indexevent');
     }
 }
