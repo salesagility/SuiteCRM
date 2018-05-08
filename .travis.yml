@@ -57,7 +57,7 @@ before_script:
 script:
   # Run the silent installer or the wizard installer ?
   - echo "using install wizard"
-  - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d  --coverage --coverage-phpunit=coverage.xml
+  - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d --coverage-xml=coverage.xml
   - ./build/push_output.sh
 
   # Run the unit tests
@@ -78,9 +78,11 @@ after_script:
   - ./build/push_output.sh
   - cat suitecrm.log
   - sudo cat /var/log/apache2/error.log
+  - echo $TRAVIS_COMMIT_RANGE
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+#after_success:
+#  - ./vendor/bin/codecept run unit --coverage-xml=./coverage.xml
+#  - bash <(curl -s https://codecov.io/bash)
 branches:
   only:
     - master
