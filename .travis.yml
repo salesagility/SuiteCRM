@@ -48,8 +48,6 @@ before_script:
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
   - sudo service apache2 restart
-  # Optimise build by removing x-debug
-  - phpenv config-rm xdebug.ini
   # Install composer
   - composer install
   - ./vendor/bin/codecept build
@@ -59,7 +57,7 @@ before_script:
 script:
   # Run the silent installer or the wizard installer ?
   - echo "using install wizard"
-  - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d
+  - ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d  --coverage --coverage-phpunit=coverage.xml
   - ./build/push_output.sh
 
   # Run the unit tests
@@ -82,12 +80,6 @@ after_script:
   - sudo cat /var/log/apache2/error.log
 
 after_success:
-  # Disable state check to make code coverage check faster
-  #  - echo "\$sugar_config['state_checker']['test_state_check_mode']=0;" >> config_override.php;
-  # Get Codecoverage
-  - phpenv config-add xdebug.ini
-  - ./vendor/bin/codecept run unit --coverage --coverage-phpunit=coverage.xml
-  # upload coverage
   - bash <(curl -s https://codecov.io/bash)
 branches:
   only:
