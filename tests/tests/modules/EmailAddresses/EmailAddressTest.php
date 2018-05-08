@@ -21,6 +21,13 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        
+        // test
+        
         $email = new EmailAddress();
 
         $email->email_address = 'test@test.com';
@@ -36,5 +43,9 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $email->mark_deleted($email->id);
         $result = $email->retrieve($email->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
     }
 }
