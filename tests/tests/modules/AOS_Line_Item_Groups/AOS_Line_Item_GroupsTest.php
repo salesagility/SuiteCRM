@@ -51,6 +51,14 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
 
     public function testsave()
     {
+
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aos_line_item_groups');
+        
+        // test
+        
         $aosLineItemGroup = new AOS_Line_Item_Groups();
         $aosLineItemGroup->name = 'test';
         $aosLineItemGroup->total_amount = 100;
@@ -66,5 +74,9 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $aosLineItemGroup->mark_deleted($aosLineItemGroup->id);
         $result = $aosLineItemGroup->retrieve($aosLineItemGroup->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aos_line_item_groups');
     }
 }
