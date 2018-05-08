@@ -96,7 +96,7 @@ class AOW_Action extends Basic
             LoggerManager::getLogger()->warn('Posted field is undefined: ' . $field);
         }
         
-        $line_count = count($postedField);
+        $line_count = count((array)$postedField);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 
