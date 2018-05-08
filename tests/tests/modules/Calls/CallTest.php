@@ -294,10 +294,21 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $call->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testsave_relationship_changes()

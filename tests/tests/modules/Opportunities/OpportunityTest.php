@@ -240,11 +240,23 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $opportunity = new Opportunity();
 
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
         $actual = $opportunity->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+
     }
 
     public function testget_account_detail()

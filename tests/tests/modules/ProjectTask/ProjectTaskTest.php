@@ -231,11 +231,22 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $projectTask = new ProjectTask();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
         $actual = $projectTask->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testcreate_export_query()

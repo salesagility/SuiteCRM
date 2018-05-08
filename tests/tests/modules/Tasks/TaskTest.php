@@ -188,11 +188,22 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $task = new Task();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testgetDefaultStatus()

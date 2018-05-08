@@ -32,10 +32,21 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aCase = new aCase();
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testsave_relationship_changes()

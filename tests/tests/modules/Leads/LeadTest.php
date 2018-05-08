@@ -313,11 +313,22 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testlistviewACLHelper()
 	{
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		$lead = new Lead();
 
 		$expected = array("MAIN"=>"a", "ACCOUNT"=>"a", "OPPORTUNITY"=>"a", "CONTACT"=>"a" );
 		$actual = $lead->listviewACLHelper();
 		$this->assertSame($expected,$actual);
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
