@@ -806,14 +806,13 @@ class Importer
      */
     protected function _convertId($string)
     {
+        $function = function ($matches) {
+            return ord($matches[0]);
+        };
+
         return preg_replace_callback(
             '|[^A-Za-z0-9\-\_]|',
-            create_function(
-            // single quotes are essential here,
-            // or alternative escape all $ as \$
-            '$matches',
-            'return ord($matches[0]);'
-                 ) ,
+            $function,
             $string);
     }
 

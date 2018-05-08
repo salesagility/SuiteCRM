@@ -17,6 +17,7 @@
     "ext-gd": "*",
     "ext-curl": "*",
     "ext-openssl": "*",
+    "ext-zip": "*",
     "slim/slim": "^3.8",
     "tuupola/slim-jwt-auth": "^2.0",
     "league/url": "^3.3",
