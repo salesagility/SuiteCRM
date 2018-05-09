@@ -175,6 +175,15 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMarkDeleted()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('campaigns');
+        $state->pushGlobals();
+        
+        // test
+        
         $campaign = new Campaign();
         $campaign->name = 'test';
         $campaign->amount = 100;
@@ -189,6 +198,12 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $campaign->mark_deleted($campaign->id);
         $result = $campaign->retrieve($campaign->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('campaigns');
+        $state->popTable('aod_indexevent');
     }
 
     public function testset_notification_body()
