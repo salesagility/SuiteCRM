@@ -141,11 +141,23 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testuserHasAccess()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+        
         $this->assertFalse(ACLAction::userHasAccess('', '', '')); //test with empty module and action
         $this->assertTrue(ACLAction::userHasAccess('', 'Accounts', 'list')); //test with e,pty user and valid module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Accounts', 'list')); //test with valid User, module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'SecurityGroups', 'list')); //test with valid User, module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Users', 'list')); //test with valid User, module and action
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testgetUserAccessLevel()
