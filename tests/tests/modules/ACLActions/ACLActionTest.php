@@ -162,6 +162,14 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUserAccessLevel()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+        
 
         //tes for accoounts module with two different actions
         $this->assertEquals(90, ACLAction::getUserAccessLevel('1', 'Accounts', 'list'));
@@ -170,6 +178,10 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //tes for users module with two different actions
         $this->assertEquals(90, ACLAction::getUserAccessLevel('1', 'Users', 'list'));
         $this->assertEquals(89, ACLAction::getUserAccessLevel('1', 'Users', 'access'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testuserNeedsOwnership()
