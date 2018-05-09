@@ -157,34 +157,34 @@ function constructDDSubscriptionList($focus,$classname=''){
 }
 
 
-
-/*
+ /*
  *This function constructs multiselect box of subscriptions for display in manage subscription form
-*/
-function printOriginalValues($focus){
-    $return_arr =  [];
+ */
+ function printOriginalValues($focus)
+ {
+     $return_arr = [];
 
      // Lets start by creating the subscription and unsubscription arrays
-        $subscription_arrays = get_subscription_lists($focus);
-        $unsubs_arr = $subscription_arrays['unsubscribed'];
-        $subs_arr =  $subscription_arrays['subscribed'];
+     $subscription_arrays = get_subscription_lists($focus);
+     $unsubs_arr = $subscription_arrays['unsubscribed'];
+     $subs_arr = $subscription_arrays['subscribed'];
 
-//    ORIG_UNSUBS_VALUES
-        $unsubs_vals = ' ';
-        $subs_vals = ' ';
-        foreach($subs_arr as $name => $id){
-            $subs_vals .= ", $id";
-        }
-        $return_arr[]=$subs_vals;
+     //    ORIG_UNSUBS_VALUES
+     $unsubs_vals = ' ';
+     $subs_vals = ' ';
+     foreach ($subs_arr as $name => $id) {
+         $subs_vals .= ", $id";
+     }
+     $return_arr[] = $subs_vals;
 
-        foreach($unsubs_arr as $name => $id){
-            $unsubs_vals .= ", $id";
-        }
+     foreach ($unsubs_arr as $name => $id) {
+         $unsubs_vals .= ", $id";
+     }
 
-        $return_arr[]=$unsubs_vals;
+     $return_arr[] = $unsubs_vals;
 
-        return $return_arr;
-    }
+     return $return_arr;
+ }
 
 
 /*
