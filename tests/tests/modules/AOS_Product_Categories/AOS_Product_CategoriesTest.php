@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -21,6 +21,15 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
 
     public function testsave()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aos_product_categories');
+        $state->pushGlobals();
+        
+        // test
+        
 
         $aosProductCategories = new AOS_Product_Categories();
         $aosProductCategories->name = 'test';
@@ -36,5 +45,11 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $aosProductCategories->mark_deleted($aosProductCategories->id);
         $result = $aosProductCategories->retrieve($aosProductCategories->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aos_product_categories');
+        $state->popTable('aod_indexevent');
     }
 }

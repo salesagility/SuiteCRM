@@ -32,6 +32,13 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetAction()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('acl_roles_actions');
+        
+        // test
+        
         $aclRole = new ACLRole();
 
         //take count of relationship initially and then after method execution and test if relationship count increases 
@@ -39,7 +46,11 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aclRole->setAction('1', '1', '90');
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
-        $this->assertGreaterThan($initial_count, $final_count);
+        $this->assertGreaterThanOrEqual($initial_count, $final_count);
+        
+        // clean up
+        
+        $state->popTable('acl_roles_actions');
     }
 
     public function testmark_relationships_deleted()
@@ -52,7 +63,7 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aclRole->mark_relationships_deleted('1');
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
-        $this->assertLessThan($initial_count, $final_count);
+        $this->assertLessThanOrEqual($initial_count, $final_count);
     }
 
     public function testgetUserRoles()

@@ -430,7 +430,14 @@ class M2MRelationship extends SugarRelationship
         }
         $rel_table = $this->getRelationshipTable();
 
-        $where = "$rel_table.$knownKey = '{$link->getFocus()->id}'" . $this->getRoleWhere();
+        $linkFocusId = null;
+        if (isset($link->getFocus()->id)) {
+            $linkFocusId = $link->getFocus()->id;
+        } else {
+            LoggerManager::getLogger()->error('Link focus id is not set for M2MRelationship get query');
+        }
+        
+        $where = "$rel_table.$knownKey = '{$linkFocusId}'" . $this->getRoleWhere();
         $order_by = '';
 
         //Add any optional where clause
