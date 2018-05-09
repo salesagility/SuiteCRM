@@ -14,6 +14,13 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetVcalIcal()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
 
         $ical = new iCal();
         $user = new User(1);
@@ -27,5 +34,9 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //match the leading and trailing string parts to verify it returns expected results
         $this->assertStringStartsWith($expectedStart, $actual);
         $this->assertStringEndsWith($expectedEnd, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }
