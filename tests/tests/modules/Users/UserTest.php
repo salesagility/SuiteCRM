@@ -44,6 +44,14 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testgetDefaultSignature()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
@@ -56,6 +64,10 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$result = $user->getDefaultSignature();
 		$this->assertTrue(is_array($result));
 
+        
+        // clean up
+        
+        $state->popGlobals();
 	}
 
 
@@ -137,6 +149,14 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testgetUserPrivGuid()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
@@ -150,11 +170,23 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$this->assertTrue(isset($result));
 		$this->assertEquals(36, strlen($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 	public function testsetUserPrivGuid()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
@@ -171,11 +203,23 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$this->assertTrue(isset($result));
 		$this->assertEquals(36, strlen($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 	public function testSetAndGetAndResetPreference( )
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('user_preferences');
+        $state->pushGlobals();
+        
+        // test
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
@@ -200,6 +244,11 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$user->resetPreferences();
 		$result = $user->getPreference('userPrivGuid', 'global', $user);
 		$this->assertFalse(isset($result));
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('user_preferences');
 
 	}
 
@@ -320,6 +369,13 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testGetETagSeedAndIncrementETag(){
 
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	//unset and reconnect Db to resolve mysqli fetch exeception
     	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
@@ -341,6 +397,10 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	//execute getETagSeed method again, get Etag final value and  compare final and initial values
     	$ETagFinal = $user->getETagSeed('test');
     	$this->assertGreaterThan($ETagInitial, $ETagFinal);
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
@@ -379,6 +439,13 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testcheck_role_membership()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
 		unset ($db->database);
@@ -393,11 +460,23 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$result = $user->check_role_membership("test", '1');
 		$this->assertEquals(false, $result);
 
+        // clean up
+        
+        $state->popGlobals();
 	}
 
 
 	public function testsaveAndOthers()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addr_bean_rel');
+        $state->pushTable('user_preferences');
+        $state->pushTable('users');
+        $state->pushGlobals();
+        
+        // test
 
 		//unset and reconnect Db to resolve mysqli fetch exeception
 		$db = DBManagerFactory::getInstance();
@@ -463,6 +542,12 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$user->save();
 		$user->mark_deleted($user->id);
 
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('users');
+        $state->popTable('user_preferences');
+        $state->popTable('email_addr_bean_rel');
 	}
 
 	public function retrieve($id)
@@ -873,6 +958,14 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testsetDefaultsInConfig()
 	{
+        
+        // save state
+        
+        //$state = new SuiteCRM\StateSaver();
+        //$state->pushFile('config.php');
+        
+        // test
+
 		$user = new User();
 
 		$result = $user->setDefaultsInConfig();
@@ -880,12 +973,24 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$this->assertTrue(is_array($result));
 		$this->assertEquals('sugar', $result['email_default_client']);
 		$this->assertEquals('html', $result['email_default_editor']);
+        
+        // clean up
+        
+        //$state->popFile('config.php');
 
 	}
 
 
 	public function testgetEmailLink2()
 	{
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		$user = new User();
 
 		$user->retrieve(1);
@@ -907,12 +1012,23 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$expected = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init({\"fullComposeUrl\":\"contact_id=\u0026parent_type=Contacts\u0026parent_id=\u0026parent_name=+\u0026to_addrs_ids=\u0026to_addrs_names=+\u0026to_addrs_emails=\u0026to_email_addrs=+%26nbsp%3B%26lt%3Babc%40email.com%26gt%3B\u0026return_module=Contacts\u0026return_action=DetailView\u0026return_id=\",\"composePackage\":{\"contact_id\":\"\",\"parent_type\":\"Contacts\",\"parent_id\":\"\",\"parent_name\":\" \",\"to_addrs_ids\":\"\",\"to_addrs_names\":\" \",\"to_addrs_emails\":\"\",\"to_email_addrs\":\"  \u003Cabc@email.com\u003E\",\"return_module\":\"Contacts\",\"return_action\":\"DetailView\",\"return_id\":\"\"}});' class=''>";
 		$actual = $user->getEmailLink2("abc@email.com", $contact);
 		$this->assertSame($expected,$actual);
+        
+        // clean up
+        
+        $state->popGlobals();
 
 	}
 
 
 	public function testgetEmailLink()
 	{
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
 		$user = new User();
 
@@ -935,6 +1051,11 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$expected = "<a href='javascript:void(0);' onclick='SUGAR.quickCompose.init({\"fullComposeUrl\":\"contact_id=\u0026parent_type=Contacts\u0026parent_id=\u0026parent_name=+\u0026to_addrs_ids=\u0026to_addrs_names=+\u0026to_addrs_emails=\u0026to_email_addrs=+%26nbsp%3B%26lt%3Btest%26gt%3B\u0026return_module=Contacts\u0026return_action=DetailView\u0026return_id=\",\"composePackage\":{\"contact_id\":\"\",\"parent_type\":\"Contacts\",\"parent_id\":\"\",\"parent_name\":\" \",\"to_addrs_ids\":\"\",\"to_addrs_names\":\" \",\"to_addrs_emails\":\"\",\"to_email_addrs\":\"  \u003Ctest\u003E\",\"return_module\":\"Contacts\",\"return_action\":\"DetailView\",\"return_id\":\"\"}});' class=''>";
 		$actual = $user->getEmailLink("name", $contact);
 		$this->assertSame($expected,$actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+        
 
 	}
 
@@ -982,6 +1103,13 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testgetDeveloperModules()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	//unset and reconnect Db to resolve mysqli fetch exeception
     	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
@@ -993,11 +1121,22 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     	$result = $user->getDeveloperModules();
     	$this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
     public function testisDeveloperForModule()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
@@ -1018,11 +1157,22 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	$user->is_admin = 1;
     	$this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
 
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
     public function testgetAdminModules()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
     	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
@@ -1034,11 +1184,22 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     	$result = $user->getAdminModules();
     	$this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
     public function testisAdminForModule()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	$db = DBManagerFactory::getInstance();
     	unset ($db->database);
     	$db->checkConnection();
@@ -1059,16 +1220,31 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	$user->is_admin = 1;
     	$this->assertEquals(true, $user->isAdminForModule("Accounts"));
 
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
 	public function testshowLastNameFirst()
 	{
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 		$user = new User();
 
 		$result = $user->showLastNameFirst();
 		$this->assertEquals(false, $result);
 
+        
+        // clean up
+        
+        $state->popGlobals();
 	}
 
     /**
@@ -1097,16 +1273,34 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testget_first_day_of_week()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	$user = new User();
 
     	$result = $user->get_first_day_of_week();
     	$this->assertTrue(is_numeric($result));
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 
     public function testgeneratePassword()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	//generate apsswords and verify they are not same
 
     	$password1 = User::generatePassword();
@@ -1117,11 +1311,22 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     	$this->assertNotEquals($password1, $password2);
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 
     public function testsendEmailForPassword()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
     	$user = new User();
 
@@ -1130,11 +1335,22 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	//expected result is a array with template not found message.
     	$this->assertTrue(is_array($result));
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 
     public function testafterImportSave()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
     	$user = new User();
 
@@ -1147,11 +1363,22 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     		$this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
     	}
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 
     public function testisPrimaryEmail()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
     	$user = new User();
 
     	//test without user email
@@ -1167,6 +1394,10 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	$user->email1 = "abc@abc.com";
     	$this->assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
 
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
 }

@@ -1060,12 +1060,14 @@ EOQ;
 	function get_meetings() {
 		// First, get the list of IDs.
 		$query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
-		return $this->build_related_list($query, new Meeting());
+                $meeting = new Meeting();
+		return $this->build_related_list($query, $meeting);
 	}
 	function get_calls() {
 		// First, get the list of IDs.
 		$query = "SELECT call_id as id from calls_users where user_id='$this->id' AND deleted=0";
-		return $this->build_related_list($query, new Call());
+                $call = new Call();
+		return $this->build_related_list($query, $call);
 	}
 
 	/**
