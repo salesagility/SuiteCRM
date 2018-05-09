@@ -22,6 +22,13 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMark_deleted()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_quotes');
+        
+        // test
+        
 
         $aosQuotes = new AOS_Quotes();
 
@@ -39,5 +46,9 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosQuotes->mark_deleted($aosQuotes->id);
         $result = $aosQuotes->retrieve($aosQuotes->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aos_quotes');
     }
 }
