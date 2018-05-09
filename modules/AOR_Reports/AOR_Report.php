@@ -667,6 +667,12 @@ class AOR_Report extends Basic
                         <img src='" . SugarThemeRegistry::current()->getImageURL('end.gif') . "' alt='End' align='absmiddle' border='0'>
                     </button>";
             } else {
+                
+                if (!isset($dashletPaginationButtons)) {
+                    LoggerManager::getLogger()->warn('AOR Report dashlet pagination buttons are not set');
+                    $dashletPaginationButtons = null;
+                }
+                
                 $html .= "<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button'  disabled='disabled'>
                         <img src='" . SugarThemeRegistry::current()->getImageURL('next_off.gif') . "' alt='Next' align='absmiddle' border='0'>
                     </button>
@@ -1069,7 +1075,14 @@ class AOR_Report extends Basic
         }
         $query_array = $this->build_report_query_where($query_array);
 
-        foreach ($query_array['select'] as $select) {
+        $qaSelect = null;
+        if (isset($query_array['select'])) {
+            $qaSelect = $query_array['select'];
+        } else {
+            LoggerManager::getLogger()->warn('AOR Report query array select is not set');
+        }
+        
+        foreach ((array)$qaSelect as $select) {
             $query .= ($query == '' ? 'SELECT ' : ', ') . $select;
         }
 

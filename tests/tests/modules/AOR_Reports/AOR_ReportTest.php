@@ -128,6 +128,13 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_group_report()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
         $aor_Report->id = '1';
@@ -148,6 +155,11 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertNotEquals($html1, $html2);
         $this->assertNotEquals($html1, $html3);
         $this->assertNotEquals($html2, $html3);
+        
+        // clean up
+        
+        $state->popGlobals();
+        
     }
 
     public function testbuild_report_html()
