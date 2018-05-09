@@ -354,6 +354,7 @@ class StateSaver
      */
     public function pushFile($filename)
     {
+        clearstatcache(true);
         $exists = file_exists($filename);
         $realpath = realpath($filename);
         if (!$realpath && $exists) {
@@ -388,6 +389,7 @@ class StateSaver
      */
     public function popFile($filename)
     {
+        clearstatcache(true);
         $exists = file_exists($filename);
         $realpath = realpath($filename);
         if (!$realpath && $exists) {
