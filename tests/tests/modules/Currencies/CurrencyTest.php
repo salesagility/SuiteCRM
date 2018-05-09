@@ -140,6 +140,14 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('currencies');
+        
+        // test
+        
         $currency = new Currency();
         $currency->name = 'Rand';
         $currency->iso4217 = 'R';
@@ -156,6 +164,10 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $currency->mark_deleted($currency->id);
         $result = $currency->retrieve($currency->id);
         $this->assertEquals(-99, $result->id);
+        
+        // clean up
+        
+        $state->popTable('currencies');
     }
 
     public function testcurrency_format_number()
@@ -204,6 +216,8 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetCurrencyDropDown()
     {
+        $this->markTestIncomplete('This test is not a test. Focus came from nowhere');
+        
         //test with view = Default / DetailView
         $this->assertEquals('US Dollars', getCurrencyDropDown($focus));
 
@@ -215,6 +229,8 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetCurrencyNameDropDown()
     {
+        $this->markTestIncomplete('This test is not a test. Focus came from nowhere');
+        
         //test with view = Default / DetailView
         $this->assertEquals('US Dollars', getCurrencyNameDropDown($focus));
 
@@ -226,6 +242,8 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetCurrencySymbolDropDown()
     {
+        $this->markTestIncomplete('This test is not a test. Focus came from nowhere');
+        
         //test with view = Default / DetailView
         $this->assertEquals('US Dollars', getCurrencySymbolDropDown($focus));
 
