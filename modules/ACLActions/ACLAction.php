@@ -583,7 +583,15 @@ class ACLAction  extends SugarBean{
             foreach($category as $type_name=>$type){
                 foreach($type as $act_name=>$action){
                     $names[$act_name] = translate($ACLActions[$type_name]['actions'][$act_name]['label'], 'ACLActions');
-                    $categories[$cat_name][$type_name][$act_name]['accessColor'] = ACLAction::AccessColor($action['aclaccess']);
+                    
+                    $actionAclAccess = null;
+                    if (isset($action['aclaccess'])) {
+                        $actionAclAccess = $action['aclaccess'];
+                    } else {
+                        LoggerManager::getLogger()->warn('Action ACL access is not set for setup Categories Matrix');
+                    }
+                    
+                    $categories[$cat_name][$type_name][$act_name]['accessColor'] = ACLAction::AccessColor($actionAclAccess);
                     if($type_name== 'module'){
 
                         if($act_name != 'aclaccess' && $categories[$cat_name]['module']['access']['aclaccess'] == ACL_ALLOW_DISABLED){
