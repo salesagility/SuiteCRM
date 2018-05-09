@@ -17,6 +17,6 @@ class AM_ProjectTemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $this->assertAttributeEquals('am_projecttemplates', 'table_name', $am_projectTemplate);
         $this->assertAttributeEquals(true, 'new_schema', $am_projectTemplate);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $am_projectTemplate);
-        $this->assertAttributeEquals(false, 'importable', $am_projectTemplate);
+        $this->assertAttributeEquals(true, 'importable', $am_projectTemplate);
     }
 }
