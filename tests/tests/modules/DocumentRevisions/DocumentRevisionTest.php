@@ -17,6 +17,16 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndRetrieve()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('document_revisions');
+        $state->pushGlobals();
+        
+        // test
 
         $documentRevision = new DocumentRevision();
 
@@ -44,6 +54,13 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $docRev->mark_deleted($docRev->id);
         $result = $docRev->retrieve($docRev->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('document_revisions');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_summary_text()
@@ -126,6 +143,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlist_view_parse_additional_sections()
     {
+        $this->markTestIncomplete('This test is not a test');
         $documentRevision = new DocumentRevision();
 
         //execute the method and test if it works and does not throws an exception.
