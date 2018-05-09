@@ -166,6 +166,7 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         
         // test
         
@@ -185,6 +186,7 @@ class SugarControllerTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('aod_index');
         $state->popTable('users');
     }
 
