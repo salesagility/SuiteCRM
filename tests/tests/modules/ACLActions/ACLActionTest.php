@@ -186,6 +186,13 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testuserNeedsOwnership()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //test with invalid values
         $this->assertFalse(ACLAction::userNeedsOwnership('', '', ''));
@@ -195,6 +202,10 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Accounts', 'delete'));
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Users', 'delete'));
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Users', 'list'));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testsetupCategoriesMatrix()
