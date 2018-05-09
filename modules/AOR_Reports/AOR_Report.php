@@ -888,7 +888,15 @@ class AOR_Report extends Basic
                 continue;
             }
             if ($field['total']) {
-                $totalLabel = $field['label'] . " " . $app_list_strings['aor_total_options'][$field['total']];
+                
+                $totalOptions = null;
+                if (isset($app_list_strings['aor_total_options'][$field['total']])) {
+                    $totalOptions = $app_list_strings['aor_total_options'][$field['total']];
+                } else {
+                    LoggerManager::getLogger()->warn('AOR Report get total HTML error: lang file doesnt contains total field, $app_list_strings[aor_total_options] is incorrect');
+                }
+                
+                $totalLabel = $field['label'] . " " . $totalOptions;
                 $html .= "<th>{$totalLabel}</th>";
             } else {
                 $html .= "<th></th>";
@@ -904,29 +912,51 @@ class AOR_Report extends Basic
                 $type = $field['total'];
                 $total = $this->calculateTotal($type, $totals[$label]);
                 // Customise display based on the field type
-                $moduleBean = BeanFactory::newBean($field['module']);
-                $fieldDefinition = $moduleBean->field_defs[$field['field']];
-                $fieldDefinitionType = $fieldDefinition['type'];
-                switch ($fieldDefinitionType) {
-                    case "currency":
-                        // Customise based on type of function
-                        switch ($type) {
-                            case 'SUM':
-                            case 'AVG':
-                                if ($currency->id == -99) {
-                                    $total = $currency->symbol . format_number($total, null, null);
-                                } else {
-                                    $total = $currency->symbol . format_number($total, null, null,
-                                            array('convert' => true));
-                                }
-                                break;
-                            case 'COUNT':
-                            default:
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
+                
+                $fieldModule = null;
+                if (isset($field['module'])) {
+                    $fieldModule = $field['module'];
+                } else {
+                    LoggerManager::getLogger()->error('field module is not set for AOR Report get total HTML');
+                }
+                
+                $moduleBean = BeanFactory::newBean($fieldModule);
+                
+                if (!is_object($moduleBean)) {
+                    LoggerManager::getLogger()->error('Module not found for AOR Report');
+                } else {
+
+                    
+                    $fieldField = null;
+                    if (isset($field['field'])) {
+                        $fieldField = $field['field'];
+                    } else {
+                        LoggerManager::getLogger()->error('field field is not set for AOR Report get total HTML');
+                    }
+
+                    $fieldDefinition = $moduleBean->field_defs[$fieldField];
+                    $fieldDefinitionType = $fieldDefinition['type'];
+                    switch ($fieldDefinitionType) {
+                        case "currency":
+                            // Customise based on type of function
+                            switch ($type) {
+                                case 'SUM':
+                                case 'AVG':
+                                    if ($currency->id == -99) {
+                                        $total = $currency->symbol . format_number($total, null, null);
+                                    } else {
+                                        $total = $currency->symbol . format_number($total, null, null,
+                                                array('convert' => true));
+                                    }
+                                    break;
+                                case 'COUNT':
+                                default:
+                                    break;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 $html .= "<td>" . $total . "</td>";
             } else {

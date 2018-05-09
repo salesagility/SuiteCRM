@@ -164,6 +164,13 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_report_html()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -182,6 +189,10 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //verify that group and identifier exist in the strings
         $this->assertContains('grouptest', $html3);
         $this->assertContains('testidentifier', $html3);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testgetTotalHTML()
@@ -227,6 +238,13 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_report_query()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -237,10 +255,21 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method with parameter and verify that it returns a non empty string
         $actual = $aor_Report->build_report_query('name');
         $this->assertGreaterThan(0, strlen($actual));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_report_query_select()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
         $query_array = array();
@@ -248,6 +277,10 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method with parameters and verify that it returns an array.
         $actual = $aor_Report->build_report_query_select($query_array, 'name');
         $this->assertTrue(is_array($actual));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_report_query_join()
@@ -256,7 +289,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aor_Report->report_module = 'Accounts';
 
         //test with type custom and verify that it retunrs expected results
-        $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `contacts` ON `accounts`.id = `contacts`.id_c '));
+        $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `accounts_contacts` ON `accounts`.id = `contacts`.id_c '));
         $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(), 'custom', array());
         $this->assertSame($expected, $actual);
 
@@ -270,6 +303,13 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_report_access_query()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
 
         //test without alias and verify that it retunrs expected results
@@ -279,10 +319,21 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with alias and verify that it retunrs expected results
         $result = $aor_Report->build_report_access_query(new AOR_Report(), 'rep');
         $this->assertEquals('', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_report_query_where()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -290,5 +341,9 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = array('where' => array('accounts.deleted = 0 '));
         $actual = $aor_Report->build_report_query_where();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }
