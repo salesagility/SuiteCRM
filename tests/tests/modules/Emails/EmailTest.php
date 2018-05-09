@@ -187,6 +187,17 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsaveAndOthers()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('emails');
+        $state->pushTable('emails_email_addr_rel');
+        $state->pushTable('emails_text');
+        $state->pushGlobals();
+        
+        // test
+        
         $email = new Email();
 
         $email->from_addr = 'from@email.com';
@@ -229,6 +240,13 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test delete method
         $this->delete($email->id);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('emails_text');
+        $state->popTable('emails_email_addr_rel');
+        $state->popTable('emails');
     }
 
     public function retrieve($id)
@@ -340,6 +358,17 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveTempNoteAttachmentsAndGetNotesAndDoesImportedEmailHaveAttachment()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('notes');
+        $state->pushGlobals();
+        
+        // test
+
+
         $email = new Email();
 
         $email->id = 1;
@@ -361,6 +390,12 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //finally cleanup
         $email->delete($email->id);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('notes');
+        $state->popTable('aod_indexevent');
     }
 
     public function testcleanEmails()

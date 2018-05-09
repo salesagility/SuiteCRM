@@ -1152,7 +1152,12 @@ class Email extends SugarBean {
 	    $tmpNote->filename = $filename;
 	    $tmpNote->file_mime_type = $mimeType;
 	    $noteFile = "upload://{$tmpNote->id}";
-	    if(!copy($fileLocation, $noteFile)) {
+            
+            if (!file_exists($fileLocation)) {
+                LoggerManager::getLogger()->warn('File not found for copy: ' . $fileLocation);
+            }
+            
+	    if(!file_exists($fileLocation) || !copy($fileLocation, $noteFile)) {
     	    $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
 	    }
 	    $tmpNote->save();
