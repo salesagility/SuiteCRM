@@ -56,7 +56,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //execute the method and test it it returns expected contents
 
-        $expected = '0';
+        $expected = '1';
         $actual = query_user_has_roles('1');
         $this->assertSame($expected, $actual);
     }
