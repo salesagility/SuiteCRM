@@ -594,14 +594,29 @@ class ACLAction  extends SugarBean{
                     $categories[$cat_name][$type_name][$act_name]['accessColor'] = ACLAction::AccessColor($actionAclAccess);
                     if($type_name== 'module'){
 
-                        if($act_name != 'aclaccess' && $categories[$cat_name]['module']['access']['aclaccess'] == ACL_ALLOW_DISABLED){
+                        $catModAccACL = null;
+                        if (isset($categories[$cat_name]['module']['access']['aclaccess'])) {
+                            $catModAccACL = $categories[$cat_name]['module']['access']['aclaccess'];
+                        } else {
+                            LoggerManager::getLogger()->warn('Categories / category name: [' . $cat_name . '] / module / access / aclaccess is not set for ACLAction::setupCategoriesMatrix()' );
+                        }
+                        
+                        if($act_name != 'aclaccess' && $catModAccACL == ACL_ALLOW_DISABLED){
                             $categories[$cat_name][$type_name][$act_name]['accessColor'] = 'darkgray';
                             $disabled[] = $cat_name;
                         }
 
                     }
-                    $categories[$cat_name][$type_name][$act_name]['accessName'] = ACLAction::AccessName($action['aclaccess']);
-                    $categories[$cat_name][$type_name][$act_name]['accessLabel'] = ACLAction::AccessLabel($action['aclaccess']);
+                    
+                    $actionAclAccess = null;
+                    if (isset($action['aclaccess'])) {
+                        $actionAclAccess = $action['aclaccess'];
+                    } else {
+                        LoggerManager::getLogger()->warn('ACL Action access is not set for ACLAction::setupCategoriesMatrix()');
+                    }
+                    
+                    $categories[$cat_name][$type_name][$act_name]['accessName'] = ACLAction::AccessName($actionAclAccess);
+                    $categories[$cat_name][$type_name][$act_name]['accessLabel'] = ACLAction::AccessLabel($actionAclAccess);
 
                     if($cat_name=='Users'&& $act_name=='admin'){
                         $categories[$cat_name][$type_name][$act_name]['accessOptions'][ACL_ALLOW_DEFAULT]=ACLAction::AccessName(ACL_ALLOW_DEFAULT);;
