@@ -31,6 +31,19 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aor_charts');
+        $state->pushTable('aor_fields');
+        $state->pushTable('aor_reports');
+        $state->pushGlobals();
+        $state->pushPHPConfigOptions();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
 
         //populate value for aor_fields related/child object
@@ -67,6 +80,15 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aor_Report->mark_deleted($aor_Report->id);
 
         unset($aor_Report);
+        
+        // clean up
+        
+        $state->popPHPConfigOptions();
+        $state->popGlobals();
+        $state->popTable('aor_reports');
+        $state->popTable('aor_fields');
+        $state->popTable('aor_charts');
+        $state->popTable('aod_indexevent');
     }
 
     public function testload_report_beans()

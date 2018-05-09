@@ -170,6 +170,17 @@ class AOR_Report extends Basic
             $fields[] = $field;
         }
         usort($fields, function ($a, $b) {
+            
+            if (!is_numeric($a->field_order)) {
+                LoggerManager::getLogger()->warn('A non-numeric value encountered at field order (a)');
+                $a->field_order = 0;
+            }
+            
+            if (!is_numeric($b->field_order)) {
+                LoggerManager::getLogger()->warn('A non-numeric value encountered at field order (b)');
+                $b->field_order = 0;
+            }
+            
             return $a->field_order - $b->field_order;
         });
 

@@ -93,9 +93,16 @@ class AOR_Condition extends Basic
     {
 
         require_once('modules/AOW_WorkFlow/aow_utils.php');
+        
+        $postData = null;
+        if (isset($post_data[$key . 'field'])) {
+            $postData = $post_data[$key . 'field'];
+        } else {
+            LoggerManager::getLogger()->warn('Field in POST data is not set for save lines at key: ' . $key);
+        }
 
         $j = 0;
-        foreach ($post_data[$key . 'field'] as $i => $field) {
+        foreach ((array)$postData as $i => $field) {
 
             if (!isset($post_data[$key . 'deleted'][$i])) {
                 LoggerManager::getLogger()->warn('AOR Condition trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
