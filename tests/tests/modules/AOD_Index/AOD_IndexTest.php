@@ -4,6 +4,14 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOD_Index()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and type attribute
         $aod_index = new AOD_Index();
@@ -18,6 +26,10 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aod_index);
         $this->assertAttributeEquals(false, 'importable', $aod_index);
         $this->assertAttributeEquals(false, 'tracker_visibility', $aod_index);
+        
+        // clean up
+        
+        $state->popTable('aod_index');
     }
 
     public function testisEnabled()
@@ -44,6 +56,13 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testoptimise()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
+        // test
+        
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
@@ -52,6 +71,10 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method and test if the last optimized date is changed to a later date/time.
         $aod_index->optimise();
         $this->assertGreaterThan($last_optimized, $aod_index->last_optimised);
+        
+        // clean up
+        
+        $state->popTable('aod_index');
     }
 
     public function testgetIndex()

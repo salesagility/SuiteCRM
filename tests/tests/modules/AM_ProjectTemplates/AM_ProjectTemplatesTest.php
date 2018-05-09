@@ -5,6 +5,14 @@ class AM_ProjectTemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
 {
     public function testAM_ProjectTemplates()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and type attribute
         $am_projectTemplate = new AM_ProjectTemplates();
@@ -18,5 +26,10 @@ class AM_ProjectTemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $this->assertAttributeEquals(true, 'new_schema', $am_projectTemplate);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $am_projectTemplate);
         $this->assertAttributeEquals(true, 'importable', $am_projectTemplate);
+        
+        // clean up
+        
+        $state->popTable('aod_index');
+        
     }
 }
