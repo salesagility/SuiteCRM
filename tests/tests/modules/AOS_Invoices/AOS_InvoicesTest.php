@@ -21,6 +21,13 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMark_deleted()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_invoices');
+        
+        // test
+        
 
         $aosInvoices = new AOS_Invoices();
         $aosInvoices->name = 'test';
@@ -36,5 +43,9 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosInvoices->mark_deleted($aosInvoices->id);
         $result = $aosInvoices->retrieve($aosInvoices->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('aos_invoices');
     }
 }
