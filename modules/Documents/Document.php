@@ -219,6 +219,10 @@ class Document extends File {
 	}
 
 	function is_authenticated() {
+            if (!isset($this->authenticated)) {
+                LoggerManager::getLogger()->warn('Document::$authenticated is not set');
+                return null;
+            }
 		return $this->authenticated;
 	}
 
