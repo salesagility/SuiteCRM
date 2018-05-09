@@ -5,6 +5,12 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAlert()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('oauth_tokens');
+        
+        // test
 
         //execute the contructor and check for the Object type and type attribute
         $alert = new Alert();
@@ -18,6 +24,10 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $alert);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $alert);
         $this->assertAttributeEquals(false, 'importable', $alert);
+        
+        // clean up
+        
+        $state->popTable('oauth_tokens');
     }
 
     public function testbean_implements()
