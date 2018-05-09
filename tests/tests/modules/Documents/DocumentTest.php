@@ -197,7 +197,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'DOCUMENT_NAME' => 'test',
             'DOC_TYPE' => 'Sugar',
             'FILENAME' => 'test',
-            'ACTIVE_DATE' => '05/08/2018',
+            'ACTIVE_DATE' => date('m/d/Y'),
             'CATEGORY_ID' => null,
             'SUBCATEGORY_ID' => null,
             'REVISION' => '1',
