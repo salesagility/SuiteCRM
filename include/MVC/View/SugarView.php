@@ -1687,7 +1687,7 @@ EOHTML;
      *
      * @return string
      */
-    public function getBreadCrumbSymbol()
+    public static function getBreadCrumbSymbol()
     {
         if (SugarThemeRegistry::current()->directionality == "ltr") {
             return "<span class='pointer'>&raquo;</span>";
