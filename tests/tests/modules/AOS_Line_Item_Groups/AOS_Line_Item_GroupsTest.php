@@ -22,6 +22,13 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
 
     public function testsave_groups()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aos_line_item_groups');
+        
+        // test
+        
 
         $aosLineItemGroup = new AOS_Line_Item_Groups();
 
@@ -47,6 +54,10 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         foreach ($line_item_groups as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
+        
+        // clean up
+        
+        $state->popTable('aos_line_item_groups');
     }
 
     public function testsave()
