@@ -162,9 +162,6 @@ function constructDDSubscriptionList($focus,$classname=''){
  *This function constructs multiselect box of subscriptions for display in manage subscription form
 */
 function printOriginalValues($focus){
-    global $app_strings;
-    $unsubs_arr = '';
-    $subs_arr =  '';
     $return_arr =  [];
 
      // Lets start by creating the subscription and unsubscription arrays
