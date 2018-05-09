@@ -253,7 +253,15 @@ class ACLAction  extends SugarBean{
                         if(empty($type)){
                             return $_SESSION['ACL'][$user_id][$category];
                         }
-                        return $_SESSION['ACL'][$user_id][$category][$type];
+                        
+                        $aclCatType = null;
+                        if (isset($_SESSION['ACL'][$user_id][$category][$type])) {
+                            $aclCatType = $_SESSION['ACL'][$user_id][$category][$type];
+                        } else {
+                            LoggerManager::getLogger()->warn('ACL Category Type is not set for user action');
+                        }
+                        
+                        return $aclCatType;
                     }else if(!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])){
                         return $_SESSION['ACL'][$user_id][$category][$type][$action];
                     }

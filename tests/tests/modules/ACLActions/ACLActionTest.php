@@ -89,6 +89,13 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUserActions()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $result1 = ACLAction::getUserActions('1');
         $result2 = ACLAction::getUserActions('1', false, 'Accounts');
         $result3 = ACLAction::getUserActions('1', false, 'Accounts', 'list');
@@ -97,6 +104,10 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertNotSame($result1, $result2);
         $this->assertNotSame($result1, $result3);
         $this->assertNotSame($result2, $result3);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testhasAccess()
