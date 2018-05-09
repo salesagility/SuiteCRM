@@ -23,6 +23,15 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsaveAndDelete()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aos_contracts');
+        $state->pushGlobals();
+        
+        // test
+        
 
         $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';
@@ -37,6 +46,12 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aosContracts->mark_deleted($aosContracts->id);
         $result = $aosContracts->retrieve($aosContracts->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aos_contracts');
+        $state->popTable('aod_indexevent');
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()

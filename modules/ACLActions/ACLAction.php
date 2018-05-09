@@ -649,7 +649,15 @@ class ACLAction  extends SugarBean{
         $array_fields = array('id', 'aclaccess');
         $arr = array();
         foreach($array_fields as $field){
-            $arr[$field] = $this->$field;
+            
+            $thisField = null;
+            if (isset($this->$field)) {
+                $thisField = $this->$field;
+            } else {
+                LoggerManager::getLogger()->warn('Field is not set for ACLAction: ' . $field);
+            }
+            
+            $arr[$field] = $thisField;
         }
         return $arr;
     }
@@ -672,7 +680,9 @@ class ACLAction  extends SugarBean{
     *
     */
     function clearSessionCache(){
-        unset($_SESSION['ACL']);
+        if (isset($_SESSION['ACL'])) {
+            unset($_SESSION['ACL']);
+        }
     }
 
 

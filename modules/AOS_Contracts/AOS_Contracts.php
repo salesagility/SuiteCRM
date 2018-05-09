@@ -149,8 +149,12 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 	function deleteCall(){
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
+            
+            if (!isset($this->call_id)) {
+                LoggerManager::getLogger()->warn('AOS Contracts: Call ID is not set for delete Call');
+            }
 
-		if($this->call_id != null){
+		if(isset($this->call_id) && $this->call_id != null){
             $call->id = $this->call_id;
             $call->mark_deleted($call->id);
 		}
