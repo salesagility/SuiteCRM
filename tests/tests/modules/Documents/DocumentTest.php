@@ -21,6 +21,16 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndGet_document_name()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('cron_remove_documents');
+        $state->pushTable('documents');
+        $state->pushGlobals();
+        
+        // test
+        
 
         $document = new Document();
 
@@ -46,6 +56,13 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $document->mark_deleted($document->id);
         $result = $document->retrieve($document->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('documents');
+        $state->popTable('cron_remove_documents');
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_summary_text()
