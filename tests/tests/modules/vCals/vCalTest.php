@@ -93,6 +93,14 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_sugar_freebusy()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         global $locale, $timedate;
 
         $vcal = new vCal();
@@ -104,10 +112,22 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $vcal->create_sugar_freebusy($user_bean, $start_date_time, $end_date_time);
         $this->assertGreaterThanOrEqual(0, strlen($result));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_vcal_freebusy()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -118,10 +138,23 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertStringStartsWith($expectedStart, $result);
         $this->assertStringEndsWith($expectedEnd, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testcache_sugar_vcal()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
+        // test
+        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -132,10 +165,24 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
     }
 
     public function testcache_sugar_vcal_freebusy()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
+        // test
+        
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -146,6 +193,11 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
     }
 
     public function testfold_ical_lines()
