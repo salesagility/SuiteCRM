@@ -364,11 +364,16 @@ class StateSaver
             if (false === $contents) {
                 throw new StateSaverException('Can not read file: ' . $realpath);
             }
-            $this->files[$realpath]['contents'] = $contents;
-            $this->files[$realpath]['time'] = filemtime($realpath);
-            if (false === $this->files[$realpath]['time']) {
-                throw new StateSaverException('Unable to get filemtime for file: ' . $realpath);
+            $size = filesize($realpath);
+            if (false === $size) {
+                throw new StateSaverException('Can not get file size: ' . $realpath);
             }
+            $this->files[$realpath]['contents'] = $contents;
+            $this->files[$realpath]['size'] = $size;
+//            $this->files[$realpath]['time'] = filemtime($realpath);
+//            if (false === $this->files[$realpath]['time']) {
+//                throw new StateSaverException('Unable to get filemtime for file: ' . $realpath);
+//            }
         } else {
             unset($this->files[$realpath]['contents']);
         }
@@ -394,9 +399,16 @@ class StateSaver
             if (false === $ok) {
                 throw new StateSaverException('Can not write file: ' . $realpath);
             }
-            if (false ===touch($realpath, $this->files[$realpath]['time'])) {
-                throw new StateSaverException('Unable to touch filemtime for file: ' . $realpath);
+            $size = filesize($realpath);
+            if (false === $size) {
+                throw new StateSaverException('Unable to get file size: ' . $realpath);
             }
+            if ($size !== $this->files[$realpath]['size']) {
+                throw new StateSaverException('File size is incorrect: ' . $realpath . ' ' . $size . ' != ' . $this->files[$realpath]['size']);
+            }
+//            if (false === touch($realpath, $this->files[$realpath]['time'])) {
+//                throw new StateSaverException('Unable to touch filemtime for file: ' . $realpath);
+//            }
         } else {
             if (file_exists($realpath) && false === unlink($realpath)) {
                 return false;
