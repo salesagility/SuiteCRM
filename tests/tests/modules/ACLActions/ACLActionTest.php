@@ -123,8 +123,20 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testuserNeedsSecurityGroup()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
+        
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action 
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts', 'list')); //test with valid module and action
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testuserHasAccess()
