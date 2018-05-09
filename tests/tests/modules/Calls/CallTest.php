@@ -50,6 +50,17 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMarkDeleted()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('calls');
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
 
         $call->name = 'test';
@@ -63,6 +74,13 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call->mark_deleted($call->id);
         $result = $call->retrieve($call->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
+        $state->popTable('calls');
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_contacts()
@@ -254,6 +272,15 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_accept_status()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('calls_users');
+        $state->pushTable('vcals');
+        $state->pushGlobals();
+        
+        // test
+        
         $call = new Call();
         $call->id = 1;
 
@@ -267,6 +294,12 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(1, count($call_users));
 
         $call->delete_linked($call->id);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('vcals');
+        $state->popTable('calls_users');
     }
 
     public function testget_notification_recipients()
