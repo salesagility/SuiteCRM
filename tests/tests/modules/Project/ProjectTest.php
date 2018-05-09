@@ -57,6 +57,14 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testsave_relationship_changes()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 
     	$project = new Project();
 
@@ -72,6 +80,10 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	catch (Exception $e) {
     		$this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
     	}
+        
+        // clean up
+        
+        $state->popGlobals();
 
     }
 
@@ -117,7 +129,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 
 		//test with valid string params
-		$expected = "project.name LIKE '%%'";
+		$expected = "project.name LIKE '%test%'";
 		$actual = $project->build_generic_where_clause('test');
 		$this->assertSame($expected,$actual);
 
@@ -164,7 +176,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	//test with empty string params
     	$expected = "SELECT
 				project.*,
-                users.user_name as assigned_user_name ,project_cstm.jjwg_maps_lat_c,project_cstm.jjwg_maps_address_c,project_cstm.jjwg_maps_geocode_status_c,project_cstm.jjwg_maps_lng_c FROM project  LEFT JOIN project_cstm ON project.id = project_cstm.id_c  LEFT JOIN users
+                users.user_name as assigned_user_name ,project_cstm.jjwg_maps_address_c,project_cstm.jjwg_maps_geocode_status_c,project_cstm.jjwg_maps_lat_c,project_cstm.jjwg_maps_lng_c FROM project  LEFT JOIN project_cstm ON project.id = project_cstm.id_c  LEFT JOIN users
                    	ON project.assigned_user_id=users.id where  project.deleted=0 ";
     	$actual = $project->create_export_query('','');
     	$this->assertSame($expected,$actual);
@@ -173,7 +185,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	//test with valid string params
     	$expected = "SELECT
 				project.*,
-                users.user_name as assigned_user_name ,project_cstm.jjwg_maps_lat_c,project_cstm.jjwg_maps_address_c,project_cstm.jjwg_maps_geocode_status_c,project_cstm.jjwg_maps_lng_c FROM project  LEFT JOIN project_cstm ON project.id = project_cstm.id_c  LEFT JOIN users
+                users.user_name as assigned_user_name ,project_cstm.jjwg_maps_address_c,project_cstm.jjwg_maps_geocode_status_c,project_cstm.jjwg_maps_lat_c,project_cstm.jjwg_maps_lng_c FROM project  LEFT JOIN project_cstm ON project.id = project_cstm.id_c  LEFT JOIN users
                    	ON project.assigned_user_id=users.id where (users.user_name) AND  project.deleted=0  ORDER BY project.id";
     	$actual = $project->create_export_query('project.id','users.user_name');
     	$this->assertSame($expected,$actual);
