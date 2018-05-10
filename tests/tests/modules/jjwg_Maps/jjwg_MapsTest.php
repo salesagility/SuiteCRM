@@ -166,6 +166,14 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdateGeocodeInfoByBeanQuery()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('accounts_cstm');
+        
+        // test
+        
         $jjwgMaps = new jjwg_Maps();
         $bean = new Account();
 
@@ -177,6 +185,11 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $bean->id = 1;
         $result = $jjwgMaps->updateGeocodeInfoByBeanQuery($bean);
         $this->assertSame(null, $result);
+        
+        
+        // clean up
+        
+        $state->popTable('accounts_cstm');
     }
 
     public function testdeleteAllGeocodeInfoByBeanQuery()
