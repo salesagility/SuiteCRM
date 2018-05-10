@@ -98,7 +98,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "name like '%'";
+        $expected = "name like 'test%'";
         $actual = $release->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
     }
