@@ -51,11 +51,22 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdeleteAttachment()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
         $note = new Note();
 
         $note->id = 1;
         $result = $note->deleteAttachment();
         $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testget_summary_text()
