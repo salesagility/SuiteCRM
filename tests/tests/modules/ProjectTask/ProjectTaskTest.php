@@ -35,7 +35,16 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testsave()
-    {
+    {   
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('project_task');
+        $state->pushGlobals();
+        
+        // test
+
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
@@ -57,6 +66,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('project_task');
+        $state->popTable('aod_indexevent');
     }
 
     public function _get_depends_on_name($id)
