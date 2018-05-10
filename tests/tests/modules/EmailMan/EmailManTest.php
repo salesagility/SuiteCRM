@@ -115,6 +115,13 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testset_as_sent()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('campaign_log');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         //execute the method and test if it works and does not throws an exception.
@@ -134,6 +141,10 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('campaign_log');
     }
 
     public function testcreate_indiv_email()
