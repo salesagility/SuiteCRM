@@ -135,6 +135,15 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('eapm');
+        
+        // test
+
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -144,6 +153,11 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('eapm');
+        $state->popTable('aod_index');
     }
 
     public function testfill_in_additional_list_fields()
