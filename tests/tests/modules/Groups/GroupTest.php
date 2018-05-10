@@ -18,6 +18,12 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testmark_deleted()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        
+        // test
 
         $group = new Group();
 
@@ -28,6 +34,10 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('users');
     }
 
     public function testcreate_export_query()
