@@ -474,6 +474,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $state->pushTable('email_addr_bean_rel');
         $state->pushTable('user_preferences');
         $state->pushTable('users');
+        $state->pushTable('email_addresses');
         $state->pushGlobals();
         
         // test
@@ -545,6 +546,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('email_addresses');
         $state->popTable('users');
         $state->popTable('user_preferences');
         $state->popTable('email_addr_bean_rel');
