@@ -269,15 +269,21 @@ $query .= 			"LEFT JOIN users
 		$this->load_relationship('contacts');
 		$query_array=$this->contacts->getQuery(true);
 
-		//update the select clause in the retruned query.
-		$query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
+                if (is_string($query_array)) {
+                    LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array)"); 
+                } else {
+                    //update the select clause in the retruned query.
+                    $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
 
+                }
+                
 		$query='';
-		foreach ($query_array as $qstring) {
+		foreach ((array)$query_array as $qstring) {
 			$query.=' '.$qstring;
 		}
 	    $temp = Array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-		return $this->build_related_list2($query, new Contact(), $temp);
+            $contact = new Contact();
+		return $this->build_related_list2($query, $contact, $temp);
 	}
 
     function update_currency_id($fromid, $toid) {
