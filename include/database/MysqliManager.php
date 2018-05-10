@@ -121,13 +121,6 @@ class MysqliManager extends MysqlManager
 	 */
 	public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
 	{
-            $enableds = [
-                'SELECT * FROM aod_indexevent',
-                'SELECT * FROM aod_indexevent_audit'
-            ];
-            if (strpos($sql, 'aod_indexevent') && !in_array($sql, $enableds)) {
-                throw new Exception($sql);
-            }
 		if(is_array($sql)) {
 			return $this->queryArray($sql, $dieOnError, $msg, $suppress);
         }
