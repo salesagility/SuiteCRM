@@ -56,6 +56,13 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheckPendingJobs()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('job_queue');
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -65,6 +72,10 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('job_queue');
     }
 
     public function testderiveDBDateTimes()
