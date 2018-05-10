@@ -181,6 +181,18 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('opportunities');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('opportunities_cstm');
+        $state->pushTable('sugarfeed');
+        $state->pushGlobals();
+        
+        // test
+        
+
         $opportunity = new Opportunity();
 
         $opportunity->name = 'test';
@@ -199,6 +211,14 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $opportunity->mark_deleted($opportunity->id);
         $result = $opportunity->retrieve($opportunity->id);
         $this->assertEquals(null, $result);
+        
+        // cleanup
+        
+        $state->popGlobals();
+        $state->popTable('sugarfeed');
+        $state->popTable('opportunities_cstm');
+        $state->popTable('aod_indexevent');
+        $state->popTable('opportunities');
     }
 
     public function testsave_relationship_changes()
