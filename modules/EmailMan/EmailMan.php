@@ -308,7 +308,15 @@ class EmailMan extends SugarBean{
 
 			$campaign_log = new CampaignLog();
 			$campaign_log->campaign_id=$this->campaign_id;
-			$campaign_log->target_tracker_key=$this->target_tracker_key;
+                        
+                        $targetTrackerKey = null;
+                        if (isset($this->target_tracker_key)) {
+                            $targetTrackerKey = $this->target_tracker_key;
+                        } else {
+                            LoggerManager::getLogger()->warn('EmailMan::set_as_sent: target_tracker_key is not set');
+                        }
+                        
+			$campaign_log->target_tracker_key= $targetTrackerKey;
 			$campaign_log->target_id= $this->related_id;
 			$campaign_log->target_type=$this->related_type;
             $campaign_log->marketing_id=$this->marketing_id;
