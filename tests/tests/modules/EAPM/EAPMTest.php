@@ -31,6 +31,13 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetLoginInfo()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
         $eapm = new EAPM();
 
         //test with default value/false
@@ -40,6 +47,10 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with true
         $result = $eapm->getLoginInfo('', true);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testcreate_new_list_query()
