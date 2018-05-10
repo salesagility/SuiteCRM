@@ -74,14 +74,19 @@ if(file_exists($autoloader)) {
 }
 
 // config|_override.php
+global $sugar_config;
 if (is_file('config.php')) {
     require_once 'config.php'; // provides $sugar_config
 }
 
 // load up the config_override.php file.  This is used to provide default user settings
 if (is_file('config_override.php')) {
+    $core_sugar_config = $sugar_config;
     require_once 'config_override.php';
+    $sugar_config = array_merge_recursive($core_sugar_config, $sugar_config);
 }
+
+
 if (empty($GLOBALS['installing']) && empty($sugar_config['dbconfig']['db_name'])) {
     header('Location: install.php');
     exit();
