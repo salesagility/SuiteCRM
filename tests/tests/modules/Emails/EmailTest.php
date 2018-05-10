@@ -194,6 +194,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
         $state->pushTable('emails_text');
+        $state->pushTable('email_addresses');
         $state->pushGlobals();
         
         // test
@@ -244,6 +245,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('email_addresses');
         $state->popTable('emails_text');
         $state->popTable('emails_email_addr_rel');
         $state->popTable('emails');
