@@ -126,10 +126,21 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testquery_user_allowed_modules()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
+
         $role = new Role();
 
         $result = $role->query_user_allowed_modules('1');
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popTable('roles_users');
     }
 
     public function testquery_user_disallowed_modules()
