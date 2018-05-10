@@ -189,7 +189,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "project_task.name like '%'";
+        $expected = "project_task.name like 'test%'";
         $actual = $projectTask->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
     }
