@@ -119,7 +119,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                 contacts.*,
                                 email_addresses.email_address email_address,
                                 '' email_addresses_non_primary, accounts.name as account_name,
-                                users.user_name as assigned_user_name ,contacts_cstm.jjwg_maps_address_c,contacts_cstm.jjwg_maps_geocode_status_c,contacts_cstm.jjwg_maps_lat_c,contacts_cstm.jjwg_maps_lng_c FROM contacts LEFT JOIN users
+                                users.user_name as assigned_user_name ,contacts_cstm.jjwg_maps_lat_c,contacts_cstm.jjwg_maps_address_c,contacts_cstm.jjwg_maps_geocode_status_c,contacts_cstm.jjwg_maps_lng_c FROM contacts LEFT JOIN users
 	                                ON contacts.assigned_user_id=users.id LEFT JOIN accounts_contacts
 	                                ON ( contacts.id=accounts_contacts.contact_id and (accounts_contacts.deleted is null or accounts_contacts.deleted = 0))
 	                                LEFT JOIN accounts
@@ -134,7 +134,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                 contacts.*,
                                 email_addresses.email_address email_address,
                                 '' email_addresses_non_primary, accounts.name as account_name,
-                                users.user_name as assigned_user_name ,contacts_cstm.jjwg_maps_address_c,contacts_cstm.jjwg_maps_geocode_status_c,contacts_cstm.jjwg_maps_lat_c,contacts_cstm.jjwg_maps_lng_c FROM contacts LEFT JOIN users
+                                users.user_name as assigned_user_name ,contacts_cstm.jjwg_maps_lat_c,contacts_cstm.jjwg_maps_address_c,contacts_cstm.jjwg_maps_geocode_status_c,contacts_cstm.jjwg_maps_lng_c FROM contacts LEFT JOIN users
 	                                ON contacts.assigned_user_id=users.id LEFT JOIN accounts_contacts
 	                                ON ( contacts.id=accounts_contacts.contact_id and (accounts_contacts.deleted is null or accounts_contacts.deleted = 0))
 	                                LEFT JOIN accounts
