@@ -518,7 +518,15 @@ class EmailTemplate extends SugarBean
 
             $fieldName = $field_def['name'];
             if ($field_def['type'] == 'enum') {
-                $translated = translate($field_def['options'], 'Users', $user->$fieldName);
+                
+                $userFieldName = null;
+                if (isset($user->$fieldName)) {
+                    $userFieldName = $user->$fieldName;
+                } else {
+                    LoggerManager::getLogger()->warn('EmailTemplate::_parseUserValues: User Field name does not set: ' . $fieldName);
+                }
+                
+                $translated = translate($field_def['options'], 'Users', $userFieldName);
 
                 if (isset($translated) && !is_array($translated)) {
                     $repl_arr["contact_user_" . $fieldName] = $translated;
@@ -650,7 +658,15 @@ class EmailTemplate extends SugarBean
 
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'enum') {
-                    $translated = translate($field_def['options'], 'Accounts', $contact->$fieldName);
+                    
+                    $contactFieldName = null;
+                    if (isset($contact->$fieldName)) {
+                        $contactFieldName = $contact->$fieldName;
+                    } else {
+                        LoggerManager::getLogger()->warn('EmailTemplate::parse_template_bean: Contact Field name does not set: ' . $fieldName);
+                    }
+                    
+                    $translated = translate($field_def['options'], 'Accounts', $contactFieldName);
 
                     if (isset($translated) && !is_array($translated)) {
                         $repl_arr = EmailTemplate::add_replacement($repl_arr, $field_def, array(
