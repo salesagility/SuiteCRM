@@ -263,10 +263,21 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcustomGetMessageText()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email');
+        
+        // test
+
         $inboundEmail = new InboundEmail();
 
         $result = $inboundEmail->customGetMessageText('some message');
         $this->assertEquals('some message', $result);
+        
+        // clean up
+        
+        $state->popTable('inbound_email');
     }
 
     public function testgetFormattedRawSource()
