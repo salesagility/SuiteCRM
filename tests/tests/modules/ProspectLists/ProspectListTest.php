@@ -285,7 +285,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 
 		//test with valid string params
-		$expected = "prospect_lists.name like '%'";
+		$expected = "prospect_lists.name like '1%'";
 		$actual = $prospectList->build_generic_where_clause('1');
 		$this->assertSame($expected,$actual);
 
