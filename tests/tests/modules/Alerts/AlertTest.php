@@ -34,11 +34,21 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
 
         $alert = new Alert();
 
         $this->assertEquals(false, $alert->bean_implements('')); //test with empty value
         $this->assertEquals(false, $alert->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $alert->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popTable('roles_users');
     }
 }
