@@ -4,6 +4,8 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEAPM()
     {
+        $this->markTestIncomplete('environment dependency');
+        
         // save state
         
         $state = new SuiteCRM\StateSaver();
