@@ -459,7 +459,15 @@ class SugarFeed extends Basic {
         foreach ( $replies['list'] as $reply ) {
             // Setup the delete link
             $delete = '';
-            if(is_admin($GLOBALS['current_user']) || $data['CREATED_BY'] == $GLOBALS['current_user']->id) {
+            
+            $dataCreatedBy = null;
+            if (isset($data['CREATED_BY'])) {
+                $dataCreatedBy = $data['CREATED_BY'];
+            } else {
+                LoggerManager::getLogger()->warn('SugarFeed::fetchReplies - created by is not defined');
+            }
+            
+            if(is_admin($GLOBALS['current_user']) || $dataCreatedBy == $GLOBALS['current_user']->id) {
                 $delete = '<a id="sugarFieldDeleteLink'.$reply->id.'" href="#" onclick=\'SugarFeed.deleteFeed("'. $reply->id . '", "{this.id}"); return false;\'>'. $GLOBALS['app_strings']['LBL_DELETE_BUTTON_LABEL'].'</a>';
             }
 
@@ -467,7 +475,15 @@ class SugarFeed extends Basic {
             if ( isset($reply->created_by) ) {
                 $user = loadBean('Users');
                 $user->retrieve($reply->created_by);
-                $image_url = 'index.php?entryPoint=download&id='.$user->picture.'&type=SugarFieldImage&isTempFile=1&isProfile=1';
+                
+                $userPicture = null;
+                if (isset($user->picture)) {
+                    $userPicture = $user->picture;
+                } else {
+                    LoggerManager::getLogger()->warn('SugarFeed::fetchReplies - user picture is not defined');
+                }
+                
+                $image_url = 'index.php?entryPoint=download&id='.$userPicture.'&type=SugarFieldImage&isTempFile=1&isProfile=1';
             }
             $replyHTML .= '<div style="float: left; margin-right: 3px; width: 50px; height: 50px;"><!--not_in_theme!--><img src="'.$image_url.'" style="max-width: 50px; max-height: 50px;"></div> ';
             $replyHTML .= str_replace("{this.CREATED_BY}",get_assigned_user_name($reply->created_by),html_entity_decode($reply->name)).'<br>';
