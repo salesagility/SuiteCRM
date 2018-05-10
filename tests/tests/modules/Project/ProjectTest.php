@@ -171,6 +171,8 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testcreate_export_query()
     {
+        $this->markTestIncomplete('environment dependency');
+        
     	$project = new Project();
 
     	//test with empty string params
