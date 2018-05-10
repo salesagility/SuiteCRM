@@ -270,7 +270,14 @@ class InboundEmail extends SugarBean {
 		$this->connectMailserver();
         $oldConnect = $this->getConnectString('', $oldName);
         $newConnect = $this->getConnectString('', $newName);
-		if(!imap_renamemailbox($this->conn, $oldConnect , $newConnect)) {
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushErrorLevel();
+        error_reporting(0);
+        $imapRenameMailbox = imap_renamemailbox($this->conn, $oldConnect, $newConnect);
+        $state->popErrorLevel();
+        
+		if(!$imapRenameMailbox) {
 			$GLOBALS['log']->debug("***INBOUNDEMAIL: failed to rename mailbox [ {$oldConnect} ] to [ {$newConnect} ]");
 		} else {
         	$this->mailbox = str_replace($oldName, $newName, $this->mailbox);
@@ -2042,7 +2049,12 @@ class InboundEmail extends SugarBean {
 		$out = array();
 
 		foreach($beans as $bean) {
-			if(!in_array($bean->id, $showFolders)) {
+                    
+                    if (!is_array($showFolders)) {
+                        LoggerManager::getLogger()->warn('InboundEmail::search: show folders is not an array, ' . gettype($showFolders) . ' given');
+                    }
+                    
+			if(!in_array($bean->id, (array)$showFolders)) {
 				continue;
 			}
 
@@ -4655,7 +4667,15 @@ eoq;
 		imap_errors(); // clearing error stack
 
 		// tls::ca::ssl::protocol::novalidate-cert::notls
-		$useSsl = ($_REQUEST['ssl'] == 'true') ? true : false;
+                
+                $requestSsl = null;
+                if (isset($_REQUEST['ssl'])) {
+                    $requestSsl = $_REQUEST['ssl'];
+                } else {
+                    LoggerManager::getLogger()->warn('InboundEmail::connectMailserver: Request ssl is not defined');
+                }
+                
+		$useSsl = ($requestSsl == 'true') ? true : false;
 		if($test) {
 			imap_timeout(1, 15); // 60 secs is the default
 			imap_timeout(2, 15);
@@ -4813,7 +4833,11 @@ eoq;
                 $params = array();
             }
 
+            $state = new \SuiteCRM\StateSaver();
+            $state->pushErrorLevel();
+            error_reporting(0);
             $connection = imap_open($mailbox, $username, $password, $options, 0, $params);
+            $state->popErrorLevel();
         }
 
         return $connection;
