@@ -21,6 +21,16 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('tasks');
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
+
 
         $task = new Task();
 
@@ -39,6 +49,12 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $task->mark_deleted($task->id);
         $result = $task->retrieve($task->id);
         $this->assertEquals(null, $result);
+        
+        // cleanup
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
+        $state->popTable('tasks');
     }
 
     public function testget_summary_text()
