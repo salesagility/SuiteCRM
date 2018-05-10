@@ -23,12 +23,23 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_recently_viewed()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $tracker = new Tracker();
 
         $result = $tracker->get_recently_viewed(1);
 
         $this->assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testmakeInvisibleForAll()
