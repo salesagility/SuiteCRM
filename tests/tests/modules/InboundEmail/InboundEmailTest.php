@@ -267,6 +267,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('inbound_email');
+        $state->pushTable('aod_index');
         
         // test
 
@@ -277,6 +278,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('aod_index');
         $state->popTable('inbound_email');
     }
 
