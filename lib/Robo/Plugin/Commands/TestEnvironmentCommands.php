@@ -118,7 +118,8 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
-     *
+     * Download and run the chrome web driver
+     * @param array $opts
      */
     public function driverRunChrome($opts = ['url_base' => '/wd/hub'])
     {
@@ -276,6 +277,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
 
+    /**
+     * @param string $version
+     * @return string url
+     */
     private function getChromeWebDriverUrl($version = '2.38')
     {
         $os = new OperatingSystem();
@@ -301,6 +306,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
         }
     }
 
+    /**
+     * @param $url to download
+     * @param $toPath path to download file to (save as)
+     */
     private function download($url, $toPath)
     {
         $contents = file_get_contents($url, false);
@@ -312,6 +321,11 @@ class TestEnvironmentCommands extends \Robo\Tasks
         }
     }
 
+    /**
+     * @param $zipPath
+     * @param $unzippedPath
+     * @return bool
+     */
     private function unzip($zipPath, $unzippedPath)
     {
         $zip = new \ZipArchive();
@@ -325,6 +339,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
         }
     }
 
+    /**
+     * @param $basePath directory where driver is kept
+     * @param string $urlBase the url chrome should respond to
+     */
     private function runChromeWebDriver($basePath, $urlBase = '/wd/hub')
     {
         $os = new OperatingSystem();
