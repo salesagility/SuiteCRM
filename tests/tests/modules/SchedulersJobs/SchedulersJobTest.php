@@ -221,6 +221,14 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrunJobId()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+
 
         //test with invalid job id
         $result = SchedulersJob::runJobId('1','');
@@ -244,6 +252,10 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Job '.$schedulersJob->id.' belongs to another client, can not run as test_client.', $result);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testerrorHandler()
@@ -271,6 +283,13 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrunJob()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
 
         //test without a valid user
         $schedulersJob = new SchedulersJob();
@@ -296,5 +315,9 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $schedulersJob->runJob();
         $this->assertEquals(true, $result);
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }
