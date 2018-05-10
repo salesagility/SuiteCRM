@@ -181,10 +181,18 @@ class SavedSearch extends SugarBean
             }
         } else {
             foreach ($this->columns as $name => $val) {
+                
+                $valLabel = null;
+                if (isset($val['label'])) {
+                    $valLabel = $val['label'];
+                } else {
+                    LoggerManager::getLogger()->warn('Column label is not defined.');
+                }
+                
                 if (!empty($val['default']) && $val['default'])
-                    $chooser->args['values_array'][0][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][0][$name] = trim(translate($valLabel, $module), ':');
                 else
-                    $chooser->args['values_array'][1][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][1][$name] = trim(translate($valLabel, $module), ':');
             }
         }
 
