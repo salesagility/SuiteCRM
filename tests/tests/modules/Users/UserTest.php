@@ -963,8 +963,8 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         // save state
         
-        //$state = new SuiteCRM\StateSaver();
-        //$state->pushFile('config.php');
+        $state = new SuiteCRM\StateSaver();
+        $state->pushFile('config.php');
         
         // test
 
@@ -978,7 +978,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         // clean up
         
-        //$state->popFile('config.php');
+        $state->popFile('config.php');
 
 	}
 
