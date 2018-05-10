@@ -63,7 +63,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "prospects.last_name like '%' or prospects.first_name like '%' or prospects.assistant like '%'";
+        $expected = "prospects.last_name like '1%' or prospects.first_name like '1%' or prospects.assistant like '1%' or prospects.phone_home like '%1%' or prospects.phone_mobile like '%1%' or prospects.phone_work like '%1%' or prospects.phone_other like '%1%' or prospects.phone_fax like '%1%' or prospects.assistant_phone like '%1%'";
         $actual = $prospect->build_generic_where_clause('1');
         $this->assertSame($expected, $actual);
     }
