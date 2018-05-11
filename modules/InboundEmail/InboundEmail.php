@@ -1699,6 +1699,7 @@ class InboundEmail extends SugarBean {
 		}
 
 		$ret = array();
+                $ret['processCount'] = 0;
 		$ret['mailboxes'] = $mailboxes_meta;
 
 		foreach($mailboxes_meta as $count) {
@@ -1731,7 +1732,14 @@ class InboundEmail extends SugarBean {
 		}
 
 		$GLOBALS['log']->info("INBOUNDEMAIL: using [ {$criteria} ]");
-		$searchResults = imap_search($this->conn, $criteria, SE_UID);
+                
+                $connType = gettype($this->conn);
+                if ($connType !== 'resource') {
+                    LoggerManager::getLogger()->warn('InboundEmail::checkEmailOneMailbox: connection type is not a valid resource, ' . $connType . ' given.');
+                    $searchResults = null;
+                } else {
+                    $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                }
 
 		if(!empty($searchResults)) {
 			$concatResults = implode(",", $searchResults);
