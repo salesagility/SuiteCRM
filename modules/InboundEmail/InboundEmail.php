@@ -1765,6 +1765,12 @@ class InboundEmail extends SugarBean {
 		} else {
 			$this->connectMailserver();
 			$mailboxes = $this->getMailboxes(true);
+                        
+                        if (null === $mailboxes) {
+                            LoggerManager::getLogger()->warn('InboundEmail::checkEmail: mailboxes array is null');
+                            $mailboxes = (array)$mailboxes;
+                        }
+                        
 			sort($mailboxes);
 
 			$GLOBALS['log']->info("INBOUNDEMAIL: checking account [ {$this->name} ]");
@@ -1857,7 +1863,7 @@ class InboundEmail extends SugarBean {
 
 		$uids = $this->email->et->_cleanUIDList($uids);
 
-		foreach($uids as $uid) {
+		foreach((array)$uids as $uid) {
 			$file = "{$this->EmailCachePath}/{$this->id}/messages/{$fromFolder}{$uid}.php";
 
 			if(file_exists($file)) {
