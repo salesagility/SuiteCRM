@@ -2179,7 +2179,15 @@ class Email extends SugarBean {
 
 		///////////////////////////////////////////////////////////////////////
 		////	ATTACHMENTS
-		foreach($this->saved_attachments as $note) {
+                
+                $savedAttachments = null;
+                if (isset($this->saved_attachments)) {
+                    $savedAttachments = $this->saved_attachments;
+                } else {
+                    LoggerManager::getLogger()->warn('Email::send: saved attachments is not set');
+                }
+                
+		foreach((array)$savedAttachments as $note) {
 			$mime_type = 'text/plain';
 			if($note->object_name == 'Note') {
 				if(!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
