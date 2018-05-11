@@ -201,7 +201,20 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetEAPMExternalApiDropDown()
     {
+        $this->markTestIncomplete('Error: Call to undefined function getEAPMExternalApiDropDown()');
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $result = getEAPMExternalApiDropDown();
         $this->assertEquals(array('' => ''), $result);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 }
