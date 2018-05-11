@@ -694,7 +694,19 @@ class EmailTemplate extends SugarBean
 
         ///////////////////////////////////////////////////////////////////////
         ////	LOAD FOCUS DATA INTO REPL_ARR
-        foreach ($focus->field_defs as $field_def) {
+        
+        if (!is_object($focus)) {
+            LoggerManager::getLogger()->warn('EmailTemplate::parse_template_bean: focus is not an object');
+        }
+        
+        $focusFieldDefs = null;
+        if (isset($focus->field_defs)) {
+            $focusFieldDefs = $focus->field_defs;
+        } else {
+            LoggerManager::getLogger()->warn('EmailTemplate::parse_template_bean: focus has not field_defs set');
+        }
+        
+        foreach ((array)$focusFieldDefs as $field_def) {
             $fieldName = $field_def['name'];
             if (isset($focus->$fieldName)) {
                 if (($field_def['type'] == 'relate' && empty($field_def['custom_type'])) || $field_def['type'] == 'assigned_user_name') {
