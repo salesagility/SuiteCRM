@@ -6,6 +6,13 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEmail()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $email = new Email();
@@ -19,43 +26,98 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals(true, 'new_schema', $email);
         $this->assertAttributeEquals('archived', 'type', $email);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testemail2init()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
 
         $email = new Email();
         $email->email2init();
 
         $this->assertInstanceOf('EmailUI', $email->et);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testbean_implements()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
         $this->assertEquals(false, $email->bean_implements('')); //test with blank value
         $this->assertEquals(false, $email->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $email->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testemail2saveAttachment()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
         $result = $email->email2saveAttachment();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testsafeAttachmentName()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $this->assertEquals(false, $email->safeAttachmentName('test.ext'));
         $this->assertEquals(false, $email->safeAttachmentName('test.exe'));
         $this->assertEquals(true, $email->safeAttachmentName('test.cgi'));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testemail2ParseAddresses()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->email2init();
@@ -64,10 +126,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $email->email2ParseAddresses($addresses);
         $this->assertSame($expected, $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testemail2ParseAddressesForAddressesOnly()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with simplest format
@@ -79,27 +152,60 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $addresses = 'abc<abc@xyz.com>,xyz<xyz@abc.com>';
         $result = $email->email2ParseAddressesForAddressesOnly($addresses);
         $this->assertEquals(array('abc@xyz.com', 'xyz@abc.com'), $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testemail2GetMime()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with a filename
         $result = $email->email2GetMime('config.php');
         $this->assertEquals('text/x-php', $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testdecodeDuringSend()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $this->assertEquals('some text', $email->decodeDuringSend('some text'));
         $this->assertEquals('&lt; some text &gt;', $email->decodeDuringSend('sugarLessThan some text sugarGreaterThan'));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testisDraftEmail()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with required parametr set
@@ -112,18 +218,40 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with both of required attribute set
         $email->status = 'draft';
         $this->assertEquals(true,  $email->isDraftEmail(array()));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testgetNamePlusEmailAddressesForCompose()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $result = $email->getNamePlusEmailAddressesForCompose('Users', array(1));
         $this->assertGreaterThanOrEqual(0, strlen($result));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function test_arrayToDelimitedString()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with empty array
@@ -133,6 +261,10 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with valid array
         $result = $email->_arrayToDelimitedString(array('value1', 'value2'));
         $this->assertEquals('value1,value2', $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testsendEmailTest()
@@ -195,6 +327,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails_email_addr_rel');
         $state->pushTable('emails_text');
         $state->pushTable('email_addresses');
+        $state->pushTable('eapm');
         $state->pushGlobals();
         
         // test
@@ -245,6 +378,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('eapm');
         $state->popTable('email_addresses');
         $state->popTable('emails_text');
         $state->popTable('emails_email_addr_rel');
@@ -253,6 +387,13 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function retrieve($id)
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $result = $email->retrieve($id);
@@ -267,10 +408,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(isset($result->raw_source));
         $this->assertTrue(isset($result->description_html));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function saveEmailAddresses($id)
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->id = $id;
@@ -288,10 +440,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertNotSame(false, strpos($email->to_addrs, 'to_test@email.com'));
         $this->assertNotSame(false, strpos($email->cc_addrs, 'cc_test@email.com'));
         $this->assertNotSame(false, strpos($email->bcc_addrs, 'bcc_test@email.com'));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function retrieveEmailAddresses($id)
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->id = $id;
@@ -301,10 +464,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(isset($email->to_addrs));
         $this->assertTrue(isset($email->cc_addrs));
         $this->assertTrue(isset($email->bcc_addrs));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function linkEmailToAddress($id)
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->id = $id;
@@ -313,10 +487,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(isset($result));
         $this->assertEquals(36, strlen($result));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function retrieveEmailText($id)
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->id = $id;
@@ -331,10 +516,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(isset($email->raw_source));
         $this->assertTrue(isset($email->description_html));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function handleAttachments($id)
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email = $email->retrieve($id);
@@ -346,16 +542,31 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $email->handleAttachments();
 
         $this->assertTrue(is_array($email->attachments));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function delete($id)
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->delete($id);
 
         $result = $email->retrieve($id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testSaveTempNoteAttachmentsAndGetNotesAndDoesImportedEmailHaveAttachment()
@@ -366,6 +577,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('notes');
+        $state->pushTable('eapm');
         $state->pushGlobals();
         
         // test
@@ -396,12 +608,24 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('eapm');
         $state->popTable('notes');
         $state->popTable('aod_indexevent');
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testcleanEmails()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with simplest format
@@ -413,10 +637,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $addresses = 'abc<abc@xyz.com>,xyz<xyz@abc.com>';
         $result = $email->cleanEmails($addresses);
         $this->assertEquals('abc <abc@xyz.com>, xyz <xyz@abc.com>', $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testgetForwardHeader()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->from_name = 'from test';
@@ -429,10 +664,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $email->getForwardHeader();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testgetReplyHeader()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->from_name = 'from test';
@@ -443,10 +689,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $email->getReplyHeader();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testquotePlainTextEmail()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with plain string containing no line breaks
@@ -458,10 +715,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "\n> some\r> text\r> with\r> new\r> lines\r";
         $actual = $email->quotePlainTextEmail("some\ntext\nwith\nnew\nlines");
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testquoteHtmlEmail()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with empty string
@@ -478,10 +746,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "<div style='border-left:1px solid #00c; padding:5px; margin-left:10px;'>some test with <&</div>";
         $actual = $email->quoteHtmlEmail('some test with <&');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testquoteHtmlEmailForNewEmailUI()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with empty string
@@ -498,6 +777,10 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "<div style='border-left:1px solid #00c; padding:5px; margin-left:10px;'>some test with</div>";
         $actual = $email->quoteHtmlEmailForNewEmailUI("some test with \n");
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testcheck_email_settings()
@@ -515,18 +798,40 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User(1);
         $result = $email->check_email_settings();
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testjs_set_archived()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $actual = $email->js_set_archived();
         $this->assertGreaterThan(0, strlen($actual));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testu_get_clear_form_js()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //with empty params
@@ -538,27 +843,60 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "\n		<script type=\"text/javascript\" language=\"JavaScript\"><!-- Begin\n			function clear_form(form) {\n				var newLoc = \"index.php?action=\" + form.action.value + \"&module=\" + form.module.value + \"&query=true&clear_query=true&type=out&assigned_user_id=1\";\n				if(typeof(form.advanced) != \"undefined\"){\n					newLoc += \"&advanced=\" + form.advanced.value;\n				}\n				document.location.href= newLoc;\n			}\n		//  End --></script>";
         $actual = $email->u_get_clear_form_js('out', '', '1');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testpickOneButton()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $expected = "<div><input	title=\"\"\n						class=\"button\"\n						type=\"button\" name=\"button\"\n						onClick=\"window.location='index.php?module=Emails&action=Grab';\"\n						style=\"margin-bottom:2px\"\n						value=\"    \"></div>";
         $actual = $email->pickOneButton();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testgetUserEditorPreference()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $result = $email->getUserEditorPreference();
         $this->assertEquals('html', $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testparse_addrs()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $addrs = 'abc<abc@email.com>;xyz<xyz@email.com>';
@@ -571,10 +909,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $email->parse_addrs($addrs, $addrs_ids, $addrs_names, $addrs_emails);
 
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testremove_empty_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test for array with empty values
@@ -588,10 +937,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $fields = array('val1', 'val2');
         $actual = $email->remove_empty_fields($fields);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testhasSignatureInBody()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->description_html = 'some html text with <b>sign</b>';
@@ -606,10 +966,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $sig = array('signature_html' => 'signature', 'signature' => 'signature');
         $result = $email->hasSignatureInBody($sig);
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testremoveAllNewlines()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $this->assertEquals('', $email->removeAllNewlines(''));
@@ -617,10 +988,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('some text', $email->removeAllNewlines('some text<br>'));
         $this->assertEquals('some text', $email->removeAllNewlines("some\n text\n"));
         $this->assertEquals('some text', $email->removeAllNewlines("some\r\n text\r\n"));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testgetStartPage()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test without assigned_user_id in url
@@ -654,16 +1036,31 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
         $actual = $email->getStartPage($url);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testsetMailer()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $result = $email->setMailer(new SugarPHPMailer(), '', '');
 
         $this->assertInstanceOf('SugarPHPMailer', $result);
         $this->assertInstanceOf('OutboundEmail', $result->oe);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testhandleBody()
@@ -671,6 +1068,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
         $state->pushGlobals();
         
         // test
@@ -697,11 +1095,19 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('eapm');
         $state->popGlobals();
     }
 
     public function testhandleBodyInHTMLformat()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $mailer = new SugarPHPMailer();
@@ -711,6 +1117,10 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertEquals("some email description containing email text & &#39; \n&nbsp;", $email->description);
         $this->assertEquals('some email description containing email text & &#39; <br>&nbsp;', $mailer->Body);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testlistviewACLHelper()
@@ -718,6 +1128,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
         $state->pushGlobals();
         
         // test
@@ -730,21 +1141,40 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('eapm');
         $state->popGlobals();
     }
 
     public function testgetSystemDefaultEmail()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $expected = array('email' => 'do_not_reply@example.com', 'name' => 'SuiteCRM');
         $actual = $email->getSystemDefaultEmail();
 
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testcreate_new_list_query()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with empty string params
@@ -756,10 +1186,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "SELECT emails.*, users.user_name as assigned_user_name\n FROM emails\n LEFT JOIN users ON emails.assigned_user_id=users.id \nWHERE users.user_name = \"\" AND  emails.deleted=0 \n ORDER BY emails.id";
         $actual = $email->create_new_list_query('emails.id', 'users.user_name = ""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testfill_in_additional_list_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->parent_id = '1';
@@ -770,10 +1211,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertEquals('DetailView', $email->link_action);
         $this->assertEquals('', $email->attachment_image);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->created_by = '1';
@@ -788,10 +1240,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('', $email->type_name);
         $this->assertEquals('', $email->name);
         $this->assertEquals('DetailView', $email->link_action);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testcreate_export_query()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with empty string params
@@ -803,10 +1266,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = 'SELECT emails.* FROM emails where users.user_name = "" AND emails.deleted=0 ORDER BY emails.id';
         $actual = $email->create_export_query('emails.id', 'users.user_name = ""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
         $current_theme = SugarThemeRegistry::current();
 
@@ -850,10 +1324,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
             }
         }
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testquickCreateForm()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
         $sugar_theme = SugarThemeRegistry::current();
 
@@ -861,23 +1346,49 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $email->quickCreateForm();
         $this->assertRegExp($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testsearchImportedEmails()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $actual = $email->searchImportedEmails();
         $this->assertTrue(is_array($actual));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function test_genereateSearchImportedEmailsQuery()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $expected = "SELECT emails.id , emails.mailbox_id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status,\n		                      emails_text.from_addr, emails_text.to_addrs  FROM emails   JOIN emails_text on emails.id = emails_text.email_id   WHERE (emails.type= 'inbound' OR emails.type='archived' OR emails.type='out') AND emails.deleted = 0 ";
         $actual = $email->_genereateSearchImportedEmailsQuery();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function test_generateSearchImportWhereClause()
@@ -885,6 +1396,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
         $state->pushGlobals();
         
         // test
@@ -918,20 +1430,39 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('eapm');
         $state->popGlobals();
     }
 
     public function testtrimLongTo()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $this->assertEquals('test string', $email->trimLongTo('test string')); //test without any separator
         $this->assertEquals('test string 1...', $email->trimLongTo('test string 1, test string2')); //test with , separator
         $this->assertEquals('test string 1...', $email->trimLongTo('test string 1; test string2'));//test with ; separator
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testget_summary_text()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test without setting name
@@ -940,6 +1471,10 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $email->name = 'test';
         $this->assertEquals('test', $email->get_summary_text());
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testdistributionForm()
@@ -947,6 +1482,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
         $state->pushGlobals();
         
         // test
@@ -964,19 +1500,38 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('eapm');
         $state->popGlobals();
     }
 
     public function testuserSelectTable()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $result = $email->userSelectTable();
         $this->assertGreaterThan(0, strlen($result));
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testcheckInbox()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //test with empty string
@@ -988,10 +1543,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "<div><input	title=\"\"\n						class=\"button\"\n						type=\"button\" name=\"button\"\n						onClick=\"window.location='index.php?module=Emails&action=Check&type=test';\"\n						style=\"margin-bottom:2px\"\n						value=\"    \"></div>";
         $actual = $email->checkInbox('test');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testfillPrimaryParentFields()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1001,10 +1567,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testcid2Link()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->description_html = '<img class="image" src="cid:1">';
@@ -1017,10 +1594,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testcids2Links()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         $email->description_html = '<img class="image" src="cid:1">';
@@ -1033,10 +1621,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testsetFieldNullable()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1046,10 +1645,21 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testrevertFieldNullable()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $email = new Email();
 
         //execute the method and test if it works and does not throws an exception.
@@ -1059,5 +1669,9 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 }
