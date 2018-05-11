@@ -150,6 +150,11 @@ class StateSaver
         if (!isset($this->stack[$namespace][$key])) {
             $this->stack[$namespace][$key] = [];
         }
+        
+        if (!empty($this->stack[$namespace][$key])) {
+            throw new StateSaverException('Trying to push to stack but it is not empty: ' . "[value:$value][key:$key][namespace:$namespace]");
+        }
+        
         $this->stack[$namespace][$key][] = $value;
     }
     
