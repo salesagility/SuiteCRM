@@ -1972,8 +1972,13 @@ class InboundEmail extends SugarBean {
 		if(is_array($fetchedOverviews) && !empty($fetchedOverviews)) {
 			foreach($fetchedOverviews as $overview) {
 				if($overview->size < 10000) {
-
+                                    
+                                    $uid = null;
+                                    if (!isset($overview->imap_uid)) {
+                                        LoggerManager::getLogger()->warn('InboundEmail::fetchCheckedEmails: IMAP UID is not set');
+                                    } else {
 					$uid = $overview->imap_uid;
+                                    }
 
 					if(!empty($uid)) {
 						$file = "{$this->mailbox}{$uid}.php";
@@ -2006,6 +2011,13 @@ class InboundEmail extends SugarBean {
 	 * @param string $type Flag to mark
 	 */
 	function markEmails($uids, $type) {
+            
+            $connType = gettype($this->conn);
+            if ($connType !== 'resource') {
+                LoggerManager::getLogger()->warn('InboundEmail::markEmails: connection type is not a valid resource, ' . $connType . ' given.');
+                return false;
+            }
+            
 		switch($type) {
 			case 'unread':
 				$result = imap_clearflag_full($this->conn, $uids, '\\SEEN', ST_UID);
@@ -2046,9 +2058,20 @@ class InboundEmail extends SugarBean {
 		$connectString = $this->getConnectString('', $mbox);
 		//Remove Folder cache
 		global $sugar_config;
-		unlink("{$this->EmailCachePath}/{$this->id}/folders/folders.php");
+                
+                $file = "{$this->EmailCachePath}/{$this->id}/folders/folders.php"; 
+                if (!file_exists($file)) {
+                    LoggerManager::getLogger()->warn('InboundEmail::deleteFolder: File not found: ' . $file);
+                } else {
+                    unlink($file);
+                }
 
-		if(imap_unsubscribe($this->conn, imap_utf7_encode($connectString))) {
+                if (null === $this->conn) {
+                    LoggerManager::getLogger()->error('InboundEmail::getFormattedRawSource: connection is null');
+                    return false;
+                } 
+                
+                if(imap_unsubscribe($this->conn, imap_utf7_encode($connectString))) {
 			if(imap_deletemailbox($this->conn, $connectString)) {
 	        	$this->mailbox = str_replace(("," . $mbox), "", $this->mailbox);
 	        	$this->save();
