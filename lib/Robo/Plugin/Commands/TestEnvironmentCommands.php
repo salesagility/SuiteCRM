@@ -149,6 +149,48 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
+     * Configures local environment to look like travis
+     * @param array $opts
+     */
+    public function fakeTravis(
+        array $opts = [
+            'travis' => true,
+            'travis_commit_range' => '',
+            'travis_pull_request' => true,
+        ]
+    ) {
+        $this->say('Fake Travis Environment');
+
+        $this->askDefaultOptionWhenEmpty('Is Travis Environment:', true, $opts['travis']);
+        $this->askDefaultOptionWhenEmpty('Travis commit range:', 'master..develop', $opts['travis_commit_range']);
+        $opts['travis_commit_range'] = '\''. $opts['travis_commit_range'] .'\'';
+        $this->askDefaultOptionWhenEmpty('Is Pull request:', true, $opts['travis_pull_request']);
+
+        $os = new OperatingSystem();
+        if ($os->isOsWindows()) {
+            $this->say('Windows detected');
+            $this->installWindowsEnvironmentVariables($opts);
+        } elseif ($os->isOsLinux()) {
+            $this->say('Linux detected');
+            $this->installUnixEnvironmentVariables($opts);
+        } elseif ($os->isOsMacOsX()) {
+            $this->say('Mac OS X detected');
+            $this->installUnixEnvironmentVariables($opts);
+        } elseif ($os->isOsBSD()) {
+            $this->say('BSD detected');
+            $this->installUnixEnvironmentVariables($opts);
+        } elseif ($os->isOsSolaris()) {
+            $this->say('Solaris detected');
+            $this->installUnixEnvironmentVariables($opts);
+        } elseif ($os->isOsUnknown()) {
+            throw new \DomainException('Unknown Operating system');
+        } else {
+            throw new \DomainException('Unable to detect Operating system');
+        }
+
+        $this->say('Fake Travis Environment Complete');
+    }
+    /**
      * Install unix environment variables for the testing framework
      * @param array $opts optional command line arguments
      */
