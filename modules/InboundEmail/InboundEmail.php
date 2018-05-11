@@ -271,11 +271,15 @@ class InboundEmail extends SugarBean {
         $oldConnect = $this->getConnectString('', $oldName);
         $newConnect = $this->getConnectString('', $newName);
         
+        $level = error_reporting();
         $state = new \SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         error_reporting(0);
         $imapRenameMailbox = imap_renamemailbox($this->conn, $oldConnect, $newConnect);
         $state->popErrorLevel();
+        if ($level !== error_reporting()) {
+            throw new Exception('Incorrect error reporting level');
+        }
         
 		if(!$imapRenameMailbox) {
 			$GLOBALS['log']->debug("***INBOUNDEMAIL: failed to rename mailbox [ {$oldConnect} ] to [ {$newConnect} ]");
@@ -348,8 +352,13 @@ class InboundEmail extends SugarBean {
 				if ($this->isPop3Protocol()) {
 					$uid = $this->getCorrectMessageNoForPop3($uid);
 				}
-				$raw  = imap_fetchheader($this->conn, $uid, FT_UID+FT_PREFETCHTEXT);
-				$raw .= $this->convertToUtf8(imap_body($this->conn, $uid, FT_UID));
+                                if (null === $this->conn) {
+                                    LoggerManager::getLogger()->error('InboundEmail::getFormattedRawSource: connection is null');
+                                    $raw = '';
+                                } else {
+                                    $raw  = imap_fetchheader($this->conn, $uid, FT_UID+FT_PREFETCHTEXT);
+                                    $raw .= $this->convertToUtf8(imap_body($this->conn, $uid, FT_UID));
+                                }
 			} // else
 			$raw = to_html($raw);
 			$raw = nl2br($raw);
@@ -392,7 +401,12 @@ class InboundEmail extends SugarBean {
 			if ($this->isPop3Protocol()) {
 				$uid = $this->getCorrectMessageNoForPop3($uid);
 			}
-			$headers = imap_fetchheader($this->conn, $uid, FT_UID);
+                        if (null === $this->conn) {
+                            LoggerManager::getLogger()->error('InboundEmail::getFormattedHeader: connection is null');
+                            $headers = '';
+                        } else {
+                            $headers = imap_fetchheader($this->conn, $uid, FT_UID);
+                        }
 
 			$lines = explode("\n", $headers);
 
@@ -431,7 +445,13 @@ class InboundEmail extends SugarBean {
 		}
 		$this->connectMailserver();
 
-		$uids = imap_search($this->conn, "ALL", SE_UID);
+                $connType = gettype($this->conn);
+                if ($connType === 'resource') {
+                    $uids = imap_search($this->conn, "ALL", SE_UID);
+                } else {
+                    LoggerManager::getLogger()->warn('InboundEmail::emptyTrash: connection is not a resource, ' . $connType . ' given.');
+                    $uids = [];
+                }
 
 		foreach($uids as $uid) {
 			if(!imap_delete($this->conn, $uid, FT_UID)) {
@@ -824,7 +844,15 @@ class InboundEmail extends SugarBean {
 							if(isset($overview->uid) && !empty($overview->uid)) {
 								$this->imap_uid = $overview->uid;
 							}
-							$values .= "'{$this->imap_uid}'";
+                                                        
+                                                        $imapUid = null;
+                                                        if (isset($this->imap_uid)) {
+                                                            $imapUid = $this->imap_uid;
+                                                        } else {
+                                                            LoggerManager::getLogger()->warn('InboundEmail::setCacheValue: IMAP UID is not set');
+                                                        }
+                                                        
+							$values .= "'{$imapUid}'";
 						break;
 
 						case "ie_id":
@@ -934,9 +962,18 @@ class InboundEmail extends SugarBean {
 		if(!is_resource($this->pop3socket)) {
 			$GLOBALS['log']->info("*** INBOUNDEMAIL: opening socket connection");
 			$exServ = explode('::', $this->service);
-			$socket  = ($exServ[2] == 'ssl') ? "ssl://" : "tcp://";
-			$socket .= $this->server_url;
-			$this->pop3socket = fsockopen($socket, $this->port);
+                        
+                        $exServ2 = null;
+                        if (isset($exServ[2])) {
+                            $exServ2 = $exServ[2];
+                            $socket  = ($exServ2 == 'ssl') ? "ssl://" : "tcp://";
+                            $socket .= $this->server_url;
+                            $this->pop3socket = fsockopen($socket, $this->port);
+                        } else {
+                            LoggerManager::getLogger()->warn('InboundEmail::pop3_open: incorrect service');
+                            return false;
+                        }
+                            
 		} else {
 			$GLOBALS['log']->info("*** INBOUNDEMAIL: REUSING socket connection");
 			return true;
@@ -4833,11 +4870,16 @@ eoq;
                 $params = array();
             }
 
+            $level = error_reporting();
             $state = new \SuiteCRM\StateSaver();
             $state->pushErrorLevel();
             error_reporting(0);
             $connection = imap_open($mailbox, $username, $password, $options, 0, $params);
             $state->popErrorLevel();
+            if ($level !== error_reporting()) {
+                throw new Exception('Incorrect error reporting level');
+            }
+            
         }
 
         return $connection;
@@ -5455,7 +5497,15 @@ eoq;
 		$query = "SELECT msgno FROM email_cache WHERE ie_id = '{$this->id}' AND message_id = '{$messageid}'";
 		$r = $this->db->query($query);
 		$a = $this->db->fetchByAssoc($r);
-		return $a['message_id'];
+                
+                $messageId = null;
+                if (isset($a['message_id'])) {
+                    $messageId = $a['message_id'];
+                } else {
+                    LoggerManager::getLogger()->warn('InboundEmail::getMsgnoForMessageID: message_id is not set');
+                }
+                
+		return $messageId;
 	}
 
 	/**
