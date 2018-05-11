@@ -4,6 +4,13 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testFP_events()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('emails');
+        $state->pushGlobals();
+        
+        // test
 
         //execute the contructor and check for the Object type and  attributes
         $fpEvents = new FP_events();
@@ -17,6 +24,11 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $fpEvents);
         $this->assertAttributeEquals(true, 'importable', $fpEvents);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $fpEvents);
+        
+        // clean up
+        
+        $state->popTable('emails');
+        $state->popGlobals();
     }
 
     public function testemail_templates()
@@ -24,6 +36,7 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -37,6 +50,7 @@ class FP_eventsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('emails');
         $state->popGlobals();
     }
 }

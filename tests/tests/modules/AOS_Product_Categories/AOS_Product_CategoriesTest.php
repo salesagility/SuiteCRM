@@ -4,6 +4,17 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
 {
     public function testAOS_Product_Categories()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
+        $state->pushTable('aos_product_categories');
+        $state->pushGlobals();
+        
+        // test
+        
+
 
         //execute the contructor and check for the Object type and  attributes
         $aosProductCategories = new AOS_Product_Categories();
@@ -17,6 +28,13 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $this->assertAttributeEquals(true, 'new_schema', $aosProductCategories);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProductCategories);
         $this->assertAttributeEquals(true, 'importable', $aosProductCategories);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aos_product_categories');
+        $state->popTable('emails');
+        $state->popTable('aod_indexevent');
     }
 
     public function testsave()
@@ -25,6 +43,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushTable('aos_product_categories');
         $state->pushGlobals();
         
@@ -50,6 +69,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         
         $state->popGlobals();
         $state->popTable('aos_product_categories');
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 }
