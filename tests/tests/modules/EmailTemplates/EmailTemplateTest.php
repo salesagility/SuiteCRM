@@ -330,6 +330,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with body_html attribute
         $emailTemplate->body_html = '<h1>text</h1>';
         $emailTemplate->cleanBean();
-        $this->assertEquals('<h1>text</h1>', $emailTemplate->body_html);
+        $this->assertEquals('&lt;h1&gt;text&lt;/h1&gt;', $emailTemplate->body_html);
     }
 }
