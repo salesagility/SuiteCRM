@@ -11,6 +11,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('oauth_tokens');
+        $state->pushTable('roles_users');
         
         // test
 
@@ -29,6 +30,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('roles_users');
         $state->popTable('oauth_tokens');
     }
 
