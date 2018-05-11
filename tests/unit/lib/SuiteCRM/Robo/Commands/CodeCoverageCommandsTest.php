@@ -2,7 +2,7 @@
 
 use \SuiteCRM\Robo\Plugin\Commands\CodeCoverageCommands;
 
-class CodeCoverageCommandsTest extends \Codeception\Test\Unit
+class CodeCoverageCommandsTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
