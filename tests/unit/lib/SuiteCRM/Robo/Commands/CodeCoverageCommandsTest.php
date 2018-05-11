@@ -37,6 +37,20 @@ class CodeCoverageCommandsTest extends \Codeception\Test\Unit
 
     public function testGetCommitRangeForTravisCi()
     {
+        $reflection = new ReflectionClass(CodeCoverageCommands::class);
+        $method = $reflection->getMethod('getCommitRangeForTravisCi');
+        $method->setAccessible(true);
+
+        $actual = $method->invoke(
+            self::$testClass
+        );
+
+        $returnType = is_string($actual) || is_array($actual) || is_bool($actual);
+        $this->assertTrue($returnType);
+    }
+
+    public function testDisableStateChecker()
+    {
         // backup configure override
         $configOverrideData = '';
         $configOverridePath = 'config_override.php';
