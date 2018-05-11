@@ -26,6 +26,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('config');
         
         // test
 
@@ -43,6 +44,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('config');
         $state->popTable('aod_indexevent');
     }
 

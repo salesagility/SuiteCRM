@@ -28,6 +28,12 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -44,6 +50,10 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(isset($mergeRecord->merge_bean->id));
         $this->assertEquals(1, $mergeRecord->merge_bean->id);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testload_merge_bean()
