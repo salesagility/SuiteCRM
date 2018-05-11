@@ -321,6 +321,8 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcleanBean()
     {
+        $this->markTestIncomplete('environment dependency');
+        
         $emailTemplate = new EmailTemplate();
 
         //test without body_html attribute
