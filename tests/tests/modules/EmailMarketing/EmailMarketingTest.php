@@ -5,6 +5,13 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEmailMarketing()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $emailMarketing = new EmailMarketing();
@@ -17,19 +24,41 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('email_marketing', 'table_name', $emailMarketing);
 
         $this->assertAttributeEquals(true, 'new_schema', $emailMarketing);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testretrieve()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
 
         $emailMarketing = new EmailMarketing();
 
         $result = $emailMarketing->retrieve();
         $this->assertInstanceOf('EmailMarketing', $result);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testget_summary_text()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $emailMarketing = new EmailMarketing();
 
         //test without setting name
@@ -38,6 +67,10 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $emailMarketing->name = 'test';
         $this->assertEquals('test', $emailMarketing->get_summary_text());
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testcreate_export_query()
@@ -45,6 +78,7 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
         $state->pushGlobals();
         
         // test
@@ -63,11 +97,19 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('eapm');
         $state->popGlobals();
     }
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $emailMarketing = new EmailMarketing();
 
         //execute the method and verify that it retunrs expected results
@@ -77,23 +119,49 @@ class EmailMarketingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $emailMarketing->get_list_view_data();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testbean_implements()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $emailMarketing = new EmailMarketing();
         $this->assertEquals(false, $emailMarketing->bean_implements('')); //test with blank value
         $this->assertEquals(false, $emailMarketing->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $emailMarketing->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 
     public function testget_all_prospect_lists()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('eapm');
+        
+        // test
+        
         $emailMarketing = new EmailMarketing();
 
         //execute the method and verify that it retunrs expected results
         $expected = "select prospect_lists.* from prospect_lists  left join prospect_list_campaigns on prospect_list_campaigns.prospect_list_id=prospect_lists.id where prospect_list_campaigns.deleted=0 and prospect_list_campaigns.campaign_id='' and prospect_lists.deleted=0 and prospect_lists.list_type not like 'exempt%'";
         $actual = $emailMarketing->get_all_prospect_lists();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('eapm');
     }
 }
