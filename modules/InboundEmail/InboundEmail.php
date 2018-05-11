@@ -1407,7 +1407,15 @@ class InboundEmail extends SugarBean {
 		}
 		$this->setCacheTimestamp($mailbox);
 		$GLOBALS['log']->info("[EMAIL] Performing IMAP search using criteria [{$criteria}] on mailbox [{$mailbox}] for user [{$current_user->user_name}]");
-		$searchResults = imap_search($this->conn, $criteria, SE_UID);
+                
+                $connType = gettype($this->conn);
+                if ($connType !== 'resource') {
+                    LoggerManager::getLogger()->warn('InboundEmail::checkEmailOneMailbox: connection type is not a valid resource, ' . $connType . ' given.');
+                    $searchResults = null;
+                } else {
+                    $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                }
+                
 		$GLOBALS['log']->info("[EMAIL] Done IMAP search on mailbox [{$mailbox}] for user [{$current_user->user_name}]. Result count = ".count($searchResults));
 
 		if(!empty($searchResults)) {
@@ -1449,7 +1457,17 @@ class InboundEmail extends SugarBean {
 		}
 
 		if($this->mailbox != $trashFolder) {
-			$searchResults = imap_search($this->conn, $criteria, SE_UID);
+                    
+                    
+                    $connType = gettype($this->conn);
+                    if ($connType !== 'resource') {
+                        LoggerManager::getLogger()->warn('InboundEmail::checkEmailOneMailbox: connection type is not a valid resource, ' . $connType . ' given.');
+                        $searchResults = null;
+                    } else {
+                        $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                    }
+
+			
 			if(!empty($searchResults)) {
 				$uids = implode($app_strings['LBL_EMAIL_DELIMITER'], $searchResults);
 				$GLOBALS['log']->info("INBOUNDEMAIL: removing UIDs found deleted [ {$uids} ]");
@@ -1530,7 +1548,13 @@ class InboundEmail extends SugarBean {
         if ($ret['status'] == 'done') {
         	//Remove the cached search if we are done with this mailbox
         	$cacheFilePath = clean_path("{$this->EmailCachePath}/{$this->id}/folders/SearchData.php");
-            unlink($cacheFilePath);
+                
+                if (!file_exists($cacheFilePath)) {
+                    LoggerManager::getLogger()->warn('InboundEmail::checkEmailOneMailboxPartial: cache file path not found');
+                } else {
+                    unlink($cacheFilePath);
+                }
+                
 	        /**
 	         * To handle the use case where an external client is also connected, deleting emails, we need to clear our
 	         * local cache of all emails with the "DELETED" flag
@@ -1545,7 +1569,15 @@ class InboundEmail extends SugarBean {
 			}
 
 	        if($this->mailbox != $trashFolder) {
-	            $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                                        
+                    $connType = gettype($this->conn);
+                    if ($connType !== 'resource') {
+                        LoggerManager::getLogger()->warn('InbouncEmail::checkEmailOneMailboxPartial: connection type is not a valid resource, ' . $connType . ' given');
+                        $searchResults = [];
+                    } else {
+                        $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                    }
+                    
 	            if(!empty($searchResults)) {
 	                $uids = implode($app_strings['LBL_EMAIL_DELIMITER'], $searchResults);
 	                $GLOBALS['log']->info("INBOUNDEMAIL: removing UIDs found deleted [ {$uids} ]");
@@ -1584,7 +1616,15 @@ class InboundEmail extends SugarBean {
             } // if
         } // if
         if (!$cacheDataExists) {
-            $searchResults = imap_search($this->conn, $criteria, SE_UID);
+            
+            $connType = gettype($this->conn);
+            if ($connType !== 'resource') {
+                LoggerManager::getLogger()->warn('InbouncEmail::getCachedIMAPSearch: connection type is not a valid resource, ' . $connType . ' given');
+                $searchResults = [];
+            } else {
+                $searchResults = imap_search($this->conn, $criteria, SE_UID);
+            }
+            
             if(count($searchResults) > 0) {
                 $results = $searchResults;
                 $data = serialize($searchResults);
