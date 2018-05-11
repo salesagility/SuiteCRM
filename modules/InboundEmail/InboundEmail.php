@@ -1348,13 +1348,23 @@ class InboundEmail extends SugarBean {
 	function getMessagesInEmailCache($msgno, $uid) {
 		$fetchedOverviews = array();
 		if ($this->isPop3Protocol()) {
-			$fetchedOverviews = imap_fetch_overview($this->conn, $msgno);
+                    
+                        if (null === $this->conn) {
+                            LoggerManager::getLogger()->warn('InboundEmail::getMessageEmailCache: connection is null');
+                        } else {
+                            $fetchedOverviews = imap_fetch_overview($this->conn, $msgno);
+                        }
+			
 			foreach($fetchedOverviews as $k => $overview) {
 				$overview->message_id = $uid;
 				$fetchedOverviews[$k] = $overview;
 			}
 		} else {
+                    if (null === $this->conn) {
+                        LoggerManager::getLogger()->warn('InboundEmail::getMessageEmailCache: connection is null');
+                    } else {
 			$fetchedOverviews = imap_fetch_overview($this->conn, $uid, FT_UID);
+                    }
 		} // else
 		$this->updateOverviewCacheFile($fetchedOverviews);
 
