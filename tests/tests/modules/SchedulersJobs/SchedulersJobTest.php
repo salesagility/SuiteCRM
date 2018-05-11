@@ -126,6 +126,9 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testonFailureRetry()
     {
+
+        $this->markTestIncomplete('method has no implementation: logic hooks not defined');
+        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -135,12 +138,13 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
-
-        $this->markTestIncomplete('method has no implementation: logic hooks not defined');
     }
 
     public function testonFinalFailure()
     {
+
+        $this->markTestIncomplete('method has no implementation: logic hooks not defined');
+        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -150,8 +154,6 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
-
-        $this->markTestIncomplete('method has no implementation: logic hooks not defined');
     }
 
     public function testresolveJob()

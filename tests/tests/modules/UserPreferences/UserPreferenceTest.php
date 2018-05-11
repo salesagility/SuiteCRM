@@ -196,6 +196,8 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdateAllUserPrefs()
     {
+        $this->markTestIncomplete('Multiple errors in method: Unknown column user_preferences in field list');
+        
         global $current_user;
 
         $current_user = new User();
@@ -203,6 +205,5 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //UserPreference::updateAllUserPrefs("test","test val");
 
-        $this->markTestIncomplete('Multiple errors in method: Unknown column user_preferences in field list');
     }
 }

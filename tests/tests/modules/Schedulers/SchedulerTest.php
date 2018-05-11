@@ -235,6 +235,9 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
+
+        $this->markTestIncomplete('method has no implementation');
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -244,8 +247,6 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
-
-        $this->markTestIncomplete('method has no implementation');
     }
 
     public function testget_list_view_data()

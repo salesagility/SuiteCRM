@@ -365,6 +365,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function saveMailBoxValueOfInboundEmail($id)
     {
+        $this->markTestSkipped('saveMailBoxValueOfInboundEmail skipped - method looks suspect. Should likely be removed.');
         // save state
         
         $state = new SuiteCRM\StateSaver();
@@ -373,7 +374,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-        $this->markTestSkipped('saveMailBoxValueOfInboundEmail skipped - method looks suspect. Should likely be removed.');
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->email_user = 'TEST';
@@ -982,6 +982,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testsetStatuses()
     {
+        $this->markTestIncomplete("Different results for php5 and php7");
         /*
         $inboundEmail = new InboundEmail();
 
@@ -997,7 +998,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         $this->assertEquals('123', $result['retArr'][0]->message_id);
         */
-        $this->markTestIncomplete("Different results for php5 and php7");
     }
 
     /**
@@ -1005,6 +1005,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testdeleteMessageFromCache()
     {
+        $this->markTestIncomplete("Unable to test until testsetStatuses is re-enabled");
         /*
         $inboundEmail = new InboundEmail();
 
@@ -1020,7 +1021,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         $this->assertEquals(0, count($result['retArr']));
         */
-        $this->markTestIncomplete("Unable to test until testsetStatuses is re-enabled");
     }
 
     public function testemptyTrash()
@@ -1615,6 +1615,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testupdateOverviewCacheFile()
     {
+        $this->markTestIncomplete("Different results for php5 and php7");
         /*
         $inboundEmail = new InboundEmail();
 
@@ -1635,7 +1636,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, count($result['retArr'][0]));
         $this->assertEquals('subject 1', $result['retArr'][0]->subject);
         */
-        $this->markTestIncomplete("Different results for php5 and php7");
     }
 
     public function testsetReadFlagOnFolderCache()
@@ -3191,6 +3191,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testhandleUUDecode()
     {
 
+        $this->markTestIncomplete('Uncaught require_once(include/PHP_Compat/convert_uudecode.php)');
         /*
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -3205,7 +3206,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $inboundEmail->handleUUDecode("1", "handleUUDecode_test", $raw);
 
         */
-        $this->markTestIncomplete('Uncaught require_once(include/PHP_Compat/convert_uudecode.php)');
     }
 
     public function testcheckFilterDomain()
@@ -3399,6 +3399,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetRelatedId()
     {
+        
+        $this->markTestIncomplete('Undefined variable: result');
+        
         // save state
         
         $state = new SuiteCRM\StateSaver();
@@ -3406,8 +3409,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('folders_subscriptions');
         
         // test
-        
-        $this->markTestIncomplete('Undefined variable: result');
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -4103,6 +4104,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreateUserSubscriptionsForGroupAccount()
     {
+        $this->markTestIncomplete("Fatal error: Class 'Team' not found");
+        
         // save state
         
         $state = new SuiteCRM\StateSaver();
@@ -4121,7 +4124,6 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //$inboundEmail->createUserSubscriptionsForGroupAccount();
 
-        $this->markTestIncomplete("Fatal error: Class 'Team' not found");
         
         // clean up
         

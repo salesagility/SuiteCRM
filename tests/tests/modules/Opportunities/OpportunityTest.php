@@ -308,6 +308,8 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetCurrencyType()
     {
 
+        $this->markTestIncomplete('This method has no implementation');
+
         //execute the method and test if it works and does not throws an exception.
         try {
             getCurrencyType();
@@ -315,7 +317,5 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
-
-        $this->markTestIncomplete('This method has no implementation');
     }
 }

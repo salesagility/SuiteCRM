@@ -15,6 +15,8 @@ class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     public function testdisplay()
     {
 
+        $this->markTestIncomplete('Can Not be implemented');
+
         $view = new ViewImportvcardsave();
 
         //execute without any parameters set. it should return some html/JS
@@ -26,7 +28,5 @@ class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         ob_end_clean();
         $this->assertGreaterThan(0,strlen($renderedContent));
         */
-
-        $this->markTestIncomplete('Can Not be implemented');
     }
 }

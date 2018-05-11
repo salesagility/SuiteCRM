@@ -11,7 +11,7 @@
   "require": {},
   "require-dev": {
     "leafo/scssphp": "dev-master",
-    "phpunit/phpunit": "^7.1",
+    "phpunit/phpunit": "^3.7",
     "mikey179/vfsStream": "1.4.*"
   },
   "scripts": {},

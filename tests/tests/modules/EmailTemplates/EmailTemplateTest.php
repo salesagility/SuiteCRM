@@ -170,6 +170,7 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function test_parseUserValues()
     {
+        $this->markTestIncomplete("Different values for php5 and php7");
         /*
         $emailTemplate = new EmailTemplate();
         $user = new User(1);
@@ -246,7 +247,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $emailTemplate->_parseUserValues($repl_arr, $user);
         $this->assertSame($expected, $actual);
         */
-        $this->markTestIncomplete("Different values for php5 and php7");
     }
 
     public function testparse_template_bean()

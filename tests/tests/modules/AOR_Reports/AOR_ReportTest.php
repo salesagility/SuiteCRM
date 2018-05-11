@@ -226,14 +226,14 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testbuild_report_csv()
     {
 
+        $this->markTestIncomplete('Can Not be implemented');
+
         //this method uses exit so it cannot be tested
 
         /*$aor_Report = new AOR_Report();
         $aor_Report->report_module = "Accounts";
         $aor_Report->build_report_csv();
         */
-
-        $this->markTestIncomplete('Can Not be implemented');
     }
 
     public function testbuild_report_query()

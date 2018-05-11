@@ -104,6 +104,8 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsaveAndMarkDeletedAndValidated()
     {
+        $this->markTestSkipped('Validated column never gets updated in Db ');
+        
         $eapm = new EAPM();
 
         $eapm->name = 'test';
@@ -125,7 +127,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //retrieve back to test if validated attribute is updated in db
         $eapmValidated = $eapm->retrieve($eapm->id);
         //$this->assertEquals(1, $eapmValidated->validated);
-        $this->markTestSkipped('Validated column never gets updated in Db ');
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $eapm->mark_deleted($eapm->id);

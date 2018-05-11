@@ -20,10 +20,11 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
+        $this->markTestIncomplete('method has no implementation');
+        
         $mergeRecord = new MergeRecord();
         //$mergeRecord->save();
 
-        $this->markTestIncomplete('method has no implementation');
     }
 
     public function testretrieve()

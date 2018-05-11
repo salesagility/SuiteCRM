@@ -47,6 +47,8 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     //Incomplete test.  SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
     public function testdisplay()
     {
+
+        $this->markTestIncomplete('Can Not be implemented');
         // save state 
         
         $state = new \SuiteCRM\StateSaver();
@@ -54,8 +56,6 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // test
         
-
-        $this->markTestIncomplete('Can Not be implemented');
          
         // cleanup
         

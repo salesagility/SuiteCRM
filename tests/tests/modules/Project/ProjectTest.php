@@ -126,10 +126,11 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function test_get_total_estimated_effort()
 	{
+            $this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
+
 		//$project = new Project();
 		//$result = $project->_get_total_estimated_effort("1");
-		$this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
-
+		
 	}
 
 
@@ -242,6 +243,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
     public function testcreate_export_query()
     {
+        $this->markTestIncomplete('environment dependency');
         
         // save state
         
@@ -249,7 +251,6 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $state->pushTable('roles_users');
         
         // test
-        $this->markTestIncomplete('environment dependency');
         
     	$project = new Project();
 

@@ -138,12 +138,13 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testhandleRedirect()
     {
+        $this->markTestIncomplete('method uses die');
+        
         $savedSearch = new SavedSearch();
-
+        
         $search_query = '&orderBy=&sortOrder=&query=&searchFormTab=&showSSDIV=';
 
         //$savedSearch->handleRedirect("Leads", $search_query, 1, 'true');
-        $this->markTestIncomplete('method uses die');
     }
 
     public function testfill_in_additional_list_fields()

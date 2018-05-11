@@ -286,6 +286,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testredirect()
     {
+        $this->markTestIncomplete('Can Not be implemented');
         //this method uses exit() which stops execution of phpunit as well so it cannot be tested without additional --process-isolation commandline parameter.
         /*
         $SugarApplication = new SugarApplication();
@@ -304,7 +305,6 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
         */
-        $this->markTestIncomplete('Can Not be implemented');
     }
 
     public function testappendErrorMessage()

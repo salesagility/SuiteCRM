@@ -40,12 +40,13 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testclear_account_case_relationship()
     {
+
+        $this->markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
+        
         //This method cannot be tested because Query has a wrong column name which makes the function to die. 
 
         /*$Account = new Account();
         $Account->clear_account_case_relationship('','');*/
-
-        $this->markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
     }
 
     public function testremove_redundant_http()
