@@ -5,6 +5,14 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testProject()
 	{
+        
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
+        
 		//execute the contructor and check for the Object type and  attributes
 		$project = new Project();
 
@@ -17,11 +25,22 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$this->assertAttributeEquals('Project', 'object_name', $project);
 
 		$this->assertAttributeEquals(true, 'new_schema', $project);
+        
+        // clean up
+        
+        $state->popTable('roles_users');
 
 	}
 
 	public function testfill_in_additional_detail_fields()
 	{
+        
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
 
 		$project = new Project();
 
@@ -34,12 +53,23 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_detail_fields();
 		$this->assertEquals("Administrator", $project->assigned_user_name);
+        
+        // clean up
+        
+        $state->popTable('roles_users');
 
 	}
 
 
 	public function testfill_in_additional_list_fields()
 	{
+        
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
 		$project = new Project();
 
 		//test without setting assigned_user_id
@@ -51,6 +81,10 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_list_fields();
 		$this->assertEquals("Administrator", $project->assigned_user_name);
+        
+        // clean up
+        
+        $state->popTable('roles_users');
 
 	}
 
@@ -61,6 +95,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
         $state->pushGlobals();
         
         // test
@@ -83,6 +118,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         // clean up
         
+        $state->popTable('roles_users');
         $state->popGlobals();
 
     }
@@ -105,6 +141,13 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testget_summary_text()
 	{
+        
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
 		$project = new Project();
 
 		//test without setting name
@@ -114,11 +157,22 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$project->name = "test";
 		$this->assertEquals('test',$project->get_summary_text());
 
+        
+        // clean up
+        
+        $state->popTable('roles_users');
 	}
 
 
 	public function testbuild_generic_where_clause ()
 	{
+        
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
 
 		$project = new Project();
 
@@ -133,6 +187,10 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$actual = $project->build_generic_where_clause('test');
 		$this->assertSame($expected,$actual);
 
+        
+        // clean up
+        
+        $state->popTable('roles_users');
 	}
 
     /**
@@ -140,6 +198,8 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
      */
 	public function testget_list_view_data()
 	{
+            $this->markTestIncomplete('NEEDS FIXING!');
+            
         /*
 		$project = new Project();
 
@@ -156,21 +216,39 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$this->assertSame($expected, $actual);
 		*/
-        $this->assertTrue(true, "NEEDS FIXING!");
+//        $this->assertTrue(true, "NEEDS FIXING!");
 	}
 
 	public function testbean_implements(){
 
+        
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
 		$project = new Project();
 
 		$this->assertEquals(false, $project->bean_implements('')); //test with blank value
 		$this->assertEquals(false, $project->bean_implements('test')); //test with invalid value
 		$this->assertEquals(true, $project->bean_implements('ACL')); //test with valid value
 
+        
+        // clean up
+        
+        $state->popTable('roles_users');
 	}
 
     public function testcreate_export_query()
     {
+        
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
         $this->markTestIncomplete('environment dependency');
         
     	$project = new Project();
@@ -192,16 +270,31 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	$actual = $project->create_export_query('project.id','users.user_name');
     	$this->assertSame($expected,$actual);
 
+        
+        // clean up
+        
+        $state->popTable('roles_users');
     }
 
 	public function testgetAllProjectTasks(){
 
+        
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        
+        // test
 		$project = new Project();
 
 		$project->id = 1;
 		$result = $project->getAllProjectTasks();
 		$this->assertTrue(is_array($result));
 
+        
+        // clean up
+        
+        $state->popTable('roles_users');
 	}
 
 }
