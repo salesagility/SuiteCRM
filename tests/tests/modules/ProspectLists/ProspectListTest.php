@@ -6,6 +6,14 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function testProspectList()
 	{
 
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
+
 		//execute the contructor and check for the Object type and  attributes
 		$prospectList = new ProspectList();
 
@@ -17,11 +25,23 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$this->assertAttributeEquals('ProspectList', 'object_name', $prospectList);
 
 		$this->assertAttributeEquals("prospect_lists_prospects", 'rel_prospects_table', $prospectList);
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
 	public function testget_summary_text()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 
 		$prospectList = new ProspectList();
 
@@ -31,10 +51,22 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		//test with name set
 		$prospectList->name = "test";
 		$this->assertEquals('test',$prospectList->get_summary_text());
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 	}
 
 	public function testcreate_list_query()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 
 		$prospectList = new ProspectList();
 
@@ -48,12 +80,24 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users\n					ON prospect_lists.assigned_user_id=users.id where users.user_name = \"\" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
 		$actual = $prospectList->create_list_query('prospect_lists.id','users.user_name = ""');
 		$this->assertSame($expected,$actual);
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
 
 	public function testcreate_export_query()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 
 		$prospectList = new ProspectList();
 
@@ -67,6 +111,11 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$expected = "SELECT\n                                prospect_lists.*,\n                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users\n                                ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
 		$actual = $prospectList->create_export_query('prospect_lists.id','users.user_name = ""');
 		$this->assertSame($expected,$actual);
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
     }
 
@@ -83,7 +132,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     	$actual = $prospectList->create_export_members_query('1');
     	$this->assertSame($expected,$actual);
         */
-        $this->assertTrue(true, "NEEDS FIXING!");
+        $this->markTestIncomplete("NEEDS FIXING!");
 	}
 
 	public function testsave() {
@@ -91,6 +140,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // save state
         
         $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
         $state->pushTable('aod_indexevent');
         $state->pushTable('prospect_lists');
         $state->pushGlobals();
@@ -128,6 +178,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $state->popGlobals();
         $state->popTable('prospect_lists');
         $state->popTable('aod_indexevent');
+        $state->popTable('roles_users');
 	}
 
 
@@ -138,6 +189,13 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function set_prospect_relationship($id)
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 		$prospectList = new ProspectList();
 
 		//preset the required attributes, retrive the bean by id and verify the count of records
@@ -154,11 +212,23 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		//test clear_prospect_relationship method with expected counts
 		$this->clear_prospect_relationship($id, '1');
 		$this->clear_prospect_relationship($id, '2');
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
 	public function set_prospect_relationship_single($id)
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 		$prospectList = new ProspectList();
 
 		$prospectList->retrieve($id);
@@ -169,12 +239,24 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$this->assertEquals(1,$expected_count);
 
 		$this->clear_prospect_relationship($id, '3');
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
 
 	public function clear_prospect_relationship($id, $related_id)
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 		$prospectList = new ProspectList();
 
 		//retrieve the bean and get counts before and after method execution for comparison.
@@ -187,11 +269,17 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$expected_count = (int)$prospectList->get_entry_count();
 		$this->assertEquals($initial_count - 1 , $expected_count);
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 	}
 
 
 	public function testmark_relationships_deleted()
 	{
+		$this->markTestIncomplete('Method has no implementation');
 		$prospectList = new ProspectList();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -203,12 +291,12 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 			$this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
 		}
 
-		$this->markTestIncomplete('Method has no implementation');
 
 	}
 
 	public function testfill_in_additional_list_fields()
 	{
+		$this->markTestIncomplete('Method has no implementation');
 		$prospectList = new ProspectList();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -220,22 +308,34 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 			$this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
 		}
 
-		$this->markTestIncomplete('Method has no implementation');
 
 	}
 
 	public function testfill_in_additional_detail_fields()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 		$prospectList = new ProspectList();
 
 		$prospectList->fill_in_additional_detail_fields();
 		$this->assertEquals(0,$prospectList->entry_count);
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
 
 	public function testupdate_currency_id()
 	{
+		$this->markTestIncomplete('Method has no implementation');
 
 		$prospectList = new ProspectList();
 
@@ -247,34 +347,65 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		catch (Exception $e) {
 			$this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
 		}
+                
 
-		$this->markTestIncomplete('Method has no implementation');
 
 	}
 
 
 	public function testget_entry_count()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 		$prospectList = new ProspectList();
 
 		$result = $prospectList->get_entry_count();
 		$this->assertEquals(0, $result);
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
 
 	public function testget_list_view_data(){
 
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 		$prospectList = new ProspectList();
 
 		$expected = array( "DELETED"=> 0, "ENTRY_COUNT"=> '0' );
 		$actual = $prospectList->get_list_view_data();
 		$this->assertSame($expected, $actual);
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
 	public function testbuild_generic_where_clause()
 	{
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 
 		$prospectList = new ProspectList();
 
@@ -288,17 +419,34 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$expected = "prospect_lists.name like '1%'";
 		$actual = $prospectList->build_generic_where_clause('1');
 		$this->assertSame($expected,$actual);
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
 
 	public function testbean_implements(){
 
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
 		$prospectList = new ProspectList();
 
 		$this->assertEquals(false, $prospectList->bean_implements('')); //test with blank value
 		$this->assertEquals(false, $prospectList->bean_implements('test')); //test with invalid value
 		$this->assertEquals(true, $prospectList->bean_implements('ACL')); //test with valid value
+                
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
 
 	}
 
