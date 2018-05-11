@@ -231,11 +231,6 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 			$this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
 		}
         
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('emails');
-        $state->popTable('aod_indexevent');
 
 	}
 
