@@ -5,6 +5,13 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testtoString()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
 
         $emailMan = new EmailMan();
 
@@ -25,10 +32,21 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "EmailMan:\nid = 1 ,user_id= 1 module = test , related_id = 1 , related_type = test ,list_id = 1, send_date_time= 1/1/2015\n";
         $actual = $emailMan->toString();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testEmailMan()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $emailMan = new EmailMan();
@@ -40,10 +58,21 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('emailman', 'table_name', $emailMan);
 
         $this->assertAttributeEquals(false, 'test', $emailMan);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testcreate_new_list_query()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         //test with empty string params
@@ -55,10 +84,21 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "SELECT emailman.* ,\n					campaigns.name as campaign_name,\n					email_marketing.name as message_name,\n					(CASE related_type\n						WHEN 'Contacts' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'&nbsp;',IFNULL(contacts.last_name,''))))\n						WHEN 'Leads' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),'&nbsp;',IFNULL(leads.last_name,''))))\n						WHEN 'Accounts' THEN accounts.name\n						WHEN 'Users' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),'&nbsp;',IFNULL(users.last_name,''))))\n						WHEN 'Prospects' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,''),'&nbsp;',IFNULL(prospects.last_name,''))))\n					END) recipient_name	FROM emailman\n					LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type ='Users'\n					LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type ='Contacts'\n					LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type ='Leads'\n					LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type ='Accounts'\n					LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type ='Prospects'\n					LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id\n                    LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0\n					LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id\n					LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id WHERE emailman.user_id=\"\" AND  emailman.deleted=0";
         $actual = $emailMan->create_new_list_query('emailman.id', 'emailman.user_id=""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testcreate_queue_items_query()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         //without parameters
@@ -70,10 +110,21 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "SELECT emailman.* ,\n					campaigns.name as campaign_name,\n					email_marketing.name as message_name,\n					(CASE related_type\n						WHEN 'Contacts' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'&nbsp;',IFNULL(contacts.last_name,''))))\n						WHEN 'Leads' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),'&nbsp;',IFNULL(leads.last_name,''))))\n						WHEN 'Accounts' THEN accounts.name\n						WHEN 'Users' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),'&nbsp;',IFNULL(users.last_name,''))))\n						WHEN 'Prospects' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,''),'&nbsp;',IFNULL(prospects.last_name,''))))\n					END) recipient_name FROM emailman\n		            LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type ='Users'\n					LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type ='Contacts'\n					LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type ='Leads'\n					LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type ='Accounts'\n					LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type ='Prospects'\n					LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id\n                    LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0\n					LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id\n					LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id INNER JOIN (select min(id) as id from emailman  em GROUP BY em.user_id  ) secondary\n			           on emailman.id = secondary.id	WHERE emailman.user_id=\"\" AND  emailman.deleted=0";
         $actual = $emailMan->create_queue_items_query('emailman.id', 'emailman.user_id=""', array(), array('group_by' => 'emailman.user_id'));
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testcreate_list_query()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         //test with empty string params
@@ -85,6 +136,10 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "SELECT emailman.* ,\n					campaigns.name as campaign_name,\n					email_marketing.name as message_name,\n					(CASE related_type\n						WHEN 'Contacts' THEN LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'&nbsp;',IFNULL(contacts.last_name,''))))\n						WHEN 'Leads' THEN LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),'&nbsp;',IFNULL(leads.last_name,''))))\n						WHEN 'Accounts' THEN accounts.name\n						WHEN 'Users' THEN LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),'&nbsp;',IFNULL(users.last_name,''))))\n						WHEN 'Prospects' THEN LTRIM(RTRIM(CONCAT(IFNULL(prospects.first_name,''),'&nbsp;',IFNULL(prospects.last_name,''))))\n					END) recipient_name	FROM emailman\n					LEFT JOIN users ON users.id = emailman.related_id and emailman.related_type ='Users'\n					LEFT JOIN contacts ON contacts.id = emailman.related_id and emailman.related_type ='Contacts'\n					LEFT JOIN leads ON leads.id = emailman.related_id and emailman.related_type ='Leads'\n					LEFT JOIN accounts ON accounts.id = emailman.related_id and emailman.related_type ='Accounts'\n					LEFT JOIN prospects ON prospects.id = emailman.related_id and emailman.related_type ='Prospects'\n					LEFT JOIN prospect_lists ON prospect_lists.id = emailman.list_id\n                    LEFT JOIN email_addr_bean_rel ON email_addr_bean_rel.bean_id = emailman.related_id and emailman.related_type = email_addr_bean_rel.bean_module and email_addr_bean_rel.primary_address = 1 and email_addr_bean_rel.deleted=0\n					LEFT JOIN campaigns ON campaigns.id = emailman.campaign_id\n					LEFT JOIN email_marketing ON email_marketing.id = emailman.marketing_id where emailman.user_id=\"\" AND  emailman.deleted=0";
         $actual = $emailMan->create_list_query('emailman.id', 'emailman.user_id=""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_list_view_data()
@@ -92,6 +147,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
         
         // test
@@ -110,6 +166,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('aod_indexevent');
         $state->popGlobals();
     }
 
@@ -119,6 +176,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('campaign_log');
+        $state->pushTable('aod_indexevent');
         
         // test
         
@@ -144,11 +202,19 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('aod_indexevent');
         $state->popTable('campaign_log');
     }
 
     public function testcreate_indiv_email()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         $result = $emailMan->create_indiv_email(new Contact(), new Email());
@@ -158,17 +224,39 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $email = new Email();
         $email->mark_deleted($result);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testverify_campaign()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
         $result = $emailMan->verify_campaign('');
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testsendEmail()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         //test without setting any attributes
@@ -180,19 +268,41 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $emailMan->related_id = 1;
         $result = $emailMan->sendEmail(new Email(), 1, true);
         $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testvalid_email_address()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         $this->assertEquals(false, $emailMan->valid_email_address(''));
         $this->assertEquals(false, $emailMan->valid_email_address('test'));
         $this->assertEquals(true, $emailMan->valid_email_address('test@test.com'));
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testis_primary_email_address()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         $bean = new Contact();
@@ -203,10 +313,21 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with a dummy email set
         $bean->email1 = 'test@test.com';
         $this->assertEquals(false, $emailMan->is_primary_email_address($bean));
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testcreate_export_query()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         //test with empty string params
@@ -218,10 +339,21 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = 'SELECT emailman.* FROM emailman where (emailman.user_id="") AND ( emailman.deleted IS NULL OR emailman.deleted=0 )';
         $actual = $emailMan->create_export_query('emailman.id', 'emailman.user_id=""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testmark_deleted()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
 
         //execute the method and test if it works and does not throws an exception.
@@ -231,10 +363,21 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testcreate_ref_email()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
+        // test
+        
         $emailMan = new EmailMan();
         $emailMan->test = true;
 
@@ -244,5 +387,9 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(36, strlen($result));
         $email = new Email();
         $email->mark_deleted($result);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 }
