@@ -187,11 +187,16 @@ class AOR_ReportsController extends SugarController
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
+        
+        $level = error_reporting();
         $state = SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         error_reporting(0);
         require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
         $state->popErrorLevel();
+        if ($level !== error_reporting()) {
+            throw new Exception('Incorrect error reporting level');
+        }
 
         $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $graphs = $_POST["graphsForPDF"];
