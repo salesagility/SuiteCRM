@@ -405,32 +405,69 @@ class EmailMan extends SugarBean{
                 $this->ref_email->status='sent';
                 $retId = $this->ref_email->save();
 
-                foreach($notes as $note) {
-                    if($note->object_name == 'Note') {
-                        if (! empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
-                            $file_location = $note->file->temp_file_location;
-                            $filename = $note->file->original_file_name;
-                            $mime_type = $note->file->mime_type;
-                        } else {
-                            $file_location = "upload://{$note->id}";
+                if (!is_array($notes)) {
+                    LoggerManager::getLogger()->warn('EmailMan::create_ref_email: notes should be an array, ' . gettype($notes) . ' given');
+                }
+                
+                foreach((array)$notes as $note) {
+                    if (!is_object($note)) {
+                        LoggerManager::getLogger()->warn('EmailMan::create_ref_email: notes should be an array of object, one of elements was: ' . gettype($note));
+                    } else {
+                        if($note->object_name == 'Note') {
+                            if (! empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) {
+                                $file_location = $note->file->temp_file_location;
+                                $filename = $note->file->original_file_name;
+                                $mime_type = $note->file->mime_type;
+                            } else {
+                                $file_location = "upload://{$note->id}";
+                                $filename = $note->id.$note->filename;
+                                $mime_type = $note->file_mime_type;
+                            }
+                        } elseif($note->object_name == 'DocumentRevision') { // from Documents
                             $filename = $note->id.$note->filename;
+                            $file_location = "upload://$filename";
                             $mime_type = $note->file_mime_type;
+                        } else {
+                            LoggerManager::getLogger()->warn('Unknown object name');
                         }
-                    } elseif($note->object_name == 'DocumentRevision') { // from Documents
-                        $filename = $note->id.$note->filename;
-                        $file_location = "upload://$filename";
-                        $mime_type = $note->file_mime_type;
                     }
 
                     $noteAudit = new Note();
                     $noteAudit->parent_id = $retId;
                     $noteAudit->parent_type = $this->ref_email->module_dir;
-                    $noteAudit->description = "[".$note->filename."] ".$mod_strings['LBL_ATTACHMENT_AUDIT'];
+                    
+                    $noteFilename = null;
+                    if (isset($note->filename)) {
+                        $noteFilename = $note->filename;
+                    } else {
+                        LoggerManager::getLogger()->warn('EmailMan::create_ref_email: note filename is undefined');
+                    }
+                    
+                    $noteAudit->description = "[" . $noteFilename . "] " . $mod_strings['LBL_ATTACHMENT_AUDIT'];
+                    
+                    if (!isset($filename)) {
+                        $filename = null;
+                        LoggerManager::getLogger('EmailMan::create_ref_email: resolving filename is failed');
+                    }
+                    
                     $noteAudit->filename=$filename;
+                    
+                    if (!isset($mime_type)) {
+                        $mime_type = null;
+                        LoggerManager::getLogger('EmailMan::create_ref_email: resolving mime type is failed');
+                    }
+                    
                     $noteAudit->file_mime_type=$mime_type;
                     $noteAudit_id=$noteAudit->save();
 
-                    UploadFile::duplicate_file($note->id, $noteAudit_id, $filename);
+                    $noteId = null;
+                    if (isset($note->id)) {
+                        $noteId = $note->id;
+                    } else {
+                        LoggerManager::getLogger()->warn('EmailMan::create_ref_email: resolving note id is failed');
+                    }
+                    
+                    UploadFile::duplicate_file($noteId, $noteAudit_id, $filename);
                 }
             }
 
@@ -489,15 +526,61 @@ class EmailMan extends SugarBean{
         $email->to_addrs_emails = $module->email1 . ';';
         $email->type= 'archived';
         $email->deleted = '0';
-        $email->name = $this->current_campaign->name.': '.$mail->Subject ;
-        if ($mail->ContentType == "text/plain") {
-            $email->description = $mail->Body;
+        
+        $currentCampaignName = null;
+        if (isset($this->current_campaign->name)) {
+            $currentCampaignName = $this->current_campaign->name;
+        } else {
+            LoggerManager::getLogger()->warn('EmailMan::create_indiv_email: current campaign name is undefined');
+        }
+        
+        $mailSubject = null;
+        if (isset($mail->Subject)) {
+            $mailSubject = $mail->Subject ;
+        } else {
+            LoggerManager::getLogger()->warn('EmailMan::create_indiv_email: email subject is undefined');
+        }
+        
+        $email->name = $currentCampaignName . ': ' . $mailSubject;
+        
+        $mailContentType = null;
+        if (isset($mail->ContentType)) {
+            $mailContentType = $mail->ContentType;
+        } else {
+            LoggerManager::getLogger()->warn('EmailMan::create_indiv_email: mail content type is undefined');
+        }
+        
+        $mailBody = null;
+        if (isset($mail->Body)) {
+            $mailBody = $mail->Body;
+        } else {
+            LoggerManager::getLogger()->warn('EmailMan::create_indiv_email: mail body is undefined');
+        }
+        
+        if ($mailContentType == "text/plain") {
+            $email->description = $mailBody;
             $email->description_html =null;
         } else {
-            $email->description_html = $mail->Body;
-            $email->description = $mail->AltBody;
+            $email->description_html = $mailBody;
+        
+            $mailAltBody = null;
+            if (isset($mail->AltBody)) {
+                $mailAltBody = $mail->AltBody;
+            } else {
+                LoggerManager::getLogger()->warn('EmailMan::create_indiv_email: mail alt body is undefined');
+            }
+        
+            $email->description = $mailAltBody;
         }
-        $email->from_addr = $mail->From;
+        
+        $mailFrom = null;
+        if (isset($mail->From)) {
+            $mailFrom = $mail->From ;
+        } else {
+            LoggerManager::getLogger()->warn('EmailMan::create_indiv_email: mail from is undefined');
+        }
+        
+        $email->from_addr = $mailFrom;
         $email->assigned_user_id = $this->user_id;
         $email->parent_type = $this->related_type;
         $email->parent_id = $this->related_id ;
