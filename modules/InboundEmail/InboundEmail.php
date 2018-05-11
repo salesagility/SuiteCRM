@@ -995,9 +995,16 @@ class InboundEmail extends SugarBean {
 	 */
 	function pop3_cleanUp() {
 		$GLOBALS['log']->info("*** INBOUNDEMAIL: cleaning up socket connection");
-		fputs($this->pop3socket, "QUIT\r\n");
-		$buf = fgets($this->pop3socket, 1024);
-		fclose($this->pop3socket);
+                
+                if (null === $this->pop3socket) {
+                    LoggerManager::getLogger()->warn('InboundEmail::pop3_cleanUp: pop3socket is null');
+                    return false;
+                } else {
+                    fputs($this->pop3socket, "QUIT\r\n");
+                    $buf = fgets($this->pop3socket, 1024);
+                    fclose($this->pop3socket);
+                    return true;
+                }
 	}
 
 	/**
@@ -1013,7 +1020,12 @@ class InboundEmail extends SugarBean {
 		$GLOBALS['log']->info("*** INBOUNDEMAIL: pop3_sendCommand() SEND [ {$command} ]");
 		$command .= "\r\n";
 
-		fputs($this->pop3socket, $command);
+                if (null === $this->pop3socket) {
+                    LoggerManager::getLogger()->warn('InboundEmail::pop3_sendCommand: pop3socket is null');
+                    return false;
+                } else {
+                    fputs($this->pop3socket, $command);
+                }
 
 		if($return) {
 			$ret = trim(fgets($this->pop3socket, 1024));
