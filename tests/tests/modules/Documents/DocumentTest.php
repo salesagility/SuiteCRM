@@ -5,6 +5,14 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testDocument()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $document = new Document();
@@ -17,6 +25,11 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('documents', 'table_name', $document);
         $this->assertAttributeEquals(true, 'new_schema', $document);
         $this->assertAttributeEquals(false, 'disable_row_level_security', $document);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 
     public function testSaveAndGet_document_name()
@@ -67,6 +80,14 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_summary_text()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $document = new Document();
 
         //test without setting name
@@ -75,10 +96,23 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $document->document_name = 'test';
         $this->assertEquals('test', $document->get_summary_text());
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 
     public function testis_authenticated()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $document = new Document();
 
         //test without presetting attributes
@@ -87,6 +121,11 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with attributes preset
         $document->authenticated = true;
         $this->assertEquals(true, $document->is_authenticated());
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 
     public function testfill_in_additional_list_fields()
@@ -94,6 +133,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
         
         // test
@@ -111,6 +151,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 
     public function testfill_in_additional_detail_fields()
@@ -118,6 +159,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
         
         // test
@@ -138,6 +180,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 
     public function testlist_view_parse_additional_sections()
@@ -158,6 +201,14 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $document = new Document();
 
         //test with empty string parameters
@@ -169,6 +220,11 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "SELECT\n						documents.* FROM documents  WHERE documents.document_name = \"\" AND  documents.deleted = 0 ORDER BY documents.id";
         $actual = $document->create_export_query('documents.id', 'documents.document_name = ""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 
     public function testget_list_view_data()
@@ -178,6 +234,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
         
         // test
@@ -218,10 +275,19 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 
     public function testmark_relationships_deleted()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $document = new Document();
 
         //execute the method and test if it works and does not throws an exception.
@@ -231,13 +297,31 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 
     public function testbean_implements()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        
+        // test
+        
         $document = new Document();
         $this->assertEquals(false, $document->bean_implements('')); //test with blank value
         $this->assertEquals(false, $document->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $document->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_indexevent');
     }
 }
