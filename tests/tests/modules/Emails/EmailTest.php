@@ -612,9 +612,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('notes');
         $state->popTable('aod_indexevent');
         
-        // clean up
-        
-        $state->popTable('eapm');
     }
 
     public function testcleanEmails()
