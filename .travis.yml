@@ -5,8 +5,14 @@ php:
   - 7.0
   - 7.1
   - 7.2
+
 matrix:
   fast_finish: true
+jobs:
+  include:
+      - stage: codecoverage
+        php: 7.0
+        script: ./vendor/bin/codecept run install --env travis-ci-hub -f -vvv -d; ./vendor/bin/robo -vvv code:coverage; cat codeception.yml; bash <(curl -s https://codecov.io/bash) -f tests/_output/coverage.xml
 
 sudo: required
 dist: trusty
@@ -48,8 +54,6 @@ before_script:
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
   - sudo service apache2 restart
-  # Optimise build by removing x-debug
-  - phpenv config-rm xdebug.ini
   # Install composer
   - composer install
   - ./vendor/bin/codecept build
@@ -80,6 +84,7 @@ after_script:
   - ./build/push_output.sh
   - cat suitecrm.log
   - sudo cat /var/log/apache2/error.log
+  - echo $TRAVIS_COMMIT_RANGE
 
 branches:
   only:
