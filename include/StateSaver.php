@@ -328,7 +328,7 @@ class StateSaver
         DBManagerFactory::getInstance()->query("TRUNCATE TABLE " . DBManagerFactory::getInstance()->quote($table));
         
         if(!is_array($rows)) {
-            throw new StateSaverException('Table information is not an array. Are you sure you pushed this table previously?');
+            throw new StateSaverException('Table information is not an array. Are you sure you pushed this table "' . $table . '" previously?');
         }
         foreach ($rows as $row) {
             $query = "INSERT INTO $table (";
