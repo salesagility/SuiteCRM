@@ -10,6 +10,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -36,6 +37,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -47,6 +49,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -64,6 +67,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -75,6 +79,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -92,6 +97,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -103,6 +109,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -120,6 +127,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -131,6 +139,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -148,6 +157,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -159,6 +169,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         $state->pushGlobals();
         
         // test
@@ -177,6 +188,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
         $state->popGlobals();
@@ -227,6 +239,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -242,6 +255,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -253,6 +267,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -262,6 +277,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -273,6 +289,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -290,6 +307,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -301,6 +319,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -312,6 +331,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -323,6 +343,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -339,6 +360,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -350,6 +372,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -367,6 +390,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -378,6 +402,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -393,6 +418,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
@@ -404,6 +430,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         $state->pushTable('eapm');
+        $state->pushTable('campaign_log');
         
         // test
         
@@ -419,6 +446,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('campaign_log');
         $state->popTable('eapm');
         $state->popTable('aod_indexevent');
     }
