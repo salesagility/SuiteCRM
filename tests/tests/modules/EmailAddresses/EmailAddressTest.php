@@ -5,6 +5,14 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEmailAddress()
     {
+        // save state
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        $state->pushTable('eapm');
+        
+        // test
+        
         //execute the contructor and check for the Object type and  attributes
         $email = new EmailAddress();
         $this->assertInstanceOf('EmailAddress', $email);
@@ -17,6 +25,11 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('email_addresses', 'table_name', $email);
 
         $this->assertAttributeEquals(true, 'disable_row_level_security', $email);
+        
+        // clean up
+        
+        $state->popTable('eapm');
+        $state->popTable('email_addresses');
     }
 
     public function testsave()
@@ -25,6 +38,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
+        $state->pushTable('eapm');
         
         // test
         
@@ -46,6 +60,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('eapm');
         $state->popTable('email_addresses');
     }
 }
