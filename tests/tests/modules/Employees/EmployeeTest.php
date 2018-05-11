@@ -9,6 +9,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -27,6 +28,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 
 	}
@@ -38,6 +40,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -54,6 +57,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 
     }
@@ -65,6 +69,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -83,6 +88,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 
 	}
@@ -93,6 +99,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -113,6 +120,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 
 	}
@@ -124,6 +132,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -136,6 +145,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 	}
 
@@ -146,6 +156,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -157,6 +168,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 	}
 
@@ -166,6 +178,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -197,6 +210,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 
 	}
@@ -220,6 +234,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 
 	}
@@ -231,6 +246,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -251,6 +267,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 
 	}
@@ -261,6 +278,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -279,6 +297,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
 
 	}
@@ -312,6 +331,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -323,6 +343,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 

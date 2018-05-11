@@ -9,6 +9,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -29,6 +30,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -38,6 +40,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushTable('cron_remove_documents');
         $state->pushTable('documents');
         $state->pushGlobals();
@@ -75,6 +78,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popGlobals();
         $state->popTable('documents');
         $state->popTable('cron_remove_documents');
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -84,6 +88,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -100,6 +105,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -109,6 +115,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -125,6 +132,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -134,6 +142,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -151,6 +160,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -160,6 +170,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -180,6 +191,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -205,6 +217,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -224,6 +237,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -235,6 +249,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -275,6 +290,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -284,6 +300,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -301,6 +318,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 
@@ -310,6 +328,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
+        $state->pushTable('emails');
         $state->pushGlobals();
         
         // test
@@ -322,6 +341,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails');
         $state->popTable('aod_indexevent');
     }
 }
