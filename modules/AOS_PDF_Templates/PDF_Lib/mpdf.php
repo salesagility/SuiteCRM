@@ -8878,7 +8878,7 @@ function _putimages()
 {
 	$filter=($this->compress) ? '/Filter /FlateDecode ' : '';
 	reset($this->images);
-	while(list($file,$info)=each($this->images)) {
+	foreach ($this->images as $file => $info) {
 		$this->_newobj();
 		$this->images[$file]['n']=$this->n;
 		$this->_out('<</Type /XObject');
@@ -10440,7 +10440,7 @@ function _imageTypeFromString(&$data) {
 // Moved outside WMF as also needed for SVG
 function _putformobjects() {
 	reset($this->formobjects);
-	while(list($file,$info)=each($this->formobjects)) {
+	foreach ($this->formobjects as $file => $into) {
 		$this->_newobj();
 		$this->formobjects[$file]['n']=$this->n;
 		$this->_out('<</Type /XObject');
@@ -32370,7 +32370,8 @@ function pdf_write_value(&$value) {
 			// A dictionary.
 			$this->_out("<<",false);
 			reset ($value[1]);
-			while (list($k, $v) = each($value[1])) {
+
+			foreach ($value[1] as $k => $v) {
 				$this->_out($k . " ",false);
 				$this->pdf_write_value($v);
 			}

@@ -177,7 +177,7 @@ class AOR_ReportsController extends SugarController
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
         $this->bean->build_report_csv();
         die;
     }
@@ -189,7 +189,7 @@ class AOR_ReportsController extends SugarController
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
         }
-        
+
         $state = new \SuiteCRM\StateSaver();
         $state->pushErrorLevel();
         error_reporting(0);
@@ -251,7 +251,7 @@ class AOR_ReportsController extends SugarController
                 </tbody>
                 </table><br />' . $graphHtml;
 
-        $this->bean->user_parameters = requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters($this->bean);
 
         $printable = $this->bean->build_group_report(-1, false);
         $stylesheet = file_get_contents(SugarThemeRegistry::current()->getCSSURL('style.css', false));

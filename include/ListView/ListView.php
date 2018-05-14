@@ -285,8 +285,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
         $this->xTemplate->assign("COL_COUNT", count($thepanel->get_list_fields()));
         $this->xTemplate->parse($xtemplateSection.".nodata");
     }
-    while(list($aVal, $aItem) = each($data))
-    {
+     foreach($data as $aVal => $aItem) {
         $subpanel_item_count++;
         $aItem->check_date_relationships_load();
         // TODO: expensive and needs to be removed and done better elsewhere
@@ -1584,8 +1583,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         $mergeList = array();
         $module = '';
         //todo what is this?  It is using an array as a boolean
-        while(list($aVal, $aItem) = each($data))
-        {
+        foreach($data as $aVal => $aItem) {
             if(isset($this->data_array)) {
                 $fields = $this->data_array;
             } else {
