@@ -4,6 +4,21 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testMeeting()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $meeting = new Meeting();
@@ -26,6 +41,19 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals(null, 'cached_get_users', $meeting);
         $this->assertAttributeEquals(false, 'date_changed', $meeting);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testACLAccess()
@@ -33,9 +61,18 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
         $state->pushGlobals();
         
         // test
+        
         
         $meeting = new Meeting();
 
@@ -55,13 +92,50 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testhasIntegratedMeeting()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
         $result = $meeting->hasIntegratedMeeting();
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
@@ -76,6 +150,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_leads');
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
         $state->pushGlobals();
         
         // test
@@ -122,6 +197,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
         $state->popTable('meetings_leads');
@@ -129,10 +205,25 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('meetings_contacts');
         $state->popTable('meetings');
         $state->popTable('aod_indexevent');
+        
     }
 
     public function testget_summary_text()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
         $meeting = new Meeting();
 
         //test without setting name
@@ -141,6 +232,19 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $meeting->name = 'test';
         $this->assertEquals('test', $meeting->get_summary_text());
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testcreate_export_query()
@@ -158,6 +262,19 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = 'SELECT meetings.*, users.user_name as assigned_user_name  ,meetings_cstm.jjwg_maps_address_c,meetings_cstm.jjwg_maps_geocode_status_c,meetings_cstm.jjwg_maps_lat_c,meetings_cstm.jjwg_maps_lng_c FROM meetings   LEFT JOIN users ON meetings.assigned_user_id=users.id  LEFT JOIN meetings_cstm ON meetings.id = meetings_cstm.id_c  where users.user_name="" AND meetings.deleted=0';
         $actual = $meeting->create_export_query('meetings.id', 'users.user_name=""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -165,6 +282,14 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
         $state->pushGlobals();
         
         // test
@@ -198,6 +323,15 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
 
     }
 
@@ -206,6 +340,14 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
         $state->pushGlobals();
         
         // test
@@ -257,10 +399,33 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testset_notification_body()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
         global $current_user;
         $current_user = new User(1);
 
@@ -284,10 +449,38 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($meeting->duration_hours, $result->_tpl_vars['MEETING_HOURS']);
         $this->assertEquals($meeting->duration_minutes, $result->_tpl_vars['MEETING_MINUTES']);
         $this->assertEquals($meeting->description, $result->_tpl_vars['MEETING_DESCRIPTION']);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testcreate_notification_email()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         $meeting->date_start = '2016-02-11 17:30:00';
@@ -300,10 +493,38 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with valid user
         $result = $meeting->create_notification_email(new User(1));
         $this->assertInstanceOf('SugarPHPMailer', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testsend_assignment_notifications()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         $meeting->date_start = '2016-02-11 17:30:00';
@@ -322,27 +543,111 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testget_meeting_users()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         $result = $meeting->get_meeting_users();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testget_invite_meetings()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         $user = new User();
         $result = $meeting->get_invite_meetings($user);
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testget_notification_recipients()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         //test without special_notification
@@ -353,15 +658,56 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $meeting->special_notification = 1;
         $result = $meeting->get_notification_recipients();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testbean_implements()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         $this->assertEquals(false, $meeting->bean_implements('')); //test with blank value
         $this->assertEquals(false, $meeting->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $meeting->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testlistviewACLHelper()
@@ -369,6 +715,14 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // save state
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
         $state->pushGlobals();
         
         // test
@@ -382,10 +736,34 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testsave_relationship_changes()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
 
         //execute the method and test if it works and does not throws an exception.
@@ -395,6 +773,19 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     /**
@@ -402,6 +793,21 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testafterImportSave()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         require_once 'data/Link.php';
 
         //execute the method and test if it works and does not throws an exception.
@@ -422,29 +828,127 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testgetDefaultStatus()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         $meeting = new Meeting();
         $result = $meeting->getDefaultStatus();
         $this->assertEquals('Planned', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testgetMeetingsExternalApiDropDown()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         include_once __DIR__ . '/../../../../modules/Meetings/Meeting.php';
         $actual = getMeetingsExternalApiDropDown();
         $expected = array('Sugar' => 'SuiteCRM');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testgetMeetingTypeOptions()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('meetings');
+        $state->pushTable('meetings_contacts');
+        $state->pushTable('meetings_cstm');
+        $state->pushTable('meetings_leads');
+        $state->pushTable('meetings_users');
+        $state->pushTable('vcals');
+        $state->pushTable('inbound_email');
+        $state->pushGlobals();
+        
+        // test
+        
         include_once __DIR__ . '/../../../../modules/Meetings/Meeting.php';
         global $dictionary, $app_list_strings;
 
         $result = getMeetingTypeOptions($dictionary, $app_list_strings);
         $this->assertTrue(is_array($result));
+        
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email');
+        $state->popTable('vcals');
+        $state->popTable('meetings_users');
+        $state->popTable('meetings_leads');
+        $state->popTable('meetings_cstm');
+        $state->popTable('meetings_contacts');
+        $state->popTable('meetings');
+        $state->popTable('aod_indexevent');
+        
     }
 }
