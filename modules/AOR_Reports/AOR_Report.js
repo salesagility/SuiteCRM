@@ -56,8 +56,8 @@ $(document).ready(function () {
 function updateTimeDateFields(fieldInput, ln) {
   // datetime combo fields
   if (typeof fieldInput === 'undefined'
-    && $("[name='aor_conditions_value" + ln + "']").val()
-    && $("[name='aor_conditions_value" + ln + "']").hasClass('DateTimeCombo')) {
+    && $("[name='aor_conditions_value\\[" + ln + "\\]").val()
+    && $("[name='aor_conditions_value\\[" + ln + "\\]").hasClass('DateTimeCombo')) {
     var datetime = $("[name='aor_conditions_value\\[" + ln + "\\]']").val();
     var date = datetime.substr(0, 10);
     var formatDate = $.datepicker.formatDate('yy-mm-dd', new Date(date));
@@ -69,15 +69,16 @@ function updateTimeDateFields(fieldInput, ln) {
 function updateHiddenReportFields(ln, _form) {
 // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
   if ($('#aor_conditions_value' + ln).length) {
-    var fieldValue = $('#aor_conditions_value' + ln).val();
-    var fieldSign = $('#aor_conditions_value' + ln).val();
-    var fieldNumber = $('#aor_conditions_value' + ln).val();
-    var fieldTime = $('#aor_conditions_value' + ln).val();
+      var conditionsValue = $('#aor_conditions_value' + ln).val();
+      var fieldValue = conditionsValue;
+      var fieldSign = conditionsValue;
+      var fieldNumber = conditionsValue;
+      var fieldTime = conditionsValue;
 
-    _form.append('<input type="hidden" name="parameter_date_value[]" value="' + fieldValue + '">');
-    _form.append('<input type="hidden" name="parameter_date_sign[]" value="' + fieldSign + '">');
-    _form.append('<input type="hidden" name="parameter_date_number[]" value="' + fieldNumber + '">');
-    _form.append('<input type="hidden" name="parameter_date_time[]" value="' + fieldTime + '">');
+      _form.append('<input type="hidden" name="parameter_date_value['+ ln + '] value="' + fieldValue + '">');
+      _form.append('<input type="hidden" name="parameter_date_sign['+ ln + ']" value="' + fieldSign + '">');
+      _form.append('<input type="hidden" name="parameter_date_number['+ ln + ']" value="' + fieldNumber + '">');
+      _form.append('<input type="hidden" name="parameter_date_time['+ ln + ']" value="' + fieldTime + '">');
   }
 }
 
@@ -91,24 +92,30 @@ function localToDbFormat(index, ln, fieldInput) {
   return fieldInput;
 }
 
+function appendHiddenFields(_form, ln, id) {
+  debugger;
+    _form.append('<input type="hidden" name="parameter_id\[' + ln + '\]" value="' + id + '">');
+    var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
+    _form.append('<input type="hidden" name="parameter_operator\[' + ln + '\]" value="' + operator + '">');
+    var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
+    _form.append('<input type="hidden" name="parameter_type[' + ln + ']" value="' + fieldType + '">');
+    var fieldInput = $('#aor_conditions_value' + ln).val();
+    _form.append('<input type="hidden" name="parameter_value[' + ln + ']" value="' + fieldInput + '">');
+    fieldInput = updateTimeDateFields(fieldInput, ln);
+    updateHiddenReportFields(ln, _form);
+}
+
 function addParametersToForm(action) {
   var _form = $('#formDetailView');
   _form.find('input[name=action]').val(action);
 
-  $('.aor_conditions_id').each(function(index, elem){
+  $('.aor_conditions_id').each(function(index, elem) {
     $elem = $(elem);
     var ln = $elem.attr('id').substr(17);
     var id = $elem.val();
-    _form.append('<input type="hidden" name="parameter_id[]" value="'+id+'">');
-    var operator = $("#aor_conditions_operator\\["+ln+"\\]").val();
-    _form.append('<input type="hidden" name="parameter_operator[]" value="'+operator+'">');
-    var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
-    _form.append('<input type="hidden" name="parameter_type[]" value="'+fieldType+'">');
-    var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
-    updateTimeDateFields(fieldInput, ln);
-    updateHiddenReportFields(ln, _form);
+    appendHiddenFields(_form, ln, id);
   });
-
+    debugger;
   return _form;
 }
 
