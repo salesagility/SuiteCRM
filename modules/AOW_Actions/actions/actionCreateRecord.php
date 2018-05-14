@@ -250,7 +250,7 @@ class actionCreateRecord extends actionBase {
                                 } else if($params['value'][$key][0] === 'field'){
                                     $dateToUse = $params['field'][$key];
                                     $date = $record->$dateToUse;
-                                    $date_object = $timedate->fromUser($date);
+                                    $date_object = $timedate->fromUserType($date, $record_vardefs[$field]['type']);
                                     if ($date_object) {
                                         $date = $timedate->asDbType($date_object, $record_vardefs[$field]['type']);
                                     }
@@ -259,7 +259,7 @@ class actionCreateRecord extends actionBase {
                                 } else {
                                     $dateToUse = $params['value'][$key][0];
                                     $date = $bean->$dateToUse;
-                                    $date_object = $timedate->fromUser($date);
+                                    $date_object = $timedate->fromUserType($date, $record_vardefs[$field]['type']);
                                     if ($date_object) {
                                         $date = $timedate->asDbType($date_object, $record_vardefs[$field]['type']);
                                     }
