@@ -56,17 +56,21 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
 {
     use StateCheckerTrait;
     
+    protected static $verbose = true;
+    
     /**
      * Collect state information and storing a hash
      */
-    public function setUp()
+    protected function setUp()
     {
-        $currentTestName = get_class($this) . '::' . $this->getName(false);
-        echo "\t" . $currentTestName  . " ..";
-        for ($i = 60; $i > strlen($currentTestName); $i--) {
-            echo ".";
-        }
         
+        if (self::$verbose) {
+            $currentTestName = get_class($this) . '::' . $this->getName(false);
+            echo "\t" . $currentTestName  . " ..";
+            for ($i = 60; $i > strlen($currentTestName); $i--) {
+                echo ".";
+            }
+        }
         
         $this->beforeStateCheck();
         parent::setUp();
@@ -75,11 +79,13 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
     /**
      * Collect state information and comparing hash
      */
-    public function tearDown()
+    protected function tearDown()
     {
         parent::tearDown();
         $this->afterStateCheck();
         
-        echo " [done]\n";
+        if (self::$verbose) {
+            echo " [done]\n";
+        }
     }
 }
