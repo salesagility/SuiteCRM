@@ -250,11 +250,19 @@ class actionCreateRecord extends actionBase {
                                 } else if($params['value'][$key][0] === 'field'){
                                     $dateToUse = $params['field'][$key];
                                     $date = $record->$dateToUse;
+                                    $date_object = $timedate->fromUser($date);
+                                    if ($date_object) {
+                                        $date = $timedate->asDbType($date_object, $record_vardefs[$field]['type']);
+                                    }
                                 } else if ($params['value'][$key][0] === 'today') {
                                     $date = $params['value'][$key][0];
                                 } else {
                                     $dateToUse = $params['value'][$key][0];
                                     $date = $bean->$dateToUse;
+                                    $date_object = $timedate->fromUser($date);
+                                    if ($date_object) {
+                                        $date = $timedate->asDbType($date_object, $record_vardefs[$field]['type']);
+                                    }
                                 }
 
                                 if($params['value'][$key][1] !== 'now'){
