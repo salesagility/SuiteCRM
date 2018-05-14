@@ -317,6 +317,9 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $aor_row = str_replace('aor_conditions_value', '', $aow_field);
     $aor_row = str_replace('[', '', $aor_row);
     $aor_row = str_replace(']', '', $aor_row);
+    if ($aor_row === $fieldname) {
+        $aor_row = '';
+    }
     // use the mod_strings for this module
     $mod_strings = return_module_language($current_language,$module);
 
