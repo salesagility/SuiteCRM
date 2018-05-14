@@ -299,6 +299,7 @@ class AOR_ReportsCest
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
+
         // Navigate to reports list-view
         $reports->gotoReports();
         $listView->waitForListViewVisible();
@@ -313,8 +314,10 @@ class AOR_ReportsCest
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(this).closest(\'li.jqtree_common\').data(\'node\'); $(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
+        $editView->click('Accounts', '.jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', '.jqtree-title jqtree_common');
 
         // Add condition
         $editView->click('Conditions', 'tab-toggler');
