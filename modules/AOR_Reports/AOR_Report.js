@@ -99,8 +99,16 @@ function appendHiddenFields(_form, ln, id) {
     _form.append('<input type="hidden" name="parameter_operator\[' + ln + '\]" value="' + operator + '">');
     var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
     _form.append('<input type="hidden" name="parameter_type[' + ln + ']" value="' + fieldType + '">');
-    var fieldInput = $('#aor_conditions_value' + ln).val();
-    fieldInput = updateTimeDateFields(fieldInput, ln);
+
+    // values can be #aor_conditions_value3 or #aor_conditions_value[3]
+    var fieldInput = '';
+    if ($('#aor_conditions_value' + ln).length > 0) {
+        fieldInput = $('#aor_conditions_value' + ln).val();
+        fieldInput = updateTimeDateFields(fieldInput, ln);
+    } else {
+        fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+    }
+
     _form.append('<input type="hidden" name="parameter_value[' + ln + ']" value="' + fieldInput + '">');
     updateHiddenReportFields(ln, _form);
 }
