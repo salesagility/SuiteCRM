@@ -95,12 +95,9 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testMain()
     {
-        
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('saved_search');
-        $state->pushGlobals();
+        $state = $this->storeStateAll();
         
         // test
 
