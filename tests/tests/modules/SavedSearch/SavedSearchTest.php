@@ -19,9 +19,9 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         // clean up
         
+        $state->popGlobals();
         $state->popTable('roles_users');
         $state->popTable('saved_search');
-        $state->popGlobals();
         
     }
     
