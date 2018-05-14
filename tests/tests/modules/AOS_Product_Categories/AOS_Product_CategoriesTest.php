@@ -1,9 +1,10 @@
 <?php
 
 class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
-{
-    public function testAOS_Product_Categories()
+{    
+    protected function storeStateAll() 
     {
+
         // save state
         
         $state = new SuiteCRM\StateSaver();
@@ -12,7 +13,33 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $state->pushTable('aos_product_categories');
         $state->pushTable('config');
         $state->pushTable('emails_text');
+        $state->pushTable('inbound_email_autoreply');
         $state->pushGlobals();
+        
+        
+        return $state;
+    }
+    
+    protected function restoreStateAll($state) 
+    {
+
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('inbound_email_autoreply');
+        $state->popTable('emails_text');
+        $state->popTable('config');
+        $state->popTable('aos_product_categories');
+        $state->popTable('emails');
+        $state->popTable('aod_indexevent');
+        
+    }
+    
+    public function testAOS_Product_Categories()
+    {
+        // save state
+        
+        $state = $this->storeStateAll();
         
         // test
         
@@ -31,27 +58,17 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProductCategories);
         $this->assertAttributeEquals(true, 'importable', $aosProductCategories);
         
+        
         // clean up
         
-        $state->popGlobals();
-        $state->popTable('emails_text');
-        $state->popTable('config');
-        $state->popTable('aos_product_categories');
-        $state->popTable('emails');
-        $state->popTable('aod_indexevent');
+        $this->restoreStateAll($state);($state);
     }
 
     public function testsave()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('emails');
-        $state->pushTable('config');
-        $state->pushTable('aos_product_categories');
-        $state->pushTable('emails_text');
-        $state->pushGlobals();
+        $state = $this->storeStateAll();
         
         // test
         
@@ -71,13 +88,9 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $result = $aosProductCategories->retrieve($aosProductCategories->id);
         $this->assertEquals(null, $result);
         
+        
         // clean up
         
-        $state->popGlobals();
-        $state->popTable('emails_text');
-        $state->popTable('aos_product_categories');
-        $state->popTable('config');
-        $state->popTable('emails');
-        $state->popTable('aod_indexevent');
+        $this->restoreStateAll($state);($state);
     }
 }
