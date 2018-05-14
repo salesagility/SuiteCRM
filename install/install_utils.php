@@ -987,7 +987,7 @@ EOQ;
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
-    RewriteRule ^api/(.*?)$ lib/SuiteCRM/API/public/index.php/$1 [L]
+    RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
@@ -1180,8 +1180,6 @@ function create_default_users(){
     $user->is_admin = true;
     $user->employee_status = 'Active';
     $user->user_hash = User::getPasswordHash($setup_site_admin_password);
-    $user->email = '';
-    $user->picture = UserDemoData::_copy_user_image($user->id);
     $user->save();
     //Bug#53793: Keep default current user in the global variable in order to store 'created_by' info as default user
     //           while installation is proceed.

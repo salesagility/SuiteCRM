@@ -37,67 +37,91 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+namespace SuiteCRM\Robo\Plugin\Commands;
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+use SuiteCRM\Utility\OperatingSystem;
+use SuiteCRM\Robo\Traits\RoboTrait;
+use Robo\Task\Base\loadTasks;
+use SuiteCRM\Utility\Paths;
+use Symfony\Component\Yaml\Yaml;
 
-class OAuth2ClientsViewEdit extends ViewEdit
+class CodeCoverageCommands extends \Robo\Tasks
 {
-    /**
-     * @var OAuth2Clients $bean
-     */
-    public $bean;
+    use loadTasks;
+    use RoboTrait;
 
     /**
-     * @var string $formName
+     * Runs code coverage for travis ci
+     * @throws RuntimeException
      */
-    public $formName;
-
-    /**
-     * @see SugarView::preDisplay()
-     */
-    public function getMetaDataFile()
+    public function codeCoverage()
     {
-        $this->setViewType();
-        return parent::getMetaDataFile();
+        $this->say('Code Coverage');
+
+        // Get environment
+        if ($this->isEnvironmentTravisCI()) {
+            $range = $this->getCommitRangeForTravisCi();
+        } else {
+            throw new \RuntimeException('unable to detect continuous integration environment');
+        }
+
+        $this->disableStateChecker();
+        $this->generateCodeCoverageFile();
+
+        $this->say('Code Coverage Completed');
     }
 
     /**
-     *
+     * @return bool
      */
-    private function setViewType()
+    private function isEnvironmentTravisCI()
     {
-        switch ($this->bean->allowed_grant_type) {
-            case 'password':
-                $this->type = 'editpassword';
-                $this->formName = 'EditPassword';
-                break;
-            case 'client_credentials':
-                $this->type = 'editcredentials';
-                $this->formName = 'EditCredentials';
-                break;
-        }
-        if (!empty($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
-                case 'EditViewPassword':
-                    $this->type = 'editpassword';
-                    $this->formName = 'EditPassword';
-                    break;
-                case 'EditViewCredentials':
-                    $this->type = 'editcredentials';
-                    $this->formName = 'EditCredentials';
-                    break;
-            }
-        }
+        return !empty(getenv('TRAVIS'));
     }
 
     /**
-     * @inheritdoc
+     * @return array|false|string git commit range from travis ci
+     * eg 3b762531a80e768c2b303f4cce0189386a9f71d4...921bd12b282b0a984a83cc3d7e2a43bc21f2694f
      */
-    public function display()
+    private function getCommitRangeForTravisCi()
     {
-        $this->ev->formName = $this->formName;
-        parent::display();
+        return getenv('TRAVIS_COMMIT_RANGE');
+    }
+
+    /**
+     * Run code coverage command
+     */
+    private function generateCodeCoverageFile()
+    {
+        $this->_exec($this->getCodeCoverageCommand());
+    }
+
+    /**
+     * Disables the state checker
+     */
+    private function disableStateChecker()
+    {
+        global $sugar_config;
+        require_once 'include/utils/file_utils.php';
+
+        $sugar_config['state_checker']['test_state_check_mode'] = 0;
+
+        return write_array_to_file(
+            'sugar_config',
+            $sugar_config,
+            'config_override.php'
+        );
+    }
+
+    private function getCodeCoverageCommand()
+    {
+        $paths = new Paths();
+        $os = new OperatingSystem();
+        $projectPath = $os->toOsPath($paths->getProjectPath());
+        $command = $projectPath
+            . DIRECTORY_SEPARATOR
+            . $os->toOsPath('vendor/bin/codecept')
+            . ' run unit --coverage-xml';
+        return $command;
     }
 }

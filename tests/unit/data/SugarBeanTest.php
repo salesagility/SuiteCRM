@@ -708,37 +708,37 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null, null, null, null);
+        SugarBean::createRelationshipMeta(null, null, null, array(), null);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null, null, null, 'Contacts');
+        SugarBean::createRelationshipMeta(null, null,null, array(), 'Contacts');
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null, null, null, 'Contacts', true);
+        SugarBean::createRelationshipMeta(null, null, null, array(), 'Contacts', true);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts');
+        SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', $this->db, null, null, 'Contacts');
+        SugarBean::createRelationshipMeta('User', $this->db, null, array(), 'Contacts');
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('Nonexists1', $this->db, null, null, 'Nonexists2');
+        SugarBean::createRelationshipMeta('Nonexists1', $this->db, null, array(), 'Nonexists2');
         self::assertCount(1, $GLOBALS['log']->calls['debug']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts');
+        SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
         
     }
