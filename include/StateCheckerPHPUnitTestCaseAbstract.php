@@ -56,12 +56,41 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
 {
     use StateCheckerTrait;
     
+    protected static $tableContents = [];
+    
     /**
      * Collect state information and storing a hash
      */
     public function setUp()
     {
         echo "\t" . get_class($this) . '::' , $this->getName(false) . "\n";
+        
+        
+        
+        // TODO : debug only: needs to remove..........
+        
+        $table = 'roles_users';
+        
+        $db = \DBManagerFactory::getInstance();
+        $res = $db->query("SELECT * FROM $table");
+        $rows = [];
+        while($row = $res->fetch_assoc()) {
+            $rows[] = $row; 
+        }
+        
+        if (empty(self::$tableContents)) {
+            self::$tableContents = $rows;
+        } else {
+            $serTbl = serialize(self::$tableContents);
+            $serCur = serialize($rows);
+            if ($serTbl !== $serCur) {
+                echo "[TBL:$table]\n$serTbl\n[CUR:$table]\n$serCur\n";
+                exit(1);
+            }
+        }
+        
+        // TODO: debug stuff end...........
+        
         
         $this->beforeStateCheck();
         parent::setUp();
