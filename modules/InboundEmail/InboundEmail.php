@@ -486,7 +486,7 @@ class InboundEmail extends SugarBean {
 	 */
 	function setCacheTimestamp($mbox) {
 		$key = $this->db->quote("{$this->id}_{$mbox}");
-		$ts = mktime();
+		$ts = time();
 		$tsOld = $this->getCacheTimestamp($mbox);
 
 		if($tsOld < 0) {
