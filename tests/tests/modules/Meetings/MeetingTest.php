@@ -75,7 +75,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testACLAccess()
@@ -104,7 +104,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testhasIntegratedMeeting()
@@ -121,7 +121,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
@@ -173,7 +173,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testget_summary_text()
@@ -195,7 +195,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
         
     }
 
@@ -254,7 +254,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testget_list_view_data()
@@ -311,7 +311,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testset_notification_body()
@@ -348,7 +348,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testcreate_notification_email()
@@ -375,7 +375,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testsend_assignment_notifications()
@@ -408,7 +408,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testget_meeting_users()
@@ -427,7 +427,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testget_invite_meetings()
@@ -447,7 +447,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testget_notification_recipients()
@@ -472,7 +472,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testbean_implements()
@@ -492,7 +492,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testlistviewACLHelper()
@@ -512,7 +512,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testsave_relationship_changes()
@@ -536,7 +536,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     /**
@@ -574,7 +574,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testgetDefaultStatus()
@@ -592,7 +592,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testgetMeetingsExternalApiDropDown()
@@ -610,7 +610,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
         
     }
 
@@ -630,7 +630,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
         
     }
 }

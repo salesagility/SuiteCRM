@@ -71,7 +71,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testsaveAndOthers()

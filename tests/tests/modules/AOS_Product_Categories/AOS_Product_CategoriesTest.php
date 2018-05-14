@@ -61,7 +61,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 
     public function testsave()
@@ -91,6 +91,6 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         
         // clean up
         
-        $this->restoreStateAll($state);($state);
+        $this->restoreStateAll($state);
     }
 }

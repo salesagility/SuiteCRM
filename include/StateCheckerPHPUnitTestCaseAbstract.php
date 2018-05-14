@@ -56,8 +56,6 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
 {
     use StateCheckerTrait;
     
-    protected static $configTableContents = [];
-    
     /**
      * Collect state information and storing a hash
      */
