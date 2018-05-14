@@ -81,21 +81,10 @@
                   $elem = $(elem);
                   var ln = $elem.attr('id').substr(17);
                   var id = $elem.val();
-                  _form.append('<input type="hidden" name="parameter_id[]" value="' + id + '">');
-                  var operator = $("#aor_conditions_operator" + ln).val();
-                  _form.append('<input type="hidden" name="parameter_operator[]" value="' + operator + '">');
-                  var fieldType = $('#aor_conditions_value_type' + ln).val();
-                  _form.append('<input type="hidden" name="parameter_type[]" value="' + fieldType + '">');
-                  var fieldInput = $('#aor_conditions_value' + ln).val();
-                  _form.append('<input type="hidden" name="parameter_value[]" value="' + fieldInput + '">');
-		
-		              if($("input[name='aor_conditions_value"+ln).attr('type') === 'radio'){
-                      var fieldInput = $("input[name='aor_conditions_value" + ln + "']:checked").val();
-                  }
-                       f1(ln, _form);
+                  appendHiddenFields(_form, ln, id);
+                  updateTimeDateFields(fieldInput, ln);
                   // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
-                f2(ln, _form);
-
+                  updateHiddenReportFields(ln, _form);
                 });
                 _form.submit();
               });
