@@ -1058,6 +1058,11 @@ class AOR_Report extends Basic
             ++$i;
         }
 
+        // Remove last delimiter of the line
+        if ($field->display) {
+            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
+        }
+            
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
 
@@ -1075,6 +1080,8 @@ class AOR_Report extends Basic
                     $csv .= $delimiter;
                 }
             }
+            // Remove last delimiter of the line
+            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
         }
 
         $csv = $GLOBALS['locale']->translateCharset($csv, 'UTF-8', $GLOBALS['locale']->getExportCharset());

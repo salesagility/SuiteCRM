@@ -40,6 +40,7 @@
 namespace SuiteCRM\Robo\Plugin\Commands;
 
 use SuiteCRM\Utility\OperatingSystem;
+use SuiteCRM\Utility\Paths;
 
 class TestEnvironmentCommands extends \Robo\Tasks
 {
@@ -63,27 +64,28 @@ class TestEnvironmentCommands extends \Robo\Tasks
             'instance_client_id' => '',
             'instance_client_secret' => '',
         ]
-    ) {
+    )
+    {
         $this->say('Configure Test Environment');
 
         // Database
-        $default_db_driver = strtoupper($this->chooseConfigOrDefault('dbconfig.db_type','MYSQL'));
+        $default_db_driver = strtoupper($this->chooseConfigOrDefault('dbconfig.db_type', 'MYSQL'));
         $this->askDefaultOptionWhenEmpty('Database Driver:', $default_db_driver, $opts['database_driver']);
 
-        $default_db_host = $this->chooseConfigOrDefault('dbconfig.db_host_name','localhost');
-        $this->askDefaultOptionWhenEmpty('Database Host:',$default_db_host, $opts['database_host']);
+        $default_db_host = $this->chooseConfigOrDefault('dbconfig.db_host_name', 'localhost');
+        $this->askDefaultOptionWhenEmpty('Database Host:', $default_db_host, $opts['database_host']);
 
-        $default_db_user = $this->chooseConfigOrDefault('dbconfig.db_user_name','suitecrm_tests');
+        $default_db_user = $this->chooseConfigOrDefault('dbconfig.db_user_name', 'suitecrm_tests');
         $this->askDefaultOptionWhenEmpty('Database Username:', $default_db_user, $opts['database_user']);
 
-        $default_db_password = $this->chooseConfigOrDefault('dbconfig.db_password','suitecrm_tests');
+        $default_db_password = $this->chooseConfigOrDefault('dbconfig.db_password', 'suitecrm_tests');
         $this->askDefaultOptionWhenEmpty('Database User password:', $default_db_password, $opts['database_password']);
 
-        $default_db_name = $this->chooseConfigOrDefault('dbconfig.db_name','suitecrm_tests');
+        $default_db_name = $this->chooseConfigOrDefault('dbconfig.db_name', 'suitecrm_tests');
         $this->askDefaultOptionWhenEmpty('Database Name:', $default_db_name, $opts['database_name']);
 
         // SuiteCRM Instance
-        $default_instance_url = $this->chooseConfigOrDefault('site_url','http://localhost');
+        $default_instance_url = $this->chooseConfigOrDefault('site_url', 'http://localhost');
         $this->askDefaultOptionWhenEmpty('Instance URL:', $default_instance_url, $opts['instance_url']);
         $this->askDefaultOptionWhenEmpty('Instance Admin Username:', 'admin', $opts['instance_admin_user']);
         $this->askDefaultOptionWhenEmpty('Instance Admin Password:', 'admin1', $opts['instance_admin_password']);
@@ -116,6 +118,79 @@ class TestEnvironmentCommands extends \Robo\Tasks
     }
 
     /**
+     * Download and run the chrome web driver
+     * @param array $opts
+     */
+    public function driverRunChrome($opts = ['url_base' => '/wd/hub'])
+    {
+        $this->say('Driver Run Chrome');
+        $os = new OperatingSystem();
+        $paths = new Paths();
+        $url = $this->getChromeWebDriverUrl();
+        $basePath = $os->toOsPath($paths->getProjectPath().'/build/tmp/');
+
+        if(!file_exists($basePath)) {
+            if (mkdir($basePath, 0777, true) === false) {
+                throw  new \RuntimeException('Unable to create file structure ' . $basePath);
+            }
+        }
+
+        $zipPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver.zip';
+        $unzippedPath = $basePath . DIRECTORY_SEPARATOR . 'webdriver';
+
+        if (!file_exists($unzippedPath)){
+            $this->download($url, $zipPath);
+            $this->unzip($zipPath, $unzippedPath);
+        }
+
+        $this->runChromeWebDriver($unzippedPath, $opts['url_base']);
+
+        $this->say('Driver Run Chrome Completed');
+    }
+
+    /**
+     * Configures local environment to look like travis
+     * @param array $opts
+     */
+    public function fakeTravis(
+        array $opts = [
+            'travis' => true,
+            'travis_commit_range' => '',
+            'travis_pull_request' => true,
+        ]
+    ) {
+        $this->say('Fake Travis Environment');
+
+        $this->askDefaultOptionWhenEmpty('Is Travis Environment:', true, $opts['travis']);
+        $this->askDefaultOptionWhenEmpty('Travis commit range:', 'master..develop', $opts['travis_commit_range']);
+        $opts['travis_commit_range'] = '\''. $opts['travis_commit_range'] .'\'';
+        $this->askDefaultOptionWhenEmpty('Is Pull request:', true, $opts['travis_pull_request']);
+
+        $os = new OperatingSystem();
+        if ($os->isOsWindows()) {
+            $this->say('Windows detected');
+            $this->installWindowsEnvironmentVariables($opts);
+        } elseif ($os->isOsLinux()) {
+            $this->say('Linux detected');
+            $this->installUnixEnvironmentVariables($opts);
+        } elseif ($os->isOsMacOsX()) {
+            $this->say('Mac OS X detected');
+            $this->installUnixEnvironmentVariables($opts);
+        } elseif ($os->isOsBSD()) {
+            $this->say('BSD detected');
+            $this->installUnixEnvironmentVariables($opts);
+        } elseif ($os->isOsSolaris()) {
+            $this->say('Solaris detected');
+            $this->installUnixEnvironmentVariables($opts);
+        } elseif ($os->isOsUnknown()) {
+            throw new \DomainException('Unknown Operating system');
+        } else {
+            throw new \DomainException('Unable to detect Operating system');
+        }
+
+        $this->say('Fake Travis Environment Complete');
+    }
+    /**
      * Install unix environment variables for the testing framework
      * @param array $opts optional command line arguments
      */
@@ -145,10 +220,10 @@ class TestEnvironmentCommands extends \Robo\Tasks
             // find option key
             $optionKeyReplaced = str_ireplace('-', '_', $optionKey);
 
-            $bashAliasesLines = array_map(function($line) use ($self, $optionKeyReplaced) {
+            $bashAliasesLines = array_map(function ($line) use ($self, $optionKeyReplaced) {
                 // clear line
                 if (stristr($line, $optionKeyReplaced) !== false) {
-                    $self->say('Removed: '.$optionKeyReplaced);
+                    $self->say('Removed: ' . $optionKeyReplaced);
                     return '';
                 } else {
                     return $line;
@@ -169,7 +244,7 @@ class TestEnvironmentCommands extends \Robo\Tasks
         $newBashAliasesFile .= PHP_EOL . $environment_string_unix;
         $this->writeln($newBashAliasesFile);
 
-        if ($this->confirm('May I overwrite '.$bashAliasesPath .'?')) {
+        if ($this->confirm('May I overwrite ' . $bashAliasesPath . '?')) {
 
             // write current file to backup file
             $this->say('Saving existing copy of .bash_aliases to ' . $bashAliasesPath . '~');
@@ -241,5 +316,116 @@ class TestEnvironmentCommands extends \Robo\Tasks
     private function toUnixEnvironmentVariables(array $opts)
     {
         return $this->toEnvironmentVariables($opts, 'export %s=%s;' . PHP_EOL);
+    }
+
+
+    /**
+     * @param string $version
+     * @return string url
+     */
+    private function getChromeWebDriverUrl($version = '2.38')
+    {
+        $os = new OperatingSystem();
+        if ($os->isOsWindows()) {
+            $this->say('Windows detected');
+            return 'https://chromedriver.storage.googleapis.com/' . $version . '/chromedriver_win32.zip';
+        } elseif ($os->isOsLinux()) {
+            $this->say('Linux detected');
+            return 'https://chromedriver.storage.googleapis.com/' . $version . '/chromedriver_linux64.zip';
+        } elseif ($os->isOsMacOsX()) {
+            $this->say('Mac OS X detected');
+            return 'https://chromedriver.storage.googleapis.com/' . $version . '/chromedriver_mac64.zip';
+        } elseif ($os->isOsBSD()) {
+            $this->say('BSD detected');
+            throw new \DomainException('Unsupported Operating system');
+        } elseif ($os->isOsSolaris()) {
+            $this->say('Solaris detected');
+            throw new \DomainException('Unsupported Operating system');
+        } elseif ($os->isOsUnknown()) {
+            throw new \DomainException('Unknown Operating system');
+        } else {
+            throw new \DomainException('Unable to detect Operating system');
+        }
+    }
+
+    /**
+     * @param $url to download
+     * @param $toPath path to download file to (save as)
+     */
+    private function download($url, $toPath)
+    {
+        $contents = file_get_contents($url, false);
+        if($contents === false) {
+            throw new \RuntimeException('Unable to download ' . $url);
+        }
+        if(file_put_contents($toPath, $contents) === false) {
+            throw new \RuntimeException('Unable to write to ' . $toPath);
+        }
+    }
+
+    /**
+     * @param $zipPath
+     * @param $unzippedPath
+     * @return bool
+     */
+    private function unzip($zipPath, $unzippedPath)
+    {
+        $zip = new \ZipArchive();
+        $res = $zip->open($zipPath);
+        if ($res === true) {
+            $zip->extractTo($unzippedPath);
+            $zip->close();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param $basePath directory where driver is kept
+     * @param string $urlBase the url chrome should respond to
+     */
+    private function runChromeWebDriver($basePath, $urlBase = '/wd/hub')
+    {
+        $os = new OperatingSystem();
+        if ($os->isOsWindows()) {
+            $this->say('Windows detected');
+            $binPath = $basePath
+                . DIRECTORY_SEPARATOR
+                . 'chromedriver.exe';
+        } elseif ($os->isOsLinux()) {
+            $this->say('Linux detected');
+            $binPath = $basePath
+                . DIRECTORY_SEPARATOR
+                . 'chromedriver';
+            chmod($binPath, 100);
+        } elseif ($os->isOsMacOsX()) {
+            $binPath = $basePath
+                . DIRECTORY_SEPARATOR
+                . 'chromedriver';
+            chmod($binPath, 100);
+        } elseif ($os->isOsBSD()) {
+            $this->say('BSD detected');
+            throw new \DomainException('Unsupported Operating system');
+        } elseif ($os->isOsSolaris()) {
+            $this->say('Solaris detected');
+            throw new \DomainException('Unsupported Operating system');
+        } elseif ($os->isOsUnknown()) {
+            throw new \DomainException('Unknown Operating system');
+        } else {
+            throw new \DomainException('Unable to detect Operating system');
+        }
+
+        if (!file_exists($binPath)) {
+            throw new \RuntimeException('Unable to find chrome driver ' . $binPath);
+        }
+
+        $this->say('Hint: open terminal and run `'.$os->toOsPath('./vendor/bin/codecept').'run [test suite] --env chrome-driver`');
+        $this->say('Starting Chrome Driver');
+        $this->_exec(
+            $binPath
+            . ' --url-base='
+            . $urlBase
+        );
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -39,65 +40,39 @@
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
+    die('Not A Valid Entry Point');
 }
 
-class OAuth2ClientsViewEdit extends ViewEdit
+require_once('include/Popups/Popup_picker.php');
+
+/**
+ * Class DocumentPopupPicker
+ *
+ * DocumentPopupPicker class is used to filter
+ * documents on compose email pop-up.
+ *
+ * @author Marc Sanchez <@sanchezfauste>
+ */
+class DocumentPopupPicker extends Popup_Picker
 {
     /**
-     * @var OAuth2Clients $bean
-     */
-    public $bean;
-
-    /**
-     * @var string $formName
-     */
-    public $formName;
-
-    /**
-     * @see SugarView::preDisplay()
-     */
-    public function getMetaDataFile()
-    {
-        $this->setViewType();
-        return parent::getMetaDataFile();
-    }
-
-    /**
+     * Return WHERE clause used to filter
+     * documents on compose email pop-up.
      *
+     * @return string WHERE clause
      */
-    private function setViewType()
+    public function _get_where_clause()
     {
-        switch ($this->bean->allowed_grant_type) {
-            case 'password':
-                $this->type = 'editpassword';
-                $this->formName = 'EditPassword';
-                break;
-            case 'client_credentials':
-                $this->type = 'editcredentials';
-                $this->formName = 'EditCredentials';
-                break;
+        $where = '';
+        if(isset($_REQUEST['query'])) {
+            $where_clauses = array();
+            append_where_clause($where_clauses, "document_name", "documents.document_name");
+            append_where_clause($where_clauses, "category_id", "documents.category_id");
+            append_where_clause($where_clauses, "subcategory_id", "documents.subcategory_id");
+            append_where_clause($where_clauses, "template_type", "documents.template_type");
+            append_where_clause($where_clauses, "is_template", "documents.is_template");
+            $where = generate_where_statement($where_clauses);
         }
-        if (!empty($_REQUEST['action'])) {
-            switch ($_REQUEST['action']) {
-                case 'EditViewPassword':
-                    $this->type = 'editpassword';
-                    $this->formName = 'EditPassword';
-                    break;
-                case 'EditViewCredentials':
-                    $this->type = 'editcredentials';
-                    $this->formName = 'EditCredentials';
-                    break;
-            }
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function display()
-    {
-        $this->ev->formName = $this->formName;
-        parent::display();
+        return $where;
     }
 }
