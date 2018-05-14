@@ -847,6 +847,7 @@ class SugarEmailAddress extends SugarBean
         $post_from_email_address_widget = (isset($_REQUEST[$module . '_email_widget_id']));
         $primaryValue = $primary;
         $widgetCount = 0;
+        $widget_id = '';
         $hasEmailValue = false;
         $email_ids = array();
 
@@ -865,7 +866,6 @@ class SugarEmailAddress extends SugarBean
             if (empty($widget_id)) {
                 $GLOBALS['log']->debug('Widget not found, so it should be an update and not a create');
             }
-
 
             //Iterate over the widgets for this module, in case there are multiple email widgets for this module
             while (isset($_REQUEST[$module . $widget_id . 'emailAddress' . $widgetCount])) {
@@ -998,8 +998,8 @@ class SugarEmailAddress extends SugarBean
                                     $email_id = (array_key_exists($k, $email_ids)) ? $email_ids[$k] : null;
                                     $primary = ($k == $primaryValue) ? true : false;
                                     $replyTo = ($k == $replyToField) ? true : false;
-                                    $invalid = (in_array($k, $invalidValues)) ? true : false;
-                                    $optOut = (in_array($k, $optOutValues)) ? true : false;
+                                    $invalid = (in_array($k, (array)$invalidValues)) ? true : false;
+                                    $optOut = (in_array($k, (array)$optOutValues)) ? true : false;
                                     $optIn = (in_array($k, $optInValues)) ? true : false;
                                     $this->addAddress(
                                         trim($new_addrs[$k]),

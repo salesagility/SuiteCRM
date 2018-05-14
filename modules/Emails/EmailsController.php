@@ -144,7 +144,7 @@ class EmailsController extends SugarController
             $toAddressIds = explode(',', rtrim($_REQUEST['ids'], ','));
             foreach ($toAddressIds as $id){
                 $destinataryBean = BeanFactory::getBean($_REQUEST['targetModule'], $id);
-                if($destinataryBean && $destinataryBean->email1){
+                if($destinataryBean){
                     $idLine = '<input type="hidden" class="email-compose-view-to-list" ';
                     $idLine .= 'data-record-module="' . $_REQUEST['targetModule'] . '" ';
                     $idLine .= 'data-record-id="' . $id . '" ';
@@ -542,7 +542,7 @@ class EmailsController extends SugarController
      */
     public function action_DisplayDetailView()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $emails = BeanFactory::getBean("Emails");
         
         $inboundEmailRecordIdQuoted = $db->quote($_REQUEST['inbound_email_record']);
@@ -562,7 +562,7 @@ class EmailsController extends SugarController
      */
     public function action_ImportAndShowDetailView()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         if (isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = new InboundEmail();
             $inboundEmail->retrieve($db->quote($_REQUEST['inbound_email_record']), true, true);
@@ -601,7 +601,7 @@ class EmailsController extends SugarController
 
     public function action_ImportFromListView()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         if (isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
@@ -723,7 +723,7 @@ class EmailsController extends SugarController
             throw new InvalidArgumentException('EmailController::composeBean $mode argument is COMPOSE_BEAN_MODE_UNDEFINED');
         }
 
-        global $db;
+        $db = DBManagerFactory::getInstance();
         global $mod_strings;
 
                 

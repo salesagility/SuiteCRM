@@ -55,7 +55,7 @@ require_once('include/OutboundEmail/OutboundEmail.php');
 
 class Administration extends SugarBean
 {
-    public $settings;
+    public $settings = array();
     public $table_name = "config";
     public $object_name = "Administration";
     public $new_schema = true;
@@ -89,18 +89,25 @@ class Administration extends SugarBean
         $smtp_error = false;
         $this->retrieveSettings();
 
+
         //If sendmail has been configured by setting the config variable ignore this warning
         $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
 
-        if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
-            if ($this->settings['notify_on']) {
-                $smtp_error = true;
+            // remove php notice from installer
+            if (!array_key_exists('mail_smtpserver', $this->settings)) {
+                $this->settings['mail_smtpserver'] = '';
             }
-        }
 
-        if ($displayWarning && $smtp_error) {
-            displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
-        }
+            if (trim($this->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
+                if (isset($this->settings['notify_on']) && $this->settings['notify_on']) {
+                    $smtp_error = true;
+                }
+            }
+
+            if ($displayWarning && $smtp_error) {
+                displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
+            }
+
 
         return $smtp_error;
     }
@@ -164,6 +171,11 @@ class Administration extends SugarBean
             $oe->getSystemMailerSettings();
 
             foreach ($oe->field_defs as $def) {
+                // fixes installer php notice
+                if (!array_key_exists($def, $this->settings)) {
+                    continue;
+                }
+
                 if (strpos($def, "mail_") !== false) {
                     $this->settings[$def] = $oe->$def;
                 }

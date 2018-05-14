@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
- * Description of ErrorMessageException
+ * ErrorMessageException
  *
  * @author gyula
  */

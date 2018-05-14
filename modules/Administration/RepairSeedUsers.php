@@ -52,11 +52,11 @@ if(is_admin($current_user)){
     		}
     	}
     	$query = "UPDATE users SET status = '$status' WHERE id LIKE 'seed%'";
-   		$GLOBALS['db']->query($query);
+   		DBManagerFactory::getInstance()->query($query);
     }
     	$query = "SELECT status FROM users WHERE id LIKE 'seed%'";
-    	$result = $GLOBALS['db']->query($query);
-		$row = $GLOBALS['db']->fetchByAssoc($result);
+    	$result = DBManagerFactory::getInstance()->query($query);
+		$row = DBManagerFactory::getInstance()->fetchByAssoc($result);
 		if(!empty($row['status'])){
 			$activate = 'false';
 			if($row['status'] == 'Inactive'){

@@ -1493,18 +1493,18 @@ function handle_set_relationship($set_relationship_value, $session = '')
 
                 // Check if this relationship already exists
                 $query = "SELECT count(*) AS count FROM product_bundle_quote WHERE quote_id = '{$module1_id}' AND bundle_id = '{$module2_id}' AND deleted = '0'";
-                $result = $GLOBALS['db']->query($query, true,
+                $result = DBManagerFactory::getInstance()->query($query, true,
                     "Error checking for previously existing relationship between quote and product_bundle");
-                $row = $GLOBALS['db']->fetchByAssoc($result);
+                $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
                 if (isset($row['count']) && $row['count'] > 0) {
                     return $error->get_soap_array();
                 }
 
                 $query = "SELECT MAX(bundle_index)+1 AS idx FROM product_bundle_quote WHERE quote_id = '{$module1_id}' AND deleted='0'";
-                $result = $GLOBALS['db']->query($query, true, "Error getting bundle_index");
+                $result = DBManagerFactory::getInstance()->query($query, true, "Error getting bundle_index");
                 $GLOBALS['log']->debug("*********** Getting max bundle_index");
                 $GLOBALS['log']->debug($query);
-                $row = $GLOBALS['db']->fetchByAssoc($result);
+                $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
 
                 $idx = 0;
                 if ($row) {
@@ -1524,18 +1524,18 @@ function handle_set_relationship($set_relationship_value, $session = '')
 
                 // Check if this relationship already exists
                 $query = "SELECT count(*) AS count FROM product_bundle_product WHERE bundle_id = '{$module1_id}' AND product_id = '{$module2_id}' AND deleted = '0'";
-                $result = $GLOBALS['db']->query($query, true,
+                $result = DBManagerFactory::getInstance()->query($query, true,
                     "Error checking for previously existing relationship between quote and product_bundle");
-                $row = $GLOBALS['db']->fetchByAssoc($result);
+                $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
                 if (isset($row['count']) && $row['count'] > 0) {
                     return $error->get_soap_array();
                 }
 
                 $query = "SELECT MAX(product_index)+1 AS idx FROM product_bundle_product WHERE bundle_id='{$module1_id}'";
-                $result = $GLOBALS['db']->query($query, true, "Error getting bundle_index");
+                $result = DBManagerFactory::getInstance()->query($query, true, "Error getting bundle_index");
                 $GLOBALS['log']->debug("*********** Getting max bundle_index");
                 $GLOBALS['log']->debug($query);
-                $row = $GLOBALS['db']->fetchByAssoc($result);
+                $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
 
                 $idx = 0;
                 if ($row) {
@@ -1806,9 +1806,9 @@ function search_by_module($user_name, $password, $search_string, $modules, $offs
                         if ($key != 'EmailAddresses') {
                             foreach ($search_terms as $term) {
                                 if (!strpos($where_clause, 'number')) {
-                                    $where .= string_format($where_clause, array($GLOBALS['db']->quote($term)));
+                                    $where .= string_format($where_clause, array(DBManagerFactory::getInstance()->quote($term)));
                                 } elseif (is_numeric($term)) {
-                                    $where .= string_format($where_clause, array($GLOBALS['db']->quote($term)));
+                                    $where .= string_format($where_clause, array(DBManagerFactory::getInstance()->quote($term)));
                                 } else {
                                     $addQuery = false;
                                 }
@@ -1820,7 +1820,7 @@ function search_by_module($user_name, $password, $search_string, $modules, $offs
                         } else {
                             $where .= '(';
                             foreach ($search_terms as $term) {
-                                $where .= "ea.email_address LIKE '" . $GLOBALS['db']->quote($term) . "'";
+                                $where .= "ea.email_address LIKE '" . DBManagerFactory::getInstance()->quote($term) . "'";
                                 if ($count < $termCount) {
                                     $where .= " OR ";
                                 }
@@ -2333,8 +2333,8 @@ function get_entries_count($session, $module_name, $query, $deleted)
         $sql .= ' WHERE ' . implode(' AND ', $where_clauses);
     }
 
-    $res = $GLOBALS['db']->query($sql);
-    $row = $GLOBALS['db']->fetchByAssoc($res);
+    $res = DBManagerFactory::getInstance()->query($sql);
+    $row = DBManagerFactory::getInstance()->fetchByAssoc($res);
 
     return array(
         'result_count' => $row['result_count'],

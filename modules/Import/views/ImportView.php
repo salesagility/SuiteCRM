@@ -128,7 +128,11 @@ class ImportView extends SugarView
             'script'        => $script);
 
         if($encode){
-            array_walk($out, create_function('&$val', '$val = htmlspecialchars($val,ENT_NOQUOTES);'));
+            $function = function (&$val) {
+                $val = htmlspecialchars($val,ENT_NOQUOTES);
+            };
+
+            array_walk($out, $function);
         }
         echo json_encode($out);
     }

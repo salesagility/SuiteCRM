@@ -155,7 +155,7 @@ class UnifiedSearchAdvanced {
 		}
 
 		$sugar_smarty->assign('SHOWGSDIV', $showDiv);
-		$sugar_smarty->debugging = true;
+		$sugar_smarty->debugging = false;
 		return $sugar_smarty->fetch($tpl);
 	}
 
@@ -312,7 +312,7 @@ class UnifiedSearchAdvanced {
                 foreach($innerJoins as $field=>$def) {
                     if (isset($def['db_field'])) {
                       foreach($def['db_field'] as $dbfield)
-                          $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
+                          $where_clauses[] = $dbfield . " LIKE '" . DBManagerFactory::getInstance()->quote($this->query_string) . "%'";
                           $params['custom_select'] .= ", $dbfield";
                           $params['distinct'] = true;
                           //$filterFields[$dbfield] = $dbfield;
