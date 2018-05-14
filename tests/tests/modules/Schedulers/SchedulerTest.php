@@ -4,9 +4,37 @@ require_once 'include/SugarQueue/SugarJobQueue.php';
 require_once 'install/install_utils.php';
 
 class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
-{
+{    
+    protected function storeStateAll() 
+    {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('job_queue');
+        $state->pushTable('schedulers');
+        $state->pushGlobals();
+        
+        return $state;
+    }
+    
+    protected function restoreStateAll($state) 
+    {
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('schedulers');
+        $state->popTable('job_queue');
+        
+    }
+    
     public function test__construct()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $scheduler = new Scheduler();
@@ -20,16 +48,36 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals(true, 'new_schema', $scheduler);
         $this->assertAttributeEquals(true, 'process_save_dates', $scheduler);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testinitUser()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $user = Scheduler::initUser();
         $this->assertInstanceOf('User', $user);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testfireQualified()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         $scheduler = new Scheduler();
 
@@ -44,24 +92,38 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $scheduler->fireQualified();
         $this->assertEquals(true, $result);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testcreateJob()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
         $result = $scheduler->createJob();
 
         $this->assertInstanceOf('SchedulersJob', $result);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testcheckPendingJobs()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('job_queue');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $scheduler = new Scheduler();
 
@@ -75,11 +137,18 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('job_queue');
+        $this->restoreStateAll($state);
+        
     }
 
     public function testderiveDBDateTimes()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         $scheduler->id = 1;
@@ -98,10 +167,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $scheduler->job_interval = '0::*::3::*::*';
         $result = $scheduler->deriveDBDateTimes($scheduler);
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testhandleIntervalType()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //execute the method with different job intervals
@@ -111,10 +190,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('30th', $scheduler->handleIntervalType('2', '0', '2', '2'));
         $this->assertEquals('December', $scheduler->handleIntervalType('3', '0', '2', '2'));
         $this->assertEquals('', $scheduler->handleIntervalType('4', '0', '2', '2'));
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testsetIntervalHumanReadable()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //execute the method with different job intervals
@@ -128,10 +217,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $scheduler->parseInterval();
         $scheduler->setIntervalHumanReadable();
         $this->assertEquals('03:00; 3rd; March', $scheduler->intervalHumanReadable);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testsetStandardArraysAttributes()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //execute the method and verify related attributes
@@ -143,10 +242,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(array('', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'), $scheduler->monthsLabel);
         $this->assertEquals(array('*', '/', '-', ','), $scheduler->metricsVar);
         $this->assertEquals(array(' every ', '', ' thru ', ' and '), $scheduler->metricsVal);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testparseInterval()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         $scheduler->job_interval = '0::3::3::*::*';
@@ -162,10 +271,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(is_array($scheduler->intervalParsed));
         $this->assertSame($expected, $scheduler->intervalParsed);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testcheckCurl()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -175,10 +294,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testdisplayCronInstructions()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //execute the method and capture the echo output 
@@ -190,10 +319,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
 
         $this->assertGreaterThanOrEqual(0, strlen($renderedContent));
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testrebuildDefaultSchedulers()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -203,10 +342,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testcreate_export_query()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //test with empty string params
@@ -218,10 +367,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = " SELECT  schedulers.*  , jt0.user_name created_by_name , jt0.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt1.user_name modified_by_name , jt1.created_by modified_by_name_owner  , 'Users' modified_by_name_mod FROM schedulers   LEFT JOIN  users jt0 ON jt0.id=schedulers.created_by AND jt0.deleted=0\n AND jt0.deleted=0  LEFT JOIN  users jt1 ON schedulers.modified_user_id=jt1.id AND jt1.deleted=0\n\n AND jt1.deleted=0 where (schedulers.name = \"\") AND schedulers.deleted=0";
         $actual = $scheduler->create_export_query('schedulers.id', 'schedulers.name = ""');
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testfill_in_additional_list_fields()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //execute the method and test if it works and does not throws an exception.
@@ -231,26 +390,45 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         } catch (Exception $e) {
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testfill_in_additional_detail_fields()
     {
-
         $this->markTestIncomplete('method has no implementation');
-        
-        $scheduler = new Scheduler();
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $scheduler->fill_in_additional_detail_fields();
-            $this->assertTrue(true);
-        } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-        }
+//        
+//        // save state
+//        
+//        $state = $this->storeStateAll();
+//        
+//        // test
+//        
+//        $scheduler = new Scheduler();
+//
+//        //execute the method and test if it works and does not throws an exception.
+//        try {
+//            $scheduler->fill_in_additional_detail_fields();
+//            $this->assertTrue(true);
+//        } catch (Exception $e) {
+//            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+//        }
+//        
+//        // clean up
+//        
+//        $this->restoreStateAll($state);
     }
 
     public function testget_list_view_data()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //preset required attributes
@@ -274,10 +452,20 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $scheduler->get_list_view_data();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testget_summary_text()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $scheduler = new Scheduler();
 
         //test without setting name
@@ -286,11 +474,25 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $scheduler->name = 'test';
         $this->assertEquals('test', $scheduler->get_summary_text());
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetJobsList()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $result = Scheduler::getJobsList();
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 }
