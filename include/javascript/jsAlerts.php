@@ -60,14 +60,14 @@ EOQ;
 		}
 	}
 
-    function addAlert($type, $name, $subtitle, $description, $countdown, $redirect = '')
+    function addAlert($type, $name, $subtitle, $description, $countdown, $redirect = '', $reminder_id = '')
     {
         if ($countdown < 0) {
             $countdown = 0;
         }
         $script = 'addAlert(' . json_encode($type) . ',' . json_encode($name) . ',' . json_encode($subtitle)
             . ',' . json_encode(str_replace(array("\r", "\n"), array('', '<br>'), $description))
-            . ',' . $countdown . ',' . json_encode($redirect) . ');' . "\n";
+            . ',' . $countdown . ',' . json_encode($redirect) . ',' . json_encode($reminder_id) . ');' . "\n";
         $this->script .= $script;
     }
 

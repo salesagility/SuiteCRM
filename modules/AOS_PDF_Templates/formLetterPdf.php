@@ -77,11 +77,13 @@ if(!$template){
 
 $file_name = str_replace(" ", "_", $template->name) . ".pdf";
 
-$pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+$format = $template->page_size . ($template->orientation === 'Landscape' ? '-L' : '');
+
+$pdf = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
 foreach ($recordIds as $recordId) {
     $bean->retrieve($recordId);
-    $pdf_history = new mPDF('en', 'A4', '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
+    $pdf_history = new mPDF('en', $format, '', 'DejaVuSansCondensed', $template->margin_left, $template->margin_right, $template->margin_top, $template->margin_bottom, $template->margin_header, $template->margin_footer);
 
     $object_arr = array();
     $object_arr[$bean->module_dir] = $bean->id;

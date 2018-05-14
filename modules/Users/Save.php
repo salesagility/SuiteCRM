@@ -500,6 +500,7 @@ if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "")
     $return_module = $_REQUEST['return_module'];
 else
     $return_module = "Users";
+
 if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "")
     $return_action = $_REQUEST['return_action'];
 else
@@ -513,4 +514,11 @@ $redirect = "index.php?action={$return_action}&module={$return_module}&record={$
 $redirect .= isset($_REQUEST['type']) ? "&type={$_REQUEST['type']}" : ''; // cn: bug 6897 - detect redirect to Email compose
 $redirect .= isset($_REQUEST['return_id']) ? "&return_id={$_REQUEST['return_id']}" : '';
 $redirect .= ($new_pwd != '') ? "&pwd_set=" . $new_pwd : '';
-header("Location: {$redirect}");
+
+
+if (array_key_exists('do_not_redirect', $_REQUEST) && $_REQUEST['do_not_redirect'] === true) {
+    // do nothing
+} else {
+    header("Location: {$redirect}");
+}
+
