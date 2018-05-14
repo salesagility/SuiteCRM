@@ -18,20 +18,20 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testloadUser()
     {
         $this->markTestIncomplete('session_destroy(): Trying to destroy uninitialized session');
-        //cannot test this method as it uses die which stops execution of php unit as well
-        
-        $SugarApplication = new SugarApplication();
-        $SugarApplication->controller = new SugarController();
-        
-        try {
-            $SugarApplication->loadUser();
-        } 
-        catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-        }
-        
-        $this->assertTrue(TRUE);
-        
+//        //cannot test this method as it uses die which stops execution of php unit as well
+//        
+//        $SugarApplication = new SugarApplication();
+//        $SugarApplication->controller = new SugarController();
+//        
+//        try {
+//            $SugarApplication->loadUser();
+//        } 
+//        catch (Exception $e) {
+//            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+//        }
+//        
+//        $this->assertTrue(TRUE);
+//        
     }
 
     public function testACLFilter()
@@ -255,33 +255,33 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function teststartSession()
     {
         $this->markTestIncomplete('session_start(): Cannot send session cookie - headers already sent');
-        $SugarApplication = new SugarApplication();
-        $SugarApplication->controller = new SugarController();
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $SugarApplication->startSession();
-        } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-        }
-
-        $this->assertTrue(true);
+//        $SugarApplication = new SugarApplication();
+//        $SugarApplication->controller = new SugarController();
+//
+//        //execute the method and test if it works and does not throws an exception.
+//        try {
+//            $SugarApplication->startSession();
+//        } catch (Exception $e) {
+//            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+//        }
+//
+//        $this->assertTrue(true);
     }
 
     public function testendSession()
     {
         $this->markTestIncomplete('session_destroy(): Trying to destroy uninitialized session');
-        $SugarApplication = new SugarApplication();
-        $SugarApplication->controller = new SugarController();
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $SugarApplication->endSession();
-        } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-        }
-
-        $this->assertTrue(true);
+//        $SugarApplication = new SugarApplication();
+//        $SugarApplication->controller = new SugarController();
+//
+//        //execute the method and test if it works and does not throws an exception.
+//        try {
+//            $SugarApplication->endSession();
+//        } catch (Exception $e) {
+//            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+//        }
+//
+//        $this->assertTrue(true);
     }
 
     public function testredirect()
@@ -310,11 +310,11 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testappendErrorMessage()
     {
         $this->markTestIncomplete('Undefined variable: _SESSION');
-        //execute the method and check that the method adds the message to user_error_message array.
-        //there should be one more array element after method execution.
-        $user_error_message_count = count($_SESSION['user_error_message']);
-        SugarApplication::appendErrorMessage('some error');
-        $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
+//        //execute the method and check that the method adds the message to user_error_message array.
+//        //there should be one more array element after method execution.
+//        $user_error_message_count = count($_SESSION['user_error_message']);
+//        SugarApplication::appendErrorMessage('some error');
+//        $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
     }
 
     public function testgetErrorMessages()

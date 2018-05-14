@@ -15,6 +15,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -45,6 +46,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -69,6 +71,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -92,6 +95,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -116,6 +120,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -127,6 +132,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -151,6 +157,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -197,6 +204,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -221,6 +229,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -236,6 +245,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -263,18 +273,6 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $meeting->create_export_query('meetings.id', 'users.user_name=""');
         $this->assertSame($expected, $actual);
         
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('inbound_email');
-        $state->popTable('vcals');
-        $state->popTable('meetings_users');
-        $state->popTable('meetings_leads');
-        $state->popTable('meetings_cstm');
-        $state->popTable('meetings_contacts');
-        $state->popTable('meetings');
-        $state->popTable('aod_indexevent');
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -290,6 +288,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -323,6 +322,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -348,6 +348,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -399,6 +400,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -423,6 +425,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -453,6 +456,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -477,6 +481,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -497,6 +502,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -521,6 +527,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -547,6 +554,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -571,6 +579,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -583,6 +592,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -607,6 +617,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -620,6 +631,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -644,6 +656,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -662,6 +675,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -686,6 +700,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -699,6 +714,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -723,6 +739,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -736,6 +753,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -760,6 +778,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -777,6 +796,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -804,6 +824,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -832,6 +853,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -856,6 +878,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -867,6 +890,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -891,6 +915,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -903,6 +928,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');
@@ -927,6 +953,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('meetings_users');
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         // test
@@ -941,6 +968,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
         $state->popTable('meetings_users');

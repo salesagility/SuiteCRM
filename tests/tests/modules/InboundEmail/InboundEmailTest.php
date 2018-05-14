@@ -3,13 +3,33 @@
 
 class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    
+    protected function storeStateAll() 
+    {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email');
+        $state->pushTable('aod_index');
+        $state->pushTable('folders');
+        $state->pushTable('folders_subscriptions');
+        $state->pushGlobals();
+        
+        return $state;
+    }
+    
+    protected function restoreStateAll($state) 
+    {
+        $state->popGlobals();
+        $state->popTable('folders_subscriptions');
+        $state->popTable('folders');
+        $state->popTable('aod_index');
+        $state->popTable('inbound_email');
+    }
+    
     public function testInboundEmail()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
         
@@ -45,19 +65,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);($state);
     }
 
     public function testsaveAndOthers()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -118,19 +136,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function getSingularRelatedId()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -148,19 +165,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function getCorrectMessageNoForPop3($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -174,19 +190,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function retrieve($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -199,19 +213,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function retrieveByGroupId($group_id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -225,19 +238,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function retrieveAllByGroupId($group_id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -251,19 +263,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function retrieveAllByGroupIdWithGroupAccounts($group_id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -277,19 +288,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function renameFolder($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -305,19 +315,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function search($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -331,19 +340,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function saveMailBoxFolders($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -359,21 +367,11 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function saveMailBoxValueOfInboundEmail($id)
     {
-        $this->markTestSkipped('saveMailBoxValueOfInboundEmail skipped - method looks suspect. Should likely be removed.');
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
-        
-        // test
-        
         $inboundEmail = new InboundEmail();
 
         $inboundEmail->email_user = 'TEST';
@@ -382,23 +380,19 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //retrieve it back and verify the updates
         $inboundEmail->retrieve($id);
-        $this->assertEquals('TEST', $inboundEmail->mailbox);
-        
-        // clean up
-        
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->assertEquals('mailbox1,mailbox2,mailbox3', $inboundEmail->mailbox);
     }
 
     public function mark_deleted($id)
     {
+        
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -409,19 +403,18 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function hardDelete($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -432,21 +425,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcustomGetMessageText()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('inbound_email');
-        $state->pushTable('aod_index');
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
 
         $inboundEmail = new InboundEmail();
 
@@ -455,21 +444,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
-        $state->popTable('aod_index');
-        $state->popTable('inbound_email');
+        $this->restoreStateAll($state);
     }
 
     public function testgetFormattedRawSource()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -484,19 +469,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testfilterMailBoxFromRaw()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -516,19 +499,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testconvertToUtf8()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
         $result = $inboundEmail->convertToUtf8('some text with non UTF8 chars');
@@ -536,19 +517,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetFormattedHeaders()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -563,19 +542,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsetAndgetCacheTimestamp()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -590,19 +567,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsetCacheValue()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -634,19 +609,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetCacheValueForUIDs()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -667,19 +640,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetCacheValue()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -700,19 +671,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testvalidCacheExists()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -727,19 +696,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdisplayFetchedSortedListXML()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -753,19 +720,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetCacheUnreadCount()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -781,19 +746,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetCacheCount()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -809,19 +772,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetCacheUnread()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -837,19 +798,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testmark_answered()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -865,19 +824,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testpop3_shiftCache()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -893,19 +850,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetUIDLForMessage()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -921,19 +876,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetMsgnoForMessageID()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -949,19 +902,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testpop3_getCacheUidls()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -973,8 +924,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     /**
@@ -1027,11 +977,10 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1044,19 +993,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdeleteCache()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1069,19 +1016,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdeletePop3Cache()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1097,19 +1042,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testpop3_open()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1121,19 +1064,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testpop3_cleanUp()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1149,19 +1090,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testpop3_sendCommand()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1173,19 +1112,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetPop3NewMessagesToDownload()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1197,19 +1134,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetPop3NewMessagesToDownloadForCron()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1221,19 +1156,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testpop3_getUIDL()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1246,19 +1179,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testpop3_checkPartialEmail()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1277,19 +1208,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testpop3_checkEmail()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1308,19 +1237,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetMessagesInEmailCache()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1347,19 +1274,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcheckEmailOneMailbox()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1370,19 +1295,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcheckEmailOneMailboxPartial()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1394,19 +1317,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetCachedIMAPSearch()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1418,19 +1339,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcheckEmailIMAPPartial()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1442,19 +1361,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcheckEmail2_meta()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1467,19 +1384,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetMailboxProcessCount()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1489,19 +1404,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcheckEmail()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1527,19 +1440,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsyncEmail()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         global $current_user;
         $current_user = new User('1');
@@ -1556,19 +1467,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdeleteCachedMessages()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1584,19 +1493,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetOverviewsFromCacheFile()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1606,8 +1513,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     /**
@@ -1641,27 +1547,26 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsetReadFlagOnFolderCache()
     {
         $this->markTestIncomplete('Undefined offset: 0');
-        
-        $inboundEmail = new InboundEmail();
-
-        $inboundEmail->id = 1;
-
-        $inboundEmail->setReadFlagOnFolderCache('INBOX', '1');
-
-        //retrieve back to verify the records updated
-        $result = $inboundEmail->getCacheValue('INBOX');
-        $this->assertEquals(0, $result['retArr'][0]->seen);
+//        
+//        $inboundEmail = new InboundEmail();
+//
+//        $inboundEmail->id = 1;
+//
+//        $inboundEmail->setReadFlagOnFolderCache('INBOX', '1');
+//
+//        //retrieve back to verify the records updated
+//        $result = $inboundEmail->getCacheValue('INBOX');
+//        $this->assertEquals(0, $result['retArr'][0]->seen);
     }
 
     public function testfetchCheckedEmails()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -1697,19 +1602,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testmarkEmails()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1728,19 +1631,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdeleteFolder()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1752,19 +1653,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsaveNewFolder()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1774,19 +1673,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetImapMboxFromSugarProprietary()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1804,19 +1701,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testrepairAccount()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1828,26 +1723,25 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetTeamSetIdForTeams()
     {
         $this->markTestIncomplete("Fatal error: Class 'Team' not found");
-        
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
-        $inboundEmail = new InboundEmail();
-
-        //$result = $inboundEmail->getTeamSetIdForTeams("1");
-
-        //test for record ID to verify that record is saved
-        //$this->assertTrue(isset($result));
-        //$this->assertEquals(36, strlen($result));
+//        
+//        //unset and reconnect Db to resolve mysqli fetch exeception
+//        $db = DBManagerFactory::getInstance();
+//        unset($db->database);
+//        $db->checkConnection();
+//
+//        $inboundEmail = new InboundEmail();
+//
+//        //$result = $inboundEmail->getTeamSetIdForTeams("1");
+//
+//        //test for record ID to verify that record is saved
+//        //$this->assertTrue(isset($result));
+//        //$this->assertEquals(36, strlen($result));
 
     }
 
@@ -1855,11 +1749,10 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1892,19 +1785,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function handleIsPersonal($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1920,19 +1811,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function getUserPersonalAccountCount()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1948,19 +1837,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function retrieveByGroupFolderId()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -1980,19 +1867,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function getUserNameFromGroupId($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2008,19 +1893,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function deletePersonalEmailAccount($id)
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2034,19 +1917,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetFoldersListForMailBox()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2055,19 +1936,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testfindOptimumSettings()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2081,19 +1960,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetSessionConnectionString()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2108,19 +1985,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsetSessionConnectionString()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2129,19 +2004,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetSessionInboundDelimiterString()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2156,19 +2029,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsetSessionInboundDelimiterString()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2177,19 +2048,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetSessionInboundFoldersString()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2204,19 +2073,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsetSessionInboundFoldersString()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2225,19 +2092,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgroupUserDupeCheck()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2258,19 +2123,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetGroupsWithSelectOptions()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2292,19 +2155,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleAutoresponse()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2330,19 +2191,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleCaseAssignment()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2360,19 +2219,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleMailboxType()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2397,19 +2254,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testisMailBoxTypeCreateCase()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2432,19 +2287,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleCreateCase()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2467,19 +2320,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleLinking()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2497,28 +2348,27 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetEncodingFromBreadCrumb()
     {
         $this->markTestIncomplete('errors in method');
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
-        $inboundEmail = new InboundEmail();
-
-        $parts = array(
-                    (Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => 'dummy parts 2'))))),
-                );
-
-        //$result = $inboundEmail->getEncodingFromBreadCrumb("1.2.3", $parts);
-
-        //$this->assertEqilas('utf-8', $result);
+//
+//        //unset and reconnect Db to resolve mysqli fetch exeception
+//        $db = DBManagerFactory::getInstance();
+//        unset($db->database);
+//        $db->checkConnection();
+//
+//        $inboundEmail = new InboundEmail();
+//
+//        $parts = array(
+//                    (Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => array((Object) array('encoding' => 'utf-8', 'parts' => 'dummy parts 2'))))),
+//                );
+//
+//        //$result = $inboundEmail->getEncodingFromBreadCrumb("1.2.3", $parts);
+//
+//        //$this->assertEqilas('utf-8', $result);
 
         
     }
@@ -2527,11 +2377,10 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2545,39 +2394,37 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetMessageTextFromSingleMimePart()
     {
         $this->markTestIncomplete('Exception: PHPUnit_Framework_Error_Notice: Undefined variable: structure');
-        
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
-        $inboundEmail = new InboundEmail();
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $result = $inboundEmail->getMessageTextFromSingleMimePart(1, 1, $structure);
-            $this->assertTrue(true);
-        } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-        }
+//        
+//        //unset and reconnect Db to resolve mysqli fetch exeception
+//        $db = DBManagerFactory::getInstance();
+//        unset($db->database);
+//        $db->checkConnection();
+//
+//        $inboundEmail = new InboundEmail();
+//
+//        //execute the method and test if it works and does not throws an exception.
+//        try {
+//            $result = $inboundEmail->getMessageTextFromSingleMimePart(1, 1, $structure);
+//            $this->assertTrue(true);
+//        } catch (Exception $e) {
+//            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+//        }
     }
 
     public function testaddBreadCrumbOffset()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2600,8 +2447,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
 
     }
 
@@ -2609,32 +2455,31 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $this->markTestIncomplete('Exception: PHPUnit_Framework_Error_Notice: Undefined variable: structure');
         
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
-        $inboundEmail = new InboundEmail();
-
-        //execute the method and test if it works and does not throws an exception.
-        try {
-            $result = $inboundEmail->getMessageText(1, 'PLAIN', $structure, $fullHeader);
-            $this->assertTrue(true);
-        } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
-        }
+//
+//        //unset and reconnect Db to resolve mysqli fetch exeception
+//        $db = DBManagerFactory::getInstance();
+//        unset($db->database);
+//        $db->checkConnection();
+//
+//        $inboundEmail = new InboundEmail();
+//
+//        //execute the method and test if it works and does not throws an exception.
+//        try {
+//            $result = $inboundEmail->getMessageText(1, 'PLAIN', $structure, $fullHeader);
+//            $this->assertTrue(true);
+//        } catch (Exception $e) {
+//            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+//        }
     }
 
     public function testdecodeHeader()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2660,19 +2505,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleCharsetTranslation()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2691,19 +2534,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testbuildBreadCrumbs()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2723,19 +2564,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testbuildBreadCrumbsHTML()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2755,19 +2594,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testconvertImapToSugarEmailAddress()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2785,19 +2622,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleEncodedFilename()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2812,19 +2647,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetMimeType()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -2839,19 +2672,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsaveAttachments()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2871,19 +2702,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetNoteBeanForAttachment()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2895,19 +2724,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testretrieveAttachmentNameFromStructure()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2930,19 +2757,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsaveAttachmentBinaries()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -2964,19 +2789,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleTranserEncoding()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -2986,19 +2809,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetMessageId()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3010,19 +2831,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testimportDupeCheck()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3033,19 +2852,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleMimeHeaderDecode()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3055,19 +2872,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetUnixHeaderDate()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3077,19 +2892,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetDuplicateEmailId()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -3109,19 +2922,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testimportOneEmail()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3138,19 +2949,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testisUuencode()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3160,19 +2969,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleUUEncodedEmailBody()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3184,8 +2991,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testhandleUUDecode()
@@ -3210,14 +3016,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheckFilterDomain()
     {
-
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -3235,19 +3039,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcheckOutOfOffice()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -3262,19 +3064,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsetAndgetAutoreplyStatus()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
@@ -3295,19 +3095,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsaveInboundEmailSystemSettings()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         global $sugar_config, $db;
 
@@ -3325,19 +3123,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetSystemSettingsForm()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3348,19 +3144,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetCaseIdFromCaseNumber()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3369,19 +3163,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testget_stored_options()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3393,53 +3185,38 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetRelatedId()
     {
         
         $this->markTestIncomplete('Undefined variable: result');
-        
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
-        
-        // test
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
-        $inboundEmail = new InboundEmail();
-
-        //test with Users module
-        $inboundEmail->getRelatedId('getRelatedId@email.com', 'Users');
-        $this->assertEquals(false, $result);
-
-        //test with Contacts module
-        $inboundEmail->getRelatedId('getRelatedId@email.com', 'Contacts');
-        $this->assertEquals(false, $result);
-        
-        // clean up
-        
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+//
+//        //unset and reconnect Db to resolve mysqli fetch exeception
+//        $db = DBManagerFactory::getInstance();
+//        unset($db->database);
+//        $db->checkConnection();
+//
+//        $inboundEmail = new InboundEmail();
+//
+//        //test with Users module
+//        $inboundEmail->getRelatedId('getRelatedId@email.com', 'Users');
+//        $this->assertEquals(false, $result);
+//
+//        //test with Contacts module
+//        $inboundEmail->getRelatedId('getRelatedId@email.com', 'Contacts');
+//        $this->assertEquals(false, $result);
     }
 
     public function testgetNewMessageIds()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3449,19 +3226,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetConnectString()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3472,19 +3247,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdisconnectMailserver()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3498,19 +3271,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testconnectMailserver()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3524,19 +3295,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcheckImap()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3550,19 +3319,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testget_summary_text()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3575,19 +3342,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcreate_export_query()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3603,19 +3368,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testget_list_view_data()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3641,19 +3404,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testfill_in_additional_list_fields()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3668,19 +3429,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testfill_in_additional_detail_fields()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3695,19 +3454,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testisAutoImport()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3724,19 +3481,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcleanOutCache()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3750,19 +3505,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcopyEmails()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3778,19 +3531,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testmoveEmails()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3804,19 +3555,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetTempFilename()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3832,19 +3581,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdeleteMessageOnMailServer()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3854,19 +3601,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdeleteMessageOnMailServerForPop3()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3880,19 +3625,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testisPop3Protocol()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3905,19 +3648,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testSetAndGetUsersDefaultOutboundServerId()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3934,19 +3675,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsetEmailForDisplay()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3964,19 +3703,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdisplayOneEmail()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -3999,19 +3736,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcollapseLongMailingList()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4025,19 +3760,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsortFetchedOverview()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4072,19 +3805,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testdisplayFolderContents()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4098,48 +3829,35 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testcreateUserSubscriptionsForGroupAccount()
     {
         $this->markTestIncomplete("Fatal error: Class 'Team' not found");
         
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
-        
-        // test
-        
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
-        $inboundEmail = new InboundEmail();
-
-        //$inboundEmail->createUserSubscriptionsForGroupAccount();
-
-        
-        // clean up
-        
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+//        
+//
+//        //unset and reconnect Db to resolve mysqli fetch exeception
+//        $db = DBManagerFactory::getInstance();
+//        unset($db->database);
+//        $db->checkConnection();
+//
+//        $inboundEmail = new InboundEmail();
+//
+//        //$inboundEmail->createUserSubscriptionsForGroupAccount();
+//
+//        
     }
 
     public function testcreateAutoImportSugarFolder()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -4158,19 +3876,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetMailboxes()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4187,19 +3903,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetMailBoxesForGroupAccount()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4213,19 +3927,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testretrieveMailBoxFolders()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4237,19 +3949,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testinsertMailBoxFolders()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4265,19 +3975,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testretrieveDelimiter()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4287,19 +3995,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgenerateFlatArrayFromMultiDimArray()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4313,19 +4019,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgenerateMultiDimArrayFromFlatArray()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4337,19 +4041,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgenerateArrayData()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4363,19 +4065,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testsortMailboxes()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4387,19 +4087,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetServiceString()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4411,19 +4109,17 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testgetNewEmailsForSyncedMailbox()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4435,21 +4131,20 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
         
+        
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testimportMessages()
     {
         // save state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
+        $state = $this->storeStateAll();
         
         // test
+        
         
         $inboundEmail = new InboundEmail();
 
@@ -4465,34 +4160,20 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+        $this->restoreStateAll($state);
     }
 
     public function testOverview()
     {
         $this->markTestIncomplete('Fatal error: Class \'Overview\' not found');
-        
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('folders');
-        $state->pushTable('folders_subscriptions');
-        
-        // test
-        
-
-        //execute the contructor and check for the Object type and  attributes
-        $overview = new Overview();
-
-        $this->assertInstanceOf('Overview', $overview);
-
-        $this->assertTrue(is_array($overview->fieldDefs));
-        $this->assertTrue(is_array($overview->indices));
-        
-        // clean up
-        
-        $state->popTable('folders');
-        $state->popTable('folders_subscriptions');
+//        
+//
+//        //execute the contructor and check for the Object type and  attributes
+//        $overview = new Overview();
+//
+//        $this->assertInstanceOf('Overview', $overview);
+//
+//        $this->assertTrue(is_array($overview->fieldDefs));
+//        $this->assertTrue(is_array($overview->indices));
     }
 }
