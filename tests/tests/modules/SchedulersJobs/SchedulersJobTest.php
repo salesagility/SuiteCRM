@@ -2,6 +2,26 @@
 
 class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    
+    protected $state;
+    
+    protected function setUp() {
+        parent::setUp();
+        
+        $this->state = new \SuiteCRM\StateSaver();
+        $this->state->pushTable('aod_index');
+        $this->state->pushGlobals();
+        
+    }
+    
+    protected function tearDown() {
+        
+        $this->state->popTable('aod_index');
+        $this->state->popGlobals();
+        
+        parent::tearDown();
+    }
+    
     public function testSchedulersJob()
     {
         //execute the contructor and check for the Object type and  attributes
@@ -225,14 +245,6 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrunJobId()
     {
-        
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        // test
-
 
         //test with invalid job id
         $result = SchedulersJob::runJobId('1','');
@@ -256,10 +268,6 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Job '.$schedulersJob->id.' belongs to another client, can not run as test_client.', $result);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 
     public function testerrorHandler()
@@ -287,14 +295,6 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testrunJob()
     {
-        
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        // test
-
         //test without a valid user
         $schedulersJob = new SchedulersJob();
         $schedulersJob->target = 'function::processAOW_Workflow';
@@ -319,9 +319,5 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $schedulersJob->runJob();
         $this->assertEquals(true, $result);
         $schedulersJob->mark_deleted($schedulersJob->id);
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 }
