@@ -52,6 +52,45 @@ $(document).ready(function () {
   });
 });
 
+
+function updateTimeDateFields(fieldInput, ln) {
+  // datetime combo fields
+  if (typeof fieldInput === 'undefined'
+    && $("[name='aor_conditions_value" + ln + "']").val()
+    && $("[name='aor_conditions_value" + ln + "']").hasClass('DateTimeCombo')) {
+    var datetime = $("[name='aor_conditions_value\\[" + ln + "\\]']").val();
+    var date = datetime.substr(0, 10);
+    var formatDate = $.datepicker.formatDate('yy-mm-dd', new Date(date));
+    fieldInput = datetime.replace(date, formatDate) + ':00';
+  }
+  return fieldInput;
+}
+
+function updateHiddenReportFields(ln, _form) {
+// Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
+  if ($('#aor_conditions_value' + ln).length) {
+    var fieldValue = $('#aor_conditions_value' + ln).val();
+    var fieldSign = $('#aor_conditions_value' + ln).val();
+    var fieldNumber = $('#aor_conditions_value' + ln).val();
+    var fieldTime = $('#aor_conditions_value' + ln).val();
+
+    _form.append('<input type="hidden" name="parameter_date_value[]" value="' + fieldValue + '">');
+    _form.append('<input type="hidden" name="parameter_date_sign[]" value="' + fieldSign + '">');
+    _form.append('<input type="hidden" name="parameter_date_number[]" value="' + fieldNumber + '">');
+    _form.append('<input type="hidden" name="parameter_date_time[]" value="' + fieldTime + '">');
+  }
+}
+
+function localToDbFormat(index, ln, fieldInput) {
+// Fix for issue #1082 - change local date format to db date format
+  if ($('#aor_conditions_value' + index + '').hasClass('date_input')) { // only change to DB format if its a date
+    if ($('#aor_conditions_value' + ln + '').hasClass('date_input')) {
+      fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
+    }
+  }
+  return fieldInput;
+}
+
 function addParametersToForm(action) {
   var _form = $('#formDetailView');
   _form.find('input[name=action]').val(action);
@@ -66,35 +105,8 @@ function addParametersToForm(action) {
     var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
     _form.append('<input type="hidden" name="parameter_type[]" value="'+fieldType+'">');
     var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
-
-    // datetime combo fields
-    if (typeof fieldInput === 'undefined'
-      && $("[name='aor_conditions_value\\["+ln+"\\]']").val()
-      && $("[name='aor_conditions_value\\["+ln+"\\]']").hasClass('DateTimeCombo')) {
-      var datetime = $("[name='aor_conditions_value\\["+ln+"\\]']").val();
-      var date = datetime.substr(0,10);
-      var formatDate = $.datepicker.formatDate('yy-mm-dd', new Date(date));
-      fieldInput = datetime.replace(date, formatDate) + ':00';
-    }
-
-    // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
-    if($('#aor_conditions_value\\['+ln+'\\]\\[0\\]').length){
-      var fieldValue = $('#aor_conditions_value\\['+ln+'\\]\\[0\\]').val();
-      var fieldSign = $('#aor_conditions_value\\['+ln+'\\]\\[1\\]').val();
-      var fieldNumber = $('#aor_conditions_value\\['+ln+'\\]\\[2\\]').val();
-      var fieldTime = $('#aor_conditions_value\\['+ln+'\\]\\[3\\]').val();
-      _form.append('<input type="hidden" name="parameter_date_value[]" value="'+fieldValue+'">');
-      _form.append('<input type="hidden" name="parameter_date_sign[]" value="'+fieldSign+'">');
-      _form.append('<input type="hidden" name="parameter_date_number[]" value="'+fieldNumber+'">');
-      _form.append('<input type="hidden" name="parameter_date_time[]" value="'+fieldTime+'">');
-    }
-    // Fix for issue #1082 - change local date format to db date format
-    if($('#aor_conditions_value\\['+index+'\\]').hasClass('date_input')) { // only change to DB format if its a date
-      if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
-        fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
-      }
-    }
-    _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldInput+'">');
+    updateTimeDateFields(fieldInput, ln);
+    updateHiddenReportFields(ln, _form);
   });
 
   return _form;
