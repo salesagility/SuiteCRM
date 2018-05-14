@@ -89,8 +89,8 @@ class StateSaver
      */
     public function __destruct()
     {
-        if (!empty($this->state)) {
-            throw new StateSaverException('Some garbage state left in stack');
+        if (!empty($this->stack)) {
+            throw new StateSaverException('Some garbage state left in stack: ' . var_export($this->stack, true));
         }
     }
     
@@ -180,6 +180,14 @@ class StateSaver
         }
         
         $value = $ok ? array_pop($this->stack[$namespace][$key]) : self::UNDEFINED;
+        
+        if (empty($this->stack[$namespace][$key])) {
+            unset($this->stack[$namespace][$key]);
+        }
+        
+        if (empty($this->stack[$namespace])) {
+            unset($this->stack[$namespace]);
+        }
           
         return $value;
     }
