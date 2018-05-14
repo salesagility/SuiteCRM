@@ -173,7 +173,13 @@ function changeReportPage(record, offset, group_value, table_id) {
     query += "&parameter_operator[]=" + operator;
     var fieldType = $('#aor_conditions_value_type\\[' + ln + '\\]').val();
     query += "&parameter_type[]=" + fieldType;
-    var fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+    var fieldInput = '';
+    if ($('#aor_conditions_value' + ln).length > 0) {
+        fieldInput = $('#aor_conditions_value' + ln).val();
+        fieldInput = updateTimeDateFields(fieldInput, ln);
+    } else {
+        fieldInput = $('#aor_conditions_value\\[' + ln + '\\]').val();
+    }
     query += "&parameter_value[]=" + fieldInput;
   });
 
