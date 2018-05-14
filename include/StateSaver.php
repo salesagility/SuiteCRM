@@ -90,7 +90,7 @@ class StateSaver
     public function __destruct()
     {
         if (!empty($this->stack)) {
-            throw new StateSaverException('Some garbage state left in stack: ' . var_export($this->stack, true));
+            throw new StateSaverException('Some garbage state left in stack (did you pop everything?): ' . var_export($this->stack, true));
         }
     }
     
