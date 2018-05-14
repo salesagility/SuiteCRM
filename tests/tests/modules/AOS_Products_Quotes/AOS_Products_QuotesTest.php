@@ -4,6 +4,14 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
 {
     public function testAOS_Products_Quotes()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('roles_users');
+        $state->pushGlobals();
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $aosProductsQuotes = new AOS_Products_Quotes();
@@ -17,6 +25,11 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $this->assertAttributeEquals(true, 'new_schema', $aosProductsQuotes);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProductsQuotes);
         $this->assertAttributeEquals(true, 'importable', $aosProductsQuotes);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('roles_users');
     }
 
     public function testsave_lines()
@@ -26,7 +39,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products_quotes');
-//        $state->pushGlobals();
+        $state->pushGlobals();
         
         // test
         
@@ -52,7 +65,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         
         // clean up
         
-//        $state->popGlobals();
+        $state->popGlobals();
         $state->popTable('aos_products_quotes');
     }
 
@@ -63,7 +76,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aos_products_quotes');
-//        $state->pushGlobals();
+        $state->pushGlobals();
         
         // test
         
@@ -91,7 +104,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         
         // clean up
         
-//        $state->popGlobals();
+        $state->popGlobals();
         $state->popTable('aos_products_quotes');
     }
 
@@ -103,6 +116,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aos_products_quotes');
         $state->pushTable('aos_line_item_groups');
+        $state->pushTable('roles_users');
         
         // test
         
@@ -125,6 +139,7 @@ class AOS_Products_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         
         // clean up
         
+        $state->popTable('roles_users');
         $state->popTable('aos_line_item_groups');
         $state->popTable('aos_products_quotes');
     }

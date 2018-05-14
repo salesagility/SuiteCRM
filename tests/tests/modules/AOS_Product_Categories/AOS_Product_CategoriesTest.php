@@ -10,6 +10,8 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $state->pushTable('aod_indexevent');
         $state->pushTable('emails');
         $state->pushTable('aos_product_categories');
+        $state->pushTable('config');
+        $state->pushTable('emails_text');
         $state->pushGlobals();
         
         // test
@@ -32,6 +34,8 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails_text');
+        $state->popTable('config');
         $state->popTable('aos_product_categories');
         $state->popTable('emails');
         $state->popTable('aod_indexevent');
@@ -46,6 +50,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $state->pushTable('emails');
         $state->pushTable('config');
         $state->pushTable('aos_product_categories');
+        $state->pushTable('emails_text');
         $state->pushGlobals();
         
         // test
@@ -69,6 +74,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         // clean up
         
         $state->popGlobals();
+        $state->popTable('emails_text');
         $state->popTable('aos_product_categories');
         $state->popTable('config');
         $state->popTable('emails');
