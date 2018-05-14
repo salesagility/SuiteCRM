@@ -212,7 +212,7 @@ class StateSaver
     public function popGlobal($key, $namespace = 'GLOBALS')
     {
         $top = $this->pop($key, $namespace);
-        if (!$this->stack[$namespace]) {
+        if (isset($this->stack[$namespace]) && !$this->stack[$namespace]) {
             unset($this->stack[$namespace]);
         }
         if ($top !== self::UNDEFINED) {
