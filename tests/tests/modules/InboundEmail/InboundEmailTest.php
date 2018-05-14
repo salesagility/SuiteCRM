@@ -7,6 +7,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     protected function storeStateAll() 
     {
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('inbound_email_cache_ts');
+        $state->pushTable('inbound_email_autoreply');
         $state->pushTable('inbound_email');
         $state->pushTable('aod_index');
         $state->pushTable('folders');
@@ -23,6 +25,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('folders');
         $state->popTable('aod_index');
         $state->popTable('inbound_email');
+        $state->popTable('inbound_email_autoreply');
+        $state->popTable('inbound_email_cache_ts');
     }
     
     public function testInboundEmail()
