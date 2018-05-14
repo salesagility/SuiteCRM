@@ -3270,10 +3270,23 @@ class InboundEmail extends SugarBean {
 	    $results = array();
 	    for($i=0;$i < count($a_bc); $i++)
 	    {
-	        if(isset($a_offset[$i]))
-	           $results[] = $a_bc[$i] + $a_offset[$i];
-	        else
-	           $results[] = $a_bc[$i];
+                
+                if (!is_numeric($a_bc[$i])) {
+                    LoggerManager::getLogger('InboundEmail::addBreadCrumbOffset given a non-numeric bc value: ' . $a_bc[$i]);
+                }
+                $a_bci = is_numeric($a_bc[$i]) ? $a_bc[$i] : (int)$a_bc[$i];
+                
+	        if(isset($a_offset[$i])) {
+                   
+                    if (!is_numeric($a_offset[$i])) {
+                        LoggerManager::getLogger('InboundEmail::addBreadCrumbOffset given a non-numeric offset value: ' . $a_offset[$i]);
+                    }
+                    $a_offseti = is_numeric($a_offset[$i]) ? $a_offset[$i] : (int)$a_offset[$i];
+                    
+                    $results[] = $a_bci + $a_offseti;
+                } else {
+	           $results[] = $a_bci;
+                }
 	    }
 	    return implode(".", $results);
 	}
