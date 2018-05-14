@@ -18,6 +18,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('vcals');
         $state->pushTable('inbound_email');
         $state->pushTable('config');
+        $state->pushFile('config.php');
         $state->pushGlobals();
         
         return $state;
@@ -28,6 +29,7 @@ class MeetingTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popFile('config.php');
         $state->popTable('config');
         $state->popTable('inbound_email');
         $state->popTable('vcals');
