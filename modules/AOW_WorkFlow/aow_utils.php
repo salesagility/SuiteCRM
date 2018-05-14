@@ -306,13 +306,22 @@ function getValidFieldsTypes($module, $field){
 
 
 function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = '', $params= array()){
-    global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
+    global $current_language;
+    global $app_strings;
+    global $app_list_strings;
+    global $current_user;
+    global $beanFiles;
+    global $beanList;
 
+    // get row number
+    $aor_row = str_replace('aor_conditions_value', '', $aow_field);
+    $aor_row = str_replace('[', '', $aor_row);
+    $aor_row = str_replace(']', '', $aor_row);
     // use the mod_strings for this module
     $mod_strings = return_module_language($current_language,$module);
 
     // set the filename for this control
-    $file = create_cache_directory('modules/AOW_WorkFlow/') . $module . $view . $alt_type . $fieldname . '.tpl';
+    $file = create_cache_directory('modules/AOW_WorkFlow/') . $module . $view . $alt_type . $fieldname . $aor_row . '.tpl';
 
     $displayParams = array();
 
@@ -617,7 +626,9 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
  */
 function createBracketVariableAlias($variable)
 {
-    return str_replace('[', 'SCRMLSQBR', str_replace(']', 'SCRMRSQBR', $variable));
+    $replaceRightBracket = str_replace(']', '', $variable);
+    $replaceLeftBracket =  str_replace('[', '', $replaceRightBracket);
+    return $replaceLeftBracket;
 }
 
 /**
