@@ -53,8 +53,8 @@ $(document).ready(function () {
 });
 
 
-function f1(fieldInput, ln) {
-// datetime combo fields
+function updateTimeDateFields(fieldInput, ln) {
+  // datetime combo fields
   if (typeof fieldInput === 'undefined'
     && $("[name='aor_conditions_value" + ln + "']").val()
     && $("[name='aor_conditions_value" + ln + "']").hasClass('DateTimeCombo')) {
@@ -66,7 +66,7 @@ function f1(fieldInput, ln) {
   return fieldInput;
 }
 
-function f2(ln, _form) {
+function updateHiddenReportFields(ln, _form) {
 // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
   if ($('#aor_conditions_value' + ln).length) {
     var fieldValue = $('#aor_conditions_value' + ln).val();
@@ -81,15 +81,16 @@ function f2(ln, _form) {
   }
 }
 
-function f3(index, ln, fieldInput) {
+function localToDbFormat(index, ln, fieldInput) {
 // Fix for issue #1082 - change local date format to db date format
-  if ($('#aor_conditions_value' + index + '\\]').hasClass('date_input')) { // only change to DB format if its a date
-    if ($('#aor_conditions_value\\[' + ln + '\\]').hasClass('date_input')) {
+  if ($('#aor_conditions_value' + index + '').hasClass('date_input')) { // only change to DB format if its a date
+    if ($('#aor_conditions_value' + ln + '').hasClass('date_input')) {
       fieldInput = $.datepicker.formatDate('yy-mm-dd', new Date(fieldInput));
     }
   }
   return fieldInput;
 }
+
 function addParametersToForm(action) {
   var _form = $('#formDetailView');
   _form.find('input[name=action]').val(action);
@@ -104,8 +105,8 @@ function addParametersToForm(action) {
     var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
     _form.append('<input type="hidden" name="parameter_type[]" value="'+fieldType+'">');
     var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
-    f1(fieldInput, ln);
-    f2(ln, _form);
+    updateTimeDateFields(fieldInput, ln);
+    updateHiddenReportFields(ln, _form);
   });
 
   return _form;
