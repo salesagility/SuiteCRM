@@ -13,6 +13,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('folders');
         $state->pushTable('folders_subscriptions');
+        $state->pushTable('config');
         $state->pushGlobals();
         
         return $state;
@@ -21,6 +22,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     protected function restoreStateAll($state) 
     {
         $state->popGlobals();
+        $state->popTable('config');
         $state->popTable('folders_subscriptions');
         $state->popTable('folders');
         $state->popTable('aod_index');
