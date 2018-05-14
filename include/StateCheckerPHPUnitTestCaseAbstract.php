@@ -64,6 +64,7 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
      */
     public function setUp()
     {
+        echo "\t" . get_class($this) . '::' , $this->getName(false) . "\n";
         $this->beforeStateCheck();
         parent::setUp();
     }
