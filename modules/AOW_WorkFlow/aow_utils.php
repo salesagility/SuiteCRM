@@ -350,9 +350,6 @@ function getModuleField(
             . '.tpl';
     }
 
-    // set the filename for this control
-    $file = create_cache_directory('modules/AOW_WorkFlow/') . $module . $view . $alt_type . $fieldname . $aor_row . '.tpl';
-
     $displayParams = array();
 
     if ( !is_file($file)
