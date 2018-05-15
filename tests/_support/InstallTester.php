@@ -133,7 +133,7 @@ class InstallTester extends \Codeception\Actor
         $I->dontSeeMissingLabels();
         $I->dontSeeErrors();
 
-        $I->click('Next');
+        //$I->click('Next');
     }
 
     /**
