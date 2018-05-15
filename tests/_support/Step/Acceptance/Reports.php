@@ -1,4 +1,5 @@
 <?php
+
 namespace Step\Acceptance;
 
 class Reports extends \AcceptanceTester
@@ -9,7 +10,7 @@ class Reports extends \AcceptanceTester
     public function gotoReports()
     {
         $I = new NavigationBar($this->getScenario());
-        $I ->clickAllMenuItem('Reports');
+        $I->clickAllMenuItem('Reports');
     }
 
     /**
@@ -18,7 +19,7 @@ class Reports extends \AcceptanceTester
     public function gotoProfile()
     {
         $I = new NavigationBar($this->getScenario());
-        $I ->clickUserMenuItem('Profile');
+        $I->clickUserMenuItem('Profile');
     }
 
     /**
@@ -40,7 +41,8 @@ class Reports extends \AcceptanceTester
      *
      * @param $name
      */
-    public function createAccount($name) {
+    public function createAccount($name)
+    {
         $I = new EditView($this->getScenario());
         $DetailView = new DetailView();
         $Sidebar = new SideBar();
@@ -59,11 +61,26 @@ class Reports extends \AcceptanceTester
      * @param $name
      * @param $module
      */
-    public function addField($name, $module) {
+    public function addField($name, $module)
+    {
         $I = new EditView($this->getScenario());
         $I->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
 $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $I->click($module, '.jqtree_common jqtree-title jqtree-title-folder');
         $I->click($name, '.jqtree-title jqtree_common');
+    }
+
+    /**
+     * Adds condition to report
+     * @param $condition
+     * @param $module
+     */
+    public function addCondition($condition, $module)
+    {
+        $I = new EditView($this->getScenario());
+
+        $I->click('Conditions', 'tab-toggler');
+        $I->click($module, 'jqtree_common jqtree-title jqtree-title-folder');
+        $I->click($condition, 'jqtree-title jqtree_common');
     }
 }

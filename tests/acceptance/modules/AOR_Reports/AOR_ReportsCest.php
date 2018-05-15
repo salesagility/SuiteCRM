@@ -307,9 +307,7 @@ class AOR_ReportsCest
         $reports->addField('Name', 'Accounts');
 
         // Add condition
-        $editView->click('Conditions', 'tab-toggler');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addCondition('Name', 'Accounts');
         $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -361,12 +359,10 @@ class AOR_ReportsCest
         $reports->addField('Name', 'Date Created');
 
         // Add condition
-        $editView->click('Conditions', 'tab-toggler');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
-        $editView->click('Date Created', 'jqtree-title jqtree_common');
-        $editView->click('Date Created', 'jqtree-title jqtree_common');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addCondition('Name', 'Accounts');
+        $reports->addCondition('Date Created', 'Accounts');
+        $reports->addCondition('Date Created', 'Accounts');
+        $reports->addCondition('Name', 'Accounts');
         $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
 
         // Set users date format
@@ -446,9 +442,7 @@ class AOR_ReportsCest
         $reports->addField('Name', 'Deleted');
 
         // Add condition
-        $editView->click('Conditions', 'tab-toggler');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addCondition('Name', 'Accounts');
         $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -509,9 +503,7 @@ class AOR_ReportsCest
         $reports->addField('Type', 'Accounts');
 
         // Add condition
-        $editView->click('Conditions', 'tab-toggler');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addCondition('Name', 'Accounts');
         $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -731,9 +723,7 @@ class AOR_ReportsCest
         $reports->addField('Name', 'Accounts');
 
         // Add condition
-        $editView->click('Conditions', 'tab-toggler');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addCondition('Name', 'Accounts');
         $editView->fillField('#aor_conditions_operator[0]', 'Contains');
         $editView->fillField('#aor_conditions_value[0]', 'Test_Account_Contains');
         $editView->clickSaveButton();
