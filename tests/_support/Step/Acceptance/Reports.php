@@ -169,7 +169,6 @@ var module_path_display = "Accounts";
 $(\'.jqtree-selected\').removeClass(\'jqtree-selected\');
 $(\'#fieldTree\').tree(\'addToSelection\', node);
 ');
-        $I->click($module, '.jqtree_common jqtree-title jqtree-title-folder');
         $I->click($name, '.jqtree-title jqtree_common');
     }
 
