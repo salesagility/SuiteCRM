@@ -445,7 +445,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $reports->createReport('Report_Test_Text', 'Accounts');
+        $reports->createReport('Report_Test_Checkbox', 'Accounts');
 
         // Add field
         $reports->addField('Name', 'Accounts');
@@ -458,7 +458,7 @@ class AOR_ReportsCest
         $detailView->waitForDetailViewVisible();
 
         // Check Output
-        $I->see('Deleted');
+        $I->see('Test_Account_Checkbox');
     }
 
     /**
@@ -506,7 +506,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $reports->createReport('Report_Test_Text', 'Accounts');
+        $reports->createReport('Report_Test_DropDown', 'Accounts');
 
         // Add field
         $reports->addField('Name', 'Accounts');
@@ -519,7 +519,129 @@ class AOR_ReportsCest
         $detailView->waitForDetailViewVisible();
 
         // Check Output
-        $I->see('Type');
+        $I->see('Test_Account_DropDown');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to verify the output of a report using the phone field
+     */
+    public function testScenarioPhoneFieldReportOutput(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Verify the output of a report based on the phone field');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to Accounts
+        $I->loginAsAdmin();
+        $navigationBar->clickAllMenuItem('Accounts');
+        $listView->waitForListViewVisible();
+
+        // Create Account
+        $reports->createAccount('Test_Account_Phone');
+
+        // Navigate to reports list-view
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $reports->createReport('Report_Test_Phone', 'Accounts');
+
+        // Add field
+        $reports->addField('Name', 'Accounts');
+        $reports->addField('Office Phone', 'Accounts');
+
+        // Add condition
+        $reports->addCondition('Name', 'Accounts');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account_Phone');
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $I->see('(810) 267-0146');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to verify the output of a report using the URL field
+     */
+    public function testScenarioURLFieldReportOutput(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Verify the output of a report based on a URL field');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to Accounts
+        $I->loginAsAdmin();
+        $navigationBar->clickAllMenuItem('Accounts');
+        $listView->waitForListViewVisible();
+
+        // Create Account
+        $reports->createAccount('Test_Account_URL');
+
+        // Navigate to reports list-view
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $reports->createReport('Report_Test_URL', 'Accounts');
+
+        // Add field
+        $reports->addField('Name', 'Accounts');
+        $reports->addField('Website', 'Accounts');
+
+        // Add condition
+        $reports->addCondition('Name', 'Accounts');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account_URL');
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $I->see('www.afakeurl.com');
     }
 
     /**

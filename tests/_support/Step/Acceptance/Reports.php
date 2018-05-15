@@ -51,6 +51,8 @@ class Reports extends \AcceptanceTester
         $Sidebar->clickSideBarAction('Create');
         $I->waitForEditViewVisible();
         $I->fillField('#name', $name);
+        $I->fillField('#phone_office', '(810) 267-0146');
+        $I->fillField('#website', 'www.afakeurl.com');
         $I->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
     }
