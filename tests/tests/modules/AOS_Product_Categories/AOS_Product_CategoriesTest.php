@@ -14,6 +14,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $state->pushTable('config');
         $state->pushTable('emails_text');
         $state->pushTable('inbound_email_autoreply');
+        $state->pushFile('config.php');
         $state->pushGlobals();
         
         
@@ -26,6 +27,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         // clean up
         
         $state->popGlobals();
+        $state->popFile('config.php');
         $state->popTable('inbound_email_autoreply');
         $state->popTable('emails_text');
         $state->popTable('config');
