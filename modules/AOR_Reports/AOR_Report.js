@@ -93,7 +93,6 @@ function localToDbFormat(index, ln, fieldInput) {
 }
 
 function appendHiddenFields(_form, ln, id) {
-  debugger;
     _form.append('<input type="hidden" name="parameter_id\[' + ln + '\]" value="' + id + '">');
     var operator = $("#aor_conditions_operator\\[" + ln + "\\]").val();
     _form.append('<input type="hidden" name="parameter_operator\[' + ln + '\]" value="' + operator + '">');
