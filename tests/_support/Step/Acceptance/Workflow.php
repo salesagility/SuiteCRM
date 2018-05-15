@@ -41,8 +41,8 @@ class Workflow extends Tester
     {
         $now = new \DateTime();
         $valueDateDay =$now->format('d');
-        $calendarButton = '#aow_conditions_valueSCRMLSQBR'.$row.'SCRMRSQBR_trigger';
-        $calendarDialog = '#aow_conditions_valueSCRMLSQBR'.$row.'SCRMRSQBR_trigger_div';
+        $calendarButton = '#aow_conditions_value'.$row.'_trigger';
+        $calendarDialog = '#aow_conditions_value'.$row.'_trigger_div';
         $this->click($calendarButton);
         $this->waitForElementVisible($calendarDialog, 10);
         $this->click('.today > .selector', $calendarDialog);
