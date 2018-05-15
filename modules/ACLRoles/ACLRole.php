@@ -133,7 +133,7 @@ function getUserRoles($user_id, $getAsNameArray = true){
  * @param GUID $user_id
  * @return a list of ACLRole Names
  */
-function getUserRoleNames($user_id){
+public static function getUserRoleNames($user_id){
 
         $user_roles = sugar_cache_retrieve("RoleMembershipNames_".$user_id);
 
