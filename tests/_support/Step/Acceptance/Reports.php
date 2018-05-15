@@ -20,4 +20,12 @@ class Reports extends \AcceptanceTester
         $I = new NavigationBar($this->getScenario());
         $I ->clickUserMenuItem('Profile');
     }
+
+    public function createReport($name, $module)
+    {
+        $I = new EditView($this->getScenario());
+        $I->waitForEditViewVisible();
+        $I->fillField('#name', $name);
+        $I->selectOption('#report_module', $module);
+    }
 }

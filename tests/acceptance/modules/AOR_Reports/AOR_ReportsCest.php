@@ -99,9 +99,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test', 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
     }
@@ -309,9 +307,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test_Text');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test_Text', 'Accounts');
 
         // Add field
         $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
@@ -367,9 +363,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test_Dates');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test_Dates', 'Accounts');
 
         // Add field
         $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
@@ -463,9 +457,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test_Text');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test_Text', 'Accounts');
 
         // Add field
         $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
@@ -537,9 +529,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test_Text');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test_Text', 'Accounts');
 
         // Add field
         $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
@@ -596,9 +586,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test_Pagination');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test_Pagination', 'Accounts');
 
         // Add field
         $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
@@ -650,9 +638,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test_Pagination_Parameters');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test_Pagination_Parameters', 'Accounts');
 
         // Add field
         $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
@@ -715,9 +701,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test_Charts');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test_Charts', 'Accounts');
 
         // Add field
         $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
@@ -785,9 +769,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Report_Test_Contains');
-        $editView->selectOption('#report_module', 'Accounts');
+        $reports->createReport('Report_Test_Contains', 'Accounts');
 
         // Add field
         $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
