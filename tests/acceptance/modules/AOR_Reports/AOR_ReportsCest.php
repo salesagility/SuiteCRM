@@ -372,7 +372,8 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
-        $editView->click('Fields', 'tab-toggler');
+        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
         $editView->click('Date Created', 'jqtree-title jqtree_common');
@@ -600,6 +601,8 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
+        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
@@ -652,6 +655,8 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
+        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
@@ -715,6 +720,8 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
+        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
@@ -783,6 +790,8 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->selectOption('#report_module', 'Accounts');
 
         // Add field
+        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', 'jqtree-title jqtree_common');
 
