@@ -290,7 +290,7 @@ class AOR_ReportsCest
         $listView->waitForListViewVisible();
 
         // Create Account
-        $reports->createAccount('Test_Account');
+        $reports->createAccount('Test_Account_Text');
 
         // Navigate to reports list-view
         $reports->gotoReports();
@@ -308,12 +308,12 @@ class AOR_ReportsCest
 
         // Add condition
         $reports->addCondition('Name', 'Accounts');
-        $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account_Text');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
         // Check Output
-        $I->see('Test_Account', '.sugar_field');
+        $I->see('Test_Account_Text', '.sugar_field');
     }
 
     /**
@@ -323,6 +323,7 @@ class AOR_ReportsCest
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\Reports $reports
+     * @param \Step\Acceptance\NavigationBar $navigationBar
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
      * As administrative user I want to verify the output of a report using date fields
@@ -334,6 +335,7 @@ class AOR_ReportsCest
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\EditView $editView,
         \Step\Acceptance\Reports $reports,
+        \Step\Acceptance\NavigationBar $navigationBar,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('Verify the output of a report based on date fields');
@@ -341,6 +343,14 @@ class AOR_ReportsCest
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
+
+        // Navigate to Accounts
+        $I->loginAsAdmin();
+        $navigationBar->clickAllMenuItem('Accounts');
+        $listView->waitForListViewVisible();
+
+        // Create Account
+        $reports->createAccount('Test_Account_Date');
 
         // Navigate to reports list-view
         $I->loginAsAdmin();
@@ -363,7 +373,7 @@ class AOR_ReportsCest
         $reports->addCondition('Date Created', 'Accounts');
         $reports->addCondition('Date Created', 'Accounts');
         $reports->addCondition('Name', 'Accounts');
-        $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account_Date');
 
         // Set users date format
         $reports->gotoProfile();
@@ -387,7 +397,7 @@ class AOR_ReportsCest
         $detailView->waitForDetailViewVisible();
 
         // Check Output
-        $I->see('Test_Account', '.sugar_field');
+        $I->see('Test_Account_Date', '.sugar_field');
     }
 
     /**
@@ -424,7 +434,7 @@ class AOR_ReportsCest
         $listView->waitForListViewVisible();
 
         // Create Account
-        $reports->createAccount('Test_Account');
+        $reports->createAccount('Test_Account_Checkbox');
 
         // Navigate to reports list-view
         $reports->gotoReports();
@@ -443,7 +453,7 @@ class AOR_ReportsCest
 
         // Add condition
         $reports->addCondition('Name', 'Accounts');
-        $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account_Checkbox');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
@@ -485,7 +495,7 @@ class AOR_ReportsCest
         $listView->waitForListViewVisible();
 
         // Create Account
-        $reports->createAccount('Test_Account');
+        $reports->createAccount('Test_Account_DropDown');
 
         // Navigate to reports list-view
         $reports->gotoReports();
@@ -504,7 +514,7 @@ class AOR_ReportsCest
 
         // Add condition
         $reports->addCondition('Name', 'Accounts');
-        $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account_DropDown');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
