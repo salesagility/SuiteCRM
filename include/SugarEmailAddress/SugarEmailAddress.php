@@ -2050,7 +2050,14 @@ class SugarEmailAddress extends SugarBean
     public function getOptInStatus()
     {
         $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        
+        $enableConfirmedOptIn = null;
+        if (isset($configurator->config['email_enable_confirm_opt_in'])) {
+            $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
+        }
+        
         $optInFromFlags = $this->getOptInIndicationFromFlags();
 
         if ($enableConfirmedOptIn === self::COI_STAT_DISABLED) {
