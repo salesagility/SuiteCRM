@@ -44,8 +44,8 @@ class Reports extends \AcceptanceTester
     public function createAccount($name)
     {
         $I = new EditView($this->getScenario());
-        $DetailView = new DetailView();
-        $Sidebar = new SideBar();
+        $DetailView = new DetailView($this->getScenario());
+        $Sidebar = new SideBar($this->getScenario());
 
         $I->see('Create Account', '.actionmenulink');
         $Sidebar->clickSideBarAction('Create');
