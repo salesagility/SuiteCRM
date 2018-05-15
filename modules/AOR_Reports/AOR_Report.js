@@ -122,7 +122,6 @@ function addParametersToForm(action) {
     var id = $elem.val();
     appendHiddenFields(_form, ln, id);
   });
-    debugger;
   return _form;
 }
 
