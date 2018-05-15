@@ -60,7 +60,15 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         if (!isset($_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'])) {
             LoggerManager::getLogger()->warn('no session');
             $result = null;
+            
+            // clean up
+
+            $state->popTable('aod_index');
+            $state->popGlobals();
+            
             self::markTestIncomplete('environment dependency: This test needs session');
+            return;
+            
         } else {
             $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
         }
@@ -198,6 +206,8 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     
     public function testSavePreferencesToDBAndResetPreferences()
     {
+        self::markTestIncomplete('environment dependency');
+        
 	// save state
 
         $state = new \SuiteCRM\StateSaver();
@@ -224,7 +234,6 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'category' => 'test_category',
         ));
         
-        self::markTestIncomplete('environment dependency');
         //$this->assertFalse(isset($result->id));
 
         //reset the preferences and verify that it is deleted
