@@ -52,4 +52,18 @@ class Reports extends \AcceptanceTester
         $I->clickSaveButton();
         $DetailView->waitForDetailViewVisible();
     }
+
+    /**
+     * Add a field to a report
+     *
+     * @param $name
+     * @param $module
+     */
+    public function addField($name, $module) {
+        $I = new EditView($this->getScenario());
+        $I->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
+        $I->click($module, '.jqtree_common jqtree-title jqtree-title-folder');
+        $I->click($name, '.jqtree-title jqtree_common');
+    }
 }

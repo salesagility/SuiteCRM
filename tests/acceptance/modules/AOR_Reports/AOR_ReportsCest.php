@@ -304,10 +304,7 @@ class AOR_ReportsCest
         $reports->createReport('Report_Test_Text', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
-$(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Accounts', '.jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', '.jqtree-title jqtree_common');
+        $reports->addField('Name', 'Accounts');
 
         // Add condition
         $editView->click('Conditions', 'tab-toggler');
@@ -360,11 +357,8 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $reports->createReport('Report_Test_Dates', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
-$(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
-        $editView->click('Date Created', 'jqtree-title jqtree_common');
+        $reports->addField('Name', 'Accounts');
+        $reports->addField('Name', 'Date Created');
 
         // Add condition
         $editView->click('Conditions', 'tab-toggler');
@@ -448,11 +442,8 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $reports->createReport('Report_Test_Text', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
-$(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Accounts', '.jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', '.jqtree-title jqtree_common');
-        $editView->click('Deleted', '.jqtree-title jqtree_common');
+        $reports->addField('Name', 'Accounts');
+        $reports->addField('Name', 'Deleted');
 
         // Add condition
         $editView->click('Conditions', 'tab-toggler');
@@ -514,11 +505,8 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $reports->createReport('Report_Test_Text', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
-$(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Accounts', '.jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', '.jqtree-title jqtree_common');
-        $editView->click('Type', '.jqtree-title jqtree_common');
+        $reports->addField('Name', 'Accounts');
+        $reports->addField('Type', 'Accounts');
 
         // Add condition
         $editView->click('Conditions', 'tab-toggler');
@@ -571,10 +559,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $reports->createReport('Report_Test_Pagination', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
-$(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addField('Name', 'Accounts');
 
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -623,10 +608,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $reports->createReport('Report_Test_Pagination_Parameters', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
-$(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addField('Name', 'Accounts');
 
         $editView->click('Conditions', 'tab-toggler');
         $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
@@ -686,10 +668,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $reports->createReport('Report_Test_Charts', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
-$(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addField('Name', 'Accounts');
 
         // Add Chart
         $editView->click('Charts', 'tab-toggler');
@@ -749,10 +728,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $reports->createReport('Report_Test_Contains', 'Accounts');
 
         // Add field
-        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
-$(\'#fieldTree\').tree(\'addToSelection\', node);');
-        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
-        $editView->click('Name', 'jqtree-title jqtree_common');
+        $reports->addField('Name', 'Accounts');
 
         // Add condition
         $editView->click('Conditions', 'tab-toggler');
