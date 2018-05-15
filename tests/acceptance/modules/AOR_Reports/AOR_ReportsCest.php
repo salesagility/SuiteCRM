@@ -340,6 +340,159 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
      * @param \Step\Acceptance\Reports $reports
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
+     * As administrative user I want to verify the output of a report using date fields
+     */
+    public function testScenarioDateFieldReportOutput(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Verify the output of a report based on date fields');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to reports list-view
+        $I->loginAsAdmin();
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Report_Test_Dates');
+        $editView->selectOption('#report_module', 'Accounts');
+
+        // Add field
+        $editView->click('Fields', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->click('Date Created', 'jqtree-title jqtree_common');
+
+        // Add condition
+        $editView->click('Conditions', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->click('Date Created', 'jqtree-title jqtree_common');
+        $editView->click('Date Created', 'jqtree-title jqtree_common');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+
+        // Set users date format
+        $reports->gotoProfile();
+        $reports->setDateTime();
+        $editView->fillField('dateformat', 'd/m/Y');
+        $editView->fillField('timeformat', 'H:i');
+        $editView->fillField('timezone', 'UTC');
+
+        $date1 = strtotime("-1 day", strtotime(date('d/m/Y')));
+        $date2 = strtotime("+1 day", strtotime(date('d/m/Y')));
+
+        $editView->fillField('#aor_conditions_fieldInput1', $date1);
+        $editView->fillField('#aor_conditions_operator[1]', 'Greater Than');
+
+
+        $editView->fillField('#aor_conditions_fieldInput2', $date2);
+        $editView->fillField('#aor_conditions_operator[2]', 'Less Than');
+
+
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $I->see('Test_Account', '.sugar_field');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to verify the output of a report using checkbox fields
+     */
+    public function testScenarioCheckboxFieldReportOutput(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Verify the output of a report based on checkbox fields');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to Accounts
+        $I->loginAsAdmin();
+        $navigationBar->clickAllMenuItem('Accounts');
+        $listView->waitForListViewVisible();
+
+        // Create Account
+        $I->see('Create Account', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Test_Account');
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+
+        // Navigate to reports list-view
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Report_Test_Text');
+        $editView->selectOption('#report_module', 'Accounts');
+
+        // Add field
+        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
+        $editView->click('Accounts', '.jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', '.jqtree-title jqtree_common');
+
+        // Add condition
+        $editView->click('Conditions', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $I->see('Deleted');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
      * As administrative user I want to verify the pagination of reports
      */
     public function testScenarioPagination(
