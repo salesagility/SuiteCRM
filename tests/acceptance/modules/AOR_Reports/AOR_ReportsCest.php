@@ -290,13 +290,7 @@ class AOR_ReportsCest
         $listView->waitForListViewVisible();
 
         // Create Account
-        $I->see('Create Account', '.actionmenulink');
-        $sidebar->clickSideBarAction('Create');
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Test_Account');
-        $editView->clickSaveButton();
-        $detailView->waitForDetailViewVisible();
-
+        $reports->createAccount('Test_Account');
 
         // Navigate to reports list-view
         $reports->gotoReports();
@@ -440,13 +434,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $listView->waitForListViewVisible();
 
         // Create Account
-        $I->see('Create Account', '.actionmenulink');
-        $sidebar->clickSideBarAction('Create');
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Test_Account');
-        $editView->clickSaveButton();
-        $detailView->waitForDetailViewVisible();
-
+        $reports->createAccount('Test_Account');
 
         // Navigate to reports list-view
         $reports->gotoReports();
@@ -512,13 +500,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $listView->waitForListViewVisible();
 
         // Create Account
-        $I->see('Create Account', '.actionmenulink');
-        $sidebar->clickSideBarAction('Create');
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Test_Account');
-        $editView->clickSaveButton();
-        $detailView->waitForDetailViewVisible();
-
+        $reports->createAccount('Test_Account');
 
         // Navigate to reports list-view
         $reports->gotoReports();
@@ -753,12 +735,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $listView->waitForListViewVisible();
 
         // Create Account
-        $I->see('Create Account', '.actionmenulink');
-        $sidebar->clickSideBarAction('Create');
-        $editView->waitForEditViewVisible();
-        $editView->fillField('#name', 'Test_Account_Contains');
-        $editView->clickSaveButton();
-        $detailView->waitForDetailViewVisible();
+        $reports->createAccount('Test_Account_Contains');
 
         // Navigate to reports list-view
         $reports->gotoReports();
