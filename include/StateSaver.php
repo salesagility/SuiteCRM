@@ -90,7 +90,22 @@ class StateSaver
     public function __destruct()
     {
         if (!empty($this->stack)) {
-            throw new StateSaverException('Some garbage state left in stack (did you pop everything?): ' . var_export($this->stack, true));
+            
+            $info = "\nNeeds to restore:\n";
+            
+            $namespaces = array_keys($this->stack);
+            foreach ($namespaces as $namespace) {
+                $keys = array_keys($this->stack[$namespace]);
+                foreach ($keys as $key) {
+                    $value = (string)$key;
+                    if (strlen($value) > 30) {
+                        $value = substr($value, 0, 28) . '..';
+                    }
+                    $info .= "\t[$namespace.$key] => '$value'\n";
+                }
+            }
+            
+            throw new StateSaverException('Some garbage state left in stack (did you pop everything?)' . $info);
         }
     }
     
