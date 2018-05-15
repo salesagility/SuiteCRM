@@ -471,6 +471,7 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
 $(\'#fieldTree\').tree(\'addToSelection\', node);');
         $editView->click('Accounts', '.jqtree_common jqtree-title jqtree-title-folder');
         $editView->click('Name', '.jqtree-title jqtree_common');
+        $editView->click('Deleted', '.jqtree-title jqtree_common');
 
         // Add condition
         $editView->click('Conditions', 'tab-toggler');
@@ -482,6 +483,80 @@ $(\'#fieldTree\').tree(\'addToSelection\', node);');
 
         // Check Output
         $I->see('Deleted');
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\Reports $reports
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to verify the output of a report using DropDown fields
+     */
+    public function testScenarioDropDownFieldReportOutput(
+        \AcceptanceTester $I,
+        \Step\Acceptance\SideBar $sidebar,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\NavigationBar $navigationBar,
+        \Step\Acceptance\Reports $reports,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Verify the output of a report based on DropDown fields');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to Accounts
+        $I->loginAsAdmin();
+        $navigationBar->clickAllMenuItem('Accounts');
+        $listView->waitForListViewVisible();
+
+        // Create Account
+        $I->see('Create Account', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Test_Account');
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+
+        // Navigate to reports list-view
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        // Select create report from sidebar
+        $I->see('Create Report', '.actionmenulink');
+        $sidebar->clickSideBarAction('Create');
+
+        // Create a report
+        $editView->waitForEditViewVisible();
+        $editView->fillField('#name', 'Report_Test_Text');
+        $editView->selectOption('#report_module', 'Accounts');
+
+        // Add field
+        $editView->executeJS('var node = $(\'span.jqtree_common.jqtree-title.jqtree-title-folder\').closest(\'li.jqtree_common\').data(\'node\');
+$(\'#fieldTree\').tree(\'addToSelection\', node);');
+        $editView->click('Accounts', '.jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', '.jqtree-title jqtree_common');
+        $editView->click('Type', '.jqtree-title jqtree_common');
+
+        // Add condition
+        $editView->click('Conditions', 'tab-toggler');
+        $editView->click('Accounts', 'jqtree_common jqtree-title jqtree-title-folder');
+        $editView->click('Name', 'jqtree-title jqtree_common');
+        $editView->fillField('#aor_conditions_value[0]', 'Test_Account');
+        $editView->clickSaveButton();
+        $detailView->waitForDetailViewVisible();
+
+        // Check Output
+        $I->see('Type');
     }
 
     /**
