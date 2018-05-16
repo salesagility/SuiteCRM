@@ -81,6 +81,17 @@ class AOW_WorkflowCest
         $workflow->setConditionOperator($lastCondition, $operator, $operatorType);
         $workflow->setConditionOperatorDateTimeValue($lastCondition);
 
+        $workflow->addCondition();
+        $lastCondition = $workflow->getLastConditionRowNumber();
+        $module = 'Accounts';
+        $field = 'Date Modified';
+        $operator = 'Greater Than or Equal To';
+        $operatorType = 'Value';
+        $workflow->setConditionModuleField($lastCondition, $module, $field);
+        $workflow->setConditionOperator($lastCondition, $operator, $operatorType);
+        $workflow->setConditionOperatorDateTimeValue($lastCondition);
+
+
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
     }
