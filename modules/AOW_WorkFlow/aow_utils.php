@@ -339,19 +339,6 @@ function getModuleField(
             . $fieldname
             . $aor_row
             . '.tpl';
-    } elseif(strstr($aow_field, 'aow_conditionLines') !== false) {
-        // get aor condition row
-        $aor_row = str_replace('aow_conditions_value', '', $aow_field);
-        $aor_row = str_replace('[', '', $aor_row);
-        $aor_row = str_replace(']', '', $aor_row);
-        // set the filename for this control
-        $file = create_cache_directory('modules/AOW_WorkFlow/')
-            . $module
-            . $view
-            . $alt_type
-            . $fieldname
-            . $aor_row
-            . '.tpl';
     } else {
         //  its probably result of the report
         // set the filename for this control
