@@ -104,6 +104,11 @@ class AOR_ReportsCest
         $reports->createReport('Test_'. $this->fakeData->company(), 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
+
+        // Delete report
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
     }
 
     /**
@@ -148,8 +153,16 @@ class AOR_ReportsCest
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
-        $listView->clickNameLink('fail');
+        $reports->gotoReports();
+        $listView->waitForListViewVisible();
+
+        $listView->clickNameLink($reportName);
         $detailView->waitForDetailViewVisible();
+
+        // Delete report
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
     }
 
     /**
@@ -202,8 +215,12 @@ class AOR_ReportsCest
 
         // Save record
         $editView->click('Save');
-
         $detailView->waitForDetailViewVisible();
+
+        // Delete report
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
     }
 
     /**
@@ -259,9 +276,10 @@ class AOR_ReportsCest
         $editView->click('Save');
 
         $detailView->waitForDetailViewVisible();
+
+        // Delete report
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
-
         $listView->waitForListViewVisible();
     }
 
@@ -307,13 +325,9 @@ class AOR_ReportsCest
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
-        $listView->clickNameLink($reportName);
-        $detailView->waitForDetailViewVisible();
-
         // Delete Record
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
-
         $listView->waitForListViewVisible();
     }
 }
