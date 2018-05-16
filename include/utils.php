@@ -3493,6 +3493,7 @@ function display_stack_trace($textOnly = false)
     }
 
     echo $out;
+    return $out;
 }
 
 function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
@@ -3541,9 +3542,10 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
     }
     $error_msg = '<b>' . $type . '</b>:' . $error_msg;
     echo $error_msg;
-    display_stack_trace();
+    $trace = display_stack_trace();
+    \SuiteCRM\ErrorMessage::log("Catch error: $error_msg \nTrace info:\n" . $trace);
     if ($halt_script) {
-        exit - 1;
+        exit(1);
     }
 }
 
