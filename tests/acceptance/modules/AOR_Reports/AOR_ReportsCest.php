@@ -207,9 +207,6 @@ class AOR_ReportsCest
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
-        $listView->clickNameLink($reportName);
-        $detailView->waitForDetailViewVisible();
-
         // Edit Record
         $detailView->clickActionMenuItem('Edit');
 
