@@ -37,7 +37,7 @@ class CallsCest
         $I->fillField('#name', 'Call_Test');
 
         // Verify date
-        $I->seeElement('#date_start_meridiem');
+        $I->waitForElementVisible('#date_start_meridiem');
 
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
