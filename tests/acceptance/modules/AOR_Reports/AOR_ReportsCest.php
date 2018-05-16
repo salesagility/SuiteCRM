@@ -265,9 +265,6 @@ class AOR_ReportsCest
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
 
-        $listView->clickNameLink($reportName);
-        $detailView->waitForDetailViewVisible();
-
         // duplicate Record
         $detailView->clickActionMenuItem('Duplicate');
         $editView->fillField('#name', $reportName . '_1');
