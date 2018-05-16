@@ -1,9 +1,11 @@
 <?php
-namespace Api\V8;
+namespace Api\V8\BeanDecorator;
 
 class BeanManager
 {
     const MAX_RECORDS_PER_PAGE = 20;
+    const DEFAULT_OFFSET = 0;
+    const DEFAULT_MAX = -1;
 
     /**
      * @var array
@@ -26,6 +28,10 @@ class BeanManager
      */
     public function newBeanSafe($module)
     {
+        if (array_key_exists($module, $this->beanAliases)) {
+            $module = $this->beanAliases[$module];
+        }
+
         $bean = \BeanFactory::newBean($module);
 
         if (!$bean instanceof \SugarBean) {
@@ -91,16 +97,14 @@ class BeanManager
     /**
      * @param string $module
      *
-     * @return \SugarBean
+     * @return BeanListRequest
      */
-    public function findBean($module)
+    public function getList($module)
     {
         if (array_key_exists($module, $this->beanAliases)) {
             $module = $this->beanAliases[$module];
         }
 
-        $bean = $this->newBeanSafe($module);
-
-        return $bean;
+        return new BeanListRequest($this->newBeanSafe($module));
     }
 }

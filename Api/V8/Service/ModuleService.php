@@ -1,18 +1,15 @@
 <?php
 namespace Api\V8\Service;
 
-use Api\V8\BeanManager;
+use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\JsonApi\Helper\AttributeObjectHelper;
+use Api\V8\JsonApi\Helper\PaginationObjectHelper;
 use Api\V8\JsonApi\Helper\RelationshipObjectHelper;
-use Api\V8\JsonApi\Response\AttributeResponse;
 use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
-use Api\V8\JsonApi\Response\PaginationResponse;
-use Api\V8\JsonApi\Response\RelationshipResponse;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
-use Psr\Http\Message\UriInterface;
 use Slim\Http\Request;
 
 class ModuleService
@@ -33,34 +30,44 @@ class ModuleService
     private $relationshipHelper;
 
     /**
+     * @var PaginationObjectHelper
+     */
+    private $paginationHelper;
+
+    /**
      * @param BeanManager $beanManager
      * @param AttributeObjectHelper $attributeHelper
      * @param RelationshipObjectHelper $relationshipHelper
+     * @param PaginationObjectHelper $paginationHelper
      */
     public function __construct(
         BeanManager $beanManager,
         AttributeObjectHelper $attributeHelper,
-        RelationshipObjectHelper $relationshipHelper
+        RelationshipObjectHelper $relationshipHelper,
+        PaginationObjectHelper $paginationHelper
     ) {
         $this->beanManager = $beanManager;
         $this->attributeHelper = $attributeHelper;
         $this->relationshipHelper = $relationshipHelper;
+        $this->paginationHelper = $paginationHelper;
     }
 
     /**
      * @param GetModuleParams $params
-     * @param UriInterface $uri
+     * @param string $path
      *
      * @return DocumentResponse
      */
-    public function getRecord(GetModuleParams $params, UriInterface $uri)
+    public function getRecord(GetModuleParams $params, $path)
     {
+        $fields = $params->getFields();
         $bean = $this->beanManager->getBeanSafe(
             $params->getModuleName(),
             $params->getId()
         );
 
-        $dataResponse = $this->getDataResponse($bean, $params, $uri->getPath());
+        $dataResponse = $this->getDataResponse($bean, $fields, $path);
+
         $response = new DocumentResponse();
         $response->setData($dataResponse);
 
@@ -75,62 +82,44 @@ class ModuleService
      */
     public function getRecords(GetModulesParams $params, Request $request)
     {
-        $bean = $this->beanManager->findBean($params->getModuleName());
-        $pageParams = $params->getPage();
-        $response = new DocumentResponse();
-        $uriPath = $request->getUri()->getPath();
+        $module = $params->getModuleName();
+        $fields = $params->getFields();
+        $size = $params->getPage()->getSize();
+        $number = $params->getPage()->getNumber();
+        $offset = $number !== 0 ? ($number - 1) * $size : $number;
+        $orderBy = $params->getSort();
 
-        // we should really split this into classes asap
-        if (isset($pageParams['size'])) {
-            $pageSize = (int) $pageParams['size'];
-            if ($pageSize > BeanManager::MAX_RECORDS_PER_PAGE) {
-                throw new \InvalidArgumentException(
-                    'Maximum allowed page size is ' . BeanManager::MAX_RECORDS_PER_PAGE
-                );
-            }
-
-            $currentPage = (int) $pageParams['number'];
-            $offset = $currentPage !== 0 ? ($currentPage - 1) * $pageSize : $currentPage;
-
-            $beanList = $bean->get_list('', '', $offset, -1, $pageSize);
-
-            if ($currentPage !== 0) {
-                $totalPages = ceil((int) $beanList['row_count'] / $pageSize);
-                if ($beanList['row_count'] <= $offset) {
-                    throw new \InvalidArgumentException(
-                        'Page not found. Total pages: ' . $totalPages
-                    );
-                }
-
-                $response->setMeta(
-                    new MetaResponse(['total-pages' => $totalPages])
-                );
-
-                $pagination = new PaginationResponse();
-                $pagination->setFirst($this->createPaginationLink($request, 1));
-                $pagination->setLast($this->createPaginationLink($request, $totalPages));
-
-                if ($currentPage > 1) {
-                    $pagination->setPrev($this->createPaginationLink($request, $currentPage - 1));
-                }
-
-                if ($currentPage + 1 <= $totalPages) {
-                    $pagination->setNext($this->createPaginationLink($request, $currentPage + 1));
-                }
-
-                $response->setLinks($pagination);
-            }
-        } else {
-            $beanList = $bean->get_list();
-        }
+        $beanListResponse = $this->beanManager->getList($module)
+            ->orderBy($orderBy)
+            ->offset($offset)
+            ->max($size)
+            ->fetch();
 
         $data = [];
-        foreach ($beanList['list'] as $record) {
-            $dataResponse = $this->getDataResponse($record, $params, $uriPath . '/' . $record->id);
+        foreach ($beanListResponse->getBeans() as $bean) {
+            $dataResponse = $this->getDataResponse(
+                $bean,
+                $fields,
+                $request->getUri()->getPath() . '/' . $bean->id
+            );
+
             $data[] = $dataResponse;
         }
 
+        $response = new DocumentResponse();
         $response->setData($data);
+
+        // pagination
+        if ($number !== BeanManager::DEFAULT_OFFSET) {
+            // this will be split into separated classed later
+            $totalPages = ceil($beanListResponse->getRowCount() / $size);
+
+            $paginationMeta = $this->paginationHelper->getPaginationMeta($totalPages);
+            $paginationLinks = $this->paginationHelper->getPaginationLinks($request, $totalPages, $number);
+
+            $response->setMeta($paginationMeta);
+            $response->setLinks($paginationLinks);
+        }
 
         return $response;
     }
@@ -144,7 +133,7 @@ class ModuleService
      */
     public function createRecord($module, $params)
     {
-        $bean = $this->beanManager->findBean($module);
+        $bean = $this->beanManager->newBeanSafe($module);
 
         // this is gonna be replaced with param
         if (!isset($params['data'])) {
@@ -166,8 +155,7 @@ class ModuleService
         $bean->save();
 
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
-        $attributes = $this->attributeHelper->getAttributes($bean);
-        $dataResponse->setAttributes(new AttributeResponse($attributes));
+        $dataResponse->setAttributes($this->attributeHelper->getAttributes($bean));
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
@@ -209,8 +197,7 @@ class ModuleService
         }
 
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
-        $attributes = $this->attributeHelper->getAttributes($bean);
-        $dataResponse->setAttributes(new AttributeResponse($attributes));
+        $dataResponse->setAttributes($this->attributeHelper->getAttributes($bean));
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
@@ -242,36 +229,18 @@ class ModuleService
 
     /**
      * @param \SugarBean $bean
-     * @param GetModuleParams|GetModulesParams $params
+     * @param array $fields
      * @param string $path
      *
      * @return DataResponse
      */
-    public function getDataResponse(\SugarBean $bean, $params, $path)
+    public function getDataResponse(\SugarBean $bean, $fields, $path)
     {
-        // this method might go to a separate class later
+        // this will be split into separated classed later
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
-
-        $attributes = $this->attributeHelper->getAttributes($bean, $params->getFields());
-        $relationships = $this->relationshipHelper->getRelationships($bean, $path);
-
-        $dataResponse->setAttributes(new AttributeResponse($attributes));
-        $dataResponse->setRelationships(new RelationshipResponse($relationships));
+        $dataResponse->setAttributes($this->attributeHelper->getAttributes($bean, $fields));
+        $dataResponse->setRelationships($this->relationshipHelper->getRelationships($bean, $path));
 
         return $dataResponse;
-    }
-
-    /**
-     * @param Request $request
-     * @param int $number
-     *
-     * @return string
-     */
-    private function createPaginationLink(Request $request, $number)
-    {
-        $queryParams = $request->getQueryParams();
-        $queryParams['page']['number'] = $number;
-
-        return sprintf('/%s?%s', $request->getUri()->getPath(), urldecode(http_build_query($queryParams)));
     }
 }

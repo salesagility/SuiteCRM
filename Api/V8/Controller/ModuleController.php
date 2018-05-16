@@ -33,7 +33,7 @@ class ModuleController extends BaseController
     public function getModuleRecord(Request $request, Response $response, array $args, GetModuleParams $params)
     {
         try {
-            $jsonResponse = $this->moduleService->getRecord($params, $request->getUri());
+            $jsonResponse = $this->moduleService->getRecord($params, $request->getUri()->getPath());
 
             return $this->generateResponse($response, $jsonResponse, 200);
         } catch (\Exception $exception) {

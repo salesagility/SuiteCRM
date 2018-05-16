@@ -1,6 +1,6 @@
 <?php
 
-use Api\V8\BeanManager;
+use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\AccessTokenEntity;
 use Api\V8\OAuth2\Entity\ClientEntity;
 use Api\V8\OAuth2\Repository\AccessTokenRepository;

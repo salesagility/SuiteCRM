@@ -6,7 +6,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class BaseParam implements \JsonSerializable
 {
-    const REGEX_FIELDS_PATTERN = '/[^A-Za-z0-9-_,]/';
+    const REGEX_FIELD_PATTERN = '/[^A-Za-z0-9-_,]/';
+    const REGEX_SORT_PATTERN = '/[^A-Za-z0-9-_]/';
     const REGEX_PAGE_PATTERN = '/^\d+$/';
 
     /**

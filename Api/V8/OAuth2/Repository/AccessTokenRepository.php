@@ -1,7 +1,7 @@
 <?php
 namespace Api\V8\OAuth2\Repository;
 
-use Api\V8\BeanManager;
+use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\AccessTokenEntity;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;

@@ -1,6 +1,6 @@
 <?php
 
-use Api\V8\BeanManager;
+use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Controller\InvocationStrategy\SuiteInvocationStrategy;
 use Interop\Container\ContainerInterface as Container;
 

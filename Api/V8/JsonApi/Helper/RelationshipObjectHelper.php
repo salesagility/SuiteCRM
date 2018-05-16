@@ -3,6 +3,7 @@ namespace Api\V8\JsonApi\Helper;
 
 use Api\V8\Helper\VarDefHelper;
 use Api\V8\JsonApi\Response\LinksResponse;
+use Api\V8\JsonApi\Response\RelationshipResponse;
 
 class RelationshipObjectHelper
 {
@@ -23,7 +24,7 @@ class RelationshipObjectHelper
      * @param \SugarBean $bean
      * @param string $uriPath
      *
-     * @return array
+     * @return RelationshipResponse
      */
     public function getRelationships(\SugarBean $bean, $uriPath)
     {
@@ -40,6 +41,6 @@ class RelationshipObjectHelper
             $relationshipsLinks[$module] = ['links' => $linkResponse];
         }
 
-        return $relationshipsLinks;
+        return new RelationshipResponse($relationshipsLinks);
     }
 }

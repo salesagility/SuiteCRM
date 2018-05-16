@@ -1,6 +1,6 @@
 <?php
 
-use Api\V8\BeanManager;
+use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Helper;
 use Api\V8\JsonApi\Helper as ApiHelper;
 use Interop\Container\ContainerInterface as Container;
@@ -18,5 +18,8 @@ return [
         return new ApiHelper\RelationshipObjectHelper(
             $container->get(Helper\VarDefHelper::class)
         );
+    },
+    ApiHelper\PaginationObjectHelper::class => function (Container $container) {
+        return new ApiHelper\PaginationObjectHelper();
     },
 ];

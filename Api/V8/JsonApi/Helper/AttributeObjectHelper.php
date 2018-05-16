@@ -1,7 +1,8 @@
 <?php
 namespace Api\V8\JsonApi\Helper;
 
-use Api\V8\BeanManager;
+use Api\V8\BeanDecorator\BeanManager;
+use Api\V8\JsonApi\Response\AttributeResponse;
 
 class AttributeObjectHelper
 {
@@ -20,11 +21,11 @@ class AttributeObjectHelper
 
     /**
      * @param \SugarBean $bean
-     * @param array|null $fieldParams
+     * @param array|null $fields
      *
-     * @return array
+     * @return AttributeResponse
      */
-    public function getAttributes(\SugarBean $bean, $fieldParams = null)
+    public function getAttributes(\SugarBean $bean, $fields = null)
     {
         $bean->fixUpFormatting();
         $attributes = $bean->toArray();
@@ -36,46 +37,12 @@ class AttributeObjectHelper
             }
         });
 
-        if ($fieldParams !== null) {
-            $attributes = $this->getFilteredAttributes($fieldParams, $attributes);
+        if ($fields !== null) {
+            $attributes = array_intersect_key($attributes, array_flip($fields));
         }
 
         unset($attributes['id']);
 
-        return $attributes;
-    }
-
-    /**
-     * @param array $fieldParams
-     * @param array $attributes
-     *
-     * @return array
-     * @throws \InvalidArgumentException If field(s) is/are not found.
-     */
-    private function getFilteredAttributes(array $fieldParams, array $attributes)
-    {
-        $module = $this->beanManager->findBean(key($fieldParams));
-
-        // spaces between params are validated in the endpoint's Param class
-        $fields = explode(',', array_shift($fieldParams));
-        $invalidFields = array_filter($fields, function ($field) use ($attributes) {
-            return !array_key_exists($field, $attributes);
-        });
-
-        if ($invalidFields) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'The following field%s in %s module %s not found: %s',
-                    count($invalidFields) > 1 ? 's' : '',
-                    $module->getObjectName(),
-                    count($invalidFields) > 1 ? 'are' : 'is',
-                    implode(', ', $invalidFields)
-                )
-            );
-        }
-
-        $attributes = array_intersect_key($attributes, array_flip($fields));
-
-        return $attributes;
+        return new AttributeResponse($attributes);
     }
 }

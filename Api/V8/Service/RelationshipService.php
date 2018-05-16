@@ -1,9 +1,8 @@
 <?php
 namespace Api\V8\Service;
 
-use Api\V8\BeanManager;
+use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\JsonApi\Helper\AttributeObjectHelper;
-use Api\V8\JsonApi\Response\AttributeResponse;
 use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
@@ -58,7 +57,7 @@ class RelationshipService
             foreach ($relatedBeans as $relatedBean) {
                 $dataResponse = new DataResponse($relatedBean->getObjectName(), $relatedBean->id);
                 $attributes = $this->attributeHelper->getAttributes($relatedBean, $params->getFields());
-                $dataResponse->setAttributes(new AttributeResponse($attributes));
+                $dataResponse->setAttributes($attributes);
 
                 $data[] = $dataResponse;
             }

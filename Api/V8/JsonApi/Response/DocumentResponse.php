@@ -4,7 +4,7 @@ namespace Api\V8\JsonApi\Response;
 class DocumentResponse implements \JsonSerializable
 {
     /**
-     * @var DataResponse|DataResponse[]
+     * @var DataResponse|DataResponse[]|[]
      */
     private $data;
 
@@ -19,7 +19,7 @@ class DocumentResponse implements \JsonSerializable
     private $links;
 
     /**
-     * @return DataResponse|DataResponse[]
+     * @return DataResponse|DataResponse[]|[]
      */
     public function getData()
     {
@@ -27,7 +27,7 @@ class DocumentResponse implements \JsonSerializable
     }
 
     /**
-     * @param DataResponse|DataResponse[] $data
+     * @param DataResponse|DataResponse[]|[] $data
      */
     public function setData($data)
     {
@@ -71,6 +71,10 @@ class DocumentResponse implements \JsonSerializable
      */
     public function jsonSerialize()
     {
+        if (!$this->getData()) {
+            $this->setMeta(new MetaResponse(['message' => 'Request was successful, but there is no result']));
+        }
+
         $response = [
             'meta' => $this->getMeta(),
             'data' => $this->getData(),
