@@ -1768,8 +1768,7 @@ function sugar_die($error_message, $exit_code = 1)
 {
     global $focus;
     sugar_cleanup();
-    //echo $error_message;
-    //die($exit_code);
+    echo $error_message;
     throw new \Exception($error_message, $exit_code);
 }
 

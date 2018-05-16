@@ -40,6 +40,7 @@
 $dictionary['AOS_Products'] = array(
     'table' => 'aos_products',
     'audited' => true,
+    'duplicate_merge' => true,
     'fields' => array(
         'aos_products_purchases' => array(
             'name' => 'aos_products_purchases',
