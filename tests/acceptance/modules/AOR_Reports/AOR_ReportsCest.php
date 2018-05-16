@@ -28,14 +28,6 @@ class AOR_ReportsCest
     }
 
     /**
-     * @param AcceptanceTester $I
-     */
-    public function _after(AcceptanceTester $I)
-    {
-
-    }
-
-    /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Reports $reports
