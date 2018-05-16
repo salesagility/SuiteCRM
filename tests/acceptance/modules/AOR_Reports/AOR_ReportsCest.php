@@ -21,8 +21,9 @@ class AOR_ReportsCest
     {
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
-            $this->fakeDataSeed = rand(0, 2048);
         }
+
+        $this->fakeDataSeed = rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
@@ -99,6 +100,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
+        $this->fakeData->seed($this->fakeDataSeed);
         $reports->createReport('Test_'. $this->fakeData->company(), 'Accounts');
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -140,6 +142,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
+        $this->fakeData->seed($this->fakeDataSeed);
         $reportName = 'Test_'. $this->fakeData->company();
         $reports->createReport($reportName, 'Accounts');
         $editView->clickSaveButton();
@@ -185,6 +188,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
+        $this->fakeData->seed($this->fakeDataSeed);
         $reportName = 'Test_'. $this->fakeData->company();
         $reports->createReport($reportName, 'Accounts');
         $editView->clickSaveButton();
@@ -238,6 +242,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
+        $this->fakeData->seed($this->fakeDataSeed);
         $reportName = 'Test_'. $this->fakeData->company();
         $reports->createReport($reportName, 'Accounts');
         $editView->clickSaveButton();
@@ -296,6 +301,7 @@ class AOR_ReportsCest
         $sidebar->clickSideBarAction('Create');
 
         // Create a report
+        $this->fakeData->seed($this->fakeDataSeed);
         $reportName = 'Test_'. $this->fakeData->company();
         $reports->createReport($reportName, 'Accounts');
         $editView->clickSaveButton();
