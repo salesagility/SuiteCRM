@@ -866,9 +866,6 @@ class SugarView
         $template->assign('SUGAR_GRP1', getVersionedPath('cache/include/javascript/sugar_grp1.js'));
         $template->assign('CALENDAR', getVersionedPath('include/javascript/calendar.js'));
 
-        if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-            $template->assign('HEADERSYNC', getVersionedPath('modules/Sync/headersync.js'));
-        }
         echo $template->fetch('include/MVC/View/tpls/displayLoginJS.tpl');
     }
 
