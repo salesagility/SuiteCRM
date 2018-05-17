@@ -511,7 +511,15 @@ enableQS(false);
         $altStrings = array();
         foreach($alt_modules[1] as $alt){
             //create the alt string and replace the alt token
-            $altString = 'alt="'.translate('LBL_VIEW','SugarFeed').' '.$GLOBALS['app_list_strings']['moduleListSingular'][$alt].'"';
+            
+            $moduleListSingularAlt = null;
+            if (isset($GLOBALS['app_list_strings']['moduleListSingular'][$alt])) {
+                $moduleListSingularAlt = $GLOBALS['app_list_strings']['moduleListSingular'][$alt];
+            } else {
+                LoggerManager::getLogger()->warn('SugarFeedDashlet::display error: $GLOBALS[app_list_strings][moduleListSingular][$alt] is undefined');
+            }
+            
+            $altString = 'alt="'.translate('LBL_VIEW','SugarFeed').' '.$moduleListSingularAlt.'"';
             $listview = preg_replace('/REPLACE_ALT/', $altString, $listview,1);
         }
 
