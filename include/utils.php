@@ -5460,7 +5460,7 @@ function getClassInstance($className, $includePath)
     global $log;
 
     if ($includePath) {
-        requireClassFile($includePath);
+        require_once get_custom_file_if_exists($includePath);
     }
 
     $customClassName = 'Custom' . $className;
@@ -5474,12 +5474,4 @@ function getClassInstance($className, $includePath)
     }
 
     $log->fatal('Unable to find class: ' . $className);
-}
-
-/**
- * @param string $fileName
- */
-function requireClassFile($fileName)
-{
-    require_once get_custom_file_if_exists($fileName);
 }
