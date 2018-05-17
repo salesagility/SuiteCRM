@@ -5455,7 +5455,7 @@ function isValidId($id) {
  * @param string $className
  * @return mixed
  */
-function getClassInstance($className, $includePath)
+function getClassInstance($className, $includePath = false)
 {
     global $log;
 
