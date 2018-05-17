@@ -35,7 +35,6 @@ class RelationshipService
      *
      * @return DocumentResponse
      */
-
     public function getRelationship(GetRelationshipParams $params)
     {
         $bean = $this->beanManager->getBeanSafe(

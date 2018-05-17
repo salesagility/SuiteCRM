@@ -31,6 +31,8 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 
     /**
      * @inheritdoc
+     *
+     * @throws \InvalidArgumentException When access token is not found.
      */
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
     {
@@ -51,6 +53,8 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 
     /**
      * @inheritdoc
+     *
+     * @throws \InvalidArgumentException When refresh token is not found.
      */
     public function revokeRefreshToken($tokenId)
     {

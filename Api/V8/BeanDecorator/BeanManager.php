@@ -24,7 +24,7 @@ class BeanManager
      * @param string $module
      *
      * @return \SugarBean
-     * @throws \InvalidArgumentException When the module is invalid
+     * @throws \InvalidArgumentException When the module is invalid.
      */
     public function newBeanSafe($module)
     {
@@ -58,7 +58,7 @@ class BeanManager
      * @param string $module
      * @param string $id
      * @param array $params
-     * @param bool $deleted
+     * @param boolean $deleted
      *
      * @return \SugarBean
      * @throws \DomainException When bean id is empty or bean is not found by name.
@@ -71,7 +71,7 @@ class BeanManager
         $deleted = true
     ) {
         if (empty($id)) {
-            throw new \DomainException('Module id is empty when trying to fetch ' . $module);
+            throw new \DomainException('Module id is empty when trying to get ' . $module);
         }
 
         $objectName = \BeanFactory::getObjectName($module);

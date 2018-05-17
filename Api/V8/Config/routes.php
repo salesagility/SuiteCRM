@@ -59,7 +59,10 @@ $app->group('', function () use ($app) {
          * Get a relationship
          */
         $this
-            ->get('/module/{moduleName}/{id}/relationships/{relationshipName}', 'Api\V8\Controller\RelationshipController:getRelationship')
+            ->get(
+                '/module/{moduleName}/{id}/relationships/{relationshipName}',
+                'Api\V8\Controller\RelationshipController:getRelationship'
+            )
             ->add($paramsMiddlewareFactory->bind(GetRelationshipParams::class));
 
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));

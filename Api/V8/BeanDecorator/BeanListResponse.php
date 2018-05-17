@@ -31,7 +31,7 @@ class BeanListResponse
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getRowCount()
     {

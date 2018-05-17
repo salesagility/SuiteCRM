@@ -45,6 +45,11 @@ class ParamsMiddleware
         return $next($request, $httpResponse);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     private function getParameters(Request $request)
     {
         $routeParams = array_map(
@@ -56,12 +61,11 @@ class ParamsMiddleware
 
         $queryParams = $request->getQueryParams();
         $parsedBody = $request->getParsedBody();
-        $parameters = array_merge(
+
+        return array_merge(
             $routeParams,
             isset($queryParams) ? $queryParams : [],
             isset($parsedBody) ? $parsedBody : []
         );
-
-        return $parameters;
     }
 }

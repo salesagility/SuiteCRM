@@ -4,7 +4,7 @@ namespace Api\V8\JsonApi\Response;
 class ErrorResponse implements \JsonSerializable
 {
     /**
-     * @var int
+     * @var integer
      */
     private $status;
 
@@ -19,7 +19,7 @@ class ErrorResponse implements \JsonSerializable
     private $detail;
 
     /**
-     * @return int
+     * @return integer
      */
     public function getStatus()
     {
@@ -27,7 +27,7 @@ class ErrorResponse implements \JsonSerializable
     }
 
     /**
-     * @param int $status
+     * @param integer $status
      */
     public function setStatus($status)
     {

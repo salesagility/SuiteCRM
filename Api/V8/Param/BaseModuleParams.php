@@ -43,6 +43,8 @@ class BaseModuleParams extends BaseParam
 
     /**
      * @inheritdoc
+     *
+     * @throws \InvalidArgumentException In case of field is not found.
      */
     protected function configureParameters(OptionsResolver $resolver)
     {

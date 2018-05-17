@@ -38,4 +38,5 @@ class RelationshipController extends BaseController
         } catch (\Exception $exception) {
             return $this->generateErrorResponse($response, $exception, 400);
         }
-    }}
+    }
+}

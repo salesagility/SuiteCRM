@@ -1,7 +1,8 @@
 <?php
 namespace Api\V8\Param;
 
-use Api\V8\BeanDecorator\Filter;
+use Api\V8\JsonApi\Repository\Filter;
+use Api\V8\JsonApi\Repository\Sort;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,15 +22,25 @@ class GetModulesParams extends BaseModuleParams
     }
 
     /**
-     * @return string|null
+     * @return string
      */
     public function getSort()
     {
-        return isset($this->parameters['sort']) ? $this->parameters['sort'] : null;
+        return isset($this->parameters['sort']) ? $this->parameters['sort'] : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilter()
+    {
+        return isset($this->parameters['filter']) ? $this->parameters['filter'] : '';
     }
 
     /**
      * @inheritdoc
+     *
+     * @throws \InvalidArgumentException If page key is invalid.
      */
     protected function configureParameters(OptionsResolver $resolver)
     {
@@ -67,26 +78,10 @@ class GetModulesParams extends BaseModuleParams
                 ]),
             ], true))
             ->setNormalizer('sort', function (Options $options, $value) {
-                // we don't support multiple sorting. for now.
                 $bean = $this->beanManager->newBeanSafe($options->offsetGet('moduleName'));
-                $sortBy = ' ASC';
+                $sort = new Sort();
 
-                if ($value[0] === '-') {
-                    $sortBy = ' DESC';
-                    $value = ltrim($value, '-');
-                }
-
-                if (!property_exists($bean, $value)) {
-                    throw new \InvalidArgumentException(
-                        sprintf(
-                            'Sort field %s in %s module is not found',
-                            $value,
-                            $bean->getObjectName()
-                        )
-                    );
-                }
-
-                return $value . $sortBy;
+                return $sort->parseOrderBy($bean, $value);
             });
 
         $resolver
@@ -98,32 +93,11 @@ class GetModulesParams extends BaseModuleParams
             ->setNormalizer('filter', function (Options $options, $values) {
                 // we don't support multiple level filtering. for now.
                 $bean = $this->beanManager->newBeanSafe($options->offsetGet('moduleName'));
+                $filter = new Filter($bean->db);
 
-                $operator = $values['operator'];
-                unset($values['operator']);
-
-                foreach ($values as $key => $value) {
-                    if (!property_exists($bean, $key)) {
-                        throw new \InvalidArgumentException(
-                            sprintf(
-                                'Filter field %s in %s module is not found',
-                                $key,
-                                $bean->getObjectName()
-                            )
-                        );
-                    }
-
-                    if (!is_array($value)) {
-                        throw new \InvalidArgumentException(
-                            sprintf('Filter field %s must be an array', $key)
-                        );
-                    }
-
-                    $filterParams = new FilterParams($this->validatorFactory);
-                    $filterParams->configure($value);
-                }
+                return $filter->parseWhere($bean, $values);
             });
 
-        return parent::configureParameters($resolver);
+        parent::configureParameters($resolver);
     }
 }

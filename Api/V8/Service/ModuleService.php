@@ -88,9 +88,11 @@ class ModuleService
         $number = $params->getPage()->getNumber();
         $offset = $number !== 0 ? ($number - 1) * $size : $number;
         $orderBy = $params->getSort();
+        $where = $params->getFilter();
 
         $beanListResponse = $this->beanManager->getList($module)
             ->orderBy($orderBy)
+            ->where($where)
             ->offset($offset)
             ->max($size)
             ->fetch();
@@ -129,7 +131,7 @@ class ModuleService
      * @param array|null $params
      *
      * @return DocumentResponse
-     * @throws \InvalidArgumentException if data or bean's property are invalid
+     * @throws \InvalidArgumentException If data or bean's property are invalid.
      */
     public function createRecord($module, $params)
     {
@@ -168,7 +170,7 @@ class ModuleService
      * @param array|null $params
      *
      * @return DocumentResponse
-     * @throws \InvalidArgumentException if data or bean's property are invalid
+     * @throws \InvalidArgumentException If data or bean's property are invalid.
      */
     public function updateRecord(array $args, $params)
     {
@@ -234,7 +236,7 @@ class ModuleService
      *
      * @return DataResponse
      */
-    public function getDataResponse(\SugarBean $bean, $fields, $path)
+    public function getDataResponse(\SugarBean $bean, array $fields, $path)
     {
         // this will be split into separated classed later
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);

@@ -12,8 +12,10 @@ class AttributeResponse extends MetaResponse
 
     /**
      * @param array $properties
+     *
+     * @throws \InvalidArgumentException When attribute object includes forbidden keys.
      */
-    public function __construct($properties = [])
+    public function __construct(array $properties = [])
     {
         parent::__construct($properties);
 

@@ -12,8 +12,10 @@ class MetaResponse implements \JsonSerializable
      * Meta object can contain any properties.
      *
      * @param array $properties
+     *
+     * @throws \InvalidArgumentException When bean is not found with the given id.
      */
-    public function __construct($properties = [])
+    public function __construct(array $properties = [])
     {
         if (!is_array($properties) && !$properties instanceof \stdClass) {
             throw new \InvalidArgumentException('The properties must be an array or sdtClass');

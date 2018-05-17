@@ -27,8 +27,6 @@ class GetRelationshipParams extends GetModulesParams
      */
     protected function configureParameters(OptionsResolver $resolver)
     {
-        parent::configureParameters($resolver);
-
         $resolver
             ->setRequired('id')
             ->setAllowedTypes('id', ['string'])
@@ -40,5 +38,7 @@ class GetRelationshipParams extends GetModulesParams
         $resolver
             ->setRequired('relationshipName')
             ->setAllowedTypes('relationshipName', ['string']);
+
+        parent::configureParameters($resolver);
     }
 }

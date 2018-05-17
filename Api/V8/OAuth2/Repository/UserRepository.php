@@ -23,6 +23,8 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * @inheritdoc
+     *
+     * @throws \InvalidArgumentException If user does not exist or the password is invalid.
      */
     public function getUserEntityByUserCredentials(
         $username,

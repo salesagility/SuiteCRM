@@ -19,22 +19,22 @@ class BeanListRequest
     private $where = '';
 
     /**
-     * @var int
+     * @var integer
      */
     private $offset = BeanManager::DEFAULT_OFFSET;
 
     /**
-     * @var int
+     * @var integer
      */
     private $limit = -1;
 
     /**
-     * @var int
+     * @var integer
      */
     private $max = BeanManager::DEFAULT_MAX;
 
     /**
-     * @var int
+     * @var integer
      */
     private $deleted = 0;
 
@@ -81,7 +81,7 @@ class BeanListRequest
     }
 
     /**
-     * @param int $offset
+     * @param integer $offset
      *
      * @return BeanListRequest
      */
@@ -93,7 +93,7 @@ class BeanListRequest
     }
 
     /**
-     * @param int $limit
+     * @param integer $limit
      *
      * @return BeanListRequest
      */
@@ -105,7 +105,7 @@ class BeanListRequest
     }
 
     /**
-     * @param int $max
+     * @param integer $max
      *
      * @return BeanListRequest
      */
@@ -117,7 +117,7 @@ class BeanListRequest
     }
 
     /**
-     * @param int $deleted
+     * @param integer $deleted
      *
      * @return BeanListRequest
      */
@@ -129,7 +129,7 @@ class BeanListRequest
     }
 
     /**
-     * @param bool $singleSelect
+     * @param boolean $singleSelect
      *
      * @return BeanListRequest
      */

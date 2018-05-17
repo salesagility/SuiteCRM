@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class PageParams extends BaseParam
 {
     /**
-     * @return int
+     * @return integer
      */
     public function getSize()
     {
@@ -16,7 +16,7 @@ class PageParams extends BaseParam
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getNumber()
     {

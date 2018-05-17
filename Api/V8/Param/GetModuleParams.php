@@ -27,6 +27,6 @@ class GetModuleParams extends BaseModuleParams
                 new Assert\Uuid(['strict' => false]),
             ]));
 
-        return parent::configureParameters($resolver);
+        parent::configureParameters($resolver);
     }
 }

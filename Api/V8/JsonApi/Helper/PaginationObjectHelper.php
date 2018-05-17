@@ -8,7 +8,7 @@ use Slim\Http\Request;
 class PaginationObjectHelper
 {
     /**
-     * @param int $totalPages
+     * @param integer $totalPages
      *
      * @return MetaResponse
      */
@@ -19,8 +19,8 @@ class PaginationObjectHelper
 
     /**
      * @param Request $request
-     * @param int $totalPages
-     * @param int $number
+     * @param integer $totalPages
+     * @param integer $number
      *
      * @return PaginationResponse
      */
@@ -43,7 +43,7 @@ class PaginationObjectHelper
 
     /**
      * @param Request $request
-     * @param int $number
+     * @param integer $number
      *
      * @return string
      */

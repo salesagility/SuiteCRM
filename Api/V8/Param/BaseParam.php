@@ -47,6 +47,7 @@ abstract class BaseParam implements \JsonSerializable
      *
      * @param OptionsResolver $resolver
      *
+     * @return void
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException In case of invalid access.
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException In case of invalid option.
      */

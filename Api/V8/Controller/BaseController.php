@@ -12,7 +12,7 @@ abstract class BaseController
     /**
      * @param HttpResponse $httpResponse
      * @param DocumentResponse|ErrorResponse $response
-     * @param int $status
+     * @param integer $status
      *
      * @return HttpResponse
      */
@@ -36,11 +36,11 @@ abstract class BaseController
     /**
      * @param HttpResponse $httpResponse
      * @param \Exception $exception
-     * @param int $status
+     * @param integer $status
      *
      * @return HttpResponse
      */
-    public function generateErrorResponse(HttpResponse $httpResponse, $exception, $status)
+    public function generateErrorResponse(HttpResponse $httpResponse, \Exception $exception, $status)
     {
         $response = new ErrorResponse();
         $response->setStatus($status);
