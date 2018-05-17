@@ -5450,3 +5450,36 @@ function isValidId($id) {
     $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
     return $valid;
 }
+
+/**
+ * @param string $className
+ * @return mixed
+ */
+function getClassInstance($className, $includePath)
+{
+    global $log;
+
+    if ($includePath) {
+        requireClassFile($includePath);
+    }
+
+    $customClassName = 'Custom' . $className;
+
+    if (class_exists($customClassName)) {
+        return new $customClassName;
+    }
+
+    if (class_exists($className)) {
+        return new $className;
+    }
+
+    $log->fatal('Unable to find class: ' . $className);
+}
+
+/**
+ * @param string $fileName
+ */
+function requireClassFile($fileName)
+{
+    require_once get_custom_file_if_exists($fileName);
+}
