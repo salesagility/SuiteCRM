@@ -498,7 +498,12 @@ enableQS(false);
         };
 
 		$listview = preg_replace_callback('/\{([^\^ }]+)\.([^\}]+)\}/', $function, $listview);
-
+                
+ini_set('xdebug.var_display_max_depth', 5);
+ini_set('xdebug.var_display_max_children', 256);
+ini_set('xdebug.var_display_max_data', 1024);
+var_dump($listview);
+exit;
 
         //grab each token and store the module for later processing
         preg_match_all('/\[(\w+)\:/', $listview, $alt_modules);
