@@ -984,10 +984,6 @@ EOHTML;
 
             echo $this->_getModLanguageJS();
 
-            if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-                echo getVersionedScript('modules/Sync/headersync.js');
-            }
-
             //echo out the $js_vars variables as javascript variables
             echo "<script type='text/javascript'>\n";
             foreach ($js_vars as $var => $value) {
