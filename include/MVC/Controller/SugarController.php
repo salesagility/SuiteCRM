@@ -653,10 +653,9 @@ class SugarController{
             set_time_limit(0);//I'm wondering if we will set it never goes timeout here.
             // until we have more efficient way of handling MU, we have to disable the limit
             $GLOBALS['db']->setQueryLimit(0);
-            require_once("include/MassUpdate.php");
             require_once('modules/MySettings/StoreQuery.php');
             $seed = loadBean($_REQUEST['module']);
-            $mass = new MassUpdate();
+            $mass = getClassInstance('MassUpdate', 'include/MassUpdate.php');
             $mass->setSugarBean($seed);
             if(isset($_REQUEST['entire']) && empty($_POST['mass'])) {
                 $mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_query_by_page']);

@@ -383,7 +383,7 @@ class PopupSmarty extends ListViewSmarty{
         }
 		if(!empty($params['massupdate']) && $params['massupdate'] != false) {
 			$this->show_mass_update_form = true;
-			$this->mass = new MassUpdate();
+			$this->mass = getClassInstance('MassUpdate', 'include/MassUpdate.php');
 			$this->mass->setSugarBean($this->seed);
 			if(!empty($params['handleMassupdate']) || !isset($params['handleMassupdate'])) {
                 $this->mass->handleMassUpdate();

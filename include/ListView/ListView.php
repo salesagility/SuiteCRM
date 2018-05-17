@@ -123,8 +123,7 @@ function processListView($seed, $xTemplateSection, $html_varName)
     //needs to the reset after each search.
     $this->setLocalSessionVariable($html_varName,"DETAIL_NAV_HISTORY",false);
 
-    require_once('include/MassUpdate.php');
-    $mass = new MassUpdate();
+    $mass = getClassInstance('MassUpdate', 'include/MassUpdate.php');
     $add_acl_javascript = false;
     if(!isset($_REQUEST['action'])) {
         $this->shouldProcess=false;

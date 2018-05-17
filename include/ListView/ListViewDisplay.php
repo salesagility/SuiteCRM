@@ -43,7 +43,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 require_once('include/ListView/ListViewData.php');
-require_once('include/MassUpdate.php');
 
 class ListViewDisplay {
     static $listViewCounter = 0;
@@ -613,11 +612,11 @@ EOF;
 	}
 
      /**
-     * @return MassUpdate instance
+     * @return MassUpdate|MassUpdate instance
      */
     protected function getMassUpdate()
     {
-        return new MassUpdate();
+        return getClassInstance('MassUpdate', 'include/MassUpdate.php');
     }
 
     /**

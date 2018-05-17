@@ -56,8 +56,7 @@ $uids = array();
 if($_REQUEST['select_entire_list'] == '1'){
 	$order_by = '';
 
-	require_once('include/MassUpdate.php');
-	$mass = new MassUpdate();
+	$mass = getClassInstance('MassUpdate', 'include/MassUpdate.php');
 	$mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_query_by_page']);
 	$ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
 	/* BEGIN - SECURITY GROUPS */
