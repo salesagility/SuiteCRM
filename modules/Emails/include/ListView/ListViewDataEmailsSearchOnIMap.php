@@ -135,7 +135,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
             $ret_array['inner_join'] = ' ' . implode(' ', $this->lvde->seed->listview_inner_join) . ' ';
         }
 
-        if (!is_array($params)) {
+        if (!isset($params) || !is_array($params)) {
             $params = array();
         }
         if (!isset($params['custom_select'])) {
