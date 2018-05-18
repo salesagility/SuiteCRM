@@ -50,8 +50,7 @@ class CalendarCest
         // Navigate to calendar list-view
         $I->loginAsAdmin();
         $calendar->gotoCalendar();
-        $listView->waitForListViewVisible();
 
-        $I->see('Calendar', '.module-title-text');
+        $I->see('Calendar', '.moduleTitle');
     }
 }
