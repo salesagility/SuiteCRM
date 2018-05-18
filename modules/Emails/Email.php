@@ -2788,35 +2788,49 @@ class Email extends Basic
         $ieId = $this->mailbox_id;
         $mail = $this->setMailer($mail, '', $ieId);
 
-        // FROM ADDRESS
-        if (!empty($this->from_addr)) {
-            $mail->From = $this->from_addr;
+        
+        
+        if ($mail->oe->type === 'system') {
+            $mail->From = 
+            $sender = 
+            $ReplyToAddr = $mail->oe->smtp_from_addr;
+            $ReplyToName = $mail->oe->smtp_from_name;
         } else {
-            $mail->From = $current_user->getPreference('mail_fromaddress');
-            $this->from_addr = $mail->From;
-        }
-        // FROM NAME
-        if (!empty($this->from_name)) {
-            $mail->FromName = $this->from_name;
-        } elseif (!empty($this->from_addr_name)) {
-            $mail->FromName = $this->from_addr_name;
-        } else {
-            $mail->FromName = $current_user->getPreference('mail_fromname');
-            $this->from_name = $mail->FromName;
-        }
 
-        //Reply to information for case create and autoreply.
-        if (!empty($this->reply_to_name)) {
-            $ReplyToName = $this->reply_to_name;
-        } else {
-            $ReplyToName = $mail->FromName;
+            // FROM ADDRESS
+            if (!empty($this->from_addr)) {
+                $mail->From = $this->from_addr;
+            } else {
+                $mail->From = $current_user->getPreference('mail_fromaddress');
+                $this->from_addr = $mail->From;
+            }
+            // FROM NAME
+            if (!empty($this->from_name)) {
+                $mail->FromName = $this->from_name;
+            } elseif (!empty($this->from_addr_name)) {
+                $mail->FromName = $this->from_addr_name;
+            } else {
+                $mail->FromName = $current_user->getPreference('mail_fromname');
+                $this->from_name = $mail->FromName;
+            }
+
+            //Reply to information for case create and autoreply.
+            if (!empty($this->reply_to_name)) {
+                $ReplyToName = $this->reply_to_name;
+            } else {
+                $ReplyToName = $mail->FromName;
+            }
+
+            $sender = $mail->From;
+            if (!empty($this->reply_to_addr)) {
+                $ReplyToAddr = $this->reply_to_addr;
+            } else {
+                $ReplyToAddr = $mail->From;
+            }
         }
-        if (!empty($this->reply_to_addr)) {
-            $ReplyToAddr = $this->reply_to_addr;
-        } else {
-            $ReplyToAddr = $mail->From;
-        }
-        $mail->Sender = $mail->From; /* set Return-Path field in header to reduce spam score in emails sent via Sugar's Email module */
+        
+        
+        $mail->Sender = $sender; /* set Return-Path field in header to reduce spam score in emails sent via Sugar's Email module */
         $mail->AddReplyTo($ReplyToAddr, $locale->translateCharsetMIME(trim($ReplyToName), 'UTF-8', $OBCharset));
 
         //$mail->Subject = html_entity_decode($this->name, ENT_QUOTES, 'UTF-8');
