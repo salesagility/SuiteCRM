@@ -623,8 +623,8 @@ class ListViewDataEmails extends ListViewData
         return
             (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
             (
-                isset($request["type_basic"]) && count($request["type_basic"]) > 1 ||
-                $request["type_basic"][0] != ""
+                isset($request["type_basic"]) && (count($request["type_basic"]) > 1 ||
+                $request["type_basic"][0] != "")
             ) ||
             (isset($request["module"]) && $request["module"] == "MergeRecords");
     }
