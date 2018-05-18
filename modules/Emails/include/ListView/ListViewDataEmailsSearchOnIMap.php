@@ -323,7 +323,11 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
         $request['email_uids'] = $this->lvde->getEmailUIds($data);
 
-
+        if (!isset($queryString)) {
+            $queryString = null;
+            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: qurey string is not set');
+        }
+        
         $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
 
         return $ret;
