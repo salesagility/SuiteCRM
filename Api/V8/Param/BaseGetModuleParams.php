@@ -1,30 +1,12 @@
 <?php
 namespace Api\V8\Param;
 
-use Api\V8\BeanDecorator\BeanManager;
-use Api\V8\Factory\ValidatorFactory;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class BaseModuleParams extends BaseParam
+class BaseGetModuleParams extends BaseParam
 {
-    /**
-     * @var BeanManager
-     */
-    protected $beanManager;
-
-    /**
-     * @param ValidatorFactory $validatorFactory
-     * @param BeanManager $beanManager
-     */
-    public function __construct(ValidatorFactory $validatorFactory, BeanManager $beanManager)
-    {
-        parent::__construct($validatorFactory);
-
-        $this->beanManager = $beanManager;
-    }
-
     /**
      * @return string
      */
@@ -50,7 +32,14 @@ class BaseModuleParams extends BaseParam
     {
         $resolver
             ->setRequired('moduleName')
-            ->setAllowedTypes('moduleName', ['string']);
+            ->setAllowedTypes('moduleName', ['string'])
+            ->setAllowedValues('moduleName', $this->validatorFactory->createClosure([
+                new Assert\NotBlank(),
+                new Assert\Regex([
+                    'pattern' => self::REGEX_MODULE_NAME_PATTERN,
+                    'match' => false,
+                ]),
+            ]));
 
         $resolver
             ->setDefined('fields')
@@ -63,7 +52,7 @@ class BaseModuleParams extends BaseParam
                 ]),
             ], true))
             ->setNormalizer('fields', function (Options $options, $values) {
-                $bean = $this->beanManager->newBeanSafe(key($values));
+                $bean = $this->beanManager->newBeanSafe($options->offsetGet('moduleName'));
                 $attributes = $bean->toArray();
                 $fields = explode(',', array_shift($values));
 

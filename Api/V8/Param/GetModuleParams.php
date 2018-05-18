@@ -4,7 +4,7 @@ namespace Api\V8\Param;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class GetModuleParams extends BaseModuleParams
+class GetModuleParams extends BaseGetModuleParams
 {
     /**
      * @return string

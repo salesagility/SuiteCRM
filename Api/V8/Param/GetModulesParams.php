@@ -7,10 +7,8 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class GetModulesParams extends BaseModuleParams
+class GetModulesParams extends BaseGetModuleParams
 {
-    private static $allowedPageKeys = ['size', 'number'];
-
     /**
      * @return PageParams
      */
@@ -18,7 +16,7 @@ class GetModulesParams extends BaseModuleParams
     {
         return isset($this->parameters['page'])
             ? $this->parameters['page']
-            : new PageParams($this->validatorFactory);
+            : new PageParams($this->validatorFactory, $this->beanManager);
     }
 
     /**
@@ -51,17 +49,11 @@ class GetModulesParams extends BaseModuleParams
                 new Assert\NotBlank(),
                 new Assert\Regex([
                     'pattern' => self::REGEX_PAGE_PATTERN,
+                    'match' => false,
                 ]),
             ], true))
             ->setNormalizer('page', function (Options $options, $values) {
-                $invalidKeys = array_diff_key($values, array_flip(self::$allowedPageKeys));
-                if ($invalidKeys) {
-                    throw new \InvalidArgumentException(
-                        'Invalid key(s) for page parameter: ' . implode(', ', array_keys($invalidKeys))
-                    );
-                }
-
-                $pageParams = new PageParams($this->validatorFactory);
+                $pageParams = new PageParams($this->validatorFactory, $this->beanManager);
                 $pageParams->configure($values);
 
                 return $pageParams;

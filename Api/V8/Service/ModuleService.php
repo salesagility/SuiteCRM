@@ -8,6 +8,7 @@ use Api\V8\JsonApi\Helper\RelationshipObjectHelper;
 use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
+use Api\V8\Param\CreateModuleParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Slim\Http\Request;
@@ -127,20 +128,16 @@ class ModuleService
     }
 
     /**
-     * @param string $module
-     * @param array|null $params
+     * @param CreateModuleParams $params
      *
      * @return DocumentResponse
      * @throws \InvalidArgumentException If data or bean's property are invalid.
      */
-    public function createRecord($module, $params)
+    public function createRecord($params)
     {
+        $module = $params->getModuleName();
+        $data = $params->getData();
         $bean = $this->beanManager->newBeanSafe($module);
-
-        // this is gonna be replaced with param
-        if (!isset($params['data'])) {
-            throw new \InvalidArgumentException('Data resource object must exist');
-        }
 
         if (isset($params['data']['attributes'])) {
             foreach ($params['data']['attributes'] as $property => $value) {

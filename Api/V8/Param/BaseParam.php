@@ -1,14 +1,16 @@
 <?php
 namespace Api\V8\Param;
 
+use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\Factory\ValidatorFactory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class BaseParam implements \JsonSerializable
 {
-    const REGEX_FIELD_PATTERN = '/[^A-Za-z0-9-_,]/';
-    const REGEX_SORT_PATTERN = '/[^A-Za-z0-9-_]/';
-    const REGEX_PAGE_PATTERN = '/^\d+$/';
+    const REGEX_MODULE_NAME_PATTERN = '/^(\d|\W)|\W/';
+    const REGEX_FIELD_PATTERN = '/[^\w-,]/';
+    const REGEX_SORT_PATTERN = '/[^\w-]/';
+    const REGEX_PAGE_PATTERN = '/[^\d]/';
 
     /**
      * @var array
@@ -21,11 +23,18 @@ abstract class BaseParam implements \JsonSerializable
     protected $validatorFactory;
 
     /**
-     * @param ValidatorFactory $validatorFactory
+     * @var BeanManager
      */
-    public function __construct(ValidatorFactory $validatorFactory)
+    protected $beanManager;
+
+    /**
+     * @param ValidatorFactory $validatorFactory
+     * @param BeanManager $beanManager
+     */
+    public function __construct(ValidatorFactory $validatorFactory, BeanManager $beanManager)
     {
         $this->validatorFactory = $validatorFactory;
+        $this->beanManager = $beanManager;
     }
 
     /**
@@ -54,18 +63,10 @@ abstract class BaseParam implements \JsonSerializable
     abstract protected function configureParameters(OptionsResolver $resolver);
 
     /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return $this->parameters;
-    }
-
-    /**
      * @inheritdoc
      */
     public function jsonSerialize()
     {
-        return $this->toArray();
+        return $this->parameters;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Api\V8\Controller;
 
+use Api\V8\Param\CreateModuleParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Service\ModuleService;
@@ -64,17 +65,16 @@ class ModuleController extends BaseController
      * @param Request $request
      * @param Response $response
      * @param array $args
+     * @param CreateModuleParams $params
      *
      * @return Response
      */
-    public function createModuleRecord(Request $request, Response $response, array $args)
+    public function createModuleRecord(Request $request, Response $response, array $args, CreateModuleParams $params)
     {
         try {
-            $moduleName = $args['moduleName'];
-            $bodyParams = $request->getParsedBody();
-            $jsonResponse = $this->moduleService->createRecord($moduleName, $bodyParams);
+            $jsonResponse = $this->moduleService->createRecord($params);
 
-            return $this->generateResponse($response, $jsonResponse, 200);
+            return $this->generateResponse($response, $jsonResponse, 201);
         } catch (\Exception $exception) {
             return $this->generateErrorResponse($response, $exception, 400);
         }

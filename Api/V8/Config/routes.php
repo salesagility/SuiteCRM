@@ -2,6 +2,7 @@
 
 use Api\V8\Controller\LogoutController;
 use Api\V8\Factory\ParamsMiddlewareFactory;
+use Api\V8\Param\CreateModuleParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\GetRelationshipParams;
@@ -43,12 +44,14 @@ $app->group('', function () use ($app) {
         /**
          * Create a module record
          */
-        $this->post('/module/{moduleName}', 'Api\V8\Controller\ModuleController:createModuleRecord');
+        $this
+            ->post('/module', 'Api\V8\Controller\ModuleController:createModuleRecord')
+            ->add($paramsMiddlewareFactory->bind(CreateModuleParams::class));
 
         /**
          * Update a module record
          */
-        $this->patch('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:updateModuleRecord');
+        $this->patch('/module', 'Api\V8\Controller\ModuleController:updateModuleRecord');
 
         /**
          * Delete a module record

@@ -6,8 +6,8 @@ use Api\V8\Param;
 use Interop\Container\ContainerInterface as Container;
 
 return [
-    Param\BaseModuleParams::class => function (Container $container) {
-        return new Param\BaseModuleParams(
+    Param\BaseGetModuleParams::class => function (Container $container) {
+        return new Param\BaseGetModuleParams(
             $container->get(ValidatorFactory::class),
             $container->get(BeanManager::class)
         );
@@ -20,6 +20,12 @@ return [
     },
     Param\GetModulesParams::class => function (Container $container) {
         return new Param\GetModulesParams(
+            $container->get(ValidatorFactory::class),
+            $container->get(BeanManager::class)
+        );
+    },
+    Param\CreateModuleParams::class => function (Container $container) {
+        return new Param\CreateModuleParams(
             $container->get(ValidatorFactory::class),
             $container->get(BeanManager::class)
         );
