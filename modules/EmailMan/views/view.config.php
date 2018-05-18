@@ -149,8 +149,15 @@ class ViewConfig extends SugarView
         }
         
         $mailSmtpSsl = null;
+        if (isset($focus->settings['mail_smtpssl'])) {
+            $mailSmtpSsl = $focus->settings['mail_smtpssl'];
+        } else {
+            LoggerManager::getLogger()->error('EmailMan view display error: mail smtp pass is not set for focus');
+        }
+        
+        $mailSmtpPass = null;
         if (isset($focus->settings['mail_smtppass'])) {
-            $mailSmtpSsl = $focus->settings['mail_smtppass'];
+            $mailSmtpPass = $focus->settings['mail_smtppass'];
         } else {
             LoggerManager::getLogger()->error('EmailMan view display error: mail smtp pass is not set for focus');
         }
@@ -169,8 +176,8 @@ class ViewConfig extends SugarView
         $this->ss->assign("mail_smtpport", $mailSmtpPort);
         $this->ss->assign("mail_smtpuser", $mailSmtpUser);
         $this->ss->assign("mail_smtpauth_req", ($mailSmtpAuthReq) ? "checked='checked'" : "");
-        $this->ss->assign("mail_haspass", empty($mailSmtpSsl)?0:1);
-        $this->ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $focus->settings['mail_smtpssl']));
+        $this->ss->assign("mail_haspass", empty($mailSmtpPass)?0:1);
+        $this->ss->assign("MAIL_SSL_OPTIONS", get_select_options_with_id($app_list_strings['email_settings_for_ssl'], $mailSmtpSsl));
 
         //Assign the current users email for the test send dialogue.
         $this->ss->assign("CURRENT_USER_EMAIL", $current_user->email1);
