@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Cases extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to cases module
      */
     public function gotoCases()
     {

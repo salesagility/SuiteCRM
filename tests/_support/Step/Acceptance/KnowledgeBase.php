@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class KnowledgeBase extends \AcceptanceTester
 {
     /**
-     * Navigate to targets module
+     * Navigate to knowledge base module
      */
     public function gotoKnowledgeBase()
     {

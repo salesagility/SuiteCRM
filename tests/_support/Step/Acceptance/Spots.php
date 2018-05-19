@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Spots extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to spots module
      */
     public function gotoSpots()
     {

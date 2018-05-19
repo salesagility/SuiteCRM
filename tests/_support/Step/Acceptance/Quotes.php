@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Quotes extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to quotes module
      */
     public function gotoQuotes()
     {

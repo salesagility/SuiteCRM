@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Calls extends \AcceptanceTester
 {
     /**
-     * Go to calls module
+     * Navigate to calls module
      */
     public function gotoCalls()
     {
@@ -17,7 +17,6 @@ class Calls extends \AcceptanceTester
      * Create a call
      *
      * @param $name
-     * @param $module
      */
     public function createCall($name)
     {

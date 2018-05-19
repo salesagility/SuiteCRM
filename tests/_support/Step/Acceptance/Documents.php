@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Documents extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to documents module
      */
     public function gotoDocuments()
     {

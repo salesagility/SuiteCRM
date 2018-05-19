@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Accounts extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to accounts module
      */
     public function gotoAccounts()
     {

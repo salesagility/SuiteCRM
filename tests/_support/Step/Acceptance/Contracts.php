@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Contracts extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to contracts module
      */
     public function gotoContracts()
     {

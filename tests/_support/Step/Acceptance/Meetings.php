@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Meetings extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to meetings module
      */
     public function gotoMeetings()
     {

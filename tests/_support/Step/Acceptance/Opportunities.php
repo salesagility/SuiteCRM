@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Opportunities extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to opportunities module
      */
     public function gotoOpportunities()
     {

@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Contacts extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to contacts module
      */
     public function gotoContacts()
     {

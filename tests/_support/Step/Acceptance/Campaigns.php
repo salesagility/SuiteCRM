@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Campaigns extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to campaigns module
      */
     public function gotoCampaigns()
     {

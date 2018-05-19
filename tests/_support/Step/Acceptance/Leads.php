@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Leads extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to leads module
      */
     public function gotoLeads()
     {

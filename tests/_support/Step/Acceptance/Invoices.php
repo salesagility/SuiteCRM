@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Invoices extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to invoices module
      */
     public function gotoInvoices()
     {

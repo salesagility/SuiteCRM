@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Tasks extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to tasks module
      */
     public function gotoTasks()
     {

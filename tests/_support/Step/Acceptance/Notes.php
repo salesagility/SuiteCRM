@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Notes extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to notes module
      */
     public function gotoNotes()
     {

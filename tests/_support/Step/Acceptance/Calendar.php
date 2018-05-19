@@ -5,7 +5,7 @@ namespace Step\Acceptance;
 class Calendar extends \AcceptanceTester
 {
     /**
-     * Go to the reports
+     * Navigate to calendar module
      */
     public function gotoCalendar()
     {
