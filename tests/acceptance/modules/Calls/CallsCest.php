@@ -55,9 +55,11 @@ class CallsCest
 
     /**
      * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\NavigationBar $NavigationBar
      * @param \Step\Acceptance\SideBar $sidebar
      * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -65,9 +67,11 @@ class CallsCest
      */
     public function testScenarioCallDate(
         \AcceptanceTester $I,
+        \Step\Acceptance\ListView $listView,
         \Step\Acceptance\NavigationBar $NavigationBar,
         \Step\Acceptance\SideBar $sidebar,
         \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\Calls $calls,
         \Step\Acceptance\DetailView $detailView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
@@ -81,17 +85,26 @@ class CallsCest
         $I->loginAsAdmin();
         $NavigationBar->clickAllMenuItem('Calls');
 
-        // Create Call
+        // Select create report from sidebar
         $I->see('Log Call', '.actionmenulink');
         $sidebar->clickSideBarAction('Log');
+
+        // Create call
         $editView->waitForEditViewVisible();
-        $I->fillField('#name', 'Call_Test');
+        $this->fakeData->seed($this->fakeDataSeed);
+        $callName = 'Test_'. $this->fakeData->company();
+        $calls->createCall($callName);
 
         // Verify date
         $I->waitForElementVisible('#date_start_hours', 120);
 
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
-        $I->see('Call_Test');
+        $I->see($callName);
+
+        // Delete Record
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
     }
 }
