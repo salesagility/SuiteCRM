@@ -2,7 +2,7 @@
 
 use Faker\Generator;
 
-class ProductCategoriesCest
+class AOS_Prouduct_CategoriesCest
 {
     /**
      * @var Generator $fakeData
@@ -52,6 +52,6 @@ class ProductCategoriesCest
         $productCategories->gotoProductCategories();
         $listView->waitForListViewVisible();
 
-        $I->see('ProductCategories', '.module-title-text');
+        $I->see('Products - Categories', '.module-title-text');
     }
 }

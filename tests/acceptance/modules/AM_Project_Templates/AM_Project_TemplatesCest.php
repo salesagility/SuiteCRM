@@ -2,7 +2,7 @@
 
 use Faker\Generator;
 
-class ProjectTemplatesCest
+class AM_Project_TemplatesCest
 {
     /**
      * @var Generator $fakeData
@@ -52,6 +52,6 @@ class ProjectTemplatesCest
         $projectTemplates->gotoProjectTemplates();
         $listView->waitForListViewVisible();
 
-        $I->see('ProjectTemplates', '.module-title-text');
+        $I->see('Projects - Templates', '.module-title-text');
     }
 }

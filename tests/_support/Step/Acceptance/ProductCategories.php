@@ -10,6 +10,6 @@ class ProductCategories extends \AcceptanceTester
     public function gotoProductCategories()
     {
         $I = new NavigationBar($this->getScenario());
-        $I->clickAllMenuItem('ProductCategories');
+        $I->clickAllMenuItem('Products - Categories');
     }
 }
