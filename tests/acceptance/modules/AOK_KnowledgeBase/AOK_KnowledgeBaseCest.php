@@ -54,4 +54,42 @@ class AOK_KnowledgeBaseCest
 
         $I->see('Knowledge Base', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\KnowledgeBase $knowledgeBase
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a Knowledge Base so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateKnowledgeBase(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\KnowledgeBase $knowledgeBase,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a Knowledge Base');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to Knowledge Base list-view
+        $I->loginAsAdmin();
+        $knowledgeBase->gotoKnowledgeBase();
+        $listView->waitForListViewVisible();
+
+        // Create Knowledge Base
+        $this->fakeData->seed($this->fakeDataSeed);
+        $knowledgeBase->createKnowledgeBase('Test_'. $this->fakeData->company());
+
+        // Delete Knowledge Base
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }

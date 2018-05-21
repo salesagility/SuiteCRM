@@ -83,11 +83,11 @@ class AOK_Knowledge_Base_CategoriesCest
         $knowledgeBaseCategories->gotoKnowledgeBaseCategories();
         $listView->waitForListViewVisible();
 
-        // Create account
+        // Create knowledge base category
         $this->fakeData->seed($this->fakeDataSeed);
         $knowledgeBaseCategories->createKnowledgeBaseCategory('Test_'. $this->fakeData->company());
 
-        // Delete account
+        // Delete knowledge base category
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
