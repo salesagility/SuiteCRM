@@ -3005,10 +3005,19 @@ abstract class DBManager
                 ) {
                     $change = false;
                     if (trim($before_value) !== trim($after_value)) {
+			 // decode value for field type of 'text' or 'varchar' to check before audit if the value contain trip tags or special character
+                        if($field_type == 'varchar' || $field_type == 'name' || $field_type == 'text') {
+                            $decode_before_value = strip_tags(html_entity_decode($before_value));
+                            $decode_after_value = strip_tags(html_entity_decode($after_value));
+                            if($decode_before_value == $decode_after_value) {
+                                continue;
+                            }
+                            $change = true;
+                        }
                         // Bug #42475: Don't directly compare numeric values, instead do the subtract and see if the comparison comes out to be "close enough", it is necessary for floating point numbers.
                         // Manual merge of fix 95727f2eed44852f1b6bce9a9eccbe065fe6249f from DBHelper
                         // This fix also fixes Bug #44624 in a more generic way and therefore eliminates the need for fix 0a55125b281c4bee87eb347709af462715f33d2d in DBHelper
-                        if ($this->isNumericType($field_type)) {
+                        else if ($this->isNumericType($field_type)) {
                             $numerator = abs(2 * ((trim($before_value) + 0) - (trim($after_value) + 0)));
                             $denominator = abs(((trim($before_value) + 0) + (trim($after_value) + 0)));
                             // detect whether to use absolute or relative error. use absolute if denominator is zero to avoid division by zero
