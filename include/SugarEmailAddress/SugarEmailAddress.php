@@ -66,6 +66,9 @@ class SugarEmailAddress extends SugarBean
     const COI_STAT_OPT_IN = 'opt-in';
     const COI_STAT_CONFIRMED_OPT_IN = 'confirmed-opt-in';
 
+    /** @var boolean $tracker_visibility */
+    public $tracker_visibility = false;
+    
     /**
      * @var string $table_name
      */
