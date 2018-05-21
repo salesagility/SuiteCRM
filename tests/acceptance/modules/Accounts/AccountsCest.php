@@ -57,7 +57,6 @@ class AccountsCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
@@ -68,7 +67,6 @@ class AccountsCest
      */
     public function testScenarioCreateAccount(
         \AcceptanceTester $I,
-        \Step\Acceptance\EditView $editView,
         \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Accounts $accounts,
