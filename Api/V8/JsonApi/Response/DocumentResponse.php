@@ -4,9 +4,9 @@ namespace Api\V8\JsonApi\Response;
 class DocumentResponse implements \JsonSerializable
 {
     /**
-     * @var DataResponse|DataResponse[]|[]
+     * @var array|DataResponse|DataResponse[]
      */
-    private $data;
+    private $data = [];
 
     /**
      * @var MetaResponse
@@ -19,7 +19,7 @@ class DocumentResponse implements \JsonSerializable
     private $links;
 
     /**
-     * @return DataResponse|DataResponse[]|[]
+     * @return array|DataResponse|DataResponse[]
      */
     public function getData()
     {
@@ -27,7 +27,7 @@ class DocumentResponse implements \JsonSerializable
     }
 
     /**
-     * @param DataResponse|DataResponse[]|[] $data
+     * @param array|DataResponse|DataResponse[] $data
      */
     public function setData($data)
     {
@@ -71,16 +71,22 @@ class DocumentResponse implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        if (!$this->getData()) {
+        $response = [
+            'data' => $this->getData()
+        ];
+
+        if (!$this->getData() && !$this->getMeta()) {
             $this->setMeta(new MetaResponse(['message' => 'Request was successful, but there is no result']));
         }
 
-        $response = [
-            'meta' => $this->getMeta(),
-            'data' => $this->getData(),
-            'links' => $this->getLinks(),
-        ];
+        if ($this->getMeta()) {
+            $response = ['meta' => $this->getMeta()] + $response;
+        }
 
-        return array_filter($response);
+        if ($this->getLinks()) {
+            $response['links'] = $this->getLinks();
+        }
+
+        return $response;
     }
 }

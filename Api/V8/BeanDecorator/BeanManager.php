@@ -107,4 +107,80 @@ class BeanManager
 
         return new BeanListRequest($this->newBeanSafe($module));
     }
+
+    /**
+     * @param \SugarBean $bean
+     * @param string $relationship
+     *
+     * @return array|\SugarBean[]
+     * @throws \RuntimeException When relationship cannot be loaded.
+     */
+    public function getRelatedBeans(\SugarBean $bean, $relationship)
+    {
+        if (!$bean->load_relationship($relationship)) {
+            throw new \RuntimeException(
+                sprintf('Cannot load relationship %s for module %s', $relationship, $bean->getObjectName())
+            );
+        }
+
+        return $bean->get_linked_beans($relationship);
+    }
+
+    /**
+     * @param \SugarBean $sourceBean
+     * @param \SugarBean $relatedBean
+     * @param string $relationship
+     *
+     * @throws \RuntimeException If relationship cannot be loaded or created between beans.
+     */
+    public function createRelationshipSafe(\SugarBean $sourceBean, \SugarBean $relatedBean, $relationship)
+    {
+        if (!$sourceBean->load_relationship($relationship)) {
+            throw new \RuntimeException(
+                sprintf('Cannot load relationship %s for module %s', $relationship, $sourceBean->getObjectName())
+            );
+        }
+
+        $result = $sourceBean->{$relationship}->add($relatedBean);
+
+        if (!$result) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Cannot create relationship %s between module %s and %s',
+                    $relationship,
+                    $sourceBean->getObjectName(),
+                    $relatedBean->getObjectName()
+                )
+            );
+        }
+    }
+
+    /**
+     * @param \SugarBean $sourceBean
+     * @param \SugarBean $relatedBean
+     * @param string $relationship
+     *
+     * @throws \RuntimeException If relationship cannot be loaded or deleted between beans.
+     */
+    public function deleteRelationshipSafe(\SugarBean $sourceBean, \SugarBean $relatedBean, $relationship)
+    {
+        if (!$sourceBean->load_relationship($relationship)) {
+            throw new \RuntimeException(
+                sprintf('Cannot load relationship %s for module %s', $relationship, $sourceBean->getObjectName())
+            );
+        }
+
+        $result = $sourceBean->{$relationship}->delete($sourceBean->id, $relatedBean->id);
+
+        if (!$result) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Cannot delete relationship %s between module %s and %s',
+                    $relationship,
+                    $sourceBean->getObjectName(),
+                    $relatedBean->getObjectName()
+                )
+            );
+        }
+    }
 }

@@ -5,7 +5,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class GetRelationshipParams extends BaseParam
+class DeleteRelationshipParams extends BaseParam
 {
     /**
      * @return string
@@ -24,11 +24,11 @@ class GetRelationshipParams extends BaseParam
     }
 
     /**
-     * @return string
+     * @return GetRelationshipDataParams
      */
-    public function getRelationshipName()
+    public function getData()
     {
-        return $this->parameters['relationshipName'];
+        return $this->parameters['data'];
     }
 
     /**
@@ -37,14 +37,6 @@ class GetRelationshipParams extends BaseParam
     public function getSourceBean()
     {
         return $this->parameters['sourceBean'];
-    }
-
-    /**
-     * @return \SugarBean
-     */
-    public function getRelatedBean()
-    {
-        return $this->parameters['relatedBean'];
     }
 
     /**
@@ -72,8 +64,17 @@ class GetRelationshipParams extends BaseParam
             ]));
 
         $resolver
-            ->setRequired('relationshipName')
-            ->setAllowedTypes('relationshipName', ['string']);
+            ->setRequired('data')
+            ->setAllowedTypes('data', ['array'])
+            ->setAllowedValues('data', $this->validatorFactory->createClosureForIterator([
+                new Assert\NotBlank(),
+            ]))
+            ->setNormalizer('data', function (Options $options, $value) {
+                $dataParams = new DeleteRelationshipDataParams($this->validatorFactory, $this->beanManager);
+                $dataParams->configure($value);
+
+                return $dataParams;
+            });
 
         $resolver
             ->setDefined('sourceBean')
@@ -84,12 +85,5 @@ class GetRelationshipParams extends BaseParam
                 );
             })
             ->setAllowedTypes('sourceBean', [\SugarBean::class]);
-
-        $resolver
-            ->setDefined('relatedBean')
-            ->setDefault('relatedBean', function (Options $options) {
-                return $this->beanManager->newBeanSafe($options->offsetGet('relationshipName'));
-            })
-            ->setAllowedTypes('relatedBean', [\SugarBean::class]);
     }
 }

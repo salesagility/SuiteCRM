@@ -5,14 +5,14 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class GetRelationshipParams extends BaseParam
+class DeleteRelationshipDataParams extends BaseParam
 {
     /**
      * @return string
      */
-    public function getModuleName()
+    public function getType()
     {
-        return $this->parameters['moduleName'];
+        return $this->parameters['type'];
     }
 
     /**
@@ -21,22 +21,6 @@ class GetRelationshipParams extends BaseParam
     public function getId()
     {
         return $this->parameters['id'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getRelationshipName()
-    {
-        return $this->parameters['relationshipName'];
-    }
-
-    /**
-     * @return \SugarBean
-     */
-    public function getSourceBean()
-    {
-        return $this->parameters['sourceBean'];
     }
 
     /**
@@ -53,9 +37,9 @@ class GetRelationshipParams extends BaseParam
     protected function configureParameters(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired('moduleName')
-            ->setAllowedTypes('moduleName', ['string'])
-            ->setAllowedValues('moduleName', $this->validatorFactory->createClosure([
+            ->setRequired('type')
+            ->setAllowedTypes('type', ['string'])
+            ->setAllowedValues('type', $this->validatorFactory->createClosure([
                 new Assert\NotBlank(),
                 new Assert\Regex([
                     'pattern' => self::REGEX_MODULE_NAME_PATTERN,
@@ -72,23 +56,12 @@ class GetRelationshipParams extends BaseParam
             ]));
 
         $resolver
-            ->setRequired('relationshipName')
-            ->setAllowedTypes('relationshipName', ['string']);
-
-        $resolver
-            ->setDefined('sourceBean')
-            ->setDefault('sourceBean', function (Options $options) {
-                return $this->beanManager->getBeanSafe(
-                    $options->offsetGet('moduleName'),
-                    $options->offsetGet('id')
-                );
-            })
-            ->setAllowedTypes('sourceBean', [\SugarBean::class]);
-
-        $resolver
             ->setDefined('relatedBean')
             ->setDefault('relatedBean', function (Options $options) {
-                return $this->beanManager->newBeanSafe($options->offsetGet('relationshipName'));
+                return $this->beanManager->getBeanSafe(
+                    $options->offsetGet('type'),
+                    $options->offsetGet('id')
+                );
             })
             ->setAllowedTypes('relatedBean', [\SugarBean::class]);
     }

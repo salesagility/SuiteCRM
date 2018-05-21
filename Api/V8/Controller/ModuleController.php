@@ -2,8 +2,10 @@
 namespace Api\V8\Controller;
 
 use Api\V8\Param\CreateModuleParams;
+use Api\V8\Param\DeleteModuleParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
+use Api\V8\Param\UpdateModuleParams;
 use Api\V8\Service\ModuleService;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -65,14 +67,14 @@ class ModuleController extends BaseController
      * @param Request $request
      * @param Response $response
      * @param array $args
-     * @param CreateModuleParams $params
+     * @param CreateModuleParams|UpdateModuleParams $params
      *
      * @return Response
      */
-    public function createModuleRecord(Request $request, Response $response, array $args, CreateModuleParams $params)
+    public function saveModuleRecord(Request $request, Response $response, array $args, $params)
     {
         try {
-            $jsonResponse = $this->moduleService->createRecord($params);
+            $jsonResponse = $this->moduleService->saveModuleRecord($params);
 
             return $this->generateResponse($response, $jsonResponse, 201);
         } catch (\Exception $exception) {
@@ -84,34 +86,14 @@ class ModuleController extends BaseController
      * @param Request $request
      * @param Response $response
      * @param array $args
+     * @param DeleteModuleParams $params
      *
      * @return Response
      */
-    public function updateModuleRecord(Request $request, Response $response, array $args)
+    public function deleteModuleRecord(Request $request, Response $response, array $args, DeleteModuleParams $params)
     {
         try {
-            // we should create a new middleware for fetching beans instead of passing args
-            $bodyParams = $request->getParsedBody();
-            $jsonResponse = $this->moduleService->updateRecord($args, $bodyParams);
-
-            return $this->generateResponse($response, $jsonResponse, 200);
-        } catch (\Exception $exception) {
-            return $this->generateErrorResponse($response, $exception, 400);
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @param Response $response
-     * @param array $args
-     *
-     * @return Response
-     */
-    public function deleteModuleRecord(Request $request, Response $response, array $args)
-    {
-        try {
-            // we should create a new middleware for fetching beans instead of passing args
-            $jsonResponse = $this->moduleService->deleteRecord($args);
+            $jsonResponse = $this->moduleService->deleteRecord($params);
 
             return $this->generateResponse($response, $jsonResponse, 200);
         } catch (\Exception $exception) {

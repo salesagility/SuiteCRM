@@ -24,6 +24,11 @@ class DataResponse implements \JsonSerializable
     private $relationships;
 
     /**
+     * @var LinksResponse
+     */
+    private $links;
+
+    /**
      * @param string $type
      * @param string $id
      */
@@ -82,6 +87,22 @@ class DataResponse implements \JsonSerializable
     }
 
     /**
+     * @return LinksResponse
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * @param LinksResponse $links
+     */
+    public function setLinks(LinksResponse $links)
+    {
+        $this->links = $links;
+    }
+
+    /**
      * @inheritdoc
      */
     public function jsonSerialize()
@@ -90,7 +111,8 @@ class DataResponse implements \JsonSerializable
             'type' => $this->getType(),
             'id' => $this->getId(),
             'attributes' => $this->getAttributes(),
-            'relationships' => $this->getRelationships()
+            'relationships' => $this->getRelationships(),
+            'links' => $this->getLinks()
         ];
 
         return array_filter($response);

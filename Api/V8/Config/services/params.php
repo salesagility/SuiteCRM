@@ -6,12 +6,6 @@ use Api\V8\Param;
 use Interop\Container\ContainerInterface as Container;
 
 return [
-    Param\BaseGetModuleParams::class => function (Container $container) {
-        return new Param\BaseGetModuleParams(
-            $container->get(ValidatorFactory::class),
-            $container->get(BeanManager::class)
-        );
-    },
     Param\GetModuleParams::class => function (Container $container) {
         return new Param\GetModuleParams(
             $container->get(ValidatorFactory::class),
@@ -30,7 +24,34 @@ return [
             $container->get(BeanManager::class)
         );
     },
+    Param\UpdateModuleParams::class => function (Container $container) {
+        return new Param\UpdateModuleParams(
+            $container->get(ValidatorFactory::class),
+            $container->get(BeanManager::class)
+        );
+    },
+    Param\DeleteModuleParams::class => function (Container $container) {
+        return new Param\DeleteModuleParams(
+            $container->get(ValidatorFactory::class),
+            $container->get(BeanManager::class)
+        );
+    },
     Param\GetRelationshipParams::class => function (Container $container) {
-        return new Param\GetRelationshipParams($container->get(ValidatorFactory::class));
+        return new Param\GetRelationshipParams(
+            $container->get(ValidatorFactory::class),
+            $container->get(BeanManager::class)
+        );
+    },
+    Param\CreateRelationshipParams::class => function (Container $container) {
+        return new Param\CreateRelationshipParams(
+            $container->get(ValidatorFactory::class),
+            $container->get(BeanManager::class)
+        );
+    },
+    Param\DeleteRelationshipParams::class => function (Container $container) {
+        return new Param\DeleteRelationshipParams(
+            $container->get(ValidatorFactory::class),
+            $container->get(BeanManager::class)
+        );
     },
 ];

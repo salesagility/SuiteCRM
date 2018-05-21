@@ -3,9 +3,13 @@
 use Api\V8\Controller\LogoutController;
 use Api\V8\Factory\ParamsMiddlewareFactory;
 use Api\V8\Param\CreateModuleParams;
+use Api\V8\Param\CreateRelationshipParams;
+use Api\V8\Param\DeleteModuleParams;
+use Api\V8\Param\DeleteRelationshipParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
 use Api\V8\Param\GetRelationshipParams;
+use Api\V8\Param\UpdateModuleParams;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Middleware\AuthorizationServerMiddleware;
 use League\OAuth2\Server\Middleware\ResourceServerMiddleware;
@@ -45,21 +49,25 @@ $app->group('', function () use ($app) {
          * Create a module record
          */
         $this
-            ->post('/module', 'Api\V8\Controller\ModuleController:createModuleRecord')
+            ->post('/module', 'Api\V8\Controller\ModuleController:saveModuleRecord')
             ->add($paramsMiddlewareFactory->bind(CreateModuleParams::class));
 
         /**
          * Update a module record
          */
-        $this->patch('/module', 'Api\V8\Controller\ModuleController:updateModuleRecord');
+        $this
+            ->patch('/module', 'Api\V8\Controller\ModuleController:saveModuleRecord')
+            ->add($paramsMiddlewareFactory->bind(UpdateModuleParams::class));
 
         /**
          * Delete a module record
          */
-        $this->delete('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:deleteModuleRecord');
+        $this
+            ->delete('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:deleteModuleRecord')
+            ->add($paramsMiddlewareFactory->bind(DeleteModuleParams::class));
 
         /**
-         * Get a relationship
+         * Get relationships
          */
         $this
             ->get(
@@ -67,6 +75,26 @@ $app->group('', function () use ($app) {
                 'Api\V8\Controller\RelationshipController:getRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(GetRelationshipParams::class));
+
+        /**
+         * Create relationship
+         */
+        $this
+            ->post(
+                '/module/{moduleName}/{id}/relationships',
+                'Api\V8\Controller\RelationshipController:createRelationship'
+            )
+            ->add($paramsMiddlewareFactory->bind(CreateRelationshipParams::class));
+
+        /**
+         * Delete relationship
+         */
+        $this
+            ->delete(
+                '/module/{moduleName}/{id}/relationships',
+                'Api\V8\Controller\RelationshipController:deleteRelationship'
+            )
+            ->add($paramsMiddlewareFactory->bind(DeleteRelationShipParams::class));
 
     })->add(new ResourceServerMiddleware($app->getContainer()->get(ResourceServer::class)));
 });

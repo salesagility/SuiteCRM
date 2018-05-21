@@ -9,8 +9,10 @@ use Api\V8\JsonApi\Response\DataResponse;
 use Api\V8\JsonApi\Response\DocumentResponse;
 use Api\V8\JsonApi\Response\MetaResponse;
 use Api\V8\Param\CreateModuleParams;
+use Api\V8\Param\DeleteModuleParams;
 use Api\V8\Param\GetModuleParams;
 use Api\V8\Param\GetModulesParams;
+use Api\V8\Param\UpdateModuleParams;
 use Slim\Http\Request;
 
 class ModuleService
@@ -62,10 +64,7 @@ class ModuleService
     public function getRecord(GetModuleParams $params, $path)
     {
         $fields = $params->getFields();
-        $bean = $this->beanManager->getBeanSafe(
-            $params->getModuleName(),
-            $params->getId()
-        );
+        $bean = $params->getBean();
 
         $dataResponse = $this->getDataResponse($bean, $fields, $path);
 
@@ -128,29 +127,19 @@ class ModuleService
     }
 
     /**
-     * @param CreateModuleParams $params
+     * @param CreateModuleParams|UpdateModuleParams $params
      *
      * @return DocumentResponse
-     * @throws \InvalidArgumentException If data or bean's property are invalid.
      */
-    public function createRecord($params)
+    public function saveModuleRecord($params)
     {
-        $module = $params->getModuleName();
-        $data = $params->getData();
-        $bean = $this->beanManager->newBeanSafe($module);
+        /** @var \SugarBean $bean */
+        $bean = $params->getData()->getBean();
+        $attributes = $params->getData()->getAttributes();
 
-        if (isset($params['data']['attributes'])) {
-            foreach ($params['data']['attributes'] as $property => $value) {
-                if (!property_exists($bean, $property)) {
-                    throw new \InvalidArgumentException(
-                        sprintf('Invalid property in %s module: %s', $bean->getObjectName(), $property)
-                    );
-                }
-
-                $bean->$property = $value;
-            }
+        foreach ($attributes as $property => $value) {
+            $bean->$property = $value;
         }
-
         $bean->save();
 
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
@@ -163,64 +152,18 @@ class ModuleService
     }
 
     /**
-     * @param array $args
-     * @param array|null $params
-     *
-     * @return DocumentResponse
-     * @throws \InvalidArgumentException If data or bean's property are invalid.
-     */
-    public function updateRecord(array $args, $params)
-    {
-        // we need to create a new class for preventing duplication
-        $module = $args['moduleName'];
-        $moduleId = $args['id'];
-
-        $bean = $this->beanManager->getBeanSafe($module, $moduleId);
-
-        if (!isset($params['data'])) {
-            throw new \InvalidArgumentException('Data resource object must exist');
-        }
-
-        if (isset($params['data']['attributes'])) {
-            foreach ($params['data']['attributes'] as $property => $value) {
-                if (!property_exists($bean, $property)) {
-                    throw new \InvalidArgumentException(
-                        sprintf('Invalid property in %s module: %s', $bean->getObjectName(), $property)
-                    );
-                }
-
-                $bean->$property = $value;
-            }
-
-            $bean->save();
-        }
-
-        $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
-        $dataResponse->setAttributes($this->attributeHelper->getAttributes($bean));
-
-        $response = new DocumentResponse();
-        $response->setData($dataResponse);
-
-        return $response;
-    }
-
-    /**
-     * @param array $args
+     * @param DeleteModuleParams $params
      *
      * @return DocumentResponse
      */
-    public function deleteRecord(array $args)
+    public function deleteRecord(DeleteModuleParams $params)
     {
-        // we need to create a new class for preventing duplication
-        $module = $args['moduleName'];
-        $moduleId = $args['id'];
-
-        $bean = $this->beanManager->getBeanSafe($module, $moduleId);
-        $bean->mark_deleted($moduleId);
+        $bean = $params->getBean();
+        $bean->mark_deleted($bean->id);
 
         $response = new DocumentResponse();
         $response->setMeta(
-            new MetaResponse(['message' => sprintf('Record with %s id is deleted', $moduleId)])
+            new MetaResponse(['message' => sprintf('Record with id %s is deleted', $bean->id)])
         );
 
         return $response;
@@ -228,12 +171,12 @@ class ModuleService
 
     /**
      * @param \SugarBean $bean
-     * @param array $fields
+     * @param array|null $fields
      * @param string $path
      *
      * @return DataResponse
      */
-    public function getDataResponse(\SugarBean $bean, array $fields, $path)
+    public function getDataResponse(\SugarBean $bean, $fields, $path)
     {
         // this will be split into separated classed later
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);

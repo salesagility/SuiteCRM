@@ -5,7 +5,7 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CreateModuleParams extends BaseParam
+class UpdateModuleParams extends BaseParam
 {
     /**
      * @return CreateDataParams
@@ -27,7 +27,7 @@ class CreateModuleParams extends BaseParam
                 new Assert\NotBlank(),
             ]))
             ->setNormalizer('data', function (Options $options, $values) {
-                $dataParams = new CreateDataParams($this->validatorFactory, $this->beanManager);
+                $dataParams = new UpdateDataParams($this->validatorFactory, $this->beanManager);
                 $dataParams->configure($values);
 
                 return $dataParams;
