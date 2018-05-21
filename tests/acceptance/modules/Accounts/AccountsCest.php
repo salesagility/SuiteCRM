@@ -54,4 +54,44 @@ class AccountsCest
 
         $I->see('Accounts', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a report with the reports module so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateAccount(
+        \AcceptanceTester $I,
+        \Step\Acceptance\EditView $editView,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Accounts $accounts,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create an Account');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to accounts list-view
+        $I->loginAsAdmin();
+        $accounts->gotoAccounts();
+        $listView->waitForListViewVisible();
+
+        // Create account
+        $this->fakeData->seed($this->fakeDataSeed);
+        $accounts->createAccount('Test_'. $this->fakeData->company());
+
+        // Delete account
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }
