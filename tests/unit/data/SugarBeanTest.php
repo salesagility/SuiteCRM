@@ -708,37 +708,37 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null, null, null, null);
+        SugarBean::createRelationshipMeta(null, null, null, array(), null);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null, null, null, 'Contacts');
+        SugarBean::createRelationshipMeta(null, null,null, array(), 'Contacts');
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null, null, null, 'Contacts', true);
+        SugarBean::createRelationshipMeta(null, null, null, array(), 'Contacts', true);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts');
+        SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', $this->db, null, null, 'Contacts');
+        SugarBean::createRelationshipMeta('User', $this->db, null, array(), 'Contacts');
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('Nonexists1', $this->db, null, null, 'Nonexists2');
+        SugarBean::createRelationshipMeta('Nonexists1', $this->db, null, array(), 'Nonexists2');
         self::assertCount(1, $GLOBALS['log']->calls['debug']);
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta('User', null, null, null, 'Contacts');
+        SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
         
     }
@@ -1422,6 +1422,46 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                 ),
                 'comment' => 'Work phone number of the contact',
                 'merge_filter' => 'enabled',
+            ),
+            'lawful_basis' => array(
+                'name' => 'lawful_basis',
+                'vname' => 'LBL_LAWFUL_BASIS',
+                'type' => 'multienum',
+                'massupdate' => true,
+                'no_default' => false,
+                'comments' => '',
+                'inline_edit' => true,
+                'reportable' => true,
+                'merge_filter' => 'enabled',
+                'len' => 100,
+                'size' => '20',
+                'options' => 'lawful_basis_dom',
+                'audited' => true,
+                'importable' => true,
+            ),
+            'date_reviewed' => array(
+                'name' => 'date_reviewed',
+                'vname' => 'LBL_DATE_REVIEWED',
+                'type' => 'date',
+                'massupdate' => true,
+                'audited' => true,
+                'importable' => true,
+            ),
+            'lawful_basis_source' => array(
+                'name' => 'lawful_basis_source',
+                'vname' => 'LBL_LAWFUL_BASIS_SOURCE',
+                'type' => 'enum',
+                'massupdate' => true,
+                'no_default' => false,
+                'comments' => '',
+                'inline_edit' => true,
+                'reportable' => true,
+                'merge_filter' => 'enabled',
+                'len' => 100,
+                'size' => '20',
+                'options' => 'lawful_basis_source_dom',
+                'audited' => true,
+                'importable' => true,
             ),
         ), $results);
 

@@ -17,6 +17,7 @@
     "ext-gd": "*",
     "ext-curl": "*",
     "ext-openssl": "*",
+    "ext-zip": "*",
     "slim/slim": "^3.8",
     "tuupola/slim-jwt-auth": "^2.0",
     "league/url": "^3.3",
@@ -32,7 +33,10 @@
     "codeception/codeception": "^2.0",
     "fzaninotto/Faker": "^1.6",
     "jeroendesloovere/vcard": "v1.5",
-    "browserstack/browserstack-local": "dev-master"
+    "browserstack/browserstack-local": "dev-master",
+    "consolidation/robo": "^1.0.0",
+    "mockery/mockery": "^0.9.9",
+    "symfony/yaml": "^3.4"
   },
   "scripts": {},
   "prefer-stable": true,

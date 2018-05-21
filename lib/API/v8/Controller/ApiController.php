@@ -224,7 +224,7 @@ class ApiController implements LoggerAwareInterface
                     ' Message: ' . $exception->getMessage() .
                     ' Detail: ' . $exception->getDetail() .
                     ' Source: [' . $exception->getSource()['pointer'] . ']';
-                $this->logger->log('fatal', $logMessage);
+                $this->logger->error($logMessage);
             } else {
                 $response = $response->withStatus(400);
                 $logMessage = $exception->getMessage();
