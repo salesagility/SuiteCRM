@@ -17,7 +17,6 @@ class Accounts extends \AcceptanceTester
      * Create an account
      *
      * @param $name
-     * @param $fake
      */
     public function createAccount($name)
     {
