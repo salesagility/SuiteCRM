@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -46,17 +46,62 @@ require_once('modules/MySettings/StoreQuery.php');
 
 class ViewList extends SugarView
 {
-    var $type = 'list';
-    var $lv;
-    var $searchForm;
-    var $use_old_search;
-    var $headers;
-    var $seed;
-    var $params;
-    var $listViewDefs;
-    var $storeQuery;
-    var $where = '';
+    /**
+     * @var string $type
+     */
+    public $type = 'list';
 
+    /**
+     * @var ListViewSmartyEmails $lv
+     */
+    public $lv;
+
+    /**
+     * @var SearchForm $searchForm
+     */
+    public $searchForm;
+
+    /** @var  array $savedSearchData */
+    public $savedSearchData;
+
+    /**
+     * @var
+     */
+    public $use_old_search;
+
+    /**
+     * @var bool $headers
+     */
+    public $headers;
+
+    /**
+     * @var SugarBean
+     */
+    public $seed;
+
+    /**
+     * @var array $params
+     */
+    public $params;
+
+    /**
+     * @var array $listViewDefs
+     */
+    public $listViewDefs;
+
+    /**
+     * @var StoreQuery $storeQuery
+     */
+    public $storeQuery;
+
+    /**
+     * @var string $where
+     */
+    public $where = '';
+
+    /**
+     * ViewList constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -76,29 +121,26 @@ class ViewList extends SugarView
         self::__construct();
     }
 
-
-    function oldSearch()
-    {
-
-    }
-
-    function newSearch()
-    {
-
-    }
-
-    function listViewPrepare()
+    /**
+     * Prepare List View
+     */
+    public function listViewPrepare()
     {
         $module = $GLOBALS['module'];
 
         $metadataFile = $this->getMetaDataFile();
 
-        if (!file_exists($metadataFile))
-            sugar_die($GLOBALS['app_strings']['LBL_NO_ACTION']);
+        if (!file_exists($metadataFile)) {
+            sugar_die(sprintf($GLOBALS['app_strings']['LBL_NO_ACTION'], $this->do_action));
+        }
 
         require($metadataFile);
 
         $this->listViewDefs = $listViewDefs;
+
+        if(isset($viewdefs[$this->module]['ListView']['templateMeta'])) {
+            $this->lv->templateMeta = $viewdefs[$this->module]['ListView']['templateMeta'];
+        }
 
         if (!empty($this->bean->object_name) && isset($_REQUEST[$module . '2_' . strtoupper($this->bean->object_name) . '_offset'])) {//if you click the pagination button, it will populate the search criteria here
             if (!empty($_REQUEST['current_query_by_page'])) {//The code support multi browser tabs pagination
@@ -191,7 +233,10 @@ class ViewList extends SugarView
         }
     }
 
-    function listViewProcess()
+    /**
+     * Process List View
+     */
+    public function listViewProcess()
     {
         $this->processSearchForm();
         $this->lv->searchColumns = $this->searchForm->searchColumns;
@@ -207,7 +252,10 @@ class ViewList extends SugarView
         }
     }
 
-    function prepareSearchForm()
+    /**
+     * Setup Search Form
+     */
+    public function prepareSearchForm()
     {
         $this->searchForm = null;
 
@@ -247,7 +295,10 @@ class ViewList extends SugarView
         }
     }
 
-    function processSearchForm()
+    /**
+     * Process Search Form
+     */
+    public function processSearchForm()
     {
         if (isset($_REQUEST['query'])) {
             // we have a query
@@ -283,12 +334,18 @@ class ViewList extends SugarView
         }
     }
 
-    function preDisplay()
+    /**
+     * Setup View
+     */
+    public function preDisplay()
     {
         $this->lv = new ListViewSmarty();
     }
 
-    function display()
+    /**
+     * Display View
+     */
+    public function display()
     {
         if (!$this->bean || !$this->bean->ACLAccess('list')) {
             ACLController::displayNoAccess();
@@ -309,5 +366,3 @@ class ViewList extends SugarView
         return new SearchForm($seed, $module, $action);
     }
 }
-
-?>

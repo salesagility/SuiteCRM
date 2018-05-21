@@ -63,30 +63,30 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
 	<tr>
 		<td width="15%" scope="row">
-			<slot>{MOD.LBL_GROUP_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot>
+			<span>{MOD.LBL_GROUP_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span>
 		</td>
 		<td width="35%" >
-			<slot><input name='user_name' type="text" tabindex='1' size='15' maxlength='25' value='{USER_NAME}'></slot>
+			<span><input name='user_name' type="text" tabindex='1' size='15' maxlength='25' value='{USER_NAME}'></span>
 		</td>
 		<td scope="row">
-			<slot>{MOD.LBL_DESCRIPTION}</slot>
+			<span>{MOD.LBL_DESCRIPTION}</span>
 		</td>
 		<td >
-			<slot><textarea name='description' type="text" tabindex='2' columns='40'>{DESCRIPTION}</textarea></slot>
+			<span><textarea name='description' type="text" tabindex='2' columns='40'>{DESCRIPTION}</textarea></span>
 		</td>
 	</tr>
 	<tr>
 		<td width="15%" scope="row">
-			<slot>{MOD.LBL_TEAM} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot>
+			<span>{MOD.LBL_TEAM} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></span>
 		</td>
 		<td width="35%" >
-			<slot><select name="team_id">{TEAMS}</select></slot>
+			<span><select name="team_id">{TEAMS}</select></span>
 		</td>
 		<td scope="row">
-			<slot></slot>
+			<span></span>
 		</td>
 		<td >
-			<slot></slot>
+			<span></span>
 		</td>
 	</tr>
 </table>

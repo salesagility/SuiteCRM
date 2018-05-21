@@ -139,6 +139,10 @@ if(strpos($server_software,'Microsoft-IIS') === false) {
 	<td> <?php echo $mod_strings['LBL_REPAIR_IE_DESC'] ; ?> </td>
 </tr>
 <tr>
+    <td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Repair','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_SYNC_IE_EMAILS']); ?>&nbsp;<a href="./index.php?module=Administration&action=SyncInboundEmailAccounts"><?php echo $mod_strings['LBL_SYNC_IE_EMAILS']; ?></a></td>
+    <td> <?php echo $mod_strings['LBL_SYNC_IE_EMAILS_DESC'] ; ?> </td>
+</tr>
+<tr>
 	<td scope="row"><?php echo SugarThemeRegistry::current()->getImage('Repair','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_REPAIR_XSS']); ?>&nbsp;<a href="./index.php?module=Administration&action=RepairXSS"><?php echo $mod_strings['LBL_REPAIR_XSS']; ?></a></td>
 	<td> <?php echo $mod_strings['LBL_REPAIRXSS_TITLE'] ; ?> </td>
 </tr>

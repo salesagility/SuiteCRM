@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -167,8 +167,8 @@ $xtpl->assign('encoded_assigned_users_popup_request_data', $json->encode($popup_
 if (!empty($focus->assigned_user_name))
     $xtpl->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
 
-$xtpl->assign("assign_user_select", SugarThemeRegistry::current()->getImage('id-ff-select', '', null, null, '.png', $mod_strings['LBL_SELECT']));
-$xtpl->assign("assign_user_clear", SugarThemeRegistry::current()->getImage('id-ff-clear', '', null, null, '.gif', $mod_strings['LBL_ID_FF_CLEAR']));
+$xtpl->assign("assign_user_select", '<span class="suitepicon suitepicon-action-select"></span>');
+$xtpl->assign("assign_user_clear", '<span class="suitepicon suitepicon-action-clear"></span>');
 //Assign qsd script
 require_once('include/QuickSearchDefaults.php');
 $qsd = QuickSearchDefaults::getQuickSearchDefaults();
@@ -247,9 +247,21 @@ $xtpl->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['reco
 if (isset($focus->body)) $xtpl->assign("BODY", $focus->body); else $xtpl->assign("BODY", "");
 if (isset($focus->body_html)) $xtpl->assign("BODY_HTML", $focus->body_html); else $xtpl->assign("BODY_HTML", "");
 
-require_once('include/SuiteMozaik.php');
-$mozaik = new SuiteMozaik();
-$xtpl->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_text'));
+
+// ---------------------------------
+// ------------ EDITOR -------------
+// ---------------------------------
+
+
+require_once 'include/SuiteEditor/SuiteEditorConnector.php';
+$templateWidth = 600;
+$xtpl->assign('template_width', $templateWidth);
+$xtpl->assign('BODY_EDITOR', SuiteEditorConnector::getHtml(SuiteEditorConnector::getSuiteSettings(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', $templateWidth)));
+$xtpl->assign('width_style', 'style="display:'.($current_user->getEditorType() != 'mozaik' ? 'none' : 'table-row').';"');
+
+// ---------------------------------
+// ---------------------------------
+// ---------------------------------
 
 
 if (true) {
@@ -264,7 +276,7 @@ if (true) {
     }
     ///////////////////////////////////////
     ////	MACRO VARS
-    $xtpl->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.EditView.variable_text.value)");
+    $xtpl->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.EditView.variable_text.value, \"email_template_editor\")");
 
     // bug 37255, included without condition
     $xtpl->parse("main.NoInbound.variable_button");
@@ -386,4 +398,4 @@ $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus);
 $javascript->addAllFields('');
 echo $javascript->getScript();
-?>
+

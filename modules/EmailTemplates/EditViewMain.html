@@ -152,7 +152,10 @@
 							</span>
 							<input type="text" size="30" tabindex="0" name="variable_text" />
 <!-- BEGIN: variable_button -->
-							<input type='button' tabindex="0" onclick='{INSERT_VARIABLE_ONCLICK}' class='button' value='{MOD.LBL_INSERT}'>
+							<div class="button-group">
+								<input  id="insert_variable_to_body_btn" type='button' tabindex="0" onclick='{INSERT_VARIABLE_ONCLICK}' class='button' value='{MOD.LBL_INSERT}' style="display: none;">
+								<input id="insert_variable_to_subject_btn" type='button' tabindex="0" onclick='insert_variable(document.EditView.variable_text.value, "subjectfield", true)' class='button' value='{MOD.LBL_INSERT}'>
+							</div>
 <!-- END: variable_button -->
 						</td>
 					</tr>
@@ -176,7 +179,7 @@
 							{MOD.LBL_SUBJECT}
 						</td>
 						<td colspan='4' >
-							<textarea onblur="remember_place(this);" name='subject' tabindex='0' cols="90" rows="1" style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" id="subjectfield">{SUBJECT}</textarea>
+							<textarea onclick="onClickTemplateSubject(this);" onblur="remember_place(this);" name='subject' tabindex='0' cols="90" rows="1" style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" id="subjectfield">{SUBJECT}</textarea>
 						</td>
 					</tr>
 					<tr>
@@ -187,6 +190,18 @@
 							&nbsp;{MOD.LBL_SEND_AS_TEXT}
 						</td>
 					</tr>
+					<tr {width_style}>
+						<td width="15%" scope="row">
+							{MOD.LBL_WIDTH}
+						</td>
+						<td>
+							<div class="panel-toolbar">
+								<div class="template-container">
+									<input type="number" class="form-control input-sm" id="mozaik_width_set" onkeyup="mozaik.setWidth(parseInt(this.value)+'px');" onmouseup="mozaik.setWidth(parseInt(this.value)+'px'); "value="{template_width}" >
+								</div>
+							</div>
+						</td>
+					<tr>
 					<tr>
 						<td valign="top" scope="row">
 							{MOD.LBL_BODY}
@@ -195,8 +210,7 @@
 <!-- BEGIN: textarea -->
 						<td colspan="4" >
 
-
-							{BODY_MOZAIK}
+							{BODY_EDITOR}
 
 
 							<div id='body_text_div'>

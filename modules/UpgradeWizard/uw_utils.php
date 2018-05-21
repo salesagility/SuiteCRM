@@ -760,7 +760,89 @@ function upgradeUWFiles($file) {
 		$allFiles[] = "$from_dir/include/utils/autoloader.php";
 	}
 
-	upgradeUWFilesCopy($allFiles, $from_dir);
+    if(file_exists("$from_dir/include/UploadFile.php")) {
+		$allFiles[] = "$from_dir/include/UploadFile.php";
+	}
+	if(file_exists("$from_dir/include/SugarTheme/SugarTheme.php")) {
+		$allFiles[] = "$from_dir/include/SugarTheme/SugarTheme.php";
+	}
+
+	// add extra files to post upgrade process
+	if(file_exists(realpath("$from_dir/../scripts/files_to_add_post.php"))) {
+		include(realpath("$from_dir/../scripts/files_to_add_post.php"));
+		if(isset($filesToAddPost) && is_array($filesToAddPost) && $filesToAddPost) {
+			foreach($filesToAddPost as $file) {
+				if(file_exists("$from_dir/$file")) {
+					$allFiles[] = "$from_dir/$file";
+					$GLOBALS['log']->info("File added to post upgrade: $from_dir/$file");
+				} else {
+					$GLOBALS['log']->error("File not found for post upgrade: $from_dir/$file");
+				}
+			}
+		}
+	}
+
+	// check custom changes and alert the user before upgrade
+
+	if($filesInCustom = checkCustomOverrides($from_dir)) {
+		global $mod_strings;
+		$alertMessage = $mod_strings["LBL_UPGRD_CSTM_CHK"];
+		echo "<div class=\"error\">$alertMessage<br><ul>";
+		foreach($filesInCustom as $fileInCustom) {
+			echo "<li>$fileInCustom => custom/$fileInCustom</li>";
+		}
+		echo "</ul></div>";
+	}upgradeUWFilesCopy($allFiles, $from_dir);
+}
+
+/**
+ * find files in custom folder if it also in upgrade pack
+ *
+ * @param string $fromDir uploaded temp directory
+ * @return array filelist (or empty array if there is no any)
+ */
+function checkCustomOverrides($fromDir) {
+
+	$ret = array();
+
+	logThis(' -------------- Check Custom Overrides ------------- ');
+
+	$path = realpath($fromDir);
+	logThis("Upload temp directory: $fromDir");
+
+	// read all upgrade files
+
+	$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
+
+	foreach($objects as $name => $object){
+
+		// check only files (folder doesn't matter)
+
+		if(!is_dir($name)) {
+
+			// get the original file name
+
+			$orig = str_replace("$fromDir/", '', $name);
+
+			// original file exists?
+
+			if (file_exists($orig)) {
+
+				// custom for this file exists?
+
+				if(file_exists("custom/$orig")) {
+
+					// grab the customized files
+
+					logThis("A file in upgrade pack found in custom folder: $orig");
+					$ret[] = $orig;
+				}
+			}
+		}
+
+	}
+
+	return $ret;
 }
 
 /**
@@ -2029,7 +2111,7 @@ if ( !function_exists('validate_manifest') ) {
 		global $sugar_flavor;
 		global $mod_strings;
 
-		include_once('suitecrm_version.php');
+	include('suitecrm_version.php');
 
 		if(!isset($manifest['type'])) {
 			return $mod_strings['ERROR_MANIFEST_TYPE'];

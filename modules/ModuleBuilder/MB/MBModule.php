@@ -212,14 +212,24 @@ class MBModule
         return $this->mblanguage->getModStrings ( $language ) ;
     }
 
-    function setModStrings($language = 'en_us', $mod_strings = array())
+    function setModStrings ($language  , $mod_strings= array())
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
         $language .= '.lang.php';
         $this->mblanguage->strings [$language] = $mod_strings;
     }
 
-    function setLabel($language = 'en_us', $key, $value = null)
+	function setLabel ($language  , $key , $value= null)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
     	$language .= '.lang.php' ;
         $this->mblanguage->strings [ $language ] [ $key ] = $value ;
         //Ensure this key exists in all languages
@@ -230,8 +240,13 @@ class MBModule
         }
     }
 
-    function deleteLabel($language = 'en_us', $key = null)
+    function deleteLabel ($language  , $key= null)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
    		foreach ($this->mblanguage->strings as $lang => $values) {
         	if (!empty($values[$key])) {
         		unset($this->mblanguage->strings[$lang][$key]);
@@ -248,8 +263,13 @@ class MBModule
         $this->save();
     }
 
-    function getLabel($language = 'en_us', $key = null)
+    function getLabel ($language  , $key= null)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
         $language .= '.lang.php' ;
         if (empty ( $this->mblanguage->strings [ $language ] [ $key ] ))
         {
@@ -265,20 +285,33 @@ class MBModule
         return $this->mblanguage->getAppListStrings ( $language ) ;
     }
 
-    function setAppListStrings($language = 'en_us', $app_list_strings = array())
+    function setAppListStrings ($language  , $app_list_strings= array())
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
         $language .= '.lang.php' ;
         $this->mblanguage->appListStrings [ $language ] = $app_list_strings ;
     }
 
-    function setDropDown($language = 'en_us', $key = null, $value = null)
+    function setDropDown ($language  , $key = null, $value= null)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
         $language .= '.lang.php' ;
         $this->mblanguage->appListStrings [ $language ] [ $key ] = $value ;
     }
 
-    function deleteDropDown($language = 'en_us', $key = null)
+    function deleteDropDown ($language  , $key= null)
     {
+        // set $language = 'en_us' as default
+        if (!$language) {
+            $language = 'en_us';
+        }
+
         $language .= '.lang.php' ;
         unset ( $this->mblanguage->appListStrings [ $language ] [ $key ] ) ;
     }
@@ -463,7 +496,7 @@ class MBModule
             $class [ 'requires' ] [] = MB_TEMPLATES . '/' . $template . '/' . ucfirst ( $template ) . '.php' ;
         }
         $class [ 'importable' ] = $this->config [ 'importable' ] ;
-        $class [ 'inline_edit' ] = $this->config [ 'inline_edit' ] ;
+        $class [ 'inline_edit' ] = isset($this->config [ 'inline_edit' ]) ? $this->config [ 'inline_edit' ] : null;
         $this->mbvardefs->updateVardefs () ;
         $class [ 'fields' ] = $this->mbvardefs->vardefs [ 'fields' ] ;
         $class [ 'fields_string' ] = var_export_helper ( $this->mbvardefs->vardef [ 'fields' ] ) ;

@@ -53,7 +53,7 @@ class campaign_charts {
 	* Contributor(s): ______________________________________..
 	*/
 
-    /**
+	/**
      * @param array $datay
      * @param array $targets
      * @param null|string $campaign_id
@@ -62,135 +62,134 @@ class campaign_charts {
      * @param string $marketing_id
      * @return string
      */
-    public function campaign_response_by_activity_type(
-        $datay = array(),
-        $targets = array(),
-        $campaign_id = null,
-        $cache_file_name = 'a_file',
-        $refresh = false,
-        $marketing_id = ''
-    ) {
+    public function campaign_response_by_activity_type($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false, $marketing_id='') {
 		global $app_strings, $mod_strings, $charset, $lang, $barChartColors,$app_list_strings;
-		$sugarChart = SugarChartFactory::getInstance('','Reports');
-		$xmlFile = $sugarChart->getXMLFileName($campaign_id);
 
-		if (!file_exists($xmlFile) || $refresh == true) {
-			$GLOBALS['log']->debug("datay is:");
-			$GLOBALS['log']->debug($datay);
-			$GLOBALS['log']->debug("user_id is: ");
-			$GLOBALS['log']->debug("cache_file_name is: $xmlFile");
+		if ($campaign_id) {
+			$sugarChart = SugarChartFactory::getInstance('', 'Reports');
+			$xmlFile = $sugarChart->getXMLFileName($campaign_id);
 
-			$focus = new Campaign();
+			if (!file_exists($xmlFile) || $refresh == true) {
+				$GLOBALS['log']->debug("datay is:");
+				$GLOBALS['log']->debug($datay);
+				$GLOBALS['log']->debug("user_id is: ");
+				$GLOBALS['log']->debug("cache_file_name is: $xmlFile");
 
-			$query = "SELECT activity_type,target_type, count(*) hits ";
-			$query.= " FROM campaign_log ";
-			$query.= " WHERE campaign_id = '$campaign_id' AND archived=0 AND deleted=0";
+				$focus = new Campaign();
 
-            //if $marketing id is specified, then lets filter the chart by the value
-            if (!empty($marketing_id)){
-                $query.= " AND marketing_id ='$marketing_id'";
-            }
+				$query = "SELECT activity_type,target_type, count(*) hits ";
+				$query .= " FROM campaign_log ";
+				$query .= " WHERE campaign_id = '$campaign_id' AND archived=0 AND deleted=0";
 
-			$query.= " GROUP BY  activity_type, target_type";
-			$query.= " ORDER BY  activity_type, target_type";
-			$result = $focus->db->query($query);
-			//$camp_data=$focus->db->fetchByAssoc($result);
-			$camp_data = array();
-			$leadSourceArr = array();
-			$total=0;
-			$total_targeted=0;
-			$rowTotalArr = array();
-			$rowTotalArr[] = 0;
-			while($row = $focus->db->fetchByAssoc($result))
-			{
-				if(!isset($leadSourceArr[$row['activity_type']]['row_total'])) {
-					$leadSourceArr[$row['activity_type']]['row_total']=0;
+				//if $marketing id is specified, then lets filter the chart by the value
+				if (!empty($marketing_id)) {
+					$query .= " AND marketing_id ='$marketing_id'";
 				}
 
-				$leadSourceArr[$row['activity_type']][$row['target_type']]['hits'][] = $row['hits'];
-				$leadSourceArr[$row['activity_type']][$row['target_type']]['total'][] = $row['hits'];
-				$leadSourceArr[$row['activity_type']]['outcome'][$row['target_type']]=$row['target_type'];
-				$leadSourceArr[$row['activity_type']]['row_total'] += $row['hits'];
+				$query .= " GROUP BY  activity_type, target_type";
+				$query .= " ORDER BY  activity_type, target_type";
+				$result = $focus->db->query($query);
+				//$camp_data=$focus->db->fetchByAssoc($result);
+				$camp_data = array();
+				$leadSourceArr = array();
+				$total = 0;
+				$total_targeted = 0;
+				$rowTotalArr = array();
+				$rowTotalArr[] = 0;
+				while ($row = $focus->db->fetchByAssoc($result)) {
+					if (!isset($leadSourceArr[$row['activity_type']]['row_total'])) {
+						$leadSourceArr[$row['activity_type']]['row_total'] = 0;
+					}
 
-				if (!isset($leadSourceArr['all_activities'][$row['target_type']])) {
-					$leadSourceArr['all_activities'][$row['target_type']]=array('total'=>0);
+					$leadSourceArr[$row['activity_type']][$row['target_type']]['hits'][] = $row['hits'];
+					$leadSourceArr[$row['activity_type']][$row['target_type']]['total'][] = $row['hits'];
+					$leadSourceArr[$row['activity_type']]['outcome'][$row['target_type']] = $row['target_type'];
+					$leadSourceArr[$row['activity_type']]['row_total'] += $row['hits'];
+
+					if (!isset($leadSourceArr['all_activities'][$row['target_type']])) {
+						$leadSourceArr['all_activities'][$row['target_type']] = array('total' => 0);
+					}
+
+					$leadSourceArr['all_activities'][$row['target_type']]['total'] += $row['hits'];
+
+					$total += $row['hits'];
+					if ($row['activity_type'] == 'targeted') {
+						$targeted[$row['target_type']] = $row['hits'];
+						$total_targeted += $row['hits'];
+					}
 				}
 
-				$leadSourceArr['all_activities'][$row['target_type']]['total'] += $row['hits'];
-
-				$total += $row['hits'];
-				if ($row['activity_type'] =='targeted') {
-					$targeted[$row['target_type']]=$row['hits'];
-					$total_targeted+=$row['hits'];
-				}
-			}
-
-			foreach ($datay as $key=>$translation) {
-				if ($key == '') {
-					//$key = $mod_strings['NTC_NO_LEGENDS'];
-					$key = 'None';
-					$translation = $mod_strings['NTC_NO_LEGENDS'];
-				}
-				if(!isset($leadSourceArr[$key])){
-					$leadSourceArr[$key] = $key;
-				}
+				foreach ($datay as $key => $translation) {
+					if ($key == '') {
+						//$key = $mod_strings['NTC_NO_LEGENDS'];
+						$key = 'None';
+						$translation = $mod_strings['NTC_NO_LEGENDS'];
+					}
+					if (!isset($leadSourceArr[$key])) {
+						$leadSourceArr[$key] = $key;
+					}
 
 
-				if(is_array($leadSourceArr[$key]) && isset($leadSourceArr[$key]['row_total'])){$rowTotalArr[]=$leadSourceArr[$key]['row_total'];}
-				if(is_array($leadSourceArr[$key]) && isset($leadSourceArr[$key]['row_total']) && $leadSourceArr[$key]['row_total']>100){
-					$leadSourceArr[$key]['row_total'] = round($leadSourceArr[$key]['row_total']);
-				}
-				$camp_data[$translation] = array();
-					foreach ($targets as $outcome=>$outcome_translation){
+					if (is_array($leadSourceArr[$key]) && isset($leadSourceArr[$key]['row_total'])) {
+						$rowTotalArr[] = $leadSourceArr[$key]['row_total'];
+					}
+					if (is_array($leadSourceArr[$key]) && isset($leadSourceArr[$key]['row_total']) && $leadSourceArr[$key]['row_total'] > 100) {
+						$leadSourceArr[$key]['row_total'] = round($leadSourceArr[$key]['row_total']);
+					}
+					$camp_data[$translation] = array();
+					foreach ($targets as $outcome => $outcome_translation) {
 						//create alternate text.
-                        $alttext = ' ';
-                        if(isset($targeted) && isset($targeted[$outcome])&& !empty($targeted[$outcome])){
-						$alttext=$targets[$outcome].': '.$mod_strings['LBL_TARGETED'].' '.$targeted[$outcome]. ', '.$mod_strings['LBL_TOTAL_TARGETED'].' '. $total_targeted. ".";
-                        }
-						if ($key != 'targeted'){
-							$hits =  (isset($leadSourceArr[$key][$outcome]) && is_array($leadSourceArr[$key][$outcome]) && is_array($leadSourceArr[$key][$outcome]['hits'])) ? array_sum($leadSourceArr[$key][$outcome]['hits']) : 0;
-							$alttext.=" $translation ".$hits;
+						$alttext = ' ';
+						if (isset($targeted) && isset($targeted[$outcome]) && !empty($targeted[$outcome])) {
+							$alttext = $targets[$outcome] . ': ' . $mod_strings['LBL_TARGETED'] . ' ' . $targeted[$outcome] . ', ' . $mod_strings['LBL_TOTAL_TARGETED'] . ' ' . $total_targeted . ".";
+						}
+						if ($key != 'targeted') {
+							$hits = (isset($leadSourceArr[$key][$outcome]) && is_array($leadSourceArr[$key][$outcome]) && is_array($leadSourceArr[$key][$outcome]['hits'])) ? array_sum($leadSourceArr[$key][$outcome]['hits']) : 0;
+							$alttext .= " $translation " . $hits;
 						}
 						$count = (isset($leadSourceArr[$key][$outcome]) && is_array($leadSourceArr[$key][$outcome]) && is_array($leadSourceArr[$key][$outcome]['total'])) ? array_sum($leadSourceArr[$key][$outcome]['total']) : 0;
 						$camp_data[$translation][$outcome] =
 							array(
-							"numerical_value" => $count,
-							"group_text" => $translation,
-							"group_key" => "",
-							"count" => "{$count}",
-							"group_label" => $alttext,
-							"numerical_label" => "Hits",
-							"numerical_key" => "hits",
-							"module" => 'Campaigns',
-     						"group_base_text" => $outcome,
-     						"link" => $key
+								"numerical_value" => $count,
+								"group_text" => $translation,
+								"group_key" => "",
+								"count" => "{$count}",
+								"group_label" => $alttext,
+								"numerical_label" => "Hits",
+								"numerical_key" => "hits",
+								"module" => 'Campaigns',
+								"group_base_text" => $outcome,
+								"link" => $key
 							);
 					}
 
+				}
+
+				// Since this isn't a standard report chart (with report defs), set the group_by manually so the chart bars show properly
+				$sugarChart->group_by = array('activity_type', 'target_type');
+
+				if ($camp_data)
+					$sugarChart->setData($camp_data);
+				else
+					$sugarChart->setData(array());
+
+				$sugarChart->setProperties($mod_strings['LBL_CAMPAIGN_RESPONSE_BY_RECIPIENT_ACTIVITY'], "", 'horizontal group by chart');
+				$sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
 			}
 
-            // Since this isn't a standard report chart (with report defs), set the group_by manually so the chart bars show properly
-            $sugarChart->group_by = array('activity_type', 'target_type');
-
-			if($camp_data)
-			$sugarChart->setData($camp_data);
-			else
-			$sugarChart->setData(array());
-
-			$sugarChart->setProperties($mod_strings['LBL_CAMPAIGN_RESPONSE_BY_RECIPIENT_ACTIVITY'], "", 'horizontal group by chart');
-			$sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
+			$width = '100%';
+			$return = '';
+			$return .= $sugarChart->display($campaign_id, $xmlFile, $width, '480', "");
+		} else {
+			$GLOBALS['log']->fatal('no campaign id');
+			$return = false;
 		}
-
-		$width = '100%';
-		$return = '';
-		$return .= $sugarChart->display($campaign_id, $xmlFile, $width, '480',"");
-
 		return $return;
 	}
 
-    /**
+	/**
      * Campaign roi computations.
-     *
+	*
      * @param array $datay
      * @param array $targets
      * @param string|null $campaign_id
@@ -200,19 +199,8 @@ class campaign_charts {
      * @param bool $is_dashlet
      * @param string $dashlet_id
      * @return string
-     */
-    function campaign_response_roi(
-        $datay = array(),
-        $targets = array(),
-        $campaign_id = null,
-        $cache_file_name = 'a_file',
-        $refresh = false,
-        $marketing_id = '',
-        $is_dashlet = false,
-        $dashlet_id = ''
-    ) {
-        global $app_strings, $mod_strings, $current_module_strings, $charset,
-               $lang, $app_list_strings, $current_language, $sugar_config;
+     */function campaign_response_roi($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id=''
+		) {global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 
 		$not_empty = false;
 
@@ -220,7 +208,7 @@ class campaign_charts {
 			$mod_strings = return_module_language($current_language, 'Campaigns');
 		}
 
-		if (!file_exists($cache_file_name) || $refresh == true) {
+		if ((!file_exists($cache_file_name) || $refresh == true) && $campaign_id) {
 			$GLOBALS['log']->debug("datay is:");
 			$GLOBALS['log']->debug($datay);
 			$GLOBALS['log']->debug("user_id is: ");
@@ -303,6 +291,8 @@ class campaign_charts {
 			$total=0;
 			$total_targeted=0;
 
+		} elseif (!$campaign_id) {
+			$GLOBALS['log']->fatal('no campaign id');
 		}
 
 		global $current_user;

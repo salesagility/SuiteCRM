@@ -1,10 +1,10 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
-/*********************************************************************************
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     'LBL_MODULE_NAME' => 'Targets',
@@ -53,29 +50,16 @@ $mod_strings = array(
     'LBL_SEARCH_FORM_TITLE' => 'Target Search',
     'LBL_LIST_FORM_TITLE' => 'Target List',
     'LBL_NEW_FORM_TITLE' => 'New Target',
-    'LBL_PROSPECT' => 'Target:',
     'LBL_BUSINESSCARD' => 'Business Card',
     'LBL_LIST_NAME' => 'Name',
     'LBL_LIST_LAST_NAME' => 'Last Name',
-    'LBL_LIST_PROSPECT_NAME' => 'Target Name',
     'LBL_LIST_TITLE' => 'Title',
     'LBL_LIST_EMAIL_ADDRESS' => 'Email',
-    'LBL_LIST_OTHER_EMAIL_ADDRESS' => 'Other Email',
     'LBL_LIST_PHONE' => 'Phone',
-    'LBL_LIST_PROSPECT_ROLE' => 'Role',
     'LBL_LIST_FIRST_NAME' => 'First Name',
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_ASSIGNED_TO_ID' => 'Assigned To:',
-//DON'T CONVERT THESE THEY ARE MAPPINGS
-    'db_last_name' => 'LBL_LIST_LAST_NAME',
-    'db_first_name' => 'LBL_LIST_FIRST_NAME',
-    'db_title' => 'LBL_LIST_TITLE',
-    'db_email1' => 'LBL_LIST_EMAIL_ADDRESS',
-    'db_email2' => 'LBL_LIST_OTHER_EMAIL_ADDRESS',
-//END DON'T CONVERT
     'LBL_CAMPAIGN_ID' => 'Campaign ID',
-    'LBL_EXISTING_PROSPECT' => 'Used an existing contact',
-    'LBL_CREATED_PROSPECT' => 'Created a new contact',
     'LBL_EXISTING_ACCOUNT' => 'Used an existing account',
     'LBL_CREATED_ACCOUNT' => 'Created a new account',
     'LBL_CREATED_CALL' => 'Created a new call',
@@ -83,8 +67,6 @@ $mod_strings = array(
     'LBL_ADDMORE_BUSINESSCARD' => 'Add another business card',
     'LBL_ADD_BUSINESSCARD' => 'Enter Business Card',
     'LBL_NAME' => 'Name:',
-    'LBL_FULL_NAME' => 'Name',
-    'LBL_PROSPECT_NAME' => 'Target Name:',
     'LBL_PROSPECT_INFORMATION' => 'OVERVIEW',
     'LBL_MORE_INFORMATION' => 'More Information',
     'LBL_FIRST_NAME' => 'First Name:',
@@ -123,10 +105,8 @@ $mod_strings = array(
     'LBL_STATE' => 'State:',
     'LBL_POSTAL_CODE' => 'Postal Code:',
     'LBL_COUNTRY' => 'Country:',
-    'LBL_DESCRIPTION_INFORMATION' => 'Description Information',
     'LBL_ADDRESS_INFORMATION' => 'Address Information',
     'LBL_DESCRIPTION' => 'Description:',
-    'LBL_PROSPECT_ROLE' => 'Role:',
     'LBL_OPP_NAME' => 'Opportunity Name:',
     'LBL_IMPORT_VCARD' => 'Import vCard',
     'LBL_IMPORT_VCARDTEXT' => 'Automatically create a new contact by importing a vCard from your file system.',
@@ -146,14 +126,9 @@ $mod_strings = array(
     'LNK_IMPORT_PROSPECTS' => 'Import Targets',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
     'NTC_REMOVE_CONFIRMATION' => 'Are you sure you want to remove this contact from the case?',
-    'NTC_REMOVE_DIRECT_REPORT_CONFIRMATION' => 'Are you sure you want to remove this record as a direct report?',
     'ERR_DELETE_RECORD' => 'A record number must be specified to delete the contact.',
-    'NTC_COPY_PRIMARY_ADDRESS' => 'Copy primary address to alternate address',
-    'NTC_COPY_ALTERNATE_ADDRESS' => 'Copy alternate address to primary address',
     'LBL_SALUTATION' => 'Salutation',
-    'LBL_SAVE_PROSPECT' => 'Save Target',
     'LBL_CREATED_OPPORTUNITY' => 'Created a new opportunity',
-    'NTC_OPPORTUNITY_REQUIRES_ACCOUNT' => 'Creating an opportunity requires an account.\n Please either create a new account or select an existing one.',
     'LNK_SELECT_ACCOUNT' => "Select Account",
     'LNK_NEW_PROSPECT' => 'Create Target',
     'LNK_PROSPECT_LIST' => 'View Targets',
@@ -161,19 +136,15 @@ $mod_strings = array(
     'LNK_CAMPAIGN_LIST' => 'Campaigns',
     'LNK_NEW_PROSPECT_LIST' => 'Create Target List',
     'LNK_PROSPECT_LIST_LIST' => 'Target Lists',
-    'LNK_IMPORT_PROSPECT' => 'Import Targets',
     'LBL_SELECT_CHECKED_BUTTON_LABEL' => 'Select Checked Targets',
     'LBL_SELECT_CHECKED_BUTTON_TITLE' => 'Select Checked Targets',
     'LBL_INVALID_EMAIL' => 'Invalid Email:',
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Targets',
     'LBL_PROSPECT_LIST' => 'Prospect List',
-    'LBL_CONVERT_BUTTON_KEY' => 'V',
     'LBL_CONVERT_BUTTON_TITLE' => 'Convert Target',
     'LBL_CONVERT_BUTTON_LABEL' => 'Convert Target',
-    'LBL_CONVERTPROSPECT' => 'Convert Target',
     'LNK_NEW_CONTACT' => 'New Contact',
     'LBL_CREATED_CONTACT' => "Created a new contact",
-    'LBL_BACKTO_PROSPECTS' => 'Back to Targets',
     'LBL_CAMPAIGNS' => 'Campaigns',
     'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE' => 'Campaign Log',
     'LBL_TRACKER_KEY' => 'Tracker Key',
@@ -183,20 +154,7 @@ $mod_strings = array(
     'LBL_EDIT_ACCOUNT_NAME' => 'Account Name:',
     'LBL_CREATED_USER' => 'Created User',
     'LBL_MODIFIED_USER' => 'Modified User',
-    'LBL_CAMPAIGNS_SUBPANEL_TITLE' => 'Campaigns',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     //For export labels
-    'LBL_PHONE_HOME' => 'Phone Home',
-    'LBL_PHONE_MOBILE' => 'Phone Mobile',
-    'LBL_PHONE_WORK' => 'Phone Work',
-    'LBL_PHONE_OTHER' => 'Phone Other',
-    'LBL_PHONE_FAX' => 'Phone Fax',
-    'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Assigned User Name',
-    'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned User ID',
-    'LBL_EXPORT_MODIFIED_USER_ID' => 'Modified By ID',
-    'LBL_EXPORT_CREATED_BY' => 'Created By ID',
-    'LBL_EXPORT_EMAIL2' => 'Other Email Address',
-
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_FP_EVENTS_TITLE' => 'Events',
 );
-?>

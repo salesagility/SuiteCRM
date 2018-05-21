@@ -86,5 +86,4 @@ $subpanel_layout = array(
 			'usage' =>'query_only',
 		),		
 	),
-);			
-?>
+);

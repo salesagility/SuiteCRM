@@ -1670,7 +1670,7 @@ SE.composeLayout = {
                 // remove button
                 "<button class='button lastChild' type='button' name='documentRemove" + idx + index + "' id='documentRemove" + idx + index + "'" +
                     "onclick='SE.composeLayout.deleteDocumentField(\"documentCup" + idx + index + "\");' value='" + app_strings.LBL_EMAIL_REMOVE + "'>" +
-                 "<img src='index.php?entryPoint=getImage&themeName=" + SUGAR.themes.theme_name + "&imageName=id-ff-clear.png' ></button>" +
+                 "<span class=\"suitepicon suitepicon-action-clear\"></span></button>" +
                 "<br/>";
 
         basket.appendChild(documentCup);

@@ -257,6 +257,7 @@ function merge_passwordsetting($sugar_config, $sugar_version) {
             'lockoutexpirationtime' => '',
             'lockoutexpirationtype' => '1',
             'lockoutexpirationlogin' => '',
+            'factoremailtmpl' => '',
         ),
     );
 

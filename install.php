@@ -1,11 +1,11 @@
 <?php
-/**
- *
+ /**
+*
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
+*
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,16 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-if(!defined('sugarEntry')) {
+ if(!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
 
 require_once 'include/utils.php';
-
 @session_start();
 if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
     session_destroy();
@@ -63,14 +61,14 @@ if(isset($_POST['smtp_tab_selected'])) {
  * If less than minimum we refuse to install.
  */
 if (check_php_version() === -1) {
-    $msg = 'The recommended PHP version to install SuiteCRM is ';
-    $msg .= constant('SUITECRM_PHP_REC_VERSION').'<br />';
-    $msg .= 'Although the minimum PHP version required is ';
-    $msg .= constant('SUITECRM_PHP_MIN_VERSION').', ';
-    $msg .= 'is not recommended due to the large number of fixed bugs, including security fixes, ';
-    $msg .= 'released in the more modern versions.<br />';
-    $msg .= 'You are using PHP version '.constant('PHP_VERSION').', which is EOL: <a href="http://php.net/eol.php">http://php.net/eol.php</a>.<br />';
-    $msg .= 'Please consider upgrading your PHP version. Instructions on <a href="http://php.net/migration70">http://php.net/migration70</a>. ';
+	$msg = 'The recommended PHP version to install SuiteCRM is ';
+	$msg .= constant('SUITECRM_PHP_REC_VERSION').'<br />';
+	$msg .= 'Although the minimum PHP version required is ';
+	$msg .= constant('SUITECRM_PHP_MIN_VERSION').', ';
+	$msg .= 'is not recommended due to the large number of fixed bugs, including security fixes, ';
+	$msg .= 'released in the more modern versions.<br />';
+ 	$msg .= 'You are using PHP version  '. constant('PHP_VERSION').', which is EOL: <a href="http://php.net/eol.php">http://php.net/eol.php</a>.<br />';
+	$msg .= 'Please consider upgrading your PHP version. Instructions on <a href="http://php.net/migration70">http://php.net/migration70</a>. ';
     die($msg);
 }
 
@@ -352,7 +350,7 @@ $next_step = 0;
 $workflow = array() ;
 // If less then recommended PHP version, insert old_php.pho into workflow.
 if (check_php_version() === 0) {
-    $workflow[] = 'old_php.php';
+	$workflow[] = 'old_php.php';
 }
 // use a simple array to map out the steps of the installer page flow
 $workflow[] = 'welcome.php';
@@ -519,17 +517,17 @@ EOQ;
 else{
     $validation_errors = array();
 // process the data posted
-    if($next_clicked) {
-        // store the submitted data because the 'Next' button was clicked
-        switch($workflow[trim($_REQUEST['current_step'])]) {
-            case 'old_php.php':
-                $_SESSION['language'] = $_REQUEST['language'];
-                $_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
-                break;
+if($next_clicked) {
+	// store the submitted data because the 'Next' button was clicked
+    switch($workflow[trim($_REQUEST['current_step'])]) {
+        case 'old_php.php':
+		$_SESSION['language'] = $_REQUEST['language'];
+		$_SESSION['setup_old_php'] = get_boolean_from_request('setup_old_php');
+		break;
 
-            case 'welcome.php':
-                $_SESSION['language'] = $_REQUEST['language'];
-                $_SESSION['setup_site_admin_user_name'] = 'admin';
+	case 'welcome.php':
+        	$_SESSION['language'] = $_REQUEST['language'];
+   			$_SESSION['setup_site_admin_user_name'] = 'admin';
 //        break;
 //      case 'license.php':
                 $_SESSION['setup_license_accept']   = get_boolean_from_request('setup_license_accept');
@@ -653,17 +651,17 @@ else{
 
     }
 
-    switch($the_file) {
-        case 'old_php.php':
-        case 'welcome.php':
-        case 'license.php':
-            //
-            // Check to see if session variables are working properly
-            //
-            $_SESSION['test_session'] = 'sessions are available';
-            @session_write_close();
-            unset($_SESSION['test_session']);
-            @session_start();
+switch($the_file) {
+    case 'old_php.php':
+    case 'welcome.php':
+    case 'license.php':
+			//
+			// Check to see if session variables are working properly
+			//
+			$_SESSION['test_session'] = 'sessions are available';
+        @session_write_close();
+			unset($_SESSION['test_session']);
+        @session_start();
 
             if(!isset($_SESSION['test_session']))
             {
@@ -798,5 +796,3 @@ installerHook('pre_installFileRequire', array('the_file' => $the_file));
 require('install/' . $the_file);
 
 installerHook('post_installFileRequire', array('the_file' => $the_file));
-
-?>

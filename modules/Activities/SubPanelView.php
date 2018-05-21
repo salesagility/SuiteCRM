@@ -328,7 +328,7 @@ foreach($open_activity_list as $activity)
  global $click_bg;
 $xtpl->assign("BG_HILITE", $hilite_bg);
 $xtpl->assign("BG_CLICK", $click_bg);
-$xtpl->assign("ACTIVITY_MODULE_PNG", SugarThemeRegistry::current()->getImage($activity_fields['MODULE'].'','border="0"', null,null,'.gif',$activity_fields['NAME']));
+$xtpl->assign("ACTIVITY_MODULE_PNG", '<span class="suitepicon suitepicon-module-'.$activity_fields['MODULE'].'"></span>');
 	$xtpl->assign("ACTIVITY", $activity_fields);
 
 	if($oddRow)
@@ -433,7 +433,7 @@ foreach($history_list as $activity)
 	if (isset($activity['parent_type'])) $activity_fields['PARENT_MODULE'] = $activity['parent_type'];
 
 	$xtpl->assign("ACTIVITY", $activity_fields);
-	$xtpl->assign("ACTIVITY_MODULE_PNG", SugarThemeRegistry::current()->getImage($activity_fields['MODULE'].'','border="0"', null,null,'.gif',$activity_fields['NAME']));
+	$xtpl->assign("ACTIVITY_MODULE_PNG",  '<span class="suitepicon suitepicon-module-'.$activity_fields['MODULE'].'"></span>');
 
 	if($oddRow)
     {
@@ -455,5 +455,3 @@ foreach($history_list as $activity)
 
 $xtpl->parse("history");
 $xtpl->out("history");
-
-?>

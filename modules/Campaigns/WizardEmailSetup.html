@@ -227,67 +227,67 @@
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<td valign="top" scope="row" width="20%" NOWRAP>
-				<slot>{$MOD.LBL_MAILBOX_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{$MOD.LBL_MAILBOX_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot><input id='name' name='wiz_step2_name' title='{$MOD.LBL_MAILBOX_NAME}' tabindex='10' size='30' maxlength='255' type="text" value="" ></slot></td>
+				<span><input id='name' name='wiz_step2_name' title='{$MOD.LBL_MAILBOX_NAME}' tabindex='10' size='30' maxlength='255' type="text" value="" ></span></td>
 			<td valign="top" scope="row" width="20%" NOWRAP>
-				<slot>{$MOD.LBL_FROM_ADDR}:&nbsp;</slot></td>
+				<span>{$MOD.LBL_FROM_ADDR}:&nbsp;</span></td>
 			<td valign="top"  width="30%" NOWRAP>
-				<slot><input name="wiz_step2_from_addr" id="from_addr" title='{$MOD.LBL_FROM_ADDR}' size='30'>&nbsp;</slot></td>
+				<span><input name="wiz_step2_from_addr" id="from_addr" title='{$MOD.LBL_FROM_ADDR}' size='30'>&nbsp;</span></td>
 
 		</tr>
 		<tr>
 			<td valign="top" scope="row">
-					<slot>{$MOD.LBL_SERVER_URL}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+					<span>{$MOD.LBL_SERVER_URL}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot><input title='{$MOD.LBL_SERVER_URL}' name='wiz_step2_server_url' id='server_url' tabindex='20' size='30' maxlength='100' type="text" value="" ></slot></td>
+				<span><input title='{$MOD.LBL_SERVER_URL}' name='wiz_step2_server_url' id='server_url' tabindex='20' size='30' maxlength='100' type="text" value="" ></span></td>
 			<td valign="top" scope="row">
-				<slot>{$MOD.LBL_LOGIN}:
-				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{$MOD.LBL_LOGIN}:
+				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot><input title="{$MOD.LBL_LOGIN}" name='wiz_step2_email_user' id='email_user' tabindex='70' size='30' maxlength='100' type="text" value="" ></slot></td>
+				<span><input title="{$MOD.LBL_LOGIN}" name='wiz_step2_email_user' id='email_user' tabindex='70' size='30' maxlength='100' type="text" value="" ></span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="20%" NOWRAP>
-				<slot>{$MOD.LBL_SERVER_TYPE}:
-				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{$MOD.LBL_SERVER_TYPE}:
+				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot>
-				<select title='{$MOD.LBL_SERVER_TYPE}' name='wiz_step2_protocol' id='protocol' tabindex='30' onchange="toggle_monitored_folder(this); setPortDefault();" >{$PROTOCOL}</select></slot></td>
+				<span>
+				<select title='{$MOD.LBL_SERVER_TYPE}' name='wiz_step2_protocol' id='protocol' tabindex='30' onchange="toggle_monitored_folder(this); setPortDefault();" >{$PROTOCOL}</select></span></td>
 			<td valign="top" scope="row">
-				<slot>{$MOD.LBL_PASSWORD}:
-				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}&nbsp;</slot></td>
+				<span>{$MOD.LBL_PASSWORD}:
+				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot><input id='email_password' title="{$MOD.LBL_PASSWORD}" name='wiz_step_email_password' tabindex='80' size='30' maxlength='100' type="password" value="{$PASSWORD}" {$IE_DISABLED}></span></slot></td>
+				<span><input id='email_password' title="{$MOD.LBL_PASSWORD}" name='wiz_step_email_password' tabindex='80' size='30' maxlength='100' type="password" value="{$PASSWORD}" {$IE_DISABLED}></span></span></td>
 		</tr>
 		<tr>
 			<td valign="top" scope="row" width="20%" NOWRAP>
-				<slot>{$MOD.LBL_PORT}:
-				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</slot></td>
+				<span>{$MOD.LBL_PORT}:
+				<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span>&nbsp;</span></td>
 			<td valign="top"  width="30%">
-				<slot>
+				<span>
 				<input title="{$MOD.LBL_PORT}"  type='text' name='wiz_step2_port' id='port' tabindex="40" value="{$PORT}" size='10'>
             <td valign="top" scope="row" width="20%" NOWRAP>
-                <slot><div id='label_inbox' style="{$DISPLAY}">{$MOD.LBL_MAILBOX}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</div></span>&nbsp;</slot></td>
+                <span><div id='label_inbox' style="{$DISPLAY}">{$MOD.LBL_MAILBOX}: <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</div></span>&nbsp;</span></td>
             <td valign="top"  width="30%">
-                <slot><div id='inbox' style="{$DISPLAY}"><input id="mailbox" name='mailbox' title="{$MOD.LBL_MAILBOX}" tabindex='90' size='30' maxlength='50' type="text" value="{$MOD.LBL_MAILBOX_DEFAULT}"></div>
-                </slot></td>
+                <span><div id='inbox' style="{$DISPLAY}"><input id="mailbox" name='mailbox' title="{$MOD.LBL_MAILBOX}" tabindex='90' size='30' maxlength='50' type="text" value="{$MOD.LBL_MAILBOX_DEFAULT}"></div>
+                </span></td>
 		</tr>
         <tr>
             <td valign="top" scope="row" width="1%" NOWRAP>
                 <div class="maybe">
-                    <slot>{$MOD.LBL_SSL}:&nbsp;</slot>
+                    <span>{$MOD.LBL_SSL}:&nbsp;</span>
                 </div>
             </td>
             <td valign="top"  width="33%">
-                <slot>
+                <span>
                     <div class="maybe">
                         <div id="rollover">
                             <a href="#" class="rollover"><span>{$MOD.LBL_SSL_DESC}</span><img border="0" src="{sugar_getimagepath file='helpInline.gif'}"></a>
                         </div>
                         <input name='ssl' id='ssl' tabindex='45' type='checkbox' class="checkbox" value="1" onClick="setPortDefault();" title="{$MOD.LBL_SSL}" {$IE_DISABLED}>
                     </div>
-                </slot>
+                </span>
             </td>
         </tr>
 	</table>

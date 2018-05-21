@@ -182,4 +182,3 @@ class JotPadDashlet extends Dashlet {
     }
 }
 
-?>

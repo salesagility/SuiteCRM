@@ -55,4 +55,3 @@ $fields_array['vcal'] = array ('column_fields' =>Array(
 		,"deleted"
 		),
 );
-?>

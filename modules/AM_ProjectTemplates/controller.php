@@ -344,7 +344,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
         $dateformat = $current_user->getPreference('datef');
 
-        $startdate = DateTime::createFromFormat($dateformat, "01/01/2016");
+        $startdate = DateTime::createFromFormat("d/m/Y", "01/01/2016");
         $start = $startdate->format('Y-m-d');
 
         //Take 1 off duration so that task displays in correct number of table cells in gantt chart.

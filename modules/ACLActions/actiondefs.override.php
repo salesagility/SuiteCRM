@@ -134,6 +134,3 @@ $GLOBALS['ACLActions'] = array(
 				),),
 );
 /* END - SECURITY GROUPS */ 
-
-
-?>

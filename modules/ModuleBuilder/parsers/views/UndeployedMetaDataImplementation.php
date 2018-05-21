@@ -102,14 +102,14 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
                 if ($def['module'] == $module->key_name) {
             	   $GLOBALS [ 'mod_strings' ][$def['system_label']] = $def['display_label'];
 
-            	}
+                }
             }
         }
 
         $loaded = null ;
-        foreach ( array ( MB_BASEMETADATALOCATION , MB_HISTORYMETADATALOCATION ) as $type )
-    	{
-			$this->_sourceFilename = $this->getFileName ( $view, $moduleName, $packageName , $type ) ;
+        foreach ( array ( MB_BASEMETADATALOCATION , MB_HISTORYMETADATALOCATION ) as $type ){
+
+			$this->_sourceFilename = $this->getFileNameInPackage ( $view, $moduleName, $packageName , $type ) ;
 			if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
 				$layout = $this->_loadFromPopupFile ( $this->_sourceFilename , null, $view);
 			}else{
@@ -123,13 +123,12 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 			}
 		}
 
-        if ($loaded === null)
-        {
-            throw new Exception ( get_class ( $this ) . ": view definitions for View $this->_view and Module $this->_moduleName are missing" ) ;
+        if ($loaded === null) {
+            throw new Exception (get_class($this) . ": view definitions for View $this->_view and Module $this->_moduleName are missing");
         }
 
         $this->_viewdefs = $loaded ;
-        $sourceFilename = $this->getFileName ( $view, $moduleName, $packageName, MB_BASEMETADATALOCATION );
+        $sourceFilename = $this->getFileNameInPackage ( $view, $moduleName, $packageName, MB_BASEMETADATALOCATION );
         if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
 			$layout = $this->_loadFromPopupFile ( $sourceFilename , null, $view);
 		}else{
@@ -137,7 +136,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 		}
 		$this->_originalViewdefs = $layout ;
 		$this->_fielddefs = $fielddefs ;
-        $this->_history = new History ( $this->getFileName ( $view, $moduleName, $packageName, MB_HISTORYMETADATALOCATION ) ) ;
+        $this->_history = new History($this->getFileNameInPackage($view, $moduleName, $packageName, MB_HISTORYMETADATALOCATION)) ;
     }
 
     function getLanguage ()
@@ -152,24 +151,41 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
     function deploy ($defs)
     {
         //If we are pulling from the History Location, that means we did a restore, and we need to save the history for the previous file.
-    	if ($this->_sourceFilename == $this->getFileName ( $this->_view, $this->_moduleName, $this->_packageName, MB_HISTORYMETADATALOCATION )
-    	&& file_exists($this->getFileName ( $this->_view, $this->_moduleName, $this->_packageName, MB_BASEMETADATALOCATION ))) {
-        	$this->_history->append ( $this->getFileName ( $this->_view, $this->_moduleName, $this->_packageName, MB_BASEMETADATALOCATION )) ;
+        if ($this->_sourceFilename == $this->getFileName($this->_view, $this->_moduleName, MB_HISTORYMETADATALOCATION)
+        && file_exists($this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION))) {
+            $this->_history->append($this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION));
         } else {
     		$this->_history->append ( $this->_sourceFilename ) ;
         }
-        $filename = $this->getFileName ( $this->_view, $this->_moduleName, $this->_packageName, MB_BASEMETADATALOCATION ) ;
-        $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . "->deploy(): writing to " . $filename ) ;
-        $this->_saveToFile ( $filename, $defs ) ;
+        $filename = $this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION);
+        $GLOBALS ['log']->debug(get_class($this) . "->deploy(): writing to " . $filename);
+        $this->_saveToFile($filename, $defs);
     }
 
-    /*
+    /**
      * Construct a full pathname for the requested metadata
-     * @param string view           The view type, that is, EditView, DetailView etc
-     * @param string modulename     The name of the module that will use this layout
-     * @param string type
+     *
+     * @param string $view           The view type, that is, EditView, DetailView etc
+     * @param string $moduleName     The name of the module that will use this layout
+     * @param string $packageName
+     * @param string $type
+     * @return string               The file name
      */
-    public static function getFileName ($view , $moduleName , $packageName , $type = MB_BASEMETADATALOCATION)
+    public function getFileName($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
+    {
+        return $this->getFileNameInPackage($view, $moduleName, $this->_packageName, $type);
+    }
+
+    /**
+     * Construct a full pathname for the requested metadata, in a specific package
+     *
+     * @param string $view           The view type, that is, EditView, DetailView etc
+     * @param string $moduleName     The name of the module that will use this layout
+     * @param string $packageName    The name of the package to use
+     * @param string $type
+     * @return string               The file name
+     */
+    public function getFileNameInPackage($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
     {
 
         $type = strtolower ( $type ) ;
@@ -211,4 +227,3 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 		return $this->module->key_name;
 	}
 }
-?>

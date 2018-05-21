@@ -390,8 +390,12 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 $this->settings['geocoding_api_secret'] = $rev['geocoding_api_secret'];
             }
             // Set Google Maps API Key
-            $this->settings['google_maps_api_key'] = !empty($rev['google_maps_api_key']) ?
-                $rev['google_maps_api_key'] : "";
+            if(!isset($rev['google_maps_api_key'])) {
+                $GLOBALS['log']->fatal('Undefined index: google_maps_api_key');
+                $this->settings['google_maps_api_key'] = null;
+            } else {
+                $this->settings['google_maps_api_key'] = $rev['google_maps_api_key'];
+            }
         }
 
         // Set for Global Use
@@ -907,6 +911,25 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        // Add proxy option if user enabled proxy
+        $admin_config = new Administration();
+        $admin_config->retrieveSettings('proxy');
+        if(!empty($admin_config->settings['proxy_on'])) {
+            $proxy_host = $admin_config->settings['proxy_host'];
+            $proxy_port = $admin_config->settings['proxy_port'];
+
+            curl_setopt($ch, CURLOPT_PROXY, $proxy_host);
+            curl_setopt($ch, CURLOPT_PROXYPORT, $proxy_port);
+
+            // Check if use proxy auth
+            if(!empty($admin_config->settings['proxy_auth'])) {
+                $proxy_userpwd = $admin_config->settings['proxy_username'] . ':' . $admin_config->settings['proxy_password'];
+                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxy_userpwd);
+            }
+        }
+        // End
+        
         $json_contents = curl_exec($ch);
 
         // Debug: Error Handling

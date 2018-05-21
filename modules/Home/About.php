@@ -40,7 +40,7 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-include_once 'suitecrm_version.php';
+include 'suitecrm_version.php';
 global $sugar_config, $mod_strings;
 
 ?>

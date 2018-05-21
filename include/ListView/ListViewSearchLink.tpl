@@ -49,15 +49,15 @@
 {if $savedSearchData.hasOptions}
     <ul class="action-link action-link-{$action_menu_location} clickMenu selectActions fancymenu show listViewLinkButton listViewLinkButton_{$action_menu_location}">
         <li class="sugar_action_button">
-            <a href="javascript:void(0)" class="parent-dropdown-handler" onclick="return false;">
-                <label class="selected-actions-label">{$APP.LBL_SAVED_FILTER_SHORTCUT}</label>
+            <a href="javascript:void(0)" class="parent-dropdown-handler" title="{$APP.LBL_SAVED_FILTER_SHORTCUT}" onclick="return false;">
+                <label class="selected-actions-label"><span class="glyphicon glyphicon-bookmark"></span><span class="selected-actions-label-text">{$APP.LBL_SAVED_FILTER_SHORTCUT}</span></label>
             </a>
             <ul class="subnav">
                 {foreach from=$savedSearchData.options key=id item=option}
                     <li><a href="javascript:void(0)" class="parent-dropdown-action-handler"{if $id!=$savedSearchData.selected} onclick="SUGAR.savedViews.shortcutDropdown('{$id}', '{$currentModule}');"{/if}>{$option}{if $id==$savedSearchData.selected}&nbsp;&#10004{/if}</a></li>
                 {/foreach}
             </ul>
-            <span></span>
+            <span><span class="suitepicon suitepicon-action-caret"></span></span>
         </li>
     </ul>
 {/if}

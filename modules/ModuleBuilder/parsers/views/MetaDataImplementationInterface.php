@@ -44,6 +44,6 @@ interface MetaDataImplementationInterface
     public function getViewdefs () ;
     public function getFielddefs () ;
     public function getLanguage () ;
-    public function deploy ($defs) ;
+    public function deploy ($layoutDefinitions) ;
     public function getHistory () ;
 }

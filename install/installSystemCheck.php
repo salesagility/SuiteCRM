@@ -49,7 +49,7 @@ $_SESSION['setup_license_accept'] = true;
  * @param array $mod_strings
  * @return string
  */
-function runCheck($install_script = false, $mod_strings = array())
+function runCheck($install_script, $mod_strings = array())
 {
     installLog('Begin System Check Process *************');
 
@@ -121,7 +121,9 @@ function runCheck($install_script = false, $mod_strings = array())
     }
 
 // PHP VERSION
-    if (check_php_version() === -1) {
+
+
+if(check_php_version() === -1) {
         installLog($mod_strings['ERR_CHECKSYS_PHP_INVALID_VER'].'  '.constant('PHP_VERSION'));
         $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." )</span></b>";
         $error_found = true;
@@ -129,7 +131,6 @@ function runCheck($install_script = false, $mod_strings = array())
             <p><b>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</b></p>
             <p><span class="error">'.$phpVersion.'</span></p>
         ';
-
 }
 
 //Php Backward compatibility checks

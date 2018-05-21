@@ -93,7 +93,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 		{counter start=0 name="colCounter" print=false assign="colCounter"}
 		{foreach from=$displayColumns key=colHeader item=params}
 			<th scope='col' width='{$params.width}%'>
-				<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+				<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
                 {if false}
                     {if $params.url_sort}
                         <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1' title="{$arrowAlt}">
@@ -105,7 +105,6 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
                         {/if}
                     {/if}
                     {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
-					&nbsp;&nbsp;
 					{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
 						{if $pageData.ordering.sortOrder == 'ASC'}
 							{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
@@ -158,7 +157,7 @@ YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, "module=Meetings&
 			{/if}
 			{if !empty($quickViewLinks)}
 
-			<td width='2%' nowrap>{if $pageData.access.edit}<a title='{$editLinkString}' id="dashedit-{$rowData.ID}" href="index.php?action=EditView&module={if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index" title="{sugar_translate label="LBL_EDIT_INLINE"}">{sugar_getimage name="edit_inline.gif" attr='border="0" '}</a>{/if}</td>
+			<td width='2%' nowrap>{if $pageData.access.edit}<a title='{$editLinkString}' id="dashedit-{$rowData.ID}" href="index.php?action=EditView&module={if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index" title="{sugar_translate label="LBL_EDIT_INLINE"}"> <span class="suitepicon suitepicon-action-edit"></span></a>{/if}</td>
 
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}

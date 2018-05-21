@@ -787,6 +787,41 @@ function handleSugarConfig() {
     $sugar_config['log_file']                       = $setup_site_log_file;
     $sugar_config['enable_line_editing_detail']     = true;
     $sugar_config['enable_line_editing_list']       = true;
+    $sugar_config['filter_module_fields']           = array(
+        'Users' => array(
+            'show_on_employees',
+            'portal_only',
+            'is_group',
+            'system_generated_password',
+            'external_auth_only',
+            'sugar_login',
+            'authenticate_id',
+            'pwd_last_changed',
+            'is_admin',
+            'user_name',
+            'user_hash',
+            'password',
+            'last_login',
+            'oauth_tokens',
+        ),
+        'Employees' => array(
+            'show_on_employees',
+            'portal_only',
+            'is_group',
+            'system_generated_password',
+            'external_auth_only',
+            'sugar_login',
+            'authenticate_id',
+            'pwd_last_changed',
+            'is_admin',
+            'user_name',
+            'user_hash',
+            'password',
+            'last_login',
+            'oauth_tokens',
+        )
+    );
+
     $sugar_config['hide_subpanels']       = true;
 
     // Setup FTS
@@ -952,6 +987,8 @@ EOQ;
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
+    RewriteRule ^api/(.*?)$ lib/SuiteCRM/API/public/index.php/$1 [L]
+    RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>

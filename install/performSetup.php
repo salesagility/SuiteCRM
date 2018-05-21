@@ -469,6 +469,8 @@ FP;
     $enabled_tabs[] = 'AOW_WorkFlow';
     $enabled_tabs[] = 'AOK_KnowledgeBase';
     $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
+    $enabled_tabs[] = 'EmailTemplates';
+    $enabled_tabs[] = 'Surveys';
 
 //Beginning of the scenario implementations
 //We need to load the tabs so that we can remove those which are scenario based and un-selected

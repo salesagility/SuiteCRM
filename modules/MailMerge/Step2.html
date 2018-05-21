@@ -63,7 +63,7 @@
 	<tr>
 	<th align="left" scope="row" colspan="2"><h4 class="">{MAIL_MERGE_HEADER_STEP_2}</h4></th>
 	</tr>
-	<tr><td><slot>&nbsp;</slot></td></tr>
+	<tr><td><span>&nbsp;</span></td></tr>
 	<tr>
 	<td><input type='text' id="searchText" name="searchText" ONKEYDOWN="javascript:return displayKeyCode(event)"></td>
 	<td><input type="submit" id="searchSubmit" value="Search"  onClick="search();" class='button'></td>
@@ -86,7 +86,7 @@
 				<td scope="row">{MOD.LBL_AVAILABLE}
 					<table>
 						<tr>
-							<td><slot><select id="display_objs" name="display_objs[]" size="10" multiple="multiple" ></select></slot></td>
+							<td><span><select id="display_objs" name="display_objs[]" size="10" multiple="multiple" ></select></span></td>
 						</tr>
 					</table>
 				</td>
@@ -105,7 +105,7 @@
 				<td scope="row">{MOD.LBL_SELECTED}
 					<table>
 						<tr>
-							<td><slot><select id="selected_objs" name="selected_objs[]" size="10" multiple="multiple" >{MAILMERGE_PRESELECTED_OBJECTS}</select></slot></td>
+							<td><span><select id="selected_objs" name="selected_objs[]" size="10" multiple="multiple" >{MAILMERGE_PRESELECTED_OBJECTS}</select></span></td>
 						</tr>
 					</table>
 				</td>

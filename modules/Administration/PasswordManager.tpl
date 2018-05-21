@@ -148,7 +148,16 @@
 										</tr>
 									</table>
 
-						<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+			<!-- PASSWORD SECURITY SETTINGS -->
+			<table id="pwdsec_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+				<tr>
+					<td>{include file="modules/Administration/PasswordManagerSecurity.tpl"}</td>
+				</tr>
+			</table>
+			<!-- END PASSWORD SECURITY SETTINGS -->
+
+
+			<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
 								<th align="left" scope="row" colspan="2"><h4>{$MOD.LBL_PASSWORD_USER_RESET}</h4>
 								</th>
@@ -265,11 +274,11 @@
 										<tr>
 									        <td  scope="row" width="35%">{$MOD.LBL_PASSWORD_GENERATE_TEMPLATE_MSG}: </td>
 									        <td  >
-										        <slot>
+										        <span>
 									        		<select tabindex='251' id="generatepasswordtmpl" name="passwordsetting_generatepasswordtmpl" {$IE_DISABLED}>{$TMPL_DRPDWN_GENERATE}</select>
 													<input type="button" class="button" onclick="javascript:open_email_template_form('generatepasswordtmpl')" value="{$MOD.LBL_PASSWORD_CREATE_TEMPLATE}" {$IE_DISABLED}>
 													<input type="button" value="{$MOD.LBL_PASSWORD_EDIT_TEMPLATE}" class="button" onclick="javascript:edit_email_template_form('generatepasswordtmpl')" name='edit_generatepasswordtmpl' id='edit_generatepasswordtmpl' style="{$EDIT_TEMPLATE}">
-												</slot>
+												</span>
 									        </td>
 									        <td ></td>
 									        <td  ></td>
@@ -277,15 +286,37 @@
 										<tr>
 									        <td  scope="row">{$MOD.LBL_PASSWORD_LOST_TEMPLATE_MSG}: </td>
 									        <td  >
-							        			<slot>
+							        			<span>
 									        		<select tabindex='251' id="lostpasswordtmpl" name="passwordsetting_lostpasswordtmpl" {$IE_DISABLED}>{$TMPL_DRPDWN_LOST}</select>
 													<input type="button" class="button" onclick="javascript:open_email_template_form('lostpasswordtmpl')" value="{$MOD.LBL_PASSWORD_CREATE_TEMPLATE}" {$IE_DISABLED}>
 													<input type="button" value="{$MOD.LBL_PASSWORD_EDIT_TEMPLATE}" class="button" onclick="javascript:edit_email_template_form('lostpasswordtmpl')" name='edit_lostpasswordtmpl' id='edit_lostpasswordtmpl' style="{$EDIT_TEMPLATE}">
-												</slot>
+												</span>
 							        		 </td>
 									        <td ></td>
 									        <td ></td>
 										</tr>
+
+
+							<tr>
+								<td  scope="row">{$MOD.LBL_TWO_FACTOR_AUTH_EMAIL_TPL}: </td>
+								<td>
+									<span>
+										<select tabindex='251' id="factoremailtmpl"
+                                                name="passwordsetting_factoremailtmpl" {$IE_DISABLED}>{$TMPL_DRPDWN_FACTOR}</select>
+										<input type="button" class="button"
+                                               onclick="open_email_template_form('factoremailtmpl')"
+                                               value="{$MOD.LBL_PASSWORD_CREATE_TEMPLATE}" {$IE_DISABLED}>
+										<input type="button" value="{$MOD.LBL_PASSWORD_EDIT_TEMPLATE}" class="button"
+                                               onclick="edit_email_template_form('factoremailtmpl')"
+                                               name='edit_factoremailtmpl' id='edit_factoremailtmpl'
+                                               style="{$EDIT_TEMPLATE}">
+									</span>
+                        </td>
+								<td ></td>
+								<td ></td>
+							</tr>
+
+
 									</table>
 
 
@@ -626,7 +657,7 @@ function refresh_email_template_list(template_id, template_name) {
 		newElement.value=template_id;
 		field.options.add(newElement);
 	} // else
-	-->
+        
 }
 
 function testregex(customregex)

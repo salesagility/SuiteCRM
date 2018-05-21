@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class InsideViewLogicHook {
 
-    const urlBase = 'https://my.insideview.com/iv/crm/';
+    const URL_BASE = 'https://my.insideview.com/iv/crm/';
 
     protected function handleFieldMap($bean, $mapping) {
         $outArray = array();
@@ -77,7 +77,7 @@ class InsideViewLogicHook {
     }
 
     protected function getAccountFrameUrl($bean, $extraUrl) {
-        $url = self::urlBase.'analyseAccount.do?crm_context=account&';
+        $url = self::URL_BASE.'analyseAccount.do?crm_context=account&';
         $fieldMap = array('crm_account_name'=>'name',
                           'crm_account_id'=>'id',
                           'crm_account_website'=>'website',
@@ -95,7 +95,7 @@ class InsideViewLogicHook {
     }
 
     protected function getOpportunityFrameUrl($bean, $extraUrl) {
-        $url = self::urlBase.'analyseAccount.do?crm_context=opportunity&';
+        $url = self::URL_BASE.'analyseAccount.do?crm_context=opportunity&';
         $fieldMap = array('crm_account_name'=>'account_name',
                           'crm_account_id'=>'account_id',
                           'crm_opportunity_id'=>'id',
@@ -107,7 +107,7 @@ class InsideViewLogicHook {
 
     }
     protected function getLeadFrameUrl($bean, $extraUrl) {
-        $url = self::urlBase.'analyseAccount.do?crm_context=lead&';
+        $url = self::URL_BASE.'analyseAccount.do?crm_context=lead&';
         $fieldMap = array('crm_lead_id'=>'id',
                           'crm_lead_firstname'=>'first_name',
                           'crm_lead_lastname'=>'last_name',
@@ -123,7 +123,7 @@ class InsideViewLogicHook {
 
     }
     protected function getContactFrameUrl($bean, $extraUrl) {
-        $url = self::urlBase.'analyseExecutive.do?crm_context=contact&';
+        $url = self::URL_BASE.'analyseExecutive.do?crm_context=contact&';
         $fieldMap = array('crm_object_id'=>'id',
                           'crm_fn'=>'first_name',
                           'crm_ln'=>'last_name',

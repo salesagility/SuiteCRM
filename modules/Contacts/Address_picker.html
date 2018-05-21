@@ -108,9 +108,9 @@
 <td valign="top">{PREROW}</td>
 <td scope='row' valign="top"><a href="#"  onclick="send_back('Contacts','{CONTACT.ID}');">{CONTACT.FIRST_NAME}&nbsp;{CONTACT.LAST_NAME}</a></td>
 <td valign="top">
-	<slot>{CONTACT.PRIMARY_ADDRESS_STREET}<br>
+	<span>{CONTACT.PRIMARY_ADDRESS_STREET}<br>
 	{CONTACT.PRIMARY_ADDRESS_CITY} {CONTACT.PRIMARY_ADDRESS_STATE}&nbsp;&nbsp;{CONTACT.PRIMARY_ADDRESS_POSTALCODE}<br>
-	{CONTACT.PRIMARY_ADDRESS_COUNTRY}</slot>
+	{CONTACT.PRIMARY_ADDRESS_COUNTRY}</span>
 <td valign="top">{CONTACT.ACCOUNT_NAME}</td>
 </tr>
 

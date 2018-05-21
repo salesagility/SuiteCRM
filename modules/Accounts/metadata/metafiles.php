@@ -52,4 +52,3 @@
  	'searchfields'	  =>    'modules/Accounts/metadata/SearchFields.php',
  
  );
-?>

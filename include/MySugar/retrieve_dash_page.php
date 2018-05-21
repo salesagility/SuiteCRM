@@ -335,4 +335,3 @@ if (file_exists("custom/include/MySugar/tpls/MySugar2.tpl")) {
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
-?>

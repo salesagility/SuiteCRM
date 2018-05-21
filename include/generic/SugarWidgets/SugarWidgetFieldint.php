@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetFieldInt extends SugarWidgetReportField
 {
- function displayList($layout_def)
+ function displayList(&$layout_def)
  {
 
  	return $this->displayListPlain($layout_def);
@@ -97,5 +97,3 @@ class SugarWidgetFieldInt extends SugarWidgetReportField
  } 
 
 }
-
-?>

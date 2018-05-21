@@ -176,12 +176,12 @@ $tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='
 <table cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_DATE_START']?> </b><br><i><?php echo $timedate->get_user_date_format();?></i></td>
-	<td valign='top' ><input onblur="parseDate(this, '<?php echo $cal_dateformat ?>');" class="text" name="mypbss_date_start" size='12' maxlength='10' id='date_start' value='<?php echo $date_start; ?>'> <?php echo SugarThemeRegistry::current()->getImage('jscalendar', 'id="date_start_trigger" align="absmiddle"', null, null, ".gif", $app_strings['LBL_ENTER_DATE']); ?> </td>
+	<td valign='top' ><input onblur="parseDate(this, '<?php echo $cal_dateformat ?>');" class="text" name="mypbss_date_start" size='12' maxlength='10' id='date_start' value='<?php echo $date_start; ?>'> <span id="date_start_trigger" class="suitepicon suitepicon-module-calendar"></span> </td>
 </tr>
 
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_DATE_END'];?></b><br><i><?php echo $timedate->get_user_date_format();?></i></td>
-	<td valign='top' ><input onblur="parseDate(this, '<?php echo $cal_dateformat ?>');" class="text" name="mypbss_date_end" size='12' maxlength='10' id='date_end' value='<?php echo $date_end; ?>'>  <?php echo SugarThemeRegistry::current()->getImage('jscalendar', 'id="date_end_trigger" align="absmiddle"', null, null, ".gif", $app_strings['LBL_ENTER_DATE']); ?> </td>
+	<td valign='top' ><input onblur="parseDate(this, '<?php echo $cal_dateformat ?>');" class="text" name="mypbss_date_end" size='12' maxlength='10' id='date_end' value='<?php echo $date_end; ?>'><span id="date_end_trigger" class="suitepicon suitepicon-module-calendar"></span></td>
 </tr>
 
 	<tr>
@@ -250,7 +250,12 @@ function gen_xml_pipeline_by_sales_stage(
     $chart_size = 'hBarF',
     $current_module_strings = null
 ) {
-		global $app_strings, $charset, $lang, $barChartColors, $current_user;
+		global $app_strings, $charset, $lang, $barChartColors, $current_user, $current_language;
+
+    // set $current_module_strings to 'Charts' module strings by default
+    if (empty($current_module_strings)) {
+        $current_module_strings = return_module_language($current_language, 'Charts');
+    }
 
 		$kDelim = $current_user->getPreference('num_grp_sep');
 		global $timedate;

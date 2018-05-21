@@ -564,7 +564,7 @@ public function login($user_auth, $application, $name_value_list){
 			$GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
 			self::$helperObject->setFaultObject($error);
 			return;
-	} else if(function_exists('mcrypt_cbc')){
+	} else if(function_exists('openssl_decrypt')){
 		$password = self::$helperObject->decrypt_string($user_auth['password']);
 		if($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id'])){
 			$success = true;

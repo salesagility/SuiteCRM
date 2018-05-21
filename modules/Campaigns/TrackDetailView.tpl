@@ -76,58 +76,64 @@
 <table width="100%" border="0" cellspacing="{$GRIDLINE}" cellpadding="0">
 <tr>
 {$PAGINATION}
-	<td width="20%" scope="row"><slot>{$MOD.LBL_NAME}</slot></td>
-	<td width="30%"><slot>{$NAME}</slot></td>
-	<td width="20%" scope="row"><slot>{$MOD.LBL_ASSIGNED_TO}</slot></td>
-	<td width="30%"><slot>{$ASSIGNED_TO}</slot></td>
+	<td width="20%" scope="row"><span>{$MOD.LBL_NAME}</span></td>
+	<td width="30%"><span>{$NAME}</span></td>
+	<td width="20%" scope="row"><span>{$MOD.LBL_ASSIGNED_TO}</span></td>
+	<td width="30%"><span>{$ASSIGNED_TO}</span></td>
 	</tr><tr>
-	<td width="20%" scope="row"><slot>{$MOD.LBL_CAMPAIGN_STATUS}</slot></td>
-	<td width="30%"><slot>{$STATUS}</slot></td>
-	<td width="20%" scope="row"><slot>{$MOD.LBL_TEAM}</slot></td>
-	<td width="30%"><slot>{$TEAM_NAME}</slot></td>
+	<td width="20%" scope="row"><span>{$MOD.LBL_CAMPAIGN_STATUS}</span></td>
+	<td width="30%"><span>{$STATUS}</span></td>
+<!-- BEGIN: pro -->
+	<td width="20%" scope="row"><span>{$MOD.LBL_TEAM}</span></td>
+	<td width="30%"><span>{$TEAM_NAME}</span></td>
+<!-- END: pro -->
+<!-- BEGIN: open_source -->
+	<td width="20%" scope="row"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
+<!-- END: open_source -->
 	</tr><tr>
-	<td width="20%" scope="row"><slot>{$MOD.LBL_CAMPAIGN_START_DATE}</slot></td>
-	<td width="30%"><slot>{$START_DATE}</slot></td>
-	<td scope="row"><slot>{$APP.LBL_DATE_MODIFIED}&nbsp;</slot></td>
-	<td><slot>{$DATE_MODIFIED} {$APP.LBL_BY} {$MODIFIED_BY}</slot></td>
+	<td width="20%" scope="row"><span>{$MOD.LBL_CAMPAIGN_START_DATE}</span></td>
+	<td width="30%"><span>{$START_DATE}</span></td>
+	<td scope="row"><span>{$APP.LBL_DATE_MODIFIED}&nbsp;</span></td>
+	<td><span>{$DATE_MODIFIED} {$APP.LBL_BY} {$MODIFIED_BY}</span></td>
 	</tr><tr>
-	<td width="20%" scope="row"><slot>{$MOD.LBL_CAMPAIGN_END_DATE}</slot></td>
-	<td width="30%"><slot>{$END_DATE}</slot></td>
-	<td scope="row"><slot>{$APP.LBL_DATE_ENTERED}&nbsp;</slot></td>
-	<td><slot>{$DATE_ENTERED} {$APP.LBL_BY} {$CREATED_BY}</slot></td>
+	<td width="20%" scope="row"><span>{$MOD.LBL_CAMPAIGN_END_DATE}</span></td>
+	<td width="30%"><span>{$END_DATE}</span></td>
+	<td scope="row"><span>{$APP.LBL_DATE_ENTERED}&nbsp;</span></td>
+	<td><span>{$DATE_ENTERED} {$APP.LBL_BY} {$CREATED_BY}</span></td>
 	</tr><tr>
-	<td width="20%" scope="row"><slot>{$MOD.LBL_CAMPAIGN_TYPE}</slot></td>
-	<td width="30%"><slot>{$TYPE}</slot></td>
-	<td width="20%" scope="row"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
+	<td width="20%" scope="row"><span>{$MOD.LBL_CAMPAIGN_TYPE}</span></td>
+	<td width="30%"><span>{$TYPE}</span></td>
+	<td width="20%" scope="row"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
 	</tr><tr>
-	<td width="20%" scope="row"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
-	<td width="20%" scope="row"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
+	<td width="20%" scope="row"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
+	<td width="20%" scope="row"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
 	</tr><tr>
-	<td width="20%" nowrap scope="row"><slot>{$MOD.LBL_CAMPAIGN_BUDGET} ({$CURRENCY})</slot></td>
-	<td width="30%"><slot>{$BUDGET}</slot></td>
-	<td width="20%" nowrap scope="row"><slot>{$MOD.LBL_CAMPAIGN_ACTUAL_COST} ({$CURRENCY})</slot></td>
-	<td width="30%"><slot>{$ACTUAL_COST}</slot></td>
+	<td width="20%" nowrap scope="row"><span>{$MOD.LBL_CAMPAIGN_BUDGET} ({$CURRENCY})</span></td>
+	<td width="30%"><span>{$BUDGET}</span></td>
+	<td width="20%" nowrap scope="row"><span>{$MOD.LBL_CAMPAIGN_ACTUAL_COST} ({$CURRENCY})</span></td>
+	<td width="30%"><span>{$ACTUAL_COST}</span></td>
 	</tr><tr>
-	<td width="20%" nowrap scope="row"><slot>{$MOD.LBL_CAMPAIGN_EXPECTED_REVENUE} ({$CURRENCY})</slot></td>
-	<td width="30%" nowrap><slot>{$EXPECTED_REVENUE}</slot></td>
-	<td width="20%" nowrap scope="row"><slot>{$MOD.LBL_CAMPAIGN_EXPECTED_COST} ({$CURRENCY})</slot></td>
-	<td width="30%"><slot>{$EXPECTED_COST}</slot></td>
+	<td width="20%" nowrap scope="row"><span>{$MOD.LBL_CAMPAIGN_EXPECTED_REVENUE} ({$CURRENCY})</span></td>
+	<td width="30%" nowrap><span>{$EXPECTED_REVENUE}</span></td>
+	<td width="20%" nowrap scope="row"><span>{$MOD.LBL_CAMPAIGN_EXPECTED_COST} ({$CURRENCY})</span></td>
+	<td width="30%"><span>{$EXPECTED_COST}</span></td>
 	</tr><tr>
 	</tr><tr>
-	<td width="20%" scope="row"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
-	<td width="20%" scope="row"><slot>&nbsp;</slot></td>
-	<td width="30%"><slot>&nbsp;</slot></td>
+	<td width="20%" scope="row"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
+	<td width="20%" scope="row"><span>&nbsp;</span></td>
+	<td width="30%"><span>&nbsp;</span></td>
 	</tr>
 	<tr>
-	<td width="20%" valign="top" scope="row"><slot>{$MOD.LBL_CAMPAIGN_OBJECTIVE}</slot></td>
-	<td colspan="3"><slot>{$OBJECTIVE}</slot></td>
+	<td width="20%" valign="top" scope="row"><span>{$MOD.LBL_CAMPAIGN_OBJECTIVE}</span></td>
+	<td colspan="3"><span>{$OBJECTIVE}</span></td>
 </tr><tr>
-	<td width="20%" valign="top" scope="row"><slot>{$MOD.LBL_CAMPAIGN_CONTENT}</slot></td>
-	<td colspan="3"><slot>{$CONTENT}</slot></td>
+	<td width="20%" valign="top" scope="row"><span>{$MOD.LBL_CAMPAIGN_CONTENT}</span></td>
+	<td colspan="3"><span>{$CONTENT}</span></td>
 </tr>
 </table>
 </div>
@@ -166,4 +172,4 @@ var toggle = 0;
 
 <!-- BEGIN: subpanel -->
 {sugar_getscript file="modules/Campaigns/DetailView.js"}
-<slot>{$SUBPANEL}</slot>
+<span>{$SUBPANEL}</span>

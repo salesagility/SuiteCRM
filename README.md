@@ -1,6 +1,6 @@
-## SuiteCRM 7.8.18  LTS
+## SuiteCRM 7.10.4
 
-[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=develop)](https://travis-ci.org/salesagility/SuiteCRM)
 
 
 ### What's in this repository ###
@@ -42,7 +42,7 @@ SuiteCRM in your language: [ Download and install language packs from][suitecrm_
 
 See our [Code of Conduct][code_of_conduct] on our Wiki.
 
-[code_of_conduct]: https://docs.suitecrm.com/community/code-of-conduct/
+[code_of_conduct]: https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Code_of_Conduct
 
 
 ### Helpful links for the community ###

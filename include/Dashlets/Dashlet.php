@@ -242,9 +242,13 @@ class Dashlet
         $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
         $template->assign('DELETE_ICON',$this->setDeleteIcon());
-        if(!empty($this->seedBean->module_name)) {
-            $template->assign('DASHLET_MODULE', $this->seedBean->module_name);
+        $moduleName = '';
+        if(!is_object($this->seedBean)) {
+            $GLOBALS['log']->warn('incorrect seed bean');
+        } else {
+            $moduleName = $this->seedBean->module_name;
         }
+        $template->assign('DASHLET_MODULE', $moduleName);
         $template->assign('DASHLET_BUTTON_ARIA_EDIT', translate('LBL_DASHLET_EDIT', 'Home'));
         $template->assign('DASHLET_BUTTON_ARIA_REFRESH',  translate('LBL_DASHLET_REFRESH', 'Home'));
         $template->assign('DASHLET_BUTTON_ARIA_DELETE',  translate('LBL_DASHLET_DELETE', 'Home'));

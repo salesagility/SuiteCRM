@@ -377,15 +377,14 @@ EOF;
                 backgroundGrid:false,
                 backgroundGrid:false,
                 gutterBottom: 150,
-                //gutterTop:40,
-                //gutterLeft:30,
+                gutterTop:25,
+                gutterLeft:128,
                 title: '$chartName',
 
                 tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
-                gutterLeft:50,
                 shadow:false,
                 titleSize:10,
                 labels: $chartLabelValues,
@@ -419,8 +418,8 @@ EOF;
             options: {
             title: '$chartName',
                 gutterBottom: 150,
-                gutterLeft:50,
-                //gutterTop:50,
+                gutterLeft: 128,
+                gutterTop: 25,
                 //title: '$chartName',
                 labels: $chartLabelValues,
                 colorsSequential:true,
@@ -532,7 +531,7 @@ EOF;
                 tickmarks:'encircle',
                 textSize:10,
                 titleSize:10,
-                gutterLeft:70,
+                gutterLeft:128,
                 //title: '$chartName',
                 labels: $chartLabelValues,
 

@@ -1,9 +1,10 @@
 <?php
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -15,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -33,9 +34,13 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
@@ -44,10 +49,8 @@ $mod_strings = array(
     'LBL_DATE_ENTERED' => 'Date Created',
     'LBL_DATE_MODIFIED' => 'Date Modified',
     'LBL_MODIFIED' => 'Modified By',
-    'LBL_MODIFIED_ID' => 'Modified By Id',
     'LBL_MODIFIED_NAME' => 'Modified By Name',
     'LBL_CREATED' => 'Created By',
-    'LBL_CREATED_ID' => 'Created By Id',
     'LBL_DESCRIPTION' => 'Description',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Name',
@@ -62,11 +65,9 @@ $mod_strings = array(
     'LBL_HOMEPAGE_TITLE' => 'My Event',
     'LNK_NEW_RECORD' => 'Create Event',
     'LNK_LIST' => 'View Events',
-    'LNK_IMPORT_FP_EVENTS' => 'Import Event',
     'LBL_SEARCH_FORM_TITLE' => 'Search Event',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-    'LBL_FP_EVENTS_SUBPANEL_TITLE' => 'Event',
     'LBL_NEW_FORM_TITLE' => 'New Event',
     'LBL_LOCATION' => 'Location',
     'LBL_START_DATE' => 'start date',
@@ -103,6 +104,7 @@ $mod_strings = array(
     'LBL_ERROR_MSG_2' => 'Sending the invite emails has failed! Please check your email settings.',
     'LBL_ERROR_MSG_3' => 'More than 10 emails have failed to send. Please check that all the contacts you are inviting have a valid email address. (See suitecrm.log)',
     'LBL_ERROR_MSG_4' => ' emails have failed to send. Please check that all the contacts you are inviting have a valid email address. (See suitecrm.log)',
+    //LBL_ERROR_MSG_4 Begins with a number (controller.php line 581) for example 10 emails have failed to send.
     'LBL_ERROR_MSG_5' => 'Invalid Email Template',
     'LBL_EMAIL_INVITE' => 'Email Invite',
 
@@ -110,29 +112,19 @@ $mod_strings = array(
     'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENT_LOCATIONS_TITLE' => 'Locations',
     'LBL_FP_EVENTS_LEADS_1_FROM_LEADS_TITLE' => 'Leads',
     'LBL_FP_EVENTS_PROSPECTS_1_FROM_PROSPECTS_TITLE' => 'Targets',
+
+    'LBL_HOURS_ABBREV' => 'h',
+    'LBL_MINSS_ABBREV' => 'm',
     'LBL_FP_EVENTS_FP_EVENT_DELEGATES_1_FROM_FP_EVENT_DELEGATES_TITLE' => 'Delegates',
-	'LBL_HOURS_ABBREV' => 'h',
-	'LBL_MINSS_ABBREV' => 'm',
 
-	// Attendance report
-	'LBL_CONTACT_NAME' => 'Name',
-	'LBL_ACCOUNT_NAME' => 'Company',
-	'LBL_SIGNATURE' => 'Signature',
-	// email templates
-	'LBL_EMAIL_ACCEPT' => 'Accept',
-	'LBL_EMAIL_DECLINE' => 'Decline',
-	// contacts/leads/targets subpanels
-	'LBL_LIST_INVITE_STATUS_EVENT' => 'Invited',
-	'LBL_LIST_ACCEPT_STATUS_EVENT' => 'Status',
-	// counts
-	'LBL_NB_ACCEPT' => 'Accepted :',
-	'LBL_NB_DECLINED' => 'Refused :',
-	'LBL_NB_ATTENDED' => 'Attended :',
+    // Attendance report
+    'LBL_CONTACT_NAME' => 'Name',
+    'LBL_ACCOUNT_NAME' => 'Company',
+    'LBL_SIGNATURE' => 'Signature',
+    // contacts/leads/targets subpanels
+    'LBL_LIST_INVITE_STATUS_EVENT' => 'Invited',
+    'LBL_LIST_ACCEPT_STATUS_EVENT' => 'Status',
 
-	'LBL_NAME_FIRST' => 'First Name',
-	'LBL_NAME_SECOND' => 'Last Name',
-     
-	'LBL_ACTIVITY_STATUS' => 'Activity Status',
-	'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE' => 'Event Locations from Events Title',
+    'LBL_ACTIVITY_STATUS' => 'Activity Status',
+    'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE' => 'Event Locations from Events Title',
 );
-//LBL_ERROR_MSG_4 Begins with a number (controller.php line 581) for example 10 emails have failed to send. 

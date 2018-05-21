@@ -115,6 +115,7 @@ function getModuleFields(
 
         }
     }
+    asort($fields);
     if($view == 'JSON'){
         return json_encode($fields);
     }
@@ -601,7 +602,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if ($params['record_id']) {
+    if (isset($params['record_id']) && $params['record_id']) {
         $ss->assign("record_id", $params['record_id']);
     }
 
@@ -627,9 +628,14 @@ function createBracketVariableAlias($variable)
  * @param bool $field_option
  * @return string
  */
-function getDateField($module, $aow_field, $view='EditView', $value = null, $field_option = true)
+function getDateField($module, $aow_field, $view, $value = null, $field_option = true)
 {
     global $app_list_strings;
+
+    // set $view = 'EditView' as default
+    if (!$view) {
+        $view = 'EditView';
+    }
 
     $value = json_decode(html_entity_decode_utf8($value), true);
 
@@ -858,7 +864,7 @@ function fixUpFormatting($module, $field, $value)
 
     require_once($beanFiles[$beanList[$module]]);
     $bean = new $beanList[$module];
-    
+
     static $boolean_false_values = array('off', 'false', '0', 'no');
 
     switch($bean->field_defs[$field]['type']) {

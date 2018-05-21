@@ -165,4 +165,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
         return (!isset($question) || trim($question)==='' || $question =='http://');
     }
 
-?>

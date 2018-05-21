@@ -158,17 +158,14 @@
                                 {if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
                                     {if $pageData.ordering.sortOrder == 'ASC'}
                                         {capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
-                                        {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-                                        {sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+                                        <span class="suitepicon suitepicon-action-sorting-descending"></span>
                                     {else}
                                         {capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
-                                        {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-                                        {sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+                                        <span class="suitepicon suitepicon-action-sorting-ascending"></span>
                                     {/if}
                                 {else}
                                     {capture assign="imageName"}arrow.{$arrowExt}{/capture}
-                                    {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
-                                    {sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
+                                    <span class="suitepicon suitepicon-action-sorting-none"></span>
                                 {/if}
                             </a>
                             {else}
@@ -257,7 +254,7 @@
                             </{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
                             {/if}
                             {if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}
-                                <div class="inlineEditIcon">{sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}</div>{/if}
+                                <div class="inlineEditIcon"><span class="suitepicon suitepicon-action-edit"></span></div>{/if}
                         </td>
                     {/strip}
                     {assign var='scope_row' value=false}

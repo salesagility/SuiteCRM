@@ -1,10 +1,10 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
  * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -16,7 +16,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $mod_strings = array(
     'LBL_MODULE_NAME' => 'Project',
@@ -52,57 +55,39 @@ $mod_strings = array(
     'LBL_ASSIGNED_USER_NAME' => 'Project Manager:',
     'LBL_MODIFIED_USER_ID' => 'Modified User Id:',
     'LBL_CREATED_BY' => 'Created By:',
-    'LBL_TEAM_ID' => 'Team:',
     'LBL_NAME' => 'Name:',
-    'LBL_PDF_PROJECT_NAME' => 'Project Name:',
     'LBL_DESCRIPTION' => 'Description:',
     'LBL_DELETED' => 'Deleted:',
     'LBL_DATE' => 'Date:',
     'LBL_DATE_START' => 'Start Date:',
     'LBL_DATE_END' => 'End Date:',
     'LBL_PRIORITY' => 'Priority:',
-    'LBL_MY_PROJECTS' => 'My Projects',
-    'LBL_MY_PROJECT_TASKS' => 'My Project Tasks',
-    'LBL_TOTAL_ESTIMATED_EFFORT' => 'Total Estimated Effort (hrs):',
-    'LBL_TOTAL_ACTUAL_EFFORT' => 'Total Actual Effort (hrs):',
     'LBL_LIST_NAME' => 'Name',
-    'LBL_LIST_DAYS' => 'days',
     'LBL_LIST_TOTAL_ESTIMATED_EFFORT' => 'Total Estimated Effort (hrs)',
     'LBL_LIST_TOTAL_ACTUAL_EFFORT' => 'Total Actual Effort (hrs)',
-    'LBL_LIST_UPCOMING_TASKS' => 'Upcoming Tasks (1 Week)',
-    'LBL_LIST_OVERDUE_TASKS' => 'Overdue Tasks',
-    'LBL_LIST_OPEN_CASES' => 'Open Cases',
     'LBL_LIST_END_DATE' => 'End Date',
-    'LBL_LIST_TEAM_ID' => 'Team',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LBL_PROJECT_TASK_SUBPANEL_TITLE' => 'Project Tasks',
-    'LBL_CONTACT_SUBPANEL_TITLE' => 'Contacts',
-    'LBL_ACCOUNT_SUBPANEL_TITLE' => 'Accounts',
     'LBL_OPPORTUNITY_SUBPANEL_TITLE' => 'Opportunities',
-    'LBL_QUOTE_SUBPANEL_TITLE' => 'Quotes',
-	'LBL_PROJECT_PREDECESSOR_NONE' => 'None',
-	'LBL_ALL_PROJECTS' => 'All Projects',
-	'LBL_ALL_USERS' => 'All Users',
-	'LBL_ALL_CONTACTS' => 'All Contacts',
+    'LBL_PROJECT_PREDECESSOR_NONE' => 'None',
+    'LBL_ALL_PROJECTS' => 'All Projects',
+    'LBL_ALL_USERS' => 'All Users',
+    'LBL_ALL_CONTACTS' => 'All Contacts',
 
     // quick create label
     'LBL_NEW_FORM_TITLE' => 'New Project',
-    'CONTACT_REMOVE_PROJECT_CONFIRM' => 'Are you sure you want to remove this contact from this project?',
     'LNK_NEW_PROJECT' => 'Create Project',
     'LNK_PROJECT_LIST' => 'View Project List',
     'LNK_NEW_PROJECT_TASK' => 'Create Project Task',
     'LNK_PROJECT_TASK_LIST' => 'View Project Tasks',
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Projects',
-    'LBL_ACTIVITIES_TITLE' => 'Activities',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
-    'LBL_QUICK_NEW_PROJECT' => 'New Project',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
     'LBL_OPPORTUNITIES_SUBPANEL_TITLE' => 'Opportunities',
     'LBL_CASES_SUBPANEL_TITLE' => 'Cases',
     'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
-    'LBL_PRODUCTS_SUBPANEL_TITLE' => 'Products',
     'LBL_TASK_ID' => 'ID',
     'LBL_TASK_NAME' => 'Task Name',
     'LBL_DURATION' => 'Duration',
@@ -112,34 +97,15 @@ $mod_strings = array(
     'LBL_PREDECESSORS' => 'Predecessors',
     'LBL_PERCENT_COMPLETE' => '% Complete',
     'LBL_MORE' => 'More...',
-    'LBL_PERCENT_BUSY' => '% Busy',
-    'LBL_TASK_ID_WIDGET' => 'id',
-    'LBL_TASK_NAME_WIDGET' => 'description',
-    'LBL_DURATION_WIDGET' => 'duration',
-    'LBL_START_WIDGET' => 'date_start',
-    'LBL_FINISH_WIDGET' => 'date_finish',
-    'LBL_PREDECESSORS_WIDGET' => 'predecessors_',
-    'LBL_PERCENT_COMPLETE_WIDGET' => 'percent_complete',
-    'LBL_EDIT_PROJECT_TASKS_TITLE' => 'Edit Project Tasks',
     'LBL_OPPORTUNITIES' => 'Opportunities',
-    'LBL_LAST_WEEK' => 'Previous',
     'LBL_NEXT_WEEK' => 'Next',
-    'LBL_PROJECTRESOURCES_SUBPANEL_TITLE' => 'Project Resources',
-    'LBL_PROJECTTASK_SUBPANEL_TITLE' => 'Project Task',
-    'LBL_HOLIDAYS_SUBPANEL_TITLE' => 'Holidays',
     'LBL_PROJECT_INFORMATION' => 'Project Overview',
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
-    'LBL_INSERTROWS' => 'Insert Rows' /*for 508 compliance fix*/,
     'LBL_PROJECT_TASKS_SUBPANEL_TITLE' => 'Project Tasks',
     'LBL_VIEW_GANTT_TITLE' => 'View Gantt',
     'LBL_VIEW_GANTT_DURATION' => 'Duration',
     'LBL_TASK_TITLE' => 'Edit Task',
-    'LBL_PREDECESSOR_TITLE' => 'Edit Predecessor',
-    'LBL_START_DATE_TITLE' => 'Select Start Date',
-    'LBL_END_DATE_TITLE' => 'Select End Date',
     'LBL_DURATION_TITLE' => 'Edit Duration',
-    'LBL_PERCENTAGE_COMPLETE_TITLE' => 'Edit % Complete',
-    'LBL_ACTUAL_DURATION_TITLE' => 'Edit Actual Duration',
     'LBL_LAG' => 'Lag',
     'LBL_DAYS' => 'Days',
     'LBL_HOURS' => 'Hours',
@@ -151,20 +117,15 @@ $mod_strings = array(
     'LBL_EDIT_TASK_PROPERTIES' => 'Edit task properties.',
     'LBL_PARENT_TASK_ID' => 'Parent Task Id',
     'LBL_RESOURCE_CHART' => 'Resource Calendar',
-    'LBL_RESOURCE_CHART_START' => 'Date Start:',
-    'LBL_RESOURCE_CHART_END' => 'Date End:',
-    'LBL_RESOURCES' => 'Select Resources:',
     'LBL_RELATIONSHIP_TYPE' => 'Relation Type',
     'LBL_ASSIGNED_TO' => 'Project Manager',
     'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_AM_PROJECTTEMPLATES_TITLE' => 'Project Template',
     'LBL_STATUS' => 'Status:',
     'LBL_LIST_ASSIGNED_USER_ID' => 'Project Manager',
-    'LBL_AM_PROJECTHOLIDAYS_PROJECT_FROM_AM_PROJECTHOLIDAYS_TITLE' => 'Project Holidays',
     'LBL_TOOLTIP_PROJECT_NAME' => 'Project',
     'LBL_TOOLTIP_TASK_NAME' => 'Task Name',
     'LBL_TOOLTIP_TITLE' => 'Tasks on this day',
     'LBL_TOOLTIP_TASK_DURATION' => 'Duration',
-    'LBL_PROJECT_TITLE_HOVER' => 'Project Detail View',
     'LBL_RESOURCE_TYPE_TITLE_USER' => 'Resource is a User',
     'LBL_RESOURCE_TYPE_TITLE_CONTACT' => 'Resource is a Contact',
     'LBL_RESOURCE_CHART_PREVIOUS_MONTH' => 'Previous Month',
@@ -178,41 +139,39 @@ $mod_strings = array(
     'LBL_UNASSIGNED' => 'Unassigned',
     'LBL_PROJECT_USERS_1_FROM_USERS_TITLE' => 'Resources',
 
-	'LBL_EMAIL' => 'Email',
-	'LBL_PHONE' => 'Phone Office:',
-	'LBL_ADD_BUTTON'=> 'Add',
-	'LBL_ADD_INVITEE' => 'Add Resource',
-	'LBL_FIRST_NAME' => 'First Name',
-	'LBL_LAST_NAME' => 'Last Name',
-	'LBL_SEARCH_BUTTON'=> 'Search',
-	'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
-	'LBL_CREATE_INVITEE' => 'Create a Resource',
-	'LBL_CREATE_CONTACT' => 'As Contact',
-	'LBL_CREATE_AND_ADD' => 'Create & Add',
-	'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
-	'LBL_NO_ACCESS' => 'You have no access to create $module',
-	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
-	'LBL_REMOVE' => 'rem',
-	'LBL_VIEW_DETAIL' => 'View Details',
-	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Consider Working days',
+    'LBL_EMAIL' => 'Email',
+    'LBL_PHONE' => 'Phone Office:',
+    'LBL_ADD_BUTTON' => 'Add',
+    'LBL_ADD_INVITEE' => 'Add Resource',
+    'LBL_FIRST_NAME' => 'First Name',
+    'LBL_LAST_NAME' => 'Last Name',
+    'LBL_SEARCH_BUTTON' => 'Search',
+    'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
+    'LBL_CREATE_INVITEE' => 'Create a Resource',
+    'LBL_CREATE_CONTACT' => 'As Contact',
+    'LBL_CREATE_AND_ADD' => 'Create & Add',
+    'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
+    'LBL_NO_ACCESS' => 'You have no access to create $module',
+    'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
+    'LBL_REMOVE' => 'rem',
+    'LBL_VIEW_DETAIL' => 'View Details',
+    'LBL_OVERRIDE_BUSINESS_HOURS' => 'Consider Working days',
 
-	'LBL_PROJECTS_SEARCH' => 'Search Projects',
-	'LBL_USERS_SEARCH' => 'Search Users',
-	'LBL_CONTACTS_SEARCH' => 'Select  Contacts',
-	'LBL_RESOURCE_CHART_SEARCH_BUTTON' => 'Search',
-	
-	'LBL_CHART_TYPE' => 'Type',
-	'LBL_CHART_WEEKLY' => 'Weekly',
-	'LBL_CHART_MONTHLY' => 'Monthly',	
-	'LBL_CHART_QUARTERLY' => 'Quarterly',
+    'LBL_PROJECTS_SEARCH' => 'Search Projects',
+    'LBL_USERS_SEARCH' => 'Search Users',
+    'LBL_CONTACTS_SEARCH' => 'Select  Contacts',
+    'LBL_RESOURCE_CHART_SEARCH_BUTTON' => 'Search',
 
-	'LBL_RESOURCE_CHART_MONTH' => 'Month',
-	'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
- 	'LBL_ALL_RESOURCES' => 'All Resources',
+    'LBL_CHART_TYPE' => 'Type',
+    'LBL_CHART_WEEKLY' => 'Weekly',
+    'LBL_CHART_MONTHLY' => 'Monthly',
+    'LBL_CHART_QUARTERLY' => 'Quarterly',
 
- 	'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Project Contacts from Contacts Title',
- 	'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
- 	'LBL_AOS_QUOTES_PROJECT' => 'Quotes: Project',
+    'LBL_RESOURCE_CHART_MONTH' => 'Month',
+    'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
+
+    'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE' => 'Project Contacts from Contacts Title',
+    'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE' => 'Project Templates: Project from Project Title',
+    'LBL_AOS_QUOTES_PROJECT' => 'Quotes: Project',
 
 );
-?>

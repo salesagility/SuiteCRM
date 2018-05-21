@@ -106,9 +106,9 @@ class PackageManagerDisplay{
         $form2 .= "</td><td align='left'><div id='workingStatusDiv' style='display:none;'>".SugarThemeRegistry::current()->getImage("sqsWait","border='0' align='bottom'",null,null,'.gif',"Loading")."</div></td><td align='right'>";
 
         if($isAlive){
-            $form2 .= "<slot><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></slot>";
+            $form2 .= "<span><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></span>";
         }else{
-            $form2 .= "<slot><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div' style='display:none;'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></slot>";
+            $form2 .= "<span><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div' style='display:none;'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></span>";
         }
         $form2 .= "</td></tr></table>";
 		$form2 = '';   //Commenting out the form as part of sugar depot hiding.
@@ -348,7 +348,7 @@ class PackageManagerDisplay{
         $display .= "<b><font color='red' >{$mod_strings['LBL_MODULE_LICENSE']}</font></b>";
         $display .= "</td>";
         $display .= "<td>";
-        $display .= "<slot><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleLowerDiv('span_animate_div_$div_id', 'span_license_div_$div_id', 350, 0);\"><span id='span_animate_div_$div_id'<img src='".SugarThemeRegistry::current()->getImageURL('advanced_search.gif')."' width='8' height='8' alt='Advanced' border='0'>&nbsp;Expand</span></a></slot></td>";
+        $display .= "<span><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleLowerDiv('span_animate_div_$div_id', 'span_license_div_$div_id', 350, 0);\"><span id='span_animate_div_$div_id'<img src='".SugarThemeRegistry::current()->getImageURL('advanced_search.gif')."' width='8' height='8' alt='Advanced' border='0'>&nbsp;Expand</span></a></span></td>";
         $display .= "</td>";
         $display .= "</tr>";
         $display .= "</table>";

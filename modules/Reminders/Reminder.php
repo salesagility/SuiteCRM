@@ -55,7 +55,7 @@ class Reminder extends Basic
     var $tracker_visibility = false;
     var $importable = false;
     var $disable_row_level_security = true;
-    
+
     /**
      *
      * @var int
@@ -69,6 +69,8 @@ class Reminder extends Basic
     var $timer_email;
     var $related_event_module;
     var $related_event_module_id;
+
+    public $popup_viewed;
 
     private static $remindersData = array();
 
@@ -104,8 +106,8 @@ class Reminder extends Basic
             $reminderBean->timer_popup = $reminderData->timer_popup;
             $reminderBean->timer_email = $reminderData->timer_email;
             $reminderBean->related_event_module = $eventModule;
-            $reminderBean->related_event_module_id = $eventModuleId;	
-            
+            $reminderBean->related_event_module_id = $eventModuleId;
+
             //nullify date_willexecute (NULL) so it can be updated on next fetch run
             $reminderBean->date_willexecute = null;
 
@@ -283,7 +285,7 @@ class Reminder extends Basic
 
         // cn: get a boundary limiter
         $dateTimeMax = $timedate->getNow(true)->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb(false);
-        
+
         $dateTimeMaxUnix = time()+$app_list_strings['reminder_max_time'];
 
         $dateTimeNow = $timedate->getNow(true)->asDb(false);
@@ -306,14 +308,14 @@ class Reminder extends Basic
         ///////////////////////////////////////////////////////////////////////
 
 
-        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list('', 
+        $popupReminders = BeanFactory::getBean('Reminders')->get_full_list('',
                 "reminders.popup = 1 AND (reminders.date_willexecute = -1 OR reminders.date_willexecute >= " . $dateTimeMaxUnix . ")");
 
         if ($popupReminders) {
             $i_runs = 0;
             foreach ($popupReminders as $popupReminder) {
                 $relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
-                
+
                 /** UPDATE REMINDER EXECUTION TIME *********************************************************************************************** */
                 if (
                         isset($popupReminder->fetched_row['date_willexecute']) &&
@@ -334,7 +336,7 @@ class Reminder extends Basic
                     }
                 }
                 /** UPDATE REMINDER EXECUTION TIME END  ***************************************************************************************** */
-                
+
                 if ($relatedEvent &&
                     (!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
                     (!isset($relatedEvent->date_start) || (strtotime($relatedEvent->date_start) >= strtotime(self::unQuoteTime($dateTimeNow)) && strtotime($relatedEvent->date_start) <= strtotime(self::unQuoteTime($dateTimeMax)))) &&
@@ -395,6 +397,9 @@ class Reminder extends Basic
                                 $timeStart - strtotime($alertDateTimeNow),
                                 $url
                             );
+
+                            $popupReminder->popup_viewed = 1;
+                            $popupReminder->save();
                         }
                     }
                 }
@@ -751,5 +756,3 @@ class Reminder extends Basic
     }
 
 }
-
-?>

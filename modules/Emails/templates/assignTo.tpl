@@ -45,12 +45,12 @@
 <input type="hidden" name="action" value="Distribute">
 
 
-<table cellpadding="4" cellspacing="0" border="0" width="100%" class="edit view"> 
+<table cellpadding="4" cellspacing="0" border="0"  class="edit view">
     <tr>
         <td scope="row" nowrap="nowrap" valign="top" >
         {sugar_translate label="LBL_ASSIGNED_TO"}:
         </td>
-        <td nowrap="nowrap" width="37%">
+        <td nowrap="nowrap" >
         <input name="assigned_user_name" class="sqsEnabled" tabindex="2" id="assigned_user_name" size="" value="{$currentUserName}" type="text">
         <input name="assigned_user_id" id="assigned_user_id" value="{$currentUserId}" type="hidden">
         <input name="btn_assigned_user_name" tabindex="2" title="{$app_strings.LBL_SELECT_BUTTON_TITLE}" class="button" value="{$app_strings.LBL_SELECT_BUTTON_LABEL}" onclick='open_popup("Users", 600, 400, "", true, false, {literal}{"call_back_function":"set_return","form_name":"Distribute","field_to_name_array":{"id":"assigned_user_id","name":"assigned_user_name"}}{/literal}, "single", true);' type="button">

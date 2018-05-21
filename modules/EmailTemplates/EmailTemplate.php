@@ -300,7 +300,18 @@ class EmailTemplate extends SugarBean
     {
         if (empty($this->body) && !empty($this->body_html)) {
             global $sugar_config;
-            $this->body = strip_tags(html_entity_decode($this->body_html, ENT_COMPAT, $sugar_config['default_charset']));
+
+            $bodyCleanup = html_entity_decode($this->body_html, ENT_COMPAT, $sugar_config['default_charset']);
+
+            // Template contents should contains at least one
+            // white space character at after the variable names
+            // to recognise it when parsing and replacing variables
+
+            $bodyCleanup = preg_replace('/(\$\w+\b)([^\s])/', '$1 $2', $bodyCleanup);
+
+            $bodyCleanup = strip_tags($bodyCleanup);
+
+            $this->body = $bodyCleanup;
         }
         $this->created_by_name = get_assigned_user_name($this->created_by);
         $this->modified_by_name = get_assigned_user_name($this->modified_user_id);
@@ -310,15 +321,6 @@ class EmailTemplate extends SugarBean
 
     function fill_in_additional_parent_fields()
     {
-    }
-
-    function get_list_view_data()
-    {
-        global $app_list_strings, $focus, $action, $currentModule;
-        $fields = $this->get_list_view_array();
-        //$fields["DATE_MODIFIED"] = substr($fields["DATE_MODIFIED"], 0, 10);
-        $fields["DATE_MODIFIED"] = isset($fields["DATE_MODIFIED"]) && !empty($fields["DATE_MODIFIED"]) ? substr($fields["DATE_MODIFIED"], 0, 10) : false;
-        return $fields;
     }
 
 //function all string that match the pattern {.} , also catches the list of found strings.
@@ -463,7 +465,12 @@ class EmailTemplate extends SugarBean
                     $value = $user->$userFieldName;
                     //_pp($userFieldName."[{$value}]");
                 } else {
-                    $value = $focus->{$field_name};
+                    if(isset($focus->{$field_name})) {
+                        $value = $focus->{$field_name};
+                    } else {
+                        $value = null;
+                        $GLOBALS['log']->warn("Undefined field name in email template: $field_name");
+                    }
                 }
 
                 //check dom
@@ -913,4 +920,3 @@ class EmailTemplate extends SugarBean
 
 }
 
-?>

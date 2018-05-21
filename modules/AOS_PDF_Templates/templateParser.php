@@ -147,5 +147,3 @@ class templateParser
         return $string;
     }
 }
-
-?>

@@ -88,5 +88,3 @@ class MyOpportunitiesDashlet extends DashletGeneric {
     }
 
 }
-
-?>

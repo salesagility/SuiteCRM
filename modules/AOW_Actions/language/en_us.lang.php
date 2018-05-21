@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,15 +34,14 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- *
- * This file was contributed by diligent technology & business consulting GmbH <info@dtbc.eu>
- *
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
+
 $mod_strings = array(
     'LBL_ID' => 'ID',
     'LBL_DATE_ENTERED' => 'Date Created',
@@ -53,8 +52,8 @@ $mod_strings = array(
     'LBL_CREATED_USER' => 'Created by User',
     'LBL_MODIFIED_USER' => 'Modified by User',
     'LBL_CREATED' => 'Created By',
-    'LBL_CREATED_ID' => 'Created By Id',
     'LBL_DESCRIPTION' => 'Description',
+    'LBL_CREATED_ID' => 'Created By Id',
     'LBL_DELETED' => 'Deleted',
     'LBL_NAME' => 'Name',
     'LBL_MODULE_NAME' => 'WorkFlow Actions',
@@ -62,12 +61,12 @@ $mod_strings = array(
     'LBL_AOW_WORKFLOW_ID' => 'AOW_WorkFlow Id',
     'LBL_ACTION' => 'Action',
     'LBL_PARAMETERS' => 'Parameters',
-    'LBL_SENDEMAIL' => 'Send Email',
-    'LBL_CREATERECORD' => 'Create Record',
-    'LBL_MODIFYRECORD' => 'Modify Record',
     'LBL_SELECT_ACTION' => 'Select Action',
     'LBL_CREATE_EMAIL_TEMPLATE' => 'Create',
     'LBL_RECORD_TYPE' => 'Record Type',
+    'LBL_SENDEMAIL' => 'Send Email',
+    'LBL_CREATERECORD' => 'Create Record',
+    'LBL_MODIFYRECORD' => 'Modify Record',
     'LBL_ADD_FIELD' => 'Add Field',
     'LBL_ADD_RELATIONSHIP' => 'Add Relationship',
     'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',

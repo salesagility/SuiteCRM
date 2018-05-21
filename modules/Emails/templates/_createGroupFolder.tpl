@@ -110,7 +110,7 @@ currentFolders = {$group_folder_array};
 	<input type="hidden" name="groupFoldersUser" value="">
 
 
-	<table width="100%" border="0" align="center" cellspacing="{$GRIDLINE}" cellpadding="0">
+	<table  border="0" align="center" cellspacing="{$GRIDLINE}" cellpadding="0">
 		<tr>
 		<td NOWRAP style="padding: 8px;" valign="top">
 			<div style="{$createGroupFolderStyle}">

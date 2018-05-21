@@ -661,4 +661,3 @@ class Project extends SugarBean {
 	}
 
 }
-?>

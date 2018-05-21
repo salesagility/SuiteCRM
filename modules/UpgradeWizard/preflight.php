@@ -74,14 +74,16 @@ if (version_compare(phpversion(),'5.2.0') >=0) {
 
 	$errors = preflightCheck();
 
-	if (check_php_version() === -1) {
-		$phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." </span></b>";
-		$error_txt = '<span class="error">'.$phpVersion.'</span>';
-		if(count($errors) == 0)
-			$errors[] = '';
-		$errors[] = $error_txt;
-		logThis($error_txt);
-	}
+
+    if(check_php_version() === -1){
+
+        $phpVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_PHP_INVALID_VER']} ".constant('PHP_VERSION')." </span></b>";
+        $error_txt = '<span class="error">'.$phpVersion.'</span>';
+        if(count($errors) == 0)
+        $errors[] = '';
+        $errors[] = $error_txt;
+        logThis($error_txt);
+    }
 	$diffs = '';
 	$schema = '';
 	$anyScriptChanges = '';

@@ -84,5 +84,3 @@ class AM_ProjectTemplatesViewList extends ViewList{
     }
 
 }
-
-?>

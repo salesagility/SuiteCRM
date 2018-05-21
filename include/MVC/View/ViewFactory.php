@@ -68,7 +68,7 @@ class ViewFactory
      */
     static function loadView(
         $type = 'default',
-        $module = null,
+        $module = '',
         $bean = null,
         $view_object_map = array(),
         $target_module = ''

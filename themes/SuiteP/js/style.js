@@ -437,31 +437,7 @@ $(function () {
     initFooterPopups();
   }
 
-  setInterval(function () {
-    $('#alerts').css({left: 16 - $('#alerts').width() + 'px'});
-  }, 100);
 
-  // fix dropdown menu top-position
-  var ddInt = setInterval(function () {
-    if ($('.sugar_action_button span').length > 0) {
-      $('.sugar_action_button span').click(function (e) {
-        var hsum = 0;
-        if (!$(this).closest('.sugar_action_button').find('.subnav').hasClass('upper')) {
-          hsum += 22;
-        }
-        else {
-          $(this).closest('.sugar_action_button').find('.subnav li').each(function (e) {
-            hsum -= $(this).height();
-          });
-        }
-        var _this = $(this);
-        setTimeout(function () {
-          _this.closest('.sugar_action_button').find('.subnav').css('top', hsum);
-        }, 11);
-      });
-      clearInterval(ddInt);
-    }
-  }, 300);
 
   var hideEmptyFormCellsOnTablet = function () {
     if ($(window).width() <= 767) {
@@ -471,7 +447,7 @@ $(function () {
             $(e).html('&nbsp;');
           }
         });
-        if ($(e).html().trim() == '<slot>&nbsp;</slot>') {
+        if ($(e).html().trim() == '<span>&nbsp;</span>') {
           $(e).addClass('hidden');
           $(e).addClass('hiddenOnTablet');
         }
@@ -556,26 +532,6 @@ $(function () {
   };
   setInterval(function () {
     listViewCheckboxInit();
-  }, 100);
-
-
-  setInterval(function () {
-    $('.subnav').each(function (i, e) {
-      if ($(e).hasClass('ddopen')) {
-        $(e).closest('.sugar_action_button').addClass('hover');
-        if (!$(e).hasClass('upper')) {
-          $(e).closest('.sugar_action_button').addClass('opened');
-        }
-      }
-      else {
-        $(e).closest('.sugar_action_button').removeClass('hover');
-        $(e).closest('.sugar_action_button').removeClass('opened');
-      }
-    });
-
-    $('.subnav.upper.ddopen').each(function (i, e) {
-      $(e).css('top', '-' + $(e).height() + 'px');
-    });
   }, 100);
 
 });

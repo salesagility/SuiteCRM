@@ -69,6 +69,7 @@ $viewdefs['Users']['EditView'] = array(
                       ),
                 ),
             array('photo'),
+            array(array('name' => 'factor_auth', 'label' => 'LBL_FACTOR_AUTH'),)
         ),
         'LBL_EMPLOYEE_INFORMATION' => array(
             array(array(

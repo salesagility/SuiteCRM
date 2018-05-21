@@ -55,5 +55,3 @@ interface Store {
     public function flush($monitor);
 
 }
-
-?>

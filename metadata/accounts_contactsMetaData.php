@@ -58,5 +58,4 @@ $dictionary['accounts_contacts'] = array ( 'table' => 'accounts_contacts'
 							  'join_table'=> 'accounts_contacts', 'join_key_lhs'=>'account_id', 'join_key_rhs'=>'contact_id'))
 
 
-)
-?>
+);

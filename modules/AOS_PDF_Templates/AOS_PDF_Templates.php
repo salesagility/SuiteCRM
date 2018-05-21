@@ -50,4 +50,3 @@ class AOS_PDF_Templates extends AOS_PDF_Templates_sugar {
 
 
 }
-?>
