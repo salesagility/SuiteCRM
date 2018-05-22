@@ -23,7 +23,6 @@ class PDFTemplates extends \AcceptanceTester
         $I = new EditView($this->getScenario());
         $DetailView = new DetailView($this->getScenario());
         $Sidebar = new SideBar($this->getScenario());
-        $faker = $this->getFaker();
 
         $I->see('Create PDF Template', '.actionmenulink');
         $Sidebar->clickSideBarAction('Create');
