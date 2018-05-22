@@ -54,4 +54,42 @@ class AOS_Prouduct_CategoriesCest
 
         $I->see('Products - Categories', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\ProductCategories $productCategory
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a product category so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateAccount(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\ProductCategories $productCategory,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a product category');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to product category list-view
+        $I->loginAsAdmin();
+        $productCategory->gotoProductCategories();
+        $listView->waitForListViewVisible();
+
+        // Create product category
+        $this->fakeData->seed($this->fakeDataSeed);
+        $productCategory->createProductCategory('Test_'. $this->fakeData->company());
+
+        // Delete product category
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }
