@@ -54,4 +54,42 @@ class AOS_PDF_TemplatesCest
 
         $I->see('PDF - Templates', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\PDFTemplates $pdfTemplate
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a PDF template so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreatePDFTemplate(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\PDFTemplates $pdfTemplate,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a PDF Template');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to PDF Template list-view
+        $I->loginAsAdmin();
+        $pdfTemplate->gotoPDFTemplates();
+        $listView->waitForListViewVisible();
+
+        // Create PDF Template
+        $this->fakeData->seed($this->fakeDataSeed);
+        $pdfTemplate->createPDFTemplate('Test_'. $this->fakeData->company());
+
+        // Delete PDF Template
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }
