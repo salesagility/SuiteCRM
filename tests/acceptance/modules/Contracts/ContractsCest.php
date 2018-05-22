@@ -110,6 +110,7 @@ class ContractsCest
         $I->fillField('#name_basic', $account_name);
         $I->click('#search_form_submit');
         $listView->waitForListViewVisible();
+        $I->waitForText('Test_Funk-Block', 30);
         $I->click($account_name);
         $detailView->waitForDetailViewVisible();
         $detailView->clickActionMenuItem('Delete');
