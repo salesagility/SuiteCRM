@@ -54,4 +54,42 @@ class ContactsCest
 
         $I->see('Contacts', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Contacts $contact
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a contact so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateContact(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Contacts $contact,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a Contact');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to contacts list-view
+        $I->loginAsAdmin();
+        $contact->gotoContacts();
+        $listView->waitForListViewVisible();
+
+        // Create contact
+        $this->fakeData->seed($this->fakeDataSeed);
+        $contact->createContact('Test_'. $this->fakeData->company());
+
+        // Delete contact
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }
