@@ -94,7 +94,7 @@ class CampaignsCest
         $I->fillField('name_basic', $name);
         $I->click('#search_form_submit');
         $listView->waitForListViewVisible();
-        $I->click($name);
+        $listView->clickNameLink($name);
         $detailView->waitForDetailViewVisible();
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();

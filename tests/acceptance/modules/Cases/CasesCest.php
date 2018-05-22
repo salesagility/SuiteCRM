@@ -90,19 +90,6 @@ class CasesCest
         $account_name = 'Test_'. $this->fakeData->company();
         $account->createAccount($account_name);
 
-        // Navigate to cases list-view
-        $cases->gotoCases();
-        $listView->waitForListViewVisible();
-
-        // Create case
-        $this->fakeData->seed($this->fakeDataSeed);
-        $cases->createCase('Test_'. $this->fakeData->company(), $account_name);
-
-        // Delete case
-        $detailView->clickActionMenuItem('Delete');
-        $detailView->acceptPopup();
-        $listView->waitForListViewVisible();
-
         // Delete account
         $account->gotoAccounts();
         $listView->waitForListViewVisible();
@@ -110,8 +97,7 @@ class CasesCest
         $I->fillField('#name_basic', $account_name);
         $I->click('#search_form_submit');
         $listView->waitForListViewVisible();
-        $I->see($account_name);
-        $I->click($account_name);
+        $listView->clickNameLink($account_name);
         $detailView->waitForDetailViewVisible();
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
