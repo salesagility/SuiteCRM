@@ -23,5 +23,6 @@ class Calls extends \AcceptanceTester
         $I = new EditView($this->getScenario());
         $I->waitForEditViewVisible();
         $I->fillField('#name', $name);
+        $I->fillField('#date_start_date', '01/01/1970');
     }
 }
