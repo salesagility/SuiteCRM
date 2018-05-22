@@ -107,8 +107,8 @@ class ContractsCest
         $account->gotoAccounts();
         $listView->waitForListViewVisible();
         $listView->clickFilterButton();
-        $I->fillField('#name_advanced', $account_name);
-        $I->click('#search_form_submit_advanced');
+        $I->fillField('#name_basic', $account_name);
+        $I->click('#search_form_submit');
         $listView->waitForListViewVisible();
         $I->click($account_name);
         $detailView->waitForDetailViewVisible();
