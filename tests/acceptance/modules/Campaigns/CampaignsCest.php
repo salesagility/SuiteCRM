@@ -54,4 +54,50 @@ class CampaignsCest
 
         $I->see('Campaigns', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Campaigns $campaign
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a non-emails campaign so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateNonEmailCampaign(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Campaigns $campaign,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create Non-Email Campaign');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to campaigns list-view
+        $I->loginAsAdmin();
+        $campaign->gotoCampaigns();
+        $listView->waitForListViewVisible();
+
+        // Create campaign
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = 'Test_'. $this->fakeData->company();
+        $campaign->createNonEmailCampaign($name);
+
+        // Delete campaign
+        $listView->waitForListViewVisible();
+        $listView->clickFilterButton();
+        $I->fillField('name_basic', $name);
+        $I->click('#search_form_submit');
+        $listView->waitForListViewVisible();
+        $I->click($name);
+        $detailView->waitForDetailViewVisible();
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }

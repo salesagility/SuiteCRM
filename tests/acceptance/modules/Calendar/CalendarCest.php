@@ -29,7 +29,6 @@ class CalendarCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Calendar $calendar
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
@@ -37,7 +36,6 @@ class CalendarCest
      */
     public function testScenarioViewCalendarModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Calendar $calendar,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
