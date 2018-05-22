@@ -110,6 +110,7 @@ class EventsCest
         $I->fillField('#name_basic', $location_name);
         $I->click('#search_form_submit');
         $listView->waitForListViewVisible();
+        $I->see($location_name);
         $I->click($location_name);
         $detailView->waitForDetailViewVisible();
         $detailView->clickActionMenuItem('Delete');

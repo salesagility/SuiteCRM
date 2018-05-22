@@ -110,7 +110,7 @@ class ContractsCest
         $I->fillField('#name_basic', $account_name);
         $I->click('#search_form_submit');
         $listView->waitForListViewVisible();
-        $I->see($account_name);
+        $I->waitForElementVisible($account_name,30);
         $I->click($account_name);
         $detailView->waitForDetailViewVisible();
         $detailView->clickActionMenuItem('Delete');

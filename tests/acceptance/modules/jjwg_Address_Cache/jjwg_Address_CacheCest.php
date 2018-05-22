@@ -54,4 +54,42 @@ class jjwg_Address_CacheCest
 
         $I->see('Maps - Address Cache', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\MapsAddressCache $mapsAddressCache
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a maps address cache so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateMapsAddressCache(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\MapsAddressCache $mapsAddressCache,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create maps address cache');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to maps address cache list-view
+        $I->loginAsAdmin();
+        $mapsAddressCache->gotoMapsAddressCache();
+        $listView->waitForListViewVisible();
+
+        // Create maps address cache
+        $this->fakeData->seed($this->fakeDataSeed);
+        $mapsAddressCache->createMapsAddressCache('Test_'. $this->fakeData->company());
+
+        // Delete maps address cache
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }
