@@ -21,8 +21,20 @@ class Calls extends \AcceptanceTester
     public function createCall($name)
     {
         $I = new EditView($this->getScenario());
+        $DetailView = new DetailView($this->getScenario());
+        $Sidebar = new SideBar($this->getScenario());
+        $faker = $this->getFaker();
+
+        $I->see('Log Call', '.actionmenulink');
+        $Sidebar->clickSideBarAction('Log');
         $I->waitForEditViewVisible();
         $I->fillField('#name', $name);
-        $I->fillField('#date_start_date', '01/01/1970');
+        $I->fillField('#date_start_date', '01/19/2038');
+        $I->fillField('#description', $faker->text());
+
+        $I->waitForElementVisible('#date_start_hours', 120);
+
+        $I->clickSaveButton();
+        $DetailView->waitForDetailViewVisible();
     }
 }
