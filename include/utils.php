@@ -3727,19 +3727,7 @@ function search_filter_rel_info(&$focus, $tar_rel_module, $relationship_name)
  */
 function get_module_info($module_name)
 {
-    global $beanList, $beanFiles;
-
-    // Get dictionary and focus data for module
-    $vardef_name = $beanList[$module_name];
-    $fileName = $beanFiles[$vardef_name];
-
-    if (!file_exists($fileName)) {
-        return;
-    }
-
-    include_once $fileName;
-
-    return new $vardef_name();
+    return BeanFactory::getBean($module_name);
 }
 
 /**
