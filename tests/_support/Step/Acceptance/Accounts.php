@@ -35,6 +35,7 @@ class Accounts extends \AcceptanceTester
         $I->fillField('#Accounts0emailAddress0', $faker->email());
         $I->fillField('#billing_address_street', $faker->streetAddress());
         $I->fillField('#billing_address_city', $faker->city());
+        $I->fillField('#billing_address_state', $faker->city());
         $I->fillField('#billing_address_postalcode', $faker->postcode());
         $I->fillField('#billing_address_country', $faker->country());
         $I->fillField('#description', $faker->text());

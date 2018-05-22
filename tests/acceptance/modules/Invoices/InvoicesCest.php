@@ -54,4 +54,42 @@ class InvoicesCest
 
         $I->see('Invoices', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Invoices $invoice
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create an invoice so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateInvoice(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Invoices $invoice,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create an Invoice');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to invoices list-view
+        $I->loginAsAdmin();
+        $invoice->gotoInvoices();
+        $listView->waitForListViewVisible();
+
+        // Create invoice
+        $this->fakeData->seed($this->fakeDataSeed);
+        $invoice->createInvoice('Test_'. $this->fakeData->company());
+
+        // Delete invoice
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }
