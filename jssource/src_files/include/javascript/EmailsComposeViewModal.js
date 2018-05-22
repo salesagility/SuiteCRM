@@ -226,8 +226,20 @@
       composeBox.on('cancel', function () {
         composeBox.remove();
       });
-      composeBox.on('hide.bs.modal', function () {
-        composeBox.remove();
+      composeBox.on('hide.bs.modal', function (e) {
+        e.preventDefault();
+        var mb = messageBox({size: 'lg'});
+        mb.setTitle(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_EMAIL_TITLE'));
+        mb.setBody(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_EMAIL_BODY'));
+        mb.on('ok', function () {
+          mb.remove();
+          composeBox.hide();
+          composeBox.remove();
+        });
+        mb.on('cancel', function () {
+          mb.remove();
+        });
+        mb.show();
       });
     }).fail(function (data) {
       composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));

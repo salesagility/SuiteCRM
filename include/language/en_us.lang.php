@@ -2084,6 +2084,8 @@ $app_strings = array(
 
     'LBL_CONFIRM_DISREGARD_DRAFT_TITLE' => 'Disregard draft',
     'LBL_CONFIRM_DISREGARD_DRAFT_BODY' => 'This operation will delete this email, do you want to continue?',
+    'LBL_CONFIRM_DISREGARD_EMAIL_TITLE' => 'Exit compose dialog',
+    'LBL_CONFIRM_DISREGARD_EMAIL_BODY' => 'By leaving the compose dialog all entered information will be lost, do you wish to continue?',
     'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE' => 'Apply an Email Template',
     'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
 
