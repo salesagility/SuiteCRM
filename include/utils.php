@@ -3721,30 +3721,25 @@ function search_filter_rel_info(&$focus, $tar_rel_module, $relationship_name)
     //end function search_filter_rel_info
 }
 
+/**
+ * @param $module_name
+ * @return mixed
+ */
 function get_module_info($module_name)
 {
-    global $beanList;
-    global $dictionary;
+    global $beanList, $beanFiles;
 
-    //Get dictionary and focus data for module
+    // Get dictionary and focus data for module
     $vardef_name = $beanList[$module_name];
+    $fileName = $beanFiles[$vardef_name];
 
-    if ($vardef_name == 'aCase') {
-        $class_name = 'Case';
-    } else {
-        $class_name = $vardef_name;
-    }
-
-    if (!file_exists('modules/'.$module_name.'/'.$class_name.'.php')) {
+    if (!file_exists($fileName)) {
         return;
     }
 
-    include_once 'modules/'.$module_name.'/'.$class_name.'.php';
+    include_once $fileName;
 
-    $module_bean = new $vardef_name();
-
-    return $module_bean;
-    //end function get_module_table
+    return new $vardef_name();
 }
 
 /**
