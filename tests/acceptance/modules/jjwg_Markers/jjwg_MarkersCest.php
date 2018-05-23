@@ -54,4 +54,42 @@ class jjwg_MarkersCest
 
         $I->see('Maps - Markers', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\MapsMarkers $mapMarker
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a map marker so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateMapMarker(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\MapsMarkers $mapMarker,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a Map Marker');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to map markers list-view
+        $I->loginAsAdmin();
+        $mapMarker->gotoMapsMarkers();
+        $listView->waitForListViewVisible();
+
+        // Create map marker
+        $this->fakeData->seed($this->fakeDataSeed);
+        $mapMarker->createMapMarker('Test_'. $this->fakeData->company());
+
+        // Delete map marker
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
 }
