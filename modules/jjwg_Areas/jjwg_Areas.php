@@ -101,7 +101,7 @@ class jjwg_Areas extends jjwg_Areas_sugar {
         if (count($this->coords) > 0) {
             foreach ($this->coords as $coord) {
                 $p = preg_split("/[\s\(\)]*,[\s\(\)]*/", $coord, null, PREG_SPLIT_NO_EMPTY);
-                if ($this->is_valid_lng($p[0]) && $this->is_valid_lat($p[1])) {
+                if (isset($p[0]) && $this->is_valid_lng($p[0]) && isset($p[1]) && $this->is_valid_lat($p[1])) {
                     $this->polygon[] = array(
                         'lng' => $p[0],
                         'lat' => $p[1],
