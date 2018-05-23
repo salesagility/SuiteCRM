@@ -54,4 +54,43 @@ class MeetingsCest
 
         $I->see('Meetings', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Meetings $meeting
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a meeting so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateMeeting(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Meetings $meeting,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a meeting');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to meetings list-view
+        $I->loginAsAdmin();
+        $meeting->gotoMeetings();
+        $listView->waitForListViewVisible();
+
+        // Create meeting
+        $this->fakeData->seed($this->fakeDataSeed);
+        $meeting->createMeeting('Test_'. $this->fakeData->company());
+
+        // Delete meeting
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
+
 }
