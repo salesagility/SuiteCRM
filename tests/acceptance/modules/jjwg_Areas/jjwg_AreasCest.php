@@ -54,45 +54,4 @@ class jjwg_AreasCest
 
         $I->see('Maps - Areas', '.module-title-text');
     }
-
-    /**
-     * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\DetailView $detailView
-     * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\MapsAreas $mapsArea
-     * @param \Helper\WebDriverHelper $webDriverHelper
-     *
-     * As administrative user I want to create a maps area so that I can test
-     * the standard fields.
-     */
-    public function testScenarioCreateMapsArea(
-        \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\MapsAreas $mapsArea,
-        \Helper\WebDriverHelper $webDriverHelper
-    ) {
-        $I->wantTo('Create Maps Area');
-
-        $I->amOnUrl(
-            $webDriverHelper->getInstanceURL()
-        );
-
-        // Navigate to maps area list-view
-        $I->loginAsAdmin();
-        $mapsArea->gotoMapsAreas();
-        $listView->waitForListViewVisible();
-
-        // Create maps area
-        $this->fakeData->seed($this->fakeDataSeed);
-        $name = 'Test_'. $this->fakeData->company();
-        $mapsArea->createMapsArea($name);
-
-        // Delete maps area
-        $listView->clickNameLink($name);
-        $detailView->waitForDetailViewVisible();
-        $detailView->clickActionMenuItem('Delete');
-        $detailView->acceptPopup();
-        $listView->waitForListViewVisible();
-    }
 }
