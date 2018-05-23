@@ -101,10 +101,6 @@ class BeanManager
      */
     public function getList($module)
     {
-        if (array_key_exists($module, $this->beanAliases)) {
-            $module = $this->beanAliases[$module];
-        }
-
         return new BeanListRequest($this->newBeanSafe($module));
     }
 

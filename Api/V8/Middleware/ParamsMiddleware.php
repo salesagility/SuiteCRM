@@ -39,7 +39,11 @@ class ParamsMiddleware
             $response->setStatus(400);
             $response->setDetail($exception->getMessage());
 
-            return $httpResponse->withJson($response);
+            return $httpResponse->withJson(
+                $response,
+                400,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+            );
         }
 
         return $next($request, $httpResponse);

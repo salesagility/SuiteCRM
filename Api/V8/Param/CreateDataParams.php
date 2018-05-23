@@ -32,14 +32,6 @@ class CreateDataParams extends BaseParam
     }
 
     /**
-     * @return CreateDataParams
-     */
-    public function getData()
-    {
-        return $this->parameters['data'];
-    }
-
-    /**
      * @inheritdoc
      *
      * @throws \InvalidArgumentException If attributes parameters have invalid property.
