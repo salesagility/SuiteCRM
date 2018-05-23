@@ -1249,7 +1249,7 @@ class SugarEmailAddress extends SugarBean
 
         // confirmed opt in check
         if (!is_null($optInFlag)) {
-            $optInFlag = 0;
+            $optInFlag = (int)$optInFlag;
         }
 
         $isValidEmailAddress = ($opt_out !== 1 && $invalid !== 1);
