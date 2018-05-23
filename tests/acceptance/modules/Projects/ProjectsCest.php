@@ -54,4 +54,43 @@ class ProjectsCest
 
         $I->see('Projects', '.module-title-text');
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Projects $project
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a project so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateProject(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Projects $project,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create a Project');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to projects list-view
+        $I->loginAsAdmin();
+        $project->gotoProjects();
+        $listView->waitForListViewVisible();
+
+        // Create project
+        $this->fakeData->seed($this->fakeDataSeed);
+        $project->createProject('Test_'. $this->fakeData->company());
+
+        // Delete project
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+    }
+
 }
