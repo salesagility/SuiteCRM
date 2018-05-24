@@ -38,18 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-/* * *******************************************************************************
-
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- * ****************************************************************************** */
 require_once('data/SugarBean.php');
 require_once('include/OutboundEmail/OutboundEmail.php');
 
@@ -172,7 +164,7 @@ class Administration extends SugarBean
 
             foreach ($oe->field_defs as $def) {
                 // fixes installer php notice
-                if (!array_key_exists($def, $this->settings)) {
+                if (!isset($def) && (!isset($this->settings))) {
                     continue;
                 }
 
