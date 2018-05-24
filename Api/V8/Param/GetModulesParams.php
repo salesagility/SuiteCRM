@@ -80,7 +80,7 @@ class GetModulesParams extends BaseParam
                 ]),
             ], true))
             ->setNormalizer('fields', function (Options $options, $values) {
-                $bean = $this->beanManager->newBeanSafe($options->offsetGet('moduleName'));
+                $bean = $this->beanManager->newBeanSafe(key($values));
                 $attributes = $bean->toArray();
                 $fields = explode(',', array_shift($values));
 

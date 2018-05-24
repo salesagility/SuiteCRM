@@ -228,7 +228,7 @@ class apiTester extends \Codeception\Actor
      *
      * @throws \Codeception\Exception\ModuleException
      */
-    public function getLogin()
+    public function login()
     {
         $this->sendPOST($this->getInstanceURL() . '/Api/access_token', [
             'username' => $this->getAdminUser(),
@@ -261,10 +261,11 @@ class apiTester extends \Codeception\Actor
         $db = DBManagerFactory::getInstance();
 
         $query = sprintf(
-            "INSERT INTO accounts (id, name, account_type) VALUES (%s, %s, %s)",
+            "INSERT INTO accounts (id, name, account_type, date_entered) VALUES (%s, %s, %s, %s)",
             $db->quoted($id),
             $db->quoted($name),
-            $db->quoted($accountType)
+            $db->quoted($accountType),
+            $db->quoted(date('Y-m-d H:i:s'))
         );
         $db->query($query);
 

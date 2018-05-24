@@ -1,17 +1,11 @@
 <?php
 namespace Test\Api\V8;
 
-use Account;
 use apiTester;
 use Codeception\Example;
 
 class GetModuleCest
 {
-    /**
-     * @var string
-     */
-    private $accountId = '';
-
     /**
      * @param apiTester $I
      *
@@ -19,16 +13,7 @@ class GetModuleCest
      */
     public function _before(ApiTester $I)
     {
-        $I->getLogin();
-        $this->accountId = $I->createAccount();
-    }
-
-    /**
-     * @param apiTester $I
-     */
-    public function _after(ApiTester $I)
-    {
-        $I->deleteAccount($this->accountId);
+        $I->login();
     }
 
     /**
@@ -42,19 +27,22 @@ class GetModuleCest
     {
         /** @var \ArrayIterator $iterator */
         $iterator = $example->getIterator();
-        $endpoint = str_replace('{id}', $this->accountId, $iterator->offsetGet('endPoint'));
+        $id = $I->createAccount();
+        $endpoint = str_replace('{id}', $id, $iterator->offsetGet('endPoint'));
 
         $I->sendGET($I->getInstanceURL() . $endpoint);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->canSeeResponseContainsJson([
-            'type' => Account::class,
-            'id' => $this->accountId
+            'type' => \Account::class,
+            'id' => $id
         ]);
 
         $I->seeResponseJsonMatchesJsonPath('$.data.attributes');
         $assert = $iterator->current() === 'withFields' ? 'assertEquals' : 'assertGreaterThan';
         $I->{$assert}(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
+
+        $I->deleteAccount($id);
     }
 
     /**
@@ -68,20 +56,31 @@ class GetModuleCest
     {
         /** @var \ArrayIterator $iterator */
         $iterator = $example->getIterator();
-        $endpoint = str_replace('{id}', $this->accountId, $iterator->offsetGet('endPoint'));
+        $endpoint = $I->getInstanceURL() . $iterator->offsetGet('endPoint');
+        $detail = $iterator->offsetGet('detail');
+
+        if (in_array($iterator->current(), ['withInvalidField', 'withInvalidFieldKey'], true)) {
+            $id = $I->createAccount();
+            $endpoint = str_replace('{id}', $id, $endpoint);
+            $detail = str_replace('{id}', $id, $detail);
+        }
 
         $expectedResult = [
             'errors' => [
                 'status' => 400,
                 'title' => null,
-                'detail' => $iterator->offsetGet('detail')
+                'detail' => $detail
             ]
         ];
 
-        $I->sendGET($I->getInstanceURL() . $endpoint);
+        $I->sendGET($endpoint);
         $I->seeResponseCodeIs(400);
         $I->seeResponseIsJson();
         $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
+
+        if (in_array($iterator->current(), ['withInvalidField', 'withInvalidFieldKey'], true)) {
+            $I->deleteAccount($id);
+        }
     }
 
     /**
@@ -109,7 +108,7 @@ class GetModuleCest
         return [
             [
                 'shouldNotWork01' => 'withInvalidModuleName',
-                'endPoint' => '/Api/V8/module/InvalidModuleName/{id}',
+                'endPoint' => '/Api/V8/module/InvalidModuleName/97c3669b-607a-4b30-964f-2409b55a1551',
                 'detail' => 'Module with name InvalidModuleName is not found'
             ],
             [
@@ -124,16 +123,16 @@ class GetModuleCest
             ],
             [
                 'shouldNotWork04' => 'withInvalidParameter',
-                'endPoint' => '/Api/V8/module/Accounts/{id}?invalidParam',
+                'endPoint' => '/Api/V8/module/Accounts/97c3669b-607a-4b30-964f-2409b55a1551?invalidParam',
                 'detail' => 'The option "invalidParam" does not exist. Defined options are: "bean", "fields", "id", "moduleName".'
             ],
             [
-                'shouldNotWork05' => 'withInvalidFieldParameter',
+                'shouldNotWork05' => 'withInvalidField',
                 'endPoint' => '/Api/V8/module/Accounts/{id}?fields[Accounts]=name,not_exist_property1,not_exist_property2',
                 'detail' => 'The following fields in Account module are not found: not_exist_property1, not_exist_property2'
             ],
             [
-                'shouldNotWork06' => 'withInvalidFieldParameterKey',
+                'shouldNotWork06' => 'withInvalidFieldKey',
                 'endPoint' => '/Api/V8/module/Accounts/{id}?fields[NotExist]=name,account_type',
                 'detail' => 'Module NotExist does not exist'
             ],

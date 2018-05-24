@@ -16,6 +16,14 @@ class CreateDataParams extends BaseParam
     }
 
     /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->parameters['id'];
+    }
+
+    /**
      * @return \SugarBean
      */
     public function getBean()
@@ -50,11 +58,12 @@ class CreateDataParams extends BaseParam
             ]));
 
         $resolver
-            ->setDefined('bean')
-            ->setDefault('bean', function (Options $options) {
-                return $this->beanManager->newBeanSafe($options->offsetGet('type'));
-            })
-            ->setAllowedTypes('bean', [\SugarBean::class]);
+            ->setRequired('id')
+            ->setAllowedTypes('id', ['string'])
+            ->setAllowedValues('id', $this->validatorFactory->createClosure([
+                new Assert\NotBlank(),
+                new Assert\Uuid(['strict' => false]),
+            ]));
 
         $resolver
             ->setDefined('attributes')
@@ -81,5 +90,12 @@ class CreateDataParams extends BaseParam
 
                 return $values;
             });
+
+        $resolver
+            ->setDefined('bean')
+            ->setDefault('bean', function (Options $options) {
+                return $this->beanManager->newBeanSafe($options->offsetGet('type'));
+            })
+            ->setAllowedTypes('bean', [\SugarBean::class]);
     }
 }

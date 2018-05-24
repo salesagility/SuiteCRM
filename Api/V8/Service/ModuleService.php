@@ -135,11 +135,13 @@ class ModuleService
     {
         /** @var \SugarBean $bean */
         $bean = $params->getData()->getBean();
+        $beanId = $params->getData()->getId();
         $attributes = $params->getData()->getAttributes();
 
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
+        $bean->id = $beanId;
         $bean->save();
 
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
