@@ -164,7 +164,7 @@ class Administration extends SugarBean
 
             foreach ($oe->field_defs as $def) {
                 // fixes installer php notice
-                if (!isset($def) && (!isset($this->settings))) {
+                if (!isset($def) && !isset($this->settings)) {
                     continue;
                 }
 
