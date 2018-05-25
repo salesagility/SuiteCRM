@@ -1,40 +1,27 @@
 <?php
 namespace Api\V8\Param;
 
-use Api\V8\BeanDecorator\BeanManager;
-use Api\V8\Factory\ValidatorFactory;
+use Api\V8\Builder\OptionsBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class BaseParam implements \JsonSerializable
 {
-    const REGEX_MODULE_NAME_PATTERN = '/^(\d|\W)|\W/';
-    const REGEX_FIELD_PATTERN = '/[^\w-,]/';
-    const REGEX_SORT_PATTERN = '/[^\w-]/';
-    const REGEX_PAGE_PATTERN = '/[^\d]/';
-
     /**
      * @var array
      */
     protected $parameters = [];
 
     /**
-     * @var ValidatorFactory
+     * @var OptionsBuilder
      */
-    protected $validatorFactory;
+    protected $optionBuilder;
 
     /**
-     * @var BeanManager
+     * @param $optionBuilder
      */
-    protected $beanManager;
-
-    /**
-     * @param ValidatorFactory $validatorFactory
-     * @param BeanManager $beanManager
-     */
-    public function __construct(ValidatorFactory $validatorFactory, BeanManager $beanManager)
+    public function __construct($optionBuilder)
     {
-        $this->validatorFactory = $validatorFactory;
-        $this->beanManager = $beanManager;
+        $this->optionBuilder = $optionBuilder;
     }
 
     /**
@@ -53,6 +40,7 @@ abstract class BaseParam implements \JsonSerializable
 
     /**
      * Configure parameters.
+     * They can be set by reusing already existed options or create new ones in this method.
      *
      * @param OptionsResolver $resolver
      *
@@ -68,5 +56,10 @@ abstract class BaseParam implements \JsonSerializable
     public function jsonSerialize()
     {
         return $this->parameters;
+    }
+
+    public function getOptionBuilderInstance()
+    {
+        return $this->optionBuilder;
     }
 }

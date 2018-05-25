@@ -11,11 +11,11 @@ class AttributeResponse extends MetaResponse
     private static $forbiddenKeys = ['relationships', 'links'];
 
     /**
-     * @param array $properties
+     * @param array|\stdClass $properties
      *
      * @throws \InvalidArgumentException When attribute object includes forbidden keys.
      */
-    public function __construct(array $properties = [])
+    public function __construct($properties = [])
     {
         parent::__construct($properties);
 
