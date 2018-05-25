@@ -496,14 +496,14 @@ class SugarFeed extends Basic {
 
 	static function getTimeLapse($startDate)
 	{
-            if (!isset($GLOBALS['timedate']->getNow()->ts)) {
+            if (!isset($GLOBALS['timedate'])) {
                 LoggerManager::getLogger()->warn('SugarFeed getTimeLapse: Trying to get property of non-object ($GLOBALS[timedate]->getNow()->ts)');
                 $globalsTimedateNowTs = null;
             } else {
                 $globalsTimedateNowTs = $GLOBALS['timedate']->getNow()->ts;
             }
             
-            if (!isset($GLOBALS['timedate']->fromUser($startDate)->ts)) {
+            if (!isset($GLOBALS['timedate'])) {
                 LoggerManager::getLogger()->warn('SugarFeed getTimeLapse: Trying to get property of non-object ($GLOBALS[timedate]->fromUser($startDate)->ts)');
                 $globalsTimedateFromUserStartDateTs = null;
             } else {
