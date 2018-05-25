@@ -1,0 +1,934 @@
+{
+	"info": {
+		"name": "SalesAgility",
+		"_postman_id": "9977217b-9e4a-b8fe-f32d-a59c29424939",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SuiteCRM/V8",
+			"description": "",
+			"item": [
+				{
+					"name": "Get module",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFkNTIyOGJhODU4MzM2N2M4ODRlODNjMzM5ZTM1NmE3ZTUyMzA2N2Y1MTBjYTczZDc4YjJhMmQzMjY2NzJkZTllYjVkMjMxYzViOTZmY2M3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiJhZDUyMjhiYTg1ODMzNjdjODg0ZTgzYzMzOWUzNTZhN2U1MjMwNjdmNTEwY2E3M2Q3OGIyYTJkMzI2NjcyZGU5ZWI1ZDIzMWM1Yjk2ZmNjNyIsImlhdCI6MTUyNTE2ODk4OCwibmJmIjoxNTI1MTY4OTg4LCJleHAiOjE1MjUxNzI1ODgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.rgIPmVZJFEmvtPQBx2Cpmcf3pF4rW16zT38tU6lBRmN_mLcUdDfIKwhGJg6MWkYrDZc3Ec5YIOHbZNv1XFqUM7kX7ANoZcNJ_odaZvOM8HMyLaiQgmzCqi5LQUCLTqo3-e4w_pMr45ztOfRHI5RTU1w9tDiM7vZdi7FNMxry2wNh5dfQjxG-nyEWOPVzi8B42GVzjSOE6WQ6M5YuqTTfjdBSWTVY6hsEuoF0aoKDXRhuzTgs049h8rwmxeHvTsDNfzwqGBTSAn58DzBK_B3wN6yV2LnNdWusKrc9PnZkhLQ7DyFeJIqbZg4_S-cuJ4DvUPDc4OhQj51Bey7xrX0_KQ",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n}"
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493?fields[Accounts]=name,account_type",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"module",
+								"Accounts",
+								"11a71596-83e7-624d-c792-5ab9006dd493"
+							],
+							"query": [
+								{
+									"key": "fields[Accounts]",
+									"value": "name,account_type",
+									"equals": true
+								}
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Get modules",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFiNGUyYzkyMzIxZjQ5OTgwNDMyOGNmMTFjMjdiOTk2MzBiMjE0NGE5M2YxN2FhZmI4MTM4ZDE4ZWY0OWRkYWRkNGIwOGVjNDVhOTg3NmNmIn0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiJhYjRlMmM5MjMyMWY0OTk4MDQzMjhjZjExYzI3Yjk5NjMwYjIxNDRhOTNmMTdhYWZiODEzOGQxOGVmNDlkZGFkZDRiMDhlYzQ1YTk4NzZjZiIsImlhdCI6MTUyNjU1ODQyNiwibmJmIjoxNTI2NTU4NDI2LCJleHAiOjE1MjY1NjIwMjYsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.XoR3_CT19V8vkrSC668oQen6UHGiJB_EqUArvTUj6svuYW_VFS5QP57P2NCPuy_NlcD3WmqKgSG_v2c_ye7tvEV1dnpW1dqI0yWUTtOmRICtlPzc_DQgVCPJKMU0OFyBDIdoPu7hOL3gp-D46ImMQuQhBQDYVN9AAyBwef8CeSJ_0_V7_nrryXBRisiAGnQAhuuXcGsbUpVRnssBizBQzif9-ikRoh7PQ6q3WZ6oqmZCyj_7-azQyAMs3I0VytdV_EnfTJbwLTl4r47zwiahHy72JH5oTOdItjngFB921IncXSPGWukBUflUbz-Ds7A5tPZBKm2axpKxQRV_Dt-daA",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n}"
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/module/Accounts?fields[Accounts]=name,account_type&page[size]=4&page[number]=4&sort=name&filter[operator]=and&filter[account_type][eq]=Customer",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"module",
+								"Accounts"
+							],
+							"query": [
+								{
+									"key": "fields[Accounts]",
+									"value": "name,account_type",
+									"equals": true
+								},
+								{
+									"key": "page[size]",
+									"value": "4",
+									"equals": true
+								},
+								{
+									"key": "page[number]",
+									"value": "4",
+									"equals": true
+								},
+								{
+									"key": "sort",
+									"value": "name",
+									"equals": true
+								},
+								{
+									"key": "filter[operator]",
+									"value": "and",
+									"equals": true
+								},
+								{
+									"key": "filter[account_type][eq]",
+									"value": "Customer",
+									"equals": true
+								}
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Create module",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFkNTIyOGJhODU4MzM2N2M4ODRlODNjMzM5ZTM1NmE3ZTUyMzA2N2Y1MTBjYTczZDc4YjJhMmQzMjY2NzJkZTllYjVkMjMxYzViOTZmY2M3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiJhZDUyMjhiYTg1ODMzNjdjODg0ZTgzYzMzOWUzNTZhN2U1MjMwNjdmNTEwY2E3M2Q3OGIyYTJkMzI2NjcyZGU5ZWI1ZDIzMWM1Yjk2ZmNjNyIsImlhdCI6MTUyNTE2ODk4OCwibmJmIjoxNTI1MTY4OTg4LCJleHAiOjE1MjUxNzI1ODgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.rgIPmVZJFEmvtPQBx2Cpmcf3pF4rW16zT38tU6lBRmN_mLcUdDfIKwhGJg6MWkYrDZc3Ec5YIOHbZNv1XFqUM7kX7ANoZcNJ_odaZvOM8HMyLaiQgmzCqi5LQUCLTqo3-e4w_pMr45ztOfRHI5RTU1w9tDiM7vZdi7FNMxry2wNh5dfQjxG-nyEWOPVzi8B42GVzjSOE6WQ6M5YuqTTfjdBSWTVY6hsEuoF0aoKDXRhuzTgs049h8rwmxeHvTsDNfzwqGBTSAn58DzBK_B3wN6yV2LnNdWusKrc9PnZkhLQ7DyFeJIqbZg4_S-cuJ4DvUPDc4OhQj51Bey7xrX0_KQ",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"Accounts\",\n    \"id\": \"86ee02b3-96d2-47b3-bd6d-9e1035daff3a\",\n    \"attributes\": {\n      \"name\": \"Muhahaha\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/module",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"module"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Update module",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjBhYTZjNjJkOWIxOTE0OTViZWM4YmZmOGU2M2QyNmZhZDUxMjEzYTY3NTg2NTBjOTJjMDBiZDFlZjNkM2JlYmE5ZjBmMzU0ZTc4MzIxZmRhIn0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiIwYWE2YzYyZDliMTkxNDk1YmVjOGJmZjhlNjNkMjZmYWQ1MTIxM2E2NzU4NjUwYzkyYzAwYmQxZWYzZDNiZWJhOWYwZjM1NGU3ODMyMWZkYSIsImlhdCI6MTUyNjg5NjQ5NywibmJmIjoxNTI2ODk2NDk3LCJleHAiOjE1MjY5MDAwOTcsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.X28VMbKB4CDiXh7bmxrQr93bqFNgKI_H0Mv4h9uE8B4wvP5Vfk-a1xje54tprfYLDpm68jhEZYe0rs5yiTj4K5vaP3W4sZuodQ9zs0LPuzTbLyGvQnZqhIsnH6TDQnN3prtyqOTBY0fNBKMUTQ-mBYz3JCUjUhdibIxtO8hKD26plhe-6mz0MB3ymyevmhoUv43eJ5-DR-ZD58y7qEa-9N0EQsowP9dybw-vfUvGLjY1t4NiGbXxajPXYNsoDWKq9VY4mSicVwL8Vc0yGn6qsZM-Juh8Xk-vpW4xIz1XKztqLBjoLdavZ14_6waDX6yB01me0FeHeDHEG4JYiwmEBw",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"Accounts\",\n    \"id\": \"11a71596-83e7-624d-c792-5ab9006dd493\",\n    \"attributes\": {\n      \"name\": \"hapfffff\"\n    }\n  }\n}"
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/module",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"module"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Delete module",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFkNTIyOGJhODU4MzM2N2M4ODRlODNjMzM5ZTM1NmE3ZTUyMzA2N2Y1MTBjYTczZDc4YjJhMmQzMjY2NzJkZTllYjVkMjMxYzViOTZmY2M3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiJhZDUyMjhiYTg1ODMzNjdjODg0ZTgzYzMzOWUzNTZhN2U1MjMwNjdmNTEwY2E3M2Q3OGIyYTJkMzI2NjcyZGU5ZWI1ZDIzMWM1Yjk2ZmNjNyIsImlhdCI6MTUyNTE2ODk4OCwibmJmIjoxNTI1MTY4OTg4LCJleHAiOjE1MjUxNzI1ODgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.rgIPmVZJFEmvtPQBx2Cpmcf3pF4rW16zT38tU6lBRmN_mLcUdDfIKwhGJg6MWkYrDZc3Ec5YIOHbZNv1XFqUM7kX7ANoZcNJ_odaZvOM8HMyLaiQgmzCqi5LQUCLTqo3-e4w_pMr45ztOfRHI5RTU1w9tDiM7vZdi7FNMxry2wNh5dfQjxG-nyEWOPVzi8B42GVzjSOE6WQ6M5YuqTTfjdBSWTVY6hsEuoF0aoKDXRhuzTgs049h8rwmxeHvTsDNfzwqGBTSAn58DzBK_B3wN6yV2LnNdWusKrc9PnZkhLQ7DyFeJIqbZg4_S-cuJ4DvUPDc4OhQj51Bey7xrX0_KQ",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"module",
+								"Accounts",
+								"11a71596-83e7-624d-c792-5ab9006dd493"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get rrelationship",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMjY0Y2VmY2I5YzQzYjJiMWI2MDAyOWZkODU3NDc5OTUwOWQ3NjQxOGJhYzg3YTU3OGZiODM2M2JhMjlmMGE2YzA5ZmI3YjM5YzAyZDY3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiI2YTI2NGNlZmNiOWM0M2IyYjFiNjAwMjlmZDg1NzQ3OTk1MDlkNzY0MThiYWM4N2E1NzhmYjgzNjNiYTI5ZjBhNmMwOWZiN2IzOWMwMmQ2NyIsImlhdCI6MTUyNjkxNjQ2MywibmJmIjoxNTI2OTE2NDYzLCJleHAiOjE1MjY5MjAwNjMsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.arJPQOyRQ6HAJqiazaJkcKEjZM1tbCyxnPE1UUOjHPw6K3JE0lDtZbvSwu5LdFMGCuHSt8q6V94Ykn0tYICaQxjqt6lE0fvMouSIMEfcMfptU2EnYsUK8Rz7-p1PngWU0WUWWrOeQq0X_ehjwAO4fc4DdxPRZZJwT2hsJLbVtrN9dVKtR4_N-6e-3SDePOfGjlrmnRc0dybmbZOIg3jRFs7uNjX_iFFwuTJieqsRSqUR9LWgm6L5D0g1Gh0DeQb7yoGp7tChrF8_MMuyD516KI8X5untswM6bSiXyKTbOhYv5VK5_9FBIu_pUWNF_5uE3QHBpNEYhRaoJAa65rHPVQ",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n}"
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships/contacts",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"module",
+								"Accounts",
+								"11a71596-83e7-624d-c792-5ab9006dd493",
+								"relationships",
+								"contacts"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Create realtionship",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMjY0Y2VmY2I5YzQzYjJiMWI2MDAyOWZkODU3NDc5OTUwOWQ3NjQxOGJhYzg3YTU3OGZiODM2M2JhMjlmMGE2YzA5ZmI3YjM5YzAyZDY3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiI2YTI2NGNlZmNiOWM0M2IyYjFiNjAwMjlmZDg1NzQ3OTk1MDlkNzY0MThiYWM4N2E1NzhmYjgzNjNiYTI5ZjBhNmMwOWZiN2IzOWMwMmQ2NyIsImlhdCI6MTUyNjkxNjQ2MywibmJmIjoxNTI2OTE2NDYzLCJleHAiOjE1MjY5MjAwNjMsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.arJPQOyRQ6HAJqiazaJkcKEjZM1tbCyxnPE1UUOjHPw6K3JE0lDtZbvSwu5LdFMGCuHSt8q6V94Ykn0tYICaQxjqt6lE0fvMouSIMEfcMfptU2EnYsUK8Rz7-p1PngWU0WUWWrOeQq0X_ehjwAO4fc4DdxPRZZJwT2hsJLbVtrN9dVKtR4_N-6e-3SDePOfGjlrmnRc0dybmbZOIg3jRFs7uNjX_iFFwuTJieqsRSqUR9LWgm6L5D0g1Gh0DeQb7yoGp7tChrF8_MMuyD516KI8X5untswM6bSiXyKTbOhYv5VK5_9FBIu_pUWNF_5uE3QHBpNEYhRaoJAa65rHPVQ",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"module",
+								"Accounts",
+								"11a71596-83e7-624d-c792-5ab9006dd493",
+								"relationships"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Delete realtionship",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMjY0Y2VmY2I5YzQzYjJiMWI2MDAyOWZkODU3NDc5OTUwOWQ3NjQxOGJhYzg3YTU3OGZiODM2M2JhMjlmMGE2YzA5ZmI3YjM5YzAyZDY3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiI2YTI2NGNlZmNiOWM0M2IyYjFiNjAwMjlmZDg1NzQ3OTk1MDlkNzY0MThiYWM4N2E1NzhmYjgzNjNiYTI5ZjBhNmMwOWZiN2IzOWMwMmQ2NyIsImlhdCI6MTUyNjkxNjQ2MywibmJmIjoxNTI2OTE2NDYzLCJleHAiOjE1MjY5MjAwNjMsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.arJPQOyRQ6HAJqiazaJkcKEjZM1tbCyxnPE1UUOjHPw6K3JE0lDtZbvSwu5LdFMGCuHSt8q6V94Ykn0tYICaQxjqt6lE0fvMouSIMEfcMfptU2EnYsUK8Rz7-p1PngWU0WUWWrOeQq0X_ehjwAO4fc4DdxPRZZJwT2hsJLbVtrN9dVKtR4_N-6e-3SDePOfGjlrmnRc0dybmbZOIg3jRFs7uNjX_iFFwuTJieqsRSqUR9LWgm6L5D0g1Gh0DeQb7yoGp7tChrF8_MMuyD516KI8X5untswM6bSiXyKTbOhYv5VK5_9FBIu_pUWNF_5uE3QHBpNEYhRaoJAa65rHPVQ",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n\t\"id\": \"67267a29-ef0d-a14d-e11a-5b02edd1b180\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"module",
+								"Accounts",
+								"11a71596-83e7-624d-c792-5ab9006dd493",
+								"relationships"
+							]
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessToken",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjNhZDE1ZDQzZjFlMmRhNDhhZGMzMmU1OWFlNWE2NmRjYzI4ZjljZjFmZmJhMzdkMjQ4YzExOWVmOGI1ZmI4MWM1Y2MxOTdkOWQ4ZmEwYzliIn0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiIzYWQxNWQ0M2YxZTJkYTQ4YWRjMzJlNTlhZTVhNjZkY2MyOGY5Y2YxZmZiYTM3ZDI0OGMxMTllZjhiNWZiODFjNWNjMTk3ZDlkOGZhMGM5YiIsImlhdCI6MTUyNTE2MDEzNSwibmJmIjoxNTI1MTYwMTM1LCJleHAiOjE1MjUyMDMzMzUsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.Ypei77VrFLiY-TLI4fCUWyDVGpJ_H9OSdHmZKmReRpKKVuhltmTgyYjYDU96yWF9uBrjsthF7_87bCfTk-wIYelSqH_v-02-TlQru_qyNd9xkUxmm3-7v03FI3Fw9gyj0zruPtHBi6V8x0G1ZSYAqsuAIygIPpZH10TrNKPYIFeo0Lxwg3oGkpH9YfXGJSQkliFv--euiB3C2sJDE9Djk-xxA-48xwZvzn-249-ox7FI6qU2OIPNDlnVjx0l8N9KVjFPsz79U40T259QvwHZiFiubUE4pWjs6u74KBr-z6Rls0d3ndqi8JYA5ZLYjEQq8txmrqwjBISn1nZqBsGbiQ",
+									"type": "string"
+								},
+								{
+									"key": "tokenType",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "callBackUrl",
+									"type": "any"
+								},
+								{
+									"key": "authUrl",
+									"type": "any"
+								},
+								{
+									"key": "accessTokenUrl",
+									"type": "any"
+								},
+								{
+									"key": "clientId",
+									"type": "any"
+								},
+								{
+									"key": "clientSecret",
+									"type": "any"
+								},
+								{
+									"key": "clientAuth",
+									"type": "any"
+								},
+								{
+									"key": "grantType",
+									"type": "any"
+								},
+								{
+									"key": "scope",
+									"type": "any"
+								},
+								{
+									"key": "username",
+									"type": "any"
+								},
+								{
+									"key": "password",
+									"type": "any"
+								},
+								{
+									"key": "redirectUri",
+									"type": "any"
+								},
+								{
+									"key": "refreshToken",
+									"type": "any"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\n}"
+						},
+						"url": {
+							"raw": "{{suitecrm71.url}}/V8/logout",
+							"host": [
+								"{{suitecrm71.url}}"
+							],
+							"path": [
+								"V8",
+								"logout"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
