@@ -371,12 +371,12 @@ class SubPanelTiles
             elseif ($current_user->getPreference('count_collapsed_subpanels')) {
 
                 $subPanelDef = $this->subpanel_definitions->layout_defs['subpanel_setup'][$tab];
-                $count = $this->getSubPanelRowCount($subPanelDef);
+                $count = (int)$this->getSubPanelRowCount($subPanelDef);
 
-                if (!$count) {
+                if ($count === 0) {
                     $tabs_properties[$t]['title'] .= ' (0)';
                 }
-                else {
+                elseif ($count > 0) {
                     $tabs_properties[$t]['title'] .= ' +';
                     $tabs_properties[$t]['collapsed_override'] = 1;
                 }
@@ -429,7 +429,7 @@ class SubPanelTiles
 
         $query = $this->makeSubPanelRowCountQuery($subPanelDef);
         if (!$query) {
-            return 0;
+            return -1;
         }
 
         $result = $db->query($query);
@@ -451,17 +451,16 @@ class SubPanelTiles
         if (substr($relationshipName, 0, 9) === 'function:') {
             include_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'utils.php';
             $functionName = substr($relationshipName, 9);
-            $array = [];
+            $qry = [];
             if (method_exists($this->focus, $functionName)) {
-                $array = $this->focus->$functionName($subPanelDef['function_parameters']);
+                $qry = $this->focus->$functionName($subPanelDef['function_parameters']);
             } elseif (function_exists($functionName)) {
-                $array = call_user_func($functionName, $subPanelDef['function_parameters']);
+                $qry = call_user_func($functionName, $subPanelDef['function_parameters']);
             }
-            if (!count($array)) {
-                return '';
+            if (is_array($qry) && count($qry)) {
+                $qry =  $qry['select'] . $qry['from'] . $qry['join'] . $qry['where'];
             }
-            $select = 'SELECT COUNT(' . str_replace('SELECT', '', $array['select']) . ') ';
-            return $select . $array['from'] . $array['join'] . $array['where'] . 'LIMIT 1';
+            return $this->selectQueryToCountQuery($qry);
         }
 
         $this->focus->load_relationship($relationshipName);
@@ -469,12 +468,37 @@ class SubPanelTiles
         $relationship = $this->focus->$relationshipName;
 
         if ($relationship) {
-            $parts = explode(' ', $relationship->getQuery());
-            $parts[1] = 'COUNT(' . $parts[1] . ')';
-            return implode(' ', $parts) . ' LIMIT 1';
+            return $this->selectQueryToCountQuery($relationship->getQuery());
         }
 
         return '';
+    }
+
+    /**
+     * @param string $selectQuery
+     * @return string
+     */
+    protected function selectQueryToCountQuery($selectQuery)
+    {
+        if (!is_string($selectQuery)) {
+            return '';
+        }
+
+        if (0 !== stripos($selectQuery, 'SELECT')) {
+            return '';
+        }
+
+        $fromPos = strpos($selectQuery, ' FROM');
+        if ($fromPos === false) {
+            return '';
+        }
+
+        $selectPart = trim(substr($selectQuery, 7, $fromPos - 7));
+        if (false !== strpos($selectPart, ',')) {
+            return '';
+        }
+
+        return 'SELECT COUNT(' . $selectPart . ') ' . substr($selectQuery, $fromPos) . ' LIMIT 1';
     }
 
 	function getLayoutManager()
