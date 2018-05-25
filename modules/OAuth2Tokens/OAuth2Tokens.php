@@ -119,4 +119,14 @@ class OAuth2Tokens extends SugarBean
     {
         return substr($this->id, 0, 10) . '...';
     }
+
+    /**
+     * @return string
+     */
+    public static function getNowDateString()
+    {
+        /** @var TimeDate */
+        global $timedate;
+        return "'" . $timedate->asDb(new DateTime()) . "'";
+    }
 }
