@@ -223,7 +223,6 @@ eoq;
         $mail_smtpdisplay = $systemOutboundEmail->mail_smtpdisplay;
         $mail_smtpuser = "";
         $mail_smtppass = "";
-        $hide_if_can_use_default = true;
         $mail_smtpauth_req=true;
         if(!empty($mail_smtpserver) && !empty($mail_smtptype)) {
             if( !$systemOutboundEmail->isAllowUserAccessToSystemDefaultOutbound() )
@@ -234,15 +233,6 @@ eoq;
                 if($userOverrideOE != null) {
                     $mail_smtpuser = $userOverrideOE->mail_smtpuser;
                     $mail_smtppass = $userOverrideOE->mail_smtppass;
-                }
-                if(!$mail_smtpauth_req &&
-                    (empty($systemOutboundEmail->mail_smtpserver) || empty($systemOutboundEmail->mail_smtpuser)
-                     || empty($systemOutboundEmail->mail_smtppass)))
-               {
-                    $hide_if_can_use_default = true;
-                }
-                else{
-                    $hide_if_can_use_default = false;
                 }
             }
         }
