@@ -67,14 +67,33 @@ class ModuleController extends BaseController
      * @param Request $request
      * @param Response $response
      * @param array $args
-     * @param CreateModuleParams|UpdateModuleParams $params
+     * @param CreateModuleParams $params
      *
      * @return Response
      */
-    public function saveModuleRecord(Request $request, Response $response, array $args, $params)
+    public function createModuleRecord(Request $request, Response $response, array $args, CreateModuleParams $params)
     {
         try {
-            $jsonResponse = $this->moduleService->saveModuleRecord($params);
+            $jsonResponse = $this->moduleService->createRecord($params, $request);
+
+            return $this->generateResponse($response, $jsonResponse, 201);
+        } catch (\Exception $exception) {
+            return $this->generateErrorResponse($response, $exception, 400);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @param UpdateModuleParams $params
+     *
+     * @return Response
+     */
+    public function updateModuleRecord(Request $request, Response $response, array $args, UpdateModuleParams $params)
+    {
+        try {
+            $jsonResponse = $this->moduleService->updateRecord($params, $request);
 
             return $this->generateResponse($response, $jsonResponse, 201);
         } catch (\Exception $exception) {

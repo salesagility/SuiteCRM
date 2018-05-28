@@ -1,22 +1,30 @@
 <?php
 namespace Api\V8\Param\Options;
 
-use Api\V8\Builder\OptionsBuilder;
+use Api\V8\BeanDecorator\BeanManager;
+use Api\V8\Factory\ValidatorFactory;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class BaseOption
 {
     /**
-     * @var OptionsBuilder
+     * @var ValidatorFactory
      */
-    protected $optionBuilder;
+    protected $validatorFactory;
 
     /**
-     * @param OptionsBuilder $optionBuilder
+     * @var BeanManager
      */
-    public function __construct(OptionsBuilder $optionBuilder)
+    protected $beanManager;
+
+    /**
+     * @param ValidatorFactory $validatorFactory
+     * @param BeanManager $beanManager
+     */
+    public function __construct(ValidatorFactory $validatorFactory, BeanManager $beanManager)
     {
-        $this->optionBuilder = $optionBuilder;
+        $this->validatorFactory = $validatorFactory;
+        $this->beanManager = $beanManager;
     }
 
     /**
@@ -25,4 +33,15 @@ abstract class BaseOption
      * @return void
      */
     abstract public function add(OptionsResolver $resolver);
+
+    /**
+     * @param string $class
+     * @see https://github.com/rappasoft/laravel-helpers#class_basename
+     *
+     * @return string
+     */
+    protected function getOptionName($class)
+    {
+        return lcfirst(basename(str_replace('\\', '/', $class)));
+    }
 }

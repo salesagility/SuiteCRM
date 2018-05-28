@@ -18,32 +18,33 @@ class CreateModuleCest
 
     /**
      * @param apiTester $I
+     * @param Example $example
      *
+     * @dataProvider shouldWorkDataProvider
      * @throws \Codeception\Exception\ModuleException
      * @throws \Exception
      */
-    public function shouldWork(ApiTester $I)
+    public function shouldWork(ApiTester $I, Example $example)
     {
+        /** @var \ArrayIterator $iterator */
+        $iterator = $example->getIterator();
+        $payload = $iterator->offsetGet('payload');
+
         $id = create_guid();
         $endpoint = $I->getInstanceURL() . '/Api/V8/module';
-        $payload = [
-            'data' => [
-                'type' => 'Accounts',
-                'id' => $id,
-                'attributes' => [
-                    'name' => 'testName',
-                    'account_type' => 'testAccountType'
-                ]
-            ]
+        $response = [
+            'type' => \Account::class,
         ];
+
+        if ($iterator->current() === 'withId') {
+            $payload['data']['id'] = str_replace('{id}', $id, $payload['data']['id']);
+            $response = $response + ['id' => $id];
+        }
 
         $I->sendPOST($endpoint, $payload);
         $I->seeResponseCodeIs(201);
         $I->seeResponseIsJson();
-        $I->canSeeResponseContainsJson([
-            'type' => \Account::class,
-            'id' => $id
-        ]);
+        $I->canSeeResponseContainsJson($response);
         $I->assertGreaterThanOrEqual(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
 
         $I->deleteAccount($id);
@@ -60,13 +61,20 @@ class CreateModuleCest
     {
         /** @var \ArrayIterator $iterator */
         $iterator = $example->getIterator();
-        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
+        $detail = $iterator->offsetGet('detail');
         $payload = $iterator->offsetGet('payload');
+
+        if ($iterator->current() === 'withExistingBean') {
+            $id = $I->createAccount();
+            $detail = str_replace('{id}', $id, $detail);
+            $payload['data']['id'] = str_replace('{id}', $id, $payload['data']['id']);
+        }
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
         $expectedResult = [
             'errors' => [
                 'status' => 400,
                 'title' => null,
-                'detail' => $iterator->offsetGet('detail')
+                'detail' => $detail
             ]
         ];
 
@@ -74,6 +82,40 @@ class CreateModuleCest
         $I->seeResponseCodeIs(400);
         $I->seeResponseIsJson();
         $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
+
+        if (isset($id)) {
+            $I->deleteAccount($id);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    protected function shouldWorkDataProvider()
+    {
+        return [
+            [
+                'shouldWork01' => 'withId',
+                'payload' => [
+                    'data' => [
+                        'type' => 'Accounts',
+                        'id' => '{id}',
+                        'attributes' => [
+                            'name' => 'testName',
+                            'account_type' => 'testAccountType'
+                        ]
+                    ]
+                ]
+            ],
+            [
+                'shouldWork02' => 'withOutId',
+                'payload' => [
+                    'data' => [
+                        'type' => 'Accounts'
+                    ]
+                ],
+            ],
+        ];
     }
 
     /**
@@ -89,7 +131,7 @@ class CreateModuleCest
                         'invalidParam' => 'what-eva'
                     ]
                 ],
-                'detail' => 'The option "invalidParam" does not exist. Defined options are: "attributes", "bean", "id", "type".'
+                'detail' => 'The option "invalidParam" does not exist. Defined options are: "attributes", "id", "type".'
             ],
             [
                 'shouldNotWork02' => 'withInvalidType',
@@ -123,6 +165,19 @@ class CreateModuleCest
                     ]
                 ],
                 'detail' => 'Property invalidAttribute in Account module is invalid'
+            ],
+            [
+                'shouldNotWork05' => 'withExistingBean',
+                'payload' => [
+                    'data' => [
+                        'type' => 'Accounts',
+                        'id' => '{id}',
+                        'attributes' => [
+                            'name' => 'testName'
+                        ]
+                    ]
+                ],
+                'detail' => 'Bean Accounts with id {id} is already exist'
             ],
         ];
     }

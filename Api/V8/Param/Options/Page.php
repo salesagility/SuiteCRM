@@ -15,12 +15,10 @@ class Page extends BaseOption
      */
     public function add(OptionsResolver $resolver)
     {
-        $validator = $this->optionBuilder->getValidatorInstance();
-
         $resolver
             ->setDefined('page')
             ->setAllowedTypes('page', 'array')
-            ->setAllowedValues('page', $validator->createClosureForIterator([
+            ->setAllowedValues('page', $this->validatorFactory->createClosureForIterator([
                 new Assert\NotBlank(),
                 new Assert\Regex([
                     'pattern' => self::REGEX_PAGE_PATTERN,
@@ -28,7 +26,7 @@ class Page extends BaseOption
                 ]),
             ], true))
             ->setNormalizer('page', function (Options $options, $values) {
-                $pageParams = new PageParams($this->optionBuilder);
+                $pageParams = new PageParams($this->validatorFactory, $this->beanManager);
                 $pageParams->configure($values);
 
                 return $pageParams;

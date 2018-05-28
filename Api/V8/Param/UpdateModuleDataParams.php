@@ -4,14 +4,14 @@ namespace Api\V8\Param;
 use Api\V8\Param\Options as ParamOption;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DeleteModuleParams extends BaseParam
+class UpdateModuleDataParams extends BaseParam
 {
     /**
      * @return string
      */
-    public function getModuleName()
+    public function getType()
     {
-        return $this->parameters['moduleName'];
+        return $this->parameters['type'];
     }
 
     /**
@@ -23,6 +23,14 @@ class DeleteModuleParams extends BaseParam
     }
 
     /**
+     * @return array
+     */
+    public function getAttributes()
+    {
+        return isset($this->parameters['attributes']) ? $this->parameters['attributes'] : [];
+    }
+
+    /**
      * @inheritdoc
      */
     protected function configureParameters(OptionsResolver $resolver)
@@ -30,8 +38,9 @@ class DeleteModuleParams extends BaseParam
         $this->setOptions(
             $resolver,
             [
-                ParamOption\ModuleName::class,
+                ParamOption\Type::class,
                 ParamOption\Id::class,
+                ParamOption\Attributes::class,
             ]
         );
     }

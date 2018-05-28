@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class UpdateModuleParams extends BaseParam
 {
     /**
-     * @return CreateDataParams
+     * @return CreateModuleDataParams
      */
     public function getData()
     {
@@ -20,14 +20,15 @@ class UpdateModuleParams extends BaseParam
      */
     protected function configureParameters(OptionsResolver $resolver)
     {
+        // need to make this more simple
         $resolver
             ->setRequired('data')
-            ->setAllowedTypes('data', ['array'])
+            ->setAllowedTypes('data', 'array')
             ->setAllowedValues('data', $this->validatorFactory->createClosureForIterator([
                 new Assert\NotBlank(),
             ]))
             ->setNormalizer('data', function (Options $options, $values) {
-                $dataParams = new UpdateDataParams($this->validatorFactory, $this->beanManager);
+                $dataParams = new UpdateModuleDataParams($this->validatorFactory, $this->beanManager);
                 $dataParams->configure($values);
 
                 return $dataParams;

@@ -28,8 +28,6 @@ class PageParams extends BaseParam
      */
     protected function configureParameters(OptionsResolver $resolver)
     {
-        $validator = $this->optionBuilder->getValidatorInstance();
-
         $resolver
             ->setDefined('size')
             ->setAllowedTypes('size', ['string']);
@@ -37,7 +35,7 @@ class PageParams extends BaseParam
         $resolver
             ->setDefined('number')
             ->setAllowedTypes('number', ['string'])
-            ->setAllowedValues('number', $validator->createClosure([
+            ->setAllowedValues('number', $this->validatorFactory->createClosure([
                 new Assert\GreaterThan(0),
                 new Assert\LessThanOrEqual(BeanManager::MAX_RECORDS_PER_PAGE),
             ]));

@@ -1,9 +1,9 @@
 <?php
 namespace Api\V8\Param;
 
+use Api\V8\Param\Options as ParamOption;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class GetRelationshipDataParams extends BaseParam
 {
@@ -28,16 +28,12 @@ class GetRelationshipDataParams extends BaseParam
      */
     protected function configureParameters(OptionsResolver $resolver)
     {
-        $resolver
-            ->setRequired('type')
-            ->setAllowedTypes('type', ['string'])
-            ->setAllowedValues('type', $this->validatorFactory->createClosure([
-                new Assert\NotBlank(),
-                new Assert\Regex([
-                    'pattern' => self::REGEX_MODULE_NAME_PATTERN,
-                    'match' => false,
-                ]),
-            ]));
+        $this->setOptions(
+            $resolver,
+            [
+                ParamOption\Type::class,
+            ]
+        );
 
         $resolver
             ->setDefined('relatedBean')

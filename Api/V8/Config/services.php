@@ -17,7 +17,6 @@ return
         },
     ] +
     (require __DIR__ . '/services/beanAliases.php') +
-    (require __DIR__ . '/services/builder.php') +
     (require __DIR__ . '/services/controllers.php') +
     (require __DIR__ . '/services/factories.php') +
     (require __DIR__ . '/services/globals.php') +

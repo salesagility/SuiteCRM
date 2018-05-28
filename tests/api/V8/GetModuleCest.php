@@ -124,7 +124,7 @@ class GetModuleCest
             [
                 'shouldNotWork04' => 'withInvalidParameter',
                 'endPoint' => '/Api/V8/module/Accounts/97c3669b-607a-4b30-964f-2409b55a1551?invalidParam',
-                'detail' => 'The option "invalidParam" does not exist. Defined options are: "bean", "fields", "id", "moduleName".'
+                'detail' => 'The option "invalidParam" does not exist. Defined options are: "fields", "id", "moduleName".'
             ],
             [
                 'shouldNotWork05' => 'withInvalidField',

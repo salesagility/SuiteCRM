@@ -49,14 +49,14 @@ $app->group('', function () use ($app) {
          * Create a module record
          */
         $this
-            ->post('/module', 'Api\V8\Controller\ModuleController:saveModuleRecord')
+            ->post('/module', 'Api\V8\Controller\ModuleController:createModuleRecord')
             ->add($paramsMiddlewareFactory->bind(CreateModuleParams::class));
 
         /**
          * Update a module record
          */
         $this
-            ->patch('/module', 'Api\V8\Controller\ModuleController:saveModuleRecord')
+            ->patch('/module', 'Api\V8\Controller\ModuleController:updateModuleRecord')
             ->add($paramsMiddlewareFactory->bind(UpdateModuleParams::class));
 
         /**

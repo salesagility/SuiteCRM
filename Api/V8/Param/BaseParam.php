@@ -1,7 +1,9 @@
 <?php
 namespace Api\V8\Param;
 
-use Api\V8\Builder\OptionsBuilder;
+use Api\V8\BeanDecorator\BeanManager;
+use Api\V8\Factory\ValidatorFactory;
+use Api\V8\Param\Options\BaseOption;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class BaseParam implements \JsonSerializable
@@ -12,22 +14,29 @@ abstract class BaseParam implements \JsonSerializable
     protected $parameters = [];
 
     /**
-     * @var OptionsBuilder
+     * @var ValidatorFactory
      */
-    protected $optionBuilder;
+    protected $validatorFactory;
 
     /**
-     * @param $optionBuilder
+     * @var BeanManager
      */
-    public function __construct($optionBuilder)
+    protected $beanManager;
+
+    /**
+     * @param ValidatorFactory $validatorFactory
+     * @param BeanManager $beanManager
+     */
+    public function __construct(ValidatorFactory $validatorFactory, BeanManager $beanManager)
     {
-        $this->optionBuilder = $optionBuilder;
+        $this->validatorFactory = $validatorFactory;
+        $this->beanManager = $beanManager;
     }
 
     /**
      * @param array $arguments
      *
-     * @return $this
+     * @return self
      */
     final public function configure(array $arguments)
     {
@@ -40,15 +49,33 @@ abstract class BaseParam implements \JsonSerializable
 
     /**
      * Configure parameters.
-     * They can be set by reusing already existed options or create new ones in this method.
      *
      * @param OptionsResolver $resolver
      *
      * @return void
-     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException In case of invalid access.
-     * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException In case of invalid option.
      */
     abstract protected function configureParameters(OptionsResolver $resolver);
+
+    /**
+     * Configure already defined options.
+     *
+     * @param OptionsResolver $optionResolver
+     * @param array $options
+     *
+     * @throws \InvalidArgumentException If option is not exist.
+     */
+    protected function setOptions(OptionsResolver $optionResolver, array $options)
+    {
+        foreach ($options as $key => $option) {
+            if (!class_exists($option)) {
+                throw new \InvalidArgumentException(sprintf('Option %s does not exist!', $option));
+            }
+
+            /** @var BaseOption $class */
+            $class = new $option($this->validatorFactory, $this->beanManager);
+            $class->add($optionResolver);
+        }
+    }
 
     /**
      * @inheritdoc
@@ -56,10 +83,5 @@ abstract class BaseParam implements \JsonSerializable
     public function jsonSerialize()
     {
         return $this->parameters;
-    }
-
-    public function getOptionBuilderInstance()
-    {
-        return $this->optionBuilder;
     }
 }

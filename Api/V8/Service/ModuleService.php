@@ -64,7 +64,10 @@ class ModuleService
     public function getRecord(GetModuleParams $params, $path)
     {
         $fields = $params->getFields();
-        $bean = $params->getBean();
+        $bean = $this->beanManager->getBeanSafe(
+            $params->getModuleName(),
+            $params->getId()
+        );
 
         $dataResponse = $this->getDataResponse($bean, $fields, $path);
 
@@ -127,25 +130,74 @@ class ModuleService
     }
 
     /**
-     * @param CreateModuleParams|UpdateModuleParams $params
+     * @param CreateModuleParams $params
+     * @param Request $request
      *
      * @return DocumentResponse
+     * @throws \InvalidArgumentException When bean is already exist.
      */
-    public function saveModuleRecord($params)
+    public function createRecord(CreateModuleParams $params, Request $request)
     {
-        /** @var \SugarBean $bean */
-        $bean = $params->getData()->getBean();
-        $beanId = $params->getData()->getId();
+        $module = $params->getData()->getType();
+        $id = $params->getData()->getId();
         $attributes = $params->getData()->getAttributes();
+
+        if ($id !== null && $this->beanManager->getBean($module, $id, [], false) instanceof \SugarBean) {
+            throw new \InvalidArgumentException(sprintf(
+                'Bean %s with id %s is already exist',
+                $module,
+                $id
+            ));
+        }
+
+        $bean = $this->beanManager->newBeanSafe($module);
+        if ($id !== null) {
+            $bean->id = $id;
+            $bean->new_with_id = true;
+        }
 
         foreach ($attributes as $property => $value) {
             $bean->$property = $value;
         }
-        $bean->id = $beanId;
+
         $bean->save();
 
-        $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);
-        $dataResponse->setAttributes($this->attributeHelper->getAttributes($bean));
+        $dataResponse = $this->getDataResponse(
+            $bean,
+            null,
+            $request->getUri()->getPath() . '/' . $bean->id
+        );
+
+        $response = new DocumentResponse();
+        $response->setData($dataResponse);
+
+        return $response;
+    }
+
+    /**
+     * @param UpdateModuleParams $params
+     * @param Request $request
+     *
+     * @return DocumentResponse
+     */
+    public function updateRecord(UpdateModuleParams $params, Request $request)
+    {
+        $module = $params->getData()->getType();
+        $id = $params->getData()->getId();
+        $attributes = $params->getData()->getAttributes();
+        $bean = $this->beanManager->getBeanSafe($module, $id);
+
+        foreach ($attributes as $property => $value) {
+            $bean->$property = $value;
+        }
+
+        $bean->save();
+
+        $dataResponse = $this->getDataResponse(
+            $bean,
+            null,
+            $request->getUri()->getPath() . '/' . $bean->id
+        );
 
         $response = new DocumentResponse();
         $response->setData($dataResponse);
@@ -160,7 +212,10 @@ class ModuleService
      */
     public function deleteRecord(DeleteModuleParams $params)
     {
-        $bean = $params->getBean();
+        $bean = $this->beanManager->getBeanSafe(
+            $params->getModuleName(),
+            $params->getId()
+        );
         $bean->mark_deleted($bean->id);
 
         $response = new DocumentResponse();
@@ -174,11 +229,11 @@ class ModuleService
     /**
      * @param \SugarBean $bean
      * @param array|null $fields
-     * @param string $path
+     * @param string|null $path
      *
      * @return DataResponse
      */
-    public function getDataResponse(\SugarBean $bean, $fields, $path)
+    public function getDataResponse(\SugarBean $bean, $fields = null, $path = null)
     {
         // this will be split into separated classed later
         $dataResponse = new DataResponse($bean->getObjectName(), $bean->id);

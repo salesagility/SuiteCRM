@@ -16,21 +16,18 @@ class Fields extends BaseOption
      */
     public function add(OptionsResolver $resolver)
     {
-        $validator = $this->optionBuilder->getValidatorInstance();
-        $beanManager = $this->optionBuilder->getBeanManagerInstance();
-
         $resolver
             ->setDefined('fields')
             ->setAllowedTypes('fields', 'array')
-            ->setAllowedValues('fields', $validator->createClosureForIterator([
+            ->setAllowedValues('fields', $this->validatorFactory->createClosureForIterator([
                 new Assert\NotBlank(),
                 new Assert\Regex([
                     'pattern' => self::REGEX_FIELD_PATTERN,
                     'match' => false,
                 ]),
             ], true))
-            ->setNormalizer('fields', function (Options $options, $values) use ($beanManager) {
-                $bean = $beanManager->newBeanSafe(key($values));
+            ->setNormalizer('fields', function (Options $options, $values) {
+                $bean = $this->beanManager->newBeanSafe(key($values));
                 $attributes = $bean->toArray();
                 $fields = explode(',', array_shift($values));
 

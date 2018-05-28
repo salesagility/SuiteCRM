@@ -1,6 +1,7 @@
 <?php
 namespace Api\V8\Param;
 
+use Api\V8\Param\Options as ParamOption;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GetModuleParams extends BaseParam
@@ -30,21 +31,17 @@ class GetModuleParams extends BaseParam
     }
 
     /**
-     * @return \SugarBean
-     */
-    public function getBean()
-    {
-        return $this->parameters['bean'];
-    }
-
-    /**
      * @inheritdoc
      */
     protected function configureParameters(OptionsResolver $resolver)
     {
-        $this->optionBuilder->setOptions(
+        $this->setOptions(
             $resolver,
-            ['moduleName', 'id', 'fields', 'bean']
+            [
+                ParamOption\ModuleName::class,
+                ParamOption\Id::class,
+                ParamOption\Fields::class,
+            ]
         );
     }
 }
