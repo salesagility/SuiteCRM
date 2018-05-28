@@ -214,7 +214,9 @@ var plgBackground = {
             ace: true,
             width: '600px',
             toolPlugins: [plgBackground],
-            uploadPathField: null
+            uploadPathField: null,
+            expandBody: true,
+            expandBodyMinHeight: 400,
         }, options);
 
         if(typeof settings.tinyMCE == 'undefined') {
@@ -419,6 +421,19 @@ var plgBackground = {
                     $mozaik.css('overflow-x', 'auto');
                 }
 
+                // expand editor height
+                if(settings.expandBody) {
+                    var sum = 100;
+                    $mozaik.find('.mozaik-elem').each(function (i, e) {
+                        sum += $(this).height();
+                    });
+                    if (sum < settings.expandBodyMinHeight) {
+                        sum = settings.expandBodyMinHeight;
+                    }
+                    $mozaik.parent().height(sum);
+                    $mozaik.parent().find('.mozaik-list').height(sum);
+                    $mozaik.parent().find('.mozaik-thumbs').height(sum);
+                }
             };
             onResize();
 
