@@ -71,8 +71,6 @@ RedirectMatch 403 {$ignoreCase}/+files\.md5\$
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
     RewriteRule ^Api/(.*?)$ Api/index.php/$1 [L,QSA]
-    RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
-    RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 # END SUGARCRM RESTRICTIONS
 EOQ;
