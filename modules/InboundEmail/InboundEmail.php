@@ -5421,8 +5421,10 @@ class InboundEmail extends SugarBean
 
             $this->connectMailserver();
 
-            $header = imap_fetch_overview($this->conn, $uid, FT_UID);
-            $email->name = $this->handleMimeHeaderDecode($header[0]->subject);
+            $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
+            $parsedFullHeader = imap_rfc822_parse_headers($fullHeader);
+
+            $email->name = $this->handleMimeHeaderDecode($parsedFullHeader->subject);
             $email->type = 'inbound';
 
             if(
@@ -5445,7 +5447,7 @@ class InboundEmail extends SugarBean
                     ];
 
                     foreach ($possibleFormats  as $possibleFormat) {
-                        $dateTime = \DateTime::createFromFormat( $possibleFormat, $header[0]->date);
+                        $dateTime = \DateTime::createFromFormat( $possibleFormat, $parsedFullHeader->date);
                         if ($dateTime !== false) {
                             break;
                         }
@@ -5453,7 +5455,7 @@ class InboundEmail extends SugarBean
 
                     if ($dateTime === false) {
                         throw new Exception(
-                            sprintf('Expected header Date to comply with RFC882 or RFC2882, but actual is "%s"', $header[0]->date)
+                            sprintf('Expected header Date to comply with RFC882 or RFC2882, but actual is "%s"', $parsedFullHeader->date)
                         );
                     }
 
@@ -5470,16 +5472,16 @@ class InboundEmail extends SugarBean
                 }
 
                 $email->status = 'unread'; // this is used in Contacts' Emails SubPanel
-                if (!empty($header[0]->to)) {
-                    $email->to_name = $this->handleMimeHeaderDecode($header[0]->to);
+                if (!empty($parsedFullHeader->to)) {
+                    $email->to_name = $this->handleMimeHeaderDecode($parsedFullHeader->toaddress);
                     $email->to_addrs_names = $email->to_name;
-                    $email->to_addrs = $this->convertImapToSugarEmailAddress($header[0]->to);
+                    $email->to_addrs = $this->convertImapToSugarEmailAddress($parsedFullHeader->toaddress);
                 }
 
-                if (!empty($header[0]->from)) {
-                    $email->to_addrs = $this->convertImapToSugarEmailAddress($header[0]->to);
+                if (!empty($parsedFullHeader->from)) {
+                    $email->to_addrs = $this->convertImapToSugarEmailAddress($parsedFullHeader->toaddress);
                 }
-                $email->from_name = $this->handleMimeHeaderDecode($header[0]->from);
+                $email->from_name = $this->handleMimeHeaderDecode($parsedFullHeader->fromaddress);
                 $email->from_addr_name = $email->from_name;
                 $email->from_addr = $this->convertImapToSugarEmailAddress($email->from_name);
 
@@ -5487,16 +5489,16 @@ class InboundEmail extends SugarBean
                     in_array('cc_addrs', $fields_selected)
                     || in_array('cc_addrs_names', $fields_selected)
                 ) {
-                    $headerByMsgNo = imap_headerinfo($this->conn, $msgNo);
-                    if (!empty($headerByMsgNo->ccaddress)) {
-                        $email->cc_addrs = $this->convertImapToSugarEmailAddress($headerByMsgNo->ccaddress);
-                        $email->cc_addrs_names = $this->handleMimeHeaderDecode($headerByMsgNo->ccaddress);
+
+                    if (!empty($parsedFullHeader->ccaddress)) {
+                        $email->cc_addrs = $this->convertImapToSugarEmailAddress($parsedFullHeader->ccaddress);
+                        $email->cc_addrs_names = $this->handleMimeHeaderDecode($parsedFullHeader->ccaddress);
                     } // if
                 }
 
 
-                $email->reply_to_name = $this->handleMimeHeaderDecode($header[0]->reply_toaddress);
-                $email->reply_to_email = $this->convertImapToSugarEmailAddress($header[0]->reply_to);
+                $email->reply_to_name = $this->handleMimeHeaderDecode($parsedFullHeader->reply_toaddress);
+                $email->reply_to_email = $this->convertImapToSugarEmailAddress($parsedFullHeader->reply_to);
                 if (!empty($email->reply_to_email)) {
                     $email->reply_to_addr = $email->reply_to_name;
                 }
@@ -5509,7 +5511,6 @@ class InboundEmail extends SugarBean
 
                 if(in_array('description_html', $fields_selected)) {
                     $structure = imap_fetchstructure($this->conn, $uid, FT_UID); // map of email
-                    $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
                     $email->description_html = $this->getMessageTextWithUid(
                         $uid,
                         'HTML',
@@ -5521,7 +5522,6 @@ class InboundEmail extends SugarBean
 
                 if(in_array('description', $fields_selected)) {
                     $structure = imap_fetchstructure($this->conn, $uid, FT_UID); // map of email
-                    $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
                     $email->description = $this->getMessageTextWithUid(
                         $uid,
                         'PLAIN',
