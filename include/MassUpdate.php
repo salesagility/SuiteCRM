@@ -343,7 +343,7 @@ eoq;
 									if($parentenum_value != $dynamic_field_value) {
 
 										// Change to the default value of the correct value set.
-                      $defaultValue = $parentenum_value . '_' . $parentenum_value;
+                      $defaultValue = '';
                       foreach ($app_list_strings[$field_name['options']] as $key => $value) {
                           if (strpos($key, $parentenum_value) === 0) {
                               $defaultValue = $key;
