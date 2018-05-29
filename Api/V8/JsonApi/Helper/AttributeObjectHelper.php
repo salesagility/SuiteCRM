@@ -28,14 +28,13 @@ class AttributeObjectHelper
     public function getAttributes(\SugarBean $bean, $fields = null)
     {
         $bean->fixUpFormatting();
-        $attributes = $bean->toArray();
 
         // using the ISO 8601 format for dates
-        array_walk($attributes, function (&$value) {
-            if (\DateTime::createFromFormat('Y-m-d H:i:s', $value)) {
-                $value = date(\DateTime::ATOM, strtotime($value));
-            }
-        });
+        $attributes = array_map(function ($value) {
+            return $value = \DateTime::createFromFormat('Y-m-d H:i:s', $value)
+                ? date(\DateTime::ATOM, strtotime($value))
+                : $value;
+        }, $bean->toArray());
 
         if ($fields !== null) {
             $attributes = array_intersect_key($attributes, array_flip($fields));

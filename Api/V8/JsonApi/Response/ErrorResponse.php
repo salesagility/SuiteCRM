@@ -79,6 +79,6 @@ class ErrorResponse implements \JsonSerializable
             ]
         ];
 
-        return array_filter($response);
+        return $response;
     }
 }
