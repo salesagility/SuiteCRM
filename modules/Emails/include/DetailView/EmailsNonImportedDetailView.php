@@ -73,9 +73,10 @@ class EmailsNonImportedDetailView extends EmailsDetailView
     public function populateBean($request = array())
     {
         if (!empty($request['uid']) && !empty($request['inbound_email_record'])&& !empty($request['msgno'])) {
+            /** @var InboundEmail $inboundEmail **/
             $inboundEmail = BeanFactory::getBean('InboundEmail', $request['inbound_email_record']);
 
-            $email = $inboundEmail->returnNonImportedEmail($_REQUEST['msgno'], $request['uid']);
+            $email = $inboundEmail->returnNonImportedEmail($request);
             $this->focus = $email;
             $this->populateFields();
         } else {
