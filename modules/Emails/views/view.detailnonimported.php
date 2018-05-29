@@ -67,9 +67,13 @@ class EmailsViewDetailNonImported extends ViewDetail
      */
     public function preDisplay()
     {
+        $request = $_REQUEST;
         $metadataFile = $this->getMetaDataFile();
+        $viewdefs = $this->getFieldsInViewDefinitions($metadataFile);
+        $request['metadata'] = array();
+        $request['metadata']['viewdefs'] = $viewdefs;
         $this->dv = new EmailsNonImportedDetailView();
-        $this->dv->populateBean($_REQUEST);
+        $this->dv->populateBean($request);
         $this->dv->ss =& $this->ss;
         $this->dv->setup(
             $this->module,
@@ -85,5 +89,35 @@ class EmailsViewDetailNonImported extends ViewDetail
     {
         $this->dv->process();
         echo $this->dv->display();
+    }
+
+    private function getFieldsInViewDefinitions($metadataFile)
+    {
+        require_once $metadataFile;
+        $fields_in_definition = array();
+        $module_name = 'Emails';
+        if (
+            isset($viewdefs)
+            && isset($viewdefs['Emails']['DetailView'])
+            && isset($viewdefs['Emails']['DetailView']['panels'])
+        ) {
+            $panels = $viewdefs['Emails']['DetailView']['panels'];
+            foreach ($panels as $panel) {
+                $slots = $panel;
+                foreach ($slots as $slot) {
+                    $fields = $slot;
+                    foreach ($fields as $field) {
+                        if(isset($field['name'])) {
+                            $fields_in_definition[] = $field['name'];
+                        }
+                    }
+
+                }
+            }
+
+            return $fields_in_definition;
+        }
+
+        return false;
     }
 }

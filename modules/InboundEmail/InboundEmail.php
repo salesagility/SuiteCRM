@@ -5401,14 +5401,19 @@ class InboundEmail extends SugarBean
 
     /**
      * Used to view non imported emails
-     * @param string $msgNo - imap mesgno
-     * @param string $uid - imap uid
+     * @param string $request - must include the metadata
      * @return Email|boolean - false on error | a non imported email
      * @throws Exception
+     * @see EmailsViewDetailNonImported::preDisplay()
      */
-    public function returnNonImportedEmail($msgNo, $uid)
+    public function returnNonImportedEmail($request)
     {
-        global $timedate, $current_user;
+        global $timedate;
+        global $current_user;
+        global $log;
+
+        $msgNo = $request['msgno'];
+        $uid = $request['uid'];
 
         if (empty($header)) {
             $email = new Email();
@@ -5416,99 +5421,118 @@ class InboundEmail extends SugarBean
 
             $this->connectMailserver();
 
-
             $header = imap_fetch_overview($this->conn, $uid, FT_UID);
-            $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
-            $headerByMsgNo = imap_headerinfo($this->conn, $msgNo);
-            $structure = imap_fetchstructure($this->conn, $uid, FT_UID); // map of email
             $email->name = $this->handleMimeHeaderDecode($header[0]->subject);
             $email->type = 'inbound';
 
+            if(
+                isset($request['metadata'])
+                && isset($request['metadata']['viewdefs'])
+            ) {
+                // only process field(s) in which we actually use
+                $fields_selected = $request['metadata']['viewdefs'];
 
-            if(empty($email->date_entered)) {
+                if(empty($email->date_entered)) {
+                    $possibleFormats = [
+                        \DateTime::RFC2822.'+',
+                        str_replace(['D, '], '', \DateTime::RFC2822), // day-of-week is optional
+                        str_replace([':s'], '', \DateTime::RFC2822), // seconds are optional
+                        str_replace(['D, ', ':s'], '', \DateTime::RFC2822), // day-of-week is optional, seconds are optional
+                        \DateTime::RFC822,
+                        str_replace(['D, '], '', \DateTime::RFC822), // day is optional
+                        str_replace([':s'], '', \DateTime::RFC822), // seconds are optional
+                        str_replace(['D, ', ':s'], '', \DateTime::RFC822), // day is optional, seconds are optional
+                    ];
 
-                $possibleFormats = [
-                    \DateTime::RFC2822.'+',
-                    str_replace(['D, '], '', \DateTime::RFC2822), // day-of-week is optional
-                    str_replace([':s'], '', \DateTime::RFC2822), // seconds are optional
-                    str_replace(['D, ', ':s'], '', \DateTime::RFC2822), // day-of-week is optional, seconds are optional
-                    \DateTime::RFC822,
-                    str_replace(['D, '], '', \DateTime::RFC822), // day is optional
-                    str_replace([':s'], '', \DateTime::RFC822), // seconds are optional
-                    str_replace(['D, ', ':s'], '', \DateTime::RFC822), // day is optional, seconds are optional
-                ];
-
-                foreach ($possibleFormats  as $possibleFormat) {
-                    $dateTime = \DateTime::createFromFormat( $possibleFormat, $header[0]->date);
-                    if ($dateTime !== false) {
-                        break;
+                    foreach ($possibleFormats  as $possibleFormat) {
+                        $dateTime = \DateTime::createFromFormat( $possibleFormat, $header[0]->date);
+                        if ($dateTime !== false) {
+                            break;
+                        }
                     }
+
+                    if ($dateTime === false) {
+                        throw new Exception(
+                            sprintf('Expected header Date to comply with RFC882 or RFC2882, but actual is "%s"', $header[0]->date)
+                        );
+                    }
+
+                    $email->date_entered = $timedate->asUser($dateTime, $current_user);
+                    $email->date_modified = $timedate->asUser($dateTime, $current_user);
+                    $email->date_start = $timedate->asUserDate($dateTime);
+                    $email->time_start = $timedate->asUserTime($dateTime);
+
+                    $systemUser =  BeanFactory::getBean('Users', 1);
+                    $email->created_by = $systemUser->id;
+                    $email->created_by_name = $systemUser->name;
+                    $email->modified_user_id = $systemUser->id;
+                    $email->modified_by_name = $systemUser->name;
                 }
 
-                if ($dateTime === false) {
-                    throw new Exception(
-                        sprintf('Expected header Date to comply with RFC882 or RFC2882, but actual is "%s"', $header[0]->date)
+                $email->status = 'unread'; // this is used in Contacts' Emails SubPanel
+                if (!empty($header[0]->to)) {
+                    $email->to_name = $this->handleMimeHeaderDecode($header[0]->to);
+                    $email->to_addrs_names = $email->to_name;
+                    $email->to_addrs = $this->convertImapToSugarEmailAddress($header[0]->to);
+                }
+
+                if (!empty($header[0]->from)) {
+                    $email->to_addrs = $this->convertImapToSugarEmailAddress($header[0]->to);
+                }
+                $email->from_name = $this->handleMimeHeaderDecode($header[0]->from);
+                $email->from_addr_name = $email->from_name;
+                $email->from_addr = $this->convertImapToSugarEmailAddress($email->from_name);
+
+                if(
+                    in_array('cc_addrs', $fields_selected)
+                    || in_array('cc_addrs_names', $fields_selected)
+                ) {
+                    $headerByMsgNo = imap_headerinfo($this->conn, $msgNo);
+                    if (!empty($headerByMsgNo->ccaddress)) {
+                        $email->cc_addrs = $this->convertImapToSugarEmailAddress($headerByMsgNo->ccaddress);
+                        $email->cc_addrs_names = $this->handleMimeHeaderDecode($headerByMsgNo->ccaddress);
+                    } // if
+                }
+
+
+                $email->reply_to_name = $this->handleMimeHeaderDecode($header[0]->reply_toaddress);
+                $email->reply_to_email = $this->convertImapToSugarEmailAddress($header[0]->reply_to);
+                if (!empty($email->reply_to_email)) {
+                    $email->reply_to_addr = $email->reply_to_name;
+                }
+                $email->intent = $this->mailbox_type;
+
+                $email->message_id = $this->compoundMessageId; // filled by importDupeCheck();
+
+                $oldPrefix = $this->imagePrefix;
+
+
+                if(in_array('description_html', $fields_selected)) {
+                    $structure = imap_fetchstructure($this->conn, $uid, FT_UID); // map of email
+                    $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
+                    $email->description_html = $this->getMessageTextWithUid(
+                        $uid,
+                        'HTML',
+                        $structure,
+                        $fullHeader,
+                        true
                     );
                 }
 
-                $email->date_entered = $timedate->asUser($dateTime, $current_user);
-                $email->date_modified = $timedate->asUser($dateTime, $current_user);
-                $email->date_start = $timedate->asUserDate($dateTime);
-                $email->time_start = $timedate->asUserTime($dateTime);
-
-                $systemUser =  BeanFactory::getBean('Users', 1);
-                $email->created_by = $systemUser->id;
-                $email->created_by_name = $systemUser->name;
-                $email->modified_user_id = $systemUser->id;
-                $email->modified_by_name = $systemUser->name;
+                if(in_array('description', $fields_selected)) {
+                    $structure = imap_fetchstructure($this->conn, $uid, FT_UID); // map of email
+                    $fullHeader = imap_fetchheader($this->conn, $uid, FT_UID);
+                    $email->description = $this->getMessageTextWithUid(
+                        $uid,
+                        'PLAIN',
+                        $structure,
+                        $fullHeader,
+                        true
+                    );
+                }
+            } else {
+                $log->warn('Missing viewdefs in request');
             }
-
-            $email->status = 'unread'; // this is used in Contacts' Emails SubPanel
-            if (!empty($header[0]->to)) {
-                $email->to_name = $this->handleMimeHeaderDecode($header[0]->to);
-                $email->to_addrs_names = $email->to_name;
-                $email->to_addrs = $this->convertImapToSugarEmailAddress($header[0]->to);
-            }
-
-            if (!empty($header[0]->from)) {
-                $email->to_addrs = $this->convertImapToSugarEmailAddress($header[0]->to);
-            }
-            $email->from_name = $this->handleMimeHeaderDecode($header[0]->from);
-            $email->from_addr_name = $email->from_name;
-            $email->from_addr = $this->convertImapToSugarEmailAddress($email->from_name);
-
-            if (!empty($headerByMsgNo->ccaddress)) {
-                $email->cc_addrs = $this->convertImapToSugarEmailAddress($headerByMsgNo->ccaddress);
-                $email->cc_addrs_names = $this->handleMimeHeaderDecode($headerByMsgNo->ccaddress);
-            } // if
-
-            $email->reply_to_name = $this->handleMimeHeaderDecode($header[0]->reply_toaddress);
-            $email->reply_to_email = $this->convertImapToSugarEmailAddress($header[0]->reply_to);
-            if (!empty($email->reply_to_email)) {
-                $email->reply_to_addr = $email->reply_to_name;
-            }
-            $email->intent = $this->mailbox_type;
-
-            $email->message_id = $this->compoundMessageId; // filled by importDupeCheck();
-
-            $oldPrefix = $this->imagePrefix;
-
-            // handle multi-part email bodies
-            $email->description_html = $this->getMessageTextWithUid(
-                $uid,
-                'HTML',
-                $structure,
-                $fullHeader,
-                true
-            ); // runs through handleTranserEncoding() already
-
-            $email->description = $this->getMessageTextWithUid(
-                $uid,
-                'PLAIN',
-                $structure,
-                $fullHeader,
-                true
-            ); // runs through handleTranserEncoding() already
 
             if (empty($email->description_html)) {
                 $email->description_html = $email->description;
