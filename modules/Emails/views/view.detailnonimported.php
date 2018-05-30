@@ -96,10 +96,7 @@ class EmailsViewDetailNonImported extends ViewDetail
         require_once $metadataFile;
         $fields_in_definition = array();
         $module_name = 'Emails';
-        if (
-            isset($viewdefs)
-            && isset($viewdefs['Emails']['DetailView'])
-            && isset($viewdefs['Emails']['DetailView']['panels'])
+        if (($viewdefs['Emails']['DetailView']['panels'])
         ) {
             $panels = $viewdefs['Emails']['DetailView']['panels'];
             foreach ($panels as $panel) {
