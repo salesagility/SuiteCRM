@@ -740,7 +740,8 @@ class ListViewDataEmails extends ListViewData
                         $limit,
                         $limitPerPage,
                         $params,
-                        $pageData
+                        $pageData,
+                        $filter_fields
                     );
                     break;
 

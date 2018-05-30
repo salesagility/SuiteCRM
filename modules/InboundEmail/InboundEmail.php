@@ -467,14 +467,17 @@ class InboundEmail extends SugarBean
             $uids,
             FT_UID
         );
-
         $emailHeaders = json_decode(json_encode($emailHeaders), true);
-        // get attachment status
-        foreach ($emailHeaders as $i=> $emailHeader) {
-            $structure = imap_fetchstructure($this->conn,  $emailHeader['uid'], FT_UID);
+        if(isset($columns['has_attachment'])) {
+            // get attachment status
+            foreach ($emailHeaders as $i=> $emailHeader) {
+                $structure = imap_fetchstructure($this->conn,  $emailHeader['uid'], FT_UID);
 
-            $emailHeaders[$i]['has_attachment'] = $this->mesageStructureHasAttachment($structure);
+                $emailHeaders[$i]['has_attachment'] = $this->mesageStructureHasAttachment($structure);
+            }
         }
+
+
 
         usort(
             $emailHeaders,

@@ -61,7 +61,21 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
      * @param array $params
      * @return array
      */
-    public function search($seed, &$request, $where, $id, $inboundEmail, $filter, $folderObj, $currentUser, $folder, $limit, $limitPerPage, $params) {
+    public function search(
+        $seed,
+        &$request,
+        $where,
+        $id,
+        $inboundEmail,
+        $filter,
+        $folderObj,
+        $currentUser,
+        $folder,
+        $limit,
+        $limitPerPage,
+        $params,
+        $pageData,
+        $filter_fields) {
 
 
         // Create the data structure which are required to view a list view.
@@ -102,7 +116,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
         }
 
         // Get emails from email server
-        $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter);
+        $emailServerEmails = $inboundEmail->checkWithPagination($offset, $limitPerPage, $order, $filter, $filter_fields);
 
         $total = $emailServerEmails['mailbox_info']['Nmsgs']; // + count($importedEmails['data']);
         if ($page === "end") {
