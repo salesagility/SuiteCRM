@@ -494,68 +494,61 @@ class SugarFeed extends Basic {
 
     static function getTimeLapse($startDate)
     {
-        if (!isset($GLOBALS['timedate'])) {
-            LoggerManager::getLogger()->warn('SugarFeed getTimeLapse: Trying to get property of non-object ($GLOBALS[timedate]->getNow()->ts)');
-            $globalsTimedateNowTs = null;
-        } else {
-            $globalsTimedateNowTs = $GLOBALS['timedate']->getNow()->ts;
-        }
+        global $timedate;
 
-        if (!isset($GLOBALS['timedate'])) {
-            LoggerManager::getLogger()->warn('SugarFeed getTimeLapse: Trying to get property of non-object ($GLOBALS[timedate]->fromUser($startDate)->ts)');
-            $globalsTimedateFromUserStartDateTs = null;
-        } else {
-            $globalsTimedateFromUserStartDateTs = $GLOBALS['timedate']->fromUser($startDate)->ts;
-        }
-            
-        $seconds = $globalsTimedateNowTs - $globalsTimedateFromUserStartDateTs;
-        $minutes =   $seconds/60;
+        $timedate->getInstance()->userTimezone();
+        $currentTime = $timedate->now();
+
+        $first = strtotime($currentTime);
+        $second = strtotime($startDate);
+
+        $seconds = $first - $second;
+        $minutes = $seconds / 60;
         $seconds = $seconds % 60;
-        $hours = floor( $minutes / 60);
+        $hours = floor($minutes / 60);
         $minutes = $minutes % 60;
-        $days = floor( $hours / 24);
+        $days = floor($hours / 24);
         $hours = $hours % 24;
-        $weeks = floor( $days / 7);
+        $weeks = floor($days / 7);
         $days = $days % 7;
         $result = '';
-        if($weeks == 1){
-            $result = translate('LBL_TIME_LAST_WEEK','SugarFeed').' ';
-            return $result;
-        }else if($weeks > 1){
-            $result .= $weeks . ' '.translate('LBL_TIME_WEEKS','SugarFeed').' ';
-            if($days > 0) {
-                $result .= ' ' .translate('LBL_TIME_AND','SugarFeed').' ';
-                $result .= $days . ' '.translate('LBL_TIME_DAYS','SugarFeed').' ';
+        if ($weeks == 1) {
+            return translate('LBL_TIME_LAST_WEEK', 'SugarFeed') . ' ';
+        } elseif ($weeks > 1) {
+            $result .= $weeks . ' ' . translate('LBL_TIME_WEEKS', 'SugarFeed') . ' ';
+            if ($days > 0) {
+                $result .= ' ' . translate('LBL_TIME_AND', 'SugarFeed') . ' ';
+                $result .= $days . ' ' . translate('LBL_TIME_DAYS', 'SugarFeed') . ' ';
             }
-        }else{
-            if($days == 1){
-                $result = translate('LBL_TIME_YESTERDAY','SugarFeed').' ';
-                return $result;
-            }else if($days > 1){
-                $result .= $days . ' '. translate('LBL_TIME_DAYS','SugarFeed').' ';
-            }else{
-                if($hours == 1) {
-                    $result .= $hours . ' '.translate('LBL_TIME_HOUR','SugarFeed').' ';
+        } else {
+            if ($days == 1) {
+                return translate('LBL_TIME_YESTERDAY', 'SugarFeed') . ' ';
+            } elseif ($days > 1) {
+                $result .= $days . ' ' . translate('LBL_TIME_DAYS', 'SugarFeed') . ' ';
+            } else {
+                if ($hours == 1) {
+                    $result .= $hours . ' ' . translate('LBL_TIME_HOUR', 'SugarFeed') . ' ';
                 } else {
-                    $result .= $hours . ' '.translate('LBL_TIME_HOURS','SugarFeed').' ';
+                    $result .= $hours . ' ' . translate('LBL_TIME_HOURS', 'SugarFeed') . ' ';
                 }
-                if($hours < 6){
-                    if($minutes == 1) {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTE','SugarFeed'). ' ';
+                if ($hours < 6) {
+                    if ($minutes == 1) {
+                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTE', 'SugarFeed') . ' ';
                     } else {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTES','SugarFeed'). ' ';
+                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTES', 'SugarFeed') . ' ';
                     }
                 }
-                if($hours == 0 && $minutes == 0) {
-                    if($seconds == 1 ) {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECOND','SugarFeed');
+                if ($hours == 0 && $minutes == 0) {
+                    if ($seconds == 1) {
+                        $result = $seconds . ' ' . translate('LBL_TIME_SECOND', 'SugarFeed');
                     } else {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS','SugarFeed');
+                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS', 'SugarFeed');
                     }
                 }
             }
         }
-        return $result . ' ' . translate('LBL_TIME_AGO','SugarFeed');
+
+        return $result . ' ' . translate('LBL_TIME_AGO', 'SugarFeed');
     }
 
     /**
