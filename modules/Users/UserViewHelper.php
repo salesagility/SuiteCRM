@@ -513,6 +513,10 @@ class UserViewHelper {
         }
         $this->ss->assign("USE_GROUP_TABS",($useGroupTabs=='gm')?'checked':'');
 
+        if ($this->bean->getPreference('sort_modules_by_name')) {
+            $this->ss->assign('SORT_MODULES_BY_NAME', ' checked');
+        }
+
         $user_subpanel_tabs = $this->bean->getPreference('subpanel_tabs');
         if(isset($user_subpanel_tabs)) {
             $this->ss->assign("SUBPANEL_TABS", $user_subpanel_tabs?'checked':'');

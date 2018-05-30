@@ -41,7 +41,7 @@
 namespace SuiteCRM\API\JsonApi\v1\Filters\Operators;
 
 use Psr\Container\ContainerInterface;
-use SuiteCRM\API\v8\Exception\BadRequest;
+use SuiteCRM\API\v8\Exception\BadRequestException;
 use SuiteCRM\Exception\InvalidArgumentException;
 
 /**
@@ -159,7 +159,7 @@ class Operator
      * @param array $operands
      * @return string
      * @throws InvalidArgumentException
-     * @throws BadRequest
+     * @throws BadRequestException
      */
     public function toSqlOperands(array $operands)
     {
@@ -175,7 +175,7 @@ class Operator
 
         foreach ($operands as $i => $operand) {
             if ($i >= $this->totalOperands()) {
-               throw new BadRequest('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][operand limit exceeded]');
+               throw new BadRequestException('[JsonApi][v1][Filters][Operators][Operator][toSqlOperands][operand limit exceeded]');
             }
 
             if(is_numeric($operand)) {

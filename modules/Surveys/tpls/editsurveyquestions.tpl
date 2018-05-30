@@ -47,13 +47,12 @@
     function addOption(ev, data) {
       var target = $(ev.target);
       var questionIndex = target.data('question-index');
-      var clearImage = 'themes/' + SUGAR.themes.theme_name + "/images/id-ff-clear.png";
       var list = target.closest('td').find('ul');
       var html = "<li>"
         + "<input type='hidden' class='survey_question_options_id' name='survey_questions_options_id[" + questionIndex + "][]'/>"
         + "<input type='hidden' class='survey_question_options_deleted' name='survey_questions_options_deleted[" + questionIndex + "][]' value='0'/>"
         + "<input class='survey_question_options' name='survey_questions_options[" + questionIndex + "][]' type='text'/>"
-        + "<button type='button' class='button deleteQuestionOption'><img src='" + clearImage + "'/></button>"
+        + "<button type='button' class='button deleteQuestionOption'><span class='suitepicon suitepicon-action-clear'></span></button>"
         + "</li>";
       var item = $(html);
       if (data) {
@@ -121,14 +120,10 @@
       newRow += "<td><select class='surveyQuestionType' name='survey_questions_types[" + createQuestion.questionCount + "]'>{/literal}{$question_type_options}{literal}</select></td>";
       newRow += "<td>";
 
-      var clearImage = 'themes/' + SUGAR.themes.theme_name + "/images/id-ff-clear.png";
-      var upImage = 'themes/' + SUGAR.themes.theme_name + "/images/arrow_up.png";
-      var downImage = 'themes/' + SUGAR.themes.theme_name + "/images/arrow_down.png";
-
-      newRow += "<button type='button' class='button moveQuestionUp'><img src='" + upImage + "'/></button>";
-      newRow += "<button type='button' class='button moveQuestionDown'><img src='" + downImage + "'/></button>";
+      newRow += "<button type='button' class='button moveQuestionUp'><span class='suitepicon suitepicon-action-move-up'></span></button>";
+      newRow += "<button type='button' class='button moveQuestionDown'><span class='suitepicon suitepicon-action-move-down'></span></button>";
       newRow += "&nbsp;&nbsp;&nbsp;";
-      newRow += "<button type='button' class='button deleteQuestion'><img src='" + clearImage + "'/></button>";
+      newRow += "<button type='button' class='button deleteQuestion'><span class='suitepicon suitepicon-action-clear'></span></button>";
       newRow += "</td>";
       newRow += "</tr>";
       newRow += "<tr class='questionOptions' style='display: none;'>";

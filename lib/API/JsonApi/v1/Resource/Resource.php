@@ -45,8 +45,8 @@ use SuiteCRM\API\JsonApi\v1\Links;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use SuiteCRM\API\JsonApi\v1\Enumerator\ResourceEnum;
-use SuiteCRM\API\v8\Exception\BadRequest;
-use SuiteCRM\API\v8\Exception\Conflict;
+use SuiteCRM\API\v8\Exception\BadRequestException;
+use SuiteCRM\API\v8\Exception\ConflictException;
 use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\Utility\SuiteLogger as Logger;
 
@@ -113,8 +113,8 @@ class Resource extends ResourceIdentifier
      * @param array $data
      * @param string $source rfc6901
      * @return Resource|$this
-     * @throws Conflict
-     * @throws BadRequest
+     * @throws ConflictException
+     * @throws BadRequestException
      * @see https://tools.ietf.org/html/rfc6901
      */
     public function fromJsonApiRequest(array $data, $source = ResourceEnum::DEFAULT_SOURCE)
@@ -126,13 +126,13 @@ class Resource extends ResourceIdentifier
         $this->source = $source;
 
         if ($this->type === null) {
-            $exception = new Conflict('[Missing "type" key in data]');
+            $exception = new ConflictException('[Missing "type" key in data]');
             $exception->setSource('/data/attributes/type');
             throw $exception;
         }
 
         if(!isset($data[self::ATTRIBUTES] )) {
-            $exception = new BadRequest('[Missing attributes]');
+            $exception = new BadRequestException('[Missing attributes]');
             $exception->setSource('/data/attributes');
             throw $exception;
         }
@@ -230,20 +230,20 @@ class Resource extends ResourceIdentifier
          return self::$JSON_API_RESERVED_KEYWORDS;
     }
     /**
-     * @throws Conflict
+     * @throws ConflictException
      */
     protected function validateResource()
     {
         // Validate ID
         if ($this->id === null) {
-            $exception = new Conflict('[Missing "id" key in data]"');
+            $exception = new ConflictException('[Missing "id" key in data]"');
             $exception->setSource($this->source . '/attributes/id');
             throw $exception;
         }
 
         // Validate Type
         if ($this->type === null) {
-            $exception = new Conflict('[Missing "type" key in data]');
+            $exception = new ConflictException('[Missing "type" key in data]');
             $exception->setSource($this->source . '/attributes/type');
             throw $exception;
         }
@@ -251,7 +251,7 @@ class Resource extends ResourceIdentifier
 
     /**
      * @param array $data
-     * @throws BadRequest
+     * @throws BadRequestException
      */
     private function relationshipFromDataArray(array $data)
     {
@@ -261,7 +261,7 @@ class Resource extends ResourceIdentifier
             foreach ($dataRelationships as $relationshipName => $relationship) {
 
                 if (isset($relationship['data']) === false) {
-                    $exception = new BadRequest('[Resource] [missing relationship data]');
+                    $exception = new BadRequestException('[Resource] [missing relationship data]');
                     $exception->setSource('/data/relationships/{link}/data');
                     throw $exception;
                 }
@@ -321,25 +321,25 @@ class Resource extends ResourceIdentifier
     /**
      * @param $toOneRelationship
      * @param $relationshipName
-     * @throws BadRequest
+     * @throws BadRequestException
      */
     private function validateToOneRelationshipFromDataArray($toOneRelationship, $relationshipName)
     {
     // validate relationship
         if (isset($toOneRelationship['id']) === false || empty($toOneRelationship['id'])) {
-            $exception = new BadRequest('[Resource] [missing "to one" relationship field] "id"');
+            $exception = new BadRequestException('[Resource] [missing "to one" relationship field] "id"');
             $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/id');
             throw $exception;
         }
 
         if (isset($toOneRelationship['type']) === false || empty($toOneRelationship['type'])) {
-            $exception = new BadRequest('[Resource] [missing "to one" relationship field] "type"');
+            $exception = new BadRequestException('[Resource] [missing "to one" relationship field] "type"');
             $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/type');
             throw $exception;
         }
 
         if (isset($toOneRelationship[self::ATTRIBUTES]) === true) {
-            $exception = new BadRequest('[Resource] [invalid "to one" relationship field] "attributes"');
+            $exception = new BadRequestException('[Resource] [invalid "to one" relationship field] "attributes"');
             $exception->setSource(self::DATA_RELATIONSHIPS . $relationshipName . '/attributes');
             $exception->setDetail('A related item\'s cannot be updated in the relationships object');
             throw $exception;
@@ -350,7 +350,7 @@ class Resource extends ResourceIdentifier
      * @param $toManyRelationship
      * @param $relationshipName
      * @param $toManyRelationshipName
-     * @throws BadRequest
+     * @throws BadRequestException
      */
     private function validateToManyRelationshipFromDataArray(
         $toManyRelationship,
@@ -358,7 +358,7 @@ class Resource extends ResourceIdentifier
         $toManyRelationshipName
     ) {
         if (isset($toManyRelationship['id']) === false || empty($toManyRelationship['id'])) {
-            $exception = new BadRequest('[Resource] [missing "to many" relationship field] "id"');
+            $exception = new BadRequestException('[Resource] [missing "to many" relationship field] "id"');
             $exception->setSource(
                 self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/id'
             );
@@ -366,7 +366,7 @@ class Resource extends ResourceIdentifier
         }
 
         if (isset($toManyRelationship['type']) === false || empty($toManyRelationship['type'])) {
-            $exception = new BadRequest('[Resource] [missing "to many" relationship field] "type"');
+            $exception = new BadRequestException('[Resource] [missing "to many" relationship field] "type"');
             $exception->setSource(
                 self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/type'
             );
@@ -375,7 +375,7 @@ class Resource extends ResourceIdentifier
         }
 
         if (isset($toManyRelationship[self::ATTRIBUTES]) === true) {
-            $exception = new BadRequest('[Resource] [invalid "to many" relationship field] "attributes"');
+            $exception = new BadRequestException('[Resource] [invalid "to many" relationship field] "attributes"');
             $exception->setSource(
                 self::DATA_RELATIONSHIPS . $relationshipName . '/' . $toManyRelationshipName . '/attributes'
             );

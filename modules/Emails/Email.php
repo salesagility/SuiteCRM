@@ -520,7 +520,7 @@ class Email extends Basic
 
             return array(
                 'guid' => $guid,
-                'name' => $GLOBALS['db']->quote($fileName),
+                'name' => DBManagerFactory::getInstance()->quote($fileName),
                 'nameForDisplay' => $fileName
             );
         } else {
@@ -876,6 +876,7 @@ class Email extends Basic
                 isset($_REQUEST['parent_id']) && !empty($_REQUEST['parent_id']) &&
                 ($_REQUEST['parent_type'] == 'Accounts' ||
                     $_REQUEST['parent_type'] == 'Contacts' ||
+                    $_REQUEST['parent_type'] == 'Cases' ||
                     $_REQUEST['parent_type'] == 'Leads' ||
                     $_REQUEST['parent_type'] == 'Users' ||
                     $_REQUEST['parent_type'] == 'Prospects')
@@ -1303,29 +1304,31 @@ class Email extends Basic
             $this->save();
         }
 
-        if (!empty($request['fromAccount'])) {
-            if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
-                $sentFolder = $ie->get_stored_options("sentFolder");
-                if (!empty($sentFolder)) {
-                    $data = $mail->CreateHeader() . "\r\n" . $mail->CreateBody() . "\r\n";
-                    $ie->mailbox = $sentFolder;
-                    if ($ie->connectMailserver() == 'true') {
-                        $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-                        $returnData = imap_append($ie->conn, $connectString, $data, "\\Seen");
-                        if (!$returnData) {
-                            $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
-                        } // if
-                    } else {
-                        $GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
-                    } // else
-                } else {
-                    $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
-                } // else
-            } // if
-        } // if
-
-        return true;
-    } // end email2send
+		if(!empty($request['fromAccount'])) {
+			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
+				$sentFolder = $ie->get_stored_options("sentFolder");
+				if (!empty($sentFolder)) {
+					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+					$emailbody = $mail->CreateBody();
+					$emailheader = $mail->CreateHeader();
+					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
+					$ie->mailbox = $sentFolder;
+					if ($ie->connectMailserver() == 'true') {
+						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
+						$returnData = imap_append($ie->conn,$connectString, $data, "\\Seen");
+						if (!$returnData) {
+							$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
+						} // if
+					} else {
+						$GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
+					} // else
+				} else {
+					$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
+				} // else
+			} // if
+		} // if
+		return true;
+	} // end email2send
 
     /**
      * Generates a config-specified separated name and addresses to be used in compose email screen for
@@ -1500,6 +1503,7 @@ class Email extends Basic
      * @param string $filename
      * @param string $fileLocation
      * @param string $mimeType
+     * @return boolean success/failed
      */
     public function saveTempNoteAttachments($filename, $fileLocation, $mimeType)
     {
@@ -1512,10 +1516,22 @@ class Email extends Basic
         $tmpNote->filename = $filename;
         $tmpNote->file_mime_type = $mimeType;
         $noteFile = "upload://{$tmpNote->id}";
-        if (!copy($fileLocation, $noteFile)) {
-            $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
+        
+        if (!file_exists($fileLocation)) {
+            LoggerManager::getLogger()->warn('Email error: File Location not found for save temp note attachments. File location was: "' . $fileLocation . '"');
+        } else {
+
+            if (!copy($fileLocation, $noteFile)) {
+                $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
+            } else {
+                
+                if (!$tmpNote->save()) {
+                    return false;
+                }
+            }
         }
-        $tmpNote->save();
+        
+        return true;
     }
 
     /**
@@ -2808,49 +2824,53 @@ class Email extends Basic
 
         ///////////////////////////////////////////////////////////////////////
         ////	ATTACHMENTS
-        foreach ($this->saved_attachments as $note) {
-            $mime_type = 'text/plain';
-            if ($note->object_name == 'Note') {
-                if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
-                    $file_location = "file://" . $note->file->temp_file_location;
-                    $filename = $note->file->original_file_name;
-                    $mime_type = $note->file->mime_type;
-                } else { // attachment coming from template/forward
-                    $file_location = "upload://{$note->id}";
-                    // cn: bug 9723 - documents from EmailTemplates sent with Doc Name, not file name.
-                    $filename = !empty($note->filename) ? $note->filename : $note->name;
+        if (isset($this->saved_attachments)) {
+            foreach ($this->saved_attachments as $note) {
+                $mime_type = 'text/plain';
+                if ($note->object_name == 'Note') {
+                    if (!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
+                        $file_location = "file://" . $note->file->temp_file_location;
+                        $filename = $note->file->original_file_name;
+                        $mime_type = $note->file->mime_type;
+                    } else { // attachment coming from template/forward
+                        $file_location = "upload://{$note->id}";
+                        // cn: bug 9723 - documents from EmailTemplates sent with Doc Name, not file name.
+                        $filename = !empty($note->filename) ? $note->filename : $note->name;
+                        $mime_type = $note->file_mime_type;
+                    }
+                } elseif ($note->object_name == 'DocumentRevision') { // from Documents
+                    $filePathName = $note->id;
+                    // cn: bug 9723 - Emails with documents send GUID instead of Doc name
+                    $filename = $note->getDocumentRevisionNameForDisplay();
+                    $file_location = "upload://$note->id";
                     $mime_type = $note->file_mime_type;
                 }
-            } elseif ($note->object_name == 'DocumentRevision') { // from Documents
-                $filePathName = $note->id;
-                // cn: bug 9723 - Emails with documents send GUID instead of Doc name
-                $filename = $note->getDocumentRevisionNameForDisplay();
-                $file_location = "upload://$note->id";
-                $mime_type = $note->file_mime_type;
-            }
 
-            // strip out the "Email attachment label if exists
-            $filename = str_replace($mod_strings['LBL_EMAIL_ATTACHMENT'] . ': ', '', $filename);
-            $file_ext = pathinfo($filename, PATHINFO_EXTENSION);
-            //is attachment in our list of bad files extensions?  If so, append .txt to file location
-            //check to see if this is a file with extension located in "badext"
-            foreach ($sugar_config['upload_badext'] as $badExt) {
-                if (strtolower($file_ext) == strtolower($badExt)) {
-                    //if found, then append with .txt to filename and break out of lookup
-                    //this will make sure that the file goes out with right extension, but is stored
-                    //as a text in db.
-                    $file_location = $file_location . ".txt";
-                    break; // no need to look for more
+                // strip out the "Email attachment label if exists
+                $filename = str_replace($mod_strings['LBL_EMAIL_ATTACHMENT'] . ': ', '', $filename);
+                $file_ext = pathinfo($filename, PATHINFO_EXTENSION);
+                //is attachment in our list of bad files extensions?  If so, append .txt to file location
+                //check to see if this is a file with extension located in "badext"
+                foreach ($sugar_config['upload_badext'] as $badExt) {
+                    if (strtolower($file_ext) == strtolower($badExt)) {
+                        //if found, then append with .txt to filename and break out of lookup
+                        //this will make sure that the file goes out with right extension, but is stored
+                        //as a text in db.
+                        $file_location = $file_location . ".txt";
+                        break; // no need to look for more
+                    }
+                }
+                $mail->AddAttachment($file_location, $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
+                    'base64', $mime_type);
+
+                // embedded Images
+                if ($note->embed_flag == true) {
+                    $cid = $filename;
+                    $mail->AddEmbeddedImage($file_location, $cid, $filename, 'base64', $mime_type);
                 }
             }
-            $mail->AddAttachment($file_location, $locale->translateCharsetMIME(trim($filename), 'UTF-8', $OBCharset),
-                'base64', $mime_type);
-
-            // embedded Images
-            if ($note->embed_flag == true) {
-                $cid = $filename;
-                $mail->AddEmbeddedImage($file_location, $cid, $filename, 'base64', $mime_type);
-            }
+        } else {
+            LoggerManager::getLogger()->fatal('Attachements not found');
         }
         ////	END ATTACHMENTS
         ///////////////////////////////////////////////////////////////////////
@@ -3096,7 +3116,10 @@ class Email extends Basic
      */
     public function fill_in_additional_detail_fields()
     {
-        global $app_list_strings, $mod_strings;
+        global $app_list_strings;
+
+        $mod_strings = return_module_language($GLOBALS['current_language'], 'Emails'); //Called from EmailMan as well.
+
         // Fill in the assigned_user_name
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id, '');
         //if ($this->parent_type == 'Contacts') {

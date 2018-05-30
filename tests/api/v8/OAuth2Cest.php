@@ -14,6 +14,7 @@ class OAuth2Cest
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
      */
     public function TestScenarioInvalidLogin(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
     {
@@ -34,6 +35,7 @@ class OAuth2Cest
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
      */
     public function TestScenarioInvalidClient(apiTester $I, \Helper\PhpBrowserDriverHelper $browserDriverHelper)
     {
@@ -52,14 +54,54 @@ class OAuth2Cest
     }
 
     /**
+     * I want to make sure only the allowed grant types can be requested for any client
+     * @param apiTester $I
+     *
+     * HTTP Verb: POST
+     * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function TestScenarioGrantTypeNotAllowed(apiTester $I)
+    {
+        $I->sendPOST(
+            $I->getInstanceURL().'/api/oauth/access_token',
+            array(
+                'grant_type' => 'password',
+                'client_id' => $I->getPasswordGrantClientId(),
+                'client_secret' => $I->getPasswordGrantClientSecret(),
+            )
+        );
+
+        $I->canSeeResponseIsJson();
+        $I->seeResponseCodeIs(400);
+    }
+
+    /**
      * As a Rest API Client, I want to login so that I can get a JWT token
      * @param apiTester $I
      *
      * HTTP Verb: POST
      * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
      */
-    public function TestScenarioLogin(apiTester $I)
+    public function TestScenarioLoginWithPasswordGrant(apiTester $I)
     {
-       $I->loginAsAdmin();
+        $I->loginAsAdminWithPassword();
+    }
+
+    /**
+     * I want to be able to login with Client Credentials grant type
+     * @param apiTester $I
+     *
+     * HTTP Verb: POST
+     * URL: /api/oauth/access_token
+     * @throws \Codeception\Exception\ModuleException
+     */
+    public function TestScenarioLoginWithClientCredentialsGrant(apiTester $I)
+    {
+        $I->loginAsAdminWithClientCredentials();
+
+        // Now log back in with password grant
+        $I->loginAsAdminWithPassword();
     }
 }

@@ -57,7 +57,7 @@
                     <li><a href="javascript:void(0)" class="parent-dropdown-action-handler"{if $id!=$savedSearchData.selected} onclick="SUGAR.savedViews.shortcutDropdown('{$id}', '{$currentModule}');"{/if}>{$option}{if $id==$savedSearchData.selected}&nbsp;&#10004{/if}</a></li>
                 {/foreach}
             </ul>
-            <span></span>
+            <span><span class="suitepicon suitepicon-action-caret"></span></span>
         </li>
     </ul>
 {/if}

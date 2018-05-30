@@ -678,8 +678,8 @@ document.getElementById('addrow').onclick = function(){
     removeButton.title = "{$mod_strings['LBL_REMOVE_ROW']}";
     removeButton.id = 'deleterow_' + rownum;
     removeButton.className = "removeButton";
-    var imgButton = document.createElement("img");
-    imgButton.src = "index.php?entryPoint=getImage&themeName=Sugar&imageName=id-ff-remove.png";
+    var imgButton = document.createElement("span");
+    imgButton.className = 'suitepicon suitepicon-action-minus';
     removeButton.appendChild(imgButton);
 
 

@@ -86,7 +86,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     }
 
     if (isset($camp_data) && $camp_data != null) {
-        //$personForm = new $formBase();
+        /** @var Person $person */
         $person = BeanFactory::getBean($moduleDir);
         $prefix = '';
         if (!empty($_POST['prefix'])) {
@@ -248,8 +248,16 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                             } else {
                                 $sea->confirm_opt_in_sent_date = $now;
                             }
-                            
                         }
+                        if($configurator->isOptInEnabled()) {
+                            $date = TimeDate::getInstance()->nowDb();
+                            $date_test = $timedate->to_display_date($date,false);
+                            $person->lawful_basis = '^consent^';
+                            $person->date_reviewed = $date_test;
+                            $person->lawful_basis_source = 'website';
+                            $person->save();
+                        }
+
                         $savedRequest = $_REQUEST;
                         $_REQUEST['action'] = 'ConvertLead';
                         $sea->saveEmail($person->id, $moduleDir);

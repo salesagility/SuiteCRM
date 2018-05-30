@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,18 +34,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-/*********************************************************************************
-
- * $Description: TODO: To be written. Portions created by SugarCRM are Copyright
- * (C) SugarCRM, Inc. All Rights Reserved. Contributor(s):
- * ______________________________________..
- * *******************************************************************************/
-
-if(!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
@@ -70,7 +63,7 @@ function installerHook($function_name, $options = array()){
             $GLOBALS['customInstallHooksExist'] = true;
         }
         else{
-            installLog("installerHook: Could not find custom/install/install_hooks.php");
+            installLog("installerHook: Info: custom/install/install_hooks.php not present, no custom hooks to execute");
             $GLOBALS['customInstallHooksExist'] = false;
         }
     }
@@ -255,7 +248,7 @@ function commitPatch($unlink = false, $type = 'patch'){
     global $mod_strings;
     global $base_upgrade_dir;
     global $base_tmp_upgrade_dir;
-    global $db;
+    $db = DBManagerFactory::getInstance();
     $GLOBALS['db'] = $db;
     $errors = array();
     $files = array();
@@ -324,7 +317,7 @@ function commitModules($unlink = false, $type = 'module'){
     global $mod_strings;
     global $base_upgrade_dir;
     global $base_tmp_upgrade_dir;
-    global $db;
+    $db = DBManagerFactory::getInstance();
     $GLOBALS['db'] = $db;
     $errors = array();
     $files = array();
@@ -994,7 +987,7 @@ EOQ;
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
-    RewriteRule ^api/(.*?)$ lib/SuiteCRM/API/public/index.php/$1 [L]
+    RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
@@ -1132,7 +1125,7 @@ function handleWebConfig()
  * Drop old tables if table exists and told to drop it
  */
 function drop_table_install( &$focus ){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $dictionary;
 
     $result = $db->tableExists($focus->table_name);
@@ -1168,7 +1161,7 @@ function create_table_if_not_exist( &$focus ){
 
 
 function create_default_users(){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $setup_site_admin_password;
     global $setup_site_admin_user_name;
     global $create_default_user;
@@ -1187,8 +1180,6 @@ function create_default_users(){
     $user->is_admin = true;
     $user->employee_status = 'Active';
     $user->user_hash = User::getPasswordHash($setup_site_admin_password);
-    $user->email = '';
-    $user->picture = UserDemoData::_copy_user_image($user->id);
     $user->save();
     //Bug#53793: Keep default current user in the global variable in order to store 'created_by' info as default user
     //           while installation is proceed.
@@ -1209,7 +1200,7 @@ function create_default_users(){
 }
 
 function set_admin_password( $password ) {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     $user_hash = User::getPasswordHash($password);
 
@@ -1219,7 +1210,7 @@ function set_admin_password( $password ) {
 }
 
 function insert_default_settings(){
-    global $db;
+    $db = DBManagerFactory::getInstance();
     global $setup_sugar_version;
     global $sugar_db_version;
 
@@ -2085,7 +2076,7 @@ function post_install_modules(){
 }
 
 function get_help_button_url(){
-    $help_url = 'http://www.sugarcrm.com/docs/Administration_Guides/CommunityEdition_Admin_Guide_5.0/toc.html';
+    $help_url = 'https://docs.suitecrm.com/user/';
 
     return $help_url;
 }
@@ -2105,7 +2096,7 @@ function create_db_user_creds($numChars=10){
 }
 
 function addDefaultRoles($defaultRoles = array()) {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
 
     foreach($defaultRoles as $roleName=>$role){

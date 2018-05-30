@@ -680,7 +680,7 @@ function get_assigned_user_name($assigned_user_id, $is_group = '')
  */
 function get_user_name($id)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
@@ -1359,7 +1359,7 @@ function append_where_clause(&$where_clauses, $variable_name, $SQL_name = null)
     }
 
     if (isset($_REQUEST[$variable_name]) && $_REQUEST[$variable_name] != '') {
-        array_push($where_clauses, "$SQL_name like '" . $GLOBALS['db']->quote($_REQUEST[$variable_name]) . "%'");
+        array_push($where_clauses, "$SQL_name like '" . DBManagerFactory::getInstance()->quote($_REQUEST[$variable_name]) . "%'");
     }
 }
 
@@ -1768,8 +1768,7 @@ function sugar_die($error_message, $exit_code = 1)
 {
     global $focus;
     sugar_cleanup();
-    //echo $error_message;
-    //die($exit_code);
+    echo $error_message;
     throw new \Exception($error_message, $exit_code);
 }
 
@@ -2457,11 +2456,22 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-    return preg_replace_callback('|[^A-Za-z0-9\-]|', create_function(
-                    // single quotes are essential here,
-                    // or alternative escape all $ as \$
-                    '$matches', 'return ord($matches[0]);'
-            ), $string);
+
+
+    $stateSaver = new SuiteCRM\StateSaver();
+    $stateSaver->pushErrorLevel();
+
+    $function = function ($matches) {
+        return ord($matches[0]);
+    };
+
+    if ($function === false) {
+        LoggerManager::getLogger()->warn('Function not created');
+    }
+
+    $stateSaver->popErrorLevel();
+
+    return preg_replace_callback('|[^A-Za-z0-9\-]|', $function, $string);
 }
 
 /**
@@ -3497,7 +3507,7 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
                 $halt_script = false;
                 $type = 'Notice';
             } else {
-                return;
+                break;
             }
             break;
         case E_USER_WARNING:
@@ -3584,7 +3594,7 @@ function return_bytes($val)
 {
     $val = trim($val);
     $last = strtolower($val{strlen($val) - 1});
-    $val = (int)$val;
+    $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
         case 'g':
@@ -4270,11 +4280,11 @@ function generate_search_where(
                         if (!empty($field_value)) {
                             $field_value .= ',';
                         }
-                        $field_value .= "'" . $GLOBALS['db']->quote($val) . "'";
+                        $field_value .= "'" . DBManagerFactory::getInstance()->quote($val) . "'";
                     }
                 }
             } else {
-                $field_value = $GLOBALS['db']->quote($values[$field]);
+                $field_value = DBManagerFactory::getInstance()->quote($values[$field]);
             }
             //set db_fields array.
             if (!isset($parms['db_field'])) {
@@ -4282,7 +4292,7 @@ function generate_search_where(
             }
             if (isset($parms['my_items']) and $parms['my_items'] == true) {
                 global $current_user;
-                $field_value = $GLOBALS['db']->quote($current_user->id);
+                $field_value = DBManagerFactory::getInstance()->quote($current_user->id);
                 $operator = '=';
             }
 
@@ -4293,7 +4303,7 @@ function generate_search_where(
                     if (strstr($db_field, '.') === false) {
                         $db_field = $bean->table_name . '.' . $db_field;
                     }
-                    if ($GLOBALS['db']->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
+                    if (DBManagerFactory::getInstance()->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
                         $db_field = 'upper(' . $db_field . ')';
                         $field_value = strtoupper($field_value);
                     }
@@ -4541,7 +4551,7 @@ function get_dashlets_dialog_icon($module = '', $width = '32', $height = '32', $
         return $app_strings['LBL_NO_IMAGE'];
     }
 
-    return SugarThemeRegistry::current()->getImage($iconName, "align=\"$align\" border=\"0\"", $width, $height);
+    return $iconName;
 }
 
 // works nicely to change UTF8 strings that are html entities - good for PDF conversions
@@ -5544,5 +5554,5 @@ function isValidId($id)
 function displayAdminError($errorString)
 {
     $output = '<p class="error">' . $errorString . '</p>';
-    echo $output;
+    SugarApplication::appendErrorMessage($output);
 }

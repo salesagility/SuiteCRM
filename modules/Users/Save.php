@@ -199,6 +199,12 @@ if (!$focus->is_group && !$focus->portal_only) {
         $focus->setPreference('navigation_paradigm', 'gm', 0, 'global');
     }
 
+    if (isset($_POST['sort_modules_by_name'])) {
+        $focus->setPreference('sort_modules_by_name', $_POST['sort_modules_by_name'], 0, 'global');
+    } else {
+        $focus->setPreference('sort_modules_by_name', '', 0, 'global');
+    }
+
     if (isset($_POST['user_subpanel_tabs'])) {
         $focus->setPreference('subpanel_tabs', $_POST['user_subpanel_tabs'], 0, 'global');
     } else {
@@ -380,7 +386,7 @@ if (!$focus->verify_data()) {
     if ((isset($_POST['old_password']) || $focus->portal_only) &&
             (isset($_POST['new_password']) && !empty($_POST['new_password'])) &&
             (isset($_POST['password_change']) && $_POST['password_change'] == 'true')) {
-        if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {            
+        if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
 
             if ($focus->error_string) {
                 SugarApplication::appendErrorMessage($focus->error_string);
@@ -494,6 +500,7 @@ if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "")
     $return_module = $_REQUEST['return_module'];
 else
     $return_module = "Users";
+
 if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "")
     $return_action = $_REQUEST['return_action'];
 else
@@ -507,4 +514,11 @@ $redirect = "index.php?action={$return_action}&module={$return_module}&record={$
 $redirect .= isset($_REQUEST['type']) ? "&type={$_REQUEST['type']}" : ''; // cn: bug 6897 - detect redirect to Email compose
 $redirect .= isset($_REQUEST['return_id']) ? "&return_id={$_REQUEST['return_id']}" : '';
 $redirect .= ($new_pwd != '') ? "&pwd_set=" . $new_pwd : '';
-header("Location: {$redirect}");
+
+
+if (array_key_exists('do_not_redirect', $_REQUEST) && $_REQUEST['do_not_redirect'] === true) {
+    // do nothing
+} else {
+    header("Location: {$redirect}");
+}
+

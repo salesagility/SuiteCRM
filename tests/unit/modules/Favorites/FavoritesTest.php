@@ -1,6 +1,6 @@
 <?PHP
 
-class FavoritesTest extends PHPUnit_Framework_TestCase
+class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testFavorites()
     {
@@ -19,13 +19,20 @@ class FavoritesTest extends PHPUnit_Framework_TestCase
 
     public function testdeleteFavorite()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $favorites = new Favorites();
 
         //testing with an empty ID
         $result = $favorites->deleteFavorite('');
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        
     }
 
     public function testgetFavoriteID()

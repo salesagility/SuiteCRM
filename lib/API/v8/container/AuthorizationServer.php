@@ -51,18 +51,31 @@ $container['AuthorizationServer'] = function () {
 
     $server->setEncryptionKey(base64_encode(random_bytes(32)));
 
-    $grant = new League\OAuth2\Server\Grant\PasswordGrant(
+    $passwordGrant = new League\OAuth2\Server\Grant\PasswordGrant(
         new SuiteCRM\API\OAuth2\Repositories\UserRepository(),
         new  SuiteCRM\API\OAuth2\Repositories\RefreshTokenRepository()
     );
 
     // refresh tokens will expire after 1 month
-    $grant->setRefreshTokenTTL(new \DateInterval('P1M'));
+    $passwordGrant->setRefreshTokenTTL(new \DateInterval('P1M'));
 
     // Enable the password grant on the server with a token TTL of 1 hour
     // access tokens will expire after 1 hour
     $server->enableGrantType(
-        $grant,
+        $passwordGrant,
+        new \DateInterval('PT1H')
+    );
+
+
+    $clientCredentialsGrant = new League\OAuth2\Server\Grant\ClientCredentialsGrant();
+
+    // refresh tokens will expire after 1 month
+    $clientCredentialsGrant->setRefreshTokenTTL(new \DateInterval('P1M'));
+
+    // Enable the client credentials grant on the server with a token TTL of 1 hour
+    // access tokens will expire after 1 hour
+    $server->enableGrantType(
+        $clientCredentialsGrant,
         new \DateInterval('PT1H')
     );
 

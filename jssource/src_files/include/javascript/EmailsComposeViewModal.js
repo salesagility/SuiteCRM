@@ -129,7 +129,7 @@
     }
     else{
       var inputs = document.MassUpdate.elements;
-      for (i = 0; i < inputs.length; i++) {
+      for (var i = 0; i < inputs.length; i++) {
         if (inputs[i].name === 'mass[]' && inputs[i].checked) {
           ids = ids + inputs[i].value + ',';
         }
@@ -156,22 +156,39 @@
       var populateEmailAddress = '';
       var populateModule = '';
       var populateModuleRecord = '';
+      var dataEmailName = $(source).attr('data-module-name');
+      var dataEmailAddress = $(source).attr('data-email-address');
+
       $('.email-compose-view-to-list').each(function () {
         populateModuleName = $(this).attr('data-record-name');
+        if (dataEmailName !== '') {
+            populateModuleName = dataEmailName;
+        }
+
         populateEmailAddress = $(this).attr('data-record-email');
+
+        if (dataEmailAddress !== '') {
+            populateEmailAddress = dataEmailAddress;
+        }
+
         populateModule = $(this).attr('data-record-module');
         populateModuleRecord = $(this).attr('data-record-id');
         if (targetCount > 0) {
           targetList = targetList + ',';
         }
-        if (populateModuleName == '') {
+        if (populateModuleName === '') {
           populateModuleName = populateEmailAddress;
         }
         targetList = targetList + populateModuleName + ' <' + populateEmailAddress + '>';
         targetCount++;
       });
       if (targetCount > 0) {
-        $(self.emailComposeView).find('#to_addrs_names').val(targetList);
+        if (populateEmailAddress !== '') {
+          $(self.emailComposeView).find('#to_addrs_names').val(targetList);
+        }
+        else {
+          $(self.emailComposeView).find('#name').val(populateModuleName);
+        }
         if (targetCount < 2) {
           $(self.emailComposeView).find('#parent_type').val(populateModule);
           $(self.emailComposeView).find('#parent_name').val(populateModuleName);

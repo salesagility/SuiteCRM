@@ -1,10 +1,12 @@
 <?php
 
 
-class AOW_ActionTest extends PHPUnit_Framework_TestCase
+class AOW_ActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -30,7 +32,11 @@ class AOW_ActionTest extends PHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('aow_actions');
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowAction = new AOW_Action();
 
@@ -54,15 +60,27 @@ class AOW_ActionTest extends PHPUnit_Framework_TestCase
         foreach ($aow_actions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
+        
+        // clean up
+        
+        $state->popTable('aow_actions');
+        
     }
 
     public function testbean_implements()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowAction = new AOW_Action();
         $this->assertEquals(false, $aowAction->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowAction->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $aowAction->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        
     }
 }

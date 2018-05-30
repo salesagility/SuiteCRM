@@ -37,6 +37,12 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
+
+// Prevent errors from being echoed out to the client
+// We MUST use the exceptions instead to pass the errors object
+// back to the client
+ini_set('error_reporting', ~E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
+
 chdir(__DIR__.'/../../../');
 require_once __DIR__.'/../../../include/entryPoint.php';
 global $sugar_config;
@@ -50,23 +56,33 @@ $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['curren
 $_SERVER['REQUEST_URI'] = $_SERVER['PHP_SELF'];
 
 $version = 8;
-const API_PATH = 'lib/API/v8';
 
 require_once __DIR__.'/containers.php';
 
 $app = new \Slim\App($container);
+$paths = new \SuiteCRM\Utility\Paths();
 
-// Load Routes
-$routeFiles = (array) glob(API_PATH.'/route/*.php');
 
+// Load Core Routes
+$routeFiles = (array) glob($paths->getLibraryPath() . '/API/v8/route/*.php');
 foreach ($routeFiles as $routeFile) {
     require $routeFile;
 }
 
-// Load Callables
-$callableFiles = (array) glob(API_PATH.'/callable/*.php');
+// Load Custom Routes
+$customRouteFiles = (array) glob($paths->getCustomLibraryPath() . '/API/v8/route/*.php');
+foreach ($customRouteFiles as $routeFile) {
+    require $routeFile;
+}
 
+// Load callables
+$callableFiles = (array) glob($paths->getLibraryPath().'/API/v8/callable/*.php');
 foreach ($callableFiles as $callableFile) {
+    require $callableFile;
+}
+
+$customCallableFiles = (array) glob($paths->getCustomLibraryPath().'/API/v8/callable/*.php');
+foreach ($customCallableFiles as $callableFile) {
     require $callableFile;
 }
 

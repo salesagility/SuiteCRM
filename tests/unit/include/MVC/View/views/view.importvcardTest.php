@@ -1,6 +1,6 @@
 <?php
 
-class ViewImportvcardTest extends PHPUnit_Framework_TestCase
+class ViewImportvcardTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function test__construct()
     {
@@ -13,6 +13,10 @@ class ViewImportvcardTest extends PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
+        
+        if(isset($_REQUEST)) {
+            $request = $_REQUEST;
+        }
 
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewImportvcard();
@@ -24,5 +28,13 @@ class ViewImportvcardTest extends PHPUnit_Framework_TestCase
         $renderedContent = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
+         
+        // cleanup
+        
+        if(isset($request)) {
+            $_REQUEST = $request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 }

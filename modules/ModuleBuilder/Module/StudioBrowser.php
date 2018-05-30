@@ -72,7 +72,7 @@ class StudioBrowser{
     }
 		
 	function getNodes(){
-		$this->loadModules();
+        $this->loadModules();
 	    $nodes = array();
 		foreach($this->modules as $module){
 			$nodes[$module->name] = $module->getNodes();

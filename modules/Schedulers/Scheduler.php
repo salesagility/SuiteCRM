@@ -174,7 +174,16 @@ class Scheduler extends SugarBean {
 	    $job->scheduler_id = $this->id;
         $job->name = $this->name;
         $job->execute_time = $GLOBALS['timedate']->nowDb();
-        $job->assigned_user_id = $this->getUser()->id;
+        
+        $user = $this->getUser();
+        
+        if(!is_object($user)) {
+            LoggerManager::getLogger()->warn('Scheduler / create job: User object not found.');
+            $job->assigned_user_id = null;
+        } else {
+            $job->assigned_user_id = $user->id;
+        }
+        
         $job->target = $this->job;
         return $job;
 	}
@@ -411,15 +420,8 @@ class Scheduler extends SugarBean {
 			}
 		} elseif(strstr($mins,'*/')) {
 			$mult = str_replace('*/','',$mins);
-			$startMin = (int) $timedate->fromDb($focus->date_time_start)->min;
-			$startFrom = ($startMin % $mult);
-			for($i=$startFrom; $i<=59; $i) {
-				if(($currentMin + $i) > 59) {
-					$minName[] = ($i + $currentMin - 60);
-				} else {
-					$minName[] = ($i+$currentMin);
-				}
-				$i += $mult;
+			for($i = 0; $i < 60; $i += $mult) {
+				$minName[] = $i;
 			}
 
 		} elseif($mins != '*') {
@@ -790,7 +792,7 @@ class Scheduler extends SugarBean {
 				<tr class="evenListRowS1">
 					<td scope="row" valign="top" width="70%"><span>
 						'.$mod_strings['LBL_CRON_WINDOWS_DESC'].'<br>
-						<b>cd '.realpath('./').'<br>
+						<b>cd /D '.realpath('./').'<br>
 						php.exe -f cron.php</b>
 					</span></td>
 				</tr>

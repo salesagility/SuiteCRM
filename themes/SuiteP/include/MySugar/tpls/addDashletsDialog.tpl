@@ -57,16 +57,16 @@
 
 {if $moduleName == 'Home'}
  <ul class="subpanelTablist" id="dashletCategories">
-	<li id="moduleCategory" class="active"><a href="javascript:SUGAR.mySugar.toggleDashletCategories('module');" class="current" id="moduleCategoryAnchor">{sugar_translate label='LBL_MODULES' module='Home'}</a></li>
-	<li id="chartCategory" class=""><a href="javascript:SUGAR.mySugar.toggleDashletCategories('chart');" class="" id="chartCategoryAnchor">{sugar_translate label='LBL_CHARTS' module='Home'}</a></li>
-	<li id="toolsCategory" class=""><a href="javascript:SUGAR.mySugar.toggleDashletCategories('tools');" class="" id="toolsCategoryAnchor">{sugar_translate label='LBL_TOOLS' module='Home'}</a></li>	
-	<li id="webCategory" class=""><a href="javascript:SUGAR.mySugar.toggleDashletCategories('web');" class="" id="webCategoryAnchor">{sugar_translate label='LBL_WEB' module='Home'}</a></li>	
+	<li id="moduleCategory" class="active"><a href="javascript:SUGAR.mySugar.toggleDashletCategories('module');" class="current" id="moduleCategoryAnchor"><span class="suitepicon suitepicon-module-default"></span>{sugar_translate label='LBL_MODULES' module='Home'}</a></li>
+	<li id="chartCategory" class=""><a href="javascript:SUGAR.mySugar.toggleDashletCategories('chart');" class="" id="chartCategoryAnchor"><span class="suitepicon suitepicon-dashlet-charts-groupby"></span>{sugar_translate label='LBL_CHARTS' module='Home'}</a></li>
+	<li id="toolsCategory" class=""><a href="javascript:SUGAR.mySugar.toggleDashletCategories('tools');" class="" id="toolsCategoryAnchor"><span class="suitepicon suitepicon-dashlet-jotpad"></span>{sugar_translate label='LBL_TOOLS' module='Home'}</a></li>
+	<li id="webCategory" class=""><a href="javascript:SUGAR.mySugar.toggleDashletCategories('web');" class="" id="webCategoryAnchor"><span class="suitepicon suitepicon-action-home"></span>{sugar_translate label='LBL_WEB' module='Home'}</a></li>
 </ul>
 {/if}
 
 {if $moduleName == 'Home'}
 <div id="moduleDashlets" style="height:400px;display:;">
-	<h3>{sugar_translate label='LBL_MODULES' module='Home'}</h3>
+	<h3><span class="suitepicon suitepicon-module-default"></span>{sugar_translate label='LBL_MODULES' module='Home'}</h3>
 	<div id="moduleDashletsList" style="height:394px;overflow:auto;display:;">
 	<table width="95%">
 		{counter assign=rowCounter start=0 print=false}
@@ -75,12 +75,7 @@
 		<tr>
 		{/if}
 			<td width="50%" align="left"><a id="{$module.id}_icon" href="javascript:void(0)" onclick="{$module.onclick}" style="text-decoration:none">
-					{capture name="dashlet_img_capture" assign="dashlet_img"}{sugar_getimagepath file_name=$module.module_name file_extension='svg'}{/capture}
-					{if !empty($dashlet_img)}
-						<img src="{$dashlet_img}"/>
-					{else}
-						<img src="themes/SuiteP/images/basic.svg"/>
-					{/if}
+					<span class="suitepicon suitepicon-module-{$module.module_name|lower|replace:'_':'-'}"></span>
 					<span id="mbLBLL" class="mbLBLL">{$module.title}</span></a><br /></td>
 		{if $rowCounter % 2 == 1}
 		</tr>
@@ -93,12 +88,12 @@
 {/if}
 <div id="chartDashlets" style="{if $moduleName == 'Home'}height:400px;display:none;{else}height:425px;display:;{/if}">
 	{if $charts != false}
-	<h3><span id="basicChartDashletsExpCol"><a href="javascript:void(0)" onClick="javascript:SUGAR.mySugar.collapseList('basicChartDashlets');">{sugar_getimage alt=$app_strings.LBL_BASIC_SEARCH name="basic_search" ext=".gif" other_attributes='align="absmiddle" border="0" '}</span></a>&nbsp;{sugar_translate label='LBL_BASIC_CHARTS' module='Home'}</h3>
+	<h3><span id="basicChartDashletsExpCol"><a href="javascript:void(0)" onClick="javascript:SUGAR.mySugar.collapseList('basicChartDashlets');"><span class="suitepicon suitepicon-dashlet-charts-groupby"></span></span></a>&nbsp;{sugar_translate label='LBL_BASIC_CHARTS' module='Home'}</h3>
 	<div id="basicChartDashletsList">
 	<table width="100%">
-		{foreach from=$charts item=chart}
+		{foreach from=$charts item=chart key=a}
 		<tr>
-			<td align="left"><a href="javascript:void(0)" onclick="{$chart.onclick}">{$chart.icon}</a>&nbsp;<a class="mbLBLL" href="#" onclick="{$chart.onclick}">{$chart.title}</a><br /></td>
+			<td align="left"><a href="javascript:void(0)" onclick="{$chart.onclick}"><span class="suitepicon suitepicon-module-{$chart.icon|lower|replace:'_':'-'}"></span></a>&nbsp;<a class="mbLBLL" href="#" onclick="{$chart.onclick}">{$chart.title}</a><br /></td>
 		</tr>
 		{/foreach}
 	</table>
@@ -116,7 +111,7 @@
 		{if $rowCounter % 2 == 0}
 		<tr>
 		{/if}
-			<td align="left"><a href="javascript:void(0)" onclick="{$tool.onclick}">{$tool.icon}</a>&nbsp;<a class="mbLBLL" href="#" onclick="{$tool.onclick}">{$tool.title}</a><br /></td>
+			<td align="left"><a href="javascript:void(0)" onclick="{$tool.onclick}"<span class="suitepicon suitepicon-dashlet-{$tool.icon|lower|replace:'_':'-'}"></span></a>&nbsp;<a class="mbLBLL" href="#" onclick="{$tool.onclick}">{$tool.title}</a><br /></td>
 		{if $rowCounter % 2 == 1}
 		</tr>
 		{/if}

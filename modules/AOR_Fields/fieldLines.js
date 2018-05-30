@@ -128,7 +128,7 @@ function loadFieldLine(field){
 }
 
 function showFieldOptions(field, ln){
-    if(field.field_type == "datetime" || field.field_type == "date"){
+    if(field.field_type == "datetime" || field.field_type == "date" || field.field_type == "datetimecombo"){
         showElem("aor_fields_format" + ln);
     }
 }

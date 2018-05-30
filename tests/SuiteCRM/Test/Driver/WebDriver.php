@@ -72,12 +72,12 @@ class WebDriver extends \Codeception\Module\WebDriver
     protected function initialWindowSize()
     {
         $config = $this->_getConfig();
-        $width =  $config['width'];
-        $height = $config['height'];
         // Don't resize window for browser stack instead maximize
         if($this->isBrowserStackEnabled()) {
             $this->maximizeWindow();
         }  else {
+            $width =  isset($config['width']) ? $config['width'] : 1920;
+            $height = isset($config['height']) ? $config['height'] : 1080;
             $this->resizeWindow($width, $height);
         }
     }

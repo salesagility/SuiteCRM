@@ -62,6 +62,14 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         $token->access_token = $accessTokenEntity->getIdentifier();
         $token->access_token_expires = $accessTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s');
         $token->client = $accessTokenEntity->getClient()->getIdentifier();
+        $token->assigned_user_id = $accessTokenEntity->getUserIdentifier();
+
+        if (!$token->assigned_user_id) {
+            $client = new \OAuth2Clients();
+            $client->retrieve($token->client);
+            $token->assigned_user_id = $client->assigned_user_id;
+        }
+
         $token->save();
     }
 
