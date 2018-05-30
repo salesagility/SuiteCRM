@@ -446,23 +446,45 @@ class EmailsController extends SugarController
         $oe = new OutboundEmail();
         if ($oe->isAllowUserAccessToSystemDefaultOutbound()) {
             $system = $oe->getSystemMailerSettings();
-            $data[] = array(
-                'type' => 'system',
-                'id' => $system->id,
-                'attributes' => array(
-                    'from' => $system->mail_smtpuser,
-                    'name' => $system->name,
-                    'oe' => $system->mail_smtpuser,
-                ),
-                'prepend' => false,
-                'isPersonalEmailAccount' => false,
-                'isGroupEmailAccount' => true,
-                'outboundEmail' => array(
+
+            if($system->mail_smtpserver != 'smtp.sendgrid.net')
+            {
+                $data[] = array(
+                    'type' => 'system',
                     'id' => $system->id,
-                    'name' => $system->name,
-                ),
-                'emailSignatures' => $defaultEmailSignature,
-            );
+                    'attributes' => array(
+                        'from' => $system->mail_smtpuser,
+                        'name' => $system->name,
+                        'oe' => $system->mail_smtpuser,
+                    ),
+                    'prepend' => false,
+                    'isPersonalEmailAccount' => false,
+                    'isGroupEmailAccount' => true,
+                    'outboundEmail' => array(
+                        'id' => $system->id,
+                        'name' => $system->name,
+                    ),
+                    'emailSignatures' => $defaultEmailSignature,
+                );
+            } else {
+                $data[] = array(
+                    'type' => 'system',
+                    'id' => $system->id,
+                    'attributes' => array(
+                        'from' => $system->smtp_from_addr,
+                        'name' => $system->name,
+                        'oe' => $system->mail_smtpuser,
+                    ),
+                    'prepend' => false,
+                    'isPersonalEmailAccount' => false,
+                    'isGroupEmailAccount' => true,
+                    'outboundEmail' => array(
+                        'id' => $system->id,
+                        'name' => $system->name,
+                    ),
+                    'emailSignatures' => $defaultEmailSignature,
+                );
+            }
         }
 
         $dataEncoded = json_encode(array('data' => $data), JSON_UNESCAPED_UNICODE);
