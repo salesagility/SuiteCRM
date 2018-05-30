@@ -5429,10 +5429,7 @@ class InboundEmail extends SugarBean
             $email->name = $this->handleMimeHeaderDecode($parsedFullHeader->subject);
             $email->type = 'inbound';
 
-            if(
-                isset($request['metadata'])
-                && isset($request['metadata']['viewdefs'])
-            ) {
+            if(isset($request['metadata']['viewdefs'])) {
                 // only process field(s) in which we actually use
                 $fields_selected = $request['metadata']['viewdefs'];
 
