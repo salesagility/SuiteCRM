@@ -5445,6 +5445,11 @@ class InboundEmail extends SugarBean
                         str_replace(['D, ', ':s'], '', \DateTime::RFC822), // day is optional, seconds are optional
                     ];
 
+                    // Some IMAP server respond with different data formats.
+                    // The iteration attempt to use each possible format to decode the detail.
+                    // The if ($dateTime !== false) means that when the DateTime class successfully
+                    // decodes the date field it will exit the loop.
+                    // As we no longer need to continue trying to decode the datetime format.
                     foreach ($possibleFormats  as $possibleFormat) {
                         $dateTime = \DateTime::createFromFormat( $possibleFormat, $parsedFullHeader->date);
                         if ($dateTime !== false) {
