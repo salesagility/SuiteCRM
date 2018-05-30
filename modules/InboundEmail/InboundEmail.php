@@ -5403,7 +5403,7 @@ class InboundEmail extends SugarBean
 
     /**
      * Used to view non imported emails
-     * @param string $request - must include the metadata
+     * @param array $request - must include the metadata
      * @return Email|boolean - false on error | a non imported email
      * @throws Exception
      * @see EmailsViewDetailNonImported::preDisplay()
