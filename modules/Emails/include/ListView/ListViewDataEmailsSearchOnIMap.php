@@ -58,9 +58,10 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
      * @param string $folder
      * @param int $limit
      * @param string $limitPerPage
+     * @param array $params
      * @return array
      */
-    public function search($seed, &$request, $where, $id, $inboundEmail, $filter, $folderObj, $currentUser, $folder, $limit, $limitPerPage) {
+    public function search($seed, &$request, $where, $id, $inboundEmail, $filter, $folderObj, $currentUser, $folder, $limit, $limitPerPage, $params) {
 
 
         // Create the data structure which are required to view a list view.
@@ -125,7 +126,6 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
             $pageData['additionalDetails'][$h] = '';
             $pageData['tag'][$h]['MAIN'] = 'a';
         }
-
 
         // Filter imported emails based on the UID of the results from the IMap server
         $crmWhere = $where . " AND mailbox_id LIKE " . "'" . $inboundEmail->id . "'";
@@ -231,6 +231,13 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
                 && count($inboundEmail->mailboxarray)) {
                 $request['folder'] = $inboundEmail->mailboxarray[0];
             }
+        }
+
+        if(!isset($pageData['ordering'])) {
+            $pageData['ordering'] = array(
+                'orderBy' => 'date_entered',
+                'sortOrder'=> 'ASC'
+            );
         }
 
         // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap

@@ -706,8 +706,18 @@ class ListViewDataEmails extends ListViewData
 
                     $search = new ListViewDataEmailsSearchOnCrm($this);
                     $ret = $search->search(
-                        $filter_fields, $request, $where, $inboundEmail, $params, $seed,
-                        $singleSelect, $id, $limit, $current_user, $id_field, $offset
+                        $filter_fields,
+                        $request,
+                        $where,
+                        $inboundEmail,
+                        $params,
+                        $seed,
+                        $singleSelect,
+                        $id,
+                        $limit,
+                        $current_user,
+                        $id_field,
+                        $offset
                     );
 
                     break;
@@ -717,7 +727,21 @@ class ListViewDataEmails extends ListViewData
                     $limitPerPage = isset($sugar_config['list_max_entries_per_page']) && (int)$sugar_config['list_max_entries_per_page'] ? $sugar_config['list_max_entries_per_page'] : 10;
 
                     $search = new ListViewDataEmailsSearchOnIMap($this);
-                    $ret = $search->search($seed, $request, $where, $id, $inboundEmail, $filter, $folderObj, $current_user, $folder, $limit, $limitPerPage);
+                    $ret = $search->search(
+                        $seed,
+                        $request,
+                        $where,
+                        $id,
+                        $inboundEmail,
+                        $filter,
+                        $folderObj,
+                        $current_user,
+                        $folder,
+                        $limit,
+                        $limitPerPage,
+                        $params,
+                        $pageData
+                    );
                     break;
 
                 default:
