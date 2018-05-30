@@ -211,7 +211,7 @@ function getGetToForm($ignore='', $usePostAsAuthority = false)
             }
 	        continue;
         }
-f
+
         if (is_array($value)) {
             if(!empty($value)) {
                 $log->warn('$value must be a string');
