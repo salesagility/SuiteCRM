@@ -44,11 +44,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 // classes where moved that we have one class per file
 // this file has been kept for backward compatibility
-require_once  __DIR__ . '/HTMLPurifierURISchemeCid.php';
-require_once  __DIR__ . '/HTMLPurifierFilterXmp.php';
-require_once  __DIR__ . '/SugarCleaner.php';
-require_once  __DIR__ . '/SugarURIFilter.php';
-
 // Remap old namespace to the SuiteCRM namespace
 // Older code can still use this the old class names
 // new code can leverage the autoloader and use the SuiteCRM namespace
