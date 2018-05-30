@@ -46,7 +46,7 @@ class SugarCleaner
         }
         $config->set('Output.FlashCompat', true);
         // for iframe and xmp
-        $config->set('Filter.Custom',  array(new HTMLPurifier_Filter_Xmp()));
+        $config->set('Filter.Custom',  array(new HTMLPurifierFilterXmp()));
         // for link
         $config->set('HTML.DefinitionID', 'Sugar HTML Def');
         $config->set('HTML.DefinitionRev', 2);
@@ -87,7 +87,7 @@ class SugarCleaner
         }
         $uri = $config->getDefinition('URI');
         $uri->addFilter(new SugarURIFilter(), $config);
-        \HTMLPurifier_URISchemeRegistry::instance()->register('cid', new HTMLPurifier_URIScheme_cid());
+        \HTMLPurifier_URISchemeRegistry::instance()->register('cid', new HTMLPurifierURISchemeCid());
 
         $this->purifier = new \HTMLPurifier($config);
     }

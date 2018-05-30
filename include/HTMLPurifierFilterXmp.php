@@ -39,7 +39,7 @@
  */
 namespace SuiteCRM;
 
-class HTMLPurifier_Filter_Xmp extends \HTMLPurifier_Filter
+class HTMLPurifierFilterXmp extends \HTMLPurifier_Filter
 {
 
     public $name = 'Xmp';

@@ -42,7 +42,7 @@ namespace SuiteCRM;
 /**
  * cid: scheme implementation
  */
-class HTMLPurifier_URIScheme_cid extends \HTMLPurifier_URIScheme
+class HTMLPurifierURISchemeCid extends \HTMLPurifier_URIScheme
 {
     public $browsable = true;
     public $may_omit_host = true;
