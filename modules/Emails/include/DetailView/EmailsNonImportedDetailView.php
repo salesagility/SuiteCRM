@@ -72,7 +72,7 @@ class EmailsNonImportedDetailView extends EmailsDetailView
      */
     public function populateBean($request = array())
     {
-        global $log;
+        $log = LoggerManager::getLogger();
         if (!empty($request['uid'])
             && !empty($request['inbound_email_record'])
             && !empty($request['msgno'])
