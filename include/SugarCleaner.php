@@ -26,7 +26,10 @@ class SugarCleaner
      */
     public function __construct()
     {
-        $sugar_config = \SugarConfig::getInstance();
+        $configurator = new \Configurator();
+        $sugar_config = $configurator->config;
+
+
         $config = \HTMLPurifier_Config::createDefault();
 
         if (!is_dir(sugar_cached("htmlclean"))) {
