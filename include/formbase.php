@@ -207,14 +207,14 @@ function getGetToForm($ignore='', $usePostAsAuthority = false)
 	{
 	    if(is_array($key)) {
             if(!empty($key)) {
-                $log->warn('$key must be an string');
+                $log->warn('$key must be a string');
             }
 	        continue;
         }
-
+f
         if (is_array($value)) {
             if(!empty($value)) {
-                $log->warn('$value must be an string');
+                $log->warn('$value must be a string');
             }
 	        continue;
         }
