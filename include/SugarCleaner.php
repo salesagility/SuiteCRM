@@ -19,7 +19,7 @@ class SugarCleaner
     function __construct()
     {
         global $sugar_config;
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier_Config::createDefault();
 
         if(!is_dir(sugar_cached("htmlclean"))) {
             create_cache_directory("htmlclean/");
@@ -87,9 +87,9 @@ class SugarCleaner
         }
         $uri = $config->getDefinition('URI');
         $uri->addFilter(new SugarURIFilter(), $config);
-        HTMLPurifier_URISchemeRegistry::instance()->register('cid', new HTMLPurifier_URIScheme_cid());
+        \HTMLPurifier_URISchemeRegistry::instance()->register('cid', new HTMLPurifier_URIScheme_cid());
 
-        $this->purifier = new HTMLPurifier($config);
+        $this->purifier = new \HTMLPurifier($config);
     }
 
     /**
