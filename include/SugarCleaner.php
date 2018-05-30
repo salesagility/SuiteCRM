@@ -2,6 +2,11 @@
 
 namespace SuiteCRM;
 
+/**
+ * Class SugarCleaner
+ * @package SuiteCRM
+ * Html Sanitizer
+ */
 class SugarCleaner
 {
     /**
@@ -12,18 +17,22 @@ class SugarCleaner
 
     /**
      * HTMLPurifier instance
-     * @var HTMLPurifier
+     * @var \HTMLPurifier
      */
     protected $purifier;
 
-    function __construct()
+    /**
+     * SugarCleaner constructor.
+     */
+    public function __construct()
     {
-        global $sugar_config;
+        $sugar_config = \SugarConfig::getInstance();
         $config = \HTMLPurifier_Config::createDefault();
 
-        if(!is_dir(sugar_cached("htmlclean"))) {
+        if (!is_dir(sugar_cached("htmlclean"))) {
             create_cache_directory("htmlclean/");
         }
+
         $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
         $config->set('Core.Encoding', 'UTF-8');
         $hidden_tags = array('script' => true, 'style' => true, 'title' => true, 'head' => true);
@@ -35,56 +44,41 @@ class SugarCleaner
         $config->set('HTML.ForbiddenElements', array('body' => true, 'html' => true));
         $config->set('AutoFormat.RemoveEmpty', true);
         $config->set('Cache.SerializerPermissions', 0775);
-        // for style
-        //$config->set('Filter.ExtractStyleBlocks', true);
-        $config->set('Filter.ExtractStyleBlocks.TidyImpl', false); // can't use csstidy, GPL
-        if(!empty($GLOBALS['sugar_config']['html_allow_objects'])) {
-            // for object
+        $config->set('Filter.ExtractStyleBlocks.TidyImpl', false);
+        if (!empty($sugar_config['html_allow_objects'])) {
             $config->set('HTML.SafeObject', true);
-            // for embed
             $config->set('HTML.SafeEmbed', true);
         }
         $config->set('Output.FlashCompat', true);
-        // for iframe and xmp
-        $config->set('Filter.Custom',  array(new HTMLPurifierFilterXmp()));
-        // for link
+        $config->set('Filter.Custom', array(new HTMLPurifierFilterXmp()));
         $config->set('HTML.DefinitionID', 'Sugar HTML Def');
         $config->set('HTML.DefinitionRev', 2);
         $config->set('Cache.SerializerPath', sugar_cached('htmlclean/'));
-        // IDs are namespaced
         $config->set('Attr.EnableID', true);
         $config->set('Attr.IDPrefix', 'sugar_text_');
 
         if ($def = $config->maybeGetRawHTMLDefinition()) {
-            $form = $def->addElement(
-                'link',   // name
-                'Flow',  // content set
-                'Empty', // allowed children
-                'Core', // attribute collection
-                array( // attributes
-                    'href*' => 'URI',
-                    'rel' => 'Enum#stylesheet', // only stylesheets supported here
-                    'type' => 'Enum#text/css' // only CSS supported here
-                )
-            );
             $iframe = $def->addElement(
-                'iframe',   // name
-                'Flow',  // content set
-                'Optional: #PCDATA | Flow | Block', // allowed children
-                'Core', // attribute collection
-                array( // attributes
+                'iframe',
+                'Flow',
+                'Optional: #PCDATA | Flow | Block',
+                'Core',
+                array(
                     'src*' => 'URI',
                     'frameborder' => 'Enum#0,1',
-                    'marginwidth' =>  'Pixels',
-                    'marginheight' =>  'Pixels',
+                    'marginwidth' => 'Pixels',
+                    'marginheight' => 'Pixels',
                     'scrolling' => 'Enum#|yes,no,auto',
                     'align' => 'Enum#top,middle,bottom,left,right,center',
                     'height' => 'Length',
                     'width' => 'Length',
                 )
             );
-            $iframe->excludes=array('iframe');
+
+            $iframe->excludes = array('iframe');
         }
+
+        /** @var \HTMLPurifier_URIDefinition $uri */
         $uri = $config->getDefinition('URI');
         $uri->addFilter(new SugarURIFilter(), $config);
         \HTMLPurifier_URISchemeRegistry::instance()->register('cid', new HTMLPurifierURISchemeCid());
@@ -103,19 +97,18 @@ class SugarCleaner
 
     /**
      * Clean string from potential XSS problems
-     * @param string $dirty_html
-     * @param bool $remove_html - encodes html
-     * @return string
+     * @param string $dirtyHtml
+     * @param bool $removeHtml - remove encoded html
+     * @return string clean html
      */
-    public static function cleanHtml($dirty_html, $remove_html = false)
+    public static function cleanHtml($dirtyHtml, $removeHtml = false)
     {
-
         // $encode_html previously effected the decoding process.
         // we should decode regardless, just in case, the calling method passing encoded html
-        $dirty_html_decoded = html_entity_decode($dirty_html);
+        $dirty_html_decoded = html_entity_decode($dirtyHtml);
 
         // Re-encode html
-        if ($remove_html === true) {
+        if ($removeHtml === true) {
             // remove all HTML tags
             $sugarCleaner = new SugarCleaner();
             $purifier = $sugarCleaner->purifier;
@@ -128,13 +121,18 @@ class SugarCleaner
         return $clean_html;
     }
 
-    static public function stripTags($string, $encoded = true)
+    /**
+     * @param $dirtyHtml
+     * @param bool $isEncoded
+     * @return string
+     */
+    public static function stripTags($dirtyHtml, $isEncoded = true)
     {
-        if($encoded) {
-            $string = from_html($string);
+        if ($isEncoded) {
+            $dirtyHtml = from_html($dirtyHtml);
         }
-        $string = filter_var($string, FILTER_SANITIZE_STRIPPED, FILTER_FLAG_NO_ENCODE_QUOTES);
-        return $encoded?to_html($string):$string;
+        $dirtyHtml = filter_var($dirtyHtml, FILTER_SANITIZE_STRIPPED, FILTER_FLAG_NO_ENCODE_QUOTES);
+        return $isEncoded ? to_html($dirtyHtml) : $dirtyHtml;
     }
 }
 
