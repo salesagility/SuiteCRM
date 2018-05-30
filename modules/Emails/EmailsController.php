@@ -154,6 +154,14 @@ class EmailsController extends SugarController
                 }
             }
         }
+        if (isset($_REQUEST['relatedModule']) && isset($_REQUEST['relatedId'])){
+            $relateBean = BeanFactory::getBean($_REQUEST['relatedModule'], $_REQUEST['relatedId']);
+            $relateLine = '<input type="hidden" class="email-relate-target" ';
+            $relateLine .= 'data-relate-module="' . $_REQUEST['relatedModule'] . '" ';
+            $relateLine .= 'data-relate-id="' . $_REQUEST['relatedId'] . '" ';
+            $relateLine .= 'data-relate-name="' . $relateBean->name . '">';
+            echo $relateLine;
+        }
     }
 
     /**
