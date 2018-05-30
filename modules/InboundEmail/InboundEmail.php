@@ -334,7 +334,7 @@ class InboundEmail extends SugarBean
      * @param array $filter
      * @return array
      */
-    public function checkWithPagination($offset = 0, $pageSize = 20, $order = array(), $filter = array())
+    public function checkWithPagination($offset = 0, $pageSize = 20, $order = array(), $filter = array(), $columns = array())
     {
         $mailboxInfo = array('Nmsgs' => 0);
         $this->connectMailserver();
@@ -5143,9 +5143,8 @@ class InboundEmail extends SugarBean
             $msgNo = imap_msgno($this->conn, (int)$uid);
         }
 
-        $header = imap_headerinfo($this->conn, $msgNo);
-        $fullHeader = imap_fetchheader($this->conn, $msgNo); // raw headers
-
+        $fullHeader = imap_fetchheader($this->conn, $msgNo);
+        $header = imap_rfc822_parse_headers($fullHeader);
         // reset inline images cache
         $this->inlineImages = array();
 
