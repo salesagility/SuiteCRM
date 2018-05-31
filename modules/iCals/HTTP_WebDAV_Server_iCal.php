@@ -57,11 +57,6 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
     var $http_spec = "";
 
     /**
-     * @var boolean
-     */
-    private $authenticated;
-
-    /**
      * Constructor for the WebDAV srver
      */
     public function __construct()
