@@ -746,12 +746,6 @@ class UserViewHelper {
                     $mail_smtppass = $userOverrideOE->mail_smtppass;
                 }
 
-
-                if(!$mail_smtpauth_req && (empty($systemOutboundEmail->mail_smtpserver) || empty($systemOutboundEmail->mail_smtpuser) || empty($systemOutboundEmail->mail_smtppass))) {
-                    $hide_if_can_use_default = true;
-                } else{
-                    $hide_if_can_use_default = false;
-                }
             }
 
             $this->ss->assign("mail_smtpdisplay", $mail_smtpdisplay);
