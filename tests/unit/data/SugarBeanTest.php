@@ -2305,8 +2305,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         }
         self::assertNotTrue(isValidId($results));
 
-//        self::assertEquals(false, $bean->in_save);
-//        self::assertStringStartsWith(date('Y-m-d'), $bean->date_modified);
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);
@@ -2333,7 +2331,6 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($results));
 
         self::assertEquals(true, $bean->in_save);
-//        self::assertStringStartsWith(date('Y-m-d'), $bean->date_modified);
         self::assertEquals($current_user->id, $bean->modified_user_id);
         self::assertEquals($current_user->user_name, $bean->modified_by_name);
         self::assertEquals(0, $bean->deleted);

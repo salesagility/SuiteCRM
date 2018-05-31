@@ -399,10 +399,6 @@ class StateSaver
             }
             $this->files[$realpath]['contents'] = $contents;
             $this->files[$realpath]['size'] = $size;
-//            $this->files[$realpath]['time'] = filemtime($realpath);
-//            if (false === $this->files[$realpath]['time']) {
-//                throw new StateSaverException('Unable to get filemtime for file: ' . $realpath);
-//            }
         } else {
             unset($this->files[$realpath]['contents']);
         }
@@ -436,9 +432,6 @@ class StateSaver
             if ($size !== $this->files[$realpath]['size']) {
                 throw new StateSaverException('File size is incorrect: ' . $realpath . ' ' . $size . ' != ' . $this->files[$realpath]['size']);
             }
-//            if (false === touch($realpath, $this->files[$realpath]['time'])) {
-//                throw new StateSaverException('Unable to touch filemtime for file: ' . $realpath);
-//            }
         } else {
             if (file_exists($realpath) && false === unlink($realpath)) {
                 return false;
