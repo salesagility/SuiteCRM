@@ -10,7 +10,7 @@ namespace SuiteCRM;
  * Until we have comprehensive CSRF protection, we need to sanitize URLs in emails, etc.
  * to avoid CSRF attacks.
  */
-class SugarURIFilter extends \HTMLPurifier_URIFilter
+class URIFilter extends \HTMLPurifier_URIFilter
 {
     /** @var string $name */
     public $name = 'SugarURIFilter';

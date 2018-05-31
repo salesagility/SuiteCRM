@@ -7,11 +7,11 @@ namespace SuiteCRM;
  * @package SuiteCRM
  * Html Sanitizer
  */
-class SugarCleaner
+class HtmlSanitizer
 {
     /**
      * Singleton instance
-     * @var SugarCleaner
+     * @var HtmlSanitizer
      */
     private static $instance;
 
@@ -83,7 +83,7 @@ class SugarCleaner
 
         /** @var \HTMLPurifier_URIDefinition $uri */
         $uri = $config->getDefinition('URI');
-        $uri->addFilter(new SugarURIFilter(), $config);
+        $uri->addFilter(new URIFilter(), $config);
         \HTMLPurifier_URISchemeRegistry::instance()->register('cid', new HTMLPurifierURISchemeCid());
 
         $this->purifier = new \HTMLPurifier($config);
@@ -91,7 +91,7 @@ class SugarCleaner
 
     /**
      * Get cleaner instance
-     * @return SugarCleaner
+     * @return HtmlSanitizer
      */
     public static function getInstance()
     {
@@ -113,7 +113,7 @@ class SugarCleaner
         // Re-encode html
         if ($removeHtml === true) {
             // remove all HTML tags
-            $sugarCleaner = new SugarCleaner();
+            $sugarCleaner = new HtmlSanitizer();
             $purifier = $sugarCleaner->purifier;
             $clean_html = $purifier->purify($dirty_html_decoded);
         } else {

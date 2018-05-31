@@ -49,5 +49,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // new code can leverage the autoloader and use the SuiteCRM namespace
 class HTMLPurifier_URIScheme_cid extends \SuiteCRM\HTMLPurifierURISchemeCid {}
 class HTMLPurifier_Filter_Xmp extends \SuiteCRM\HTMLPurifierFilterXmp {}
-class SugarCleaner extends \SuiteCRM\SugarCleaner {}
-class SugarURIFilter extends \SuiteCRM\SugarURIFilter {}
+class SugarCleaner extends \SuiteCRM\HtmlSanitizer {}
+class SugarURIFilter extends \SuiteCRM\URIFilter {}
