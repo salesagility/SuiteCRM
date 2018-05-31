@@ -159,7 +159,6 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
                 $user = $this->user_focus;
                 $user->retrieve_by_string_fields(['user_name' => $query_arr['user_name']]);
                 if ($user->id === null
-                    || !$user->is_authenticated()
                     && !$user::findUserPassword($user->user_name, md5($query_arr['password']))
                 ) {
                     $this->http_status("401 not authorized");
