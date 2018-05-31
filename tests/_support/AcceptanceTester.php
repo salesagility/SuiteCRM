@@ -31,6 +31,7 @@ class AcceptanceTester extends \Codeception\Actor
     {
         return Factory::create();
     }
+
     /**
      * @param string $username
      * @param string $password
