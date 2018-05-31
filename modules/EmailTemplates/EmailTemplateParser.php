@@ -160,7 +160,7 @@ class EmailTemplateParser
         $charVariable = chr(36);
         $charUnderscore = chr(95);
 
-        if (strpos($variable, $charVariable) || strpos($variable, $charUnderscore) === false) {
+        if (strpos($variable, $charVariable) === false || strpos($variable, $charUnderscore) === false) {
             $GLOBALS['log']->warn(sprintf(
                 'Variable %s parsed to an empty string, because attribute has no %s or %s character',
                 $variable,
