@@ -51,6 +51,7 @@ function get_body($ss, $vardef)
         $edValue = str_replace(array("\r\n", "\n"), " ",$edValue);
     }
     $ss->assign('HTML_EDITOR', $edValue);
+    $ss->assign('disableInlineEdit', 1);
     $ss->assign('preSave', 'document.popup_form.presave();');
 	///////////////////////////////////
 	return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/html.tpl');
