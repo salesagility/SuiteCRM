@@ -167,7 +167,7 @@
       $('.email-compose-view-to-list').each(function () {
         if ( $('.email-relate-target'.length) ){
           populateModule = $('.email-relate-target').attr('data-relate-module');
-          populateModuleRecord = $('.email-relate-target').attr('data-relate-module');
+          populateModuleRecord = $('.email-relate-target').attr('data-relate-id');
           populateModuleName = $('.email-relate-target').attr('data-relate-name');
         }
         else {
