@@ -108,7 +108,7 @@ class Links implements LoggerAwareInterface, JsonApiResponseInterface
      */
     public function __construct()
     {
-
+        $this->logger = new Logger();
     }
 
     /**
