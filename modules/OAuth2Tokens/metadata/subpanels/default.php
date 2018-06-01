@@ -48,7 +48,7 @@ $subpanel_layout = array(
         array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
     ),
 
-    'where' => 'token_is_revoked = false AND (refresh_token_expires > NOW() OR refresh_token_expires IS NULL)',
+    'where' => 'token_is_revoked = 0 AND (refresh_token_expires > ' . OAuth2Tokens::getNowDateString() . ' OR refresh_token_expires IS NULL)',
 
     'list_fields' => array(
         'id' => [
