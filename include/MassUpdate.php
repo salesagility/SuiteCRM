@@ -159,7 +159,7 @@ eoq;
 	function handleMassUpdate(){
 
 		require_once('include/formbase.php');
-		global $current_user, $db, $disable_date_format, $timedate;
+		global $current_user, $db, $disable_date_format, $timedate, $app_list_strings;
 
 		foreach($_POST as $post=>$value){
 			if(is_array($value)){
@@ -341,8 +341,16 @@ eoq;
 									list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
 
 									if($parentenum_value != $dynamic_field_value) {
+
 										// Change to the default value of the correct value set.
-										$newbean->$dynamic_field_name = $parentenum_value . '_' . $parentenum_value;
+                      $defaultValue = '';
+                      foreach ($app_list_strings[$field_name['options']] as $key => $value) {
+                          if (strpos($key, $parentenum_value) === 0) {
+                              $defaultValue = $key;
+                              break;
+                          }
+                      }
+                      $newbean->$dynamic_field_name = $defaultValue;
 									}
 								}
 							}
