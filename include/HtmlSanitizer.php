@@ -95,7 +95,11 @@ class HtmlSanitizer
      */
     public static function getInstance()
     {
-        return self::$instance instanceof self ? self::$instance : (self::$instance = new self());
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 
     /**
