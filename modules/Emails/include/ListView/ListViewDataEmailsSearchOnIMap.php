@@ -135,7 +135,7 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
             $ret_array['inner_join'] = ' ' . implode(' ', $this->lvde->seed->listview_inner_join) . ' ';
         }
 
-        if (!is_array($params)) {
+        if (!isset($params) || !is_array($params)) {
             $params = array();
         }
         if (!isset($params['custom_select'])) {
@@ -235,6 +235,12 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
         // TODO: TASK: UNDEFINED - HANDLE in second filter after IMap
         $endOffset = floor(($total - 1) / $limit) * $limit;
+        
+        if (!isset($pageData['ordering']) || !isset($pageData['ordering']['sortOrder'])) {
+            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: sort order is not set. Using null by default.');
+            $pageData['ordering']['sortOrder'] = null;
+        }
+        
         $pageData['queries'] = $this->lvde->callGenerateQueries(
             $pageData['ordering']['sortOrder'],
             $offset,
@@ -317,7 +323,11 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
 
         $request['email_uids'] = $this->lvde->getEmailUIds($data);
 
-
+        if (!isset($queryString)) {
+            $queryString = null;
+            LoggerManager::getLogger()->warn('ListViewDataEmailsSearchOnIMap::search: qurey string is not set');
+        }
+        
         $ret = array('data' => $data, 'pageData' => $pageData, 'query' => $queryString);
 
         return $ret;

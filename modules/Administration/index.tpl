@@ -48,7 +48,12 @@
 
 		<div class="screen admin-panel">
 
-{$MY_FRAME}
+{if isset($MY_FRAME)}
+    {$MY_FRAME}
+{else}
+    {log msg="MY_FRAME is not set"}
+{/if}
+
 {foreach  from=$ADMIN_GROUP_HEADER key=j item=val1}
 
    {if isset($GROUP_HEADER[$j][1])}

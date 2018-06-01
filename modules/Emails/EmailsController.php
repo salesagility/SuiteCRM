@@ -448,8 +448,9 @@ class EmailsController extends SugarController
                 'type' => 'system',
                 'id' => $system->id,
                 'attributes' => array(
+                    'reply_to' => $system->smtp_from_addr,
                     'from' => $system->mail_smtpuser,
-                    'name' => $system->name,
+                    'name' => $system->smtp_from_name,
                     'oe' => $system->mail_smtpuser,
                 ),
                 'prepend' => false,
