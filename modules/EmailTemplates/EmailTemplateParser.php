@@ -183,7 +183,7 @@ class EmailTemplateParser
         }
 
         $GLOBALS['log']->warn(sprintf(
-            'Variable %s parsed to an empty string, because attribute %s does not set in %s bean',
+            'Variable %s parsed to an empty string, because attribute %s is not set in %s bean',
             $variable,
             $attribute,
             get_class($this->module)
