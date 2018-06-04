@@ -38,16 +38,33 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+namespace SuiteCRM;
 
-// classes where moved that we have one class per file
-// this file has been kept for backward compatibility
-// Remap old namespace to the SuiteCRM namespace
-// Older code can still use this the old class names
-// new code can leverage the autoloader and use the SuiteCRM namespace
-class HTMLPurifier_URIScheme_cid extends \SuiteCRM\HTMLPurifierURISchemeCid {}
-class HTMLPurifier_Filter_Xmp extends \SuiteCRM\HTMLPurifierFilterXmp {}
-class SugarCleaner extends \SuiteCRM\HtmlSanitizer {}
-class SugarURIFilter extends \SuiteCRM\URIFilter {}
+/**
+ * Class HTMLPurifierURISchemeCid
+ * @package SuiteCRM
+ * content-id: scheme implementation
+ */
+class HTMLPurifierURISchemeCid extends \HTMLPurifier_URIScheme
+{
+    /** @var bool $browsable */
+    public $browsable = true;
+    /** @var bool $may_omit_host */
+    public $may_omit_host = true;
+
+    /**
+     * @param \HTMLPurifier_URI $uri
+     * @param \HTMLPurifier_Config $config
+     * @param \HTMLPurifier_Context $context
+     * @return bool
+     */
+    public function doValidate(&$uri, $config, $context)
+    {
+        $uri->userinfo = null;
+        $uri->port = null;
+        $uri->host = null;
+        $uri->query = null;
+        $uri->fragment = null;
+        return true;
+    }
+}
