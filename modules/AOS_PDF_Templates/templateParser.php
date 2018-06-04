@@ -89,8 +89,14 @@ class templateParser
                     if(!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
                         $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                     }
-                    $link = $secureLink;
-                    $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
+                    
+                    if(empty($focus->$fieldName)){
+                        $repl_arr[$key . "_" . $fieldName] = ""; 
+                    }
+                    else{
+                        $link = $secureLink;
+                        $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
+                    }
                 } else {
                     $repl_arr[$key . "_" . $fieldName] = $focus->$fieldName;
                 }

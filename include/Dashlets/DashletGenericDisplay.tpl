@@ -52,7 +52,7 @@
                 <tr>
                     <td align='left'>&nbsp;</td>
                     <td align='right' nowrap='nowrap'>
-                        {if $pageData.urls.startPage}
+                        {if isset($pageData.urls.startPage) && $pageData.urls.startPage}
 							<button title='{$navStrings.start}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.startPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								<span class="suitepicon suitepicon-action-first"></span>
 							</button>
