@@ -93,6 +93,7 @@ if($queryString){
     <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate("LBL_SEARCH_QUERY_PLACEHOLDER","AOD_Index");?>' value='<?php echo $queryString;?>'>
     <input type="submit" class="button primary" value="<?php echo translate("LBL_SEARCH_BUTTON","AOD_Index");?>">&nbsp;
 </form>
+<?php if($hits){ ?>
 <table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
     <?php getPaginateHTML($queryString, $start,$amount,$total); ?>
     <thead>
@@ -136,7 +137,6 @@ if($queryString){
     </tr>
     </thead>
     <?php
-    if($hits){
 foreach($hits as $hit){
     echo "<tr>"
         ."<td>".$hit->label."</td>"
@@ -147,11 +147,14 @@ foreach($hits as $hit){
         ."<td>".getScoreDisplay($hit)."</td>"
         ."</tr>";
 }
-        }else{
-        echo "<tr><td>".translate("LBL_SEARCH_RESULT_EMPTY","AOD_Index")."</td></td>";
-    }
 ?>
 </table>
+
+<?php
+        }else{
+        echo "<p>".translate("LBL_SEARCH_RESULT_EMPTY","AOD_Index")."</p>";
+    }
+?>
 
 <?php
 function getRecordSummary(SugarBean $bean){
