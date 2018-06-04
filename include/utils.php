@@ -3498,7 +3498,7 @@ function display_stack_trace($textOnly = false)
 function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
 {
     $error_msg = " $errstr occurred in <b>$errfile</b> on line $errline [" . date('Y-m-d H:i:s') . ']';
-    
+
     switch ($errno) {
 //        case 2048:
 //            return; //depricated we have lots of these ignore them
@@ -3508,8 +3508,8 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
             $type = 'Notice';
             $halt_script = false;
             break;
-        
-        
+
+
         case E_USER_WARNING:
             $type = 'User warning';
         case E_COMPILE_WARNING:
@@ -3829,30 +3829,13 @@ function search_filter_rel_info(&$focus, $tar_rel_module, $relationship_name)
     //end function search_filter_rel_info
 }
 
+/**
+ * @param $module_name
+ * @return mixed
+ */
 function get_module_info($module_name)
 {
-    global $beanList;
-    global $dictionary;
-
-    //Get dictionary and focus data for module
-    $vardef_name = $beanList[$module_name];
-
-    if ($vardef_name == 'aCase') {
-        $class_name = 'Case';
-    } else {
-        $class_name = $vardef_name;
-    }
-
-    if (!file_exists('modules/' . $module_name . '/' . $class_name . '.php')) {
-        return;
-    }
-
-    include_once 'modules/' . $module_name . '/' . $class_name . '.php';
-
-    $module_bean = new $vardef_name();
-
-    return $module_bean;
-    //end function get_module_table
+    return BeanFactory::getBean($module_name);
 }
 
 /**
