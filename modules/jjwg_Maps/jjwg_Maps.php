@@ -268,7 +268,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
 
         parent::__construct();
         // Admin Config Setting
-        if($init)$this->configuration();
+        if ($init) {
+            $this->configuration();
+        }
     }
 
     /**
@@ -472,7 +474,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['map_default_unit_type']) && in_array(trim($data['map_default_unit_type']), array('mi', 'km'))) {
                 $admin->saveSetting($category, 'map_default_unit_type', trim($data['map_default_unit_type']));
             }
-            if (empty($data['map_duplicate_marker_adjustment'])) $data['map_duplicate_marker_adjustment'] = 0.00002;
+            if (empty($data['map_duplicate_marker_adjustment'])) {
+                $data['map_duplicate_marker_adjustment'] = 0.00002;
+            }
             if (isset($data['map_duplicate_marker_adjustment']) && is_numeric(trim($data['map_duplicate_marker_adjustment']))) {
                 $admin->saveSetting($category, 'map_duplicate_marker_adjustment', (float) trim($data['map_duplicate_marker_adjustment']));
             }
@@ -481,7 +485,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 LoggerManager::getLogger()->warn('jjwg Maps: map default center latitude is not set');
             }
             
-            if (!isset($data['map_default_center_latitude']) || !$this->is_valid_lat($data['map_default_center_latitude'])) $data['map_default_center_latitude'] = 39.5;
+            if (!isset($data['map_default_center_latitude']) || !$this->is_valid_lat($data['map_default_center_latitude'])) {
+                $data['map_default_center_latitude'] = 39.5;
+            }
             if (isset($data['map_default_center_latitude']) && is_numeric(trim($data['map_default_center_latitude']))) {
                 $admin->saveSetting($category, 'map_default_center_latitude', (float) trim($data['map_default_center_latitude']));
             }
@@ -490,7 +496,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 LoggerManager::getLogger()->warn('jjwg Maps: map default center longitude is not set');
             }
             
-            if (!isset($data['map_default_center_longitude']) || !$this->is_valid_lng($data['map_default_center_longitude'])) $data['map_default_center_longitude'] = -99.5;
+            if (!isset($data['map_default_center_longitude']) || !$this->is_valid_lng($data['map_default_center_longitude'])) {
+                $data['map_default_center_longitude'] = -99.5;
+            }
             if (isset($data['map_default_center_longitude']) && is_numeric(trim($data['map_default_center_longitude']))) {
                 $admin->saveSetting($category, 'map_default_center_longitude', (float) trim($data['map_default_center_longitude']));
             }
@@ -508,7 +516,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 $admin->saveSetting($category, 'geocoding_api_url', trim($data['geocoding_api_url']));
             }
             // Set Google Maps API Secret
-            if (empty($data['geocoding_api_secret'])) $data['geocoding_api_secret'] = '';
+            if (empty($data['geocoding_api_secret'])) {
+                $data['geocoding_api_secret'] = '';
+            }
             if (isset($data['geocoding_api_secret'])) {
                 $admin->saveSetting($category, 'geocoding_api_secret', trim($data['geocoding_api_secret']));
             }
@@ -905,7 +915,9 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          * New Default: https://maps.googleapis.com/maps/api/geocode/json?sensor=false
          */
         $base_url = $this->settings['geocoding_api_url'];
-        if (!(strpos($base_url, '?') > 0)) $base_url .= '?';
+        if (!(strpos($base_url, '?') > 0)) {
+            $base_url .= '?';
+        }
         // Add Address Parameter
         $request_url = $base_url . "&address=" . urlencode($address);
         // Add Hash Parameter as MD5 of Concatenation of Address and Secret
