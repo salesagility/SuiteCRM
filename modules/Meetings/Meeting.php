@@ -637,7 +637,7 @@ class Meeting extends SugarBean {
                 if (isset($meeting->current_notify_user->id)) {
                     $meetingCurrentNotifyUserId = $meeting->current_notify_user->id;
                 } else {
-                    LoggerManager::getLogger()->wanr('Meeting current notify user id is not set for set notification body');
+                    LoggerManager::getLogger()->warn('Meeting current notify user id is not set for set notification body');
                 }
                 
 		// cn: bug 8078 - fixed call to $timedate
