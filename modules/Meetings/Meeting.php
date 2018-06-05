@@ -617,6 +617,9 @@ class Meeting extends SugarBean {
                 if (isset($meeting->current_notify_user->object_name)) {
                     $meetingCurrentNotifyUserObjectName = $meeting->current_notify_user->object_name;
                 } else {
+                    
+                    // Should Log correctly what the issue is only if $meeting->current_notify_user->object_name is not set at this point.
+                    
                     if (!isset($meeting->current_notify_user->object_name)) {
                         LoggerManager::getLogger()->warn('Meeting current notify user object name is not set for set notification body');
                     } elseif (!isset($meeting->current_notify_user)) {
