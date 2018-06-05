@@ -43,7 +43,7 @@ SuiteCRM in your language: [ Download and install language packs from][suitecrm_
 
 See our [Code of Conduct][code_of_conduct] on our Wiki.
 
-[code_of_conduct]: https://suitecrm.com/wiki/index.php/Contributing_to_SuiteCRM#Code_of_Conduct
+[code_of_conduct]: https://docs.suitecrm.com/community/code-of-conduct/
 
 
 ### Helpful links for the community ###

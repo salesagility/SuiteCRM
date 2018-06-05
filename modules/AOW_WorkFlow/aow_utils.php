@@ -332,7 +332,7 @@ function getModuleField(
         $aor_row = str_replace('[', '', $aor_row);
         $aor_row = str_replace(']', '', $aor_row);
         // set the filename for this control
-        $file = create_cache_directory('modules/AOR_WorkFlow/')
+        $file = create_cache_directory('modules/AOW_WorkFlow/')
             . $module
             . $view
             . $alt_type
