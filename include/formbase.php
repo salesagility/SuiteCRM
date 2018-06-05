@@ -205,14 +205,14 @@ function getGetToForm($ignore='', $usePostAsAuthority = false)
 	$fields = '';
 	foreach ($_GET as $key => $value)
 	{
-	    if(is_array($key)) {
+	    if(!is_string($key) || !is_int($key)) {
             if(!empty($key)) {
-                $log->warn('$key must be a string');
+                $log->warn('$key must be a string or an integer');
             }
 	        continue;
         }
 
-        if (is_array($value)) {
+        if (!is_string($value)) {
             if(!empty($value)) {
                 $log->warn('$value must be a string');
             }
