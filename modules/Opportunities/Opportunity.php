@@ -270,7 +270,7 @@ $query .= 			"LEFT JOIN users
 		$query_array=$this->contacts->getQuery(true);
 
                 if (is_string($query_array)) {
-                    LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array)"); 
+                    LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array) value id: $query_array"); 
                 } else {
                     //update the select clause in the retruned query.
                     $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
