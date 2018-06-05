@@ -1,6 +1,8 @@
 <?php
 
-class CallsCest
+use Faker\Generator;
+
+class AOK_KnowledgeBaseCest
 {
     /**
      * @var Generator $fakeData
@@ -28,65 +30,64 @@ class CallsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Calls $calls
+     * @param \Step\Acceptance\KnowledgeBase $knowledgeBase
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to view the calls module.
+     * As an administrator I want to view the knowledgeBase module.
      */
-    public function testScenarioViewCallsModule(
+    public function testScenarioViewKnowledgeBaseModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Calls $calls,
+        \Step\Acceptance\KnowledgeBase $knowledgeBase,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('View the calls module for testing');
+        $I->wantTo('View the knowledgeBase module for testing');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to calls list-view
+        // Navigate to knowledgeBase list-view
         $I->loginAsAdmin();
-        $calls->gotoCalls();
+        $knowledgeBase->gotoKnowledgeBase();
         $listView->waitForListViewVisible();
 
-        $I->see('Calls', '.module-title-text');
+        $I->see('Knowledge Base', '.module-title-text');
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\NavigationBar $NavigationBar
-     * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\KnowledgeBase $knowledgeBase
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to verify the date field of a call
+     * As administrative user I want to create a Knowledge Base so that I can test
+     * the standard fields.
      */
-    public function testScenarioCallDate(
+    public function testScenarioCreateKnowledgeBase(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\NavigationBar $NavigationBar,
-        \Step\Acceptance\Calls $calls,
         \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\KnowledgeBase $knowledgeBase,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Create a call');
+        $I->wantTo('Create a Knowledge Base');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to Calls
+        // Navigate to Knowledge Base list-view
         $I->loginAsAdmin();
-        $NavigationBar->clickAllMenuItem('Calls');
+        $knowledgeBase->gotoKnowledgeBase();
+        $listView->waitForListViewVisible();
 
-        // Create call
+        // Create Knowledge Base
         $this->fakeData->seed($this->fakeDataSeed);
-        $callName = 'Test_'. $this->fakeData->company();
-        $calls->createCall($callName);
+        $knowledgeBase->createKnowledgeBase('Test_'. $this->fakeData->company());
 
-        // Delete Record
+        // Delete Knowledge Base
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();

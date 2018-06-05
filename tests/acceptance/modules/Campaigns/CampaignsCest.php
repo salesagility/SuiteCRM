@@ -1,6 +1,8 @@
 <?php
 
-class CallsCest
+use Faker\Generator;
+
+class CampaignsCest
 {
     /**
      * @var Generator $fakeData
@@ -28,65 +30,72 @@ class CallsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Calls $calls
+     * @param \Step\Acceptance\Campaigns $campaigns
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to view the calls module.
+     * As an administrator I want to view the campaigns module.
      */
-    public function testScenarioViewCallsModule(
+    public function testScenarioViewCampaignsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Calls $calls,
+        \Step\Acceptance\Campaigns $campaigns,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('View the calls module for testing');
+        $I->wantTo('View the campaigns module for testing');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to calls list-view
+        // Navigate to campaigns list-view
         $I->loginAsAdmin();
-        $calls->gotoCalls();
+        $campaigns->gotoCampaigns();
         $listView->waitForListViewVisible();
 
-        $I->see('Calls', '.module-title-text');
+        $I->see('Campaigns', '.module-title-text');
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\NavigationBar $NavigationBar
-     * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Campaigns $campaign
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to verify the date field of a call
+     * As administrative user I want to create a non-emails campaign so that I can test
+     * the standard fields.
      */
-    public function testScenarioCallDate(
+    public function testScenarioCreateNonEmailCampaign(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\NavigationBar $NavigationBar,
-        \Step\Acceptance\Calls $calls,
         \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Campaigns $campaign,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Create a call');
+        $I->wantTo('Create Non-Email Campaign');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to Calls
+        // Navigate to campaigns list-view
         $I->loginAsAdmin();
-        $NavigationBar->clickAllMenuItem('Calls');
+        $campaign->gotoCampaigns();
+        $listView->waitForListViewVisible();
 
-        // Create call
+        // Create campaign
         $this->fakeData->seed($this->fakeDataSeed);
-        $callName = 'Test_'. $this->fakeData->company();
-        $calls->createCall($callName);
+        $name = 'Test_'. $this->fakeData->company();
+        $campaign->createNonEmailCampaign($name);
 
-        // Delete Record
+        // Delete campaign
+        $listView->waitForListViewVisible();
+        $listView->clickFilterButton();
+        $I->fillField('name_basic', $name);
+        $I->click('#search_form_submit');
+        $listView->waitForListViewVisible();
+        $listView->clickNameLink($name);
+        $detailView->waitForDetailViewVisible();
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();

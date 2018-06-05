@@ -1,6 +1,8 @@
 <?php
 
-class CallsCest
+use Faker\Generator;
+
+class AOS_PDF_TemplatesCest
 {
     /**
      * @var Generator $fakeData
@@ -28,65 +30,64 @@ class CallsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Calls $calls
+     * @param \Step\Acceptance\PDFTemplates $pdfTemplates
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to view the calls module.
+     * As an administrator I want to view the pdfTemplates module.
      */
-    public function testScenarioViewCallsModule(
+    public function testScenarioViewPDFTemplatesModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Calls $calls,
+        \Step\Acceptance\PDFTemplates $pdfTemplates,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('View the calls module for testing');
+        $I->wantTo('View the pdfTemplates module for testing');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to calls list-view
+        // Navigate to pdfTemplates list-view
         $I->loginAsAdmin();
-        $calls->gotoCalls();
+        $pdfTemplates->gotoPDFTemplates();
         $listView->waitForListViewVisible();
 
-        $I->see('Calls', '.module-title-text');
+        $I->see('PDF - Templates', '.module-title-text');
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\NavigationBar $NavigationBar
-     * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\PDFTemplates $pdfTemplate
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to verify the date field of a call
+     * As administrative user I want to create a PDF template so that I can test
+     * the standard fields.
      */
-    public function testScenarioCallDate(
+    public function testScenarioCreatePDFTemplate(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\NavigationBar $NavigationBar,
-        \Step\Acceptance\Calls $calls,
         \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\PDFTemplates $pdfTemplate,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Create a call');
+        $I->wantTo('Create a PDF Template');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to Calls
+        // Navigate to PDF Template list-view
         $I->loginAsAdmin();
-        $NavigationBar->clickAllMenuItem('Calls');
+        $pdfTemplate->gotoPDFTemplates();
+        $listView->waitForListViewVisible();
 
-        // Create call
+        // Create PDF Template
         $this->fakeData->seed($this->fakeDataSeed);
-        $callName = 'Test_'. $this->fakeData->company();
-        $calls->createCall($callName);
+        $pdfTemplate->createPDFTemplate('Test_'. $this->fakeData->company());
 
-        // Delete Record
+        // Delete PDF Template
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();

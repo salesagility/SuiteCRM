@@ -1,6 +1,8 @@
 <?php
 
-class CallsCest
+use Faker\Generator;
+
+class jjwg_MarkersCest
 {
     /**
      * @var Generator $fakeData
@@ -28,65 +30,64 @@ class CallsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Calls $calls
+     * @param \Step\Acceptance\MapsMarkers $mapsMarkers
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to view the calls module.
+     * As an administrator I want to view the mapsMarkers module.
      */
-    public function testScenarioViewCallsModule(
+    public function testScenarioViewMapsMarkersModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Calls $calls,
+        \Step\Acceptance\MapsMarkers $mapsMarkers,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('View the calls module for testing');
+        $I->wantTo('View the mapsMarkers module for testing');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to calls list-view
+        // Navigate to mapsMarkers list-view
         $I->loginAsAdmin();
-        $calls->gotoCalls();
+        $mapsMarkers->gotoMapsMarkers();
         $listView->waitForListViewVisible();
 
-        $I->see('Calls', '.module-title-text');
+        $I->see('Maps - Markers', '.module-title-text');
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\NavigationBar $NavigationBar
-     * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\MapsMarkers $mapMarker
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to verify the date field of a call
+     * As administrative user I want to create a map marker so that I can test
+     * the standard fields.
      */
-    public function testScenarioCallDate(
+    public function testScenarioCreateMapMarker(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\NavigationBar $NavigationBar,
-        \Step\Acceptance\Calls $calls,
         \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\MapsMarkers $mapMarker,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Create a call');
+        $I->wantTo('Create a Map Marker');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to Calls
+        // Navigate to map markers list-view
         $I->loginAsAdmin();
-        $NavigationBar->clickAllMenuItem('Calls');
+        $mapMarker->gotoMapsMarkers();
+        $listView->waitForListViewVisible();
 
-        // Create call
+        // Create map marker
         $this->fakeData->seed($this->fakeDataSeed);
-        $callName = 'Test_'. $this->fakeData->company();
-        $calls->createCall($callName);
+        $mapMarker->createMapMarker('Test_'. $this->fakeData->company());
 
-        // Delete Record
+        // Delete map marker
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();

@@ -1,6 +1,8 @@
 <?php
 
-class CallsCest
+use Faker\Generator;
+
+class MeetingsCest
 {
     /**
      * @var Generator $fakeData
@@ -28,67 +30,67 @@ class CallsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\Calls $calls
+     * @param \Step\Acceptance\Meetings $meetings
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to view the calls module.
+     * As an administrator I want to view the meetings module.
      */
-    public function testScenarioViewCallsModule(
+    public function testScenarioViewMeetingsModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\Calls $calls,
+        \Step\Acceptance\Meetings $meetings,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('View the calls module for testing');
+        $I->wantTo('View the meetings module for testing');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to calls list-view
+        // Navigate to meetings list-view
         $I->loginAsAdmin();
-        $calls->gotoCalls();
+        $meetings->gotoMeetings();
         $listView->waitForListViewVisible();
 
-        $I->see('Calls', '.module-title-text');
+        $I->see('Meetings', '.module-title-text');
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\NavigationBar $NavigationBar
-     * @param \Step\Acceptance\Calls $calls
      * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Meetings $meeting
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to verify the date field of a call
+     * As administrative user I want to create a meeting so that I can test
+     * the standard fields.
      */
-    public function testScenarioCallDate(
+    public function testScenarioCreateMeeting(
         \AcceptanceTester $I,
-        \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\NavigationBar $NavigationBar,
-        \Step\Acceptance\Calls $calls,
         \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Meetings $meeting,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Create a call');
+        $I->wantTo('Create a meeting');
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to Calls
+        // Navigate to meetings list-view
         $I->loginAsAdmin();
-        $NavigationBar->clickAllMenuItem('Calls');
+        $meeting->gotoMeetings();
+        $listView->waitForListViewVisible();
 
-        // Create call
+        // Create meeting
         $this->fakeData->seed($this->fakeDataSeed);
-        $callName = 'Test_'. $this->fakeData->company();
-        $calls->createCall($callName);
+        $meeting->createMeeting('Test_'. $this->fakeData->company());
 
-        // Delete Record
+        // Delete meeting
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
     }
+
 }

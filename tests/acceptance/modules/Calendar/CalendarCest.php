@@ -1,16 +1,19 @@
 <?php
+
 use Faker\Generator;
 
-class EmailManCest
+class CalendarCest
 {
     /**
      * @var Generator $fakeData
      */
     protected $fakeData;
+
     /**
      * @var integer $fakeDataSeed
      */
     protected $fakeDataSeed;
+
     /**
      * @param AcceptanceTester $I
      */
@@ -19,32 +22,33 @@ class EmailManCest
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
         }
+
         $this->fakeDataSeed = rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\EmailMan $emailMan
+     * @param \Step\Acceptance\Calendar $calendar
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to test outgoing mail configuration.
+     * As an administrator I want to view the calendar module.
      */
-    public function testScenarioAdminEmailSettings(
+    public function testScenarioViewCalendarModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\EmailMan $emailMan,
+        \Step\Acceptance\Calendar $calendar,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Save an outgoing email configuration');
+        $I->wantTo('View the calendar module for testing');
+
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to email configuration and save settings
+        // Navigate to calendar list-view
         $I->loginAsAdmin();
-        $emailMan->createEmailSettings();
+        $calendar->gotoCalendar();
 
-        $I->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
+        $I->see('Calendar', '.moduleTitle');
     }
 }

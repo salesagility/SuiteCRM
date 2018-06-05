@@ -1,16 +1,19 @@
 <?php
+
 use Faker\Generator;
 
-class EmailManCest
+class TasksCest
 {
     /**
      * @var Generator $fakeData
      */
     protected $fakeData;
+
     /**
      * @var integer $fakeDataSeed
      */
     protected $fakeDataSeed;
+
     /**
      * @param AcceptanceTester $I
      */
@@ -19,6 +22,7 @@ class EmailManCest
         if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
         }
+
         $this->fakeDataSeed = rand(0, 2048);
         $this->fakeData->seed($this->fakeDataSeed);
     }
@@ -26,25 +30,28 @@ class EmailManCest
     /**
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\ListView $listView
-     * @param \Step\Acceptance\EmailMan $emailMan
+     * @param \Step\Acceptance\Tasks $tasks
      * @param \Helper\WebDriverHelper $webDriverHelper
      *
-     * As an administrator I want to test outgoing mail configuration.
+     * As an administrator I want to view the tasks module.
      */
-    public function testScenarioAdminEmailSettings(
+    public function testScenarioViewTasksModule(
         \AcceptanceTester $I,
-        \Step\Acceptance\EmailMan $emailMan,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Tasks $tasks,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
-        $I->wantTo('Save an outgoing email configuration');
+        $I->wantTo('View the tasks module for testing');
+
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
 
-        // Navigate to email configuration and save settings
+        // Navigate to tasks list-view
         $I->loginAsAdmin();
-        $emailMan->createEmailSettings();
+        $tasks->gotoTasks();
+        $listView->waitForListViewVisible();
 
-        $I->dontSee('Note: To send record assignment notifications, an SMTP server must be configured in Email Settings.');
+        $I->see('Tasks', '.module-title-text');
     }
 }
