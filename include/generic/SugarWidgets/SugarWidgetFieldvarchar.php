@@ -90,7 +90,7 @@ class SugarWidgetFieldVarchar extends SugarWidgetReportField
 		return $this->_get_column_select($layout_def)." LIKE '%".$GLOBALS['db']->quote($layout_def['input_name0'])."'\n";
  }
 
- function queryFilterone_of(&$layout_def)
+ function queryFilterone_of($layout_def, $rename_columns = true)
  {
     foreach($layout_def['input_name0'] as $key => $value) {
         $layout_def['input_name0'][$key] = $GLOBALS['db']->quote($value);

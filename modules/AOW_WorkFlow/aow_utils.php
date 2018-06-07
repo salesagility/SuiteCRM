@@ -637,7 +637,7 @@ function getModuleField(
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if ($params['record_id']) {
+    if (!empty($params['record_id'])) {
         $ss->assign("record_id", $params['record_id']);
     }
 
