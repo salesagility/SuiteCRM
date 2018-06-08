@@ -59,7 +59,7 @@ class AOR_ReportsCest
      * @param \AcceptanceTester $I
      * @param \Step\Acceptance\EditView $editView
      * @param \Step\Acceptance\DetailView $detailView
-     * @param \Step\Acceptance\Step\Acceptance\SideBar $sidebar
+     * @param \Step\Acceptance\SideBar $sidebar
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Reports $reports
      * @param \Helper\WebDriverHelper $webDriverHelper

@@ -1,6 +1,7 @@
 <?php
 use Faker\Generator;
-class EmailsCest
+
+class EmailManCest
 {
     /**
      * @var Generator $fakeData
