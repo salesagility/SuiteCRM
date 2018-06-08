@@ -263,6 +263,7 @@ class AOR_ReportsController extends SugarController
             $pdf->SetDefaultBodyCSS('background-color', '#FFFFFF');
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);
+            $pdf->setFooter('{PAGENO}');
             $pdf->Output($this->bean->name . '.pdf', "D");
 
         } catch (mPDF_exception $e) {
