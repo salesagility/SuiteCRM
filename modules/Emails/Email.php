@@ -2836,6 +2836,9 @@ class Email extends Basic
         //$mail->Subject = html_entity_decode($this->name, ENT_QUOTES, 'UTF-8');
         $mail->Subject = $this->name;
 
+        //Set MessageID for outgoing mail array
+        $mail->MessageID = '<' . $this->message_id . '>';
+
         ///////////////////////////////////////////////////////////////////////
         ////	ATTACHMENTS
         if (isset($this->saved_attachments)) {
