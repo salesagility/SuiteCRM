@@ -5540,6 +5540,21 @@ function isValidId($id)
     return $valid;
 }
 
+function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error') {
+    if ($orEmpty && !$email) {
+        return true;
+    }
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return true;
+    }
+    if ($logInvalid) {
+        $trace = debug_backtrace();
+        $where = "Called at {$trace[1]['file']}:{$trace[1]['line']} from function {$trace[1]['function']}.";
+        \SuiteCRM\ErrorMessage::log("$message: [$email] $where", $logInvalid);
+    }
+    return false;
+}
+
 function displayAdminError($errorString)
 {
     $output = '<p class="error">' . $errorString . '</p>';

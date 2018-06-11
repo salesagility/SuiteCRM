@@ -257,6 +257,7 @@ class SugarAuthenticateUser
         $defaults = $emailObj->getSystemDefaultEmail();
 
         $mailer->From = $defaults['email'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $defaults['name'];
 
         $mailer->Subject = from_html($emailTemplate->subject);

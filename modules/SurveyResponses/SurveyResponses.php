@@ -161,6 +161,7 @@ class SurveyResponses extends Basic
         $mailer->IsHTML(true);
         $mailer->AltBody = $text['body_alt'];
         $mailer->From = $admin->settings['notify_fromaddress'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $admin->settings['notify_fromname'];
 
         $mailer->AddAddress($email);
@@ -211,6 +212,7 @@ class SurveyResponses extends Basic
         $emailObj->description = $mailer->AltBody;
         $emailObj->description_html = $mailer->Body;
         $emailObj->from_addr = $mailer->From;
+        isValidEmailAddress($emailObj->from_addr);
         if ($contactId) {
             $emailObj->parent_type = "Contacts";
             $emailObj->parent_id = $contactId;
