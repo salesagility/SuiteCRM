@@ -367,6 +367,7 @@ class EmailsController extends SugarController
     public function action_GetFromFields()
     {
         global $current_user;
+        global $sugar_config;
         $email = new Email();
         $email->email2init();
         $ie = new InboundEmail();
@@ -447,6 +448,24 @@ class EmailsController extends SugarController
 
                 $data[] = $dataAddress;
             }
+        }
+
+        if ($sugar_config['email_allow_send_as_user']) {
+            $data[] = array(
+                'type' => 'personal',
+                'id' => $current_user->id,
+                'attributes' => array(
+                    'from' => $current_user->email1,
+                    'name' => $current_user->full_name,
+                ),
+                'prepend' => $prependSignature,
+                'isPersonalEmailAccount' => true,
+                'isGroupEmailAccount' => false,
+                'emailSignatures' => array(
+                    'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                    'plain' => $defaultEmailSignature['signature'],
+                ),
+            );
         }
 
         $oe = new OutboundEmail();
