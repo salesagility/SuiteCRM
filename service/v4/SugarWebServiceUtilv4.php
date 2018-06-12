@@ -211,6 +211,9 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 	            $entry['type'] = $var['type'];
 	            $entry['group'] = isset($var['group']) ? $var['group'] : '';
 	            $entry['id_name'] = isset($var['id_name']) ? $var['id_name'] : '';
+                if (isset($var['parentenum'])) {
+                    $entry['parentenum'] = $var['parentenum'];
+                }
 
 	            if ($var['type'] == 'link') {
 		            $entry['relationship'] = (isset($var['relationship']) ? $var['relationship'] : '');
