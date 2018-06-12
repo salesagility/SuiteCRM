@@ -68,18 +68,24 @@ script:
 
   # Run the unit tests
   - ./vendor/bin/codecept run unit --steps
-  # Install OAuth2 demo data
-  - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
+  # ###############################################
+  # ########## REMOVE OLD API FROM TESTS ##########
+  # ###############################################
+  # # Install OAuth2 demo data
+  # - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
-  # add keys
-  - openssl genrsa -out Api/V8/OAuth2/private.key 2048
-  - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
-  - sudo chmod 600 Api/V8/OAuth2/private.key Api/V8/OAuth2/public.key
-  # Run API functional tests
-  - ./vendor/bin/codecept run api --steps
+  # # add keys
+  # - openssl genrsa -out Api/V8/OAuth2/private.key 2048
+  # - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
+  # - sudo chmod 600 Api/V8/OAuth2/private.key Api/V8/OAuth2/public.key
+  # # Run API functional tests
+  # - ./vendor/bin/codecept run api --steps
+  # ###############################################
+  # ############### OLD API FINISH ################
+  # ###############################################
   # RUN Basic Acceptance test
   - sudo chmod -R 777 .
   - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
