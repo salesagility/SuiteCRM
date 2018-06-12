@@ -20,7 +20,7 @@ class CreateModuleDataParams extends BaseParam
      */
     public function getId()
     {
-        return ($this->parameters['id']) ? $this->parameters['id'] : null;
+        return isset($this->parameters['id']) ? $this->parameters['id'] : null;
     }
 
     /**

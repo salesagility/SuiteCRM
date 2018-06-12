@@ -25,7 +25,7 @@ class DeleteModuleCest
     public function shouldWork(ApiTester $I)
     {
         $id = $I->createAccount();
-        $endpoint = $I->getInstanceURL() . '/Api/V8/module/Accounts/' . $id;
+        $endpoint = $I->getInstanceURL() . '/Api/index.php/V8/module/Accounts/' . $id;
         $expectedResult = [
             'meta' => [
                 'message' => sprintf('Record with id %s is deleted', $id)
@@ -85,17 +85,17 @@ class DeleteModuleCest
         return [
             [
                 'shouldNotWork01' => 'withInvalidModuleName',
-                'endPoint' => '/Api/V8/module/InvalidModuleName/11a71596-83e7-624d-c792-5ab9006dd493',
+                'endPoint' => '/Api/index.php/V8/module/InvalidModuleName/11a71596-83e7-624d-c792-5ab9006dd493',
                 'detail' => 'Module with name InvalidModuleName is not found'
             ],
             [
                 'shouldNotWork02' => 'withInvalidId',
-                'endPoint' => '/Api/V8/module/Accounts/111',
+                'endPoint' => '/Api/index.php/V8/module/Accounts/111',
                 'detail' => 'The option "id" with value "111" is invalid.'
             ],
             [
                 'shouldNotWork03' => 'withDeletedRecord',
-                'endPoint' => '/Api/V8/module/Accounts/{id}',
+                'endPoint' => '/Api/index.php/V8/module/Accounts/{id}',
                 'detail' => 'Accounts module with id {id} is not found'
             ],
         ];

@@ -50,47 +50,47 @@ class GetModulesCest
         return [
             [
                 'shouldNotWork01' => 'withInvalidModuleName',
-                'endPoint' => '/Api/V8/module/InvalidModuleName',
+                'endPoint' => '/Api/index.php/V8/module/InvalidModuleName',
                 'detail' => 'Module InvalidModuleName does not exist'
             ],
             [
                 'shouldNotWork02' => 'withInvalidParameter',
-                'endPoint' => '/Api/V8/module/Accounts?invalidParam',
+                'endPoint' => '/Api/index.php/V8/module/Accounts?invalidParam',
                 'detail' => 'The option "invalidParam" does not exist. Defined options are: "fields", "filter", "moduleName", "page", "sort".'
             ],
             [
                 'shouldNotWork03' => 'withInvalidField',
-                'endPoint' => '/Api/V8/module/Accounts?fields[Accounts]=name,not_exist_property1,not_exist_property2',
+                'endPoint' => '/Api/index.php/V8/module/Accounts?fields[Accounts]=name,not_exist_property1,not_exist_property2',
                 'detail' => 'The following fields in Account module are not found: not_exist_property1, not_exist_property2'
             ],
             [
                 'shouldNotWork04' => 'withInvalidFieldKey',
-                'endPoint' => '/Api/V8/module/Accounts?fields[NotExist]=name,account_type',
+                'endPoint' => '/Api/index.php/V8/module/Accounts?fields[NotExist]=name,account_type',
                 'detail' => 'Module NotExist does not exist'
             ],
             [
                 'shouldNotWork05' => 'withInvalidPage',
-                'endPoint' => '/Api/V8/module/Accounts?page[size]=-1',
+                'endPoint' => '/Api/index.php/V8/module/Accounts?page[size]=-1',
                 'detail' => 'The option "page" with value array is invalid.'
             ],
             [
                 'shouldNotWork06' => 'withInvalidPageKey',
-                'endPoint' => '/Api/V8/module/Accounts?page[invalidParameter]=1',
+                'endPoint' => '/Api/index.php/V8/module/Accounts?page[invalidParameter]=1',
                 'detail' => 'The option "invalidParameter" does not exist. Defined options are: "number", "size".'
             ],
             [
                 'shouldNotWork07' => 'withInvalidSort',
-                'endPoint' => '/Api/V8/module/Accounts?sort=invalidField',
+                'endPoint' => '/Api/index.php/V8/module/Accounts?sort=invalidField',
                 'detail' => 'Sort field invalidField in Account module is not found'
             ],
             [
                 'shouldNotWork08' => 'withInvalidFilter',
-                'endPoint' => '/Api/V8/module/Accounts?filter[operator]=and&filter[invalidProperty][eq]=Customer',
+                'endPoint' => '/Api/index.php/V8/module/Accounts?filter[operator]=and&filter[invalidProperty][eq]=Customer',
                 'detail' => 'Filter field invalidProperty in Account module is not found'
             ],
             [
                 'shouldNotWork09' => 'withInvalidFilterOperator',
-                'endPoint' => '/Api/V8/module/Accounts?filter[operator]=and&filter[account_type][eq111]=Customer',
+                'endPoint' => '/Api/index.php/V8/module/Accounts?filter[operator]=and&filter[account_type][eq111]=Customer',
                 'detail' => 'Filter operator eq111 is invalid'
             ],
         ];
