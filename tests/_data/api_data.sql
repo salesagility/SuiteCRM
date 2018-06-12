@@ -6,4 +6,4 @@
 
 
 INSERT INTO `oauth2clients` (`id`, `name`, `date_entered`, `date_modified`, `modified_user_id`, `created_by`, `description`, `deleted`, `secret`, `redirect_url`, `is_confidential`, `allowed_grant_type`, `duration_value`, `duration_amount`, `duration_unit`, `assigned_user_id`) VALUES
-('suitecrm_client', 'suitecrm_client', '2018-06-12 14:12:49', '2018-06-12 14:12:49', '1', '1', NULL, 0, '2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b', NULL, 1, 'password', 60, 1, 'minute', NULL);
+('API-4c59-f678-cecc-6594-5a8d9c704473', 'suitecrm_client', '2018-06-12 14:12:49', '2018-06-12 14:12:49', '1', '1', NULL, 0, '2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b', NULL, 1, 'password', 60, 1, 'minute', NULL);
