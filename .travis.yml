@@ -83,7 +83,7 @@ script:
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # RUN Basic Acceptance test
   - sudo chmod -R 777 .
-  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
+  #- ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
 
 after_script:
   - ./build/push_output.sh
