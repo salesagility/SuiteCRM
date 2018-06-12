@@ -91,7 +91,7 @@ class GetModuleCest
         return [
             [
                 'shouldWork01' => 'withoutParams',
-                'endPoint' => '/Api/V8/module/Accounts/{id}'
+                'endPoint' => '/Api/index.php/V8/module/Accounts/{id}'
             ],
             [
                 'shouldWork02' => 'withFields',
