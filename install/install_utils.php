@@ -987,10 +987,10 @@ EOQ;
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
-    RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
-    RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-    # RewriteRule ^Api/(.*?)$ Api/index.php/$1 [L]
-    # RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    # RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
+    # RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteRule ^Api/(.*?)$ Api/index.php/$1 [L]
+    RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>
