@@ -441,7 +441,7 @@ function change_state(radiobutton) {
 								{$MOD.LBL_SECURITY_STYLE}
 							</td>
 							<td width="40%" NOWRAP valign="middle" >
-								<input type="checkbox" value="1" name="style" id="style" {$styleChecked}>&nbsp; &lt;style&gt;
+								<input type="checkbox" value="1" name="style" id="style" {if isset($styleChecked)}{$styleChecked}{else}{log msg="styleChecked is not set"}{/if}>&nbsp; &lt;style&gt;
 							</td>
 						</tr>
 						<tr>

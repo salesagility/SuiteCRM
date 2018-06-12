@@ -307,7 +307,7 @@ class Link2
     {
         //First try the relationship
         if ($this->relationship->getLHSLink() == $this->name &&
-            ($this->relationship->getLHSModule() == isset($this->focus->module_name) ? $this->focus->module_name : null)
+            ($this->relationship->getLHSModule() == (isset($this->focus->module_name) ? $this->focus->module_name : null))
         ) {
             return REL_LHS;
         }

@@ -40,7 +40,7 @@
 *}
 {include file="_head.tpl" theme_template=true}
 <body onMouseOut="closeMenus();">
-{$DCSCRIPT}
+
 {if $AUTHENTICATED}
     <div id="ajaxHeader">
         {include file="_headerModuleList.tpl" theme_template=true}
