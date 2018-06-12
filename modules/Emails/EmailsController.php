@@ -450,22 +450,29 @@ class EmailsController extends SugarController
             }
         }
 
-        if ($sugar_config['email_allow_send_as_user']) {
-            $data[] = array(
-                'type' => 'personal',
-                'id' => $current_user->id,
-                'attributes' => array(
-                    'from' => $current_user->email1,
-                    'name' => $current_user->full_name,
-                ),
-                'prepend' => $prependSignature,
-                'isPersonalEmailAccount' => true,
-                'isGroupEmailAccount' => false,
-                'emailSignatures' => array(
-                    'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
-                    'plain' => $defaultEmailSignature['signature'],
-                ),
-            );
+        if (isset($sugar_config['email_allow_send_as_user']) && ($sugar_config['email_allow_send_as_user'])) {
+            require_once ('include/SugarEmailAddress/SugarEmailAddress.php');
+            $sugarEmailAddress = new SugarEmailAddress();
+            $userAddressesArr = $sugarEmailAddress->getAddressesByGUID($current_user->id, 'Users');
+            foreach ($userAddressesArr as $userAddress) {
+                $data[] = array(
+                    'type' => 'personal',
+                    'id' => $userAddress['email_address_id'],
+                    'attributes' => array(
+                        'from' => ($userAddress['reply_to_addr'] === '1') ? $current_user->email1 : $userAddress['email_address'],
+                        'reply_to' => $userAddress['email_address'],
+                        'name' => $current_user->full_name,
+                    ),
+                    'prepend' => $prependSignature,
+                    'isPersonalEmailAccount' => true,
+                    'isGroupEmailAccount' => false,
+                    'emailSignatures' => array(
+                        'html' => utf8_encode(html_entity_decode($defaultEmailSignature['signature_html'])),
+                        'plain' => $defaultEmailSignature['signature'],
+                    ),
+                );
+            }
+            unset($userAddress);
         }
 
         $oe = new OutboundEmail();

@@ -2790,7 +2790,7 @@ class Email extends Basic
 
         
         
-        if ($mail->oe->type === 'system') {
+        if (($mail->oe->type === 'system') && (!isset($sugar_config['email_allow_send_as_user']) && (!$sugar_config['email_allow_send_as_user']))) {
             $mail->From = 
             $sender = 
             $ReplyToAddr = $mail->oe->smtp_from_addr;
