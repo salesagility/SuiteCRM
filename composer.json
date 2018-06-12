@@ -26,7 +26,8 @@
     "justinrainbow/json-schema": "^5.2",
     "onelogin/php-saml": "3.0.0.x-dev as 3.0.0",
     "google/recaptcha": "^1.1",
-    "ezyang/htmlpurifier": "^4.10"
+    "ezyang/htmlpurifier": "^4.10",
+    "zendframework/zend-crypt": "^2.6"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
