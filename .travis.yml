@@ -81,6 +81,7 @@ script:
   - ./vendor/bin/codecept run tests/api/V8/ -f -vvv -d;
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
+  - echo "\$sugar_config['show_log_trace']=true;" >> config_override.php
   # RUN Basic Acceptance test
   - sudo chmod -R 777 .
   #- ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
