@@ -1,4 +1,10 @@
 <?php
+
+use Api\Core\Loader\ContainerLoader;
+use Api\Core\Loader\RouteLoader;
+use Slim\App;
+use Slim\Container;
+
 // @codingStandardsIgnoreStart
 if (!defined('sugarEntry')) {
     define('sugarEntry', true);
@@ -9,9 +15,9 @@ chdir(__DIR__ . '/../../');
 require_once __DIR__ . '/../../include/entryPoint.php';
 
 $slimSettings = require __DIR__ . '/Config/slim.php';
-$container = new \Slim\Container($slimSettings);
-\Api\Core\Loader\ContainerLoader::configure($container);
-$app = new \Slim\App($container);
+$container = new Container($slimSettings);
+ContainerLoader::configure($container);
+$app = new App($container);
 
-$loader = new \Api\Core\Loader\RouteLoader();
+$loader = new RouteLoader();
 $loader->configureRoutes($app);
