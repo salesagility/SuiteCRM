@@ -13,4 +13,5 @@ $container = new \Slim\Container($slimSettings);
 \Api\Core\Loader\ContainerLoader::configure($container);
 $app = new \Slim\App($container);
 
-\Api\Core\Loader\RouteLoader::configureRoutes($app);
+$loader = new \Api\Core\Loader\RouteLoader();
+$loader->configureRoutes($app);

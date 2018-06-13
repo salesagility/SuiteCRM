@@ -25,8 +25,8 @@ class RouteLoader
      *
      * @param App $app
      */
-    public static function configureRoutes(App $app)
-    {
+    public function configureRoutes(App $app)
+    {        
         //require __DIR__ . '/../../V8/Config/routes.php';
         $app->group('', function () use ($app) {
             /**
