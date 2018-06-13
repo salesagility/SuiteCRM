@@ -92,4 +92,45 @@ class AccountsCest
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
     }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to inline edit a field on the list-view
+     */
+    public function testScenarioInlineEditListView(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Accounts $accounts,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Inline edit an account on the list-view');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        // Navigate to accounts list-view
+        $I->loginAsAdmin();
+        $accounts->gotoAccounts();
+        $listView->waitForListViewVisible();
+
+        // Create account
+        $this->fakeData->seed($this->fakeDataSeed);
+        $account_name = 'Test_'. $this->fakeData->company();
+        $accounts->createAccount($account_name);
+
+        // Inline edit
+        $accounts->gotoAccounts();
+        $listView->waitForListViewVisible();
+        $I->doubleClick('.inlineEdit');
+        $I->fillField('#name', 'InlineAccountNameEdit');
+        $I->clickWithLeftButton('.suitepicon-action-confirm');
+        $I->see('InlineAccountNameEdit');
+    }
 }
