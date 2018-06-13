@@ -74,14 +74,10 @@ script:
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
-  - echo "\$sugar_config['show_log_trace']=true;" >> config_override.php
-  # RUN Basic Acceptance test
-  - sudo chmod -R 777 .
   # add keys
   - openssl genrsa -out Api/V8/OAuth2/private.key 2048
   - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
-  - sudo chmod 600 Api/V8/OAuth2/private.key 
-  - sudo chmod 600 Api/V8/OAuth2/public.key
+  - sudo chmod 600 Api/V8/OAuth2/private.key Api/V8/OAuth2/public.key
   # Run API functional tests
   - ./vendor/bin/codecept run tests/api/V8/ -f -vvv;
   # RUN Basic Acceptance test

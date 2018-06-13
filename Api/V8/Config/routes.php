@@ -89,6 +89,7 @@ $app->group('', function () use ($app) {
         /**
          * Delete relationship
          */
+
         $app
             ->delete(
                 '/module/{moduleName}/{id}/relationships',

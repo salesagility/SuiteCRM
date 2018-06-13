@@ -69,7 +69,7 @@ class CreateModuleCest
             $detail = str_replace('{id}', $id, $detail);
             $payload['data']['id'] = str_replace('{id}', $id, $payload['data']['id']);
         }
-        $endpoint = $I->getInstanceURL() . '/Api/index.php/V8/module';
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
         $expectedResult = [
             'errors' => [
                 'status' => 400,
