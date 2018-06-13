@@ -230,7 +230,7 @@ class apiTester extends \Codeception\Actor
      */
     public function login()
     {
-        $this->sendPOST($this->getInstanceURL() . '/Api/index.php/access_token', [
+        $this->sendPOST($this->getInstanceURL() . '/Api/access_token', [
             'username' => $this->getAdminUser(),
             'password' => $this->getAdminPassword(),
             'grant_type' => 'password',
@@ -240,7 +240,6 @@ class apiTester extends \Codeception\Actor
         ]);
 
         $response = json_decode($this->grabResponse(), true);
-        
         $this->setHeader('Authorization', sprintf('%s %s', $response['token_type'], $response['access_token']));
         $this->setHeader('Content-Type', \Api\V8\Controller\BaseController::MEDIA_TYPE);
 

@@ -91,11 +91,11 @@ class GetModuleCest
         return [
             [
                 'shouldWork01' => 'withoutParams',
-                'endPoint' => '/Api/index.php/V8/module/Accounts/{id}'
+                'endPoint' => '/Api/V8/module/Accounts/{id}'
             ],
             [
                 'shouldWork02' => 'withFields',
-                'endPoint' => '/Api/index.php/V8/module/Accounts/{id}?fields[Accounts]=name,account_type'
+                'endPoint' => '/Api/V8/module/Accounts/{id}?fields[Accounts]=name,account_type'
             ],
         ];
     }
@@ -108,32 +108,32 @@ class GetModuleCest
         return [
             [
                 'shouldNotWork01' => 'withInvalidModuleName',
-                'endPoint' => '/Api/index.php/V8/module/InvalidModuleName/97c3669b-607a-4b30-964f-2409b55a1551',
+                'endPoint' => '/Api/V8/module/InvalidModuleName/97c3669b-607a-4b30-964f-2409b55a1551',
                 'detail' => 'Module with name InvalidModuleName is not found'
             ],
             [
                 'shouldNotWork02' => 'withInvalidId',
-                'endPoint' => '/Api/index.php/V8/module/Accounts/111',
+                'endPoint' => '/Api/V8/module/Accounts/111',
                 'detail' => 'The option "id" with value "111" is invalid.'
             ],
             [
                 'shouldNotWork03' => 'withIdNotExist',
-                'endPoint' => '/Api/index.php/V8/module/Accounts/97c3669b-607a-4b30-964f-2409b55a1551',
+                'endPoint' => '/Api/V8/module/Accounts/97c3669b-607a-4b30-964f-2409b55a1551',
                 'detail' => 'Accounts module with id 97c3669b-607a-4b30-964f-2409b55a1551 is not found'
             ],
             [
                 'shouldNotWork04' => 'withInvalidParameter',
-                'endPoint' => '/Api/index.php/V8/module/Accounts/97c3669b-607a-4b30-964f-2409b55a1551?invalidParam',
+                'endPoint' => '/Api/V8/module/Accounts/97c3669b-607a-4b30-964f-2409b55a1551?invalidParam',
                 'detail' => 'The option "invalidParam" does not exist. Defined options are: "fields", "id", "moduleName".'
             ],
             [
                 'shouldNotWork05' => 'withInvalidField',
-                'endPoint' => '/Api/index.php/V8/module/Accounts/{id}?fields[Accounts]=name,not_exist_property1,not_exist_property2',
+                'endPoint' => '/Api/V8/module/Accounts/{id}?fields[Accounts]=name,not_exist_property1,not_exist_property2',
                 'detail' => 'The following fields in Account module are not found: not_exist_property1, not_exist_property2'
             ],
             [
                 'shouldNotWork06' => 'withInvalidFieldKey',
-                'endPoint' => '/Api/index.php/V8/module/Accounts/{id}?fields[NotExist]=name,account_type',
+                'endPoint' => '/Api/V8/module/Accounts/{id}?fields[NotExist]=name,account_type',
                 'detail' => 'Module NotExist does not exist'
             ],
         ];
