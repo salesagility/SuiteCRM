@@ -989,7 +989,7 @@ EOQ;
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
     # RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
     # RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-    RewriteRule ^Api/access_token$ Api/index.php/access_token$1 [L]
+    RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
     RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
     RewriteRule ^Api/V8/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
