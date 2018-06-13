@@ -62,7 +62,13 @@ class SugarFieldHtml extends SugarFieldBase
 
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
 
-        return $this->fetch($this->findTemplate('DetailView'));
+        $module = $GLOBALS['module'];
+
+        if ($module === 'Emails') {
+            return $this->fetch($this->findTemplate('Emails/EmailDetailView'));
+        } else {
+            return $this->fetch($this->findTemplate('DetailView'));
+        }
     }
 
     /**
