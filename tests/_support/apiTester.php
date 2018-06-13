@@ -230,6 +230,8 @@ class apiTester extends \Codeception\Actor
      */
     public function login()
     {
+        echo "[SECRET:]";
+        var_dump($this->getPasswordGrantClientSecret());
         $this->sendPOST($this->getInstanceURL() . '/Api/index.php/access_token', [
             'username' => $this->getAdminUser(),
             'password' => $this->getAdminPassword(),
