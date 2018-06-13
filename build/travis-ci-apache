@@ -3,17 +3,11 @@
 
   DocumentRoot %TRAVIS_BUILD_DIR%
 
-  # <Directory "%TRAVIS_BUILD_DIR%/">
-  #   Options FollowSymLinks MultiViews ExecCGI
-  #   AllowOverride All
-  #   Require all granted
-  # </Directory>
-<Directory  "%TRAVIS_BUILD_DIR%/">
-    Options Indexes FollowSymLinks MultiViews
+  <Directory "%TRAVIS_BUILD_DIR%/">
+    Options FollowSymLinks MultiViews ExecCGI
     AllowOverride All
-    Order allow,deny
-    allow from all
-</Directory>
+    Require all granted
+  </Directory>
 
   # Wire up Apache to use Travis CI's php-fpm.
   <IfModule mod_fastcgi.c>
