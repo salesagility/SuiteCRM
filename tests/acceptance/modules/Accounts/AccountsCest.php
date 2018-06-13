@@ -95,7 +95,6 @@ class AccountsCest
 
     /**
      * @param \AcceptanceTester $I
-     * @param \Step\Acceptance\DetailView $detailView
      * @param \Step\Acceptance\ListView $listView
      * @param \Step\Acceptance\Accounts $accounts
      * @param \Helper\WebDriverHelper $webDriverHelper
@@ -104,7 +103,6 @@ class AccountsCest
      */
     public function testScenarioInlineEditListView(
         \AcceptanceTester $I,
-        \Step\Acceptance\DetailView $detailView,
         \Step\Acceptance\ListView $listView,
         \Step\Acceptance\Accounts $accounts,
         \Helper\WebDriverHelper $webDriverHelper

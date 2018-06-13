@@ -327,13 +327,17 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->closePopupSuccess();
     }
 
-    // Deploy module
-
+    /**
+     * @param AcceptanceTester $I
+     * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
+     * @param \Step\Acceptance\Repair $repair
+     *
+     * As an administrator I want to test deploying a module
+     */
     public function testScenarioDeployModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Step\Acceptance\Repair $repair,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Repair $repair
     ) {
         $I->wantTo('Deploy Test Module');
 
@@ -343,7 +347,17 @@ class ModuleBuilderFieldsCest
         $repair->clickQuickRepairAndRebuild();
     }
 
-    // Tests after deploying module
+    /**
+     * @param AcceptanceTester $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As an administrator I want to test relating to the accounts module
+     */
     public function testScenarioRelateToAccounts(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
@@ -357,10 +371,6 @@ class ModuleBuilderFieldsCest
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
-
-
-
-        // Goto Accounts
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
@@ -415,6 +425,7 @@ class ModuleBuilderFieldsCest
         $detailView->waitForDetailViewVisible();
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
+        $I->clickWithLeftButton('.clearSearchIcon');
         $listView->waitForListViewVisible();
     }
 }
