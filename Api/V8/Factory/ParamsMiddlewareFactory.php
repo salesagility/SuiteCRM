@@ -31,7 +31,10 @@ class ParamsMiddlewareFactory
         $container = $this->container;
 
         return function (Request $request, Response $response, callable $next) use ($containerId, $container) {
-            return (new ParamsMiddleware($container->get($containerId)))($request, $response, $next);
+            $para = new ParamsMiddleware($container->get($containerId));
+            $ret = $para($request, $response, $next);
+                    
+            return $ret;
         };
     }
 }

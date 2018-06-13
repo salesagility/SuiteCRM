@@ -29,47 +29,47 @@ $app->group('', function () use ($app) {
         /**
          * Logout
          */
-        $this->post('/logout', LogoutController::class);
+        $app->post('/logout', LogoutController::class);
 
         /**
          * Get module records
          */
-        $this
+        $app
             ->get('/module/{moduleName}', 'Api\V8\Controller\ModuleController:getModuleRecords')
             ->add($paramsMiddlewareFactory->bind(GetModulesParams::class));
 
         /**
          * Get a module record
          */
-        $this
+        $app
             ->get('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:getModuleRecord')
             ->add($paramsMiddlewareFactory->bind(GetModuleParams::class));
 
         /**
          * Create a module record
          */
-        $this
+        $app
             ->post('/module', 'Api\V8\Controller\ModuleController:createModuleRecord')
             ->add($paramsMiddlewareFactory->bind(CreateModuleParams::class));
 
         /**
          * Update a module record
          */
-        $this
+        $app
             ->patch('/module', 'Api\V8\Controller\ModuleController:updateModuleRecord')
             ->add($paramsMiddlewareFactory->bind(UpdateModuleParams::class));
 
         /**
          * Delete a module record
          */
-        $this
+        $app
             ->delete('/module/{moduleName}/{id}', 'Api\V8\Controller\ModuleController:deleteModuleRecord')
             ->add($paramsMiddlewareFactory->bind(DeleteModuleParams::class));
 
         /**
          * Get relationships
          */
-        $this
+        $app
             ->get(
                 '/module/{moduleName}/{id}/relationships/{relationshipName}',
                 'Api\V8\Controller\RelationshipController:getRelationship'
@@ -79,7 +79,7 @@ $app->group('', function () use ($app) {
         /**
          * Create relationship
          */
-        $this
+        $app
             ->post(
                 '/module/{moduleName}/{id}/relationships',
                 'Api\V8\Controller\RelationshipController:createRelationship'
@@ -89,7 +89,8 @@ $app->group('', function () use ($app) {
         /**
          * Delete relationship
          */
-        $this
+
+        $app
             ->delete(
                 '/module/{moduleName}/{id}/relationships',
                 'Api\V8\Controller\RelationshipController:deleteRelationship'

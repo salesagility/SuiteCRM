@@ -240,7 +240,6 @@ class apiTester extends \Codeception\Actor
         ]);
 
         $response = json_decode($this->grabResponse(), true);
-
         $this->setHeader('Authorization', sprintf('%s %s', $response['token_type'], $response['access_token']));
         $this->setHeader('Content-Type', \Api\V8\Controller\BaseController::MEDIA_TYPE);
 

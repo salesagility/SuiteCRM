@@ -79,7 +79,7 @@ script:
   - openssl rsa -in Api/V8/OAuth2/private.key -pubout -out Api/V8/OAuth2/public.key
   - sudo chmod 600 Api/V8/OAuth2/private.key Api/V8/OAuth2/public.key
   # Run API functional tests
-  - ./vendor/bin/codecept run api --steps
+  - ./vendor/bin/codecept run tests/api/V8/ -f -vvv;
   # RUN Basic Acceptance test
   - sudo chmod -R 777 .
   - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
