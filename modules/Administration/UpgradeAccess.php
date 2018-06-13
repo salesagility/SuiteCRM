@@ -74,7 +74,7 @@ RedirectMatch 403 {$ignoreCase}/+files\.md5\$
     # RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
     RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
-    RewriteRule ^Api/V8/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 # END SUGARCRM RESTRICTIONS
 EOQ;
