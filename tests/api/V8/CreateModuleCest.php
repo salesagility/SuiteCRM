@@ -31,7 +31,7 @@ class CreateModuleCest
         $payload = $iterator->offsetGet('payload');
 
         $id = create_guid();
-        $endpoint = $I->getInstanceURL() . '/Api/index.php/V8/module';
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
         $response = [
             'type' => \Account::class,
         ];
