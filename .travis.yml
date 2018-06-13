@@ -89,7 +89,7 @@ after_script:
   - cat suitecrm.log
   - sudo cat /var/log/apache2/error.log
   - echo $TRAVIS_COMMIT_RANGE
-  - sudo cat .htacess
+  - sudo cat .htaccess
 
 branches:
   only:
