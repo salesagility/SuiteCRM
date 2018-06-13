@@ -505,7 +505,8 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
                         }
                         else
                         {
-                            $button_contents[] = '';
+                            $_content = $layout_manager->widgetDisplay($list_field);
+                            $button_contents[] = (empty($_content)) ? '' : $_content;
                         }
                 	} else {
                			$count++;
