@@ -425,7 +425,10 @@ class ModuleBuilderFieldsCest
         $detailView->waitForDetailViewVisible();
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
-        $I->clickWithLeftButton('.clearSearchIcon');
         $listView->waitForListViewVisible();
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $listView->fillField('#name_basic', '');
+        $listView->click('Search', '.submitButtons');
     }
 }
