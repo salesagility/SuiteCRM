@@ -670,6 +670,8 @@ class MysqlManager extends DBManager
                 return $string . ' ' . $operation . ' INTERVAL ' . abs($getUserUTCOffset) . ' MINUTE';
             case 'avg':
                 return "avg($string)";
+            case 'now':
+                return 'NOW()';
         }
 
         return $string;

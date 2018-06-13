@@ -154,6 +154,14 @@ class EmailsController extends SugarController
                 }
             }
         }
+        if (isset($_REQUEST['relatedModule']) && isset($_REQUEST['relatedId'])){
+            $relateBean = BeanFactory::getBean($_REQUEST['relatedModule'], $_REQUEST['relatedId']);
+            $relateLine = '<input type="hidden" class="email-relate-target" ';
+            $relateLine .= 'data-relate-module="' . $_REQUEST['relatedModule'] . '" ';
+            $relateLine .= 'data-relate-id="' . $_REQUEST['relatedId'] . '" ';
+            $relateLine .= 'data-relate-name="' . $relateBean->name . '">';
+            echo $relateLine;
+        }
     }
 
     /**
@@ -448,8 +456,9 @@ class EmailsController extends SugarController
                 'type' => 'system',
                 'id' => $system->id,
                 'attributes' => array(
+                    'reply_to' => $system->smtp_from_addr,
                     'from' => $system->mail_smtpuser,
-                    'name' => $system->name,
+                    'name' => $system->smtp_from_name,
                     'oe' => $system->mail_smtpuser,
                 ),
                 'prepend' => false,

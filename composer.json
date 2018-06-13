@@ -27,7 +27,8 @@
     "onelogin/php-saml": "3.0.0.x-dev as 3.0.0",
     "google/recaptcha": "^1.1",
     "symfony/options-resolver": "^3.4",
-    "symfony/validator": "^3.4"
+    "symfony/validator": "^3.4",
+    "ezyang/htmlpurifier": "^4.10"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",

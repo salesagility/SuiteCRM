@@ -398,13 +398,13 @@ class AOW_WorkFlow extends Basic
                     if (false === $params) {
                         LoggerManager::getLogger()->fatal('Unable to serialize a condition value for AOW WorkFlow / build quiery where. Condition value was: ' . $condition->value);
                     }
-                    if(isset($param[0]) && $params[0] == 'now'){
+                    if(isset($params[0]) && $params[0] == 'now'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             $value  = 'GetUTCDate()';
                         } else {
                             $value = 'UTC_TIMESTAMP()';
                         }
-                    } else if(isset($param[0]) && $params[0] == 'today'){
+                    } else if(isset($params[0]) && $params[0] == 'today'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             //$field =
                             $value  = 'CAST(GETDATE() AS DATE)';

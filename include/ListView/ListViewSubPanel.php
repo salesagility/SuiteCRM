@@ -489,7 +489,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                 }
                                 else {
                                     if (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink') {
-                                        $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
+
+                                        if (isset($list_field['fields']['EMAIL1_LINK'])) {
+                                            $widget_contents[$aVal][$field_name] = $list_field['fields']['EMAIL1_LINK'];
+                                        }
+                                        else {
+                                            $widget_contents[$aVal][$field_name] = $layout_manager->widgetDisplay($list_field);
+                                        }
                                     }
                                 }
 
