@@ -53,12 +53,12 @@ before_script:
   # Configure apache virtual hosts - images with PHP 7 or above
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/000-default.conf
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  # Additional PHP config
+  - phpenv config-add travis.php.ini
   - sudo service apache2 restart
   # Install composer
   - composer install
   - ./vendor/bin/codecept build
-  # Additional PHP config
-  - phpenv config-add travis.php.ini
 
 script:
   # Run the silent installer or the wizard installer ?
@@ -89,6 +89,7 @@ after_script:
   - cat suitecrm.log
   - sudo cat /var/log/apache2/error.log
   - echo $TRAVIS_COMMIT_RANGE
+  - sudo cat .htacess
 
 branches:
   only:

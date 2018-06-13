@@ -57,7 +57,7 @@ class CreateModuleCest
      * @dataProvider shouldNotWorkDataProvider
      * @throws \Exception
      */
-    public function shouldNotWork(ApiTester $I, Example $example)
+    public function shouldNotWork(apiTester $I, Example $example)
     {
         /** @var \ArrayIterator $iterator */
         $iterator = $example->getIterator();
