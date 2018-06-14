@@ -77,9 +77,9 @@ class EmailsCest
         $I->loginAsAdmin();
 
         // Check for HTML caching issue
-        $I->amOnUrl($webDriverHelper->getInstanceURL() . '/index.php?module=Emails&action=DetailView&record=eae65b87-6852-e43c-4213-5b213b39f2aa');
+        $I->amOnUrl($webDriverHelper->getInstanceURL() . 'index.php?module=Emails&action=DetailView&record=eae65b87-6852-e43c-4213-5b213b39f2aa');
         $I->see('Test Description 1');
-        $I->amOnUrl($webDriverHelper->getInstanceURL() . '/index.php?module=Emails&action=DetailView&record=eae65b87-6852-e43c-4213-5b213b39f2ab');
+        $I->amOnUrl($webDriverHelper->getInstanceURL() . 'index.php?module=Emails&action=DetailView&record=eae65b87-6852-e43c-4213-5b213b39f2ab');
         $I->see('Test Description 2');
     }
 }
