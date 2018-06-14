@@ -1,23 +1,23 @@
 <?php
 namespace Test\Api\V8;
 
-use apiTester;
+use ApiTester;
 use Codeception\Example;
 
 class CreateModuleCest
 {
     /**
-     * @param apiTester $I
+     * @param ApiTester $I
      *
      * @throws \Codeception\Exception\ModuleException
      */
-    public function _before(apiTester $I)
+    public function _before(ApiTester $I)
     {
         $I->login();
     }
 
     /**
-     * @param apiTester $I
+     * @param ApiTester $I
      * @param Example $example
      *
      * @dataProvider shouldWorkDataProvider
@@ -51,13 +51,13 @@ class CreateModuleCest
     }
 
     /**
-     * @param apiTester $I
+     * @param ApiTester $I
      * @param Example $example
      *
      * @dataProvider shouldNotWorkDataProvider
      * @throws \Exception
      */
-    public function shouldNotWork(apiTester $I, Example $example)
+    public function shouldNotWork(ApiTester $I, Example $example)
     {
         /** @var \ArrayIterator $iterator */
         $iterator = $example->getIterator();
