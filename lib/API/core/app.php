@@ -54,7 +54,7 @@ include_once __DIR__ . '/../../../include/SugarObjects/SugarConfig.php';
 include_once __DIR__ . '/../../../include/SugarLogger/SugarLogger.php';
 include_once __DIR__ . '/../../../include/SugarLogger/LoggerManager.php';
 
-SuiteCRM\ErrorMessage::log('Calling this area of API is depricated. Use http://[SuiteCRM_instance]/Api/V8... ', 'fatal');
+SuiteCRM\ErrorMessage::log('Calling this area of API is depricated. Use http://[SuiteCRM_instance]/Api/V8... ', 'deprecated');
 
 require_once __DIR__.'/../../../include/entryPoint.php';
 global $sugar_config;
