@@ -987,13 +987,15 @@ EOQ;
     RewriteBase {$basePath}
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
-    # RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
-    # RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-    RewriteRule ^Api/(.*?)$ Api/index.php/$1 [L]
+    
+    # --------- DEPRECATED --------
+    RewriteRule ^api/(.*?)$ lib/API/public/index.php/$1 [L]
+    RewriteRule ^api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+    # -----------------------------
+    
+    RewriteRule ^Api/access_token$ Api/index.php/access_token [L]
+    RewriteRule ^Api/V8/(.*?)$ Api/index.php/V8/$1 [L]
     RewriteRule ^Api/(.*)$ - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-    # RewriteCond %{REQUEST_FILENAME} !-d
-    # RewriteCond %{REQUEST_FILENAME} !-f
-    # RewriteRule ^Api/(.*)$ Api/index.php/$1 [QSA,L]
 </IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>

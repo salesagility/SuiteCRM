@@ -16,9 +16,9 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class apiTester extends \Codeception\Actor
+class ApiTester extends \Codeception\Actor
 {
-    use _generated\apiTesterActions;
+    use _generated\ApiTesterActions;
 
     const CONTENT_TYPE = 'Content-Type';
     const CONTENT_TYPE_JSON_API = 'application/vnd.api+json';

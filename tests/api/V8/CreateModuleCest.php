@@ -1,13 +1,13 @@
 <?php
 namespace Test\Api\V8;
 
-use apiTester;
+use ApiTester;
 use Codeception\Example;
 
 class CreateModuleCest
 {
     /**
-     * @param apiTester $I
+     * @param ApiTester $I
      *
      * @throws \Codeception\Exception\ModuleException
      */
@@ -17,7 +17,7 @@ class CreateModuleCest
     }
 
     /**
-     * @param apiTester $I
+     * @param ApiTester $I
      * @param Example $example
      *
      * @dataProvider shouldWorkDataProvider
@@ -51,7 +51,7 @@ class CreateModuleCest
     }
 
     /**
-     * @param apiTester $I
+     * @param ApiTester $I
      * @param Example $example
      *
      * @dataProvider shouldNotWorkDataProvider
