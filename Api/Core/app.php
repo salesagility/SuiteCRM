@@ -1,9 +1,8 @@
 <?php
-
-use Api\Core\Loader\ContainerLoader;
-use Api\Core\Loader\RouteLoader;
-use Slim\App;
-use Slim\Container;
+// Swagger needs this, but should remove - CORS
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
 // @codingStandardsIgnoreStart
 if (!defined('sugarEntry')) {
@@ -15,9 +14,8 @@ chdir(__DIR__ . '/../../');
 require_once __DIR__ . '/../../include/entryPoint.php';
 
 $slimSettings = require __DIR__ . '/Config/slim.php';
-$container = new Container($slimSettings);
-ContainerLoader::configure($container);
-$app = new App($container);
+$container = new \Slim\Container($slimSettings);
+\Api\Core\Loader\ContainerLoader::configure($container);
+$app = new \Slim\App($container);
 
-$loader = new RouteLoader();
-$loader->configureRoutes($app);
+\Api\Core\Loader\RouteLoader::configureRoutes($app);

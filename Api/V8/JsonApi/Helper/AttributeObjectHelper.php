@@ -31,7 +31,11 @@ class AttributeObjectHelper
 
         // using the ISO 8601 format for dates
         $attributes = array_map(function ($value) {                    
-            return is_string($value) ? (\DateTime::createFromFormat('Y-m-d H:i:s', $value) ? date(\DateTime::ATOM, strtotime($value)) : $value) : $value;
+            return is_string($value)
+                ? (\DateTime::createFromFormat('Y-m-d H:i:s', $value)
+                    ? date(\DateTime::ATOM, strtotime($value))
+                    : $value)
+                : $value;
         }, $bean->toArray());
 
         if ($fields !== null) {
