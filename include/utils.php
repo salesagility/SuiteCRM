@@ -3492,57 +3492,63 @@ function display_stack_trace($textOnly = false)
     }
 
     echo $out;
+    return $out;
 }
 
 function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext)
 {
     $error_msg = " $errstr occurred in <b>$errfile</b> on line $errline [" . date('Y-m-d H:i:s') . ']';
-    $halt_script = true;
-    switch ($errno) {
-        case 2048:
-            return; //depricated we have lots of these ignore them
-        case E_USER_NOTICE:
-        case E_NOTICE:
-            if (error_reporting() & E_NOTICE) {
-                $halt_script = false;
-                $type = 'Notice';
-            } else {
-                break;
-            }
-            break;
-        case E_USER_WARNING:
-        case E_COMPILE_WARNING:
-        case E_CORE_WARNING:
-        case E_WARNING:
 
+    switch ($errno) {
+//        case 2048:
+//            return; //depricated we have lots of these ignore them
+        case E_USER_NOTICE:
+            $type = 'User notice';
+        case E_NOTICE:
+            $type = 'Notice';
             $halt_script = false;
+            break;
+
+
+        case E_USER_WARNING:
+            $type = 'User warning';
+        case E_COMPILE_WARNING:
+            $type = 'Compile warning';
+        case E_CORE_WARNING:
+            $type = 'Core warning';
+        case E_WARNING:
             $type = 'Warning';
+            $halt_script = false;
             break;
 
         case E_USER_ERROR:
+            $type = 'User error';
         case E_COMPILE_ERROR:
+            $type = 'Compile error';
         case E_CORE_ERROR:
+            $type = 'Core error';
         case E_ERROR:
-
-            $type = 'Fatal Error';
+            $type = 'Error';
+            $halt_script = true;
             break;
 
         case E_PARSE:
-
             $type = 'Parse Error';
+            $halt_script = true;
             break;
 
         default:
             //don't know what it is might not be so bad
-            $halt_script = false;
             $type = "Unknown Error ($errno)";
+            $halt_script = false;
             break;
     }
-    $error_msg = '<b>' . $type . '</b>:' . $error_msg;
+    $error_msg = '<b>[' . $type . ']</b> ' . $error_msg;
     echo $error_msg;
-    display_stack_trace();
+    $trace = display_stack_trace();
+    \SuiteCRM\ErrorMessage::log("Catch an error: $error_msg \nTrace info:\n" . $trace);
     if ($halt_script) {
-        exit - 1;
+        exit(1);
     }
 }
 
@@ -3823,30 +3829,13 @@ function search_filter_rel_info(&$focus, $tar_rel_module, $relationship_name)
     //end function search_filter_rel_info
 }
 
+/**
+ * @param $module_name
+ * @return mixed
+ */
 function get_module_info($module_name)
 {
-    global $beanList;
-    global $dictionary;
-
-    //Get dictionary and focus data for module
-    $vardef_name = $beanList[$module_name];
-
-    if ($vardef_name == 'aCase') {
-        $class_name = 'Case';
-    } else {
-        $class_name = $vardef_name;
-    }
-
-    if (!file_exists('modules/' . $module_name . '/' . $class_name . '.php')) {
-        return;
-    }
-
-    include_once 'modules/' . $module_name . '/' . $class_name . '.php';
-
-    $module_bean = new $vardef_name();
-
-    return $module_bean;
-    //end function get_module_table
+    return BeanFactory::getBean($module_name);
 }
 
 /**
