@@ -99,5 +99,6 @@ class CampaignsCest
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
+        $listView->clearFilterButton();
     }
 }
