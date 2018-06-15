@@ -57,6 +57,7 @@ class Campaigns extends \AcceptanceTester
         $I->click('#wiz_submit_finish_button');
 
         // Step 4
+        $I->wait(3);
         $I->see('You have no associated targets in your selected target list(s) for this campaign. You can populate your list after finishing.');
         $Sidebar->clickSideBarAction('View Campaigns');
     }
@@ -117,9 +118,11 @@ class Campaigns extends \AcceptanceTester
         $I->selectOption('#inbound_email_id', 'Test_BounceHandling');
         $I->click('#date_start_trigger');
         $I->click('#callnav_today');
+        $I->wait(3);
         $I->click('#wiz_submit_button');
 
         // Step 6
+        $I->wait(3);
         $I->see('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
 
         // Populate target list
