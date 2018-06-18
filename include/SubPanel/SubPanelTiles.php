@@ -298,33 +298,27 @@ class SubPanelTiles
                 }
             }
 
-            $display = 'none';
             $div_display = $default_div_display;
-            $cookie_name =   $tab . '_v';
 
-            if (isset($thisPanel->_instance_properties['collapsed']) && $thisPanel->_instance_properties['collapsed'])
-            {
+            if (isset($thisPanel->_instance_properties['collapsed'])
+                && $thisPanel->_instance_properties['collapsed']) {
                 $div_display = 'none';
             }
 
-            if(isset($div_cookies[$cookie_name])){
-                // If defaultSubPanelExpandCollapse is set, ignore the cookie that remembers whether the panel is expanded or collapsed.
-                // To be used with the above 'collapsed' metadata setting so they will always be set the same when the page is loaded.
-                if(!isset($sugar_config['defaultSubPanelExpandCollapse']) || $sugar_config['defaultSubPanelExpandCollapse'] == false)
-                {
-                    $div_display = 	$div_cookies[$cookie_name];
-                }
-            }
-
-            if(!empty($sugar_config['hide_subpanels']) or $thisPanel->isDefaultHidden()) {
+            if (!empty($sugar_config['hide_subpanels']) || $thisPanel->isDefaultHidden()) {
                 $div_display = 'none';
             }
 
-            if($div_display == 'none'){
-                $opp_display  = 'inline';
+            $cookie_name = $this->module . '_' . $tab . '_v';
+            if (isset($div_cookies[$cookie_name])) {
+                $div_display = $div_cookies[$cookie_name] === 'false' ? 'none' : '';
+            }
+
+            if ($div_display == 'none') {
+                $opp_display = 'inline';
                 $tabs_properties[$t]['expanded_subpanels'] = false;
-            } else{
-                $opp_display  = 'none';
+            } else {
+                $opp_display = 'none';
                 $tabs_properties[$t]['expanded_subpanels'] = true;
             }
 
@@ -344,7 +338,7 @@ class SubPanelTiles
                 $tabs_properties[$t]['show_icon_html'] = $show_icon_html;
                 $tabs_properties[$t]['hide_icon_html'] = $hide_icon_html;
 
-                $max_min = "<a name=\"$tab\"> </a><span id=\"show_link_".$tab."\" style=\"display: $opp_display\"><a href='#' class='utilsLink' onclick=\"current_child_field = '".$tab."';showSubPanel('".$tab."',null,null,'".$layout_def_key."');document.getElementById('show_link_".$tab."').style.display='none';document.getElementById('hide_link_".$tab."').style.display='';return false;\">"
+                $max_min = "<a name=\"$tab\"> </a><span id=\"show_link_".$tab."\" style=\"display: $opp_display\"><a href='#' class='utilsLink' onclick=\"current_child_field = '".$tab."';showSubPanel('".$tab."',null,true,'".$layout_def_key."');document.getElementById('show_link_".$tab."').style.display='none';document.getElementById('hide_link_".$tab."').style.display='';return false;\">"
                     . "" . $show_icon_html . "</a></span>";
                 $max_min .= "<span id=\"hide_link_".$tab."\" style=\"display: $div_display\"><a href='#' class='utilsLink' onclick=\"hideSubPanel('".$tab."');document.getElementById('hide_link_".$tab."').style.display='none';document.getElementById('show_link_".$tab."').style.display='';return false;\">"
                     . "" . $hide_icon_html . "</a></span>";

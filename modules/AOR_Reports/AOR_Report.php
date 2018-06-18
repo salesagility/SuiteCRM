@@ -107,7 +107,7 @@ class AOR_Report extends Basic
         // TODO: process of saveing the fields and conditions is too long so we will have to make some optimization on save_lines functions
         set_time_limit(3600);
 
-        if (empty($this->id)) {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aor_conditions_id']);
             unset($_POST['aor_fields_id']);
         }
@@ -455,7 +455,7 @@ class AOR_Report extends Basic
                     '_USD') && isset($field_module->field_defs['currency_id'])
             ) {
                 if ((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
-                    $query['select'][$table_alias . '_currency_id'] = $table_alias . '_cstm' . ".currency_id AS '" . $table_alias . "_currency_id'";
+                    $query_array['select'][$table_alias . '_currency_id'] = $table_alias . '_cstm' . ".currency_id AS '" . $table_alias . "_currency_id'";
                 } else {
                     $query_array['select'][$table_alias . '_currency_id'] = $table_alias . ".currency_id AS '" . $table_alias . "_currency_id'";
                 }
@@ -465,7 +465,7 @@ class AOR_Report extends Basic
                 $select_field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $field->field;
                 // Fix for #1251 - added a missing parameter to the function call
                 $query_array = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm',
-                    $table_alias, $field_module, 'custom', $query);
+                    $table_alias, $field_module, 'custom', $query_array);
             } else {
                 $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
             }
@@ -992,6 +992,11 @@ class AOR_Report extends Basic
             ++$i;
         }
 
+        // Remove last delimiter of the line
+        if ($field->display) {
+            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
+        }
+            
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
 
@@ -1009,6 +1014,8 @@ class AOR_Report extends Basic
                     $csv .= $delimiter;
                 }
             }
+            // Remove last delimiter of the line
+            $csv = substr($csv, 0, strlen($csv) - strlen($delimiter));
         }
 
         $csv = $GLOBALS['locale']->translateCharset($csv, 'UTF-8', $GLOBALS['locale']->getExportCharset());
@@ -1206,6 +1213,7 @@ class AOR_Report extends Basic
                 } else {
                     $select_field = $this->db->quoteIdentifier($table_alias) . '.' . $field->field;
                 }
+                $select_field_db = $select_field;
 
                 if ($field->format && in_array($data['type'], array('date', 'datetime', 'datetimecombo'))) {
                     if (in_array($data['type'], array('datetime', 'datetimecombo'))) {
@@ -1230,7 +1238,12 @@ class AOR_Report extends Basic
                 }
 
                 if ($field->sort_by != '') {
-                    $query['sort_by'][] = $select_field . " " . $field->sort_by;
+                    // If the field is a date, sort by the natural date and not the user-formatted date
+                    if ($data['type'] == 'date' || $data['type'] == 'datetime') {
+                        $query['sort_by'][] = $select_field_db . " " . $field->sort_by;
+                    } else {
+                        $query['sort_by'][] = $select_field . " " . $field->sort_by;
+                    }
                 }
 
                 $query['select'][] = $select_field . " AS '" . $field->label . "'";
@@ -1577,6 +1590,14 @@ class AOR_Report extends Basic
                     }
 
                     if ($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
+                        if(!isset($value)) {
+                            $GLOBALS['log']->warn(
+                                $condition->field
+                                . ' value is not set, assuming empty string value'
+                            );
+                            $value = '';
+                        }
+
                         $value = "{$value} OR {$field} IS NULL)";
                         $field = "(" . $field;
                     }

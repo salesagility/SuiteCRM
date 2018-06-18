@@ -248,11 +248,13 @@ class actionCreateRecord extends actionBase {
                                 if($params['value'][$key][0] === 'now'){
                                     $date = gmdate($dformat);
                                 } else if($params['value'][$key][0] === 'field'){
-                                    $date = $record->fetched_row[$params['field'][$key]];
+                                    $dateToUse = $params['field'][$key];
+                                    $date = $record->$dateToUse;
                                 } else if ($params['value'][$key][0] === 'today') {
                                     $date = $params['value'][$key][0];
                                 } else {
-                                    $date = $bean->fetched_row[$params['value'][$key][0]];
+                                    $dateToUse = $params['value'][$key][0];
+                                    $date = $bean->$dateToUse;
                                 }
 
                                 if($params['value'][$key][1] !== 'now'){

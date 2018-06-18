@@ -564,7 +564,38 @@ class Email extends SugarBean {
 		        $this->type = 'out';
 		        $this->status = 'sent';
 			}
-        }
+
+        // This code is 7.8.x LTS specific, from 7.9 onwards it is found in EmailsController and can be deleted here
+        if (!empty($_REQUEST['parent_type']) && !empty($_REQUEST['parent_id'])) {
+            $macro_nv = array();
+            $focusName = $request['parent_type'];
+            $focus = BeanFactory::getBean($focusName, $request['parent_id']);
+            if ($this->module_dir == 'Accounts') {
+                $focusName = 'Accounts';
+            }
+
+            $emailTemplate = BeanFactory::getBean(
+                'EmailTemplates',
+                isset($request['emails_email_templates_idb']) ?
+                    $request['emails_email_templates_idb'] :
+                    null
+            );
+            $templateData = $emailTemplate->parse_email_template(
+                array(
+                    'subject' => $this->name,
+                    'body_html' => $this->description_html,
+                    'body' => $this->description,
+                ),
+                $focusName,
+                $focus,
+                $macro_nv
+            );
+
+            $this->description_html = $templateData['body_html'];
+            $this->description = $templateData['body'];
+
+        } // End of 7.8.x code
+    }
 
         if(isset($_REQUEST['parent_type']) && empty($_REQUEST['parent_type']) &&
 			isset($_REQUEST['parent_id']) && empty($_REQUEST['parent_id']) ) {
@@ -938,7 +969,10 @@ class Email extends SugarBean {
 			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
 				$sentFolder = $ie->get_stored_options("sentFolder");
 				if (!empty($sentFolder)) {
-					$data = $mail->CreateHeader() . "\r\n" . $mail->CreateBody() . "\r\n";
+					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+					$emailbody = $mail->CreateBody();
+					$emailheader = $mail->CreateHeader();
+					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
 					$ie->mailbox = $sentFolder;
 					if ($ie->connectMailserver() == 'true') {
 						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
@@ -2440,7 +2474,7 @@ class Email extends SugarBean {
 			$this->status_name = $app_list_strings['dom_email_status'][$this->status];
 		}
 
-		if ( empty($this->name ) &&  empty($_REQUEST['record'])) {
+		if ( empty($this->name ) &&  empty($_REQUEST['record']) && !empty($mod_strings['LBL_NO_SUBJECT'])) {
 			$this->name = $mod_strings['LBL_NO_SUBJECT'];
 		}
 

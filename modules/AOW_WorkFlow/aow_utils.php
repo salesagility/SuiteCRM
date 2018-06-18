@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -141,23 +141,32 @@ function getRelModuleFields($module, $rel_field, $view='EditView',$value = ''){
 
 }
 
-function getRelatedModule($module, $rel_field){
-    global $beanList;
+/**
+ * @param string $module
+ * @param string $linkFields
+ * @return string
+ */
+function getRelatedModule($module, $linkFields)
+{
+    $linkField = explode(':', $linkFields, 2);
 
-    if($module == $rel_field){
-        return $module;
+    $link = $linkField[0];
+    $relatedModule = $module;
+
+    if ($module === $link) {
+        $relatedModule = $module;
+    } else {
+        $bean = BeanFactory::newBean($module);
+        if ($bean && $bean->load_relationship($link)) {
+            $relatedModule = $bean->$link->getRelatedModuleName();
+        }
     }
 
-    $mod = new $beanList[$module]();
-
-    if(isset($arr['module']) && $arr['module'] != '') {
-        return $arr['module'];
-    } else if($mod->load_relationship($rel_field)){
-        return $mod->$rel_field->getRelatedModuleName();
+    if (!empty($linkField[1])) {
+        return getRelatedModule($relatedModule, $linkField[1]);
     }
 
-    return $module;
-
+    return $relatedModule;
 }
 
 function getModuleTreeData($module){
@@ -295,14 +304,50 @@ function getValidFieldsTypes($module, $field){
 }
 
 
-function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = '', $params= array()){
-    global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
+function getModuleField(
+    $module,
+    $fieldname,
+    $aow_field,
+    $view='EditView',
+    $value = '',
+    $alt_type = '',
+    $currency_id = '',
+    $params= array()
+){
+    global $current_language;
+    global $app_strings;
+    global $app_list_strings;
+    global $current_user;
+    global $beanFiles;
+    global $beanList;
 
     // use the mod_strings for this module
     $mod_strings = return_module_language($current_language,$module);
 
-    // set the filename for this control
-    $file = create_cache_directory('modules/AOW_WorkFlow/') . $module . $view . $alt_type . $fieldname . '.tpl';
+    // if aor condition
+    if(strstr($aow_field, 'aor_conditions_value') !== false) {
+        // get aor condition row
+        $aor_row = str_replace('aor_conditions_value', '', $aow_field);
+        $aor_row = str_replace('[', '', $aor_row);
+        $aor_row = str_replace(']', '', $aor_row);
+        // set the filename for this control
+        $file = create_cache_directory('modules/AOW_WorkFlow/')
+            . $module
+            . $view
+            . $alt_type
+            . $fieldname
+            . $aor_row
+            . '.tpl';
+    } else {
+        //  its probably result of the report
+        // set the filename for this control
+        $file = create_cache_directory('modules/AOW_WorkFlow/')
+            . $module
+            . $view
+            . $alt_type
+            . $fieldname
+            . '.tpl';
+    }
 
     $displayParams = array();
 
@@ -336,10 +381,13 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 
         //$vardef['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits', $current_user);
 
-        //TODO Fix datetimecomebo
-        //temp work around
+        if( $vardef['type'] == 'datetime') {
+            $vardef['type'] = 'datetimecombo';
+        }
         if( $vardef['type'] == 'datetimecombo') {
-            $vardef['type'] = 'datetime';
+            $displayParams['originalFieldName'] = $aow_field;
+            // Replace the square brackets by a deliberately complex alias to avoid JS conflicts
+            $displayParams['idName'] = createBracketVariableAlias($aow_field);
         }
 
         // trim down textbox display
@@ -399,6 +447,13 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
                 '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
         }
         if ($view == 'DetailView' && $vardef['type'] == 'image') {
+	     // Because TCPDF could not read image from download entryPoint, we need change entryPoint link to image path to resolved issue Image is not showing in PDF report
+	   if($_REQUEST['module'] == 'AOR_Reports' && $_REQUEST['action'] == 'DownloadPDF') {
+                global $sugar_config;
+                $upload_dir = isset($sugar_config['upload_dir']) ? $sugar_config['upload_dir'] : 'upload/';
+                $contents = str_replace('index.php?entryPoint=download&id=', $upload_dir, $contents);
+                $contents = str_replace('&type={$module}', '', $contents);
+            }
             $contents = str_replace('{$fields.id.value}', '{$record_id}', $contents);
         }
         // hack to disable one of the js calls in this control
@@ -535,14 +590,18 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value);
-        //$fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
-        //$fieldlist[$fieldname]['value'] = $value;
+        $displayValue = $timedate->to_display_date_time($value);
+        $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else {
         $fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['name'] = $aow_field;
 
+    }
+
+    if (isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' ) {
+        $fieldlist[$aow_field]['aliasId'] = createBracketVariableAlias($aow_field);
+        $fieldlist[$aow_field]['originalId'] = $aow_field;
     }
 
     if(isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView'){
@@ -578,13 +637,25 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $ss->assign("MOD", $mod_strings);
     $ss->assign("APP", $app_strings);
     $ss->assign("module", $module);
-    if ($params['record_id']) {
+    if (!empty($params['record_id'])) {
         $ss->assign("record_id", $params['record_id']);
     }
 
     return $ss->fetch($file);
 }
 
+/**
+ *  Convert a bracketed variable into a string that can become a JS variable
+ *
+ * @param string $variable
+ * @return string
+ */
+function createBracketVariableAlias($variable)
+{
+    $replaceRightBracket = str_replace(']', '', $variable);
+    $replaceLeftBracket =  str_replace('[', '', $replaceRightBracket);
+    return $replaceLeftBracket;
+}
 
 /**
  * @param string $module

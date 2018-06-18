@@ -69,13 +69,13 @@ function getJSLanguage()
 
         return;
     }
-    if (empty($_REQUEST['module']) || $_REQUEST['module'] === 'app_strings') {
+    if (empty($_REQUEST['modulename']) || $_REQUEST['modulename'] === 'app_strings') {
         $file = sugar_cached('jsLanguage/').$lang.'.js';
         if (!is_file($file)) {
             jsLanguage::createAppStringsCache($lang);
         }
     } else {
-        $module = clean_path($_REQUEST['module']);
+        $module = clean_path($_REQUEST['modulename']);
         $fullModuleList = array_merge($GLOBALS['moduleList'], $GLOBALS['modInvisList']);
         if (!isset($app_list_strings['moduleList'][$module]) && !in_array($module, $fullModuleList)) {
             echo 'Invalid module specified';

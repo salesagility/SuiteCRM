@@ -231,7 +231,7 @@ class RelationshipHandler extends Relationship {
 
 
 
-	function build_related_list($type="base"){
+	public function build_related_list($type="base", &$template, $row_offset = 0, $limit = -1){
 		//type can be base, rel1
 
 		$target_list = "";

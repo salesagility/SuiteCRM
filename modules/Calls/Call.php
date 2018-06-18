@@ -297,8 +297,9 @@ class Call extends SugarBean {
 	{
 		// First, get the list of IDs.
 		$query = "SELECT contact_id as id from calls_contacts where call_id='$this->id' AND deleted=0";
+		$contact = new Contact();
 
-		return $this->build_related_list($query, new Contact());
+		return $this->build_related_list($query, $contact);
 	}
 
 

@@ -177,8 +177,8 @@ HTML;
 					var smtpssl  = document.getElementById('mail_smtpssl').value;
 					var mailsmtpauthreq = document.getElementById('mail_smtpauth_req');
 					var mail_sendtype = 'SMTP'; 
-                                                                var adminNotifyFromAddress = document.getElementById('smtp_from_name').value ? document.getElementById('smtp_from_name').value : '$adminNotifyFromAddress';
-                                                                var adminNotifyFromName = document.getElementById('smtp_from_addr').value ? document.getElementById('smtp_from_addr').value :'$adminNotifyFromName';
+                                                                var adminNotifyFromAddress = document.getElementById('smtp_from_addr').value ? document.getElementById('smtp_from_addr').value :'$adminNotifyFromName';
+                                                                var adminNotifyFromName = document.getElementById('smtp_from_name').value ? document.getElementById('smtp_from_name').value : '$adminNotifyFromAddress';
 					var postDataString =
 						'mail_type=system&' +
 						'mail_sendtype=' + mail_sendtype + '&' +
