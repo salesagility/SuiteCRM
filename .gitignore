@@ -54,7 +54,7 @@ tramp
 .idea/
 .phpstorm.meta.php
 # NetBeans
-nbproject/private/
+nbproject/
 # Vim
 .*.sw[a-z]
 *.un~
