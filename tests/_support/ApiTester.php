@@ -230,7 +230,7 @@ class ApiTester extends \Codeception\Actor
      */
     public function login()
     {
-        $this->sendPOST($this->getInstanceURL() . '/Api/access_token', [
+        $this->sendPOST($this->getInstanceURL() . 'Api/access_token', [
             'username' => $this->getAdminUser(),
             'password' => $this->getAdminPassword(),
             'grant_type' => 'password',
@@ -280,6 +280,6 @@ class ApiTester extends \Codeception\Actor
     {
         $db = DBManagerFactory::getInstance();
         $query = sprintf("DELETE FROM accounts WHERE id = %s", $db->quoted($id));
-        DBManagerFactory::getInstance()->query($query);
+        $db->query($query);
     }
 }

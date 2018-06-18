@@ -52,6 +52,6 @@ class DeleteRelationshipDataParams extends BaseParam
                     $options->offsetGet('id')
                 );
             })
-            ->setAllowedTypes('relatedBean', [\SugarBean::class]);
+            ->setAllowedTypes('relatedBean', \SugarBean::class);
     }
 }

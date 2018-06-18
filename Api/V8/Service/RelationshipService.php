@@ -40,10 +40,9 @@ class RelationshipService
      */
     public function getRelationship(GetRelationshipParams $params)
     {
-        $sourceBean = $params->getSourceBean();
-        $relationship = $params->getRelationshipName();
-        $relatedBeans = $this->beanManager->getRelatedBeans($sourceBean, $relationship);
-
+        $bean = $params->getBean();
+        $relationship = $params->getLinkedFieldName();
+        $relatedBeans = $bean->get_linked_beans($relationship);
         $response = new DocumentResponse();
 
         if (!$relatedBeans) {
@@ -52,7 +51,7 @@ class RelationshipService
                     'message' => sprintf(
                         'Relationship %s of module %s is empty',
                         $relationship,
-                        $sourceBean->getObjectName()
+                        $bean->getObjectName()
                     )
                 ]
             ));
@@ -69,7 +68,7 @@ class RelationshipService
             }
 
             $response->setMeta(new MetaResponse(
-                ['message' => sprintf('%s relationship of %s module', $relationship, $sourceBean->getObjectName())]
+                ['message' => sprintf('Relationship %s of %s module', $relationship, $bean->getObjectName())]
             ));
             $response->setData($data);
         }
@@ -85,10 +84,16 @@ class RelationshipService
     public function createRelationship(CreateRelationshipParams $params)
     {
         $sourceBean = $params->getSourceBean();
-        $relatedBean = $params->getData()->getRelatedBean();
-        $relationship = $params->getData()->getType();
+        $relatedBean = $params->getRelatedBean();
+        $linkField = \Relationship::retrieve_by_modules(
+            $sourceBean->module_name,
+            $relatedBean->module_name,
+            $sourceBean->db
+        );
 
-        $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $relationship);
+        $pfff = $sourceBean->get_linked_fields();
+
+        $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $linkField);
 
         $dataResponse = new DataResponse($relatedBean->getObjectName(), $relatedBean->id);
         $dataResponse->setAttributes($this->attributeHelper->getAttributes($relatedBean));

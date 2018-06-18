@@ -71,7 +71,7 @@ $app->group('', function () use ($app) {
          */
         $app
             ->get(
-                '/module/{moduleName}/{id}/relationships/{relationshipName}',
+                '/module/{moduleName}/{id}/relationships/{linkFieldName}',
                 'Api\V8\Controller\RelationshipController:getRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(GetRelationshipParams::class));
@@ -81,7 +81,7 @@ $app->group('', function () use ($app) {
          */
         $app
             ->post(
-                '/module/{moduleName}/{id}/relationships',
+                '/module/{moduleName}/{id}/relationships/{linkFieldName}',
                 'Api\V8\Controller\RelationshipController:createRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(CreateRelationshipParams::class));
@@ -89,10 +89,9 @@ $app->group('', function () use ($app) {
         /**
          * Delete relationship
          */
-
         $app
             ->delete(
-                '/module/{moduleName}/{id}/relationships',
+                '/module/{moduleName}/{id}/relationships/{linkFieldName}/{relationshipId}',
                 'Api\V8\Controller\RelationshipController:deleteRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(DeleteRelationShipParams::class));

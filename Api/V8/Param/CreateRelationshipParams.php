@@ -41,6 +41,14 @@ class CreateRelationshipParams extends BaseParam
     }
 
     /**
+     * @return \SugarBean
+     */
+    public function getRelatedBean()
+    {
+        return $this->parameters['relatedBean'];
+    }
+
+    /**
      * @inheritdoc
      */
     protected function configureParameters(OptionsResolver $resolver)
@@ -55,7 +63,7 @@ class CreateRelationshipParams extends BaseParam
 
         $resolver
             ->setRequired('data')
-            ->setAllowedTypes('data', ['array'])
+            ->setAllowedTypes('data', 'array')
             ->setAllowedValues('data', $this->validatorFactory->createClosureForIterator([
                 new Assert\NotBlank(),
             ]))
@@ -74,6 +82,19 @@ class CreateRelationshipParams extends BaseParam
                     $options->offsetGet('id')
                 );
             })
-            ->setAllowedTypes('sourceBean', [\SugarBean::class]);
+            ->setAllowedTypes('sourceBean', \SugarBean::class);
+
+
+        $resolver
+            ->setDefined('relatedBean')
+            ->setDefault('relatedBean', function (Options $options) {
+                $dataParams = $options->offsetGet('data');
+
+                return $this->beanManager->getBeanSafe(
+                    $dataParams->getType(),
+                    $dataParams->getId()
+                );
+            })
+            ->setAllowedTypes('relatedBean', \SugarBean::class);
     }
 }

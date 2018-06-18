@@ -10,7 +10,7 @@ class RouteLoader
      *
      * @param App $app
      */
-    public function configureRoutes(App $app)
+    public static function configureRoutes(App $app)
     {
         require __DIR__ . '/../../V8/Config/routes.php';
     }

@@ -2,7 +2,6 @@
 namespace Api\V8\Param;
 
 use Api\V8\Param\Options as ParamOption;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GetRelationshipDataParams extends BaseParam
@@ -16,11 +15,11 @@ class GetRelationshipDataParams extends BaseParam
     }
 
     /**
-     * @return \SugarBean
+     * @return string
      */
-    public function getRelatedBean()
+    public function getId()
     {
-        return $this->parameters['relatedBean'];
+        return $this->parameters['id'];
     }
 
     /**
@@ -32,17 +31,8 @@ class GetRelationshipDataParams extends BaseParam
             $resolver,
             [
                 ParamOption\Type::class,
+                ParamOption\Id::class,
             ]
         );
-
-        $resolver
-            ->setDefined('relatedBean')
-            ->setDefault('relatedBean', function (Options $options) {
-                $bean = $this->beanManager->newBeanSafe($options->offsetGet('type'));
-                $bean->save();
-
-                return $bean;
-            })
-            ->setAllowedTypes('relatedBean', [\SugarBean::class]);
     }
 }

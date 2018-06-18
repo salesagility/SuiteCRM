@@ -30,11 +30,11 @@ class PageParams extends BaseParam
     {
         $resolver
             ->setDefined('size')
-            ->setAllowedTypes('size', ['string']);
+            ->setAllowedTypes('size', 'string');
 
         $resolver
             ->setDefined('number')
-            ->setAllowedTypes('number', ['string'])
+            ->setAllowedTypes('number', 'string')
             ->setAllowedValues('number', $this->validatorFactory->createClosure([
                 new Assert\GreaterThan(0),
                 new Assert\LessThanOrEqual(BeanManager::MAX_RECORDS_PER_PAGE),

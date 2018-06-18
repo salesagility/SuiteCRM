@@ -4,6 +4,7 @@ namespace Api\V8\Param;
 use Api\V8\Param\Options as ParamOption;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class GetRelationshipParams extends BaseParam
 {
@@ -26,29 +27,22 @@ class GetRelationshipParams extends BaseParam
     /**
      * @return string
      */
-    public function getRelationshipName()
+    public function getLinkedFieldName()
     {
-        return $this->parameters['relationshipName'];
+        return $this->parameters['linkFieldName'];
     }
 
     /**
      * @return \SugarBean
      */
-    public function getSourceBean()
+    public function getBean()
     {
-        return $this->parameters['sourceBean'];
-    }
-
-    /**
-     * @return \SugarBean
-     */
-    public function getRelatedBean()
-    {
-        return $this->parameters['relatedBean'];
+        return $this->parameters['bean'];
     }
 
     /**
      * @inheritdoc
+     * @throws \RuntimeException When relationship cannot be loaded.
      */
     protected function configureParameters(OptionsResolver $resolver)
     {
@@ -61,24 +55,35 @@ class GetRelationshipParams extends BaseParam
         );
 
         $resolver
-            ->setRequired('relationshipName')
-            ->setAllowedTypes('relationshipName', ['string']);
-
-        $resolver
-            ->setDefined('sourceBean')
-            ->setDefault('sourceBean', function (Options $options) {
+            ->setDefined('bean')
+            ->setDefault('bean', function (Options $options) {
                 return $this->beanManager->getBeanSafe(
                     $options->offsetGet('moduleName'),
                     $options->offsetGet('id')
                 );
             })
-            ->setAllowedTypes('sourceBean', [\SugarBean::class]);
+            ->setAllowedTypes('bean', [\SugarBean::class]);
 
         $resolver
-            ->setDefined('relatedBean')
-            ->setDefault('relatedBean', function (Options $options) {
-                return $this->beanManager->newBeanSafe($options->offsetGet('relationshipName'));
-            })
-            ->setAllowedTypes('relatedBean', [\SugarBean::class]);
+            ->setRequired('linkFieldName')
+            ->setAllowedTypes('linkFieldName', ['string'])
+            ->setAllowedValues('linkFieldName', $this->validatorFactory->createClosure([
+                new Assert\NotBlank(),
+                new Assert\Regex([
+                    'pattern' => ParamOption\ModuleName::REGEX_MODULE_NAME_PATTERN,
+                    'match' => false,
+                ]),
+            ]))
+            ->setNormalizer('linkFieldName', function (Options $options, $value) {
+                $bean = $options->offsetGet('bean');
+
+                if (!$bean->load_relationship($value)) {
+                    throw new \RuntimeException(
+                        sprintf('Cannot load relationship %s for %s module', $value, $bean->getObjectName())
+                    );
+                }
+
+                return $value;
+            });
     }
 }

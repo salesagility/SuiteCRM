@@ -105,24 +105,6 @@ class BeanManager
     }
 
     /**
-     * @param \SugarBean $bean
-     * @param string $relationship
-     *
-     * @return array|\SugarBean[]
-     * @throws \RuntimeException When relationship cannot be loaded.
-     */
-    public function getRelatedBeans(\SugarBean $bean, $relationship)
-    {
-        if (!$bean->load_relationship($relationship)) {
-            throw new \RuntimeException(
-                sprintf('Cannot load relationship %s for module %s', $relationship, $bean->getObjectName())
-            );
-        }
-
-        return $bean->get_linked_beans($relationship);
-    }
-
-    /**
      * @param \SugarBean $sourceBean
      * @param \SugarBean $relatedBean
      * @param string $relationship

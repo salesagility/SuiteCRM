@@ -55,7 +55,7 @@ class DeleteRelationshipParams extends BaseParam
 
         $resolver
             ->setRequired('data')
-            ->setAllowedTypes('data', ['array'])
+            ->setAllowedTypes('data', 'array')
             ->setAllowedValues('data', $this->validatorFactory->createClosureForIterator([
                 new Assert\NotBlank(),
             ]))
@@ -74,6 +74,6 @@ class DeleteRelationshipParams extends BaseParam
                     $options->offsetGet('id')
                 );
             })
-            ->setAllowedTypes('sourceBean', [\SugarBean::class]);
+            ->setAllowedTypes('sourceBean', \SugarBean::class);
     }
 }
