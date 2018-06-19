@@ -30,7 +30,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testloadUser()
     {
 
-        //cannot test this method as it uses die which stops execution of php unit as well
+        
         /*  
         //error_reporting(E_ERROR | E_PARSE);
         
