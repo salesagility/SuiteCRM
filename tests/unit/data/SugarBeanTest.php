@@ -787,7 +787,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         ), $results);
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $subPanelDef->_instance_properties['type'] = 'collection';
         $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
