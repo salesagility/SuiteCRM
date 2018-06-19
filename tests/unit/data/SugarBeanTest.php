@@ -956,7 +956,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $sugar_config['list_max_entries_per_subpanel'] = $tmp;
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $bean->id = 'test_contact_0';
