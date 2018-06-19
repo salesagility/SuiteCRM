@@ -1176,7 +1176,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             null, $results['query']);
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $bean->retrieve('test_contact1');
