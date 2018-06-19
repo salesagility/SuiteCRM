@@ -683,7 +683,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         SugarBean::removeRelationshipMeta(null, null, null, null, null);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $GLOBALS['log']->reset();
         SugarBean::removeRelationshipMeta(null, null, null, null, 'Contacts');
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
