@@ -2265,7 +2265,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             'DROP TABLE contacts_audit;';
         $this->db->query($query);
 
-        // test
+        
         $bean = new Contact();
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->create_audit_table();
