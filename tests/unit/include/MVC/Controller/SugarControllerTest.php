@@ -236,7 +236,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $action = SugarController::getActionFilename('');
         $this->assertEquals('', $action);
 
-        //secondly check with a valid value
+        
         $action = SugarController::getActionFilename('editview');
         $this->assertEquals('EditView', $action);
     }
