@@ -49,7 +49,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $SugarController = new SugarController();
 
-        //first test with empty parameter and check for null. Default is Home but Home has no bean
+        
         $SugarController->setModule('');
         $SugarController->loadBean();
         $this->assertEquals(null, $SugarController->bean);
