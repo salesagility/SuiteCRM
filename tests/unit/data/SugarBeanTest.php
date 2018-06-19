@@ -2286,7 +2286,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testSave()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
