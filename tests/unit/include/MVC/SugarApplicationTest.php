@@ -543,7 +543,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test that it returns a array.
+        
         $vars = $SugarApplication->getLoginVars();
         $this->assertTrue(is_array($vars));
     }
