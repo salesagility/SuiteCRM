@@ -659,7 +659,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $results = $bean->publicParseDateDefault('2015-05-05');
         self::assertEquals('05/05/2015', $results);
 
-        // test
+        
         $results = $bean->publicParseDateDefault('2015-05-05', true);
         self::assertNotEquals('05/05/2015', $results);
         self::assertEquals(1, preg_match('/05\/05\/2015 \d{2}:\d{2}/', $results));
