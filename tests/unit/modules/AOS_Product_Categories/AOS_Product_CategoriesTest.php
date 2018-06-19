@@ -14,7 +14,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
     public function testAOS_Product_Categories()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $aosProductCategories = new AOS_Product_Categories();
         $this->assertInstanceOf('AOS_Product_Categories', $aosProductCategories);
         $this->assertInstanceOf('Basic', $aosProductCategories);
@@ -37,7 +37,7 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aosProductCategories = new AOS_Product_Categories();
         $aosProductCategories->name = 'test';
@@ -45,16 +45,16 @@ class AOS_Product_CategoriesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbs
 
         $aosProductCategories->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($aosProductCategories->id));
         $this->assertEquals(36, strlen($aosProductCategories->id));
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $aosProductCategories->mark_deleted($aosProductCategories->id);
         $result = $aosProductCategories->retrieve($aosProductCategories->id);
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('tracker');
