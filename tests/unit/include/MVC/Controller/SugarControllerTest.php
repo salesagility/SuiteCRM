@@ -224,7 +224,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $this->assertAttributeEquals('classic', 'view', $SugarController);
 
-        //secondly check for attribute value change on method execution.
+        
         $SugarController->action_spot();
         $this->assertAttributeEquals('spot', 'view', $SugarController);
     }
