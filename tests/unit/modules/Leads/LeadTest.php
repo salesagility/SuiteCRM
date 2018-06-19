@@ -13,7 +13,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testLead()
     {
-        //self::markTestIncomplete('Test changes error level');
+        
 
 	// save state
 
@@ -51,7 +51,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $lead = new Lead();
 
@@ -255,7 +255,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $lead->get_list_view_data();
 
-        //$this->assertSame($expected, $actual);
+        
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['DELETED'], $actual['DELETED']);
         $this->assertEquals($expected['FULL_NAME'], $actual['FULL_NAME']);
