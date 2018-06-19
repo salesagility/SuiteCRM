@@ -1379,7 +1379,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
 
         $GLOBALS['log']->reset();
 
-        // test
+        
         $bean = new SugarBeanMock();
         $results = $bean->getAuditEnabledFieldDefinitions();
         self::assertEquals(array(), $results);
