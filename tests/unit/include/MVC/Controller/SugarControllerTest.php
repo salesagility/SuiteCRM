@@ -221,7 +221,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $SugarController = new SugarController();
 
-        //first check with default value of attribute
+        
         $this->assertAttributeEquals('classic', 'view', $SugarController);
 
         //secondly check for attribute value change on method execution.
