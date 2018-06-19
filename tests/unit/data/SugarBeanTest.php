@@ -926,7 +926,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         } 
         $tableAodIndex = $rows;
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $bean->id = 'test_contact_0';
