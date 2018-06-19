@@ -252,7 +252,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $SugarController = new SugarController();
 
-        //check with a invalid value
+        
         $result = $SugarController->checkEntryPointRequiresAuth('');
         $this->assertTrue($result);
 
