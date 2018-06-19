@@ -8,11 +8,11 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it doesn't throw an exception.
-        //this method uses flush so we cannot get and verify content printed
+        
+        
+        
         try {
             progress_bar_flush(false);
             $this->assertTrue(true);
@@ -20,7 +20,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -30,11 +30,11 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it doesn't throw an exception.
-        //this method uses flush so we cannot get and verify content printed
+        
+        
+        
         try {
             ob_start();
             display_flow_bar('test', 0, 200, false);
@@ -44,7 +44,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -54,11 +54,11 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it doesn't throw an exception.
-        //this method uses flush so we cannot get and verify content printed
+        
+        
+        
         try {
             ob_start();
             start_flow_bar('test', 1, false);
@@ -68,7 +68,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -78,11 +78,11 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it doesn't throw an exception.
-        //this method uses flush so we cannot get and verify content printed
+        
+        
+        
         try {
             ob_start();
             destroy_flow_bar('test', false);
@@ -92,7 +92,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -102,11 +102,11 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it doesn't throw an exception.
-        //this method uses flush so we cannot get and verify content printed
+        
+        
+        
         try {
             ob_start();
             display_progress_bar('test', 80, 100, false);
@@ -116,7 +116,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -126,11 +126,11 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it doesn't throw an exception.
-        //this method uses flush so we cannot get and verify content printed
+        
+        
+        
         try {
             ob_start();
             update_progress_bar('test', 80, 100, false);
@@ -140,7 +140,7 @@ class progress_bar_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
