@@ -99,7 +99,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         global $sugar_config;
 
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $userPreference = new UserPreference();
 
@@ -234,7 +234,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'category' => 'test_category',
         ));
         
-        //$this->assertFalse(isset($result->id));
+        
 
         //reset the preferences and verify that it is deleted
         $userPreference->resetPreferences();
@@ -264,7 +264,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
         $current_user->retrieve('1');
 
-        //UserPreference::updateAllUserPrefs("test","test val");
+        
 
         $this->markTestIncomplete('Multiple errors in method: Unknown column user_preferences in field list');
     }
