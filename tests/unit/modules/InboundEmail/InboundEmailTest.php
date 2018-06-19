@@ -15,8 +15,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testthis_callback()
     {
 
-        //$result = this_callback("%test%");
-        //var_dump($result);
+        
+        
     }
 
     public function testInboundEmail()
@@ -54,60 +54,60 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 // --------------------------------------- [OK]
 //    public function testsaveAndOthers()
 //    {
-//        self::markTestIncomplete('Segmentation fault');
-//        return ;
+
+
 //        
 //
-//        $inboundEmail = new InboundEmail();
+
 //
-//        $inboundEmail->name = 'test';
-//        $inboundEmail->group_id = 1;
-//        $inboundEmail->status = 'Active';
-//        $inboundEmail->email_user = 'testuser';
-//        $inboundEmail->email_password = 'testpass';
-//        $inboundEmail->mailbox = 'mailbox1,mailbox2,mailbox3';
+
+
+
+
+
+
 //
-//        $inboundEmail->save();
+
 //
 //        //test for record ID to verify that record is saved
-//        $this->assertTrue(isset($inboundEmail->id));
-//        $this->assertEquals(36, strlen($inboundEmail->id));
+
+
 //
 //        //test getCorrectMessageNoForPop3 method
-//        $this->getCorrectMessageNoForPop3($inboundEmail->id);
+
 //
 //        //test retrieve method
-//        $this->retrieve($inboundEmail->id);
+
 //
 //        //test retrieveByGroupId method
-//        $this->retrieveByGroupId($inboundEmail->group_id);
+
 //
 //        //test retrieveAllByGroupId method
-//        $this->retrieveAllByGroupId($inboundEmail->group_id);
+
 //
 //        //test retrieveAllByGroupIdWithGroupAccounts method
-//        $this->retrieveAllByGroupIdWithGroupAccounts($inboundEmail->group_id);
+
 //
 //        //test getSingularRelatedId method
-//        $this->getSingularRelatedId();
+
 //
 //        //test renameFolder method
-//        $this->renameFolder($inboundEmail->id);
+
 //
 //        //test search method
-//        $this->search($inboundEmail->id);
+
 //
 //        //test saveMailBoxFolders method
-//        $this->saveMailBoxFolders($inboundEmail->id);
+
 //
 //        //test saveMailBoxValueOfInboundEmail method
-//        $this->saveMailBoxValueOfInboundEmail($inboundEmail->id);
+
 //
 //        //test mark_deleted method
-//        $this->mark_deleted($inboundEmail->id);
+
 //
 //        //test hardDelete method
-//        $this->hardDelete($inboundEmail->id);
+
 //        
 //        // clean up
 //        
@@ -1487,7 +1487,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $overview2 = new Overview();
         $overview2->subject = 'subject 2';
         $overview2->size = '100';
-        //$overview2->imap_uid = 1; //dies if imap_uid is set
+        
 
         $fetchedOverviews = array($overview2);
         $result = $inboundEmail->fetchCheckedEmails($fetchedOverviews);
@@ -1662,11 +1662,11 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $inboundEmail = new InboundEmail();
 
-        //$result = $inboundEmail->getTeamSetIdForTeams("1");
+        
 
         //test for record ID to verify that record is saved
-        //$this->assertTrue(isset($result));
-        //$this->assertEquals(36, strlen($result));
+        
+        
 
         $this->markTestIncomplete("Fatal error: Class 'Team' not found");
         
@@ -2120,7 +2120,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "\n<OPTION value='0'>1</OPTION>\n<OPTION selected value='1'>2</OPTION>\n<OPTION value='2'>3</OPTION>";
         $result = $inboundEmail->getGroupsWithSelectOptions(array(1, 2, 3));
         $this->assertEquals($expected, $result);
-        //var_dump($result);
+        
         
         // clean up
         
@@ -2332,9 +2332,9 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             ),
         );
 
-        //$result = $inboundEmail->getEncodingFromBreadCrumb("1.2.3", $parts);
+        
 
-        //$this->assertEqilas('utf-8', $result);
+        
 
         $this->markTestIncomplete('errors in method');
         
@@ -3902,7 +3902,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $inboundEmail = new InboundEmail();
 
-        //$inboundEmail->createUserSubscriptionsForGroupAccount();
+        
 
         $this->markTestIncomplete("Fatal error: Class 'Team' not found");
         
