@@ -1231,7 +1231,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
+        
         
         $state->popTable('tracker');
         $state->popTable('aod_index');
