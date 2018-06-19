@@ -5,13 +5,13 @@ class ViewSerializedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testViewSerialized()
     {
 
-        //execute the contructor and check for the Object type
+        
         $view = new ViewSerialized();
         $this->assertInstanceOf('ViewSerialized', $view);
         $this->assertInstanceOf('SugarView', $view);
     }
 
-    //Incomplete Test. method uses exit() so it cannot be tested.
+    
     public function testdisplay()
     {
 
