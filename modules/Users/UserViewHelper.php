@@ -513,6 +513,10 @@ class UserViewHelper {
         }
         $this->ss->assign("USE_GROUP_TABS",($useGroupTabs=='gm')?'checked':'');
 
+        if ($this->bean->getPreference('sort_modules_by_name')) {
+            $this->ss->assign('SORT_MODULES_BY_NAME', ' checked');
+        }
+
         $user_subpanel_tabs = $this->bean->getPreference('subpanel_tabs');
         if(isset($user_subpanel_tabs)) {
             $this->ss->assign("SUBPANEL_TABS", $user_subpanel_tabs?'checked':'');
@@ -742,12 +746,6 @@ class UserViewHelper {
                     $mail_smtppass = $userOverrideOE->mail_smtppass;
                 }
 
-
-                if(!$mail_smtpauth_req && (empty($systemOutboundEmail->mail_smtpserver) || empty($systemOutboundEmail->mail_smtpuser) || empty($systemOutboundEmail->mail_smtppass))) {
-                    $hide_if_can_use_default = true;
-                } else{
-                    $hide_if_can_use_default = false;
-                }
             }
 
             $this->ss->assign("mail_smtpdisplay", $mail_smtpdisplay);

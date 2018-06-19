@@ -101,3 +101,6 @@ cache/
 custom/**/
 .sass-cache/
 .php_cs.cache
+
+# Ignore testing environment
+build/tmp/

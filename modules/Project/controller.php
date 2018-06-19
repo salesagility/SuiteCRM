@@ -28,7 +28,7 @@ class ProjectController extends SugarController {
     }
 
     function action_generate_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         include_once('modules/Project/gantt.php');
         include_once('modules/Project/project_table.php');
@@ -344,7 +344,7 @@ class ProjectController extends SugarController {
 
     //Updates the resource chart based on specified dates and users
     function action_update_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
         include('modules/Project/chart.php');
 
         //Get  specified dates and users

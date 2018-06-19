@@ -1,7 +1,7 @@
 <?php
 
 
-class CurrentLanguageTest extends \Codeception\Test\Unit
+class CurrentLanguageTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -14,16 +14,15 @@ class CurrentLanguageTest extends \Codeception\Test\Unit
     private static $language;
 
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if (self::$language === null) {
             self::$language = new \SuiteCRM\Utility\CurrentLanguage();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetCurrentLanguage()
     {

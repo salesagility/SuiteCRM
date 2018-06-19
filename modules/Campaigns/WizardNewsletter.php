@@ -498,7 +498,7 @@ if(count($prospect_lists)>0){
     //create array for javascript, this will help to display the option text, not the value
     $dom_txt =' ';
     foreach($app_list_strings['prospect_list_type_dom'] as $key=>$val){
-        $dom_txt .="if(trgt_type_text =='$key'){trgt_type_text='$val';}";
+        $dom_txt .="if(trgt_type_text =='$key'){trgt_type_text='".addslashes($val)."';}";
     }
     $ss->assign("PL_DOM_STMT", $dom_txt);
     $trgt_count = 0;
@@ -608,7 +608,7 @@ if($campaign_type == 'general'){
     $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','hidden');
 
-}elseif($campaign_type == 'email' || $campaign_type = 'survey'){
+}elseif($campaign_type == 'email' || $campaign_type == 'survey'){
     $steps = create_email_steps();
     if($focus->id) {
         $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;

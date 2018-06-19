@@ -83,7 +83,7 @@ foreach ($beanFiles as $bean => $file) {
         $focus = new $bean ();
         if (($focus instanceof SugarBean)) {
             if (!isset($repairedTables[$focus->table_name])) {
-                $sql = $GLOBALS['db']->repairTable($focus, true);
+                $sql = DBManagerFactory::getInstance()->repairTable($focus, true);
                 if (trim($sql) != '') {
                     logThis('Running sql:'.$sql, $path);
                 }
@@ -116,7 +116,7 @@ foreach ($dictionary as $meta) {
     }
     $fielddefs = $meta['fields'];
     $indices = $meta['indices'];
-    $sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
+    $sql = DBManagerFactory::getInstance()->repairTableParams($tablename, $fielddefs, $indices, true);
     if (trim($sql) != '') {
         logThis('Running sql:'.$sql, $path);
     }
@@ -275,6 +275,9 @@ $cleanUrl = "{$parsedSiteUrl['scheme']}://{$host}{$port}{$path}/index.php";
 check_now(get_sugarbeat());
 ob_end_clean();*/
 
+include 'PasswordExpirationService.php';
+$expirationMessage = (new PasswordExpirationService())->getExpirationMessage();
+
 $uwMain = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
 
@@ -287,6 +290,8 @@ $uwMain = <<<eoq
 			<br>
             <b>{$mod_strings['LBL_UW_END_LOGOUT_PRE']}</b> {$mod_strings['LBL_UW_END_LOGOUT']}
 			</p>
+			<br>
+			<p>{$expirationMessage}</p>
 		</td>
 	</tr>
 </table>

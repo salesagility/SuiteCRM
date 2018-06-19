@@ -140,7 +140,7 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
-        $I->click('EditView', '.bodywrapper');
+        $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
@@ -225,7 +225,7 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
-        $I->click('EditView', '.bodywrapper');
+        $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
@@ -307,7 +307,7 @@ class ModuleBuilderFieldsCest
 
         // Click Edit View
         $I->waitForElementVisible('.bodywrapper', 30);
-        $I->click('EditView', '.bodywrapper');
+        $I->click('Edit View', '.bodywrapper');
         $I->waitForElementVisible('#layoutEditor', 30);
 
         // Drag a new row into the last panel
@@ -327,28 +327,37 @@ class ModuleBuilderFieldsCest
         $moduleBuilder->closePopupSuccess();
     }
 
-    // Deploy module
-
+    /**
+     * @param AcceptanceTester $I
+     * @param \Step\Acceptance\ModuleBuilder $moduleBuilder
+     * @param \Step\Acceptance\Repair $repair
+     *
+     * As an administrator I want to test deploying a module
+     */
     public function testScenarioDeployModule(
         \AcceptanceTester $I,
         \Step\Acceptance\ModuleBuilder $moduleBuilder,
-        \Step\Acceptance\Repair $repair,
-        \Helper\WebDriverHelper $webDriverHelper
+        \Step\Acceptance\Repair $repair
     ) {
         $I->wantTo('Deploy Test Module');
-        $moduleBuilder->selectPackage(\Page\ModuleFields::$PACKAGE_NAME);
-        // Save button
-        $I->click(['name' => 'deploybtn']);
-        $I->acceptPopup();
-        // Close popup
-        $moduleBuilder->closePopupSuccess();
 
-        // Wait for page to refresh and look for new package link
-        $I->waitForElement('#newPackageLink', 360);
+        $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
+        $moduleBuilder->deployPackage(\Page\ModuleFields::$PACKAGE_NAME, true);
+
         $repair->clickQuickRepairAndRebuild();
     }
 
-    // Tests after deploying module
+    /**
+     * @param AcceptanceTester $I
+     * @param \Step\Acceptance\NavigationBar $navigationBar
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\EditView $editView
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\Accounts $accounts
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As an administrator I want to test relating to the accounts module
+     */
     public function testScenarioRelateToAccounts(
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
@@ -362,10 +371,6 @@ class ModuleBuilderFieldsCest
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
         );
-
-
-
-        // Goto Accounts
 
         $I->amOnUrl(
             $webDriverHelper->getInstanceURL()
@@ -381,6 +386,7 @@ class ModuleBuilderFieldsCest
         // Create an account to relate to
         $this->fakeData->seed($this->fakeDataSeed);
         $company = $this->fakeData->company;
+        $I->waitForElementVisible('#name', 30);
         $editView->fillField('#name', $company);
         $editView->clickSaveButton();
         $detailView->waitForDetailViewVisible();
@@ -391,6 +397,7 @@ class ModuleBuilderFieldsCest
         $navigationBar->clickCurrentMenuItem('Create ' . \Page\ModuleFields::$NAME);
 
         // Create an account to relate to
+        $I->waitForElementVisible('#name', 30);
         $editView->fillField('#name', $company);
         $relateFieldId = 'test_relate_field';
         $editView->fillField( '#'.$relateFieldId, $company);
@@ -419,5 +426,9 @@ class ModuleBuilderFieldsCest
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
+        $listView->clickFilterButton();
+        $listView->click('Quick Filter');
+        $listView->fillField('#name_basic', '');
+        $listView->click('Search', '.submitButtons');
     }
 }

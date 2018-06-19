@@ -169,14 +169,17 @@ if($focus->type == 'archived' ) {
 	if($_REQUEST['from_addr'] != $_REQUEST['from_addr_name'].' &lt;'.$_REQUEST['from_addr_email'].'&gt;') {
 		if(false === strpos($_REQUEST['from_addr'], '&lt;')) { // we have an email only?
 			$focus->from_addr = $_REQUEST['from_addr'];
+                        isValidEmailAddress($focus->from_addr);
 			$focus->from_name = '';
 		} else { // we have a compound string
 			$newFromAddr =  str_replace($old, $new, $_REQUEST['from_addr']);
 			$focus->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')), (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) -1 );
-			$focus->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') -1));
+                        isValidEmailAddress($focus->from_addr);
+                        $focus->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') -1));
 		}
 	} elseif(!empty($_REQUEST['from_addr_email']) && isset($_REQUEST['from_addr_email'])) {
 		$focus->from_addr = $_REQUEST['from_addr_email'];
+                isValidEmailAddress($focus->from_addr);
 		$focus->from_name = $_REQUEST['from_addr_name'];
 	} else {
 		$focus->from_addr = $focus->getSystemDefaultEmail();
@@ -193,6 +196,8 @@ $focus->to_addrs = $_REQUEST['to_addrs'];
 $focus->cc_addrs = $_REQUEST['cc_addrs'];
 $focus->bcc_addrs = $_REQUEST['bcc_addrs'];
 $focus->from_addr = $_REQUEST['from_addr'];
+isValidEmailAddress($focus->from_addr);
+
 
 // delete the existing relationship of all the email addresses with this email
 $query = "update emails_email_addr_rel set deleted = 1 WHERE email_id = '{$focus->id}'";

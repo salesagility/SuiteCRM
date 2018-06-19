@@ -52,7 +52,7 @@
                 <tr>
                     <td align='left'>&nbsp;</td>
                     <td align='right' nowrap='nowrap'>
-                        {if $pageData.urls.startPage}
+                        {if isset($pageData.urls.startPage) && $pageData.urls.startPage}
 							<button title='{$navStrings.start}' class='button' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.startPage}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())'>
 								<span class="suitepicon suitepicon-action-first"></span>
 							</button>
@@ -112,7 +112,7 @@
             {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
             {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
             {else}<th scope='col' data-hide="{$datahide}">{/if}
-				<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+				<div style='white-space: normal; width:100%; text-align:{$params.align|default:'left'}'>
                 {if $params.sortable|default:true}
 					<!-- dashlet: {$dashletId} -->
 	                <a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}&sugar_body_only=1&id={$dashletId}", false, false, true, $(this).closest("div[id^=pageNum_][id$=_div]").parent().parent())' class='listViewThLinkS1' title="{$arrowAlt}">{sugar_translate label=$params.label module=$pageData.bean.moduleDir}</a>&nbsp;&nbsp;
@@ -187,7 +187,7 @@
                     <a title='{$editLinkString}' class="list-view-data-icon" href='index.php?action=EditView&module={$pageData.bean.moduleDir}&record={$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index'> <span class="suitepicon suitepicon-action-edit"></span></a>
 				{/if}
 				{if $pageData.access.view}
-                <a title='{$viewLinkString}' class="list-view-data-icon" href='index.php?action=DetailView&module={$params.module|default:$pageData.bean.moduleDir}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index' title="{sugar_translate label="LBL_VIEW_INLINE"}"> <span class="suitepicon suitepicon-action-view-record"></span></a>
+                <a title='{$viewLinkString}' class="list-view-data-icon" href='index.php?action=DetailView&module={$pageData.bean.moduleDir}&record={$rowData[$params.parent_id]|default:$rowData.ID}&offset={$pageData.offsets.current+$smarty.foreach.rowIteration.iteration}&stamp={$pageData.stamp}&return_module=Home&return_action=index' title="{sugar_translate label="LBL_VIEW_INLINE"}"> <span class="suitepicon suitepicon-action-view-record"></span></a>
 				{/if}
 			</td>
 			{/if}

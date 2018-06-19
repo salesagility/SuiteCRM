@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -161,8 +161,8 @@ eoq;
     function handleMassUpdate()
     {
 
-        require_once('include/formbase.php');
-        global $current_user, $db, $disable_date_format, $timedate;
+		require_once('include/formbase.php');
+		global $current_user, $db, $disable_date_format, $timedate, $app_list_strings;
 
         foreach ($_POST as $post => $value) {
             if (is_array($value)) {
@@ -370,13 +370,21 @@ eoq;
                                     // Dynamic field set value.
                                     list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
 
-                                    if ($parentenum_value != $dynamic_field_value) {
-                                        // Change to the default value of the correct value set.
-                                        $newbean->$dynamic_field_name = $parentenum_value . '_' . $parentenum_value;
-                                    }
-                                }
-                            }
-                        }
+									if($parentenum_value != $dynamic_field_value) {
+
+										// Change to the default value of the correct value set.
+                      $defaultValue = '';
+                      foreach ($app_list_strings[$field_name['options']] as $key => $value) {
+                          if (strpos($key, $parentenum_value) === 0) {
+                              $defaultValue = $key;
+                              break;
+                          }
+                      }
+                      $newbean->$dynamic_field_name = $defaultValue;
+									}
+								}
+							}
+						}
 
                         $newbean->save($check_notify);
                         if (!empty($email_address_id)) {
@@ -1257,27 +1265,16 @@ EOQ;
         $userformat = $timedate->get_user_time_format();
         $cal_dateformat = $timedate->get_cal_date_format();
         global $app_strings, $app_list_strings, $theme;
-        $jscalendarImage = '<span class="suitepicon suitepicon-module-calendar"></span>';
 
         $javascriptend = <<<EOQ
-		 <script type="text/javascript">
-		Calendar.setup ({
-			inputField : "{$varname}_date",
-			daFormat : "$cal_dateformat",
-			ifFormat : "$cal_dateformat",
-			showsTime : false,
-			button : "{$varname}_trigger",
-			singleClick : true,
-			step : 1,
-			weekNumbers:false
-		});
-		</script>
+		 
+	<span id="date_start_trigger" class="suitepicon suitepicon-module-calendar" onclick="return false;"></span>
 EOQ;
         $dtscript = getVersionedScript('include/SugarFields/Fields/Datetimecombo/Datetimecombo.js');
         $html = <<<EOQ
 		<td scope="row" width="20%">$displayname</td>
 		<td class='dataField' width="30%"><input onblur="parseDate(this, '$cal_dateformat')" type="text" name='$varname' size="12" id='{$varname}_date' maxlength='10' value="">
-		<span class="suitepicon suitepicon-module-calendar"></span>&nbsp;$javascriptend
+		&nbsp;$javascriptend
 
 		<span id="{$varname}_time_section"></span>
 		</td>
@@ -1473,7 +1470,7 @@ EOQ;
             'modified_by_name' => 1,
         );
         foreach ($this->sugarbean->field_defs as $field) {
-            if (!isset($banned[$field['name']]) && (!isset($field['massupdate']) || !empty($field['massupdate']))) {
+            if (!isset($banned[isset($field['name']) ? $field['name'] : null]) && (!isset($field['massupdate']) || !empty($field['massupdate']))) {
                 if (isset($field['type']) && $field['type'] == 'relate' && isset($field['id_name']) && $field['id_name'] == 'assigned_user_id') {
                     $field['type'] = 'assigned_user_name';
                 }
