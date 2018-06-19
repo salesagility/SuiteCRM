@@ -53,7 +53,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $GLOBALS['app'] = new SugarApplication();
 
         
-        //secondly check if it outputs any content to browser
+        
         try {
             ob_start();
 
