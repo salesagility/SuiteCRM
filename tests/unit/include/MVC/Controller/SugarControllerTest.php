@@ -75,7 +75,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $SugarController = new SugarController();
 
-        // replace and use a temporary logger
+        
 
 
         $logger = $GLOBALS['log'];
