@@ -20,7 +20,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         $state->pushTable('aod_indexevent');
         
-        //execute the method and test it it returns expected contents
+        
 
         $user = new User('1');
         $expected = array(
@@ -66,7 +66,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = query_module_access_list($user);
         $this->assertSame($expected, $actual);
         
-        // clean up
+        
         
         $state->popTable('aod_indexevent');
         $state->popGlobals();
@@ -77,25 +77,25 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
-        // execute the method and test it returns 1 role
-        // if the test suite run runs RolesTest first.
-        // otherwise it will be 0
-        // TODO: TASK: UNDEFINED - Mock up user first
+        
+        
+        
+        
 
         $expected = '0';
         $actual = query_user_has_roles('1');
         $this->assertSame($expected, $actual);
         
-        // clean up
+        
         
         
     }
 
     public function testget_user_allowed_modules()
     {
-        //execute the method and test it it returns expected contents
+        
 
         $expected = array();
         $actual = get_user_allowed_modules('1');
@@ -107,7 +107,7 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         self::markTestIncomplete('Test fails only in travis and php7, Test has environment specific issue.');
         
-        //execute the method and test it it returns expected contents
+        
 
         $expected = array(
             'Calendar' => 'Calendar',
@@ -129,10 +129,10 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        //test without setting any server parameters
+        
         $this->assertSame(null, query_client_ip());
 
-        //test with server params set
+        
         $_SERVER['REMOTE_ADDR'] = '1.1.1.3';
         $this->assertSame('1.1.1.3', query_client_ip());
 
@@ -142,14 +142,14 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_SERVER['HTTP_CLIENT_IP'] = '1.1.1.1';
         $this->assertSame('1.1.1.1', query_client_ip());
         
-        // clean up
+        
         
         $state->popGlobals();
     }
 
     public function testget_val_array()
     {
-        //execute the method and test it it returns expected contents
+        
         $tempArray = array('key1' => 'val1', 'key2' => 'val2', 'key3' => 'val3');
         $expected = array('key1' => 'key1', 'key2' => 'key2', 'key3' => 'key3');
         $actual = get_val_array($tempArray);
