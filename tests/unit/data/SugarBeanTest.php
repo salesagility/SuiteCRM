@@ -2249,7 +2249,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testGetAuditTableNames()
     {
 
-        // test
+        
         $bean = new Contact();
         $results = $bean->get_audit_table_name();
         self::assertEquals('contacts_audit', $results);
