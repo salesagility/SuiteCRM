@@ -2875,7 +2875,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertTrue($bean->testField1);
 
 
-        // test
+        
         $bean = new Contact();
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
