@@ -103,7 +103,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        //execute the method with valid input and test if it works and does not throws an exception.
+        
         try {
             $SugarApplication->setupResourceManagement('Users');
         } catch (Exception $e) {
