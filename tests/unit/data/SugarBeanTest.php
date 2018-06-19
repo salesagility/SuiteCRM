@@ -1476,7 +1476,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testIsOwner()
     {
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
         $result = $bean->isOwner(null);
