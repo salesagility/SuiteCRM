@@ -28,7 +28,7 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
 //    public function testgetVcalIcal()
-//    {
+
 //	// save state
 //
 
@@ -57,5 +57,5 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //        
 
 
-//    }
+
 }
