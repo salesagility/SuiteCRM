@@ -376,7 +376,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        // clean up
+        
         
         
         
