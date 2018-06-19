@@ -54,7 +54,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarController->loadBean();
         $this->assertEquals(null, $SugarController->bean);
 
-        //secondly test with module name and check for correct bean class loaded.
+        
         $SugarController->setModule('Users');
         $SugarController->loadBean();
         $this->assertInstanceOf('User', $SugarController->bean);
