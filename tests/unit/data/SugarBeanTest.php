@@ -2236,7 +2236,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $results = $bean->is_AuditEnabled();
         self::assertEquals(false, $results);
 
-        // test
+        
         $bean = new Contact();
         $results = $bean->is_AuditEnabled();
         self::assertEquals(true, $results);
