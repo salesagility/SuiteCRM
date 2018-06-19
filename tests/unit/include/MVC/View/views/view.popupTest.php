@@ -14,7 +14,7 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testViewPopup()
     {
 
-        //execute the contructor and check for the Object type and type attribute
+        
         $view = new ViewPopup();
         $this->assertInstanceOf('ViewPopup', $view);
         $this->assertInstanceOf('SugarView', $view);
@@ -30,9 +30,9 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $session = $_SESSION;
         }
 
-        //error_reporting(E_ERROR | E_PARSE |E_ALL);
+        
 
-        //execute the method with required child objects preset. it should return some html. 
+        
         $view = new ViewPopup();
         $view->module = 'Accounts';
 
@@ -43,7 +43,7 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             self::assertTrue(true);
         }
 
-        // clean up
+        
 
         if(isset($session)) {
             $_SESSION = $session;
