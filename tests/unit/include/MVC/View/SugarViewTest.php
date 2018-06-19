@@ -38,7 +38,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testprocess()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
