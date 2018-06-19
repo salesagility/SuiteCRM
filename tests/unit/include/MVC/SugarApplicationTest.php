@@ -445,7 +445,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testredirect()
     {
-        //this method uses exit() which stops execution of phpunit as well so it cannot be tested without additional --process-isolation commandline parameter.
+        
         /*
         $SugarApplication = new SugarApplication();
 
