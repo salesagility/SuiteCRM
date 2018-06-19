@@ -67,7 +67,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('tracker');
