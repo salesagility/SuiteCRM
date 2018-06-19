@@ -2125,7 +2125,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testGetLinkedBeans()
     {
 
-        // test
+        
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
         $bean = new Contact();
