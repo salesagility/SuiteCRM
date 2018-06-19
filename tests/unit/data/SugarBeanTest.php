@@ -58,7 +58,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         global $dictionary;
 
-        // test dup3
+        
         include_once __DIR__ . '/../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
         $bean = new AM_ProjectTemplates_sugar();
         self::assertInstanceOf(DBManager::class, $bean->db);
