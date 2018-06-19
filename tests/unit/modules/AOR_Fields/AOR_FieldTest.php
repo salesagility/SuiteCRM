@@ -6,7 +6,7 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testAOR_Field()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $aor_Field = new AOR_Field();
         $this->assertInstanceOf('AOR_Field', $aor_Field);
         $this->assertInstanceOf('Basic', $aor_Field);
@@ -30,11 +30,11 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aor_Field = new AOR_Field();
 
-        //preset the required data 
+        
         $post_data = array();
         $post_data['field'][] = 'test field';
         $post_data['name'][] = 'test';
@@ -48,7 +48,7 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $post_data['group_order'][] = 'desc';
         $post_data['group_display'][] = '1';
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $aor_Field->save_lines($post_data, new AOR_Report());
             $this->assertTrue(true);
@@ -56,7 +56,7 @@ class AOR_FieldTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('tracker');
