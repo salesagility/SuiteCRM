@@ -5,7 +5,7 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function db_convertProvider()
     {
-        //array containing all possible types supported by db_convert
+        
         return array(
                 array(gmdate('Y-m-d H:i:s'), 'today', array(), 'CURDATE()'),
                 array('text', 'left', array(2), 'LEFT(text,2)'),
@@ -35,11 +35,11 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         
-        //execute the method and test if it returns expected values for all types
+        
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
         
-        // clean up
+        
         
         $state->popTable('aod_indexevent');
     }
@@ -50,9 +50,9 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
-        //execute the method and test if it returns expected values
+        
 
         $table = 'Table1';
         $fields = array('Col1', 'Col2', 'Col3');
@@ -60,14 +60,14 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = db_concat($table, $fields);
         $this->assertSame($expected, $actual);
         
-        // clean up
+        
         
         
     }
 
     public function testfrom_db_convert()
     {
-        //execute the method and test if it returns expected values
+        
 
         $this->assertSame('2015-11-16 19:32:29', from_db_convert('2015-11-16 19:32:29', 'date'));
         $this->assertSame('19:32:29', from_db_convert('19:32:29', 'time'));
@@ -78,7 +78,7 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testto_html()
     {
-        //execute the method and test if it returns expected values
+        
 
         $string = '';
         $expected = '';
@@ -117,12 +117,12 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testisValidDBName()
     {
-        //valid value
+        
         $expected = true;
         $actual = isValidDBName('suitecrmtest', 'mysql');
         $this->assertSame($expected, $actual);
 
-        //invalid value
+        
         $expected = false;
         $actual = isValidDBName('suite/crm.test', 'mysql');
         $this->assertSame($expected, $actual);
