@@ -2345,7 +2345,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(true, $bean->new_with_id);
         self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->new_with_id = true;
