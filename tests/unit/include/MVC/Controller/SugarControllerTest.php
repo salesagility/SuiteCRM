@@ -232,7 +232,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testgetActionFilename()
     {
 
-        //first check with a invalid value
+        
         $action = SugarController::getActionFilename('');
         $this->assertEquals('', $action);
 
