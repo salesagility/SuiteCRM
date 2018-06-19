@@ -400,7 +400,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             if(!headers_sent()) {
                 $SugarApplication->startSession();
