@@ -88,7 +88,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
-        // change back to original logger
+        
 
         $testLogger = $GLOBALS['log'];
         $GLOBALS['log'] = $logger;
