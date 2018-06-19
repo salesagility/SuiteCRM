@@ -2944,7 +2944,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testHasBeenModifiedSince()
     {
 
-        // test
+        
         $bean = new Contact();
         $results = $bean->has_been_modified_since(null, null);
         self::assertFalse($results);
