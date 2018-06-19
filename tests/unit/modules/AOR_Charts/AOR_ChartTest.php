@@ -1,6 +1,6 @@
 <?php
 
-//require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
+
 class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOR_Chart()
@@ -26,7 +26,7 @@ class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         $this->markTestSkipped('Skipping AOR Charts Tests');
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aorChart = new AOR_Chart();
 
