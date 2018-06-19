@@ -59,7 +59,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         $person = new Contact();
         $person->last_name = 'Smith';
 
-        // Test when  basis is not a string
+        
         $this->tester->expectException(
              new InvalidArgumentException('basis must be a string'),
              function() use ($person) {
@@ -67,7 +67,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
              }
         );
 
-        // test when basis does not exist
+        
         $this->tester->expectException(
             new InvalidArgumentException('invalid lawful basis'),
             function() use ($person) {
@@ -75,7 +75,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
             }
         );
 
-        // test valid basis
+        
         $this->assertEquals(1, $person->setLawfulBasis('', ''));
         $this->assertEquals(1, $person->setLawfulBasis('consent', ''));
         $this->assertEquals(1, $person->setLawfulBasis('contract', ''));
@@ -85,11 +85,11 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(1, $person->setLawfulBasis('legitimate_interest', ''));
         $this->assertEquals(1, $person->setLawfulBasis('withdrawn', ''));
 
-        // test lawful basis has been set
+        
         $person->setLawfulBasis('consent', '');
         $this->assertEquals($person->lawful_basis, '^consent^');
 
-        // Test when source is not a string
+        
         $this->tester->expectException(
             new InvalidArgumentException('source for lawful basis must be a string'),
             function() use ($person) {
@@ -97,7 +97,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
             }
         );
 
-        // test when source does not exist
+        
         $this->tester->expectException(
             new InvalidArgumentException('invalid lawful basis source'),
             function() use ($person) {
@@ -105,7 +105,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
             }
         );
 
-        // test lawful sources
+        
         $this->assertEquals(true, $person->setLawfulBasis('', ''));
         $this->assertEquals(true, $person->setLawfulBasis('', 'website'));
         $this->assertEquals(true, $person->setLawfulBasis('', 'phone'));
@@ -113,7 +113,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertEquals(true, $person->setLawfulBasis('', 'email'));
         $this->assertEquals(true, $person->setLawfulBasis('', 'third_party'));
 
-        // test that source is being set
+        
         $this->assertEquals('third_party', $person->lawful_basis_source);
 
         $state->popTable('aod_indexevent');
