@@ -15,7 +15,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testAlert()
     {
 
-        //execute the contructor and check for the Object type and type attribute
+        
         $alert = new Alert();
         $this->assertInstanceOf('Alert', $alert);
         $this->assertInstanceOf('Basic', $alert);
@@ -34,7 +34,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $alert = new Alert();
 
@@ -42,7 +42,7 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $alert->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $alert->bean_implements('ACL')); //test with valid value
         
-        // clean up
+        
         
         
     }
