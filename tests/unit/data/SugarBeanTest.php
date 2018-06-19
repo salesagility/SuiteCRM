@@ -2983,7 +2983,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $results = $bean->has_been_modified_since('1900-01-01', '1');
         self::assertFalse($results);
 
-        // test
+        
         $query = /** @lang sql */
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
