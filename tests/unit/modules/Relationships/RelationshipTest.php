@@ -5,7 +5,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testRelationship()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $relationship = new Relationship();
 
         $this->assertInstanceOf('Relationship', $relationship);
@@ -21,13 +21,13 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testis_self_referencing()
     {
 
-        //test without setting any attributes
+        
         $relationship = new Relationship();
 
         $result = $relationship->is_self_referencing();
         $this->assertEquals(true, $result);
 
-        //test with attributes set to different values
+        
         $relationship = new Relationship();
 
         $relationship->lhs_table = 'lhs_table';
@@ -38,7 +38,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $relationship->is_self_referencing();
         $this->assertEquals(false, $result);
 
-        //test with attributes set to same values
+        
         $relationship = new Relationship();
 
         $relationship->lhs_table = 'table';
@@ -53,7 +53,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testexists()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
@@ -61,11 +61,11 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $relationship = new Relationship();
 
-        //test with invalid relationship
+        
         $result = $relationship->exists('test_test', $db);
         $this->assertEquals(false, $result);
 
-        //test with valid relationship
+        
         $result = $relationship->exists('roles_users', $db);
         $this->assertEquals(true, $result);
     }
@@ -76,11 +76,11 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $db = DBManagerFactory::getInstance();
         
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             Relationship::delete('test_test', $db);
             $this->assertTrue(true);
@@ -88,7 +88,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -96,7 +96,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_other_module()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
@@ -104,11 +104,11 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $relationship = new Relationship();
 
-        //test with invalid relationship
+        
         $result = $relationship->get_other_module('test_test', 'test', $db);
         $this->assertEquals(false, $result);
 
-        //test with valid relationship
+        
         $result = $relationship->get_other_module('roles_users', 'Roles', $db);
         $this->assertEquals('Users', $result);
     }
@@ -116,7 +116,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testretrieve_by_sides()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
@@ -124,11 +124,11 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $relationship = new Relationship();
 
-        //test with invalid relationship
+        
         $result = $relationship->retrieve_by_sides('test1', 'test2', $db);
         $this->assertEquals(null, $result);
 
-        //test with valid relationship
+        
         $result = $relationship->retrieve_by_sides('Roles', 'Users', $db);
 
         $this->assertEquals('Users', $result['rhs_module']);
@@ -143,7 +143,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testretrieve_by_modules()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
@@ -151,15 +151,15 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $relationship = new Relationship();
 
-        //test with invalid relationship
+        
         $result = $relationship->retrieve_by_modules('test1', 'test2', $db);
         $this->assertEquals(null, $result);
 
-        //test with valid relationship but incorecct type
+        
         $result = $relationship->retrieve_by_modules('Roles', 'Users', $db, 'one-to-many');
         $this->assertEquals(null, $result);
 
-        //test with valid relationship and valid type
+        
         $result = $relationship->retrieve_by_modules('Roles', 'Users', $db, 'many-to-many');
         $this->assertEquals('roles_users', $result);
     }
@@ -169,11 +169,11 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $relationship = new Relationship();
 
-        //test with invalid relationship
+        
         $result = $relationship->retrieve_by_name('test_test');
         $this->assertEquals(false, $result);
 
-        //test with invalid relationship
+        
         unset($result);
         $result = $relationship->retrieve_by_name('roles_users');
         $this->assertEquals(null, $result);
@@ -202,12 +202,12 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $relationship = new Relationship();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $relationship->build_relationship_cache();
             $this->assertTrue(true);
@@ -215,7 +215,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -238,10 +238,10 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it works and does not throws an exception.
+        
+        
         try {
             Relationship::delete_cache();
             $this->assertTrue(true);
@@ -249,7 +249,7 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
