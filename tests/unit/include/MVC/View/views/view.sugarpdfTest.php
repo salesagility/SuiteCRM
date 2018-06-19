@@ -19,9 +19,9 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_request = $_REQUEST;
         }
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
-         //execute the method without request parameters and test if it works. it should output some headers and throw headers output exception.
+         
          try {
              $view = new ViewSugarpdf();
              $this->assertEmpty("", $view);
@@ -31,7 +31,7 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
          }
 
 
-         //execute the method with request parameters and test if it works.
+         
          $_REQUEST['sugarpdf'] = 'someValue';
         $view = new ViewSugarpdf();
         $view->module = 'Users';
@@ -41,7 +41,7 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('someValue', 'sugarpdf', $view);
         $this->assertAttributeEquals(null, 'sugarpdfBean', $view);
 
-        // clean up
+        
         
         if(isset($_request)) {
             $_REQUEST = $_request;
@@ -50,13 +50,13 @@ class ViewSugarpdfTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
     }
 
-    //Incomplete test. SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
+    
     public function testpreDisplay()
     {
         $this->markTestIncomplete('Can Not be implemented');
     }
 
-    //Incomplete test.  SugarpdfFactory::loadSugarpdf throws fatal error. error needs to be resolved before testing.
+    
     public function testdisplay()
     {
         $this->markTestIncomplete('Can Not be implemented');
