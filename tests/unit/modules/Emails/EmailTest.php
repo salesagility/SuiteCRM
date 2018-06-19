@@ -35,7 +35,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $email = new Email();
         $email->email2init();
@@ -554,7 +554,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 				}
 				document.location.href= newLoc;
 			}
-		//  End --></script>";
+		
         $actual = $email->u_get_clear_form_js('', '', '');
         $this->assertSame($expected, $actual, "exp:[" . print_r($expected, true) . "] act:[" . print_r($actual, true) . "]");
 
@@ -715,30 +715,30 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // TODO: TASK: UNDEFINED - Refactor html body
         //test with REQUEST parameters set
-//        $_REQUEST['setEditor'] = 1;
-//        $_REQUEST['description_html'] = '1';
-//        $email->description_html = 'some email description containing email text &amp; &#39; <br>&nbsp;';
+
+
+
 //
-//        $result = $email->handleBody(new SugarPHPMailer());
+
 //
-//        $expected = "some email description containing email text & ' \n ";
-//        $actual = $email->description;
-//        $this->assertEquals($expected, $actual);
-//        $this->assertInstanceOf('SugarPHPMailer', $result);
+
+
+
+
     }
 
     public function testhandleBodyInHTMLformat()
     {
         // TODO: TASK: UNDEFINED - Refactor html body
-//        $email = new Email();
+
 //
-//        $mailer = new SugarPHPMailer();
-//        $email->description_html = 'some email description containing email text &amp; &#39; <br>&nbsp;';
+
+
 //
-//        $result = $email->handleBodyInHTMLformat($mailer);
+
 //
-//        $this->assertEquals("some email description containing email text & ' \n ", $email->description);
-//        $this->assertEquals("some email description containing email text & ' <br> ", $mailer->Body);
+
+
     }
 
     public function testlistviewACLHelper()
@@ -838,38 +838,38 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
         // TODO: TASK: UNDEFINED - Update to handle new list view
-//        $email = new Email();
-//        $current_theme = SugarThemeRegistry::current();
+
+
 //
-//        $email->from_addr_name = 'Admin';
-//        $email->id = 1;
-//        $email->intent = 'support';
-//        $email->to_addrs = 'abc@email.com';
-//        $email->link_action = 'DetailView';
-//        $email->type_name = 'out';
+
+
+
+
+
+
 //
-//        $expected = array(
-//                'ID' => 1,
-//                'FROM_ADDR_NAME' => 'Admin',
-//                'TYPE' => 'Archived',
-//                'INTENT' => 'support',
-//                'FROM_ADDR' => null,
-//                'QUICK_REPLY' => '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record=1&inbound_email_id=1">Reply</a>',
-//                'STATUS' => null,
-//                'CREATE_RELATED' => '~index.php\?module=Cases&action=EditView&inbound_email_id=1~',
-//                'CONTACT_NAME' => '</a>abc@email.com<a>',
-//                'CONTACT_ID' => '',
-//                'ATTACHMENT_IMAGE' => null,
-//                'LINK_ACTION' => 'DetailView',
-//                'TYPE_NAME' => 'out',
-//        );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
-//        $actual = $email->get_list_view_data();
-//        foreach ($expected as $expectedKey => $expectedVal) {
-//            if ($expectedKey == 'CREATE_RELATED') {
-//                $this->assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
+
+
+
+
 //            } else {
-//                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
+
 //            }
 //        }
         $this->markTestIncomplete('Need to be updated');
@@ -1039,7 +1039,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $email = new Email();
@@ -1062,7 +1062,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $email = new Email();
@@ -1088,7 +1088,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $email = new Email();
@@ -1114,7 +1114,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $email = new Email();
@@ -1137,7 +1137,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $email = new Email();
