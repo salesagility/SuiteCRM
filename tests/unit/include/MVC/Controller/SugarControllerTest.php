@@ -248,7 +248,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        // test
+        
         
         $SugarController = new SugarController();
 
