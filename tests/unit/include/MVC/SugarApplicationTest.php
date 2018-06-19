@@ -552,7 +552,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test that it returns a plus length string
+        
         $redirect = $SugarApplication->getLoginRedirect();
         $this->assertGreaterThan(0, strlen($redirect));
     }
