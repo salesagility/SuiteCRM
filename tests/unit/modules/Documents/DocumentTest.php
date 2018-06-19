@@ -38,7 +38,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $document = new Document();
 
@@ -127,7 +127,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $document = new Document();
@@ -184,7 +184,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushTable('cron_remove_documents');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $document = new Document();
@@ -274,7 +274,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $document = new Document();
