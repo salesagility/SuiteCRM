@@ -21,7 +21,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $SugarView = new SugarView();
 
-        //execute the method and check if it works and doesn't throws an exception
+        
         try {
             $SugarView->init();
         } catch (Exception $e) {
