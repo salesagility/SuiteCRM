@@ -93,7 +93,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(true);
         
-        // clean up
+        
         
         
     }
