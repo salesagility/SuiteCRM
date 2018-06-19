@@ -6,7 +6,7 @@ class ControllerFactoryTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
     public function testgetController()
     {
 
-        //execute the method with invalid input
+        
         $controller = ControllerFactory::getController('');
         $this->assertInstanceOf('SugarController', $controller);
 
