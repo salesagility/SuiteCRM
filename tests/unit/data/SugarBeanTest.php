@@ -755,7 +755,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $request = $_REQUEST;
         self::assertFalse(isset($_SESSION));
         
-        // test
+        
         $GLOBALS['log']->reset();
         $results = SugarBean::get_union_related_list(null);
         self::assertCount(3, $GLOBALS['log']->calls['fatal']);
