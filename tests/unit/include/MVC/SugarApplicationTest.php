@@ -127,7 +127,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $SugarApplication = new SugarApplication();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $SugarApplication->setupPrint();
         } catch (Exception $e) {
