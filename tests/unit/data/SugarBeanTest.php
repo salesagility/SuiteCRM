@@ -1632,7 +1632,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testGetIndices()
     {
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $bean->object_name = false;
