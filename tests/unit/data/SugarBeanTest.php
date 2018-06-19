@@ -1343,7 +1343,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(array(), $results);
 
 
-        // test
+        
         $bean = new SugarBeanMock();
 
         $this->db->query(/** @lang sql */
