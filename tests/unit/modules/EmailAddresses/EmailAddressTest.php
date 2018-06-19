@@ -5,7 +5,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEmailAddress()
     {
-        //execute the contructor and check for the Object type and  attributes
+        
         $email = new EmailAddress();
         $this->assertInstanceOf('EmailAddress', $email);
         $this->assertInstanceOf('SugarEmailAddress', $email);
@@ -21,14 +21,14 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
         
-        // test 
+        
         
         $email = new EmailAddress();
 
@@ -37,16 +37,16 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $email->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($email->id));
         $this->assertEquals(36, strlen($email->id));
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $email->mark_deleted($email->id);
         $result = $email->retrieve($email->id);
         $this->assertEquals(null, $result);
 
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('tracker');
