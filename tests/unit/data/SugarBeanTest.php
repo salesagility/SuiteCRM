@@ -192,7 +192,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertTrue($bean->added_custom_field_defs);
         self::assertTrue(isset($bean->acl_fields));
 
-        // test
+        
         $GLOBALS['reload_vardefs'] = true;
         $dictionary['']['fields'] = $dictionary['User']['fields'];
         $bean = BeanFactory::getBean('Users');
