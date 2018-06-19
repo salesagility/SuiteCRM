@@ -36,8 +36,8 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
         parent::_before();
         $container = $this->tester->getContainerInterface();
         if(self::$filterParser === null) {
-            // load PSR 11 interface
-            // Load mock class
+            
+            
             self::$filterParser = new FilterParserMock($container);
         }
 
@@ -110,8 +110,8 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
         $expectGoodArray = array(
             self::$fieldOperator->toFilterTag('Accounts') => array(
                 self::$fieldOperator->toFilterTag('contacts') => array(
-                    // Empty marks the that this is the leaf of the field
-                    // This is where the operators and values go
+                    
+                    
                     self::$fieldOperator->toFilterTag('name') => array()
                 )
             )
@@ -156,8 +156,8 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
         $expectGoodArray = array(
             self::$fieldOperator->toFilterTag('Accounts') => array(
                 self::$fieldOperator->toFilterTag('contacts') => array(
-                    // Empty marks the that this is the leaf of the field
-                    // This is where the operators and values go
+                    
+                    
                     self::$fieldOperator->toFilterTag('name') => array()
                 )
             )

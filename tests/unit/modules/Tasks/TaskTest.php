@@ -14,7 +14,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testTask()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $task = new Task();
 
         $this->assertInstanceOf('Task', $task);
@@ -38,7 +38,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $task = new Task();
 
@@ -49,16 +49,16 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $task->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($task->id));
         $this->assertEquals(36, strlen($task->id));
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $task->mark_deleted($task->id);
         $result = $task->retrieve($task->id);
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('tracker');
@@ -72,10 +72,10 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $task = new Task();
 
-        //test without setting name
+        
         $this->assertEquals(null, $task->get_summary_text());
 
-        //test with name set
+        
         $task->name = 'test';
         $this->assertEquals('test', $task->get_summary_text());
     }
@@ -84,12 +84,12 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $task = new Task();
 
-        //test with empty string params
+        
         $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where tasks.deleted=0 ORDER BY tasks.name';
         $actual = $task->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where users.user_name = "" AND tasks.deleted=0 ORDER BY tasks.name';
         $actual = $task->create_export_query('tasks.id', 'users.user_name = ""');
         $this->assertSame($expected, $actual);
@@ -100,12 +100,12 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $task = new Task();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $task->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -115,7 +115,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+        
         
         
     }
@@ -125,13 +125,13 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $task = new Task();
         $task->contact_id = 1;
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $task->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -139,7 +139,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -149,14 +149,14 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $task = new Task();
         $task->parent_type = 'Accounts';
         $task->parent_id = '1';
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $task->fill_in_additional_parent_fields();
             $this->assertTrue(true);
@@ -164,7 +164,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -206,7 +206,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $task = new Task();
 
-        //test with attributes preset and verify template variables are set accordingly
+        
 
         $task->name = 'test';
         $task->priority = 'Medium';
@@ -236,12 +236,12 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-        // save state
+        
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $task = new Task();
 
@@ -249,7 +249,7 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $task->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
-        // clean up
+        
         
         $state->popGlobals();
 

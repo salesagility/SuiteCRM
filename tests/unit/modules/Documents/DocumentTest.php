@@ -15,7 +15,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testDocument()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $document = new Document();
         $this->assertInstanceOf('Document', $document);
         $this->assertInstanceOf('File', $document);
@@ -38,7 +38,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $document = new Document();
 
@@ -52,20 +52,20 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $document->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($document->id));
         $this->assertEquals(36, strlen($document->id));
 
-        //execute Get_document_name() method and verify it gets the name correctly
+        
         $this->assertEquals(null, $document->get_document_name(1));
         $this->assertEquals('test', $document->get_document_name($document->id));
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $document->mark_deleted($document->id);
         $result = $document->retrieve($document->id);
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('tracker');
@@ -84,14 +84,14 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $document = new Document();
 
-        //test without setting name
+        
         $this->assertEquals(null, $document->get_summary_text());
 
-        //test with name set
+        
         $document->document_name = 'test';
         $this->assertEquals('test', $document->get_summary_text());
         
-        // clean up
+        
         
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -105,14 +105,14 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $document = new Document();
 
-        //test without presetting attributes
+        
         $this->assertEquals(null, $document->is_authenticated());
 
-        //test with attributes preset
+        
         $document->authenticated = true;
         $this->assertEquals(true, $document->is_authenticated());
         
-        // clean up
+        
         
         $state->popTable('cron_remove_documents');
         $state->popTable('aod_indexevent');
@@ -127,12 +127,12 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $document = new Document();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $document->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -140,7 +140,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('cron_remove_documents');
@@ -163,15 +163,15 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_theme = SugarThemeRegistry::current();
         $document->id = 'abcde-12345';
 
-        //execute the method with attributes preset and verify attributes are set accordingly
+        
         $document->fill_in_additional_detail_fields();
 
-        // test the urls instead of the a tag itself
+        
         $this->assertEquals('', $document->file_url, 'file url: [[' . $document->file_url . ']]');
-        //
+        
         $this->assertEquals('', $document->file_url_noimage, 'file url noimage: [[' . $document->file_url_noimage . ']]');
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('cron_remove_documents');
@@ -184,14 +184,14 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushTable('cron_remove_documents');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $document = new Document();
 
         $xTemplateSection = null;
         
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $ss = new Sugar_Smarty();
             $document->list_view_parse_additional_sections($ss, $xTemplateSection);
@@ -200,7 +200,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popTable('cron_remove_documents');
         
@@ -212,12 +212,12 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $document = new Document();
 
-        //test with empty string parameters
+        
         $expected = "SELECT\n						documents.* FROM documents  WHERE  documents.deleted = 0 ORDER BY documents.document_name";
         $actual = $document->create_export_query('', '');
         $this->assertSame($expected, $actual);
         
-        //test with valid string parameters
+        
         $expected = "SELECT\n						documents.* FROM documents  WHERE documents.document_name = \"\" AND  documents.deleted = 0 ORDER BY documents.id";
         $actual = $document->create_export_query('documents.id', 'documents.document_name = ""');
         $this->assertSame($expected, $actual);
@@ -229,7 +229,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $document = new Document();
         $current_theme = SugarThemeRegistry::current();
-        //execute the method and verify that it retunrs expected results
+        
 
         $document->filename = 'test';
         $document->file_url = 'test_url';
@@ -274,12 +274,12 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $document = new Document();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $document->mark_relationships_deleted(1);
             $this->assertTrue(true);
@@ -287,7 +287,7 @@ class DocumentTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }

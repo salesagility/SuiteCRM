@@ -13,20 +13,20 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $user = new User();
 
-        //preset required values
+        
         $user->retrieve(1);
         $mod_strings['LBL_BUTTON_EDIT'] = "";
         $mod_strings['LBL_BUTTON_CREATE'] = "";
 
 
-        //test with defaultDisplay false
+        
         $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:hidden;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;
 					</span>";
         $actual = $user->getSignatureButtons('');
         $this->assertSame($expected, $actual);
 
 
-        //test with defaultDisplay true
+        
         $expected = "<input class='button' onclick='javascript:open_email_signature_form(\"\", \"1\");' value='' type='button'>&nbsp;<span name=\"edit_sig\" id=\"edit_sig\" style=\"visibility:inherit;\"><input class=\"button\" onclick=\"javascript:open_email_signature_form(document.getElementById('signature_id', '').value)\" value=\"\" type=\"button\" tabindex=\"392\">&nbsp;
 					</span>";
         $actual = $user->getSignatureButtons('', true);
@@ -36,7 +36,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testUser()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $user = new User();
 
         $this->assertInstanceOf('User', $user);
@@ -69,16 +69,16 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testgetDefaultSignature()
     {
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
-        // test
+        
         
 
-//        self::markTestIncomplete('environment dependency');
+
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -91,7 +91,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $result = $user->getDefaultSignature();
         $this->assertTrue(is_array($result));
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popGlobals();
@@ -202,17 +202,17 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $user->retrieve(1);
 
 
-        //test setPreference method
+        
         $user->setPreference('userPrivGuid', 'someGuid', 0, 'global', $user);
 
 
-        //test getPreference method
+        
         $result = $user->getPreference('userPrivGuid', 'global', $user);
         $this->assertTrue(isset($result));
         $this->assertEquals('someGuid', $result);
 
 
-        //test resetPreferences method and verify that created preference is no longer available
+        
         $user->resetPreferences();
         $result = $user->getPreference('userPrivGuid', 'global', $user);
         $this->assertFalse(isset($result));
@@ -224,14 +224,14 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $user = new User();
 
         $user->retrieve(1);
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $user->savePreferencesToDB();
             $this->assertTrue(true);
@@ -239,7 +239,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -281,16 +281,16 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $user->retrieve(1);
 
-        //execute getETagSeed method, get Etag value
+        
         $ETagInitial = $user->getETagSeed('test');
         $this->assertGreaterThanOrEqual(0, $ETagInitial);
 
 
-        //execute incrementETag to increment
+        
         $user->incrementETag('test');
 
 
-        //execute getETagSeed method again, get Etag final value and  compare final and initial values
+        
         $ETagFinal = $user->getETagSeed('test');
         $this->assertGreaterThan($ETagInitial, $ETagFinal);
     }
@@ -307,10 +307,10 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //test without setting name
+        
         $this->assertEquals(null, $user->get_summary_text());
 
-        //test with name set
+        
         $user->name = "test";
         $this->assertEquals('test', $user->get_summary_text());
     }
@@ -350,9 +350,9 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -371,51 +371,51 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $result = $user->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($user->id));
         $this->assertEquals(36, strlen($user->id));
 
 
-        //test retrieve method
+        
         $this->retrieve($user->id);
 
 
-        //test retrieve_by_email_address method
+        
         $this->retrieve_by_email_address($user->id);
 
 
-        //test newPassword And findUserPassword methods
+        
         $this->NewPasswordAndFindUserPassword($user->id);
 
-        //test authenticate_user method
+        
         $this->authenticate_user($user->id);
 
 
-        //test load_user method
+        
         $this->load_user($user->id);
 
 
-        //test change_password method
+        
         $this->change_password($user->id);
 
-        //test getPreferredEmail method
+        
         $this->getPreferredEmail($user->id);
 
 
-        //test getUsersNameAndEmail method
+        
         $this->getUsersNameAndEmail($user->id);
 
 
-        //test getEmailInfo method
+        
         $this->getEmailInfo($user->id);
 
 
-        //change username and delete the user to avoid picking it up by password in future
+        
         $user->user_name = "test_deleted";
         $user->save();
         $user->mark_deleted($user->id);
         
-        // clean up
+        
         
         
     }
@@ -439,12 +439,12 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //test with invalid email
+        
         $user->retrieve_by_email_address("wrongone@email.com");
         $this->assertEquals('', $user->id);
 
 
-        //test with valid email and test for record ID to verify that record is same
+        
         $user = BeanFactory::getBean('Users', $id);
         $rand = mt_rand(1, 10000);
         $email = "one{$rand}@email.com";
@@ -461,25 +461,25 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $user->retrieve($id);
 
-        // preset
+        
         $query = "DELETE FROM users WHERE user_name = '{$user->user_name}' AND id != '$id'";
         DBManagerFactory::getInstance()->query($query);
 
 
-        //set user password and then retrieve user by created password
+        
         $rand = 1;
         $pwd = 'test' . $rand;
         $user->setNewPassword($pwd);
 
         $result = User::findUserPassword($user->user_name, md5($pwd), '', true);
 
-        // here is a really unpredictable mysql connection issue why this test is unstable
-        // but should works on a correct test environments:
-        // $this->assertTrue(isset($result['id']));
-        // $this->assertEquals($id, $result['id']);
+        
+        
+        
+        
     }
 
-// --- OK
+
  
     public function authenticate_user($id)
     {
@@ -487,11 +487,11 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $user->retrieve($id);
 
-        //test with invalid password
+        
         $result = $user->authenticate_user(md5("pass"));
         $this->assertEquals(false, $result);
 
-        //test with invalid password
+        
 
         $result = $user->authenticate_user(md5("test1"));
         $this->assertEquals(true, $result);
@@ -515,12 +515,12 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $user->retrieve($id);
 
-        //execute the method and verifh that it returns true
+        
         $result = $user->change_password("test1", "testpass");
         $this->assertEquals(true, $result);
 
 
-        //find the user by new password
+        
         $result = User::findUserPassword("test", md5("testpass"));
 
         $this->assertTrue(isset($result['id']));
@@ -586,22 +586,22 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testcheckPassword()
     {
 
-        //test with empty password and empty hash
+        
         $result = User::checkPassword("", '');
         $this->assertEquals(false, $result);
 
 
-        //test with valid hash and empty password
+        
         $result = User::checkPassword("", '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
         $this->assertEquals(false, $result);
 
 
-        //test with valid password and invalid hash
+        
         $result = User::checkPassword("test", '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la2');
         $this->assertEquals(false, $result);
 
 
-        //test with valid password and valid hash
+        
         $result = User::checkPassword("test", '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
         $this->assertEquals(true, $result);
     }
@@ -610,22 +610,22 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testcheckPasswordMD5()
     {
 
-        //test with empty password and empty hash
+        
         $result = User::checkPasswordMD5(md5(""), '');
         $this->assertEquals(false, $result);
 
 
-        //test with valid hash and empty password
+        
         $result = User::checkPasswordMD5(md5(""), '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
         $this->assertEquals(false, $result);
 
 
-        //test with valid password and invalid hash
+        
         $result = User::checkPasswordMD5(md5("test"), '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la2');
         $this->assertEquals(false, $result);
 
 
-        //test with valid password and valid hash
+        
         $result = User::checkPasswordMD5(md5("test"), '$1$Gt0.XI4.$tVVSXgE36sfsVMBNo/9la1');
         $this->assertEquals(true, $result);
     }
@@ -635,10 +635,10 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //test without setting name
+        
         $this->assertEquals(false, $user->is_authenticated());
 
-        //test with name set
+        
         $user->authenticated = true;
         $this->assertEquals(true, $user->is_authenticated());
     }
@@ -692,25 +692,25 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $user->retrieve(1);
 
-        //test with default/true
+        
         $result = $user->verify_data();
         $this->assertEquals(true, $result);
 
 
-        //test with false
+        
         $result = $user->verify_data(false);
         $this->assertEquals(false, $result);
     }
 
     public function testget_list_view_data()
     {
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
-        // test
+        
         
 
         global $mod_strings;
@@ -723,7 +723,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $result = $user->get_list_view_data();
         $this->assertTrue(is_array($result));
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popGlobals();
@@ -756,13 +756,13 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //test with empty string params
+        
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE  users.deleted = 0 AND users.is_admin=0 ORDER BY users.user_name";
         $actual = $user->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
 
-        //test with valid string params
+        
         $expected = "SELECT id, user_name, first_name, last_name, description, date_entered, date_modified, modified_user_id, created_by, title, department, is_admin, phone_home, phone_mobile, phone_work, phone_other, phone_fax, address_street, address_city, address_state, address_postalcode, address_country, reports_to_id, portal_only, status, receive_notifications, employee_status, messenger_id, messenger_type, is_group FROM users  WHERE user_name=\"\" AND  users.deleted = 0 AND users.is_admin=0 ORDER BY id";
         $actual = $user->create_export_query('id', 'user_name=""');
         $this->assertSame($expected, $actual);
@@ -781,8 +781,8 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //$result = $user->get_calls();
-        //$this->assertTrue(is_array($result));
+        
+        
 
         $this->markTestIncomplete('Error:Only variables should be passed by reference');
     }
@@ -794,7 +794,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $expected = '<script type="text/javascript" language="Javascript">var welcome = document.getElementById("welcome");var welcomeContent = welcome.innerHTML;welcome.innerHTML = welcomeContent + "&nbsp;&nbsp;&nbsp;&nbsp;<a href=index.php?module=Emails&action=ListViewGroup>Group Inbox: (0 New)</a>";</script>';
 
-        //cpature the screen output and compare with exected values
+        
 
         ob_start();
 
@@ -832,13 +832,13 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testgetEmailLink2()
     {
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
-        // test
+        
         
 
         $user = new User();
@@ -846,7 +846,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $user->retrieve(1);
 
 
-        //test with accounts module
+        
         $account = new Account();
         $account->name = "test";
 
@@ -862,9 +862,9 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertSame($expected, $actual);
 
 
-        //test with contacts module
+        
         $contact = new Contact();
-        // Contact name auto populate from first name and last name, so we need set value for first name or last name to test insteard set value for name
+        
         $contact->first_name = "test";
 
         /** @var SugarEmailAddress $emailAddress*/
@@ -878,7 +878,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $actual = $user->getEmailLink2("abc@email.com", $contact);
         $this->assertSame($expected, $actual);
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popGlobals();
@@ -893,7 +893,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $user->retrieve(1);
 
 
-        //test with accounts module
+        
         $account = new Account();
         $account->name = "test";
 
@@ -905,9 +905,9 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->assertSame($expected, $actual);
 
 
-        //test with contacts module
+        
         $contact = new Contact();
-         // Contact name auto populate from first name and last name, so we need set value for first name or last name to test insteard set value for name
+         
         $contact->first_name = "test";
 
         $expected =
@@ -931,10 +931,10 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //test without setting attribute
+        
         $this->assertEquals(false, $user->isAdmin());
 
-        //test with attribute set
+        
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isAdmin());
     }
@@ -943,29 +943,29 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //test without setting is_admin
+        
         $this->assertEquals(false, $user->isDeveloperForAnyModule());
 
 
-        //test with id set
+        
         $user->id = 1;
         $this->assertEquals(false, $user->isDeveloperForAnyModule());
 
 
-        //test with id and is_admin set
+        
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isDeveloperForAnyModule());
     }
 
     public function testgetDeveloperModules()
     {
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
-        // test
+        
         
 
 
@@ -976,7 +976,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $result = $user->getDeveloperModules();
         $this->assertTrue(is_array($result));
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popGlobals();
@@ -984,33 +984,33 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testisDeveloperForModule()
     {
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
-        // test
+        
         
 
 
         $user = new User();
 
 
-        //test without setting is_admin
+        
         $this->assertEquals(false, $user->isDeveloperForModule("Accounts"));
 
 
-        //test with id set
+        
         $user->id = 1;
         $this->assertEquals(false, $user->isDeveloperForModule("Accounts"));
 
 
-        //test with id and is_admin set
+        
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isDeveloperForModule("Accounts"));
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popGlobals();
@@ -1020,13 +1020,13 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testgetAdminModules()
     {
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
-        // test
+        
         
 
         $user = new User();
@@ -1036,7 +1036,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $result = $user->getAdminModules();
         $this->assertTrue(is_array($result));
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popGlobals();
@@ -1046,33 +1046,33 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testisAdminForModule()
     {
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
-        // test
+        
         
 
         $user = new User();
 
 
-        //test without setting is_admin
+        
         $this->assertEquals(false, $user->isAdminForModule("Accounts"));
 
 
-        //test with id set
+        
         $user->id = 1;
         $this->assertEquals(false, $user->isAdminForModule("Accounts"));
 
 
-        //test with id and is_admin set
+        
         $user->is_admin = 1;
         $this->assertEquals(true, $user->isAdminForModule("Accounts")); 
         
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popGlobals();
@@ -1097,14 +1097,14 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         /*
             $user = new User();
 
-            //test with empty string params
+            
             $expected = " SELECT  users.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt2.last_name reports_to_name , jt2.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM users   LEFT JOIN  users jt2 ON users.reports_to_id=jt2.id AND jt2.deleted=0\n\n AND jt2.deleted=0 where users.deleted=0";
             $actual = $user->create_new_list_query('','');
             $this->assertSame($expected,$actual);
 
 
 
-            //test with valid string params
+            
             $expected = " SELECT  users.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt2.last_name reports_to_name , jt2.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM users   LEFT JOIN  users jt2 ON users.reports_to_id=jt2.id AND jt2.deleted=0\n\n AND jt2.deleted=0 where (user_name=\"\") AND users.deleted=0 ORDER BY users.id";
             $actual = $user->create_new_list_query('id','user_name=""');
             $this->assertSame($expected,$actual);
@@ -1124,7 +1124,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testgeneratePassword()
     {
-        //generate apsswords and verify they are not same
+        
 
         $password1 = User::generatePassword();
         $this->assertGreaterThan(0, strlen($password1));
@@ -1142,7 +1142,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $result = $user->sendEmailForPassword("1");
 
-        //expected result is a array with template not found message.
+        
         $this->assertTrue(is_array($result));
     }
 
@@ -1152,11 +1152,11 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ALL);
+        
 
         $user = new User();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $result = $user->afterImportSave();
             $this->assertTrue(true);
@@ -1164,7 +1164,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
             $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
         }
         
-        // clean up
+        
         
         
     }
@@ -1174,16 +1174,16 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //test without user email
+        
         $this->assertEquals(false, $user->isPrimaryEmail("abc@abc.com"));
 
 
-        //test with non matching user email
+        
         $user->email1 = "xyz@abc.com";
         $this->assertEquals(false, $user->isPrimaryEmail("abc@abc.com"));
 
 
-        //test with matching user email
+        
         $user->email1 = "abc@abc.com";
         $this->assertEquals(true, $user->isPrimaryEmail("abc@abc.com"));
     }

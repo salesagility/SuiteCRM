@@ -14,7 +14,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testOpportunity()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $opportunity = new Opportunity();
 
         $this->assertInstanceOf('Opportunity', $opportunity);
@@ -35,18 +35,18 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $opportunity = new Opportunity();
 
-        //test without setting name
+        
         $this->assertEquals(null, $opportunity->get_summary_text());
 
-        //test with name set
+        
         $opportunity->name = 'test';
         $this->assertEquals('test', $opportunity->get_summary_text());
         
-        // clean up
+        
         
         
     }
@@ -56,12 +56,12 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('Breaks on php 7.1');
         $opportunity = new Opportunity();
 
-        //test with empty string params
+        
         $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY opportunities.name";
         $actual = $opportunity->create_list_query('', '');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY accounts.id";
         $actual = $opportunity->create_list_query('accounts.id', 'accounts.name=""');
         $this->assertSame($expected, $actual);
@@ -72,12 +72,12 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('Breaks on php 7.1');
         $opportunity = new Opportunity();
 
-        //test with empty string params
+        
         $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY opportunities.name";
         $actual = $opportunity->create_list_query('', '');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY accounts.id";
         $actual = $opportunity->create_list_query('accounts.id', 'accounts.name=""');
         $this->assertSame($expected, $actual);
@@ -88,18 +88,18 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
 
-            //test without force_load_details
+            
             $opportunity->fill_in_additional_list_fields();
 
-            //test without force_load_details
+            
             $opportunity->force_load_details = true;
             $opportunity->fill_in_additional_list_fields();
 
@@ -108,7 +108,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -118,12 +118,12 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $opportunity->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -131,7 +131,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -149,12 +149,12 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $opportunity = new Opportunity();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $opportunity->update_currency_id(array('GBP', 'EUR'), 'USD');
             $this->assertTrue(true);
@@ -162,7 +162,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -181,7 +181,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 );
 
         $actual = $opportunity->get_list_view_data();
-        //$this->assertSame($expected, $actual);
+        
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['DELETED'], $actual['DELETED']);
         $this->assertEquals($expected['SALES_STAGE'], $actual['SALES_STAGE']);
@@ -192,10 +192,10 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $opportunity = new Opportunity();
 
-        //te4st without currency id
+        
         $this->assertEquals('', $opportunity->get_currency_symbol());
 
-        //test with invalid currency id
+        
         $opportunity->currency_id = 1;
         $this->assertEquals('', $opportunity->get_currency_symbol());
     }
@@ -204,7 +204,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $opportunity = new Opportunity();
 
-        //test with empty string params
+        
         $expected = "opportunities.name like '%' or accounts.name like '%'";
         $actual = $opportunity->build_generic_where_clause('');
         $this->assertSame($expected, $actual);
@@ -212,7 +212,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
@@ -223,7 +223,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-	// test
+	
         
         $opportunity = new Opportunity();
 
@@ -233,18 +233,18 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $opportunity->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($opportunity->id));
         $this->assertEquals(36, strlen($opportunity->id));
         $this->assertEquals(-99, $opportunity->currency_id);
         $this->assertEquals(30, $opportunity->probability);
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $opportunity->mark_deleted($opportunity->id);
         $result = $opportunity->retrieve($opportunity->id);
         $this->assertEquals(null, $result);
 
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('aod_index');
@@ -261,7 +261,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $opportunity = new Opportunity();
@@ -274,7 +274,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -284,7 +284,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $opportunity = new Opportunity();
@@ -296,7 +296,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -305,7 +305,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $opportunity = new Opportunity();
 
-        //test with attributes preset and verify template variables are set accordingly
+        
 
         $opportunity->name = 'test';
         $opportunity->amount = '100';
@@ -334,12 +334,12 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistviewACLHelper()
     {
 
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $opportunity = new Opportunity();
 
@@ -347,7 +347,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $opportunity->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+        
         
         $state->popGlobals();
 
@@ -367,10 +367,10 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it works and does not throws an exception.
+        
+        
         try {
             getCurrencyType();
             $this->assertTrue(true);
@@ -380,7 +380,7 @@ class OpportunityTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('This method has no implementation');
         
-        // clean up
+        
         
         
     }

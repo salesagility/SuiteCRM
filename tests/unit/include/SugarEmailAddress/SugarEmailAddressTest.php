@@ -66,12 +66,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSave()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addr_bean_rel');
 
-	// test
+	
         
         
         $query = "SELECT * FROM email_addr_bean_rel";
@@ -86,14 +86,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
-        // test
+        
         /** @noinspection PhpDeprecationInspection */
         $this->ea->save(null, null, null, null, null, null, null, null);
         self::assertCount(1, $GLOBALS['log']->calls['deprecated']);
 
         $GLOBALS['log'] = $logger;
         
-        // clean up
+        
         
         DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel");
         foreach($tableEmailAddrBeanRel as $row) {
@@ -106,7 +106,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
+        
         
         $state->popTable('email_addr_bean_rel');
 
@@ -119,7 +119,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testConstruct()
     {
-        // test
+        
         $ea = new SugarEmailAddress();
         $indexBefore = $ea->index;
         $countBefore = $ea::$count;
@@ -136,7 +136,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSugarEmailAddress()
     {
-        // test
+        
         $ea = new SugarEmailAddress();
         $indexBefore = $ea->index;
         $countBefore = $ea::$count;
@@ -161,7 +161,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $c = new Contact();
 
-        // test
+        
         if (!empty($_REQUEST)) {
             $req = $_REQUEST;
         }
@@ -177,7 +177,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             unset($_REQUEST);
         }
 
-        // test
+        
         $c->email1 = 'test@email.com';
         $c->email2 = 'test2@email.com';
         $this->ea->handleLegacySave($c);
@@ -195,7 +195,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertSame('0', $this->ea->addresses[1]['opt_out']);
         self::assertNull($this->ea->addresses[1]['email_address_id']);
 
-        // clean up
+        
 
         if(isset($_request)) {
             $_REQUEST = $_request;
@@ -212,11 +212,11 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $c = new Contact();
 
-        // test
+        
         $this->ea->handleLegacyRetrieve($c);
         self::assertFalse($c->fetched_row);
 
-        // test
+        
         $c->email1 = 'test5@email.com';
         $this->ea->handleLegacyRetrieve($c);
         self::assertSame(array(
@@ -232,14 +232,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $c = new Contact();
 
-        // test
+        
         $this->ea->populateLegacyFields($c);
         self::assertEquals(null, $c->email1);
         self::assertEquals(null, $c->email_opt_out);
         self::assertEquals(null, $c->invalid_email);
         self::assertEquals(null, $c->email2);
 
-        // test
+        
         $this->ea->addAddress('test6@email.com');
         $this->ea->addAddress('test7@email.com');
         $this->ea->populateLegacyFields($c);
@@ -248,7 +248,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(0, $c->invalid_email);
         self::assertEquals('test7@email.com', $c->email2);
 
-        // test
+        
         $this->ea->addresses[1]['primary_address'] = 1;
         $this->ea->populateLegacyFields($c);
         self::assertEquals('test7@email.com', $c->email1);
@@ -264,14 +264,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testSaveEmail()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
 
-	// test
+	
         
         
         
@@ -314,7 +314,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $db = DBManagerFactory::getInstance();
 
-        // test
+        
         $db->query(/** @lang sql */
             "delete  from email_addr_bean_rel  WHERE email_addr_bean_rel.bean_id = '' AND email_addr_bean_rel.bean_module = '' and email_addr_bean_rel.deleted=0");
 
@@ -327,7 +327,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->ea->saveEmail(false, null);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
 
         $this->ea->addAddress('test8@email.com');
         $this->ea->addAddress('test9@email.com');
@@ -347,7 +347,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $row = $db->fetchByAssoc($r);
         self::assertEquals(2, $row['cnt']);
 
-        // test
+        
 
         $this->ea->addAddress('test10@email.com');
         $this->ea->addAddress('test11@email.com');
@@ -367,7 +367,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $row = $db->fetchByAssoc($r);
         self::assertEquals(4, $row['cnt']);
 
-        // test
+        
 
         $this->ea->addAddress('test12@email.com');
         $this->ea->addAddress('test13@email.com');
@@ -400,7 +400,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $row = $db->fetchByAssoc($r);
         self::assertEquals(6, $row['cnt']);
 
-        // test
+        
 
         $_REQUEST['action'] = 'ConvertLead';
 
@@ -443,7 +443,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $GLOBALS['log'] = $logger;
         
-        // clean up
+        
 
         if(isset($_request)) {
             $_REQUEST = $_request;
@@ -484,7 +484,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popTable('tracker');
@@ -496,14 +496,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetCountEmailAddressByBean()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
 
-	// test
+	
         
         
         
@@ -521,7 +521,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(0, $result0);
         self::assertEquals(0, $result1);
 
-        // test
+        
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
@@ -555,7 +555,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(0, $result1);
 
 
-        // test
+        
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -566,7 +566,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
         
-        // clean up
+        
         
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach($tableEmailAddresses as $row) {
@@ -579,7 +579,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popTable('tracker');
@@ -591,11 +591,11 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetRelatedId()
     {
-        // test
+        
         $results = $this->ea->getRelatedId('test@email.com', 'Contacts');
         self::assertEquals(false, $results);
 
-        // test
+        
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
@@ -655,7 +655,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $results = $this->ea->getBeansByEmailAddress('test@email.com');
         self::assertEquals(array(), $results);
 
-        // test
+        
         $i = 1;
         $db = DBManagerFactory::getInstance();
 
@@ -697,12 +697,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
         $db->query($q);
 
-        // test
+        
 
         $results = $this->ea->getBeansByEmailAddress('');
         self::assertEquals(array(), $results);
 
-        // test
+        
         $i = 2;
         $q = /** @lang sql */
             "
@@ -747,14 +747,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db = DBManagerFactory::getInstance();
 
 
-        // test
+        
         $results = $this->ea->populateAddresses('', '');
         if(null !== $results) {
             throw new Exception('Assert error 1');
         }
         self::assertEquals(null, $results);
 
-        // test
+        
         $_REQUEST['emailAddressWidget'] = true;
         $results = $this->ea->populateAddresses('', '');
         if(null !== $results) {
@@ -762,7 +762,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         self::assertEquals(null, $results);
 
-        // test
+        
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $results = $this->ea->populateAddresses('', $module);
@@ -771,7 +771,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         self::assertEquals(null, $results);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -782,14 +782,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         self::assertEquals(array(), $this->ea->addresses);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
         $_REQUEST['non-exists-or-invalid1emailAddress0'] = array();
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -797,7 +797,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalid1emailAddressReplyToFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -805,7 +805,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalidemailAddressReplyToFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -813,7 +813,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalid1emailAddressPrimaryFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -821,7 +821,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalidemailAddressPrimaryFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -829,7 +829,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalid1emailAddressOptOutFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -837,7 +837,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalidemailAddressOptOutFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -845,7 +845,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalid1emailAddressInvalidFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -853,7 +853,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalidemailAddressInvalidFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
         
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -861,7 +861,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalid1emailAddressDeleteFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -869,7 +869,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalidemailAddressDeleteFlag'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -877,7 +877,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['non-exists-or-invalid1emailAddressId0'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         unset($_REQUEST);
         $module = 'non-exists-or-invalid';
         $_REQUEST['non-exists-or-invalid_email_widget_id'] = true;
@@ -886,7 +886,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['emailAddressWidget'] = true;
         $results = $this->ea->populateAddresses('', $module);
 
-        // test
+        
         $i = 1;
         $q = /** @lang sql */
             "
@@ -915,17 +915,17 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db->query($q);
         $results = $this->ea->populateAddresses('', $module, array('emailAddress0' => 'test@email.com'));
         $this->markTestIncomplete('We need to clear the emails after each test');
-//        self::assertEquals(false, $results);
-//        self::assertSame(array(
-//            1 => array(
-//                'email_address' => 'test@email.com',
-//                'primary_address' => '0',
-//                'reply_to_address' => '0',
-//                'invalid_email' => '1',
-//                'opt_out' => '0',
-//                'email_address_id' => null,
-//            ),
-//        ), $this->ea->addresses);
+
+
+
+
+
+
+
+
+
+
+
 
         $q = /** @lang sql */
             "UPDATE email_addresses SET opt_out = 1, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
@@ -967,14 +967,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testAddAddress()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
 
-	// test
+	
         
         
         $query = "SELECT * FROM email_addr_bean_rel";
@@ -1025,7 +1025,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             ),
         ), $this->ea->addresses);
         
-        // clean up
+        
         
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach($tableEmailAddresses as $row) {
@@ -1060,7 +1060,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popTable('tracker');
@@ -1073,58 +1073,58 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testUpdateFlags()
     {
         $this->markTestIncomplete('testUpdateFlags');
-//        // test
-//        $i = 1;
-//        $q = /** @lang sql */
-//            "
-//          INSERT INTO email_addr_bean_rel (id, email_address_id, bean_id, bean_module, primary_address, deleted)
-//          VALUES ('test_email_bean_rel_{$i}', 'test_email_{$i}', 'test_contact_{$i}', 'Contacts', '0', '0')
-//        ";
-//        $db->query($q);
-//        $q = /** @lang sql */
-//            "INSERT INTO email_addresses (id, email_address, email_address_caps) VALUES ('test_email_{$i}', 'test@email.com', 'TEST@EMAIL.COM')";
-//        $db->query($q);
-//        $q = /** @lang sql */
-//            "INSERT INTO contacts (id) VALUES ('test_contact_{$i}')";
-//        $db->query($q);
-//
-//        $this->ea->addAddress('test@email.com', true);
-//
-//        $q = /** @lang sql */
-//            "UPDATE email_addresses SET opt_out = 0, invalid_email = 1 WHERE email_address_caps = 'TEST@EMAIL.COM'";
-//        $db->query($q);
-//
-//        $this->ea->updateFlags();
-//
-//        $q = /** @lang sql */
-//            "SELECT * FROM email_addresses WHERE email_address_caps = 'TEST@EMAIL.COM'";
-//        $r = $db->query($q);
-//        $a = $db->fetchByAssoc($r);
-//
-//        self::assertSame(array(
-//            'id' => $a['id'],
-//            'email_address' => 'test@email.com',
-//            'email_address_caps' => 'TEST@EMAIL.COM',
-//            'invalid_email' => '0',
-//            'opt_out' => '0',
-//            'confirm_opt_in' => null,
-//            'confirm_opt_in_date' => null,
-//            'confirm_opt_in_sent_date' => null,
-//            'date_created' => $a['date_created'],
-//            'date_modified' => $a['date_modified'],
-//            'deleted' => '0',
-//        ), $a);
-//
-//
-//        $q = /** @lang sql */
-//            "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
-//        $db->query($q);
-//        $q = /** @lang sql */
-//            "DELETE FROM email_addresses WHERE id = 'test_email_{$i}'";
-//        $db->query($q);
-//        $q = /** @lang sql */
-//            "DELETE FROM contacts WHERE id = 'test_contact_{$i}'";
-//        $db->query($q);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -1225,14 +1225,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetEmailGUID()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('tracker');
         $state->pushTable('email_addresses');
 
-	// test
+	
         
         
         
@@ -1265,7 +1265,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $db = DBManagerFactory::getInstance();
 
-        // test
+        
         $q = /** @lang sql */
             "
           DELETE FROM email_addresses 
@@ -1276,15 +1276,15 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $this->ea->getEmailGUID(null);
         self::assertEquals('', $result);
 
-        // test
+        
         $result = $this->ea->getEmailGUID('non-valid');
         self::assertTrue(isValidId($result));
 
-        // test
+        
         $result = $this->ea->getEmailGUID('nonexists@nihil.com');
         self::assertTrue(isValidId($result));
 
-        // test
+        
         $q = /** @lang sql */
             "
           DELETE FROM email_addresses 
@@ -1296,7 +1296,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertTrue(isValidId($result));
         
         
-        // clean up
+        
         
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach($tableEmailAddresses as $row) {
@@ -1331,7 +1331,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popTable('tracker');
@@ -1343,19 +1343,19 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testAddUpdateEmailAddress()
     {
-        // test
+        
         $db = DBManagerFactory::getInstance();
 
-        // test
+        
         $result = $this->ea->AddUpdateEmailAddress(null);
         self::assertEquals('', $result);
 
-        // test
+        
         $result = $this->ea->AddUpdateEmailAddress(null, 0, 0, 1);
         self::assertEquals('', $result);
 
 
-        // test
+        
         $i = 1;
         $q = /** @lang sql */
             "
@@ -1373,7 +1373,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $this->ea->AddUpdateEmailAddress(null, 0, 0, "test_email_{$i}");
         self::assertEquals('', $result);
 
-        // test
+        
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1394,12 +1394,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $c = new Contact();
 
-        // test
+        
         $result = $this->ea->getPrimaryAddress($c);
         self::assertEquals('', $result);
 
 
-        // test
+        
         $i = 1;
         $q = /** @lang sql */
             "
@@ -1418,7 +1418,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $this->ea->getPrimaryAddress($c);
         self::assertEquals('test@email.com', $result);
 
-        // test
+        
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1440,7 +1440,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $c = BeanFactory::getBean('Contacts');
 
 
-        // test
+        
         $i = 1;
         $q = /** @lang sql */
             "
@@ -1471,7 +1471,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $this->ea->getReplyToAddress($c, true);
         self::assertEquals('test@email.com', $result);
 
-        // test
+        
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1483,11 +1483,11 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db->query($q);
 
 
-        // test
+        
         $result = $this->ea->getReplyToAddress($c);
         self::assertEquals('', $result);
 
-        // test
+        
         $result = $this->ea->getReplyToAddress($c, true);
         self::assertEquals('', $result);
     }
@@ -1499,7 +1499,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $db = DBManagerFactory::getInstance();
 
-        // test
+        
         $id = null;
         $module = null;
 
@@ -1517,7 +1517,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $count = count($result);
         self::assertEquals($cnt, $count);
 
-        // test
+        
         $id = 'non-exists-xyz';
         $module = null;
 
@@ -1525,7 +1525,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $count = count($result);
         self::assertEquals(0, $count);
 
-        // test
+        
         /**
          * @var Contact $c
          */
@@ -1588,7 +1588,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db->query($q);
 
 
-        // test
+        
         $result = $this->ea->getEmailAddressWidgetEditView(null, null);
         self::assertEquals(false, $result);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
@@ -1601,7 +1601,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $result);
         self::assertCount(3, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $_REQUEST['non-exists-module0emailAddress0'] = true;
@@ -1615,7 +1615,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        // test
+        
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $_REQUEST['non-exists-module0emailAddress0'] = true;
@@ -1628,7 +1628,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        // test
+        
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
 
@@ -1643,12 +1643,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        // test
+        
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
 
         self::assertEquals($result, false);
         
-        // test
+        
         $_POST['is_converted'] = true;
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
 
@@ -1658,7 +1658,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals($expected, false);
         self::assertCount(10, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['is_converted'] = true;
         $_POST['return_id'] = 'any-non-exists-id';
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
@@ -1666,7 +1666,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         self::assertCount(12, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['is_converted'] = true;
         $_POST['return_module'] = 'any-non-exists-module';
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'non-exists-module');
@@ -1675,12 +1675,12 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         self::assertCount(13, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $result = $this->ea->getEmailAddressWidgetEditView('non-exists-id', 'Users');
 
         self::assertTrue(is_string($result));
 
-        // test
+        
         $_POST['return_id'] = 'test_contact_1';
         $_POST['return_module'] = 'Contacts';
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
@@ -1692,14 +1692,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         self::assertEquals($result, false);
 
-        // test
+        
         $_POST['return_id'] = 'non-exists-id';
         $_POST['return_module'] = 'Contacts';
         $result = $this->ea->getEmailAddressWidgetEditView('test_contact_1', 'Contacts');
 
         self::assertEquals($result, false);
 
-        // test
+        
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $_REQUEST['non-exists-module0emailAddress0'] = true;
@@ -1714,7 +1714,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        // test
+        
         $_REQUEST['full_form'] = true;
         $_REQUEST['emailAddressWidget'] = true;
         $_REQUEST['non-exists-module0emailAddress0'] = true;
@@ -1729,7 +1729,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_REQUEST = $env['$_REQUEST'];
         }
 
-        // test
+        
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1752,7 +1752,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $GLOBALS['log'] = $logger;
         
-        // clean up
+        
         
         DBManagerFactory::getInstance()->query("DELETE FROM accounts_cstm");
         foreach($tableAccountsCstm as $row) {
@@ -1788,16 +1788,16 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db->query($q);
 
 
-        // test
+        
         $result = $this->ea->getEmailAddressWidgetDetailView(null);
         self::assertEquals('', $result);
 
-        // test
+        
         $c = BeanFactory::getBean('Contacts');
         $result = $this->ea->getEmailAddressWidgetDetailView($c);
         self::assertEquals('', $result);
 
-        // test
+        
         $c = BeanFactory::getBean('Contacts');
         $c->id = 'an-non-exists-id';
         $result = $this->ea->getEmailAddressWidgetDetailView($c);
@@ -1806,7 +1806,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = !empty($result) && is_string($result);
         self::assertTrue($expected);
 
-        // test
+        
         $c->id = "test_contact_{$i}";
         $result = $this->ea->getEmailAddressWidgetDetailView($c);
         self::assertFalse(strpos($result, '--None--'));
@@ -1815,7 +1815,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertTrue($expected);
 
 
-        // test
+        
         $q = /** @lang sql */
             "DELETE FROM email_addr_bean_rel WHERE id = 'test_email_bean_rel_{$i}'";
         $db->query($q);
@@ -1852,18 +1852,18 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
 
 
-        // test
+        
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
         self::assertEquals('', $result);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['emailAddressPrimaryFlag'] = '';
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
         self::assertEquals('', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddress0'] = true;
         $result = $this->ea->getEmailAddressWidgetDuplicatesView(null);
@@ -1877,7 +1877,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddress0'] = true;
         $_POST['emailAddressOptOutFlag'] = true;
@@ -1893,7 +1893,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(9, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddressInvalidFlag'] = '';
         $_POST['emailAddress0'] = true;
@@ -1913,7 +1913,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(13, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddressReplyToFlag'] = '';
         $_POST['emailAddress0'] = true;
@@ -1933,7 +1933,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(18, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddressDeleteFlag'] = '';
         $_POST['emailAddress0'] = true;
@@ -1953,7 +1953,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 <input type="hidden" name="useEmailWidget" value="true">', $result);
         self::assertCount(24, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['emailAddressPrimaryFlag'] = '';
         $_POST['emailAddressVerifiedValue1'] = '';
         $_POST['emailAddress0'] = true;
@@ -1974,7 +1974,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertCount(31, $GLOBALS['log']->calls['fatal']);
 
 
-        // test
+        
         if (isset($env['$_POST'])) {
             $_POST = $env['$_POST'];
         }
@@ -1993,7 +1993,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetFormBaseURL()
     {
-        // test
+        
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
@@ -2014,29 +2014,29 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $focus = new Contact();
 
 
-        // test
+        
         $result = $this->ea->getFormBaseURL(null);
         self::assertEquals(false, $result);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=&emailAddressWidget=', $result);
         self::assertCount(3, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['Contacts_email_widget_id'] = 'testid';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_POST['emailAddressWidget'] = 'testaddress';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_REQUEST['ContactstestidemailAddress0'] = 'testadrr0';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals(
@@ -2045,14 +2045,14 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_REQUEST['ContactstestidemailAddressVerifiedValue1'] = 'testverfdv1';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress' .
             '&ContactstestidemailAddress0=testadrr0&ContactstestidemailAddressVerifiedValue1=testverfdv1', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_REQUEST['ContactstestidemailAddressPrimaryFlag'] = 'testadentprimflg';
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress' .
@@ -2060,7 +2060,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             '&ContactstestidemailAddressPrimaryFlag=testadentprimflg', $result);
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $_REQUEST['ContactstestidemailAddressPrimaryFlag'] = array('testadentprimflg1', 'testadentprimflg2');
         $result = $this->ea->getFormBaseURL($focus);
         self::assertEquals('&Contacts_email_widget_id=testid&emailAddressWidget=testaddress' .
@@ -2070,7 +2070,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertCount(4, $GLOBALS['log']->calls['fatal']);
 
 
-        // tear down
+        
         if (isset($env['$_POST'])) {
             $_POST = $env['$_POST'];
         }
@@ -2101,27 +2101,27 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetCorrectedModule()
     {
-        // test
+        
         $module = null;
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame($module, $result);
 
-        // test
+        
         $module = '';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('', $result);
 
-        // test
+        
         $module = 'Nonexists';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('Nonexists', $result);
 
-        // test
+        
         $module = 'Contacts';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('Contacts', $result);
 
-        // test
+        
         $module = 'Employees';
         $result = $this->ea->getCorrectedModule($module);
         self::assertSame('Users', $result);
@@ -2139,7 +2139,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
-        // test
+        
         $this->ea->stash(null, null);
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
     }
@@ -2160,7 +2160,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $tableAccountsCstm = $rows;
         
         
-        // test
+        
         $c = BeanFactory::getBean('Contacts');
         $c->id = 'test_contact_1';
 
@@ -2171,21 +2171,21 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $logger = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
-        // test
+        
         $result = getEmailAddressWidget($c, null, null, 'ConvertLead');
         self::assertFalse(strpos($result, '--None--'));
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
 
-        // test
+        
         $result = getEmailAddressWidget($a, null, null, 'ConvertLead');
         self::assertFalse(strpos($result, '--None--'));
 
-        // test
+        
         $result = getEmailAddressWidget($c, null, null, 'EditView');
         self::assertFalse(strpos($result, '--None--'));
 
-        // test
+        
         $result = getEmailAddressWidget($c, null, null, 'DetailView');
         self::assertEquals(/** @lang html */
             '
@@ -2197,16 +2197,16 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 				</tr>
 							</table>', $result);
 
-        // test
+        
         $result = getEmailAddressWidget(null, null, null, null);
         self::assertEquals('', $result);
 
 
-        // test
+        
         $GLOBALS['log'] = $logger;
         
         
-        // clean up
+        
         
         DBManagerFactory::getInstance()->query("DELETE FROM accounts_cstm");
         foreach($tableAccountsCstm as $row) {
@@ -2224,19 +2224,19 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testGetOptInStatus ()
     {
         self::markTestIncomplete('COI_STAT_CONFIRMED_OPT_IN');
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('email_addresses');
         
-        // test
+        
         
 
         global $sugar_config;
 
-        //
-        // Test Scenario: when email_enable_confirm_opt_in is disabled
+        
+        
         $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_DISABLED;
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
@@ -2247,7 +2247,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status, opt in
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2258,7 +2258,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2271,7 +2271,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2285,7 +2285,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2299,8 +2299,8 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        //
-        // Test Scenario: when email_enable_confirm_opt_in is opt in
+        
+        
         $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_OPT_IN;
 
         $emailAddress = new SugarEmailAddress();
@@ -2316,7 +2316,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status, opt in
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2327,7 +2327,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2340,7 +2340,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2354,7 +2354,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2369,8 +2369,8 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
 
-        //
-        // Test Scenario: when email_enable_confirm_opt_in is confirmed opt in
+        
+        
         $sugar_config['email_enable_confirm_opt_in'] = SugarEmailAddress::COI_STAT_CONFIRMED_OPT_IN;
 
         $emailAddress = new SugarEmailAddress();
@@ -2386,7 +2386,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2397,7 +2397,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2410,7 +2410,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2424,7 +2424,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
 
-        // Test opt in status, email failed
+        
         $emailAddress = new SugarEmailAddress();
         $emailAddress->email_address = 'test@example.com';
         $emailAddress->email_address_caps = 'TEST@EXAMPLE.COM';
@@ -2438,7 +2438,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailAddress->getOptInStatus()
         );
         
-        // clean up
+        
         
         $state->popTable('email_addresses');
         $state->popGlobals();

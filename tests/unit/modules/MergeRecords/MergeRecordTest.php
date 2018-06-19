@@ -14,7 +14,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testMergeRecord()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $mergeRecord = new MergeRecord();
 
         $this->assertInstanceOf('MergeRecord', $mergeRecord);
@@ -30,7 +30,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsave()
     {
         $mergeRecord = new MergeRecord();
-        //$mergeRecord->save();
+        
 
         $this->markTestIncomplete('method has no implementation');
     }
@@ -42,14 +42,14 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mergeRecord = new MergeRecord();
 
-        //preset variables required
+        
         $mergeRecord->merge_bean = 'Users';
         $_REQUEST['action'] = 'Step2';
 
         $mergeRecord->retrieve('1');
 
         $this->markTestIncomplete('Merge bean is broken at the moment');
-        //$this->assertTrue(isset($mergeRecord->merge_bean->id));
+        
         
         $this->assertEquals(1, $mergeRecord->merge_bean->id);
     }
@@ -62,14 +62,14 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mergeRecord = new MergeRecord();
 
-        //test without merge_id
+        
         $mergeRecord->load_merge_bean('Contacts');
 
         $this->assertAttributeEquals('Contacts', 'merge_module', $mergeRecord);
         $this->assertAttributeEquals('Contact', 'merge_bean_class', $mergeRecord);
         $this->assertAttributeEquals('modules/Contacts/Contact.php', 'merge_bean_file_path', $mergeRecord);
 
-        //test with merge_id
+        
         $mergeRecord->load_merge_bean('Users', false, 1);
 
         $this->assertAttributeEquals('Users', 'merge_module', $mergeRecord);
@@ -84,14 +84,14 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mergeRecord = new MergeRecord();
 
-        //test without merge_id
+        
         $mergeRecord->load_merge_bean2('Contacts');
 
         $this->assertAttributeEquals('Contacts', 'merge_module2', $mergeRecord);
         $this->assertAttributeEquals('Contact', 'merge_bean_class2', $mergeRecord);
         $this->assertAttributeEquals('modules/Contacts/Contact.php', 'merge_bean_file_path2', $mergeRecord);
 
-        //test with merge_id
+        
         $mergeRecord->load_merge_bean2('Users', false, 1);
 
         $this->assertAttributeEquals('Users', 'merge_module2', $mergeRecord);
@@ -108,7 +108,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
 
@@ -116,7 +116,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mergeRecord->load_merge_bean('Users', false, 1);
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $mergeRecord->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -124,7 +124,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -137,14 +137,14 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $mergeRecord = new MergeRecord();
 
         $mergeRecord->load_merge_bean('Users', false, 1);
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $mergeRecord->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -152,7 +152,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -167,10 +167,10 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mergeRecord->load_merge_bean('Users');
 
-        //test without setting name
+        
         $this->assertEquals(null, $mergeRecord->get_summary_text());
 
-        //test with name set
+        
         $mergeRecord->merge_bean->name = 'test';
         $this->assertEquals('test', $mergeRecord->get_summary_text());
     }
@@ -199,12 +199,12 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mergeRecord->load_merge_bean('Contacts');
 
-        //test with string
+        
         $expected = "contacts.last_name like 'test%' or contacts.first_name like 'test%' or accounts.name like 'test%' or contacts.assistant like 'test%' or ea.email_address like 'test%'";
         $actual = $mergeRecord->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
 
-        //test with number
+        
         $expected = "contacts.last_name like '1%' or contacts.first_name like '1%' or accounts.name like '1%' or contacts.assistant like '1%' or ea.email_address like '1%' or contacts.phone_home like '%1%' or contacts.phone_mobile like '%1%' or contacts.phone_work like '%1%' or contacts.phone_other like '%1%' or contacts.phone_fax like '%1%' or contacts.assistant_phone like '%1%'";
         $actual = $mergeRecord->build_generic_where_clause(1);
         $this->assertSame($expected, $actual);
@@ -226,10 +226,10 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mergeRecord = new MergeRecord();
 
-        //test without loading merge bean
+        
         $this->assertEquals(true, $mergeRecord->ACLAccess('')); //test with valid value
 
-        //test with merge bean loaded
+        
         $mergeRecord->load_merge_bean('Meetings');
 
         $this->assertEquals(true, $mergeRecord->ACLAccess('edit'));
@@ -266,7 +266,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $mergeRecord = new MergeRecord();
 
@@ -278,7 +278,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertSame($expected, $result);
         
-        // clean up
+        
         
         
     }
@@ -305,11 +305,11 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mergeRecord = new MergeRecord();
 
-        //test with type = like
+        
         $result = $mergeRecord->release_name_query('like', 'test');
         $this->assertSame('', $result);
 
-        //test with type = start
+        
         $result = $mergeRecord->release_name_query('start', 'test');
         $this->assertSame('', $result);
     }
@@ -320,7 +320,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
@@ -353,6 +353,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertSame($expected, $actual);
 
-        ////error_reporting(E_ALL);
+        
     }
 }

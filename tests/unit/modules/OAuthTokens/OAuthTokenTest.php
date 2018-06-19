@@ -14,7 +14,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function test__construct()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $oauthToken = new OAuthToken();
 
         $this->assertInstanceOf('OAuthToken', $oauthToken);
@@ -32,14 +32,14 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $oauthToken = new OAuthToken();
         $oauthToken->setState($oauthToken::REQUEST);
 
         $this->assertEquals($oauthToken::REQUEST, $oauthToken->tstate);
         
-        // clean up
+        
         
         
     }
@@ -79,36 +79,36 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testSaveAndOthers()
     {
 
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
 
-	// test
+	
         
         $oauthToken = OAuthToken::generate();
 
         $oauthToken->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($oauthToken->id));
         $this->assertEquals(12, strlen($oauthToken->id));
 
-        //test load method
+        
         $this->load($oauthToken->id);
 
-        //test invalidate method
+        
         $token = OAuthToken::load($oauthToken->id);
         $this->invalidate($token);
 
-        //test authorize method
+        
         $this->authorize($token);
 
-        //test mark_deleted method
+        
         $this->mark_deleted($oauthToken->id);
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('tracker');
@@ -149,22 +149,22 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $oauthToken = new OAuthToken();
 
-        //execute the method
+        
         $oauthToken->mark_deleted($id);
 
-        //verify that record can not be loaded anymore
+        
         $token = OAuthToken::load($id);
         $this->assertEquals(null, $token);
     }
 
     public function testcreateAuthorized()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
 
-	// test
+	
         
         $oauthKey = new OAuthKey();
         $oauthKey->id = '1';
@@ -179,14 +179,14 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($oauthToken::ACCESS, $oauthToken->tstate);
         $this->assertEquals($user->id, $oauthToken->assigned_user_id);
 
-        //execute copyAuthData method
+        
         $oauthToken->authdata = 'test';
         $this->copyAuthData($oauthToken);
 
-        //finally mark deleted for cleanup
+        
         $oauthToken->mark_deleted($oauthToken->id);
         
-        // clean up
+        
         
         $state->popTable('tracker');
 
@@ -209,7 +209,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $oauthToken->queryString();
         $this->assertEquals('oauth_token=&oauth_token_secret=', $result);
 
-        //test with attributes set
+        
         $oauthToken->token = 'toekn';
         $oauthToken->secret = 'secret';
         $result = $oauthToken->queryString();
@@ -222,10 +222,10 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it works and does not throws an exception.
+        
+        
         try {
             OAuthToken::cleanup();
             $this->assertTrue(true);
@@ -233,7 +233,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -250,10 +250,10 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it works and does not throws an exception.
+        
+        
         try {
             OAuthToken::deleteByConsumer('1');
             $this->assertTrue(true);
@@ -261,7 +261,7 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -271,10 +271,10 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
         
         
-        //execute the method and test if it works and does not throws an exception.
+        
+        
         try {
             OAuthToken::deleteByUser('1');
             $this->assertTrue(true);
@@ -282,18 +282,18 @@ class OAuthTokenTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
 
     public function testdisplayDateFromTs()
     {
-        //test with empty array
+        
         $result = displayDateFromTs(array('' => ''), 'timestamp', '');
         $this->assertEquals('', $result);
 
-        //test with a valid array
+        
         $result = displayDateFromTs(array('TIMESTAMP' => '1272508903'), 'timestamp', '');
         $this->assertEquals('04/29/2010 02:41', $result);
     }

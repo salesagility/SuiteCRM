@@ -16,21 +16,21 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testclean_path()
     {
-        //execute the method and test if it returns expected values
+        
 
-        //invalid path
+        
         $expected = '';
         $path = '';
         $actual = clean_path($path);
         $this->assertSame($expected, $actual);
 
-        //a simple valid path
+        
         $expected = '/SuiteCRM-develop/include/utils';
         $path = '\SuiteCRM-develop\include\utils';
         $actual = clean_path($path);
         $this->assertSame($expected, $actual);
 
-        //valid network path 
+        
         $expected = '//SuiteCRM-develop/include/utils';
         $path = '\\\\/SuiteCRM-develop/include/utils';
         $actual = clean_path($path);
@@ -49,7 +49,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_cache_directory()
     {
-        //execute the method and test if it created file/dir exists
+        
 
         $cache_dir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
         $file = 'Test/';
@@ -68,7 +68,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_module_dir_list()
     {
-        //execute the method and test if it returns expected values
+        
 
         $expected = array(
                 'Accounts' => 'Accounts',
@@ -199,32 +199,32 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testmk_temp_dir()
     {
         self::markTestIncomplete('Test failing in php 7.1 and 7.2: tempnam(): file created in the system\'s temporary directory');
-        //execute the method and test if created dir/file exists
+        
 
-        //without prefix
+        
         $actual = mk_temp_dir('vfs://root', '');
         $this->assertFileExists($actual);
 
-        //with prefix
+        
         $actual = mk_temp_dir('vfs://root', 'pfx');
         $this->assertFileExists($actual);
     }
 
     public function testremove_file_extension()
     {
-        //execute the method and test if it returns expected values
+        
 
-        //no file extension
+        
         $expected = '';
         $actual = remove_file_extension('fileNoExt');
         $this->assertSame($expected, $actual);
 
-        //simple file extension
+        
         $expected = 'file1';
         $actual = remove_file_extension('file1.txt');
         $this->assertSame($expected, $actual);
 
-        //complex filename
+        
         $expected = 'file2.ext1';
         $actual = remove_file_extension('file2.ext1.ext2');
         $this->assertSame($expected, $actual);
@@ -233,12 +233,12 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testwrite_array_to_file()
     {
         $this->markTestSkipped('write_array_to_file cannot be tested with vfsStream');
-        //execute the method and test if it returns true and verify contents
+        
 
         $cache_dir = 'vfs://root';
         $tempArray = array('Key1' => array('Key2' => 'value2', 'Key3' => 'value3'));
 
-        //without header
+        
         $expected = "<?php\n// created: ".date('Y-m-d H:i:s')."\n\$tempArray = array (\n  'Key1' => \n  array (\n    'Key2' => 'value2',\n    'Key3' => 'value3',\n  ),\n);";
         $actual = write_array_to_file('tempArray', $tempArray, $cache_dir.'\tempArray.txt');
         $this->assertTrue($actual);
@@ -246,7 +246,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual_contents);
         unlink($cache_dir.'\tempArray.txt');
 
-        //with header
+        
         $expected = "test header \$tempArray = array (\n  'Key1' => \n  array (\n    'Key2' => 'value2',\n    'Key3' => 'value3',\n  ),\n);";
         $actual = write_array_to_file('tempArray', $tempArray, $cache_dir.'\tempArray.txt', 'w', 'test header ');
         $this->assertTrue($actual);
@@ -257,17 +257,17 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testwrite_encoded_file()
     {
-        //execute the method and test if it created file exists
+        
 
         $cache_dir = 'vfs://root';
 
-        //without filename 
+        
         $tempArray = array('filename' => 'soap_array.txt', 'md5' => '523ef67de860fc54794f27117dba4fac', 'data' => 'some soap data');
         $actual = write_encoded_file($tempArray, $cache_dir, '');
         $this->assertFileExists($actual);
         unlink($actual);
 
-        //with filename
+        
         $tempArray = array('md5' => '523ef67de860fc54794f27117dba4fac', 'data' => 'some soap data');
         $actual = write_encoded_file($tempArray, $cache_dir, 'soap_array.txt');
         $this->assertFileExists($actual);
@@ -276,7 +276,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_custom_directory()
     {
-        //execute the method and test if it created file/dir exists
+        
 
         $file = 'Test/';
 
@@ -298,7 +298,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         self::markTestIncomplete('environment dependency');
         
-        //execute the method and test if it returns expected values
+        
 
         $expected = array(
             'data/Relationships/EmailAddressRelationship.php' => '2f04780ddd15f7b65a35c75c303ed5d7',
@@ -317,7 +317,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testmd5DirCompare()
     {
-        //execute the method and test if it returns expected values
+        
 
         $expected = array();
 
@@ -327,9 +327,9 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetFiles()
     {
-        //execute the method and test if it returns expected values
+        
 
-        //test without pattern
+        
         $expected = array(
             'include/MVC/Controller/ControllerFactory.php',
             'include/MVC/Controller/file_access_control_map.php',
@@ -344,7 +344,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         sort($expected);
         $this->assertSame($expected, $actual);
 
-        //test with pattern
+        
         $expected = array(
                 'include/MVC/Controller/action_view_map.php',
                 'include/MVC/View/views/view.ajax.php',
@@ -384,11 +384,11 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testreadfile_chunked()
     {
-        //execute the method and test if it returns expected values
+        
 
         $expected = file_get_contents('config.php');
 
-        //retbytes parameter false
+        
         ob_start();
         $actual = readfile_chunked('config.php', false);
         $renderedContent = ob_get_contents();
@@ -397,7 +397,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue($actual);
         $this->assertSame($expected, $renderedContent);
 
-        //retbytes parameter true/default
+        
         ob_start();
         $actual = readfile_chunked('config.php');
         $renderedContent = ob_get_contents();
@@ -409,7 +409,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsugar_rename()
     {
-        //execute the method and test if it returns true/success
+        
 
         $dir = 'vfs://root';
         $file = 'test.txt';
@@ -418,11 +418,11 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             write_array_to_file('', '', $dir.'/'.$file);
         }
 
-        //test with empty file names
+        
         $actual = sugar_rename('', '');
         $this->assertFalse($actual);
 
-        //test with valid file names 
+        
         $actual = sugar_rename($dir.'/'.$file, $dir.'/'.'newtest.txt');
         $this->assertTrue($actual);
 
@@ -436,21 +436,21 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_session = $_SESSION;
         }
         
-        //execute the method and test if it returns expected values
+        
 
-        //test with empty filename string
+        
         $expected = 'd41d8cd98f00b204e9800998ecf8427e';
         $hash = fileToHash('');
         $this->assertSame($expected, $hash);
         $this->assertSame('', $_SESSION['file2Hash'][$hash]);
 
-        //test with valid filename
+        
         $expected = '9e5e2527d69c009a81b8ecd730f3957e';
         $hash = fileToHash('config.php');
         $this->assertSame($expected, $hash);
         $this->assertSame('config.php', $_SESSION['file2Hash'][$hash]);
 
-        // clean up
+        
 
         if(isset($_session)) {
             $_SESSION = $_session;
@@ -466,18 +466,18 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $_session = $_SESSION;
         }
         
-        //execute the method and test if it returns expected values
+        
 
-        //test with invalid hash.
+        
         $actual = hashToFile('');
         $this->assertFalse($actual);
 
-        //test with a newly generated hash
+        
         $hash = fileToHash('config.php');
         $actual = hashToFile($hash);
         $this->assertSame('config.php', $actual);
 
-        // clean up
+        
 
         if(isset($_session)) {
             $_SESSION = $_session;
@@ -488,7 +488,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_file_extension()
     {
-        //execute the method and test if it returns expected values
+        
 
         $file = ''; // Only variables should be passed by reference in php7
         $this->assertSame('', get_file_extension($file));
@@ -505,7 +505,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_mime_content_type_from_filename()
     {
-        //execute the method and test if it returns expected values
+        
 
         $this->assertSame('', get_mime_content_type_from_filename(''));
         $this->assertSame('application/octet-stream', get_mime_content_type_from_filename('file.tmp'));
@@ -516,7 +516,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcleanFileName()
     {
-        //execute the method and test if it returns expected values
+        
 
         $this->assertSame('file.txt', cleanFileName('file<?>.txt'));
         $this->assertSame('file_1.txt', cleanFileName('file_1<?>.txt'));
@@ -525,7 +525,7 @@ class file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcleanDirName()
     {
-        //execute the method and test if it returns expected values
+        
 
         $this->assertSame('testDir', cleanDirName('./testDir'));
         $this->assertSame('testDir', cleanDirName('..\\testDir'));

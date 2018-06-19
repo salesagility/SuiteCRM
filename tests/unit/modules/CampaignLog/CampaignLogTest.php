@@ -15,7 +15,7 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testCampaignLog()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $campaignLog = new CampaignLog();
         $this->assertInstanceOf('CampaignLog', $campaignLog);
         $this->assertInstanceOf('SugarBean', $campaignLog);
@@ -31,16 +31,16 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $campaignLog = new CampaignLog();
 
-        //execute the method and verify it returns an array
+        
         $actual = $campaignLog->get_list_view_data();
         $this->assertTrue(is_array($actual));
         $this->assertSame(array(), $actual);
         
-        // clean up
+        
         
         
     }
@@ -56,7 +56,7 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $campaignLog = new CampaignLog();
 
-        //execute the method and verify that it retunrs expected results for all type parameters
+        
 
         $this->assertEquals('1Emails', $campaignLog->get_related_name(1, 'Emails'));
         $this->assertEquals('1Contacts', $campaignLog->get_related_name(1, 'Contacts'));

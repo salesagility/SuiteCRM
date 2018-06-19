@@ -14,7 +14,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testCall()
     {
-        //execute the contructor and check for the Object type and  attributes
+        
         $call = new Call();
         $this->assertInstanceOf('Call', $call);
         $this->assertInstanceOf('SugarBean', $call);
@@ -37,26 +37,26 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $call = new Call();
 
-        //test without setting recurring_source attribute
+        
         $this->assertTrue($call->ACLAccess(''));
-        //$this->assertTrue($call->ACLAccess('edit'));
+        
 
-        //test with recurring_source attribute set
+        
         $call->recurring_source = 'test';
         $this->assertFalse($call->ACLAccess('edit'));
         
-        // clean up
+        
         
         $state->popGlobals();
     }
 
     public function testSaveAndMarkDeleted()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -66,23 +66,23 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('vcals');
         $state->pushGlobals();
 
-	// test
+	
         
         $call = new Call();
 
         $call->name = 'test';
         $call->id = $call->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($call->id));
         $this->assertEquals(36, strlen($call->id));
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $call->mark_deleted($call->id);
         $result = $call->retrieve($call->id);
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('vcals');
@@ -97,7 +97,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call = new Call();
         $call->id = 1;
 
-        //execute the method and verify if it returns an array
+        
         $result = $call->get_contacts();
         $this->assertTrue(is_array($result));
     }
@@ -106,10 +106,10 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $call = new Call();
 
-        //test without setting name
+        
         $this->assertEquals(null, $call->get_summary_text());
 
-        //test with name set
+        
         $call->name = 'test';
         $this->assertEquals('test', $call->get_summary_text());
     }
@@ -120,12 +120,12 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $call = new Call();
 
-        //test with empty string params
+        
         $expected = "SELECT \n			calls.*,\n			users.user_name as assigned_user_name FROM calls \n			LEFT JOIN users\n			ON calls.assigned_user_id=users.id where  calls.deleted=0   ORDER BY calls.name";
         $actual = $call->create_list_query('', '');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = "SELECT \n			calls.*,\n			users.user_name as assigned_user_name FROM calls \n			LEFT JOIN users\n			ON calls.assigned_user_id=users.id where users.user_name=\"\" AND  calls.deleted=0   ORDER BY calls.name";
         $actual = $call->create_list_query('name', 'users.user_name=""');
         $this->assertSame($expected, $actual);
@@ -135,31 +135,31 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $call = new Call();
 
-        //test with empty string params
+        
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where calls.deleted=0 ORDER BY calls.name';
         $actual = $call->create_export_query('', '');
         $this->assertSame($expected, $actual);
-        //var_dump($actual);	
+        
 
-        //test with empty string params
+        
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where users.user_name="" AND calls.deleted=0 ORDER BY calls.name';
         $actual = $call->create_export_query('name', 'users.user_name=""');
         $this->assertSame($expected, $actual);
-        //var_dump($actual);
+        
     }
 
     public function testfill_in_additional_detail_fields()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $call = new Call();
 
-        //execute the method and verify it sets up the intended fields
+        
         $call->fill_in_additional_detail_fields();
 
         $this->assertEquals('0', $call->duration_hours);
@@ -170,7 +170,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $call->email_reminder_checked);
         $this->assertEquals('Accounts', $call->parent_type);
 
-        // clean up
+        
         
         $state->popGlobals();
     }
@@ -179,14 +179,14 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency (php5/php7)');
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
-        // 
-        //self::markTestIncomplete('environment dependency');
+	
+        
+        
                 
         $call = new Call();
 
@@ -196,7 +196,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call->created_by = 1;
         $call->modified_user_id = 1;
 
-        //execute the method and verify that it retunrs expected results
+        
         $expected = array(
             'MODIFIED_USER_ID' => 1,
             'CREATED_BY' => 1,
@@ -223,7 +223,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Administrator', $call->created_by_name);
         $this->assertEquals('Administrator', $call->modified_by_name);
 
-        // clean up
+        
         
         $state->popGlobals();
     }
@@ -232,7 +232,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $call = new Call();
 
-        //test with attributes preset and verify template variables are set accordingly
+        
 
         $call->name = 'test';
         $call->duration_hours = '1';
@@ -259,7 +259,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call = new Call();
         $call->id = 1;
 
-        //execute the method and verify it returns an array
+        
         $result = $call->get_call_users();
         $this->assertTrue(is_array($result));
     }
@@ -269,14 +269,14 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $call = new Call();
         $user = new User(1);
 
-        //execute the method and verify it returns an array
+        
         $result = $call->get_invite_calls($user);
         $this->assertTrue(is_array($result));
     }
 
     public function testset_accept_status()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('calls_users');
@@ -284,12 +284,12 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('vcals');
         $state->pushGlobals();
 
-	// test
+	
         
         $call = new Call();
         $call->id = 1;
 
-        //test for calls Users and delete the created linked records afterwards
+        
         $user = new User();
         $user->id = '1';
 
@@ -300,7 +300,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $call->delete_linked($call->id);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('vcals');
@@ -313,11 +313,11 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $call = new Call();
 
-        //test without setting any user list
+        
         $result = $call->get_notification_recipients();
         $this->assertTrue(is_array($result));
 
-        //test with a user in notofication list set
+        
         $call->users_arr = array(1);
         $result = $call->get_notification_recipients();
         $this->assertTrue(is_array($result));
@@ -336,19 +336,19 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $call = new Call();
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $call->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+        
         
         $state->popGlobals();
     }
@@ -358,12 +358,12 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $call = new Call();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $call->save_relationship_changes(true);
             $this->assertTrue(true);
@@ -371,7 +371,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }

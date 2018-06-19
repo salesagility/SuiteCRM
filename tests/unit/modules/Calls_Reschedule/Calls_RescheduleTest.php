@@ -14,7 +14,7 @@ class Calls_RescheduleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testCalls_Reschedule()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $callsReschedule = new Calls_Reschedule();
         $this->assertInstanceOf('Calls_Reschedule', $callsReschedule);
         $this->assertInstanceOf('Basic', $callsReschedule);

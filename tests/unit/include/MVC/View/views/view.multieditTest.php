@@ -6,7 +6,7 @@
      public function testViewMultiedit()
      {
 
-        //execute the contructor and check for the Object type and type attribute
+        
         $view = new ViewMultiedit();
          $this->assertInstanceOf('ViewMultiedit', $view);
          $this->assertInstanceOf('SugarView', $view);
@@ -16,7 +16,7 @@
      public function testdisplay()
      {
 
-        //test without action value and modules list in REQUEST object
+        
         $view = new ViewMultiedit();
          ob_start();
          $view->display();
@@ -24,7 +24,7 @@
          ob_end_clean();
          $this->assertEquals(0, strlen($renderedContent));
 
-        //test with valid action value to get link in return
+        
         $view = new ViewMultiedit();
          $view->action = 'AjaxFormSave';
          $view->module = 'Users';
@@ -36,9 +36,9 @@
          ob_end_clean();
          $this->assertGreaterThan(0, strlen($renderedContent));
 
-        //Fails with a fatal error, method creates editview without properly setting it up causing fatal errors.
+        
         /*
-        //test only with modules list in REQUEST object
+        
         $view = new ViewMultiedit();
         $GLOBALS['current_language']= 'en_us';
         $_REQUEST['modules']= Array('Calls','Accounts');

@@ -16,7 +16,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $Account = new Account();
 
-        //without account id
+        
         $expected = "
 			SELECT
 				aos_products_quotes.*
@@ -29,7 +29,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $Account->getProductsServicesPurchasedQuery();
         $this->assertSame($expected, $actual);
 
-        //with account id
+        
         $expected = "
 			SELECT
 				aos_products_quotes.*
@@ -47,7 +47,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testAccount()
     {
 
-        //execute the contructor and check for the Object type and type attribute
+        
         $Account = new Account();
         $this->assertInstanceOf('Account', $Account);
         $this->assertInstanceOf('Company', $Account);
@@ -61,19 +61,19 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
-        //test without name setting attribute
+        
         $Account = new Account();
         $name = $Account->get_summary_text();
         $this->assertEquals(null, $name);
 
-        //test with  name attribute set
+        
         $Account->name = 'test account';
         $name = $Account->get_summary_text();
         $this->assertEquals('test account', $name);
         
-        // clean up
+        
         
         
     }
@@ -82,14 +82,14 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $Account = new Account('');
 
-        //execute the method and verify that it returns an array
+        
         $contacts = $Account->get_contacts();
         $this->assertTrue(is_array($contacts));
     }
 
     public function testclear_account_case_relationship()
     {
-        //This method cannot be tested because Query has a wrong column name which makes the function to die.
+        
 
         /*$Account = new Account();
         $Account->clear_account_case_relationship('','');*/
@@ -102,12 +102,12 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $Account = new Account();
 
-        //this method has no implementation. so test for exceptions only.
+        
         try {
             $Account->remove_redundant_http();
             $this->assertTrue(true);
@@ -115,7 +115,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -125,12 +125,12 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $Account = new Account('');
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $Account->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -138,7 +138,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -148,12 +148,12 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $Account = new Account('');
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $Account->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -161,7 +161,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -184,7 +184,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $Account = new Account();
 
-        //execute the method and verify that it retunrs expected results
+        
         $actual = $Account->get_list_view_data();
 
         foreach ($expected as $key => $value) {
@@ -196,12 +196,12 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $Account = new Account();
 
-        //execute the method with a string as parameter and verify that it retunrs expected results
+        
         $expected = "accounts.name like 'value%'";
         $actual = $Account->build_generic_where_clause('value');
         $this->assertSame($expected, $actual);
 
-        //execute the method with number as parameter and verify that it retunrs expected results
+        
         $expected = "accounts.name like '1234%' or accounts.phone_alternate like '%1234%' or accounts.phone_fax like '%1234%' or accounts.phone_office like '%1234%'";
         $actual = $Account->build_generic_where_clause('1234');
         $this->assertSame($expected, $actual);
@@ -211,7 +211,7 @@ class AccountTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $Account = new Account();
 
-        // execute the method with empty strings and verify that it retunrs expected results
+        
         $expected = " SELECT accounts.*,
        email_addresses.email_address email_address,
        ''                            email_addresses_non_primary,
@@ -255,7 +255,7 @@ WHERE ( accounts.deleted IS NULL
     {
         $Account = new Account();
 
-        //execute the method and test if populates provided sugar_smarty
+        
         $result = $Account->set_notification_body(new Sugar_Smarty(), new Account());
         $this->assertInstanceOf('Sugar_Smarty', $result);
         $this->assertNotEquals(new Sugar_Smarty(), $result);
@@ -275,7 +275,7 @@ WHERE ( accounts.deleted IS NULL
         
         $Account = new Account();
 
-        //without setting type parameter
+        
         $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear
 
 	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and
@@ -286,7 +286,7 @@ WHERE ( accounts.deleted IS NULL
         $actual = $Account->get_unlinked_email_query();
         $this->assertSame($expected, $actual);
 
-        //with type parameter set
+        
         $expected = array(
             'select' => 'SELECT emails.id ',
             'from' => 'FROM emails ',

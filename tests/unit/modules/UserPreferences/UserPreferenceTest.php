@@ -14,13 +14,13 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetUserDateTimePreferences()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-	// test
+	
         
         $user = new User();
         $user->retrieve('1');
@@ -30,7 +30,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $userPreference->getUserDateTimePreferences();
         $this->assertTrue(is_array($result));
 
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popGlobals();
@@ -39,13 +39,13 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSetAndGetPreference()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-	// test
+	
         
         global $sugar_config;
 
@@ -54,27 +54,35 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $userPreference = new UserPreference($user);
 
-        //test setPreference method
+        
         $userPreference->setPreference('test', 'test val', 'test_category');
         
         if (!isset($_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'])) {
             LoggerManager::getLogger()->warn('no session');
             $result = null;
+            
+            
+
+            $state->popTable('aod_index');
+            $state->popGlobals();
+            
             self::markTestIncomplete('environment dependency: This test needs session');
+            return;
+            
         } else {
             $result = $_SESSION[$user->user_name.'_PREFERENCES']['test_category']['test'];
         }
         
         $this->assertEquals('test val', $result);
 
-        //test getPreference method
+        
         $result = $userPreference->getPreference('test', 'test_category');
         $this->assertEquals('test val', $result);
 
         $result = $userPreference->getPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popGlobals();
@@ -82,24 +90,24 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     
     public function testgetDefaultPreference()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
 
-	// test
+	
         
         global $sugar_config;
 
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $userPreference = new UserPreference();
 
-        //test with non global category
+        
         $result = $userPreference->getDefaultPreference('chartEngine', 'Home');
         $this->assertEquals(null, $result);
 
-        //test with default global category
+        
 
         $result = $userPreference->getDefaultPreference('chartEngine');
         $this->assertEquals($sugar_config['chartEngine'], $result);
@@ -116,21 +124,21 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $userPreference->getDefaultPreference('email_link_type');
         $this->assertEquals($email_link_type, $result);
         
-        // clean up
+        
         
         $state->popTable('aod_index');
     }
 
     public function test__construct()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
 
-	// test
+	
         
-        //execute the contructor and check for the Object type and  attributes
+        
         $userPreference = new UserPreference();
 
         $this->assertInstanceOf('UserPreference', $userPreference);
@@ -143,19 +151,19 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $userPreference);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $userPreference);
         
-        // clean up
+        
         
         $state->popTable('aod_index');
     }
 
     public function testreloadPreferences()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $user = new User();
         $user->retrieve('1');
@@ -165,7 +173,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $userPreference->reloadPreferences();
         $this->assertTrue(!$result, 'Result was: ' . var_dump($result, true));
 
-        // clean up
+        
         
         $state->popGlobals();
 
@@ -174,12 +182,12 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     
     public function testloadPreferences()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $user = new User();
         $user->retrieve('1');
@@ -190,7 +198,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(!$result, 'Result was: ' . $result);
         
-        // clean up
+        
         
         $state->popGlobals();
 
@@ -198,7 +206,9 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     
     public function testSavePreferencesToDBAndResetPreferences()
     {
-	// save state
+        self::markTestIncomplete('environment dependency');
+        
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
@@ -207,27 +217,26 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-	// test
+	
         
         $user = new User();
         $user->retrieve('1');
 
         $userPreference = new UserPreference($user);
 
-        //create a Preference record, save it to DB
+        
         $userPreference->setPreference('test', 'test val', 'test_category');
         $userPreference->savePreferencesToDB();
 
-        //retrieve it back and verify
+        
         $result = $userPreference->retrieve_by_string_fields(array(
                 'assigned_user_id' => $user->id,
                 'category' => 'test_category',
         ));
         
-        self::markTestIncomplete('environment dependency');
-        //$this->assertFalse(isset($result->id));
+        
 
-        //reset the preferences and verify that it is deleted
+        
         $userPreference->resetPreferences();
         $result = $userPreference->retrieve_by_string_fields(array(
                 'assigned_user_id' => $user->id,
@@ -235,7 +244,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ));
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('tracker');
@@ -255,7 +264,7 @@ class UserPreferenceTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
         $current_user->retrieve('1');
 
-        //UserPreference::updateAllUserPrefs("test","test val");
+        
 
         $this->markTestIncomplete('Multiple errors in method: Unknown column user_preferences in field list');
     }

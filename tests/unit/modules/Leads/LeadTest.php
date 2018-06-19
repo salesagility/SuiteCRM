@@ -13,17 +13,17 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testLead()
     {
-        //self::markTestIncomplete('Test changes error level');
+        
 
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('inbound_email');
         
 
-	// test
+	
         
-        //execute the contructor and check for the Object type and  attributes
+        
         $lead = new Lead();
 
         $this->assertInstanceOf('Lead', $lead);
@@ -38,7 +38,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $lead);
         $this->assertAttributeEquals(true, 'importable', $lead);
         
-        // clean up
+        
         
         
         $state->popTable('inbound_email');
@@ -51,21 +51,21 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $lead = new Lead();
 
-        //test without pre settting attributes
+        
         $result = $lead->get_account();
         $this->assertEquals(null, $result);
 
 
-        //test with required attributes preset
+        
         $lead->account_id = 1;
         $result = $lead->get_account();
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         
     }
@@ -74,12 +74,12 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $lead = new Lead();
 
-        //test without pre settting attributes
+        
         $result = $lead->get_opportunity();
         $this->assertEquals(null, $result);
 
 
-        //test with required attributes preset
+        
         $lead->opportunity_id = 1;
         $result = $lead->get_opportunity();
         $this->assertEquals(null, $result);
@@ -89,12 +89,12 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $lead = new Lead();
 
-        //test without pre settting attributes
+        
         $result = $lead->get_contact();
         $this->assertEquals(null, $result);
 
 
-        //test with required attributes preset
+        
         $lead->contact_id = 1;
         $result = $lead->get_contact();
         $this->assertEquals(null, $result);
@@ -105,13 +105,13 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestIncomplete('Breaks on php 7.1');
         $lead = new Lead();
 
-        //test with empty string params
+        
         $expected = "SELECT leads.*, users.user_name assigned_user_name,leads_cstm.* FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN leads_cstm ON leads.id = leads_cstm.id_c where  leads.deleted=0 ";
         $actual = $lead->create_list_query('', '');
         $this->assertSame($expected, $actual);
 
 
-        //test with valid string params
+        
         $expected = "SELECT leads.*, users.user_name assigned_user_name,leads_cstm.* FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN leads_cstm ON leads.id = leads_cstm.id_c where (users.user_name=\"\") AND  leads.deleted=0  ORDER BY leads.id";
         $actual = $lead->create_list_query('leads.id', 'users.user_name=""');
         $this->assertSame($expected, $actual);
@@ -125,13 +125,13 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         /*
         $lead = new Lead();
 
-        //test with empty string params
+        
         $expected = " SELECT  leads.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' e_invite_status_fields , '                                    '  fp_events_leads_1fp_events_ida , '                                                                                                                                                                                                                                                              ' e_accept_status_fields , LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),' ',IFNULL(leads.last_name,'')))) as name , jt3.user_name modified_by_name , jt3.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt4.user_name created_by_name , jt4.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt5.user_name assigned_user_name , jt5.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod, LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),' ',IFNULL(leads.last_name,'')))) as full_name , jt6.name campaign_name , jt6.assigned_user_id campaign_name_owner  , 'Campaigns' campaign_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM leads   LEFT JOIN  users jt3 ON leads.modified_user_id=jt3.id AND jt3.deleted=0\n\n AND jt3.deleted=0  LEFT JOIN  users jt4 ON leads.created_by=jt4.id AND jt4.deleted=0\n\n AND jt4.deleted=0  LEFT JOIN  users jt5 ON leads.assigned_user_id=jt5.id AND jt5.deleted=0\n\n AND jt5.deleted=0  LEFT JOIN  campaigns jt6 ON leads.campaign_id=jt6.id AND jt6.deleted=0\n\n AND jt6.deleted=0 where leads.deleted=0";
         $actual = $lead->create_new_list_query('','');
         $this->assertSame($expected,$actual);
 
 
-        //test with valid string params
+        
         $expected = " SELECT  leads.* , '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' e_invite_status_fields , '                                    '  fp_events_leads_1fp_events_ida , '                                                                                                                                                                                                                                                              ' e_accept_status_fields , LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),' ',IFNULL(leads.last_name,'')))) as name , jt3.user_name modified_by_name , jt3.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt4.user_name created_by_name , jt4.created_by created_by_name_owner  , 'Users' created_by_name_mod , jt5.user_name assigned_user_name , jt5.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod, LTRIM(RTRIM(CONCAT(IFNULL(leads.first_name,''),' ',IFNULL(leads.last_name,'')))) as full_name , jt6.name campaign_name , jt6.assigned_user_id campaign_name_owner  , 'Campaigns' campaign_name_mod, '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id  FROM leads   LEFT JOIN  users jt3 ON leads.modified_user_id=jt3.id AND jt3.deleted=0\n\n AND jt3.deleted=0  LEFT JOIN  users jt4 ON leads.created_by=jt4.id AND jt4.deleted=0\n\n AND jt4.deleted=0  LEFT JOIN  users jt5 ON leads.assigned_user_id=jt5.id AND jt5.deleted=0\n\n AND jt5.deleted=0  LEFT JOIN  campaigns jt6 ON leads.campaign_id=jt6.id AND jt6.deleted=0\n\n AND jt6.deleted=0 where (users.user_name=\"\") AND leads.deleted=0";
         $actual = $lead->create_new_list_query('leads.id','users.user_name=""');
         $this->assertSame($expected,$actual);
@@ -151,16 +151,16 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $lead->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($lead->id));
         $this->assertEquals(36, strlen($lead->id));
         $this->assertEquals("New", $lead->status);
 
 
-        //test converted_lead method after saving
+        
         /*$lead->converted_lead("'" . $lead->id . "'" , "'1'", "'1'", "'1'");
 
-        //retrieve back to test if attributes are updated in db
+        
         $lead = $lead->retrieve($lead->id);
         $this->assertEquals("Converted", $lead->status);
         $this->assertEquals("1", $lead->converted);
@@ -171,7 +171,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $lead->mark_deleted($lead->id);
         $result = $lead->retrieve($lead->id);
         $this->assertEquals(null, $result);
@@ -181,7 +181,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testfill_in_additional_list_fields()
     {
 
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -191,7 +191,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('sugarfeed');
         $state->pushTable('tracker');
 
-	// test
+	
         $lead = new Lead();
 
         $lead->first_name = "firstn";
@@ -202,7 +202,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals("firstn lastn", $lead->name);
 
         
-        // clean up
+        
         
         $state->popTable('tracker');
         $state->popTable('sugarfeed');
@@ -228,13 +228,13 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testget_list_view_data()
     {
 
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushTable('tracker');
 
-	// test
+	
         
         $lead = new Lead();
 
@@ -255,14 +255,14 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $actual = $lead->get_list_view_data();
 
-        //$this->assertSame($expected, $actual);
+        
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['DELETED'], $actual['DELETED']);
         $this->assertEquals($expected['FULL_NAME'], $actual['FULL_NAME']);
         $this->assertEquals($expected['DO_NOT_CALL'], $actual['DO_NOT_CALL']);
         $this->assertEquals($expected['EMAIL1_LINK'], $actual['EMAIL1_LINK']);
         
-        // clean up
+        
         
         $state->popTable('tracker');
         $state->popTable('email_addresses');
@@ -314,13 +314,13 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $lead = new Lead();
 
-        //test with empty string params
+        
         $expected = "leads.last_name like '%' or leads.account_name like '%' or leads.first_name like '%' or ea.email_address like '%'";
         $actual = $lead->build_generic_where_clause("");
         $this->assertSame($expected, $actual);
 
 
-        //test with valid string params
+        
         $expected = "leads.last_name like '%' or leads.account_name like '%' or leads.first_name like '%' or ea.email_address like '%'";
         $actual = $lead->build_generic_where_clause("123");
         $this->assertSame($expected, $actual);
@@ -330,7 +330,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $lead = new Lead();
 
-        //test with attributes preset and verify template variables are set accordingly
+        
 
         $lead->first_name = "firstn";
         $lead->last_name = "lastn";
@@ -358,12 +358,12 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $lead = new Lead();
 
@@ -371,7 +371,7 @@ class LeadTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $lead->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+        
         
         $state->popGlobals();
     }

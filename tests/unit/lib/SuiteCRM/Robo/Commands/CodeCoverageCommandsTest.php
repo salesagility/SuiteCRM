@@ -51,14 +51,14 @@ class CodeCoverageCommandsTest extends \Codeception\Test\Unit
 
     public function testDisableStateChecker()
     {
-        // backup configure override
+        
         $configOverrideData = '';
         $configOverridePath = 'config_override.php';
         if (file_exists($configOverridePath)) {
             $configOverrideData = \file_get_contents($configOverridePath);
         }
 
-        // Run tests
+        
         $reflection = new ReflectionClass(CodeCoverageCommands::class);
         $method = $reflection->getMethod('disableStateChecker');
         $method->setAccessible(true);
@@ -69,7 +69,7 @@ class CodeCoverageCommandsTest extends \Codeception\Test\Unit
 
         $this->assertTrue($actual);
 
-        // restore config override
+        
         if(!empty($configOverrideData)) {
             \file_put_contents($configOverridePath, $configOverrideData);
         }
@@ -84,7 +84,7 @@ class CodeCoverageCommandsTest extends \Codeception\Test\Unit
             . $os->toOsPath('vendor/bin/codecept')
             . ' run unit --coverage-xml';
 
-        // Run tests
+        
         $reflection = new ReflectionClass(CodeCoverageCommands::class);
         $method = $reflection->getMethod('getCodeCoverageCommand');
         $method->setAccessible(true);

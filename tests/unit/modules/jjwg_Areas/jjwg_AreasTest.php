@@ -6,7 +6,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testjjwg_Areas()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $jjwgAreas = new jjwg_Areas();
 
         $this->assertInstanceOf('jjwg_Areas', $jjwgAreas);
@@ -32,7 +32,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $jjwgAreas = new jjwg_Areas();
         $jjwgAreas->configuration();
@@ -41,7 +41,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($jjwgAreas->settings));
         $this->assertGreaterThan(0, count($jjwgAreas->settings));
         
-        // clean up
+        
         
         
     }
@@ -51,13 +51,13 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestSkipped('Skipped pending feedback on the area behaviour.');
         $jjwgAreas = new jjwg_Areas();
 
-        //test without pre settting attributes
+        
         $jjwgAreas->retrieve();
         $this->assertEquals(false, $jjwgAreas->polygon);
         $this->assertEquals(0, $jjwgAreas->area);
         $this->assertEquals(null, $jjwgAreas->centroid);
 
-        //test with required attributes preset
+        
         $jjwgAreas->coordinates = "100,80,10\r\n101,81,11\r\n102,82,12";
 
         $expected_polygon = array(
@@ -78,11 +78,11 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test without pre settting attributes
+        
         $actual = $jjwgAreas->define_polygon();
         $this->assertEquals(false, $actual);
 
-        //test with required attributes preset
+        
         $jjwgAreas->coordinates = "100,80,10\r\n101,81,11\r\n102,82,12";
         $expected = array(
                       array('lng' => '100', 'lat' => '80', 'elv' => '10'),
@@ -97,13 +97,13 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test without pre settting attributes 
+        
         $result = $jjwgAreas->define_area_loc();
         $this->assertEquals('N/A', $result['name']);
         $this->assertTrue(is_numeric($result['lat']));
         $this->assertTrue(is_numeric($result['lng']));
 
-        //test with required attributes preset
+        
         $jjwgAreas->name = 'test';
         $jjwgAreas->centroid = array('lng' => 100, 'lat' => 50);
 
@@ -117,11 +117,11 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestSkipped('Skipped pending feedback on the area behaviour.');
         $jjwgAreas = new jjwg_Areas();
 
-        //test without setting up coordinates
+        
         $result = $jjwgAreas->define_centroid();
         $this->assertEquals(null, $result);
 
-        //test with coordinates setup 
+        
         $jjwgAreas->coordinates = "100,80,10\r\n101,81,11\r\n102,82,12";
         $expected = array('lng' => 67.3333333333333285963817615993320941925048828125, 'lat' => 54.0, 'elv' => 0);
 
@@ -134,11 +134,11 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->markTestSkipped('Skipped pending feedback on the area behaviour.');
         $jjwgAreas = new jjwg_Areas();
 
-        //test without setting up coordinates
+        
         $result = $jjwgAreas->define_area();
         $this->assertEquals(0, $result);
 
-        //test with coordinates setup
+        
         $jjwgAreas->coordinates = "100,80,10\r\n101,81,11\r\n102,82,12";
 
         $result = $jjwgAreas->define_area();
@@ -149,13 +149,13 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test without pre settting attributes 
+        
         $result = $jjwgAreas->define_loc(array());
         $this->assertEquals('N/A', $result['name']);
         $this->assertTrue(is_numeric($result['lat']));
         $this->assertTrue(is_numeric($result['lng']));
 
-        //test with required attributes preset   	 
+        
         $marker = array('name' => 'test', 'lat' => 50, 'lng' => 100);
         $result = $jjwgAreas->define_loc($marker);
         $this->assertSame($marker, $result);
@@ -165,12 +165,12 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test with invalid values
+        
         $this->assertEquals(false, $jjwgAreas->is_valid_lng(''));
         $this->assertEquals(false, $jjwgAreas->is_valid_lng(181));
         $this->assertEquals(false, $jjwgAreas->is_valid_lng(-181));
 
-        //test with valid values
+        
         $this->assertEquals(true, $jjwgAreas->is_valid_lng(180));
         $this->assertEquals(true, $jjwgAreas->is_valid_lng(-180));
     }
@@ -179,12 +179,12 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test with invalid values
+        
         $this->assertEquals(false, $jjwgAreas->is_valid_lat(''));
         $this->assertEquals(false, $jjwgAreas->is_valid_lat(91));
         $this->assertEquals(false, $jjwgAreas->is_valid_lat(-91));
 
-        //test with valid values
+        
         $this->assertEquals(true, $jjwgAreas->is_valid_lat(90));
         $this->assertEquals(true, $jjwgAreas->is_valid_lat(-90));
     }
@@ -195,10 +195,10 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $marker = array('name' => 'test', 'lat' => 100, 'lng' => 40);
 
-        //test without setting up coordinates
+        
         $this->assertEquals(false, $jjwgAreas->is_marker_in_area($marker));
 
-        //test with coordinates set
+        
         $jjwgAreas->coordinates = '100,40,0.0 101,81,0.0 102,32,0.0';
         $this->assertEquals(false, $jjwgAreas->is_marker_in_area($marker));
     }
@@ -207,10 +207,10 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test without setting up coordinates
+        
         $this->assertEquals(false,  $jjwgAreas->is_point_in_area(100, 40));
 
-        //test with coordinates set
+        
         $jjwgAreas->coordinates = '100,40,10 101,81,11 102,82,12';
         $this->assertEquals(false,  $jjwgAreas->is_point_in_area(101, 40));
         $this->assertEquals(true,  $jjwgAreas->is_point_in_area(100, 40));
@@ -220,10 +220,10 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgAreas = new jjwg_Areas();
 
-        //test without setting up coordinates
+        
         $this->assertEquals(false,  $jjwgAreas->point_in_polygon('100,40,0.0'));
 
-        //test with coordinates set
+        
         $jjwgAreas->coordinates = '100,40,10 101,81,11 102,82,12';
         $this->assertEquals(true,  $jjwgAreas->point_in_polygon('100,40,0.0'));
     }

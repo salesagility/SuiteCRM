@@ -13,7 +13,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testDocumentRevision()
     {
-        //execute the contructor and check for the Object type and  attributes
+        
         $documentRevision = new DocumentRevision();
         $this->assertInstanceOf('DocumentRevision', $documentRevision);
         $this->assertInstanceOf('SugarBean', $documentRevision);
@@ -35,7 +35,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $documentRevision = new DocumentRevision();
 
@@ -47,11 +47,11 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $documentRevision->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($documentRevision->id));
         $this->assertEquals(36, strlen($documentRevision->id));
 
-        //test document retrieve method
+        
         $docRev = $documentRevision->retrieve($documentRevision->id);
         $this->assertEquals('1', $docRev->document_id);
         $this->assertEquals('1', $docRev->doc_id);
@@ -59,12 +59,12 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test', $docRev->filename);
         $this->assertEquals('ext', $docRev->file_ext);
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $docRev->mark_deleted($docRev->id);
         $result = $docRev->retrieve($docRev->id);
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('tracker');
@@ -86,14 +86,14 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $documentRevision = new DocumentRevision();
 
-        //test without setting name
+        
         $this->assertEquals(null, $documentRevision->get_summary_text());
 
-        //test with name set
+        
         $documentRevision->filename = 'test';
         $this->assertEquals('test', $documentRevision->get_summary_text());
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -112,14 +112,14 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $documentRevision = new DocumentRevision();
 
-        //test wihout setting attributes
+        
         $this->assertEquals(null, $documentRevision->is_authenticated());
 
-        //test with attributes preset
+        
         $documentRevision->authenticated = true;
         $this->assertEquals(true, $documentRevision->is_authenticated());
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -136,12 +136,12 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $documentRevision = new DocumentRevision();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $documentRevision->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -149,7 +149,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -167,12 +167,12 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $documentRevision = new DocumentRevision();
 
-            //execute the method and test if it works and does not throws an exception.
+            
         try {
             $documentRevision->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -180,7 +180,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -197,17 +197,17 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $documentRevision = new DocumentRevision();
 
-        //test wihout setting attributes
+        
         $result = $documentRevision->getDocumentRevisionNameForDisplay();
         $this->assertEquals('.', $result);
 
-        //test with attributes preset
+        
         $documentRevision->filename = 'test.ext';
         $documentRevision->revision = 1;
         $result = $documentRevision->getDocumentRevisionNameForDisplay();
         $this->assertEquals('-Revision_1.ext', $result);
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -222,12 +222,12 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $documentRevision = new DocumentRevision();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $documentRevision->fill_document_name_revision('dummy_id');
             $this->assertTrue(true);
@@ -235,7 +235,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -251,14 +251,14 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cron_remove_documents');
         $state->pushTable('document_revisions');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $documentRevision = new DocumentRevision();
         
         $xTemplateSection = null;
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $ss = new Sugar_Smarty();
             $documentRevision->list_view_parse_additional_sections($ss, $xTemplateSection);
@@ -267,7 +267,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -287,7 +287,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $documentRevision->get_list_view_data();
         $this->assertEquals(array('DELETED' => 0), $result);
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -305,7 +305,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $documentRevision->get_document_revision_name(1);
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -323,7 +323,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $results = $documentRevision->get_document_revisions(1);
         $this->assertTrue(is_array($results));
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');
@@ -342,7 +342,7 @@ class DocumentRevisionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(false, $documentRevision->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $documentRevision->bean_implements('FILE')); //test with valid value
         
-        // clean up
+        
         
         $state->popTable('document_revisions');
         $state->popTable('cron_remove_documents');

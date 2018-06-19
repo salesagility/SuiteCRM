@@ -18,7 +18,7 @@ class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
         parent::_before();
         if(self::$interpreter === null) {
 
-            // load PSR 11 interface
+            
             $container = $this->tester->getContainerInterface();
             self::$interpreter = new \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\FilterInterpreter($container);
         }

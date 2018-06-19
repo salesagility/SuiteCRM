@@ -4,7 +4,7 @@ class ViewNoaccessTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testdisplay()
     {
-        //executet the method and check for default attributes and check that it returns some html.
+        
         $view = new ViewNoaccess();
 
         ob_start();

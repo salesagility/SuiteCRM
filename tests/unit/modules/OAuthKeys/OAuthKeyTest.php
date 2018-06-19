@@ -15,7 +15,7 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testOAuthKey()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $oauthKey = new OAuthKey();
 
         $this->assertInstanceOf('OAuthKey', $oauthKey);
@@ -35,27 +35,27 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushTable('tracker');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $oauthKey = new OAuthKey();
 
-        //preset required attributes
+        
         $oauthKey->name = 'test';
         $oauthKey->c_key = 'key';
         $oauthKey->c_secret = 'secret';
 
         $oauthKey->save();
 
-        //test getByKey method
+        
         $this->getByKey($oauthKey->c_key);
 
-        //test fetchKey method
+        
         $this->fetchKey($oauthKey->c_key);
 
-        //test mark_deleted method
+        
         $this->mark_deleted($oauthKey->id);
         
-        // clean up
+        
         
         $state->popTable('tracker');
         
@@ -65,11 +65,11 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $oauthKey = new OAuthKey();
 
-        //test with a invalid id
+        
         $result = $oauthKey->getByKey('');
         $this->assertEquals(false, $result);
 
-        //test with a valid id
+        
         $result = $oauthKey->getByKey($key);
         $this->assertInstanceOf('OAuthKey', $result);
     }
@@ -77,11 +77,11 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function fetchKey($key)
     {
 
-        //test with a invalid id
+        
         $result = OAuthKey::fetchKey('');
         $this->assertEquals(false, $result);
 
-        //test with a valid id
+        
         $result = OAuthKey::fetchKey($key);
         $this->assertInstanceOf('OAuthKey', $result);
     }
@@ -92,7 +92,7 @@ class OAuthKeyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $oauthKey->mark_deleted($id);
 
-        //verify that record is deleted
+        
         $result = $oauthKey->getByKey($id);
         $this->assertEquals(false, $result);
     }

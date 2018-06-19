@@ -13,7 +13,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 	public function testProject()
 	{
-		//execute the contructor and check for the Object type and  attributes
+		
 		$project = new Project();
 
 		$this->assertInstanceOf('Project',$project);
@@ -33,21 +33,21 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-		//error_reporting(E_ERROR | E_PARSE);
+		
 
 		$project = new Project();
 
-		//test without setting assigned_user_id
+		
 		$project->fill_in_additional_detail_fields();
 		$this->assertEquals("", $project->assigned_user_name);
 
 
-		//test with assigned_user_id set
+		
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_detail_fields();
 		$this->assertEquals("Administrator", $project->assigned_user_name);
         
-        // clean up
+        
         
         
 
@@ -58,12 +58,12 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	{
 		$project = new Project();
 
-		//test without setting assigned_user_id
+		
 		$project->fill_in_additional_list_fields();
 		$this->assertEquals("", $project->assigned_user_name);
 
 
-		//test with assigned_user_id set
+		
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_list_fields();
 		$this->assertEquals("Administrator", $project->assigned_user_name);
@@ -78,7 +78,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
     	$project = new Project();
@@ -87,7 +87,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     	$_REQUEST['relate_id'] = 2;
     	$_REQUEST['relate_to'] = "contacts";
 
-    	//execute the method and test if it works and does not throws an exception.
+    	
     	try {
     		$project->save_relationship_changes(true);
     		$this->assertTrue(true);
@@ -96,7 +96,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     		$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
     	}
         
-        // clean up
+        
         
         $state->popGlobals();
         
@@ -106,8 +106,8 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 	public function test_get_total_estimated_effort()
 	{
-		//$project = new Project();
-		//$result = $project->_get_total_estimated_effort("1");
+		
+		
 		$this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
 
 	}
@@ -123,10 +123,10 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	{
 		$project = new Project();
 
-		//test without setting name
+		
 		$this->assertEquals(Null,$project->get_summary_text());
 
-		//test with name set
+		
 		$project->name = "test";
 		$this->assertEquals('test',$project->get_summary_text());
 
@@ -138,13 +138,13 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 		$project = new Project();
 
-		//test with empty string params
+		
 		$expected = "project.name LIKE '%%'";
 		$actual = $project->build_generic_where_clause('');
 		$this->assertSame($expected,$actual);
 
 
-		//test with valid string params
+		
 		$expected = "project.name LIKE '%test%'";
 		$actual = $project->build_generic_where_clause('test');
 		$this->assertSame($expected,$actual);

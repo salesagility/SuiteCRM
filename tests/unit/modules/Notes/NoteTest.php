@@ -14,7 +14,7 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testNote()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $note = new Note();
 
         $this->assertInstanceOf('Note', $note);
@@ -33,22 +33,22 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $note = new Note();
 
-        //test with valid file name
+        
         $note->filename = 'test.txt';
         $note->safeAttachmentName();
         $this->assertEquals('test.txt', $note->filename);
 
-        //test with invalid file name
+        
         $note->filename = 'test.php';
         $note->safeAttachmentName();
         $this->assertEquals('.txt', $note->name);
         $this->assertEquals('test.php.txt', $note->filename);
         
-        // clean up
+        
         
         
     }
@@ -60,12 +60,12 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $note = new Note();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $note->mark_deleted(1);
             $this->assertTrue(true);
@@ -73,7 +73,7 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popTable('tracker');
         $state->popTable('aod_index');
@@ -83,13 +83,13 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdeleteAttachment()
     {
 
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         $state->pushTable('tracker');
 
-	// test
+	
         
         $note = new Note();
 
@@ -97,7 +97,7 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $note->deleteAttachment();
         $this->assertEquals(true, $result);
 
-        // clean up
+        
         
         $state->popTable('tracker');
         $state->popGlobals();
@@ -108,10 +108,10 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $note = new Note();
 
-        //test without setting name
+        
         $this->assertEquals('', $note->get_summary_text());
 
-        //test with name set
+        
         $note->name = 'test';
         $this->assertEquals('test', $note->get_summary_text());
     }
@@ -120,12 +120,12 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $note = new Note();
 
-        //test with empty string params
+        
         $expected = 'SELECT notes.*, contacts.first_name, contacts.last_name, users.user_name as assigned_user_name  FROM notes 	LEFT JOIN contacts ON notes.contact_id=contacts.id   LEFT JOIN users ON notes.assigned_user_id=users.id where  notes.deleted=0 AND (contacts.deleted IS NULL OR contacts.deleted=0) ORDER BY notes.name';
         $actual = $note->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = 'SELECT notes.*, contacts.first_name, contacts.last_name, users.user_name as assigned_user_name  FROM notes 	LEFT JOIN contacts ON notes.contact_id=contacts.id   LEFT JOIN users ON notes.assigned_user_id=users.id where users.user_name="" AND  notes.deleted=0 AND (contacts.deleted IS NULL OR contacts.deleted=0) ORDER BY notes.name';
         $actual = $note->create_export_query('notes.id', 'users.user_name=""');
         $this->assertSame($expected, $actual);
@@ -136,12 +136,12 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $note = new Note();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $note->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -149,7 +149,7 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -159,12 +159,12 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $note = new Note();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $note->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -172,7 +172,7 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -205,12 +205,12 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistviewACLHelper()
     {
 
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $note = new Note();
 
@@ -218,7 +218,7 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $note->listviewACLHelper();
         $this->assertSame($expected, $actual);
 
-        // clean up
+        
         
         $state->popGlobals();
 

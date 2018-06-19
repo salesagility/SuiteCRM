@@ -15,7 +15,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testProspect()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $prospect = new Prospect();
 
         $this->assertInstanceOf('Prospect', $prospect);
@@ -35,7 +35,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $prospect = new Prospect();
 
@@ -50,7 +50,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('last', 'full_name', $prospect);
         $this->assertAttributeEquals('last &lt;email1@test.com&gt;', 'email_and_name1', $prospect);
         
-        // clean up
+        
         
         
     }
@@ -74,12 +74,12 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $prospect = new Prospect();
 
-        //test with empty string params
+        
         $expected = "prospects.last_name like '%' or prospects.first_name like '%' or prospects.assistant like '%'";
         $actual = $prospect->build_generic_where_clause('');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = "prospects.last_name like '1%' or prospects.first_name like '1%' or prospects.assistant like '1%' or prospects.phone_home like '%1%' or prospects.phone_mobile like '%1%' or prospects.phone_work like '%1%' or prospects.phone_other like '%1%' or prospects.phone_fax like '%1%' or prospects.assistant_phone like '%1%'";
         $actual = $prospect->build_generic_where_clause('1');
         $this->assertSame($expected, $actual);
@@ -90,14 +90,14 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $prospect = new Prospect();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
-            //$prospect->converted_prospect('1', '2', '3', '4');
+            
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
@@ -105,7 +105,7 @@ class ProspectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('Multiple errors in query');
         
-        // clean up
+        
         
         
     }

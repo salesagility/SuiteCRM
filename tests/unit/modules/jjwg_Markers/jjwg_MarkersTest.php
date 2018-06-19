@@ -6,7 +6,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testjjwg_Markers()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $jjwgMarkers = new jjwg_Markers();
 
         $this->assertInstanceOf('jjwg_Markers', $jjwgMarkers);
@@ -27,7 +27,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $jjwgMarkers = new jjwg_Markers();
 
@@ -37,7 +37,7 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($jjwgMarkers->settings));
         $this->assertGreaterThan(0, count($jjwgMarkers->settings));
         
-        // clean up
+        
         
         
     }
@@ -46,14 +46,14 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgMarkers = new jjwg_Markers();
 
-        //test without pre settting attributes
+        
         $result = $jjwgMarkers->define_loc(array());
         $this->assertEquals('N/A', $result['name']);
         $this->assertTrue(is_numeric($result['lat']));
         $this->assertTrue(is_numeric($result['lng']));
         $this->assertEquals('company', $result['image']);
 
-        //test with required attributes preset
+        
         $marker = array('name' => 'test', 'lat' => 50, 'lng' => 100, 'image' => null);
         $result = $jjwgMarkers->define_loc($marker);
         $this->assertSame($marker, $result);
@@ -63,12 +63,12 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgMarkers = new jjwg_Markers();
 
-        //test with invalid values
+        
         $this->assertEquals(false, $jjwgMarkers->is_valid_lng(''));
         $this->assertEquals(false, $jjwgMarkers->is_valid_lng(181));
         $this->assertEquals(false, $jjwgMarkers->is_valid_lng(-181));
 
-        //test with valid values
+        
         $this->assertEquals(true, $jjwgMarkers->is_valid_lng(180));
         $this->assertEquals(true, $jjwgMarkers->is_valid_lng(-180));
     }
@@ -77,12 +77,12 @@ class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $jjwgMarkers = new jjwg_Markers();
 
-        //test with invalid values
+        
         $this->assertEquals(false, $jjwgMarkers->is_valid_lat(''));
         $this->assertEquals(false, $jjwgMarkers->is_valid_lat(91));
         $this->assertEquals(false, $jjwgMarkers->is_valid_lat(-91));
 
-        //test with valid values
+        
         $this->assertEquals(true, $jjwgMarkers->is_valid_lat(90));
         $this->assertEquals(true, $jjwgMarkers->is_valid_lat(-90));
     }
