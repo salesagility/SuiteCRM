@@ -2292,7 +2292,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
 
-	// test
+	
         
         global $current_user;
 
