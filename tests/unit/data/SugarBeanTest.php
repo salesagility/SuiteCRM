@@ -909,7 +909,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         self::markTestIncomplete('environment dependency');
 
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
