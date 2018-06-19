@@ -565,7 +565,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     {
         $bean = BeanFactory::getBean('Users');
 
-        // test
+        
+        
         $results = $bean->bean_implements('test');
         self::assertEquals(false, $results);
     }
