@@ -2296,7 +2296,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         
         global $current_user;
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $results = null;
