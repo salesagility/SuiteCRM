@@ -854,7 +854,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
 
 
-        // test
+        
         $subpanel_list = array(
             new aSubPanel('Test', array(), new SugarBeanMock())
         );
