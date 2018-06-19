@@ -14,7 +14,7 @@ class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testViewQuick()
     {
 
-        //execute the contructor and check for the Object type and type attribute
+        
 
         $view = new ViewQuick();
 
@@ -34,7 +34,7 @@ class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $view = new ViewQuick();
 
-        //execute the method with required child objects preset. it will return some html.
+        
         $view->dv = new DetailView2();
         $view->dv->ss = new Sugar_Smarty();
         $view->dv->module = 'Users';
@@ -43,7 +43,7 @@ class ViewQuickTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $view->dv->setup('Users', $view->bean);
 
 
-        // clean up
+        
 
         if(isset($session)) {
             $_SESSION = $session;
