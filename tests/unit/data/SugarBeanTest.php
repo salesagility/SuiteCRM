@@ -1191,7 +1191,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             'SELECT DISTINCT * FROM contacts', $results['query']);
 
 
-        // test
+        
         $sugar_config['disable_count_query'] = 1;
         $GLOBALS['log']->reset();
         $bean = new Contact();
