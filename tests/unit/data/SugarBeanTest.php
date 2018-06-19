@@ -1592,7 +1592,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testGetObjectName()
     {
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $result = $bean->getObjectName();
