@@ -286,7 +286,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $SugarApplication = new SugarApplication();
 
-        //execute the method with false parameter and check for false returned as it cannot connect to DB.
+        
         //testing with true will allow it to use die() which stops phpunit execution as well.
         include __DIR__ . '/../../../../sugar_version.php';
         self::assertTrue(isset($sugar_db_version) && $sugar_db_version);
