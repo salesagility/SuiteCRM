@@ -243,7 +243,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheckEntryPointRequiresAuth()
     {
-        // store state
+        
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
