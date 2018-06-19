@@ -915,7 +915,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
-	// test
+	
         global $sugar_config;
         
         $query = "SELECT * FROM aod_index";
