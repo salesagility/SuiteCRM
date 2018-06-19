@@ -14,7 +14,7 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testAOS_Quotes()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $aosQuotes = new AOS_Quotes();
         $this->assertInstanceOf('AOS_Quotes', $aosQuotes);
         $this->assertInstanceOf('Basic', $aosQuotes);
@@ -35,7 +35,7 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushTable('aos_quotes');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aosQuotes = new AOS_Quotes();
 
@@ -45,16 +45,16 @@ class AOS_QuotesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $aosQuotes->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($aosQuotes->id));
         $this->assertEquals(36, strlen($aosQuotes->id));
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $aosQuotes->mark_deleted($aosQuotes->id);
         $result = $aosQuotes->retrieve($aosQuotes->id);
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popTable('aos_quotes');
         
