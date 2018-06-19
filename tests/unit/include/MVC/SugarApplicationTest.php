@@ -298,7 +298,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        //
+        
     }
 
     public function testloadDisplaySettings()
