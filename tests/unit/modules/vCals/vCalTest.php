@@ -13,7 +13,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testvCal()
     {
-        //execute the contructor and check for the Object type and  attributes
+        
         $vcal = new vCal();
 
         $this->assertInstanceOf('vCal', $vcal);
@@ -34,18 +34,18 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $vcal = new vCal();
 
-        //test without setting name
+        
         $this->assertEquals(null, $vcal->get_summary_text());
 
-        //test with name set
+        
         $vcal->name = 'test';
         $this->assertEquals('', $vcal->get_summary_text());
         
-        // clean up
+        
         
         
     }
@@ -55,12 +55,12 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $vcal->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -70,7 +70,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+        
         
         
     }
@@ -80,12 +80,12 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $vcal->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -95,7 +95,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+        
         
         
     }
@@ -105,12 +105,12 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $vcal->get_list_view_data();
             $this->assertTrue(true);
@@ -120,7 +120,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->markTestIncomplete('method has no implementation');
         
-        // clean up
+        
         
         
     }
@@ -143,12 +143,12 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_sugar_freebusy()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         global $locale, $timedate;
 
@@ -162,19 +162,19 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $vcal->create_sugar_freebusy($user_bean, $start_date_time, $end_date_time);
         $this->assertGreaterThanOrEqual(0, strlen($result));
         
-        // clean up
+        
         
         $state->popGlobals();
     }
 
     public function testget_vcal_freebusy()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         $vcal = new vCal();
         $user_focus = new User('1');
 
@@ -186,7 +186,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertStringStartsWith($expectedStart, $result);
         $this->assertStringEndsWith($expectedEnd, $result);
 
-        // clean up
+        
         
         $state->popGlobals();
     }
@@ -201,13 +201,13 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
         $user_focus = new User('1');
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $vcal->cache_sugar_vcal($user_focus);
             $this->assertTrue(true);
@@ -215,7 +215,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('aod_index');
@@ -232,13 +232,13 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('vcals');
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $vcal = new vCal();
         $user_focus = new User('1');
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $vcal->cache_sugar_vcal_freebusy($user_focus);
             $this->assertTrue(true);
@@ -246,7 +246,7 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('vcals');
@@ -256,11 +256,11 @@ class vCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfold_ical_lines()
     {
-        //test with short strings
+        
         $result = vCal::fold_ical_lines('testkey', 'testvalue');
         $this->assertEquals('testkey:testvalue', $result);
 
-        //test with longer strings
+        
         $expected = "testkey11111111111111111111111111111111111111111111111111111111111111111111\r\n	11111111111111111111111111111111:testvalue11111111111111111111111111111111\r\n	11111111111111111111111111111111111111111111111111111111111111111111";
         $result = vCal::fold_ical_lines('testkey'.str_repeat('1', 100), 'testvalue'.str_repeat('1', 100));
         $this->assertEquals($expected, $result);
