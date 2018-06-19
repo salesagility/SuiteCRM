@@ -147,7 +147,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarController->loadBean();
 
         
-        //Fail if it throws any other exception.
+        
         try {
             $SugarController->pre_save();
         } catch (Exception $e) {
