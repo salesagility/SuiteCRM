@@ -14,7 +14,7 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testGroup()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $group = new Group();
         $this->assertInstanceOf('Group', $group);
         $this->assertInstanceOf('User', $group);
@@ -34,11 +34,11 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushTable('users');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $group = new Group();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $group->mark_deleted('');
             $this->assertTrue(true);
@@ -46,7 +46,7 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popTable('users');
         $state->popTable('tracker');
@@ -57,12 +57,12 @@ class GroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $group = new Group();
 
-        //test with empty string params
+        
         $expected = 'SELECT users.* FROM users  WHERE  users.deleted = 0 ORDER BY users.user_name';
         $actual = $group->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = 'SELECT users.* FROM users  WHERE users.user_name="" AND  users.deleted = 0 ORDER BY users.id';
         $actual = $group->create_export_query('users.id', 'users.user_name=""');
         $this->assertSame($expected, $actual);
