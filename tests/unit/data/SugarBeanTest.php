@@ -552,7 +552,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean->setupCustomFields('test');
         self::assertEquals('custom/Extension/modules/test/Ext/Vardefs', $bean->custom_fields->base_path);
 
-        // test
+        
+        
         $bean->setupCustomFields('Users');
         self::assertEquals('custom/Extension/modules/Users/Ext/Vardefs', $bean->custom_fields->base_path);
     }
