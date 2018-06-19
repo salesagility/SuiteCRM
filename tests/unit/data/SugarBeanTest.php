@@ -173,7 +173,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertTrue(isset($bean->acl_fields));
         $dictionary['']['optimistic_locking'] = null;
 
-        // test
+        
+        
         $bean = BeanFactory::getBean('Users');
         self::assertInstanceOf(DBManager::class, $bean->db);
         self::assertNotEquals('', $bean->module_name);
