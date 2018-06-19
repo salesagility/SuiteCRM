@@ -1712,7 +1712,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testGetPrimaryFieldDefinition()
     {
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $results = $bean->getPrimaryFieldDefinition();
