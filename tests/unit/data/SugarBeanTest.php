@@ -3028,7 +3028,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             "DELETE FROM contacts WHERE id = 'test_contact_11'";
         $this->db->query($query);
 
-        // test
+        
         $query = /** @lang sql */
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
         $this->db->query($query);
