@@ -5,7 +5,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testRelease()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $release = new Release();
 
         $this->assertInstanceOf('Release', $release);
@@ -23,18 +23,18 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $release = new Release();
 
-        //test without setting name
+        
         $this->assertEquals(null, $release->get_summary_text());
 
-        //test with name set
+        
         $release->name = 'test';
         $this->assertEquals('test', $release->get_summary_text());
         
-        // clean up
+        
         
         
     }
@@ -43,11 +43,11 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $release = new Release();
 
-        //test with default params
+        
         $result = $release->get_releases();
         $this->assertTrue(is_array($result));
 
-        //test with custom params
+        
         $result = $release->get_releases(true, 'Hidden', 'name is not null');
         $this->assertTrue(is_array($result));
     }
@@ -57,12 +57,12 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $release = new Release();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $release->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -70,7 +70,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -80,12 +80,12 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $release = new Release();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $release->fill_in_additional_detail_fields();
             $this->assertTrue(true);
@@ -93,7 +93,7 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -121,12 +121,12 @@ class ReleaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $release = new Release();
 
-        //test with empty string params
+        
         $expected = "name like '%'";
         $actual = $release->build_generic_where_clause('');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = "name like 'test%'";
         $actual = $release->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
