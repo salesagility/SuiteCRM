@@ -2219,7 +2219,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testGetACLCategory()
     {
-        // test
+        
         $bean = new Contact();
         $results = $bean->getACLCategory();
         self::assertEquals(null !== $bean->acl_category ? $bean->acl_category : $bean->module_dir, $results);
