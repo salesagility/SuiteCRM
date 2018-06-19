@@ -2737,7 +2737,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotNull($bean->testField1);
 
-        // test
+        
         $bean = new Contact();
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
