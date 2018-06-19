@@ -1128,7 +1128,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             'SELECT DISTINCT * FROM contacts', $results['query']);
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $bean->id = 'test_contact1';
