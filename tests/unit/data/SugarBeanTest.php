@@ -594,7 +594,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals($fieldDefsBefore, $bean->field_defs);
 
 
-        // test
+        
         $bean = BeanFactory::getBean('Users');
         $force = true;
         $bean->field_defs['test'] = array(
