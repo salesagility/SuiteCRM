@@ -891,7 +891,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
 
-        // test
+        
         $subpanel_list = null;
         $subpanel_def = null;
         $parentBean = null;
