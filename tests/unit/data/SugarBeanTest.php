@@ -2606,7 +2606,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean->fetched_row['id'] = 'test_contact_10';
         $bean->fixUpFormatting();
 
-        // test
+        
         $bean = new Contact();
         $bean->id = 'test_contact_10';
         $bean->fetched_row['id'] = 'test_contact_10';
