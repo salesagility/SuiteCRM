@@ -20,7 +20,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
 
 
-//        } catch (Exception $e) {
+
 //            print_r($e->getMessage());
 //            $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
 //        }
