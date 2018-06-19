@@ -231,7 +231,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             
             $this->assertTrue(isset($GLOBALS['current_language']));
 
-            //check that method call got the app_strings global variable set.
+            
             $this->assertTrue(is_array($GLOBALS['app_strings']) && count($GLOBALS['app_strings']) > 0);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
