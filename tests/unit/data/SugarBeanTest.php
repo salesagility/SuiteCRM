@@ -2311,10 +2311,10 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals($bean->date_modified, $bean->date_entered);
         /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertEquals(isset($current_user) ? $current_user->id : '', $bean->created_by);
-//        self::assertTrue(isValidId($bean->id));
+
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        //self::assertEquals(null, $bean->old_modified_by_name);
+        
 
 
         // test
@@ -2357,9 +2357,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($results));
 
         self::assertEquals(true, $bean->in_save);
-        //self::assertEquals(null, $bean->date_modified);
+        
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        //self::assertEquals('testing', $bean->modified_by_name);
+        
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
         /** @noinspection UnSafeIsSetOverArrayInspection */
@@ -2367,7 +2367,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(true, $bean->new_with_id);
-        //self::assertEquals(null, $bean->old_modified_by_name);
+        
 
         // test
         $GLOBALS['log']->reset();
@@ -2383,10 +2383,10 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         }
         self::assertFalse(isValidId($results));
 
-        //self::assertEquals(true, $bean->in_save);
-        //self::assertEquals(null, $bean->date_modified);
+        
+        
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        //self::assertEquals('testing', $bean->modified_by_name);
+        
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
         self::assertFalse(isset($bean->date_entered));
@@ -2395,7 +2395,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        //self::assertEquals(null, $bean->old_modified_by_name);
+        
 
 
         // test
@@ -2423,9 +2423,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($results));
 
         self::assertEquals(null, $bean->in_save);
-        //self::assertEquals(null, $bean->date_modified);
+        
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        //self::assertEquals('testing', $bean->modified_by_name);
+        
         self::assertEquals($current_user->user_name, null);
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
@@ -2435,7 +2435,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        //self::assertEquals(null, $bean->old_modified_by_name);
+        
 
         // test
         $GLOBALS['log']->reset();
@@ -2464,9 +2464,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($results));
 
         self::assertEquals(false, $bean->in_save);
-        //self::assertEquals(null, $bean->date_modified);
+        
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        //self::assertEquals('testing', $bean->modified_by_name);
+        
         self::assertEquals($current_user->user_name, null);
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
@@ -2476,7 +2476,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        //self::assertEquals(null, $bean->old_modified_by_name);
+        
 
 
         // test
@@ -2506,9 +2506,9 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($results));
 
         self::assertEquals(false, $bean->in_save);
-        //self::assertEquals(null, $bean->date_modified);
+        
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        //self::assertEquals('testing', $bean->modified_by_name);
+        
         self::assertEquals($current_user->user_name, null);
         self::assertEquals(0, $bean->deleted);
         /** @noinspection UnSafeIsSetOverArrayInspection */
@@ -2518,7 +2518,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isValidId($bean->id));
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
-        //self::assertEquals(null, $bean->old_modified_by_name);
+        
 
         // test
         $GLOBALS['log']->reset();
