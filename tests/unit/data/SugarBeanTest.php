@@ -131,7 +131,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(true, $bean->acl_fields);
 
 
-        // test
+        
 
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
