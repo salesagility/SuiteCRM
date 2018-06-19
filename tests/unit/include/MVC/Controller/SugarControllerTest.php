@@ -260,7 +260,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $SugarController->checkEntryPointRequiresAuth('download');
         $this->assertTrue($result);
 
-        //cehck with a valid False value
+        
         $result = $SugarController->checkEntryPointRequiresAuth('GeneratePassword');
         $this->assertFalse($result);
         
