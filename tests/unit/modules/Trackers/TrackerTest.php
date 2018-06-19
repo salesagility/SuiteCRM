@@ -13,7 +13,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     
     public function testTracker()
     {
-        //execute the contructor and check for the Object type and  attributes
+        
         $tracker = new Tracker();
 
         $this->assertInstanceOf('Tracker', $tracker);
@@ -32,12 +32,12 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_recently_viewed()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $tracker = new Tracker();
 
@@ -46,7 +46,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('BreadCrumbStack', $_SESSION['breadCrumbs']);
         $this->assertTrue(is_array($result));
         
-        // clean up
+        
         
         $state->popGlobals();
 
@@ -57,12 +57,12 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $tracker = new Tracker();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $tracker->makeInvisibleForAll(1);
             $this->assertTrue(true);
@@ -70,7 +70,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -92,20 +92,20 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
-        //test without setting headerDisplayed
+        
         Tracker::logPage();        
         $this->assertEquals(null, $_SESSION['lpage']);
 
-        //test with headerDisplayed set
+        
         $GLOBALS['app']->headerDisplayed = 1;
         Tracker::logPage();
         $this->assertEquals(time(), $_SESSION['lpage']);
         
-        //$this->assertEquals(time(), null);
         
-        // clean up
+        
+        
         
         $state->popGlobals();
         
