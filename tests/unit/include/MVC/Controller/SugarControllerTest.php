@@ -202,7 +202,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertTrue(true);
         
-        // cleanup
+        
         
         if(isset($session)) {
             $_SESSION = $session;
