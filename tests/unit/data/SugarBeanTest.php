@@ -655,7 +655,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean = new SugarBeanMock();
 
 
-        // test
+        
         $results = $bean->publicParseDateDefault('2015-05-05');
         self::assertEquals('05/05/2015', $results);
 
