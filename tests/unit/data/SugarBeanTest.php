@@ -1216,7 +1216,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
         $this->db->query($query);
 
-        // cleanup
+        
         $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
         $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'test_contact%'");
         
