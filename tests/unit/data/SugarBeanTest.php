@@ -2203,7 +2203,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testCreateTables()
     {
 
-        // test
+        
         $bean = new Contact();
         ob_start();
         $bean->create_tables();
