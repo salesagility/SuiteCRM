@@ -502,7 +502,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         if(isset($_COOKIE)) {
             $cookie = $_COOKIE;
         }
-        //execute the method and check that the method adds the key value pair to cookies array.
+        
         SugarApplication::setCookie('key', 'value');
         $this->assertEquals('value', $_COOKIE['key']);
         
