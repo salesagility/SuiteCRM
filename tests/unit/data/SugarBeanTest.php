@@ -762,7 +762,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(null, $results);
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $_SESSION['show_deleted'] = 1;
         $results = SugarBean::get_union_related_list(null);
