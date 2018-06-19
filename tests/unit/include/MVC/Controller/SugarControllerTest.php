@@ -21,7 +21,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarController = new SugarController();
         $default_module = $SugarController->module;
 
-        //first test with empty parameter and check for default values being used
+        
         $SugarController->setup('');
         $this->assertAttributeEquals($default_module, 'module', $SugarController);
         $this->assertAttributeEquals(null, 'target_module', $SugarController);
