@@ -803,7 +803,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         ), $results);
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $_SESSION['show_deleted'] = 1;
         $parentBean = new SugarBeanMock();
