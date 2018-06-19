@@ -26,7 +26,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
         
 $_POST['foo'] = 'bar123ase';
-        //execute the contructor and check for the Object type and type attribute
+        
         $aclAction = new ACLAction();
         $this->assertInstanceOf('ACLAction', $aclAction);
         $this->assertInstanceOf('SugarBean', $aclAction);
@@ -37,7 +37,7 @@ $_POST['foo'] = 'bar123ase';
         $this->assertAttributeEquals(true, 'new_schema', $aclAction);
         $this->assertAttributeEquals(true, 'disable_custom_fields', $aclAction);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('acl_actions');
@@ -51,15 +51,15 @@ $_POST['foo'] = 'bar123ase';
         $state->pushTable('acl_actions');
         $state->pushTable('aod_index');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
-        //take count of actions initially and then after method execution and test if action count increases
+        
         $action_count = count(ACLAction::getDefaultActions());
         ACLAction::addActions('Test');
         $actual = ACLAction::getDefaultActions();
         $this->assertGreaterThan($action_count, count($actual));
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('acl_actions');
@@ -68,7 +68,7 @@ $_POST['foo'] = 'bar123ase';
     public function testremoveActions()
     {
 
-        //take count of actions initially and then after method execution and test if action count decreases
+        
         $action_count = count(ACLAction::getDefaultActions());
         ACLAction::removeActions('Test');
         $actual = ACLAction::getDefaultActions();
@@ -80,12 +80,12 @@ $_POST['foo'] = 'bar123ase';
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $this->assertFalse(ACLAction::AccessName('')); //test with invalid value
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value
         
-        // clean up
+        
         
         
     }
@@ -113,10 +113,10 @@ $_POST['foo'] = 'bar123ase';
         $result3 = ACLAction::getUserActions('1', false, 'Accounts', 'list');
 
         self::markTestIncomplete('Need to implement: verify that all three results retunred are different.');
-        //verify that all three results retunred are different
-        //$this->assertNotSame($result1, $result2);
-        //$this->assertNotSame($result1, $result3);
-        //$this->assertNotSame($result2, $result3);
+        
+        
+        
+        
     }
 
     public function testhasAccess()
@@ -138,7 +138,7 @@ $_POST['foo'] = 'bar123ase';
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', '', ''));//test with empty module and action 
         $this->assertFalse(ACLAction::userNeedsSecurityGroup('1', 'Accounts', 'list')); //test with valid module and action
         
-        // clean up
+        
         
         $state->popGlobals();
     }
@@ -156,7 +156,7 @@ $_POST['foo'] = 'bar123ase';
         $this->assertTrue(ACLAction::userHasAccess('1', 'SecurityGroups', 'list')); //test with valid User, module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Users', 'list')); //test with valid User, module and action
         
-        // clean up
+        
         
         $state->popGlobals();
     }
@@ -166,11 +166,11 @@ $_POST['foo'] = 'bar123ase';
         self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
         
 
-        //tes for accoounts module with two different actions
+        
         $this->assertEquals(90, ACLAction::getUserAccessLevel('1', 'Accounts', 'list'));
         $this->assertEquals(89, ACLAction::getUserAccessLevel('1', 'Accounts', 'access'));
 
-        //tes for users module with two different actions
+        
         $this->assertEquals(90, ACLAction::getUserAccessLevel('1', 'Users', 'list'));
         $this->assertEquals(89, ACLAction::getUserAccessLevel('1', 'Users', 'access'));
     }
@@ -180,10 +180,10 @@ $_POST['foo'] = 'bar123ase';
         self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
         
 
-        //test with invalid values
+        
         $this->assertFalse(ACLAction::userNeedsOwnership('', '', ''));
 
-        //test with valid values for different module and action combination
+        
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Accounts', 'list'));
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Accounts', 'delete'));
         $this->assertFalse(ACLAction::userNeedsOwnership('1', 'Users', 'delete'));
@@ -193,7 +193,7 @@ $_POST['foo'] = 'bar123ase';
     public function testsetupCategoriesMatrix()
     {
 
-        //preset required data
+        
         $categories = array();
         $categories['Accounts']['module']['list'][] = 'list';
         $categories['Accounts']['module']['edit'][] = 'edit';
@@ -209,7 +209,7 @@ $_POST['foo'] = 'bar123ase';
                 ),
         );
 
-        //execute the method and verify that it retunrs expected results
+        
         $result = ACLAction::setupCategoriesMatrix($categories);
         $this->assertSame($names_expected, $result);
         $this->assertSame($categories, $categories_expected);
@@ -219,12 +219,12 @@ $_POST['foo'] = 'bar123ase';
     {
         $aclAction = new ACLAction();
 
-        //wihout any fields set 
+        
         $expected = array('id' => null, 'aclaccess' => null);
         $actual = $aclAction->toArray();
         $this->assertSame($expected, $actual);
 
-        //with fileds pre populated
+        
         $aclAction->populateFromRow(array('id' => '1234', 'aclaccess' => '9999'));
         $expected = array('id' => '1234', 'aclaccess' => '9999');
         $actual = $aclAction->toArray();
@@ -236,7 +236,7 @@ $_POST['foo'] = 'bar123ase';
         $aclAction = new ACLAction();
         $arr = array('id' => '1234', 'name' => 'test');
 
-        //execute the method and verify that it retunrs expected results
+        
         $aclAction->fromArray($arr);
         $this->assertSame($aclAction->id, '1234');
         $this->assertSame($aclAction->name, 'test');
@@ -246,7 +246,7 @@ $_POST['foo'] = 'bar123ase';
     {
         $aclAction = new ACLAction();
 
-        //execute the method and verify that it unsets the session cache
+        
         $aclAction->clearSessionCache();
         $this->assertFalse(isset($_SESSION['ACL']));
     }
