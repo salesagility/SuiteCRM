@@ -5,7 +5,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testAOD_Index()
     {
 
-        //execute the contructor and check for the Object type and type attribute
+        
         $aod_index = new AOD_Index();
         $this->assertInstanceOf('AOD_Index', $aod_index);
         $this->assertInstanceOf('Basic', $aod_index);
@@ -25,15 +25,15 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aod_index = new AOD_Index();
 
-        //execute the method and verify that it returns true
+        
         $result = $aod_index->isEnabled();
         $this->assertTrue($result);
         
-        // clean up
+        
         
         
     }
@@ -46,7 +46,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-         //execute the method with parameters and verify that it returns true
+         
          $hits = $aod_index->find('/');
         $this->assertTrue(is_array($hits));
     }
@@ -54,23 +54,23 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testoptimise()
     {
 	self::markTestIncomplete('[Zend_Search_Lucene_Exception] File \'modules/AOD_Index/Index/Index/segments_31\' is not readable.');
-        // save state
+        
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
 
-	// test
+	
         
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
         $last_optimized = $aod_index->last_optimised;
 
-        //execute the method and test if the last optimized date is changed to a later date/time.
+        
         $aod_index->optimise();
         $this->assertGreaterThan($last_optimized, $aod_index->last_optimised);
         
-        // clean up
+        
         
         $state->popTable('tracker');
 
@@ -81,7 +81,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aod_index = new AOD_Index();
         $result = $aod_index->getIndex();
 
-        //execute the method and verify it returns a different instance of samme type 
+        
         $this->assertInstanceOf('AOD_Index', $result);
         $this->assertNotSame($aod_index, $result);
     }
@@ -93,10 +93,10 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aod_index = new AOD_Index();
         $result = $aod_index->getDocumentForBean($user);
 
-        //execute the method and verify that it returns an array
+        
         $this->assertTrue(is_array($result));
 
-        //verify that returned array has a valid Zend_Search_Lucene_Document instance
+        
         $this->assertInstanceOf('Zend_Search_Lucene_Document', $result['document']);
     }
 
@@ -106,14 +106,14 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $aod_index->commit();
             $this->assertTrue(true);
@@ -121,7 +121,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -129,15 +129,15 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testisModuleSearchable()
     {
 
-        //test with an invalid module
+        
         $this->assertFalse(AOD_Index::isModuleSearchable('', ''));
 
-        //test for modules that are searchable
+        
         $this->assertTrue(AOD_Index::isModuleSearchable('DocumentRevisions', 'DocumentRevision'));
         $this->assertTrue(AOD_Index::isModuleSearchable('Cases', 'Case'));
         $this->assertTrue(AOD_Index::isModuleSearchable('Accounts', 'Account'));
 
-        //test for modules that are not searchable
+        
         $this->assertFalse(AOD_Index::isModuleSearchable('AOD_IndexEvent', 'AOD_IndexEvent'));
         $this->assertFalse(AOD_Index::isModuleSearchable('AOD_Index', 'AOD_Index'));
         $this->assertFalse(AOD_Index::isModuleSearchable('AOW_Actions', 'AOW_Action'));
@@ -153,11 +153,11 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //test with a not searchable module, it will return false
+        
         $result = $aod_index->index('Users', 1);
         $this->assertFalse($result);
 
-        //test with a searchable module but invalid bean id, it will still index it
+        
         $result = $aod_index->index('Accounts', 1);
         $this->assertEquals(null, $result);
         
@@ -170,14 +170,14 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aod_index = new AOD_Index();
         $aod_index->id = 1;
         $aod_index->location = 'modules/AOD_Index/Index/Index';
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $aod_index->remove('Accounts', 1);
             $this->assertTrue(true);
@@ -185,7 +185,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -235,7 +235,7 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $aod_index = new AOD_Index();
 
-        //execute the method and verify that it retunrs expected results
+        
         $actual = $aod_index->getIndexableModules();
         $this->assertSame($expected, $actual);
     }
