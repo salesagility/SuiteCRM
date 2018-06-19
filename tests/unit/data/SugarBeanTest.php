@@ -2482,7 +2482,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->id = 'testBean_1';
