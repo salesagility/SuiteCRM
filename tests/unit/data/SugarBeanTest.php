@@ -1577,7 +1577,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $result = $bean->getTableName();
         self::assertEquals('', $result);
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $result = $bean->getTableName();
