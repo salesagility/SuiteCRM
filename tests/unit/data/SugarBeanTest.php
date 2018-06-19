@@ -2081,7 +2081,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals('testValue', $bean->testKey);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
 
-        // test
+        
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
         $bean = new Contact();
