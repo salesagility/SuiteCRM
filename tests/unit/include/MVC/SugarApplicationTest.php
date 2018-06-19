@@ -449,7 +449,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         /*
         $SugarApplication = new SugarApplication();
 
-        //execute the method and check if it works and doesn't throws an exception
+        
         try {
             ob_start();
         
