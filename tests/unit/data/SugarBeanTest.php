@@ -836,7 +836,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testBuildSubQueriesForUnion()
     {
 
-        // test
+        
         $bean = new SugarBeanMock();
         $panel =
             new aSubPanel('Test', array(
