@@ -9,12 +9,15 @@ class PaginationObjectHelper
 {
     /**
      * @param integer $totalPages
+     * @param integer $numOfRecords
      *
      * @return MetaResponse
      */
-    public function getPaginationMeta($totalPages)
+    public function getPaginationMeta($totalPages, $numOfRecords)
     {
-        return new MetaResponse(['total-pages' => $totalPages]);
+        return new MetaResponse(
+            ['total-pages' => $totalPages, 'records-on-this-page' => $numOfRecords]
+        );
     }
 
     /**
@@ -27,15 +30,15 @@ class PaginationObjectHelper
     public function getPaginationLinks(Request $request, $totalPages, $number)
     {
         $pagination = new PaginationResponse();
-        $pagination->setFirst($this->createPaginationLink($request, 1));
-        $pagination->setLast($this->createPaginationLink($request, $totalPages));
 
         if ($number > 1) {
+            $pagination->setFirst($this->createPaginationLink($request, 1));
             $pagination->setPrev($this->createPaginationLink($request, $number - 1));
         }
 
         if ($number + 1 <= $totalPages) {
             $pagination->setNext($this->createPaginationLink($request, $number + 1));
+            $pagination->setLast($this->createPaginationLink($request, $totalPages));
         }
 
         return $pagination;

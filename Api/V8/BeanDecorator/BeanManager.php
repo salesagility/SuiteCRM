@@ -3,9 +3,13 @@ namespace Api\V8\BeanDecorator;
 
 class BeanManager
 {
-    const MAX_RECORDS_PER_PAGE = 20;
     const DEFAULT_OFFSET = 0;
-    const DEFAULT_MAX = -1;
+    const DEFAULT_ALL_RECORDS = -99;
+
+    /**
+     * @var \DBManager
+     */
+    private $db;
 
     /**
      * @var array
@@ -13,10 +17,12 @@ class BeanManager
     private $beanAliases;
 
     /**
+     * @param \DBManager $db
      * @param array $beanAliases
      */
-    public function __construct(array $beanAliases)
+    public function __construct(\DBManager $db, array $beanAliases)
     {
+        $this->db = $db;
         $this->beanAliases = $beanAliases;
     }
 
@@ -160,5 +166,13 @@ class BeanManager
                 )
             );
         }
+    }
+
+    /**
+     * @return \DBManager
+     */
+    public function getDb()
+    {
+        return $this->db;
     }
 }

@@ -31,7 +31,7 @@ class BeanListRequest
     /**
      * @var integer
      */
-    private $max = BeanManager::DEFAULT_MAX;
+    private $max = BeanManager::DEFAULT_ALL_RECORDS;
 
     /**
      * @var integer
