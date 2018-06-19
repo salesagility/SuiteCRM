@@ -14,7 +14,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testaCase()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $aCase = new aCase();
         $this->assertInstanceOf('aCase', $aCase);
         $this->assertInstanceOf('Basic', $aCase);
@@ -34,7 +34,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aCase = new aCase();
         $this->assertEquals(null, $aCase->get_summary_text());
@@ -42,7 +42,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aCase->name = 'test';
         $this->assertEquals('test', $aCase->get_summary_text());
         
-        // clean up
+        
         
         
     }
@@ -59,7 +59,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
-        // clean up
+        
         
         $state->popGlobals();
     }
@@ -69,12 +69,12 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $aCase->save_relationship_changes(true);
             $aCase->save_relationship_changes(false);
@@ -84,7 +84,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popTable('aod_indexevent');
     }
@@ -94,12 +94,12 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $aCase->set_case_contact_relationship(1);
             $this->assertTrue(true);
@@ -107,7 +107,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -117,12 +117,12 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aCase = new aCase();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $aCase->fill_in_additional_list_fields();
             $this->assertTrue(true);
@@ -130,7 +130,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -161,7 +161,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $aCase = new aCase();
         $current_theme = SugarThemeRegistry::current();
-        //test without setting attributes
+        
         $expected = array(
                 'DELETED' => 0,
                 'STATE' => 'Open',
@@ -179,14 +179,14 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
         $actual = $aCase->get_list_view_data();
-        //$this->assertSame($expected ,$actual);
+        
         $this->assertEquals($expected['STATE'], $actual['STATE']);
         $this->assertEquals($expected['UPDATE_TEXT'], $actual['UPDATE_TEXT']);
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['PRIORITY'], $actual['PRIORITY']);
         $this->assertRegExp($expected['SET_COMPLETE'], $actual['SET_COMPLETE']);
 
-        //test with attributes preset
+        
         $aCase->name = 'test';
         $aCase->priority = 'P1';
         $aCase->status = 'Open_New';
@@ -205,7 +205,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
         $actual = $aCase->get_list_view_data();
-        //$this->assertSame($expected ,$actual);
+        
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['CASE_NUMBER'], $actual['CASE_NUMBER']);
         $this->assertEquals($expected['STATUS'], $actual['STATUS']);
@@ -217,12 +217,12 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $aCase = new aCase();
 
-        //test with string
+        
         $expected = "(cases.name like 'test%' or accounts.name like 'test%')";
         $actual = $aCase->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
 
-        //test with number
+        
         $expected = "(cases.name like '1%' or accounts.name like '1%' or cases.case_number like '1%')";
         $actual = $aCase->build_generic_where_clause(1);
         $this->assertSame($expected, $actual);
@@ -269,16 +269,16 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $aCase->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($aCase->id));
         $this->assertEquals(36, strlen($aCase->id));
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $aCase->mark_deleted($aCase->id);
         $result = $aCase->retrieve($aCase->id);
         $this->assertEquals(null, $result);
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('tracker');
