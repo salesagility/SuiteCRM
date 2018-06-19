@@ -983,7 +983,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->db->query($query);
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $bean->id = 'test_contact_0';
