@@ -1854,7 +1854,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testUnPopulateDefaultValues()
     {
 
-        // test
+        
         $GLOBALS['log']->reset();
         $GLOBALS['log']->fatal('test');
         $bean = new Contact();
