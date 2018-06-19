@@ -146,7 +146,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarController->record = "1";
         $SugarController->loadBean();
 
-        //execute the method and check if it either works or throws an mysql exception.
+        
         //Fail if it throws any other exception.
         try {
             $SugarController->pre_save();
