@@ -473,7 +473,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $session = $_SESSION;
         }
         
-        //execute the method and check that the method adds the message to user_error_message array.
+        
         //there should be one more array element after method execution.
         $_SESSION['user_error_message'] = [];
         $user_error_message_count = count($_SESSION['user_error_message']);
