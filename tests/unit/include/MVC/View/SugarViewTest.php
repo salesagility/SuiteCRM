@@ -52,7 +52,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarView->module = 'Users';
         $GLOBALS['app'] = new SugarApplication();
 
-        //execute the method and check if it works and doesn't throws an exception
+        
         //secondly check if it outputs any content to browser
         try {
             ob_start();
