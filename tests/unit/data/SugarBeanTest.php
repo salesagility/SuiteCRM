@@ -1600,7 +1600,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         unset($bean->table_name);
