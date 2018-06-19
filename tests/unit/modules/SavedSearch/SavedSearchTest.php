@@ -58,7 +58,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
 //    public function testMain()
-//    {
+
 
 //
 
@@ -86,7 +86,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 ////
 ////        //test handleDelete method
 
-//    }
+
 
     public function handleSaveAndRetrieveSavedSearch($id)
     {
