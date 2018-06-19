@@ -5,14 +5,14 @@ class ViewJsonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testViewJson()
     {
 
-        //execute the contructor and check for the Object type and type attribute
+        
         $view = new ViewJson();
         $this->assertInstanceOf('ViewJson', $view);
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('detail', 'type', $view);
     }
 
-    //incomplete test. this method uses exit() so it cannot be tested.
+    
     public function testdisplay()
     {
 
