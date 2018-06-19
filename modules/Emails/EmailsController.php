@@ -764,6 +764,7 @@ class EmailsController extends SugarController
         if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
             // Move email addresses from the "from" field to the "to" field
             $this->bean->to_addrs = $this->bean->from_addr;
+            isValidEmailAddress($this->bean->to_addrs);
             $this->bean->to_addrs_names = $this->bean->from_addr_name;
         } else {
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {

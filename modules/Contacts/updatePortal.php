@@ -92,6 +92,7 @@ class updatePortal
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
         $mail->From = $emailSettings['from_address'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $emailSettings['from_name'];
         $mail->clearAllRecipients();
         $mail->clearReplyTos();

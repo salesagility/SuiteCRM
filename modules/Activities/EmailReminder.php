@@ -165,6 +165,7 @@ class EmailReminder
         }
 
         $mail->From = $from_address;
+        isValidEmailAddress($mail->From);
         $mail->FromName = $from_name;
 
         $xtpl = new XTemplate(get_notify_template_file($current_language));
