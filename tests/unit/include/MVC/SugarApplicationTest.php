@@ -280,7 +280,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         $state = new SuiteCRM\StateSaver();
-        //
+        
         
         //error_reporting(E_ERROR | E_PARSE);
 
