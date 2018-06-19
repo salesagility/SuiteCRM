@@ -93,7 +93,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $testLogger = $GLOBALS['log'];
         $GLOBALS['log'] = $logger;
 
-        // exam log
+        
 
 
         $this->assertTrue(true);
