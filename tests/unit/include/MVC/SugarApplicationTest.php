@@ -256,7 +256,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         try {
             $SugarApplication->loadLanguages();
 
-            //check that method call got the current_language global variable set.
+            
             $this->assertTrue(isset($GLOBALS['current_language']));
 
             //check that method call got the app_strings global variable set.
