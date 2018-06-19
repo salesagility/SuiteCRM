@@ -1550,7 +1550,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     public function testGetCustomTableName()
     {
 
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $result = $bean->get_custom_table_name();
