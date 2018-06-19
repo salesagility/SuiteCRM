@@ -33,7 +33,7 @@ class SugarModuleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $sugarmodule->moduleImplements('Basic');
         $this->assertEquals(false, $result);
 
-        //test for invalid input
+        
         $sugarmodule_user = new SugarModule('Users');
         $result = $sugarmodule_user->moduleImplements('SugarModule');
         $this->assertFalse($result);
