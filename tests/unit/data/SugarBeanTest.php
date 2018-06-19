@@ -1564,7 +1564,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testGetTableName()
     {
-        // test
+        
         $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
         $result = $bean->getTableName();
