@@ -2362,7 +2362,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertEquals(true, $bean->in_save);
         
         self::assertEquals($current_user->id, $bean->modified_user_id);
-        //self::assertEquals('testing', $bean->modified_by_name);
+        
         self::assertEquals(0, $bean->deleted);
         self::assertEquals($bean->date_modified, $bean->date_entered);
         /** @noinspection UnSafeIsSetOverArrayInspection */
