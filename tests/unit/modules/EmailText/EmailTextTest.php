@@ -5,7 +5,7 @@ class EmailTextTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testEmailText()
     {
 
-        //execute the contructor and check for the Object type and  attributes
+        
         $emailText = new EmailText();
 
         $this->assertInstanceOf('EmailText', $emailText);
