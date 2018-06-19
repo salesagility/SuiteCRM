@@ -14,7 +14,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistViewProcess()
     {
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -22,7 +22,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+	
         
         
         $query = "SELECT * FROM aod_index";
@@ -42,7 +42,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $tableEmailAddresses = $rows;
         
         
-        //execute the method and call methods to get the required child objects set. it should return some html.
+        
         $view = new ViewList();
         $view->seed = new User();
         $view->prepareSearchForm();
@@ -56,7 +56,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        // clean up 
+        
         
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach($tableEmailAddresses as $row) {
@@ -80,7 +80,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('email_addresses');
@@ -91,7 +91,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testViewList()
     {
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -99,15 +99,15 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+	
         
-        //execute the contructor and check for the Object type and type attribute
+        
         $view = new ViewList();
         $this->assertInstanceOf('ViewList', $view);
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('list', 'type', $view);
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('email_addresses');
@@ -118,7 +118,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistViewPrepare()
     {
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -126,13 +126,13 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+	
         
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
-        //test without setting parameters. it should return some html
+        
         $view = new ViewList();
         $view->module = 'Users';
 
@@ -142,7 +142,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
         $this->assertLessThanOrEqual(0, strlen($renderedContent));
 
-        //test with some REQUEST parameters preset. it should return some html and set the REQUEST key we provided in current_query_by_page REQUEST Param.
+        
         $view = new ViewList();
         $view->module = 'Users';
         $GLOBALS['module'] = 'Users';
@@ -158,7 +158,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('value', $_REQUEST['key']);
          
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('email_addresses');
@@ -169,7 +169,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testprepareSearchForm()
     {
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -177,16 +177,16 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+	
         
         
-        //test without any REQUEST parameters set. it will set searchform attribute to a searchform object. 
+        
         $view1 = new ViewList();
         $view1->module = 'Users';
         $view1->prepareSearchForm();
         $this->assertInstanceOf('SearchForm', $view1->searchForm);
 
-        //test with REQUEST parameters set. it will set searchform attribute to a searchform object.
+        
         $view2 = new ViewList();
         $view2->module = 'Users';
         $_REQUEST['search_form'] = true;
@@ -196,7 +196,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('SearchForm', $view2->searchForm);
         
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('email_addresses');
@@ -207,7 +207,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testprocessSearchForm()
     {
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -215,9 +215,9 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+	
         
-        //test without use_old_search. it should return html.
+        
         $view = new ViewList();
         $view->prepareSearchForm();
 
@@ -227,7 +227,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent));
 
-        //test with use_old_search = true. there is a $view variable which is never set so it doesn't returns anything.
+        
         $view = new ViewList();
         $view->prepareSearchForm();
         $view->use_old_search = true;
@@ -238,7 +238,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
         $this->assertEquals(0, strlen($renderedContent));
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('email_addresses');
@@ -249,7 +249,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testpreDisplay()
     {
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -257,15 +257,15 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+	
         
-        //execute the method and test if it sets the lv attribute to ListViewSmarty object.
+        
         $view = new ViewList();
         $view->preDisplay();
         $this->assertInstanceOf('ListViewSmarty', $view->lv);
         
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('email_addresses');
@@ -276,7 +276,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdisplay()
     {
         
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -284,7 +284,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+	
         
         
         $query = "SELECT * FROM email_addresses";
@@ -297,14 +297,14 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $view = new ViewList();
 
-        //test without setting bean attibute. it shuold return no access html.
+        
         ob_start();
         $view->display();
         $renderedContent1 = ob_get_contents();
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent1));
 
-        //test with bean, seed and other arrtibutes set. it shuold return html. 
+        
         $view->bean = new User();
         $view->seed = new User();
         $view->module = 'Users';
@@ -318,7 +318,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         ob_end_clean();
         $this->assertGreaterThan(0, strlen($renderedContent2));
         
-        // clean up 
+        
         
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
         foreach($tableEmailAddresses as $row) {
@@ -331,7 +331,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             DBManagerFactory::getInstance()->query($query);
         }
         
-        // clean up
+        
         
         $state->popTable('aod_index');
         $state->popTable('email_addresses');
