@@ -44,7 +44,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-	// test
+	
         
         //error_reporting(E_ERROR | E_PARSE);
         
