@@ -15,7 +15,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $projectTask = new ProjectTask();
 
-        //test with empty string params
+        
         $expected = "SELECT
 				project_task.*,
                 users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
@@ -23,7 +23,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $projectTask->create_export_query('', '');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = "SELECT
 				project_task.*,
                 users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
@@ -34,7 +34,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testProjectTask()
     {
-        //execute the contructor and check for the Object type and  attributes
+        
         $projectTask = new ProjectTask();
 
         $this->assertInstanceOf('ProjectTask', $projectTask);
@@ -55,26 +55,26 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $projectTask = new ProjectTask();
 
-        //test with default parameter value
+        
         $projectTask->skipParentUpdate();
         $this->assertAttributeEquals(true, '_skipParentUpdate', $projectTask);
 
-        //test with parameter value  = true
+        
         $projectTask->skipParentUpdate(false);
         $this->assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
         
-        // clean up
+        
         
         
     }
 
     public function testsave()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
@@ -83,31 +83,31 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-	// test
+	
         
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
-        //$projectTask->project_id = "1";
+        
         $projectTask->assigned_user_id = '1';
         $projectTask->description = 'test description';
         $projectTask->parent_task_id = 1;
 
         $projectTask->save();
 
-        //test for record ID to verify that record is saved
+        
         $this->assertTrue(isset($projectTask->id));
         $this->assertEquals(36, strlen($projectTask->id));
 
-        //test _get_depends_on_name method
+        
         $this->_get_depends_on_name($projectTask->id);
 
-        //mark the record as deleted and verify that this record cannot be retrieved anymore.
+        
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
         $this->assertEquals(null, $result);   
         
-        // clean up
+        
         
         $state->popGlobals();
         $state->popTable('aod_index');
@@ -132,12 +132,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $projectTask = new ProjectTask();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $projectTask->updateParentProjectTaskPercentage();
             $this->assertTrue(true);
@@ -145,7 +145,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         
     }
@@ -173,12 +173,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $projectTask = new ProjectTask();
 
-        //execute the method and test if it works and does not throws an exception.
+        
         try {
             $projectTask->updateStatistic();
             $this->assertTrue(true);
@@ -186,7 +186,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
-        // clean up
+        
         
         $state->popGlobals();
         
@@ -196,11 +196,11 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $projectTask = new ProjectTask();
 
-        //test without setting assigned_user_id
+        
         $projectTask->fill_in_additional_detail_fields();
         $this->assertEquals('', $projectTask->assigned_user_name);
 
-        //test with assigned_user_id set
+        
         $projectTask->assigned_user_id = 1;
         $projectTask->fill_in_additional_detail_fields();
         $this->assertEquals('Administrator', $projectTask->assigned_user_name);
@@ -210,11 +210,11 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $projectTask = new ProjectTask();
 
-        //test without setting assigned_user_id
+        
         $projectTask->fill_in_additional_list_fields();
         $this->assertEquals('', $projectTask->assigned_user_name);
 
-        //test with assigned_user_id set
+        
         $projectTask->assigned_user_id = 1;
         $projectTask->fill_in_additional_list_fields();
         $this->assertEquals('Administrator', $projectTask->assigned_user_name);
@@ -224,10 +224,10 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $projectTask = new ProjectTask();
 
-        //test without setting name
+        
         $this->assertEquals(null, $projectTask->get_summary_text());
 
-        //test with name set
+        
         $projectTask->name = 'test';
         $this->assertEquals('test', $projectTask->get_summary_text());
     }
@@ -236,11 +236,11 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $projectTask = new ProjectTask();
 
-        //test with a empty string
+        
         $result = $projectTask->_get_project_name('');
         $this->assertEquals('', $result);
 
-        //test with a non empty invalid id
+        
         $result = $projectTask->_get_project_name('1');
         $this->assertEquals('', $result);
     }
@@ -249,11 +249,11 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $projectTask = new ProjectTask();
 
-        //test with a empty string
+        
         $result = $projectTask->_get_parent_name('');
         $this->assertEquals('', $result);
 
-        //test with a non empty invalid id
+        
         $result = $projectTask->_get_parent_name('1');
         $this->assertEquals('', $result);
     }
@@ -262,12 +262,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $projectTask = new ProjectTask();
 
-        //test with empty string params
+        
         $expected = "project_task.name like '%'";
         $actual = $projectTask->build_generic_where_clause('');
         $this->assertSame($expected, $actual);
 
-        //test with valid string params
+        
         $expected = "project_task.name like 'test%'";
         $actual = $projectTask->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
@@ -310,12 +310,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-	// save state
+	
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+	
         
         $projectTask = new ProjectTask();
 
@@ -323,7 +323,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $projectTask->listviewACLHelper();
         $this->assertSame($expected, $actual);
         
-        // clean up
+        
         
         $state->popGlobals();
     }
