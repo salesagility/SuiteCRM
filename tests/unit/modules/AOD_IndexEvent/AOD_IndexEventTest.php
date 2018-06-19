@@ -5,7 +5,7 @@ class AOD_IndexEventTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testAOD_IndexEvent()
     {
 
-        //execute the contructor and check for the Object type and type attribute
+        
         $aod_indexEvent = new AOD_IndexEvent();
         $this->assertInstanceOf('AOD_IndexEvent', $aod_indexEvent);
         $this->assertInstanceOf('Basic', $aod_indexEvent);
