@@ -2585,7 +2585,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     public function testCleanBean()
     {
-        // test
+        
         $bean = new Contact();
         $bean->field_defs['testField'] = array('type' => 'html');
         /** @noinspection PhpUndefinedFieldInspection */
