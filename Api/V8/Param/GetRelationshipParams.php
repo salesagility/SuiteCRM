@@ -35,14 +35,13 @@ class GetRelationshipParams extends BaseParam
     /**
      * @return \SugarBean
      */
-    public function getBean()
+    public function getSourceBean()
     {
-        return $this->parameters['bean'];
+        return $this->parameters['sourceBean'];
     }
 
     /**
      * @inheritdoc
-     * @throws \RuntimeException When relationship cannot be loaded.
      */
     protected function configureParameters(OptionsResolver $resolver)
     {
@@ -55,35 +54,16 @@ class GetRelationshipParams extends BaseParam
         );
 
         $resolver
-            ->setDefined('bean')
-            ->setDefault('bean', function (Options $options) {
+            ->setDefined('sourceBean')
+            ->setDefault('sourceBean', function (Options $options) {
                 return $this->beanManager->getBeanSafe(
                     $options->offsetGet('moduleName'),
                     $options->offsetGet('id')
                 );
             })
-            ->setAllowedTypes('bean', [\SugarBean::class]);
+            ->setAllowedTypes('sourceBean', [\SugarBean::class]);
 
-        $resolver
-            ->setRequired('linkFieldName')
-            ->setAllowedTypes('linkFieldName', ['string'])
-            ->setAllowedValues('linkFieldName', $this->validatorFactory->createClosure([
-                new Assert\NotBlank(),
-                new Assert\Regex([
-                    'pattern' => ParamOption\ModuleName::REGEX_MODULE_NAME_PATTERN,
-                    'match' => false,
-                ]),
-            ]))
-            ->setNormalizer('linkFieldName', function (Options $options, $value) {
-                $bean = $options->offsetGet('bean');
-
-                if (!$bean->load_relationship($value)) {
-                    throw new \RuntimeException(
-                        sprintf('Cannot load relationship %s for %s module', $value, $bean->getObjectName())
-                    );
-                }
-
-                return $value;
-            });
+        // dependency on sourceBean field
+        $this->setOptions($resolver, [ParamOption\LinkFieldName::class]);
     }
 }

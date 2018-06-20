@@ -18,7 +18,7 @@
 							"oauth2": [
 								{
 									"key": "accessToken",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFkNTIyOGJhODU4MzM2N2M4ODRlODNjMzM5ZTM1NmE3ZTUyMzA2N2Y1MTBjYTczZDc4YjJhMmQzMjY2NzJkZTllYjVkMjMxYzViOTZmY2M3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiJhZDUyMjhiYTg1ODMzNjdjODg0ZTgzYzMzOWUzNTZhN2U1MjMwNjdmNTEwY2E3M2Q3OGIyYTJkMzI2NjcyZGU5ZWI1ZDIzMWM1Yjk2ZmNjNyIsImlhdCI6MTUyNTE2ODk4OCwibmJmIjoxNTI1MTY4OTg4LCJleHAiOjE1MjUxNzI1ODgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.rgIPmVZJFEmvtPQBx2Cpmcf3pF4rW16zT38tU6lBRmN_mLcUdDfIKwhGJg6MWkYrDZc3Ec5YIOHbZNv1XFqUM7kX7ANoZcNJ_odaZvOM8HMyLaiQgmzCqi5LQUCLTqo3-e4w_pMr45ztOfRHI5RTU1w9tDiM7vZdi7FNMxry2wNh5dfQjxG-nyEWOPVzi8B42GVzjSOE6WQ6M5YuqTTfjdBSWTVY6hsEuoF0aoKDXRhuzTgs049h8rwmxeHvTsDNfzwqGBTSAn58DzBK_B3wN6yV2LnNdWusKrc9PnZkhLQ7DyFeJIqbZg4_S-cuJ4DvUPDc4OhQj51Bey7xrX0_KQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjEyZmEzOWU5NGE1OWI1ZTkwMjBmMjg3NjZjYWM1MGRhNGJlODQ3MzE1ZmM0NjNkZTU5ZDE4Mjk2M2VlMDg3ZGQ3ZTU1NmYwMjMwMmZjMDZmIn0.eyJhdWQiOiJjOTlmZDM2Ny1kY2QwLTU4NDAtN2YwMS01YjIyNjIzMzNhYjIiLCJqdGkiOiIxMmZhMzllOTRhNTliNWU5MDIwZjI4NzY2Y2FjNTBkYTRiZTg0NzMxNWZjNDYzZGU1OWQxODI5NjNlZTA4N2RkN2U1NTZmMDIzMDJmYzA2ZiIsImlhdCI6MTUyOTA1NTgzOSwibmJmIjoxNTI5MDU1ODM5LCJleHAiOjE1MjkwNTk0MzksInN1YiI6IjEiLCJzY29wZXMiOltdfQ.NE2EPG-T1S58dkVAT4iK5TUE9s1Z_LrpzJK6YfLm8CCoAkzeRgdd1cYK63V2YspZuZENdat4QPXZU7aMSGjDguiKMiyCkIXmiB71zSUNfU-uDlPL8MUBepPc2cl72eahxJ-Z8ssbGxT8mwil9lakCaGn2K-OWl25jPtRWdeN2UC7dqVFLdbmPbThzxE3OkF1xPdUnCCbJNPyX7CZzsjV8w8Ap2k8V9pDtDNLI4BELFx17b2zKPB7gxcqNQyYZMkHIIu2N6QtpjuFXjS5Em1VgW5_SYznUVF_httQ0-IbvLGYVGzOT71dYNKMdbU0R2hNFyy3SrhVSM3OIA8iEq1SZA",
 									"type": "string"
 								},
 								{
@@ -93,9 +93,9 @@
 							"raw": "{\n\t\n}"
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493?fields[Accounts]=name,account_type",
+							"raw": "{{suitecrm.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493?fields[Accounts]=name,account_type",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",
@@ -198,9 +198,9 @@
 							"raw": "{\n\t\n}"
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/module/Accounts?fields[Accounts]=name,account_type&page[size]=4&page[number]=4&sort=name&filter[operator]=and&filter[account_type][eq]=Customer",
+							"raw": "{{suitecrm.url}}/V8/module/Accounts?fields[Accounts]=name,account_type&page[size]=4&page[number]=4&sort=name&filter[operator]=and&filter[account_type][eq]=Customer",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",
@@ -252,7 +252,7 @@
 							"oauth2": [
 								{
 									"key": "accessToken",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFkNTIyOGJhODU4MzM2N2M4ODRlODNjMzM5ZTM1NmE3ZTUyMzA2N2Y1MTBjYTczZDc4YjJhMmQzMjY2NzJkZTllYjVkMjMxYzViOTZmY2M3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiJhZDUyMjhiYTg1ODMzNjdjODg0ZTgzYzMzOWUzNTZhN2U1MjMwNjdmNTEwY2E3M2Q3OGIyYTJkMzI2NjcyZGU5ZWI1ZDIzMWM1Yjk2ZmNjNyIsImlhdCI6MTUyNTE2ODk4OCwibmJmIjoxNTI1MTY4OTg4LCJleHAiOjE1MjUxNzI1ODgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.rgIPmVZJFEmvtPQBx2Cpmcf3pF4rW16zT38tU6lBRmN_mLcUdDfIKwhGJg6MWkYrDZc3Ec5YIOHbZNv1XFqUM7kX7ANoZcNJ_odaZvOM8HMyLaiQgmzCqi5LQUCLTqo3-e4w_pMr45ztOfRHI5RTU1w9tDiM7vZdi7FNMxry2wNh5dfQjxG-nyEWOPVzi8B42GVzjSOE6WQ6M5YuqTTfjdBSWTVY6hsEuoF0aoKDXRhuzTgs049h8rwmxeHvTsDNfzwqGBTSAn58DzBK_B3wN6yV2LnNdWusKrc9PnZkhLQ7DyFeJIqbZg4_S-cuJ4DvUPDc4OhQj51Bey7xrX0_KQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImEwYTczODU5NjZkY2FiNjM3ZTk3YzM5ZWU2MzQ1NzhiZTIxYTlkMDViNmUxMmRiMDBjN2ZiMDYyYTA5ZTRjNzgxYTFjMmM4N2RiNmRhMzgwIn0.eyJhdWQiOiJjOTlmZDM2Ny1kY2QwLTU4NDAtN2YwMS01YjIyNjIzMzNhYjIiLCJqdGkiOiJhMGE3Mzg1OTY2ZGNhYjYzN2U5N2MzOWVlNjM0NTc4YmUyMWE5ZDA1YjZlMTJkYjAwYzdmYjA2MmEwOWU0Yzc4MWExYzJjODdkYjZkYTM4MCIsImlhdCI6MTUyOTUwNjE3OCwibmJmIjoxNTI5NTA2MTc4LCJleHAiOjE1Mjk1MDk3NzgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.sUBY05yiw6WGeeftrZOPesSSxzxvEoNSoP5oL3Q_pdrdm7Z5UTN0dnedUsL4fNSlPKzyuuFgFxlwLCk-kUTQ1LtSVe2OuMGdURxbK-hoA5K-5MEwWP-EudckJAcToTLVhr7K4iZdhK1i1_HRSFG-_9MWM3HkyB9xr2JpySdxlUvD9yxhmOMgK5BdL-m7IdeokoQUPE5GFZkbG0OA8EVJ92otD0PYE_6AbC8RIGqGgRZmIQDDe5AWTwT-6xYsHMTGpGQQUNiYRlGA_cQj3wseXZAoW13WpmHhoKOoJcI2A4uLzrOIoYzInujsTLtSUnJkxo47T7ZL7xNmbJEXRcfVvQ",
 									"type": "string"
 								},
 								{
@@ -324,12 +324,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"Accounts\",\n    \"id\": \"86ee02b3-96d2-47b3-bd6d-9e1035daff3a\",\n    \"attributes\": {\n      \"name\": \"Muhahaha\"\n    }\n  }\n}"
+							"raw": "{\n  \"data\": {\n    \"type\": \"Accounts\",\n    \"id\": \"11a71596-83e7-624d-c792-5ab9006dd493\",\n    \"attributes\": {\n      \"name\": \"Muhahaha\"\n    }\n  }\n}"
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/module",
+							"raw": "{{suitecrm.url}}/V8/module",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",
@@ -348,7 +348,7 @@
 							"oauth2": [
 								{
 									"key": "accessToken",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjBhYTZjNjJkOWIxOTE0OTViZWM4YmZmOGU2M2QyNmZhZDUxMjEzYTY3NTg2NTBjOTJjMDBiZDFlZjNkM2JlYmE5ZjBmMzU0ZTc4MzIxZmRhIn0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiIwYWE2YzYyZDliMTkxNDk1YmVjOGJmZjhlNjNkMjZmYWQ1MTIxM2E2NzU4NjUwYzkyYzAwYmQxZWYzZDNiZWJhOWYwZjM1NGU3ODMyMWZkYSIsImlhdCI6MTUyNjg5NjQ5NywibmJmIjoxNTI2ODk2NDk3LCJleHAiOjE1MjY5MDAwOTcsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.X28VMbKB4CDiXh7bmxrQr93bqFNgKI_H0Mv4h9uE8B4wvP5Vfk-a1xje54tprfYLDpm68jhEZYe0rs5yiTj4K5vaP3W4sZuodQ9zs0LPuzTbLyGvQnZqhIsnH6TDQnN3prtyqOTBY0fNBKMUTQ-mBYz3JCUjUhdibIxtO8hKD26plhe-6mz0MB3ymyevmhoUv43eJ5-DR-ZD58y7qEa-9N0EQsowP9dybw-vfUvGLjY1t4NiGbXxajPXYNsoDWKq9VY4mSicVwL8Vc0yGn6qsZM-Juh8Xk-vpW4xIz1XKztqLBjoLdavZ14_6waDX6yB01me0FeHeDHEG4JYiwmEBw",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImEwYTczODU5NjZkY2FiNjM3ZTk3YzM5ZWU2MzQ1NzhiZTIxYTlkMDViNmUxMmRiMDBjN2ZiMDYyYTA5ZTRjNzgxYTFjMmM4N2RiNmRhMzgwIn0.eyJhdWQiOiJjOTlmZDM2Ny1kY2QwLTU4NDAtN2YwMS01YjIyNjIzMzNhYjIiLCJqdGkiOiJhMGE3Mzg1OTY2ZGNhYjYzN2U5N2MzOWVlNjM0NTc4YmUyMWE5ZDA1YjZlMTJkYjAwYzdmYjA2MmEwOWU0Yzc4MWExYzJjODdkYjZkYTM4MCIsImlhdCI6MTUyOTUwNjE3OCwibmJmIjoxNTI5NTA2MTc4LCJleHAiOjE1Mjk1MDk3NzgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.sUBY05yiw6WGeeftrZOPesSSxzxvEoNSoP5oL3Q_pdrdm7Z5UTN0dnedUsL4fNSlPKzyuuFgFxlwLCk-kUTQ1LtSVe2OuMGdURxbK-hoA5K-5MEwWP-EudckJAcToTLVhr7K4iZdhK1i1_HRSFG-_9MWM3HkyB9xr2JpySdxlUvD9yxhmOMgK5BdL-m7IdeokoQUPE5GFZkbG0OA8EVJ92otD0PYE_6AbC8RIGqGgRZmIQDDe5AWTwT-6xYsHMTGpGQQUNiYRlGA_cQj3wseXZAoW13WpmHhoKOoJcI2A4uLzrOIoYzInujsTLtSUnJkxo47T7ZL7xNmbJEXRcfVvQ",
 									"type": "string"
 								},
 								{
@@ -420,12 +420,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"Accounts\",\n    \"id\": \"11a71596-83e7-624d-c792-5ab9006dd493\",\n    \"attributes\": {\n      \"name\": \"hapfffff\"\n    }\n  }\n}"
+							"raw": "{\n  \"data\": {\n    \"type\": \"Accounts\",\n    \"id\": \"11a71596-83e7-624d-c792-5ab9006dd493\",\n    \"attributes\": {\n      \"name\": \"hapff111fff\"\n    }\n  }\n}"
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/module",
+							"raw": "{{suitecrm.url}}/V8/module",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",
@@ -444,7 +444,7 @@
 							"oauth2": [
 								{
 									"key": "accessToken",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImFkNTIyOGJhODU4MzM2N2M4ODRlODNjMzM5ZTM1NmE3ZTUyMzA2N2Y1MTBjYTczZDc4YjJhMmQzMjY2NzJkZTllYjVkMjMxYzViOTZmY2M3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiJhZDUyMjhiYTg1ODMzNjdjODg0ZTgzYzMzOWUzNTZhN2U1MjMwNjdmNTEwY2E3M2Q3OGIyYTJkMzI2NjcyZGU5ZWI1ZDIzMWM1Yjk2ZmNjNyIsImlhdCI6MTUyNTE2ODk4OCwibmJmIjoxNTI1MTY4OTg4LCJleHAiOjE1MjUxNzI1ODgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.rgIPmVZJFEmvtPQBx2Cpmcf3pF4rW16zT38tU6lBRmN_mLcUdDfIKwhGJg6MWkYrDZc3Ec5YIOHbZNv1XFqUM7kX7ANoZcNJ_odaZvOM8HMyLaiQgmzCqi5LQUCLTqo3-e4w_pMr45ztOfRHI5RTU1w9tDiM7vZdi7FNMxry2wNh5dfQjxG-nyEWOPVzi8B42GVzjSOE6WQ6M5YuqTTfjdBSWTVY6hsEuoF0aoKDXRhuzTgs049h8rwmxeHvTsDNfzwqGBTSAn58DzBK_B3wN6yV2LnNdWusKrc9PnZkhLQ7DyFeJIqbZg4_S-cuJ4DvUPDc4OhQj51Bey7xrX0_KQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImEwYTczODU5NjZkY2FiNjM3ZTk3YzM5ZWU2MzQ1NzhiZTIxYTlkMDViNmUxMmRiMDBjN2ZiMDYyYTA5ZTRjNzgxYTFjMmM4N2RiNmRhMzgwIn0.eyJhdWQiOiJjOTlmZDM2Ny1kY2QwLTU4NDAtN2YwMS01YjIyNjIzMzNhYjIiLCJqdGkiOiJhMGE3Mzg1OTY2ZGNhYjYzN2U5N2MzOWVlNjM0NTc4YmUyMWE5ZDA1YjZlMTJkYjAwYzdmYjA2MmEwOWU0Yzc4MWExYzJjODdkYjZkYTM4MCIsImlhdCI6MTUyOTUwNjE3OCwibmJmIjoxNTI5NTA2MTc4LCJleHAiOjE1Mjk1MDk3NzgsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.sUBY05yiw6WGeeftrZOPesSSxzxvEoNSoP5oL3Q_pdrdm7Z5UTN0dnedUsL4fNSlPKzyuuFgFxlwLCk-kUTQ1LtSVe2OuMGdURxbK-hoA5K-5MEwWP-EudckJAcToTLVhr7K4iZdhK1i1_HRSFG-_9MWM3HkyB9xr2JpySdxlUvD9yxhmOMgK5BdL-m7IdeokoQUPE5GFZkbG0OA8EVJ92otD0PYE_6AbC8RIGqGgRZmIQDDe5AWTwT-6xYsHMTGpGQQUNiYRlGA_cQj3wseXZAoW13WpmHhoKOoJcI2A4uLzrOIoYzInujsTLtSUnJkxo47T7ZL7xNmbJEXRcfVvQ",
 									"type": "string"
 								},
 								{
@@ -519,9 +519,9 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493",
+							"raw": "{{suitecrm.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",
@@ -535,14 +535,14 @@
 					"response": []
 				},
 				{
-					"name": "Get rrelationship",
+					"name": "Get relationship",
 					"request": {
 						"auth": {
 							"type": "oauth2",
 							"oauth2": [
 								{
 									"key": "accessToken",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMjY0Y2VmY2I5YzQzYjJiMWI2MDAyOWZkODU3NDc5OTUwOWQ3NjQxOGJhYzg3YTU3OGZiODM2M2JhMjlmMGE2YzA5ZmI3YjM5YzAyZDY3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiI2YTI2NGNlZmNiOWM0M2IyYjFiNjAwMjlmZDg1NzQ3OTk1MDlkNzY0MThiYWM4N2E1NzhmYjgzNjNiYTI5ZjBhNmMwOWZiN2IzOWMwMmQ2NyIsImlhdCI6MTUyNjkxNjQ2MywibmJmIjoxNTI2OTE2NDYzLCJleHAiOjE1MjY5MjAwNjMsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.arJPQOyRQ6HAJqiazaJkcKEjZM1tbCyxnPE1UUOjHPw6K3JE0lDtZbvSwu5LdFMGCuHSt8q6V94Ykn0tYICaQxjqt6lE0fvMouSIMEfcMfptU2EnYsUK8Rz7-p1PngWU0WUWWrOeQq0X_ehjwAO4fc4DdxPRZZJwT2hsJLbVtrN9dVKtR4_N-6e-3SDePOfGjlrmnRc0dybmbZOIg3jRFs7uNjX_iFFwuTJieqsRSqUR9LWgm6L5D0g1Gh0DeQb7yoGp7tChrF8_MMuyD516KI8X5untswM6bSiXyKTbOhYv5VK5_9FBIu_pUWNF_5uE3QHBpNEYhRaoJAa65rHPVQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjMyZWQ4ZGEzZjQxM2QyNWI1ZGUxMWNhNGFjNWVmMWYwMmFkNDkwNzkyOGU4NjcyYTM1NWNmYTRmY2VkNWNkZWU5MjUzODVkN2I0MDU1ZmM2In0.eyJhdWQiOiJjOTlmZDM2Ny1kY2QwLTU4NDAtN2YwMS01YjIyNjIzMzNhYjIiLCJqdGkiOiIzMmVkOGRhM2Y0MTNkMjViNWRlMTFjYTRhYzVlZjFmMDJhZDQ5MDc5MjhlODY3MmEzNTVjZmE0ZmNlZDVjZGVlOTI1Mzg1ZDdiNDA1NWZjNiIsImlhdCI6MTUyOTUwMjU1MSwibmJmIjoxNTI5NTAyNTUxLCJleHAiOjE1Mjk1MDYxNTEsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.s-eQwjwvS2DA8A4GjATUnRyrTQ5MRhoDMpzcArtVWnLZT0sLWrUqDh3qtZ6U5qGcli-C609E_hUoi0wtn1SEVTMXMSIbu_ipb109LvAv9dgpOfnFdP8kOIOvQR9kkMnI0jw4AY7w0PrON_-kZjPvucBZuRv5TVguJwRSXy3_xVFMiXGI1KfyanFwpW4AT1aDmdQ-R6nl7ginGpEzphySOK8khe9FEb9rvvwtqJGbZG7khFMVw9nAzVEF4pT4ZCS774cwEhagxWUeJKs-8yYPANMJyoFxlds54InJTuxlB6P6AIddBtjMc8_aiGz1-PU8Ulsjkpp-b_KslXUtPUGy1w",
 									"type": "string"
 								},
 								{
@@ -617,9 +617,9 @@
 							"raw": "{\n\t\n}"
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships/contacts",
+							"raw": "{{suitecrm.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships/contacts",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",
@@ -635,14 +635,14 @@
 					"response": []
 				},
 				{
-					"name": "Create realtionship",
+					"name": "Create relationship",
 					"request": {
 						"auth": {
 							"type": "oauth2",
 							"oauth2": [
 								{
 									"key": "accessToken",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMjY0Y2VmY2I5YzQzYjJiMWI2MDAyOWZkODU3NDc5OTUwOWQ3NjQxOGJhYzg3YTU3OGZiODM2M2JhMjlmMGE2YzA5ZmI3YjM5YzAyZDY3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiI2YTI2NGNlZmNiOWM0M2IyYjFiNjAwMjlmZDg1NzQ3OTk1MDlkNzY0MThiYWM4N2E1NzhmYjgzNjNiYTI5ZjBhNmMwOWZiN2IzOWMwMmQ2NyIsImlhdCI6MTUyNjkxNjQ2MywibmJmIjoxNTI2OTE2NDYzLCJleHAiOjE1MjY5MjAwNjMsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.arJPQOyRQ6HAJqiazaJkcKEjZM1tbCyxnPE1UUOjHPw6K3JE0lDtZbvSwu5LdFMGCuHSt8q6V94Ykn0tYICaQxjqt6lE0fvMouSIMEfcMfptU2EnYsUK8Rz7-p1PngWU0WUWWrOeQq0X_ehjwAO4fc4DdxPRZZJwT2hsJLbVtrN9dVKtR4_N-6e-3SDePOfGjlrmnRc0dybmbZOIg3jRFs7uNjX_iFFwuTJieqsRSqUR9LWgm6L5D0g1Gh0DeQb7yoGp7tChrF8_MMuyD516KI8X5untswM6bSiXyKTbOhYv5VK5_9FBIu_pUWNF_5uE3QHBpNEYhRaoJAa65rHPVQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjMyZWQ4ZGEzZjQxM2QyNWI1ZGUxMWNhNGFjNWVmMWYwMmFkNDkwNzkyOGU4NjcyYTM1NWNmYTRmY2VkNWNkZWU5MjUzODVkN2I0MDU1ZmM2In0.eyJhdWQiOiJjOTlmZDM2Ny1kY2QwLTU4NDAtN2YwMS01YjIyNjIzMzNhYjIiLCJqdGkiOiIzMmVkOGRhM2Y0MTNkMjViNWRlMTFjYTRhYzVlZjFmMDJhZDQ5MDc5MjhlODY3MmEzNTVjZmE0ZmNlZDVjZGVlOTI1Mzg1ZDdiNDA1NWZjNiIsImlhdCI6MTUyOTUwMjU1MSwibmJmIjoxNTI5NTAyNTUxLCJleHAiOjE1Mjk1MDYxNTEsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.s-eQwjwvS2DA8A4GjATUnRyrTQ5MRhoDMpzcArtVWnLZT0sLWrUqDh3qtZ6U5qGcli-C609E_hUoi0wtn1SEVTMXMSIbu_ipb109LvAv9dgpOfnFdP8kOIOvQR9kkMnI0jw4AY7w0PrON_-kZjPvucBZuRv5TVguJwRSXy3_xVFMiXGI1KfyanFwpW4AT1aDmdQ-R6nl7ginGpEzphySOK8khe9FEb9rvvwtqJGbZG7khFMVw9nAzVEF4pT4ZCS774cwEhagxWUeJKs-8yYPANMJyoFxlds54InJTuxlB6P6AIddBtjMc8_aiGz1-PU8Ulsjkpp-b_KslXUtPUGy1w",
 									"type": "string"
 								},
 								{
@@ -714,12 +714,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\"\n  }\n}"
+							"raw": "{\n  \"data\": {\n    \"type\": \"Contacts\",\n    \"id\": \"11806811-0b4b-fcdd-268b-5b2260e68333\"\n  }\n}"
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships",
+							"raw": "{{suitecrm.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",
@@ -734,14 +734,14 @@
 					"response": []
 				},
 				{
-					"name": "Delete realtionship",
+					"name": "Delete relationship",
 					"request": {
 						"auth": {
 							"type": "oauth2",
 							"oauth2": [
 								{
 									"key": "accessToken",
-									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZhMjY0Y2VmY2I5YzQzYjJiMWI2MDAyOWZkODU3NDc5OTUwOWQ3NjQxOGJhYzg3YTU3OGZiODM2M2JhMjlmMGE2YzA5ZmI3YjM5YzAyZDY3In0.eyJhdWQiOiJiMTNhMzlmOC0xYzI0LWM1ZDAtYmEwZC01YWIxMjNkNmU4OTkiLCJqdGkiOiI2YTI2NGNlZmNiOWM0M2IyYjFiNjAwMjlmZDg1NzQ3OTk1MDlkNzY0MThiYWM4N2E1NzhmYjgzNjNiYTI5ZjBhNmMwOWZiN2IzOWMwMmQ2NyIsImlhdCI6MTUyNjkxNjQ2MywibmJmIjoxNTI2OTE2NDYzLCJleHAiOjE1MjY5MjAwNjMsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.arJPQOyRQ6HAJqiazaJkcKEjZM1tbCyxnPE1UUOjHPw6K3JE0lDtZbvSwu5LdFMGCuHSt8q6V94Ykn0tYICaQxjqt6lE0fvMouSIMEfcMfptU2EnYsUK8Rz7-p1PngWU0WUWWrOeQq0X_ehjwAO4fc4DdxPRZZJwT2hsJLbVtrN9dVKtR4_N-6e-3SDePOfGjlrmnRc0dybmbZOIg3jRFs7uNjX_iFFwuTJieqsRSqUR9LWgm6L5D0g1Gh0DeQb7yoGp7tChrF8_MMuyD516KI8X5untswM6bSiXyKTbOhYv5VK5_9FBIu_pUWNF_5uE3QHBpNEYhRaoJAa65rHPVQ",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjE1MDhmZWY3Yzg2OTkxODliMGZlOWE2Nzk1MDcyMzhjNTM4YWM2YzlmMTI2M2JjMWJiZmVkMDdjMjRlYmY4MGU0MWM5NDdiNmUyYTFhYzRjIn0.eyJhdWQiOiJjOTlmZDM2Ny1kY2QwLTU4NDAtN2YwMS01YjIyNjIzMzNhYjIiLCJqdGkiOiIxNTA4ZmVmN2M4Njk5MTg5YjBmZTlhNjc5NTA3MjM4YzUzOGFjNmM5ZjEyNjNiYzFiYmZlZDA3YzI0ZWJmODBlNDFjOTQ3YjZlMmExYWM0YyIsImlhdCI6MTUyOTQ4ODczNywibmJmIjoxNTI5NDg4NzM3LCJleHAiOjE1Mjk0OTIzMzcsInN1YiI6IjEiLCJzY29wZXMiOltdfQ.WYBD1Gc9ggTHjXqSxRvxmM-WaR9gdL6lJyqznnD9Vvm6xNll4SKe54wM9rR_PZQjMtNdCATCtewLcnB5EzGsS7RqVZcBDhFKVvt3LC0oScPpnfw20qTeAZECnsuOs9RrLD_JAV4Lk-8WhUF5PZUl9n_UK1V8Y9ll8DMQryiBj1XrN54_LEPKeQbnHOKTpqptXjxz6rVZ9oc0JjJzwG2x3CUK9J8sp0RhQjSx_G_SJrAjVkM0yDKPaYg2Cn5OyvRRMjFhTwNxW6gUjnK9WgP65d5jNwXhmcNsIeb_iDCl5aYaqDPf3V0mARoS_BFjhiizu5QSwlfH16whhKx_ZwVpKQ",
 									"type": "string"
 								},
 								{
@@ -813,19 +813,21 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"data\": {\n    \"type\": \"contacts\",\n\t\"id\": \"67267a29-ef0d-a14d-e11a-5b02edd1b180\"\n  }\n}"
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships",
+							"raw": "{{suitecrm.url}}/V8/module/Accounts/11a71596-83e7-624d-c792-5ab9006dd493/relationships/contacts/11806811-0b4b-fcdd-268b-5b2260e68333",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",
 								"module",
 								"Accounts",
 								"11a71596-83e7-624d-c792-5ab9006dd493",
-								"relationships"
+								"relationships",
+								"contacts",
+								"11806811-0b4b-fcdd-268b-5b2260e68333"
 							]
 						},
 						"description": null
@@ -915,9 +917,9 @@
 							"raw": "{\n\t\n}"
 						},
 						"url": {
-							"raw": "{{suitecrm71.url}}/V8/logout",
+							"raw": "{{suitecrm.url}}/V8/logout",
 							"host": [
-								"{{suitecrm71.url}}"
+								"{{suitecrm.url}}"
 							],
 							"path": [
 								"V8",

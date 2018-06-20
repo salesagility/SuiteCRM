@@ -31,7 +31,7 @@ class CreateModuleCest
         $payload = $iterator->offsetGet('payload');
 
         $id = create_guid();
-        $endpoint = $I->getInstanceURL() . 'Api/V8/module';
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
         $response = [
             'type' => \Account::class,
         ];
@@ -47,7 +47,7 @@ class CreateModuleCest
         $I->canSeeResponseContainsJson($response);
         $I->assertGreaterThanOrEqual(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
 
-        $I->deleteAccount($id);
+        $I->deleteBean('accounts', $id);
     }
 
     /**
@@ -69,7 +69,7 @@ class CreateModuleCest
             $detail = str_replace('{id}', $id, $detail);
             $payload['data']['id'] = str_replace('{id}', $id, $payload['data']['id']);
         }
-        $endpoint = $I->getInstanceURL() . 'Api/V8/module';
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module';
         $expectedResult = [
             'errors' => [
                 'status' => 400,
@@ -84,7 +84,7 @@ class CreateModuleCest
         $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
 
         if (isset($id)) {
-            $I->deleteAccount($id);
+            $I->deleteBean('accounts', $id);
         }
     }
 

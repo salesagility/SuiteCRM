@@ -71,14 +71,12 @@ class ErrorResponse implements \JsonSerializable
      */
     public function jsonSerialize()
     {
-        $response = [
+        return [
             'errors' => [
                 'status' => $this->getStatus(),
                 'title' => $this->getTitle(),
                 'detail' => $this->getDetail(),
             ]
         ];
-
-        return $response;
     }
 }

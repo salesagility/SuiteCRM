@@ -40,18 +40,18 @@ class RelationshipService
      */
     public function getRelationship(GetRelationshipParams $params)
     {
-        $bean = $params->getBean();
-        $relationship = $params->getLinkedFieldName();
-        $relatedBeans = $bean->get_linked_beans($relationship);
+        $sourceBean = $params->getSourceBean();
+        $linkFieldName = $params->getLinkedFieldName();
+        $relatedBeans = $sourceBean->get_linked_beans($linkFieldName);
         $response = new DocumentResponse();
 
         if (!$relatedBeans) {
             $response->setMeta(new MetaResponse(
                 [
                     'message' => sprintf(
-                        'Relationship %s of module %s is empty',
-                        $relationship,
-                        $bean->getObjectName()
+                        'There is no relationship set in %s module with %s link field',
+                        $sourceBean->getObjectName(),
+                        $linkFieldName
                     )
                 ]
             ));
@@ -67,9 +67,6 @@ class RelationshipService
                 $data[] = $dataResponse;
             }
 
-            $response->setMeta(new MetaResponse(
-                ['message' => sprintf('Relationship %s of %s module', $relationship, $bean->getObjectName())]
-            ));
             $response->setData($data);
         }
 
@@ -85,30 +82,22 @@ class RelationshipService
     {
         $sourceBean = $params->getSourceBean();
         $relatedBean = $params->getRelatedBean();
-        $linkField = \Relationship::retrieve_by_modules(
-            $sourceBean->module_name,
-            $relatedBean->module_name,
-            $sourceBean->db
-        );
+        $linkFieldName = $this->getLinkedFieldName($sourceBean, $relatedBean);
 
-        $pfff = $sourceBean->get_linked_fields();
-
-        $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $linkField);
-
-        $dataResponse = new DataResponse($relatedBean->getObjectName(), $relatedBean->id);
-        $dataResponse->setAttributes($this->attributeHelper->getAttributes($relatedBean));
+        $this->beanManager->createRelationshipSafe($sourceBean, $relatedBean, $linkFieldName);
 
         $response = new DocumentResponse();
         $response->setMeta(new MetaResponse(
             [
                 'message' => sprintf(
-                    '%s module has been added as relationship into %s module',
+                    '%s with id %s has been added to %s with id %s',
                     $relatedBean->getObjectName(),
-                    $sourceBean->getObjectName()
+                    $relatedBean->id,
+                    $sourceBean->getObjectName(),
+                    $sourceBean->id
                 )
             ]
         ));
-        $response->setData($dataResponse);
 
         return $response;
     }
@@ -117,27 +106,81 @@ class RelationshipService
      * @param DeleteRelationshipParams $params
      *
      * @return DocumentResponse
+     * @throws \DomainException When the source module is not related to the target module.
      */
     public function deleteRelationship(DeleteRelationshipParams $params)
     {
         $sourceBean = $params->getSourceBean();
-        $relatedBean = $params->getData()->getRelatedBean();
-        $relationship = $params->getData()->getType();
+        $linkFieldName = $params->getLinkedFieldName();
+        $relatedBeans = $sourceBean->get_linked_beans($linkFieldName);
+        $relatedBeanId = $params->getRelatedBeanId();
 
-        $this->beanManager->deleteRelationshipSafe($sourceBean, $relatedBean, $relationship);
+        $relatedBean = array_filter($relatedBeans, function ($bean) use ($relatedBeanId) {
+            return $bean->id === $relatedBeanId;
+        });
+
+        if (!$relatedBean) {
+            throw new \DomainException(
+                sprintf(
+                    'Module with %s id is not related to %s',
+                    $relatedBeanId,
+                    $sourceBean->getObjectName()
+                )
+            );
+        }
+
+        $relatedBean = array_shift($relatedBean);
+        $this->beanManager->deleteRelationshipSafe($sourceBean, $relatedBean, $linkFieldName);
 
         $response = new DocumentResponse();
         $response->setMeta(new MetaResponse(
             [
                 'message' => sprintf(
-                    '%s relationship has been deleted between %s and %s module',
-                    $relationship,
+                    'Relationship has been deleted between %s with id %s and %s with id %s',
+                    $sourceBean->getObjectName(),
+                    $sourceBean->id,
                     $relatedBean->getObjectName(),
-                    $sourceBean->getObjectName()
+                    $relatedBean->id
                 )
             ]
         ));
 
         return $response;
+    }
+
+    /**
+     * @param \SugarBean $sourceBean
+     * @param \SugarBean $relatedBean
+     *
+     * @return string
+     * @throws \DomainException In case link field is not found.
+     */
+    public function getLinkedFieldName(\SugarBean $sourceBean, \SugarBean $relatedBean)
+    {
+        $linkedFields = $sourceBean->get_linked_fields();
+        $relationship = \Relationship::retrieve_by_modules(
+            $sourceBean->module_name,
+            $relatedBean->module_name,
+            $sourceBean->db
+        );
+
+        $linkFieldName = '';
+        foreach ($linkedFields as $linkedField) {
+            if ($linkedField['relationship'] === $relationship) {
+                $linkFieldName = $linkedField['name'];
+            }
+        }
+
+        if (!$linkFieldName) {
+            throw new \DomainException(
+                sprintf(
+                    'Link field has not found in %s to determine relationship for %s',
+                    $sourceBean->getObjectName(),
+                    $relatedBean->getObjectName()
+                )
+            );
+        }
+
+        return $linkFieldName;
     }
 }

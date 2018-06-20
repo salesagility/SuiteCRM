@@ -42,7 +42,7 @@ class GetModuleCest
         $assert = $iterator->current() === 'withFields' ? 'assertEquals' : 'assertGreaterThan';
         $I->{$assert}(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
 
-        $I->deleteAccount($id);
+        $I->deleteBean('accounts', $id);
     }
 
     /**
@@ -79,7 +79,7 @@ class GetModuleCest
         $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
 
         if (in_array($iterator->current(), ['withInvalidField', 'withInvalidFieldKey'], true)) {
-            $I->deleteAccount($id);
+            $I->deleteBean('accounts', $id);
         }
     }
 

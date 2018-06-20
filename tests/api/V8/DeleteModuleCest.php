@@ -39,29 +39,22 @@ class DeleteModuleCest
         $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
 
         // perm delete
-        $I->deleteAccount($id);
+        $I->deleteBean('accounts', $id);
     }
 
     /**
      * @param ApiTester $I
-     * @param Example $example
      *
-     * @dataProvider shouldNotWorkDataProvider
      * @throws \Exception
      */
-    public function shouldNotWork(ApiTester $I, Example $example)
+    public function shouldNotWork(ApiTester $I)
     {
-        /** @var \ArrayIterator $iterator */
-        $iterator = $example->getIterator();
-        $endpoint = $I->getInstanceURL() . $iterator->offsetGet('endPoint');
-        $detail = $iterator->offsetGet('detail');
+        $id = $I->createAccount();
+        $I->deleteBean('accounts', $id);
 
-        if ($iterator->current() === 'withDeletedRecord') {
-            $id = $I->createAccount();
-            $I->deleteAccount($id);
-            $endpoint = str_replace('{id}', $id, $endpoint);
-            $detail = str_replace('{id}', $id, $detail);
-        }
+        $endpoint = $I->getInstanceURL() . '/Api/V8/module/Accounts/{id}';
+        $endpoint = str_replace('{id}', $id, $endpoint);
+        $detail = str_replace('{id}', $id, 'Accounts module with id {id} is not found');
 
         $expectedResult = [
             'errors' => [
@@ -75,29 +68,5 @@ class DeleteModuleCest
         $I->seeResponseCodeIs(400);
         $I->seeResponseIsJson();
         $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
-    }
-
-    /**
-     * @return array
-     */
-    protected function shouldNotWorkDataProvider()
-    {
-        return [
-            [
-                'shouldNotWork01' => 'withInvalidModuleName',
-                'endPoint' => '/Api/V8/module/InvalidModuleName/11a71596-83e7-624d-c792-5ab9006dd493',
-                'detail' => 'Module with name InvalidModuleName is not found'
-            ],
-            [
-                'shouldNotWork02' => 'withInvalidId',
-                'endPoint' => '/Api/V8/module/Accounts/111',
-                'detail' => 'The option "id" with value "111" is invalid.'
-            ],
-            [
-                'shouldNotWork03' => 'withDeletedRecord',
-                'endPoint' => '/Api/V8/module/Accounts/{id}',
-                'detail' => 'Accounts module with id {id} is not found'
-            ],
-        ];
     }
 }

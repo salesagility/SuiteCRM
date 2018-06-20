@@ -25,11 +25,19 @@ class DeleteRelationshipParams extends BaseParam
     }
 
     /**
-     * @return GetRelationshipDataParams
+     * @return string
      */
-    public function getData()
+    public function getLinkedFieldName()
     {
-        return $this->parameters['data'];
+        return $this->parameters['linkFieldName'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getRelatedBeanId()
+    {
+        return $this->parameters['relatedBeanId'];
     }
 
     /**
@@ -54,17 +62,12 @@ class DeleteRelationshipParams extends BaseParam
         );
 
         $resolver
-            ->setRequired('data')
-            ->setAllowedTypes('data', 'array')
-            ->setAllowedValues('data', $this->validatorFactory->createClosureForIterator([
+            ->setRequired('relatedBeanId')
+            ->setAllowedTypes('relatedBeanId', 'string')
+            ->setAllowedValues('relatedBeanId', $this->validatorFactory->createClosure([
                 new Assert\NotBlank(),
-            ]))
-            ->setNormalizer('data', function (Options $options, $value) {
-                $dataParams = new DeleteRelationshipDataParams($this->validatorFactory, $this->beanManager);
-                $dataParams->configure($value);
-
-                return $dataParams;
-            });
+                new Assert\Uuid(['strict' => false]),
+            ]));
 
         $resolver
             ->setDefined('sourceBean')
@@ -75,5 +78,8 @@ class DeleteRelationshipParams extends BaseParam
                 );
             })
             ->setAllowedTypes('sourceBean', \SugarBean::class);
+
+        // dependency on sourceBean field
+        $this->setOptions($resolver, [ParamOption\LinkFieldName::class]);
     }
 }

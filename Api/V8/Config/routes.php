@@ -81,7 +81,7 @@ $app->group('', function () use ($app) {
          */
         $app
             ->post(
-                '/module/{moduleName}/{id}/relationships/{linkFieldName}',
+                '/module/{moduleName}/{id}/relationships',
                 'Api\V8\Controller\RelationshipController:createRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(CreateRelationshipParams::class));
@@ -91,7 +91,7 @@ $app->group('', function () use ($app) {
          */
         $app
             ->delete(
-                '/module/{moduleName}/{id}/relationships/{linkFieldName}/{relationshipId}',
+                '/module/{moduleName}/{id}/relationships/{linkFieldName}/{relatedBeanId}',
                 'Api\V8\Controller\RelationshipController:deleteRelationship'
             )
             ->add($paramsMiddlewareFactory->bind(DeleteRelationShipParams::class));

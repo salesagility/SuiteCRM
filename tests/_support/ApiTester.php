@@ -230,7 +230,7 @@ class ApiTester extends \Codeception\Actor
      */
     public function login()
     {
-        $this->sendPOST($this->getInstanceURL() . 'Api/access_token', [
+        $this->sendPOST($this->getInstanceURL() . '/Api/access_token', [
             'username' => $this->getAdminUser(),
             'password' => $this->getAdminPassword(),
             'grant_type' => 'password',
@@ -255,7 +255,7 @@ class ApiTester extends \Codeception\Actor
     public function createAccount()
     {
         $id = create_guid();
-        $name = 'testName';
+        $name = 'testAccount';
         $accountType = 'Customer';
         $db = DBManagerFactory::getInstance();
 
@@ -274,12 +274,33 @@ class ApiTester extends \Codeception\Actor
     /**
      * This is also temporary till we fix this.
      *
+     * @return string
+     */
+    public function createContact()
+    {
+        $id = create_guid();
+        $db = DBManagerFactory::getInstance();
+
+        $query = sprintf(
+            "INSERT INTO contacts (id, date_entered) VALUES (%s,%s)",
+            $db->quoted($id),
+            $db->quoted(date('Y-m-d H:i:s'))
+        );
+        $db->query($query);
+
+        return $id;
+    }
+
+    /**
+     * This is also temporary till we fix this.
+     *
+     * @param string $tableName
      * @param string $id
      */
-    public function deleteAccount($id)
+    public function deleteBean($tableName, $id)
     {
         $db = DBManagerFactory::getInstance();
-        $query = sprintf("DELETE FROM accounts WHERE id = %s", $db->quoted($id));
+        $query = sprintf("DELETE FROM %s WHERE id = %s", $tableName, $db->quoted($id));
         $db->query($query);
     }
 }

@@ -84,7 +84,6 @@ class CreateRelationshipParams extends BaseParam
             })
             ->setAllowedTypes('sourceBean', \SugarBean::class);
 
-
         $resolver
             ->setDefined('relatedBean')
             ->setDefault('relatedBean', function (Options $options) {
