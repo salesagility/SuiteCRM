@@ -1,4 +1,4 @@
-<?php
+{*
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,56 +34,11 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-
-/**
- * @global array $app_strings
- * @param \Email $focus
- * @param string $field
- * @param mixed $value
- * @param string $view
- * @return string
- */
-function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
-{
-    global $app_strings;
-    $log = LoggerManager::getLogger();
-
-    $addressField = 'from_name';
-
-    if (empty($focus->id)) {
-        $log = LoggerManager::getLogger();
-        $log->warn('Email ID is Empty');
-        return '';
-    }
-    
-    if (
-        filter_var($focus->from_name, FILTER_VALIDATE_EMAIL) &&
-        !filter_var($focus->from_addr, FILTER_VALIDATE_EMAIL)
-    ) {
-        $log->error('Email address is stored in "from_name" field instead of "from_addr"');
-    }
-
-    if (empty($focus->from_name)) {
-        $addressField = 'from_addr';
-    }
-
-    $emailAddress = $focus->getEmailAddressFromEmailField($addressField);
-    $tick = '';
-    
-    if($emailAddress instanceof SugarEmailAddress) {
-        $tick = $emailAddress->getOptInStatusTickHTML();
-    }
-    else {
-        $log->warn('Trying to get an email field of non-Basic object');
-    }
-    
-    return $tick;
-}
+*}
+<span class="sugar_field" id="{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}">{{sugarvar key='value'}}</span>
+{{if !empty($displayParams.enableConnectors)}}
+{{sugarvar_connector view='DetailView'}}
+{{/if}}
