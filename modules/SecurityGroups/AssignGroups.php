@@ -151,6 +151,9 @@ function mass_assign($event, $arguments)
 				}
 				$group_options =  get_select_options_with_id($options, "");
 
+				$export_where = !empty($_SESSION['export_where']) ? $_SESSION['export_where'] : '';
+				$export_where_md5 = md5($export_where);
+
 				$mass_assign = <<<EOQ
 
 <script type="text/javascript" language="javascript">
@@ -241,6 +244,7 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 			<input type='hidden' name='module' value='SecurityGroups' />
 			<input type='hidden' name='return_action' value='${action}' />
 			<input type='hidden' name='return_module' value='${module}' />
+			<input type="hidden" name="export_where_md5" value="{$export_where_md5}">
 			<textarea style='display: none' name='uid'></textarea>
 
 
