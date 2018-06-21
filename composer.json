@@ -8,11 +8,11 @@
   "config": {
     "vendor-dir": "vendor",
     "platform": {
-      "php": "5.5.9"
+      "php": "5.6.0"
     }
   },
   "require": {
-    "php": ">=5.5.9",
+    "php": ">=5.6.0",
     "ext-json": "*",
     "ext-gd": "*",
     "ext-curl": "*",
@@ -26,7 +26,8 @@
     "justinrainbow/json-schema": "^5.2",
     "onelogin/php-saml": "3.0.0.x-dev as 3.0.0",
     "google/recaptcha": "^1.1",
-    "ezyang/htmlpurifier": "^4.10"
+    "ezyang/htmlpurifier": "^4.10",
+    "elasticsearch/elasticsearch": "^5.3"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",
