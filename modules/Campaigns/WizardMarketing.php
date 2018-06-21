@@ -233,6 +233,10 @@ $IEStoredOptions = get_campaign_mailboxes_with_stored_options();
 $IEStoredOptionsJSON = (!empty($IEStoredOptions)) ? $json->encode($IEStoredOptions, false) : 'new Object()';
 $ss->assign("IEStoredOptions", $IEStoredOptionsJSON);
 
+$OEStoredOptions = get_campaign_mailboxes_with_stored_options_outbound();
+$OEStoredOptionsJSON = (!empty($OEStoredOptions)) ? $json->encode($OEStoredOptions, false) : 'new Object()';
+$ss->assign("OEStoredOptions", $OEStoredOptionsJSON);
+
 //add empty options.
 $emails['']='nobody@example.com';
 $mailboxes['']='';

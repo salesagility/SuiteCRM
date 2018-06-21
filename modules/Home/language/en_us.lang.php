@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -77,7 +77,7 @@ $mod_strings = array(
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_NEW_BUG' => 'Report Bug',
     'LBL_ADD_BUSINESSCARD' => 'Enter Business Card',
-    'ERR_ONE_CHAR' => 'Please enter at least one letter or number for your search ...',
+    'ERR_ONE_CHAR' => 'Please enter at least one letter or number for your search...',
     'LBL_OPEN_TASKS' => 'My Open Tasks',
     'LBL_SEARCH_RESULTS_IN' => 'in',
     'LNK_NEW_SEND_EMAIL' => 'Compose Email',
@@ -130,10 +130,10 @@ $mod_strings = array(
         'Tools' => 'Tools',
         'Miscellaneous' => 'Miscellaneous'),
     'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your administrator has set. Please remove a SuiteCRM Dashlet to add a new one.',
-    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet...',
     'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
     'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet...',
     'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
     'LBL_DASHLET_CONFIGURE_GENERAL' => 'General',
     'LBL_DASHLET_CONFIGURE_FILTERS' => 'Filters',

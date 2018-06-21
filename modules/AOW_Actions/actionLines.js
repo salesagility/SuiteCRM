@@ -1,24 +1,40 @@
 /**
- * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * @author SalesAgility <info@salesagility.com>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -29,7 +45,7 @@ document.getElementById('flow_module').addEventListener("change", showActions, f
 
 function showActions(){
 
-    flow_module = document.getElementById('flow_module').value;
+    var flow_module = document.getElementById('flow_module').value;
 
     if(flow_module != ''){
         document.getElementById('btn_ActionLine').disabled = '';
@@ -74,7 +90,7 @@ function insertActionLine(){
     table.className = "action-table";
     a.appendChild(table);
 
-    tablebody = document.createElement("tbody");
+    var tablebody = document.createElement("tbody");
     tablebody.id = "aow_actions_body" + actln;
     table.appendChild(tablebody);
 
@@ -136,7 +152,7 @@ function getView(ln, id){
         success: function(result) {
             document.getElementById('action_parameter' + ln).innerHTML = result.responseText;
             if(document.getElementById('aow_script'+ln) != null){
-                eval(document.getElementById('aow_script'+ln).innerHTML);
+              SUGAR.util.evalScript(result.responseText);
             }
         }
     };
@@ -144,5 +160,5 @@ function getView(ln, id){
     var action = document.getElementById('aow_actions_action' + ln).value;
     var module = document.getElementById('flow_module').value;
 
-    var connectionObject = YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getAction&id="+id+"&aow_action="+action+"&line="+ln+"&aow_module="+module,callback);
+    YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getAction&id="+id+"&aow_action="+action+"&line="+ln+"&aow_module="+module,callback);
 }

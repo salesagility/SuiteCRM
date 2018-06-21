@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -66,6 +66,8 @@ RedirectMatch 403 {$ignoreCase}/+files\.md5\$
     Options +SymLinksIfOwnerMatch
     RewriteEngine On
     RewriteBase {$basePath}
+    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&modulename=app_strings&lang=$1 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&modulename=$1&lang=$2 [L,QSA]
     RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
     RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
 </IfModule>
@@ -81,7 +83,7 @@ if (file_exists($htaccess_file)) {
             $skip = true;
         }
         if (!$skip) {
-            $contents .= $line;
+            $oldcontents .= $line;
         }
         if (preg_match('/\s*#\s*END\s*SUGARCRM\s*RESTRICTIONS/i', $line)) {
             $skip = false;
@@ -92,13 +94,17 @@ if (substr($contents, -1) != "\n") {
     $restrict_str = "\n" . $restrict_str;
 }
 $status = file_put_contents($htaccess_file, $contents . $restrict_str);
+
 if (!$status) {
     echo '<p>' . $mod_strings['LBL_HT_NO_WRITE'] . "<span class=stop>{$htaccess_file}</span></p>\n";
     echo '<p>' . $mod_strings['LBL_HT_NO_WRITE_2'] . "</p>\n";
     echo "{$redirect_str}\n";
 }
 
+// new content should be prepended to the file
+file_put_contents($htaccess_file, $oldcontents, FILE_APPEND);
 
+// cn: bug 9365 - security for filesystem
 $uploadDir = '';
 $uploadHta = '';
 
@@ -114,10 +120,10 @@ $denyAll = <<<eoq
 eoq;
 
 if (file_exists($uploadHta) && filesize($uploadHta)) {
-    // File exists, parse to make sure it is current
+    // file exists, parse to make sure it is current
     if (is_writable($uploadHta)) {
         $oldHtaccess = file_get_contents($uploadHta);
-        // Use a different regex boundary b/c .htaccess uses the typicals
+        // use a different regex boundary b/c .htaccess uses the typicals
         if (strstr($oldHtaccess, $denyAll) === false) {
             $oldHtaccess .= "\n";
             $oldHtaccess .= $denyAll;
@@ -129,8 +135,13 @@ if (file_exists($uploadHta) && filesize($uploadHta)) {
         $htaccess_failed = true;
     }
 } else {
-    // No .htaccess yet, create a fill
+    // no .htaccess yet, create a fill
     if (!file_put_contents($uploadHta, $denyAll)) {
         $htaccess_failed = true;
     }
+}
+
+if (isset($_REQUEST['action']) && $_REQUEST['action'] === 'UpgradeAccess') {
+    // only display message in the repair tool and not during the upgrade process
+    echo "\n" . $mod_strings['LBL_HT_DONE'] . "<br />\n";
 }

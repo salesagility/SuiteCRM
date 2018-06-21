@@ -58,7 +58,7 @@ function show_crModuleFields(ln){
             }
         };
 
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&aow_module="+cr_module[ln],callback);
+        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&override[]=email1&override[]=email2&aow_module="+cr_module[ln],callback);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getModuleRelationships&aow_module="+cr_module[ln],callback2);
 
     }
@@ -312,7 +312,7 @@ function show_mrModuleFields(ln){
         };
 
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getRelatedModule&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback);
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback2);
+        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&view=EditView&action=getModuleFields&override[]=email1&override[]=email2&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback2);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getModuleRelationships&aow_module="+cr_module[ln]+"&rel_field="+rel_module,callback3);
 
     }

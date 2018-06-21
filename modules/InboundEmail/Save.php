@@ -270,7 +270,9 @@ if($_REQUEST['module'] == 'Campaigns'){
 
     $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 
-
+    if (!isset($error)) {
+        $error = '';
+    }
     header("Location: index.php?module=$return_module&action=$return_action&record=$return_id$edit$error");
 }
 

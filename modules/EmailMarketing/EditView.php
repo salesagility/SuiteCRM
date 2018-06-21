@@ -52,9 +52,10 @@ global $current_user;
 // global $cal_codes;
 
 $focus = new EmailMarketing();
-if(isset($_REQUEST['record'])) {
-	SugarApplication::redirect('index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $_REQUEST['parent_id'] . '&campaign_id=' . $_REQUEST['parent_id'] . '&marketing_id=' . $_REQUEST['record'] . '&func=editEmailMarketing');
-	return;
+if (isset($_REQUEST['record']) && $_REQUEST['record'] && isset($_REQUEST['parent_id']) && $_REQUEST['parent_id']) {
+    SugarApplication::redirect('index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $_REQUEST['parent_id'] . '&campaign_id=' . $_REQUEST['parent_id'] . '&marketing_id=' . $_REQUEST['record'] . '&func=editEmailMarketing');
+    return;
+} else if (isset($_REQUEST['record']) && $_REQUEST['record']) {
     $focus->retrieve($_REQUEST['record']);
 }
 

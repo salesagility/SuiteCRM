@@ -615,8 +615,17 @@ class SugarBean
      *
      * Internal Function, do not override.
      */
-    public static function get_union_related_list($parentbean, $order_by = "", $sort_order = '', $where = "",
-                                                  $row_offset = 0, $limit = -1, $max = -1, $show_deleted = 0, $subpanel_def)
+    public static function get_union_related_list(
+        $parentbean,
+        $order_by = '',
+        $sort_order = '',
+        $where = '',
+        $row_offset = 0,
+        $limit = -1,
+        $max = -1,
+        $show_deleted = 0,
+        $subpanel_def = null
+    )
     {
         $secondary_queries = array();
         global $layout_edit_mode;
@@ -907,8 +916,16 @@ class SugarBean
      * @param array $secondary_queries
      * @return array $fetched data.
      */
-    public function process_union_list_query($parent_bean, $query,
-                                             $row_offset, $limit = -1, $max_per_page = -1, $where = '', $subpanel_def, $query_row_count = '', $secondary_queries = array())
+    public function process_union_list_query(
+        $parent_bean,
+        $query,
+        $row_offset,
+        $limit = -1,
+        $max_per_page = -1,
+        $where = '',
+        $subpanel_def = null,
+        $query_row_count = '',
+        $secondary_queries = array())
     {
         $db = DBManagerFactory::getInstance('listviews');
         /**
@@ -1554,7 +1571,7 @@ class SugarBean
                 return true;
             }
         }
-        $GLOBALS['log']->debug("SugarBean.load_relationships, Error Loading relationship (" . $rel_name . ")");
+        $GLOBALS['log']->debug("SugarBean.load_relationships, failed Loading relationship (" . $rel_name . ")");
         return false;
     }
 
@@ -1902,7 +1919,15 @@ class SugarBean
             foreach ($this->email_addresses_non_primary as $mail) {
                 $this->emailAddress->addAddress($mail);
             }
-            $this->emailAddress->save($this->id, $this->module_dir);
+            $this->emailAddress->saveEmail(
+                $this->id,
+                $this->module_dir,
+                '',
+                '',
+                '',
+                '',
+                '',
+                $this->in_workflow);
         }
 
         if (isset($this->custom_fields)) {
@@ -2741,7 +2766,7 @@ class SugarBean
         if (in_array('set_notification_body', get_class_methods($this))) {
             $xtpl = $this->set_notification_body($xtpl, $this);
         } else {
-            $xtpl->assign("OBJECT", translate('LBL_MODULE_NAME'));
+            $xtpl->assign("OBJECT", translate('LBL_MODULE_NAME',$this->module_name));
             $template_name = "Default";
         }
         if (!empty($_SESSION["special_notification"]) && $_SESSION["special_notification"]) {
@@ -3866,7 +3891,7 @@ class SugarBean
 
         global $module, $action;
         //Just to get optimistic locking working for this release
-        if ($this->optimistic_lock && $module == $this->module_dir && $action == 'EditView') {
+        if ($this->optimistic_lock && $module == $this->module_dir && $action == 'EditView' && isset($_REQUEST["record"]) && $id == $_REQUEST['record']) {
             $_SESSION['o_lock_id'] = $id;
             $_SESSION['o_lock_dm'] = $this->date_modified;
             $_SESSION['o_lock_on'] = $this->object_name;
@@ -3886,6 +3911,8 @@ class SugarBean
             $field_name = $rel_field_name['name'];
             if (!empty($this->$field_name)) {
                 $this->fetched_rel_row[$rel_field_name['name']] = $this->$field_name;
+            } else {
+                $this->fetched_rel_row[$rel_field_name['name']] = '';
             }
         }
         //make a copy of fields in the relationship_fields array. These field values will be used to
@@ -4073,18 +4100,19 @@ class SugarBean
                     if ($type == 'date') {
                         if ($this->$field == '0000-00-00' || empty($this->$field)) {
                             $this->$field = '';
-                        } elseif (!empty($this->field_name_map[$field]['rel_field'])) {
-                            $rel_field = $this->field_name_map[$field]['rel_field'];
-
-                            if (!empty($this->$rel_field) && empty($disable_date_format)) {
-                                $merge_time = $timedate->merge_date_time($this->$field, $this->$rel_field);
-                                $this->$field = $timedate->to_display_date($merge_time);
-                                $this->$rel_field = $timedate->to_display_time($merge_time);
+                            continue;
+                        }
+                        if (empty($disable_date_format)) {
+                            if (!empty($this->field_name_map[$field]['rel_field'])) {
+                                $rel_field = $this->field_name_map[$field]['rel_field'];
+                                if (!empty($this->$rel_field)) {
+                                    $merge_time = $timedate->merge_date_time($this->$field, $this->$rel_field);
+                                    $this->$field = $timedate->to_display_date($merge_time);
+                                    $this->$rel_field = $timedate->to_display_time($merge_time);
+                                    continue;
+                                }
                             }
-                        } else {
-                            if (empty($disable_date_format)) {
-                                $this->$field = $timedate->to_display_date($this->$field, false);
-                            }
+                            $this->$field = $timedate->to_display_date($this->$field, false);
                         }
                     } elseif ($type == 'datetime' || $type == 'datetimecombo') {
                         if ($this->$field == '0000-00-00 00:00:00' || empty($this->$field)) {

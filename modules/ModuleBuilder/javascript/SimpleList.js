@@ -290,10 +290,11 @@ if(typeof(SimpleList) == 'undefined'){
         var editSpan = document.getElementById('span_edit_'+id);
         var textbox = document.getElementById('input_'+id);
 
+        var value = escape(val);
         dispSpan.style.display = 'inline';
         editSpan.style.display = 'none';
-        dispSpan.innerHTML = "["+val+"]";
-        document.getElementById('value_'+ id).value = val;
+        dispSpan.innerHTML = "["+value+"]";
+        document.getElementById('value_'+ id).value = value;
         SimpleList.lastEdit = null; // Bug 14662 - clear the last edit point behind us
     },
     undoDeleteDropDown : function(transaction){

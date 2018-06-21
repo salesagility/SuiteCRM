@@ -1,8 +1,8 @@
 /*
- Copyright (c) 2010, Yahoo! Inc. All rights reserved.
- Code licensed under the BSD License:
- http://developer.yahoo.com/yui/license.html
- version: 3.3.0
- build: 3167
- */
-YUI.add('event-hover',function(Y){var isFunction=Y.Lang.isFunction,noop=function(){},conf={processArgs:function(args){var i=isFunction(args[2])?2:3;return(isFunction(args[i]))?args.splice(i,1)[0]:noop;},on:function(node,sub,notifier,filter){sub._detach=node[(filter)?"delegate":"on"]({mouseenter:Y.bind(notifier.fire,notifier),mouseleave:sub._extra},filter);},detach:function(node,sub,notifier){sub._detacher.detach();}};conf.delegate=conf.on;conf.detachDelegate=conf.detach;Y.Event.define("hover",conf);},'3.3.0',{requires:['event-mouseenter']});
+Copyright (c) 2010, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.com/yui/license.html
+version: 3.3.0
+build: 3167
+*/
+YUI.add("event-hover",function(d){var c=d.Lang.isFunction,b=function(){},a={processArgs:function(e){var f=c(e[2])?2:3;return(c(e[f]))?e.splice(f,1)[0]:b;},on:function(h,f,g,e){f._detach=h[(e)?"delegate":"on"]({mouseenter:d.bind(g.fire,g),mouseleave:f._extra},e);},detach:function(g,e,f){e._detacher.detach();}};a.delegate=a.on;a.detachDelegate=a.detach;d.Event.define("hover",a);},"3.3.0",{requires:["event-mouseenter"]});

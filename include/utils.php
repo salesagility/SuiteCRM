@@ -38,6 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once 'php_version.php';
 require_once 'include/SugarObjects/SugarConfig.php';
 require_once 'include/utils/security_utils.php';
@@ -1682,8 +1686,7 @@ function sugar_die($error_message, $exit_code = 1)
 {
     global $focus;
     sugar_cleanup();
-    //echo $error_message;
-    //die($exit_code);
+    echo $error_message;
     throw new \Exception($error_message, $exit_code);
 }
 
@@ -1749,40 +1752,42 @@ EOQ;
 }
 
 /**
- * Very cool algorithm for sorting multi-dimensional arrays.  Found at http://us2.php.net/manual/en/function.array-multisort.php
- * Syntax: $new_array = array_csort($array [, 'col1' [, SORT_FLAG [, SORT_FLAG]]]...);
- * Explanation: $array is the array you want to sort, 'col1' is the name of the column
- * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
- * you can repeat the 'col',FLAG,FLAG, as often you want, the highest prioritiy is given to
- * the first - so the array is sorted by the last given column first, then the one before ...
+ * Sort Multi Dimensional Array by Column
+ *
+ * @param mixed ... &$array1 [, mixed $array1_sort_order = SORT_ASC [, mixed $array1_sort_flags = SORT_REGULAR [, mixed $... ]]]
+ * @see http://php.net/manual/en/function.array-multisort.php
+ * @return array
+ *
  * Example: $array = array_csort($array,'town','age',SORT_DESC,'name');
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
+ *
+ * $array is the array you want to sort, 'col1' is the name of the column
+ * you want to sort, SORT_FLAGS are : SORT_ASC, SORT_DESC, SORT_REGULAR, SORT_NUMERIC, SORT_STRING
+ * you can repeat the 'col',FLAG,FLAG, as often you want, the highest priority is given to
+ * the first - so the array is sorted by the last given column first, then the one before ...
+ *
  */
 function array_csort()
 {
     $args = func_get_args();
-    $marray = array_shift($args);
-    $i = 0;
+    $argsShifted = array_shift($args);
+    $arrayMultiSortParameters = array();
+    $sorting = array();
 
-    $msortline = 'return(array_multisort(';
-    foreach ($args as $arg) {
-        ++$i;
-        if (is_string($arg)) {
-            foreach ($marray as $row) {
-                $sortarr[$i][] = $row[$arg];
+    for ($i = 0, $size = count($args); $i < $size; $i++) {
+        if (is_string($args[$i])) {
+            foreach ($argsShifted as $row) {
+                $sorting[$i][] = $row[$args[$i]];
             }
         } else {
-            $sortarr[$i] = $arg;
+            $sorting[$i] = $args[$i];
         }
-        $msortline .= '$sortarr['.$i.'],';
+        $arrayMultiSortParameters[] = $sorting[$i];
     }
-    $msortline .= '$marray));';
 
-    eval($msortline);
+    $arrayMultiSortParameters[] = $argsShifted;
+    call_user_func_array('array_multisort', $arrayMultiSortParameters);
 
-    return $marray;
+    return end($arrayMultiSortParameters);
 }
 
 /**
@@ -2558,7 +2563,14 @@ function values_to_keys($array)
     return $new_array;
 }
 
-function clone_relationship(&$db, $tables = array(), $from_column, $from_id, $to_id)
+/**
+ * @param $db
+ * @param array $tables
+ * @param $from_column
+ * @param $from_id
+ * @param $to_id
+ */
+function clone_relationship(&$db, $tables = array(), $from_column = null, $from_id = null, $to_id = null)
 {
     foreach ($tables as $table) {
         if ($table == 'emails_beans') {
@@ -2732,8 +2744,23 @@ function number_empty($value)
     return empty($value) && $value != '0';
 }
 
-function get_bean_select_array($add_blank = true, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
-{
+/**
+ * @param bool $add_blank
+ * @param $bean_name
+ * @param $display_columns
+ * @param string $where
+ * @param string $order_by
+ * @param bool $blank_is_none
+ * @return array
+ */
+function get_bean_select_array(
+    $add_blank = true,
+    $bean_name = null,
+    $display_columns = null,
+    $where = '',
+    $order_by = '',
+    $blank_is_none = false
+) {
     global $beanFiles;
     require_once $beanFiles[$bean_name];
     $focus = new $bean_name();
@@ -3146,7 +3173,6 @@ function pre_login_check()
 							document.getElementById("cant_login").value=1;
 							document.getElementById("login_button").disabled = true;
 							document.getElementById("user_name").disabled = true;
-							//document.getElementById("user_password").disabled = true;
 						}
 						</script>';
         }
@@ -3463,6 +3489,7 @@ function return_bytes($val)
 {
     $val = trim($val);
     $last = strtolower($val{strlen($val) - 1});
+    $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
         // The 'G' modifier is available since PHP 5.1.0
@@ -3693,30 +3720,13 @@ function search_filter_rel_info(&$focus, $tar_rel_module, $relationship_name)
     //end function search_filter_rel_info
 }
 
+/**
+ * @param $module_name
+ * @return mixed
+ */
 function get_module_info($module_name)
 {
-    global $beanList;
-    global $dictionary;
-
-    //Get dictionary and focus data for module
-    $vardef_name = $beanList[$module_name];
-
-    if ($vardef_name == 'aCase') {
-        $class_name = 'Case';
-    } else {
-        $class_name = $vardef_name;
-    }
-
-    if (!file_exists('modules/'.$module_name.'/'.$class_name.'.php')) {
-        return;
-    }
-
-    include_once 'modules/'.$module_name.'/'.$class_name.'.php';
-
-    $module_bean = new $vardef_name();
-
-    return $module_bean;
-    //end function get_module_table
+    return BeanFactory::getBean($module_name);
 }
 
 /**
@@ -3910,7 +3920,7 @@ function getJSONobj()
     static $json = null;
     if (!isset($json)) {
         require_once 'include/JSON.php';
-        $json = new JSON(JSON_LOOSE_TYPE);
+        $json = new JSON();
     }
 
     return $json;
@@ -4119,8 +4129,21 @@ function getTrackerSubstring($name)
     return $chopped;
 }
 
-function generate_search_where($field_list = array(), $values = array(), &$bean, $add_custom_fields = false, $module = '')
-{
+/**
+ * @param array $field_list
+ * @param array $values
+ * @param array $bean
+ * @param bool $add_custom_fields
+ * @param string $module
+ * @return array
+ */
+function generate_search_where(
+    $field_list = array(),
+    $values = array(),
+    &$bean = null,
+    $add_custom_fields = false,
+    $module = ''
+) {
     $where_clauses = array();
     $like_char = '%';
     $table_name = $bean->object_name;
@@ -5398,4 +5421,14 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
     } else {
         return strrpos($haystack, $needle, $offset);
     }
+}
+
+/**
+ * @param string $id
+ * @return bool
+ * @todo add to a separated common validator class
+ */
+function isValidId($id) {
+    $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
+    return $valid;
 }

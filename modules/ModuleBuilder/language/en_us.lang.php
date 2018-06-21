@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 if (!defined('sugarEntry') || !sugarEntry) {
@@ -229,7 +229,7 @@ $mod_strings = array(
         ),
         'relationshipsHelp' => array(
             'default' => 'The <b>Relationships</b> that have been created between the module and other modules appear here.<br><br>The relationship <b>Name</b> is the system-generated name for the relationship.<br><br>The <b>Primary Module</b> is the module that owns the relationships. The relationship properties are stored in the database tables belonging to the primary module.<br><br>The <b>Type</b> is the type of relationship exists between the Primary module and the <b>Related Module</b>.<br><br>Click a column title to sort by the column.<br><br>Click a row in the relationship table to view and edit the properties associated with the relationship.<br><br>Click <b>Add Relationship</b> to create a new relationship.',
-            'addrelbtn' => 'mouse over help for add relationship..',
+            'addrelbtn' => 'mouse over help for add relationship...',
             'addRelationship' => '<b>Relationships</b> can be created between the module and another custom module or a deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
         ),
         'labelsHelp' => array(
@@ -302,7 +302,7 @@ $mod_strings = array(
             'description' => 'The <b>Description</b> of the package will be displayed in Module Loader after the package is uploaded for installation in Studio.',
         ),
         'studioWizard' => array(
-            'mainHelp' => 'Welcome to the <b>Developer Tools</b1> area. <br/><br/>Use the tools within this area to create and manage standard and custom modules and fields.',
+            'mainHelp' => 'Welcome to the <b>Developer Tools</b> area. <br/><br/>Use the tools within this area to create and manage standard and custom modules and fields.',
             'studioBtn' => 'Use <b>Studio</b> to customize installed modules by changing the field arrangement, selecting what fields are available and creating custom data fields.',
             'mbBtn' => 'Use <b>Module Builder</b> to create new modules.',
             'appBtn' => 'Use Application mode to customize various properties of the program, such as how many TPS reports are displayed on the homepage',
@@ -314,7 +314,7 @@ $mod_strings = array(
             'labelsBtn' => 'Click <b>Save</b> to save your custom labels.',
             'layoutsBtn' => 'Customize the <b>Layouts</b> of the Edit, Detail, List and search views.',
             'subpanelBtn' => 'Edit what information is shown in this modules subpanels.',
-            'layoutsHelp' => 'Select a <b>Layout to edit</b>.<br/<br/>To change the layout that contains data fields for entering data, click <b>Edit View</b>.<br/><br/>To change the layout that displays the data entered into the fields in the Edit View, click <b>Detail View</b>.<br/><br/>To change the columns which appear in the default list, click <b>List View</b>.<br/><br/>To change the Basic and Advanced search form layouts, click <b>Search</b>.',
+            'layoutsHelp' => 'Select a <b>Layout to edit</b>.<br/><br/>To change the layout that contains data fields for entering data, click <b>Edit View</b>.<br/><br/>To change the layout that displays the data entered into the fields in the Edit View, click <b>Detail View</b>.<br/><br/>To change the columns which appear in the default list, click <b>List View</b>.<br/><br/>To change the Basic and Advanced search form layouts, click <b>Search</b>.',
             'subpanelHelp' => 'Select a <b>Subpanel</b> to edit.',
             'searchHelp' => 'Select a <b>Search</b> layout to edit.',
             'newPackage' => 'Click <b>New Package</b> to create a new package.',
@@ -359,13 +359,13 @@ $mod_strings = array(
     'LBL_DASHLET' => 'SuiteCRM Dashlet',
     'LBL_DASHLETLISTVIEW' => 'SuiteCRM Dashlet ListView',
     'LBL_DASHLETSEARCH' => 'SuiteCRM Dashlet Search',
-    'LBL_POPUP' => 'PopupView',
+    'LBL_POPUP' => 'Popup View',
     'LBL_POPUPLIST' => 'Popup ListView',
     'LBL_POPUPLISTVIEW' => 'Popup ListView',
     'LBL_POPUPSEARCH' => 'Popup Search',
     'LBL_DASHLETSEARCHVIEW' => 'SuiteCRM Dashlet Search',
     'LBL_DISPLAY_HTML' => 'Display HTML Code',
-    'LBL_DETAILVIEW' => 'DetailView',
+    'LBL_DETAILVIEW' => 'Detail View',
     'LBL_DROP_HERE' => '[Drop Here]',
     'LBL_EDIT' => 'Edit',
     'LBL_EDIT_LAYOUT' => 'Edit Layout',
@@ -374,7 +374,7 @@ $mod_strings = array(
     'LBL_EDIT_LABELS' => 'Edit Labels',
     'LBL_EDIT_PORTAL' => 'Edit Portal for ',
     'LBL_EDIT_FIELDS' => 'Edit Fields',
-    'LBL_EDITVIEW' => 'EditView',
+    'LBL_EDITVIEW' => 'Edit View',
     'LBL_FILLER' => '(filler)',
     'LBL_FIELDS' => 'Fields',
     'LBL_FAILED_TO_SAVE' => 'Failed To Save',
@@ -382,14 +382,14 @@ $mod_strings = array(
     'LBL_HOMEPAGE_PREFIX' => 'My',
     'LBL_LAYOUT_PREVIEW' => 'Layout Preview',
     'LBL_LAYOUTS' => 'Layouts',
-    'LBL_LISTVIEW' => 'ListView',
+    'LBL_LISTVIEW' => 'List View',
     'LBL_MODULES' => 'Modules',
     'LBL_MODULE_TITLE' => 'Studio',
     'LBL_NEW_PACKAGE' => 'New Package',
     'LBL_NEW_PANEL' => 'New Panel',
     'LBL_NEW_ROW' => 'New Row',
     'LBL_PACKAGE_DELETED' => 'Package Deleted',
-    'LBL_PUBLISHING' => 'Publishing ...',
+    'LBL_PUBLISHING' => 'Publishing...',
     'LBL_PUBLISHED' => 'Published',
     'LBL_SELECT_FILE' => 'Select File',
     'LBL_SAVE_LAYOUT' => 'Save Layout',
@@ -406,7 +406,7 @@ $mod_strings = array(
     'LBL_TOOLBOX' => 'Toolbox',
     'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
     'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
-    'LBL_QUICKCREATE' => 'QuickCreate',
+    'LBL_QUICKCREATE' => 'Quick Create',
     'LBL_EDIT_DROPDOWNS' => 'Edit a Global Dropdown',
     'LBL_ADD_DROPDOWN' => 'Add a new Global Dropdown',
     'LBL_BLANK' => '-blank-',
@@ -425,7 +425,7 @@ $mod_strings = array(
     'LBL_DROPDOWN_ITEMS' => 'List Items',
     'LBL_DROPDOWN_ITEM_NAME' => 'Item Name',
     'LBL_DROPDOWN_ITEM_LABEL' => 'Display Label',
-    'LBL_SYNC_TO_DETAILVIEW' => 'Sync to DetailView',
+    'LBL_SYNC_TO_DETAILVIEW' => 'Sync to Detail View',
     'LBL_SYNC_TO_DETAILVIEW_HELP' => 'Select this option to sync this EditView layout to the corresponding DetailView layout. Fields and field placement in the EditView<br>will be sync\'d and saved to the DetailView automatically upon clicking Save or Save & Deploy in the EditView. <br>Layout changes will not be able to be made in the DetailView.',
     'LBL_SYNC_TO_DETAILVIEW_NOTICE' => 'This DetailView is sync\'d with the corresponding EditView.<br> Fields and field placement in this DetailView reflect the fields and field placement in the EditView.<br> Changes to the DetailView cannot be saved or deployed within this page. Make changes or un-sync the layouts in the EditView. ',
     'LBL_COPY_FROM_EDITVIEW' => 'Copy from EditView',
@@ -625,6 +625,14 @@ $mod_strings = array(
     'LBL_EC_EXPORTBTN' => 'Export',
     'LBL_MODULE_DEPLOYED' => 'Module has been deployed.',
     'LBL_UNDEFINED' => 'undefined',
+    'LBL_EC_VIEWS' => 'customized view(s)',
+    'LBL_EC_SUGARFEEDS' => 'customized Feeds(s)',
+    'LBL_EC_DASHLETS' => 'customized Dashlets(s)',
+    'LBL_EC_CSS' => 'customized css(s)',
+    'LBL_EC_TPLS' => 'customized tpls(s)',
+    'LBL_EC_IMAGES' => 'customized image(s)',
+    'LBL_EC_JS' => 'customized js(s)',
+    'LBL_EC_QTIP' => 'customized qtip(s)',
 
 //AJAX STATUS
     'LBL_AJAX_FAILED_DATA' => 'Failed to retrieve data',
@@ -637,8 +645,8 @@ $mod_strings = array(
 
     'LBL_AJAX_RESPONSE_TITLE' => 'Result',
     'LBL_AJAX_RESPONSE_MESSAGE' => 'This operation is completed successfully',
-    'LBL_AJAX_LOADING_TITLE' => 'In Progress..',
-    'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading..',
+    'LBL_AJAX_LOADING_TITLE' => 'In Progress...',
+    'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading...',
 
 //JS
     'LBL_JS_REMOVE_PACKAGE' => 'Are you sure you wish to remove this package? This will permanently delete all files associated with this package.',

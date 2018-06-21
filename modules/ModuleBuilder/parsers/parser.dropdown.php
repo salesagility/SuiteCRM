@@ -60,7 +60,9 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 
 		$list_value = str_replace('&quot;&quot;:&quot;&quot;', '&quot;__empty__&quot;:&quot;&quot;', $params['list_value']);
 		//Bug 21362 ENT_QUOTES- convert single quotes to escaped single quotes.
-		$temp = $json->decode(html_entity_decode(rawurldecode($list_value), ENT_QUOTES) );
+		$rawurldecode = rawurldecode($list_value);
+		$htmldecode = html_entity_decode($rawurldecode, ENT_QUOTES);
+		$temp = $json->decode($htmldecode);
 		$dropdown = array () ;
 		// dropdown is received as an array of (name,value) pairs - now extract to name=>value format preserving order
 		// we rely here on PHP to preserve the order of the received name=>value pairs - associative arrays in PHP are ordered
@@ -68,7 +70,9 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
         {
             foreach ( $temp as $item )
             {
-                $dropdown[ SugarCleaner::stripTags(from_html($item [ 0 ]), false) ] = SugarCleaner::stripTags(from_html($item [ 1 ]), false) ;
+                $keytemp = SugarCleaner::stripTags(from_html($item [ 0 ]), false);
+                $valuetemp = SugarCleaner::stripTags(from_html($item [ 1 ]), false);
+            	$dropdown[ $keytemp ] =  $valuetemp;
             }
         }
 		if(array_key_exists($emptyMarker, $dropdown)){

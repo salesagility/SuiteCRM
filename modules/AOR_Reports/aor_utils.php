@@ -70,27 +70,37 @@ function getDisplayForField($modulePath, $field, $reportModule)
     return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
 
-function requestToUserParameters()
+function requestToUserParameters($reportBean = null)
 {
     $params = array();
-    if(isset($_REQUEST['parameter_id']) && $_REQUEST['parameter_id']) {
+    if(!empty($_REQUEST['parameter_id'])) {
+        $dateCount = 0;
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
+
             if ($_REQUEST['parameter_type'][$key] === 'Multi') {
                 $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',', $_REQUEST['parameter_value'][$key]));
             }
-            $params[$parameterId] = array('id' => $parameterId,
+
+            $condition = BeanFactory::getBean('AOR_Conditions', $_REQUEST['parameter_id'][$key]);
+            $value = $_REQUEST['parameter_value'][$key];
+            if ($reportBean && $condition) {
+                $value = fixUpFormatting($reportBean->report_module, $condition->field, $value);
+            }
+
+            $params[$parameterId] = array(
+                'id' => $parameterId,
                 'operator' => $_REQUEST['parameter_operator'][$key],
                 'type' => $_REQUEST['parameter_type'][$key],
-                'value' => $_REQUEST['parameter_value'][$key],
+                'value' => $value,
             );
 
             // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
             if ($_REQUEST['parameter_type'][$key] === 'Date') {
                 $values = array();
-                $values[] = $_REQUEST['parameter_value'][0];
-                $values[] = $_REQUEST['parameter_value'][1];;
-                $values[] = $_REQUEST['parameter_value'][2];;
-                $values[] = $_REQUEST['parameter_value'][3];;
+                $values[] = $_REQUEST['parameter_date_value'][$dateCount];
+                $values[] = $_REQUEST['parameter_date_sign'][$dateCount];
+                $values[] = $_REQUEST['parameter_date_number'][$dateCount];
+                $values[] = $_REQUEST['parameter_date_time'][$dateCount];
 
                 $params[$parameterId] = array(
                     'id' => $parameterId,
@@ -98,6 +108,7 @@ function requestToUserParameters()
                     'type' => $_REQUEST['parameter_type'][$key],
                     'value' => $values,
                 );
+                $dateCount++;
             }
         }
     }
@@ -138,6 +149,7 @@ function getConditionsAsParameters($report, $override = array())
         $disp = getDisplayForField($path, $condition->field, $report->report_module);
         $conditions[] = array(
             'id' => $condition->id,
+            'key' => $key,
             'operator' => $condition->operator,
             'operator_display' => $app_list_strings['aor_operator_list'][$condition->operator],
             'value_type' => $condition->value_type,

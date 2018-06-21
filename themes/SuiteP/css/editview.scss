@@ -564,7 +564,7 @@ table.view {
   font-size: 14px;
   font-weight: 700;
   color: $main-font-color;
-  padding: 0 0 0 8px;
+  padding: 0;
   line-height: 48px;
   text-align: left;
   vertical-align: baseline;
@@ -623,7 +623,7 @@ slot {
   text-align: left;
   min-height: 48px;
   vertical-align: baseline;
-  white-space: nowrap;
+  white-space: inherit;
 }
 
 .detail-view-field a {
@@ -751,7 +751,7 @@ option[selected] {
 }
 
 .edit tr td[scope=row] {
-  padding: 0 10px 0 10px;
+  padding: 0 10px 0 0;
   line-height: 40px;
   text-align: left;
   height: 40px;
@@ -3945,7 +3945,7 @@ select#sales_stage_advanced {
   border-radius: 50%;
 }
 
-#user_password {
+#username_password {
   width: 150px;
 }
 
@@ -5435,7 +5435,7 @@ table tr#delegates_search {
 /* popup in studio */
 .masked .yui-simple-dialog {
   // Overridding inline style
-  z-index: 100000!important;
+  z-index: 16000;
 }
 
 /* popup dialog on home page */

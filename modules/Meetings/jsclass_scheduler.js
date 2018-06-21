@@ -1,9 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -14,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -32,9 +33,9 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 SugarClass.inherit("SugarWidgetListView","SugarClass");function SugarWidgetListView(){this.init();}
 SugarWidgetListView.prototype.init=function(){}
 SugarWidgetListView.prototype.load=function(parentNode){this.parentNode=parentNode;this.display();}
@@ -64,7 +65,7 @@ document.createInviteeForm.email1.value=document.schedulerwidget.search_email.va
 SugarWidgetSchedulerSearch.hideCreateForm=function(module){document.getElementById('create-invitee-edit').style.display='none';document.getElementById('create-invitees-buttons').style.display='';document.forms['createInviteeForm'].reset();}
 SugarWidgetSchedulerSearch.resetSearchForm=function(){if(GLOBAL_REGISTRY.scheduler_search_obj&&document.forms[GLOBAL_REGISTRY.scheduler_search_obj.form_id]){document.forms[GLOBAL_REGISTRY.scheduler_search_obj.form_id].reset();}}
 SugarWidgetSchedulerSearch.createInvitee=function(form){if(!(check_form('createInviteeForm'))){return false;}
-document.getElementById('create-invitee-btn').setAttribute('disabled','disabled');document.getElementById('cancel-create-invitee-btn').setAttribute('disabled','disabled');ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var callback={success:function(response){var rObj=eval("("+response.responseText+")");ajaxStatus.hideStatus();if(typeof rObj.noAccess!='undefined'){var alertMsg=GLOBAL_REGISTRY['meeting_strings']['LBL_NO_ACCESS'];alertMsg=alertMsg.replace("\$module",rObj.module);SugarWidgetSchedulerSearch.hideCreateForm();alert(alertMsg);return false;}
+document.getElementById('create-invitee-btn').setAttribute('disabled','disabled');document.getElementById('cancel-create-invitee-btn').setAttribute('disabled','disabled');ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var callback={success:function(response){SUGAR.util.globalEval("e=("+response.responseText+")");var rObj=e;ajaxStatus.hideStatus();if(typeof rObj.noAccess!='undefined'){var alertMsg=GLOBAL_REGISTRY['meeting_strings']['LBL_NO_ACCESS'];alertMsg=alertMsg.replace("\$module",rObj.module);SugarWidgetSchedulerSearch.hideCreateForm();alert(alertMsg);return false;}
 GLOBAL_REGISTRY.focus.users_arr[GLOBAL_REGISTRY.focus.users_arr.length]=rObj;GLOBAL_REGISTRY.scheduler_attendees_obj.display();SugarWidgetSchedulerSearch.hideCreateForm();SugarWidgetSchedulerSearch.resetSearchForm();document.getElementById('create-invitee-btn').removeAttribute('disabled');document.getElementById('cancel-create-invitee-btn').removeAttribute('disabled');}};var fieldList=['id','full_name','email1','phone_work'];var t=[];for(i in fieldList){t.push("fieldList[]="+encodeURIComponent(fieldList[i]));}
 var postData=t.join("&");var url="index.php?module=Calendar&action=CreateInvitee&sugar_body_only=true";YAHOO.util.Connect.setForm(document.forms['createInviteeForm']);YAHOO.util.Connect.asyncRequest('POST',url,callback,postData);}
 SugarClass.inherit("SugarWidgetScheduler","SugarClass");SugarWidgetScheduler.popupControl=null;SugarWidgetScheduler.popupControlDelayTime=600;SugarWidgetScheduler.mouseX=0;SugarWidgetScheduler.mouseY=0;SugarWidgetScheduler.isMouseOverToolTip=false;function SugarWidgetScheduler(){this.init();}
@@ -90,7 +91,7 @@ SugarWidgetScheduler.createDialog=function(elementId,body,caption,width,theme){c
 $dialog.dialog('open');$(".ui-dialog").appendTo("#content");var timeout=function(){setTimeout(function(){if($($dialog).is(":hover")){timeout();}else{$dialog.dialog('close');}},3000)};timeout();return $dialog;}
 SugarWidgetScheduler.getScheduleDetails=function(beans,ids){var elementId='#SugarWidgetSchedulerPopup';var show_buttons=true;var caption='';var body=new Array();var width=300;var theme='';var $dialog=SugarWidgetScheduler.createDialog(elementId,body,caption,width,theme);var getScheduleItems=function(){var deffereds=[];$dialog.html(SUGAR.language.get('app_strings','LBL_LOADING'));body='';jQuery.each(ids,function(index,value){var url='index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean='+beans[index]+'&id='+ids[index]+'&show_buttons=true';deffereds.push($.ajax(url).done(function(){}).fail(function(){}).always(function(){}));});return deffereds;}
 var requests=getScheduleItems();$.when.apply(null,requests).done(function(){var containers=[];if(typeof arguments[0]==="string"){var oldArgs=arguments;arguments=new Array();arguments[0]=oldArgs;}
-$.each(arguments,function(index,value){eval(value[0]);var container=result.body;containers.push(container);});containers.sort(SugarWidgetScheduler.sortByStartdate);containers.sort(SugarWidgetScheduler.sortByType);$dialog.html(containers);});}
+$.each(arguments,function(index,value){SUGAR.util.evalScript('<script>'+value[0]+'</script>');var container=result.body;containers.push(container);});containers.sort(SugarWidgetScheduler.sortByStartdate);containers.sort(SugarWidgetScheduler.sortByType);$dialog.html(containers);});}
 SugarClass.inherit("SugarWidgetSchedulerAttendees","SugarClass");function SugarWidgetSchedulerAttendees(){this.init();}
 SugarWidgetSchedulerAttendees.prototype.init=function(){var form_name;if(typeof document.EditView!='undefined')
 form_name="EditView";else if(typeof document.CalendarEditView!='undefined')
