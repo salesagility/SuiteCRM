@@ -30,7 +30,7 @@ function popup_select(&$bean, $event, $arguments)
 					$bean->$rel_name->add($group_id);
 				}
 			}
-		} else if(!empty($_REQUEST['dup_checked'])) {
+		} elseif(!empty($_REQUEST['dup_checked'])) {
 			//well...ShowDuplicates doesn't pass through request vars unless they are defined in the module vardefs
 			//so we are screwed here...
 			global $current_language;
@@ -40,7 +40,7 @@ function popup_select(&$bean, $event, $arguments)
 		}
 	}
 
-	else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
+	elseif(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
 		&& empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
 		&& isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature' ) { //Bug: 589
 

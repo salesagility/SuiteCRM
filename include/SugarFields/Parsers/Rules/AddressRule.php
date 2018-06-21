@@ -71,11 +71,11 @@ function parsePanels($panels, $view) {
    	  	 	if($this->matches($column, '/_address_(city|state|country|postalcode)$/si')) {
    	  	 	   if($view == 'DetailView' && !is_array($column)) {
    	  	 	   	  $panels[$name][$rowCount][$key] = '';
-   	  	 	   } else if($view == 'DetailView' && $this->matches($column, '/_address_country$/') && is_array($column)) {
+   	  	 	   } elseif($view == 'DetailView' && $this->matches($column, '/_address_country$/') && is_array($column)) {
    	  	 	      $match = $this->getMatch($column, '/(.*?)_address_country$/');
                   $panels[$name][$rowCount][$key]['name'] = $match[1] . '_address_street';
                   $panels[$name][$rowCount][$key]['label'] = 'LBL_' . strtoupper($match[1]) . '_ADDRESS';
-   	  	 	   } else if($view == 'EditView' && $isAddressPanel) {
+   	  	 	   } elseif($view == 'EditView' && $isAddressPanel) {
 
 	              $field = is_array($column) ? $column['name'] : $column;
 	              preg_match('/^(.*?)_address_/si', $field, $matches);
@@ -97,7 +97,7 @@ function parsePanels($panels, $view) {
    	  	 	   	  	 $panels[$name][$rowCount][$key] = '';
    	  	 	   	  }
    	  	 	   }
-   	  	 	} else if($this->matches($column, '/^push_.*?_(shipping|billing)$/si')) {
+   	  	 	} elseif($this->matches($column, '/^push_.*?_(shipping|billing)$/si')) {
    	  	 	   $panels[$name][$rowCount][$key] = '';
    	  	 	}
    	  	 } //foreach

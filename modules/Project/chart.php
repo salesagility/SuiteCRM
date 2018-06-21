@@ -73,7 +73,7 @@ class chart
         if ($chart_type == "monthly") {
             list($time_span,$day_count) = $this->year_week($start_date, $end_date);
         }
-        else if ($chart_type == "quarterly") {
+        elseif ($chart_type == "quarterly") {
             list($time_span,$day_count) = $this->year_quarter($start_date, $end_date);
         }
         else {
@@ -357,7 +357,7 @@ class chart
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
                 }
-                else if ($resource->type == 'project_contacts_1_c') {
+                elseif ($resource->type == 'project_contacts_1_c') {
 
                     $contact_obj = new Contact();
                     $contact_obj->retrieve($resource->id);
@@ -391,7 +391,7 @@ class chart
                             $square =  '<td class="inner_td"><div style="color: #ffffff;" rel="'.$dateq.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
 
                         }
-                        else if ($x > $resource->tasks[$c]['start_day'] && $x <= $resource->tasks[$c]['end_day']) {
+                        elseif ($x > $resource->tasks[$c]['start_day'] && $x <= $resource->tasks[$c]['end_day']) {
                             $dup++;
                             $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
                         }
@@ -408,7 +408,7 @@ class chart
 
         }//end weekly view
 
-        else if ($chart_type == "monthly") {
+        elseif ($chart_type == "monthly") {
 
             echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
             /*foreach ($weeks as $week)
@@ -481,7 +481,7 @@ class chart
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
                 }
-                else if ($resource->type == 'project_contacts_1_c') {
+                elseif ($resource->type == 'project_contacts_1_c') {
                     $contact_obj = new Contact();
                     $contact_obj->retrieve($resource->id);
 
@@ -506,7 +506,7 @@ class chart
                             $square =  '<td class="inner_td"><div style="color: #ffffff;"  rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
 
                         }
-                        else if ($x > floor($resource->tasks[$c]['start_day']/7) && $x <= floor($resource->tasks[$c]['end_day']/7)) {
+                        elseif ($x > floor($resource->tasks[$c]['start_day']/7) && $x <= floor($resource->tasks[$c]['end_day']/7)) {
                             $dup++;
                             $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
                         }
@@ -524,7 +524,7 @@ class chart
         }
         //end monthly view
 
-        else if ($chart_type == "quarterly") {
+        elseif ($chart_type == "quarterly") {
 
             echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_QUARTER'].'</td>';
             foreach ($time_span as $year => $quarters)
@@ -589,7 +589,7 @@ class chart
 
                     echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$user_obj->full_name.'</a></td>';
                 }
-                else if ($resource->type == 'project_contacts_1_c') {
+                elseif ($resource->type == 'project_contacts_1_c') {
 
                     $contact_obj = new Contact();
                     $contact_obj->retrieve($resource->id);
@@ -759,7 +759,7 @@ class chart
         if ($d2 < $d1) {
             return -1;
         }
-        else if ($d2 == $d1) {
+        elseif ($d2 == $d1) {
             return 1;
         }
         // $d2->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
@@ -817,16 +817,16 @@ class chart
         if ($date1->format('l') == 'Sunday' && $date == $now) {
             return 'weekend-today';
         }
-        else if ($date1->format('l') == 'Saturday' && $date == $now) {
+        elseif ($date1->format('l') == 'Saturday' && $date == $now) {
             return 'weekend-today';
         }
-        else if ($date1->format('l') == 'Sunday') {
+        elseif ($date1->format('l') == 'Sunday') {
             return 'weekend';
         }
-        else if ($date1->format('l') == 'Saturday') {
+        elseif ($date1->format('l') == 'Saturday') {
             return 'weekend';
         }
-        else if ($date == $now) {
+        elseif ($date == $now) {
             return 'today';
         }
         else {

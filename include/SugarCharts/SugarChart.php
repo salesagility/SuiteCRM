@@ -231,13 +231,13 @@ class SugarChart {
 		if ($baseval > 0 && $baseval <= 1){
 			$step = 2 * pow(10, $exp-1);
 		}
-		else if ($baseval > 1 && $baseval <= 3){
+		elseif ($baseval > 1 && $baseval <= 3){
 			$step = 5 * pow(10, $exp-1);
 		}
-		else if ($baseval > 3 && $baseval <= 6){
+		elseif ($baseval > 3 && $baseval <= 6){
 			$step = 10 * pow(10, $exp-1);
 		}
-		else if ($baseval > 6 && $baseval <= 10){
+		elseif ($baseval > 6 && $baseval <= 10){
 			$step = 20 * pow(10, $exp-1);
 		}
 
@@ -381,7 +381,7 @@ class SugarChart {
 		if ($value < $this->chart_yAxis['yMin']){
 			$this->chart_yAxis['yMin'] = $value;
 		}
-		else if ($value > $this->chart_yAxis['yMax']){
+		elseif ($value > $this->chart_yAxis['yMax']){
 			$this->chart_yAxis['yMax'] = $value;
 		}
 	}
@@ -519,7 +519,7 @@ class SugarChart {
 			if (isset($drill_down) && $drill_down){
 				if ($this->group_by[0] == 'm') {
                     $additional_param = '&date_closed_advanced=' . urlencode($key);
-				} else if ( $this->group_by[0] == 'sales_stage' ) {
+				} elseif ( $this->group_by[0] == 'sales_stage' ) {
                     $additional_param = '&sales_stage_advanced[]='.urlencode(array_search($key,$GLOBALS['app_list_strings']['sales_stage_dom']));
                 } else{
 					$additional_param = "&" . $this->group_by[0] . "=" . urlencode($key);
@@ -595,7 +595,7 @@ class SugarChart {
                             {
                                 $drill_down_param = '&assigned_user_id[]=' . urlencode($objectInSaleStage['assigned_user_id']);
                             }
-                            else if ($drill_down == 'm')
+                            elseif ($drill_down == 'm')
                             {
                                 $drill_down_param = '&date_closed_advanced=' . urlencode($objectInSaleStage[$drill_down]);
                             }
@@ -670,7 +670,7 @@ class SugarChart {
 		if ($this->chart_properties['type'] == 'group by chart'){
 			$data .= $this->xmlDataForGroupByChart();
 		}
-		else if ($this->chart_properties['type'] == 'bar chart' || $this->chart_properties['type'] == 'horizontal bar chart'){
+		elseif ($this->chart_properties['type'] == 'bar chart' || $this->chart_properties['type'] == 'horizontal bar chart'){
 			$data .= $this->xmlDataBarChart();
 		}
 		else{

@@ -123,7 +123,7 @@ class SugarSpot
                 {
                     $name = $row['NAME'];
                 }
-                else if(!empty($row['DOCUMENT_NAME']))
+                elseif(!empty($row['DOCUMENT_NAME']))
                 {
                     $name = $row['DOCUMENT_NAME'];
                 }
@@ -139,7 +139,7 @@ class SugarSpot
                                 $name = $v;
                                 break;
                             }
-                            else if(empty($foundName))
+                            elseif(empty($foundName))
                             {
                                 $foundName = $v;
                             }
@@ -359,13 +359,13 @@ class SugarSpot
 					        unset($searchFields[$moduleName][$k]);
 					    }
 					}
-				}else if(empty($GLOBALS['dictionary'][$class]['fields'][$k]) ){
+				}elseif(empty($GLOBALS['dictionary'][$class]['fields'][$k]) ){
 					//If module did not have unified_search defined, then check the exception for an email search before we unset
 					if(strpos($k,'email') === false || !$searchEmail)
 					{
 					   unset($searchFields[$moduleName][$k]);
 					}
-				}else if(!$this->filterSearchType($GLOBALS['dictionary'][$class]['fields'][$k]['type'], $query)){
+				}elseif(!$this->filterSearchType($GLOBALS['dictionary'][$class]['fields'][$k]['type'], $query)){
                     unset($searchFields[$moduleName][$k]);
 				}
 			} //foreach

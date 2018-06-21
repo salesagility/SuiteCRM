@@ -58,7 +58,7 @@ if($_REQUEST['from'] == 'DetailView') {
 		return;
 	}
 	echo 'false';
-} else if($_REQUEST['from'] == 'ListView') {
+} elseif($_REQUEST['from'] == 'ListView') {
 	$returnString = '';
 	$idArray = explode(',', $_REQUEST['records']);
 	foreach($idArray as $key => $value) {

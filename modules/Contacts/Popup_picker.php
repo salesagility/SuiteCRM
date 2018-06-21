@@ -332,7 +332,7 @@ EOJS;
 							{
 								$seed_bean->$field = $row[$field];
 							}
-							else if (isset($row[$seed_bean->table_name .'.'.$field]))
+							elseif (isset($row[$seed_bean->table_name .'.'.$field]))
 							{
 								$seed_bean->$field = $row[$seed_bean->table_name .'.'.$field];
 							}

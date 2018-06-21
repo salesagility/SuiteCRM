@@ -72,13 +72,13 @@ function parsePanels(& $panels, $view) {
 
                 if($this->isCustomField($column)) {
                    continue;
-                } else if(is_array($column) && !empty($column['name']) && preg_match('/^email(s|2)$/si', $column['name']) && !isset($column['type'])) {
+                } elseif(is_array($column) && !empty($column['name']) && preg_match('/^email(s|2)$/si', $column['name']) && !isset($column['type'])) {
 		           $panels[$name][$rowCount][$key] = '';
-                } else if($this->matches($column, '/^email[1]_link$/si')) {
+                } elseif($this->matches($column, '/^email[1]_link$/si')) {
                    $panels[$name][$rowCount][$key] = 'email1';
-	   	  	 	} else if($this->matches($column, '/^email[2]_link$/si')) {
+	   	  	 	} elseif($this->matches($column, '/^email[2]_link$/si')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	} else if(!is_array($column) && !empty($column)) {
+	   	  	 	} elseif(!is_array($column) && !empty($column)) {
 	   	  	 	   if(preg_match('/^email(s|2)$/si', $column) ||
 	   	  	 	      preg_match('/^invalid_email$/si', $column) ||
 	   	  	 	      preg_match('/^email_opt_out$/si', $column) ||
@@ -91,7 +91,7 @@ function parsePanels(& $panels, $view) {
 	   	  } //foreach
 	   } //foreach
 
-   } else if($view == 'EditView') {
+   } elseif($view == 'EditView') {
 
 		foreach($panels as $name=>$panel) {
 

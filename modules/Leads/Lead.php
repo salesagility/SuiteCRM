@@ -237,7 +237,7 @@ class Lead extends Person implements EmailInterface {
 			$where_auto = '1=1';
 			if($show_deleted == 0){
 				$where_auto = " leads.deleted=0 ";
-			}else if($show_deleted == 1){
+			}elseif($show_deleted == 1){
 				$where_auto = " leads.deleted=1 ";
 			}
 

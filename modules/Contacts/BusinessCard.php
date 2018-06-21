@@ -123,7 +123,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 	if(!empty($_POST['selectedAccount'])){
 		$account = new Account();
 		$account->retrieve($_POST['selectedAccount']);	
-	}else if(isset($_POST['newaccount']) && $_POST['newaccount']=='on' ){
+	}elseif(isset($_POST['newaccount']) && $_POST['newaccount']=='on' ){
 		$account= $accountForm->handleSave('Accounts',false, false);
 	}
 	if(isset($_POST['newopportunity']) && $_POST['newopportunity']=='on' ){
@@ -174,10 +174,10 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 		if(isset($contact)) {
 			$call->load_relationship('contacts');
 			$call->contacts->add($contact->id);
-		} else if(isset($account)){
+		} elseif(isset($account)){
 			$call->load_relationship('account');
 			$call->account->add($account->id);
-		}else if(isset($opportunity)){
+		}elseif(isset($opportunity)){
 			$call->load_relationship('opportunity');
 			$call->opportunity->add($opportunity->id);			
 		}
@@ -186,10 +186,10 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 		if(isset($contact)) {
 			$meeting->load_relationship('contacts');
 			$meeting->contacts->add($contact->id);
-		} else if(isset($account)){
+		} elseif(isset($account)){
 			$meeting->load_relationship('account');
 			$meeting->account->add($account->id);
-		}else if(isset($opportunity)){
+		}elseif(isset($opportunity)){
 			$meeting->load_relationship('opportunity');
 			$meeting->opportunity->add($opportunity->id);			
 		}
@@ -198,10 +198,10 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 		if(isset($contact)) {
 			$account->load_relationship('contacts');
 			$account->contacts->add($contact->id);
-		} else if(isset($accountnote)){
+		} elseif(isset($accountnote)){
 			$account->load_relationship('notes');
 			$account->notes->add($accountnote->id);
-		}else if(isset($opportunity)){
+		}elseif(isset($opportunity)){
 			$account->load_relationship('opportunities');
 			$account->opportunities->add($opportunity->id);			
 		}
@@ -210,7 +210,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 		if(isset($contact)) {
 			$opportunity->load_relationship('contacts');
 			$opportunity->contacts->add($contact->id);
-		} else if(isset($accountnote)){
+		} elseif(isset($accountnote)){
 			$opportunity->load_relationship('notes');
 			$opportunity->notes->add($accountnote->id);
 		}		

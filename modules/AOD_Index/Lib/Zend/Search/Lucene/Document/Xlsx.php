@@ -159,7 +159,7 @@ class Zend_Search_Lucene_Document_Xlsx extends Zend_Search_Lucene_Document_OpenX
                             $value = (string)$c->v;
                             if ($value == '0') {
                                 $value = false;
-                            } else if ($value == '1') {
+                            } elseif ($value == '1') {
                                 $value = true;
                             } else {
                                 $value = (bool)$c->v;

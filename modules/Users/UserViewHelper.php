@@ -777,7 +777,7 @@ class UserViewHelper {
         {
             $user->user_type = 'Administrator';
         }
-        else if ($user->is_group)
+        elseif ($user->is_group)
         {
             $user->user_type = 'GROUP';
         }

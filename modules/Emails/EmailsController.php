@@ -963,7 +963,7 @@ class EmailsController extends SugarController
             if ($adminNotifyFromAddress === $requestedEmail->from_addr) {
                 $isFromAddressTheSame = true;
             }
-        } else if ($outboundEmailAccount->type === 'user') {
+        } elseif ($outboundEmailAccount->type === 'user') {
             $isAllowedToUseOutboundEmail = true;
         }
 

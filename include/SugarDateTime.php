@@ -598,7 +598,7 @@ class SugarDateTime extends DateTime
             $ampm = trim($dateparts[$regexp['positions']['a']]);
             if($ampm == 'pm') {
                 if($data["tm_hour"] != 12) $data["tm_hour"] += 12;
-            } else if($ampm == 'am') {
+            } elseif($ampm == 'am') {
                 if($data["tm_hour"] == 12) {
                     // 12:00am is 00:00
                     $data["tm_hour"] = 0;
@@ -612,7 +612,7 @@ class SugarDateTime extends DateTime
             $ampm = trim($dateparts[$regexp['positions']['A']]);
             if($ampm == 'PM') {
                 if($data["tm_hour"] != 12) $data["tm_hour"] += 12;
-            } else if($ampm == 'AM') {
+            } elseif($ampm == 'AM') {
                 if($data["tm_hour"] == 12) {
                     // 12:00am is 00:00
                     $data["tm_hour"] = 0;

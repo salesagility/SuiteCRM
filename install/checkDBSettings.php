@@ -146,7 +146,7 @@ function checkDBSettings($silent=false) {
         }
 
         // privileged account tests
-        else if( empty($_SESSION['setup_db_admin_user_name']) ){
+        elseif( empty($_SESSION['setup_db_admin_user_name']) ){
             $errors['ERR_DB_PRIV_USER'] = $mod_strings['ERR_DB_PRIV_USER'];
             installLog("ERROR:: {$errors['ERR_DB_PRIV_USER']}");
         } else {
@@ -221,7 +221,7 @@ global $mod_strings;
     if(count($errors) == 0){
         echo 'dbCheckPassed';
         installLog("SUCCESS:: no errors detected!");
-    }else if((count($errors) == 1 && (isset($errors["ERR_DB_EXISTS_PROCEED"])||isset($errors["ERR_DB_EXISTS_WITH_CONFIG"])))  ||
+    }elseif((count($errors) == 1 && (isset($errors["ERR_DB_EXISTS_PROCEED"])||isset($errors["ERR_DB_EXISTS_WITH_CONFIG"])))  ||
     (count($errors) == 2 && isset($errors["ERR_DB_EXISTS_PROCEED"]) && isset($errors["ERR_DB_EXISTS_WITH_CONFIG"])) ){
         ///throw alert asking to overwwrite db
         echo 'preexeest';

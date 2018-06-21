@@ -214,7 +214,7 @@ if(isset($focus->currency_id) && !empty($focus->currency_id)){
     $selectCurrency = $currency->getSelectOptions($focus->currency_id);
     $ss->assign("CURRENCY", $selectCurrency);
 }
-else if($current_user->getPreference('currency') && !isset($focus->id))
+elseif($current_user->getPreference('currency') && !isset($focus->id))
 {
     $selectCurrency = $currency->getSelectOptions($current_user->getPreference('currency'));
     $ss->assign("CURRENCY", $selectCurrency);

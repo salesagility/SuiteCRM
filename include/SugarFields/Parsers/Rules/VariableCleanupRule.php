@@ -67,16 +67,16 @@ function parsePanels($panels, $view) {
 	   	  	 	   if(count($matches) == 2) {
 	   	  	 	      $panels[$name][$rowCount][$key] = $matches[1] . "_c";
 	   	  	 	   }
-	   	  	 	} else if($this->matches($column, '/^parent_id$/si')) {
+	   	  	 	} elseif($this->matches($column, '/^parent_id$/si')) {
 	   	  	 		  $panels[$name][$rowCount][$key] = '';
-				} else if($this->matches($column, '/^assigned_user_id$/si')) {
+				} elseif($this->matches($column, '/^assigned_user_id$/si')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = '';
 	   	  	 	}
 	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
 
-   } else if ($view == 'EditView') {
+   } elseif ($view == 'EditView') {
 
 		foreach($panels as $name=>$panel) {
 	   	  foreach($panel as $rowCount=>$row) {
@@ -85,13 +85,13 @@ function parsePanels($panels, $view) {
 	   	  	 	   //This converts multienum variables named with [] suffix back to normal and removes custom code
 	   	  	 	   $val = $this->getMatch($column, '/^(.*?)_c\[\]$/s');
 	   	  	 	   $panels[$name][$rowCount][$key] = $val[1] . '_c';
-	   	  	 	} else if($this->matches($column, '/^parent_id$/si')) {
+	   	  	 	} elseif($this->matches($column, '/^parent_id$/si')) {
 	   	  	 	   //Remove parent_id field (replaced with parent_name from master copy)
 	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	} else if($this->matches($column, '/^assigned_user_id$/si')) {
+	   	  	 	} elseif($this->matches($column, '/^assigned_user_id$/si')) {
 	   	  	 	   //Remove assigned_user_id field (replaced with assigned_user_name from master copy)
 	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	} else if($this->matches($column, '/^RADIOOPTIONS_/si')) {
+	   	  	 	} elseif($this->matches($column, '/^RADIOOPTIONS_/si')) {
 	   	  	 	   //This converts radioenum variables
 	   	  	 	   $val = $this->getMatch($column, '/^RADIOOPTIONS_(.*)?$/si');
 	   	  	 	   $panels[$name][$rowCount][$key] = $val[1];

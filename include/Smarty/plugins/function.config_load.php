@@ -119,7 +119,7 @@ function smarty_function_config_load($params, &$smarty)
         if ($_scope == 'parent') {
                 $smarty->_config[1]['vars'] = @array_merge($smarty->_config[1]['vars'], $_config_vars);
                 $smarty->_config[1]['files'][$_file] = true;
-        } else if ($_scope == 'global') {
+        } elseif ($_scope == 'global') {
             for ($i = 1, $for_max = count($smarty->_config); $i < $for_max; $i++) {
                 $smarty->_config[$i]['vars'] = @array_merge($smarty->_config[$i]['vars'], $_config_vars);
                 $smarty->_config[$i]['files'][$_file] = true;

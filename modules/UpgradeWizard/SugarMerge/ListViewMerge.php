@@ -172,7 +172,7 @@ class ListViewMerge extends EditViewMerge{
 				
 				
 			//if it's not set in the new fields then it was a custom field or an original field so we take the custom fields data and set the location source to custom
-			} else if(!isset($this->newFields[$field])){
+			} elseif(!isset($this->newFields[$field])){
 				$this->mergedFields[$field] = $data;
 				$this->mergedFields[$field]['loc']['source'] = 'custom';
 			} else {	

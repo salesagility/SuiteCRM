@@ -172,7 +172,7 @@ class SugarSpriteBuilder
 									$list[$file] = $info;
                                 }
 							}
-						} else if(preg_match('/\.(jpg|jpeg|gif|png|bmp|ico)$/i', $file)) {
+						} elseif(preg_match('/\.(jpg|jpeg|gif|png|bmp|ico)$/i', $file)) {
                             $GLOBALS['log']->error('Unable to process image file ' . $file);
                             //$this->logMessage('Unable to process image file ' . $file);
                         }
@@ -511,9 +511,9 @@ background-position: -{$offset_x}px -{$offset_y}px;
         if(!$this->silentRun && !$this->fromSilentUpgrade)
         {
             echo $msg . '<br />';
-        } else if ($this->fromSilentUpgrade && $this->writeToUpgradeLog) {
+        } elseif ($this->fromSilentUpgrade && $this->writeToUpgradeLog) {
             logThis($msg, $GLOBALS['path']);
-        } else if(!$this->silentRun) {
+        } elseif(!$this->silentRun) {
             echo $msg . "\n";
         }
     }

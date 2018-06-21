@@ -96,7 +96,7 @@ class SugarFieldImage extends SugarFieldFile
             $docType = isset($vardef['docType']) && isset($params[$prefix . $vardef['docType']]) ?
                 $params[$prefix . $vardef['docType']] : '';
             $upload_file->upload_doc($bean, $bean->id, $docType, $bean->$field, $upload_file->mime_type);
-        } else if (!empty($old_id)) {
+        } elseif (!empty($old_id)) {
             // It's a duplicate, I think
 
             if (empty($params[$prefix . $vardef['docUrl']])) {
@@ -105,7 +105,7 @@ class SugarFieldImage extends SugarFieldFile
                 $docType = $vardef['docType'];
                 $bean->$docType = $params[$prefix . $field . '_old_doctype'];
             }
-        } else if (!empty($params[$prefix . $field . '_remoteName'])) {
+        } elseif (!empty($params[$prefix . $field . '_remoteName'])) {
             // We aren't moving, we might need to do some remote linking
             $displayParams = array();
             $this->fillInOptions($vardef, $displayParams);

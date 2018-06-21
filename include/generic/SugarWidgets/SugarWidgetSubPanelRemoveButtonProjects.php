@@ -62,7 +62,7 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
 		if ($layout_def['module'] == 'Holidays'){
 			$action = 'DeleteHolidayRelationship';
 		}
-		else if ($layout_def['module'] == 'Users' || $layout_def['module'] == 'Contacts'){
+		elseif ($layout_def['module'] == 'Users' || $layout_def['module'] == 'Contacts'){
 			$action = 'DeleteResourceRelationship';
 		}
 		else{

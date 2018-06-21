@@ -282,7 +282,7 @@ class DetailView extends ListView {
 	    		if($current_offset < 0){
 	    			$current_offset = 1;
 	    		}
-	    		else if($current_offset > $row_count){
+	    		elseif($current_offset > $row_count){
 	    			$current_offset = $row_count;
 	    		}
 
@@ -312,7 +312,7 @@ class DetailView extends ListView {
 	    		if($current_offset < 0){
 	    			$current_offset = 1;
 	    		}
-	    		else if($current_offset > $row_count){
+	    		elseif($current_offset > $row_count){
 	    			$current_offset = $row_count;
 	    		}
 

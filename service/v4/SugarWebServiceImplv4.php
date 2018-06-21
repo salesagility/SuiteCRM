@@ -105,7 +105,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
                 $current_user = $user;
             }
         }
-        else if($usr_id && isset($user->user_name) && ($user->getPreference('lockout') == '1'))
+        elseif($usr_id && isset($user->user_name) && ($user->getPreference('lockout') == '1'))
         {
             $error->set_error('lockout_reached');
             $GLOBALS['log']->fatal('Lockout reached for user ' . $user_auth['user_name']);
@@ -114,7 +114,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
             self::$helperObject->setFaultObject($error);
             return;
         }
-		else if(function_exists('openssl_decrypt') && $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
+		elseif(function_exists('openssl_decrypt') && $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
         		&& (empty($user_auth['encryption']) || $user_auth['encryption'] !== 'PLAIN' ) )
         {
             $password = self::$helperObject->decrypt_string($user_auth['password']);
@@ -122,7 +122,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
             if($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id']))
                 $success = true;
         }
-        else if( $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
+        elseif( $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
                  && (empty($user_auth['encryption']) || $user_auth['encryption'] == 'PLAIN' ) )
         {
 

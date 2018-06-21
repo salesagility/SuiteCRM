@@ -155,7 +155,7 @@ class CalendarUtils {
 			$users = array();
 			if($bean->object_name == 'Call')
 				$users = $bean->get_call_users();
-			else if($bean->object_name == 'Meeting')
+			elseif($bean->object_name == 'Meeting')
 				$users = $bean->get_meeting_users();
 			$user_ids = array();
 			foreach($users as $u)

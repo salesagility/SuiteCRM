@@ -419,7 +419,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
                 $this->xTemplate->assign('CELL', $widget_contents);
                 $this->xTemplate->parse($xtemplateSection.".row.cell");
 
-            }else if($usage != 'query_only')
+            }elseif($usage != 'query_only')
             {
                 $list_field['name']=$field_name;
 
@@ -477,7 +477,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
 
                         }
                         $widget_contents = $layout_manager->widgetDisplay($list_field);
-                    } else if(isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink' ) {
+                    } elseif(isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink' ) {
                         $widget_contents = $layout_manager->widgetDisplay($list_field);
                     }
 
@@ -1991,7 +1991,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
 		{
 			$this->xTemplateAssign('amount_arrow', $imgArrow);
 		}
-		else if($orderBy == 'amount_usdollar')
+		elseif($orderBy == 'amount_usdollar')
 		{
 			$this->xTemplateAssign('amount_usdollar_arrow', $imgArrow);
 		}
@@ -2016,7 +2016,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
             if(!empty($list_field['vname']))
             {
                 $key = $list_field['vname'];
-            } else if(isset($list_field['name']) &&  isset($child_focus->field_defs[$list_field['name']]))
+            } elseif(isset($list_field['name']) &&  isset($child_focus->field_defs[$list_field['name']]))
             {
                     $field_def = $child_focus->field_defs[$list_field['name']];
                     $key = $field_def['vname'];

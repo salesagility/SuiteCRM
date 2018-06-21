@@ -99,7 +99,7 @@ function runCheck($install_script, $mod_strings = array())
             <p><b>'.$mod_strings['LBL_CHECKSYS_IISVER'].'</b></p>
             <p><span class="error">'.$iisVersion.'</span></p>
         ';
-        } else if(php_sapi_name() != 'cgi-fcgi')
+        } elseif(php_sapi_name() != 'cgi-fcgi')
         {
             installLog($mod_strings['ERR_CHECKSYS_FASTCGI'].' '.$iis_version);
             $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI']}</span></b>";
@@ -108,7 +108,7 @@ function runCheck($install_script, $mod_strings = array())
             <p><b>'.$mod_strings['LBL_CHECKSYS_FASTCGI'].'</b></p>
             <p><span class="error">'.$iisVersion.'</span></p>
         ';
-        } else if(ini_get('fastcgi.logging') != '0')
+        } elseif(ini_get('fastcgi.logging') != '0')
         {
             installLog($mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING'].' '.$iis_version);
             $iisVersion = "<b><span class=stop>{$mod_strings['ERR_CHECKSYS_FASTCGI_LOGGING']}</span></b>";

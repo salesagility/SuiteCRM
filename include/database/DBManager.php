@@ -3017,7 +3017,7 @@ abstract class DBManager
                         // Bug #42475: Don't directly compare numeric values, instead do the subtract and see if the comparison comes out to be "close enough", it is necessary for floating point numbers.
                         // Manual merge of fix 95727f2eed44852f1b6bce9a9eccbe065fe6249f from DBHelper
                         // This fix also fixes Bug #44624 in a more generic way and therefore eliminates the need for fix 0a55125b281c4bee87eb347709af462715f33d2d in DBHelper
-                        else if ($this->isNumericType($field_type)) {
+                        elseif ($this->isNumericType($field_type)) {
                             $numerator = abs(2 * ((trim($before_value) + 0) - (trim($after_value) + 0)));
                             $denominator = abs(((trim($before_value) + 0) + (trim($after_value) + 0)));
                             // detect whether to use absolute or relative error. use absolute if denominator is zero to avoid division by zero

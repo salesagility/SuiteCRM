@@ -234,7 +234,7 @@ var $selectedCategories = array();
                 $all_modules = array_merge($regular_modules, $owner_modules, $admin_modules);
                 $module_limiter = " sugarfeed.related_module in ('" . implode("','", $all_modules) . "')";
             }
-            else if ( count($owner_modules) > 0
+            elseif ( count($owner_modules) > 0
 				) {
                 $module_limiter = " ((sugarfeed.related_module IN ('".implode("','", $regular_modules)."') "
 					.") ";
@@ -316,7 +316,7 @@ var $selectedCategories = array();
                 $reply = $api->getLatestUpdates(0,$fetchRecordCount);
                 if ( $reply['success'] && count($reply['messages']) > 0 ) {
                     array_splice($resortQueue, count($resortQueue), 0, $reply['messages']);
-                } else if ( !$reply['success'] ) {
+                } elseif ( !$reply['success'] ) {
                     $feedErrors[] = $reply['errorMessage'];
                 }
             }

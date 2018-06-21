@@ -252,14 +252,14 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         $fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['id_name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field . '_display';
-    } else if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')) {
+    } elseif (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')) {
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         if (!$value) {
             $value = date($timedate->get_date_time_format());
         }
         $fieldlist[$fieldname]['name'] = $aow_field;
         $fieldlist[$fieldname]['value'] = $value;
-    } else if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'date')) {
+    } elseif (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'date')) {
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $fieldlist[$fieldname]['name'] = $aow_field;
         if (empty($value)) {
@@ -323,14 +323,14 @@ function saveField($field, $id, $module, $value)
 
         if ($bean->field_defs[$field]['type'] == "multienum") {
             $bean->$field = encodeMultienumValue($value);
-        }else if ($bean->field_defs[$field]['type'] == "relate" || $bean->field_defs[$field]['type'] == 'parent'){
+        }elseif ($bean->field_defs[$field]['type'] == "relate" || $bean->field_defs[$field]['type'] == 'parent'){
             $save_field = $bean->field_defs[$field]['id_name'];
             $bean->$save_field = $value;
             if ($bean->field_defs[$field]['type'] == 'parent') {
                 $bean->parent_type = $_REQUEST['parent_type'];
                 $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
             }
-        }else if ($bean->field_defs[$field]['type'] == "currency"){
+        }elseif ($bean->field_defs[$field]['type'] == "currency"){
 			if (stripos($field, 'usdollar')) {
 				$newfield = str_replace("_usdollar", "", $field);
 				$bean->$newfield = $value;
@@ -508,7 +508,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
             $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record);
 
-        } else if(!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
+        } elseif(!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
             $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record);
 
         } else {

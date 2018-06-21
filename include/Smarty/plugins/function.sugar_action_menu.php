@@ -155,7 +155,7 @@ function smarty_function_sugar_action_menu($params, &$smarty)
                         'class' => 'subnav-sub'
                     )
                 ));
-            } else if(strlen($item)) {
+            } elseif(strlen($item)) {
                 array_push($menus['items'],array(
                     'html' => $item
                 ));
@@ -188,7 +188,7 @@ function smarty_function_sugar_action_menu($params, &$smarty)
 
     if (is_array($params['buttons'])) {
         return '<div class="action_buttons">' . implode_r(' ', $params['buttons'], true).'<div class="clear"></div></div>';
-    } else if(is_array($params)) {
+    } elseif(is_array($params)) {
         return '<div class="action_buttons">' . implode_r(' ', $params, true).'<div class="clear"></div></div>';
     }
 

@@ -447,7 +447,7 @@ function recursive_empty_or_remove_directory($directory, $exclude_dirs=null,$exc
 				if(is_dir($path) && $exclude_dirs != null && in_array($path,$exclude_dirs)){
 					//do nothing
 				}
-				else if(is_dir($path))
+				elseif(is_dir($path))
 				{
 					// we call this function with the new path
 					recursive_empty_or_remove_directory($path);
@@ -3960,7 +3960,7 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
 			logThis('config.php file specified in ' . $config_si_location . ' could not be found.  Skip merging', $path);
 		}
 		return false;
-	} else if(empty($config_location)) {
+	} elseif(empty($config_location)) {
 		global $argv;
 		//We are assuming this is from the silentUpgrade scripts so argv[3] will point to SugarCRM install location
 		if(isset($argv[3]) && is_dir($argv[3]))
@@ -4001,7 +4001,7 @@ function merge_config_si_settings($write_to_upgrade_log=false, $config_location=
 			logThis('config_si.php file specified in ' . $config_si_location . ' could not be found.  Skip merging', $path);
 		}
 		return false;
-	} else if(empty($config_si_location)) {
+	} elseif(empty($config_si_location)) {
 		if(isset($argv[0]) && is_file($argv[0]))
 		{
 			$php_file = $argv[0];
@@ -4508,7 +4508,7 @@ if (!function_exists("getValidDBName"))
 			$tail = substr ( $name, -11) ;
 			$temp = substr($md5str , strlen($md5str)-4 );
 			$result = substr ( $name, 0, 10) . $temp . $tail ;
-		}else if ($len > ($maxLen - 5))
+		}elseif ($len > ($maxLen - 5))
 		{
 			$result = substr ( $name, 0, 11) . substr ( $name, 11 - $maxLen + 5);
 		}

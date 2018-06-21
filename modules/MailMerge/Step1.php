@@ -86,11 +86,11 @@ if(!empty($_REQUEST['record']))
 {
 	$_SESSION['MAILMERGE_RECORD'] = $_REQUEST['record'];
 }
-else if(isset($_REQUEST['uid'])) {
+elseif(isset($_REQUEST['uid'])) {
 	$_SESSION['MAILMERGE_RECORD'] = explode(',', $_REQUEST['uid']);
 
 }
-else if(isset($_REQUEST['entire']) && $_REQUEST['entire'] == 'true') {
+elseif(isset($_REQUEST['entire']) && $_REQUEST['entire'] == 'true') {
 	// do entire list
 	$focus = 0;
 
@@ -118,7 +118,7 @@ else if(isset($_REQUEST['entire']) && $_REQUEST['entire'] == 'true') {
 	}
 	$_SESSION['MAILMERGE_RECORD'] = $new_arr;
 }
-else if(isset($_SESSION['MAILMERGE_RECORDS']))
+elseif(isset($_SESSION['MAILMERGE_RECORDS']))
 {
 
 	$fromListView = true;
@@ -132,7 +132,7 @@ if(isset($_SESSION['MAILMERGE_RECORD']))
 	{
 		$rModule = $_POST['return_module'];
 	}
-	else if($fromListView)
+	elseif($fromListView)
 	{
 		$rModule = 	$_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'];
 		$_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = null;

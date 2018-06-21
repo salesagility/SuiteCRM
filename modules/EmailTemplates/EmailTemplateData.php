@@ -78,7 +78,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                 if(in_array($key, $fields)) {
                     $newBean->$key = $_POST[$key];
                 }
-                else if(in_array($key, $fieldsForCopy)) {
+                elseif(in_array($key, $fieldsForCopy)) {
                     $newBean->$key = $bean->$key;
                 }
             }

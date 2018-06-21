@@ -141,7 +141,7 @@ EOHTML;
 				$vname = '';
 				if(isset($value['vname']))
 					$vname = $value['vname'];
-				else if(isset($value['label']))
+				elseif(isset($value['label']))
 					$vname = $value['label'];
 				$fields .= str_replace(':', '', translate($vname, $focus->module_dir));
 

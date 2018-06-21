@@ -70,7 +70,7 @@ class TasksQuickCreate extends QuickCreate {
                   $focus->meridiem_am_values = array('am'=>'am', 'pm'=>'pm');
                } 		
                $this->ss->assign("TIME_MERIDIEM", get_select_options_with_id($focus->meridiem_am_values, $time_start_hour < 12 ? 'am' : 'pm'));               
-		} else if(strpos($time_pref, 'A')) {
+		} elseif(strpos($time_pref, 'A')) {
 		       if(!isset($focus->meridiem_AM_values)) {
 		          $focus->meridiem_AM_values = array('AM'=>'AM', 'PM'=>'PM');
 		       }       

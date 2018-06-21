@@ -111,7 +111,7 @@ abstract class source{
  		$dir = str_replace('_','/',get_class($this));
 		if(file_exists("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php")) {
 			require("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php");
-		} else if(file_exists("modules/Connectors/connectors/sources/{$dir}/mapping.php")){
+		} elseif(file_exists("modules/Connectors/connectors/sources/{$dir}/mapping.php")){
 			require("modules/Connectors/connectors/sources/{$dir}/mapping.php");
 		}
 	    $this->_mapping = $mapping;
@@ -130,7 +130,7 @@ abstract class source{
 		$dir = str_replace('_','/',$class);
 		if(file_exists("custom/modules/Connectors/connectors/sources/{$dir}/vardefs.php")) {
 			require("custom/modules/Connectors/connectors/sources/{$dir}/vardefs.php");
-		} else if(file_exists("modules/Connectors/connectors/sources/{$dir}/vardefs.php")){
+		} elseif(file_exists("modules/Connectors/connectors/sources/{$dir}/vardefs.php")){
 			require("modules/Connectors/connectors/sources/{$dir}/vardefs.php");
 		}
 
@@ -253,7 +253,7 @@ abstract class source{
  		$dir = str_replace('_','/',get_class($this));
 		if(file_exists("modules/Connectors/connectors/sources/{$dir}/mapping.php")) {
 			require("modules/Connectors/connectors/sources/{$dir}/mapping.php");
-		} else if(file_exists("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php")){
+		} elseif(file_exists("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php")){
 			require("custom/modules/Connectors/connectors/sources/{$dir}/mapping.php");
 		}
 		return $mapping;

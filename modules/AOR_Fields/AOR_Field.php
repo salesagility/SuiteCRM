@@ -132,7 +132,7 @@ class AOR_Field extends Basic
                         if ($field_name != 'group_display' && isset($postField[$i])) {
                             if (is_array($postField[$i])) {
                                 $postField[$i] = base64_encode(serialize($postField[$i]));
-                            } else if ($field_name == 'value') {
+                            } elseif ($field_name == 'value') {
                                 $postField[$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $postField[$i]);
                             }
                             if ($field_name == 'module_path') {
@@ -140,7 +140,7 @@ class AOR_Field extends Basic
                             }
                             $field->$field_name = $postField[$i];
                         }
-                    } else if (is_null($postField)) {
+                    } elseif (is_null($postField)) {
                         // do nothing
                     } else {
                         throw new Exception('illegal type in post data at key ' . $key . $field_name . ' ' . gettype($postField));

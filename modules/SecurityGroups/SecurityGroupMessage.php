@@ -102,7 +102,7 @@ class SecurityGroupMessage extends Basic {
 		global $current_user;
 		if(empty($securitygroup_id) && !is_admin($current_user)) {
 			return;
-		} else if(empty($securitygroup_id)) {
+		} elseif(empty($securitygroup_id)) {
 			$securitygroup_id = null; //6.4.0
 		}
 		$message = new SecurityGroupMessage();
@@ -135,7 +135,7 @@ class SecurityGroupMessage extends Basic {
 		if($weeks == 1){
 			$result = translate('LBL_TIME_LAST_WEEK','SugarFeed').' ';
 			return $result;
-		}else if($weeks > 1){
+		}elseif($weeks > 1){
 			$result .= $weeks . ' '.translate('LBL_TIME_WEEKS','SugarFeed').' ';
 			if($days > 0) {
                 $result .= $days . ' '.translate('LBL_TIME_DAYS','SugarFeed').' ';
@@ -144,7 +144,7 @@ class SecurityGroupMessage extends Basic {
 			if($days == 1){
 				$result = translate('LBL_TIME_YESTERDAY','SugarFeed').' ';
 				return $result;
-			}else if($days > 1){
+			}elseif($days > 1){
 				$result .= $days . ' '. translate('LBL_TIME_DAYS','SugarFeed').' ';
 			}else{
 				if($hours == 1) {

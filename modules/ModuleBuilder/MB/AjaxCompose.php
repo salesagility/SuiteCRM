@@ -69,7 +69,7 @@ class AjaxCompose{
 		foreach($this->crumbs as $name=>$action){
 			if($name == 'Home'){
 				$crumbs .= "<a onclick='$action' href='javascript:void(0)'>". getStudioIcon('home', 'home', 16, 16) . '</a>';
-			}else if($name=='Assistant'){
+			}elseif($name=='Assistant'){
 				$crumbs .= "<a id='showassist' onclick='$action' href='javascript:void(0)'>". getStudioIcon('assistant', 'assistant', 16, 16) . '</a>';
 			}else{
 				if($count > 0){

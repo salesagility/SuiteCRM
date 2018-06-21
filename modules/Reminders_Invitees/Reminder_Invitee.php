@@ -122,10 +122,10 @@ class Reminder_Invitee extends Basic {
                 if(isset($bean->first_name) && isset($bean->last_name)) {
                     $retValue = "{$bean->first_name} {$bean->last_name}";
                 }
-                else if(isset($bean->name)) {
+                elseif(isset($bean->name)) {
                     $retValue = $bean->name;
                 }
-                else if(isset($bean->email)) {
+                elseif(isset($bean->email)) {
                     $retValue = $bean->email;
                 }
                 if(!$retValue) {

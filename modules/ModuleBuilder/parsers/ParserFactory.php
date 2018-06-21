@@ -173,7 +173,7 @@ class ParserFactory
                 $path = "modules/ModuleBuilder/parsers/views/{$pName}.php";
                 if (file_exists("custom/$path"))
                     require_once("custom/$path");
-                else if (file_exists($path))
+                elseif (file_exists($path))
                     require_once($path);
                 if (class_exists ( $pName ))
                     return new $pName($view, $moduleName, $packageName);

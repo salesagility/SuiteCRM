@@ -267,7 +267,7 @@ function verifyArguments($argv,$usage_dce,$usage_regular){
             exit(1);
         }
     }
-    else if(is_file("{$cwd}/include/entryPoint.php")) {
+    elseif(is_file("{$cwd}/include/entryPoint.php")) {
         //this should be a regular sugar install
         $upgradeType = constant('SUGARCRM_INSTALL');
         //check if this is a valid zip file

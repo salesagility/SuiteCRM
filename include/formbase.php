@@ -276,7 +276,7 @@ function buildRedirectURL($return_id='', $return_module='')
             // END Meeting Integration
         } 
 		// if we create a new record "Save", we want to redirect to the DetailView
-		else if(isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
+		elseif(isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
 			&& $_REQUEST['return_module'] != 'Activities'
 			&& $_REQUEST['return_module'] != 'Home' 
 			&& $_REQUEST['return_module'] != 'Forecasts' 

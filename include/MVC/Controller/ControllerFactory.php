@@ -57,14 +57,14 @@ class ControllerFactory
 			require_once('custom/modules/'.$module.'/controller.php');
 			if(class_exists($customClass)){
 				$controller = new $customClass();
-			}else if(class_exists($class)){
+			}elseif(class_exists($class)){
 				$controller = new $class();
 			}
 		}elseif(file_exists('modules/'.$module.'/controller.php')){
 			require_once('modules/'.$module.'/controller.php');
 			if(class_exists($customClass)){
 				$controller = new $customClass();
-			}else if(class_exists($class)){
+			}elseif(class_exists($class)){
 				$controller = new $class();
 			}
 		}else{

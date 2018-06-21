@@ -288,7 +288,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
         {
             $queryString = "-advanced_search";
         }
-        else if (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search")
+        elseif (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search")
         {
             // TODO: figure out what was the SearchFormReports???
             if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();

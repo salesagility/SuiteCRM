@@ -247,7 +247,7 @@ class ParserModifySubPanel extends ParserModifyListView
                 {
                     $newFields [ $field ] [ 'width' ] = $width ;
                 }
-            } else if (isset ( $this->listViewDefs [ $field ] [ 'width' ] ))
+            } elseif (isset ( $this->listViewDefs [ $field ] [ 'width' ] ))
             {
                 $newFields [ $field ] [ 'width' ] = $this->listViewDefs [ $field ] [ 'width' ] ;
             }

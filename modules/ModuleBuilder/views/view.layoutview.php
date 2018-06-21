@@ -271,7 +271,7 @@ class ViewLayoutView extends SugarView
         $translatedViewType = '' ;
 		if ( isset ( $labels [ strtolower ( $this->editLayout ) ] ) )
 			$translatedViewType = translate ( $labels [ strtolower( $this->editLayout ) ] , 'ModuleBuilder' ) ;
-        else if (isset($this->sm))
+        elseif (isset($this->sm))
         {
             foreach($this->sm->sources as $file => $def)
             {

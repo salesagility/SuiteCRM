@@ -229,13 +229,13 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
         {
             if( preg_match('/listviewdefs.php/i', $layoutPath) )
                 $label = $module_builder_language['LBL_LISTVIEW'];
-            else if( preg_match('/detailviewdefs.php/i', $layoutPath) )
+            elseif( preg_match('/detailviewdefs.php/i', $layoutPath) )
                 $label = $module_builder_language['LBL_DETAILVIEW'];
-            else if( preg_match('/editviewdefs.php/i', $layoutPath) )
+            elseif( preg_match('/editviewdefs.php/i', $layoutPath) )
                 $label = $module_builder_language['LBL_EDITVIEW'];
-            else if( preg_match('/quickcreatedefs.php/i', $layoutPath) )
+            elseif( preg_match('/quickcreatedefs.php/i', $layoutPath) )
                 $label = $module_builder_language['LBL_QUICKCREATE'];
-            else if( preg_match('/searchdefs.php/i', $layoutPath) )
+            elseif( preg_match('/searchdefs.php/i', $layoutPath) )
                 $label = $module_builder_language['LBL_SEARCH_BUTTON'];
             else 
                 continue;

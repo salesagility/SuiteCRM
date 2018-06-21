@@ -208,7 +208,7 @@ function getElementsByType($type, $contents) {
    	        }
             $sarr[] = $count;
 
-   	     } else if($etok == $etag) {
+   	     } elseif($etok == $etag) {
    	        array_shift($sarr);
    	        if(count($sarr) == 0) {
    	           $val = substr($contents, $mark, ($count - $mark) + $eincrement);
@@ -389,9 +389,9 @@ static function parseDelimiters($javascript) {
 			  if($char == "{" && $nextChar == "$") {
 			  	 $inSmartyVariable = true;
 			  	 $newJavascript .= $javascript[$count];
-			  } else if($char == "{") {
+			  } elseif($char == "{") {
 			  	 $newJavascript .=  " {ldelim} ";
-			  } else if($char == "}") {
+			  } elseif($char == "}") {
 			  	 $newJavascript .= " {rdelim} ";
 			  } else {
 			     $newJavascript .= $javascript[$count];
@@ -424,7 +424,7 @@ function findAssignedVariableName($name, $filePath) {
 	if(!isset($this->mPHPFile)) {
 	   if(preg_match('/(.*?)(DetailView).html$/', $filePath, $matches)) {
 	   	 $dir = $matches[1];
-	   } else if(preg_match('/(.*?)(EditView).html$/', $filePath, $matches)) {
+	   } elseif(preg_match('/(.*?)(EditView).html$/', $filePath, $matches)) {
 	   	 $dir = $matches[1];
 	   }
 
@@ -648,7 +648,7 @@ function mergePanels($panels, $vardefs, $moduleDir, $masterCopy) {
 	   	       	  	 	if(is_array($column) && !empty($column['name'])) {
 	   	       	  	 	   $existingElements[$column['name']] = $column['name'];
 	   	       	  	 	   $existingLocation[$column['name']] = array("panel"=>$name, "row"=>$rowKey, "col"=>$colKey);
-	   	       	  	 	} else if(!is_array($column) && !empty($column)) {
+	   	       	  	 	} elseif(!is_array($column) && !empty($column)) {
 	   	       	  	 	   $existingElements[$column] = $column;
 	   	       	  	 	   $existingLocation[$column] = array("panel"=>$name, "row"=>$rowKey, "col"=>$colKey);
 	   	       	  	 	}
@@ -663,7 +663,7 @@ function mergePanels($panels, $vardefs, $moduleDir, $masterCopy) {
 	   	       	  	 foreach($row as $colKey=>$column) {
 	   	       	  	 	if(is_array($column) && isset($column['name'])) {
 	   	       	  	 	   $id = $column['name'];
-	   	       	  	 	} else if(!is_array($column) && !empty($column)) {
+	   	       	  	 	} elseif(!is_array($column) && !empty($column)) {
 	   	       	  	 	   $id = $column;
 	   	       	  	 	} else {
 	   	       	  	 	   continue;
@@ -760,13 +760,13 @@ function hasMultiplePanels($panels) {
 function getRelateFieldName($mixed='') {
    if(!is_array($mixed)) {
    	  return '';
-   } else if(count($mixed) == 2){
+   } elseif(count($mixed) == 2){
       $id = '';
    	  $name = '';
    	  foreach($mixed as $el) {
    	  	 if(preg_match('/_id$/', $el)) {
    	  	    $id = $el;
-   	  	 } else if(preg_match('/_name$/', $el)) {
+   	  	 } elseif(preg_match('/_name$/', $el)) {
    	  	    $name = $el;
    	  	 }
    	  }

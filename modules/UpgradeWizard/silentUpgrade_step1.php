@@ -931,7 +931,7 @@ if(!didThisStepRunBefore('commit')){
 	if(!isset($_REQUEST['silent'])){
 		$_REQUEST['silent'] = true;
 	}
-	else if(isset($_REQUEST['silent']) && $_REQUEST['silent'] != true){
+	elseif(isset($_REQUEST['silent']) && $_REQUEST['silent'] != true){
 		$_REQUEST['silent'] = true;
 	}
 

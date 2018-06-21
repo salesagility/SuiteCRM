@@ -391,7 +391,7 @@ class Sugarpdf extends TCPDF
                 if($even && !empty($options['evencolor'])){
                     $this->SetFillColorArray($this->convertHTMLColorToDec($options['evencolor']));
                     $cellOptions['fillstate']=1;
-                }else if(!$even && !empty($options['oddcolor'])){
+                }elseif(!$even && !empty($options['oddcolor'])){
                     $this->SetFillColorArray($this->convertHTMLColorToDec($options['oddcolor']));
                     $cellOptions['fillstate']=1;
                 }
@@ -645,7 +645,7 @@ class Sugarpdf extends TCPDF
             if(empty($block)){
                 $lines++;
             // If the block is in more than one line
-            }else if(ceil($this->GetStringWidth($block) / $wmax)>1){
+            }elseif(ceil($this->GetStringWidth($block) / $wmax)>1){
                 //divide into words
                 $words = explode(" ", $block);
                 //TODO explode with space is not the best things to do...

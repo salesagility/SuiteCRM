@@ -335,10 +335,10 @@ HTML;
                 $columns= count($colsFirst);
             }
         }
-        else if(!empty($colsFirst)){
+        elseif(!empty($colsFirst)){
             $columns= count($colsFirst);
         }
-        else if(!empty($colsSecond)){
+        elseif(!empty($colsSecond)){
             $columns= count($colsSecond);
         }
         return $columns;

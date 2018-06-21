@@ -124,7 +124,7 @@ foreach($tables as $table) {
 	   	  //If it's a space, simply add a blank string
 	   	  if($field == '&nbsp;') {
 	   	  	 $metacolumns[] = "";
-	   	  } else if(!empty($field)) {
+	   	  } elseif(!empty($field)) {
 
           	 preg_match_all('/[\{]([^\}].*?)[\}]/s', $field, $matches, PREG_SET_ORDER);
           	 if(!empty($matches)) {

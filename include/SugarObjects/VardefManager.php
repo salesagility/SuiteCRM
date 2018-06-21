@@ -90,7 +90,7 @@ class VardefManager{
     public static function setCustomAllowedForModule($module, $enable) {
         if ($enable && isset($custom_disabled_modules[$module])) {
               unset($custom_disabled_modules[$module]);
-        } else if (!$enable) {
+        } elseif (!$enable) {
               $custom_disabled_modules[$module] = true;
         }
     }

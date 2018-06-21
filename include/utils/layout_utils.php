@@ -137,7 +137,7 @@ function get_module_title(
     if(is_file(SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png',false)))
     {
     	$iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png');
-    } else if (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png',false)))
+    } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png',false)))
     {
         $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png');
     }
@@ -214,7 +214,7 @@ function getClassicModuleTitle($module, $params, $show_create=false, $index_url_
     if(is_file(SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png',false)))
     {
     	$iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.$module.'_32.png');
-    } else if (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png',false)))
+    } elseif (is_file(SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png',false)))
     {
         $iconPath = SugarThemeRegistry::current()->getImageURL('icon_'.ucfirst($module).'_32.png');
     }

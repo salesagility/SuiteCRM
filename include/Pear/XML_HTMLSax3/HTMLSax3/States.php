@@ -145,7 +145,7 @@ class XML_HTMLSax3_OpeningTagState {
                 if ($char == '"') {
                     $attributevalue= $context->scanUntilString('"');
                     $context->IgnoreCharacter();
-                } else if ($char == "'") {
+                } elseif ($char == "'") {
                     $attributevalue = $context->scanUntilString("'");
                     $context->IgnoreCharacter();
                 } else {
@@ -153,7 +153,7 @@ class XML_HTMLSax3_OpeningTagState {
                     $attributevalue =
                         $context->scanUntilCharacters("> \n\r\t");
                 }
-            } else if ($char !== NULL) {
+            } elseif ($char !== NULL) {
                 $attributevalue = NULL;
                 $context->unscanCharacter();
             }
@@ -222,7 +222,7 @@ class XML_HTMLSax3_EscapeState {
                 $context->unscanCharacter();
                 $text = $context->scanUntilString('>');
             }
-        } else if ( $char == '[') {
+        } elseif ( $char == '[') {
             $context->unscanCharacter();
             $text = $context->scanUntilString(']>');
             $text.= $context->scanCharacter();

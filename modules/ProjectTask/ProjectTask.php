@@ -332,7 +332,7 @@ class ProjectTask extends SugarBean {
 			}
 			/* BEGIN - SECURITY GROUPS */
 			//parent_name_owner not being set for whatever reason so we need to figure this out
-			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+			elseif(!empty($this->parent_type) && !empty($this->parent_id)) {
 				global $current_user;
                 $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
                 if($parent_bean !== false) {

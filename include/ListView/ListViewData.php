@@ -508,7 +508,7 @@ class ListViewData {
         {
             $queryString = "-advanced_search";
         }
-        else if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search")
+        elseif (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search")
         {
             if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
             else $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);

@@ -90,7 +90,7 @@ class SugarFieldBool extends SugarFieldBase {
         // This does not return a smarty section, instead it returns a direct value
         if ( $inputField == 'bool_true' || $inputField === true ) { // Note: true must be absolute true
             return $app_list_strings['checkbox_dom']['1'];
-        } else if ( $inputField == 'bool_false' || $inputField === false){ // Note: false must be absolute false
+        } elseif ( $inputField == 'bool_false' || $inputField === false){ // Note: false must be absolute false
             return $app_list_strings['checkbox_dom']['2'];
         } else { // otherwise we return blank display
             return '';

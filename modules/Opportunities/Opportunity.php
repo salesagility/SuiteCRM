@@ -169,7 +169,7 @@ $query .= 			"LEFT JOIN users
 			($this->rel_account_table.deleted is null OR $this->rel_account_table.deleted=0)
 			AND (accounts.deleted is null OR accounts.deleted=0)
 			AND opportunities.deleted=0";
-		}else 	if($show_deleted == 1){
+		}elseif($show_deleted == 1){
 				$where_auto = " opportunities.deleted=1";
 		}
 

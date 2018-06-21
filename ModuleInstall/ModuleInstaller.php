@@ -395,7 +395,7 @@ class ModuleInstaller{
 				}
 				if(isset($item["name"])) {
 				    $target = $item["name"];
-				} else if (!empty($from)){
+				} elseif (!empty($from)){
                     $target = basename($from, ".php");
                 } else {
 				    $target = $this->id_name;
@@ -434,7 +434,7 @@ class ModuleInstaller{
                 }
 				if(isset($item["name"])) {
 				    $target = $item["name"];
-				} else if (!empty($from)){
+				} elseif (!empty($from)){
                     $target = basename($from, ".php");
                 } else {
 				    $target = $this->id_name;
@@ -442,11 +442,11 @@ class ModuleInstaller{
 				$disabled_path = $path.'/'.DISABLED_PATH;
 				if (file_exists("$path/$target.php")) {
 				    rmdir_recursive("$path/$target.php");
-                } else if (file_exists("$disabled_path/$target.php")) {
+                } elseif (file_exists("$disabled_path/$target.php")) {
                     rmdir_recursive("$disabled_path/$target.php");
-				} else if (!empty($from) && file_exists($path . '/'. basename($from))) {
+				} elseif (!empty($from) && file_exists($path . '/'. basename($from))) {
 				    rmdir_recursive( $path . '/'. basename($from));
-                } else if (!empty($from) && file_exists($disabled_path . '/'. basename($from))) {
+                } elseif (!empty($from) && file_exists($disabled_path . '/'. basename($from))) {
 					rmdir_recursive( $disabled_path . '/'. basename($from));
 				}
 		    }
@@ -490,7 +490,7 @@ class ModuleInstaller{
                 }
 				if(isset($item["name"])) {
 				    $target = $item["name"];
-				} else if (!empty($from)){
+				} elseif (!empty($from)){
                     $target = basename($from, ".php");
                 }else {
 				    $target = $this->id_name;
@@ -499,7 +499,7 @@ class ModuleInstaller{
                 if (file_exists("$path/$target.php")) {
 					mkdir_recursive($disabled_path, true);
 					rename("$path/$target.php", "$disabled_path/$target.php");
-				} else if (!empty($from) && file_exists($path . '/'. basename($from))) {
+				} elseif (!empty($from) && file_exists($path . '/'. basename($from))) {
 					mkdir_recursive($disabled_path, true);
 				    rename( $path . '/'. basename($from), $disabled_path.'/'. basename($from));
 				}
@@ -534,7 +534,7 @@ class ModuleInstaller{
                 }
 				if(isset($item["name"])) {
 				    $target = $item["name"];
-				} else if (!empty($from)){
+				} elseif (!empty($from)){
                     $target = basename($from, ".php");
                 } else {
 				    $target = $this->id_name;
@@ -849,7 +849,7 @@ class ModuleInstaller{
 				{
 					rmdir_recursive( $path . '/'. $this->id_name . '.php');
 				}
-				else if (is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php'))
+				elseif (is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php'))
 				{
 					rmdir_recursive( $path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php');
 				}
@@ -985,7 +985,7 @@ class ModuleInstaller{
 						}
 						if (is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
 							rmdir_recursive( $path.'/'.$packs['language'].'.'. $this->id_name . '.php');
-						} else if (is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
+						} elseif (is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
 							rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php');
 						}
 					}
@@ -1020,7 +1020,7 @@ class ModuleInstaller{
                 if (file_exists("$path/$target.php")) {
 					mkdir_recursive($disabled_path, true);
 					rename("$path/$target.php", "$disabled_path/$target.php");
-				} else if (file_exists($path . '/'. basename($from))) {
+				} elseif (file_exists($path . '/'. basename($from))) {
 					mkdir_recursive($disabled_path, true);
 				    rename( $path . '/'. basename($from), $disabled_path.'/'. basename($from));
 				}

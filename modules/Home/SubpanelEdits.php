@@ -66,7 +66,7 @@ if(file_exists('modules/'. $_REQUEST['target_module'] . '/EditView.php')) {
 		require_once('custom/' . $subpanelView);
 		$subpanelClass =  'Custom' . $target_module . 'SubpanelQuickEdit';
 		$sqc  = new $subpanelClass($target_module, $view);
-	} else if(file_exists($subpanelView)) {
+	} elseif(file_exists($subpanelView)) {
 		require_once($subpanelView);
 		$subpanelClass = $target_module . 'SubpanelQuickEdit';
 		$sqc  = new $subpanelClass($target_module, $view);

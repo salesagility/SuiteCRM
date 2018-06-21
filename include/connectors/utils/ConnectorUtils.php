@@ -155,7 +155,7 @@ class ConnectorUtils
 
            if(file_exists('custom/' . $ds['directory'] . '/mapping.php')) {
              require('custom/' . $ds['directory'] . '/mapping.php');
-           } else if(file_exists($ds['directory'] . '/mapping.php')) {
+           } elseif(file_exists($ds['directory'] . '/mapping.php')) {
              require($ds['directory'] . '/mapping.php');
            }
 
@@ -205,7 +205,7 @@ class ConnectorUtils
 
                if(file_exists('custom/' . $ds['directory'] . '/mapping.php')) {
                  require('custom/' . $ds['directory'] . '/mapping.php');
-               } else if(file_exists($ds['directory'] . '/mapping.php')) {
+               } elseif(file_exists($ds['directory'] . '/mapping.php')) {
                  require($ds['directory'] . '/mapping.php');
                }
 
@@ -790,7 +790,7 @@ class ConnectorUtils
         if(file_exists("custom/modules/Connectors/connectors/sources/{$dir}/language/{$lang}")) {
             require("custom/modules/Connectors/connectors/sources/{$dir}/language/{$lang}");
             return !empty($connector_strings) ? $connector_strings : array();
-        } else if(file_exists("modules/Connectors/connectors/sources/{$dir}/language/{$lang}")){
+        } elseif(file_exists("modules/Connectors/connectors/sources/{$dir}/language/{$lang}")){
             require("modules/Connectors/connectors/sources/{$dir}/language/{$lang}");
             return !empty($connector_strings) ? $connector_strings : array();
         } else {

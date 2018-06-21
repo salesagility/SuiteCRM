@@ -74,9 +74,9 @@ class SugarpdfFactory
         $path = '/sugarpdf/sugarpdf.'.$type.'.php';
         if(file_exists('custom/modules/'.$module.$path)){
             $sugarpdf = SugarpdfFactory::_buildFromFile('custom/modules/'.$module.$path, $bean, $sugarpdf_object_map, $type, $module);
-        }else if(file_exists('modules/'.$module.$path)){
+        }elseif(file_exists('modules/'.$module.$path)){
             $sugarpdf = SugarpdfFactory::_buildFromFile('modules/'.$module.$path, $bean, $sugarpdf_object_map, $type, $module);
-        }else if(file_exists('custom/include/Sugarpdf'.$path)){
+        }elseif(file_exists('custom/include/Sugarpdf'.$path)){
             $sugarpdf = SugarpdfFactory::_buildFromFile('custom/include/Sugarpdf'.$path, $bean, $sugarpdf_object_map, $type, $module);
         }else{
             //if the module does not handle this Sugarpdf, then check if Sugar handles it OOTB

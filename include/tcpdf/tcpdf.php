@@ -4465,7 +4465,7 @@ if (!class_exists('TCPDF', false)) {
 				} else {
 					$w = $h * $pixw / $pixh;
 				}
-			} else if ($resize) { // Added resize case
+			} elseif ($resize) { // Added resize case
                 // Note: The issue here is that $w and $h represent abstract sizes, we pass it in as pixels,
                 // but tcpdf treats it as document units.
                 $wratio = $pixw / $w;
@@ -4474,9 +4474,9 @@ if (!class_exists('TCPDF', false)) {
                 // Check if our image exceeds the boundaries of $w and $h
                 if ($wratio > 1 AND $hratio > 1) {
                     $favoredRatio = ($wratio > $hratio) ? $wratio : $hratio;
-                } else if ($wratio > 1) {
+                } elseif ($wratio > 1) {
                     $favoredRatio = $wratio;
-                } else if ($hratio > 1) {
+                } elseif ($hratio > 1) {
                     $favoredRatio = $hratio;
                 } else {
                     $favoredRatio = 1;
@@ -4542,7 +4542,7 @@ if (!class_exists('TCPDF', false)) {
 							$info = $this->_toJPEG($img);
 						}
 					}
-					else if ($type == 'jpeg') {
+					elseif ($type == 'jpeg') {
 						$info = $this->_parsejpeg($file);
 					}
 					else {

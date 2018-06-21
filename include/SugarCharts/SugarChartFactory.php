@@ -73,7 +73,7 @@ class SugarChartFactory
         if(file_exists('custom/' . $file))
         {
           require_once('custom/' . $file);
-        } else if(file_exists($file)) {
+        } elseif(file_exists($file)) {
           require_once($file);
         } else {
           $GLOBALS['log']->debug("using default engine include/SugarCharts/".$defaultEngine."/".$defaultEngine.$module.".php");

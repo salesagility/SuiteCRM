@@ -170,7 +170,7 @@ function commitLanguagePack($uninstall=false) {
         if( $f == "." || $f == ".." ){
             continue;
         }
-        else if( preg_match("/(.*)\.lang\.php\$/", $f, $match) ){
+        elseif( preg_match("/(.*)\.lang\.php\$/", $f, $match) ){
             $new_lang_name = $match[1];
         }
     }
@@ -1532,7 +1532,7 @@ function pullSilentInstallVarsIntoSession() {
     if( file_exists('config_si.php') ){
         require_once('config_si.php');
     }
-    else if( empty($sugar_config_si) ){
+    elseif( empty($sugar_config_si) ){
         die( $mod_strings['ERR_SI_NO_CONFIG'] );
     }
 

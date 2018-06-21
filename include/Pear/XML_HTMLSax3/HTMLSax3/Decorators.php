@@ -364,7 +364,7 @@ class XML_HTMLSax3_Escape_Stripper {
             $data = preg_replace($patterns,'',$data);
 
         // Check for XML CDATA sections (note: don't do both!)
-        } else if ( substr($data,0,1) == '[' ) {
+        } elseif ( substr($data,0,1) == '[' ) {
             $patterns = array(
                 '/^\[.*CDATA.*\[/s', // Opening CDATA
                 '/\].*\]$/s',       // Closing CDATA

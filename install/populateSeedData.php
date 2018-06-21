@@ -431,7 +431,7 @@ for($i=0; $i<$number_leads; $i++)
 			{
 				$lead->assigned_user_name = "seed_sarah";
 			}
-			else if($assigned_user_id == 7)
+			elseif($assigned_user_id == 7)
 			{
 				$lead->assigned_user_name = "seed_sally";
 			}

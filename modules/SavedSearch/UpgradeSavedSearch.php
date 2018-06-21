@@ -58,7 +58,7 @@ class UpgradeSavedSearch {
 			  	 if(file_exists("custom/modules/{$module}/metadata/searchdefs.php")) {
 			  	 	require("custom/modules/{$module}/metadata/searchdefs.php");
 			  	 	$field_map = $advanced ? $searchdefs[$module]['layout']['advanced_search'] : $searchdefs[$module]['layout']['basic_search'];
-			     }else if(file_exists("modules/{$module}/metadata/SearchFields.php")) {
+			     }elseif(file_exists("modules/{$module}/metadata/SearchFields.php")) {
 			  	 	require("modules/{$module}/metadata/SearchFields.php");
 			  	 	$field_map = $searchFields[$module];
 			  	 } else {
@@ -111,7 +111,7 @@ class UpgradeSavedSearch {
 			  	 $new_contents['searchFormTab'] = $advanced ? 'advanced_search' : 'basic_search';
 			  	 $content = base64_encode(serialize($new_contents));
 			  	 DBManagerFactory::getInstance()->query("UPDATE saved_search SET contents = '{$content}' WHERE id = '{$row['id']}'");
-			} else if($has_team_name_saved) {
+			} elseif($has_team_name_saved) {
 			     //Otherwise, if the boolean has_team_name_saved is set to true, we also need to parse (coming from 5.x)
 			  	 if(isset($contents['team_name_advanced'])) {
 			  	 	$team_results = DBManagerFactory::getInstance()->query("SELECT name FROM teams where id = '{$contents['team_name_advanced']}'");

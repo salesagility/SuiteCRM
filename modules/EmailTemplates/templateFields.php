@@ -128,7 +128,7 @@ function genDropDownJS2()
                 $dropdown .= "<option value='" . $key . "'>
 						" . $lblContactAndOthers . "
 		  	       </option>";
-            } else if (isset($app_list_strings['moduleListSingular'][$key])) {
+            } elseif (isset($app_list_strings['moduleListSingular'][$key])) {
                 $dropdown .= "<option value='" . $key . "'>
 						" . $app_list_strings['moduleListSingular'][$key] . "
 		  	       </option>";

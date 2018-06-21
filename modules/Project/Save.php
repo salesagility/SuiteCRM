@@ -80,7 +80,7 @@ if (isset($_REQUEST['save_type'])){
         $sugarbean->name = $_REQUEST['project_name'];
         $sugarbean->is_template = 0;
     }
-    else if ($_REQUEST['save_type'] == 'ProjectToTemplate'){
+    elseif ($_REQUEST['save_type'] == 'ProjectToTemplate'){
         $sugarbean->name = $_REQUEST['template_name'];
         $sugarbean->is_template = true;
     }

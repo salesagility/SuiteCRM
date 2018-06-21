@@ -68,7 +68,7 @@ function parsePanels($panels, $view) {
    	  	 foreach($row as $key=>$column) {
    	  	 	if(is_array($column) && (!isset($column['name']) || empty($column['name']))) {
    	  	 	    $emptyCount++;
-   	  	 	} else if(!is_array($column) && (!isset($column) || empty($column))) {
+   	  	 	} elseif(!is_array($column) && (!isset($column) || empty($column))) {
 				$emptyCount++;
    	  	 	}
    	  	 } //foreach
@@ -77,7 +77,7 @@ function parsePanels($panels, $view) {
    	  	 if($emptyCount == count($row)) {
    	  	 	unset($panels[$name][$rowCount]);
    	  	 	continue;
-   	  	 } else if(count($row) > 2) {
+   	  	 } elseif(count($row) > 2) {
    	  	    foreach($row as $key=>$column) {
    	  	        if(empty($column) || $column == '') {
    	  	           unset($panels[$name][$rowCount][$key]);

@@ -84,7 +84,7 @@ class M2MRelationship extends SugarRelationship
             return $results;
         }
         //Multiple links with same relationship name
-        else if( is_array($results) )
+        elseif( is_array($results) )
         {
             $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
             return $this->getMostAppropriateLinkedDefinition($results);
@@ -147,7 +147,7 @@ class M2MRelationship extends SugarRelationship
 			$this->addRow($dataToInsert);
     		$rhs->$rhsLinkName->addBean($lhs);
     		$this->callAfterAdd($lhs, $rhs, $lhsLinkName);
-    	} else if(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
+    	} elseif(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
 			$lhs->$lhsLinkName->addBean($rhs);			
 			$this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
@@ -670,7 +670,7 @@ class M2MRelationship extends SugarRelationship
     {
         if (!empty($this->def['table']))
             return $this->def['table'];
-        else if(!empty($this->def['join_table']))
+        elseif(!empty($this->def['join_table']))
             return $this->def['join_table'];
 
         return false;

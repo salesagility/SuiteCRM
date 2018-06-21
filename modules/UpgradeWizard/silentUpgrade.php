@@ -48,7 +48,7 @@ function build_argument_string($arguments=array()) {
    	   	  if($arg == '.')
    	   	  {
    	   	  	 $arg = getcwd();
-   	   	  } else if ($arg == '..') {
+   	   	  } elseif ($arg == '..') {
    	   	  	 $dir = getcwd();
 			 $arg = substr($dir, 0, strrpos($dir, DIRECTORY_SEPARATOR));
    	   	  }

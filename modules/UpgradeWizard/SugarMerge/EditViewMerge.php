@@ -419,7 +419,7 @@ class EditViewMerge{
 						'loc'=>$loc);
 				}
 			//if it's not set in the new fields then it was a custom field or an original field so we take the custom fields data and set the location source to custom
-			} else if(!isset($this->newFields[$field])){
+			} elseif(!isset($this->newFields[$field])){
 				$this->mergedFields[$field] = $data;
 				$this->mergedFields[$field]['loc']['source'] = 'custom';
 			} else {	
@@ -638,7 +638,7 @@ class EditViewMerge{
                                     $field_name = 'filename';
                                     $col['name'] = 'filename';
                                 }
-                            } else if ($field_name == 'filename') {
+                            } elseif ($field_name == 'filename') {
                                 $col = 'filename';
                             }
                         }

@@ -397,7 +397,7 @@ class InboundEmail extends SugarBean
                 if ($offset === "end") {
                     $firstMsg = $totalMsgs - (int)$pageSize;
                     $lastMsg = $totalMsgs;
-                } else if ($offset <= 0) {
+                } elseif ($offset <= 0) {
                     $firstMsg = 1;
                     $lastMsg = $firstMsg + (int)$pageSize;
                 } else {
@@ -409,7 +409,7 @@ class InboundEmail extends SugarBean
                 if($offset === "end") {
                     $firstMsg = 1;
                     $lastMsg = $firstMsg + (int)$pageSize;
-                } else if($offset <= 0) {
+                } elseif($offset <= 0) {
                     $firstMsg = $totalMsgs - (int)$pageSize;
                     $lastMsg = $totalMsgs;
                 } else {

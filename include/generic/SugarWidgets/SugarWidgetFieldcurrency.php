@@ -111,13 +111,13 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
 
         if(!empty($layout_def['column_key'])){
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
-        }else if(!empty($layout_def['fields'])){
+        }elseif(!empty($layout_def['fields'])){
             $field_def = $layout_def['fields'];
         }
         $record = '';
         if ($layout_def['table_key'] == 'self' && isset($layout_def['fields']['PRIMARYID']))
             $record = $layout_def['fields']['PRIMARYID'];
-        else if (isset($layout_def['fields'][strtoupper($layout_def['table_alias']."_id")])){
+        elseif (isset($layout_def['fields'][strtoupper($layout_def['table_alias']."_id")])){
             $record = $layout_def['fields'][strtoupper($layout_def['table_alias']."_id")];
         }
         if (!empty($record)) {

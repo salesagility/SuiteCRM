@@ -69,7 +69,7 @@ function preParse($panels, $view) {
 	   	  	 foreach($row as $key=>$column) {
 				if($this->matches($column, '/^duration_minutes$/')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = 'duration_hours';
-				} else if($this->matches($column, '/^time_start$/')) {
+				} elseif($this->matches($column, '/^time_start$/')) {
 				   $panels[$name][$rowCount][$key] = 'date_start';
 				}
 	   	  	 } //foreach
