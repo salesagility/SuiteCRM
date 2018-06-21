@@ -5,7 +5,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('data/SugarBean.php');
 
 // Contact is used to store customer information.
-class SecurityGroupUserRelationship extends SugarBean {
+class SecurityGroupUserRelationship extends SugarBean
+{
     // Stored fields
     var $id;
     var $securitygroup_id;

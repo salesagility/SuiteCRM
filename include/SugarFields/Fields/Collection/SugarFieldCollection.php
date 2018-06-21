@@ -38,7 +38,8 @@
  ********************************************************************************/
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
-class SugarFieldCollection extends SugarFieldBase {
+class SugarFieldCollection extends SugarFieldBase
+{
 	var $tpl_path;
 	
 	function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {

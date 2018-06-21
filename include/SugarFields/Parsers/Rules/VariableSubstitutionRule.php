@@ -51,7 +51,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class VariableSubstitutionRule extends BaseRule {
+class VariableSubstitutionRule extends BaseRule
+{
 
 function __construct() {
 

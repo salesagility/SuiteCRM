@@ -4,7 +4,8 @@
 
 include_once('include/utils.php');
 
-class jjwg_AreasController extends SugarController {
+class jjwg_AreasController extends SugarController
+{
 
     function action_area_edit_map() {
 

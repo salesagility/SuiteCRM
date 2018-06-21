@@ -44,7 +44,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * with the name ext_soap_hoovers would be ext/soap/hoovers.php
  * @api
  */
-class SourceFactory{
+class SourceFactory
+{
 
 	/**
 	 * Given a source param, load the correct source and return the object

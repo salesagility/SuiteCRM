@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
- class ConnectorRecord extends MergeRecord{
+ class ConnectorRecord extends MergeRecord
+{
 	var $object_name = 'ConnectorRecord';
     var $module_dir = 'Connector';
 

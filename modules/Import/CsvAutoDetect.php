@@ -85,7 +85,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/parsecsv.lib.php');
 
-class CsvAutoDetect {
+class CsvAutoDetect
+{
 
     protected $_parser = null;
 

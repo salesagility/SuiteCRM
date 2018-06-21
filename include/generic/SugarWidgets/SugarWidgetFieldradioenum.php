@@ -40,6 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class SugarWidgetFieldRadioEnum extends SugarWidgetFieldEnum {
+class SugarWidgetFieldRadioEnum extends SugarWidgetFieldEnum
+{
 
 }

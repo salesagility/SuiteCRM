@@ -46,7 +46,8 @@ require_once('service/core/SugarRestServiceImpl.php');
  * Base class for rest services
  *
  */
-class SugarRestService extends SugarWebService{
+class SugarRestService extends SugarWebService
+{
 	protected $implementationClass = 'SugarRestServiceImpl';
 	protected $restURL = "";
 	protected $registeredFunc = array();

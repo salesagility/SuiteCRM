@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/Favorites/Favorites.php');
 
-class FavoritesDashlet extends DashletGeneric {
+class FavoritesDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/Favorites/metadata/dashletviewdefs.php');

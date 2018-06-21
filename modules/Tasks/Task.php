@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 // Task is used to store customer information.
-class Task extends SugarBean {
+class Task extends SugarBean
+{
         var $field_name_map;
 
 	// Stored fields

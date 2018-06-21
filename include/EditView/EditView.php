@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Old EditView
  * @deprecated
  */
-class EditView {
+class EditView
+{
     /**
      * smarty object
      * @var object

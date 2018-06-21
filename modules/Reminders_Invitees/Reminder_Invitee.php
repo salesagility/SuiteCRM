@@ -41,7 +41,8 @@
  * Reminder_Invitee class
  *
  */
-class Reminder_Invitee extends Basic {
+class Reminder_Invitee extends Basic
+{
     var $name;
 
     var $new_schema = true;

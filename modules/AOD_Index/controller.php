@@ -24,7 +24,8 @@
  */
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-class AOD_IndexController extends SugarController {
+class AOD_IndexController extends SugarController
+{
 
     protected $action_remap = array('index'=>'indexdata');
 

@@ -43,7 +43,8 @@
  * This class serves as the base class for the notifier/observable pattern used
  * by the resource management framework.
  */
-class ResourceObserver {
+class ResourceObserver
+{
 
 var $module;
 var $limit;

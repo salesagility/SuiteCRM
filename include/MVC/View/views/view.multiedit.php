@@ -44,7 +44,8 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
 require_once('include/EditView/EditView2.php');
- class ViewMultiedit extends SugarView{
+ class ViewMultiedit extends SugarView
+{
  	var $type ='edit';
 
  	public function __construct(){

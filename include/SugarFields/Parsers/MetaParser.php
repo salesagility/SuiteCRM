@@ -49,7 +49,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * @author Collin Lee
  * @api
  */
-class MetaParser {
+class MetaParser
+{
 
 var $mPHPFile;
 var $mView;

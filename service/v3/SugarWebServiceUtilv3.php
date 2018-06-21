@@ -38,7 +38,8 @@
  ********************************************************************************/
 
 require_once('service/core/SoapHelperWebService.php');
-class SugarWebServiceUtilv3 extends SoapHelperWebServices {
+class SugarWebServiceUtilv3 extends SoapHelperWebServices
+{
 
     function get_name_value($field,$value)
     {

@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('soap/SoapErrorDefinitions.php');
-class SoapError{
+class SoapError
+{
 	var $name;
 	var $number;
 	var $description;

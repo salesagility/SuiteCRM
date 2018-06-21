@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class TabController{
+class TabController
+{
 
 var $required_modules = array('Home');
 

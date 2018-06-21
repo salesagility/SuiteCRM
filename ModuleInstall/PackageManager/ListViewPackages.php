@@ -39,7 +39,8 @@
 
  require_once('include/ListView/ListViewSmarty.php');
 
-class ListViewPackages extends ListViewSmarty{
+class ListViewPackages extends ListViewSmarty
+{
     var $secondaryDisplayColumns;
     /**
      * Constructor  Call ListViewSmarty

@@ -41,7 +41,8 @@
  */
 
 
-class AM_ProjectTemplates_sugar extends Basic {
+class AM_ProjectTemplates_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AM_ProjectTemplates';
 	var $object_name = 'AM_ProjectTemplates';

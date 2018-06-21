@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
  
- class ListCurrency{
+ class ListCurrency
+{
 	var $focus = null;
 	var $list = null;
 	var $javascript = '<script>';

@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract {
+class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
+{
 
 
 

@@ -46,7 +46,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class RelationshipHandler extends Relationship {
+class RelationshipHandler extends Relationship
+{
 
 	var $db;							//Database link by reference
 

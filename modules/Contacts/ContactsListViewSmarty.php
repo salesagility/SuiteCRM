@@ -3,7 +3,8 @@ require_once('include/ListView/ListViewSmarty.php');
 require_once('modules/AOS_PDF_Templates/formLetter.php');
 
 
-class ContactsListViewSmarty extends ListViewSmarty {
+class ContactsListViewSmarty extends ListViewSmarty
+{
 
 	function __construct(){
 

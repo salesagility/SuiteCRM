@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Generic formatter
  * @api
  */
-class default_formatter {
+class default_formatter
+{
 
    protected $_ss;
    protected $_component;

@@ -41,7 +41,8 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldBool extends SugarFieldBase {
+class SugarFieldBool extends SugarFieldBase
+{
 	/**
 	 *
 	 * @return The html for a drop down if the search field is not 'my_items_only' or a dropdown for all other fields.

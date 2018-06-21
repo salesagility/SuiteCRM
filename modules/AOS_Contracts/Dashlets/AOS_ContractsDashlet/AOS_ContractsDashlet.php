@@ -36,7 +36,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Contracts/AOS_Contracts.php');
 
-class AOS_ContractsDashlet extends DashletGeneric {
+class AOS_ContractsDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOS_Contracts/metadata/dashletviewdefs.php');

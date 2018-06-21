@@ -39,7 +39,8 @@
 
 define('PACKAGE_MANAGER_DOWNLOAD_SERVER', 'https://depot.sugarcrm.com/depot/');
 define('PACKAGE_MANAGER_DOWNLOAD_PAGE', 'download.php');
-class PackageManagerDownloader{
+class PackageManagerDownloader
+{
 
 	/**
 	 * Using curl we will download the file from the depot server

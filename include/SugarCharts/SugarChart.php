@@ -43,7 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Generic chart
  * @api
  */
-class SugarChart {
+class SugarChart
+{
 
 	private $db;
 	protected $ss;

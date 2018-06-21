@@ -38,7 +38,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class ModuleScanner{
+class ModuleScanner
+{
 	private $manifestMap = array(
 			'pre_execute'=>'pre_execute',
 			'install_mkdirs'=>'mkdir',

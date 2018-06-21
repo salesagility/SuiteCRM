@@ -17,7 +17,8 @@
 //  limitations under the License.
 //
 
-class FilterLZW {
+class FilterLZW
+{
     
     var $sTable = array();
     var $data = null;

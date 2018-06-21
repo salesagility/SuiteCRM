@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class Release extends SugarBean {
+class Release extends SugarBean
+{
 	// Stored fields
 	var $id;
 	var $deleted;

@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class ACLJSController{
+class ACLJSController
+{
 
 	public function __construct($module,$form='', $is_owner=false){
 

@@ -41,7 +41,8 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/TemplateSectionLine/TemplateSectionLine_sugar.php');
-class TemplateSectionLine extends TemplateSectionLine_sugar {
+class TemplateSectionLine extends TemplateSectionLine_sugar
+{
 	
 	function __construct(){
 		parent::__construct();

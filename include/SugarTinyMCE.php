@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * PHP wrapper class for Javascript driven TinyMCE WYSIWYG HTML editor
  */
-class SugarTinyMCE {
+class SugarTinyMCE
+{
 	var $jsroot = "include/javascript/tiny_mce/";
 	var $customConfigFile = 'custom/include/tinyButtonConfig.php';
 	var $customDefaultConfigFile = 'custom/include/tinyMCEDefaultConfig.php';

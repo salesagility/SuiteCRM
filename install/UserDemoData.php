@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class UserDemoData {
+class UserDemoData
+{
 	var $_user;
 	var $_large_scale_test;
 	var $guids = array(

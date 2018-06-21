@@ -11,7 +11,8 @@
 // NB UNITS - Works in pixels as main units - converting to PDF units when outputing to PDF string
 // and on returning size
 
-class SVG {
+class SVG
+{
 
 	var $svg_gradient;	//	array - contient les infos sur les gradient fill du svg classé par id du svg
 	var $svg_shadinglist;	//	array - contient les ids des objet shading

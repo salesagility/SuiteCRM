@@ -2,7 +2,8 @@
 
 require_once __DIR__ . '/../TemplateSampleService.php';
 
-class smpl_Lead_Sample{
+class smpl_Lead_Sample
+{
 		function getType() {
 			return 'Leads';
 		}

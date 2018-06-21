@@ -47,7 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class Call extends SugarBean {
+class Call extends SugarBean
+{
 	var $field_name_map;
 	// Stored fields
 	var $id;

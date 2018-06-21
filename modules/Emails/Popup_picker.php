@@ -51,7 +51,8 @@ global $theme;
 
 
 
-class Popup_Picker {
+class Popup_Picker
+{
 	/*
 	 *
 	 */

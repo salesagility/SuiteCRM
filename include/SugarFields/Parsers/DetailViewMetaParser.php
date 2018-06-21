@@ -56,7 +56,8 @@ require_once('include/SugarFields/Parsers/MetaParser.php');
  *
  * @author Collin Lee
  */
-class DetailViewMetaParser extends MetaParser {
+class DetailViewMetaParser extends MetaParser
+{
 
 function __construct() {
    $this->mView = 'DetailView';

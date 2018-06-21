@@ -42,7 +42,8 @@
  * This helper handles the rest of the fields for the Users Edit and Detail views.
  * There are a lot of fields on those views that do not map directly to being used on the metadata based UI, so they are handled here.
  */
-class UserViewHelper {
+class UserViewHelper
+{
     /**
      * The smarty template handler for the template
      * @var SugarSmarty

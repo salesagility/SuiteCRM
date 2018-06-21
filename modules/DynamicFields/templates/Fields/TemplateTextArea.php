@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
-class TemplateTextArea extends TemplateText{
+class TemplateTextArea extends TemplateText
+{
 	var $type = 'text';
 	var $len = '';
 

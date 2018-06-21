@@ -43,7 +43,8 @@ require_once('include/EditView/EditView2.php');
  * Quick create form in the subpanel
  * @api
  */
-class SubpanelQuickCreate{
+class SubpanelQuickCreate
+{
     public $defaultProcess = true;
 
     /**

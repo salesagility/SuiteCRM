@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class CampaignLog extends SugarBean {
+class CampaignLog extends SugarBean
+{
 
     var $table_name = 'campaign_log';
     var $object_name = 'CampaignLog';

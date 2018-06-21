@@ -45,7 +45,8 @@ require_once('include/connectors/sources/default/source.php');
  * REST generic connector
  * @api
  */
-abstract class ext_rest extends source{
+abstract class ext_rest extends source
+{
 
 	protected $_url;
 

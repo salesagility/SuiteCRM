@@ -1,6 +1,7 @@
 <?php
 
-class parseCSV {
+class parseCSV
+{
 
 /*
 

@@ -1,6 +1,7 @@
 <?php
 
-class form {
+class form
+{
 
 var $mpdf = null;
 

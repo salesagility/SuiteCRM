@@ -46,7 +46,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
      * ListView for the subpanel- list of many objects
      * @api
      */
-    class ListViewSubPanel extends ListView {
+    class ListViewSubPanel extends ListView
+{
 
         protected $smartyTemplate;
         protected $smartyTemplatePath;

@@ -45,7 +45,8 @@ require_once('include/EditView/EditView.php');
  * QuickCreate - minimal object creation form
  * @api
  */
-class QuickCreate extends EditView {
+class QuickCreate extends EditView
+{
     /**
      * True if the create being populated via an AJAX call?
      */

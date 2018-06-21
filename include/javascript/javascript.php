@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
  * Description:  Creates the runtime database connection.
  ********************************************************************************/
-class javascript{
+class javascript
+{
 	var $formname = 'form';
 	var $script = '';
 	var $sugarbean = null;

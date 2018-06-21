@@ -19,7 +19,8 @@
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
-class Gantt {
+class Gantt
+{
 
     private $start_date;
     private $end_date;

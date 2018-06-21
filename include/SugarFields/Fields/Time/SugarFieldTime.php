@@ -39,7 +39,8 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldTime extends SugarFieldBase {
+class SugarFieldTime extends SugarFieldBase
+{
 
     function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
         // Create Smarty variables for the Calendar picker widget

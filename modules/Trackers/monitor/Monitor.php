@@ -44,7 +44,8 @@ require_once('modules/Trackers/Trackable.php');
 
 define('MAX_SESSION_LENGTH', 36);
 
-class Monitor implements Trackable {
+class Monitor implements Trackable
+{
 
     var $metricsFile;
     var $name;

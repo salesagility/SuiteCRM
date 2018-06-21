@@ -57,7 +57,8 @@ nusoap-general@lists.sourceforge.net
 
 * @access public 
 */
-class nusoap_wsdlcache {
+class nusoap_wsdlcache
+{
 	/**
 	 *	@var resource
 	 *	@access private
@@ -246,6 +247,7 @@ class nusoap_wsdlcache {
 /**
  * For backward compatibility
  */
-class wsdlcache extends nusoap_wsdlcache {
+class wsdlcache extends nusoap_wsdlcache
+{
 }
 ?>

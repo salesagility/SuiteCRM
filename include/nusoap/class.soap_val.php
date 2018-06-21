@@ -55,7 +55,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access   public
 */
-class soapval extends nusoap_base {
+class soapval extends nusoap_base
+{
 	/**
 	 * The XML element name
 	 *

@@ -44,7 +44,8 @@
  */
 
 
-class AOD_Index_sugar extends Basic {
+class AOD_Index_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOD_Index';
 	var $object_name = 'AOD_Index';

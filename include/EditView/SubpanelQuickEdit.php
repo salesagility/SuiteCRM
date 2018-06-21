@@ -45,7 +45,8 @@ require_once('include/EditView/EditView2.php');
  * Quick edit form in the subpanel
  * @api
  */
-class SubpanelQuickEdit{
+class SubpanelQuickEdit
+{
 	var $defaultProcess = true;
 
 	function __construct($module, $view='QuickEdit', $proccessOverride = false){

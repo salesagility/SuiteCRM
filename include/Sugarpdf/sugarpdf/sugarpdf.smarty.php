@@ -50,7 +50,8 @@ require_once('include/Sugarpdf/Sugarpdf.php');
  * @author bsoufflet
  *
  */
-class SugarpdfSmarty extends Sugarpdf{
+class SugarpdfSmarty extends Sugarpdf
+{
     
     /**
      * 

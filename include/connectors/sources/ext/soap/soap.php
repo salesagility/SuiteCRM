@@ -48,7 +48,8 @@ require_once('include/nusoap/nusoap.php');
  * a getList and getItem method override to return results from the connector
  * @api
  */
-abstract class ext_soap extends source {
+abstract class ext_soap extends source
+{
 
 	protected $_client;
 

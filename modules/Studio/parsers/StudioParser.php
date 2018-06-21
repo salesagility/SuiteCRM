@@ -47,7 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * interface for studio parsers
  */
 
-class StudioParser {
+class StudioParser
+{
 	var $positions = array ();
 	var $rows = array ();
 	var $cols = array ();

@@ -42,7 +42,8 @@
 
 require_once("include/SugarCharts/JsChart.php");
 
-class Jit extends JsChart {
+class Jit extends JsChart
+{
 	
 	var $supports_image_export = true;
 	var $print_html_legend_pdf = true;

@@ -2,7 +2,8 @@
 
 require_once('include/ListView/ListViewSmarty.php');
 
-class ProspectsListViewSmarty extends ListViewSmarty {
+class ProspectsListViewSmarty extends ListViewSmarty
+{
 
     function __construct() {
 

@@ -51,7 +51,8 @@ require_once('modules/UpgradeWizard/SugarMerge/EditViewMerge.php');
  * This class extends the EditViewMerge - since the meta data is relatively the same the only thing that needs to be changed is the parameter for viewdefs
  *
  */
-class DetailViewMerge extends EditViewMerge{
+class DetailViewMerge extends EditViewMerge
+{
 	/**
 	 * Enter the name of the parameter used in the $varName for example in editviewdefs and detailviewdefs it is 'EditView' and 'DetailView' respectively - $viewdefs['EditView']
 	 *

@@ -43,7 +43,8 @@ require_once('include/connectors/sources/SourceFactory.php');
 require_once('include/connectors/ConnectorFactory.php');
 require_once('include/MVC/Controller/SugarController.php');
 
-class ConnectorsController extends SugarController {
+class ConnectorsController extends SugarController
+{
 
 	var $admin_actions = array('ConnectorSettings', 'DisplayProperties', 'MappingProperties', 'ModifyMapping', 'ModifyDisplay', 'ModifyProperties',
 	                           'ModifySearch', 'SearchProperties', 'SourceProperties',

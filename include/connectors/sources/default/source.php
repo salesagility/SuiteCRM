@@ -43,7 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * source is the parent class of any source object.
  * @api
  */
-abstract class source{
+abstract class source
+{
 	/**
 	 * The name of an wrapper to use if the class wants to provide an override
 	 */

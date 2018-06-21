@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/SugarFeed/feedLogicBase.php');
 
 
-class LeadFeed extends FeedLogicBase {
+class LeadFeed extends FeedLogicBase
+{
     var $module = 'Leads';
     function pushFeed($bean, $event, $arguments){
         global $locale;

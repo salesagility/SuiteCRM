@@ -48,7 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class UnifiedSearchAdvanced {
+class UnifiedSearchAdvanced
+{
 
     var $query_string = '';
     

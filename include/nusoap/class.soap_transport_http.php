@@ -64,7 +64,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access public
 */
-class soap_transport_http extends nusoap_base {
+class soap_transport_http extends nusoap_base
+{
 
 	var $url = '';
 	var $uri = '';

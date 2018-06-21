@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SearchForm/SearchForm2.php');
 
-class EmployeesSearchForm extends SearchForm {
+class EmployeesSearchForm extends SearchForm
+{
     /**
      * This builds an EmployeesSearchForm from a classic search form.
      */

@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class MBLanguage{
+class MBLanguage
+{
 		var $iTemplates = array();
 		var $templates = array();
 		function __construct( $name, $path, $label, $key_name){

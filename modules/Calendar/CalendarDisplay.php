@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class CalendarDisplay {
+class CalendarDisplay
+{
 
 	/**
 	 * colors of items on calendar

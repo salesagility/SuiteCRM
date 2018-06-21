@@ -7,7 +7,8 @@ require_once('modules/jjwg_Markers/jjwg_Markers_sugar.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
 
-class jjwg_Markers extends jjwg_Markers_sugar {
+class jjwg_Markers extends jjwg_Markers_sugar
+{
 
     /**
      * @var settings array

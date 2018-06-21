@@ -40,7 +40,8 @@
  * @version    2.0.0 modified
  */
 
-class XMLSecurityKey {
+class XMLSecurityKey
+{
     const TRIPLEDES_CBC = 'http://www.w3.org/2001/04/xmlenc#tripledes-cbc';
     const AES128_CBC = 'http://www.w3.org/2001/04/xmlenc#aes128-cbc';
     const AES192_CBC = 'http://www.w3.org/2001/04/xmlenc#aes192-cbc';
@@ -517,7 +518,8 @@ class XMLSecurityKey {
 }
 
 
-class XMLSecurityDSig {
+class XMLSecurityDSig
+{
     const XMLDSIGNS = 'http://www.w3.org/2000/09/xmldsig#';
     const SHA1 = 'http://www.w3.org/2000/09/xmldsig#sha1';
     const SHA256 = 'http://www.w3.org/2001/04/xmlenc#sha256';
@@ -1332,7 +1334,8 @@ class XMLSecurityDSig {
 }
 
 
-class XMLSecEnc {
+class XMLSecEnc
+{
     const template = "<xenc:EncryptedData xmlns:xenc='http://www.w3.org/2001/04/xmlenc#'>
    <xenc:CipherData>
       <xenc:CipherValue></xenc:CipherValue>

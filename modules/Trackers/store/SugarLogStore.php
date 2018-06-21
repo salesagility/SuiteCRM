@@ -47,7 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/Trackers/store/Store.php');
 
-class SugarLogStore implements Store {
+class SugarLogStore implements Store
+{
     
     public function flush($monitor) {
        $metrics = $monitor->getMetrics();

@@ -1,6 +1,7 @@
 <?php
 
-class meter {
+class meter
+{
 
 
 function __construct() {

@@ -44,7 +44,8 @@
  */
 
 
-class FP_events_sugar extends Basic {
+class FP_events_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'FP_events';
 	var $object_name = 'FP_events';

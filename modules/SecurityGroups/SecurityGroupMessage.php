@@ -1,7 +1,8 @@
 <?PHP
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-class SecurityGroupMessage extends Basic {
+class SecurityGroupMessage extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'SecurityGroups';
 	var $object_name = 'SecurityGroupMessage';

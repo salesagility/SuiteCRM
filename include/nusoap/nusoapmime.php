@@ -188,7 +188,8 @@ require_once('Mail/mimePart.php');
 
 * @access   public
 */
-class nusoapclientmime extends nusoapclient {
+class nusoapclientmime extends nusoapclient
+{
 	/**
 	 * @var array Each array element in the return is an associative array with keys
 	 * data, filename, contenttype, cid
@@ -403,7 +404,8 @@ class nusoapclientmime extends nusoapclient {
 
 * @access   public
 */
-class nusoapservermime extends soap_server {
+class nusoapservermime extends soap_server
+{
 	/**
 	 * @var array Each array element in the return is an associative array with keys
 	 * data, filename, contenttype, cid

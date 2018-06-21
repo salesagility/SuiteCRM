@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class AjaxCompose{
+class AjaxCompose
+{
 	var $sections = array();
 	var $crumbs = array('Home'=>'ModuleBuilder.main("Home")',/* 'Assistant'=>'Assistant.mbAssistant.xy=Array("650, 40"); Assistant.mbAssistant.show();'*/);
 	function addSection($name, $title, $content, $action='activate'){

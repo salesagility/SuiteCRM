@@ -21,7 +21,8 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-class ProjectController extends SugarController {
+class ProjectController extends SugarController
+{
     //Loads the gantt view
     function action_view_GanttChart() {
         $this->view = 'GanttChart';

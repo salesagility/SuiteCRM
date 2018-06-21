@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/Audit/field_assoc.php');
 
-class Audit extends SugarBean {
+class Audit extends SugarBean
+{
 	var $module_dir = "Audit";
 	var $object_name = "Audit";
 

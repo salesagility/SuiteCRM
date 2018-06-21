@@ -35,7 +35,8 @@
  * Config file reading class
  * @package Smarty
  */
-class Config_File {
+class Config_File
+{
     /**#@+
      * Options
      * @var boolean

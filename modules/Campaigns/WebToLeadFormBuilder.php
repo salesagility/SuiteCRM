@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-class WebToLeadFormBuilder {
+class WebToLeadFormBuilder
+{
 
     // ---- html outputs ----
 

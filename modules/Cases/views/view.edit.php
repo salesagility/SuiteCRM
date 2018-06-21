@@ -39,7 +39,8 @@
 require_once('include/MVC/View/views/view.edit.php');
 require_once('include/SugarTinyMCE.php');
 
-class CasesViewEdit extends ViewEdit {
+class CasesViewEdit extends ViewEdit
+{
 
     function __construct(){
         parent::__construct();

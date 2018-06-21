@@ -43,7 +43,8 @@ require_once('include/tabs.php');
  * Old search form
  * @api
  */
-class SearchForm {
+class SearchForm
+{
    /**
      * SearchForm Template to use (xtpl)
      * @var string

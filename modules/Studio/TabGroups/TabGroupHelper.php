@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 require_once('modules/Administration/Common.php');
-class TabGroupHelper{
+class TabGroupHelper
+{
     var $modules = array();
     function getAvailableModules($lang = ''){
        static $availableModules = array();

@@ -46,7 +46,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('modules/Trackers/store/Store.php');
-class TrackerSessionsDatabaseStore implements Store {
+class TrackerSessionsDatabaseStore implements Store
+{
 
     public function flush($monitor) {
         $db = DBManagerFactory::getInstance();

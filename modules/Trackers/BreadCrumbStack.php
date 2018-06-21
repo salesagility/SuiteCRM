@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class BreadCrumbStack {
+class BreadCrumbStack
+{
 
    /**
 	* Maintain an ordered list of items in the breadcrumbs

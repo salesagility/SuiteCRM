@@ -52,7 +52,8 @@ require_once('modules/UpgradeWizard/SugarMerge/ListViewMerge.php');
  *
  */
 
-class SubpanelMerge extends ListViewMerge{
+class SubpanelMerge extends ListViewMerge
+{
 	protected $varName = 'subpanel_layout';
 	protected $viewDefs = 'SubPanel';
 	/**

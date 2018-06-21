@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SugarFeed extends Basic {
+class SugarFeed extends Basic
+{
     var $new_schema = true;
     var $module_dir = 'SugarFeed';
     var $object_name = 'SugarFeed';

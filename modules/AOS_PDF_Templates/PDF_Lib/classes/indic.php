@@ -1,6 +1,7 @@
 <?php
 
-class indic {
+class indic
+{
 
 function indic() {
 

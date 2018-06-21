@@ -38,7 +38,8 @@
  ********************************************************************************/
 
 require_once 'modules/AOR_Scheduled_Reports/lib/Cron/includeCron.php';
-class AOR_Scheduled_Reports extends basic {
+class AOR_Scheduled_Reports extends basic
+{
 
     var $new_schema = true;
     var $module_dir = 'AOR_Scheduled_Reports';

@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once("include/InlineEditing/InlineEditing.php");
 
-class HomeController extends SugarController{
+class HomeController extends SugarController
+{
 
 
     public function action_getEditFieldHTML(){

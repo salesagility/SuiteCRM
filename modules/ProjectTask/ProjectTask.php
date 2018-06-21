@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class ProjectTask extends SugarBean {
+class ProjectTask extends SugarBean
+{
 	// database table columns
 	var $id;
 	var $date_entered;

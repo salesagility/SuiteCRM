@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class TemplateParentType extends TemplateText{
+class TemplateParentType extends TemplateText
+{
     var $max_size = 25;
     var $type='parent_type';
     

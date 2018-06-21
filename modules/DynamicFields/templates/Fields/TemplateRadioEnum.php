@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 require_once('include/utils/array_utils.php');
-class TemplateRadioEnum extends TemplateEnum{
+class TemplateRadioEnum extends TemplateEnum
+{
 	var $type = 'radioenum';
 	
 	function get_html_edit(){

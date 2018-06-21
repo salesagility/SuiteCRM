@@ -53,7 +53,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 require_once('include/SugarObjects/forms/FormBase.php');
 
-abstract class PersonFormBase extends FormBase {
+abstract class PersonFormBase extends FormBase
+{
 
 var $moduleName;
 var $objectName;

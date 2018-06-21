@@ -132,7 +132,8 @@ $GLOBALS['_transient']['static']['nusoap_base']['globalDebugLevel'] = 9;
 
 * @access   public
 */
-class nusoap_base {
+class nusoap_base
+{
 	/**
 	 * Identification for HTTP headers.
 	 *

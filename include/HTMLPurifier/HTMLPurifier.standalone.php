@@ -8092,7 +8092,8 @@ class HTMLPurifier_PropertyListIterator extends FilterIterator
  * behaviour caused by repeatedly shuffling data from the input stack
  * to the output stack and back.
  */
-class HTMLPurifier_Queue {
+class HTMLPurifier_Queue
+{
     private $input;
     private $output;
 

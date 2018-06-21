@@ -318,7 +318,8 @@ $GLOBALS['_transient']['static']['nusoap_base']['globalDebugLevel'] = 0;
 
 * @access   public
 */
-class nusoap_base {
+class nusoap_base
+{
 	/**
 	 * Identification for HTTP headers.
 	 *
@@ -1452,7 +1453,8 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 
 * @access public
 */
-class nusoap_fault extends nusoap_base {
+class nusoap_fault extends nusoap_base
+{
 	/**
 	 * The fault code (client|server)
 	 * @var string
@@ -1524,7 +1526,8 @@ class nusoap_fault extends nusoap_base {
 /**
  * Backward compatibility
  */
-class soap_fault extends nusoap_fault {
+class soap_fault extends nusoap_fault
+{
 }
 
 ?><?php
@@ -1741,7 +1744,8 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 
 * @access   public
 */
-class nusoap_xmlschema extends nusoap_base  {
+class nusoap_xmlschema extends nusoap_base
+{
 
 	// files
 	var $schema = '';
@@ -2702,7 +2706,8 @@ class nusoap_xmlschema extends nusoap_base  {
 /**
  * Backward compatibility
  */
-class XMLSchema extends nusoap_xmlschema {
+class XMLSchema extends nusoap_xmlschema
+{
 }
 
 ?><?php
@@ -2921,7 +2926,8 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 
 * @access   public
 */
-class soapval extends nusoap_base {
+class soapval extends nusoap_base
+{
 	/**
 	 * The XML element name
 	 *
@@ -3224,7 +3230,8 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 
 * @access public
 */
-class soap_transport_http extends nusoap_base {
+class soap_transport_http extends nusoap_base
+{
 
 	var $url = '';
 	var $uri = '';
@@ -4730,7 +4737,8 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 
 * @access   public
 */
-class nusoap_server extends nusoap_base {
+class nusoap_server extends nusoap_base
+{
 	/**
 	 * HTTP headers of request
 	 * @var array
@@ -5849,7 +5857,8 @@ class nusoap_server extends nusoap_base {
 /**
  * Backward compatibility
  */
-class soap_server extends nusoap_server {
+class soap_server extends nusoap_server
+{
 }
 
 ?><?php
@@ -6066,7 +6075,8 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 
 * @access public
 */
-class wsdl extends nusoap_base {
+class wsdl extends nusoap_base
+{
 	// URL or filename of the root of this WSDL
     var $wsdl;
     // define internal arrays of bindings, ports, operations, messages, etc.
@@ -8202,7 +8212,8 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 
 * @access   public
 */
-class nusoap_parser extends nusoap_base {
+class nusoap_parser extends nusoap_base
+{
 
 	var $xml = '';
 	var $xml_encoding = '';
@@ -8826,7 +8837,8 @@ class nusoap_parser extends nusoap_base {
 /**
  * Backward compatibility
  */
-class soap_parser extends nusoap_parser {
+class soap_parser extends nusoap_parser
+{
 }
 
 ?><?php
@@ -9054,7 +9066,8 @@ r354 - 2004-08-02 23:00:37 -0700 (Mon, 02 Aug 2004) - sugarjacob - Adding Soap
 
 * @access   public
 */
-class nusoap_client extends nusoap_base  {
+class nusoap_client extends nusoap_base
+{
 
 	var $username = '';				// Username for HTTP authentication
 	var $password = '';				// Password for HTTP authentication
@@ -10046,7 +10059,8 @@ if (!extension_loaded('soap')) {
 	/**
 	 *	For backwards compatiblity, define soapclient unless the PHP SOAP extension is loaded.
 	 */
-	class soapclient extends nusoap_client {
+	class soapclient extends nusoap_client
+{
 	}
 }
 

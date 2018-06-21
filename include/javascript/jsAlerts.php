@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once("include/utils/db_utils.php");
 
-class jsAlerts{
+class jsAlerts
+{
 	var $script;
 
     public function __construct() {

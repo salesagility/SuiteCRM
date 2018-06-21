@@ -41,7 +41,8 @@
  * Generic filter
  * @api
  */
-class default_filter {
+class default_filter
+{
 
 var $_component;
 

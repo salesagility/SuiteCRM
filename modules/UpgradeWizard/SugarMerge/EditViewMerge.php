@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * This is the base class that all other SugarMerge objects extend 
  *
  */
-class EditViewMerge{
+class EditViewMerge
+{
 	/**
 	 * The variable name that is used with the file for example in editviewdefs and detailviewdefs it is $viewdefs
 	 *

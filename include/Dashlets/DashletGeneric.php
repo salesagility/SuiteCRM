@@ -46,7 +46,8 @@ require_once('include/generic/LayoutManager.php');
  * Generic Dashlet class
  * @api
  */
-class DashletGeneric extends Dashlet {
+class DashletGeneric extends Dashlet
+{
    /**
      * Fields that are searchable
      * @var array

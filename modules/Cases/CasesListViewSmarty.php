@@ -2,7 +2,8 @@
 
 require_once('include/ListView/ListViewSmarty.php');
 
-class CasesListViewSmarty extends ListViewSmarty {
+class CasesListViewSmarty extends ListViewSmarty
+{
 
     function __construct() {
 

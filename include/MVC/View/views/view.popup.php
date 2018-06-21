@@ -39,7 +39,8 @@
 
 include_once __DIR__ . '/../../../../include/utils/layout_utils.php';
 
-class ViewPopup extends SugarView{
+class ViewPopup extends SugarView
+{
     /**
      * @var string
      */

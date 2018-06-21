@@ -52,7 +52,8 @@ require_once('include/json_config.php');
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class CampaignsViewDetail extends ViewDetail {
+class CampaignsViewDetail extends ViewDetail
+{
 
  	function __construct(){
 

@@ -38,7 +38,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class Meeting extends SugarBean {
+class Meeting extends SugarBean
+{
 	// Stored fields
 	var $id;
 	var $date_entered;

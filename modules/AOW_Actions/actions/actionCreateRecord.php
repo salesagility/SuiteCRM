@@ -40,7 +40,8 @@
 
 
 require_once 'modules/AOW_Actions/actions/actionBase.php';
-class actionCreateRecord extends actionBase {
+class actionCreateRecord extends actionBase
+{
 
     /**
      * @return array

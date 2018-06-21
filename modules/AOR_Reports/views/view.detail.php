@@ -25,7 +25,8 @@
 require_once 'include/MVC/View/views/view.detail.php';
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
-class AOR_ReportsViewDetail extends ViewDetail {
+class AOR_ReportsViewDetail extends ViewDetail
+{
 
     private function getReportParameters(){
         if(!$this->bean->id){

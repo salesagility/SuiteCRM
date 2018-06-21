@@ -32,7 +32,8 @@
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_Trim {
+class XML_HTMLSax3_Trim
+{
     /**
     * Original handler object
     * @var object
@@ -88,7 +89,8 @@ class XML_HTMLSax3_Trim {
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_CaseFolding {
+class XML_HTMLSax3_CaseFolding
+{
     /**
     * Original handler object
     * @var object
@@ -145,7 +147,8 @@ class XML_HTMLSax3_CaseFolding {
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_Linefeed {
+class XML_HTMLSax3_Linefeed
+{
     /**
     * Original handler object
     * @var object
@@ -187,7 +190,8 @@ class XML_HTMLSax3_Linefeed {
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_Tab {
+class XML_HTMLSax3_Tab
+{
     /**
     * Original handler object
     * @var object
@@ -230,7 +234,8 @@ class XML_HTMLSax3_Tab {
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_Entities_Parsed {
+class XML_HTMLSax3_Entities_Parsed
+{
     /**
     * Original handler object
     * @var object
@@ -282,7 +287,8 @@ if (version_compare(phpversion(), '4.3', '<') && !function_exists('html_entity_d
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_Entities_Unparsed {
+class XML_HTMLSax3_Entities_Unparsed
+{
     /**
     * Original handler object
     * @var object
@@ -325,7 +331,8 @@ class XML_HTMLSax3_Entities_Unparsed {
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_Escape_Stripper {
+class XML_HTMLSax3_Escape_Stripper
+{
     /**
     * Original handler object
     * @var object

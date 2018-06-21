@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class DashletsDialog {
+class DashletsDialog
+{
 	var $dashlets = array();
 
     function getDashlets($category='') {

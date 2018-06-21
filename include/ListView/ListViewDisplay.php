@@ -45,7 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/ListView/ListViewData.php');
 require_once('include/MassUpdate.php');
 
-class ListViewDisplay {
+class ListViewDisplay
+{
     static $listViewCounter = 0;
 
 	var $show_mass_update_form = false;

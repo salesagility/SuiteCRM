@@ -39,7 +39,8 @@
 
 require_once('include/ytree/Tree.php');
 require_once('include/ytree/Node.php');
-class MBPackageTree{
+class MBPackageTree
+{
 
 	function __construct(){
 		$this->tree = new Tree('package_tree');

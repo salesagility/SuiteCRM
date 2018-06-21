@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 require_once('modules/Studio/DropDowns/DropDownHelper.php');
-class EditDropDownWizard extends StudioWizard {
+class EditDropDownWizard extends StudioWizard
+{
 	var $wizard = 'EditDropDownWizard';
     function welcome(){
 		return 'You can rename the global dropdown list here.';

@@ -38,7 +38,8 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class updateDependencies {
+class updateDependencies
+{
 
     function update_dependency(&$bean, $event, $arguments){
         //Get all tasks that are dependant on the current task being saved.

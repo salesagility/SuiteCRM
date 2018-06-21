@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * DetailView - display single record
  * @api
  */
-class DetailView extends ListView {
+class DetailView extends ListView
+{
 
 	var $list_row_count = null;
 	var $return_to_list_only=false;

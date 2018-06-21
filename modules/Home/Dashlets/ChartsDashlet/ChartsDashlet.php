@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/Dashlet.php');
 
 
-class ChartsDashlet extends Dashlet {
+class ChartsDashlet extends Dashlet
+{
     var $width = '400';
     var $height = '480';
     var $report_id;

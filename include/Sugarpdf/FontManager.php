@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once("include/Sugarpdf/sugarpdf_config.php");
-class FontManager{
+class FontManager
+{
     /**
      * Contain all the errors generated during the process of FontManager
      * @var String[]

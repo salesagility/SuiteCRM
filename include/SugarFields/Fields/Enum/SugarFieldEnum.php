@@ -39,7 +39,8 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldEnum extends SugarFieldBase {
+class SugarFieldEnum extends SugarFieldBase
+{
    
 	function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
 		if(!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html')

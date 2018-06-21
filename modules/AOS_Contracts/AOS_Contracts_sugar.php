@@ -31,7 +31,8 @@
  */
 
 
-class AOS_Contracts_sugar extends Basic {
+class AOS_Contracts_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOS_Contracts';
 	var $object_name = 'AOS_Contracts';

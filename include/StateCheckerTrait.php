@@ -51,7 +51,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author SalesAgility
  */
-trait StateCheckerTrait {
+trait StateCheckerTrait
+{
    
     /**
      *

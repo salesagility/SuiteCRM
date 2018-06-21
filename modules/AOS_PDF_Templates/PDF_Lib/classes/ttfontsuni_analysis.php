@@ -2,7 +2,8 @@
 
 require_once(_MPDF_PATH.'classes/ttfontsuni.php');
 
-class TTFontFile_Analysis EXTENDS TTFontFile {
+class TTFontFile_Analysis EXTENDS TTFontFile
+{
 
 	// Used to get font information from files in directory
 	function extractCoreInfo($file, $TTCfontID=0) {

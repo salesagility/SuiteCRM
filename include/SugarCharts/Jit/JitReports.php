@@ -42,7 +42,8 @@
 
 require_once("include/SugarCharts/Jit/Jit.php");
 
-class JitReports extends Jit {
+class JitReports extends Jit
+{
 	
 	private $processed_report_keys = array();
 	

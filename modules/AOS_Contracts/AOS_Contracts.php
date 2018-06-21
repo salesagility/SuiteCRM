@@ -29,7 +29,8 @@
  */
 require_once('modules/AOS_Contracts/AOS_Contracts_sugar.php');
 
-class AOS_Contracts extends AOS_Contracts_sugar {
+class AOS_Contracts extends AOS_Contracts_sugar
+{
 
 	function __construct(){
 

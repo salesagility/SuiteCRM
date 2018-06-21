@@ -25,7 +25,8 @@
 
 require_once __DIR__ . '/../../AOW_Actions/actions/actionBase.php';
 require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
-class actionSendEmail extends actionBase {
+class actionSendEmail extends actionBase
+{
 
     private $emailableModules = array();
     

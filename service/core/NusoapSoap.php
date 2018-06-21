@@ -46,7 +46,8 @@ require('include/nusoap/nusoap.php');
  * all NUSOAP call by passing the client's request to NUSOAP server and seding response back to client
  * @api
  */
-abstract class NusoapSoap extends SugarSoapService{
+abstract class NusoapSoap extends SugarSoapService
+{
 	/**
 	 * This is the constructor. It creates an instance of NUSOAP server.
 	 *

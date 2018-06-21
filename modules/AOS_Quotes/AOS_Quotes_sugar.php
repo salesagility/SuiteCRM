@@ -22,7 +22,8 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-class AOS_Quotes_sugar extends Basic {
+class AOS_Quotes_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOS_Quotes';
 	var $object_name = 'AOS_Quotes';

@@ -46,7 +46,8 @@ require_once('service/core/SugarWebServiceImpl.php');
 require_once('SugarWebServiceUtilv3.php');
 
 
-class SugarWebServiceImplv3 extends SugarWebServiceImpl {
+class SugarWebServiceImplv3 extends SugarWebServiceImpl
+{
 
     public function __construct()
     {

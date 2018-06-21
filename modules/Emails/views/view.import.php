@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-class EmailsViewImport extends ViewEdit {
+class EmailsViewImport extends ViewEdit
+{
 
     /**
      * @var Email $bean

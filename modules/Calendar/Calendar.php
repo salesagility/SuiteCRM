@@ -46,7 +46,8 @@ require_once('include/utils/activity_utils.php');
 require_once('modules/Calendar/CalendarUtils.php');
 require_once('modules/Calendar/CalendarActivity.php');
 
-class Calendar {
+class Calendar
+{
 
 	public $activityList = array("FP_events" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
 								 "Meetings" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),

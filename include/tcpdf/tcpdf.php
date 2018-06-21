@@ -207,7 +207,8 @@ if (!class_exists('TCPDF', false)) {
 	* @link http://www.tcpdf.org
 	* @license http://www.gnu.org/copyleft/lesser.html LGPL
 	*/
-	class TCPDF {
+	class TCPDF
+{
 
 		// protected or Protected properties
 
