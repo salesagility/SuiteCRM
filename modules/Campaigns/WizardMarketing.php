@@ -66,8 +66,7 @@ $campaign_focus = new Campaign();
 if (isset($_REQUEST['campaign_id']) && !empty($_REQUEST['campaign_id'])) {
     $campaign_focus->retrieve($_REQUEST['campaign_id']);
 }else{
-    $campaignModule = BeanFactory::getBean('Campaign');
-    $campaignList = $campaignModule->get_list();
+    $campaignList = $campaign_focus->get_full_list();
     LoggerManager::getLogger()->error('[DEBUG 1111] called URL: ' . $_SERVER['REQUEST_URI']);
     LoggerManager::getLogger()->error('[DEBUG 1112] requested campaignL: ' . $_REQUEST['campaign_id']);
     LoggerManager::getLogger()->error('[DEBUG 1113] database campaigns: ' . print_r($camapaignList, true));
@@ -812,5 +811,5 @@ if(!empty($_REQUEST['func'])) {
 if (!isset($mod_strings)) {
     global $mod_strings;
 }
-LoggerManager::getLogger()->error('[DEBUG 1114] mod_strings: ' . print_r($mod_strings));
+LoggerManager::getLogger()->error('[DEBUG 1114] mod_strings: ' . print_r($mod_strings, true));
       $ss->display('modules/Campaigns/WizardMarketing.html');
