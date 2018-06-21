@@ -4,6 +4,7 @@ namespace Api\V8\Param;
 use Api\V8\Param\Options as ParamOption;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class GetRelationshipParams extends BaseParam
 {
@@ -26,9 +27,9 @@ class GetRelationshipParams extends BaseParam
     /**
      * @return string
      */
-    public function getRelationshipName()
+    public function getLinkedFieldName()
     {
-        return $this->parameters['relationshipName'];
+        return $this->parameters['linkFieldName'];
     }
 
     /**
@@ -37,14 +38,6 @@ class GetRelationshipParams extends BaseParam
     public function getSourceBean()
     {
         return $this->parameters['sourceBean'];
-    }
-
-    /**
-     * @return \SugarBean
-     */
-    public function getRelatedBean()
-    {
-        return $this->parameters['relatedBean'];
     }
 
     /**
@@ -61,10 +54,6 @@ class GetRelationshipParams extends BaseParam
         );
 
         $resolver
-            ->setRequired('relationshipName')
-            ->setAllowedTypes('relationshipName', ['string']);
-
-        $resolver
             ->setDefined('sourceBean')
             ->setDefault('sourceBean', function (Options $options) {
                 return $this->beanManager->getBeanSafe(
@@ -74,11 +63,7 @@ class GetRelationshipParams extends BaseParam
             })
             ->setAllowedTypes('sourceBean', [\SugarBean::class]);
 
-        $resolver
-            ->setDefined('relatedBean')
-            ->setDefault('relatedBean', function (Options $options) {
-                return $this->beanManager->newBeanSafe($options->offsetGet('relationshipName'));
-            })
-            ->setAllowedTypes('relatedBean', [\SugarBean::class]);
+        // dependency on sourceBean field
+        $this->setOptions($resolver, [ParamOption\LinkFieldName::class]);
     }
 }

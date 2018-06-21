@@ -85,18 +85,23 @@ class ModuleService
      */
     public function getRecords(GetModulesParams $params, Request $request)
     {
+        // this whole method should split into separated classes later
         $module = $params->getModuleName();
+        $orderBy = $params->getSort();
+        $where = $params->getFilter();
         $fields = $params->getFields();
+
+        $rowCount = $this->countRecords($module, $where);
         $size = $params->getPage()->getSize();
         $number = $params->getPage()->getNumber();
         $offset = $number !== 0 ? ($number - 1) * $size : $number;
-        $orderBy = $params->getSort();
-        $where = $params->getFilter();
+        $limit = $size > $rowCount ? BeanManager::DEFAULT_ALL_RECORDS : $size;
 
         $beanListResponse = $this->beanManager->getList($module)
             ->orderBy($orderBy)
             ->where($where)
             ->offset($offset)
+            ->limit($limit)
             ->max($size)
             ->fetch();
 
@@ -115,11 +120,10 @@ class ModuleService
         $response->setData($data);
 
         // pagination
-        if ($number !== BeanManager::DEFAULT_OFFSET) {
-            // this will be split into separated classed later
-            $totalPages = ceil($beanListResponse->getRowCount() / $size);
+        if ($data && $limit !== BeanManager::DEFAULT_ALL_RECORDS) {
+            $totalPages = ceil($rowCount / $size);
 
-            $paginationMeta = $this->paginationHelper->getPaginationMeta($totalPages);
+            $paginationMeta = $this->paginationHelper->getPaginationMeta($totalPages, count($data));
             $paginationLinks = $this->paginationHelper->getPaginationLinks($request, $totalPages, $number);
 
             $response->setMeta($paginationMeta);
@@ -241,5 +245,27 @@ class ModuleService
         $dataResponse->setRelationships($this->relationshipHelper->getRelationships($bean, $path));
 
         return $dataResponse;
+    }
+
+    /**
+     * @param string $module
+     * @param string $where
+     *
+     * @return integer
+     */
+    public function countRecords($module, $where)
+    {
+        $db = $this->beanManager->getDb();
+        $rowCount = $db->fetchRow(
+            $db->query(
+                sprintf(
+                    "SELECT COUNT(*) AS cnt FROM %s WHERE %s",
+                    $this->beanManager->newBeanSafe($module)->getTableName(),
+                    $where
+                )
+            )
+        )["cnt"];
+
+        return intval($rowCount);
     }
 }

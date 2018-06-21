@@ -82,7 +82,7 @@ class RelationshipController extends BaseController
         try {
             $jsonResponse = $this->relationshipService->deleteRelationship($params);
 
-            return $this->generateResponse($response, $jsonResponse, 201);
+            return $this->generateResponse($response, $jsonResponse, 200);
         } catch (\Exception $exception) {
             return $this->generateErrorResponse($response, $exception, 400);
         }

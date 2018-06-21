@@ -2752,10 +2752,12 @@ class InboundEmail extends SugarBean
             if($oe->id != ""){
                 $stored_options['from_name'] = trim($oe->smtp_from_name);
                 $stored_options['from_addr'] = trim($oe->smtp_from_addr);
+                isValidEmailAddress($stored_options['from_addr']);
             }
             else{
                 $stored_options['from_name'] = trim($_REQUEST['from_name']);
                 $stored_options['from_addr'] = trim($_REQUEST['from_addr']);
+                isValidEmailAddress($stored_options['from_addr']);
             }
             $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr']);
 
@@ -3361,6 +3363,7 @@ class InboundEmail extends SugarBean
                 // get FROM ADDRESS
                 if (!empty($storedOptions['from_addr'])) {
                     $from_addr = $storedOptions['from_addr'];
+                    isValidEmailAddress($from_addr);
                 } else {
                     $rAddr = $this->db->query('SELECT value FROM config WHERE name = \'fromaddress\'', true);
                     if (is_resource($rAddr)) {
@@ -3368,6 +3371,7 @@ class InboundEmail extends SugarBean
                     }
                     if (!empty($aAddr['value'])) {
                         $from_addr = $aAddr['value'];
+                        isValidEmailAddress($from_addr);
                     } else {
                         $from_addr = '';
                     }
@@ -3375,6 +3379,7 @@ class InboundEmail extends SugarBean
 
                 $replyToName = (!empty($storedOptions['reply_to_name'])) ? from_html($storedOptions['reply_to_name']) : $from_name;
                 $replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $from_addr;
+                isValidEmailAddress($replyToAddr);
 
 
                 if (!empty($email->reply_to_email)) {
@@ -3382,6 +3387,7 @@ class InboundEmail extends SugarBean
                 } else {
                     $to[0]['email'] = $email->from_addr;
                 }
+                isValidEmailAddress($to[0]['email']);
                 // handle to name: address, prefer reply-to
                 if (!empty($email->reply_to_name)) {
                     $to[0]['display'] = $email->reply_to_name;
@@ -3409,6 +3415,7 @@ class InboundEmail extends SugarBean
                 $reply->bcc_addrs_arr = array();
                 $reply->from_name = $from_name;
                 $reply->from_addr = $from_addr;
+                isValidEmailAddress($reply->from_addr);
                 $reply->name = $et->subject;
                 $reply->description = $et->body;
                 $reply->description_html = $et->body_html;
@@ -3510,6 +3517,7 @@ class InboundEmail extends SugarBean
                 $contactAddr = $email->reply_to_email;
             } else {
                 $contactAddr = $email->from_addr;
+                isValidEmailAddress($contactAddr);
             }
 
             $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
@@ -3558,6 +3566,7 @@ class InboundEmail extends SugarBean
 				$fromAddress = "";
 				if (!empty($this->stored_options)) {
 					$fromAddress = $storedOptions['from_addr'];
+                                        isValidEmailAddress($fromAddress);
 					$fromName = from_html($storedOptions['from_name']);
 					$replyToName = (!empty($storedOptions['reply_to_name']))? from_html($storedOptions['reply_to_name']) :$fromName ;
 					$replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $fromAddress;
@@ -3597,6 +3606,7 @@ class InboundEmail extends SugarBean
 
                 $email->email2init();
                 $email->from_addr = $email->from_addr_name;
+                isValidEmailAddress($email->from_addr);
                 $email->to_addrs = $email->to_addrs_names;
                 $email->cc_addrs = $email->cc_addrs_names;
                 $email->bcc_addrs = $email->bcc_addrs_names;
@@ -3618,6 +3628,7 @@ class InboundEmail extends SugarBean
                 $reply->bcc_addrs_arr = array();
                 $reply->from_name = $fromName;
                 $reply->from_addr = $fromAddress;
+                isValidEmailAddress($reply->from_addr);
                 $reply->reply_to_name = $replyToName;
                 $reply->reply_to_addr = $replyToAddr;
                 $reply->name = $et->subject;
@@ -3633,8 +3644,10 @@ class InboundEmail extends SugarBean
         } else {
             if (!empty($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
+                isValidEmailAddress($contactAddr);
             } else {
                 $contactAddr = $email->from_addr;
+                isValidEmailAddress($contactAddr);
             }
             $this->handleAutoresponse($email, $contactAddr);
         }
@@ -3661,8 +3674,10 @@ class InboundEmail extends SugarBean
         // give precedence to REPLY-TO above FROM
         if (!empty($email->reply_to_email)) {
             $contactAddr = $email->reply_to_email;
+            isValidEmailAddress($contactAddr);
         } else {
             $contactAddr = $email->from_addr;
+            isValidEmailAddress($contactAddr);
         }
 
         // Samir Gandhi : 12/06/07
@@ -4970,6 +4985,7 @@ class InboundEmail extends SugarBean
             $email->from_name = $this->handleMimeHeaderDecode($header->fromaddress);
             $email->from_addr_name = $email->from_name;
             $email->from_addr = $this->convertImapToSugarEmailAddress($header->from);
+            isValidEmailAddress($email->from_addr);
             if (!empty($header->cc)) {
                 $email->cc_addrs = $this->convertImapToSugarEmailAddress($header->cc);
             }
@@ -5065,8 +5081,10 @@ class InboundEmail extends SugarBean
                 ////	SEND AUTORESPONSE
                 if (!empty($email->reply_to_email)) {
                     $contactAddr = $email->reply_to_email;
+                    isValidEmailAddress($contactAddr);
                 } else {
                     $contactAddr = $email->from_addr;
+                    isValidEmailAddress($contactAddr);
                 }
                 if (!$this->isMailBoxTypeCreateCase()) {
                     $this->handleAutoresponse($email, $contactAddr);
@@ -5241,6 +5259,7 @@ class InboundEmail extends SugarBean
             $email->from_name = $this->handleMimeHeaderDecode($header->fromaddress);
             $email->from_addr_name = $email->from_name;
             $email->from_addr = $this->convertImapToSugarEmailAddress($header->from);
+            isValidEmailAddress($email->from_addr);
             if (!empty($header->cc)) {
                 $email->cc_addrs = $this->convertImapToSugarEmailAddress($header->cc);
             }
@@ -5332,8 +5351,10 @@ class InboundEmail extends SugarBean
                 ////	SEND AUTORESPONSE
                 if (!empty($email->reply_to_email)) {
                     $contactAddress = $email->reply_to_email;
+                    isValidEmailAddress($contactAddress);
                 } else {
                     $contactAddress = $email->from_addr;
+                    isValidEmailAddress($contactAddress);
                 }
                 if (!$this->isMailBoxTypeCreateCase()) {
                     $this->handleAutoresponse($email, $contactAddress);
@@ -5488,6 +5509,7 @@ class InboundEmail extends SugarBean
                 $email->from_name = $this->handleMimeHeaderDecode($parsedFullHeader->fromaddress);
                 $email->from_addr_name = $email->from_name;
                 $email->from_addr = $this->convertImapToSugarEmailAddress($email->from_name);
+                isValidEmailAddress($email->from_addr);
 
                 if(
                     in_array('cc_addrs', $fields_selected)
@@ -7231,6 +7253,7 @@ eoq;
         $return = array();
         $meta['email']['name'] = to_html($this->email->name);
         $meta['email']['from_addr'] = (!empty($this->email->from_addr_name)) ? to_html($this->email->from_addr_name) : to_html($this->email->from_addr);
+        isValidEmailAddress($meta['email']['from_addr']);
         $meta['email']['toaddrs'] = (!empty($this->email->to_addrs_names)) ? to_html($this->email->to_addrs_names) : to_html($this->email->to_addrs);
         $meta['email']['cc_addrs'] = to_html($this->email->cc_addrs_names);
         $meta['email']['reply_to_addr'] = to_html($this->email->reply_to_addr);

@@ -47,7 +47,7 @@ class CreateModuleCest
         $I->canSeeResponseContainsJson($response);
         $I->assertGreaterThanOrEqual(2, count($I->grabDataFromResponseByJsonPath('$.data.attributes')[0]));
 
-        $I->deleteAccount($id);
+        $I->deleteBean('accounts', $id);
     }
 
     /**
@@ -84,7 +84,7 @@ class CreateModuleCest
         $I->seeResponseEquals(json_encode($expectedResult, JSON_PRETTY_PRINT));
 
         if (isset($id)) {
-            $I->deleteAccount($id);
+            $I->deleteBean('accounts', $id);
         }
     }
 

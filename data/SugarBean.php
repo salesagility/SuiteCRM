@@ -3231,6 +3231,7 @@ class SugarBean
                 }
                 
                 $notify_mail->From = $adminSettingsNotifyFromAddress;
+                isValidEmailAddress($notify_mail->From);
                 $notify_mail->FromName = (empty($admin->settings['notify_fromname']))
                     ? "" : $admin->settings['notify_fromname'];
             } else {
@@ -3238,6 +3239,7 @@ class SugarBean
                 $fromAddress = $current_user->emailAddress->getReplyToAddress($current_user);
                 $fromAddress = !empty($fromAddress) ? $fromAddress : $admin->settings['notify_fromaddress'];
                 $notify_mail->From = $fromAddress;
+                isValidEmailAddress($notify_mail->From);
                 //Use the users full name is available otherwise default to system name
                 $from_name = !empty($admin->settings['notify_fromname']) ? $admin->settings['notify_fromname'] : "";
                 $from_name = !empty($current_user->full_name) ? $current_user->full_name : $from_name;

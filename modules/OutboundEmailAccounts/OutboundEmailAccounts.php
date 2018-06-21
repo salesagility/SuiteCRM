@@ -111,6 +111,7 @@ HTML;
 		$admin = new Administration();
 		$admin->retrieveSettings();
 		$adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
+                isValidEmailAddress($adminNotifyFromAddress);
 		$adminNotifyFromName = $admin->settings['notify_fromname'];
 		$html = <<<HTML
 			<input type="button" class="button" value="{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}" onclick="testOutboundSettings();">

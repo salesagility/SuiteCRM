@@ -99,5 +99,80 @@ class CampaignsCest
         $detailView->clickActionMenuItem('Delete');
         $detailView->acceptPopup();
         $listView->waitForListViewVisible();
+        $listView->clearFilterButton();
+    }
+
+    /**
+     * @param \AcceptanceTester $I
+     * @param \Step\Acceptance\DetailView $detailView
+     * @param \Step\Acceptance\ListView $listView
+     * @param \Step\Acceptance\Campaigns $campaign
+     * @param \Step\Acceptance\InboundEmail $inboundEmail
+     * @param \Step\Acceptance\EmailMan $emailMan
+     * @param \Helper\WebDriverHelper $webDriverHelper
+     *
+     * As administrative user I want to create a Newsletter campaign so that I can test
+     * the standard fields.
+     */
+    public function testScenarioCreateNewsletterCampaign(
+        \AcceptanceTester $I,
+        \Step\Acceptance\DetailView $detailView,
+        \Step\Acceptance\ListView $listView,
+        \Step\Acceptance\Campaigns $campaign,
+        \Step\Acceptance\EmailMan $emailMan,
+        \Step\Acceptance\InboundEmail $inboundEmail,
+        \Helper\WebDriverHelper $webDriverHelper
+    ) {
+        $I->wantTo('Create Newsletter Campaign');
+
+        $I->amOnUrl(
+            $webDriverHelper->getInstanceURL()
+        );
+
+        $I->loginAsAdmin();
+
+        // Setup email settings
+        $emailMan->createEmailSettings();
+        $inboundEmail->createBounceEmail();
+
+        // Navigate to campaigns list-view
+        $campaign->gotoCampaigns();
+        $listView->waitForListViewVisible();
+
+        // Create Newsletter campaign
+        $this->fakeData->seed($this->fakeDataSeed);
+        $name = 'Test_'. $this->fakeData->firstname();
+        $campaign->createNewletterCampaign($name);
+
+        // Check that campaign is ready to send
+        $campaign->gotoCampaigns();
+        $listView->waitForListViewVisible();
+        $listView->clickFilterButton();
+        $I->click('Quick Filter');
+        $I->wait(3);
+        $I->fillField('name_basic', $name);
+        $I->click('#search_form_submit');
+        $listView->waitForListViewVisible();
+        $listView->clickNameLink($name);
+        $detailView->clickActionMenuItem('Launch Wizard');
+        $I->wait(5);
+        $I->dontSee('You cannot send a marketing email until your subscription list has at least one entry. You can populate your list after finishing.');
+        $campaign->gotoCampaigns();
+        $listView->clearFilterButton();
+
+        // Delete campaign
+        $listView->waitForListViewVisible();
+        $listView->clickFilterButton();
+        $I->click('Quick Filter');
+        $I->wait(3);
+        $I->fillField('name_basic', $name);
+        $I->click('#search_form_submit');
+        $listView->waitForListViewVisible();
+        $listView->clickNameLink($name);
+        $detailView->waitForDetailViewVisible();
+        $detailView->clickActionMenuItem('Delete');
+        $detailView->acceptPopup();
+        $listView->waitForListViewVisible();
+        $listView->clearFilterButton();
     }
 }

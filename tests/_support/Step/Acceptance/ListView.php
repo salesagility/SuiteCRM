@@ -28,6 +28,19 @@ class ListView  extends Tester
     }
 
     /**
+     * Clears the list-view filter
+     */
+    public function clearFilterButton()
+    {
+        $I = $this;
+        $I->clickFilterButton();
+        $I->click('Quick Filter');
+        $I->fillField('#name_basic', '');
+        $I->click('Search', '.submitButtons');
+        $I->waitForListViewVisible();
+    }
+
+    /**
      * Wait for for the list view to become visible
      */
 

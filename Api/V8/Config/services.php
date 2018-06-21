@@ -12,6 +12,7 @@ return
         },
         BeanManager::class => function (Container $container) {
             return new BeanManager(
+                $container->get(DBManager::class),
                 $container->get('beanAliases')
             );
         },
