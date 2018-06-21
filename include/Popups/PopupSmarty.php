@@ -280,6 +280,10 @@ class PopupSmarty extends ListViewSmarty{
 		}
 		$this->th->ss->assign('LIST_HEADER', get_form_header($GLOBALS['mod_strings']['LBL_LIST_FORM_TITLE'], '', false));
 		$this->th->ss->assign('SEARCH_FORM_HEADER', get_form_header($GLOBALS['mod_strings']['LBL_SEARCH_FORM_TITLE'], '', false));
+
+        $themeObject = SugarThemeRegistry::current();
+        $this->th->ss->assign("STYLE_JS", ob_get_contents() . $themeObject->getJS());
+
 		$str = $this->th->displayTemplate($this->seed->module_dir, $this->view, $this->tpl);
 		return $str;
 	}
