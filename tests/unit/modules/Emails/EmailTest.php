@@ -540,30 +540,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($actual));
     }
 
-    public function testu_get_clear_form_js()
-    {
-        self::markTestIncomplete('environment dependency (CRLF?)');
-        $email = new Email();
-
-        //with empty params
-        $expected = "		<script type=\"text/javascript\" language=\"JavaScript\"><!-- Begin
-			function clear_form(form) {
-				var newLoc = \"index.php?action=\" + form.action.value + \"&module=\" + form.module.value + \"&query=true&clear_query=true\";
-				if(typeof(form.advanced) != \"undefined\"){
-					newLoc += \"&advanced=\" + form.advanced.value;
-				}
-				document.location.href= newLoc;
-			}
-		
-        $actual = $email->u_get_clear_form_js('', '', '');
-        $this->assertSame($expected, $actual, "exp:[" . print_r($expected, true) . "] act:[" . print_r($actual, true) . "]");
-
-        //with valid params
-        $expected = "\n		<script type=\"text/javascript\" language=\"JavaScript\"><!-- Begin\n			function clear_form(form) {\n				var newLoc = \"index.php?action=\" + form.action.value + \"&module=\" + form.module.value + \"&query=true&clear_query=true&type=out&assigned_user_id=1\";\n				if(typeof(form.advanced) != \"undefined\"){\n					newLoc += \"&advanced=\" + form.advanced.value;\n				}\n				document.location.href= newLoc;\n			}\n		//  End --></script>";
-        $actual = $email->u_get_clear_form_js('out', '', '1');
-        $this->assertSame($expected, $actual, "exp:[" . print_r($expected, true) . "] act:[" . print_r($actual, true) . "]");
-    }
-
     public function testpickOneButton()
     {
         
