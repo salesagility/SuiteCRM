@@ -68,7 +68,6 @@ class EmailsCest
         \Codeception\Scenario $scenario
     ) {
         // TODO: Refactor
-        $scenario->skip('skipped test');
 
         $I->wantTo('View the HTML of two emails');
 
