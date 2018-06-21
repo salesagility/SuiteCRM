@@ -298,7 +298,8 @@ class Call extends SugarBean {
 		// First, get the list of IDs.
 		$query = "SELECT contact_id as id from calls_contacts where call_id='$this->id' AND deleted=0";
 
-		return $this->build_related_list($query, new Contact());
+                $contact = new Contact();
+		return $this->build_related_list($query, $contact);
 	}
 
 
@@ -512,7 +513,10 @@ class Call extends SugarBean {
 		global $timedate;
 		$today = $timedate->nowDb();
 		$nextday = $timedate->asDbDate($timedate->getNow()->modify("+1 day"));
-		$mergeTime = $call_fields['DATE_START']; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
+                if(!isset($call_fields['DATE_START'])) {
+                    LoggerManager::getLogger()->warn('Call has not DATE_START field for list view data.');
+                }
+		$mergeTime = isset($call_fields['DATE_START']) ? $call_fields['DATE_START'] : null; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if( $date_db	< $today){
 			if($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held')   
@@ -521,7 +525,13 @@ class Call extends SugarBean {
 			}   
 			else   
 			{    
-				$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";   
+                            if(!isset($call_fields['DATE_START'])) {
+                                LoggerManager::getLogger()->warn('Call field has not START_DATE when trying to get list view data.');
+                                $dateStart = null;
+                            } else {
+                                $dateStart = $call_fields['DATE_START'];
+                            }
+				$call_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";   
 			}
 		}else if($date_db < $nextday){
 			$call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";

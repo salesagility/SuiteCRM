@@ -144,7 +144,7 @@ class EmailsController extends SugarController
             $toAddressIds = explode(',', rtrim($_REQUEST['ids'], ','));
             foreach ($toAddressIds as $id){
                 $destinataryBean = BeanFactory::getBean($_REQUEST['targetModule'], $id);
-                if($destinataryBean && $destinataryBean->email1){
+                if($destinataryBean){
                     $idLine = '<input type="hidden" class="email-compose-view-to-list" ';
                     $idLine .= 'data-record-module="' . $_REQUEST['targetModule'] . '" ';
                     $idLine .= 'data-record-id="' . $id . '" ';
@@ -153,6 +153,14 @@ class EmailsController extends SugarController
                     echo $idLine;
                 }
             }
+        }
+        if (isset($_REQUEST['relatedModule']) && isset($_REQUEST['relatedId'])){
+            $relateBean = BeanFactory::getBean($_REQUEST['relatedModule'], $_REQUEST['relatedId']);
+            $relateLine = '<input type="hidden" class="email-relate-target" ';
+            $relateLine .= 'data-relate-module="' . $_REQUEST['relatedModule'] . '" ';
+            $relateLine .= 'data-relate-id="' . $_REQUEST['relatedId'] . '" ';
+            $relateLine .= 'data-relate-name="' . $relateBean->name . '">';
+            echo $relateLine;
         }
     }
 
@@ -175,21 +183,21 @@ class EmailsController extends SugarController
 
             $this->bean->handleMultipleFileAttachments();
 
-        // parse and replace bean variables
-        $this->bean = $this->replaceEmailVariables($this->bean, $request);
+            // parse and replace bean variables
+            $this->bean = $this->replaceEmailVariables($this->bean, $request);
 
-        if ($this->bean->send()) {
-            $this->bean->status = 'sent';
-            $this->bean->save();
-        } else {
-            // Don't save status if the email is a draft.
+            if ($this->bean->send()) {
+                $this->bean->status = 'sent';
+                $this->bean->save();
+            } else {
+                // Don't save status if the email is a draft.
                 // We need to ensure that drafts will still show
                 // in the list view
                 if ($this->bean->status !== 'draft') {
                     $this->bean->save();
                 }
                 $this->bean->status = 'send_error';
-        }
+            }
 
             $this->view = 'sendemail';
         } else {
@@ -200,14 +208,12 @@ class EmailsController extends SugarController
             );
 
             $this->view = 'ajax';
-            $response['errors'] = array(
+            $response['errors'] = [
                 'type' => get_class($this->bean),
                 'id' => $this->bean->id,
                 'title' => $app_strings['LBL_EMAIL_ERROR_SENDING']
-            );
+            ];
             echo json_encode($response);
-            // log out the user
-            session_destroy();
         }
     }
 
@@ -450,8 +456,9 @@ class EmailsController extends SugarController
                 'type' => 'system',
                 'id' => $system->id,
                 'attributes' => array(
-                    'from' => $system->mail_smtpuser,
-                    'name' => $system->name,
+                    'reply_to' => $system->smtp_from_addr,
+                    'from' => $system->smtp_from_addr,
+                    'name' => $system->smtp_from_name,
                     'oe' => $system->mail_smtpuser,
                 ),
                 'prepend' => false,
@@ -544,7 +551,7 @@ class EmailsController extends SugarController
      */
     public function action_DisplayDetailView()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $emails = BeanFactory::getBean("Emails");
         
         $inboundEmailRecordIdQuoted = $db->quote($_REQUEST['inbound_email_record']);
@@ -564,7 +571,7 @@ class EmailsController extends SugarController
      */
     public function action_ImportAndShowDetailView()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         if (isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = new InboundEmail();
             $inboundEmail->retrieve($db->quote($_REQUEST['inbound_email_record']), true, true);
@@ -603,7 +610,7 @@ class EmailsController extends SugarController
 
     public function action_ImportFromListView()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         if (isset($_REQUEST['inbound_email_record']) && !empty($_REQUEST['inbound_email_record'])) {
             $inboundEmail = BeanFactory::getBean('InboundEmail', $db->quote($_REQUEST['inbound_email_record']));
@@ -725,7 +732,7 @@ class EmailsController extends SugarController
             throw new InvalidArgumentException('EmailController::composeBean $mode argument is COMPOSE_BEAN_MODE_UNDEFINED');
         }
 
-        global $db;
+        $db = DBManagerFactory::getInstance();
         global $mod_strings;
 
                 
@@ -757,6 +764,7 @@ class EmailsController extends SugarController
         if ($mode === self::COMPOSE_BEAN_MODE_REPLY_TO || $mode === self::COMPOSE_BEAN_MODE_REPLY_TO_ALL) {
             // Move email addresses from the "from" field to the "to" field
             $this->bean->to_addrs = $this->bean->from_addr;
+            isValidEmailAddress($this->bean->to_addrs);
             $this->bean->to_addrs_names = $this->bean->from_addr_name;
         } else {
             if ($mode === self::COMPOSE_BEAN_MODE_FORWARD) {
@@ -965,8 +973,21 @@ class EmailsController extends SugarController
             $isFromAddressTheSame = true;
         }
 
-        return $hasAccessToInboundEmailAccount === true &&
-            $isFromAddressTheSame === true &&
-            $isAllowedToUseOutboundEmail === true;
+        $error = false;
+        if ($hasAccessToInboundEmailAccount !== true) {
+            $error = 'Email Error: Not authorized to use Inbound Account "' . $requestedInboundEmail->name . '"';
+        }
+        if ($isFromAddressTheSame !== true) {
+            $error = 'Email Error: Requested From address mismatch "'
+                . $requestedInboundEmail->name . '" / "' . $requestedEmail->from_addr . '"';
+        }
+        if ($isAllowedToUseOutboundEmail !== true) {
+            $error = 'Email Error: Not authorized to use Outbound Account "' . $outboundEmailAccount->name . '"';
+        }
+        if ($error !== false) {
+            $GLOBALS['log']->security($error);
+            return false;
+        }
+        return true;
     }
 }

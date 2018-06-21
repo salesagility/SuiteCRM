@@ -232,7 +232,7 @@ class Project extends SugarBean {
 	function build_generic_where_clause ($the_query_string)
 	{
 		$where_clauses = array();
-		$the_query_string = $GLOBALS['db']->quote($the_query_string);
+		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 		array_push($where_clauses, "project.name LIKE '%$the_query_string%'");
 
 		$the_where = '';
@@ -335,7 +335,7 @@ class Project extends SugarBean {
 		$focus = $this; 
 
         //--- check if project template is same or changed.
-        $new_template_id = property_exists($focus->am_projecttemplates_project_1am_projecttemplates_ida) ?
+        $new_template_id = property_exists($focus, 'am_projecttemplates_project_1am_projecttemplates_ida') ?
             $focus->am_projecttemplates_project_1am_projecttemplates_ida : null;
         $current_template_id = "";
 

@@ -2084,6 +2084,8 @@ $app_strings = array(
 
     'LBL_CONFIRM_DISREGARD_DRAFT_TITLE' => 'Disregard draft',
     'LBL_CONFIRM_DISREGARD_DRAFT_BODY' => 'This operation will delete this email, do you want to continue?',
+    'LBL_CONFIRM_DISREGARD_EMAIL_TITLE' => 'Exit compose dialog',
+    'LBL_CONFIRM_DISREGARD_EMAIL_BODY' => 'By leaving the compose dialog all entered information will be lost, do you wish to continue?',
     'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_TITLE' => 'Apply an Email Template',
     'LBL_CONFIRM_APPLY_EMAIL_TEMPLATE_BODY' => 'This operation will override the email Body and Subject fields, do you want to continue?',
 
@@ -2123,6 +2125,30 @@ $app_list_strings['project_priority_options'] = array(
     'Medium' => 'Medium',
     'Low' => 'Low',
 );
+
+//GDPR lawful basis options
+$app_list_strings['lawful_basis_dom'] = array(
+    '' => '',
+    'consent' => 'Consent',
+    'contract' => 'Contract',
+    'legal_obligation' => 'Legal obligation',
+    'protection_of_interest' => 'Protection of interest',
+    'public_interest' => 'Public interest',
+    'legitimate_interest' => 'Legitimate interest',
+    'withdrawn' => 'Withdrawn',
+);
+//End GDPR lawful basis options
+
+//GDPR lawful basis source options
+$app_list_strings['lawful_basis_source_dom'] = array(
+    '' => '',
+    'website' => 'Website',
+    'phone' => 'Phone',
+    'given_to_user' => 'Given to User',
+    'email' => 'Email',
+    'third_party' => 'Third Party',
+);
+//End GDPR lawful basis source options
 
 $app_list_strings['moduleList']['KBDocuments'] = 'Knowledge Base';
 
@@ -3623,3 +3649,7 @@ $app_strings['LBL_INVALID_JSON_API_RESPONSE_EXCEPTION_DETAIL'] = 'Unable to vali
 $app_strings['LBL_MODULE_NOT_FOUND_EXCEPTION_DETAIL'] = 'Json API cannot find resource';
 $app_strings['LBL_NOT_ACCEPTABLE_EXCEPTION_DETAIL'] = 'Json API expects the "Accept" header to be application/vnd.api+json';
 $app_strings['LBL_UNSUPPORTED_MEDIA_TYPE_EXCEPTION_DETAIL'] = 'Json API expects the "Content-Type" header to be application/vnd.api+json';
+
+$app_strings['MSG_BROWSER_NOTIFICATIONS_ENABLED'] = 'Desktop notifications are now enabled for this web browser.';
+$app_strings['MSG_BROWSER_NOTIFICATIONS_DISABLED'] = 'Desktop notifications are disabled for this web browser. Use your browser preferences to enable them again.';
+$app_strings['MSG_BROWSER_NOTIFICATIONS_UNSUPPORTED'] = 'This browser does not support desktop notifications.';

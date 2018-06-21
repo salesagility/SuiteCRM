@@ -660,7 +660,7 @@ class SugarController
                 }
             }
             if ($sf != null) {
-                $sf->save($this->bean, $_POST, $field, $properties);
+                $sf->save($this->bean, isset($_POST) ? $_POST : null, $field, $properties);
             }
         }
 
@@ -768,7 +768,7 @@ class SugarController
 
             set_time_limit(0);//I'm wondering if we will set it never goes timeout here.
             // until we have more efficient way of handling MU, we have to disable the limit
-            $GLOBALS['db']->setQueryLimit(0);
+            DBManagerFactory::getInstance()->setQueryLimit(0);
             require_once("include/MassUpdate.php");
             require_once('modules/MySettings/StoreQuery.php');
             $seed = loadBean($_REQUEST['module']);

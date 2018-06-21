@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/utils/sugar_file_utils.php';
-class sugar_file_utilsTest extends PHPUnit_Framework_TestCase
+class sugar_file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
     //@todo: check this - vfs does not seem to be working...
@@ -11,7 +11,10 @@ class sugar_file_utilsTest extends PHPUnit_Framework_TestCase
     }
 
     /*
-    public function setUp() {
+    public function setUp()
+    {
+        parent::setUp();
+
         $rootFs = org\bovigo\vfs\vfsStream::setup('root');
         $rootFs->addChild(org\bovigo\vfs\vfsStream::newDirectory('testDir'));
         $rootFs->addChild(org\bovigo\vfs\vfsStream::newFile('test.txt')->withContent("Hello world!"));

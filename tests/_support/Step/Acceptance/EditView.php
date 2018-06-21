@@ -10,7 +10,7 @@ class EditView extends Tester
     /**
      * Wait for for the edit view to become visible
      */
-    public function waitForDetailViewVisible()
+    public function waitForEditViewVisible()
     {
         $I = $this;
         $I->waitForElementVisible('#EditView', 120);

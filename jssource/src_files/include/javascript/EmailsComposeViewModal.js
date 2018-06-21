@@ -117,6 +117,7 @@
     "use strict";
 
     var self = this;
+    var beanId = $('[name="record"]').val();
     self.emailComposeView = null;
     var opts = $.extend({}, $.fn.EmailsComposeViewModal.defaults);
     var composeBox = $('<div></div>').appendTo(opts.contentSelector);
@@ -135,7 +136,11 @@
         }
       }
     }
-    var url = 'index.php?module=Emails&action=ComposeView&in_popup=1&targetModule=' + currentModule + ids;
+    var targetModule = currentModule;
+    if ($(source).attr('data-module') !== '') {
+      targetModule = $(source).attr('data-module');
+    }
+    var url = 'index.php?module=Emails&action=ComposeView&in_popup=1&targetModule=' + targetModule + ids + '&relatedModule=' + currentModule + '&relatedId=' + beanId;
     $.ajax({
       type: "GET",
       cache: false,
@@ -156,22 +161,43 @@
       var populateEmailAddress = '';
       var populateModule = '';
       var populateModuleRecord = '';
+      var dataEmailName = $(source).attr('data-module-name');
+      var dataEmailAddress = $(source).attr('data-email-address');
+
       $('.email-compose-view-to-list').each(function () {
-        populateModuleName = $(this).attr('data-record-name');
+        if ( $('.email-relate-target'.length) ){
+          populateModule = $('.email-relate-target').attr('data-relate-module');
+          populateModuleRecord = $('.email-relate-target').attr('data-relate-id');
+          populateModuleName = $('.email-relate-target').attr('data-relate-name');
+        }
+        else {
+          populateModuleName = $(this).attr('data-record-name');
+          if (dataEmailName !== '') {
+            populateModuleName = dataEmailName;
+          }
+          populateModule = $(this).attr('data-record-module');
+          populateModuleRecord = $(this).attr('data-record-id');
+          if (populateModuleName === '') {
+            populateModuleName = populateEmailAddress;
+          }
+        }
         populateEmailAddress = $(this).attr('data-record-email');
-        populateModule = $(this).attr('data-record-module');
-        populateModuleRecord = $(this).attr('data-record-id');
+        if (dataEmailAddress !== '') {
+          populateEmailAddress = dataEmailAddress;
+        }
         if (targetCount > 0) {
           targetList = targetList + ',';
         }
-        if (populateModuleName == '') {
-          populateModuleName = populateEmailAddress;
-        }
-        targetList = targetList + populateModuleName + ' <' + populateEmailAddress + '>';
+        targetList = targetList + dataEmailName + ' <' + populateEmailAddress + '>';
         targetCount++;
       });
       if (targetCount > 0) {
-        $(self.emailComposeView).find('#to_addrs_names').val(targetList);
+        if (populateEmailAddress !== '') {
+          $(self.emailComposeView).find('#to_addrs_names').val(targetList);
+        }
+        else {
+          $(self.emailComposeView).find('#name').val(populateModuleName);
+        }
         if (targetCount < 2) {
           $(self.emailComposeView).find('#parent_type').val(populateModule);
           $(self.emailComposeView).find('#parent_name').val(populateModuleName);
@@ -209,8 +235,20 @@
       composeBox.on('cancel', function () {
         composeBox.remove();
       });
-      composeBox.on('hide.bs.modal', function () {
-        composeBox.remove();
+      composeBox.on('hide.bs.modal', function (e) {
+        e.preventDefault();
+        var mb = messageBox({size: 'lg'});
+        mb.setTitle(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_EMAIL_TITLE'));
+        mb.setBody(SUGAR.language.translate('', 'LBL_CONFIRM_DISREGARD_EMAIL_BODY'));
+        mb.on('ok', function () {
+          mb.remove();
+          composeBox.hide();
+          composeBox.remove();
+        });
+        mb.on('cancel', function () {
+          mb.remove();
+        });
+        mb.show();
       });
     }).fail(function (data) {
       composeBox.controls.modal.content.html(SUGAR.language.translate('', 'LBL_EMAIL_ERROR_GENERAL_TITLE'));
@@ -224,3 +262,4 @@
     'contentSelector': '#content'
   };
 }(jQuery));
+

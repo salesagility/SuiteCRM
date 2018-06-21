@@ -222,7 +222,7 @@ class EmailTemplateParser
             /** @var Contact $contact */
             $contact = $this->module;
             $value = sprintf(
-                '%s/index.php?entryPoint=survey&id=%s&contact=%s%s',
+                '%s/index.php?entryPoint=survey&id=%s&contact=%s&tracker=%s',
                 $this->siteUrl,
                 $this->getSurvey()->id,
                 $contact->id,

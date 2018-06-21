@@ -2,11 +2,11 @@
 
 
 require_once 'include/utils/layout_utils.php';
-class layout_utilsTest extends PHPUnit_Framework_TestCase
+class layout_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testget_form_header()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns html and contains the values provided in parameters
 

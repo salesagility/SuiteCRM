@@ -1,9 +1,11 @@
 <?php
 
-class AOS_ContractsTest extends PHPUnit_Framework_TestCase
+class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -30,7 +32,15 @@ class AOS_ContractsTest extends PHPUnit_Framework_TestCase
 
     public function testsaveAndDelete()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aos_contracts');
+        $state->pushTable('tracker');
+        $state->pushTable('aod_index');
+        $state->pushGlobals();
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';
@@ -45,10 +55,26 @@ class AOS_ContractsTest extends PHPUnit_Framework_TestCase
         $aosContracts->mark_deleted($aosContracts->id);
         $result = $aosContracts->retrieve($aosContracts->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_index');
+        $state->popTable('tracker');
+        $state->popTable('aos_contracts');
+        $state->popTable('aod_indexevent');
+        
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('calls');
+        $state->pushTable('vcals');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
+        
         $call = new call();
 
         $aosContracts = new AOS_Contracts();
@@ -72,7 +98,15 @@ class AOS_ContractsTest extends PHPUnit_Framework_TestCase
 
         //delete the call and verify that this record cannot be retrieved anymore.		
         $aosContracts->deleteCall();
-        $call->retrieve($aosContracts->call_id);
+        $result = $call->retrieve($aosContracts->call_id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('vcals');
+        $state->popTable('calls');
+        $state->popTable('aod_indexevent');
     }
 }

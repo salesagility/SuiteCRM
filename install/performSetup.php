@@ -213,7 +213,7 @@ $db                 = DBManagerFactory::getInstance();
 $startTime          = microtime(true);
 $focus              = 0;
 $processed_tables   = array(); // for keeping track of the tables we have worked on
-$empty              = '';
+$empty              = array();
 $new_tables     = 1; // is there ever a scenario where we DON'T create the admin user?
 $new_config         = 1;
 $new_report     = 1;
@@ -716,8 +716,7 @@ installLog('DBG: SugarThemeRegistry::getDefault');
 $_POST['user_theme'] = (string) SugarThemeRegistry::getDefault();
 
 // save and redirect to new view
-$_REQUEST['return_module'] = 'Home';
-$_REQUEST['return_action'] = 'index';
+$_REQUEST['do_not_redirect'] = true;
 installLog('DBG: require modules/Users/Save.php');
 require('modules/Users/Save.php');
 
@@ -729,6 +728,12 @@ foreach($varStack['defined_vars'] as $__key => $__value) $$__key = $__value;
 
 $endTime = microtime(true);
 $deltaTime = $endTime - $startTime;
+
+if (!is_array($bottle) || !is_object($bottle)) {
+    $bottle = (array)$bottle;
+    LoggerManager::getLogger()->warn('Bottle needs to be an array to perform setup');
+}
+
 
 if( count( $bottle ) > 0 ){
     foreach( $bottle as $bottle_message ){

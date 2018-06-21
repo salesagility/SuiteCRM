@@ -161,7 +161,7 @@
            meta/studio defines the first panel should always be tab.
        *}
         {if $config.enable_action_menu and $config.enable_action_menu != false}
-        {{if tabCount == 0}}
+        {{if $tabCount == 0}}
         {*<!-- TAB CONTENT USE TABS -->*}
         <div class="tab-content">
             {{else}}

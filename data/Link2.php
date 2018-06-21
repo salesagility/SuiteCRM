@@ -307,13 +307,25 @@ class Link2
     {
         //First try the relationship
         if ($this->relationship->getLHSLink() == $this->name &&
-            ($this->relationship->getLHSModule() == $this->focus->module_name)
+            ($this->relationship->getLHSModule() == (isset($this->focus->module_name) ? $this->focus->module_name : null))
         ) {
             return REL_LHS;
         }
 
-        if ($this->relationship->getRHSLink() == $this->name &&
-            ($this->relationship->getRHSModule() == $this->focus->module_name)
+        $rhsLink = $this->relationship->getRHSLink();
+        $rhsModule = $this->relationship->getRHSModule();
+        if (!isset($this->focus)) {
+            LoggerManager::getLogger()->warn('No focus of Link2 when trying to get side.');
+            $focusModuleName = null;
+        } elseif (!isset($this->focus->module_name)) {
+            LoggerManager::getLogger()->warn('No module name degined in focus of Link2 when trying to get side.');
+            $focusModuleName = null;
+        } else {
+            $focusModuleName = $this->focus->module_name;
+        }
+        
+        if ($rhsLink == $this->name &&
+            ($rhsModule == $focusModuleName)
         ) {
             return REL_RHS;
         }

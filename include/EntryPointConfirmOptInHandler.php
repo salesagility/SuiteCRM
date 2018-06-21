@@ -153,6 +153,7 @@ class EntryPointConfirmOptInHandler
      */
     private function methodConfirmOptInUser($request)
     {
+
         $emailAddress = BeanFactory::getBean('EmailAddresses');
         $this->emailAddress = $emailAddress->retrieve_by_string_fields([
             'confirm_opt_in_token' => $request['from']
@@ -161,11 +162,50 @@ class EntryPointConfirmOptInHandler
         if ($this->emailAddress) {
             $this->emailAddress->confirmOptIn();
             $this->emailAddress->save();
-        }
 
+            $people = $this->getIDs($this->emailAddress->email_address, 'Contacts');
+            if ($people) {
+                $this->setLawfulBasisForEachPerson($people, 'Contacts');
+            }
+            $people = $this->getIDs($this->emailAddress->email_address, 'Leads');
+            if ($people) {
+                $this->setLawfulBasisForEachPerson($people, 'Leads');
+            }
+
+            $people = $this->getIDs($this->emailAddress->email_address, 'Prospects');
+            if ($people) {
+                $this->setLawfulBasisForEachPerson($people,  'Prospects');
+            }
+        }
         $template = new Sugar_Smarty();
         $template->assign('FOCUS', $this->emailAddress);
 
         return $template->fetch('include/EntryPointConfirmOptIn.tpl');
+    }
+
+    /**
+     * @param String $email
+     * @param String $module
+     *
+     * @return array|bool
+     */
+    private function getIDs($email, $module) {
+        $people = $this->emailAddress->getRelatedId($email, $module);
+        return $people;
+    }
+
+    /**
+     * @param array $people
+     */
+    private function setLawfulBasisForEachPerson(array $people, $module) {
+        /** @var Person $person */
+        foreach ($people as $person) {
+            $bean = BeanFactory::getBean($module, $person);
+            if($bean) {
+                if(!$bean->setLawfulBasis('consent', 'email')){
+                    LoggerManager::getLogger()->warn('Lawful basis saving failed for record ' . $bean->name);
+                }
+            }
+        }
     }
 }

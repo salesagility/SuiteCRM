@@ -1,13 +1,61 @@
 <?php
 
-class ProspectListTest extends PHPUnit_Framework_TestCase
+class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
     }
+    
+
+	public function testcreate_export_query()
+	{
+
+		$prospectList = new ProspectList();
+
+		//test with empty string params
+		$expected = "SELECT
+                                prospect_lists.*,
+                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
+                                ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name";
+		$actual = $prospectList->create_export_query('','');
+		$this->assertSame($expected,$actual);
+
+
+		//test with valid string params
+		$expected = "SELECT
+                                prospect_lists.*,
+                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
+                                ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
+		$actual = $prospectList->create_export_query('prospect_lists.id','users.user_name = ""');
+		$this->assertSame($expected,$actual);
+
+    }
+
+    
+	public function testcreate_list_query()
+	{
+
+		$prospectList = new ProspectList();
+
+		//test with empty string params
+		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
+					ON prospect_lists.assigned_user_id=users.id where prospect_lists.deleted=0 ORDER BY prospect_lists.name";
+		$actual = $prospectList->create_list_query('','');
+		$this->assertSame($expected,$actual);
+
+
+		//test with valid string params
+		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
+					ON prospect_lists.assigned_user_id=users.id where users.user_name = \"\" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
+		$actual = $prospectList->create_list_query('prospect_lists.id','users.user_name = ""');
+		$this->assertSame($expected,$actual);
+
+	}
 
 	public function testProspectList()
 	{
@@ -28,7 +76,10 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 
 	public function testget_summary_text()
 	{
-		error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+		//error_reporting(E_ERROR | E_PARSE);
 
 		$prospectList = new ProspectList();
 
@@ -38,44 +89,12 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 		//test with name set
 		$prospectList->name = "test";
 		$this->assertEquals('test',$prospectList->get_summary_text());
+        
+        // clean up
+        
+        
 	}
 
-	public function testcreate_list_query()
-	{
-
-		$prospectList = new ProspectList();
-
-		//test with empty string params
-		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users\n					ON prospect_lists.assigned_user_id=users.id where prospect_lists.deleted=0 ORDER BY prospect_lists.name";
-		$actual = $prospectList->create_list_query('','');
-		$this->assertSame($expected,$actual);
-
-
-		//test with valid string params
-		$expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users\n					ON prospect_lists.assigned_user_id=users.id where users.user_name = \"\" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
-		$actual = $prospectList->create_list_query('prospect_lists.id','users.user_name = ""');
-		$this->assertSame($expected,$actual);
-
-	}
-
-
-	public function testcreate_export_query()
-	{
-
-		$prospectList = new ProspectList();
-
-		//test with empty string params
-		$expected = "SELECT\n                                prospect_lists.*,\n                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users\n                                ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name";
-		$actual = $prospectList->create_export_query('','');
-		$this->assertSame($expected,$actual);
-
-
-		//test with valid string params
-		$expected = "SELECT\n                                prospect_lists.*,\n                                users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users\n                                ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
-		$actual = $prospectList->create_export_query('prospect_lists.id','users.user_name = ""');
-		$this->assertSame($expected,$actual);
-
-    }
 
     /**
      * @todo: NEEDS FIXING!
@@ -95,6 +114,17 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 
 	public function testsave() {
 
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('prospect_lists');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
+
+	// test
+        
 		$prospectList = new ProspectList();
 
 		$prospectList->name = "test";
@@ -119,6 +149,15 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 		$prospectList->mark_deleted($prospectList->id);
 		$result = $prospectList->retrieve($prospectList->id);
 		$this->assertEquals(null,$result);
+
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('prospect_lists');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+
 
 	}
 
@@ -184,6 +223,12 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 
 	public function testmark_relationships_deleted()
 	{
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
 		$prospectList = new ProspectList();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -192,15 +237,25 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 			$this->assertTrue(true);
 		}
 		catch (Exception $e) {
-			$this->fail();
+			$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
 		}
 
 		$this->markTestIncomplete('Method has no implementation');
+        
+        // clean up
+        
+        
 
 	}
 
 	public function testfill_in_additional_list_fields()
 	{
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
 		$prospectList = new ProspectList();
 
 		//execute the method and test if it works and does not throws an exception.
@@ -209,10 +264,14 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 			$this->assertTrue(true);
 		}
 		catch (Exception $e) {
-			$this->fail();
+			$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
 		}
 
 		$this->markTestIncomplete('Method has no implementation');
+        
+        // clean up
+        
+        
 
 	}
 
@@ -228,6 +287,12 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 
 	public function testupdate_currency_id()
 	{
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
 
 		$prospectList = new ProspectList();
 
@@ -237,10 +302,14 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 			$this->assertTrue(true);
 		}
 		catch (Exception $e) {
-			$this->fail();
+			$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
 		}
 
 		$this->markTestIncomplete('Method has no implementation');
+        
+        // clean up
+        
+        
 
 	}
 
@@ -277,7 +346,7 @@ class ProspectListTest extends PHPUnit_Framework_TestCase
 
 
 		//test with valid string params
-		$expected = "prospect_lists.name like '%'";
+		$expected = "prospect_lists.name like '1%'";
 		$actual = $prospectList->build_generic_where_clause('1');
 		$this->assertSame($expected,$actual);
 

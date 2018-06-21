@@ -140,6 +140,7 @@ class CompanyModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
+        $editView->waitForEditViewVisible();
         $editView->fillField('#name', $this->fakeData->company);
         $editView->fillField('#phone_office', $this->fakeData->phoneNumber);
         $editView->fillField('#phone_fax', $this->fakeData->phoneNumber);

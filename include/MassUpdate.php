@@ -161,8 +161,8 @@ eoq;
     function handleMassUpdate()
     {
 
-        require_once('include/formbase.php');
-        global $current_user, $db, $disable_date_format, $timedate;
+		require_once('include/formbase.php');
+		global $current_user, $db, $disable_date_format, $timedate, $app_list_strings;
 
         foreach ($_POST as $post => $value) {
             if (is_array($value)) {
@@ -370,13 +370,21 @@ eoq;
                                     // Dynamic field set value.
                                     list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
 
-                                    if ($parentenum_value != $dynamic_field_value) {
-                                        // Change to the default value of the correct value set.
-                                        $newbean->$dynamic_field_name = $parentenum_value . '_' . $parentenum_value;
-                                    }
-                                }
-                            }
-                        }
+									if($parentenum_value != $dynamic_field_value) {
+
+										// Change to the default value of the correct value set.
+                      $defaultValue = '';
+                      foreach ($app_list_strings[$field_name['options']] as $key => $value) {
+                          if (strpos($key, $parentenum_value) === 0) {
+                              $defaultValue = $key;
+                              break;
+                          }
+                      }
+                      $newbean->$dynamic_field_name = $defaultValue;
+									}
+								}
+							}
+						}
 
                         $newbean->save($check_notify);
                         if (!empty($email_address_id)) {
@@ -1462,7 +1470,7 @@ EOQ;
             'modified_by_name' => 1,
         );
         foreach ($this->sugarbean->field_defs as $field) {
-            if (!isset($banned[$field['name']]) && (!isset($field['massupdate']) || !empty($field['massupdate']))) {
+            if (!isset($banned[isset($field['name']) ? $field['name'] : null]) && (!isset($field['massupdate']) || !empty($field['massupdate']))) {
                 if (isset($field['type']) && $field['type'] == 'relate' && isset($field['id_name']) && $field['id_name'] == 'assigned_user_id') {
                     $field['type'] = 'assigned_user_name';
                 }

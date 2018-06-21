@@ -48,11 +48,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 /**
- * Description of ErrorMessageTest
+ * ErrorMessageTest
  *
  * @author gyula
  */
-class ErrorMessageTest extends PHPUnit_Framework_TestCase
+class ErrorMessageTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {

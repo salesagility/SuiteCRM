@@ -1,7 +1,7 @@
 <?php
 
 
-class FilterInterpreterTest extends \Codeception\Test\Unit
+class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -13,8 +13,9 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
      */
     private static $interpreter;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         if(self::$interpreter === null) {
 
             // load PSR 11 interface
@@ -23,9 +24,6 @@ class FilterInterpreterTest extends \Codeception\Test\Unit
         }
     }
 
-    protected function _after()
-    {
-    }
 
     public function testIsFilterByPreMadeWithByPreMadeFilterCase()
     {
