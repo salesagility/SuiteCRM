@@ -420,22 +420,34 @@ class RepairAndClear
 	///////////////////////////////////////////////////////////////
 	//// Recursively unlink all files of the given $extension in the given $thedir.
 	//
-	private function _clearCache($thedir, $extension)
-	{
-        if ($current = @opendir($thedir)) {
+    private function _clearCache($thedir, $extension) {
+        if (!file_exists($thedir)) {
+            LoggerManager::getLogger()->warn('QRR: directory not found: ' . $thedir);
+            return false;
+        }
+
+        if (!is_dir($thedir)) {
+            LoggerManager::getLogger()->warn('QRR: it is not a directory: ' . $thedir);
+            return false;
+        }
+
+
+        if ($current = opendir($thedir)) {
             while (false !== ($children = readdir($current))) {
                 if ($children != "." && $children != "..") {
                     if (is_dir($thedir . "/" . $children)) {
                         $this->_clearCache($thedir . "/" . $children, $extension);
-                    }
-                    elseif (is_file($thedir . "/" . $children) && (substr_count($children, $extension))) {
+                    } elseif (is_file($thedir . "/" . $children) && (substr_count($children, $extension))) {
                         unlink($thedir . "/" . $children);
                     }
                 }
             }
         }
-	}
-	/////////////////////////////////////////////////////////////
+
+        return true;
+    }
+
+    /////////////////////////////////////////////////////////////
 	////////
 	private function _getModuleNamePlural($module_name_singular)
 	{

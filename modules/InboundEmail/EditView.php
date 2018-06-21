@@ -145,6 +145,7 @@ if(!empty($focus->stored_options)) {
 	$storedOptions = unserialize(base64_decode($focus->stored_options));
 	$from_name = $storedOptions['from_name'];
 	$from_addr = $storedOptions['from_addr'];
+        isValidEmailAddress($from_addr);
 
 	$reply_to_name = (isset($storedOptions['reply_to_name'])) ? $storedOptions['reply_to_name'] : "";
 	$reply_to_addr = (isset($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : "";
@@ -178,6 +179,7 @@ if(!empty($focus->stored_options)) {
 } else { // initialize empty vars for template
 	$from_name = $current_user->name;
 	$from_addr = $current_user->email1;
+        isValidEmailAddress($from_addr);
 	$reply_to_name = '';
 	$reply_to_addr = '';
 	$only_since = '';
@@ -299,6 +301,7 @@ $xtpl->assign('GROUP_ID', $groupId);
 // auto-reply stuff
 $xtpl->assign('FROM_NAME', $from_name);
 $xtpl->assign('FROM_ADDR', $from_addr);
+isValidEmailAddress($from_addr);
 $xtpl->assign('DEFAULT_FROM_NAME', $default_from_name);
 $xtpl->assign('DEFAULT_FROM_ADDR', $default_from_addr);
 $xtpl->assign('REPLY_TO_NAME', $reply_to_name);

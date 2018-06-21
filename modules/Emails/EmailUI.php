@@ -1586,6 +1586,8 @@ eoq;
             $address = trim(array_pop($name));
             $address = str_replace(array("<", ">", "&lt;", "&gt;"), "", $address);
 
+            isValidEmailAddress($address);
+            
             $emailAddress[] = array(
                 'email_address' => $address,
                 'primary_address' => 1,
@@ -1791,6 +1793,7 @@ eoq;
         $smarty->assign('DATE_START', $focus->date_start);
         $smarty->assign('TIME_START', $focus->time_start);
         $smarty->assign('FROM', $focus->from_addr);
+        isValidEmailAddress($focus->from_addr);
         $smarty->assign('TO', nl2br($focus->to_addrs));
         $smarty->assign('CC', nl2br($focus->cc_addrs));
         $smarty->assign('BCC', nl2br($focus->bcc_addrs));
@@ -2289,6 +2292,7 @@ eoq;
         $ret['name'] = $email->name;
         $ret['description'] = $description;
         $ret['from'] = (isset($_REQUEST['composeType']) && $_REQUEST['composeType'] == 'forward') ? "" : $email->from_addr;
+        isValidEmailAddress($ret['from']);
         $ret['to'] = from_html($toAddresses);
         $ret['uid'] = $email->id;
         $ret['parent_name'] = $email->parent_name;
@@ -2309,7 +2313,9 @@ eoq;
             foreach ($userEmailsMeta as $emailMeta) {
                 $userEmails[] = from_html(strtolower(trim($emailMeta['email_address'])));
             }
-            $userEmails[] = from_html(strtolower(trim($email->from_addr)));
+            $fromAddr = from_html(strtolower(trim($email->from_addr)));
+            isValidEmailAddress($fromAddr);
+            $userEmails[] = $fromAddr;
 
             $ret['cc'] = from_html($email->cc_addrs);
             $toAddresses = from_html($toAddresses);
@@ -2358,6 +2364,7 @@ eoq;
                     $email->cc_addrs = "";
                     if (!empty($email->reply_to_addr)) {
                         $email->from_addr = $email->reply_to_addr;
+                        isValidEmailAddress($email->from_addr);
                     } // if
                 } else {
                     if (!empty($email->reply_to_addr)) {
@@ -2904,6 +2911,7 @@ eoq;
 
             $name = $v->get_stored_options('from_name');
             $addr = $v->get_stored_options('from_addr');
+            isValidEmailAddress($addr);
             if ($name != null && $addr != null) {
                 $name = from_html($name);
                 if (!$v->is_personal) {

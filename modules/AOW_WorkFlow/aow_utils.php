@@ -332,7 +332,7 @@ function getModuleField(
         $aor_row = str_replace('[', '', $aor_row);
         $aor_row = str_replace(']', '', $aor_row);
         // set the filename for this control
-        $file = create_cache_directory('modules/AOR_WorkFlow/')
+        $file = create_cache_directory('modules/AOW_WorkFlow/')
             . $module
             . $view
             . $alt_type
@@ -868,7 +868,8 @@ function getRelatedEmailableFields($module){
                 if(!isset($field['module']) || !in_array($field['module'],$emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")){
                     continue;
                 }
-                $relEmailFields[$field['name']] = $field['module'].": ".trim(translate($field['vname'],$mod->module_name),":");
+                $relEmailFields[$field['name']] = translate($field['module']) . ": "
+                    . trim(translate($field['vname'], $mod->module_name), ":");
             }
 
             foreach($mod->get_linked_fields() as $field){

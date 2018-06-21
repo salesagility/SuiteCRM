@@ -451,6 +451,7 @@ class actionSendEmail extends actionBase {
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
         $mail->From = $defaults['email'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $defaults['name'];
         $mail->ClearAllRecipients();
         $mail->ClearReplyTos();
@@ -486,6 +487,7 @@ class actionSendEmail extends actionBase {
             $emailObj->description = $mail->AltBody;
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr = $mail->From;
+            isValidEmailAddress($emailObj->from_addr);
             if ( $relatedBean instanceOf SugarBean && !empty($relatedBean->id) ) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;

@@ -113,6 +113,13 @@ class ConfiguratorViewEdit extends ViewEdit
             $configurator->restoreConfig();
         }
 
+        
+        $mailSendType = null;
+        if (isset($focus->settings['mail_sendtype'])) {
+            $mailSendType = $focus->settings['mail_sendtype'];
+        } else {
+            LoggerManager::getLogger()->error('ConfiguratorViewEdit view display error: mail send type is not set for focus');
+        }
 
         $this->ss->assign('MOD', $mod_strings);
         $this->ss->assign('APP', $app_strings);
@@ -124,7 +131,7 @@ class ConfiguratorViewEdit extends ViewEdit
         $this->ss->assign("JAVASCRIPT",get_set_focus_js(). get_configsettings_js());
         $this->ss->assign('company_logo', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $this->ss->assign("settings", $focus->settings);
-        $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
+        $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $mailSendType));
         if(!empty($focus->settings['proxy_on'])){
             $this->ss->assign("PROXY_CONFIG_DISPLAY", 'inline');
         }else{

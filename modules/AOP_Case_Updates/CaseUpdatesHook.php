@@ -397,6 +397,7 @@ class CaseUpdatesHook
         $mailer->isHTML(true);
         $mailer->AltBody = $text['body_alt'];
         $mailer->From = $emailSettings['from_address'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $emailSettings['from_name'];
 
         $email = $contact->emailAddress->getPrimaryAddress($contact);
@@ -538,6 +539,7 @@ class CaseUpdatesHook
         $mailer->isHTML(true);
         $mailer->AltBody = $text['body_alt'];
         $mailer->From = $emailSettings['from_address'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $emailSettings['from_name'];
         $email = $contact->emailAddress->getPrimaryAddress($contact);
         if (empty($email) && !empty($contact->email1)) {
