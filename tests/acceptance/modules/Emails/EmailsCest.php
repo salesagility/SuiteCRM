@@ -58,17 +58,15 @@ class EmailsCest
     /**
      * @param \AcceptanceTester $I
      * @param \Helper\WebDriverHelper $webDriverHelper
-     * @param \Codeception\Scenario $scenario
      *
      * As an administrator I want to view an email body and check that it's not cached.
      */
     public function testScenarioViewEmailBodyHTML(
         \AcceptanceTester $I,
-        \Helper\WebDriverHelper $webDriverHelper,
-        \Codeception\Scenario $scenario
+        \Helper\WebDriverHelper $webDriverHelper
     ) {
+
         // TODO: Refactor
-        $scenario->skip('skipped test');
 
         $I->wantTo('View the HTML of two emails');
 
