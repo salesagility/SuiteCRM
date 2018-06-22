@@ -200,7 +200,7 @@ class SugarFieldBase
     /**
      * @param array $parentFieldArray
      * @param array $vardef
-     * @param array $displayparams
+     * @param array $displayParams
      * @param string $col (unused)
      * @return string
      */
