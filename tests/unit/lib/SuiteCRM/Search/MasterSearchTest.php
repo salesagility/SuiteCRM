@@ -1,14 +1,17 @@
 <?php
+
+namespace SuiteCRM\Search;
+
+use ReflectionException;
+use RuntimeException;
+
 /**
  * Created by PhpStorm.
  * User: viocolano
  * Date: 21/06/18
  * Time: 16:48
  */
-
-use SuiteCRM\Search\MasterSearch;
-
-class MasterSearchTest extends \SuiteCRM\Search\SearchTestAbstract
+class MasterSearchTest extends SearchTestAbstract
 {
 
     public function testFetchEngine()
@@ -36,6 +39,19 @@ class MasterSearchTest extends \SuiteCRM\Search\SearchTestAbstract
         } catch (RuntimeException $e) {
             // All good!
         }
+    }
+
+    public function testFakeSearch()
+    {
+        MasterSearch::addEngine('TestSearchEngine', 'tests/unit/lib/SuiteCRM/Search/TestSearchEngine.php');
+
+        $result = MasterSearch::searchAndView('TestSearchEngine', new SearchQuery(['searchstring' => 'foo']));
+
+        self::assertEquals('bar', $result, "Wrong mocked search result!");
+
+        $result = MasterSearch::searchAndView('TestSearchEngine', new SearchQuery(['searchstring' => 'fooz']));
+
+        self::assertEquals('barz', $result, "Wrong mocked search result!");
     }
 
 }
