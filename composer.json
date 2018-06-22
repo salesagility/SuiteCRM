@@ -57,7 +57,8 @@
       ]
     },
     "classmap": [
-      "Api/"
+      "Api/",
+      "custom/Extension/Api"
     ]
   },
   "extra": {}

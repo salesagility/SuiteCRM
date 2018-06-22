@@ -13,7 +13,8 @@ class ContainerLoader
     public static function configure(ContainerInterface $container)
     {
         $containerConfig = [
-            __DIR__ . '/../../V8/Config/services.php'
+            __DIR__ . '/../../V8/Config/services.php',
+            __DIR__ . '/../../../custom/Extension/Api/Config/services.php'
         ];
 
         $services = self::loadFiles($containerConfig);

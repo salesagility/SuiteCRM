@@ -6,5 +6,5 @@ return [
         'displayErrorDetails' => true,
         /** Routes are accessible in middleware. */
         'determineRouteBeforeAppMiddleware' => true,
-    ]
+    ] + (require __DIR__ . '/../../../custom/Extension/Api/Config/slim.php')
 ];
