@@ -654,9 +654,9 @@ class AOR_ReportsController extends SugarController
                 }
                 echo getDateField($module, $aor_field, $view, $value);
                 break;
-            Case 'Round_Robin';
-            Case 'Least_Busy';
-            Case 'Random';
+            Case 'Round_Robin':
+            Case 'Least_Busy':
+            Case 'Random':
                 echo getAssignField($aor_field, $view, $value);
                 break;
             case 'Value':

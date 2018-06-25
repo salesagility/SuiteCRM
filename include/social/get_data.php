@@ -54,7 +54,7 @@ if(!empty($_REQUEST['code'])){
         case "facebook":
             require_once("include/social/facebook/facebookapi.php");
             break;
-        case "twitter";
+        case "twitter":
             require_once("include/social/twitter/twitterapi.php");
             break;
     }

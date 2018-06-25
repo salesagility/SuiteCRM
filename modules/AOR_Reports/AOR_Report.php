@@ -1605,7 +1605,7 @@ class AOR_Report extends Basic
 
                             if ($params[1] != 'now') {
                                 switch ($params[3]) {
-                                    case 'business_hours';
+                                    case 'business_hours':
                                         //business hours not implemented for query, default to hours
                                         $params[3] = 'hours';
                                     default:

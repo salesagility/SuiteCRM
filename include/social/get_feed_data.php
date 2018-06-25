@@ -283,7 +283,7 @@ if ($facebook_enabled) {
             case "":
                 $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
                 break;
-            case "link";
+            case "link":
                 $string[0] = "<img style=float:left;padding-right:5px;padding-bottom:5px; src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
                 if (!empty($stream['name'])) {
 
