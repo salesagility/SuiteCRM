@@ -261,12 +261,12 @@ class Task extends SugarBean {
         $taskClass = 'futureTask';
 		if ($dd < $today){
             if($task_fields['STATUS']=='Completed' || $task_fields['STATUS']=='Deferred')
-			{ 
+			{
 				$taskClass = '';
-			} 
-			else 
-			{ 
-				$taskClass = 'overdueTask'; 
+			}
+			else
+			{
+				$taskClass = 'overdueTask';
 			}
 		}else if( $dd	== $today ){
             $taskClass = 'todaysTask';

@@ -1,5 +1,5 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,7 +49,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $mod_strings, $app_strings;
 if(ACLController::checkAccess('Campaigns', 'edit', true))
 	$module_menu[] = array(
-		"index.php?module=Campaigns&action=WizardHome&return_module=Campaigns&return_action=index", 
+		"index.php?module=Campaigns&action=WizardHome&return_module=Campaigns&return_action=index",
 		$mod_strings['LNL_NEW_CAMPAIGN_WIZARD'],"Create"
 	);
 /*
@@ -61,7 +61,7 @@ if(ACLController::checkAccess('Campaigns', 'edit', true))
 */
 if(ACLController::checkAccess('Campaigns', 'list', true))
 	$module_menu[]=	array(
-		"index.php?module=Campaigns&action=index&return_module=Campaigns&return_action=index", 
+		"index.php?module=Campaigns&action=index&return_module=Campaigns&return_action=index",
 		$mod_strings['LNK_CAMPAIGN_LIST'],"List"
 	);
 //if(ACLController::checkAccess('Campaigns', 'list', true))

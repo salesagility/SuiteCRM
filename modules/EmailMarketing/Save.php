@@ -92,7 +92,7 @@ foreach($marketing->column_fields as $field)
 		{
 			$marketing->$field = 1;
 		} else {
-			$marketing->$field = 0;			
+			$marketing->$field = 0;
 		}
 	}else {
 		if(isset($_POST[$field]))
@@ -143,15 +143,15 @@ if ($marketing->all_prospect_lists==1) {
 			
 			$key=array_search($prospect_list_id,$prospectlists);
 			if ($key === null or $key === false) {
-				$marketing->prospectlists->add($prospect_list_id);			
+				$marketing->prospectlists->add($prospect_list_id);
 			} else {
 				unset($prospectlists[$key]);
 			}
 		}
 		if (count($prospectlists) != 0) {
 			foreach ($prospectlists as $key=>$list_id) {
-				$marketing->prospectlists->delete($marketing->id,$list_id);				
-			}	
+				$marketing->prospectlists->delete($marketing->id,$list_id);
+			}
 		}
 	}
 }

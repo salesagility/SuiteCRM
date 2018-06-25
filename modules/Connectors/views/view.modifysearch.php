@@ -44,8 +44,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/SugarView.php');
 require_once('include/connectors/sources/SourceFactory.php');
 
-class ViewModifySearch extends SugarView 
-{   
+class ViewModifySearch extends SugarView
+{
  	/**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
@@ -71,8 +71,8 @@ class ViewModifySearch extends SugarView
     /**
 	 * @see SugarView::display()
 	 */
-	public function display() 
-	{	
+	public function display()
+	{
 		require_once('include/connectors/utils/ConnectorUtils.php');
 		global $mod_strings, $app_strings;
 		$sugar_smarty	= new Sugar_Smarty();
@@ -85,7 +85,7 @@ class ViewModifySearch extends SugarView
             {
                unset($connectors[$id]);
             }
-		}		
+		}
 
 		$this->ss->assign('SOURCES', $connectors);
 	    echo $this->getModuleTitle(false);

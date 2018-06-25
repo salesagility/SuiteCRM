@@ -62,7 +62,7 @@ if(isset($_REQUEST['multi_edit'])){
 		$location .= "&sugar_body_only=" . $_REQUEST['sugar_body_only'];
 	}
 	if(isset($_REQUEST['style']) && $_REQUEST['style'] == 'popup'){
-		$location .= '&refreshparent=1';	
+		$location .= '&refreshparent=1';
 	}
 	header("Location:$location" );
 }

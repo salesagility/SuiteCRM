@@ -61,12 +61,12 @@ if (isset($_REQUEST['wiz_home_next_step']) && !empty($_REQUEST['wiz_home_next_st
         $master = 'test';
     }else{
         //user has chosen to simply save
-        $master  = 'save';        
+        $master  = 'save';
     }
         
 }else{
      //default to just saving and exiting wizard
-     $master = 'save';   
+     $master = 'save';
 }
 
 
@@ -98,14 +98,14 @@ else {
               if((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)){
               $newkey  =substr($key, strlen($prefix)) ;
               $_REQUEST[$newkey] = $val;
-         }               
+         }
     }
 
     foreach ($_REQUEST as $key => $val) {
               if((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)){
               $newkey  =substr($key, strlen($prefix)) ;
               $_REQUEST[$newkey] = $val;
-         }               
+         }
     }
 
 if(!empty($_REQUEST['meridiem'])){
@@ -113,7 +113,7 @@ if(!empty($_REQUEST['meridiem'])){
 }
 
 if(empty($_REQUEST['time_start'])) {
-  $_REQUEST['date_start'] = $_REQUEST['date_start'] . ' 00:00';	
+  $_REQUEST['date_start'] = $_REQUEST['date_start'] . ' 00:00';
 } else {
   $_REQUEST['date_start'] = $_REQUEST['date_start'] . ' ' . $_REQUEST['time_start'];
 }
@@ -125,7 +125,7 @@ foreach($marketing->column_fields as $field)
         {
             $marketing->$field = 1;
         } else {
-            $marketing->$field = 0;         
+            $marketing->$field = 0;
         }
     }else {
         if(isset($_REQUEST[$field]))
@@ -162,21 +162,21 @@ if ($marketing->all_prospect_lists==1) {
             
             $key=array_search($prospect_list_id,$prospectlists);
             if ($key === null or $key === false) {
-                $marketing->prospectlists->add($prospect_list_id);          
+                $marketing->prospectlists->add($prospect_list_id);
             } else {
                 unset($prospectlists[$key]);
             }
         }
         if (count($prospectlists) != 0) {
             foreach ($prospectlists as $key=>$list_id) {
-                $marketing->prospectlists->delete($marketing->id,$list_id);             
-            }   
+                $marketing->prospectlists->delete($marketing->id,$list_id);
+            }
         }
     }
 }
 
 //populate an array with marketing email id to use
-$mass[] = $marketing->id; 
+$mass[] = $marketing->id;
 //if sending an email was chosen, set all the needed variables for queuing campaign
 
 if($master !='save'){
@@ -185,7 +185,7 @@ if($master !='save'){
     $_REQUEST['record'] =$marketing->campaign_id;
     $_POST['record']=$marketing->campaign_id;
     $_REQUEST['mode'] = $master;
-     $_POST['mode'] = $master; 
+     $_POST['mode'] = $master;
      $_REQUEST['from_wiz']= 'true';
     require_once('modules/Campaigns/QueueCampaign.php');
 }

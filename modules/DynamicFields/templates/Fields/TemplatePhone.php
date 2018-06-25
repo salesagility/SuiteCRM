@@ -52,7 +52,7 @@ class TemplatePhone extends TemplateText{
      */
     function __construct()
 	{
-	}	
+	}
 	
 	/**
 	 * get_field_def
@@ -60,11 +60,11 @@ class TemplatePhone extends TemplateText{
 	 * @see parent::get_field_def
 	 * This method checks to see if the validate_usa_format key/value entry should be
 	 * added to the vardef entry representing the module
-	 */	
+	 */
     function get_field_def(){
 		$def = parent::get_field_def();
 		$def['dbType'] = 'varchar';
 		
-		return $def;	
+		return $def;
 	}
 }

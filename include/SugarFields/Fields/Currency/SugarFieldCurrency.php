@@ -41,7 +41,7 @@
 
 require_once('include/SugarFields/Fields/Float/SugarFieldFloat.php');
 
-class SugarFieldCurrency extends SugarFieldFloat 
+class SugarFieldCurrency extends SugarFieldFloat
 {
 
     public function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col)

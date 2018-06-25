@@ -41,7 +41,7 @@
 
 require_once('include/SugarFields/Fields/Int/SugarFieldInt.php');
 
-class SugarFieldFloat extends SugarFieldInt 
+class SugarFieldFloat extends SugarFieldInt
 {
     public function formatField($rawField, $vardef){
         // A null precision uses the user prefs / system prefs by default

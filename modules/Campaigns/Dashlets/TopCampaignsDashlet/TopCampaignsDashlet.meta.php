@@ -44,6 +44,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $app_strings;
 
 $dashletMeta['TopCampaignsDashlet'] = array('module'		=> 'Campaigns',
-											   'title'     => translate('LBL_TOP_CAMPAIGNS', 'Campaigns'), 
+											   'title'     => translate('LBL_TOP_CAMPAIGNS', 'Campaigns'),
                                                'description' => translate('LBL_TOP_CAMPAIGNS_DESCRIPTION', 'Campaigns'),
                                                'category'    => 'Module Views');

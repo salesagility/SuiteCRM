@@ -41,7 +41,7 @@
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class ProjectViewTemplatesDetail extends ViewDetail 
+class ProjectViewTemplatesDetail extends ViewDetail
 {
  	/**
 	 * @see SugarView::_getModuleTitleParams()
@@ -57,7 +57,7 @@ class ProjectViewTemplatesDetail extends ViewDetail
     	   );
     }
     
-	function display() 
+	function display()
 	{
  		global $beanFiles;
 		require_once($beanFiles['Project']);

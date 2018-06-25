@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class DocumentsViewDetail extends ViewDetail 
+class DocumentsViewDetail extends ViewDetail
 {
  	/**
 	 * @see SugarView::_getModuleTitleParams()

@@ -52,12 +52,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  
 require_once('include/MVC/View/SugarView.php');
 
-class ContactsViewValidPortalUsername extends SugarView 
+class ContactsViewValidPortalUsername extends SugarView
 {
  	/**
      * @see SugarView::process()
      */
-    public function process() 
+    public function process()
  	{
 		$this->display();
  	}
@@ -77,5 +77,5 @@ class ContactsViewValidPortalUsername extends SugarView
         }
         else
            echo '0';
- 	}	
+ 	}
 }

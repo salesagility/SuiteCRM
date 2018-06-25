@@ -40,11 +40,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 // created: 2005-10-19 11:16:08
 $acldefs['Opportunities'] = array (
-  'forms' => 
+  'forms' =>
   array (
-    'by_name' => 
+    'by_name' =>
     array (
-      'btn1' => 
+      'btn1' =>
       array (
         'display_option' => 'disabled',
         'action_option' => 'list',
@@ -53,7 +53,7 @@ $acldefs['Opportunities'] = array (
       ),
     ),
   ),
-  'form_names' => 
+  'form_names' =>
   array (
     'by_id' => 'by_id',
     'by_name' => 'by_name',

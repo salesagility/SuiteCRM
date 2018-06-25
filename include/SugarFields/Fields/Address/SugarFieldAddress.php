@@ -72,7 +72,7 @@ class SugarFieldAddress extends SugarFieldBase {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         global $app_strings;
         if(!isset($displayParams['key'])) {
-           $GLOBALS['log']->debug($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);	
+           $GLOBALS['log']->debug($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);
            $this->ss->trigger_error($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);
            return;
         }
@@ -80,17 +80,17 @@ class SugarFieldAddress extends SugarFieldBase {
         //Allow for overrides.  You can specify a Smarty template file location in the language file.
         if(isset($app_strings['SMARTY_ADDRESS_DETAILVIEW'])) {
            $tplCode = $app_strings['SMARTY_ADDRESS_DETAILVIEW'];
-           return $this->fetch($tplCode);	
+           return $this->fetch($tplCode);
         }
         
         return $this->fetch($this->findTemplate('DetailView'));
     }
     
     function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
-        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);        
+        $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         global $app_strings;
         if(!isset($displayParams['key'])) {
-           $GLOBALS['log']->debug($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);	
+           $GLOBALS['log']->debug($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);
            $this->ss->trigger_error($app_strings['ERR_ADDRESS_KEY_NOT_SPECIFIED']);
            return;
         }
@@ -98,10 +98,10 @@ class SugarFieldAddress extends SugarFieldBase {
         //Allow for overrides.  You can specify a Smarty template file location in the language file.
         if(isset($app_strings['SMARTY_ADDRESS_EDITVIEW'])) {
            $tplCode = $app_strings['SMARTY_ADDRESS_EDITVIEW'];
-           return $this->fetch($tplCode);	
-        }       
+           return $this->fetch($tplCode);
+        }
 
-        return $this->fetch($this->findTemplate('EditView'));      
+        return $this->fetch($this->findTemplate('EditView'));
     }
     
 }

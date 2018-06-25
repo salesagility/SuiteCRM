@@ -47,7 +47,7 @@ class registry_v3_1 extends registry_v3 {
 	 * This method registers all the functions on the service class
 	 *
 	 */
-	protected function registerFunction() 
+	protected function registerFunction()
 	{
 		$GLOBALS['log']->info('Begin: registry->registerFunction');
 		parent::registerFunction();
@@ -80,14 +80,14 @@ class registry_v3_1 extends registry_v3 {
 	   $this->serviceClass->registerFunction(
 		    'get_module_fields_md5',
 		    array('session'=>'xsd:string', 'module_names'=>'tns:select_fields'),
-		    array('return'=>'tns:md5_results')); 
+		    array('return'=>'tns:md5_results'));
 	}
 	
 	/**
 	 * This method registers all the complex types
 	 *
 	 */
-	protected function registerTypes() 
+	protected function registerTypes()
 	{
 	    parent::registerTypes();
 	    

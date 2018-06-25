@@ -67,11 +67,11 @@ foreach ($_POST as $key => $val) {
         	else
         	if ( $prefix[1] == "key" )
         	{
-        		$val = trim($val); // bug 16860 tyoung - trim whitespace from the start and end of the licence key value	
+        		$val = trim($val); // bug 16860 tyoung - trim whitespace from the start and end of the licence key value
         	}
         }
 
-        $focus->saveSetting($prefix[0], $prefix[1], $val); 
+        $focus->saveSetting($prefix[0], $prefix[1], $val);
 	}
 }
 

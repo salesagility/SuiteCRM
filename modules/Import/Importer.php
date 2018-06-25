@@ -540,7 +540,7 @@ class Importer
         */
         if ( ( !empty($focus->new_with_id) && !empty($focus->date_modified) ) ||
              ( empty($focus->new_with_id) && $timedate->to_db($focus->date_modified) != $timedate->to_db($timedate->to_display_date_time($focus->fetched_row['date_modified'])) )
-        ) 
+        )
             $focus->update_date_modified = false;
 
         // Bug 53636 - Allow update of "Date Created"
@@ -569,7 +569,7 @@ class Importer
                     $focus->$key = $focus->parent_id;
                 }
             }
-        }					
+        }
         //bug# 40260 setting it true as the module in focus is involved in an import
         $focus->in_import=true;
         // call any logic needed for the module preSave

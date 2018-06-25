@@ -43,7 +43,7 @@ require_once('modules/ModuleBuilder/Module/StudioModule.php');
 require_once('modules/ModuleBuilder/Module/StudioBrowser.php') ;
 require_once('include/ytree/ExtNode.php') ;
 
-class ViewHistory extends SugarView 
+class ViewHistory extends SugarView
 {
  	/**
 	 * @see SugarView::_getModuleTitleParams()

@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class CampaignROIChartDashlet extends DashletGenericChart 
+class CampaignROIChartDashlet extends DashletGenericChart
 {
     public $campaign_id;
     /**

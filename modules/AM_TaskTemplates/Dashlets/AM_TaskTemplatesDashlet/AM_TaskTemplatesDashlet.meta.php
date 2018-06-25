@@ -46,7 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $app_strings;
 
 $dashletMeta['AM_TaskTemplatesDashlet'] = array('module'		=> 'AM_TaskTemplates',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AM_TaskTemplates'), 
+										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AM_TaskTemplates'),
                                           'description' => 'A customizable view into AM_TaskTemplates',
                                           'icon'        => 'icon_AM_TaskTemplates_32.gif',
                                           'category'    => 'Module Views');

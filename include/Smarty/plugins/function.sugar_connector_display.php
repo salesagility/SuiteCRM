@@ -104,7 +104,7 @@ function smarty_function_sugar_connector_display($params, &$smarty)
     if($type == 'text') {
        echo strlen($bean->$field) > 50 ? substr($bean->$field, 0, 47) . '...' : $bean->field;
     } else if($type == 'link') {
-       echo "<a href='{$bean->$field}' target='_blank'>{$bean->$field}</a>"; 
+       echo "<a href='{$bean->$field}' target='_blank'>{$bean->$field}</a>";
     } else {
        echo $bean->$field;
     }

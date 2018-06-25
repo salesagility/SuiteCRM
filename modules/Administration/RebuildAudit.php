@@ -52,7 +52,7 @@ foreach ($beanFiles as $bean => $file)
 				printf($mod_strings['LBL_REBUILD_AUDIT_SEARCH'],$focus->get_audit_table_name(), $focus->object_name);
 				$focus->create_audit_table();
 			} else {
-				printf($mod_strings['LBL_REBUILD_AUDIT_SKIP'],$focus->object_name);	
+				printf($mod_strings['LBL_REBUILD_AUDIT_SKIP'],$focus->object_name);
 			}
 		}
 	}

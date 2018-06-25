@@ -56,7 +56,7 @@ class AbstractRelationship
      * The base set of keys are those used in the Relationships table 
      * Defined as Public as MBRelationship uses these to read the _POST data
      */
-    public static $definitionKeys = array ( 
+    public static $definitionKeys = array (
         // atttributes of this relationship - here in the definition so they are preserved across saves and loads
         'for_activities',
     	'is_custom',
@@ -72,18 +72,18 @@ class AbstractRelationship
         'rhs_subpanel' , // subpanel FROM the rhs_module to display on the lhs_module detail view
         // keys from Relationships table
         'relationship_name' ,
-        'lhs_module' , 
-        'lhs_table' , 
-        'lhs_key' , 
-        'rhs_module' , 
-        'rhs_table' , 
-        'rhs_key' , 
-        'join_table' , 
-        'join_key_lhs' , 
-        'join_key_rhs' , 
-        'relationship_type' , 
-        'relationship_role_column' , 
-        'relationship_role_column_value' , 
+        'lhs_module' ,
+        'lhs_table' ,
+        'lhs_key' ,
+        'rhs_module' ,
+        'rhs_table' ,
+        'rhs_key' ,
+        'join_table' ,
+        'join_key_lhs' ,
+        'join_key_rhs' ,
+        'relationship_type' ,
+        'relationship_role_column' ,
+        'relationship_role_column_value' ,
         'reverse' ) ;
 
     /*
@@ -187,7 +187,7 @@ class AbstractRelationship
     
     public function relationship_only ()
     {
-        return $this->definition [ 'relationship_only' ] ;   
+        return $this->definition [ 'relationship_only' ] ;
     }
     
     public function setRelationship_only ()
@@ -297,7 +297,7 @@ class AbstractRelationship
      */
     protected function getSubpanelDefinition ($relationshipName , $sourceModule , $subpanelName, $titleKeyName = '', $source = "")
     {
-        if (empty($source)) 
+        if (empty($source))
         	$source = $this->getValidDBName($relationshipName);
     	$subpanelDefinition = array ( ) ;
         $subpanelDefinition [ 'order' ] = 100 ;
@@ -438,7 +438,7 @@ class AbstractRelationship
                     $vardef [ 'rname' ] = 'kbdocument_name' ;
                     break ;
                 case 'leads' :
-                case 'contacts' : 
+                case 'contacts' :
                     // special handling as these modules lack a name column in the database; instead 'name' refers to a non-db field that concatenates first_name and last_name
                     // luckily, the relate field mechanism can handle this with an equivalent additional db_concat_fields entry
                     $vardef [ 'rname' ] = 'name' ;

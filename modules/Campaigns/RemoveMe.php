@@ -62,14 +62,14 @@ if(!empty($_REQUEST['identifier'])) {
     
     if (!empty($keys) && $keys['target_type'] == 'Users'){
         //Users cannot opt out of receiving emails, print out warning message.
-        echo $mod_strings['LBL_USERS_CANNOT_OPTOUT'];       
+        echo $mod_strings['LBL_USERS_CANNOT_OPTOUT'];
      }elseif(!empty($keys) && isset($keys['campaign_id']) && !empty($keys['campaign_id'])){
         //we need to unsubscribe the user from this particular campaign
         $beantype = $beanList[$keys['target_type']];
         require_once($beanFiles[$beantype]);
         $focus = new $beantype();
         $focus->retrieve($keys['target_id']);
-        unsubscribe($keys['campaign_id'], $focus); 
+        unsubscribe($keys['campaign_id'], $focus);
     
     }elseif(!empty($keys)){
 		$id = $keys['target_id'];

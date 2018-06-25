@@ -43,7 +43,7 @@ require_once('modules/Configurator/Configurator.php');
 require_once('include/MVC/View/SugarView.php');
         
 class AdministrationViewThemeConfigSettings extends SugarView
-{	
+{
  	/**
 	 * @see SugarView::_getModuleTitleParams()
 	 */

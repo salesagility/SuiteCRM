@@ -72,7 +72,7 @@ class ManyToManyRelationship extends AbstractRelationship
      * @return array    An array of subpanel definitions, keyed by module
      */
     function buildSubpanelDefinitions ()
-    {        
+    {
         $subpanelDefinitions = array ( ) ;
         if (!$this->relationship_only)
         {
@@ -89,9 +89,9 @@ class ManyToManyRelationship extends AbstractRelationship
     function buildVardefs ( )
     {
         $vardefs = array ( ) ;
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition ( $this->lhs_module, $this->relationship_name, false, 
+        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition ( $this->lhs_module, $this->relationship_name, false,
             'LBL_' . strtoupper ( $this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel() ) . '_TITLE' ) ;
-        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition ( $this->rhs_module, $this->relationship_name, false, 
+        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition ( $this->rhs_module, $this->relationship_name, false,
             'LBL_' . strtoupper ( $this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()  ) . '_TITLE' ) ;
         return $vardefs ;
     }

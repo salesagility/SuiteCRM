@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     **this is the ajax call that is called from RebuildJSLang.php.  It processes
     **the Request object in order to call correct methods for repairing/rebuilding JSfiles
     *Note that minify.php has already been included as part of index.php, so no need to include again.
-    */ 
+    */
 
  
     //set default root directory
@@ -54,7 +54,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     $tmp_time = ini_get('max_execution_time');
     ini_set('max_execution_time','600');
         
-        //figure out which commands to call.  
+        //figure out which commands to call.
         if($_REQUEST['js_admin_repair'] == 'concat' ){
             //concatenate mode, call the files that will concatenate javascript group files
             $_REQUEST['js_rebuild_concat'] = 'rebuild';
@@ -66,7 +66,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
         
             if($_REQUEST['js_admin_repair'] == 'replace'){
                 //should replace compressed JS with source js
-                reverseScripts("$from/jssource/src_files","$from");    
+                reverseScripts("$from/jssource/src_files","$from");
     
             }elseif($_REQUEST['js_admin_repair'] == 'mini'){
                 //should replace compressed JS with minified version of source js
@@ -77,8 +77,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
             }elseif($_REQUEST['js_admin_repair'] == 'repair'){
              //should compress existing javascript (including changes done) without overwriting original source files
                 BackUpAndCompressScriptFiles("$from","",false);
-                ConcatenateFiles("$from");        
+                ConcatenateFiles("$from");
             }
         }
-    //set execution time back to what it was   
+    //set execution time back to what it was
     ini_set('max_execution_time',$tmp_time);

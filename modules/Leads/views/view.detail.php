@@ -51,5 +51,5 @@ class LeadsViewDetail extends ViewDetail {
 		$disableConvert = ($this->bean->status == 'Converted' && !empty($sugar_config['disable_convert_lead'])) ? TRUE : FALSE;
 		$this->ss->assign("DISABLE_CONVERT_ACTION", $disableConvert);
 		parent::display();
- 	}	
+ 	}
 }

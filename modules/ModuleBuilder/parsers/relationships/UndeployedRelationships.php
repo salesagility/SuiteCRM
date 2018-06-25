@@ -81,7 +81,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         $relatableModules = parent::findRelatableModules ($includeActivitiesSubmodules ) ;
         
         // now add in the undeployed modules - those in custom/modulebuilder
-        // note that if a module exists in both deployed and undeployed forms, the subpanels from the undeployed form are used...  
+        // note that if a module exists in both deployed and undeployed forms, the subpanels from the undeployed form are used...
 
         require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
         $mb = new ModuleBuilder ( ) ;
@@ -108,7 +108,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
     function add ($relationship)
     {
         parent::add ( $relationship ) ;
-        $this->addFieldsToUndeployedLayouts ( $relationship ) ; // must come after parent::add as we need the relationship_name in the relationships getFieldsToLayouts() which is called by addFieldsToUndeployedLayouts() 
+        $this->addFieldsToUndeployedLayouts ( $relationship ) ; // must come after parent::add as we need the relationship_name in the relationships getFieldsToLayouts() which is called by addFieldsToUndeployedLayouts()
     }
 
     /*
@@ -371,7 +371,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
                     if (($actionAdd) ? $parser->addField ( array ( 'name' => $fieldName ) ) : $parser->removeField ( $fieldName ))
                     {
                         $parser->handleSave ( false ) ;
-                    } 
+                    }
                     else
                     {
                         $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": couldn't " . (($actionAdd) ? "add" : "remove") . " $fieldName on $view layout for undeployed module $deployedModuleName" ) ;
@@ -411,9 +411,9 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
                     if (! isset ( $parsedName [ 'packageName' ] ))
                     {
                         $fieldsToAdd [$parsedName [ 'moduleName' ]] = $fieldName;
-                    } 
+                    }
                     //Bug 22348: We should add in the field for custom modules not in this package, if they have been deployed.
-                    else if ($parsedName [ 'packageName' ] != $this->packageName 
+                    else if ($parsedName [ 'packageName' ] != $this->packageName
                             && isset ( $GLOBALS [ 'beanList' ] [ $deployedModuleName ])){
                         $fieldsToAdd [$deployedModuleName] = $fieldName;
                     }

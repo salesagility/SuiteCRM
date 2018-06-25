@@ -1200,7 +1200,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
             $properties[$i]->name = 'emailPermission';
             $properties[$i]->value = $emailPermission;
             $i++;
-        }        
+        }
         
         $group->property = $properties;
 
@@ -1240,7 +1240,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * @return Zend_Gdata_Gapps_GroupFeed Collection of Zend_Gdata_GroupEntry objects
      *              representing all groups apart of the domain.
      */
-    public function retrieveAllGroups() 
+    public function retrieveAllGroups()
     {
         return $this->retrieveAllEntriesForFeed($this->retrievePageOfGroups());
     }
@@ -1385,7 +1385,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
         $uri .= $this->getDomain() . '/' . $groupId . '/owner/' . $email;
         
         //if the enitiy is not an owner of the group, an exception is thrown
-        try {            
+        try {
             $results = $this->get($uri);
         } catch (Exception $e) {
             $results = false;
@@ -1459,7 +1459,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
         $uri  = self::APPS_BASE_FEED_URI . self::APPS_GROUP_PATH . '/';
         $uri .= $this->getDomain() . '/' . $groupId;
 
-        return $this->updateEntry($group, $uri, 'Zend_Gdata_Gapps_GroupEntry');        
+        return $this->updateEntry($group, $uri, 'Zend_Gdata_Gapps_GroupEntry');
     }
 
     /**

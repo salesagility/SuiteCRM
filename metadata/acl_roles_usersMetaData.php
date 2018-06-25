@@ -38,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['acl_roles_users'] = array ( 
+$dictionary['acl_roles_users'] = array (
 
 	'table' => 'acl_roles_users',
 

@@ -61,7 +61,7 @@ $subpanel_layout = array(
 		),
 		'accept_status_id'=>array(
 			'usage' => 'query_only',
-		),				
+		),
         'first_name'=>array(
 		 	'usage' => 'query_only',
 		),

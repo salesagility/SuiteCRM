@@ -39,7 +39,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 if(isset($_REQUEST['refreshparent'])){
-	echo '<SCRIPT> parent.location.reload();</script>';	
+	echo '<SCRIPT> parent.location.reload();</script>';
 }else if(isset($_REQUEST['module_name']) && isset($_REQUEST['showlist'])){
 	$the_strings = return_module_language($current_language, $_REQUEST['module_name']);
 	$mod_name = $_REQUEST['module_name'];
@@ -50,7 +50,7 @@ if(isset($_REQUEST['refreshparent'])){
 		$sugar_body_only = $_REQUEST['sugar_body_only'];
 	}
 	foreach($the_strings as $key=>$value){
-		echo "<tr><td nowrap>$key &nbsp;=>&nbsp; <a href='index.php?action=EditView&module=LabelEditor&module_name=$mod_name&record=$key&sugar_body_only=$sugar_body_only&style=popup'> $value </a></td></tr>";	
+		echo "<tr><td nowrap>$key &nbsp;=>&nbsp; <a href='index.php?action=EditView&module=LabelEditor&module_name=$mod_name&record=$key&sugar_body_only=$sugar_body_only&style=popup'> $value </a></td></tr>";
 		
 	}
 	echo '</table>';
@@ -78,7 +78,7 @@ EOQ;
 		$sugar_body_only = $_REQUEST['sugar_body_only'];
 	}
 	foreach($the_strings as $key=>$value){
-		echo "<tr><td><span class='dataLabel'>$value</span><br><span style='font-size: 9;'>$key</span><br><input name='$key' value='$value' size='40'></td></tr>";	
+		echo "<tr><td><span class='dataLabel'>$value</span><br><span style='font-size: 9;'>$key</span><br><input name='$key' value='$value' size='40'></td></tr>";
 		
 	}
 	echo '</table>';
@@ -93,4 +93,4 @@ EOQ;
 	echo '</form>';
 }else{
 	echo 'No Module Selected';
-}	
+}

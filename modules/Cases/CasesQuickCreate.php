@@ -84,8 +84,8 @@ class CasesQuickCreate extends QuickCreate {
 		);
 	
 		$encoded_popup_request_data = $json->encode($popup_request_data);
-		$this->ss->assign('encoded_popup_request_data', $encoded_popup_request_data);        
+		$this->ss->assign('encoded_popup_request_data', $encoded_popup_request_data);
 
         
-    }   
+    }
 }

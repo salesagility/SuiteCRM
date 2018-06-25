@@ -97,7 +97,7 @@
        imagealphablending($this->Picture,FALSE);
        imagefilledrectangle($this->Picture, 0,0,$XSize, $YSize, imagecolorallocatealpha($this->Picture, 255, 255, 255, 127));
        imagealphablending($this->Picture,TRUE);
-       imagesavealpha($this->Picture,true); 
+       imagesavealpha($this->Picture,true);
       }
      else
       {
@@ -373,7 +373,7 @@
      if ( $this->ImageMapStorageMode == NULL ) { return(-1); }
 
      $Values = $this->removeVOIDFromArray($Title, $Values);
-     $ID = 0; 
+     $ID = 0;
      if ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION )
       {
        if(!isset($_SESSION)) { return(-1); }

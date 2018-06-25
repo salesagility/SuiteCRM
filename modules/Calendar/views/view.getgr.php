@@ -61,6 +61,6 @@ class CalendarViewGetGR extends SugarView {
         	$GRjavascript = $json_config->getFocusData($_REQUEST['type'], $_REQUEST['record']);
         	ob_clean();
         	echo $GRjavascript;
-	}	
+	}
 
 }

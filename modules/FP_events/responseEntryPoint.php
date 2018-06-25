@@ -6,7 +6,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 	$even_id = $_GET['event'];
 	$delegate_id = $_GET['delegate'];
 	$type = $_GET['type'];
-	$response = $_GET['response'];	
+	$response = $_GET['response'];
 
 	//get event
     $event = new FP_events();
@@ -28,15 +28,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 if(!IsNullOrEmptyString($event->accept_redirect)){
                     
                     $url = $event->accept_redirect;
-                    header('Location: ' . $url);    
+                    header('Location: ' . $url);
                 }
                 else{
                     echo 'Thank you for accepting';
-                }   
+                }
     		}
     		else {
     			echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
-    		}	
+    		}
     	}
     	else if($response == 'decline'){
     		//check to see if they have already responded to the email
@@ -50,7 +50,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 if(!IsNullOrEmptyString($event->decline_redirect)){
 
                     $url = $event->decline_redirect;
-                    header('Location: ' . $url);    
+                    header('Location: ' . $url);
                     
                 }
                 else{
@@ -78,15 +78,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 if(!IsNullOrEmptyString($event->accept_redirect)){
                     
                     $url = $event->accept_redirect;
-                    header('Location: ' . $url);    
+                    header('Location: ' . $url);
                 }
                 else{
                     echo 'Thank you for accepting';
-                }   
+                }
             }
             else {
                 echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
-            }   
+            }
     	}
     	else if($response == 'decline'){
             //check to see if they have already responded to the email
@@ -99,7 +99,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 if(!IsNullOrEmptyString($event->decline_redirect)){
 
                     $url = $event->decline_redirect;
-                    header('Location: ' . $url);    
+                    header('Location: ' . $url);
                     
                 }
                 else{
@@ -126,15 +126,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 if(!IsNullOrEmptyString($event->accept_redirect)){
                     
                     $url = $event->accept_redirect;
-                    header('Location: ' . $url);    
+                    header('Location: ' . $url);
                 }
                 else{
                     echo 'Thank you for accepting';
-                }   
+                }
             }
             else {
                 echo 'There was a problem with the link please contact the sender of the invite';
-            }   
+            }
     	}
     	else if($response == 'decline'){
     		//check to see if they have already responded to the email
@@ -148,7 +148,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 if(!IsNullOrEmptyString($event->decline_redirect)){
 
                     $url = $event->decline_redirect;
-                    header('Location: ' . $url);    
+                    header('Location: ' . $url);
                     
                 }
                 else{

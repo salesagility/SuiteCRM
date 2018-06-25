@@ -72,7 +72,7 @@ class Jit extends JsChart {
 	
 		parent::display($name, $xmlFile, $width, $height, $resize);
 
-		return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');	
+		return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');
 	}
 	
 

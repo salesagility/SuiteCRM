@@ -50,7 +50,7 @@ if(isset($_REQUEST['type']) && $_REQUEST['type'] == 'personal') {
             /** @var InboundEmail $bean */
 			foreach($beans as $bean) {
                 $bean->importMessages();
-			}	
+			}
 		}
 	}
 	header('Location: index.php?module=Emails&action=ListView&type=inbound&assigned_user_id='.$current_user->id);

@@ -96,7 +96,7 @@ $sugar_smarty->assign('ACTIONS', $actions);
 ob_clean();
 
 if($_REQUEST['category_name'] == 'All'){
-	echo $sugar_smarty->fetch('modules/ACLRoles/EditAllBody.tpl');	
+	echo $sugar_smarty->fetch('modules/ACLRoles/EditAllBody.tpl');
 }else{
 //WDong Bug 23195: Strings not localized in Role Management.
 echo getClassicModuleTitle($_REQUEST['category_name'],array($app_list_strings['moduleList'][$_REQUEST['category_name']]), false);

@@ -55,12 +55,12 @@ class ConfiguratorViewAddFontView extends SugarView {
     public function display(){
         global $mod_strings, $app_list_strings, $app_strings, $current_user;
         if(!is_admin($current_user)){
-            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);  
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
-        $this->ss->assign("MODULE_TITLE", 
+        $this->ss->assign("MODULE_TITLE",
             getClassicModuleTitle(
-                $mod_strings['LBL_MODULE_ID'], 
-                array($mod_strings['LBL_ADDFONT_TITLE']), 
+                $mod_strings['LBL_MODULE_ID'],
+                array($mod_strings['LBL_ADDFONT_TITLE']),
                 true
                 )
             );

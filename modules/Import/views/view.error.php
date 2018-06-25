@@ -47,8 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/SugarView.php');
         
-class ImportViewError extends SugarView 
-{	
+class ImportViewError extends SugarView
+{
     /**
      * @see SugarView::getMenu()
      */

@@ -93,7 +93,7 @@ if(!isset($_REQUEST['adv_interval']) || $_REQUEST['adv_interval'] == 'false' || 
            $_REQUEST['hours'] = '0'; // setting it to run midnight every 24 hours
         }
         $_REQUEST['mins'] = '0';    // on top of the hours
-	} 
+	}
 }
 
 ////	END USE_ADV override

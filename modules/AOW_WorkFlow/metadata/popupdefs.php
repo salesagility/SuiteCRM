@@ -27,7 +27,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $popupMeta = array('moduleMain' => 'AOW_WorkFlow',
 						'varName' => 'AOW_WorkFlow',
 						'orderBy' => 'aow_workflow.name',
-						'whereClauses' => 
+						'whereClauses' =>
 							array('name' => 'aow_workflow.name',
 								),
 						    'searchInputs'=> array('aow_workflow_number', 'name', 'priority','status'),

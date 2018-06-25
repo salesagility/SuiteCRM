@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class OpportunitiesByLeadSourceDashlet extends DashletGenericChart 
+class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 {
     public $pbls_lead_sources = array();
     public $pbls_ids          = array();

@@ -53,7 +53,7 @@ class StudioWizard{
     }
 
     function options(){
-    	$options = array('SelectModuleWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_MODULE'], 
+    	$options = array('SelectModuleWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_MODULE'],
     	                 'EditDropDownWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_DROPDOWNS'],
     	                 'RenameTabs'=>$GLOBALS['mod_strings']['LBL_SW_RENAME_TABS'],
     	                 'ConfigureTabs'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_TABS'],
@@ -86,10 +86,10 @@ class StudioWizard{
                 require_once('modules/Studio/wizards/RenameModules.php');
                 $newWiz = new RenameModules();
                 $newWiz->process();
-                break; 
+                break;
             case 'ConfigureTabs':
                 header('Location: index.php?module=Administration&action=ConfigureTabs');
-                sugar_cleanup(true); 
+                sugar_cleanup(true);
             case 'ConfigureGroupTabs':
                 require_once('modules/Studio/TabGroups/EditViewTabs.php');
                 break;

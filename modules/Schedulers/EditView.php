@@ -124,7 +124,7 @@ if(!empty($dtEnd) && $dtEnd != '2020-12-31 23:59') {
 	$time_end = $exEnd[1];
 } else {
 	$date_end = '';
-	$time_end = '';	
+	$time_end = '';
 }
 
 // setup calendar dropdowns
@@ -150,14 +150,14 @@ $start_at = 1;
 include_once('modules/Schedulers/_AddJobsHere.php');
 
 if(is_array($job_strings) && !empty($job_strings)) {
-	$job_function = "<option value=''>--</option>"; 
+	$job_function = "<option value=''>--</option>";
 	foreach($job_strings as $k => $function) {
 		$job_function .= "<option value='function::".$function."'";
 		if($focus->job === "function::".$function) {
 			$job_function .= " SELECTED ";
 		}
 		$job_function .= ">".$mod_strings['LBL_'.strtoupper($function)]."</option>";
-	}	
+	}
 }
 
 if (empty ($time_meridiem_start)) {
@@ -174,7 +174,7 @@ for ($i = $start_at; $i < $num_of_hours; $i ++) {
 }
 
 for($j=0; $j<60; $j++) {
-	$mins_arr[$j] = str_pad($j, 2, 0, STR_PAD_LEFT);	
+	$mins_arr[$j] = str_pad($j, 2, 0, STR_PAD_LEFT);
 }
 
 // make two more array with "nulls"
@@ -183,11 +183,11 @@ $mins_arr_unreq = $mins_arr;
 $hours_arr_unreq[''] = '--';
 $mins_arr_unreq[''] = '--';
 
-// explode crontab notation 
+// explode crontab notation
 if(!empty($focus->job_interval)) {
 	$exInterval = explode("::", $focus->job_interval);
 } else {
-	$exInterval = array('*','*','*','*','*');	
+	$exInterval = array('*','*','*','*','*');
 }
 
 
@@ -223,8 +223,8 @@ if($exInterval[4] == '*') {
 		if(strpos($days, '-')) {
 			$exDaysRange = explode('-', $days);
 			for($i=$exDaysRange[0]; $i<=$exDaysRange[1]; $i++) {
-				$xtpl->assign($xtDays[$days], "CHECKED");	
-			}	
+				$xtpl->assign($xtDays[$days], "CHECKED");
+			}
 		} else {
 			$xtpl->assign($xtDays[$days], "CHECKED");
 		}
@@ -232,8 +232,8 @@ if($exInterval[4] == '*') {
 } elseif(strpos($exInterval[4], '-')) {
 	$exDaysRange = explode('-', $exInterval[4]);
 	for($i=$exDaysRange[0]; $i<=$exDaysRange[1]; $i++) {
-		$xtpl->assign($xtDays[$i], "CHECKED");	
-	}	
+		$xtpl->assign($xtDays[$i], "CHECKED");
+	}
 } else {
 	$xtpl->assign($xtDays[$exInterval[4]], "CHECKED");
 }

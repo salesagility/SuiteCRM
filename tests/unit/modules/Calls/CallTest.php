@@ -139,7 +139,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where calls.deleted=0 ORDER BY calls.name';
         $actual = $call->create_export_query('', '');
         $this->assertSame($expected, $actual);
-        //var_dump($actual);	
+        //var_dump($actual);
 
         //test with empty string params
         $expected = 'SELECT calls.*, users.user_name as assigned_user_name  FROM calls   LEFT JOIN users ON calls.assigned_user_id=users.id where users.user_name="" AND calls.deleted=0 ORDER BY calls.name';
@@ -185,7 +185,7 @@ class CallTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushGlobals();
 
 	// test
-        // 
+        //
         //self::markTestIncomplete('environment dependency');
                 
         $call = new Call();

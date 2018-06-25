@@ -178,7 +178,7 @@ function buildTableForm($rows, $mod='Accounts'){
 				if($key != 'id'){
                     if(isset($_POST['popup']) && $_POST['popup']==true){
                         $form .= "<td scope='row'><a  href='javascript:void(0)' onclick=\"window.opener.location='index.php?module=Accounts&action=DetailView&record=${row['id']}'\">$value</a></td>\n";
-                    }   
+                    }
                     else
 					    $form .= "<td><a target='_blank' href='index.php?module=Accounts&action=DetailView&record=${row['id']}'>$value</a></td>\n";
 
@@ -444,11 +444,11 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
             
 			
 			if($focus->hasCustomFields()) {
-				foreach($focus->field_defs as $name=>$field) {	
+				foreach($focus->field_defs as $name=>$field) {
 					if (!empty($field['source']) && $field['source'] == 'custom_fields')
 					{
 						$get .= "&Accounts$name=".urlencode($focus->$name);
-					}			    
+					}
 				}
 			}
 			
@@ -513,7 +513,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false){
                                  'get' => ''));
    	 	$trackerManager = TrackerManager::getInstance();
         $timeStamp = TimeDate::getInstance()->nowDb();
-        if($monitor = $trackerManager->getMonitor('tracker')){ 
+        if($monitor = $trackerManager->getMonitor('tracker')){
 	        $monitor->setValue('action', 'detailview');
 	        $monitor->setValue('user_id', $GLOBALS['current_user']->id);
 	        $monitor->setValue('module_name', 'Accounts');

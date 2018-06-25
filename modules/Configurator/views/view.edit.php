@@ -64,7 +64,7 @@ class ConfiguratorViewEdit extends ViewEdit
 	public function preDisplay()
     {
         if(!is_admin($GLOBALS['current_user']))
-            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']); 
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
     }
     
     /**
@@ -86,7 +86,7 @@ class ConfiguratorViewEdit extends ViewEdit
     }
 
     public function process()
-    {   
+    {
         if (isset($this->errors['company_logo']))
         {
             $this->configurator->errors['company_logo'] = $this->errors['company_logo'];

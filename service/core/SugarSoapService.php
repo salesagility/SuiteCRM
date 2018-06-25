@@ -78,7 +78,7 @@ abstract class SugarSoapService extends SugarWebService{
 	 * @param Array $attrs - array(array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'xsd:string[]'))
 	 * @param String $arrayType - arrayType: namespace:name (xsd:string)
 	 * @access public
-	 */	
+	 */
 	abstract function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType='');
 	
 	/**
@@ -135,7 +135,7 @@ abstract class SugarSoapService extends SugarWebService{
 	 * @access public
 	 */
 	public function getRegisteredImplClass() {
-		return $this->implementationClass;	
+		return $this->implementationClass;
 	}
 
 	/**
@@ -145,7 +145,7 @@ abstract class SugarSoapService extends SugarWebService{
 	 * @access public
 	 */
 	public function getRegisteredClass() {
-		return $this->registryClass;	
+		return $this->registryClass;
 	}
 	
 	/**
@@ -155,7 +155,7 @@ abstract class SugarSoapService extends SugarWebService{
 	 * @access public
 	 */
 	public function getServer() {
-		return $this->server;	
+		return $this->server;
 	} // fn
 	
 	

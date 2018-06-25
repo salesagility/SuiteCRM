@@ -72,7 +72,7 @@ $params[] = $mod_strings['LBL_STEP2_FORM_TITLE'];
 $params[] = $focus->merge_bean->name;
 echo getClassicModuleTitle($focus->merge_bean->module_dir, $params, true);
 
-       $order_by_name = $focus->merge_module.'2_'.strtoupper($focus->merge_bean->object_name).'_ORDER_BY' ; 
+       $order_by_name = $focus->merge_module.'2_'.strtoupper($focus->merge_bean->object_name).'_ORDER_BY' ;
        $lvso = isset($_REQUEST['lvso'])?$_REQUEST['lvso']:"";
        $request_order_by_name = isset($_REQUEST[$order_by_name])?$_REQUEST[$order_by_name]:"";
 
@@ -125,16 +125,16 @@ require_once($metadataFile);
 $displayColumns = array();
 if(!empty($_REQUEST['displayColumns'])) {
     foreach(explode('|', $_REQUEST['displayColumns']) as $num => $col) {
-        if(!empty($listViewDefs[$module][$col])) 
+        if(!empty($listViewDefs[$module][$col]))
             $displayColumns[$col] = $listViewDefs[$module][$col];
-    }    
+    }
 }
 else {
     foreach($listViewDefs[$module] as $col => $params) {
         if(!empty($params['default']) && $params['default'])
             $displayColumns[$col] = $params;
     }
-} 
+}
 $params = array('massupdate' => true, 'export' => false, 'handleMassupdate' => false );
 $ListView->displayColumns = $displayColumns;
 $ListView->lvd->listviewName = $focus->merge_module; //27633, this will make the $module to be merge_module instead of 'MergeRecords'. Then the key of  offset and orderby will be correct.

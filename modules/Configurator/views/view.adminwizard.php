@@ -69,7 +69,7 @@ class ViewAdminwizard extends SugarView
             global $current_user, $mod_strings, $app_list_strings, $sugar_config, $locale, $sugar_version;
             
             if(!is_admin($current_user)){
-            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']); 
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         }
                 
                 $themeObject = SugarThemeRegistry::current();

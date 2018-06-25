@@ -53,7 +53,7 @@ class TemplateRadioEnum extends TemplateEnum{
 		$def = parent::get_field_def();
 		$def['dbType'] = 'enum';
 		$def['separator'] = '<br>';
-		return $def;	
+		return $def;
 	}
 	
 	
@@ -64,8 +64,8 @@ class TemplateRadioEnum extends TemplateEnum{
 			$value = $this->bean->$name;
 		}else{
 			if(empty($this->bean->id)){
-				$value= $this->default_value;	
-			}	
+				$value= $this->default_value;
+			}
 		}
 		if(!empty($this->help)){
 		    $returnXTPL[$this->name . '_help'] = translate($this->help, $this->bean->module_dir);
@@ -77,7 +77,7 @@ class TemplateRadioEnum extends TemplateEnum{
 
 		
 		$returnXTPL[strtoupper('RADIOOPTIONS_'.$this->name)] = $this->generateRadioButtons($value, false);
-		return $returnXTPL;	
+		return $returnXTPL;
 		
 		
 	}
@@ -108,7 +108,7 @@ class TemplateRadioEnum extends TemplateEnum{
 		$returnXTPL = array();
 		$returnXTPL[strtoupper($this->name)] = $searchFor;
 		$returnXTPL[strtoupper('RADIOOPTIONS_'.$this->name)] = $this->generateRadioButtons($searchFor, true);
-		return $returnXTPL;	
+		return $returnXTPL;
 
 	}
 	

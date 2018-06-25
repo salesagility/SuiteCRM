@@ -419,7 +419,7 @@ class UnifiedSearchAdvanced {
 			if(file_exists("custom/modules/{$moduleName}/metadata/SearchFields.php"))
 			{
 				require "custom/modules/{$moduleName}/metadata/SearchFields.php" ;
-			}				
+			}
 
             //If there are $searchFields are empty, just continue, there are no search fields defined for the module
             if(empty($searchFields[$moduleName]))

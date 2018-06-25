@@ -151,7 +151,7 @@ class ModuleBuilderController extends SugarController
                     break ;
                 default :
                     $GLOBALS [ 'log' ]->fatal ( 'Action = editLayout with unknown view=' . $_REQUEST [ 'view' ] ) ;
-            } 
+            }
         }
 
     }

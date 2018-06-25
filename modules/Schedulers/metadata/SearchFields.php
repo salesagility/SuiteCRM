@@ -38,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchFields['Schedulers'] = 
+$searchFields['Schedulers'] =
 	array (
 		'name' => array( 'query_type'=>'default'),
 	);

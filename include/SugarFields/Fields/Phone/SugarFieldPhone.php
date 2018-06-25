@@ -51,6 +51,6 @@ class SugarFieldPhone extends SugarFieldBase {
 		 parent::save($bean, $params, $field, $properties, $prefix);
          	 	if (isset($params[$prefix.$field]))
 		            $bean->$field = $params[$prefix.$field];
-    }    
+    }
     
 }

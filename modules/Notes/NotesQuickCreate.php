@@ -68,5 +68,5 @@ class NotesQuickCreate extends QuickCreate {
         $this->javascript->addAllFields('');
 
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
-    }   
+    }
 }

@@ -53,7 +53,7 @@ global $app_list_strings;
 global $current_language, $current_user;
 $current_module_strings = return_module_language($current_language, 'ProjectTask');
 
-$today = $timedate->nowDbDate(); 
+$today = $timedate->nowDbDate();
 $today = $timedate->handle_offset($today, $timedate->dbDayFormat, false);
 
 $ListView = new ListView();
@@ -68,7 +68,7 @@ $header_text = '';
 if(is_admin($current_user)
 	&& $_REQUEST['module'] != 'DynamicLayout'
 	&& !empty($_SESSION['editinplace']))
-{	
+{
 	$header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=MyTasks&from_module=Tasks'>"
 		. SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])
 		. '</a>';

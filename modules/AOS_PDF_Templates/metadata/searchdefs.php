@@ -32,10 +32,10 @@
  */
   $searchdefs['AOS_PDF_Templates'] = array(
 					'templateMeta' => array(
-							'maxColumns' => '3', 
-                            'widths' => array('label' => '10', 'field' => '30'),                 
+							'maxColumns' => '3',
+                            'widths' => array('label' => '10', 'field' => '30'),
                            ),
-                    'layout' => array(  					
+                    'layout' => array(
 						'basic_search' => array(
 							'name',
 							array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),

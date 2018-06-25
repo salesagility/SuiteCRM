@@ -56,7 +56,7 @@ class SugarWidgetSubPanelConcat extends SugarWidgetField
 					$value.=$layout_def['fields'][strtoupper($field)];
 				} else {
 					$value.=$field;
-				}	
+				}
 			}
 		}
 		return $value;

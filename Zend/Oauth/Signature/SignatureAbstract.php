@@ -136,7 +136,7 @@ abstract class Zend_Oauth_Signature_SignatureAbstract
     {
         $encodedParams = array();
         foreach ($params as $key => $value) {
-            $encodedParams[Zend_Oauth_Http_Utility::urlEncode($key)] = 
+            $encodedParams[Zend_Oauth_Http_Utility::urlEncode($key)] =
                 Zend_Oauth_Http_Utility::urlEncode($value);
         }
         $baseStrings = array();

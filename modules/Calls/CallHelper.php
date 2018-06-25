@@ -53,7 +53,7 @@ function getDurationMinutesOptions($focus, $field, $value, $view) {
     
 	if (!isset($focus->duration_minutes)) {
 		$focus->duration_minutes = $focus->minutes_value_default;
-	}   
+	}
     
     global $timedate;
     //setting default date and time
@@ -67,7 +67,7 @@ function getDurationMinutesOptions($focus, $field, $value, $view) {
     if($view == 'EditView' || $view == 'MassUpdate' || $view == "QuickCreate"
     ) {
        $html = '<select id="duration_minutes" ';
-       if($view != 'MassUpdate' 
+       if($view != 'MassUpdate'
        	 ) {
             $html .= 'onchange="SugarWidgetScheduler.update_time();" ';
        }
@@ -75,10 +75,10 @@ function getDurationMinutesOptions($focus, $field, $value, $view) {
        $html .=  'name="duration_minutes">';
        $html .= get_select_options_with_id($focus->minutes_values, $focus->duration_minutes);
        $html .= '</select>';
-       return $html;	
+       return $html;
     }
 
-    return $focus->duration_minutes;		
+    return $focus->duration_minutes;
 }
 
 /**
@@ -116,5 +116,5 @@ function getReminderTime($focus, $field, $value, $view) {
        return "";
     }
        
-    return translate('reminder_time_options', '', $reminder_t);    
+    return translate('reminder_time_options', '', $reminder_t);
 }

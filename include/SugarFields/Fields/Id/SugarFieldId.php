@@ -39,7 +39,7 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldId extends SugarFieldBase 
+class SugarFieldId extends SugarFieldBase
 {
     /**
      * @see SugarFieldBase::importSanitize()

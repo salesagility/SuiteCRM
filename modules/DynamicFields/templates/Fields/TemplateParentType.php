@@ -47,7 +47,7 @@ class TemplateParentType extends TemplateText{
 		$def = parent::get_field_def();
 		$def['dbType'] = 'varchar';
 		$def['studio'] = 'hidden';
-		return $def;	
+		return $def;
 	}
 
 }

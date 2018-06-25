@@ -78,7 +78,7 @@ function smarty_function_sugarvar_connector($params, &$smarty) {
       if(!isset($displayParams['module'])) {
          $smarty->trigger_error("sugarvar_connector: missing 'module' parameter");
          $GLOBALS['log']->error("sugarvar_connector: missing 'module' parameter");
-         return;     	
+         return;
       }
       
       require_once('include/connectors/utils/ConnectorUtils.php');

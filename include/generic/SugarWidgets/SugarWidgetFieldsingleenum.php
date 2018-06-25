@@ -50,7 +50,7 @@ class SugarWidgetFieldSingleEnum extends SugarWidgetFieldEnum {
             if ( is_array($layout_def['options']) ) {
                 $ops = $layout_def['options'];
             }
-            elseif (isset($layout_def['options']) && isset($app_list_strings[$layout_def['options']])){ 
+            elseif (isset($layout_def['options']) && isset($app_list_strings[$layout_def['options']])){
             	$ops = $app_list_strings[$layout_def['options']];
                 if(array_key_exists('', $app_list_strings[$layout_def['options']])) {
              	   unset($ops['']);

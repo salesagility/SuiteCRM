@@ -69,9 +69,9 @@ r12955 - 2006-04-26 18:32:25 -0700 (Wed, 26 Apr 2006) - wayne - custom code in l
 function smarty_function_sugar_evalcolumn($params, &$smarty)
 {
     if (!isset($params['colData']['field']) ) {
-        if(empty($params['colData']))  
+        if(empty($params['colData']))
             $smarty->trigger_error("evalcolumn: missing 'colData' parameter");
-        if(!isset($params['colData']['field']))  
+        if(!isset($params['colData']['field']))
             $smarty->trigger_error("evalcolumn: missing 'colData.field' parameter");
         return;
     }

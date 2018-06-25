@@ -73,7 +73,7 @@ class AM_ProjectTemplatesController extends SugarController {
 				$bh = $bh[0];
 				if($bh->open){
 					$open_h = $bh ? $bh->opening_hours : 9;
-					$close_h = $bh ? $bh->closing_hours : 17;							
+					$close_h = $bh ? $bh->closing_hours : 17;
 					
 					$start_time = DateTime::createFromFormat('Y-m-d', $start);
 
@@ -86,7 +86,7 @@ class AM_ProjectTemplatesController extends SugarController {
 					if($hours < 0)
 						$hours = 0 - $hours ;
 
-					$bhours[$day] = $hours; 	
+					$bhours[$day] = $hours;
 
 
 				}
@@ -198,10 +198,10 @@ class AM_ProjectTemplatesController extends SugarController {
 			$day = $enddate->format('l');
 
 			if($bhours[$day] != 0 ){
-				$d += 1;	
+				$d += 1;
 			}
 			$enddate = $enddate->modify('+1 Days');
-            } 
+            }
             $enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
 
             //----------------------------------
@@ -227,7 +227,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
 		$startdate = $enddate;
 		//add one day to let the next task start on next day of it's finish.
-		$enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;		    
+		$enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;
                 $enddate = $end;
 
             }
@@ -377,7 +377,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
         //count tasks
 		$project_template->load_relationship('am_tasktemplates_am_projecttemplates');
-		$tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');		
+		$tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
 		
 		$tid = count($tasks) + 1 ;
 

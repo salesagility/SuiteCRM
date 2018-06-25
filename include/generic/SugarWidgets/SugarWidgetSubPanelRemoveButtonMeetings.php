@@ -67,7 +67,7 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
 		$return_id = $_REQUEST['record'];
 		
 		
-		if(isset($GLOBALS['FOCUS'])) {	
+		if(isset($GLOBALS['FOCUS'])) {
 			$focus = $GLOBALS['FOCUS'];
 		}
 		

@@ -88,7 +88,7 @@ EOQ;
 	$the_form .= get_left_form_footer();
 	$the_form .= get_validate_record_js();
 
-	return $the_form;	
+	return $the_form;
 }
 
 function getFormBody($prefix, $mod='',$formname='', $size='30',$script=true) {
@@ -152,7 +152,7 @@ EOQ;
 		}
 		if(empty($focus->name)){
 			return null;
-		}	
+		}
         if ( !isset($focus->assigned_user_id) || $focus->assigned_user_id == '' )
             $focus->assigned_user_id = $GLOBALS['current_user']->id;
 	
@@ -160,7 +160,7 @@ EOQ;
 		if($redirect){
 			$GLOBALS['log']->debug("Saved record with id of ".$return_id);
 			handleRedirect($return_id, "ProspectLists");
-		} else { 
+		} else {
 			return $focus;
 		}
 	}

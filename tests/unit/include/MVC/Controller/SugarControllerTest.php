@@ -26,7 +26,7 @@ class SugarControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals($default_module, 'module', $SugarController);
         $this->assertAttributeEquals(null, 'target_module', $SugarController);
 
-        //secondly test with module name and check for correct assignment. 
+        //secondly test with module name and check for correct assignment.
         $SugarController->setup('Users');
         $this->assertAttributeEquals('Users', 'module', $SugarController);
         $this->assertAttributeEquals(null, 'target_module', $SugarController);

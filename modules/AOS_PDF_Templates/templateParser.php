@@ -91,7 +91,7 @@ class templateParser
                     }
                     
                     if(empty($focus->$fieldName)){
-                        $repl_arr[$key . "_" . $fieldName] = ""; 
+                        $repl_arr[$key . "_" . $fieldName] = "";
                     }
                     else{
                         $link = $secureLink;

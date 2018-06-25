@@ -856,7 +856,7 @@ class RenameModules
         
         $typeDisplayList = getTypeDisplayList();
         
-        foreach (array_keys($this->changedModules)as $moduleName) 
+        foreach (array_keys($this->changedModules)as $moduleName)
         {
             foreach($typeDisplayList as $typeDisplay)
             {

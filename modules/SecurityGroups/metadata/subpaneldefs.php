@@ -5,7 +5,7 @@ global $modules_exempt_from_availability_check;
 $modules_exempt_from_availability_check['ACLRoles'] = 'ACLRoles';
 
 $layout_defs['SecurityGroups'] = array(
-	// list of what Subpanels to show in the DetailView 
+	// list of what Subpanels to show in the DetailView
 	'subpanel_setup' => array(
 
         'users' => array(
@@ -34,7 +34,7 @@ $layout_defs['SecurityGroups'] = array(
 			'title_key' => 'LBL_ROLES_SUBPANEL_TITLE',
 		),
 
-	),	
+	),
 	
 );
 $layout_defs['SecurityGroupRoles'] = array(

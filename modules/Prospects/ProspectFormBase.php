@@ -101,18 +101,18 @@ function buildTableForm($rows, $mod=''){
 	}else global $mod_strings;
 	global $app_strings;
 	$cols = sizeof($rows[0]) * 2 + 1;
-	if ($action != 'ShowDuplicates') 
+	if ($action != 'ShowDuplicates')
 	{
 		$form = '<table width="100%"><tr><td>'.$mod_strings['MSG_DUPLICATE']. '</td></tr><tr><td height="20"></td></tr></table>';
 		$form .= "<form action='index.php' method='post' name='dupProspects'><input type='hidden' name='selectedProspect' value=''>";
 	}
-	else 
+	else
 	{
 		$form = '<table width="100%"><tr><td>'.$mod_strings['MSG_SHOW_DUPLICATES']. '</td></tr><tr><td height="20"></td></tr></table>';
 	}
 	$form .= get_form_header($mod_strings['LBL_DUPLICATE'],"", '');
 	$form .= "<table width='100%' cellpadding='0' cellspacing='0'>	<tr >	";
-	if ($action != 'ShowDuplicates') 
+	if ($action != 'ShowDuplicates')
 	{
 		$form .= "<td > &nbsp;</td>";
 	}
@@ -132,7 +132,7 @@ function buildTableForm($rows, $mod=''){
 	foreach($rows as $row){
 
 		$form .= "<tr class='$rowColor'>";
-		if ($action != 'ShowDuplicates') 
+		if ($action != 'ShowDuplicates')
 			$form .= "<td width='1%' nowrap='nowrap' ><a href='#' onClick=\"document.dupProspects.selectedProspect.value='${row['id']}';document.dupProspects.submit() \">[${app_strings['LBL_SELECT_BUTTON_LABEL']}]</a>&nbsp;&nbsp;</td>\n";
 		
 		$wasSet = false;
@@ -157,11 +157,11 @@ function buildTableForm($rows, $mod=''){
 		$form .= "</tr>";
 	}
 	$form .= "<tr ><td colspan='$cols' class='blackline'></td></tr>";
-	if ($action == 'ShowDuplicates') 
+	if ($action == 'ShowDuplicates')
 	{
 		$form .= "</table><br><input title='${app_strings['LBL_SAVE_BUTTON_TITLE']}' accessKey='${app_strings['LBL_SAVE_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='Save';\" type='submit' name='button' value='  ${app_strings['LBL_SAVE_BUTTON_LABEL']}  '> <input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView'; this.form.module.value='Prospects';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '></form>";
 	}
-	else 
+	else
 	{
 		$form .= "</table><br><input type='submit' class='button' name='ContinueProspect' value='${mod_strings['LNK_NEW_PROSPECT']}'></form>";
 	}

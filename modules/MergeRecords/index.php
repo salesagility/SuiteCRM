@@ -80,7 +80,7 @@ else {
 			$whereClean = array_shift($whereArr);
 		}
 		$where = implode(" ", $whereArr);
-	}	
+	}
 	else {
 		$where = '';
 	}
@@ -97,7 +97,7 @@ else {
 	while ($row != null) {
 	    //$beanObj = new $bean;
 	    array_push($merge_ids, $row['id']);
-	    $row = $focus->db->fetchByAssoc($result);    
+	    $row = $focus->db->fetchByAssoc($result);
 	}
 	$_REQUEST['record']=$merge_ids[0];
 	$_REQUEST['action']='index.php';

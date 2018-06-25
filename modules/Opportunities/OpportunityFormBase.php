@@ -67,7 +67,7 @@ function checkForDuplicates($prefix){
 		}
 		if ($i==-1) return null;
 		
-		return $rows;		
+		return $rows;
 	}
 	return null;
 }
@@ -198,7 +198,7 @@ $lbl_probability = $mod_strings['LBL_PROBABILITY'];
 $json = getJSONobj();
 $prob_array = $json->encode($app_list_strings['sales_probability_dom']);
 //$prePopProb = '';
-//if(empty($this->bean->id)) 
+//if(empty($this->bean->id))
 $prePopProb = 'document.getElementsByName(\''.$prefix.'sales_stage\')[0].onchange();';
 $probability_script=<<<EOQ
 	<script>

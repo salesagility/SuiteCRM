@@ -503,8 +503,8 @@ class SearchForm
     function displaySavedSearchSelect()
     {
         $savedSearch = new SavedSearch(
-            $this->listViewDefs[$this->module], 
-            isset($this->lv->data['pageData']['ordering']['orderBy']) ? $this->lv->data['pageData']['ordering']['orderBy'] : null, 
+            $this->listViewDefs[$this->module],
+            isset($this->lv->data['pageData']['ordering']['orderBy']) ? $this->lv->data['pageData']['ordering']['orderBy'] : null,
             isset($this->lv->data['pageData']['ordering']['sortOrder']) ? $this->lv->data['pageData']['ordering']['sortOrder'] : null
         );
         $savedSearchSelect = $savedSearch->getSelect($this->module, $savedSearchData);

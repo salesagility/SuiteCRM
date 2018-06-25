@@ -51,7 +51,7 @@ class ContactFeed extends FeedLogicBase{
             $text =  '{SugarFeed.CREATED_CONTACT} [' . $bean->module_dir . ':' . $bean->id . ':' . $locale->getLocaleFormattedName($bean->first_name, $bean->last_name) . ']';
         }
 		
-        if(!empty($text)){ 
+        if(!empty($text)){
 			SugarFeed::pushFeed2($text, $bean);
         }
 		

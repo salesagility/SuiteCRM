@@ -223,7 +223,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $scheduler = new Scheduler();
 
-        //execute the method and capture the echo output 
+        //execute the method and capture the echo output
         ob_start();
 
         $scheduler->displayCronInstructions();
@@ -389,7 +389,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testget_summary_text()
-    {        
+    {
         self::markTestIncomplete('environment dependency');
 	// save state
 

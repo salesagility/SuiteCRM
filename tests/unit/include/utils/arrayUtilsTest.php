@@ -35,7 +35,7 @@ class array_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = add_blank_option($tempArray);
         $this->assertSame($actual, $expected);
 
-        //execute the method with array having a blank key value pair. function will return the same array back without any change.		
+        //execute the method with array having a blank key value pair. function will return the same array back without any change.
         $tempArray = array('' => '', 'Key1' => 'value1', 'Key2' => 'value2');
         $expected = array('' => '', 'Key1' => 'value1', 'Key2' => 'value2');
 

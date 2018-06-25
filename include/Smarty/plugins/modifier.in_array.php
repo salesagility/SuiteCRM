@@ -46,7 +46,7 @@ function smarty_modifier_in_array($needle = null, $haystack = null)
 {
 	//Smarty barfs if Array is empty
     if($haystack == null || empty($haystack)) {
-       return false;	
+       return false;
     }
     return in_array($needle, $haystack);
 }

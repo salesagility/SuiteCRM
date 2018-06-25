@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class chart 
+class chart
 {
     private $start_date;
     private $end_date;
@@ -430,7 +430,7 @@ class chart
 			{
                 $wcount= 0;
                 foreach ($months as $month => $weeks)
-				{//count the number of weeks in each month        
+				{//count the number of weeks in each month
                     /*foreach ($weeks as $week)
 					{
                         $wcount++;
@@ -541,9 +541,9 @@ class chart
 			{
                 $qcount= 0;
                 foreach ($quarters as $quarter => $months)
-				{//count the number of months in each quarter        
+				{//count the number of months in each quarter
                 
-					$qcount+= count($months);             
+					$qcount+= count($months);
 				}
                 $width = $qcount * 26; //used to set width on years row. width needed for css text clipping
                 echo '<td colspan="'.$qcount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">' . $year.'</div></td>';
@@ -728,7 +728,7 @@ class chart
     }
 
 
-    //count number of months between task start day and chart current month 
+    //count number of months between task start day and chart current month
     function count_months($start, $day,$x)
     {
         $sdate = DateTime::createFromFormat('Y-m-d', $start);

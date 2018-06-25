@@ -82,7 +82,7 @@ public function processFilesToRemove($files=array())
 	if(empty($files) || !is_array($files))
 	{
 		return;
-	}	
+	}
 	
 	require_once('include/dir_inc.php');
 	
@@ -92,13 +92,13 @@ public function processFilesToRemove($files=array())
 	}
 	
 	foreach($files as $file)
-	{		
+	{
 		if(file_exists($file))
 		{
-			$this->backup($file);   
+			$this->backup($file);
 			if(is_dir($file))
 			{
-			  rmdir_recursive($file);	
+			  rmdir_recursive($file);
 			} else {
 			  unlink($file);
 			}
@@ -125,7 +125,7 @@ protected function backup($file)
 	
 	if(is_dir($file))
 	{
-    	copy_recursive($file, 'custom/backup/' . $file);	
+    	copy_recursive($file, 'custom/backup/' . $file);
 	} else {
 		copy($file, 'custom/backup/' . $file);
 	}

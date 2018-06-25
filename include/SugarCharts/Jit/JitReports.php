@@ -51,13 +51,13 @@ class JitReports extends Jit {
 	}
 	
 		function calculateReportGroupTotal($dataset){
-		$total = 0;				
+		$total = 0;
 		foreach ($dataset as $value){
 			$total += $value['numerical_value'];
 		}
 		
 		return $total;
-	}	
+	}
 	
     /**
      * Method checks is our dataset from currency field or not
@@ -88,13 +88,13 @@ class JitReports extends Jit {
 			foreach ($this->super_set as $key){
 				$temp_dataset[$key] = (isset($dataset[$key])) ? $dataset[$key] : array();
 			}
-			$dataset = $temp_dataset;			
+			$dataset = $temp_dataset;
 		}
 		
 		foreach ($dataset as $key=>$value){
 			if ($first && empty($value)){
 				$data .= $this->processDataGroup(4, $key, 'NULL', '', '');
-			}			
+			}
 			else if (array_key_exists('numerical_value', $dataset)){
 				$link = (isset($dataset['link'])) ? '#'.$dataset['link'] : '';
 				$data .= $this->processDataGroup($level, $dataset['group_base_text'], $dataset['numerical_value'], $dataset['numerical_value'], $link);
@@ -119,27 +119,27 @@ class JitReports extends Jit {
                 foreach($prev_super_set as $prev_group){
                     if (!in_array($prev_group, $groups)){
                         array_push($super_set, $prev_group);
-                    }       
-                }       
-            }       
-            else{ 
+                    }
+                }
+            }
+            else{
                 foreach($groups as $group => $groupData){
-                    if (!in_array($group, $super_set)){ 
+                    if (!in_array($group, $super_set)){
                         array_push($super_set, $group);
-                    }       
-                }       
-            }       
-        }     
+                    }
+                }
+            }
+        }
         $super_set = array_unique($super_set);
 
 		return $super_set;
 	}
 	
 	function xmlDataReportSingleValue(){
-		$data = '';		
+		$data = '';
 		foreach ($this->data_set as $key => $dataset){
 			$total = $this->calculateReportGroupTotal($dataset);
-			$this->checkYAxis($total);						
+			$this->checkYAxis($total);
 
 			$data .= $this->tab('<group>', 2);
 			$data .= $this->tabValue('title',$key, 3);
@@ -150,8 +150,8 @@ class JitReports extends Jit {
 			$data .= $this->tabValue('label',$key,5);
 			$data .= $this->tab('<link></link>',5);
 			$data .= $this->tab('</group>',4);
-			$data .= $this->tab('</subgroups>', 3);				
-			$data .= $this->tab('</group>', 2);			
+			$data .= $this->tab('</subgroups>', 3);
+			$data .= $this->tab('</group>', 2);
 		}
 		return $data;
 	}
@@ -161,7 +161,7 @@ class JitReports extends Jit {
         global $app_strings;
 		$data = '';
 		// correctly process the first row
-		$first = true;	
+		$first = true;
 		foreach ($this->data_set as $key => $dataset){
 			
 			$total = $this->calculateReportGroupTotal($dataset);
@@ -196,9 +196,9 @@ class JitReports extends Jit {
 			            $data .= $this->processDataGroup(4, $k, $v['numerical_value'], $v['numerical_value'], '');
 			        }
 			    }
-			}			
+			}
 
-			if (!$first){											
+			if (!$first){
 				$not_processed = array_diff($this->super_set, $this->processed_report_keys);
 				$processed_diff_count = count($this->super_set) - count($not_processed);
 
@@ -209,13 +209,13 @@ class JitReports extends Jit {
 				}
 			}
 			
-			$data .= $this->tab('</subgroups>', 3);				
-			$data .= $this->tab('</group>', 2);				
+			$data .= $this->tab('</subgroups>', 3);
+			$data .= $this->tab('</group>', 2);
 			$this->processed_report_keys = array();
 			// we're done with the first row!
 			//$first = false;
 		}
-		return $data;		
+		return $data;
 	}
 	
 	public function processXmlData(){
@@ -239,8 +239,8 @@ class JitReports extends Jit {
 			$data .= $this->xmlDataReportChart();
 		}
 		
-		return $data;		
-	}	
+		return $data;
+	}
 		
 	/**
      * wrapper function to return the html code containing the chart in a div
@@ -252,12 +252,12 @@ class JitReports extends Jit {
      */
 	function display($name, $xmlFile, $width='320', $height='480', $reportChartDivStyle = null, $resize=false){
 		if(empty($name)) {
-			$name = "unsavedReport";	
+			$name = "unsavedReport";
 		}
 		
-		parent::display($name, $xmlFile, $width, $height, $resize=false);			
+		parent::display($name, $xmlFile, $width, $height, $resize=false);
 		
-		return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');	
+		return $this->ss->fetch('include/SugarCharts/Jit/tpls/chart.tpl');
 		
 		
 	}

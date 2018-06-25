@@ -40,18 +40,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 // created: 2005-11-04 15:39:46
 $acldefs['ProjectTask'] = array (
-  'forms' => 
+  'forms' =>
   array (
-    'by_name' => 
+    'by_name' =>
     array (
-      'change_project' => 
+      'change_project' =>
       array (
         'display_option' => 'disabled',
         'action_option' => 'list',
         'app_action' => 'EditView',
         'module' => 'Project',
       ),
-      'change_parent' => 
+      'change_parent' =>
       array (
         'display_option' => 'disabled',
         'action_option' => 'list',
@@ -60,7 +60,7 @@ $acldefs['ProjectTask'] = array (
       ),
     ),
   ),
-  'form_names' => 
+  'form_names' =>
   array (
     'by_id' => 'by_id',
     'by_name' => 'by_name',

@@ -59,7 +59,7 @@ $camp_steps[] = 'wiz_step2_';
 
     //name is used as key in post, it is also used in creation of summary page for wizard,
     //so let's clean up the posting so we can reuse the save functionality for inbound emails and
-    //from existing save.php's  
+    //from existing save.php's
     foreach($camp_steps as $step){
         clean_up_post($step);
     }
@@ -93,7 +93,7 @@ if(isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')){
     $_REQUEST['group_id'] = 'new';
 //    $_REQUEST['from_addr'] = $_REQUEST['wiz_step1_notify_fromaddress'];
     //reuse save functionality for inbound email
-    require_once('modules/InboundEmail/Save.php');    
+    require_once('modules/InboundEmail/Save.php');
 
 }
     if (!empty($_REQUEST['error'])){
@@ -119,7 +119,7 @@ function clean_up_post($prefix){
               if((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)){
               $newkey  =substr($key, strlen($prefix)) ;
               $_REQUEST[$newkey] = $val;
-         }               
+         }
     }
 
     foreach ($_POST as $key => $val) {
@@ -127,6 +127,6 @@ function clean_up_post($prefix){
               $newkey  =substr($key, strlen($prefix)) ;
               $_POST[$newkey] = $val;
               
-         }               
+         }
     }
 }

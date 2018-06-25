@@ -39,7 +39,7 @@
  ********************************************************************************/
 
 
-class ProjectViewTemplatesEdit extends ViewEdit 
+class ProjectViewTemplatesEdit extends ViewEdit
 {
  	/**
 	 * @see SugarView::_getModuleTitleParams()
@@ -57,7 +57,7 @@ class ProjectViewTemplatesEdit extends ViewEdit
     	return $crumbs;
     }
     
-	function display() 
+	function display()
 	{
         $this->bean->is_template = 1;
         $this->ev->ss->assign("is_template", 1);

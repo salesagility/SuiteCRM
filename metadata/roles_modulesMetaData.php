@@ -38,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['roles_modules'] = array ( 
+$dictionary['roles_modules'] = array (
 
 	'table' => 'roles_modules',
 

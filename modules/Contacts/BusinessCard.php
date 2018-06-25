@@ -54,7 +54,7 @@ global $theme;
 $error_msg = '';
 global $current_language;
 $mod_strings = return_module_language($current_language, 'Contacts');
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_BUSINESSCARD']), true); 
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_BUSINESSCARD']), true);
 $xtpl=new XTemplate ('modules/Contacts/BusinessCard.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
@@ -116,13 +116,13 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 	}
 	if(!empty($_POST['selectedContact'])){
 		$contact = new Contact();
-		$contact->retrieve($_POST['selectedContact']);	
+		$contact->retrieve($_POST['selectedContact']);
 	}else{
 		$contact= $contactForm->handleSave('Contacts',false, false);
 	}
 	if(!empty($_POST['selectedAccount'])){
 		$account = new Account();
-		$account->retrieve($_POST['selectedAccount']);	
+		$account->retrieve($_POST['selectedAccount']);
 	}else if(isset($_POST['newaccount']) && $_POST['newaccount']=='on' ){
 		$account= $accountForm->handleSave('Accounts',false, false);
 	}
@@ -138,7 +138,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 			}
 			if(isset($_POST['Contactslead_source']) && !empty($_POST['Contactslead_source'])){
 				$_POST['Opportunitieslead_source'] = $_POST['Contactslead_source'];
-			} 
+			}
 			$opportunity= $oppForm->handleSave('Opportunities',false, false);
 			
 		}
@@ -158,7 +158,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 		$_POST['OpportunityNotesparent_id'] = $opportunity->id;
 		$opportunitynote= $noteForm->handleSave('OpportunityNotes',false, false);
 		}
-	if(isset($_POST['newappointment']) && $_POST['newappointment']=='on' ){	
+	if(isset($_POST['newappointment']) && $_POST['newappointment']=='on' ){
 	if(isset($_POST['appointment']) && $_POST['appointment'] == 'Meeting'){
 		require_once('modules/Meetings/MeetingFormBase.php');
 		$meetingForm = new MeetingFormBase();
@@ -166,7 +166,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 	}else{
 		require_once('modules/Calls/CallFormBase.php');
 		$callForm = new CallFormBase();
-		$call= $callForm->handleSave('Appointments',false, false);	
+		$call= $callForm->handleSave('Appointments',false, false);
 	}
 	}
 	
@@ -179,7 +179,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 			$call->account->add($account->id);
 		}else if(isset($opportunity)){
 			$call->load_relationship('opportunity');
-			$call->opportunity->add($opportunity->id);			
+			$call->opportunity->add($opportunity->id);
 		}
 	}
 	if(isset($meeting)){
@@ -191,7 +191,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 			$meeting->account->add($account->id);
 		}else if(isset($opportunity)){
 			$meeting->load_relationship('opportunity');
-			$meeting->opportunity->add($opportunity->id);			
+			$meeting->opportunity->add($opportunity->id);
 		}
 	}
 	if(isset($account)){
@@ -203,7 +203,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 			$account->notes->add($accountnote->id);
 		}else if(isset($opportunity)){
 			$account->load_relationship('opportunities');
-			$account->opportunities->add($opportunity->id);			
+			$account->opportunities->add($opportunity->id);
 		}
 	}
 	if(isset($opportunity)){
@@ -213,13 +213,13 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 		} else if(isset($accountnote)){
 			$opportunity->load_relationship('notes');
 			$opportunity->notes->add($accountnote->id);
-		}		
+		}
 	}
 	if(isset($contact)){
 		if(isset($contactnote)){
 			$contact->load_relationship('notes');
 			$contact->notes->add($contactnote->id);
-		}				
+		}
 	}
 	
 	if(isset($contact)){
@@ -239,7 +239,7 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 			$xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_EXISTING_ACCOUNT']. " - <a href='index.php?action=DetailView&module=Accounts&record=".$account->id."'>".$account->name."</a>");
 			$xtpl->parse('main.row');
 		}else{
-			$xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_ACCOUNT']. " - <a href='index.php?action=DetailView&module=Accounts&record=".$account->id."'>".$account->name."</a>");		
+			$xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_ACCOUNT']. " - <a href='index.php?action=DetailView&module=Accounts&record=".$account->id."'>".$account->name."</a>");
 			$xtpl->parse('main.row');
 		}
 		
@@ -258,20 +258,20 @@ if(isset($_POST['handle']) && $_POST['handle'] == 'Save'){
 
 	if(isset($call)){
 		$call->track_view($current_user->id, 'Calls');
-		$xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_CALL']. " - <a href='index.php?action=DetailView&module=Calls&record=".$call->id."'>".$call->name."</a>");	
+		$xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_CALL']. " - <a href='index.php?action=DetailView&module=Calls&record=".$call->id."'>".$call->name."</a>");
 		$xtpl->parse('main.row');
 		}
 	if(isset($meeting)){
 		$meeting->track_view($current_user->id, 'Meetings');
-		$xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_MEETING']. " - <a href='index.php?action=DetailView&module=Calls&record=".$meeting->id."'>".$meeting->name."</a>");	
+		$xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_MEETING']. " - <a href='index.php?action=DetailView&module=Calls&record=".$meeting->id."'>".$meeting->name."</a>");
 		$xtpl->parse('main.row');
 		}
-		$xtpl->assign('ROWVALUE',"&nbsp;");	
+		$xtpl->assign('ROWVALUE',"&nbsp;");
 		$xtpl->parse('main.row');
-		$xtpl->assign('ROWVALUE',"<a href='index.php?module=Contacts&action=BusinessCard'>{$mod_strings['LBL_ADDMORE_BUSINESSCARD']}</a>");	
+		$xtpl->assign('ROWVALUE',"<a href='index.php?module=Contacts&action=BusinessCard'>{$mod_strings['LBL_ADDMORE_BUSINESSCARD']}</a>");
 	$xtpl->parse('main.row');
 	$xtpl->parse('main');
-	$xtpl->out('main');	
+	$xtpl->out('main');
 }
 	
 else{

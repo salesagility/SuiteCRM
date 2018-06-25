@@ -1,5 +1,5 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  
 if(ACLController::checkAccess('jjwg_Address_Cache', 'edit', true))$module_menu[]=Array("index.php?module=jjwg_Address_Cache&action=EditView&return_module=jjwg_Address_Cache&return_action=DetailView", $GLOBALS['mod_strings']['LNK_NEW_RECORD'],"Createjjwg_Address_Cache", 'jjwg_Address_Cache');
 if(ACLController::checkAccess('jjwg_Address_Cache', 'list', true))$module_menu[]=Array("index.php?module=jjwg_Address_Cache&action=index&return_module=jjwg_Address_Cache&return_action=DetailView", $GLOBALS['mod_strings']['LNK_LIST'],"jjwg_Address_Cache", 'jjwg_Address_Cache');

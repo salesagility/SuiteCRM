@@ -239,7 +239,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            if($_REQUEST['preview'] === "yes"){ 
+            if($_REQUEST['preview'] === "yes"){
                 header( "Content-Disposition: inline; filename=\"".$name."\";"); }
             else{
                 header("Content-Disposition: attachment; filename=\"" . $name . "\";");

@@ -100,5 +100,5 @@ $subpanel_layout = array(
 //			'width' => '5%',
 //		),
 	),
-);		
+);
 

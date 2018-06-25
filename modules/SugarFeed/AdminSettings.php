@@ -99,7 +99,7 @@ if ( !empty($_REQUEST['process']) ) {
         if ( ! isset($db) ) {
             $db = DBManagerFactory::getInstance();
         }
-        $db->query("UPDATE sugarfeed SET deleted = '1'");        
+        $db->query("UPDATE sugarfeed SET deleted = '1'");
         echo(translate('LBL_RECORDS_DELETED','SugarFeed'));
     }
 
@@ -147,11 +147,11 @@ $sugar_smarty->assign('module_list',$module_list);
 $sugar_smarty->assign('user_feed_enabled',$userFeedEnabled);
 
 echo getClassicModuleTitle(
-        "Administration", 
+        "Administration",
         array(
             "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
            $mod_strings['LBL_MODULE_NAME'],
-           ), 
+           ),
         false
         );
 $sugar_smarty->display('modules/SugarFeed/AdminSettings.tpl');

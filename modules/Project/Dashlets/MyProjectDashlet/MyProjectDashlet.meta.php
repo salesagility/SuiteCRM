@@ -40,6 +40,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $app_strings;
 
 $dashletMeta['MyProjectDashlet'] = array('module'		=> 'Project',
-					 'title'       => translate('LBL_LIST_MY_PROJECT', 'Project'), 
+					 'title'       => translate('LBL_LIST_MY_PROJECT', 'Project'),
                                              'description' => 'A customizable view into Project',
                                              'category'    => 'Module Views');

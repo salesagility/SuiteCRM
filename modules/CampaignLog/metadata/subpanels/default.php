@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $subpanel_layout = array(
 	'top_buttons' => array(
-		array('widget_class' => 'SubPanelAddToProspectListButton','create'=>'true'),			
+		array('widget_class' => 'SubPanelAddToProspectListButton','create'=>'true'),
 	),
 
 	'where' => '',
@@ -58,11 +58,11 @@ $subpanel_layout = array(
 			'vname' => 'LBL_LIST_RECIPIENT_EMAIL',
 			'width' => '14%',
 			'sortable'=>false,
-		),		
-		'marketing_name'=>array(			
+		),
+		'marketing_name'=>array(
 			'vname' => 'LBL_LIST_MARKETING_NAME',
 			'width' => '14%',
-			'sortable'=>false,		
+			'sortable'=>false,
 		),
 		'activity_type' => array(
 			'vname' => 'LBL_ACTIVITY_TYPE',
@@ -75,9 +75,9 @@ $subpanel_layout = array(
 		'related_name' => array(
 			'widget_class' => 'SubPanelDetailViewLink',
 			'target_record_key' => 'related_id',
-			'target_module_key' => 'related_type',		
+			'target_module_key' => 'related_type',
             'parent_id' =>'target_id',
-            'parent_module'=>'target_type',         
+            'parent_module'=>'target_type',
 			'vname' => 'LBL_RELATED',
 			'width' => '20%',
 			'sortable'=>false,
@@ -85,7 +85,7 @@ $subpanel_layout = array(
 		'hits' => array(
 			'vname' => 'LBL_HITS',
 			'width' => '5%',
-		),		
+		),
 		'target_id'=>array(
 			'usage' =>'query_only',
 		),
@@ -99,5 +99,5 @@ $subpanel_layout = array(
 			'usage' =>'query_only',
 		),
 	),
-);		
+);
 

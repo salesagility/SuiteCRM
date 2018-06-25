@@ -57,9 +57,9 @@ function smarty_function_sugar_field($params, &$smarty)
     if (!isset($params['vardef']) || !isset($params['displayType']) || !isset($params['parentFieldArray'])) {
         if(!isset($params['vardef']))
             $smarty->trigger_error("sugar_field: missing 'vardef' parameter");
-        if(!isset($params['displayType']))  
+        if(!isset($params['displayType']))
             $smarty->trigger_error("sugar_field: missing 'displayType' parameter");
-        if(!isset($params['parentFieldArray']))  
+        if(!isset($params['parentFieldArray']))
             $smarty->trigger_error("sugar_field: missing 'parentFieldArray' parameter");
                              
         return;
@@ -77,7 +77,7 @@ function smarty_function_sugar_field($params, &$smarty)
     else $displayParams['fieldSpan'] = null;
 
     if(isset($params['typeOverride'])) { // override the type in the vardef?
-        $params['vardef']['type'] = $params['typeOverride']; 
+        $params['vardef']['type'] = $params['typeOverride'];
     }
     if(isset($params['formName'])) $displayParams['formName'] = $params['formName'];
     

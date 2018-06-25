@@ -43,7 +43,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart 
+class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 {
     public $lsbo_lead_sources = array();
     public $lsbo_ids          = array();

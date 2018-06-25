@@ -63,7 +63,7 @@ $subpanel_layout = array(
 		 	'usage' => 'query_only',
 		),
 		'name'=>array(
-			'name'=>'name',		
+			'name'=>'name',
 			'vname' => 'LBL_LIST_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',
 		 	'module' => 'Contacts',
@@ -103,5 +103,5 @@ $subpanel_layout = array(
 			'width' => '5%',
 		),
 	),
-);		
+);
 

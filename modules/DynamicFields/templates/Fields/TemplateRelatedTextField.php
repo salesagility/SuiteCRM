@@ -63,16 +63,16 @@ class TemplateRelatedTextField extends TemplateText{
         $id = $this->name ;
         $value_id = strtoupper('{'.$id .'}');
         
-        return "<a href='index.php?module=$this->ext2&action=DetailView&record={$value_id}'>{$value_name}</a>" ;    
+        return "<a href='index.php?module=$this->ext2&action=DetailView&record={$value_id}'>{$value_name}</a>" ;
     }
     
     function get_html_list(){
         if(isset($this->bean)){
             $name = $this->bean->object_name . '.'. $this->ext1;
         }else{
-            $name = $this->ext1;    
+            $name = $this->ext1;
         }
-        return '{'. strtoupper($name) . '}';    
+        return '{'. strtoupper($name) . '}';
     }
 
     function get_html_search(){
@@ -80,11 +80,11 @@ class TemplateRelatedTextField extends TemplateText{
         $def = $this->bean->field_name_map[$this->name];
         if(!empty($def['id_name']) && in_array($def['id_name'], $searchable)){
             $name = $def['id_name'];
-            return "<select size='3' name='{$name}[]' tabindex='1' multiple='multiple'>{".strtoupper($name). "_FILTER}</select>";   
+            return "<select size='3' name='{$name}[]' tabindex='1' multiple='multiple'>{".strtoupper($name). "_FILTER}</select>";
         }
         //return 'NOT AVAILABLE';
         return $this->get_html_edit();
-    }   
+    }
 
     function get_xtpl_search(){
         $searchable=array();
@@ -127,7 +127,7 @@ class TemplateRelatedTextField extends TemplateText{
                $returnXTPL[strtoupper($id)] =  $_REQUEST[$id];
             }
         }
-        return $returnXTPL; 
+        return $returnXTPL;
     }
 
 
@@ -165,8 +165,8 @@ class TemplateRelatedTextField extends TemplateText{
                 $mod = new $class();
                 $mod->retrieve($this->bean->$id);
                 if(isset($mod->$mod_field)){
-                    $this->bean->$name = $mod->$mod_field;  
-                }   
+                    $this->bean->$name = $mod->$mod_field;
+                }
             }
             
             
@@ -180,7 +180,7 @@ class TemplateRelatedTextField extends TemplateText{
         }
         
         
-        return $returnXTPL; 
+        return $returnXTPL;
     }
     
     function get_xtpl_detail(){
@@ -205,7 +205,7 @@ class TemplateRelatedTextField extends TemplateText{
         $def['quicksearch'] = 'enabled';
         $def['studio'] = 'visible';
         $def['source'] = 'non-db';
-        return $def;    
+        return $def;
     }
     
     /**
@@ -275,7 +275,7 @@ class TemplateRelatedTextField extends TemplateText{
 	            $idName = $basename.++$count.'_c' ;
 	        }
 	        $id->name = $idName ;
-			$id->reportable = false;				
+			$id->reportable = false;
 	        $id->save($df);
 	        
 	        // record the id field's name, and save

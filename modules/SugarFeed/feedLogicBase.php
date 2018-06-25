@@ -51,6 +51,6 @@ class FeedLogicBase {
 	}
 
     function removeHook($file,$className){
-		remove_logic_hook($this->module, "before_save", array(1, $this->module . " push feed",  $file, $className, "pushFeed"));        
+		remove_logic_hook($this->module, "before_save", array(1, $this->module . " push feed",  $file, $className, "pushFeed"));
     }
 }

@@ -32,7 +32,7 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //error_reporting(E_ERROR | E_PARSE |E_ALL);
 
-        //execute the method with required child objects preset. it should return some html. 
+        //execute the method with required child objects preset. it should return some html.
         $view = new ViewPopup();
         $view->module = 'Accounts';
 

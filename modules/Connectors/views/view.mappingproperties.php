@@ -43,12 +43,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/views/view.list.php');
 require_once('include/connectors/sources/SourceFactory.php');
 
-class ViewMappingProperties extends ViewList 
-{   
+class ViewMappingProperties extends ViewList
+{
  	/**
 	 * @see SugarView::process()
 	 */
-	public function process() 
+	public function process()
 	{
  		$this->options['show_all'] = false;
  		$this->options['show_javascript'] = true;
@@ -60,7 +60,7 @@ class ViewMappingProperties extends ViewList
     /**
 	 * @see SugarView::display()
 	 */
-	public function display() 
+	public function display()
 	{
         require_once('include/connectors/utils/ConnectorUtils.php');
         require_once('include/connectors/sources/SourceFactory.php');
@@ -112,7 +112,7 @@ class ViewMappingProperties extends ViewList
 	    		      $duplicate_labels[$id] = $id;
 	    		    } else {
 	    		      $labels[$available_fields[$id]] = $id;
-	    		    }    		    
+	    		    }
 	    		}
 	
 	    		foreach($duplicate_labels as $id) {
@@ -150,7 +150,7 @@ class ViewMappingProperties extends ViewList
 
 		$this->ss->assign('display_data', $display_data);
     	$this->ss->assign('empty_mapping', empty($display_data) ? true : false);
-    	$this->ss->assign('dynamic_script', $script);  	
+    	$this->ss->assign('dynamic_script', $script);
     	$this->ss->assign('sources', $sources);
     	$this->ss->assign('mod', $GLOBALS['mod_strings']);
     	$this->ss->assign('APP', $GLOBALS['app_strings']);

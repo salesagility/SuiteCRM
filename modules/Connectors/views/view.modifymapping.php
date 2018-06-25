@@ -43,8 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/SugarView.php');
 require_once('include/connectors/sources/SourceFactory.php');
 
-class ViewModifyMapping extends SugarView 
-{   
+class ViewModifyMapping extends SugarView
+{
  	/**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
@@ -70,8 +70,8 @@ class ViewModifyMapping extends SugarView
     /**
 	 * @see SugarView::display()
 	 */
-	public function display() 
-	{	
+	public function display()
+	{
 		require_once('include/connectors/utils/ConnectorUtils.php');
 		require_once('include/connectors/sources/SourceFactory.php');
 		global $mod_strings, $app_strings;

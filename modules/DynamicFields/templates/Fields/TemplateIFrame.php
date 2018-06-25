@@ -60,7 +60,7 @@ function get_html_edit(){
 	function get_field_def(){
 		$def = parent::get_field_def();
 		$def['height'] = !empty($this->height) ? $this->height : $this->ext4;
-		return $def;	
-	} 
+		return $def;
+	}
 
 }

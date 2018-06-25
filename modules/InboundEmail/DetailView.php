@@ -180,7 +180,7 @@ if(!empty($focus->stored_options)) {
 	$create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
 	$email_num_autoreplies_24_hours = (isset($storedOptions['email_num_autoreplies_24_hours'])) ? $storedOptions['email_num_autoreplies_24_hours'] : $focus->defaultEmailNumAutoreplies24Hours;
     
-	if( isset($storedOptions['allow_outbound_group_usage']) && $storedOptions['allow_outbound_group_usage'] == 1) 
+	if( isset($storedOptions['allow_outbound_group_usage']) && $storedOptions['allow_outbound_group_usage'] == 1)
 	   $allow_outbound_group_usage = $app_list_strings['dom_email_bool']['bool_true'];
 	
 }
@@ -269,7 +269,7 @@ if (!isset($app_list_strings['dom_mailbox_type'][$focus->mailbox_type])) {
 
 if($focus->mailbox_type == 'createcase')
     $is_create_case = $app_list_strings['checkbox_dom']['1'];
-else 
+else
     $is_create_case = $app_list_strings['checkbox_dom']['2'];
 
 

@@ -50,12 +50,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class ProjectViewDetail extends ViewDetail 
+class ProjectViewDetail extends ViewDetail
 {
  	/**
  	 * @see SugarView::display()
  	 */
- 	public function display() 
+ 	public function display()
  	{
 		global $beanFiles;
 		require_once($beanFiles['Project']);

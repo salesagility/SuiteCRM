@@ -52,7 +52,7 @@
 function smarty_function_sugar_getlink($params, &$smarty) {
 
 	// error checking for required parameters
-	if(!isset($params['url'])) 
+	if(!isset($params['url']))
 		$smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'url');
 	if(!isset($params['title']))
 		$smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'title');
@@ -60,7 +60,7 @@ function smarty_function_sugar_getlink($params, &$smarty) {
 	// set defaults
 	if(!isset($params['attr']))
 		$params['attr'] = '';
-	if(!isset($params['img_name'])) 
+	if(!isset($params['img_name']))
 		$params['img_name'] = '';
 	if(!isset($params['img_attr']))
 		$params['img_attr'] = '';
@@ -73,7 +73,7 @@ function smarty_function_sugar_getlink($params, &$smarty) {
 	if(!isset($params['img_alt']))
 		$params['img_alt'] = '';
 
-	return SugarThemeRegistry::current()->getLink($params['url'], $params['title'], $params['attr'], $params['img_name'], 
-		$params['img_attr'], $params['img_width'], $params['img_height'], $params['img_alt'], $params['img_placement']);	
+	return SugarThemeRegistry::current()->getLink($params['url'], $params['title'], $params['attr'], $params['img_name'],
+		$params['img_attr'], $params['img_width'], $params['img_height'], $params['img_alt'], $params['img_placement']);
 }
 ?>

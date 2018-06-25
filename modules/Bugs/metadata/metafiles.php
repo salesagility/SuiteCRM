@@ -44,7 +44,7 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
  $metafiles['Bugs'] = array(
-	'detailviewdefs'  => 	'modules/Bugs/metadata/detailviewdefs.php', 	
+	'detailviewdefs'  => 	'modules/Bugs/metadata/detailviewdefs.php',
 	'editviewdefs'    => 	'modules/Bugs/metadata/editviewdefs.php',
  	'listviewdefs'    => 	'modules/Bugs/metadata/listviewdefs.php',
  	'searchdefs'      =>    'modules/Bugs/metadata/searchdefs.php',

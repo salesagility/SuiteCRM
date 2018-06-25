@@ -192,7 +192,7 @@ class registry {
 	    $GLOBALS['log']->info('END: registry->registerFunction');
 	        
 		// END OF REGISTER FUNCTIONS
-	} // fn	
+	} // fn
 
 	/**
 	 * This method registers all the complex types
@@ -411,7 +411,7 @@ class registry {
 			array(
 				'name_value_lists' => array('name'=>'name_value_lists', 'type'=>'tns:name_value_lists'),
 			)
-		);			
+		);
 		$this->serviceClass->registerType(
 		    'link_names_to_fields_array',
 			'complexType',

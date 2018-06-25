@@ -43,7 +43,7 @@ function smarty_function_sugar_replace_vars($params, &$smarty)
 	if(empty($params['subject']))  {
 	    $smarty->trigger_error("sugarvar: missing 'subject' parameter");
 	    return;
-	} 
+	}
 	$fields = empty($params['fields']) ? $smarty->get_template_vars('fields') : $params['fields'];
 	$lDelim = "[";
     $rDelim = "]";
@@ -77,7 +77,7 @@ function smarty_function_sugar_replace_vars($params, &$smarty)
 				&& isset($fields[$match]['options']) && isset($fields[$match]['options'][$value]))
 			{
 				$subject = str_replace($matches[0][$i], $fields[$match]['options'][$value], $subject);
-			} else 
+			} else
 			{
 				$subject = str_replace($matches[0][$i], $value, $subject);
 			}

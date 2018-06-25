@@ -572,7 +572,7 @@ function generateSearchWhere($module, $query) {//this function is similar with f
          $content = export($type, null, false, true);
 
          // Add a new row and add details on removing the sample data
-         // Our Importer will stop after he gets to the new row, ignoring the text below 
+         // Our Importer will stop after he gets to the new row, ignoring the text below
          return $content . "\n" . $app_strings['LBL_IMPORT_SAMPLE_FILE_TEXT'];
 
      }

@@ -145,17 +145,17 @@ class SearchMerge extends ListViewMerge{
 		//Bug 37207
 		if($module == 'Connectors') {
 		   return false;
-		}			
+		}
 		
 		$this->clear();
 		$this->log("\n\n". 'Starting a merge in ' . get_class($this));
 		$this->log('merging the following files');
 		$this->log('original file:'  . $original_file);
 		$this->log('new file:'  . $new_file);
-		$this->log('custom file:'  . $custom_file);	
+		$this->log('custom file:'  . $custom_file);
 		if(empty($custom_file) && $save){
 			return true;
-		}else{			
+		}else{
 			$this->loadData($module, $original_file, $new_file, $custom_file);
 						
 			if(!isset($this->originalData[$module])) {
@@ -171,7 +171,7 @@ class SearchMerge extends ListViewMerge{
 		}
 		if(!$save)return true;
 		return false;
-	}	
+	}
 	
 	protected function mergeTemplateMeta()
 	{
@@ -184,6 +184,6 @@ class SearchMerge extends ListViewMerge{
 	    {
 	    	$this->newData[$this->module][$this->viewDefs][$this->templateMetaName]['maxColumnsBasic'] = $this->newData[$this->module][$this->viewDefs][$this->templateMetaName]['maxColumns'];
 	    }
-	}	
+	}
 	
 }

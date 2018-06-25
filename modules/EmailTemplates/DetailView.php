@@ -155,8 +155,8 @@ if($focus->ACLAccess('EditView')) {
 }
 if(!empty($focus->body)) {
 	$xtpl->assign('ALT_CHECKED', 'CHECKED');
-} 
-else 
+}
+else
 	$xtpl->assign('ALT_CHECKED', '');
 if( $focus->published == 'on')
 {
