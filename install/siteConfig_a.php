@@ -212,4 +212,3 @@ $out .= <<<EOQ
 
 EOQ;
 echo $out;
-

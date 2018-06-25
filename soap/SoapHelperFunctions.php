@@ -1221,4 +1221,3 @@ function apply_values($seed, $dataValues, $firstSync)
 }
 
 /*END HELPER*/
-

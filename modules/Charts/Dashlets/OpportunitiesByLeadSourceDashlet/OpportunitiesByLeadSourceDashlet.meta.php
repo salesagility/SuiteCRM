@@ -48,4 +48,3 @@ $dashletMeta['OpportunitiesByLeadSourceDashlet'] = array('title'       => 'LBL_T
                                                     'icon'		  => 'icon_Charts_Pie_32.gif',
                                                     'module'        => 'Opportunities',
                                                     'category'    => 'Charts');
-

@@ -29,4 +29,3 @@ class FP_eventsViewEdit extends ViewEdit {
 	}
 
 }
-

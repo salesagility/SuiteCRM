@@ -63,5 +63,3 @@ if(!empty($_REQUEST['option'])){
 	$thewiz->display();
 	
 }
-
-

@@ -140,4 +140,3 @@ function get_documents($cat_id, $subcat_id,$href=true) {
     }
     return $nodes;
 }
-

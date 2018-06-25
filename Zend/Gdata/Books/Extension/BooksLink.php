@@ -58,4 +58,3 @@ class Zend_Gdata_Books_Extension_BooksLink extends Zend_Gdata_App_Extension_Link
 
 
 }
-

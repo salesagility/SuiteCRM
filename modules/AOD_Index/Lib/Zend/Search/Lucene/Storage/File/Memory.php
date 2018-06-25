@@ -598,4 +598,3 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
         return $returnValue;
     }
 }
-

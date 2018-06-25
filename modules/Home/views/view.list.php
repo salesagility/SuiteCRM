@@ -82,4 +82,3 @@ class HomeViewList extends ViewList{
     }
 
 }
-

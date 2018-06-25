@@ -112,4 +112,3 @@ class Zend_Gdata_Contacts_Extension_PhoneNumber extends Zend_Gdata_Extension
         return $this->_isPrimaryNumber;
     }
 }
- 

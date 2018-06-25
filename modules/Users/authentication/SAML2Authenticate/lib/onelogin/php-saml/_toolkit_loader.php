@@ -22,4 +22,3 @@ foreach ($folderInfo as $element) {
         include_once $libDir.$element;
     }
 }
-    

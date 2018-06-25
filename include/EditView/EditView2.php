@@ -1132,4 +1132,3 @@ EOQ;
         return new TemplateHandler();
     }
 }
-

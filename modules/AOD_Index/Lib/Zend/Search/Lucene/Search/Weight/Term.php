@@ -122,4 +122,3 @@ class Zend_Search_Lucene_Search_Weight_Term extends Zend_Search_Lucene_Search_We
         $this->_value = $this->_queryWeight * $this->_idf;
     }
 }
-

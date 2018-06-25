@@ -518,4 +518,3 @@ class AM_ProjectTemplatesController extends SugarController {
 
 
 }
-

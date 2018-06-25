@@ -567,5 +567,3 @@ function extractHiddenInputs(&$dom_tree = array()) {
         }
     }
 }
-
-

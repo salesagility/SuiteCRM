@@ -94,4 +94,3 @@ class CalendarViewCreateInvitee extends SugarView
         sugar_cleanup(true);
     }
 }
-

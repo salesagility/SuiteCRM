@@ -1983,4 +1983,3 @@ EOREGEX
 		}
 
 	} // END CLASS
-

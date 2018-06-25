@@ -308,4 +308,3 @@ if ($facebook_enabled) {
         }
         return $string;
     }
-

@@ -227,4 +227,3 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
     }
 
 }
-

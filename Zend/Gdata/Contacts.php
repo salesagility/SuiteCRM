@@ -139,4 +139,3 @@ class Zend_Gdata_Contacts extends Zend_Gdata
     }
 
 }
- 

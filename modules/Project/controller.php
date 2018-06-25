@@ -536,4 +536,3 @@ class ProjectController extends SugarController {
     }
 
 }
-

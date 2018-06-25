@@ -164,4 +164,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     function IsNullOrEmptyString($question){
         return (!isset($question) || trim($question)==='' || $question =='http://');
     }
-

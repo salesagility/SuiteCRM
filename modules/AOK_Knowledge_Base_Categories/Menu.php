@@ -46,4 +46,3 @@
 
     if(ACLController::checkAccess('AOK_Knowledge_Base_Categories', 'edit', true))$module_menu[]=Array("index.php?module=AOK_Knowledge_Base_Categories&action=EditView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOK_Knowledge_Base_Categories');
     if(ACLController::checkAccess('AOK_Knowledge_Base_Categories', 'list', true))$module_menu[]=Array("index.php?module=AOK_Knowledge_Base_Categories&action=index", $mod_strings['LNK_LIST'],"List", 'AOK_Knowledge_Base_Categories');
-

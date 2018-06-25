@@ -91,4 +91,3 @@ class Zend_Gdata_Contacts_Extension_Birthday extends Zend_Gdata_Extension
         return $this->_value;
     }
 }
- 

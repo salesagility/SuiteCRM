@@ -119,4 +119,3 @@ class Zend_Gdata_Books_Extension_Embeddability extends Zend_Gdata_Extension
     }
 
 }
-

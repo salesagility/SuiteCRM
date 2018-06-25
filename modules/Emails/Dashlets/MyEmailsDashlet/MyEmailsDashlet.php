@@ -154,4 +154,3 @@ EOQ;
         return $script;
     }
 }
-

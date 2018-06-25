@@ -152,4 +152,3 @@ $xtpl->assign("STEP_NUM", "Step ".$step_num.":");
 
 $xtpl->parse("main");
 $xtpl->out("main");
-

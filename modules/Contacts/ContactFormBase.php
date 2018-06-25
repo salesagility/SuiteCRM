@@ -694,4 +694,3 @@ function handleRedirect($return_id){
         return new Contact();
     }
 }
-

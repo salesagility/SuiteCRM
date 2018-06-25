@@ -72,4 +72,3 @@ $loc = 'Location: index.php?module='.$_REQUEST['return_module'].'&action='.$_REQ
 }
 
 header($loc);
-

@@ -91,4 +91,3 @@ class Zend_Search_Lucene_Index_SegmentWriter_StreamWriter extends Zend_Search_Lu
                                                         true);
     }
 }
-

@@ -135,5 +135,3 @@ class Zend_Search_Lucene_Search_Weight_MultiTerm extends Zend_Search_Lucene_Sear
         }
     }
 }
-
-

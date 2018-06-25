@@ -244,5 +244,3 @@ BSOFR;
         return true;
     }
 }
-
-    

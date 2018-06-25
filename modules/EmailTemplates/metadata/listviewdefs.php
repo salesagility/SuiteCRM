@@ -72,4 +72,3 @@ $listViewDefs['EmailTemplates'] = array(
 	    'label' => 'LBL_DATE_ENTERED',
 	    'default' => true),
 );
-

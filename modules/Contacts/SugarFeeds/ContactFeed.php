@@ -57,4 +57,3 @@ class ContactFeed extends FeedLogicBase{
 		
     }
 }
-

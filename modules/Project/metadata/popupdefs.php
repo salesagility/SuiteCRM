@@ -47,4 +47,3 @@ $popupMeta = array('moduleMain' => 'Project',
 						'searchInputs' =>
 							array('name')
 						);
-

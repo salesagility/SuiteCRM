@@ -548,4 +548,3 @@ abstract class Zend_Search_Lucene_Search_Similarity
      */
     abstract public function coord($overlap, $maxOverlap);
 }
-

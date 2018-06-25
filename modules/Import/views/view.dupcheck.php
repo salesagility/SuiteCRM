@@ -370,4 +370,3 @@ enableQS(false);
 EOJAVASCRIPT;
     }
 }
-

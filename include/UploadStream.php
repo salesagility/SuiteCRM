@@ -313,4 +313,3 @@ class UploadStream
         return move_uploaded_file($upload, self::path($path));
     }
 }
-

@@ -239,4 +239,3 @@ $dictionary['DocumentRevision'] = array('table' => 'document_revisions'
        array('name' =>'documentrevision_mimetype', 'type' =>'index', 'fields'=>array('file_mime_type')),
        )
 );
-

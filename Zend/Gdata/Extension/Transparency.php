@@ -120,4 +120,3 @@ class Zend_Gdata_Extension_Transparency extends Zend_Gdata_Extension
     }
 
 }
-

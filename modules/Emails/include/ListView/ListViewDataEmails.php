@@ -810,8 +810,3 @@ class ListViewDataEmails extends ListViewData
     }
 
 }
-
-
-
-
-

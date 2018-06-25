@@ -104,4 +104,3 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
 
   }
 }
-

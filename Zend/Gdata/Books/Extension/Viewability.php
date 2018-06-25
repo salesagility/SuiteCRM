@@ -120,4 +120,3 @@ class Zend_Gdata_Books_Extension_Viewability extends Zend_Gdata_Extension
 
 
 }
-

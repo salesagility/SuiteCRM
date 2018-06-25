@@ -70,4 +70,3 @@ $mod_strings = array(
     'LNK_CAMPAIGN_LIST' => 'Campaigns',
     'LBL_EDIT_LAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
 );
-

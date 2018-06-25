@@ -141,4 +141,3 @@ class Zend_Search_Lucene_Index_Term
         return $chars;
     }
 }
-

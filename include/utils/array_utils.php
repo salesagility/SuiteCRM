@@ -299,4 +299,3 @@ class SugarArray extends ArrayObject
         }
     }
 }
-

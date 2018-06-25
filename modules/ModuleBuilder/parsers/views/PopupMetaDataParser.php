@@ -316,4 +316,3 @@ class PopupMetaDataParser extends ListLayoutMetaDataParser
     }
 
 }
-

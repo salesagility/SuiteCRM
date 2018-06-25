@@ -104,4 +104,3 @@ class EmployeesViewEdit extends ViewEdit {
  		parent::display();
  	}
 }
-

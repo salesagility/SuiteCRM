@@ -1167,4 +1167,3 @@ function get_entries_count($session, $module_name, $query, $deleted) {
 
 
 } // clazz
-

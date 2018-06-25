@@ -133,4 +133,3 @@ abstract class Zend_Search_Lucene_Storage_Directory
     abstract public function getFileObject($filename, $shareHandler = true);
 
 }
-

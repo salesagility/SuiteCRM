@@ -354,4 +354,3 @@ class EmailReminder
         return $emails;
     }
 }
-

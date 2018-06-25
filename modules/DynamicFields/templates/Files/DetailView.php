@@ -49,4 +49,3 @@ $test =& $focus;
 $focus->custom_fields->bean =& $focus;
 $focus->custom_fields->populateXTPL($xtpl, 'detail');
 }
-

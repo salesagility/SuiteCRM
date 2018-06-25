@@ -59,4 +59,3 @@ class Zend_Gdata_Books_VolumeFeed extends Zend_Gdata_Feed
      protected $_entryClassName = 'Zend_Gdata_Books_VolumeEntry';
 
 }
-

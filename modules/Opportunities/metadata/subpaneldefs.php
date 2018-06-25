@@ -257,4 +257,3 @@ $layout_defs['Opportunities'] = array(
 
     ),
 );
-

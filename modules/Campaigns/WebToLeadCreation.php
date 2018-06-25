@@ -178,4 +178,3 @@ function getListOfExtendingClasses($superclass)
     }
     return $subclasses;
 }
-

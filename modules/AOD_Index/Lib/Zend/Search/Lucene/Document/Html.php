@@ -478,4 +478,3 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
         return implode($outputFragments);
     }
 }
-

@@ -48,4 +48,3 @@ $dashletMeta['ChartsDashlet'] = array('title'       => 'LBL_TITLE', // array ind
                                       'category'    => 'Charts',
                                       'hidden'		=> true,
                                       );
-

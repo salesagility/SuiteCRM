@@ -956,4 +956,3 @@ class EmailTemplate extends SugarBean
     }
 
 }
-

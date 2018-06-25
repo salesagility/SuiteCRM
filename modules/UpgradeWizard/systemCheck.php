@@ -288,4 +288,3 @@ $uwMain =<<<eoq
      </table>
  </div>
 eoq;
-

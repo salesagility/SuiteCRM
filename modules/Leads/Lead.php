@@ -636,4 +636,3 @@ class Lead extends Person implements EmailInterface {
     }
 
 }
-

@@ -2129,4 +2129,3 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
         return $this->_lastTermPositions;
     }
 }
-

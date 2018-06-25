@@ -692,4 +692,3 @@ class SugarFieldBase
     }
 
 }
-

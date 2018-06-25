@@ -147,4 +147,3 @@ class UsersController extends SugarController
         }
     }
 }
-

@@ -174,4 +174,3 @@ $dictionary['OutboundEmail'] = array ('table' => 'outbound_email',
 	//),
 	//), /* end indices */
 );
-

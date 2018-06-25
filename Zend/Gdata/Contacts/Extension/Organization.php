@@ -103,5 +103,3 @@ class Zend_Gdata_Contacts_Extension_Organization extends Zend_Gdata_Extension
 
 
 }
-
-
