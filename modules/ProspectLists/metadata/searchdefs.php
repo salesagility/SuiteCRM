@@ -46,10 +46,10 @@
   $searchdefs['ProspectLists'] = array(
 					'templateMeta' => array(
 							'maxColumns' => '3',
-                            'maxColumnsBasic' => '4',  
-                            'widths' => array('label' => '10', 'field' => '30'),                 
+                            'maxColumnsBasic' => '4',
+                            'widths' => array('label' => '10', 'field' => '30'),
                            ),
-                    'layout' => array(  					
+                    'layout' => array(
 						'basic_search' => array(
 						    array('name'=>'name', 'label'=>'LBL_PROSPECT_LIST_NAME',),
 						 	array('name'=>'current_user_only', 'label'=>'LBL_CURRENT_USER_FILTER', 'type'=>'bool'),

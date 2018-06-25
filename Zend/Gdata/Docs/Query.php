@@ -23,7 +23,7 @@
 
 /**
  * Modifications by SugarCRM
- * 
+ *
  * March 14, 2011 - asandberg: Changed DOCUMENTS_LIST_FEED_URI to work with v3 of Docs API.
  */
 

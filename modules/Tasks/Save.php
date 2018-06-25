@@ -95,7 +95,7 @@ if($focus->date_due_flag != 'off' && $focus->date_due_flag != 1) {
 if (isset($_REQUEST['date_due']) && strlen(trim($_REQUEST['date_due']))<8 ){
     //no date set, so clear out field, and set the rest flag to true
     $focus->date_due_flag = 1;
-    $focus->date_due = '';    
+    $focus->date_due = '';
 }
 
 //if only the time is passed in, without a date, then string length will be 7
@@ -128,7 +128,7 @@ if(isset($_REQUEST['inbound_email_id']) && !empty($_REQUEST['inbound_email_id'])
 	exit();
 }
 ////	END INBOUND EMAIL HANDLING
-///////////////////////////////////////////////////////////////////////////////	
+///////////////////////////////////////////////////////////////////////////////
 
 // CCL - Bugs 41103 and 43751.  41103 address the issue where the parent_id is set, but
 // the relate_id field overrides the relationship.  43751 fixes the problem where the relate_id and

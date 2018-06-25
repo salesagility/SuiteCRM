@@ -82,13 +82,13 @@ class CalendarViewSaveSettings extends SugarView {
 					$hours = $hours - 12;
 			if(($mer) == 'pm')
 				if($hours != 12)
-					$hours = $hours + 12;		
+					$hours = $hours + 12;
 		}
 		if($hours < 10)
 			$hours = "0".$hours;
 		if($minutes < 10)
-			$minutes = "0".$minutes;	
-		return $hours . ":". $minutes; 
+			$minutes = "0".$minutes;
+		return $hours . ":". $minutes;
 	}
 	
 

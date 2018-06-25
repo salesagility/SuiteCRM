@@ -94,4 +94,3 @@ class ImportMapOutlook extends ImportMapOther
         }
     }
 }
-

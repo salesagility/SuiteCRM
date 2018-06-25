@@ -60,7 +60,7 @@ class ListViewMerge extends EditViewMerge{
 	 *
 	 * @param STRING $module - name of the module's files that are to be merged
 	 * @param STRING $original_file - path to the file that originally shipped with sugar
-	 * @param STRING $new_file - path to the new file that is shipping with the patch 
+	 * @param STRING $new_file - path to the new file that is shipping with the patch
 	 * @param STRING $custom_file - path to the custom file
 	 */
 	protected function loadData($module, $original_file, $new_file, $custom_file){
@@ -97,8 +97,8 @@ class ListViewMerge extends EditViewMerge{
 		
 	/**
 	 * This builds the array of fields from the merged fields in the appropriate order
-	 * when building the panels for a list view the most important thing is order 
-	 * so we ensure the fields that came from the custom file keep 
+	 * when building the panels for a list view the most important thing is order
+	 * so we ensure the fields that came from the custom file keep
 	 * their order then we add any new fields at the end
 	 *
 	 * @return ARRAY
@@ -112,7 +112,7 @@ class ListViewMerge extends EditViewMerge{
 				unset($this->mergedFields[$id]);
 			}
 		}
-		//now deal with the rest 
+		//now deal with the rest
 		foreach($this->mergedFields as $id =>$field){
 			    //Set the default attribute to false for all the rest of these fields since they're not from custom source
 			    $field['data']['default'] = false;
@@ -132,7 +132,7 @@ class ListViewMerge extends EditViewMerge{
 	/**
 	 * This will save the merged data to a file
 	 *
-	 * @param STRING $to - path of the file to save it to 
+	 * @param STRING $to - path of the file to save it to
 	 * @return BOOLEAN - success or failure of the save
 	 */
 	public function save($to){
@@ -162,12 +162,12 @@ class ListViewMerge extends EditViewMerge{
 			if(isset($this->newFields[$field]) && isset($this->originalFields[$field])){
 				//if both the custom field and the original match then we take the location of the custom field since it hasn't moved
 				$loc = $this->customFields[$field]['loc'];
-				$loc['source'] = 'custom';	
+				$loc['source'] = 'custom';
 
 				//echo var_export($loc, true);
 				//but we still merge the meta data of the three
 				$this->mergedFields[$field] = array(
-					'data'=>$this->mergeField($this->originalFields[$field]['data'], $this->newFields[$field]['data'], $this->customFields[$field]['data']), 
+					'data'=>$this->mergeField($this->originalFields[$field]['data'], $this->newFields[$field]['data'], $this->customFields[$field]['data']),
 					'loc'=>$loc);
 				
 				
@@ -175,17 +175,17 @@ class ListViewMerge extends EditViewMerge{
 			} else if(!isset($this->newFields[$field])){
 				$this->mergedFields[$field] = $data;
 				$this->mergedFields[$field]['loc']['source'] = 'custom';
-			} else {	
+			} else {
 				//otherwise  the field is in both new and custom but not in the orignal so we merge the new and custom data together and take the location from the custom
 				$this->mergedFields[$field] = array(
-					'data'=>$this->mergeField('', $this->newFields[$field]['data'], $this->customFields[$field]['data']), 
+					'data'=>$this->mergeField('', $this->newFields[$field]['data'], $this->customFields[$field]['data']),
 					'loc'=>$this->customFields[$field]['loc']);
 				
 				$this->mergedFields[$field]['loc']['source'] = 'custom';
 				//echo var_export($this->mergedFields[$field], true);
 			}
 			
-			//then we clear out the field from 
+			//then we clear out the field from
 			unset($this->originalFields[$field]);
 			unset($this->customFields[$field]);
 			unset($this->newFields[$field]);
@@ -203,7 +203,7 @@ class ListViewMerge extends EditViewMerge{
 		foreach($this->newFields as $field=>$data){
 			$data['loc']['source']= 'new';
 			$this->mergedFields[$field] = array(
-					'data'=>$data['data'], 
+					'data'=>$data['data'],
 					'loc'=>$data['loc']);
 			unset($this->newFields[$field]);
 		}
@@ -261,8 +261,8 @@ class ListViewMerge extends EditViewMerge{
 			}
 		}
 		
-		//default to returning the New version of the field 
+		//default to returning the New version of the field
 		$new['default'] = isset($custom['default']) ? $custom['default'] : false;
-		return $new; 
-	}	
+		return $new;
+	}
 }

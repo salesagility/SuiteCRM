@@ -57,9 +57,9 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 			$value = preg_replace("/'$/", "%'", $value, 1);
 			$query .= $value;
 			if ($key != ($arr_count - 1))
-    			$query.= " OR " ;	
+    			$query.= " OR " ;
     	}
-		return '('.$query.')';        
+		return '('.$query.')';
 	}
         
     public function queryFilterone_of($layout_def) {
@@ -83,9 +83,9 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 			$value = preg_replace("/'$/", "%'", $value, 1);
 			$query .= $value;
 			if ($key != ($arr_count - 1))
-    			$query.= " OR " ;	
+    			$query.= " OR " ;
     	}
-		return '('.$query.')';        
+		return '('.$query.')';
 	}
 
 	public function queryFilteris($layout_def) {
@@ -95,7 +95,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 		}
 
 		// Bug 40022
-		// IS filter doesn't add the carets (^) to multienum custom field values  
+		// IS filter doesn't add the carets (^) to multienum custom field values
 		$input_name0 = $this->encodeMultienumCustom($layout_def, $input_name0);
 		
 		return $this->_get_column_select($layout_def)." = ".$this->reporter->db->quoted($input_name0)."\n";
@@ -108,7 +108,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 		}
 
 		// Bug 50549
-		// IS NOT filter doesn't add the carets (^) to multienum custom field values  
+		// IS NOT filter doesn't add the carets (^) to multienum custom field values
 		$input_name0 = $this->encodeMultienumCustom($layout_def, $input_name0);
 		
 		return $this->_get_column_select($layout_def)." <> ".$this->reporter->db->quoted($input_name0)."\n";
@@ -135,7 +135,7 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
     	// Check if it is a custom field
 		if (!empty($field_def['source']) && ($field_def['source'] == 'custom_fields' || ($field_def['source'] == 'non-db' && !empty($field_def['ext2']) && !empty($field_def['id']))) && !empty($field_def['real_table']))
 		{
-			$value = encodeMultienumValue(array($value)); 
+			$value = encodeMultienumValue(array($value));
 		}
 		return $value;
     }

@@ -68,11 +68,10 @@ function get_body (&$ss , $vardef)
     }
     
     // C.L. - Merge from studio_rel_user branch
-    $modules['Users'] = translate('LBL_MODULE_NAME', 'Users');    
+    $modules['Users'] = translate('LBL_MODULE_NAME', 'Users');
     asort($modules);
 
     $ss->assign ( 'modules', $modules ) ;
     
     return $ss->fetch ( 'modules/DynamicFields/templates/Fields/Forms/relate.tpl' ) ;
 }
-

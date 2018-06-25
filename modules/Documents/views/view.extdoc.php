@@ -175,7 +175,7 @@ class DocumentsViewExtdoc extends SugarView
         $ss->assign('displayColumns',$displayColumns);
         $ss->assign('imgPath',SugarThemeRegistry::current()->getImageURL($apiName.'_image_inline.png'));
 
-        if ( $isPopup ) { 
+        if ( $isPopup ) {
             $ss->assign('linkTarget','');
             $ss->assign('isPopup',1);
             $ss->assign('elemBaseName',$_REQUEST['elemBaseName']);

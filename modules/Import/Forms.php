@@ -80,8 +80,8 @@ function getControl(
         }
         
         // if this is the id relation field, then don't have a pop-up selector.
-        if( $vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) { 
-            $vardef['type'] = 'varchar'; 
+        if( $vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
+            $vardef['type'] = 'varchar';
         }
         
         // create the dropdowns for the parent type fields
@@ -90,8 +90,8 @@ function getControl(
         }
         
         // remove the special text entry field function 'getEmailAddressWidget'
-        if ( isset($vardef['function']) 
-                && ( $vardef['function'] == 'getEmailAddressWidget' 
+        if ( isset($vardef['function'])
+                && ( $vardef['function'] == 'getEmailAddressWidget'
                     || $vardef['function']['name'] == 'getEmailAddressWidget' ) )
             unset($vardef['function']);
         
@@ -104,7 +104,7 @@ function getControl(
         }
         
         $displayParams = array();
-        $displayParams['formName'] = 'importstep3';  
+        $displayParams['formName'] = 'importstep3';
 
         $contents = $sfh->displaySmarty('fields', $vardef, 'ImportView', $displayParams);
         
@@ -112,8 +112,8 @@ function getControl(
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
         
         // hack to disable one of the js calls in this control
-        if ( isset($vardef['function']) 
-                && ( $vardef['function'] == 'getCurrencyDropDown' 
+        if ( isset($vardef['function'])
+                && ( $vardef['function'] == 'getCurrencyDropDown'
                     || $vardef['function']['name'] == 'getCurrencyDropDown' ) )
         $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
 
@@ -141,7 +141,7 @@ function getControl(
     $t23 = strpos($time_format, '23') !== false ? '%H' : '%I';
     if(!isset($match[2]) || $match[2] == '') {
         $ss->assign('CALENDAR_FORMAT', $date_format . ' ' . $t23 . $time_separator . "%M");
-    } 
+    }
     else {
         $pm = $match[2] == "pm" ? "%P" : "%p";
         $ss->assign('CALENDAR_FORMAT', $date_format . ' ' . $t23 . $time_separator . "%M" . $pm);

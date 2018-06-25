@@ -318,4 +318,3 @@ class Employee extends Person {
         return parent::save($check_notify);
     }
 }
-

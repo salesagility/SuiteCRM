@@ -55,7 +55,7 @@ class TemplateURL extends TemplateText{
         return "<input type='text' name='". $this->name. "' id='".$this->name."' size='".$this->size."' title='{" . strtoupper($this->name) ."_HELP}' value='{". strtoupper($this->name). "}'>";
     }
     
-    function get_html_detail(){ 
+    function get_html_detail(){
         $xtpl_var = strtoupper($this->name);
         return "<a href='{" . $xtpl_var . "}' target='_blank'>{" . $xtpl_var . "}</a>";
     }
@@ -76,7 +76,7 @@ class TemplateURL extends TemplateText{
 		$def['dbType'] = 'varchar';
 		$def['gen'] = !empty($this->gen) ? $this->gen : $this->ext3;
         $def['link_target'] = !empty($this->link_target) ? $this->link_target : $this->ext4;
-		return $def;	
-	} 
+		return $def;
+	}
 
 }

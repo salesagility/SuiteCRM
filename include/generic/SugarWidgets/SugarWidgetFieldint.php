@@ -94,6 +94,6 @@ class SugarWidgetFieldInt extends SugarWidgetReportField
 	   }
 	   //Bug40995
        return parent::display($layout_def);
- } 
+ }
 
 }

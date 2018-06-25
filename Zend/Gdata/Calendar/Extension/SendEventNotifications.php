@@ -129,4 +129,3 @@ class Zend_Gdata_Calendar_Extension_SendEventNotifications extends Zend_Gdata_Ex
     }
 
 }
-

@@ -520,4 +520,3 @@ function process_subscriptions_from_request($campaign_name){
 
     return $pl_list;
 }
-

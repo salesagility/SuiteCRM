@@ -58,7 +58,7 @@ if(method_exists($authController->authController, 'preLogout')) {
 
 // submitted by Tim Scott from SugarCRM forums
 foreach($_SESSION as $key => $val) {
-	$_SESSION[$key] = ''; // cannot just overwrite session data, causes segfaults in some versions of PHP	
+	$_SESSION[$key] = ''; // cannot just overwrite session data, causes segfaults in some versions of PHP
 }
 if(isset($_COOKIE[session_name()])) {
 	setcookie(session_name(), '', time()-42000, '/',null,false,true);

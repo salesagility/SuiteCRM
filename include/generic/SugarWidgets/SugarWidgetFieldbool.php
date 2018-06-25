@@ -51,7 +51,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
 			return "(".$this->_get_column_select($layout_def)." LIKE 'on' OR ".$this->_get_column_select($layout_def)."='1')\n";
 		} else {
 			//return "(".$this->_get_column_select($layout_def)." is null OR ".$this->_get_column_select($layout_def)."='0' OR ".$this->_get_column_select($layout_def)."='off')\n";
-            return "(".$this->_get_column_select($layout_def)." is null OR ". $this->_get_column_select($layout_def)."='0')\n";            
+            return "(".$this->_get_column_select($layout_def)." is null OR ". $this->_get_column_select($layout_def)."='0')\n";
 		}
  }
 
@@ -69,10 +69,10 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
             global $app_list_strings;
             if (empty($value)) {
                 $value = $app_list_strings['dom_switch_bool']['off'];
-            }   
+            }
             else {
                 $value = $app_list_strings['dom_switch_bool']['on'];
-            } 
+            }
             return $value;
         }
 
@@ -88,7 +88,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
  function queryFilterStarts_With(&$layout_def)
  {
     return $this->queryFilterEquals($layout_def);
- }    
+ }
  
     function displayInput($layout_def)
     {

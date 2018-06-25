@@ -68,4 +68,3 @@ while ($row != null) {
     $row = $callBean->db->fetchByAssoc($result);
 }
 echo $mod_strings['LBL_DIAGNOSTIC_DONE'];
-

@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require("include/modules.php");
 require_once("include/utils/sugar_file_utils.php");
 
-foreach ($beanFiles as $classname => $filename){ 
+foreach ($beanFiles as $classname => $filename){
 	if (file_exists($filename)){
 		// Rename the class and its constructor adding SugarCore at the beginning  (Ex: class SugarCoreCall)
 		$handle = file_get_contents($filename);

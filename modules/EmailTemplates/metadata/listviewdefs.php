@@ -43,8 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $listViewDefs['EmailTemplates'] = array(
 	'NAME' => array(
-		'width' => '20', 
-		'label' => 'LBL_NAME', 
+		'width' => '20',
+		'label' => 'LBL_NAME',
 		'link' => true,
         'default' => true),
     'TYPE' => array(
@@ -53,7 +53,7 @@ $listViewDefs['EmailTemplates'] = array(
         'link' => false,
         'default' => true),
     'DESCRIPTION' => array(
-        'width' => '40', 
+        'width' => '40',
         'default' => true,
         'sortable' => false,
         'label' => 'LBL_DESCRIPTION'),
@@ -64,7 +64,7 @@ $listViewDefs['EmailTemplates'] = array(
         'id' => 'ASSIGNED_USER_ID',
         'default' => true,),
     'DATE_MODIFIED' => array(
-        'width' => '10', 
+        'width' => '10',
         'default' => true,
         'label' => 'LBL_DATE_MODIFIED'),
 	'DATE_ENTERED' => array (
@@ -72,4 +72,3 @@ $listViewDefs['EmailTemplates'] = array(
 	    'label' => 'LBL_DATE_ENTERED',
 	    'default' => true),
 );
-

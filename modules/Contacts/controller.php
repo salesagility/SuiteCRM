@@ -55,7 +55,7 @@ class ContactsController extends SugarController
 
     function action_RetrieveEmail()
     {
-        $this->view = 'retrieveemail';	
+        $this->view = 'retrieveemail';
     }
 
     function action_ContactAddressPopup()
@@ -66,6 +66,6 @@ class ContactsController extends SugarController
     function action_CloseContactAddressPopup()
     {
     	$this->view = 'closecontactaddresspopup';
-    }    
+    }
 
 }

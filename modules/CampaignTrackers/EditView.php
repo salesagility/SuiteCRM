@@ -111,7 +111,7 @@ $xtpl->assign("TRACKER_NAME", $focus->tracker_name);
 $xtpl->assign("TRACKER_URL", $focus->tracker_url);
 
 global $current_user;
-if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){	
+if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){
 	$record = '';
 	if(!empty($_REQUEST['record'])){
 		$record = 	$_REQUEST['record'];

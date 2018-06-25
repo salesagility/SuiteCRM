@@ -38,4 +38,4 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-include ('modules/MailMerge/index.php'); 
+include ('modules/MailMerge/index.php');

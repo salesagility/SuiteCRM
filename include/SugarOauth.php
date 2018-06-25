@@ -180,11 +180,11 @@
             $proxy_config = SugarModule::get('Administration')->loadBean();
             $proxy_config->retrieveSettings('proxy');
             
-            if( !empty($proxy_config) && 
+            if( !empty($proxy_config) &&
                 !empty($proxy_config->settings['proxy_on']) &&
                 $proxy_config->settings['proxy_on'] == 1) {
                 
-                $proxy_settings = array();                
+                $proxy_settings = array();
                 $proxy_settings['proxy_host'] = $proxy_config->settings['proxy_host'];
                 $proxy_settings['proxy_port'] = $proxy_config->settings['proxy_port'];
     
@@ -195,7 +195,7 @@
                 
                 $adapter = new Zend_Http_Client_Adapter_Proxy();
                 $adapter->setConfig($proxy_settings);
-                $client->setAdapter($adapter);            
+                $client->setAdapter($adapter);
             }
             
             $client->setMethod($method);

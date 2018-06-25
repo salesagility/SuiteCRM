@@ -44,8 +44,8 @@ global $mod_strings;
 $popupMeta = array('moduleMain' => 'Contact',
 						'varName' => 'CONTACT',
 						'orderBy' => 'contacts.first_name, contacts.last_name',
-						'whereClauses' => 
-							array('first_name' => 'contacts.first_name', 
+						'whereClauses' =>
+							array('first_name' => 'contacts.first_name',
 									'last_name' => 'contacts.last_name',
 									'account_name' => 'accounts.name',
 									'account_id' => 'accounts.id'),
@@ -59,4 +59,3 @@ $popupMeta = array('moduleMain' => 'Contact',
 								  ),
 						'templateForm' => 'modules/Contacts/Email_picker.html',
 						);
-

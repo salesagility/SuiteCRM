@@ -286,7 +286,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testgetEAPMExternalApiDropDown()
-    {        
+    {
         // store state
         
         $state = new SuiteCRM\StateSaver();

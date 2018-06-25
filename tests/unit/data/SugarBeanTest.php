@@ -13,7 +13,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
     /**
      * @var array
      */
-    protected $fieldDefsStore;    
+    protected $fieldDefsStore;
     
 
     public function setUp() {
@@ -920,7 +920,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $rows = [];
         while($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableAodIndex = $rows;
 
         // test

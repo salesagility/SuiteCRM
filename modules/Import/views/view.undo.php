@@ -47,12 +47,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/Import/views/ImportView.php');
         
-class ImportViewUndo extends ImportView 
-{	
+class ImportViewUndo extends ImportView
+{
 
     protected $pageTitleKey = 'LBL_UNDO_LAST_IMPORT';
     
- 	/** 
+ 	/**
      * @see SugarView::display()
      */
  	public function display()
@@ -62,7 +62,7 @@ class ImportViewUndo extends ImportView
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
         // lookup this module's $mod_strings to get the correct module name
         $old_mod_strings = $mod_strings;
-        $module_mod_strings = 
+        $module_mod_strings =
             return_module_language($current_language, $_REQUEST['import_module']);
         $this->ss->assign("MODULENAME",$module_mod_strings['LBL_MODULE_NAME']);
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false), ENT_NOQUOTES);

@@ -46,7 +46,7 @@ if(isset($_REQUEST['perform_rebuild']) && $_REQUEST['perform_rebuild'] == 'true'
 	$focus = new Scheduler();
 	$focus->rebuildDefaultSchedulers();
 	
-$admin_mod_strings = return_module_language($current_language, 'Administration');	
+$admin_mod_strings = return_module_language($current_language, 'Administration');
 ?>
 <table cellspacing="{CELLSPACING}" class="otherview">
 	<tr> 

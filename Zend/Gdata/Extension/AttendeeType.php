@@ -120,4 +120,3 @@ class Zend_Gdata_Extension_AttendeeType extends Zend_Gdata_Extension
     }
 
 }
-

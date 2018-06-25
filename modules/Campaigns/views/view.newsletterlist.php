@@ -44,8 +44,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.list.php');
 
-class ViewNewsLetterList extends ViewList 
-{    
+class ViewNewsLetterList extends ViewList
+{
     function processSearchForm()
     {
         // we have a query
@@ -54,7 +54,7 @@ class ViewNewsLetterList extends ViewList
         }
         else {
             $this->searchForm->populateFromRequest();
-        }   
+        }
         $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
         $where_clauses[] = "campaigns.campaign_type in ('NewsLetter')";
         if (count($where_clauses) > 0 )$this->where = '('. implode(' ) AND ( ', $where_clauses) . ')';
@@ -67,12 +67,12 @@ class ViewNewsLetterList extends ViewList
     /**
 	 * @see SugarView::preDisplay()
 	 */
-	public function preDisplay() 
+	public function preDisplay()
 	{
         global $mod_strings;
         $mod_strings['LBL_MODULE_TITLE'] = $mod_strings['LBL_NEWSLETTER_TITLE'];
         $mod_strings['LBL_LIST_FORM_TITLE'] = $mod_strings['LBL_NEWSLETTER_LIST_FORM_TITLE'];
         parent::preDisplay();
 
-    }        
+    }
 }

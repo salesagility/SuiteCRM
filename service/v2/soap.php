@@ -50,8 +50,3 @@ $registry_path = 'service/v2/registry.php';
 $webservice_impl_class = 'SugarWebServiceImpl';
 $location = '/service/v2/soap.php';
 require_once('service/core/webservice.php');
-
-
-
-
-		

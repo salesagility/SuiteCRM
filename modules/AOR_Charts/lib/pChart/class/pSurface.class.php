@@ -40,7 +40,7 @@
    /* Define the grid size and initialise the 2D matrix */
    function setGrid($XSize=10,$YSize=10)
     {
-     for($X=0; $X<=$XSize; $X++) { for($Y=0; $Y<=$YSize; $Y++) { $this->Points[$X][$Y]=UNKNOWN; } } 
+     for($X=0; $X<=$XSize; $X++) { for($Y=0; $Y<=$YSize; $Y++) { $this->Points[$X][$Y]=UNKNOWN; } }
 
      $this->GridSizeX = $XSize;
      $this->GridSizeY = $YSize;

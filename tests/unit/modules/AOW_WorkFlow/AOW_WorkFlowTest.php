@@ -158,7 +158,7 @@ class AOW_WorkFlowTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testget_flow_beans()
-    {        
+    {
         
         $aowWorkFlow = new AOW_WorkFlow();
         

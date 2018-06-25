@@ -116,7 +116,7 @@ if(!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
 						if(isset($row[$field])) {
 	                       $product->$field = $row[$field];
 						}
-					}	                
+					}
 
 					$product->name = $products['name'];
 					$product->id = create_guid();
@@ -164,7 +164,7 @@ if(!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
 			$focus->subtotal += $pb->subtotal;
 			$focus->deal_tot += $pb->deal_tot;
 			$focus->new_sub += $pb->new_sub;
-			$focus->total += $pb->total;	        
+			$focus->total += $pb->total;
 	        
 		} //foreach
 		

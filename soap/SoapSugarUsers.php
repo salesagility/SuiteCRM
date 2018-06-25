@@ -2598,4 +2598,3 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = fa
         );
     }
 }
-

@@ -53,7 +53,7 @@ class UserPreferencesController extends SugarController
 		   $retArray = array();
 		   $retArray['height'] = $height;
 		   $retArray['width'] = $width;
-		   echo 'result = ' . $json->encode($retArray);           
+		   echo 'result = ' . $json->encode($retArray);
         }
 	}
 	

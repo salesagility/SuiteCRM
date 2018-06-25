@@ -239,11 +239,11 @@ require_once('include/formbase.php');
 $focus = populateFromPost('', $focus);
 
 //CCL - Bug: 40168 Fix ability to change date sent from saved emails
-if($focus->type == 'archived') 
-{	
+if($focus->type == 'archived')
+{
   $focus->date_start = $_REQUEST['date_start'];
   $focus->time_start = $_REQUEST['time_start'] . $_REQUEST['meridiem'];
-  $focus->date_sent = '';	
+  $focus->date_sent = '';
 }
 
 $focus->save(false);
@@ -298,4 +298,3 @@ if($focus->type == 'draft') {
 	$return_id = $_POST['return_id'];
 }
 	header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
-

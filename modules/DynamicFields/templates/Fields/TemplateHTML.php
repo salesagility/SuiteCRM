@@ -77,7 +77,7 @@ class TemplateHTML extends TemplateField{
     
     function get_xtpl_detail(){
         
-        return from_html(nl2br($this->ext4));   
+        return from_html(nl2br($this->ext4));
     }
     
     function get_xtpl_edit(){

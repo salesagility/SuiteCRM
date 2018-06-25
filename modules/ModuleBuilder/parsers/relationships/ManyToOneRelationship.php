@@ -57,7 +57,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * @param array $definition Parameters passed in as array defined in parent::$definitionKeys
      * The lhs_module value is for the One side; the rhs_module value is for the Many
      */
-    function __construct ($definition) 
+    function __construct ($definition)
     {
         
     	parent::__construct ( $definition ) ;
@@ -94,7 +94,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * @return array    An array of subpanel definitions, keyed by the module
      */
     function buildSubpanelDefinitions ()
-    {        
+    {
         return $this->one_to_many->buildSubpanelDefinitions();
     }
 

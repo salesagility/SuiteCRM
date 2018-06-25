@@ -79,7 +79,7 @@ $button .= "<input type='hidden' name='action'>\n";
 $button .= "<input type='hidden' name='report_module'>\n";
 $button .= "<input type='hidden' name='id'>\n";
 
-if ($currentModule == 'Roles') 
+if ($currentModule == 'Roles')
 	$button .= "<input title='".$app_strings['LBL_SELECT_BUTTON_TITLE']." ' type='button' class='button' value='  ".$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' name='button' LANGUAGE=javascript onclick='window.open(\"index.php?module=Users&action=PopupUsers&html=Popup_Users_picker&form=UsersForm&record=".$focus->id."&form_submit=true&query=true\",\"new\",\"width=600,height=400,resizable=1,scrollbars=1\");'>\n";
 
 $button .= "</form>\n";

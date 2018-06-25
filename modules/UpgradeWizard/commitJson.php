@@ -50,7 +50,7 @@ if(ob_get_level() < 1)
 ob_implicit_flush(1);
 
 if(!function_exists('getFilesForPermsCheck')) {
-	require_once('modules/UpgradeWizard/uw_utils.php');	
+	require_once('modules/UpgradeWizard/uw_utils.php');
 }
 if(!isset($sugar_config) || empty($sugar_config)) {
 		
@@ -78,7 +78,7 @@ switch($_REQUEST['commitStep']) {
 	case 'final_touches':
 		logThis('commitJson->finalTouches() called.');
 		$persistence = commitAjaxFinalTouches($persistence);
-	break;	
+	break;
 }
 
 savePersistence($persistence);

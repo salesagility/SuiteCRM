@@ -64,7 +64,7 @@ error_reporting(E_ERROR);
 set_time_limit(0);
 set_upgrade_progress('layouts','in_progress');
 
-//If the user has seleceted which modules they want to merge, perform the filtering and 
+//If the user has seleceted which modules they want to merge, perform the filtering and
 //execute the merge.
 if( isset($_POST['layoutSelectedModules']) )
 {
@@ -83,7 +83,7 @@ if( isset($_POST['layoutSelectedModules']) )
             logThis("Adding $moduleKey module to rollback list.");
             $rollBackList[$moduleKey] = $layouts;
         }
-        else 
+        else
         {
             $actualMergedList[$moduleKey] = $layouts;
         }
@@ -108,7 +108,7 @@ if( isset($_POST['layoutSelectedModules']) )
     $showCheckBoxes = FALSE;
     $GLOBALS['top_message'] = "<b>{$mod_strings['LBL_LAYOUT_MERGE_TITLE2']}</b>";
 }
-else 
+else
 {
     //Fist visit to the commit layout page.  Display the selection table to the user.
     logThis('Layout Commits about to show selection table');
@@ -139,7 +139,7 @@ $state->popErrorLevel();
 $state->popPHPConfigOptions();
 
 /**
- * Clean the merge data results, removing any emptys or blanks that should not be displayed 
+ * Clean the merge data results, removing any emptys or blanks that should not be displayed
  * to the user on the confirm layout screen.
  *
  * @param array $data
@@ -191,12 +191,12 @@ function rollBackMergedModules($data)
                         @unlink($srcBackupFile);
                         logThis("Layout Commits, rollBackMergedModules successfully reverted file $srcFile");
                     }
-                    else 
+                    else
                     {
                         logThis("Layout Commits, rollBackMergedModules was unable to copy file: $srcBackupFile, to $srcFile.");
                     }
                 }
-                else 
+                else
                 {
                     logThis("Layout Commits, rollBackMergedModules is unable to find backup file $srcBackupFile , nothing to do.");
                 }
@@ -237,14 +237,14 @@ function formatLayoutMergeDataForDisplay($layoutMergeData)
                 $label = $module_builder_language['LBL_QUICKCREATE'];
             else if( preg_match('/searchdefs.php/i', $layoutPath) )
                 $label = $module_builder_language['LBL_SEARCH_BUTTON'];
-            else 
+            else
                 continue;
 
             $layouts[] = array('path' => $layoutPath, 'label' => $label);
         }
 
-        $results[$k]['layouts'] = $layouts; 
-        $results[$k]['moduleName'] = $app_list_strings['moduleList'][$k]; 
+        $results[$k]['layouts'] = $layouts;
+        $results[$k]['moduleName'] = $app_list_strings['moduleList'][$k];
     }
 
     return $results;

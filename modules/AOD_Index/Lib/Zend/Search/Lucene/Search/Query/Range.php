@@ -374,4 +374,3 @@ class Zend_Search_Lucene_Search_Query_Range extends Zend_Search_Lucene_Search_Qu
              . (($this->getBoost() != 1)? '^' . round($this->getBoost(), 4) : '');
     }
 }
-

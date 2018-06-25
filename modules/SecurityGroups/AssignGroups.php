@@ -9,9 +9,9 @@ function popup_select(&$bean, $event, $arguments)
 	global $sugar_config;
 
 	//only process if action is Save (meaning a user has triggered this event and not the portal or automated process)
-	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save' 
+	if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'Save'
 		&& isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
-		&& empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {		
+		&& empty($bean->fetched_row['id']) && $bean->module_dir != "Users" && $bean->module_dir != "SugarFeed") {
 		//Upload an attachment to an Email Template and save. If user with multi groups - popup select option
 		//it will redirect to notes instead of EmailTemplate and relationship will fail...check below to avoid
 		if(!empty($_REQUEST['module']) && $_REQUEST['module'] != $bean->module_dir) return;
@@ -34,7 +34,7 @@ function popup_select(&$bean, $event, $arguments)
 			//well...ShowDuplicates doesn't pass through request vars unless they are defined in the module vardefs
 			//so we are screwed here...
 			global $current_language;
-			$ss_mod_strings = return_module_language($current_language, 'SecurityGroups');	
+			$ss_mod_strings = return_module_language($current_language, 'SecurityGroups');
 			unset($_SESSION['securitysuite_error']); //to be safe
 			$_SESSION['securitysuite_error'] = $ss_mod_strings['LBL_ERROR_DUPLICATE'];
 		}
@@ -58,7 +58,7 @@ function popup_select(&$bean, $event, $arguments)
 			'id' => $bean->id
 		);
 	}
-} 
+}
 
 
 function popup_onload($event, $arguments)
@@ -74,17 +74,17 @@ function popup_onload($event, $arguments)
 	$module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
 	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
-	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;  
+	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;
 
 	if( (
 			//(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true)
-			//|| 
+			//||
 			($module == "Users" && isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true)
 		)
 	
 		//&& isset($_SESSION['securitygroups_popup_'.$module]) && !empty($_SESSION['securitygroups_popup_'.$module])
 		&& !empty($_SESSION['securitygroups_popup'])
-	) {	
+	) {
 
 		foreach($_SESSION['securitygroups_popup'] as $popup_index => $popup) {
 			$record_id = $popup['id'];
@@ -124,7 +124,7 @@ function mass_assign($event, $arguments)
   	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
     //check if security suite enabled
     $action = strtolower($action);
-    if(isset($module) && ($action == "list" || $action == "index" || $action == "listview") 
+    if(isset($module) && ($action == "list" || $action == "index" || $action == "listview")
     	&& (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
     	&& !array_key_exists($module,$no_mass_assign_list)
     	) {

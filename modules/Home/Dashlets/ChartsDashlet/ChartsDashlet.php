@@ -206,4 +206,3 @@ class ChartsDashlet extends Dashlet {
         return $additionalTitle;
     }
 }
-

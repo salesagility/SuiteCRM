@@ -51,5 +51,5 @@ $lc->handleAdd();
 $lc->handleUpdate();
 echo $lc->getTable();
 			}else{
-				echo 'Admin\'s Only';	
+				echo 'Admin\'s Only';
 			}

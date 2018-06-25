@@ -348,4 +348,3 @@ class ImportDuplicateCheck
         return $index_array;
     }
 }
-

@@ -161,7 +161,7 @@ class ViewPopupview extends ViewListView
         $groups = array ( ) ;
         foreach ( $parser->columns as $column => $function )
         {
-            $groups [ $GLOBALS [ 'mod_strings' ] [ $column ] ] = $parser->$function () ; 
+            $groups [ $GLOBALS [ 'mod_strings' ] [ $column ] ] = $parser->$function () ;
         }
         foreach ( $groups as $groupKey => $group )
         {

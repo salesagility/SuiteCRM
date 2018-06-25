@@ -82,16 +82,16 @@ class ViewResetmodule extends SugarView
 			array("name" => "extensions", "label" => translate("LBL_CLEAR_EXTENSIONS")),
         ));
         
-        $ajax->addSection ( 
-            'center', 
-            "Reset ". translate($moduleName) , 
-            $smarty->fetch('modules/ModuleBuilder/tpls/resetModule.tpl') //"This works now" 
+        $ajax->addSection (
+            'center',
+            "Reset ". translate($moduleName) ,
+            $smarty->fetch('modules/ModuleBuilder/tpls/resetModule.tpl') //"This works now"
         ) ;
         
         echo $ajax->getJavascript () ;
     }
     
-    function handleSave() 
+    function handleSave()
     {
         $out = "<script>ajaxStatus.flashStatus(SUGAR.language.get('app_strings', 'LBL_REQUEST_PROCESSED'), 2000);</script>";
         
@@ -108,7 +108,7 @@ class ViewResetmodule extends SugarView
             $out .= $this->removeCustomLabels();
 			
 		if (!empty($_REQUEST['extensions']))
-            $out .= $this->removeCustomExtensions();	
+            $out .= $this->removeCustomExtensions();
 			
         
         $out .= "Complete!";
@@ -120,9 +120,9 @@ class ViewResetmodule extends SugarView
         $ajax->addCrumb ( "Reset ". translate($this->module) , '') ;
         
         
-        $ajax->addSection ( 
-            'center', 
-            "Reset ". translate($this->module) , 
+        $ajax->addSection (
+            'center',
+            "Reset ". translate($this->module) ,
             $out
         ) ;
         
@@ -131,11 +131,11 @@ class ViewResetmodule extends SugarView
     
     /**
      * Removes all custom fields created in studio
-     * 
+     *
      * @return html output record of the field deleted
      */
-    function removeCustomFields() 
-    {    
+    function removeCustomFields()
+    {
         $moduleName = $this->module;
         $class_name = $GLOBALS [ 'beanList' ] [ $moduleName ] ;
         require_once ($GLOBALS [ 'beanFiles' ] [ $class_name ]) ;
@@ -164,10 +164,10 @@ class ViewResetmodule extends SugarView
     
     /**
      * Removes the metadata files for all known studio layouts.
-     * 
+     *
      * @return html output record of the files deleted
      */
-    function removeCustomLayouts() 
+    function removeCustomLayouts()
     {
         $module = StudioModuleFactory::getStudioModule( $this->module ) ;
         $sources = $module->getViewMetadataSources();
@@ -192,10 +192,10 @@ class ViewResetmodule extends SugarView
     
     /**
      * Removes all custom relationships containing this module
-     * 
+     *
      * @return html output record of the files deleted
      */
-    function removeCustomRelationships() 
+    function removeCustomRelationships()
     {
     	require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php' ;
         $out = "";
@@ -216,7 +216,7 @@ class ViewResetmodule extends SugarView
         return $out;
     }
     
-    function removeCustomLabels() 
+    function removeCustomLabels()
     {
         $out = "";
 		$languageDir = "custom/modules/{$this->module}/language";
@@ -235,7 +235,7 @@ class ViewResetmodule extends SugarView
 		return $out;
     }
 	
-	function removeCustomExtensions() 
+	function removeCustomExtensions()
 	{
         $out = "";
         $extDir = "custom/Extension/modules/{$this->module}";

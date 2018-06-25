@@ -64,5 +64,3 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 if(file_exists("custom/application/Ext/Extensions/extensions.ext.php")) {
     include("custom/application/Ext/Extensions/extensions.ext.php");
 }
-
-

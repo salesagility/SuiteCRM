@@ -108,7 +108,7 @@ class EAPMViewEdit extends ViewEdit {
     /**
 	 * @see SugarView::getModuleTitleIconPath()
 	 */
-	protected function getModuleTitleIconPath($module) 
+	protected function getModuleTitleIconPath($module)
     {
         return parent::getModuleTitleIconPath('Users');
     }

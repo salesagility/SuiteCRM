@@ -60,7 +60,7 @@ class Zend_Oauth_Token_AuthorizedRequest extends Zend_Oauth_Token
 
     /**
      * Retrieve token data
-     * 
+     *
      * @return array
      */
     public function getData()
@@ -70,7 +70,7 @@ class Zend_Oauth_Token_AuthorizedRequest extends Zend_Oauth_Token
 
     /**
      * Indicate if token is valid
-     * 
+     *
      * @return bool
      */
     public function isValid()
@@ -85,7 +85,7 @@ class Zend_Oauth_Token_AuthorizedRequest extends Zend_Oauth_Token
 
     /**
      * Parse string data into array
-     * 
+     *
      * @return array
      */
     protected function _parseData()

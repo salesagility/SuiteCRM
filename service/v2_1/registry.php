@@ -131,6 +131,6 @@ class registry_v2_1 extends registry {
 			array(
 			"entry_list"=>array('name'=>'entry_list', 'type'=>'tns:entry_list'),
 			)
-		);	
+		);
 	}
 }

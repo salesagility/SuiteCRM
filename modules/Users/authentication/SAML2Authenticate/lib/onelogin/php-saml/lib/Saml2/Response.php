@@ -1095,7 +1095,7 @@ class OneLogin_Saml2_Response
 
     /* After execute a validation process, if fails this method returns the cause
      *
-     * @return string Cause 
+     * @return string Cause
      */
     public function getError()
     {

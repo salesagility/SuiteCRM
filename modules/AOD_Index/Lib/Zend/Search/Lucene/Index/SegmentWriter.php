@@ -631,4 +631,3 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
      */
     abstract public function close();
 }
-

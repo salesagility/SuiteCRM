@@ -59,14 +59,14 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar {
     }
 function save($check_notify = FALSE) {
 
-		$focus = $this; 
+		$focus = $this;
 
 		if( (isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
 			(isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
 			(isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
 			 !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty
 		){
-			parent::save(true) ; 
+			parent::save(true) ;
 			$return_id = $focus->id;
 		}else{
 
@@ -74,7 +74,7 @@ function save($check_notify = FALSE) {
 			   $userInvitees = explode(',', trim($_POST['user_invitees'], ','));
 			} else {
 			   $userInvitees = array();
-			}		
+			}
 
 
 			if(!empty($_POST['contact_invitees'])) {
@@ -88,7 +88,7 @@ function save($check_notify = FALSE) {
 			$existingUsers = array();
 
 			$deleteContacts = array();
-			$existingContacts = array();		
+			$existingContacts = array();
 
 			if(!empty($this->id)){
 
@@ -116,7 +116,7 @@ function save($check_notify = FALSE) {
 					// We could run a delete SQL statement here, but will just mark as deleted instead
 					$sql = "UPDATE am_projecttemplates_users_1_c set deleted = 1 where users_idb in ($sql) AND am_projecttemplates_ida = '". $focus->id . "'";
 					$focus->db->query($sql);
-					echo $sql; 
+					echo $sql;
 				}
 
 				// Get all contacts for the project

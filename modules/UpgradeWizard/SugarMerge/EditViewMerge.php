@@ -47,7 +47,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
  
 /**
- * This is the base class that all other SugarMerge objects extend 
+ * This is the base class that all other SugarMerge objects extend
  *
  */
 class EditViewMerge{
@@ -100,7 +100,7 @@ class EditViewMerge{
 	 */
 	protected $customFields = array();
 	/**
-	 * this will store an associative array contianing all the merged fields 
+	 * this will store an associative array contianing all the merged fields
 	 *
 	 * @var ARRAY
 	 */
@@ -164,28 +164,28 @@ class EditViewMerge{
 	
 	/**
 	 * The ids of the panels found in custom metadata fuke
-	 * 
+	 *
 	 */
 	protected $customPanelIds = array();
 	
 	
 	/**
 	 * The ids of the panels found in original metadata fuke
-	 * 
+	 *
 	 */
 	protected $originalPanelIds = array();
 
 
 	/**
 	 * The ids of the panels found in original metadata fuke
-	 * 
+	 *
 	 */
-	protected $newPanelIds = array();	
+	protected $newPanelIds = array();
 	
 	
 	/**
 	 * Special case conversion
-	 * 
+	 *
 	 */
 	protected $fieldConversionMapping = array(
 			'Campaigns' => array('created_by_name'=>'date_entered', 'modified_by_name'=>'date_modified'),
@@ -264,7 +264,7 @@ class EditViewMerge{
 	}
 	
 	/**
-	 * 
+	 *
 	 */
 	/**
 	 * returns true if $val1 and $val2 match otherwise it returns false
@@ -305,7 +305,7 @@ class EditViewMerge{
 	/**
 	 * Recursiveley merges two arrays
 	 *
-	 * @param ARRAY $gimp - if keys match this arrays values are overriden 
+	 * @param ARRAY $gimp - if keys match this arrays values are overriden
 	 * @param ARRAY $dom - if keys match this arrays values will override the others
 	 * @return ARRAY $merged - the merges array
 	 */
@@ -374,9 +374,9 @@ class EditViewMerge{
 				return $custom;
 			}
 		}
-		//default to returning the New version of the field 
+		//default to returning the New version of the field
 		$this->log($new);
-		return $new; 
+		return $new;
 	}
 	
 	/**
@@ -386,10 +386,10 @@ class EditViewMerge{
 	protected function mergeFields() {
 		foreach($this->customFields as $field=>$data) {
 			//if we have this field in both the new fields and the original fields - it has existed since the last install/upgrade
-			if(isset($this->newFields[$field]) && isset($this->originalFields[$field])){				
+			if(isset($this->newFields[$field]) && isset($this->originalFields[$field])){
 				//if both the custom field and the original match then we take the location of the custom field since it hasn't moved
 				$loc = $this->customFields[$field]['loc'];
-				$loc['source'] = 'custom';	
+				$loc['source'] = 'custom';
 
 				$do_merge = true;
 				
@@ -401,38 +401,38 @@ class EditViewMerge{
 				   $state = $prefix . 'address_state';
 				   $country = $prefix . 'address_country';
 				   
-				   if(isset($this->customFields[$city]) || 
-				      isset($this->customFields[$postal_code]) || 
-				      isset($this->customFields[$state]) || 
+				   if(isset($this->customFields[$city]) ||
+				      isset($this->customFields[$postal_code]) ||
+				      isset($this->customFields[$state]) ||
 				      isset($this->customFields[$country])) {
                             $do_merge = false;
                             $this->mergedFields[$field] = array(
-							'data'=>$this->customFields[$field]['data'], 
+							'data'=>$this->customFields[$field]['data'],
 							'loc'=>$loc);
 				      }
-				}			
+				}
 				
 				if($do_merge) {
 					//but we still merge the meta data of the three
 					$this->mergedFields[$field] = array(
-						'data'=>$this->mergeField($this->originalFields[$field]['data'], $this->newFields[$field]['data'], $this->customFields[$field]['data']), 
+						'data'=>$this->mergeField($this->originalFields[$field]['data'], $this->newFields[$field]['data'], $this->customFields[$field]['data']),
 						'loc'=>$loc);
 				}
 			//if it's not set in the new fields then it was a custom field or an original field so we take the custom fields data and set the location source to custom
 			} else if(!isset($this->newFields[$field])){
 				$this->mergedFields[$field] = $data;
 				$this->mergedFields[$field]['loc']['source'] = 'custom';
-			} else {	
+			} else {
 				//otherwise  the field is in both new and custom but not in the orignal so we merge the new and custom data together and take the location from the custom
 				$this->mergedFields[$field] = array(
-					'data'=>$this->mergeField('', $this->newFields[$field]['data'], $this->customFields[$field]['data']), 
+					'data'=>$this->mergeField('', $this->newFields[$field]['data'], $this->customFields[$field]['data']),
 					'loc'=>$this->customFields[$field]['loc']);
 				
 				$this->mergedFields[$field]['loc']['source'] = 'custom';
 				//echo var_export($this->mergedFields[$field], true);
 			}
 			
-			//then we clear out the field from 
+			//then we clear out the field from
 			unset($this->originalFields[$field]);
 			unset($this->customFields[$field]);
 			unset($this->newFields[$field]);
@@ -453,13 +453,13 @@ class EditViewMerge{
 		$new_field_panel = $this->defaultPanel;
 	    foreach($this->customPanelIds as $custom_panel_ids=>$panels) {
 				$new_field_panel = $custom_panel_ids;
-		}		
+		}
 		
 		foreach($this->newFields as $field=>$data){
 			$data['loc']['source']= 'new';
 			$data['loc']['panel'] = $new_field_panel;
 			$this->mergedFields[$field] = array(
-					'data'=>$data['data'], 
+					'data'=>$data['data'],
 					'loc'=>$data['loc']);
 			unset($this->newFields[$field]);
 		}
@@ -476,7 +476,7 @@ class EditViewMerge{
 		$panel_keys = array_keys($this->customPanelIds);
 		$this->defaultPanel = end($panel_keys);
 		
-		foreach($this->mergedFields as $field_id=>$field){			
+		foreach($this->mergedFields as $field_id=>$field){
 			//If this field is in a panel not defined in the custom layout, set it to default panel
 			if(!isset($this->customPanelIds[$field['loc']['panel']])) {
 			   $field['loc']['panel'] = $this->defaultPanel;
@@ -503,7 +503,7 @@ class EditViewMerge{
 						$row++;
 					}
 					$panels[$field['loc']['panel']][$row][$field['loc']['col']] = $field['data'];
-				}				
+				}
 			} else {
 				$panels[$field['loc']['panel']][$field['loc']['row']][$field['loc']['col']] = $field['data'];
 			}
@@ -532,7 +532,7 @@ class EditViewMerge{
         //this is to handle the situation in Calls/Meetings where we updated the templateMeta and will fail if we don't update this.
         //long term we should not do this and should provide a way for calls/meetings to update themselves.
 	    if( isset($this->customData[$this->module][$this->viewDefs][$this->templateMetaName]) && strcmp(strtolower($this->module), 'calls') != 0 && strcmp(strtolower($this->module), 'meetings') != 0 )
-	    {   
+	    {
 	    	$this->newData[$this->module][$this->viewDefs][$this->templateMetaName] = $this->customData[$this->module][$this->viewDefs][$this->templateMetaName];
 	    }
 
@@ -559,7 +559,7 @@ class EditViewMerge{
 		$this->originalFields = $this->getFields($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
 		$this->originalPanelIds = $this->getPanelIds($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
 		$this->customFields = $this->getFields($this->customData[$this->module][$this->viewDefs][$this->panelName]);
-		$this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);		
+		$this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);
 		$this->newFields = $this->getFields($this->newData[$this->module][$this->viewDefs][$this->panelName]);
 		//echo var_export($this->newFields, true);
 		$this->newPanelIds = $this->getPanelIds($this->newData[$this->module][$this->viewDefs][$this->panelName]);
@@ -587,11 +587,11 @@ class EditViewMerge{
 		   } else {
 		   	  $panels = $panels[''];
 		   }
-		   $setDefaultPanel = true;   
-		}		
+		   $setDefaultPanel = true;
+		}
 		
 		if($this->scanForMultiPanel){
-			require_once('include/SugarFields/Parsers/MetaParser.php');			
+			require_once('include/SugarFields/Parsers/MetaParser.php');
 			if($setDefaultPanel || !MetaParser::hasMultiplePanels($panels)) {
 			   $panels = array($this->defaultPanel=>$panels);
 			   $this->isMultiPanel = false;
@@ -601,7 +601,7 @@ class EditViewMerge{
 		//echo "---------------------------------------------------------\n";
 		//echo var_export($panels, true);
 		
-		foreach($panels as $panel_id=>$panel){	
+		foreach($panels as $panel_id=>$panel){
 			foreach($panel as $row_id=>$rows){
 				foreach($rows as $col_id=>$col){
 					if(empty($col)) {
@@ -646,7 +646,7 @@ class EditViewMerge{
 						$fields[$field_name] = array('data'=>$col, 'loc'=>array('panel'=>"{$panel_id}", 'row'=>"{$row_id}", 'col'=>"{$col_id}"));
 					}
 				}
-			}		
+			}
 		}
 		
 		//echo "---------------------------------------------------------\n";
@@ -658,7 +658,7 @@ class EditViewMerge{
 		
 	/**
 	 * getPanelIds
-	 * 
+	 *
 	 */
 	protected function getPanelIds($panels){
 
@@ -673,30 +673,30 @@ class EditViewMerge{
 		   } else {
 		   	  $panels = $panels[''];
 		   }
-		   $setDefaultPanel = true;   
-		}		
+		   $setDefaultPanel = true;
+		}
 		
 		if($this->scanForMultiPanel){
-			require_once('include/SugarFields/Parsers/MetaParser.php');			
+			require_once('include/SugarFields/Parsers/MetaParser.php');
 			if($setDefaultPanel || !MetaParser::hasMultiplePanels($panels)) {
 			   $panels = array($this->defaultPanel=>$panels);
 			   $this->isMultiPanel = false;
 			}
 		}
 
-		foreach($panels as $panel_id=>$panel){	
+		foreach($panels as $panel_id=>$panel){
 	            $panel_ids[$panel_id] = $panel_id;
 		}
 				
 		return $panel_ids;
-	}	
+	}
 	
 	/**
 	 * Loads the meta data of the original, new, and custom file into the variables originalData, newData, and customData respectively
 	 *
 	 * @param STRING $module - name of the module's files that are to be merged
 	 * @param STRING $original_file - path to the file that originally shipped with sugar
-	 * @param STRING $new_file - path to the new file that is shipping with the patch 
+	 * @param STRING $new_file - path to the new file that is shipping with the patch
 	 * @param STRING $custom_file - path to the custom file
 	 */
 	protected function loadData($module, $original_file, $new_file, $custom_file){
@@ -711,13 +711,13 @@ class EditViewMerge{
 			$this->customData = $$varnmame;
 		}else{
 			$this->customData = $this->originalData;
-		}	
+		}
 	}
 	
 	/**
 	 * This will save the merged data to a file
 	 *
-	 * @param STRING $to - path of the file to save it to 
+	 * @param STRING $to - path of the file to save it to
 	 * @return BOOLEAN - success or failure of the save
 	 */
 	public function save($to){
@@ -738,7 +738,7 @@ class EditViewMerge{
 	 *
 	 * @param STRING $module - name of the module's files that are to be merged
 	 * @param STRING $original_file - path to the file that originally shipped with sugar
-	 * @param STRING $new_file - path to the new file that is shipping with the patch 
+	 * @param STRING $new_file - path to the new file that is shipping with the patch
 	 * @param STRING $custom_file - path to the custom file
 	 * @param BOOLEAN $save - boolean on if it should save the results to the custom file or not
 	 * @return BOOLEAN - if the merged file was saved if false is passed in for the save parameter it always returns true

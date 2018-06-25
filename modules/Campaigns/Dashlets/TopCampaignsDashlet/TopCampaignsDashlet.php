@@ -43,8 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/Dashlet.php');
 
-class TopCampaignsDashlet extends Dashlet 
-{ 
+class TopCampaignsDashlet extends Dashlet
+{
 	protected $top_campaigns = array();
 	
 	/**
@@ -52,27 +52,27 @@ class TopCampaignsDashlet extends Dashlet
 	 *
 	 * @see Dashlet::Dashlet()
 	 */
-	public function __construct($id, $def = null) 
+	public function __construct($id, $def = null)
 	{
         global $current_user, $app_strings;
         parent::__construct($id);
         $this->isConfigurable = true;
-        $this->isRefreshable = true;        
+        $this->isRefreshable = true;
 
-        if(empty($def['title'])) { 
+        if(empty($def['title'])) {
             $this->title = translate('LBL_TOP_CAMPAIGNS', 'Campaigns');
-        } 
+        }
         else {
             $this->title = $def['title'];
         }
         
         if(isset($def['autoRefresh'])) $this->autoRefresh = $def['autoRefresh'];
         
-        $this->seedBean = new Opportunity();      
+        $this->seedBean = new Opportunity();
 
        	$qry = "SELECT C.name AS campaign_name, SUM(O.amount) AS revenue, C.id as campaign_id " .
 			   "FROM campaigns C, opportunities O " .
-			   "WHERE C.id = O.campaign_id " . 
+			   "WHERE C.id = O.campaign_id " .
 			   "AND O.sales_stage = 'Closed Won' " .
                "AND O.deleted = 0 " .
 			   "GROUP BY C.name,C.id ORDER BY revenue desc";
@@ -82,7 +82,7 @@ class TopCampaignsDashlet extends Dashlet
 
 		while ($row != null){
 			array_push($this->top_campaigns, $row);
-			$row = $this->seedBean->db->fetchByAssoc($result);			
+			$row = $this->seedBean->db->fetchByAssoc($result);
 		}
     }
     
@@ -93,7 +93,7 @@ class TopCampaignsDashlet extends Dashlet
 	{
     	$ss = new Sugar_Smarty();
     	$ss->assign('lbl_campaign_name', translate('LBL_TOP_CAMPAIGNS_NAME', 'Campaigns'));
-    	$ss->assign('lbl_revenue', translate('LBL_TOP_CAMPAIGNS_REVENUE', 'Campaigns'));    	
+    	$ss->assign('lbl_revenue', translate('LBL_TOP_CAMPAIGNS_REVENUE', 'Campaigns'));
     	$ss->assign('top_campaigns', $this->top_campaigns);
     	
     	return parent::display() . $ss->fetch('modules/Campaigns/Dashlets/TopCampaignsDashlet/TopCampaignsDashlet.tpl');
@@ -102,7 +102,7 @@ class TopCampaignsDashlet extends Dashlet
     /**
 	 * @see Dashlet::displayOptions()
 	 */
-	public function displayOptions() 
+	public function displayOptions()
     {
         $ss = new Sugar_Smarty();
         $ss->assign('titleLBL', translate('LBL_DASHLET_OPT_TITLE', 'Home'));
@@ -116,13 +116,13 @@ class TopCampaignsDashlet extends Dashlet
 			$ss->assign('autoRefreshSelect', $this->autoRefresh);
 		}
         
-		return $ss->fetch('modules/Opportunities/Dashlets/MyClosedOpportunitiesDashlet/MyClosedOpportunitiesDashletConfigure.tpl');        
+		return $ss->fetch('modules/Opportunities/Dashlets/MyClosedOpportunitiesDashlet/MyClosedOpportunitiesDashletConfigure.tpl');
     }
 
     /**
 	 * @see Dashlet::saveOptions()
 	 */
-	public function saveOptions($req) 
+	public function saveOptions($req)
     {
         $options = array();
         

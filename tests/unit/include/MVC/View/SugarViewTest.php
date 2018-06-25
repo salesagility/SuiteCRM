@@ -229,7 +229,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetJavascriptValidation()
     {
-        //check if it returns any text i-e JS code    	
+        //check if it returns any text i-e JS code
         $js = SugarView::getJavascriptValidation();
         $this->assertGreaterThan(0, strlen($js));
     }
@@ -307,7 +307,7 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     		//check first with invalid value and test if it throws an exception
     		$menu = $SugarView->getMenu();
     		//$this->assertTrue(is_array($menu));
-    		 
+
     	} catch (Exception $e) {
     		$this->assertTrue(TRUE);
     		//$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());

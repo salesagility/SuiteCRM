@@ -85,9 +85,9 @@ class SugarpdfFactory
                 //it appears Sugar does have the proper logic for this file.
                 $sugarpdf = SugarpdfFactory::_buildFromFile($file, $bean, $sugarpdf_object_map, $type, $module);
             }
-        }    
+        }
         // Default to Sugarpdf if still nothing found/built
-        if (!isset($sugarpdf)) 
+        if (!isset($sugarpdf))
             $sugarpdf = new Sugarpdf($bean, $sugarpdf_object_map);
         return $sugarpdf;
     }
@@ -107,7 +107,7 @@ class SugarpdfFactory
 //        if(!$sugarpdf_config){
 //            if(file_exists('custom/modules/'.$sugarpdf->module.'/sugarpdf/'.$config_file_name)){
 //                require_once('custom/modules/'.$sugarpdf->module.'/sugarpdf/'.$config_file_name);
-//            } 
+//            }
 //            if(file_exists('modules/'.$sugarpdf->module.'/sugarpdf/'.$config_file_name)){
 //                require_once('modules/'.$sugarpdf->module.'/sugarpdf/'.$config_file_name);
 //            }
@@ -116,18 +116,18 @@ class SugarpdfFactory
 //            }
 //            if(file_exists('include/Sugarpdf/sugarpdf/'.$config_file_name)){
 //                require_once('include/Sugarpdf/sugarpdf/'.$config_file_name);
-//            }    
+//            }
 //            if(file_exists('include/Sugarpdf/sugarpdf/sugarpdf.config.php')){
 //                require_once('include/Sugarpdf/sugarpdf/sugarpdf.config.php');
 //            }
 //        }
 //
-//    }    
+//    }
     
     /**
      * This is a private function which just helps the getSugarpdf function generate the
      * proper Tcpdf object
-     * 
+     *
      * @return a valid Sugarpdf
      */
     function _buildFromFile($file, &$bean, $sugarpdf_object_map, $type, $module){
@@ -140,18 +140,18 @@ class SugarpdfFactory
                 return new Sugarpdf($bean, $sugarpdf_object_map);
             }
         }
-        return SugarpdfFactory::_buildClass($class, $bean, $sugarpdf_object_map);    
+        return SugarpdfFactory::_buildClass($class, $bean, $sugarpdf_object_map);
     }
     
     /**
      * instantiate the correct Tcpdf and call init to pass on any obejcts we need to
      * from the controller.
-     * 
+     *
      * @param string class - the name of the class to instantiate
      * @param object bean = the bean to pass to the Sugarpdf
      * @param array Sugarpdf_object_map - the array which holds obejcts to pass between the
      *                                controller and the tcpdf.
-     * 
+     *
      * @return Sugarpdf
      */
     function _buildClass($class, &$bean, $sugarpdf_object_map){

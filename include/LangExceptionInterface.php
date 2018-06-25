@@ -55,7 +55,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 interface LangExceptionInterface { // extends Throwable { // extending Throwable only in PHP7+
 
     /**
-     * 
+     *
      * @return string
      */
     public function getLangMessage();

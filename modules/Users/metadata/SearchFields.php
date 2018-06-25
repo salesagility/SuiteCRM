@@ -38,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchFields['Users'] = 
+$searchFields['Users'] =
 	array (
 	    'user_name' => array( 'query_type'=>'default'),
 		'first_name' => array( 'query_type'=>'default'),
@@ -63,7 +63,7 @@ $searchFields['Users'] =
                 'SELECT id FROM users where phone_other LIKE',
                 'SELECT id FROM users where phone_work LIKE',
                 'SELECT id FROM users where phone_mobile LIKE',
-                'OR' =>true              
+                'OR' =>true
             ),
             'db_field' => array(
                 'id',

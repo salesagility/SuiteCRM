@@ -69,7 +69,7 @@ $view_config = array(
 		 					'show_footer' => false,
 		 					'show_javascript' => true,
 		 				),
-		 ), 	
+		 ),
     'req_params' => array(
         'print' => array(
             'param_value' => true,

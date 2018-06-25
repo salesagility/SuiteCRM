@@ -155,4 +155,3 @@ class Zend_Gdata_Gapps_GroupEntry extends Zend_Gdata_Entry
     }
 
 }
-

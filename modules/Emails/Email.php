@@ -2798,8 +2798,8 @@ class Email extends Basic
         
         
         if ($mail->oe->type === 'system') {
-            $mail->From = 
-                $sender = 
+            $mail->From =
+                $sender =
                 $ReplyToAddr = $mail->oe->smtp_from_addr;
             isValidEmailAddress($mail->From);
             $ReplyToName = $mail->oe->smtp_from_name;

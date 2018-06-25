@@ -70,7 +70,7 @@ $xtpl->assign('JSON_CONFIG_JAVASCRIPT', $json_config->get_static_json_server(fal
 
 if(isset($_POST['mailmerge_module']))
 {
-	$_SESSION['MAILMERGE_MODULE'] = $_POST['mailmerge_module'];	
+	$_SESSION['MAILMERGE_MODULE'] = $_POST['mailmerge_module'];
     if($_SESSION['MAILMERGE_MODULE'] == 'Campaigns'){
         $_SESSION['MAILMERGE_MODULE'] = 'CampaignProspects';
     }
@@ -97,12 +97,12 @@ if(!empty($_SESSION['SELECTED_OBJECTS_DEF'])){
                 $_SESSION['MAILMERGE_WHERE'] = $where;
                 $_SESSION['MAILMERGE_CAMPAIGN_ID'] = $key;
                 $idArray = array();
-                break; 
-            }   
+                break;
+            }
         }
 	}
                    
-    $xtpl->assign("MAILMERGE_WHERE", $_SESSION['MAILMERGE_WHERE']); 
+    $xtpl->assign("MAILMERGE_WHERE", $_SESSION['MAILMERGE_WHERE']);
 	$xtpl->assign("MAILMERGE_PRESELECTED_OBJECTS", get_select_options_with_id($idArray, '0'));
 	$step_txt .= "Refine list of ".$_SESSION['MAILMERGE_MODULE']." to merge.";
 	$xtpl->assign("MAILMERGE_GET_OBJECTS", 0);
@@ -115,7 +115,7 @@ else
 
 if(isset($_SESSION['MAILMERGE_SKIP_REL']) && $_SESSION['MAILMERGE_SKIP_REL'])
 {
-	$xtpl->assign("STEP", "4");	
+	$xtpl->assign("STEP", "4");
 	
 }
 else
@@ -123,9 +123,9 @@ else
 
 	$selected = '';
 	if(isset($_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO']) && $_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO']){
-		$selected = $_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO'];	
+		$selected = $_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO'];
 	}
-	$xtpl->assign("STEP", "3");	
+	$xtpl->assign("STEP", "3");
 	//$xtpl->assign("MAIL_MERGE_CONTAINS_CONTACT_INFO", '<table><tr><td><input id="contains_contact_info" name="contains_contact_info" class="checkbox" type="checkbox" '.$checked.'/></td><td>'.$mod_strings['LBL_CONTAINS_CONTACT_INFO'].'</td></tr></table>');
 	$rel_options = array(""=>"--None--");
 	$seed = loadBean($_SESSION['MAILMERGE_MODULE']);

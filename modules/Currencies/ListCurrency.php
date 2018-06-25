@@ -52,8 +52,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 	  	if(is_array($this->list)){
 		$this->list = array_merge(Array($this->focus), $this->list);
 	  	}else{
-	  		$this->list = Array($this->focus);	
-	  	} 
+	  		$this->list = Array($this->focus);
+	  	}
 		
 	}
 	function handleAdd(){
@@ -89,7 +89,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 			$isos  = $_POST['iso'];
 			$size = sizeof($ids);
 			if($size != sizeof($names)|| $size != sizeof($isos) || $size != sizeof($symbols) || $size != sizeof($rates)){
-				return;	
+				return;
 			}
 			
 				$temp = new Currency();
@@ -104,8 +104,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 	}}
 	}
 	
-	function getJavascript(){ 
-		// wp: DO NOT add formatting and unformatting numbers in here, add them prior to calling these to avoid double calling 
+	function getJavascript(){
+		// wp: DO NOT add formatting and unformatting numbers in here, add them prior to calling these to avoid double calling
 		// of unformat number
 		return $this->javascript . <<<EOQ
 					function get_rate(id){
@@ -163,7 +163,7 @@ EOQ;
 	
 	function getSelectOptions($id = ''){
 		global $current_user;
-		$this->javascript .="var ConversionRates = new Array(); \n";		
+		$this->javascript .="var ConversionRates = new Array(); \n";
 		$this->javascript .="var CurrencySymbols = new Array(); \n";
 		$options = '';
 		$this->lookupCurrencies();
@@ -179,7 +179,7 @@ EOQ;
 			}else{
 				$options .= '<option value="'. $data->id . '">'	;
 			}
-			$options .= $data->name . ' : ' . $data->symbol; 
+			$options .= $data->name . ' : ' . $data->symbol;
 			$this->javascript .=" ConversionRates['".$data->id."'] = '".$data->conversion_rate."';\n";
 			$this->javascript .=" CurrencySymbols['".$data->id."'] = '".$data->symbol."';\n";
 		}}

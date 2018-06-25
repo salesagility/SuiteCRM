@@ -745,7 +745,7 @@ function aorRunScheduledReports()
             $jq->submitJob($job);
         }
     }
-    return true;  
+    return true;
 }
 
 function processAOW_Workflow()

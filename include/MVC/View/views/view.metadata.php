@@ -129,7 +129,7 @@ EOQ;
  		echo "<div width='100%'></div><div><div style='float:left'>";
  		switch ($do){
  			case 'Modules':
- 				$this->printValue(VardefBrowser::findVardefs( $modules));	
+ 				$this->printValue(VardefBrowser::findVardefs( $modules));
  				break;
  			case 'Field Attributes':
  				$this->printValue(VardefBrowser::findFieldAttributes($attributes, $modules));
@@ -139,7 +139,7 @@ EOQ;
  				foreach($allAttributes as $at){
  					if(!empty($_POST[$at])){
  						$searchFor[$at] = $_POST[$at];
- 					}	
+ 					}
  				}
  				
  				$this->printValue(VardefBrowser::findFieldsWithAttributes($searchFor, $modules));
@@ -281,13 +281,13 @@ class VardefBrowser{
 					foreach($attributes as $k=>$v){
 						$alt = false;
 						if($k == 'type'){
-							$alt = 'dbType';	
+							$alt = 'dbType';
 						}
 						if($v == 'true' && !empty($def[$k])){
 							continue;
 						}
 						if((empty($def[$k]) || $def[$k] != $v) && (empty($alt) || empty($def[$alt]) || $def[$alt] != $v )){
-							$match = false;	
+							$match = false;
 						}
 					}
 					if($match){
@@ -296,9 +296,9 @@ class VardefBrowser{
 					
 				}
 				
-			}	
+			}
 		}
-		return $fields;			
+		return $fields;
 	}
 	
 		static function findVardefs($modules=null){
@@ -334,23 +334,23 @@ class VardefBrowser{
 							$key = is_array($def[$k])?null:$def[$k];
 							if($k == 'type'){
 								if(isset($def['dbType'])){
-									$v = var_export($def['dbType'], true);	
-								}	
+									$v = var_export($def['dbType'], true);
+								}
 							}
 							if($byModule){
 								$fields[$module][$object][$def['type']][$k][$key] = $v;
 							}else{
 								if($byType){
-									$fields[$def['type']][$k][$key] = $v;	
+									$fields[$def['type']][$k][$key] = $v;
 								}else{
 									if(!is_array($def[$k])){
 										if(isset($fields[$k][$key])){
 											$fields[$k][$key]['refs']++;
 										}else{
-											$fields[$k][$key] = array('attribute'=>$v, 'refs'=>1);		
+											$fields[$k][$key] = array('attribute'=>$v, 'refs'=>1);
 										}
 									}else{
-										$fields[$k]['_array'][] = $def[$k];	
+										$fields[$k]['_array'][] = $def[$k];
 
 									}
 								}
@@ -365,9 +365,9 @@ class VardefBrowser{
 				
 				}
 				
-			}	
+			}
 		}
-		return $fields;			
+		return $fields;
 	}
 	
 	

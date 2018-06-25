@@ -350,7 +350,7 @@
           $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$PolyAlpha,"Surrounding"=>$PointSurrounding);
 
          $PointsArray = "";
-         for($i=0; $i<count($Points);$i++) 
+         for($i=0; $i<count($Points);$i++)
           { $PointsArray[] = $Points[$i][0]; $PointsArray[] = $Points[$i][1]; }
          $Object->drawPolygon($PointsArray,$Color);
         }
@@ -370,7 +370,7 @@
         $Object->drawLine($Points[count($Points)-1][0],$Points[count($Points)-1][1],$Points[0][0],$Points[0][1],$Color);
 
        /* Draw the lines & points */
-       for($i=0; $i<count($Points);$i++) 
+       for($i=0; $i<count($Points);$i++)
         {
          if ( $DrawLines && $i < count($Points)-1)
           $Object->drawLine($Points[$i][0],$Points[$i][1],$Points[$i+1][0],$Points[$i+1][1],$Color);
@@ -634,7 +634,7 @@
           $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$PolyAlpha,"Surrounding"=>$PointSurrounding);
 
          $PointsArray = "";
-         for($i=0; $i<count($Points);$i++) 
+         for($i=0; $i<count($Points);$i++)
           { $PointsArray[] = $Points[$i][0]; $PointsArray[] = $Points[$i][1]; }
 
          $Object->drawPolygon($PointsArray,$Color);
@@ -655,7 +655,7 @@
         $Object->drawLine($Points[count($Points)-1][0],$Points[count($Points)-1][1],$Points[0][0],$Points[0][1],$Color);
        
        /* Draw the lines & points */
-       for($i=0; $i<count($Points);$i++) 
+       for($i=0; $i<count($Points);$i++)
         {
          if ( $DrawLines && $i < count($Points)-1)
           $Object->drawLine($Points[$i][0],$Points[$i][1],$Points[$i+1][0],$Points[$i+1][1],$Color);

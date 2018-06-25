@@ -89,4 +89,3 @@ if (!is_admin($focus)) {
     $sugar_smarty->assign('LAYOUT_DEF_KEY', 'UserRoles');
     echo $sugar_smarty->fetch('modules/ACLRoles/DetailViewUser.tpl');
 }
-

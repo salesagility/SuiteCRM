@@ -143,7 +143,7 @@ class SugarFieldFile extends SugarFieldBase {
         }
 
 
-        if (empty($bean->id)) { 
+        if (empty($bean->id)) {
             $bean->id = create_guid();
             $bean->new_with_id = true;
         }
@@ -167,7 +167,7 @@ class SugarFieldFile extends SugarFieldBase {
             
             if ( isset($params[$prefix . $vardef['docId']])
                  && ! empty($params[$prefix . $vardef['docId']])
-                 && isset($params[$prefix . $vardef['docType']]) 
+                 && isset($params[$prefix . $vardef['docType']])
                  && ! empty($params[$prefix . $vardef['docType']])
                 ) {
                 $bean->$field = $params[$prefix . $field . '_remoteName'];

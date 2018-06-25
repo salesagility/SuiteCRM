@@ -46,4 +46,3 @@
 
     if(ACLController::checkAccess('AOK_KnowledgeBase', 'edit', true))$module_menu[]=Array("index.php?module=AOK_KnowledgeBase&action=EditView", $mod_strings['LNK_NEW_RECORD'],"Create", 'AOK_KnowledgeBase');
     if(ACLController::checkAccess('AOK_KnowledgeBase', 'list', true))$module_menu[]=Array("index.php?module=AOK_KnowledgeBase&action=index", $mod_strings['LNK_LIST'],"List", 'AOK_KnowledgeBase');
-

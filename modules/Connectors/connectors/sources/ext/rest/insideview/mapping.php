@@ -39,20 +39,19 @@
 
 
 $mapping = array (
-  'beans' => 
+  'beans' =>
   array (
-    'Accounts' => 
+    'Accounts' =>
     array (
     ),
-    'Contacts' => 
+    'Contacts' =>
     array (
     ),
-    'Leads' => 
+    'Leads' =>
     array (
     ),
-    'Opportunities' => 
+    'Opportunities' =>
     array (
     ),
   ),
 );
-

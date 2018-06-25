@@ -48,6 +48,6 @@ class TemplateAddressCountry extends TemplateEnum {
 		$def = parent::get_field_def();
 		$def['group'] = $this->group;
 		$def['options'] = 'countries_dom';
-		return $def;	
+		return $def;
 	}
 }

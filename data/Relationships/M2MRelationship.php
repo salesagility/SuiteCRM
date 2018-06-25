@@ -140,7 +140,7 @@ class M2MRelationship extends SugarRelationship
     	//due to the way the module works. Plus it would remove the relative ease of adding custom module support
     	
     	if(get_class($rhs) != 'User' && get_class($rhs) != 'ACLRole' && get_class($lhs) == 'SecurityGroup') {
-			$rhs->$rhsLinkName->addBean($lhs);			
+			$rhs->$rhsLinkName->addBean($lhs);
 			$this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
 
 			$dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
@@ -148,7 +148,7 @@ class M2MRelationship extends SugarRelationship
     		$rhs->$rhsLinkName->addBean($lhs);
     		$this->callAfterAdd($lhs, $rhs, $lhsLinkName);
     	} else if(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
-			$lhs->$lhsLinkName->addBean($rhs);			
+			$lhs->$lhsLinkName->addBean($rhs);
 			$this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
 			$dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
@@ -192,7 +192,7 @@ class M2MRelationship extends SugarRelationship
             $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
 
         /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;
@@ -309,7 +309,7 @@ class M2MRelationship extends SugarRelationship
 				}
 			}
 		} else {
-    	/* END - SECURITY GROUPS */        
+    	/* END - SECURITY GROUPS */
         if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
         {
             $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
@@ -361,7 +361,7 @@ class M2MRelationship extends SugarRelationship
             }
         }
         /* BEGIN - SECURITY GROUPS */
-        } //end normal 
+        } //end normal
         /* END - SECURITY GROUPS */
 
         return true;

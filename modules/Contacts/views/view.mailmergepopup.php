@@ -40,7 +40,7 @@
 
 /**
  * ContactsViewContactAddressPopup
- * 
+ *
  * */
  
 require_once('include/MVC/View/SugarView.php');
@@ -60,5 +60,5 @@ class ContactsViewMailMergePopup extends SugarView {
  		
 		$popup = new Popup_Picker();
 		echo $popup->process_page_for_merge();
- 	}	
+ 	}
 }

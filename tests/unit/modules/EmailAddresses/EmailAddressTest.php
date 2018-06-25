@@ -28,7 +28,7 @@ class EmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
         
-        // test 
+        // test
         
         $email = new EmailAddress();
 

@@ -24,7 +24,7 @@ class ViewMetadataTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testdisplaySelect()
-    {   
+    {
         $view = new ViewMetadata();
 
         //check with empty values array. it should return html sting

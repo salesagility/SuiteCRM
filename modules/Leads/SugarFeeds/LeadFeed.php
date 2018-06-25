@@ -60,10 +60,9 @@ class LeadFeed extends FeedLogicBase {
             }
         }
 		
-        if(!empty($text)){ 
+        if(!empty($text)){
         	SugarFeed::pushFeed2($text, $bean);
         }
 		
     }
 }
-

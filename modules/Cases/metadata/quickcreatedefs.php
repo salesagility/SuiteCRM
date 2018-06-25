@@ -40,9 +40,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $viewdefs['Cases']['QuickCreate'] = array(
-'templateMeta' => array('maxColumns' => '2', 
+'templateMeta' => array('maxColumns' => '2',
                         'widths' => array(
-                                        array('label' => '10', 'field' => '30'), 
+                                        array('label' => '10', 'field' => '30'),
                                         array('label' => '10', 'field' => '30')
                                         ),
                        ),

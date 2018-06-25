@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $style='embeded';
 if(isset($_REQUEST['style'])){
-	$style = $_REQUEST['style'];	
+	$style = $_REQUEST['style'];
 }
 if(isset($_REQUEST['module_name'])){
 	$the_strings = return_module_language($current_language, $_REQUEST['module_name']);
@@ -76,7 +76,7 @@ if(isset($_REQUEST['module_name'])){
 		if(isset($the_strings[$_REQUEST['record']])){
 			$xtpl->assign("VALUE",$the_strings[$_REQUEST['record']]);
 		}else{
-			if(isset($_REQUEST['value']) )$xtpl->assign("VALUE", $_REQUEST['value']);	
+			if(isset($_REQUEST['value']) )$xtpl->assign("VALUE", $_REQUEST['value']);
 		}
 	}
 	if($style == 'popup'){

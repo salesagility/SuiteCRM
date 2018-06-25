@@ -114,7 +114,7 @@ function smarty_function_mailto($params, &$smarty)
         $string = '<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>';
 
         for($x = 0, $y = strlen($string); $x < $y; $x++ ) {
-            $ord[] = ord($string[$x]);   
+            $ord[] = ord($string[$x]);
         }
 
         $_ret = "<script type=\"text/javascript\" language=\"javascript\">\n";

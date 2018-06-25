@@ -110,8 +110,8 @@ $subpanel_layout = array(
 		'filename'=>array(
 			'usage'=>'query_only',
 			'force_exists'=>true
-			),	
+			),
 				
 				
 	),
-);		
+);

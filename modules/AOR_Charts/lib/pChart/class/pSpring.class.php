@@ -373,7 +373,7 @@
                    if ( !isset($this->Data[$BiggestPartner]["Angular"][$Angle]) || !isset($this->Data[$BiggestPartner]["Angular"]) )
                     {
                      $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
-                     $Done = TRUE; 
+                     $Done = TRUE;
                     }
                   }
                  if ( !$Done )
@@ -664,7 +664,7 @@
        $this->firstPass($Algorithm);
 
        /* Apply the vectors */
-       if ( $Pass > 0 ) 
+       if ( $Pass > 0 )
         {
          for ($i=0; $i<=$Pass; $i++) { $this->doPass(); }
         }
@@ -862,7 +862,7 @@
         { return(TRUE); }
       }
 
-      return(FALSE);   
+      return(FALSE);
     }
   }
 ?>

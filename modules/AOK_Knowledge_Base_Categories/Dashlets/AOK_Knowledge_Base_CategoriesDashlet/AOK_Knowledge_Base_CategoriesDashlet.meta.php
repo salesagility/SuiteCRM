@@ -49,7 +49,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $app_strings;
 
 $dashletMeta['AOK_Knowledge_Base_CategoriesDashlet'] = array('module'		=> 'AOK_Knowledge_Base_Categories',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOK_Knowledge_Base_Categories'), 
+										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOK_Knowledge_Base_Categories'),
                                           'description' => 'A customizable view into AOK_Knowledge_Base_Categories',
                                           'icon'        => 'icon_AOK_Knowledge_Base_Categories_32.gif',
                                           'category'    => 'Module Views');

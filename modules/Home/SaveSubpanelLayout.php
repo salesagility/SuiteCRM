@@ -45,7 +45,7 @@ global $current_user;
 
 if(!empty($_REQUEST['layout']) && !empty($_REQUEST['layoutModule'])) {
 //    sleep (2);
-//  _ppd($_REQUEST['layout']); 
+//  _ppd($_REQUEST['layout']);
     $subpanels = explode(',', $_REQUEST['layout']);
     
     $layoutParam = $_REQUEST['layoutModule'];

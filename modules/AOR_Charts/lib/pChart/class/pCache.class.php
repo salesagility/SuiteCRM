@@ -263,7 +263,7 @@
      /* Not in the cache */
      if (!$CacheInfo) { return(NULL); }
 
-     /* Get the database extended information */     
+     /* Get the database extended information */
      $DBPos   = $CacheInfo["DBPos"];
      $PicSize = $CacheInfo["PicSize"];
 

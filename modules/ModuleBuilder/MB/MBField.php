@@ -56,7 +56,7 @@ class MBField{
 		if(empty($this->name)){
 			$this->error = 'A name is required to create a field';
 			return false;
-		}		
+		}
 		if(empty($this->label))$this->label = $this->name;
 		$this->name = strtolower($this->getDBName($this->name));
 		$vardef = array();

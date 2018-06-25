@@ -711,7 +711,7 @@ class EmailTemplate extends SugarBean
         ////	LOAD FOCUS DATA INTO REPL_ARR
         if (!isset($focus->field_defs)) {
             LoggerManager::getLogger()->warn('Email Template / parse template bean error on load focus data into repl_arr: Focus field defs is undefined.');
-        } else { 
+        } else {
             foreach ($focus->field_defs as $field_def) {
                 if(!isset($field_def['name'])) {
                     LoggerManager::getLogger()->warn('Email Template / parse template bean error on load focus data into repl_arr: Focus field defs [name] is undefined.');
@@ -956,4 +956,3 @@ class EmailTemplate extends SugarBean
     }
 
 }
-

@@ -158,4 +158,3 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
         return (current($this->_recordSet) !== FALSE);
     }
 }
-

@@ -342,7 +342,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 
                 if(isset($errors) && $errors) {
                     $log = LoggerManager::getLogger();
-                    $log->error('Success but some error occured: ' . implode(', ', $errors)); 
+                    $log->error('Success but some error occured: ' . implode(', ', $errors));
                 }
                 
                 //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one

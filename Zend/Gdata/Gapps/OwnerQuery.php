@@ -76,7 +76,7 @@ class Zend_Gdata_Gapps_OwnerQuery extends Zend_Gdata_Gapps_Query
      * Set the group id to query for.
      *
      * @see getGroupId
-     * @param string $value 
+     * @param string $value
      */
     public function setGroupId($value)
     {

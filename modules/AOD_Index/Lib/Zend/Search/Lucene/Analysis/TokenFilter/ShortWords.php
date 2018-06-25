@@ -66,4 +66,3 @@ class Zend_Search_Lucene_Analysis_TokenFilter_ShortWords extends Zend_Search_Luc
         }
     }
 }
-

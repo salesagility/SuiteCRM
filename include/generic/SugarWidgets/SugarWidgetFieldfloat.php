@@ -59,7 +59,7 @@ class SugarWidgetFieldFloat extends SugarWidgetFieldInt
      return $this->displayList($layout_def);
  }
  function queryFilterEquals(&$layout_def)
- {	
+ {
     return $this->_get_column_select($layout_def)."= ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
  }
                                                                                  

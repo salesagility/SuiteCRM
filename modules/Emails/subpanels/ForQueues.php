@@ -57,7 +57,7 @@ $subpanel_layout = array(
 	'fill_in_additional_fields'=>true,
 	'list_fields' => array(
 /*		'mass_update' => array (
-			
+
 		),
 */		'object_image'=>array(
 			'widget_class' => 'SubPanelIcon',
@@ -83,12 +83,12 @@ $subpanel_layout = array(
 			'force_exists'=>true,
 		)	,
 /*		'parent_name'=>array(
-			 'vname' => 'LBL_LIST_RELATED_TO',		
+			 'vname' => 'LBL_LIST_RELATED_TO',
 			 'width' => '22%',
 			 'target_record_key' => 'parent_id',
 			 'target_module_key'=>'parent_type',
 			 'widget_class' => 'SubPanelDetailViewLink',
-			  'sortable'=>false,	
+			  'sortable'=>false,
 		),*/
 		'date_modified'=>array(
 			'vname' => 'LBL_DATE_MODIFIED',
@@ -111,7 +111,7 @@ $subpanel_layout = array(
 		'filename'=>array(
 			'usage'=>'query_only',
 			'force_exists'=>true
-			),		
-*/		
+			),
+*/
 	),
-);		
+);

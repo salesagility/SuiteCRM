@@ -75,7 +75,7 @@ class ViewHome extends SugarView
 	}
 
 
-	function generateHomeButtons() 
+	function generateHomeButtons()
 	{
 	    global $current_user;
         if(displayStudioForCurrentUser() == true) {

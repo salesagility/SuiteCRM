@@ -55,7 +55,7 @@ $fields_array['DocumentRevision'] = array ('column_fields' => Array("id"
 		,"file_mime_type"
 		,"revision"
 		,"date_modified"
-		,"deleted"				
+		,"deleted"
 		),
         'list_fields' =>  Array("id"
 		,"change_log"
@@ -67,8 +67,8 @@ $fields_array['DocumentRevision'] = array ('column_fields' => Array("id"
 		,"file_mime_type"
 		,"revision"
 		,"date_modified"
-		,"deleted"		
-		,"latest_revision_id"		
+		,"deleted"
+		,"latest_revision_id"
 		),
         'required_fields' => Array("revision"=>1),
 );

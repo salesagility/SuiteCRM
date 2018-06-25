@@ -165,7 +165,7 @@ class UnifiedSearchAdvanced {
      *
      * Search function run when user goes to Show All and runs a search again.  This outputs the search results
      * calling upon the various listview display functions for each module searched on.
-     * 
+     *
      * Todo: Sync this up with SugarSpot.php search method.
      *
      *
@@ -419,7 +419,7 @@ class UnifiedSearchAdvanced {
 			if(file_exists("custom/modules/{$moduleName}/metadata/SearchFields.php"))
 			{
 				require "custom/modules/{$moduleName}/metadata/SearchFields.php" ;
-			}				
+			}
 
             //If there are $searchFields are empty, just continue, there are no search fields defined for the module
             if(empty($searchFields[$moduleName]))

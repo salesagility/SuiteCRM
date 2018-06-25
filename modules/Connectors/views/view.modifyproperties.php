@@ -42,8 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/SugarView.php');
 
-class ViewModifyProperties extends SugarView 
-{   
+class ViewModifyProperties extends SugarView
+{
  	/**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
@@ -69,7 +69,7 @@ class ViewModifyProperties extends SugarView
     /**
 	 * @see SugarView::display()
 	 */
-	public function display() 
+	public function display()
 	{
     	global $mod_strings, $app_strings;
 		

@@ -54,7 +54,7 @@ function is_system_tabs_in_db(){
         $administration->retrieveSettings('MySettings');
         if(isset($administration->settings) && isset($administration->settings['MySettings_tab']))
         {
-            return true;       
+            return true;
         }
         else
         {
@@ -85,7 +85,7 @@ function get_system_tabs(){
 					if (!in_array($tab, $moduleList))
 						unset($tabs[$id]);
 				}
-				ACLController :: filterModuleList($tabs); 
+				ACLController :: filterModuleList($tabs);
 				$tabs = $this->get_key_array($tabs);
 				$system_tabs_result = $tabs;
 			}else{
@@ -117,7 +117,7 @@ function get_tabs_system(){
 	   } else if(isset($tabs['iFrames'])) {
 	   	  unset($tabs['iFrames']);
 	   }
-	} 
+	}
 
 	return array($tabs,$unsetTabs);
 }

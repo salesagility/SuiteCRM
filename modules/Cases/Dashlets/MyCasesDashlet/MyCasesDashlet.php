@@ -72,4 +72,3 @@ class MyCasesDashlet extends DashletGeneric {
     }
 
 }
-

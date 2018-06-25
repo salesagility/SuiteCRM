@@ -54,11 +54,11 @@ global $app_strings;
 global $current_user, $focus;
 
 echo getClassicModuleTitle(
-        "Administration", 
+        "Administration",
         array(
             "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
            $mod_strings['LBL_MODULE_NAME'],
-           ), 
+           ),
         false
         );
 
@@ -122,7 +122,7 @@ $edit_botton = '<form name="EditView" method="POST" action="index.php" >';
 		$edit_botton .= '<input title="'.$app_strings['LBL_SAVE_BUTTON_TITLE'].'" accessKey="'.$app_strings['LBL_SAVE_BUTTON_KEY'].'" class="button" onclick="this.form.edit.value=\'true\';this.form.action.value=\'index\';return check_form(\'EditView\');" type="submit" name="button" value="'.$app_strings['LBL_SAVE_BUTTON_LABEL'].'" > ';
 		$edit_botton .= '<input title="'.$app_strings['LBL_CANCEL_BUTTON_TITLE'].'" accessKey="'.$app_strings['LBL_CANCEL_BUTTON_KEY'].'" class="button" onclick="this.form.edit.value=\'false\';this.form.action.value=\'index\';" type="submit" name="button" value="'.$app_strings['LBL_CANCEL_BUTTON_LABEL'].'" > ';
 $header_text = '';
-if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){	
+if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){
 		$header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=ListView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>";
 	}
 $ListView = new ListView();
@@ -135,18 +135,18 @@ $ListView->setHeaderText($merge_button);
 
 $ListView->processListView($lc->list, "main", "CURRENCY");
 
-if(isset($_GET['record']) && !empty($_GET['record']) && !isset($_POST['edit'])) { 
+if(isset($_GET['record']) && !empty($_GET['record']) && !isset($_POST['edit'])) {
 	$focus->retrieve($_GET['record']);
 	$focus->conversion_rate = format_number($focus->conversion_rate, 10, 10);
 }
-if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){	
+if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){
 		$header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=EditView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'", null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>";
 }
 if ( empty($focus->id) ) {
-    echo get_form_header($app_strings['LBL_CREATE_BUTTON_LABEL'] . $header_text,$edit_botton , false); 
+    echo get_form_header($app_strings['LBL_CREATE_BUTTON_LABEL'] . $header_text,$edit_botton , false);
 }
 else {
-    echo get_form_header($app_strings['LBL_EDIT_BUTTON_LABEL']." &raquo; ".$focus->name . $header_text,$edit_botton , false); 
+    echo get_form_header($app_strings['LBL_EDIT_BUTTON_LABEL']." &raquo; ".$focus->name . $header_text,$edit_botton , false);
 }
 $sugar_smarty = new Sugar_Smarty();
 
@@ -174,7 +174,7 @@ $sugar_smarty = new Sugar_Smarty();
 	$sugar_smarty->assign('SYMBOL', $focus->symbol);
 	$sugar_smarty->assign('STATUS_OPTIONS', get_select_options_with_id($mod_strings['currency_status_dom'], $focus->status));
 	
-	//if (empty($focus->list_order)) $xtpl->assign('LIST_ORDER', count($focus->get_manufacturers(false,'All'))+1); 
+	//if (empty($focus->list_order)) $xtpl->assign('LIST_ORDER', count($focus->get_manufacturers(false,'All'))+1);
 	//else $xtpl->assign('LIST_ORDER', $focus->list_order);
 	
 	$sugar_smarty->display("modules/Currencies/EditView.tpl");
@@ -186,5 +186,5 @@ $sugar_smarty = new Sugar_Smarty();
 	echo $javascript->getScript();
     echo("<script type='text/javascript'>addToValidateMoreThan('EditView','conversion_rate','float',true,'".$mod_strings['LBL_BELOW_MIN']."',0.000001);</script>");
 			}else{
-				echo 'Admin\'s Only';	
+				echo 'Admin\'s Only';
 			}

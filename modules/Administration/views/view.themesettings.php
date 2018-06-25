@@ -49,8 +49,8 @@ require_once('modules/Administration/Forms.php');
 require_once('modules/Configurator/Configurator.php');
 require_once('include/MVC/View/SugarView.php');
         
-class AdministrationViewThemesettings extends SugarView 
-{	
+class AdministrationViewThemesettings extends SugarView
+{
  	/**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
@@ -74,7 +74,7 @@ class AdministrationViewThemesettings extends SugarView
 
         // Check if default_theme is valid
         if (isset($_REQUEST['default_theme']) && !in_array($_REQUEST['default_theme'], array_keys(SugarThemeRegistry::allThemes()))) {
-            sugar_die("Default theme is invalid.");          
+            sugar_die("Default theme is invalid.");
         }
         
         if (isset($_REQUEST['disabled_themes']) ) {
@@ -87,7 +87,7 @@ class AdministrationViewThemesettings extends SugarView
         parent::process();
     }
     
- 	/** 
+ 	/**
      * display the form
      */
  	public function display()
@@ -95,7 +95,7 @@ class AdministrationViewThemesettings extends SugarView
         global $mod_strings, $app_strings, $current_user;
         
         if ( !is_admin($current_user) )
-            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']); 
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
             
         $enabled = array();
         foreach(SugarThemeRegistry::availableThemes() as $dir => $theme)

@@ -48,7 +48,7 @@ class ProjectController extends SugarController {
         $end_date = $db->getOne($query);
 		
 		$duration = $this->count_days($start_date, $end_date );
-		if( $duration < 30 ){		
+		if( $duration < 30 ){
 			$query = "SELECT max(date_finish) + INTERVAL " . (30 - $duration ) . " DAY FROM project_task WHERE project_id = '{$project->id}'";
 			$end_date = $db->getOne($query);
 		}
@@ -133,7 +133,7 @@ class ProjectController extends SugarController {
 				$bh = $bh[0];
 				if($bh->open){
 					$open_h = $bh ? $bh->opening_hours : 9;
-					$close_h = $bh ? $bh->closing_hours : 17;							
+					$close_h = $bh ? $bh->closing_hours : 17;
 					
 					$start_time = DateTime::createFromFormat($dateformat, $_POST['start']);
 					$start_time = $start_time->modify('+'.$open_h.' Hours');
@@ -146,7 +146,7 @@ class ProjectController extends SugarController {
 						$hours = 0 - $hours ;
 
 					//$hours = $bh->diffBusinessHours($start_time, $end_time);
-					$bhours[$day] = $hours; 	
+					$bhours[$day] = $hours;
 
 				}
 				else{
@@ -170,16 +170,16 @@ class ProjectController extends SugarController {
 	
 		$enddate = $startdate;
 
-		$h = 0;		
+		$h = 0;
 		$d = 0;
 		if( $duration_unit == 'Hours' ){
 
 			while($duration > $h){
 				$day = $enddate->format('l');
 
-				$h += $bhours[$day];	
+				$h += $bhours[$day];
 				$enddate = $enddate->modify('+1 Days');
-			} 
+			}
 			
 			$enddate = $enddate->format('Y-m-d');
 
@@ -190,12 +190,12 @@ class ProjectController extends SugarController {
 				$day = $enddate->format('l');
 
 				if($bhours[$day] != 0 ){
-					$d += 1;	
+					$d += 1;
 				}
 				$enddate = $enddate->modify('+1 Days');
-			} 
+			}
 			$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
-			$enddate = $enddate->format('Y-m-d');			
+			$enddate = $enddate->format('Y-m-d');
 			
 		}
 
@@ -425,7 +425,7 @@ class ProjectController extends SugarController {
 			$resource_query = $users_resource_query . '  UNION ' . $contacts_resource_query;
 		elseif( $users[0] == 'none')
 			$resource_query = $contacts_resource_query;
-		elseif( $contacts[0] == 'none')				  
+		elseif( $contacts[0] == 'none')
 			$resource_query = $users_resource_query ;
 		else
 			$resource_query = "SELECT '0' as id, ' ' as first_name, ' ' as last_name, 'project_users_1_c' AS type";
@@ -447,7 +447,7 @@ class ProjectController extends SugarController {
             if(!is_null($tasks)){
                 foreach($tasks as $task){
                     if( $this->count_days($start, $task->date_start) == -1 && $this->count_days($start, $task->date_finish) == -1 )
-						$skipped++;	
+						$skipped++;
 					else{
 						$taskarr[$t]['id'] = $task->id;
 						$taskarr[$t]['name'] = $task->name;
@@ -490,14 +490,14 @@ class ProjectController extends SugarController {
         global $mod_strings;
 
         $start_date = $_REQUEST['start_date'];
-		$end_date = $_REQUEST['end_date']; 
+		$end_date = $_REQUEST['end_date'];
         $resource_id = $_REQUEST['resource_id'];
 
         $projects = explode(",", $_REQUEST['projects']);
         $project_where = "";
 	if( count($projects) > 1 || $projects[0] != '' ){
 		$project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
-	}	    
+	}
 
         $Task = BeanFactory::getBean('ProjectTask');
         
@@ -536,4 +536,3 @@ class ProjectController extends SugarController {
     }
 
 }
-

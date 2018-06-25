@@ -38,10 +38,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
- if(!defined('ACL_ALLOW_NONE')){   
+ if(!defined('ACL_ALLOW_NONE')){
  	define('ACL_ALLOW_ADMIN_DEV', 100);
  	define('ACL_ALLOW_ADMIN', 99);
- 	define('ACL_ALLOW_ALL', 90);                        
+ 	define('ACL_ALLOW_ALL', 90);
  	define('ACL_ALLOW_ENABLED', 89);
  	define('ACL_ALLOW_OWNER', 75);
  	define('ACL_ALLOW_NORMAL', 1);

@@ -79,7 +79,7 @@ class DetailViewMerge extends EditViewMerge{
 			if(!empty($this->fieldConversionMapping[$this->module][$field_id])) {
 			   $rename_fields[$field_id] = $this->fieldConversionMapping[$this->module][$field['data']['name']];
 			   $this->customFields[$field_id]['data']['name'] = $this->fieldConversionMapping[$this->module][$field['data']['name']];
-			}				
+			}
 		}
 
 		foreach($rename_fields as $original_index=>$new_index) {
@@ -87,7 +87,7 @@ class DetailViewMerge extends EditViewMerge{
 			unset($this->customFields[$original_index]);
 		}
 		
-		$this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);		
+		$this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);
 		$this->newFields = $this->getFields($this->newData[$this->module][$this->viewDefs][$this->panelName]);
 		//echo var_export($this->newFields, true);
 		$this->newPanelIds = $this->getPanelIds($this->newData[$this->module][$this->viewDefs][$this->panelName]);

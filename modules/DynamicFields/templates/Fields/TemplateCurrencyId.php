@@ -49,7 +49,7 @@ class TemplateCurrencyId extends TemplateId{
         $def['dbType'] = 'id';
 		$def['studio'] = 'visible';
 		$def['function'] = array('name'=>'getCurrencyDropDown', 'returns'=>'html');
-		return $def;	
+		return $def;
 	}
 	
 	function save($df){

@@ -223,4 +223,3 @@ class Zend_Search_Lucene_Field
         }
     }
 }
-

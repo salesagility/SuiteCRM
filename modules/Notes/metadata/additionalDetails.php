@@ -50,14 +50,14 @@ function additionalDetailsNote($fields) {
 	$overlib_string = '';
 	
 	if(!empty($fields['TEAM_NAME'])) $overlib_string .= '<b>'. $app_strings['LBL_TEAM'] . '</b> ' . $fields['TEAM_NAME'] . '<br>';
-	if(!empty($fields['DESCRIPTION'])) { 
+	if(!empty($fields['DESCRIPTION'])) {
 		$overlib_string .= '<b>'. $mod_strings['LBL_NOTE'] . '</b> ' . substr($fields['DESCRIPTION'], 0, 300);
 		if(strlen($fields['DESCRIPTION']) > 300) $overlib_string .= '...';
 		$overlib_string .= '<br>';
 	}
 	
-	return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => "index.php?action=EditView&module=Notes&return_module=Notes&record={$fields['ID']}", 
+	return array('fieldToAddTo' => 'NAME',
+				 'string' => $overlib_string,
+				 'editLink' => "index.php?action=EditView&module=Notes&return_module=Notes&record={$fields['ID']}",
 				 'viewLink' => "index.php?action=DetailView&module=Notes&return_module=Notes&record={$fields['ID']}");
 }

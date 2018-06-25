@@ -526,11 +526,11 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 	
 	if($vardef['type'] == "currency"){
-		if($_REQUEST['view'] != "DetailView"){			
-			$value = currency_format_number($value);		
+		if($_REQUEST['view'] != "DetailView"){
+			$value = currency_format_number($value);
 		}
 		else
-			$value = format_number($value);		
+			$value = format_number($value);
 	}
 	
     return $value;
@@ -568,4 +568,3 @@ function checkAccess($bean){
         return false;
     }
 }
-

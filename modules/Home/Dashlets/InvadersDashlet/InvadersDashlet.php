@@ -175,4 +175,3 @@ class InvadersDashlet extends Dashlet {
                                        'savedText' => $optionsArray['savedText']));
     }
 }
-

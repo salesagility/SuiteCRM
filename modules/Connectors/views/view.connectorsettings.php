@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class ViewConnectorSettings extends SugarView 
+class ViewConnectorSettings extends SugarView
 {
  	/**
 	 * @see SugarView::_getModuleTitleParams()
@@ -66,7 +66,7 @@ class ViewConnectorSettings extends SugarView
     /**
 	 * @see SugarView::display()
 	 */
-	public function display() 
+	public function display()
     {
 		global $mod_strings, $app_strings;
 		

@@ -44,7 +44,7 @@ require_once('include/MVC/View/views/view.quickcreate.php');
 
 class ContactsViewQuickcreate extends ViewQuickcreate
 {
-    public function preDisplay() 
+    public function preDisplay()
     {
     	parent::preDisplay();
     	if($this->_isDCForm) {
@@ -58,5 +58,5 @@ class ContactsViewQuickcreate extends ViewQuickcreate
     		if(!empty($this->bean->billing_address_country))$_REQUEST['primary_address_country'] = $this->bean->billing_address_country;
     		if(!empty($this->bean->billing_address_postalcode))$_REQUEST['primary_address_postalcode'] = $this->bean->billing_address_postalcode;
 	   	}
-    }    
+    }
 }

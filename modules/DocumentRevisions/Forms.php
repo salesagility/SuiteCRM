@@ -142,7 +142,7 @@ if(isset($_REQUEST['record'])) {
 	$the_upload_script="";
 
 
-} else 
+} else
 {
 
 $the_upload_script  = <<<EOQ
@@ -194,4 +194,3 @@ EOQ;
 
 return $the_script;
 }
-

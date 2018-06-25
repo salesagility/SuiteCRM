@@ -724,7 +724,7 @@ class MBModule
                     $contents = str_replace($search_array, $replace_array, $contents );
                     
                     
-                    if ("relationships.php" == $e) 
+                    if ("relationships.php" == $e)
                     {
                         //bug 39598 Relationship Name Is Not Updated If Module Name Is Changed In Module Builder
                         $contents = str_replace  ( "'{$old_name}'", "'{$this->key_name}'" , $contents ) ;
@@ -895,12 +895,12 @@ class MBModule
                 $parser->handleSave(false) ; // don't populate from $_REQUEST, just save as is...
         }
 		//Remove the fields in subpanel
-        $psubs = $this->getProvidedSubpanels() ; 
+        $psubs = $this->getProvidedSubpanels() ;
         foreach ( $psubs as $sub )
         {
 			$parser = ParserFactory::getParser( MB_LISTVIEW , $this->name, $this->package ,  $sub) ;
 			if ($parser->removeField ( $fieldName ) )
-	            $parser->handleSave(false) ; 
+	            $parser->handleSave(false) ;
         }
     }
 

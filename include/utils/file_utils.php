@@ -367,7 +367,7 @@ function get_file_extension($filename, $string_to_lower=true)
         if ($string_to_lower) {
             $exp = explode('.', $filename);
             $pop = array_pop($exp);
-            $ret = strtolower($pop); 
+            $ret = strtolower($pop);
         } else {
             $exp = explode('.', $filename);
             $ret = array_pop($exp);
@@ -494,4 +494,3 @@ function cleanDirName($name)
 {
     return str_replace(array("\\", "/", "."), "", $name);
 }
-

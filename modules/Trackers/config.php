@@ -45,14 +45,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$tracker_config = 
+$tracker_config =
   array (
-    'tracker' => 
+    'tracker' =>
     array (
       'bean' => 'Tracker',
       'name' => 'Tracker',
       'metadata' => 'modules/Trackers/vardefs.php',
-      'store' => 
+      'store' =>
       array (
         0 => 'DatabaseStore',
       ),

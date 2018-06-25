@@ -26,14 +26,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $listViewDefs ['AOR_Reports'] =
 array (
-  'NAME' => 
+  'NAME' =>
   array (
     'width' => '15%',
     'label' => 'LBL_NAME',
     'default' => true,
     'link' => true,
   ),
-  'REPORT_MODULE' => 
+  'REPORT_MODULE' =>
   array (
     'type' => 'enum',
     'default' => true,
@@ -41,7 +41,7 @@ array (
     'label' => 'LBL_REPORT_MODULE',
     'width' => '15%',
   ),
-  'ASSIGNED_USER_NAME' => 
+  'ASSIGNED_USER_NAME' =>
   array (
     'width' => '15%',
     'label' => 'LBL_ASSIGNED_TO_NAME',
@@ -49,14 +49,14 @@ array (
     'id' => 'ASSIGNED_USER_ID',
     'default' => true,
   ),
-  'DATE_ENTERED' => 
+  'DATE_ENTERED' =>
   array (
     'type' => 'datetime',
     'label' => 'LBL_DATE_ENTERED',
     'width' => '15%',
     'default' => true,
   ),
-  'DATE_MODIFIED' => 
+  'DATE_MODIFIED' =>
   array (
     'type' => 'datetime',
     'label' => 'LBL_DATE_MODIFIED',

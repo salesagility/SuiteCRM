@@ -282,9 +282,9 @@ function get_relationship_information(& $target_bean, $get_upstream_rel_field_na
 			if($rel_array['relationship_role_column']!=""){
 				$relRole = $rel_array['relationship_role_column'];
 				$target_bean->$relRole = $rel_array['relationship_role_column_value'];
-			}				
-		//end if many-to-many	
-		}	
+			}
+		//end if many-to-many
+		}
 		
 		if($rel_array['relationship_type']=="one-to-many"){
 			$RHSKey = $rel_array['rhs_key'];
@@ -313,9 +313,9 @@ function get_relationship_information(& $target_bean, $get_upstream_rel_field_na
 			if($rel_array['relationship_role_column']!=""){
 				$relRole = $rel_array['relationship_role_column'];
 				$target_bean->$relRole = $rel_array['relationship_role_column_value'];
-			}				
-		//end if many-to-many	
-		}	
+			}
+		//end if many-to-many
+		}
 		
 		if($rel_array['relationship_type']=="one-to-many"){
 			$RHSKey = $rel_array['rhs_key'];

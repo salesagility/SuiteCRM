@@ -80,7 +80,7 @@ else {
 			$whereClean = array_shift($whereArr);
 		}
 		$where = implode(" ", $whereArr);
-	}	
+	}
 	else {
 		$where = '';
 	}
@@ -90,14 +90,14 @@ else {
 	
 	/*
 	$query = 'select * from '.$focus->table_name.' where deleted=0';
-	$result = $focus->db->query($query, true, "");   
+	$result = $focus->db->query($query, true, "");
 	*/
 	$row = $focus->db->fetchByAssoc($result);
 	
 	while ($row != null) {
 	    //$beanObj = new $bean;
 	    array_push($merge_ids, $row['id']);
-	    $row = $focus->db->fetchByAssoc($result);    
+	    $row = $focus->db->fetchByAssoc($result);
 	}
 	$_REQUEST['record']=$merge_ids[0];
 	$_REQUEST['action']='index.php';

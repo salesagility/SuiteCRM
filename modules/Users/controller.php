@@ -146,5 +146,4 @@ class UsersController extends SugarController
             SugarApplication::redirect("index.php?module=Home&action=index");
         }
     }
-}	
-
+}

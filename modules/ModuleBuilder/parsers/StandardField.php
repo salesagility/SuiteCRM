@@ -115,7 +115,7 @@ class StandardField extends DynamicField
            
         	if ($property == "action" || $property == "label_value" || $property == "label"
             	|| ((substr($property, 0,3) == 'ext' && strlen($property) == 4))
-            ) 
+            )
             	continue;
        	 		
             // Bug 37043 - Avoid writing out vardef defintions that are the default value.

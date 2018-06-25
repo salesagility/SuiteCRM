@@ -665,4 +665,3 @@ class Zend_Search_Lucene_Search_Query_MultiTerm extends Zend_Search_Lucene_Searc
         return $query;
     }
 }
-

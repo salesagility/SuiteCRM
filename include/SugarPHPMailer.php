@@ -240,7 +240,7 @@ eoq;
             
             $fromName = $this->FromName;
             
-            // checking if username already set for phpmailer and 
+            // checking if username already set for phpmailer and
             // using that as username instead fromname
             if ($this->FromName == self::$FromNameOrigin && !empty($this->Username)) {
                 $fromName = $this->Username;

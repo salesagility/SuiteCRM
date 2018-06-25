@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
 
- * Description: 
+ * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
@@ -57,7 +57,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 if(isset($_REQUEST['return_action']) && $_REQUEST['return_action'] == 'WizardMarketing'){
     $_POST['return_module'] = $_REQUEST['return_module'];
     $_POST['return_action'] = 'TrackDetailView';
-    $_POST['record'] = $_REQUEST['record'];    
+    $_POST['record'] = $_REQUEST['record'];
 }
 
 
@@ -162,7 +162,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 
 				$bean = new EmailMarketing();
 				$bean->retrieve($row['email_marketing_id']);
-				$bean->mode='test';	
+				$bean->mode='test';
 				$seed[]=$bean;
 			}
 			$query=" select email_marketing.id email_marketing_id from email_marketing ";
@@ -175,7 +175,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 
 				$bean = new EmailMarketing();
 				$bean->retrieve($row['email_marketing_id']);
-				$bean->mode='test';	
+				$bean->mode='test';
 				$seed[]=$bean;
 			}
 

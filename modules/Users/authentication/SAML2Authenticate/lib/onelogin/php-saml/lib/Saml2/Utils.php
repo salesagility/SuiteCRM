@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * Utils of OneLogin PHP Toolkit
  *

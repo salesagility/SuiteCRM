@@ -80,8 +80,8 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 	if(!empty($_REQUEST[$prefix.'record']) && !$skipRetrieve)
 		$focus->retrieve($_REQUEST[$prefix.'record']);
 
-	if(!empty($_POST['assigned_user_id']) && 
-	    ($focus->assigned_user_id != $_POST['assigned_user_id']) && 
+	if(!empty($_POST['assigned_user_id']) &&
+	    ($focus->assigned_user_id != $_POST['assigned_user_id']) &&
 	    ($_POST['assigned_user_id'] != $current_user->id)) {
 		$GLOBALS['check_notify'] = true;
 	}
@@ -127,11 +127,11 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 				if($_POST[$prefix.$field][0] === '' && !empty($_POST[$prefix.$field][1]) ) {
 					unset($_POST[$prefix.$field][0]);
 				}
-				$_POST[$prefix.$field] = encodeMultienumValue($_POST[$prefix.$field]);	
+				$_POST[$prefix.$field] = encodeMultienumValue($_POST[$prefix.$field]);
 			}
 
 			$focus->$field = $_POST[$prefix.$field];
-			/* 
+			/*
 			 * overrides the passed value for booleans.
 			 * this will be fully deprecated when the change to binary booleans is complete.
 			 /
@@ -188,7 +188,7 @@ function getPostToForm($ignore='', $isRegularExpression=false)
 			if(!preg_match($ignore, $key)) {
                                 $fields .= add_hidden_elements($key, $value);
 			}
-		}	
+		}
 	} else {
 		foreach ($_POST as $key=>$value){
 			if($key != $ignore) {
@@ -245,11 +245,11 @@ function handleRedirect($return_id='', $return_module='', $additionalFlags = fal
 
 	$url = buildRedirectURL($return_id, $return_module);
 	header($url);
-	exit;	
+	exit;
 }
 
 //eggsurplus: abstract to simplify unit testing
-function buildRedirectURL($return_id='', $return_module='') 
+function buildRedirectURL($return_id='', $return_module='')
 {
     if(isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "")
 	{
@@ -265,8 +265,8 @@ function buildRedirectURL($return_id='', $return_module='')
 	   //if we are doing a "Close and Create New"
         if(isCloseAndCreateNewPressed())
         {
-            $return_action = "EditView";    
-            $isDuplicate = "true";        
+            $return_action = "EditView";
+            $isDuplicate = "true";
             $status = "";
             
             // Meeting Integration
@@ -274,23 +274,23 @@ function buildRedirectURL($return_id='', $return_module='')
             	$additionalFlags = array('meetingIntegrationShowForm' => '1');
             }
             // END Meeting Integration
-        } 
+        }
 		// if we create a new record "Save", we want to redirect to the DetailView
-		else if(isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
+		else if(isset($_REQUEST['action']) && $_REQUEST['action'] == "Save"
 			&& $_REQUEST['return_module'] != 'Activities'
-			&& $_REQUEST['return_module'] != 'Home' 
-			&& $_REQUEST['return_module'] != 'Forecasts' 
+			&& $_REQUEST['return_module'] != 'Home'
+			&& $_REQUEST['return_module'] != 'Forecasts'
 			&& $_REQUEST['return_module'] != 'Calendar'
 			&& $_REQUEST['return_module'] != 'MailMerge'
-			) 
+			)
 			{
 			    $return_action = 'DetailView';
 			} elseif($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
 			$return_module = $_REQUEST['module'];
-			$return_action = $_REQUEST['return_action']; 
+			$return_action = $_REQUEST['return_action'];
 			// wp: return action needs to be set for one-click close in task list
-		} 
-		else 
+		}
+		else
 		{
 			// if we "Cancel", we go back to the list view.
 			$return_action = $_REQUEST['return_action'];
@@ -375,10 +375,10 @@ function getLikeForEachWord($fieldname, $value, $minsize=4)
 }
 
 function isCloseAndCreateNewPressed() {
-    return isset($_REQUEST['action']) && 
+    return isset($_REQUEST['action']) &&
            $_REQUEST['action'] == "Save" &&
-           isset($_REQUEST['isSaveAndNew']) && 
-           $_REQUEST['isSaveAndNew'] == 'true';	
+           isset($_REQUEST['isSaveAndNew']) &&
+           $_REQUEST['isSaveAndNew'] == 'true';
 }
 
 

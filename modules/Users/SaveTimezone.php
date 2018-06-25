@@ -42,7 +42,7 @@ global $current_user;
 global $sugar_config;
 
 if(isset($_POST['timezone']) || isset($_GET['timezone'])) {
-    if(isset($_POST['timezone'])) { 
+    if(isset($_POST['timezone'])) {
     	$timezone = $_POST['timezone'];
     } else {
     	$timezone = $_GET['timezone'];

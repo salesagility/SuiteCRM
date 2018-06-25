@@ -212,4 +212,3 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
     }
 
 }
-

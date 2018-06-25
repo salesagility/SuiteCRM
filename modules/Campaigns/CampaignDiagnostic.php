@@ -96,7 +96,7 @@ $focus = new Administration();
 $focus->retrieveSettings(); //retrieve all admin settings.
 
 
-//run query for mail boxes of type 'bounce' 
+//run query for mail boxes of type 'bounce'
 $email_health = 0;
 $email_components = 2;
 $mbox_qry = "select * from inbound_email where deleted ='0' and mailbox_type = 'bounce'";
@@ -135,7 +135,7 @@ $mboxTable.= '</table>' ;
     
 $ss->assign("MAILBOXES_DETECTED_MESSAGE", $mboxTable);
 
-//email settings configured 
+//email settings configured
 $conf_msg="<table border='0' width='100%' class='detail view' cellpadding='0' cellspacing='0'>";
 if (strstr($focus->settings['notify_fromaddress'], 'example.com')){
     //if from address is the default, then set "bad" message and increment health counter
@@ -161,11 +161,11 @@ if (strstr($focus->settings['notify_fromaddress'], 'example.com')){
         $conf_msg .= "<td>".$focus->settings['mail_smtpserver']."</td>";
         $conf_msg .= "<td>".$focus->settings['mail_smtpuser']."</td></tr>";
 
-    }else{$conf_msg .= "</tr>";}       
+    }else{$conf_msg .= "</tr>";}
 
 }
           
-$conf_msg .= '</table>'; 
+$conf_msg .= '</table>';
 $ss->assign("EMAIL_SETTINGS_CONFIGURED_MESSAGE", $conf_msg);
 $email_setup_wiz_link='';
 if ($email_health>0){
@@ -173,7 +173,7 @@ if ($email_health>0){
         $email_setup_wiz_link="<a href='index.php?module=Campaigns&action=WizardEmailSetup'>".$mod_strings['LBL_EMAIL_SETUP_WIZ']."</a>";
     }else{
         $email_setup_wiz_link=$mod_strings['LBL_NON_ADMIN_ERROR_MSG'];
-    }    
+    }
 }
 
 $ss->assign("EMAIL_SETUP_WIZ_LINK", $email_setup_wiz_link);
@@ -184,7 +184,7 @@ $ss->assign( 'RECHECK_BTN', $mod_strings['LBL_RECHECK_BTN']);
 
 /************* SCHEDULER COMPONENTS ************/
 
-//create and run the scheduler queries 
+//create and run the scheduler queries
 $sched_qry = "select job, name, status from schedulers where deleted = 0 and status = 'Active'";
 $sched_res = $focus->db->query($sched_qry);
 $sched_health = 0;
@@ -206,7 +206,7 @@ foreach ($scheds as $funct){
             $check_sched1 ="found";
         }else{
             $check_sched2 ="found";
-        }  
+        }
         
   }
 }
@@ -238,12 +238,12 @@ if ($sched_health>0){
     if (is_admin($current_user)){
         $admin_sched_link="<a href='index.php?module=Schedulers&action=index'>".$mod_strings['LBL_SCHEDULER_LINK']."</a>";
     }else{
-     $admin_sched_link=$mod_strings['LBL_NON_ADMIN_ERROR_MSG'];   
-    }    
-}    
+     $admin_sched_link=$mod_strings['LBL_NON_ADMIN_ERROR_MSG'];
+    }
+}
 
 //put table html together and display
-    $final_sched_msg = $sched_mes . $sched_mes_body . '</table>' . $admin_sched_link;        
+    $final_sched_msg = $sched_mes . $sched_mes_body . '</table>' . $admin_sched_link;
     $ss->assign("SCHEDULER_EMAILS_MESSAGE", $final_sched_msg);
     $ss->assign( 'SCHEDULE_IMAGE', define_image($sched_health, 2));
 
@@ -255,8 +255,8 @@ if(!isset($_REQUEST['inline']) || $_REQUEST['inline'] != 'inline'){
 }
 
 /**
- * This function takes in 3 parameters and determines the appropriate image source.  
- * 
+ * This function takes in 3 parameters and determines the appropriate image source.
+ *
  * @param  int $num parameter is the "health" parameter being tracked whenever there is something wrong.  (higher number =bad)
  * @param  int $total Parameter is the total number things being checked.
  * @return string HTML img tag

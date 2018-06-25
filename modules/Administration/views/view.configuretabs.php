@@ -109,7 +109,7 @@ class ViewConfiguretabs extends SugarView
         $this->ss->assign('disabled_tabs', json_encode($disabled));
         $this->ss->assign('title',$this->getModuleTitle(false));
         
-        //get list of all subpanels and panels to hide 
+        //get list of all subpanels and panels to hide
         $mod_list_strings_key_to_lower = array_change_key_case($app_list_strings['moduleList']);
         $panels_arr = SubPanelDefinitions::get_all_subpanels();
         $hidpanels_arr = SubPanelDefinitions::get_hidden_subpanels();
@@ -135,6 +135,6 @@ class ViewConfiguretabs extends SugarView
         $this->ss->assign('enabled_panels', json_encode($enabled));
         $this->ss->assign('disabled_panels', json_encode($disabled));
         
-        echo $this->ss->fetch('modules/Administration/templates/ConfigureTabs.tpl');	
+        echo $this->ss->fetch('modules/Administration/templates/ConfigureTabs.tpl');
     }
 }

@@ -42,7 +42,7 @@ $dictionary['AOR_Report'] = array(
 	'audited'=>true,
 	'duplicate_merge'=>true,
 	'fields'=>array (
-	  'report_module' => 
+	  'report_module' =>
 	  array (
 		'required' => true,
 		'name' => 'report_module',
@@ -196,4 +196,3 @@ if (!class_exists('VardefManager')){
         require_once('include/SugarObjects/VardefManager.php');
 }
 VardefManager::createVardef('AOR_Reports','AOR_Report', array('basic','assignable','security_groups'));
-

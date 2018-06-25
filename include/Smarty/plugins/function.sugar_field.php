@@ -12,7 +12,7 @@ r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.
 
 r53409 - 2010-01-03 19:31:15 -0800 (Sun, 03 Jan 2010) - roger - merge -r50376:HEAD from fuji_newtag_tmp
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -45,7 +45,7 @@ r21720 - 2007-04-11 14:07:59 -0700 (Wed, 11 Apr 2007) - wayne - sugar field plug
  * Type:     function<br>
  * Name:     sugar_field<br>
  * Purpose:  retreives the smarty equivalent for use by TemplateHandler
- * 
+ *
  * @author Wayne Pan {wayne at sugarcrm.com}
  * @param array
  * @param Smarty
@@ -57,9 +57,9 @@ function smarty_function_sugar_field($params, &$smarty)
     if (!isset($params['vardef']) || !isset($params['displayType']) || !isset($params['parentFieldArray'])) {
         if(!isset($params['vardef']))
             $smarty->trigger_error("sugar_field: missing 'vardef' parameter");
-        if(!isset($params['displayType']))  
+        if(!isset($params['displayType']))
             $smarty->trigger_error("sugar_field: missing 'displayType' parameter");
-        if(!isset($params['parentFieldArray']))  
+        if(!isset($params['parentFieldArray']))
             $smarty->trigger_error("sugar_field: missing 'parentFieldArray' parameter");
                              
         return;
@@ -77,7 +77,7 @@ function smarty_function_sugar_field($params, &$smarty)
     else $displayParams['fieldSpan'] = null;
 
     if(isset($params['typeOverride'])) { // override the type in the vardef?
-        $params['vardef']['type'] = $params['typeOverride']; 
+        $params['vardef']['type'] = $params['typeOverride'];
     }
     if(isset($params['formName'])) $displayParams['formName'] = $params['formName'];
     
