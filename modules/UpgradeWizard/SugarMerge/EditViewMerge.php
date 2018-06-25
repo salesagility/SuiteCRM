@@ -47,7 +47,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
  
 /**
- * This is the base class that all other SugarMerge objects extend 
+ * This is the base class that all other SugarMerge objects extend
  *
  */
 class EditViewMerge{
@@ -100,7 +100,7 @@ class EditViewMerge{
 	 */
 	protected $customFields = array();
 	/**
-	 * this will store an associative array contianing all the merged fields 
+	 * this will store an associative array contianing all the merged fields
 	 *
 	 * @var ARRAY
 	 */
@@ -164,28 +164,28 @@ class EditViewMerge{
 	
 	/**
 	 * The ids of the panels found in custom metadata fuke
-	 * 
+	 *
 	 */
 	protected $customPanelIds = array();
 	
 	
 	/**
 	 * The ids of the panels found in original metadata fuke
-	 * 
+	 *
 	 */
 	protected $originalPanelIds = array();
 
 
 	/**
 	 * The ids of the panels found in original metadata fuke
-	 * 
+	 *
 	 */
 	protected $newPanelIds = array();
 	
 	
 	/**
 	 * Special case conversion
-	 * 
+	 *
 	 */
 	protected $fieldConversionMapping = array(
 			'Campaigns' => array('created_by_name'=>'date_entered', 'modified_by_name'=>'date_modified'),
@@ -264,7 +264,7 @@ class EditViewMerge{
 	}
 	
 	/**
-	 * 
+	 *
 	 */
 	/**
 	 * returns true if $val1 and $val2 match otherwise it returns false
@@ -305,7 +305,7 @@ class EditViewMerge{
 	/**
 	 * Recursiveley merges two arrays
 	 *
-	 * @param ARRAY $gimp - if keys match this arrays values are overriden 
+	 * @param ARRAY $gimp - if keys match this arrays values are overriden
 	 * @param ARRAY $dom - if keys match this arrays values will override the others
 	 * @return ARRAY $merged - the merges array
 	 */
@@ -658,7 +658,7 @@ class EditViewMerge{
 		
 	/**
 	 * getPanelIds
-	 * 
+	 *
 	 */
 	protected function getPanelIds($panels){
 
@@ -696,7 +696,7 @@ class EditViewMerge{
 	 *
 	 * @param STRING $module - name of the module's files that are to be merged
 	 * @param STRING $original_file - path to the file that originally shipped with sugar
-	 * @param STRING $new_file - path to the new file that is shipping with the patch 
+	 * @param STRING $new_file - path to the new file that is shipping with the patch
 	 * @param STRING $custom_file - path to the custom file
 	 */
 	protected function loadData($module, $original_file, $new_file, $custom_file){
@@ -717,7 +717,7 @@ class EditViewMerge{
 	/**
 	 * This will save the merged data to a file
 	 *
-	 * @param STRING $to - path of the file to save it to 
+	 * @param STRING $to - path of the file to save it to
 	 * @return BOOLEAN - success or failure of the save
 	 */
 	public function save($to){
@@ -738,7 +738,7 @@ class EditViewMerge{
 	 *
 	 * @param STRING $module - name of the module's files that are to be merged
 	 * @param STRING $original_file - path to the file that originally shipped with sugar
-	 * @param STRING $new_file - path to the new file that is shipping with the patch 
+	 * @param STRING $new_file - path to the new file that is shipping with the patch
 	 * @param STRING $custom_file - path to the custom file
 	 * @param BOOLEAN $save - boolean on if it should save the results to the custom file or not
 	 * @return BOOLEAN - if the merged file was saved if false is passed in for the save parameter it always returns true

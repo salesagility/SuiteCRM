@@ -44,7 +44,7 @@
  * Type:     function
  * Name:     sugar_getlink
  * Purpose:  Returns HTML link <a> with embedded image or normal text
- * 
+ *
  * @param array
  * @param Smarty
  */

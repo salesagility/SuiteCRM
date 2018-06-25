@@ -90,7 +90,7 @@ else {
 	
 	/*
 	$query = 'select * from '.$focus->table_name.' where deleted=0';
-	$result = $focus->db->query($query, true, "");   
+	$result = $focus->db->query($query, true, "");
 	*/
 	$row = $focus->db->fetchByAssoc($result);
 	

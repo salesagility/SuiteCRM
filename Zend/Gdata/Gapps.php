@@ -1466,7 +1466,7 @@ class Zend_Gdata_Gapps extends Zend_Gdata
      * Retrieve all of the groups that a user is a member of
      *
      * @param string $memberId Member username
-     * @param bool $directOnly (Optional) If true, members with direct association 
+     * @param bool $directOnly (Optional) If true, members with direct association
      *             only will be considered
      * @return Zend_Gdata_Gapps_GroupFeed Collection of Zend_Gdata_GroupEntry
      *              objects representing all groups member is apart of in the domain.

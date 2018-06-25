@@ -89,7 +89,7 @@ class Calendar {
 		
 	/**
 	 * constructor
-	 * @param string $view 
+	 * @param string $view
 	 * @param array $time_arr
 	 * @param array $views
 	 */
@@ -339,7 +339,7 @@ class Calendar {
 	}
 	
 	/**
-	 * Calculate timestamp the calendar grid should be started from 
+	 * Calculate timestamp the calendar grid should be started from
 	 */
 	protected function calculate_grid_start_ts(){
 	
@@ -356,7 +356,7 @@ class Calendar {
 	}
 	
 	/**
-	 * calculate count of timeslots per visible day, calculates day start and day end in minutes 
+	 * calculate count of timeslots per visible day, calculates day start and day end in minutes
 	 */
 	function calculate_day_range(){
 		

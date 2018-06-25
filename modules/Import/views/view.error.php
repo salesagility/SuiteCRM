@@ -88,7 +88,7 @@ class ImportViewError extends SugarView
             return $_REQUEST['import_module'];
  	}
  	
- 	/** 
+ 	/**
      * @see SugarView::display()
      */
  	public function display()

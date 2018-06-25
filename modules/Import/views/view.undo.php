@@ -52,7 +52,7 @@ class ImportViewUndo extends ImportView
 
     protected $pageTitleKey = 'LBL_UNDO_LAST_IMPORT';
     
- 	/** 
+ 	/**
      * @see SugarView::display()
      */
  	public function display()

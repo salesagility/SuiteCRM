@@ -62,7 +62,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
 
     /**
      * Stream for storing output
-     * 
+     *
      * @var resource
      */
     protected $out_stream = null;
@@ -519,7 +519,7 @@ class Zend_Http_Client_Adapter_Socket implements Zend_Http_Client_Adapter_Interf
     
     /**
      * Set output stream for the response
-     * 
+     *
      * @param resource $stream
      * @return Zend_Http_Client_Adapter_Socket
      */

@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
 
- * Description:  
+ * Description:
  ********************************************************************************/
 global $mod_strings;
 global $current_user;

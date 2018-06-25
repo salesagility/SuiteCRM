@@ -127,7 +127,7 @@ class SugarpdfFactory
     /**
      * This is a private function which just helps the getSugarpdf function generate the
      * proper Tcpdf object
-     * 
+     *
      * @return a valid Sugarpdf
      */
     function _buildFromFile($file, &$bean, $sugarpdf_object_map, $type, $module){
@@ -146,12 +146,12 @@ class SugarpdfFactory
     /**
      * instantiate the correct Tcpdf and call init to pass on any obejcts we need to
      * from the controller.
-     * 
+     *
      * @param string class - the name of the class to instantiate
      * @param object bean = the bean to pass to the Sugarpdf
      * @param array Sugarpdf_object_map - the array which holds obejcts to pass between the
      *                                controller and the tcpdf.
-     * 
+     *
      * @return Sugarpdf
      */
     function _buildClass($class, &$bean, $sugarpdf_object_map){

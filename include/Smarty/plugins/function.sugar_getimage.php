@@ -44,8 +44,8 @@
  * Type:     function
  * Name:     sugar_getimage
  * Purpose:  Returns HTML image or sprite
- * 
- * @author Aamir Mansoor (amansoor@sugarcrm.com) 
+ *
+ * @author Aamir Mansoor (amansoor@sugarcrm.com)
  * @author Cam McKinnon (cmckinnon@sugarcrm.com)
  * @param array
  * @param Smarty

@@ -48,7 +48,7 @@ $subpanel_layout = array(
 	'fill_in_additional_fields'=>true,
 	'list_fields' => array(
 /*		'mass_update' => array (
-			
+
 		),
 */
 		'id'=>array(

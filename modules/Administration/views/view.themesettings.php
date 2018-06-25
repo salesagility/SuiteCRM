@@ -87,7 +87,7 @@ class AdministrationViewThemesettings extends SugarView
         parent::process();
     }
     
- 	/** 
+ 	/**
      * display the form
      */
  	public function display()

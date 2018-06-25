@@ -67,8 +67,8 @@ abstract class SugarSoapService extends SugarWebService{
 	abstract function registerFunction($function, $input, $output);
 	
 	/**
-	 * This is an abstract method. This implementation method should register all the complex type	 
-	 * 
+	 * This is an abstract method. This implementation method should register all the complex type
+	 *
 	 * @param String $name - name of complex type
 	 * @param String $typeClass - (complexType|simpleType|attribute)
 	 * @param String $phpType - array or struct

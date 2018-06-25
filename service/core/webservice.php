@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /**
  * This file intialize the service class and does all the setters based on the values provided in soap/rest entry point
- * and calls serve method which takes the request and send response back to the client  
+ * and calls serve method which takes the request and send response back to the client
  */
 ob_start();
 chdir(dirname(__FILE__).'/../../');

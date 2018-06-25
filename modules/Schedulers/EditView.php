@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
 
- * Description:  
+ * Description:
  ********************************************************************************/
 global $current_user;
 if(!is_admin($current_user)) sugar_die("Unauthorized access to administration.");

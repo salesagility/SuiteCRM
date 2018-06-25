@@ -10,7 +10,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -22,7 +22,7 @@ r34090 - 2008-04-14 11:15:00 -0700 (Mon, 14 Apr 2008) - dwheeler - 20936: Link f
 
 r34040 - 2008-04-11 11:48:13 -0700 (Fri, 11 Apr 2008) - dwheeler - Fixed Typo that prevented enum fields from being replaced properly.
 
-r33968 - 2008-04-10 11:30:04 -0700 (Thu, 10 Apr 2008) - dwheeler - bug 20936: Added smarty function to find and replace dynamic strings for custom dynamic fields, now handles translating strings for enum variables. 
+r33968 - 2008-04-10 11:30:04 -0700 (Thu, 10 Apr 2008) - dwheeler - bug 20936: Added smarty function to find and replace dynamic strings for custom dynamic fields, now handles translating strings for enum variables.
 
 
 */
@@ -31,7 +31,7 @@ r33968 - 2008-04-10 11:30:04 -0700 (Thu, 10 Apr 2008) - dwheeler - bug 20936: Ad
 
 /**
  * This function will replace fields taken from the fields variable
- * and insert them into the passed string replacing [variableName] 
+ * and insert them into the passed string replacing [variableName]
  * tokens where found.
  *
  * @param unknown_type $params

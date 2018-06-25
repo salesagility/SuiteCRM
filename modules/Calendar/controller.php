@@ -46,7 +46,7 @@ class CalendarController extends SugarController
 
     /**
      * Bean that is being handled by the Calendar's current action.
-     * @var SugarBean $currentBean 
+     * @var SugarBean $currentBean
      */
     protected $currentBean = null;
 
@@ -277,7 +277,7 @@ class CalendarController extends SugarController
     
     /**
      * Retrieves current activity bean and checks access to action
-     * 
+     *
      * @param string $actionToCheck
      * @return bool Result of check
      */

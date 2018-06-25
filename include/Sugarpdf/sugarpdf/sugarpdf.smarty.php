@@ -46,14 +46,14 @@ require_once('include/Sugarpdf/Sugarpdf.php');
  * You have to extend this class, set the templateLocation to your smarty template
  * location and assign the Smarty variables ($this->ss->assign()) in the overriden
  * preDisplay method (don't forget to call the parent).
- * 
+ *
  * @author bsoufflet
  *
  */
 class SugarpdfSmarty extends Sugarpdf{
     
     /**
-     * 
+     *
      * @var String
      */
     protected $templateLocation = "";

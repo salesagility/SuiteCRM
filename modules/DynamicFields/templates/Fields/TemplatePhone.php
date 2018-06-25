@@ -46,7 +46,7 @@ class TemplatePhone extends TemplateText{
     
     /**
      * __construct
-     * 
+     *
      * Constructor for TemplatePhone class. This constructor ensures that TemplatePhone instances have the
      * validate_usa_format vardef value.
      */
@@ -56,7 +56,7 @@ class TemplatePhone extends TemplateText{
 	
 	/**
 	 * get_field_def
-	 * 
+	 *
 	 * @see parent::get_field_def
 	 * This method checks to see if the validate_usa_format key/value entry should be
 	 * added to the vardef entry representing the module

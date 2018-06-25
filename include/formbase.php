@@ -127,11 +127,11 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 				if($_POST[$prefix.$field][0] === '' && !empty($_POST[$prefix.$field][1]) ) {
 					unset($_POST[$prefix.$field][0]);
 				}
-				$_POST[$prefix.$field] = encodeMultienumValue($_POST[$prefix.$field]);	
+				$_POST[$prefix.$field] = encodeMultienumValue($_POST[$prefix.$field]);
 			}
 
 			$focus->$field = $_POST[$prefix.$field];
-			/* 
+			/*
 			 * overrides the passed value for booleans.
 			 * this will be fully deprecated when the change to binary booleans is complete.
 			 /

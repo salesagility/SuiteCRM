@@ -105,10 +105,10 @@ class Zend_Oauth_Http_Utility
 
     /**
      * Cast to authorization header
-     * 
-     * @param  array $params 
-     * @param  null|string $realm 
-     * @param  bool $excludeCustomParams 
+     *
+     * @param  array $params
+     * @param  null|string $realm
+     * @param  bool $excludeCustomParams
      * @return void
      */
     public function toAuthorizationHeader(array $params, $realm = null, $excludeCustomParams = true)
@@ -132,13 +132,13 @@ class Zend_Oauth_Http_Utility
 
     /**
      * Sign request
-     * 
-     * @param  array $params 
-     * @param  string $signatureMethod 
-     * @param  string $consumerSecret 
-     * @param  null|string $tokenSecret 
-     * @param  null|string $method 
-     * @param  null|string $url 
+     *
+     * @param  array $params
+     * @param  string $signatureMethod
+     * @param  string $consumerSecret
+     * @param  null|string $tokenSecret
+     * @param  null|string $method
+     * @param  null|string $url
      * @return string
      */
     public function sign(
@@ -161,8 +161,8 @@ class Zend_Oauth_Http_Utility
 
     /**
      * Parse query string
-     * 
-     * @param  mixed $query 
+     *
+     * @param  mixed $query
      * @return array
      */
     public function parseQueryString($query)
@@ -184,7 +184,7 @@ class Zend_Oauth_Http_Utility
 
     /**
      * Generate nonce
-     * 
+     *
      * @return string
      */
     public function generateNonce()
@@ -194,7 +194,7 @@ class Zend_Oauth_Http_Utility
 
     /**
      * Generate timestamp
-     * 
+     *
      * @return int
      */
     public function generateTimestamp()
@@ -204,8 +204,8 @@ class Zend_Oauth_Http_Utility
 
     /**
      * urlencode a value
-     * 
-     * @param  string $value 
+     *
+     * @param  string $value
      * @return string
      */
     public static function urlEncode($value)
