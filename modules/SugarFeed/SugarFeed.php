@@ -522,7 +522,7 @@ class SugarFeed extends Basic {
             }
         } else {
             if ($days == 1) {
-                return translate('LBL_TIME_YESTERDAY', 'SugarFeed') . ' ';
+                $result .= $days . ' ' . translate('LBL_TIME_DAY', 'SugarFeed') . ' ';
             } elseif ($days > 1) {
                 $result .= $days . ' ' . translate('LBL_TIME_DAYS', 'SugarFeed') . ' ';
             } else {
