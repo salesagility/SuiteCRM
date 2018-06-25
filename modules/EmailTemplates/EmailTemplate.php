@@ -506,7 +506,7 @@ class EmailTemplate extends SugarBean
     function _convertToType($type, $value)
     {
         switch ($type) {
-            case 'currency' :
+            case 'currency':
                 return currency_format_number($value);
             default:
                 return $value;

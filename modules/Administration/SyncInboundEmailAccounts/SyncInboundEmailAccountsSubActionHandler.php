@@ -89,11 +89,11 @@ class SyncInboundEmailAccountsSubActionHandler
 
             switch ($subAction) {
 
-                case 'index' :
+                case 'index':
                     $this->action_Index();
                     break;
 
-                case 'sync' :
+                case 'sync':
                     $this->action_Sync();
                     break;
 

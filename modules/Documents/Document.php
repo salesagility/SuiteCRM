@@ -427,9 +427,9 @@ class Document extends File
     function bean_implements($interface)
     {
         switch ($interface) {
-            case 'ACL' :
+            case 'ACL':
                 return true;
-            case 'FILE' :
+            case 'FILE':
                 return true;
         }
 

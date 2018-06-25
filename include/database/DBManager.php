@@ -1846,14 +1846,14 @@ abstract class DBManager
         $sqlStr = '';
         foreach ($tokens as $key => $val) {
             switch ($val) {
-                case '?' :
-                case '!' :
-                case '&' :
+                case '?':
+                case '!':
+                case '&':
                     $count++;
                     $sqlStr .= '?';
                     break;
 
-                default :
+                default:
                     //escape any special characters
                     $tokens[$key] = preg_replace('/\\\([&?!])/', "\\1", $val);
                     $sqlStr .= $tokens[$key];
@@ -2137,7 +2137,7 @@ abstract class DBManager
                     }
 
                     return intval($val);
-                case 'bigint' :
+                case 'bigint':
                     $val = (float)$val;
                     if (!empty($fieldDef['required']) && $val == false) {
                         if (isset($fieldDef['default'])) {

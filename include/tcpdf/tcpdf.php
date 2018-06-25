@@ -1528,7 +1528,7 @@ if (!class_exists('TCPDF', false)) {
 					break;
 				}
 				// unsupported unit
-				default : {
+				default: {
 					$this->Error('Incorrect unit: '.$unit);
 					break;
 				}
@@ -12777,7 +12777,7 @@ if (!class_exists('TCPDF', false)) {
 					$this->addHTMLVertSpace(1, $cell, ($parent['fontsize'] * 1.5) / $this->k, $firstorlast, $tag['value'], true);
 					break;
 				}
-				default : {
+				default: {
 					break;
 				}
 			}
@@ -12826,12 +12826,12 @@ if (!class_exists('TCPDF', false)) {
 		public function setLIsymbol($symbol='!') {
 			$symbol = strtolower($symbol);
 			switch ($symbol) {
-				case '!' :
-				case '#' :
-				case 'disc' :
-				case 'disc' :
-				case 'circle' :
-				case 'square' :
+				case '!':
+				case '#':
+				case 'disc':
+				case 'disc':
+				case 'circle':
+				case 'square':
 				case '1':
 				case 'decimal':
 				case 'decimal-leading-zero':
@@ -12849,7 +12849,7 @@ if (!class_exists('TCPDF', false)) {
 					$this->lisymbol = $symbol;
 					break;
 				}
-				default : {
+				default: {
 					$this->lisymbol = '';
 				}
 			}

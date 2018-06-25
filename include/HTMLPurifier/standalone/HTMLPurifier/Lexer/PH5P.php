@@ -1722,7 +1722,7 @@ class HTML5TreeConstructer
             case self::MAIN_PHASE:
                 return $this->mainPhase($token);
                 break;
-            case self::END_PHASE :
+            case self::END_PHASE:
                 return $this->trailingEndPhase($token);
                 break;
         }

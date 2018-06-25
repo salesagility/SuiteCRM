@@ -320,7 +320,7 @@ class DocumentRevision extends SugarBean {
 
     public function bean_implements($interface) {
         switch($interface) {
-            case 'FILE' : return true;
+            case 'FILE': return true;
         }
         return parent::bean_implements($interface);
     }

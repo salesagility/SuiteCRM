@@ -1462,9 +1462,9 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       // ----- Look for next option
       switch ($p_options_list[$i]) {
         // ----- Look for options that request a path value
-        case PCLZIP_OPT_PATH :
-        case PCLZIP_OPT_REMOVE_PATH :
-        case PCLZIP_OPT_ADD_PATH :
+        case PCLZIP_OPT_PATH:
+        case PCLZIP_OPT_REMOVE_PATH:
+        case PCLZIP_OPT_ADD_PATH:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1482,7 +1482,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request an array of string for value
-        case PCLZIP_OPT_BY_NAME :
+        case PCLZIP_OPT_BY_NAME:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1513,8 +1513,8 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request an EREG or PREG expression
-        case PCLZIP_OPT_BY_EREG :
-        case PCLZIP_OPT_BY_PREG :
+        case PCLZIP_OPT_BY_EREG:
+        case PCLZIP_OPT_BY_PREG:
         //case PCLZIP_OPT_CRYPT :
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
@@ -1543,9 +1543,9 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that takes a string
-        case PCLZIP_OPT_COMMENT :
-        case PCLZIP_OPT_ADD_COMMENT :
-        case PCLZIP_OPT_PREPEND_COMMENT :
+        case PCLZIP_OPT_COMMENT:
+        case PCLZIP_OPT_ADD_COMMENT:
+        case PCLZIP_OPT_PREPEND_COMMENT:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1579,7 +1579,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request an array of index
-        case PCLZIP_OPT_BY_INDEX :
+        case PCLZIP_OPT_BY_INDEX:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1681,18 +1681,18 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request no value
-        case PCLZIP_OPT_REMOVE_ALL_PATH :
-        case PCLZIP_OPT_EXTRACT_AS_STRING :
-        case PCLZIP_OPT_NO_COMPRESSION :
-        case PCLZIP_OPT_EXTRACT_IN_OUTPUT :
-        case PCLZIP_OPT_REPLACE_NEWER :
-        case PCLZIP_OPT_STOP_ON_ERROR :
+        case PCLZIP_OPT_REMOVE_ALL_PATH:
+        case PCLZIP_OPT_EXTRACT_AS_STRING:
+        case PCLZIP_OPT_NO_COMPRESSION:
+        case PCLZIP_OPT_EXTRACT_IN_OUTPUT:
+        case PCLZIP_OPT_REPLACE_NEWER:
+        case PCLZIP_OPT_STOP_ON_ERROR:
           $v_result_list[$p_options_list[$i]] = true;
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "".PclZipUtilOptionText($p_options_list[$i])." = '".$v_result_list[$p_options_list[$i]]."'");
         break;
 
         // ----- Look for options that request an octal value
-        case PCLZIP_OPT_SET_CHMOD :
+        case PCLZIP_OPT_SET_CHMOD:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1710,10 +1710,10 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request a call-back
-        case PCLZIP_CB_PRE_EXTRACT :
-        case PCLZIP_CB_POST_EXTRACT :
-        case PCLZIP_CB_PRE_ADD :
-        case PCLZIP_CB_POST_ADD :
+        case PCLZIP_CB_PRE_EXTRACT:
+        case PCLZIP_CB_POST_EXTRACT:
+        case PCLZIP_CB_PRE_ADD:
+        case PCLZIP_CB_POST_ADD:
         /* for futur use
         case PCLZIP_CB_PRE_DELETE :
         case PCLZIP_CB_POST_DELETE :
@@ -1749,7 +1749,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
           $i++;
         break;
 
-        default :
+        default:
           // ----- Error log
           PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER,
 		                       "Unknown parameter '"
