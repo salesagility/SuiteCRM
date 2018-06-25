@@ -1,5 +1,6 @@
 <?php
 
+use Api\Core\Config\ApiConfig;
 use Api\V8\BeanDecorator\BeanManager;
 use Api\V8\OAuth2\Entity\AccessTokenEntity;
 use Api\V8\OAuth2\Entity\ClientEntity;
@@ -28,7 +29,7 @@ return [
             'file://' . __DIR__ . '/../../OAuth2/private.key',
             'file://' . __DIR__ . '/../../OAuth2/public.key'
         );
-        $server->setEncryptionKey('KcWedk/XtvWgtuf7UHx6ayHnrIaMC/t4RjZrdVBY2Ho=');
+        $server->setEncryptionKey(ApiConfig::OAUTH2_ENCRYPTION_KEY);
 
         // Client credentials grant
         $server->enableGrantType(

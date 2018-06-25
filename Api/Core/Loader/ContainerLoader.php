@@ -1,52 +1,29 @@
 <?php
 namespace Api\Core\Loader;
 
+use Api\Core\Config\ApiConfig;
+use Api\Core\Resolver\ConfigResolver;
 use Interop\Container\ContainerInterface;
+use Slim\Container;
 
 class ContainerLoader
 {
     /**
-     * Load all service containers
+     * Load all service containers and add slim settings
      *
-     * @param ContainerInterface $container
+     * @return ContainerInterface
      */
-    public static function configure(ContainerInterface $container)
+    public static function configure()
     {
-        $containerConfig = [
-            __DIR__ . '/../../V8/Config/services.php',
-            __DIR__ . '/../../../custom/Extension/Api/Config/services.php'
-        ];
+        $slimSettings = ConfigResolver::loadFiles(ApiConfig::getSlimSettings());
+        // if we want to use this without DI, should create an instance for it
+        $container = new Container($slimSettings);
 
-        $services = self::loadFiles($containerConfig);
+        $services = ConfigResolver::loadFiles(ApiConfig::getContainers());
         foreach ($services as $service => $closure) {
             $container[$service] = $closure;
         }
-    }
 
-    /**
-     * @param array $files
-     *
-     * @return array
-     * @throws \RuntimeException When config file is not readable or does not contain an array.
-     */
-    private static function loadFiles(array $files)
-    {
-        $configs = [];
-
-        foreach ($files as $file) {
-            if (!file_exists($file) || !is_readable($file)) {
-                throw new \RuntimeException(sprintf('Config file %s is not readable', $file));
-            }
-
-            $config = require $file;
-            if (!is_array($config)) {
-                throw new \RuntimeException(sprintf('Config file %s is invalid', $file));
-            }
-
-            $configs[] = $config;
-        }
-
-        // since we support 5.5.9, we can't use splat op here
-        return !$configs ? $configs : array_reduce($configs, 'array_merge', []);
+        return $container;
     }
 }
