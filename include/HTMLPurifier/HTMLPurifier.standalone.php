@@ -9901,7 +9901,8 @@ class HTMLPurifier_VarParserException extends HTMLPurifier_Exception
 
 class HTMLPurifier_Zipper
 {
-    public $front, $back;
+    public $front;
+    public $back;
 
     public function __construct($front, $back) {
         $this->front = $front;
@@ -19269,7 +19270,9 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
      */
     public $empty = false;
 
-    public $endCol = null, $endLine = null, $endArmor = array();
+    public $endCol = null;
+    public $endLine = null;
+    public $endArmor = array();
 
     public function __construct($name, $attr = array(), $line = null, $col = null, $armor = array()) {
         $this->name = $name;

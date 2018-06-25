@@ -542,7 +542,8 @@ class SugarDateTime extends DateTime
         "tm_sec" => 0,
     );
 
-    protected static $strptime_short_mon, $strptime_long_mon;
+    protected static $strptime_short_mon;
+    protected static $strptime_long_mon;
 	/**
      * DateTime homebrew parser
      *
