@@ -181,6 +181,7 @@ $dictionary['AOS_Products'] = array(
                     array(
                         'name' => 'getCurrencyDropDown',
                         'returns' => 'html',
+                        'onListView' => true,
                     ),
             ),
         'price' =>
