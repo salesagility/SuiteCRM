@@ -53,6 +53,13 @@ class ElasticSearchIndexer
     private $indexName = 'main';
     private $batchSize = 1000;
 
+    public static function _run()
+    {
+        $indexer = new self();
+
+        $indexer->run();
+    }
+
     public function run()
     {
         $client = $this->getClient();
@@ -74,9 +81,9 @@ class ElasticSearchIndexer
 
         $end = microtime(true);
 
-        $elapsed = ($end - $start); // seconds?
+        $elapsed = ($end - $start); // seconds
 
-        echo "Indexed database in $elapsed s";
+        $GLOBALS['log']->debug("Database indexing performed in $elapsed s.");
     }
 
     /**
@@ -89,10 +96,13 @@ class ElasticSearchIndexer
         return $client;
     }
 
+    /**
+     * @return string[]
+     */
     public function getModulesToIndex()
     {
         // TODO
-        return ['Accounts', 'Contacts'];
+        return ['Accounts', 'Contacts', 'Users'];
     }
 
     /**
@@ -148,37 +158,73 @@ class ElasticSearchIndexer
         }
     }
 
+    /**
+     * @param $module string
+     * @return string[]
+     */
     public function getFieldsToIndex($module)
     {
         // TODO
+        $parsers = new ParserSearchFields($module);
+        $fields = $parsers->getSearchFields()[$module];
 
-        if ($module == 'Contacts')
-            return ['first_name', 'last_name'];
-        if ($module == 'Accounts')
-            return ['name', 'description'];
+        $parsedFields = [];
 
-        // $parsers = new ParserSearchFields($module);
-        // $fields = $parsers->getSearchFields();
+        foreach ($fields as $key => $field) {
+            if (isset($field['query_type']) && $field['query_type'] != 'default') {
+                $GLOBALS['log']->warn("[$module] $key is not a supported query type!");
+                continue;
+            };
 
-        return [];
+            if (!empty($field['operator'])) {
+                $GLOBALS['log']->warn("[$module] $key has an operator!");
+                continue;
+            }
+
+            if (strpos($key, 'range_date') !== false) {
+                continue;
+            }
+
+            if (!empty($field['db_field'])) {
+                foreach ($field['db_field'] as $db_field) {
+                    $parsedFields[$key][] = $db_field;
+                }
+            } else {
+                $parsedFields[] = $key;
+            }
+        }
+
+        return $parsedFields;
     }
 
     /**
-     * @param $bean
-     * @param $fields
+     * Note: it removes not found fields from the `$fields` argument.
+     * @param $bean SugarBean
+     * @param $fields array
      * @return array
      */
-    private function makeIndexParamsBodyFromBean($bean, $fields)
+    private function makeIndexParamsBodyFromBean($bean, &$fields)
     {
         $body = [];
 
-        foreach ($fields as $field) {
-            $body[$field] = $bean->$field;
+        foreach ($fields as $key => $field) {
+            if (is_array($field)) {
+                // TODO Addresses should be structured better
+                foreach ($field as $subfield) {
+                    if ($this->hasField($bean, $subfield)) {
+                        $body[$key][$subfield] = $bean->$subfield;
+                    }
+                }
+            } else {
+                if ($this->hasField($bean, $field)) {
+                    $body[$field] = $bean->$field;
+                }
+            }
         }
 
-        if ($bean->module_name === 'Contacts') {
-            $body['name'] = $bean->first_name . ' ' . $bean->last_name;
-        }
+//        if ($bean->module_name === 'Contacts') {
+//            $body['name'] = $bean->first_name . ' ' . $bean->last_name;
+//        }
 
         return $body;
     }
@@ -210,5 +256,21 @@ class ElasticSearchIndexer
         ];
 
         return $args;
+    }
+
+    /**
+     * @param $bean
+     * @param $field
+     * @return bool
+     */
+    private function hasField($bean, $field)
+    {
+        if (!isset($bean->$field)) {
+            fwrite(STDERR, "{$bean->module_name}->$field does not exist!\n");
+            // $GLOBALS['log']->error("{$bean->module_name}->$field does not exist!");
+            return false;
+        } else {
+            return true;
+        }
     }
 }
