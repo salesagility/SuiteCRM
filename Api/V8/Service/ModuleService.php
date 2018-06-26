@@ -91,11 +91,12 @@ class ModuleService
         $where = $params->getFilter();
         $fields = $params->getFields();
 
-        $rowCount = $this->countRecords($module, $where);
         $size = $params->getPage()->getSize();
         $number = $params->getPage()->getNumber();
+        // negative numbers are validated in params
         $offset = $number !== 0 ? ($number - 1) * $size : $number;
-        $limit = $size > $rowCount ? BeanManager::DEFAULT_ALL_RECORDS : $size;
+        $realRowCount = $this->countRecords($module, $where);
+        $limit = $size === BeanManager::DEFAULT_ALL_RECORDS ? BeanManager::DEFAULT_LIMIT : $size;
 
         $beanListResponse = $this->beanManager->getList($module)
             ->orderBy($orderBy)
@@ -120,8 +121,8 @@ class ModuleService
         $response->setData($data);
 
         // pagination
-        if ($data && $limit !== BeanManager::DEFAULT_ALL_RECORDS) {
-            $totalPages = ceil($rowCount / $size);
+        if ($data && $limit !== BeanManager::DEFAULT_LIMIT) {
+            $totalPages = ceil($realRowCount / $size);
 
             $paginationMeta = $this->paginationHelper->getPaginationMeta($totalPages, count($data));
             $paginationLinks = $this->paginationHelper->getPaginationLinks($request, $totalPages, $number);
@@ -259,9 +260,9 @@ class ModuleService
         $rowCount = $db->fetchRow(
             $db->query(
                 sprintf(
-                    "SELECT COUNT(*) AS cnt FROM %s WHERE %s",
+                    "SELECT COUNT(*) AS cnt FROM %s %s",
                     $this->beanManager->newBeanSafe($module)->getTableName(),
-                    $where
+                    $where === '' ? '' : 'WHERE ' .  $where
                 )
             )
         )["cnt"];

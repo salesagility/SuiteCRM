@@ -4,6 +4,7 @@ namespace Api\V8\BeanDecorator;
 class BeanManager
 {
     const DEFAULT_OFFSET = 0;
+    const DEFAULT_LIMIT = -1;
     const DEFAULT_ALL_RECORDS = -99;
 
     /**
