@@ -1,7 +1,8 @@
 <?php
 namespace Api\Core\Config;
 
-class ApiConfig {
+class ApiConfig
+{
     // we still support 5.5.9
     private static $slimSettings = [
         'Api/Core/Config/slim.php',

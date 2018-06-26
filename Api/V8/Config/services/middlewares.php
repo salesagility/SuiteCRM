@@ -16,6 +16,9 @@ use League\OAuth2\Server\ResourceServer;
 
 return [
     AuthorizationServer::class => function (Container $container) {
+        // base dir must exist in entryPoint.php
+        $baseDir = $GLOBALS['BASE_DIR'];
+
         $server = new AuthorizationServer(
             new ClientRepository(
                 new ClientEntity(),
@@ -26,8 +29,8 @@ return [
                 $container->get(BeanManager::class)
             ),
             new ScopeRepository(),
-            'file://' . __DIR__ . '/../../OAuth2/private.key',
-            'file://' . __DIR__ . '/../../OAuth2/public.key'
+            sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PRIVATE_KEY),
+            sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PUBLIC_KEY)
         );
         $server->setEncryptionKey(ApiConfig::OAUTH2_ENCRYPTION_KEY);
 
@@ -49,12 +52,14 @@ return [
         return $server;
     },
     ResourceServer::class => function (Container $container) {
+        $baseDir = $GLOBALS['BASE_DIR'];
+
         return new ResourceServer(
             new AccessTokenRepository(
                 new AccessTokenEntity(),
                 $container->get(BeanManager::class)
             ),
-            'file://' . __DIR__ . '/../../OAuth2/public.key'
+            sprintf('file://%s/%s', $baseDir, ApiConfig::OAUTH2_PUBLIC_KEY)
         );
     },
 ];
