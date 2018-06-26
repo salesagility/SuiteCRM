@@ -66,9 +66,7 @@ class SearchQueryTest extends \Codeception\Test\Unit
     public function testTrim()
     {
         $string = ' hello test world    ';
-
         $query = SearchQuery::fromString($string);
-
         $query->trim();
 
         self::assertEquals('hello test world', $query->getSearchString());
@@ -78,11 +76,18 @@ class SearchQueryTest extends \Codeception\Test\Unit
     public function testToLowerCase()
     {
         $string = ' HelLo tEsT WorLD    ';
-
         $query = SearchQuery::fromString($string);
-
         $query->toLowerCase();
 
         self::assertEquals(' hello test world    ', $query->getSearchString());
+    }
+
+    public function testReplace(){
+        $string = '-HELLO_WOR-LD-';
+        $expString = 'HELLO_WORLD';
+        $query = SearchQuery::fromString($string);
+        $query->replace('-', '');
+
+        self::assertEquals($expString, $query->getSearchString());
     }
 }

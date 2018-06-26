@@ -88,6 +88,11 @@ class SearchQuery
         $this->query['query'] = trim($this->query['query']);
     }
 
+    public function replace($what, $with)
+    {
+        $this->query['query'] = str_replace($what, $with, $this->query['query']);
+    }
+
     /**
      * Creates a query object from a query string, i.e. from a search from.
      *
