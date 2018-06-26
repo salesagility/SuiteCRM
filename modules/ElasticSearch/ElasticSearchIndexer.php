@@ -37,8 +37,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use Elasticsearch\ClientBuilder;
-
 /**
  * Created by PhpStorm.
  * User: viocolano
@@ -202,7 +200,7 @@ class ElasticSearchIndexer
                 // TODO Addresses should be structured better
                 foreach ($field as $subfield) {
                     if ($this->hasField($bean, $subfield)) {
-                        $body[$key][$subfield] = $bean->$subfield;
+                        $body[$key][$subfield] = mb_convert_encoding($bean->$subfield, "UTF-8", "HTML-ENTITIES");
                     }
                 }
             } else {
