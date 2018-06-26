@@ -37,42 +37,25 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use Elasticsearch\ClientBuilder;
+
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 22/06/18
- * Time: 12:37
+ * Date: 26/06/18
+ * Time: 11:11
  */
-
-require_once 'modules/ElasticSearch/ElasticSearchIndexer.php';
-require_once 'modules/ElasticSearch/ElasticSearchClientBuilder.php';
-
-class ElasticSearchIndexerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ElasticSearchClientBuilder
 {
-
-    public function testGetModulesToIndex()
+    /**
+     * Returns a preconfigured elasticsearch client.
+     *
+     * @return \Elasticsearch\Client
+     */
+    public static function getClient()
     {
-        $indexer = new ElasticSearchIndexer();
-
-        $modules = $indexer->getModulesToIndex();
-
-        self::assertTrue(is_array($modules), "Result is not an array.");
-
-        self::assertTrue(count($modules) > 0, "The array is empty.");
-
-        self::assertTrue(in_array('Contacts', $modules), "Contacts was not found in the list of modules to index");
-    }
-
-    public function testRun()
-    {
-        $state = new \SuiteCRM\StateSaver();
-
-        $state->pushGlobals();
-
-        $indexer = new ElasticSearchIndexer();
-
-        $indexer->run();
-
-        $state->popGlobals();
+        $hosts = ['elasticsearch'];
+        $client = ClientBuilder::create()->setHosts($hosts)->build();
+        return $client;
     }
 }

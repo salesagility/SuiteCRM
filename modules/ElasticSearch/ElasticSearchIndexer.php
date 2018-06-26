@@ -62,7 +62,7 @@ class ElasticSearchIndexer
 
     public function run()
     {
-        $client = $this->getClient();
+        $client = ElasticSearchClientBuilder::getClient();
 
         try {
             $client->indices()->delete(['index' => '_all']);
@@ -84,16 +84,6 @@ class ElasticSearchIndexer
         $elapsed = ($end - $start); // seconds
 
         $GLOBALS['log']->debug("Database indexing performed in $elapsed s.");
-    }
-
-    /**
-     * @return \Elasticsearch\Client
-     */
-    private function getClient()
-    {
-        $hosts = ['elasticsearch'];
-        $client = ClientBuilder::create()->setHosts($hosts)->build();
-        return $client;
     }
 
     /**
