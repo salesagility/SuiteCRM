@@ -205,7 +205,7 @@ class ElasticSearchIndexer
                 }
             } else {
                 if ($this->hasField($bean, $field)) {
-                    $body[$field] = $bean->$field;
+                    $body[$field] = mb_convert_encoding($bean->$field, "UTF-8", "HTML-ENTITIES");
                 }
             }
         }
