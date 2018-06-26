@@ -14,4 +14,6 @@ chdir(__DIR__ . '/../../');
 require_once __DIR__ . '/../../include/entryPoint.php';
 
 $app = new \Slim\App(\Api\Core\Loader\ContainerLoader::configure());
-\Api\Core\Loader\RouteLoader::configureRoutes($app);
+// closure shouldn't be created in static context under PHP7
+$routeLoader = new \Api\Core\Loader\RouteLoader();
+$routeLoader->configureRoutes($app);

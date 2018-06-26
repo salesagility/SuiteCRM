@@ -12,7 +12,7 @@ class RouteLoader
      *
      * @param App $app
      */
-    public static function configureRoutes(App $app)
+    public function configureRoutes(App $app)
     {
         $routes = ApiConfig::getRoutes();
 
