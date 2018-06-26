@@ -40,30 +40,49 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 22/06/18
- * Time: 09:50
+ * Date: 26/06/18
+ * Time: 09:57
  */
 
-use SuiteCRM\Search\SearchEngine;
+use SuiteCRM\Search\SearchQuery;
 
-class TestSearchEngine extends SearchEngine
+class SearchQueryTest extends \Codeception\Test\Unit
 {
 
-    public function searchAndView($query)
+    public function testFromString()
     {
-        if ($query->query['searchstring'] == 'foo')
-            return 'bar';
+        $searchString = 'hello test';
+        $size = 20;
+        $from = 50;
 
-        if ($query->query['searchstring'] == 'fooz')
-            return 'barz';
+        $query = SearchQuery::fromString($searchString, $size, $from);
+
+        self::assertEquals($searchString, $query->getSearchString());
+        self::assertEquals($size, $query->getSize());
+        self::assertEquals($from, $query->getFrom());
     }
 
-    public function search($query)
+
+    public function testTrim()
     {
+        $string = ' hello test world    ';
+
+        $query = SearchQuery::fromString($string);
+
+        $query->trim();
+
+        self::assertEquals('hello test world', $query->getSearchString());
     }
 
 
-    protected function validateQuery(&$query)
+    public function testToLowerCase()
     {
+        $string = ' HelLo tEsT WorLD    ';
+
+        $query = SearchQuery::fromString($string);
+
+        $query->toLowerCase();
+
+        self::assertEquals(' hello test world    ', $query->getSearchString());
     }
 }
