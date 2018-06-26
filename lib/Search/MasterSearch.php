@@ -69,6 +69,20 @@ class MasterSearch
     }
 
     /**
+     * Perform a search with the given query and engine.
+     *
+     * @param $engine string
+     * @param $query SearchQuery
+     * @return array[] ids
+     */
+    public static function search($engine, $query)
+    {
+        $engine = self::fetchEngine($engine);
+
+        return $engine->search($query);
+    }
+
+    /**
      * Performs various validation and retrieves an instance of a given search engine.
      *
      * @param $engineName string
