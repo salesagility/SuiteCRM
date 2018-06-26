@@ -73,6 +73,22 @@ class SearchQuery
     }
 
     /**
+     * Makes the search string lowercase.
+     */
+    public function toLowerCase()
+    {
+        $this->query['query'] = strtolower($this->query['query']);
+    }
+
+    /**
+     * Trims the search string.
+     */
+    public function trim()
+    {
+        $this->query['query'] = trim($this->query['query']);
+    }
+
+    /**
      * Creates a query object from a query string, i.e. from a search from.
      *
      * `$size` and `$from` are for pagination.
