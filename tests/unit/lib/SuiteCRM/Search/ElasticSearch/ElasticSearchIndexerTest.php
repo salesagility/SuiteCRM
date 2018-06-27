@@ -37,6 +37,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+
 /**
  * Created by PhpStorm.
  * User: viocolano
@@ -44,8 +46,6 @@
  * Time: 12:37
  */
 
-require_once 'modules/ElasticSearch/ElasticSearchIndexer.php';
-require_once 'modules/ElasticSearch/ElasticSearchClientBuilder.php';
 
 class ElasticSearchIndexerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {

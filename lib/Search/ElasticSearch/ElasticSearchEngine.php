@@ -54,7 +54,7 @@ class ElasticSearchEngine extends SearchEngine
 
     /**
      * @param $query SearchQuery
-     * @param Elasticsearch\Client|null $client
+     * @param \Elasticsearch\Client|null $client
      * @return array[] ids
      */
     public function search($query, $client = null)
@@ -115,7 +115,7 @@ class ElasticSearchEngine extends SearchEngine
      * The `$client` parameter is only used for testing purposes.
      *
      * @param $params array
-     * @param Elasticsearch\Client|null $client
+     * @param \Elasticsearch\Client|null $client
      * @return array
      */
     private function runElasticSearch($params, $client = null)

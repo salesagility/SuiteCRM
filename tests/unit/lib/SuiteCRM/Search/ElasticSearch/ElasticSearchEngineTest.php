@@ -48,8 +48,7 @@
 use SuiteCRM\Search\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchQuery;
 
-require_once 'modules/ElasticSearch/ElasticSearchEngine.php';
-require_once 'modules/ElasticSearch/ElasticSearchClientBuilder.php';
+require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
 class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 {
@@ -210,6 +209,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     {
         $client = Mockery::mock('Elasticsearch\Client');
 
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $client
             ->shouldReceive('search')
             ->once()
