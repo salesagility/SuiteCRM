@@ -44,11 +44,10 @@
  * Time: 16:25
  */
 
+use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Search\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
-
-require_once 'modules/ElasticSearch/ElasticSearchClientBuilder.php';
 
 class ElasticSearchEngine extends SearchEngine
 {

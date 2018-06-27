@@ -51,7 +51,7 @@ class MasterSearch
      * @var array stores an associative array matching the search engine class name with the file it is stored in.
      */
     private static $engines = [
-        'ElasticSearchEngine' => 'modules/ElasticSearch/ElasticSearchEngine.php',
+        'ElasticSearchEngine' => 'lib/Search/ElasticSearch/ElasticSearchEngine.php',
     ];
 
     /**

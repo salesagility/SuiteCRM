@@ -37,6 +37,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+namespace SuiteCRM\Search\ElasticSearch;
+
 use Elasticsearch\ClientBuilder;
 
 /**

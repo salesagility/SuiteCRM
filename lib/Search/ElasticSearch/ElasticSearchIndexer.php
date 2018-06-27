@@ -44,6 +44,12 @@
  * Time: 12:33
  */
 
+namespace SuiteCRM\Search\ElasticSearch;
+
+use BeanFactory;
+use ParserSearchFields;
+use SugarBean;
+
 require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
 
 class ElasticSearchIndexer
