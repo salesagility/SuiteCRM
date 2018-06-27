@@ -56,8 +56,8 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     public function testValidateQuery()
     {
         $engine = new ElasticSearchEngine();
-        $str = " HeLlO Search ";
-        $exp = "hello search";
+        $str = " test AND test2 OR t-test3 ";
+        $exp = "test AND test2 OR t test3";
         $query = SearchQuery::fromString($str);
 
         $this->invokeMethod($engine, 'validateQuery', [&$query]);
@@ -82,18 +82,26 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     public function testCreateSearchParams1()
     {
         $engine = new ElasticSearchEngine();
-        $query = SearchQuery::fromString("hello search", 30, 5);
+        $searchString = "hello search";
+        $size = 30;
+        $from = 5;
+
+        $query = SearchQuery::fromString($searchString, $size, $from);
 
         $expectedParams = [
             'index' => 'main',
             'body' => [
-                'size' => 30,
-                'from' => 5,
                 'stored_fields' => [],
-                'query' => ["bool" => ["must" => [
-                    ["regexp" => ["_all" => ".*hello.*"]],
-                    ["regexp" => ["_all" => ".*search.*"]]
-                ]]]
+                'from' => $from,
+                'size' => $size,
+                'query' => [
+                    'query_string' => [
+                        'query' => $searchString,
+                        'analyzer' => 'standard',
+                        'default_operator' => 'OR',
+                        'minimum_should_match' => '66%'
+                    ]
+                ]
             ]
         ];
 
@@ -105,17 +113,25 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
     public function testCreateSearchParams2()
     {
         $engine = new ElasticSearchEngine();
-        $query = SearchQuery::fromString("test", 5, 0);
+        $searchString = "test";
+        $size = 30;
+
+        $query = SearchQuery::fromString($searchString, $size);
 
         $expectedParams = [
             'index' => 'main',
             'body' => [
-                'size' => 5,
-                'from' => 0,
                 'stored_fields' => [],
-                'query' => ["bool" => ["must" => [
-                    ["regexp" => ["_all" => ".*test.*"]],
-                ]]]
+                'from' => 0,
+                'size' => $size,
+                'query' => [
+                    'query_string' => [
+                        'query' => $searchString,
+                        'analyzer' => 'standard',
+                        'default_operator' => 'OR',
+                        'minimum_should_match' => '66%'
+                    ]
+                ]
             ]
         ];
 

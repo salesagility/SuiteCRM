@@ -81,25 +81,25 @@ class ElasticSearchEngine extends SearchEngine
                 'stored_fields' => [],
                 'from' => $query->getFrom(),
                 'size' => $query->getSize(),
-                'query' => ['bool' => ['must' => []]]
+                'query' => [
+                    'query_string' => [
+                        'query' => $query->getSearchString(),
+                        'analyzer' => 'standard',
+                        'default_operator' => 'OR',
+                        'minimum_should_match' => '66%'
+                    ]
+                ]
             ]
         ];
-
-        $boom = explode(' ', $query->getSearchString());
-
-        foreach ($boom as $word) {
-            $params['body']['query']['bool']['must'][] = ["regexp" => ["_all" => ".*$word.*"]];
-        }
 
         return $params;
     }
 
     /**
-     * @param $query
+     * @param $query SearchQuery
      */
     protected function validateQuery(&$query)
     {
-        $query->toLowerCase();
         $query->trim();
         $query->replace('-', ' ');
 
