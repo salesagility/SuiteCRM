@@ -5320,7 +5320,9 @@ class InboundEmail extends SugarBean
                                         break;
                                     case 'recordowner'; // Assign the email to the owner of the record the referenced email's parrent
                                         $parentBean = BeanFactory::getBean($row['parent_type'], $row['parent_id']);
-                                        $email->assigned_user_id = $parentBean->assigned_user_id;
+                                        if (isset($parentBean->id)) {
+                                            $email->assigned_user_id = $parentBean->assigned_user_id;
+                                        }
                                         break;
                                     case 'repliedetoowner'; // Assign the email to the owner of the referenced email
                                         $email->assigned_user_id = $row['assigned_user_id'];
