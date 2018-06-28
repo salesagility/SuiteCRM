@@ -47,7 +47,7 @@ use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
  */
 
 
-class ElasticSearchIndexerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 {
 
     public function testGetModulesToIndex()

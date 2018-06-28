@@ -45,8 +45,9 @@
  */
 
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Search\SearchTestAbstract;
 
-class SearchQueryTest extends \Codeception\Test\Unit
+class SearchQueryTest extends SearchTestAbstract
 {
 
     public function testFromString()
