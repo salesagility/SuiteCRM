@@ -132,6 +132,7 @@ if (isset($_REQUEST['emailUIAction'])) {
             if (isset($_REQUEST['sugarEmail']) && $_REQUEST['sugarEmail'] == 'true' && isset($_REQUEST['uid']) && !empty($_REQUEST['uid'])) {
                 $ie->email->retrieve($_REQUEST['uid']);
                 $ie->email->from_addr = $ie->email->from_addr_name;
+                isValidEmailAddress($ie->email->from_addr);
                 $ie->email->to_addrs = to_html($ie->email->to_addrs_names);
                 $ie->email->cc_addrs = to_html($ie->email->cc_addrs_names);
                 $ie->email->bcc_addrs = $ie->email->bcc_addrs_names;

@@ -1781,6 +1781,14 @@ class AOR_Report extends Basic
                     }
 
                     if ($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
+                        if(!isset($value)) {
+                            $GLOBALS['log']->warn(
+                                $condition->field
+                                . ' value is not set, assuming empty string value'
+                            );
+                            $value = '';
+                        }
+
                         $value = "{$value} OR {$field} IS NULL)";
                         $field = "(" . $field;
                     }

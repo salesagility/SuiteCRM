@@ -147,6 +147,7 @@ function commitAjaxFinalTouches($persistence) {
 			$email->description_html = nl2br($desc);
 			$email->from_name = $current_user->full_name;
 			$email->from_addr = $current_user->email1;
+                        isValidEmailAddress($email->from_addr);
 			$email->to_addrs_arr = $email->parse_addrs($current_user->email1,'','','');
 			$email->cc_addrs_arr = array();
 			$email->bcc_addrs_arr = array();

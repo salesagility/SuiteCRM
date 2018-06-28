@@ -297,6 +297,7 @@ class AOP_Case_Updates extends Basic
         $mailer->isHTML(true);
         $mailer->AltBody = $text['body_alt'] . $signaturePlain;
         $mailer->From = $emailSettings['from_address'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $emailSettings['from_name'];
         foreach ($emails as $email) {
             $mailer->addAddress($email);

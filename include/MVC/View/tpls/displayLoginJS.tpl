@@ -15,6 +15,3 @@
 {/literal}
 </script>
 
-{if $HEADERSYNC}
-    <script type="text/javascript" src="{$HEADERSYNC}"></script>
-{/if}
