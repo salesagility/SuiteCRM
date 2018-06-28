@@ -205,6 +205,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
             $emailType = $ie->email->type;
         }
         $ie->email->from_addr = $ie->email->from_addr_name;
+        isValidEmailAddress($ie->email->from_addr);
         $ie->email->to_addrs = to_html($ie->email->to_addrs_names);
         $ie->email->cc_addrs = to_html($ie->email->cc_addrs_names);
         $ie->email->bcc_addrs = $ie->email->bcc_addrs_names;
@@ -233,6 +234,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
         } else {
             if ($email->type != 'draft') {
                 $return['to'] = from_html($ie->email->from_addr);
+                isValidEmailAddress($return['to']);
             }
         } // else
         $ret = array(

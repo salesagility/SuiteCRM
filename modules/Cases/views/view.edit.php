@@ -60,23 +60,25 @@ class CasesViewEdit extends ViewEdit {
     }
 
     function display(){
+
         parent::display();
-        global $sugar_config;
-        $new = empty($this->bean->id);
-        if($new){
-            ?>
-            <script>
-                $(document).ready(function(){
+
+        $newScript = '';
+
+        if(empty($this->bean->id)){
+            $newScript = "
                     $('#update_text').closest('.edit-view-row-item').hide();
                     $('#update_text_label').closest('.edit-view-row-item').hide();
                     $('#internal').closest('.edit-view-row-item').hide();
                     $('#internal_label').closest('.edit-view-row-item').hide();
                     $('#addFileButton').closest('.edit-view-row-item').hide();
-                    $('#case_update_form_label').closest('.edit-view-row-item').hide();
-                    tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));
-                });
-            </script>
-        <?php
+                    $('#case_update_form_label').closest('.edit-view-row-item').hide();";
         }
+
+        echo  "<script>$(document).ready(function(){"
+                  . $newScript
+                  . "tinyMCE.execCommand('mceAddControl', false, document.getElementById('description'));
+                });
+            </script>";
     }
 }

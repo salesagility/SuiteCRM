@@ -122,6 +122,7 @@ $xtpl->assign("ID", $focus->id);
 $xtpl->assign("NAME", $focus->name);
 $xtpl->assign("FROM_NAME", $focus->from_name);
 $xtpl->assign("FROM_ADDR", $focus->from_addr);
+isValidEmailAddress($focus->from_addr);
 $xtpl->assign("REPLY_NAME", $focus->reply_to_name);
 $xtpl->assign("REPLY_ADDR", $focus->reply_to_addr);
 $xtpl->assign("DATE_START", $focus->date_start);

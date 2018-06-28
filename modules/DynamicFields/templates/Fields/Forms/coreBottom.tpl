@@ -48,7 +48,15 @@
 <tr ><td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_REQUIRED_OPTION"}:</td><td><input type="checkbox" name="required" value="1" {if !empty($vardef.required)}CHECKED{/if} {if $hideLevel > 5}disabled{/if}/>{if $hideLevel > 5}<input type="hidden" name="required" value="{$vardef.required}">{/if}</td></tr>
 {/if}
 <tr><td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_AUDIT"}:</td><td><input type="checkbox" name="audited" value="1" {if !empty($vardef.audited) }CHECKED{/if} {if $hideLevel > 5}disabled{/if}/>{if $hideLevel > 5}<input type="hidden" name="audited" value="{$vardef.audited}">{/if}</td></tr>
-<tr><td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_INLINE_EDIT_TEXT"}:</td><td><input type="hidden" name="inline_edit" value=""><input type="checkbox" name="inline_edit" value="1" {if !empty($vardef.inline_edit) }CHECKED{/if} {if $hideLevel > 5}disabled{/if}/>{if $hideLevel > 5}<input type="hidden" name="inline_edit" value="{$vardef.inline_edit}">{/if}</td></tr>
+
+<tr>
+    <td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_INLINE_EDIT_TEXT"}:</td>
+    <td><input type="hidden" name="inline_edit" value=""><input type="checkbox" name="inline_edit" value="1"
+        {if !empty($vardef.inline_edit) }CHECKED{/if} {if ($hideLevel > 5 || !empty($disableInlineEdit))}disabled{/if}/>{if $hideLevel > 5}
+            <input type="hidden" name="inline_edit" value="{$vardef.inline_edit}">
+        {/if}
+    </td>
+</tr>
 
 {if !$hideImportable}
 <tr><td class='mbLBL'>{sugar_translate module="DynamicFields" label="COLUMN_TITLE_IMPORTABLE"}:</td><td>

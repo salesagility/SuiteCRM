@@ -132,8 +132,6 @@ class InstallTester extends \Codeception\Actor
         $I->waitForElement('[type=submit]',90);
         $I->dontSeeMissingLabels();
         $I->dontSeeErrors();
-
-        $I->click('Next');
     }
 
     /**
