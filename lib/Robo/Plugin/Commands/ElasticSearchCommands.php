@@ -52,6 +52,7 @@ use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\Utility\BeanJsonSerializer;
 
 class ElasticSearchCommands extends \Robo\Tasks
 {
@@ -66,6 +67,7 @@ class ElasticSearchCommands extends \Robo\Tasks
         $this->bootstrap();
     }
 
+    //region necessaryEvil
     private function bootstrap()
     {
         if (!defined('sugarEntry')) {
@@ -92,26 +94,45 @@ class ElasticSearchCommands extends \Robo\Tasks
         $GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
     }
 
-    public function esearch($query)
+    //endregion
+
+    public function esearch($query, $size = 50, $showJson = false)
     {
         $engine = new MasterSearch();
 
-        $results = $engine->search('ElasticSearchEngine', SearchQuery::fromString($query));
+        $results = $engine->search('ElasticSearchEngine', SearchQuery::fromString($query, $size));
 
         foreach ($results as $key => $module) {
-            echo "\n### $key ###\n";
-            foreach ($module as $id) {
-                $bean = BeanFactory::getBean($key, $id);
-                echo "  - ", mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES"), "\n";
-            }
+            $this->printModuleResults($showJson, $key, $module);
         }
 
-        echo "\n";
+        echo PHP_EOL;
+    }
+
+    /**
+     * @param $showJson
+     * @param $key
+     * @param $module
+     */
+    private function printModuleResults($showJson, $key, $module)
+    {
+        echo "\n### $key ###\n";
+        foreach ($module as $id) {
+            $bean = BeanFactory::getBean($key, $id);
+            echo "  * ", mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES"), PHP_EOL;
+
+            if ($showJson) echo BeanJsonSerializer::serialize($bean, true, true);
+        }
     }
 
     public function eindex()
     {
+        ElasticSearchIndexer::_run(true, false);
+    }
+
+    public function ermindex()
+    {
         $indexer = new ElasticSearchIndexer();
-        $indexer->run();
+        $indexer->removeIndex();
     }
 }
