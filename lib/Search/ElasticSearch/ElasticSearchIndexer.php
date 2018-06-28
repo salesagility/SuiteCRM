@@ -49,30 +49,48 @@ namespace SuiteCRM\Search\ElasticSearch;
 use BeanFactory;
 use ParserSearchFields;
 use SugarBean;
-
-require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
+use SuiteCRM\Utility\BeanJsonSerializer;
 
 class ElasticSearchIndexer
 {
     private $indexName = 'main';
+    // 70% slower without using search defs
+    // but better quality indexing
+    private $useSearchDefs = false;
+    private $output = false;
     private $batchSize = 1000;
+    private $indexedRecords;
 
-    public static function _run()
+    public static function _run($output = false, $useSearchDefs = false)
     {
         $indexer = new self();
+
+        $indexer->output = $output;
+        $indexer->useSearchDefs = $useSearchDefs;
 
         $indexer->run();
     }
 
     public function run()
     {
+        $this->log('@', 'Starting indexing procedures');
+
+        $this->indexedRecords = 0;
+
         $client = ElasticSearchClientBuilder::getClient();
+
+        if ($this->useSearchDefs) {
+            $this->log('@', 'Indexing is performed using Searchdefs');
+        } else {
+            $this->log('@', 'Indexing is performed using BeanJsonSerialiser');
+        }
 
         try {
             $client->indices()->delete(['index' => '_all']);
         } /** @noinspection PhpRedundantCatchClauseInspection */
         catch (\Elasticsearch\Common\Exceptions\Missing404Exception $ignore) {
             // Index not there, not big deal since we meant to delete it anyway.
+            $this->log('*', 'Index not found, no index has been deleted.');
         }
 
         $start = microtime(true);
@@ -87,7 +105,28 @@ class ElasticSearchIndexer
 
         $elapsed = ($end - $start); // seconds
 
-        $GLOBALS['log']->debug("Database indexing performed in $elapsed s.");
+        $this->log('@', sprintf("Done! Indexed %d modules and %d records in %01.3F s", count($modules), $this->indexedRecords, $elapsed));
+        $estimation = $elapsed / $this->indexedRecords * 200000;
+        $this->log('@', sprintf("It would take ~%d min for 200,000 records, assuming a linear expansion", $estimation / 60));
+    }
+
+    public function log($type, $message)
+    {
+        if (!$this->output) return;
+
+        switch ($type) {
+            case '@':
+                $type = "\033[32m$type\033[0m";
+                break;
+            case '*':
+                $type = "\033[33m$type\033[0m";
+                break;
+            case '!':
+                $type = "\033[31m$type\033[0m";
+                break;
+        }
+
+        echo " [$type] ", $message, PHP_EOL;
     }
 
     /**
@@ -108,6 +147,10 @@ class ElasticSearchIndexer
         $beans = BeanFactory::getBean($module)->get_full_list();
 
         $this->indexBatch($module, $beans, $client);
+
+        $count = count($beans);
+        $this->indexedRecords += $count;
+        $this->log('@', sprintf('Indexed %d %s', $count, $module));
     }
 
     /**
@@ -117,7 +160,8 @@ class ElasticSearchIndexer
      */
     private function indexBatch($module, $beans, $client)
     {
-        $fields = $this->getFieldsToIndex($module);
+        if ($this->useSearchDefs)
+            $fields = $this->getFieldsToIndex($module);
 
         $params = ['body' => []];
 
@@ -158,7 +202,8 @@ class ElasticSearchIndexer
      */
     public function getFieldsToIndex($module)
     {
-        // TODO
+        require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
+
         $parsers = new ParserSearchFields($module);
         $fields = $parsers->getSearchFields()[$module];
 
@@ -166,12 +211,12 @@ class ElasticSearchIndexer
 
         foreach ($fields as $key => $field) {
             if (isset($field['query_type']) && $field['query_type'] != 'default') {
-                $GLOBALS['log']->warn("[$module] $key is not a supported query type!");
+                $this->log('*', "[$module]->$key is not a supported query type!");
                 continue;
             };
 
             if (!empty($field['operator'])) {
-                $GLOBALS['log']->warn("[$module] $key has an operator!");
+                $this->log('*', "[$module]->$key has an operator!");
                 continue;
             }
 
@@ -199,37 +244,66 @@ class ElasticSearchIndexer
      */
     private function makeIndexParamsBodyFromBean($bean, &$fields)
     {
-        $body = [];
+        if ($this->useSearchDefs) {
+            $body = [];
 
-        foreach ($fields as $key => $field) {
-            if (is_array($field)) {
-                // TODO Addresses should be structured better
-                foreach ($field as $subfield) {
-                    if ($this->hasField($bean, $subfield)) {
-                        $body[$key][$subfield] = mb_convert_encoding($bean->$subfield, "UTF-8", "HTML-ENTITIES");
+            foreach ($fields as $key => $field) {
+                if (is_array($field)) {
+                    // TODO Addresses should be structured better
+                    foreach ($field as $subfield) {
+                        if ($this->hasField($bean, $subfield)) {
+                            $body[$key][$subfield] = mb_convert_encoding($bean->$subfield, "UTF-8", "HTML-ENTITIES");
+                        }
+                    }
+                } else {
+                    if ($this->hasField($bean, $field)) {
+                        $body[$field] = mb_convert_encoding($bean->$field, "UTF-8", "HTML-ENTITIES");
                     }
                 }
-            } else {
-                if ($this->hasField($bean, $field)) {
-                    $body[$field] = mb_convert_encoding($bean->$field, "UTF-8", "HTML-ENTITIES");
-                }
             }
+
+            return $body;
+        } else {
+            $values = BeanJsonSerializer::toArray($bean);
+
+            unset($values['id']);
+
+            return $values;
         }
-
-//        if ($bean->module_name === 'Contacts') {
-//            $body['name'] = $bean->first_name . ' ' . $bean->last_name;
-//        }
-
-        return $body;
     }
 
     /**
-     * @param $client \Elasticsearch\Client
-     * @param $bean SugarBean
-     * @param $fields array
+     * @param $bean
+     * @param $field
+     * @return bool
      */
-    private function indexBean($client, $bean, $fields)
+    private function hasField($bean, $field)
     {
+        if (!isset($bean->$field)) {
+            $this->log('!', "{$bean->module_name}->$field does not exist!");
+
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * @param $bean SugarBean
+     * @param $fields array|null
+     * @param $client \Elasticsearch\Client|null
+     */
+    public function indexBean($bean, $fields = null, $client = null)
+    {
+        // TODO tests
+        if (empty($client)) {
+            $client = ElasticSearchClientBuilder::getClient();
+        }
+
+        if ($this->useSearchDefs && empty($fields)) {
+            $fields = $this->getFieldsToIndex($bean->module_name);
+        }
+
         $args = $this->makeIndexParamsFromBean($bean, $fields);
 
         $client->index($args);
@@ -242,29 +316,50 @@ class ElasticSearchIndexer
      */
     private function makeIndexParamsFromBean($bean, $fields)
     {
+        // TODO tests
+        $args = $this->makeParamsHeaderFromBean($bean);
+        $args['body'] = $this->makeIndexParamsBodyFromBean($bean, $fields);
+        return $args;
+    }
+
+    /**
+     * @param $bean SugarBean
+     * @return array
+     */
+    private function makeParamsHeaderFromBean($bean)
+    {
+        // TODO tests
         $args = [
             'index' => $this->indexName,
             'type' => $bean->module_name,
             'id' => $bean->id,
-            'body' => $this->makeIndexParamsBodyFromBean($bean, $fields),
         ];
 
         return $args;
     }
 
     /**
-     * @param $bean
-     * @param $field
-     * @return bool
+     * @param $bean SugarBean
+     * @param $client \Elasticsearch\Client|null
      */
-    private function hasField($bean, $field)
+    public function removeBean($bean, $client = null)
     {
-        if (!isset($bean->$field)) {
-            fwrite(STDERR, "{$bean->module_name}->$field does not exist!\n");
-            // $GLOBALS['log']->error("{$bean->module_name}->$field does not exist!");
-            return false;
-        } else {
-            return true;
+        // TODO tests
+        if (empty($client)) {
+            $client = ElasticSearchClientBuilder::getClient();
         }
+
+        $args = $this->makeParamsHeaderFromBean($bean);
+
+        $client->delete($args);
+    }
+
+    public function removeIndex($client = null)
+    {
+        // TODO tests
+        if (empty($client)) $client = ElasticSearchClientBuilder::getClient();
+
+        $params = ['index' => $this->indexName];
+        $client->indices()->delete($params);
     }
 }
