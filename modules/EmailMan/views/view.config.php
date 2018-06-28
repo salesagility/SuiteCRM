@@ -173,7 +173,7 @@ class ViewConfig extends SugarView
         if (isset($sugar_config['email_allow_send_as_user'])) {
             $mailAllowUserSend = $sugar_config['email_allow_send_as_user'];
         } else {
-            LoggerManager::getLogger()->error('EmailMan view display error: mail allow user send is not set for focus');
+            LoggerManager::getLogger()->warn('EmailMan view display error: mail allow user send is not set for focus');
         }
         
         
