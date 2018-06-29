@@ -52,7 +52,7 @@ class BeanJsonSerializer
      * Fields we don't want to be serialized.
      */
     const garbage = [
-        'deleted', 'photo', 'do_not_call', 'lawful_basis', 'date_reviewed', 'lawful_basis_source', 'account_name',
+        'deleted', 'photo', 'do_not_call', 'lawful_basis', 'date_reviewed', 'lawful_basis_source',
         'c_accept_status_fields', 'm_accept_status_fields', 'e_invite_status_fields', 'e_accept_status_fields',
         'jjwg_maps_lng_c', 'jjwg_maps_lat_c', 'jjwg_maps_geocode_status_c', 'jjwg_maps_address_c',
         'opportunity_role_fields', 'id_c', 'joomla_account_id', 'portal_account_disabled', 'portal_user_type',
@@ -242,6 +242,11 @@ class BeanJsonSerializer
             //region account
             if ($key == 'account_id') {
                 $prettyBean['account']['id'] = $value;
+                continue;
+            }
+
+            if($key == 'account_name'){
+                $prettyBean['account']['name'] = $value;
                 continue;
             }
 
