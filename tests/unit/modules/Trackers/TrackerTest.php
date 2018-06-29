@@ -57,7 +57,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $tracker = new Tracker();
@@ -92,7 +92,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //test without setting headerDisplayed
         Tracker::logPage();        
@@ -103,7 +103,7 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         Tracker::logPage();
         $this->assertEquals(time(), $_SESSION['lpage']);
         
-        //$this->assertEquals(time(), null);
+        
         
         // clean up
         

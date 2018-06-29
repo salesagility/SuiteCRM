@@ -322,7 +322,7 @@ class StateChecker
         foreach ($objects as $name => $object) {
             if (!$object->isDir() && !$this->isExcludedFile($name)) {
                 $fileObject = $object;
-                $fileObject->modifyTime = filemtime($name);
+                $fileObject->fileSize = filesize($name);
                 $fileObject->hash = $this->getHash((array)$fileObject, 'filesys::' . $fileObject);
                 $files[] = $name;
             }
