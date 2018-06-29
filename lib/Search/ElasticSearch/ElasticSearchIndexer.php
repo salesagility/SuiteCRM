@@ -60,7 +60,14 @@ class ElasticSearchIndexer
     private $output = false;
     private $batchSize = 1000;
     private $indexedRecords;
+    private $indexedFields;
 
+    /**
+     * Allows static launch of an indexing.
+     *
+     * @param bool $output shows logging on the output stream
+     * @param bool $useSearchDefs uses searchdefs.php files to understand what to index. Uses BeanJsonSerializer otherwise.
+     */
     public static function _run($output = false, $useSearchDefs = false)
     {
         $indexer = new self();
@@ -71,27 +78,26 @@ class ElasticSearchIndexer
         $indexer->run();
     }
 
+    /**
+     * Allows static launch of an indexing.
+     *
+     */
     public function run()
     {
         $this->log('@', 'Starting indexing procedures');
 
         $this->indexedRecords = 0;
+        $this->indexedFields = 0;
 
         $client = ElasticSearchClientBuilder::getClient();
 
         if ($this->useSearchDefs) {
             $this->log('@', 'Indexing is performed using Searchdefs');
         } else {
-            $this->log('@', 'Indexing is performed using BeanJsonSerialiser');
+            $this->log('@', 'Indexing is performed using BeanJsonSerializer');
         }
 
-        try {
-            $client->indices()->delete(['index' => '_all']);
-        } /** @noinspection PhpRedundantCatchClauseInspection */
-        catch (\Elasticsearch\Common\Exceptions\Missing404Exception $ignore) {
-            // Index not there, not big deal since we meant to delete it anyway.
-            $this->log('*', 'Index not found, no index has been deleted.');
-        }
+        $this->deleteAllIndexes($client);
 
         $start = microtime(true);
 
@@ -102,12 +108,12 @@ class ElasticSearchIndexer
         }
 
         $end = microtime(true);
-
         $elapsed = ($end - $start); // seconds
-
-        $this->log('@', sprintf("Done! Indexed %d modules and %d records in %01.3F s", count($modules), $this->indexedRecords, $elapsed));
         $estimation = $elapsed / $this->indexedRecords * 200000;
+
+        $this->log('@', sprintf("%d modules, %d records and %d fields indexed in %01.3F s", count($modules), $this->indexedRecords, $this->indexedFields, $elapsed));
         $this->log('@', sprintf("It would take ~%d min for 200,000 records, assuming a linear expansion", $estimation / 60));
+        $this->log('@', "Done!");
     }
 
     public function log($type, $message)
@@ -164,6 +170,12 @@ class ElasticSearchIndexer
             $fields = $this->getFieldsToIndex($module);
 
         $params = ['body' => []];
+
+        if (!is_array($beans)) {
+            $this->log('!', 'Non-array type found while batch indexing. ' . gettype($beans) . ' found!');
+            $this->log('!', "Skipping module $module");
+            return;
+        }
 
         foreach ($beans as $key => $bean) {
 
@@ -262,11 +274,15 @@ class ElasticSearchIndexer
                 }
             }
 
+            $this->indexedFields += count($body);
+
             return $body;
         } else {
             $values = BeanJsonSerializer::toArray($bean);
 
             unset($values['id']);
+
+            $this->indexedFields += count($values);
 
             return $values;
         }
@@ -361,5 +377,21 @@ class ElasticSearchIndexer
 
         $params = ['index' => $this->indexName];
         $client->indices()->delete($params);
+    }
+
+    /**
+     * Removes all the indexes from Elasticsearch, effectively nuking all data.
+     *
+     * @param $client \Elasticsearch\Client
+     */
+    private function deleteAllIndexes($client)
+    {
+        try {
+            $client->indices()->delete(['index' => '_all']);
+        } /** @noinspection PhpRedundantCatchClauseInspection */
+        catch (\Elasticsearch\Common\Exceptions\Missing404Exception $ignore) {
+            // Index not there, not big deal since we meant to delete it anyway.
+            $this->log('*', 'Index not found, no index has been deleted.');
+        }
     }
 }

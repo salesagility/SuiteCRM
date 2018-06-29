@@ -65,13 +65,13 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
     public function testRun()
     {
+        // TODO potentially move to functional testing?
+
         $state = new \SuiteCRM\StateSaver();
 
         $state->pushGlobals();
 
-        $indexer = new ElasticSearchIndexer();
-
-        $indexer->run();
+        ElasticSearchIndexer::_run(true, false);
 
         $state->popGlobals();
     }
