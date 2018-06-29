@@ -122,7 +122,7 @@ class Audit extends SugarBean {
     		}
 		}
 
-        if($focus->is_AuditEnabled()){
+        if($focus && $focus->is_AuditEnabled()){
             $order= ' order by '.$focus->get_audit_table_name().'.date_created desc' ;//order by contacts_audit.date_created desc
             $query = "SELECT ".$focus->get_audit_table_name().".*, users.user_name FROM ".$focus->get_audit_table_name().", users WHERE ".$focus->get_audit_table_name().".created_by = users.id AND ".$focus->get_audit_table_name().".parent_id = '$focus->id'".$order;
 
