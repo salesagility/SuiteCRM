@@ -150,7 +150,7 @@ class AOP_Case_Updates extends Basic
                 $headElement->parentNode->removeChild($headElement);
             }
             $dom->removeChild($dom->doctype);
-            $dom->replaceChild($dom->firstChild->firstChild->firstChild, $dom->firstChild);
+            $dom->appendChild($dom->firstChild);
             $description = $dom->saveHTML();
 
             foreach (libxml_get_errors() as $xmlError) {
