@@ -49,6 +49,8 @@ use Elasticsearch\ClientBuilder;
  */
 class ElasticSearchClientBuilder
 {
+    private static $hosts;
+
     /**
      * Returns a preconfigured elasticsearch client.
      *
@@ -56,8 +58,25 @@ class ElasticSearchClientBuilder
      */
     public static function getClient()
     {
-        $hosts = ['elasticsearch'];
-        $client = ClientBuilder::create()->setHosts($hosts)->build();
+        if (empty(self::$hosts)) self::$hosts = self::loadConfig();
+
+        $client = ClientBuilder::create();
+
+        if ($client) {
+            $client = $client->setHosts(self::$hosts);
+        }
+
+        $client = $client->build();
+
         return $client;
+    }
+
+    private static function loadConfig()
+    {
+        $results = file_get_contents(__DIR__ . '/elasticsearch.json');
+
+        if ($results === false) return null;
+
+        return json_decode($results, true);
     }
 }
