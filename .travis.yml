@@ -18,6 +18,7 @@ sudo: required
 dist: trusty
 services:
   - mysql
+  - elasticsearch
 addons:
   chrome: stable
 
