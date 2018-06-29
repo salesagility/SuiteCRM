@@ -83,14 +83,18 @@ class BeanJsonSerializer
     /**
      * Converts a SugarBean to a nested, standardised, cleaned associative array.
      *
+     * The `$loadRelationships` option allows to choose whether to load the bean's relationship or not.
+     * This has a serious impact on performance if enabled (~70% slower). Also, I suspect no more fields are detected.
+     * Keep it disabled.
+     *
      * @param $bean \SugarBean the bean to serialise
      * @param bool $hideEmptyValues removes fields with empty (`""` or `null`) values.
+     * @param bool $loadRelationships whether to load the bean relationship
      * @return array
      */
-    public static function toArray($bean, $hideEmptyValues = true)
+    public static function toArray($bean, $hideEmptyValues = true, $loadRelationships = false)
     {
-        // TODO Check if it actually of any use. Huge impact on performance!
-        $bean->load_relationships();
+        if ($loadRelationships) $bean->load_relationships();
 
         $fields = array_merge($bean->fetched_row, $bean->fetched_rel_row);
 
@@ -131,7 +135,6 @@ class BeanJsonSerializer
             //endregion
 
             //region metas
-
             if ($key == 'date_entered') {
                 $prettyBean['meta']['created']['date'] = $value;
                 continue;
@@ -176,12 +179,9 @@ class BeanJsonSerializer
                 $prettyBean['meta']['assigned']['owner_name'] = $value;
                 continue;
             }
-
-
             //endregion
 
             //region assistant
-
             if ($key == 'assistant') {
                 $prettyBean['assistant']['name'] = $value;
                 continue;
@@ -191,7 +191,6 @@ class BeanJsonSerializer
                 $prettyBean['assistant']['phone'] = $value;
                 continue;
             }
-
             // endregion
 
             //region reportTo
