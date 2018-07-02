@@ -175,7 +175,8 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aor_Report->report_module = 'Accounts';
         
         $chartBean = BeanFactory::getBean('AOR_Charts');
-        $charts = $chartBean->get_full_list();
+        $charts = (array)$chartBean->get_full_list();
+        
 
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
         $result = $aor_Report->build_report_chart();
