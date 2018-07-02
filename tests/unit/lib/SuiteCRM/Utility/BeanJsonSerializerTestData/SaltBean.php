@@ -63,6 +63,8 @@ class SaltBean
         $this->module_dir = $module;
 
         $this->fetched_row = $array;
+
+        $this->id = $array['id'];
     }
 
     public function load_relationships()
