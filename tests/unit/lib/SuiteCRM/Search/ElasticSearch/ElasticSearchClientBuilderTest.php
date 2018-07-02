@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,47 +37,51 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-namespace SuiteCRM\Search\ElasticSearch;
-
-use Elasticsearch\ClientBuilder;
-
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 26/06/18
- * Time: 11:11
+ * Date: 02/07/18
+ * Time: 09:44
  */
-class ElasticSearchClientBuilder
+
+use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
+use SuiteCRM\Search\SearchTestAbstract;
+
+class ElasticSearchClientBuilderTest extends SearchTestAbstract
 {
-    private static $hosts;
 
-    /**
-     * Returns a preconfigured elasticsearch client.
-     *
-     * @return \Elasticsearch\Client
-     */
-    public static function getClient()
+    public function testGetClient()
     {
-        if (empty(self::$hosts)) self::$hosts = self::loadConfig(__DIR__ . '/elasticsearch.json');
+        $client = ElasticSearchClientBuilder::getClient();
 
-        $client = ClientBuilder::create()->setHosts(self::$hosts)->build();
-
-        return $client;
+        self::assertInstanceOf(\Elasticsearch\Client::class, $client);
     }
 
-    private static function loadConfig($file)
+    public function testLoadConfig()
     {
-        if (!file_exists($file)) return self::loadDefaultConfig();
+        $builder = new ElasticSearchClientBuilder();
+        $config = self::invokeMethod($builder, 'loadConfig', [__DIR__ . '/TestData/ElasticsearchServerConfig.json']);
+        $expected = [
+            [
+                "host" => "foo.com",
+                "port" => "9200",
+                "scheme" => "https",
+                "user" => "username",
+                "pass" => "password!#$?*abc"
+            ],
+            ["host" => "localhost"]
+        ];
 
-        $results = file_get_contents($file);
-
-        if ($results === false) return self::loadDefaultConfig();
-
-        return json_decode($results, true);
+        self::assertEquals($expected, $config);
     }
 
-    private static function loadDefaultConfig()
+    // Tests if the default configs are returned when the config file is not found
+    public function testLoadConfigFileNotThere()
     {
-        return ['127.0.0.1'];
+        $builder = new ElasticSearchClientBuilder();
+        $config = self::invokeMethod($builder, 'loadConfig', [__DIR__ . '/TestData/NopeNotHere.json']);
+        $expected = ["127.0.0.1"];
+
+        self::assertEquals($expected, $config);
     }
 }
