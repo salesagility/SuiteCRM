@@ -63,6 +63,23 @@ class ElasticSearchIndexer
     private $indexedFields;
 
     /**
+     * @var \Elasticsearch\Client
+     */
+    private $client = null;
+
+    /**
+     * ElasticSearchIndexer constructor.
+     * @param \Elasticsearch\Client|null $client
+     */
+    public function __construct($client = null)
+    {
+        if (!empty($client))
+            $this->client = $client;
+        else
+            $this->client = ElasticSearchClientBuilder::getClient();
+    }
+
+    /**
      * Allows static launch of an indexing.
      *
      * @param bool $output shows logging on the output stream
@@ -89,22 +106,20 @@ class ElasticSearchIndexer
         $this->indexedRecords = 0;
         $this->indexedFields = 0;
 
-        $client = ElasticSearchClientBuilder::getClient();
-
         if ($this->useSearchDefs) {
             $this->log('@', 'Indexing is performed using Searchdefs');
         } else {
             $this->log('@', 'Indexing is performed using BeanJsonSerializer');
         }
 
-        $this->deleteAllIndexes($client);
+        $this->deleteAllIndexes();
 
         $start = microtime(true);
 
         $modules = $this->getModulesToIndex();
 
         foreach ($modules as $module) {
-            $this->indexModule($module, $client);
+            $this->indexModule($module);
         }
 
         $end = microtime(true);
@@ -140,19 +155,18 @@ class ElasticSearchIndexer
      */
     public function getModulesToIndex()
     {
-        // TODO
+        // TODO get them from either the search defs or the add a white/blacklist
         return ['Accounts', 'Contacts', 'Users'];
     }
 
     /**
      * @param $module string
-     * @param $client \Elasticsearch\Client
      */
-    private function indexModule($module, $client)
+    private function indexModule($module)
     {
         $beans = BeanFactory::getBean($module)->get_full_list();
 
-        $this->indexBatch($module, $beans, $client);
+        $this->indexBatch($module, $beans);
 
         $count = count($beans);
         $this->indexedRecords += $count;
@@ -162,9 +176,8 @@ class ElasticSearchIndexer
     /**
      * @param $module string
      * @param $beans SugarBean[]
-     * @param $client \Elasticsearch\Client
      */
-    private function indexBatch($module, $beans, $client)
+    private function indexBatch($module, $beans)
     {
         if ($this->useSearchDefs)
             $fields = $this->getFieldsToIndex($module);
@@ -191,7 +204,7 @@ class ElasticSearchIndexer
 
             // Send a batch of $this->batchSize elements to the server
             if ($key % $this->batchSize == 0) {
-                $responses = $client->bulk($params);
+                $responses = $this->client->bulk($params);
 
                 // erase the old bulk request
                 $params = ['body' => []];
@@ -203,7 +216,7 @@ class ElasticSearchIndexer
 
         // Send the last batch if it exists
         if (!empty($params['body'])) {
-            $responses = $client->bulk($params);
+            $responses = $this->client->bulk($params);
             unset($responses);
         }
     }
@@ -307,22 +320,16 @@ class ElasticSearchIndexer
     /**
      * @param $bean SugarBean
      * @param $fields array|null
-     * @param $client \Elasticsearch\Client|null
      */
-    public function indexBean($bean, $fields = null, $client = null)
+    public function indexBean($bean, $fields = null)
     {
-        // TODO tests
-        if (empty($client)) {
-            $client = ElasticSearchClientBuilder::getClient();
-        }
-
         if ($this->useSearchDefs && empty($fields)) {
             $fields = $this->getFieldsToIndex($bean->module_name);
         }
 
         $args = $this->makeIndexParamsFromBean($bean, $fields);
 
-        $client->index($args);
+        $this->client->index($args);
     }
 
     /**
@@ -344,7 +351,6 @@ class ElasticSearchIndexer
      */
     private function makeParamsHeaderFromBean($bean)
     {
-        // TODO tests
         $args = [
             'index' => $this->indexName,
             'type' => $bean->module_name,
@@ -356,38 +362,30 @@ class ElasticSearchIndexer
 
     /**
      * @param $bean SugarBean
-     * @param $client \Elasticsearch\Client|null
      */
-    public function removeBean($bean, $client = null)
+    public function removeBean($bean)
     {
-        // TODO tests
-        if (empty($client)) {
-            $client = ElasticSearchClientBuilder::getClient();
-        }
-
         $args = $this->makeParamsHeaderFromBean($bean);
-
-        $client->delete($args);
+        $this->client->delete($args);
     }
 
-    public function removeIndex($client = null)
+    public function removeIndex($index = null)
     {
-        // TODO tests
-        if (empty($client)) $client = ElasticSearchClientBuilder::getClient();
+        if (empty($index)) {
+            $index = $this->indexName;
+        }
 
-        $params = ['index' => $this->indexName];
-        $client->indices()->delete($params);
+        $params = ['index' => $index];
+        $this->client->indices()->delete($params);
     }
 
     /**
      * Removes all the indexes from Elasticsearch, effectively nuking all data.
-     *
-     * @param $client \Elasticsearch\Client
      */
-    private function deleteAllIndexes($client)
+    public function deleteAllIndexes()
     {
         try {
-            $client->indices()->delete(['index' => '_all']);
+            $this->client->indices()->delete(['index' => '_all']);
         } /** @noinspection PhpRedundantCatchClauseInspection */
         catch (\Elasticsearch\Common\Exceptions\Missing404Exception $ignore) {
             // Index not there, not big deal since we meant to delete it anyway.
