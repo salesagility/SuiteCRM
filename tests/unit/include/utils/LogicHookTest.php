@@ -29,7 +29,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throws an exception
@@ -83,7 +83,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //execute the method and test if it returns expected contents
 
@@ -200,7 +200,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throws an exception
@@ -339,7 +339,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             file_exists("custom/modules/logic_hooks.php") ||
             file_exists("custom/application/Ext/LogicHooks/logichooks.ext.php")
         ) {
-            //$this->assertSame($expected_default, $default_hooks);
+            
         } else {
             $this->assertTrue(empty($default_hooks));
         }
@@ -515,7 +515,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throws an exception
@@ -542,7 +542,7 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it doesn't throws an exception

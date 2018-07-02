@@ -433,8 +433,14 @@ eoq;
         global $focus;
         $myBean = $focus;
         $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
-
+        
+        $enableConfirmedOptIn = null;
+        if (isset($configurator->config['email_enable_confirm_opt_in'])) {
+            $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
+        }
+        
         if (!empty($bean)) {
             $myBean = $bean;
         } else {

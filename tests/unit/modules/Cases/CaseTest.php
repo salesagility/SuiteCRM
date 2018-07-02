@@ -34,7 +34,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $aCase = new aCase();
         $this->assertEquals(null, $aCase->get_summary_text());
@@ -69,7 +69,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aCase = new aCase();
@@ -94,7 +94,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aCase = new aCase();
@@ -117,7 +117,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aCase = new aCase();
@@ -179,7 +179,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
         $actual = $aCase->get_list_view_data();
-        //$this->assertSame($expected ,$actual);
+        
         $this->assertEquals($expected['STATE'], $actual['STATE']);
         $this->assertEquals($expected['UPDATE_TEXT'], $actual['UPDATE_TEXT']);
         $this->assertEquals($expected['NAME'], $actual['NAME']);
@@ -205,7 +205,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         );
 
         $actual = $aCase->get_list_view_data();
-        //$this->assertSame($expected ,$actual);
+        
         $this->assertEquals($expected['NAME'], $actual['NAME']);
         $this->assertEquals($expected['CASE_NUMBER'], $actual['CASE_NUMBER']);
         $this->assertEquals($expected['STATUS'], $actual['STATUS']);

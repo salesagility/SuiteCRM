@@ -17,7 +17,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //execute the contructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
@@ -57,7 +57,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aor_reports');
         $state->pushFile('modules/AOD_Index/Index/Index/read.lock.file');
         $state->pushFile('modules/AOD_Index/Index/Index/segments_3n');
-        $state->pushTable('aod_indexevent');
         $state->pushFile('modules/AOD_Index/Index/Index/read-lock-processing.lock.file');
         $state->pushFile('modules/AOD_Index/Index/Index/write.lock.file');
         $state->pushFile('modules/AOD_Index/Index/Index/optimization.lock.file');
@@ -128,7 +127,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popFile('modules/AOD_Index/Index/Index/optimization.lock.file');
         $state->popFile('modules/AOD_Index/Index/Index/write.lock.file');
         $state->popFile('modules/AOD_Index/Index/Index/read-lock-processing.lock.file');
-        $state->popTable('aod_indexevent');
         $state->popFile('modules/AOD_Index/Index/Index/segments_3n');
         $state->popFile('modules/AOD_Index/Index/Index/read.lock.file');
         $state->popTable('aor_reports');
@@ -144,7 +142,7 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $aor_Report = new AOR_Report();

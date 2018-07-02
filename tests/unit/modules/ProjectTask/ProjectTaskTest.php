@@ -55,7 +55,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $projectTask = new ProjectTask();
 
@@ -88,7 +88,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
-        //$projectTask->project_id = "1";
+        
         $projectTask->assigned_user_id = '1';
         $projectTask->description = 'test description';
         $projectTask->parent_task_id = 1;
@@ -132,7 +132,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $projectTask = new ProjectTask();
@@ -173,7 +173,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $projectTask = new ProjectTask();

@@ -32,7 +32,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $employee = new Employee();
 
@@ -54,7 +54,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $employee = new Employee();
@@ -91,7 +91,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testretrieve_employee_id()
     {
         $employee = new Employee();
-        //$this->assertEquals('1' ,$employee->retrieve_employee_id('admin'));
+        
 
         $this->markTestSkipped('Bug in query: employee_name parameter is wrongly used as user_name');
     }
@@ -164,7 +164,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $employee = new Employee();
@@ -205,7 +205,7 @@ class EmployeeTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $employee = new Employee();

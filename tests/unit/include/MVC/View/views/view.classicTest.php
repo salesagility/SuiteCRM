@@ -21,7 +21,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('', 'type', $view);
 
-        //test with bean parameter;
+        
         $bean = new User();
         $view = new ViewClassic($bean);
         $this->assertInstanceOf('ViewClassic', $view);
@@ -39,7 +39,7 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        ////error_reporting(E_ERROR | E_PARSE);
+        
 
         //test with a valid module but invalid action. it should return false.
         $view = new ViewClassic();
@@ -55,12 +55,12 @@ class ViewClassicTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         
         // folowing code says: "Test code or tested code did not (only) close its own output buffers"
-//        ob_start();
-//        $ret = $view->display();
-//        $renderedContent = ob_get_contents();
-//        ob_end_clean();
-//        $this->assertEquals(0, strlen($renderedContent), 'Renderered Content was: ' . $renderedContent);
-//        $this->assertTrue($ret);
+
+
+
+
+
+
         
         $this->markTestIncomplete("Warning was: Test code or tested code did not (only) close its own output buffers");
 

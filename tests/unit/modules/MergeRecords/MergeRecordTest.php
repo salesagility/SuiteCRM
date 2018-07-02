@@ -30,7 +30,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsave()
     {
         $mergeRecord = new MergeRecord();
-        //$mergeRecord->save();
+        
 
         $this->markTestIncomplete('method has no implementation');
     }
@@ -49,7 +49,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $mergeRecord->retrieve('1');
 
         $this->markTestIncomplete('Merge bean is broken at the moment');
-        //$this->assertTrue(isset($mergeRecord->merge_bean->id));
+        
         
         $this->assertEquals(1, $mergeRecord->merge_bean->id);
     }
@@ -108,7 +108,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
 
@@ -137,7 +137,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $mergeRecord = new MergeRecord();
@@ -266,7 +266,7 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $mergeRecord = new MergeRecord();
 
@@ -353,6 +353,6 @@ class MergeRecordTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertSame($expected, $actual);
 
-        ////error_reporting(E_ALL);
+        
     }
 }
