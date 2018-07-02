@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
+
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,7 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+use Mockery as m;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer as i;
+use SuiteCRM\Utility\BeanJsonSerializerTestData\SaltBean;
 
 /**
  * Created by PhpStorm.
@@ -45,8 +49,6 @@ use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
  * Date: 22/06/18
  * Time: 12:37
  */
-
-
 class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 {
 
@@ -65,14 +67,343 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
     public function testRun()
     {
-        // TODO potentially move to functional testing?
+        // TODO
+    }
 
-        $state = new \SuiteCRM\StateSaver();
+    public function testStaticRun()
+    {
+        // How do I test all this stuff? :(
+        // Maybe I should just get rid of the static method for easier testing.
+        self::markTestIncomplete();
+    }
 
-        $state->pushGlobals();
+    public function testIndexBatch()
+    {
+        $client = m::mock('\Elasticsearch\Client');
 
-        ElasticSearchIndexer::_run(true, false);
+        $client
+            ->shouldReceive('bulk')
+            ->times(4);
 
-        $state->popGlobals();
+        $mockedModule = 'MockedModule';
+
+        $mockedBeans = [
+            (object)array("id" => 1, "fetched_row" => ['name' => 'name 1'], "fetched_rel_row" => []),
+            (object)array("id" => 2, "fetched_row" => ['name' => 'name 2'], "fetched_rel_row" => []),
+            (object)array("id" => 3, "fetched_row" => ['name' => 'name 3'], "fetched_rel_row" => []),
+            (object)array("id" => 4, "fetched_row" => ['name' => 'name 4'], "fetched_rel_row" => []),
+            (object)array("id" => 5, "fetched_row" => ['name' => 'name 5'], "fetched_rel_row" => []),
+            (object)array("id" => 6, "fetched_row" => ['name' => 'name 6'], "fetched_rel_row" => []),
+        ];
+
+        $i = new i($client);
+
+        $i->setBatchSize(2);
+
+        self::invokeMethod($i, 'indexBatch', [$mockedModule, $mockedBeans]);
+    }
+
+    public function testGettersAndSetters()
+    {
+        $batchSize = 20;
+        $searchDefs = true;
+        $output = false;
+
+        $i = new i();
+
+        $i->setUseSearchDefs($searchDefs);
+        $i->setOutput($output);
+        $i->setBatchSize($batchSize);
+
+        self::assertEquals($batchSize, $i->getBatchSize());
+        self::assertEquals($searchDefs, $i->isUseSearchDefs());
+        self::assertEquals($output, $i->isOutput());
+
+        $i = new i();
+
+        $batchSize = 50;
+        $searchDefs = false;
+        $output = true;
+
+        $i->setUseSearchDefs($searchDefs);
+        $i->setOutput($output);
+        $i->setBatchSize($batchSize);
+    }
+
+    public function testGetFieldsToIndex()
+    {
+        $mockParser = m::mock('ParserSearchFields');
+        $mockModule = 'MockModule';
+        $mockFields = [
+            $mockModule => [
+                // TODO
+            ]
+        ];
+
+        $expected = [
+            // TODO
+        ];
+
+        $mockParser
+            ->shouldReceive('getSearchFields')
+            ->once()
+            ->with()
+            ->andReturn($mockFields);
+
+        $indexer = new i();
+        $actual = $indexer->getFieldsToIndex($mockModule, $mockParser);
+
+        self::assertEquals($expected, $actual);
+
+        self::markTestIncomplete("Need to test the foreach");
+    }
+
+    public function testIndexBean()
+    {
+        $bean = $this->getTestBean();
+        $client = m::mock('\Elasticsearch\Client');
+
+        $client
+            ->shouldReceive('index')
+            ->once();
+
+        $indexer = new ElasticSearchIndexer($client);
+        $indexer->setUseSearchDefs(false);
+
+        $indexer->indexBean($bean);
+    }
+
+    /**
+     * @return SugarBean
+     */
+    private function getTestBean()
+    {
+        /** @var SugarBean $bean */
+        $bean = new SaltBean('Contacts', __DIR__ . '/../../Utility/BeanJsonSerializerTestData/ContactBean.json');
+        return $bean;
+    }
+
+    public function testMakeIndexParamsFromBean()
+    {
+        $bean = $this->getTestBean();
+        $expected = $this->getExpectedHeader();
+        $expected['body'] = $this->getExpectedBody();
+
+        $indexer = new ElasticSearchIndexer();
+
+        $actual = self::invokeMethod($indexer, 'makeIndexParamsFromBean', [$bean]);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @return array
+     */
+    private function getExpectedHeader()
+    {
+        $expected = [
+            'index' => 'main',
+            'type' => 'Contacts',
+            'id' => '00000000-0000-0000-0000-000000000000',
+        ];
+        return $expected;
+    }
+
+    /**
+     * @return array
+     */
+    private function getExpectedBody()
+    {
+        $expected = [
+            'meta' =>
+                [
+                    'created' =>
+                        [
+                            'date' => '2018-06-12 11:01:34',
+                            'user_id' => '1',
+                            'user_name' => 'Administrator',
+                        ],
+                    'modified' =>
+                        [
+                            'date' => '2018-06-12 11:01:34',
+                            'user_id' => '1',
+                            'user_name' => 'Administrator',
+                        ],
+                    'assigned' =>
+                        [
+                            'user_id' => 'seed_max_id',
+                            'user_name' => 'Max Jensen',
+                        ],
+                ],
+            'name' =>
+                [
+                    'salutation' => 'Ms.',
+                    'first' => 'Cindy',
+                    'last' => 'Espana',
+                ],
+            'account' =>
+                [
+                    'title' => 'Director Operations',
+                    'department' => 'Genetics',
+                    'name' => 'Start Over Trust',
+                    'id' => '39363e96-5eed-0221-9889-5b1fa86ebb52',
+                ],
+            'phone' =>
+                [
+                    'home' => '4451633872',
+                    'mobile' => '9788363300',
+                    'work' => '7111123512',
+                ],
+            'address' =>
+                [
+                    'primary' =>
+                        [
+                            'street' => '345 Sugar Blvd.',
+                            'city' => 'Salt Lake City',
+                            'state' => 'CA',
+                            'postalcode' => '58821',
+                            'country' => 'USA',
+                        ],
+                ],
+            'lead_source' => 'Web Site',
+            'email' =>
+                [
+                    0 => 'kid79@example.co.jp',
+                ],
+        ];
+        return $expected;
+    }
+
+    public function testMakeIndexParamsBodyFromBean1()
+    {
+        $bean = $this->getTestBean();
+        $indexer = new ElasticSearchIndexer();
+        $indexer->setUseSearchDefs(false);
+        $expected = $this->getExpectedBody();
+
+        $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testMakeIndexParamsBodyFromBean2()
+    {
+        self::markTestIncomplete("TODO");
+    }
+
+    public function testRemoveBean()
+    {
+        $mock = m::mock('Elasticsearch\Client');
+        $bean = $this->getTestBean();
+
+
+        $params = [
+            'index' => 'main',
+            'type' => 'Contacts',
+            'id' => '00000000-0000-0000-0000-000000000000',
+        ];
+
+        $mock
+            ->shouldReceive('delete')
+            ->once()
+            ->with($params);
+
+        $indexer = new ElasticSearchIndexer($mock);
+
+        $indexer->removeBean($bean);
+    }
+
+    public function testMakeParamsFromBean()
+    {
+
+    }
+
+    public function testMakeParamsHeaderFromBean()
+    {
+        /** @var SugarBean $bean */
+        $bean = $this->getTestBean();
+        $expected = $this->getExpectedHeader();
+
+        $indexer = new ElasticSearchIndexer();
+
+        $actual = self::invokeMethod($indexer, 'makeParamsHeaderFromBean', [$bean]);
+
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testRemoveIndex()
+    {
+        list($mockClient, $mockIndices) = $this->getMockIndices();
+
+        $mockIndices
+            ->shouldReceive('delete')
+            ->once()
+            ->with(['index' => 'main']);
+
+        $indexer = new ElasticSearchIndexer($mockClient);
+
+        $indexer->removeIndex();
+    }
+
+    /**
+     * @return array
+     */
+    public function getMockIndices()
+    {
+        $mockClient = m::mock('Elasticsearch\Client');
+        $mockIndices = m::mock('Elasticsearch\Namespaces\IndicesNamespace');
+
+        $mockClient
+            ->shouldReceive('indices')
+            ->once()
+            ->withNoArgs()
+            ->andReturn($mockIndices);
+        return [$mockClient, $mockIndices];
+    }
+
+    public function testRemoveIndex2()
+    {
+        $index = uniqid();
+        list($mockClient, $mockIndices) = $this->getMockIndices();
+
+        $mockIndices
+            ->shouldReceive('delete')
+            ->once()
+            ->with(['index' => $index]);
+
+        $indexer = new ElasticSearchIndexer($mockClient);
+        $indexer->removeIndex($index);
+    }
+
+    public function testDeleteAllIndexes()
+    {
+        list($mockClient, $mockIndices) = $this->getMockIndices();
+
+        $mockIndices->shouldReceive('delete')->once();
+
+        $indexer = new ElasticSearchIndexer($mockClient);
+        $indexer->deleteAllIndexes();
+    }
+
+    public function testDeleteAllIndexes2()
+    {
+        list($mockClient, $mockIndices) = $this->getMockIndices();
+
+        $mockIndices
+            ->shouldReceive('delete')
+            ->once()
+            ->with(['index' => '_all'])
+            ->andThrow('\Elasticsearch\Common\Exceptions\Missing404Exception');
+
+
+        $indexer = new ElasticSearchIndexer($mockClient);
+        $indexer->deleteAllIndexes();
+
+        // no exception should appear here, as the 404 has to be caught.
+    }
+
+    protected function tearDown()
+    {
+        m::close();
+        parent::tearDown();
     }
 }
