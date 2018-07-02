@@ -151,6 +151,20 @@ class ElasticSearchIndexer
     }
 
     /**
+     * Removes all the indexes from Elasticsearch, effectively nuking all data.
+     */
+    public function deleteAllIndexes()
+    {
+        try {
+            $this->client->indices()->delete(['index' => '_all']);
+        } /** @noinspection PhpRedundantCatchClauseInspection */
+        catch (\Elasticsearch\Common\Exceptions\Missing404Exception $ignore) {
+            // Index not there, not big deal since we meant to delete it anyway.
+            $this->log('*', 'Index not found, no index has been deleted.');
+        }
+    }
+
+    /**
      * @return string[]
      */
     public function getModulesToIndex()
@@ -267,14 +281,16 @@ class ElasticSearchIndexer
      * @param $fields array
      * @return array
      */
-    private function makeIndexParamsBodyFromBean($bean, &$fields)
+    private function makeIndexParamsBodyFromBean($bean, &$fields = null)
     {
         if ($this->useSearchDefs) {
+            if (empty($fields))
+                throw new \InvalidArgumentException("Mandatory argument \$fields is empty.");
+
             $body = [];
 
             foreach ($fields as $key => $field) {
                 if (is_array($field)) {
-                    // TODO Addresses should be structured better
                     foreach ($field as $subfield) {
                         if ($this->hasField($bean, $subfield)) {
                             $body[$key][$subfield] = mb_convert_encoding($bean->$subfield, "UTF-8", "HTML-ENTITIES");
@@ -317,6 +333,40 @@ class ElasticSearchIndexer
         }
     }
 
+    //region Accessors
+    /**
+     * @return bool
+     */
+    public function isUseSearchDefs()
+    {
+        return $this->useSearchDefs;
+    }
+
+    /**
+     * @param bool $useSearchDefs
+     */
+    public function setUseSearchDefs($useSearchDefs)
+    {
+        $this->useSearchDefs = $useSearchDefs;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOutput()
+    {
+        return $this->output;
+    }
+
+    /**
+     * @param bool $output
+     */
+    public function setOutput($output)
+    {
+        $this->output = $output;
+    }
+    //endregion
+
     /**
      * @param $bean SugarBean
      * @param $fields array|null
@@ -334,12 +384,11 @@ class ElasticSearchIndexer
 
     /**
      * @param $bean SugarBean
-     * @param $fields array
+     * @param $fields array|null
      * @return array
      */
-    private function makeIndexParamsFromBean($bean, $fields)
+    private function makeIndexParamsFromBean($bean, $fields = null)
     {
-        // TODO tests
         $args = $this->makeParamsHeaderFromBean($bean);
         $args['body'] = $this->makeIndexParamsBodyFromBean($bean, $fields);
         return $args;
@@ -377,19 +426,5 @@ class ElasticSearchIndexer
 
         $params = ['index' => $index];
         $this->client->indices()->delete($params);
-    }
-
-    /**
-     * Removes all the indexes from Elasticsearch, effectively nuking all data.
-     */
-    public function deleteAllIndexes()
-    {
-        try {
-            $this->client->indices()->delete(['index' => '_all']);
-        } /** @noinspection PhpRedundantCatchClauseInspection */
-        catch (\Elasticsearch\Common\Exceptions\Missing404Exception $ignore) {
-            // Index not there, not big deal since we meant to delete it anyway.
-            $this->log('*', 'Index not found, no index has been deleted.');
-        }
     }
 }
