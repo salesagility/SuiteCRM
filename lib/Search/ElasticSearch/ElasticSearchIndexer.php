@@ -404,6 +404,23 @@ class ElasticSearchIndexer
     }
 
     /**
+     * @return int
+     */
+    public function getBatchSize()
+    {
+        return $this->batchSize;
+    }
+
+    /**
+     * @param int $batchSize
+     */
+    public function setBatchSize($batchSize)
+    {
+        $this->batchSize = $batchSize;
+    }
+
+
+    /**
      * @param $bean SugarBean
      * @param $fields array|null
      * @return array
