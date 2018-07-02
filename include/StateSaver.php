@@ -89,7 +89,7 @@ class StateSaver
      */
     public function __destruct()
     {
-        if (!empty($this->stack)) {
+        if (!empty($this->state)) {
             
             $info = "\nNeeds to restore:\n";
             
