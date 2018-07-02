@@ -3,14 +3,6 @@
 
 class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        global $current_user;
-        get_sugar_config_defaults();
-        $current_user = new User();
-    }
 
     public function testAOR_Report()
     {
@@ -171,19 +163,49 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_report_chart()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushGlobal('dictionary');
+        $state->pushGlobal('app_list_strings');
+        $state->pushGlobal('current_user');
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
+        
+        $chartBean = BeanFactory::getBean('AOR_Charts');
+        $charts = $chartBean->get_full_list();
 
         //execute the method and verify that it returns chart display script. strings returned vary due to included chart id.
-        $expected = '';
         $result = $aor_Report->build_report_chart();
-        $this->assertEquals($expected, $result);
+        foreach ($charts as $chart) {
+            $this->assertContains($chart->id, $result);
+        }
+        
+        // clean up
+        
+        unset($GLOBALS['_SESSION']);
+        unset($GLOBALS['objectList']);
+        unset($GLOBALS['mod_strings']);
+        unset($GLOBALS['toHTML']);
+        unset($GLOBALS['module']);
+        unset($GLOBALS['action']);
+        unset($GLOBALS['disable_date_format']);
+        unset($GLOBALS['fill_in_rel_depth']);
+        unset($GLOBALS['currentModule']);
+        $state->popGlobal('current_user');
+        $state->popGlobal('app_list_strings');
+        $state->popGlobal('dictionary');
+        $state->popGlobals();
     }
 
     public function testbuild_group_report()
     {
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        
+        // test
         
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
