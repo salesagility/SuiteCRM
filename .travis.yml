@@ -73,12 +73,9 @@ script:
   # Install demo user data
   - mysql -u root -D automated_tests -v -e "source tests/_data/demo_users.sql"
   # Run the unit tests
-  - ./vendor/bin/codecept run -f unit --steps -v
   # Run API functional tests
-  - ./vendor/bin/codecept run api --steps
   # RUN Basic Acceptance test
-  - sudo chmod -R 777 .
-  - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f;
+  - ./vendor/bin/codecept run -f unit --steps -v && ./vendor/bin/codecept run api --steps -f -v && sudo chmod -R 777 . && ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -v;
 
 after_script:
   - ./build/push_output.sh
