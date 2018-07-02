@@ -237,14 +237,17 @@ class ElasticSearchIndexer
 
     /**
      * @param $module string
+     * @param ParserSearchFields|null $parser
      * @return string[]
      */
-    public function getFieldsToIndex($module)
+    public function getFieldsToIndex($module, $parser = null)
     {
-        require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
+        if (empty($parser)) {
+            require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
+            $parser = new ParserSearchFields($module);
+        }
 
-        $parsers = new ParserSearchFields($module);
-        $fields = $parsers->getSearchFields()[$module];
+        $fields = $parser->getSearchFields()[$module];
 
         $parsedFields = [];
 
