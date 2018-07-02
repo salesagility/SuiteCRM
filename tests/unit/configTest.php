@@ -9,6 +9,6 @@ class configTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
     
     public function testFoo() {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
 }
