@@ -283,38 +283,43 @@ class ElasticSearchIndexer
      */
     private function makeIndexParamsBodyFromBean($bean, &$fields = null)
     {
-        if ($this->useSearchDefs) {
-            if (empty($fields))
-                throw new \InvalidArgumentException("Mandatory argument \$fields is empty.");
+        $results
+            = $this->useSearchDefs
+            ? $this->makeIndexParamsBodyFromBeanSearchDefs($bean, $fields)
+            : $this->makeIndexParamsBodyFromBeanSerializer($bean);
 
-            $body = [];
+        return $results;
+    }
 
-            foreach ($fields as $key => $field) {
-                if (is_array($field)) {
-                    foreach ($field as $subfield) {
-                        if ($this->hasField($bean, $subfield)) {
-                            $body[$key][$subfield] = mb_convert_encoding($bean->$subfield, "UTF-8", "HTML-ENTITIES");
-                        }
-                    }
-                } else {
-                    if ($this->hasField($bean, $field)) {
-                        $body[$field] = mb_convert_encoding($bean->$field, "UTF-8", "HTML-ENTITIES");
+    /**
+     * @param $bean
+     * @param $fields
+     * @return array
+     */
+    private function makeIndexParamsBodyFromBeanSearchDefs($bean, &$fields)
+    {
+        if (empty($fields))
+            throw new \InvalidArgumentException("Mandatory argument \$fields is empty.");
+
+        $body = [];
+
+        foreach ($fields as $key => $field) {
+            if (is_array($field)) {
+                foreach ($field as $subfield) {
+                    if ($this->hasField($bean, $subfield)) {
+                        $body[$key][$subfield] = mb_convert_encoding($bean->$subfield, "UTF-8", "HTML-ENTITIES");
                     }
                 }
+            } else {
+                if ($this->hasField($bean, $field)) {
+                    $body[$field] = mb_convert_encoding($bean->$field, "UTF-8", "HTML-ENTITIES");
+                }
             }
-
-            $this->indexedFields += count($body);
-
-            return $body;
-        } else {
-            $values = BeanJsonSerializer::toArray($bean);
-
-            unset($values['id']);
-
-            $this->indexedFields += count($values);
-
-            return $values;
         }
+
+        $this->indexedFields += count($body);
+
+        return $body;
     }
 
     /**
@@ -333,7 +338,21 @@ class ElasticSearchIndexer
         }
     }
 
-    //region Accessors
+    /**
+     * @param $bean
+     * @return array
+     */
+    private function makeIndexParamsBodyFromBeanSerializer($bean)
+    {
+        $values = BeanJsonSerializer::toArray($bean);
+
+        unset($values['id']);
+
+        $this->indexedFields += count($values);
+
+        return $values;
+    }
+
     /**
      * @return bool
      */
@@ -365,7 +384,6 @@ class ElasticSearchIndexer
     {
         $this->output = $output;
     }
-    //endregion
 
     /**
      * @param $bean SugarBean
