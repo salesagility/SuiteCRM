@@ -178,9 +178,15 @@ class ElasticSearchIndexer
      */
     public function indexModule($module)
     {
-        $this->log('@', sprintf('Indexing module %s...', $module));
         $beans = BeanFactory::getBean($module)->get_full_list();
-        $this->indexBeans($module, $beans);
+
+        if ($beans === null) {
+            $this->log('*', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
+            return;
+        } else {
+            $this->log('@', sprintf('Indexing module %s...', $module));
+            $this->indexBeans($module, $beans);
+        }
     }
 
     /**
@@ -189,6 +195,13 @@ class ElasticSearchIndexer
      */
     public function indexBeans($module, $beans)
     {
+        if (!is_array($beans)) {
+            $this->log('!', "Non-array type found while indexing $module. "
+                . gettype($beans)
+                . ' found instead. Skipping this module!');
+            return;
+        }
+
         $oldCount = $this->indexedRecords;
         $this->indexBatch($module, $beans);
         $diff = $this->indexedRecords - $oldCount;
@@ -207,12 +220,6 @@ class ElasticSearchIndexer
             $fields = $this->getFieldsToIndex($module);
 
         $params = ['body' => []];
-
-        if (!is_array($beans)) {
-            $this->log('!', 'Non-array type found while batch indexing. ' . gettype($beans) . ' found!');
-            $this->log('!', "Skipping module $module");
-            return;
-        }
 
         foreach ($beans as $key => $bean) {
 
