@@ -131,7 +131,7 @@ class ElasticSearchIndexer
         $this->log('@', "Done!");
     }
 
-    public function log($type, $message)
+    private function log($type, $message)
     {
         if (!$this->output) return;
 
@@ -176,12 +176,20 @@ class ElasticSearchIndexer
     /**
      * @param $module string
      */
-    private function indexModule($module)
+    public function indexModule($module)
     {
+        $this->log('@', sprintf('Indexing module %s', $module));
         $beans = BeanFactory::getBean($module)->get_full_list();
+        $this->indexBeans($module, $beans);
+    }
 
+    /**
+     * @param $module string
+     * @param $beans SugarBean[]
+     */
+    public function indexBeans($module, $beans)
+    {
         $this->indexBatch($module, $beans);
-
         $count = count($beans);
         $this->indexedRecords += $count;
         $this->log('@', sprintf('Indexed %d %s', $count, $module));
@@ -404,23 +412,6 @@ class ElasticSearchIndexer
     }
 
     /**
-     * @return int
-     */
-    public function getBatchSize()
-    {
-        return $this->batchSize;
-    }
-
-    /**
-     * @param int $batchSize
-     */
-    public function setBatchSize($batchSize)
-    {
-        $this->batchSize = $batchSize;
-    }
-
-
-    /**
      * @param $bean SugarBean
      * @param $fields array|null
      * @return array
@@ -445,6 +436,38 @@ class ElasticSearchIndexer
         ];
 
         return $args;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIndexedRecords()
+    {
+        return $this->indexedRecords;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIndexedFields()
+    {
+        return $this->indexedFields;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBatchSize()
+    {
+        return $this->batchSize;
+    }
+
+    /**
+     * @param int $batchSize
+     */
+    public function setBatchSize($batchSize)
+    {
+        $this->batchSize = $batchSize;
     }
 
     /**
