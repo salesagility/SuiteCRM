@@ -62,6 +62,8 @@ class Resource extends ResourceIdentifier
         'type',
     );
 
+    protected static $API_TYPE_KEYWORD_ALIAS = 'KEYWORD_RECORD_TYPE';
+
     protected static $JSON_API_RESERVED_KEYWORDS = array(
         'id',
         'type',
@@ -177,7 +179,7 @@ class Resource extends ResourceIdentifier
                 continue;
             }
             if(in_array($attribute, $fields) === true) {
-                $response[self::ATTRIBUTES][$attribute] = $this->attributes[$attribute];
+                $response[self::ATTRIBUTES][$attribute] = $value;
             }
         }
 

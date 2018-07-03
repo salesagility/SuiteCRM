@@ -64,4 +64,5 @@ class ExceptionCode
     const API_RECORD_NOT_FOUND = 8050;
     const API_VIEWDEF_NOT_FOUND = 8055;
     const API_ID_ALREADY_EXISTS = 8060;
+    const API_FORBIDDEN_TYPE_KEYWORD = 8065;
 }

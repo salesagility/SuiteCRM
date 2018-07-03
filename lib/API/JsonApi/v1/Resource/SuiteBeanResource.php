@@ -95,6 +95,15 @@ class SuiteBeanResource extends Resource
                 continue;
             }
 
+            // 'type' is a JSON API reserved keyword, but some models have a 'type' field, so we use an alias in the API
+            if ($fieldName === 'type'){
+                if(property_exists($sugarBean, $fieldName)) {
+                    $fieldValue = isset($sugarBean->$fieldName) ? $sugarBean->$fieldName : '';
+                    $fieldName = static::$API_TYPE_KEYWORD_ALIAS;
+                    $sugarBean->$fieldName = $fieldValue;
+                }
+            }
+
             // Skip the reserved keywords which can be safely skipped
             if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
                 $exception = new ReservedKeywordNotAllowedException();
@@ -106,14 +115,6 @@ class SuiteBeanResource extends Resource
                     ' Source: [' . '/data/attributes/' . $fieldName . ']';
                 $this->logger->warning($logMessage);
                 continue;
-            }
-
-            // Throw when the field names match the reserved keywords
-            if (in_array($fieldName, Resource::$JSON_API_SKIP_RESERVED_KEYWORDS, true)) {
-                $exception = new ReservedKeywordNotAllowedException($fieldName);
-                $exception->setDetail('Reserved keyword not allowed in attribute field name.');
-                $exception->setSource('/data/attributes/' . $fieldName);
-                throw $exception;
             }
 
             if ($definition['type'] === 'datetime' && isset($sugarBean->$fieldName)) {
@@ -224,9 +225,23 @@ class SuiteBeanResource extends Resource
                 continue;
             }
 
+            // 'type' is a JSON API reserved keyword, but some models have a 'type' field, so we use an alias in the API
+            if ($fieldName == 'type'){
+                // If the client is sending a 'type' attribute, inform about the alias
+                if(isset($this->attributes[$fieldName])){
+                    throw new ApiException(
+                        "[Unable to save 'type' attribute of ". $this->type ." (forbidden keyword), use '"
+                        . static::$API_TYPE_KEYWORD_ALIAS . "' instead]",
+                        ExceptionCode::API_FORBIDDEN_TYPE_KEYWORD);
+                }
+                // If the client is using the alias, convert it to the type attribute
+                if(isset($this->attributes[self::$API_TYPE_KEYWORD_ALIAS])){
+                    $this->attributes[$fieldName] = $this->attributes[self::$API_TYPE_KEYWORD_ALIAS];
+                }
+            }
             // Skip the reserved keywords which can be safely skipped
-            if (in_array($fieldName, self::$JSON_API_SKIP_RESERVED_KEYWORDS)) {
-                $exception = new ReservedKeywordNotAllowedException();
+            else if (in_array($fieldName, self::$JSON_API_SKIP_RESERVED_KEYWORDS)) {
+                $exception = new ReservedKeywordNotAllowed();
                 $logMessage =
                     ' Code: [' . $exception->getCode() . ']' .
                     ' Status: [' . $exception->getHttpStatus() . ']' .
