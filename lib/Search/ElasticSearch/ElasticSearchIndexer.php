@@ -189,10 +189,10 @@ class ElasticSearchIndexer
      */
     public function indexBeans($module, $beans)
     {
+        $oldCount = $this->indexedRecords;
         $this->indexBatch($module, $beans);
-        $count = count($beans);
-        $this->indexedRecords += $count;
-        $this->log('@', sprintf('Indexed %d %s', $count, $module));
+        $diff = $this->indexedRecords - $oldCount;
+        $this->log('@', sprintf('Indexed %d %s', $diff, $module));
     }
 
     /**
@@ -226,20 +226,13 @@ class ElasticSearchIndexer
 
             // Send a batch of $this->batchSize elements to the server
             if ($key % $this->batchSize == 0) {
-                $responses = $this->client->bulk($params);
-
-                // erase the old bulk request
-                $params = ['body' => []];
-
-                // unset the bulk response when you are done to save memory
-                unset($responses);
+                $this->sendBatch($params);
             }
         }
 
         // Send the last batch if it exists
         if (!empty($params['body'])) {
-            $responses = $this->client->bulk($params);
-            unset($responses);
+            $this->sendBatch($params);
         }
     }
 
@@ -365,6 +358,24 @@ class ElasticSearchIndexer
     }
 
     /**
+     * @param $params
+     */
+    private function sendBatch(&$params)
+    {
+        // sends the batch over to the server
+        $responses = $this->client->bulk($params);
+
+        // if successful increase the count for statistics
+        $this->indexedRecords += count($params['body']) / 2;
+
+        // erase the old bulk request
+        $params = ['body' => []];
+
+        // unset the bulk response when you are done to save memory
+        unset($responses);
+    }
+
+    /**
      * @return bool
      */
     public function isUseSearchDefs()
@@ -408,7 +419,7 @@ class ElasticSearchIndexer
 
         $args = $this->makeIndexParamsFromBean($bean, $fields);
 
-        $this->client->index($args);
+        $result = $this->client->index($args);
     }
 
     /**
