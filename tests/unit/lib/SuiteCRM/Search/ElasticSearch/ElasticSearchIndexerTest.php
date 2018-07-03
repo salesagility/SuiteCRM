@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnhandledExceptionInspection */
+<?php
+/** @noinspection PhpMethodParametersCountMismatchInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
 
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -51,7 +53,6 @@ use SuiteCRM\Utility\BeanJsonSerializerTestData\SaltBean;
  */
 class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 {
-
     public function testGetModulesToIndex()
     {
         $indexer = new ElasticSearchIndexer();
@@ -65,19 +66,28 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         self::assertTrue(in_array('Contacts', $modules), "Contacts was not found in the list of modules to index");
     }
 
-    public function testRun()
+    public function testLog()
     {
-        // TODO
+        $indexer = new ElasticSearchIndexer();
+        $indexer->setOutput(true);
+
+        ob_start();
+        self::invokeMethod($indexer, 'log', ['@', 'test notice']);
+        $content = ob_get_flush();
+        self::assertEquals($content, " [\033[32m@\033[0m] test notice\n");
+
+        ob_start();
+        self::invokeMethod($indexer, 'log', ['*', 'test warn']);
+        $content = ob_get_flush();
+        self::assertEquals($content, " [\033[33m*\033[0m] test warn\n");
+
+        ob_start();
+        self::invokeMethod($indexer, 'log', ['!', 'test error']);
+        $content = ob_get_flush();
+        self::assertEquals($content, " [\033[31m!\033[0m] test error\n");
     }
 
-    public function testStaticRun()
-    {
-        // How do I test all this stuff? :(
-        // Maybe I should just get rid of the static method for easier testing.
-        self::markTestIncomplete();
-    }
-
-    public function testIndexBatch()
+    public function testIndexBeans()
     {
         $client = m::mock('\Elasticsearch\Client');
 
@@ -93,14 +103,17 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             (object)array("id" => 3, "fetched_row" => ['name' => 'name 3'], "fetched_rel_row" => []),
             (object)array("id" => 4, "fetched_row" => ['name' => 'name 4'], "fetched_rel_row" => []),
             (object)array("id" => 5, "fetched_row" => ['name' => 'name 5'], "fetched_rel_row" => []),
-            (object)array("id" => 6, "fetched_row" => ['name' => 'name 6'], "fetched_rel_row" => []),
+            (object)array("id" => 6, "fetched_row" => ['name' => 'name 6', "opt" => 'ciao'], "fetched_rel_row" => []),
         ];
 
         $i = new i($client);
 
         $i->setBatchSize(2);
 
-        self::invokeMethod($i, 'indexBatch', [$mockedModule, $mockedBeans]);
+        $i->indexBeans($mockedModule, $mockedBeans);
+
+        self::assertEquals(7, $i->getIndexedFields());
+        self::assertEquals(6, $i->getIndexedRecords());
     }
 
     public function testGettersAndSetters()
@@ -378,7 +391,10 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     {
         list($mockClient, $mockIndices) = $this->getMockIndices();
 
-        $mockIndices->shouldReceive('delete')->once();
+        $mockIndices
+            ->shouldReceive('delete')
+            ->once()
+            ->with(['index' => '_all']);
 
         $indexer = new ElasticSearchIndexer($mockClient);
         $indexer->deleteAllIndexes();
@@ -393,7 +409,6 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             ->once()
             ->with(['index' => '_all'])
             ->andThrow('\Elasticsearch\Common\Exceptions\Missing404Exception');
-
 
         $indexer = new ElasticSearchIndexer($mockClient);
         $indexer->deleteAllIndexes();

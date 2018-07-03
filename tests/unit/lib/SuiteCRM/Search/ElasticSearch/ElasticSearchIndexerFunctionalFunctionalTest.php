@@ -45,8 +45,6 @@ use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
  * Date: 22/06/18
  * Time: 12:37
  */
-
-
 class ElasticSearchIndexerFunctionalTest extends SuiteCRM\Search\SearchTestAbstract
 {
     public function testRun()
@@ -60,5 +58,13 @@ class ElasticSearchIndexerFunctionalTest extends SuiteCRM\Search\SearchTestAbstr
         ElasticSearchIndexer::_run(true, false);
 
         $state->popGlobals();
+    }
+
+    public function testStaticRun()
+    {
+        // TODO
+        // How do I test all this stuff? :(
+        // Maybe I should just get rid of the static method for easier testing.
+        self::markTestIncomplete();
     }
 }
