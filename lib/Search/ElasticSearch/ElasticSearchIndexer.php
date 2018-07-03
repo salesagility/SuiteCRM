@@ -178,7 +178,7 @@ class ElasticSearchIndexer
      */
     public function indexModule($module)
     {
-        $this->log('@', sprintf('Indexing module %s', $module));
+        $this->log('@', sprintf('Indexing module %s...', $module));
         $beans = BeanFactory::getBean($module)->get_full_list();
         $this->indexBeans($module, $beans);
     }
@@ -192,7 +192,9 @@ class ElasticSearchIndexer
         $oldCount = $this->indexedRecords;
         $this->indexBatch($module, $beans);
         $diff = $this->indexedRecords - $oldCount;
-        $this->log('@', sprintf('Indexed %d %s', $diff, $module));
+        $total = count($beans);
+        $type = $total === $diff ? '@' : '*';
+        $this->log($type, sprintf('Indexed %d/%d %s', $diff, $total, $module));
     }
 
     /**
@@ -365,8 +367,18 @@ class ElasticSearchIndexer
         // sends the batch over to the server
         $responses = $this->client->bulk($params);
 
-        // if successful increase the count for statistics
-        $this->indexedRecords += count($params['body']) / 2;
+        if ($responses['errors'] === true) {
+            // logs the errors
+            foreach ($responses['items'] as $item) {
+                $type = $item['index']['error']['type'];
+                $reason = $item['index']['error']['reason'];
+                $this->log('!', "[$type] $reason");
+            }
+        } else {
+            // if successful increase the count for statistics
+            $this->indexedRecords += count($params['body']) / 2;
+        }
+
 
         // erase the old bulk request
         $params = ['body' => []];
@@ -419,7 +431,7 @@ class ElasticSearchIndexer
 
         $args = $this->makeIndexParamsFromBean($bean, $fields);
 
-        $result = $this->client->index($args);
+        $this->client->index($args);
     }
 
     /**
