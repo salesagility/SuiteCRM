@@ -51,6 +51,8 @@ use ParserSearchFields;
 use SugarBean;
 use SuiteCRM\Utility\BeanJsonSerializer;
 
+require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
+
 class ElasticSearchIndexer
 {
     private $indexName = 'main';
@@ -131,7 +133,7 @@ class ElasticSearchIndexer
         $this->log('@', "Done!");
     }
 
-    private function log($type, $message)
+    public function log($type, $message)
     {
         if (!$this->output) return;
 
@@ -253,7 +255,6 @@ class ElasticSearchIndexer
     public function getFieldsToIndex($module, $parser = null)
     {
         if (empty($parser)) {
-            require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
             $parser = new ParserSearchFields($module);
         }
 
@@ -316,16 +317,16 @@ class ElasticSearchIndexer
 
         $body = [];
 
-        foreach ($fields as $key => $field) {
-            if (is_array($field)) {
-                foreach ($field as $subfield) {
-                    if ($this->hasField($bean, $subfield)) {
-                        $body[$key][$subfield] = mb_convert_encoding($bean->$subfield, "UTF-8", "HTML-ENTITIES");
+        foreach ($fields as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $subvalue) {
+                    if ($this->hasField($bean, $subvalue)) {
+                        $body[$key][$subvalue] = mb_convert_encoding($bean->$subvalue, "UTF-8", "HTML-ENTITIES");
                     }
                 }
             } else {
-                if ($this->hasField($bean, $field)) {
-                    $body[$field] = mb_convert_encoding($bean->$field, "UTF-8", "HTML-ENTITIES");
+                if ($this->hasField($bean, $value)) {
+                    $body[$value] = mb_convert_encoding($bean->$value, "UTF-8", "HTML-ENTITIES");
                 }
             }
         }

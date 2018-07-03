@@ -53,24 +53,26 @@ class ElasticSearchHooks
     public function beanSaved($bean, $event, $arguments)
     {
         if (in_array($bean->module_name, self::BLACKLIST)) return;
-        $indexer = new ElasticSearchIndexer();
-
         try {
+            $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
             $indexer->indexBean($bean);
         } catch (\Exception $e) {
-            $GLOBALS['log']->error('Failed to add bean to index because: ' . $e->getMessage());
+            $message = 'Failed to add bean to index because: ' . $e->getMessage();
+            if (isset($indexer)) $indexer->log('!', $message);
+            $GLOBALS['log']->error();
         }
     }
 
     public function beanDeleted($bean, $event, $arguments)
     {
         if (in_array($bean->module_name, self::BLACKLIST)) return;
-        $indexer = new ElasticSearchIndexer();
-
         try {
+            $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
             $indexer->removeBean($bean);
         } catch (\Exception $e) {
-            $GLOBALS['log']->error('Failed to remove bean from index because: ' . $e->getMessage());
+            $message = 'Failed to remove bean from index because: ' . $e->getMessage();
+            if (isset($indexer)) $indexer->log('!', $message);
+            $GLOBALS['log']->error($message);
         }
     }
 }
