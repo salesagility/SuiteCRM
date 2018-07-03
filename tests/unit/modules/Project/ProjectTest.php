@@ -33,7 +33,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-		//error_reporting(E_ERROR | E_PARSE);
+		
 
 		$project = new Project();
 
@@ -78,7 +78,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->pushGlobals();
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
     	$project = new Project();
@@ -106,8 +106,8 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 	public function test_get_total_estimated_effort()
 	{
-		//$project = new Project();
-		//$result = $project->_get_total_estimated_effort("1");
+		
+		
 		$this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
 
 	}

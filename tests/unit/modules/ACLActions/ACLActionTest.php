@@ -51,7 +51,7 @@ $_POST['foo'] = 'bar123ase';
         $state->pushTable('acl_actions');
         $state->pushTable('aod_index');
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //take count of actions initially and then after method execution and test if action count increases
         $action_count = count(ACLAction::getDefaultActions());
@@ -80,7 +80,7 @@ $_POST['foo'] = 'bar123ase';
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $this->assertFalse(ACLAction::AccessName('')); //test with invalid value
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value
@@ -114,9 +114,9 @@ $_POST['foo'] = 'bar123ase';
 
         self::markTestIncomplete('Need to implement: verify that all three results retunred are different.');
         //verify that all three results retunred are different
-        //$this->assertNotSame($result1, $result2);
-        //$this->assertNotSame($result1, $result3);
-        //$this->assertNotSame($result2, $result3);
+        
+        
+        
     }
 
     public function testhasAccess()
@@ -145,10 +145,11 @@ $_POST['foo'] = 'bar123ase';
 
     public function testuserHasAccess()
     {
+        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
+        
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-        self::markTestIncomplete('Need to fix checking user access. Hint: session is a system state perhaps its failing because the user session');
         $this->assertFalse(ACLAction::userHasAccess('', '', '')); //test with empty module and action
         $this->assertTrue(ACLAction::userHasAccess('', 'Accounts', 'list')); //test with e,pty user and valid module and action
         $this->assertTrue(ACLAction::userHasAccess('1', 'Accounts', 'list')); //test with valid User, module and action

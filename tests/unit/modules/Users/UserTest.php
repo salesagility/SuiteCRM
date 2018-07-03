@@ -78,7 +78,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         // test
         
 
-//        self::markTestIncomplete('environment dependency');
+
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset($db->database);
@@ -224,7 +224,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $user = new User();
@@ -350,7 +350,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
@@ -475,8 +475,8 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         // here is a really unpredictable mysql connection issue why this test is unstable
         // but should works on a correct test environments:
-        // $this->assertTrue(isset($result['id']));
-        // $this->assertEquals($id, $result['id']);
+        
+        
     }
 
 // --- OK
@@ -781,8 +781,8 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $user = new User();
 
-        //$result = $user->get_calls();
-        //$this->assertTrue(is_array($result));
+        
+        
 
         $this->markTestIncomplete('Error:Only variables should be passed by reference');
     }
@@ -1152,7 +1152,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ALL);
+        
 
         $user = new User();
 

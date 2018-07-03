@@ -18,12 +18,12 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $SugarApplication = new SugarApplication();
 
         //execute the method and test if it works and does not throws an exception other than headers output exception.
-//        try {
-//            $SugarApplication->execute();
-//        } catch (Exception $e) {
-//            print_r($e->getMessage());
-//            $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
-//        }
+
+
+
+
+
+
         $this->markTestIncomplete('Can Not be implemented');
     }
 
@@ -32,7 +32,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //cannot test this method as it uses die which stops execution of php unit as well
         /*  
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
@@ -54,7 +54,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         
@@ -91,7 +91,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarApplication = new SugarApplication();
@@ -122,7 +122,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarApplication = new SugarApplication();
@@ -146,7 +146,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         
@@ -184,7 +184,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarApplication = new SugarApplication();
@@ -213,7 +213,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //check that it returns Null
         $this->assertEquals(null, $result);
 
-        //check that controller->hasAccess is true i-e default setting.
+        
         $this->assertEquals(true, $SugarApplication->controller->hasAccess);
     }
 
@@ -222,7 +222,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         try {
@@ -247,7 +247,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarApplication = new SugarApplication();
@@ -282,7 +282,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         //
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $SugarApplication = new SugarApplication();
 
@@ -306,7 +306,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarApplication = new SugarApplication();
@@ -330,7 +330,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarApplication = new SugarApplication();
@@ -354,7 +354,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         
@@ -520,7 +520,7 @@ class SugarApplicationTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $SugarApplication = new SugarApplication();
