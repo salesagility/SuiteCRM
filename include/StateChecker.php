@@ -219,9 +219,7 @@ class StateChecker
         $this->lastHash = $hash;
         
         if (!$this->checkHash($hash, $key)) {
-            if ($key != 'errlevel') { // TODO: temporary remove the error level check from state
-                throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
-            }
+            throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
         }
         
         if (StateCheckerConfig::get('saveTraces')) {
