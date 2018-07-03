@@ -46,6 +46,8 @@
 
 namespace SuiteCRM\Utility;
 
+use Person;
+
 class BeanJsonSerializer
 {
     /**
@@ -96,11 +98,44 @@ class BeanJsonSerializer
     {
         if ($loadRelationships) $bean->load_relationships();
 
-        $fields = array_merge($bean->fetched_row, $bean->fetched_rel_row);
+        // creates an associative array with all the raw values that might need serialisation
+        if ($bean->fetched_row && is_array($bean->fetched_row)) {
+            $fields = $bean->fetched_row;
+            if (!$bean->fetched_rel_row && is_array($bean->fetched_rel_row))
+                $fields = array_merge($fields, $bean->fetched_rel_row);
+            $keys = array_keys($fields);
+        } else {
+            $keys = $bean->column_fields;
+            $fields = [];
+            foreach ($keys as $i => $key) {
+                if (isset($bean->$key))
+                    $fields[$key] = $bean->$key;
+                else
+                    unset($keys[$i]);
+            }
+        }
 
         $prettyBean = [];
 
-        foreach (array_keys($fields) as $key) {
+        /*
+         * This is to normalise all the `name` fields in a standard format.
+         * Normal fields would be like [name.name = ""], while persons will be like [name.first = "", name.second = "", ...]
+         */
+        if (isset($fields['name'])) {
+            if (is_subclass_of($bean, Person::class)
+                || (isset($bean->module_name) && $bean->module_name == "Contacts")) {
+                $prettyBean['name']['first'] = $bean->first_name;
+                $prettyBean['name']['last'] = $bean->last_name;
+            } else {
+                $prettyBean['name'] = ["name" => $fields['name']];
+            }
+
+            unset($fields['name']);
+            $keys = array_diff($keys, ['name']);
+        }
+
+        // does a number of checks and validation to standardise the format of fields, especially adding nesting of values
+        foreach ($keys as $key) {
             $value = mb_convert_encoding($fields[$key], "UTF-8", "HTML-ENTITIES");
             $value = trim($value);
 
@@ -245,7 +280,7 @@ class BeanJsonSerializer
                 continue;
             }
 
-            if($key == 'account_name'){
+            if ($key == 'account_name') {
                 $prettyBean['account']['name'] = $value;
                 continue;
             }
