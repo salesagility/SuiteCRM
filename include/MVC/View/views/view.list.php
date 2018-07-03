@@ -196,8 +196,22 @@ class ViewList extends SugarView
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
         } elseif (!empty($_REQUEST['update_stored_query'])) {
-            $updateKey = $_REQUEST['update_stored_query_key'];
-            $updateValue = $_REQUEST[$updateKey];
+            
+            $updateKey = null;
+            if (isset($_REQUEST['update_stored_query_key'])) {
+                $updateKey = $_REQUEST['update_stored_query_key'];
+            } else {
+                LoggerManager::getLogger()->warn('update_stored_query_key is not defined for list view at listViewPrepare');
+            }
+            
+            $updateValue = null;
+            if (isset($_REQUEST[$updateKey])) {
+                $updateValue = $_REQUEST[$updateKey];
+            } else {
+                LoggerManager::getLogger()->warn('requested update key is not defined for list view at listViewPrepare: ' . $updateKey);
+            }
+            
+            
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
             $_REQUEST[$updateKey] = $updateValue;

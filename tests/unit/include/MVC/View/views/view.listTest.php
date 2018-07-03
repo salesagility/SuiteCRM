@@ -158,6 +158,19 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('value', $_REQUEST['key']);
          
         
+        $_REQUEST['query'] = 1;
+        $_REQUEST['update_stored_query'] = true;
+        $_REQUEST['update_stored_query_key'] = 'fooo';
+        $_REQUEST['fooo'] = 'testing';
+        ob_start();
+        $view->listViewPrepare();
+        $renderedContent = ob_get_contents();
+        ob_end_clean();
+        $this->assertGreaterThan(0, strlen($renderedContent));
+        $this->assertEquals('value', $_REQUEST['key']);
+        $this->assertEquals('testing', $_REQUEST['fooo']);
+         
+        
         // clean up
         
         $state->popTable('aod_index');
