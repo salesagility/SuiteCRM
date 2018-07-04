@@ -58,11 +58,13 @@ class ElasticSearchIndexer
     private $indexName = 'main';
     // 70% slower without using search defs
     // but better quality indexing
-    private $useSearchDefs = false;
-    private $output = false;
+    private $searchDefsEnabled = false;
+    private $echoLogsEnabled = false;
+    private $differentialIndexingEnabled = false;
+
     private $batchSize = 1000;
-    private $indexedRecords;
-    private $indexedFields;
+    private $indexedRecordsCount;
+    private $indexedFieldsCount;
 
     /**
      * @var \Elasticsearch\Client
@@ -90,10 +92,8 @@ class ElasticSearchIndexer
     public static function _run($output = false, $useSearchDefs = false)
     {
         $indexer = new self();
-
-        $indexer->output = $output;
-        $indexer->useSearchDefs = $useSearchDefs;
-
+        $indexer->echoLogsEnabled = $output;
+        $indexer->searchDefsEnabled = $useSearchDefs;
         $indexer->run();
     }
 
@@ -105,10 +105,10 @@ class ElasticSearchIndexer
     {
         $this->log('@', 'Starting indexing procedures');
 
-        $this->indexedRecords = 0;
-        $this->indexedFields = 0;
+        $this->indexedRecordsCount = 0;
+        $this->indexedFieldsCount = 0;
 
-        if ($this->useSearchDefs) {
+        if ($this->searchDefsEnabled) {
             $this->log('@', 'Indexing is performed using Searchdefs');
         } else {
             $this->log('@', 'Indexing is performed using BeanJsonSerializer');
@@ -126,16 +126,16 @@ class ElasticSearchIndexer
 
         $end = microtime(true);
         $elapsed = ($end - $start); // seconds
-        $estimation = $elapsed / $this->indexedRecords * 200000;
+        $estimation = $elapsed / $this->indexedRecordsCount * 200000;
 
-        $this->log('@', sprintf("%d modules, %d records and %d fields indexed in %01.3F s", count($modules), $this->indexedRecords, $this->indexedFields, $elapsed));
+        $this->log('@', sprintf("%d modules, %d records and %d fields indexed in %01.3F s", count($modules), $this->indexedRecordsCount, $this->indexedFieldsCount, $elapsed));
         $this->log('@', sprintf("It would take ~%d min for 200,000 records, assuming a linear expansion", $estimation / 60));
         $this->log('@', "Done!");
     }
 
     public function log($type, $message)
     {
-        if (!$this->output) return;
+        if (!$this->echoLogsEnabled) return;
 
         switch ($type) {
             case '@':
@@ -204,9 +204,9 @@ class ElasticSearchIndexer
             return;
         }
 
-        $oldCount = $this->indexedRecords;
+        $oldCount = $this->indexedRecordsCount;
         $this->indexBatch($module, $beans);
-        $diff = $this->indexedRecords - $oldCount;
+        $diff = $this->indexedRecordsCount - $oldCount;
         $total = count($beans);
         $type = $total === $diff ? '@' : '*';
         $this->log($type, sprintf('Indexed %d/%d %s', $diff, $total, $module));
@@ -218,7 +218,7 @@ class ElasticSearchIndexer
      */
     private function indexBatch($module, $beans)
     {
-        if ($this->useSearchDefs)
+        if ($this->searchDefsEnabled)
             $fields = $this->getFieldsToIndex($module);
 
         $params = ['body' => []];
@@ -298,7 +298,7 @@ class ElasticSearchIndexer
     private function makeIndexParamsBodyFromBean($bean, &$fields = null)
     {
         $results
-            = $this->useSearchDefs
+            = $this->searchDefsEnabled
             ? $this->makeIndexParamsBodyFromBeanSearchDefs($bean, $fields)
             : $this->makeIndexParamsBodyFromBeanSerializer($bean);
 
@@ -331,7 +331,7 @@ class ElasticSearchIndexer
             }
         }
 
-        $this->indexedFields += count($body);
+        $this->indexedFieldsCount += count($body);
 
         return $body;
     }
@@ -362,7 +362,7 @@ class ElasticSearchIndexer
 
         unset($values['id']);
 
-        $this->indexedFields += count($values);
+        $this->indexedFieldsCount += count($values);
 
         return $values;
     }
@@ -384,7 +384,7 @@ class ElasticSearchIndexer
             }
         } else {
             // if successful increase the count for statistics
-            $this->indexedRecords += count($params['body']) / 2;
+            $this->indexedRecordsCount += count($params['body']) / 2;
         }
 
 
@@ -398,33 +398,33 @@ class ElasticSearchIndexer
     /**
      * @return bool
      */
-    public function isUseSearchDefs()
+    public function isSearchDefsEnabled()
     {
-        return $this->useSearchDefs;
+        return $this->searchDefsEnabled;
     }
 
     /**
-     * @param bool $useSearchDefs
+     * @param bool $searchDefsEnabled
      */
-    public function setUseSearchDefs($useSearchDefs)
+    public function setSearchDefsEnabled($searchDefsEnabled)
     {
-        $this->useSearchDefs = $useSearchDefs;
+        $this->searchDefsEnabled = $searchDefsEnabled;
     }
 
     /**
      * @return bool
      */
-    public function isOutput()
+    public function isEchoLogsEnabled()
     {
-        return $this->output;
+        return $this->echoLogsEnabled;
     }
 
     /**
-     * @param bool $output
+     * @param bool $echoLogsEnabled
      */
-    public function setOutput($output)
+    public function setEchoLogsEnabled($echoLogsEnabled)
     {
-        $this->output = $output;
+        $this->echoLogsEnabled = $echoLogsEnabled;
     }
 
     /**
@@ -433,7 +433,7 @@ class ElasticSearchIndexer
      */
     public function indexBean($bean, $fields = null)
     {
-        if ($this->useSearchDefs && empty($fields)) {
+        if ($this->searchDefsEnabled && empty($fields)) {
             $fields = $this->getFieldsToIndex($bean->module_name);
         }
 
@@ -472,17 +472,17 @@ class ElasticSearchIndexer
     /**
      * @return mixed
      */
-    public function getIndexedRecords()
+    public function getIndexedRecordsCount()
     {
-        return $this->indexedRecords;
+        return $this->indexedRecordsCount;
     }
 
     /**
      * @return mixed
      */
-    public function getIndexedFields()
+    public function getIndexedFieldsCount()
     {
-        return $this->indexedFields;
+        return $this->indexedFieldsCount;
     }
 
     /**

@@ -69,7 +69,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     public function testLog()
     {
         $indexer = new ElasticSearchIndexer();
-        $indexer->setOutput(true);
+        $indexer->setEchoLogsEnabled(true);
 
         ob_start();
         self::invokeMethod($indexer, 'log', ['@', 'test notice']);
@@ -112,8 +112,8 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
         $i->indexBeans($mockedModule, $mockedBeans);
 
-        self::assertEquals(7, $i->getIndexedFields());
-        self::assertEquals(6, $i->getIndexedRecords());
+        self::assertEquals(7, $i->getIndexedFieldsCount());
+        self::assertEquals(6, $i->getIndexedRecordsCount());
     }
 
     public function testGettersAndSetters()
@@ -124,13 +124,13 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
         $i = new i();
 
-        $i->setUseSearchDefs($searchDefs);
-        $i->setOutput($output);
+        $i->setSearchDefsEnabled($searchDefs);
+        $i->setEchoLogsEnabled($output);
         $i->setBatchSize($batchSize);
 
         self::assertEquals($batchSize, $i->getBatchSize());
-        self::assertEquals($searchDefs, $i->isUseSearchDefs());
-        self::assertEquals($output, $i->isOutput());
+        self::assertEquals($searchDefs, $i->isSearchDefsEnabled());
+        self::assertEquals($output, $i->isEchoLogsEnabled());
 
         $i = new i();
 
@@ -138,8 +138,8 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $searchDefs = false;
         $output = true;
 
-        $i->setUseSearchDefs($searchDefs);
-        $i->setOutput($output);
+        $i->setSearchDefsEnabled($searchDefs);
+        $i->setEchoLogsEnabled($output);
         $i->setBatchSize($batchSize);
     }
 
@@ -181,7 +181,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             ->once();
 
         $indexer = new ElasticSearchIndexer($client);
-        $indexer->setUseSearchDefs(false);
+        $indexer->setSearchDefsEnabled(false);
 
         $indexer->indexBean($bean);
     }
@@ -291,7 +291,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     {
         $bean = $this->getTestBean();
         $indexer = new ElasticSearchIndexer();
-        $indexer->setUseSearchDefs(false);
+        $indexer->setSearchDefsEnabled(false);
         $expected = $this->getExpectedBody();
 
         $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);

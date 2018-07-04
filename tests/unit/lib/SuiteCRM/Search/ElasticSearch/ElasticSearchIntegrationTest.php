@@ -54,8 +54,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     {
         // Make a new Indexer instance
         $indexer = new ElasticSearchIndexer();
-        $indexer->setOutput(true);
-        $indexer->setUseSearchDefs(false);
+        $indexer->setEchoLogsEnabled(true);
+        $indexer->setSearchDefsEnabled(false);
 
         $this->indexRunner($indexer);
     }
@@ -95,7 +95,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
             // Perform a new indexing
             echo PHP_EOL;
-            ElasticSearchIndexer::_run($indexer->isOutput(), $indexer->isUseSearchDefs());
+            ElasticSearchIndexer::_run($indexer->isEchoLogsEnabled(), $indexer->isSearchDefsEnabled());
 
             $this->waitForIndexing();
 
@@ -117,7 +117,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
             // lets test a more complex query
             // Search by city
 
-            $query = $indexer->isUseSearchDefs()
+            $query = $indexer->isSearchDefsEnabled()
                 ? SearchQuery::fromString("address_city.primary_address_city:$city", 1)
                 : SearchQuery::fromString("address.primary.city:$city", 1);
             $results = MasterSearch::search(
@@ -197,8 +197,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     {
         // Make a new Indexer instance
         $indexer = new ElasticSearchIndexer();
-        $indexer->setOutput(true);
-        $indexer->setUseSearchDefs(true);
+        $indexer->setEchoLogsEnabled(true);
+        $indexer->setSearchDefsEnabled(true);
         $indexer->setBatchSize(1);
 
         $this->indexRunner($indexer);
