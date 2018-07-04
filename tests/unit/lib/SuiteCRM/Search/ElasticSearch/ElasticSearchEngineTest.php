@@ -141,14 +141,15 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testRunElasticSearch()
     {
-        $engine = new ElasticSearchEngine();
         $query = SearchQuery::fromString("a");
 
         $mockedResults = $this->getMockedHits();
 
         $client = $this->getMockedClient($mockedResults);
 
-        $results = $params = $this->invokeMethod($engine, 'runElasticSearch', [$query, $client]);
+        $engine = new ElasticSearchEngine($client);
+
+        $results = $params = $this->invokeMethod($engine, 'runElasticSearch', [$query]);
 
         self::assertEquals($mockedResults, $results);
     }
@@ -284,12 +285,12 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testSearch()
     {
-        $engine = new ElasticSearchEngine();
         $mockedClient = $this->getMockedClient($this->getMockedHits());
+        $engine = new ElasticSearchEngine($mockedClient);
         $expectedResults = $this->getExpectedResultsForMockedHits();
         $query = SearchQuery::fromString("test");
 
-        $results = $engine->search($query, $mockedClient);
+        $results = $engine->search($query);
 
         self::assertEquals($expectedResults, $results);
     }

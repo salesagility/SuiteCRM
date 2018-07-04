@@ -44,6 +44,7 @@
  * Time: 16:25
  */
 
+use Elasticsearch\Client;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
 use SuiteCRM\Search\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchEngine;
@@ -51,20 +52,50 @@ use SuiteCRM\Search\SearchQuery;
 
 class ElasticSearchEngine extends SearchEngine
 {
+    /**
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * ElasticSearchEngine constructor.
+     * @param Client|null $client
+     */
+    public function __construct(Client $client = null)
+    {
+        if (empty($client))
+            $this->client = ElasticSearchClientBuilder::getClient();
+        else
+            $this->client = $client;
+    }
 
     /**
      * @param $query SearchQuery
-     * @param \Elasticsearch\Client|null $client
      * @return array[] ids
      */
-    public function search($query, $client = null)
+    public function search($query)
     {
         $this->validateQuery($query);
         $params = $this->createSearchParams($query);
-        $hits = $this->runElasticSearch($params, $client);
+        $hits = $this->runElasticSearch($params);
         $results = $this->parseHits($hits);
 
         return $results;
+    }
+
+    /**
+     * @param $query SearchQuery
+     */
+    protected function validateQuery(&$query)
+    {
+        $query->trim();
+        $query->replace('-', ' ');
+
+        $string = $query->getSearchString();
+
+        if (empty($string)) {
+            throw new MasterSearchInvalidRequestException("Search string not provided.");
+        }
     }
 
     /**
@@ -95,36 +126,14 @@ class ElasticSearchEngine extends SearchEngine
     }
 
     /**
-     * @param $query SearchQuery
-     */
-    protected function validateQuery(&$query)
-    {
-        $query->trim();
-        $query->replace('-', ' ');
-
-        $string = $query->getSearchString();
-
-        if (empty($string)) {
-            throw new MasterSearchInvalidRequestException("Search string not provided.");
-        }
-    }
-
-    /**
      * Calls the Elasticsearch API.
      *
-     * The `$client` parameter is only used for testing purposes.
-     *
      * @param $params array
-     * @param \Elasticsearch\Client|null $client
      * @return array
      */
-    private function runElasticSearch($params, $client = null)
+    private function runElasticSearch($params)
     {
-        if ($client === null) {
-            $client = ElasticSearchClientBuilder::getClient();
-        }
-
-        $results = $client->search($params);
+        $results = $this->client->search($params);
 
         return $results;
     }
