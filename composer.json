@@ -27,7 +27,8 @@
     "onelogin/php-saml": "3.0.0.x-dev as 3.0.0",
     "google/recaptcha": "^1.1",
     "ezyang/htmlpurifier": "^4.10",
-    "elasticsearch/elasticsearch": "^5.3"
+    "elasticsearch/elasticsearch": "^5.3",
+    "nesbot/carbon": "^1.31"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",

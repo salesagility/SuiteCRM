@@ -47,6 +47,10 @@
 namespace SuiteCRM\Search\ElasticSearch;
 
 use BeanFactory;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+use Elasticsearch\Client;
+use JsonSchema\Exception\RuntimeException;
 use ParserSearchFields;
 use SugarBean;
 use SuiteCRM\Utility\BeanJsonSerializer;
@@ -55,25 +59,38 @@ require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
 
 class ElasticSearchIndexer
 {
-    private $indexName = 'main';
-    // 70% slower without using search defs
-    // but better quality indexing
-    private $searchDefsEnabled = false;
-    private $echoLogsEnabled = false;
-    private $differentialIndexingEnabled = false;
-
-    private $batchSize = 1000;
-    private $indexedRecordsCount;
-    private $indexedFieldsCount;
-
     /**
-     * @var \Elasticsearch\Client
+     * @var string File containing a timestamp of the last (complete or differential) indexing.
+     */
+    const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
+    /**
+     * @var string The name of the Elasticsearch index to use.
+     */
+    private $indexName = 'main';
+    /**
+     * @var Client
      */
     private $client = null;
 
     /**
+     * Without search defs the indexing is faster and more reliable with known data,
+     * but it is not yet customisable by the user. *
+     */
+    private $searchDefsEnabled = false;
+    private $echoLogsEnabled = false;
+    private $differentialIndexingEnabled = false;
+    private $batchSize = 1000;
+
+    // stats
+    private $indexedModulesCount;
+    private $indexedRecordsCount;
+    private $indexedFieldsCount;
+    /** @var bool|Carbon */
+    private $lastRunTimestamp = false;
+
+    /**
      * ElasticSearchIndexer constructor.
-     * @param \Elasticsearch\Client|null $client
+     * @param Client|null $client
      */
     public function __construct($client = null)
     {
@@ -83,28 +100,12 @@ class ElasticSearchIndexer
             $this->client = ElasticSearchClientBuilder::getClient();
     }
 
-    /**
-     * Allows static launch of an indexing.
-     *
-     * @param bool $output shows logging on the output stream
-     * @param bool $useSearchDefs uses searchdefs.php files to understand what to index. Uses BeanJsonSerializer otherwise.
-     */
-    public static function _run($output = false, $useSearchDefs = false)
-    {
-        $indexer = new self();
-        $indexer->echoLogsEnabled = $output;
-        $indexer->searchDefsEnabled = $useSearchDefs;
-        $indexer->run();
-    }
-
-    /**
-     * Allows static launch of an indexing.
-     *
-     */
+    /** Allows static launch of an indexing. */
     public function run()
     {
         $this->log('@', 'Starting indexing procedures');
 
+        $this->indexedModulesCount = 0;
         $this->indexedRecordsCount = 0;
         $this->indexedFieldsCount = 0;
 
@@ -114,25 +115,43 @@ class ElasticSearchIndexer
             $this->log('@', 'Indexing is performed using BeanJsonSerializer');
         }
 
-        $this->deleteAllIndexes();
+        if ($this->differentialIndexingEnabled) {
+            $this->lastRunTimestamp = $this->readLockFile();
+        }
 
-        $start = microtime(true);
+        if ($this->differentialIndexing()) {
+            $this->log('@', 'A differential indexing will be performed');
+        } else {
+            $this->log('@', 'A full indexing will be performed');
+            $this->deleteAllIndexes();
+        }
 
         $modules = $this->getModulesToIndex();
+
+        $start = microtime(true);
 
         foreach ($modules as $module) {
             $this->indexModule($module);
         }
 
         $end = microtime(true);
-        $elapsed = ($end - $start); // seconds
-        $estimation = $elapsed / $this->indexedRecordsCount * 200000;
 
-        $this->log('@', sprintf("%d modules, %d records and %d fields indexed in %01.3F s", count($modules), $this->indexedRecordsCount, $this->indexedFieldsCount, $elapsed));
-        $this->log('@', sprintf("It would take ~%d min for 200,000 records, assuming a linear expansion", $estimation / 60));
+        if ($this->differentialIndexingEnabled)
+            $this->writeLockFile();
+
+        $this->statistics($end, $start);
+
         $this->log('@', "Done!");
     }
 
+    /**
+     * Used to log actions and errors performed by the indexer.
+     *
+     * They are displayed to the console if `echoLogsEnabled` is `true`;
+     *
+     * @param $type string @ = info, * = warning, ! = error
+     * @param $message string the message to log
+     */
     public function log($type, $message)
     {
         if (!$this->echoLogsEnabled) return;
@@ -153,10 +172,43 @@ class ElasticSearchIndexer
     }
 
     /**
+     * Reads the lock file and returs a Carbon timestamp or `null` if the fail could not be found.
+     *
+     * @return bool|Carbon
+     */
+    private function readLockFile()
+    {
+        $this->log('@', "Reading lock file " . self::LOCK_FILE);
+        if (file_exists(self::LOCK_FILE)) {
+            $data = file_get_contents(self::LOCK_FILE);
+            $data = intval($data);
+            $carbon = Carbon::createFromTimestamp($data);
+
+            $this->log('@', sprintf("Last logged indexing performed on %s (%s)", $carbon->toDateTimeString(), $carbon->diffForHumans()));
+
+            return $carbon;
+        } else {
+            $this->log('@', "Lock file not found");
+            return false;
+        }
+    }
+
+    /**
+     * Returns true if differentialIndexing is enabled and a previous run timestamp was found.
+     *
+     * @return bool
+     */
+    private function differentialIndexing()
+    {
+        return $this->differentialIndexingEnabled && $this->lastRunTimestamp !== false;
+    }
+
+    /**
      * Removes all the indexes from Elasticsearch, effectively nuking all data.
      */
     public function deleteAllIndexes()
     {
+        $this->log('@', "Deleting all indices");
         try {
             $this->client->indices()->delete(['index' => '_all']);
         } /** @noinspection PhpRedundantCatchClauseInspection */
@@ -172,7 +224,7 @@ class ElasticSearchIndexer
     public function getModulesToIndex()
     {
         // TODO get them from either the search defs or the add a white/blacklist
-        return ['Accounts', 'Contacts', 'Users'];
+        return ['Accounts', 'Contacts', 'Users', 'Opportunities', 'Leads', 'Emails'];
     }
 
     /**
@@ -180,7 +232,21 @@ class ElasticSearchIndexer
      */
     public function indexModule($module)
     {
-        $beans = BeanFactory::getBean($module)->get_full_list();
+        $seed = BeanFactory::getBean($module);
+
+        if ($this->differentialIndexing()) {
+            $datetime = $this->lastRunTimestamp->toDateTimeString();
+            $where = sprintf("%s.date_modified > '%s' OR %s.date_entered > '%s'", $seed->table_name, $datetime, $seed->table_name, $datetime);
+        } else {
+            $where = null;
+        }
+
+        try {
+            $beans = $seed->get_full_list(null, $where, null, $this->differentialIndexing());
+        } catch (RuntimeException $e) {
+            $this->log('!', "Failed to index module $module because of $e");
+            return;
+        }
 
         if ($beans === null) {
             $this->log('*', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
@@ -188,6 +254,7 @@ class ElasticSearchIndexer
         } else {
             $this->log('@', sprintf('Indexing module %s...', $module));
             $this->indexBeans($module, $beans);
+            $this->indexedModulesCount++;
         }
     }
 
@@ -224,6 +291,8 @@ class ElasticSearchIndexer
         $params = ['body' => []];
 
         foreach ($beans as $key => $bean) {
+
+            // TODO send a delete request
 
             $params['body'][] = [
                 'index' => [
@@ -378,21 +447,45 @@ class ElasticSearchIndexer
         if ($responses['errors'] === true) {
             // logs the errors
             foreach ($responses['items'] as $item) {
-                $type = $item['index']['error']['type'];
-                $reason = $item['index']['error']['reason'];
-                $this->log('!', "[$type] $reason");
+                $action = array_keys($item)[0];
+                $type = $item[$action]['error']['type'];
+                $reason = $item[$action]['error']['reason'];
+                $this->log('!', "[$action] [$type] $reason");
             }
         } else {
             // if successful increase the count for statistics
             $this->indexedRecordsCount += count($params['body']) / 2;
         }
 
-
         // erase the old bulk request
         $params = ['body' => []];
 
         // unset the bulk response when you are done to save memory
         unset($responses);
+    }
+
+    private function writeLockFile()
+    {
+        $this->log('@', "Writing lock file to " . self::LOCK_FILE);
+        file_put_contents(self::LOCK_FILE, Carbon::now()->timestamp);
+    }
+
+    /**
+     * @param $end
+     * @param $start
+     */
+    private function statistics($end, $start)
+    {
+        if ($this->indexedRecordsCount != 0) {
+            $elapsed = ($end - $start); // seconds
+            $estimation = $elapsed / $this->indexedRecordsCount * 200000;
+            CarbonInterval::setLocale('en');
+            $estimationString = CarbonInterval::seconds(intval(round($estimation)))->cascade()->forHumans(true);
+            $this->log('@', sprintf('%d modules, %d records and %d fields indexed in %01.3F s', $this->indexedModulesCount, $this->indexedRecordsCount, $this->indexedFieldsCount, $elapsed));
+            $this->log('@', "It would take ~$estimationString for 200,000 records, assuming a linear expansion");
+        } else {
+            $this->log('@', 'No record has been indexed');
+        }
     }
 
     /**
@@ -408,7 +501,7 @@ class ElasticSearchIndexer
      */
     public function setSearchDefsEnabled($searchDefsEnabled)
     {
-        $this->searchDefsEnabled = $searchDefsEnabled;
+        $this->searchDefsEnabled = boolval($searchDefsEnabled);
     }
 
     /**
@@ -424,7 +517,7 @@ class ElasticSearchIndexer
      */
     public function setEchoLogsEnabled($echoLogsEnabled)
     {
-        $this->echoLogsEnabled = $echoLogsEnabled;
+        $this->echoLogsEnabled = boolval($echoLogsEnabled);
     }
 
     /**
@@ -470,7 +563,23 @@ class ElasticSearchIndexer
     }
 
     /**
-     * @return mixed
+     * @return bool
+     */
+    public function isDifferentialIndexingEnabled()
+    {
+        return $this->differentialIndexingEnabled;
+    }
+
+    /**
+     * @param bool $differentialIndexingEnabled
+     */
+    public function setDifferentialIndexingEnabled($differentialIndexingEnabled)
+    {
+        $this->differentialIndexingEnabled = boolval($differentialIndexingEnabled);
+    }
+
+    /**
+     * @return int
      */
     public function getIndexedRecordsCount()
     {
@@ -478,11 +587,19 @@ class ElasticSearchIndexer
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getIndexedFieldsCount()
     {
         return $this->indexedFieldsCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIndexedModulesCount()
+    {
+        return $this->indexedModulesCount;
     }
 
     /**
@@ -508,6 +625,26 @@ class ElasticSearchIndexer
     {
         $args = $this->makeParamsHeaderFromBean($bean);
         $this->client->delete($args);
+    }
+
+    /**
+     * Removes a set of beans from the index.
+     *
+     * @param $beans SugarBean[]
+     * @param bool $ignore404 deleting something that is not there won't throw an error
+     */
+    public function removeBeans($beans, $ignore404 = true)
+    {
+        $params = [];
+
+        if ($ignore404)
+            $params['client']['ignore'] = [404];
+
+        foreach ($beans as $bean) {
+            $params['body'][] = ['delete' => $this->makeParamsHeaderFromBean($bean)];
+        }
+
+        $this->sendBatch($params);
     }
 
     public function removeIndex($index = null)

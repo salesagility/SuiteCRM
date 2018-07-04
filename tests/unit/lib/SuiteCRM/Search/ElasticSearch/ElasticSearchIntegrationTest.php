@@ -41,6 +41,7 @@
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
+use SuiteCRM\StateSaver;
 
 /**
  * Created by PhpStorm.
@@ -70,7 +71,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $bean = BeanFactory::newBean('Contacts');
 
         // Save the system state for later recovery
-        $state = new \SuiteCRM\StateSaver();
+        $state = new StateSaver();
         $state->pushTable($bean->getTableName());
         $state->pushGlobals();
 
@@ -95,7 +96,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
             // Perform a new indexing
             echo PHP_EOL;
-            ElasticSearchIndexer::_run($indexer->isEchoLogsEnabled(), $indexer->isSearchDefsEnabled());
+            $indexer->run();
 
             $this->waitForIndexing();
 
@@ -204,5 +205,30 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->indexRunner($indexer);
     }
 
+    public function testDifferentialSearch()
+    {
+        $table = 'contacts';
+        $state = new StateSaver();
+        $lockFile = 'cache/ElasticSearchIndex.lock';
 
+        // Storing the application state
+        $state->pushTable($table);
+        $state->pushGlobals();
+        $state->pushFile($lockFile);
+
+        // Setting up the indexer
+        $indexer = new ElasticSearchIndexer();
+        $indexer->setDifferentialIndexingEnabled(true);
+        $indexer->setEchoLogsEnabled(true);
+
+        // DO THE THING
+        $indexer->run();
+        self::markTestIncomplete('TODO');
+        // TODO
+
+        // Restoring the application state to avoid side effects
+        $state->popTable($table);
+        $state->popGlobals();
+        $state->popFile($lockFile);
+    }
 }

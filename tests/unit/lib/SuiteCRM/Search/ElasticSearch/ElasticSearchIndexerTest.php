@@ -121,26 +121,36 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $batchSize = 20;
         $searchDefs = true;
         $output = false;
+        $differential = true;
 
         $i = new i();
 
         $i->setSearchDefsEnabled($searchDefs);
         $i->setEchoLogsEnabled($output);
         $i->setBatchSize($batchSize);
+        $i->setDifferentialIndexingEnabled($differential);
 
         self::assertEquals($batchSize, $i->getBatchSize());
         self::assertEquals($searchDefs, $i->isSearchDefsEnabled());
         self::assertEquals($output, $i->isEchoLogsEnabled());
+        self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
 
         $i = new i();
 
         $batchSize = 50;
         $searchDefs = false;
         $output = true;
+        $differential = false;
 
         $i->setSearchDefsEnabled($searchDefs);
         $i->setEchoLogsEnabled($output);
         $i->setBatchSize($batchSize);
+        $i->setDifferentialIndexingEnabled($differential);
+
+        self::assertEquals($batchSize, $i->getBatchSize());
+        self::assertEquals($searchDefs, $i->isSearchDefsEnabled());
+        self::assertEquals($output, $i->isEchoLogsEnabled());
+        self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
     }
 
     public function testGetFieldsToIndex()
@@ -303,11 +313,35 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         self::markTestIncomplete("TODO");
     }
 
+    public function testRemoveBeans()
+    {
+        $mock = m::mock('Elasticsearch\Client');
+        $beans = [$this->getTestBean(), $this->getTestBean()];
+
+        $params = [
+            'client' => [
+                'ignore' => [404],
+            ],
+            'body' => [
+                ['delete' => ['index' => 'main', 'type' => 'Contacts', 'id' => '00000000-0000-0000-0000-000000000000',]],
+                ['delete' => ['index' => 'main', 'type' => 'Contacts', 'id' => '00000000-0000-0000-0000-000000000000',]],
+            ]
+        ];
+
+        $mock
+            ->shouldReceive('bulk')
+            ->once()
+            ->with($params);
+
+        $indexer = new ElasticSearchIndexer($mock);
+
+        $indexer->removeBeans($beans, true);
+    }
+
     public function testRemoveBean()
     {
         $mock = m::mock('Elasticsearch\Client');
         $bean = $this->getTestBean();
-
 
         $params = [
             'index' => 'main',
@@ -323,11 +357,6 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $indexer = new ElasticSearchIndexer($mock);
 
         $indexer->removeBean($bean);
-    }
-
-    public function testMakeParamsFromBean()
-    {
-
     }
 
     public function testMakeParamsHeaderFromBean()

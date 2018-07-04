@@ -125,9 +125,20 @@ class ElasticSearchCommands extends \Robo\Tasks
         }
     }
 
-    public function eindex()
+    /**
+     * Indexes the sql database in the Elasticsearch engine.
+     *
+     * @param bool $differential Use search that uses to timestamps to perform an optimised indexing.
+     * @param bool $searchdefs
+     */
+    public function eindex($differential = true, $searchdefs = false)
     {
-        ElasticSearchIndexer::_run(true, false);
+        $indexer = new ElasticSearchIndexer();
+        $indexer->setEchoLogsEnabled(true);
+        $indexer->setDifferentialIndexingEnabled($differential);
+        $indexer->setSearchDefsEnabled($searchdefs);
+
+        $indexer->run();
     }
 
     public function ermindex()
