@@ -912,5 +912,8 @@ $mod_strings = array(
     'LBL_PWDSEC_SPECCHAR_DESC' => 'Password should contain special characters',
     'LBL_PWDSEC_CHARS' => 'Characters',
 
+    'LBL_SHAREDRULES_SETTINGS' => "Shared Security Rules",
+    'LBL_SHAREDRULES_SETTINGS_DESC' => "Manage Shared Security Rules",
+
 );
 
