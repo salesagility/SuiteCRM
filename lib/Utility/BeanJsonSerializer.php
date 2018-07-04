@@ -124,8 +124,12 @@ class BeanJsonSerializer
         if (isset($fields['name'])) {
             if (is_subclass_of($bean, Person::class)
                 || (isset($bean->module_name) && $bean->module_name == "Contacts")) {
-                $prettyBean['name']['first'] = $bean->first_name;
-                $prettyBean['name']['last'] = $bean->last_name;
+                if (isset($bean->first_name)) {
+                    $prettyBean['name']['first'] = $bean->first_name;
+                }
+                if (isset($bean->last_name)) {
+                    $prettyBean['name']['last'] = $bean->last_name;
+                }
             } else {
                 $prettyBean['name'] = ["name" => $fields['name']];
             }
@@ -136,7 +140,12 @@ class BeanJsonSerializer
 
         // does a number of checks and validation to standardise the format of fields, especially adding nesting of values
         foreach ($keys as $key) {
-            $value = mb_convert_encoding($fields[$key], "UTF-8", "HTML-ENTITIES");
+            $value = $fields[$key];
+
+            // fail safe to prevent objects to be forcefully casted into strings
+            if (!is_string($value) && !is_numeric($value)) continue;
+
+            $value = mb_convert_encoding($value, "UTF-8", "HTML-ENTITIES");
             $value = trim($value);
 
             if ($hideEmptyValues && ($value === null || $value === "")) continue;
