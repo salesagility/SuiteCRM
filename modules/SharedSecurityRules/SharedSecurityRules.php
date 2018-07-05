@@ -240,7 +240,16 @@ class SharedSecurityRules extends Basic
                 $converted_res = 'true';
             }
         }
+        
+        if (!isset($key)) {
+            $key = null;
+            LoggerManager::getLogger()->warn('Key is not set for Action parameter access level for shared security groups.');
+        }
 
+        if (!isset($action['parameters']['accesslevel'][$key])) {
+            $action['parameters']['accesslevel'][$key] = null;
+            LoggerManager::getLogger()->warn('Action parameter access level at key: ' . $key . ' is needed for shared security groups, but it is not set.');
+        }
 
         $GLOBALS['log']->info('SharedSecurityRules: Exiting CheckRules with result: ' . $converted_res . ' for view: ' . $view . ' and action: ' . $action['parameters']['accesslevel'][$key]);
         return $result;
@@ -554,7 +563,7 @@ class SharedSecurityRules extends Basic
         $resWhere = "";
         $parenthesis = null;
         $sql = "SELECT * FROM sharedsecurityrules WHERE sharedsecurityrules.status = 'Complete' && sharedsecurityrules.flow_module = '{$module->module_dir}'&& sharedsecurityrules.deleted ='0'";
-        $results = $db->query($sql);
+        $results = DBManagerFactory::getInstance()->query($sql);
         while (($rule = $module->db->fetchByAssoc($results)) != null) {
             $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' && sharedsecurityrulesactions.deleted = '0'";
             $actions_results = $module->db->query($sql_query);

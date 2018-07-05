@@ -2967,7 +2967,21 @@ class SugarBean
         /* BEGIN - SECURITY GROUPS */
         global $current_user, $sugar_config;
 
-        if (!$current_user->is_admin && ($_REQUEST['action'] != "Popup" && $parentbean->module_dir != "Users" && ($_REQUEST['action'] != "DetailView" && $this->module_dir != "Users"))) {
+        $requestAction = null;
+        if (isset($_REQUEST['action'])) {
+            $requestAction = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested action is not set but needed for create_new_list_query in SugarBean.');
+        }
+        
+        $parentBeanModuleDir = null;
+        if (!isset($parentbean->module_dir)) {
+            LoggerManager::getLogger()->warn('Parent Bean module dir is not exists but Shared Security Groups needs it.');
+        } else {
+            $parentBeanModuleDir = $parentbean->module_dir;
+        }
+        
+        if (!$current_user->is_admin && ($requestAction != "Popup" && $parentBeanModuleDir != "Users" && ($requestAction != "DetailView" && $this->module_dir != "Users"))) {
             $rules_where = SharedSecurityRules::buildRuleWhere($this);
         }
 
@@ -5434,8 +5448,14 @@ class SugarBean
             }
         }
 
-
-        if($_REQUEST['action'] == "Popup") {
+        $requestAction = null;
+        if (isset($_REQUEST['action'])) {
+            $requestAction = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested Action is not set but needed for ACLAccess in SugarBean.');
+        }
+        
+        if($requestAction == "Popup") {
             $access = true;
         }
 

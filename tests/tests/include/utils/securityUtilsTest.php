@@ -77,11 +77,12 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method and test it it returns expected contents
 
         $expected = array(
-                'Bugs' => 'Bugs',
-                'ResourceCalendar' => 'ResourceCalendar',
-				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
-                'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
-                'SecurityGroups' => 'SecurityGroups',
+            'Bugs' => 'Bugs',
+            'ResourceCalendar' => 'ResourceCalendar',
+            'AOBH_BusinessHours' => 'AOBH_BusinessHours',
+            'SharedSecurityRules' => 'SharedSecurityRules',
+            'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
+            'SecurityGroups' => 'SecurityGroups',
         );
 
         $usr = new User('1');
