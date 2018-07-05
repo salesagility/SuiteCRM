@@ -43,10 +43,6 @@ function display_condition_lines($focus, $field, $value, $view)
             . "\";</script>";
         $html .= "<table border='0' cellspacing='4' width='100%' id='conditionLines'></table>";
 
-        //    $html .= "<div style='padding-top: 10px; padding-bottom:10px;'>";
-        //    $html .= "<input type=\"button\" tabindex=\"116\" class=\"button\" value=\"".$mod_strings['LBL_ADD_CONDITION']."\" id=\"btn_ConditionLine\" onclick=\"insertSecurityConditionLine()\" disabled/>";
-        //    $html .= "</div>";
-
         $html .= '<div class="tab-panels" style="width:100%">';
         $html .= '<div class="edit view edit508" id="detailpanel_conditions">';
         $html .= '<hr>';
