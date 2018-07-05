@@ -198,6 +198,9 @@ else {
  		}
 		$relName = $_REQUEST['subpanel_field_name'];
  		$focus->load_relationship($relName);
+                if ($focus->module_name == 'Users' && $relName == 'SecurityGroups' && !is_admin($GLOBALS['current_user'])) {
+                    sugar_die('Access denied');
+ 		}
  		$focus->$relName->add($_REQUEST['subpanel_id'],$add_values);
         $focus->save();
  	}
