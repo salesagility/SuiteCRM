@@ -428,6 +428,22 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
+     * @return string
+     */
+    public function getIndexName()
+    {
+        return $this->indexName;
+    }
+
+    /**
+     * @param string $indexName
+     */
+    public function setIndexName($indexName)
+    {
+        $this->indexName = $indexName;
+    }
+
+    /**
      * @param $bean SugarBean
      */
     public function removeBean($bean)
