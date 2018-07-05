@@ -53,11 +53,12 @@ use Elasticsearch\Client;
 use JsonSchema\Exception\RuntimeException;
 use ParserSearchFields;
 use SugarBean;
+use SuiteCRM\Search\Index\AbstractIndexer;
 use SuiteCRM\Utility\BeanJsonSerializer;
 
 require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
 
-class ElasticSearchIndexer
+class ElasticSearchIndexer extends AbstractIndexer
 {
     /**
      * @var string File containing a timestamp of the last (complete or differential) indexing.
@@ -77,8 +78,6 @@ class ElasticSearchIndexer
      * but it is not yet customisable by the user. *
      */
     private $searchDefsEnabled = false;
-    private $echoLogsEnabled = false;
-    private $differentialIndexingEnabled = false;
     private $batchSize = 1000;
 
     // stats
@@ -101,7 +100,6 @@ class ElasticSearchIndexer
             $this->client = ElasticSearchClientBuilder::getClient();
     }
 
-    /** Allows static launch of an indexing. */
     public function run()
     {
         $this->log('@', 'Starting indexing procedures');
@@ -125,7 +123,7 @@ class ElasticSearchIndexer
             $this->log('@', 'A differential indexing will be performed');
         } else {
             $this->log('@', 'A full indexing will be performed');
-            $this->deleteAllIndexes();
+            $this->removeAllIndices();
         }
 
         $modules = $this->getModulesToIndex();
@@ -144,33 +142,6 @@ class ElasticSearchIndexer
         $this->statistics($end, $start);
 
         $this->log('@', "Done!");
-    }
-
-    /**
-     * Used to log actions and errors performed by the indexer.
-     *
-     * They are displayed to the console if `echoLogsEnabled` is `true`;
-     *
-     * @param $type string @ = info, * = warning, ! = error
-     * @param $message string the message to log
-     */
-    public function log($type, $message)
-    {
-        if (!$this->echoLogsEnabled) return;
-
-        switch ($type) {
-            case '@':
-                $type = "\033[32m$type\033[0m";
-                break;
-            case '*':
-                $type = "\033[33m$type\033[0m";
-                break;
-            case '!':
-                $type = "\033[31m$type\033[0m";
-                break;
-        }
-
-        echo " [$type] ", $message, PHP_EOL;
     }
 
     /**
@@ -208,7 +179,7 @@ class ElasticSearchIndexer
     /**
      * Removes all the indexes from Elasticsearch, effectively nuking all data.
      */
-    public function deleteAllIndexes()
+    public function removeAllIndices()
     {
         $this->log('@', "Deleting all indices");
         try {
@@ -218,15 +189,6 @@ class ElasticSearchIndexer
             // Index not there, not big deal since we meant to delete it anyway.
             $this->log('*', 'Index not found, no index has been deleted.');
         }
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getModulesToIndex()
-    {
-        // TODO get them from either the search defs or the add a white/blacklist
-        return ['Accounts', 'Contacts', 'Users', 'Opportunities', 'Leads', 'Emails'];
     }
 
     /**
@@ -329,7 +291,7 @@ class ElasticSearchIndexer
      * @param ParserSearchFields|null $parser
      * @return string[]
      */
-    public function getFieldsToIndex($module, $parser = null)
+    private function getFieldsToIndex($module, $parser = null)
     {
         if (empty($parser)) {
             $parser = new ParserSearchFields($module);
@@ -513,22 +475,6 @@ class ElasticSearchIndexer
     }
 
     /**
-     * @return bool
-     */
-    public function isEchoLogsEnabled()
-    {
-        return $this->echoLogsEnabled;
-    }
-
-    /**
-     * @param bool $echoLogsEnabled
-     */
-    public function setEchoLogsEnabled($echoLogsEnabled)
-    {
-        $this->echoLogsEnabled = boolval($echoLogsEnabled);
-    }
-
-    /**
      * @param $bean SugarBean
      * @param $fields array|null
      */
@@ -568,22 +514,6 @@ class ElasticSearchIndexer
         ];
 
         return $args;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDifferentialIndexingEnabled()
-    {
-        return $this->differentialIndexingEnabled;
-    }
-
-    /**
-     * @param bool $differentialIndexingEnabled
-     */
-    public function setDifferentialIndexingEnabled($differentialIndexingEnabled)
-    {
-        $this->differentialIndexingEnabled = boolval($differentialIndexingEnabled);
     }
 
     /**

@@ -177,7 +177,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             ->andReturn($mockFields);
 
         $indexer = new i();
-        $actual = $indexer->getFieldsToIndex($mockModule, $mockParser);
+        $actual = self::invokeMethod($indexer, 'getFieldsToIndex', [$mockModule, $mockParser]);
 
         self::assertEquals($expected, $actual);
 
@@ -429,7 +429,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             ->with(['index' => '_all']);
 
         $indexer = new ElasticSearchIndexer($mockClient);
-        $indexer->deleteAllIndexes();
+        $indexer->removeAllIndices();
     }
 
     public function testDeleteAllIndexes2()
@@ -443,7 +443,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             ->andThrow('\Elasticsearch\Common\Exceptions\Missing404Exception');
 
         $indexer = new ElasticSearchIndexer($mockClient);
-        $indexer->deleteAllIndexes();
+        $indexer->removeAllIndices();
 
         // no exception should appear here, as the 404 has to be caught.
     }
