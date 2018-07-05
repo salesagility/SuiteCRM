@@ -437,35 +437,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	}
 
 
-	public function testcheck_role_membership()
-	{
-        // save state
-        
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        // test
-        
-		//unset and reconnect Db to resolve mysqli fetch exeception
-		$db = DBManagerFactory::getInstance();
-		unset ($db->database);
-		$db->checkConnection();
-
-		$user = new User();
-
-		$result = $user->check_role_membership("test", '');
-		$this->assertEquals(false, $result);
-
-
-		$result = $user->check_role_membership("test", '1');
-		$this->assertEquals(false, $result);
-
-        // clean up
-        
-        $state->popGlobals();
-	}
-
-
 	public function testsaveAndOthers()
 	{
         // save state
