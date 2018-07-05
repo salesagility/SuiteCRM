@@ -27,19 +27,7 @@ require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
 class SharedSecurityRulesViewDetail extends ViewDetail {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
-    function display()
-    {
-        //   global $app_list_strings;
-        //   $matrix = new SharedSecurityRules();
-        //   $bean = BeanFactory::getBean($this->bean->report_module);
-        //    $app_list_strings['aomr_field_list'] = $matrix->getFieldDefs($bean->field_defs, $this->bean->report_module);
-        parent::display();
-    }
     private function getConditionLines(){
         if(!$this->bean->id){
             return array();
@@ -48,13 +36,9 @@ class SharedSecurityRulesViewDetail extends ViewDetail {
         $result = $this->bean->db->query($sql);
         $conditions = array();
         while ($row = $this->bean->db->fetchByAssoc($result)) {
-            //$condition_name = new AOMR_Condition();
             $condition_name = new SharedSecurityRulesConditions();
 
             $condition_name->retrieve($row['id']);
-            //      if(!$condition_name->parenthesis) {
-            //          $condition_name->module_path = implode(":", unserialize(base64_decode($condition_name->module_path)));
-            //      }
             if($condition_name->value_type == 'Date'){
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
