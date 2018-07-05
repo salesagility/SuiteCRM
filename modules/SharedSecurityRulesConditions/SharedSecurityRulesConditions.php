@@ -78,93 +78,6 @@ class SharedSecurityRulesConditions extends Basic
         return false;
     }
 
-    /*
-    function save_lines($post_data, $parent, $key = '')
-    {
-
-        require_once('modules/AOW_WorkFlow/aow_utils.php');
-
-        $line_count = count($post_data[$key . 'field']);
-        $j = 0;
-        for ($i = 0; $i < $line_count; ++$i) {
-
-            if ($post_data[$key . 'deleted'][$i] == 1) {
-                $this->mark_deleted($post_data[$key . 'id'][$i]);
-            } else {
-                $condition = new SharedSecurityRulesConditions();
-                foreach ($this->field_defs as $field_def) {
-                    $field_name = $field_def['name'];
-                    if (isset($post_data[$key . $field_name][$i])) {
-                        if (is_array($post_data[$key . $field_name][$i])) {
-                            if ($field_name == 'module_path') {
-                                $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
-                            } else {
-                                switch ($condition->value_type) {
-                                    case 'Date':
-                                        $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
-                                        break;
-                                    default:
-                                        $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
-                                }
-                            }
-                        } else if ($field_name === 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
-                            $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]);
-                        }
-                        $condition->$field_name = $post_data[$key . $field_name][$i];
-
-
-
-                    if ($field_name == 'parenthesis' && $post_data[$key . $field_name][$i] == 'END') {
-                        if (!isset($lastParenthesisStartConditionId)) {
-                            throw new Exception('a closure parenthesis has no starter pair');
-                        }
-                        $condition->parenthesis = $lastParenthesisStartConditionId;
-                    } else {
-                        $condition->$field_name = $post_data[$key . $field_name][$i];
-                    }
-                } else {
-                    if ($field_name == 'parameter') {
-                        $condition->$field_name = 0;
-                    }
-                }
-
-
-                }
-                if (trim($condition->field) != '') {
-                    $condition->condition_order = ++$j;
-                    $condition->sa_shared_sec_rules_id = $parent->id;
-                    $condition->save();
-                }
-
-                // Period must be saved as a string instead of a base64 encoded datetime.
-                // Overwriting value
-                if ((!isset($condition->parenthesis) || !$condition->parenthesis) &&
-                    isset($condition->value_type) &&
-                    $condition->value_type == 'Period') {
-                    $condition->value = base64_encode($_POST['aor_conditions_value'][$i]);
-                }
-                if (trim($condition->field) != '' || $condition->parenthesis) {
-                    if (isset($_POST['aor_conditions_order'][$i])) {
-                        $condition->condition_order = (int)$_POST['aor_conditions_order'][$i];
-                    } else {
-                        $condition->condition_order = ++$j;
-                    }
-                    $condition->aor_report_id = $parent->id;
-                    $conditionId = $condition->save();
-                    if ($condition->parenthesis == 'START') {
-                        $lastParenthesisStartConditionId = $conditionId;
-                    }
-                }
-            }
-        }
-    }
-    */
-
-
-
-
-
-
 
     function save_lines($post_data, $parent, $key = '')
     {
@@ -172,7 +85,6 @@ class SharedSecurityRulesConditions extends Basic
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $j = 0;
-     //   $conditionCounter = 0;
         $lastParenthesisStartConditionIdArray = array();
         if(isset($post_data[$key . 'field']) && !empty($post_data[$key . 'field'])) {
 
@@ -260,17 +172,12 @@ class SharedSecurityRulesConditions extends Basic
                         $condition->sa_shared_sec_rules_id = $parent->id;
 
                         // Set first condition logic operator to be null on the rule (first condition does not require a logic operator)
-                     //   if($conditionCounter == 0)
-                     //   {
-                     //       $condition->logic_op = "";
-                     //       $conditionCounter++;
-                     //   }
+
                         $conditionId = $condition->save();
 
 
 
                         if ($condition->parenthesis == 'START') {
-                           // $lastParenthesisStartConditionId = $conditionId;
 
                             array_push($lastParenthesisStartConditionIdArray, $conditionId);
                         }
