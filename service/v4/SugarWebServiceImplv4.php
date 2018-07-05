@@ -299,6 +299,21 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1 {
         if($deleted){
             $deleted = -1;
         }
+
+        $user = BeanFactory::getBean('Users', $_SESSION['user_id']);
+        $module = BeanFactory::newBean($module_name);
+
+        if(!$user->is_admin){
+            $rulesWhere = SharedSecurityRules::buildRuleWhere($module);
+            if (!empty($rulesWhere)) {
+                if (empty($query)) {
+                    $query = $rulesWhere;
+                } else {
+                    $query .= " AND (".$rulesWhere.") ";
+                }
+            }
+        }
+
         if($using_cp){
             $response = $seed->retrieveTargetList($query, $select_fields, $offset,-1,-1,$deleted);
         }else
