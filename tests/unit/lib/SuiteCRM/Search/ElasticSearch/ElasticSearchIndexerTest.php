@@ -66,27 +66,6 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         self::assertTrue(in_array('Contacts', $modules), "Contacts was not found in the list of modules to index");
     }
 
-    public function testLog()
-    {
-        $indexer = new ElasticSearchIndexer();
-        $indexer->setEchoLogsEnabled(true);
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['@', 'test notice']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[32m@\033[0m] test notice\n");
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['*', 'test warn']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[33m*\033[0m] test warn\n");
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['!', 'test error']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[31m!\033[0m] test error\n");
-    }
-
     public function testIndexBeans()
     {
         $client = m::mock('\Elasticsearch\Client');
@@ -122,34 +101,16 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     public function testGettersAndSetters()
     {
         $batchSize = 20;
-        $output = false;
-        $differential = true;
-
         $i = new i();
 
-
-        $i->setEchoLogsEnabled($output);
         $i->setBatchSize($batchSize);
-        $i->setDifferentialIndexingEnabled($differential);
-
         self::assertEquals($batchSize, $i->getBatchSize());
-        self::assertEquals($output, $i->isEchoLogsEnabled());
-        self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
 
         $i = new i();
-
         $batchSize = 50;
-        $output = true;
-        $differential = false;
 
-
-        $i->setEchoLogsEnabled($output);
         $i->setBatchSize($batchSize);
-        $i->setDifferentialIndexingEnabled($differential);
-
         self::assertEquals($batchSize, $i->getBatchSize());
-        self::assertEquals($output, $i->isEchoLogsEnabled());
-        self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
     }
 
     public function testIndexBean()
