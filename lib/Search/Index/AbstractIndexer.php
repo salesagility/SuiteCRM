@@ -47,18 +47,25 @@
 namespace SuiteCRM\Search\Index;
 
 
+use InvalidArgumentException;
 use ReflectionClass;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 
 abstract class AbstractIndexer
 {
-    /** @var bool **/
+    /** @var bool */
     protected $echoLogsEnabled = false;
-    /** @var bool **/
+    /** @var bool */
     protected $differentialIndexingEnabled = false;
-    /** @var AbstractDocumentifier **/
+    /** @var AbstractDocumentifier * */
     protected $documentifier = null;
+    /** @var string[] */
+    protected $modulesToIndex = [
+        'Accounts', 'Contacts', 'Users', 'Opportunities',
+        'Leads', 'Emails', 'Calls', 'Meetings',
+        'Tasks', 'Spots', 'Surveys'
+    ];
 
     public function __construct()
     {
@@ -174,7 +181,28 @@ abstract class AbstractIndexer
      */
     public function getModulesToIndex()
     {
-        // TODO get them from either the search defs or the add a white/blacklist
-        return ['Accounts', 'Contacts', 'Users', 'Opportunities', 'Leads', 'Emails'];
+        return $this->modulesToIndex;
+    }
+
+    /**
+     * @param $modules string[]
+     */
+    public function setModulesToIndex($modules)
+    {
+        $this->modulesToIndex = $modules;
+    }
+
+    /**
+     * @param $modules string|string[]
+     */
+    public function addModulesToIndex($modules)
+    {
+        if (is_array($modules)) {
+            $this->modulesToIndex = array_merge($this->modulesToIndex, $modules);
+        } elseif (is_string($modules)) {
+            $this->modulesToIndex[] = $modules;
+        } else {
+            throw new InvalidArgumentException("Wrong type provided to AddModulesToIndex");
+        }
     }
 }
