@@ -54,8 +54,6 @@ use JsonSchema\Exception\RuntimeException;
 use SugarBean;
 use SuiteCRM\Search\Index\AbstractIndexer;
 
-require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
-
 class ElasticSearchIndexer extends AbstractIndexer
 {
     /**

@@ -46,8 +46,9 @@
 
 namespace SuiteCRM\Search\Index\Documentify;
 
-
 use ParserSearchFields;
+
+require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
 
 class SearchDefsDocumentifier extends AbstractDocumentifier
 {
