@@ -74,23 +74,15 @@ var LogicalOperatorHandler = {
     });
   },
 
-  onLogicSelectChange: function(elem, counter) {
-    // console.log('logic select changed... ', elem, counter);
-  }
-
 };
 
 var ConditionOrderHandler = {
-
-  //conditionOrderInputCounter: 0,
 
   getConditionOrderHiddenInput: function(value, _condln) {
 
     if(_condln===0)_condln = '0';
 
     if (typeof value === 'undefined' || !value) { value = '0'; }
-
-    //conditionOrderInputCounter++
 
     inputHTML = '<input type="hidden" class="aor_condition_order_input" name="aor_conditions_order[' + (_condln ? _condln : condln) + ']" value="' + value + '">';
 
@@ -124,8 +116,6 @@ var ConditionOrderHandler = {
 };
 
 var ParenthesisHandler = {
-
-  //parenthesisCounter: 0,
 
   getParenthesisStartHtml: function(condition_id, logic_op, condition_order, _condln) {
 
@@ -186,8 +176,6 @@ var ParenthesisHandler = {
 
     condln+=2;
     condln_count+=2;
-
-    //parenthesisCounter++;
   },
 
   deleteParenthesisPair: function(elem, counter) {
@@ -377,7 +365,6 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
         SUGAR.util.evalScript(result.responseText);
         enableQS(false);
         testModuleFieldsPandingFinihed();
-     //   $("#aor_conditions_value\\[" + ln +"\\]").blur( UpdatePreview("preview") );
       },
       failure: function(result) {
         document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
@@ -397,7 +384,6 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
   }
 
   else {
-   // document.getElementById('aor_conditions_logicInput'+ln).innerHTML = ''
     document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = ''
     document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = '';
     document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
@@ -446,7 +432,6 @@ function insertConditionHeader(){
   x.id='conditionLines_head';
 
   var a=x.insertCell(nxtCell++);
-  //a.style.color="rgb(68,68,68)";
 
   if(view === 'EditView') {
     var cellLogic = x.insertCell(nxtCell++);
@@ -479,12 +464,6 @@ function insertConditionHeader(){
         g.innerHTML=SUGAR.language.get('SharedSecurityRules', 'LBL_LOGIC_OP');
     }
 
-
-  // if(view === 'EditView') {
-  //   var h = x.insertCell(-1);
-  //   h.style.color = "rgb(0,0,0)";
-  //   h.innerHTML = SUGAR.language.get('AOR_MatrixReporting', 'LBL_PARAMETER');
-  // }
 }
 
 function insertConditionLine(condition){
@@ -537,32 +516,14 @@ function insertConditionLine(condition){
     var b = x.insertCell(nxtCell++);
     b.style.width = '15%';
     b.className = 'condition-sortable-handle';
-    var viewStyle = 'display:none';
-    if (action_sugar_grp1 == 'EditView') {
-      viewStyle = '';
-    }
-    b.innerHTML = "<input type='hidden' name='aor_conditions_module_path[" + condln + "]' id='aor_conditions_module_path" + condln + "' value=''>";
-    if (action_sugar_grp1 == 'EditView') {
-      viewStyle = 'display:none';
-    } else {
-      viewStyle = '';
-    }
+
     b.innerHTML += "<span style='width:178px;' id='aor_conditions_module_path_display" + condln + "' ></span>";
 
 
     var c = x.insertCell(nxtCell++);
     c.style.width = '15%';
     c.className = 'condition-sortable-handle';
-    var viewStyle = 'display:none';
-    if (action_sugar_grp1 == 'EditView') {
-      viewStyle = '';
-    }
-    c.innerHTML = "<input type='hidden' name='aor_conditions_field[" + condln + "]' id='aor_conditions_field" + condln + "' value=''>";
-    if (action_sugar_grp1 == 'EditView') {
-      viewStyle = 'display:none';
-    } else {
-      viewStyle = '';
-    }
+
     c.innerHTML += "<span style='width:178px;' id='aor_conditions_field_label" + condln + "' ></span>";
 
 
@@ -583,13 +544,6 @@ function insertConditionLine(condition){
           g.id = 'aor_conditions_logic_op' + condln;
           g.style.width = '10%';
       }
-
-
-    // if (view === 'EditView') {
-    //   var h = x.insertCell(-1);
-    //   h.innerHTML += "<input id='aor_conditions_parameter" + condln + "' name='aor_conditions_parameter[" + condln + "]' value='1' type='checkbox'>";
-    //   h.style.width = '10%';
-    // }
 
   }
 
@@ -667,7 +621,6 @@ function date_field_change(field){
 }
 
 function UpdatePreview(panel){
-    var numberOfConditions = $("#aor_conditions_body tr").length;
     var url = "index.php?module=AOR_Reports&action=getPreview";
     $.ajax({
         url: url,

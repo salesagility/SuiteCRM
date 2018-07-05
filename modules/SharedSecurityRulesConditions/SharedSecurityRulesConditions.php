@@ -137,9 +137,9 @@ class SharedSecurityRulesConditions extends Basic
                                 }
                             }
                             if ($field_name == 'parenthesis' && $post_data[$key . $field_name][$i] == 'END') {
-                                if (empty($lastParenthesisStartConditionIdArray)){//(!isset($lastParenthesisStartConditionId)) {
+                                if (empty($lastParenthesisStartConditionIdArray)) {
                                     throw new Exception('a closure parenthesis has no starter pair');
-                                       }
+                                }
 
                                 $condition->parenthesis=  array_pop($lastParenthesisStartConditionIdArray);
 
