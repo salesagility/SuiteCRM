@@ -96,7 +96,7 @@ class ElasticSearchCommands extends \Robo\Tasks
 
     //endregion
 
-    public function esearch($query, $size = 50, $showJson = false)
+    public function elasticSearch($query, $size = 50, $showJson = false)
     {
         $engine = new MasterSearch();
 
@@ -131,7 +131,7 @@ class ElasticSearchCommands extends \Robo\Tasks
      * @param bool $differential Use search that uses to timestamps to perform an optimised indexing.
      * @param bool $searchdefs
      */
-    public function eindex($differential = true, $searchdefs = false)
+    public function elasticIndex($differential = true, $searchdefs = false)
     {
         $indexer = new ElasticSearchIndexer();
         $indexer->setEchoLogsEnabled(true);
@@ -141,7 +141,7 @@ class ElasticSearchCommands extends \Robo\Tasks
         $indexer->run();
     }
 
-    public function ermindex()
+    public function elasticRmIndex()
     {
         $indexer = new ElasticSearchIndexer();
         $indexer->removeIndex();
