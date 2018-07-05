@@ -1934,9 +1934,11 @@ class SugarBean
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
                 if (!is_array($properties)) {
-                    $GLOBALS['log']->fatal('array_search() expects parameter 2 to be array, ' .
+                    LoggerManager::getLogger()->warn('properties should be an array for SugarBean::get_linked_fields ' .
                         gettype($properties) . ' given');
-                } elseif (array_search('link', $properties) === 'type') {
+                    $properties = (array)$properties;
+                }
+                if (array_search('link', $properties) === 'type') {
                     $linked_fields[$name] = $properties;
                 }
             }
@@ -3550,6 +3552,22 @@ class SugarBean
         }
         /* BEGIN - SECURITY GROUPS */
         global $current_user, $sugar_config;
+     
+        $requestAction = null;
+        if (isset($_REQUEST['action'])) {
+            $requestAction = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested action is not set but needed for create_new_list_query in SugarBean.');
+        }
+        
+        $parentBeanModuleDir = null;
+        if (!isset($parentbean->module_dir)) {
+            LoggerManager::getLogger()->warn('Parent Bean module dir is not exists but Shared Security Groups needs it.');
+        } else {
+            $parentBeanModuleDir = $parentbean->module_dir;
+        }
+        
+        $rules_where = ['addwhere' => null, 'resWhere' => null];
 
         if (!$current_user->is_admin && ($_REQUEST['action'] != "Popup" && $parentbean->module_dir != "Users" && ($_REQUEST['action'] != "DetailView" && $this->module_dir != "Users"))) {
             $rules_where = SharedSecurityRules::buildRuleWhere($this);
@@ -3670,6 +3688,10 @@ class SugarBean
         // through their relationship_info field
         $addrelate = array();
         foreach ($fields as $field => $value) {
+            if (!isset($fields) || null === $fields) {
+                LoggerManager::getLogger()->warn('filter is not set for SugarBean::create_new_list_query');
+                $fields = array();
+            }
             if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) &&
                 $this->field_defs[$field]['source'] == 'non-db'
             ) {
@@ -3740,14 +3762,21 @@ class SugarBean
 
                 $selectedFields["$this->table_name.$field"] = true;
             }
+            
+            $dataType = null;
+            if (!isset($data['type'])) {
+                LoggerManager::getLogger()->warn('SugarBean needs a type of data to create new list query');
+            } else {
+                $dataType = $data['type'];
+            }
 
-            if ($data['type'] != 'relate' && isset($data['db_concat_fields'])) {
+            if ($dataType != 'relate' && isset($data['db_concat_fields'])) {
                 $ret_array['select'] .= ", " . $this->db->concat($this->table_name, $data['db_concat_fields'])
                     . " as $field";
                 $selectedFields[$this->db->concat($this->table_name, $data['db_concat_fields'])] = true;
             }
             //Custom relate field or relate fields built in module builder which have no link field associated.
-            if ($data['type'] == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
+            if ($dataType == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
                 $joinTableAlias = 'jt' . $jtcount;
                 $relateJoinInfo = $this->custom_fields->getRelateJoin($data, $joinTableAlias, false);
                 $ret_array['select'] .= $relateJoinInfo['select'];
@@ -3758,7 +3787,7 @@ class SugarBean
                 $jtcount++;
             }
             //Parent Field
-            if ($data['type'] == 'parent') {
+            if ($dataType == 'parent') {
                 //See if we need to join anything by inspecting the where clause
                 $match = preg_match(
                     '/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/',
@@ -5076,6 +5105,10 @@ class SugarBean
         //find all definitions of type link.
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
+                if (!is_array($properties)) {
+                    LoggerManager::getLogger()->warn('properties of field defs should be an array, ' . gettype($properties) . ' given.');
+                    $properties = (array)$properties;
+                }
                 if (array_search('relate', $properties, true) === 'type') {
                     $related_fields[$name] = $properties;
                 }
@@ -6162,7 +6195,14 @@ class SugarBean
         }
 
 
-        if($_REQUEST['action'] == "Popup") {
+        $requestAction = null;
+        if (isset($_REQUEST['action'])) {
+            $requestAction = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested Action is not set but needed for ACLAccess in SugarBean.');
+        }
+        
+        if($requestAction == "Popup") {
             $access = true;
         }
 
