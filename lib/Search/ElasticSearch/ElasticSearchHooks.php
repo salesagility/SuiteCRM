@@ -46,15 +46,16 @@
 
 namespace SuiteCRM\Search\ElasticSearch;
 
+use SugarBean;
+
 class ElasticSearchHooks
 {
-    const BLACKLIST = ['AOD_IndexEvent'];
-
     public function beanSaved($bean, $event, $arguments)
     {
-        if (in_array($bean->module_name, self::BLACKLIST)) return;
         try {
-            $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
+            $indexer = $this->getIndexer($bean);
+            if ($this->isBlacklisted($bean, $indexer))
+                return;
             $indexer->indexBean($bean);
         } catch (\Exception $e) {
             $message = 'Failed to add bean to index because: ' . $e->getMessage();
@@ -63,11 +64,32 @@ class ElasticSearchHooks
         }
     }
 
+    /**
+     * @param $bean
+     * @return ElasticSearchIndexer
+     */
+    private function getIndexer($bean)
+    {
+        $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
+        return $indexer;
+    }
+
+    /**
+     * @param $bean SugarBean
+     * @param $indexer ElasticSearchIndexer
+     * @return bool
+     */
+    private function isBlacklisted($bean, $indexer)
+    {
+        return !in_array($bean->module_name, $indexer->getModulesToIndex());
+    }
+
     public function beanDeleted($bean, $event, $arguments)
     {
-        if (in_array($bean->module_name, self::BLACKLIST)) return;
         try {
-            $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
+            $indexer = $this->getIndexer($bean);
+            if ($this->isBlacklisted($bean, $indexer))
+                return;
             $indexer->removeBean($bean);
         } catch (\Exception $e) {
             $message = 'Failed to remove bean from index because: ' . $e->getMessage();
