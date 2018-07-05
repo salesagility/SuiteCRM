@@ -2966,6 +2966,11 @@ class SugarBean
         }
         /* BEGIN - SECURITY GROUPS */
         global $current_user, $sugar_config;
+
+        if (!$current_user->is_admin && ($_REQUEST['action'] != "Popup" && $parentbean->module_dir != "Users" && ($_REQUEST['action'] != "DetailView" && $this->module_dir != "Users"))) {
+            $rules_where = SharedSecurityRules::buildRuleWhere($this);
+        }
+
         if ($this->module_dir == 'Users' && !is_admin($current_user)
             && isset($sugar_config['securitysuite_filter_user_list'])
             && $sugar_config['securitysuite_filter_user_list']
@@ -2973,24 +2978,40 @@ class SugarBean
             require_once('modules/SecurityGroups/SecurityGroup.php');
             global $current_user;
             $group_where = SecurityGroup::getGroupUsersWhere($current_user->id);
-            if (empty($where)) {
-                $where = " (" . $group_where . ") ";
-            } else {
-                $where .= " AND (" . $group_where . ") ";
-            }
         } elseif ($this->bean_implements('ACL') && ACLController::requireSecurityGroup($this->module_dir, 'list')) {
             require_once('modules/SecurityGroups/SecurityGroup.php');
             global $current_user;
             $owner_where = $this->getOwnerWhere($current_user->id);
             $group_where = SecurityGroup::getGroupWhere($this->table_name, $this->module_dir, $current_user->id);
-            if (!empty($owner_where)) {
-                if (empty($where)) {
-                    $where = " (" . $owner_where . " or " . $group_where . ") ";
-                } else {
-                    $where .= " AND (" . $owner_where . " or " . $group_where . ") ";
-                }
+        }
+
+        $sgWhere = "";
+        if(!empty($group_where)) {
+            if(!empty($owner_where)) {
+                $sgWhere = " (" . $owner_where . " OR " . $group_where . ") ";
             } else {
-                $where .= ' AND ' . $group_where;
+                $sgWhere  = " (" . $group_where . ") ";
+            }
+        } elseif (!empty($owner_where)) {
+            $sgWhere  = " (" . $owner_where . ") ";
+        }
+        $permWhere = "";
+        if(!empty($sgWhere) && !empty($rules_where['addWhere'])) {
+            $permWhere = " ( " . $sgWhere . " OR (" . $rules_where['addWhere'] . ") ) ";
+        } elseif (!empty($sgWhere) || !empty($rules_where['addWhere'])) {
+            $permWhere = " ( " . $sgWhere . "" . $rules_where['addWhere'] . " ) ";
+        }
+        if(!empty($rules_where['resWhere']) && !empty($permWhere)) {
+            $permWhere = " ( " . $rules_where['resWhere'] . " AND " . $permWhere . " ) ";
+        } elseif (!empty($rules_where['resWhere']) || !empty($permWhere)) {
+            $permWhere = " ( " . $rules_where['resWhere'] . "" . $permWhere . " ) ";
+        }
+
+        if(!empty($permWhere)) {
+            if(empty($where)) {
+                $where = $permWhere;
+            } else {
+                $where .= " AND " . $permWhere;
             }
         }
         /* END - SECURITY GROUPS */
@@ -5346,6 +5367,7 @@ class SugarBean
         if ($current_user->isAdmin() || !$this->bean_implements('ACL')) {
             return true;
         }
+
         $view = strtolower($view);
         switch ($view) {
             case 'list':
@@ -5394,7 +5416,33 @@ class SugarBean
             require_once("modules/SecurityGroups/SecurityGroup.php");
             $in_group = SecurityGroup::groupHasAccess($this->module_dir, $this->id, $view);
         }
-        return ACLController::checkAccess($this->module_dir, $view, $is_owner, $this->acltype, $in_group);
+
+
+
+        $access = ACLController::checkAccess($this->module_dir, $view, $is_owner, $this->acltype, $in_group);
+
+        if($view != "list") {
+            $bean = BeanFactory::getBean("SharedSecurityRules");
+            if($bean != false) {
+                $GLOBALS['log']->fatal('SharedSecurityRules: Entering checkRules.');
+                $ruleAccess = $bean->checkRules($this, $view);
+                if ($ruleAccess === false) {
+                    $access = false;
+                }elseif($ruleAccess === true){
+                    $access = true;
+                }
+            }
+        }
+
+
+        if($_REQUEST['action'] == "Popup") {
+            $access = true;
+        }
+
+        return $access;
+
+
+
     }
 
     /**
