@@ -122,66 +122,34 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     public function testGettersAndSetters()
     {
         $batchSize = 20;
-        $searchDefs = true;
         $output = false;
         $differential = true;
 
         $i = new i();
 
-        $i->setSearchDefsEnabled($searchDefs);
+
         $i->setEchoLogsEnabled($output);
         $i->setBatchSize($batchSize);
         $i->setDifferentialIndexingEnabled($differential);
 
         self::assertEquals($batchSize, $i->getBatchSize());
-        self::assertEquals($searchDefs, $i->isSearchDefsEnabled());
         self::assertEquals($output, $i->isEchoLogsEnabled());
         self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
 
         $i = new i();
 
         $batchSize = 50;
-        $searchDefs = false;
         $output = true;
         $differential = false;
 
-        $i->setSearchDefsEnabled($searchDefs);
+
         $i->setEchoLogsEnabled($output);
         $i->setBatchSize($batchSize);
         $i->setDifferentialIndexingEnabled($differential);
 
         self::assertEquals($batchSize, $i->getBatchSize());
-        self::assertEquals($searchDefs, $i->isSearchDefsEnabled());
         self::assertEquals($output, $i->isEchoLogsEnabled());
         self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
-    }
-
-    public function testGetFieldsToIndex()
-    {
-        $mockParser = m::mock('ParserSearchFields');
-        $mockModule = 'MockModule';
-        $mockFields = [
-            $mockModule => [
-                // TODO
-            ]
-        ];
-
-        $expected = [
-            // TODO
-        ];
-
-        $mockParser
-            ->shouldReceive('getSearchFields')
-            ->once()
-            ->with()
-            ->andReturn($mockFields);
-
-        $indexer = new i();
-        $actual = self::invokeMethod($indexer, 'getFieldsToIndex', [$mockModule, $mockParser]);
-
-        self::assertEquals($expected, $actual);
-
-        self::markTestIncomplete("Need to test the foreach");
     }
 
     public function testIndexBean()
@@ -194,7 +162,6 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             ->once();
 
         $indexer = new ElasticSearchIndexer($client);
-        $indexer->setSearchDefsEnabled(false);
 
         $indexer->indexBean($bean);
     }
@@ -304,7 +271,6 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     {
         $bean = $this->getTestBean();
         $indexer = new ElasticSearchIndexer();
-        $indexer->setSearchDefsEnabled(false);
         $expected = $this->getExpectedBody();
 
         $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);

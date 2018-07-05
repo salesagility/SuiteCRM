@@ -47,10 +47,23 @@
 namespace SuiteCRM\Search\Index;
 
 
+use ReflectionClass;
+use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
+use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
+
 abstract class AbstractIndexer
 {
+    /** @var bool **/
     protected $echoLogsEnabled = false;
+    /** @var bool **/
     protected $differentialIndexingEnabled = false;
+    /** @var AbstractDocumentifier **/
+    protected $documentifier = null;
+
+    public function __construct()
+    {
+        $this->documentifier = new JsonSerializerDocumentifier();
+    }
 
     abstract function run();
 
@@ -123,6 +136,37 @@ abstract class AbstractIndexer
     public function setDifferentialIndexingEnabled($differentialIndexingEnabled)
     {
         $this->differentialIndexingEnabled = boolval($differentialIndexingEnabled);
+    }
+
+    /**
+     * @return AbstractDocumentifier
+     */
+    public function getDocumentifier()
+    {
+        return $this->documentifier;
+    }
+
+    /**
+     * @param AbstractDocumentifier $documentifier
+     */
+    public function setDocumentifier($documentifier)
+    {
+        $this->documentifier = $documentifier;
+    }
+
+    /**
+     * Returns the name of the selected documentifier.
+     *
+     * @return string
+     */
+    public function getDocumentifierName()
+    {
+        try {
+            $reflect = new ReflectionClass($this->documentifier);
+            return $reflect->getShortName();
+        } catch (\ReflectionException $e) {
+            return get_class($this->documentifier);
+        }
     }
 
     /**

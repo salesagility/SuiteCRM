@@ -39,6 +39,7 @@
  */
 
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\StateSaver;
@@ -56,7 +57,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         // Make a new Indexer instance
         $indexer = new ElasticSearchIndexer();
         $indexer->setEchoLogsEnabled(true);
-        $indexer->setSearchDefsEnabled(false);
+        $indexer->setDocumentifier(new SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier());
 
         $this->indexRunner($indexer);
     }
@@ -118,7 +119,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
             // lets test a more complex query
             // Search by city
 
-            $query = $indexer->isSearchDefsEnabled()
+            $query = $indexer->getDocumentifierName() == "SearchDefsDocumentifier"
                 ? SearchQuery::fromString("address_city.primary_address_city:$city", 1)
                 : SearchQuery::fromString("address.primary.city:$city", 1);
             $results = MasterSearch::search(
@@ -199,7 +200,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         // Make a new Indexer instance
         $indexer = new ElasticSearchIndexer();
         $indexer->setEchoLogsEnabled(true);
-        $indexer->setSearchDefsEnabled(true);
+        $indexer->setDocumentifier(new SearchDefsDocumentifier());
         $indexer->setBatchSize(1);
 
         $this->indexRunner($indexer);

@@ -50,6 +50,7 @@ use BeanFactory;
 use Robo\Task\Base\loadTasks;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Utility\BeanJsonSerializer;
@@ -136,8 +137,8 @@ class ElasticSearchCommands extends \Robo\Tasks
         $indexer = new ElasticSearchIndexer();
         $indexer->setEchoLogsEnabled(true);
         $indexer->setDifferentialIndexingEnabled($differential);
-        $indexer->setSearchDefsEnabled($searchdefs);
-
+        if ($searchdefs)
+            $indexer->setDocumentifier(new SearchDefsDocumentifier());
         $indexer->run();
     }
 

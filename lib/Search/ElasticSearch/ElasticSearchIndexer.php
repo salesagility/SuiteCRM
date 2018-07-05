@@ -51,10 +51,8 @@ use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Elasticsearch\Client;
 use JsonSchema\Exception\RuntimeException;
-use ParserSearchFields;
 use SugarBean;
 use SuiteCRM\Search\Index\AbstractIndexer;
-use SuiteCRM\Utility\BeanJsonSerializer;
 
 require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
 
@@ -77,7 +75,6 @@ class ElasticSearchIndexer extends AbstractIndexer
      * Without search defs the indexing is faster and more reliable with known data,
      * but it is not yet customisable by the user. *
      */
-    private $searchDefsEnabled = false;
     private $batchSize = 1000;
 
     // stats
@@ -94,6 +91,8 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     public function __construct($client = null)
     {
+        parent::__construct();
+
         if (!empty($client))
             $this->client = $client;
         else
@@ -109,11 +108,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->indexedFieldsCount = 0;
         $this->removedRecordsCount = 0;
 
-        if ($this->searchDefsEnabled) {
-            $this->log('@', 'Indexing is performed using Searchdefs');
-        } else {
-            $this->log('@', 'Indexing is performed using BeanJsonSerializer');
-        }
+        $this->log('@', 'Indexing is performed using ' . $this->getDocumentifierName());
 
         if ($this->differentialIndexingEnabled) {
             $this->lastRunTimestamp = $this->readLockFile();
@@ -145,7 +140,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
-     * Reads the lock file and returs a Carbon timestamp or `null` if the fail could not be found.
+     * Reads the lock file and returns a Carbon timestamp or `null` if the fail could not be found.
      *
      * @return bool|Carbon
      */
@@ -255,9 +250,6 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     private function indexBatch($module, $beans)
     {
-        if ($this->searchDefsEnabled)
-            $fields = $this->getFieldsToIndex($module);
-
         $params = ['body' => []];
 
         foreach ($beans as $key => $bean) {
@@ -267,7 +259,7 @@ class ElasticSearchIndexer extends AbstractIndexer
                 $params['body'][] = ['delete' => $head];
                 $this->removedRecordsCount++;
             } else {
-                $body = $this->makeIndexParamsBodyFromBean($bean, $fields);
+                $body = $this->makeIndexParamsBodyFromBean($bean);
                 $params['body'][] = ['index' => $head];
                 $params['body'][] = $body;
                 $this->indexedRecordsCount++;
@@ -287,117 +279,12 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
-     * @param $module string
-     * @param ParserSearchFields|null $parser
-     * @return string[]
-     */
-    private function getFieldsToIndex($module, $parser = null)
-    {
-        if (empty($parser)) {
-            $parser = new ParserSearchFields($module);
-        }
-
-        $fields = $parser->getSearchFields()[$module];
-
-        $parsedFields = [];
-
-        foreach ($fields as $key => $field) {
-            if (isset($field['query_type']) && $field['query_type'] != 'default') {
-                $this->log('*', "[$module]->$key is not a supported query type!");
-                continue;
-            };
-
-            if (!empty($field['operator'])) {
-                $this->log('*', "[$module]->$key has an operator!");
-                continue;
-            }
-
-            if (strpos($key, 'range_date') !== false) {
-                continue;
-            }
-
-            if (!empty($field['db_field'])) {
-                foreach ($field['db_field'] as $db_field) {
-                    $parsedFields[$key][] = $db_field;
-                }
-            } else {
-                $parsedFields[] = $key;
-            }
-        }
-
-        return $parsedFields;
-    }
-
-    /**
-     * Note: it removes not found fields from the `$fields` argument.
      * @param $bean SugarBean
-     * @param $fields array
      * @return array
      */
-    private function makeIndexParamsBodyFromBean($bean, &$fields = null)
+    private function makeIndexParamsBodyFromBean($bean)
     {
-        $results
-            = $this->searchDefsEnabled
-            ? $this->makeIndexParamsBodyFromBeanSearchDefs($bean, $fields)
-            : $this->makeIndexParamsBodyFromBeanSerializer($bean);
-
-        return $results;
-    }
-
-    /**
-     * @param $bean
-     * @param $fields
-     * @return array
-     */
-    private function makeIndexParamsBodyFromBeanSearchDefs($bean, &$fields)
-    {
-        if (empty($fields))
-            throw new \InvalidArgumentException("Mandatory argument \$fields is empty.");
-
-        $body = [];
-
-        foreach ($fields as $key => $value) {
-            if (is_array($value)) {
-                foreach ($value as $subvalue) {
-                    if ($this->hasField($bean, $subvalue)) {
-                        $body[$key][$subvalue] = mb_convert_encoding($bean->$subvalue, "UTF-8", "HTML-ENTITIES");
-                    }
-                }
-            } else {
-                if ($this->hasField($bean, $value)) {
-                    $body[$value] = mb_convert_encoding($bean->$value, "UTF-8", "HTML-ENTITIES");
-                }
-            }
-        }
-
-        return $body;
-    }
-
-    /**
-     * @param $bean
-     * @param $field
-     * @return bool
-     */
-    private function hasField($bean, $field)
-    {
-        if (!isset($bean->$field)) {
-            $this->log('!', "{$bean->module_name}->$field does not exist!");
-
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * @param $bean
-     * @return array
-     */
-    private function makeIndexParamsBodyFromBeanSerializer($bean)
-    {
-        $values = BeanJsonSerializer::toArray($bean);
-        unset($values['id']);
-        return $values;
+        return $this->documentifier->documentify($bean);
     }
 
     /**
@@ -459,45 +346,23 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
-     * @return bool
-     */
-    public function isSearchDefsEnabled()
-    {
-        return $this->searchDefsEnabled;
-    }
-
-    /**
-     * @param bool $searchDefsEnabled
-     */
-    public function setSearchDefsEnabled($searchDefsEnabled)
-    {
-        $this->searchDefsEnabled = boolval($searchDefsEnabled);
-    }
-
-    /**
      * @param $bean SugarBean
-     * @param $fields array|null
      */
-    public function indexBean($bean, $fields = null)
+    public function indexBean($bean)
     {
-        if ($this->searchDefsEnabled && empty($fields)) {
-            $fields = $this->getFieldsToIndex($bean->module_name);
-        }
-
-        $args = $this->makeIndexParamsFromBean($bean, $fields);
+        $args = $this->makeIndexParamsFromBean($bean);
 
         $this->client->index($args);
     }
 
     /**
      * @param $bean SugarBean
-     * @param $fields array|null
      * @return array
      */
-    private function makeIndexParamsFromBean($bean, $fields = null)
+    private function makeIndexParamsFromBean($bean)
     {
         $args = $this->makeParamsHeaderFromBean($bean);
-        $args['body'] = $this->makeIndexParamsBodyFromBean($bean, $fields);
+        $args['body'] = $this->makeIndexParamsBodyFromBean($bean);
         return $args;
     }
 
