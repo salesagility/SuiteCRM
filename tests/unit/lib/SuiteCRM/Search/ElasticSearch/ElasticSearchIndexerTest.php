@@ -93,17 +93,19 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
         $client
             ->shouldReceive('bulk')
-            ->times(4);
+            ->times(5);
 
         $mockedModule = 'MockedModule';
 
         $mockedBeans = [
-            (object)array("id" => 1, "fetched_row" => ['name' => 'name 1'], "fetched_rel_row" => []),
-            (object)array("id" => 2, "fetched_row" => ['name' => 'name 2'], "fetched_rel_row" => []),
-            (object)array("id" => 3, "fetched_row" => ['name' => 'name 3'], "fetched_rel_row" => []),
-            (object)array("id" => 4, "fetched_row" => ['name' => 'name 4'], "fetched_rel_row" => []),
-            (object)array("id" => 5, "fetched_row" => ['name' => 'name 5'], "fetched_rel_row" => []),
-            (object)array("id" => 6, "fetched_row" => ['name' => 'name 6', "opt" => 'ciao'], "fetched_rel_row" => []),
+            (object)array("id" => 1, "fetched_row" => ['name' => 'name 1'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
+            (object)array("id" => 2, "fetched_row" => ['name' => 'name 2'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
+            (object)array("id" => 3, "fetched_row" => ['name' => 'name 3'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
+            (object)array("id" => 4, "fetched_row" => ['name' => 'name 4'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
+            (object)array("id" => 5, "fetched_row" => ['name' => 'name 5'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
+            (object)array("id" => 6, "fetched_row" => ['name' => 'name 6'], "fetched_rel_row" => [], "deleted" => true, "module_name" => $mockedModule),
+            (object)array("id" => 7, "fetched_row" => ['name' => 'name 7', "opt" => 'ciao'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
+            (object)array("id" => 8, "fetched_row" => ['name' => 'name 8', "opt" => 'ciao'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
         ];
 
         $i = new i($client);
@@ -112,8 +114,9 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
         $i->indexBeans($mockedModule, $mockedBeans);
 
-        self::assertEquals(7, $i->getIndexedFieldsCount());
-        self::assertEquals(6, $i->getIndexedRecordsCount());
+        self::assertEquals(1, $i->getRemovedRecordsCount());
+        self::assertEquals(7, $i->getIndexedRecordsCount());
+        self::assertEquals(9, $i->getIndexedFieldsCount());
     }
 
     public function testGettersAndSetters()

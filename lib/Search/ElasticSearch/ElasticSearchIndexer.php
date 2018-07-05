@@ -85,6 +85,7 @@ class ElasticSearchIndexer
     private $indexedModulesCount;
     private $indexedRecordsCount;
     private $indexedFieldsCount;
+    private $removedRecordsCount;
     /** @var bool|Carbon */
     private $lastRunTimestamp = false;
 
@@ -108,6 +109,7 @@ class ElasticSearchIndexer
         $this->indexedModulesCount = 0;
         $this->indexedRecordsCount = 0;
         $this->indexedFieldsCount = 0;
+        $this->removedRecordsCount = 0;
 
         if ($this->searchDefsEnabled) {
             $this->log('@', 'Indexing is performed using Searchdefs');
@@ -233,23 +235,27 @@ class ElasticSearchIndexer
     public function indexModule($module)
     {
         $seed = BeanFactory::getBean($module);
+        $table_name = $seed->table_name;
 
         if ($this->differentialIndexing()) {
             $datetime = $this->lastRunTimestamp->toDateTimeString();
-            $where = sprintf("%s.date_modified > '%s' OR %s.date_entered > '%s'", $seed->table_name, $datetime, $seed->table_name, $datetime);
+            $where = "$table_name.date_modified > '$datetime' OR $table_name.date_entered > '$datetime'";
+            $showDeleted = -1;
         } else {
-            $where = null;
+            $where = "";
+            $showDeleted = 0;
         }
 
         try {
-            $beans = $seed->get_full_list(null, $where, null, $this->differentialIndexing());
+            $beans = $seed->get_full_list("", $where, false, $showDeleted);
         } catch (RuntimeException $e) {
             $this->log('!', "Failed to index module $module because of $e");
             return;
         }
 
         if ($beans === null) {
-            $this->log('*', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
+            if (!$this->differentialIndexing())
+                $this->log('*', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
             return;
         } else {
             $this->log('@', sprintf('Indexing module %s...', $module));
@@ -272,9 +278,11 @@ class ElasticSearchIndexer
         }
 
         $oldCount = $this->indexedRecordsCount;
+        $oldRemCount = $this->removedRecordsCount;
         $this->indexBatch($module, $beans);
         $diff = $this->indexedRecordsCount - $oldCount;
-        $total = count($beans);
+        $remDiff = $this->removedRecordsCount - $oldRemCount;
+        $total = count($beans) - $remDiff;
         $type = $total === $diff ? '@' : '*';
         $this->log($type, sprintf('Indexed %d/%d %s', $diff, $total, $module));
     }
@@ -291,18 +299,18 @@ class ElasticSearchIndexer
         $params = ['body' => []];
 
         foreach ($beans as $key => $bean) {
+            $head = ['_index' => $this->indexName, '_type' => $module, '_id' => $bean->id];
 
-            // TODO send a delete request
-
-            $params['body'][] = [
-                'index' => [
-                    '_index' => $this->indexName,
-                    '_type' => $module,
-                    '_id' => $bean->id
-                ]
-            ];
-
-            $params['body'][] = $this->makeIndexParamsBodyFromBean($bean, $fields);
+            if ($bean->deleted) {
+                $params['body'][] = ['delete' => $head];
+                $this->removedRecordsCount++;
+            } else {
+                $body = $this->makeIndexParamsBodyFromBean($bean, $fields);
+                $params['body'][] = ['index' => $head];
+                $params['body'][] = $body;
+                $this->indexedRecordsCount++;
+                $this->indexedFieldsCount += count($body);
+            }
 
             // Send a batch of $this->batchSize elements to the server
             if ($key % $this->batchSize == 0) {
@@ -400,8 +408,6 @@ class ElasticSearchIndexer
             }
         }
 
-        $this->indexedFieldsCount += count($body);
-
         return $body;
     }
 
@@ -428,11 +434,7 @@ class ElasticSearchIndexer
     private function makeIndexParamsBodyFromBeanSerializer($bean)
     {
         $values = BeanJsonSerializer::toArray($bean);
-
         unset($values['id']);
-
-        $this->indexedFieldsCount += count($values);
-
         return $values;
     }
 
@@ -451,10 +453,12 @@ class ElasticSearchIndexer
                 $type = $item[$action]['error']['type'];
                 $reason = $item[$action]['error']['reason'];
                 $this->log('!', "[$action] [$type] $reason");
+                if ($action === 'index') {
+                    $this->indexedRecordsCount--;
+                } else if ($action === 'delete') {
+                    $this->removedRecordsCount--;
+                }
             }
-        } else {
-            // if successful increase the count for statistics
-            $this->indexedRecordsCount += count($params['body']) / 2;
         }
 
         // erase the old bulk request
@@ -476,6 +480,10 @@ class ElasticSearchIndexer
      */
     private function statistics($end, $start)
     {
+        if ($this->removedRecordsCount) {
+            $this->log('@', sprintf('%s records have been removed', $this->removedRecordsCount));
+        }
+
         if ($this->indexedRecordsCount != 0) {
             $elapsed = ($end - $start); // seconds
             $estimation = $elapsed / $this->indexedRecordsCount * 200000;
@@ -576,6 +584,14 @@ class ElasticSearchIndexer
     public function setDifferentialIndexingEnabled($differentialIndexingEnabled)
     {
         $this->differentialIndexingEnabled = boolval($differentialIndexingEnabled);
+    }
+
+    /**
+     * @return int
+     */
+    public function getRemovedRecordsCount()
+    {
+        return $this->removedRecordsCount;
     }
 
     /**

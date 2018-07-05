@@ -1516,7 +1516,7 @@ class Email extends Basic
         $tmpNote->filename = $filename;
         $tmpNote->file_mime_type = $mimeType;
         $noteFile = "upload://{$tmpNote->id}";
-        
+
         if (!file_exists($fileLocation)) {
             LoggerManager::getLogger()->warn('Email error: File Location not found for save temp note attachments. File location was: "' . $fileLocation . '"');
         } else {
@@ -1524,13 +1524,13 @@ class Email extends Basic
             if (!copy($fileLocation, $noteFile)) {
                 $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
             } else {
-                
+
                 if (!$tmpNote->save()) {
                     return false;
                 }
             }
         }
-        
+
         return true;
     }
 
@@ -2788,11 +2788,11 @@ class Email extends Basic
         $ieId = $this->mailbox_id;
         $mail = $this->setMailer($mail, '', $ieId);
 
-        
-        
+
+
         if ($mail->oe->type === 'system') {
-            $mail->From = 
-            $sender = 
+            $mail->From =
+            $sender =
             $ReplyToAddr = $mail->oe->smtp_from_addr;
             $ReplyToName = $mail->oe->smtp_from_name;
         } else {
@@ -2828,8 +2828,8 @@ class Email extends Basic
                 $ReplyToAddr = $mail->From;
             }
         }
-        
-        
+
+
         $mail->Sender = $sender; /* set Return-Path field in header to reduce spam score in emails sent via Sugar's Email module */
         $mail->AddReplyTo($ReplyToAddr, $locale->translateCharsetMIME(trim($ReplyToName), 'UTF-8', $OBCharset));
 
@@ -3062,6 +3062,7 @@ class Email extends Basic
 
         $query .= $custom_join['join'];
 
+        $where_auto = "1=1";
         if ($show_deleted == 0) {
             $where_auto = " emails.deleted=0 \n";
         } else {
