@@ -47,11 +47,14 @@ require_once("modules/AOW_WorkFlow/aow_utils.php");
 
 class SharedSecurityRulesController extends SugarController
 {
+    
     public function action_fielddefs()
     {
-        $bean = BeanFactory::getBean($_REQUEST['moduletype']);
+        $request = $_REQUEST;
+        
+        $bean = BeanFactory::getBean($request['moduletype']);
         $matrix = new SharedSecurityRules();
-        $fields = $matrix->getFieldDefs($bean->field_defs, $_REQUEST['moduletype']);
+        $fields = $matrix->getFieldDefs($bean->field_defs, $request['moduletype']);
         asort($fields);
         echo get_select_options_with_id($fields, "");
         die();
@@ -60,11 +63,12 @@ class SharedSecurityRulesController extends SugarController
     protected function action_getAction()
     {
         global $beanList, $beanFiles;
+        $request = $_REQUEST;
 
-        $action_name = 'action' . $_REQUEST['aow_action'];
-        $line = $_REQUEST['line'];
+        $action_name = 'action' . $request['aow_action'];
+        $line = $request['line'];
 
-        if ($_REQUEST['aow_module'] == '' || !isset($beanList[$_REQUEST['aow_module']])) {
+        if ($request['aow_module'] == '' || !isset($beanList[$request['aow_module']])) {
             echo '';
             die;
         }
@@ -85,49 +89,51 @@ class SharedSecurityRulesController extends SugarController
 
         $id = '';
         $params = array();
-        if (isset($_REQUEST['id'])) {
+        if (isset($request['id'])) {
             require_once('modules/AOW_Actions/AOW_Action.php');
             $aow_action = new SharedSecurityRulesActions();
-            $aow_action->retrieve($_REQUEST['id']);
+            $aow_action->retrieve($request['id']);
             $id = $aow_action->id;
             $params = unserialize(base64_decode($aow_action->parameters));
         }
 
         $action = new $action_name($id);
 
-        require_once($beanFiles[$beanList[$_REQUEST['aow_module']]]);
-        $bean = new $beanList[$_REQUEST['aow_module']];
+        require_once($beanFiles[$beanList[$request['aow_module']]]);
+        $bean = new $beanList[$request['aow_module']];
         echo $action->edit_display($line, $bean, $params);
         die;
     }
 
     protected function action_getModuleFieldType()
     {
-        if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
-            $rel_module = getRelatedModule($_REQUEST['aow_module'], $_REQUEST['rel_field']);
+        $request = $_REQUEST;
+                
+        if (isset($request['rel_field']) && $request['rel_field'] != '') {
+            $rel_module = getRelatedModule($request['aow_module'], $request['rel_field']);
         } else {
-            $rel_module = $_REQUEST['aow_module'];
+            $rel_module = $request['aow_module'];
         }
-        $module = $_REQUEST['aow_module'];
-        $fieldname = $_REQUEST['aow_fieldname'];
-        $aow_field = $_REQUEST['aow_newfieldname'];
+        $module = $request['aow_module'];
+        $fieldname = $request['aow_fieldname'];
+        $aow_field = $request['aow_newfieldname'];
 
-        if (isset($_REQUEST['view'])) {
-            $view = $_REQUEST['view'];
+        if (isset($request['view'])) {
+            $view = $request['view'];
         } else {
             $view = 'EditView';
         }
 
-        if (isset($_REQUEST['aow_value'])) {
-            $value = $_REQUEST['aow_value'];
+        if (isset($request['aow_value'])) {
+            $value = $request['aow_value'];
         } else {
             $value = '';
         }
 
-        switch ($_REQUEST['aow_type']) {
+        switch ($request['aow_type']) {
             case 'Field':
-                if (isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') {
-                    $module = $_REQUEST['alt_module'];
+                if (isset($request['alt_module']) && $request['alt_module'] != '') {
+                    $module = $request['alt_module'];
                 }
                 if ($view == 'EditView') {
                     echo "<select type='text'  name='$aow_field' id='$aow_field ' title='' tabindex='116'>" . getModuleFields($module, $view, $value, getValidFieldsTypes($module, $fieldname)) . "</select>";
@@ -159,23 +165,24 @@ class SharedSecurityRulesController extends SugarController
     protected function action_getFieldTypeOptions()
     {
         global $app_list_strings, $beanFiles, $beanList;
+        $request = $_REQUEST;
 
-        if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
-            $module = getRelatedModule($_REQUEST['aow_module'], $_REQUEST['rel_field']);
+        if (isset($request['rel_field']) && $request['rel_field'] != '') {
+            $module = getRelatedModule($request['aow_module'], $request['rel_field']);
         } else {
-            $module = $_REQUEST['aow_module'];
+            $module = $request['aow_module'];
         }
-        $fieldname = $_REQUEST['aow_fieldname'];
-        $aow_field = $_REQUEST['aow_newfieldname'];
+        $fieldname = $request['aow_fieldname'];
+        $aow_field = $request['aow_newfieldname'];
 
-        if (isset($_REQUEST['view'])) {
-            $view = $_REQUEST['view'];
+        if (isset($request['view'])) {
+            $view = $request['view'];
         } else {
             $view = 'EditView';
         }
 
-        if (isset($_REQUEST['aow_value'])) {
-            $value = $_REQUEST['aow_value'];
+        if (isset($request['aow_value'])) {
+            $value = $request['aow_value'];
         } else {
             $value = '';
         }
@@ -247,23 +254,24 @@ class SharedSecurityRulesController extends SugarController
     protected function action_getModuleOperatorField()
     {
         global $app_list_strings, $beanFiles, $beanList;
+        $request = $_REQUEST;
 
-        if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
-            $module = getRelatedModule($_REQUEST['aor_module'], $_REQUEST['rel_field']);
+        if (isset($request['rel_field']) && $request['rel_field'] != '') {
+            $module = getRelatedModule($request['aor_module'], $request['rel_field']);
         } else {
-            $module = $_REQUEST['aor_module'];
+            $module = $request['aor_module'];
         }
-        $fieldname = $_REQUEST['aor_fieldname'];
-        $aor_field = $_REQUEST['aor_newfieldname'];
+        $fieldname = $request['aor_fieldname'];
+        $aor_field = $request['aor_newfieldname'];
 
-        if (isset($_REQUEST['view'])) {
-            $view = $_REQUEST['view'];
+        if (isset($request['view'])) {
+            $view = $request['view'];
         } else {
             $view = 'EditView';
         }
 
-        if (isset($_REQUEST['aor_value'])) {
-            $value = $_REQUEST['aor_value'];
+        if (isset($request['aor_value'])) {
+            $value = $request['aor_value'];
         } else {
             $value = '';
         }
@@ -330,7 +338,7 @@ class SharedSecurityRulesController extends SugarController
         }
 
         $onchange = "";
-        if ($_REQUEST['m'] != "aomr") {
+        if ($request['m'] != "aomr") {
             $onchange = "UpdatePreview(\"preview\");";
         }
 
