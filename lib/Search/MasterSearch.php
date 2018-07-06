@@ -123,4 +123,14 @@ class MasterSearch
     {
         self::$engines[$className] = $file;
     }
+
+    /**
+     * Retrieves the available search engines class names.
+     *
+     * @return string[]
+     */
+    public static function getEngines()
+    {
+        return array_keys(self::$engines);
+    }
 }
