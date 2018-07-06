@@ -122,7 +122,7 @@ class SharedSecurityRules extends Basic
             }
         }
 
-        $app_list_strings['sa_moduleList'] = array_merge((array) array('' => ''), (array) $app_list_strings['sa_moduleList']);
+        $app_list_strings['sa_moduleList'] = array_merge(array('' => ''), (array) $app_list_strings['sa_moduleList']);
 
         asort($app_list_strings['sa_moduleList']);
     }
@@ -168,6 +168,8 @@ class SharedSecurityRules extends Basic
             $moduleBean->populateFromRow($module->fetched_row);
         } elseif ($moduleBean->module_name != 'Documents') {
             $moduleBean->retrieve($module->id);
+        } else {
+            LoggerManager::getLogger()->warn('Chcking rules does not applyed for ' . $class);
         }
 
         LoggerManager::getLogger()->info('SharedSecurityRules: Module bean ID: ' . $moduleBean->id);
