@@ -341,8 +341,7 @@ class SharedSecurityRulesController extends SugarController
         if ($request['m'] != "aomr") {
             $onchange = "UpdatePreview(\"preview\");";
         }
-
-        $app_list_strings['aor_operator_list'];
+        
         if ($view == 'EditView') {
             echo "<select type='text' style='width:178px;' name='{$aor_field}' id='{$aor_field}' title=''
             onchange='{$onchange}' tabindex='116'>"
