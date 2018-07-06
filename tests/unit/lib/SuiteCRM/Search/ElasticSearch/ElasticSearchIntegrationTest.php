@@ -80,10 +80,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // Save the system state for later recovery
         $state = new StateSaver();
-        $state->pushTable($bean->getTableName());
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('contacts_cstm');
-        $state->pushGlobals();
+        $this->saveState($state, $bean);
 
         try {
             // Create unique test vars
@@ -186,20 +183,25 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
             self::assertEmpty($results, "The deleted bean should not have been found!");
 
-            $state->popGlobals();
-            $state->popTable($bean->getTableName());
-            $state->popTable('aod_indexevent');
-            $state->popTable('contacts_cstm');
-            $indexer->removeIndex('test');
+            $this->restore($indexer, $state, $bean);
         } catch (Exception $e) {
-            $state->popGlobals();
-            $state->popTable($bean->getTableName());
-            $state->popTable('aod_indexevent');
-            $state->popTable('contacts_cstm');
-            $indexer->removeIndex('test');
+            $this->restore($indexer, $state, $bean);
 
             throw $e;
         }
+    }
+
+    /**
+     * @param $state
+     * @param $bean
+     */
+    private function saveState($state, $bean)
+    {
+        $state->pushTable($bean->getTableName());
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('contacts_cstm');
+        $state->pushTable('sugarfeed');
+        $state->pushGlobals();
     }
 
     /** The indexing on Elasticsearch is scheduled each second.
@@ -208,6 +210,21 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     private function waitForIndexing()
     {
         sleep(1);
+    }
+
+    /**
+     * @param $indexer
+     * @param $state
+     * @param $bean
+     */
+    private function restore($indexer, $state, $bean)
+    {
+        $state->popGlobals();
+        $state->popTable($bean->getTableName());
+        $state->popTable('aod_indexevent');
+        $state->popTable('contacts_cstm');
+        $state->popTable('sugarfeed');
+        $indexer->removeIndex('test');
     }
 
     public function testWithSearchdefs()
@@ -239,7 +256,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $indexer->setIndexName('test');
 
         // DO THE THING
-        $indexer->run();
+        // $indexer->run();
         self::markTestIncomplete('TODO');
         // TODO
 
