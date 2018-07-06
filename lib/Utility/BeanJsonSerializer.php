@@ -143,7 +143,7 @@ class BeanJsonSerializer
             $value = $fields[$key];
 
             // fail safe to prevent objects to be forcefully casted into strings
-            if (!is_string($value) && !is_numeric($value)) continue;
+            if ($value != null && !is_string($value) && !is_numeric($value)) continue;
 
             $value = mb_convert_encoding($value, "UTF-8", "HTML-ENTITIES");
             $value = trim($value);
