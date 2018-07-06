@@ -53,6 +53,14 @@ class actionAccessLevel extends actionBase
         return array('modules/SharedSecurityRulesActions/actions/actionAccessLevel.js');
     }
 
+    /**
+     * 
+     * @global array $app_list_strings
+     * @param string $line
+     * @param SugarBean $bean
+     * @param array $params
+     * @return string
+     */
     public function edit_display($line, SugarBean $bean = null, $params = array())
     {
         global $app_list_strings;
@@ -88,7 +96,8 @@ class actionAccessLevel extends actionBase
         $html .= "<script id ='aow_script" . $line . "'>";
 
         if (isset($params['email_target_type'])) {
-            foreach ($params['email_target_type'] as $key => $field) {
+            $keys = array_keys($params['email_target_type']);
+            foreach ($keys as $key) {
                 if (is_array($params['email'][$key])) {
                     $params['email'][$key] = json_encode($params['email'][$key]);
                 }
