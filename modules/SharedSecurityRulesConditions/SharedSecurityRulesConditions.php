@@ -38,7 +38,9 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class SharedSecurityRulesConditions extends Basic
 {
@@ -47,7 +49,6 @@ class SharedSecurityRulesConditions extends Basic
     public $object_name = 'SharedSecurityRulesConditions';
     public $table_name = 'sharedsecurityrulesconditions';
     public $importable = false;
-
     public $id;
     public $name;
     public $date_entered;
@@ -66,11 +67,10 @@ class SharedSecurityRulesConditions extends Basic
     public $assigned_user_name;
     public $assigned_user_link;
     public $SecurityGroups;
-	
+
     public function bean_implements($interface)
     {
-        switch($interface)
-        {
+        switch ($interface) {
             case 'ACL':
                 return true;
         }
@@ -78,22 +78,17 @@ class SharedSecurityRulesConditions extends Basic
         return false;
     }
 
-
-    function save_lines($post_data, $parent, $key = '')
+    public function save_lines($post_data, $parent, $key = '')
     {
-
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $j = 0;
         $lastParenthesisStartConditionIdArray = array();
-        if(isset($post_data[$key . 'field']) && !empty($post_data[$key . 'field'])) {
-
+        if (isset($post_data[$key . 'field']) && !empty($post_data[$key . 'field'])) {
             foreach ($post_data[$key . 'field'] as $i => $field) {
-
                 if ($post_data[$key . 'deleted'][$i] == 1) {
                     $this->mark_deleted($post_data[$key . 'id'][$i]);
                 } else {
-
                     $condition = new SharedSecurityRulesConditions();
 
 
@@ -101,37 +96,28 @@ class SharedSecurityRulesConditions extends Basic
                         $field_name = $field_def['name'];
                         if (isset($post_data[$key . $field_name][$i])) {
                             if (is_array($post_data[$key . $field_name][$i])) {
-
                                 switch ($condition->value_type) {
                                     case 'Date':
-                                        $post_data[$key . $field_name][$i] =
-                                            base64_encode(serialize($post_data[$key . $field_name][$i]));
+                                        $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
                                         break;
                                     default:
-                                        $post_data[$key . $field_name][$i] =
-                                            encodeMultienumValue($post_data[$key . $field_name][$i]);
+                                        $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
                                 }
                             } else {
                                 if ($field_name == 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
-                                    $post_data[$key . $field_name][$i] =
-                                        fixUpFormatting(
-                                            $_REQUEST['flow_module'],
-                                            $condition->field,
-                                            $post_data[$key . $field_name][$i]
-                                        );
+                                    $post_data[$key . $field_name][$i] = fixUpFormatting(
+                                            $_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]
+                                    );
                                 } else {
                                     if ($field_name == 'parameter') {
                                         $post_data[$key . $field_name][$i] = isset($post_data[$key . $field_name][$i]);
                                     } else {
                                         if ($field_name == 'module_path') {
-                                            if($parent->fetched_row['flow_module'] !== $post_data['flow_module'])
-                                            {
-                                                $post_data[$key . $field_name][$i] =
-                                                    base64_encode(
+                                            if ($parent->fetched_row['flow_module'] !== $post_data['flow_module']) {
+                                                $post_data[$key . $field_name][$i] = base64_encode(
                                                         serialize(explode(":", $post_data[$key . $field_name][$i]))
-                                                    );
+                                                );
                                             }
-
                                         }
                                     }
                                 }
@@ -141,31 +127,26 @@ class SharedSecurityRulesConditions extends Basic
                                     throw new Exception('a closure parenthesis has no starter pair');
                                 }
 
-                                $condition->parenthesis=  array_pop($lastParenthesisStartConditionIdArray);
-
+                                $condition->parenthesis = array_pop($lastParenthesisStartConditionIdArray);
                             } else {
-
-                                    $condition->$field_name = $post_data[$key . $field_name][$i];
-
+                                $condition->$field_name = $post_data[$key . $field_name][$i];
                             }
                         } else {
                             if ($field_name == 'parameter') {
                                 $condition->$field_name = 0;
                             }
-
                         }
-
                     }
                     // Period must be saved as a string instead of a base64 encoded datetime.
                     // Overwriting value
                     if ((!isset($condition->parenthesis) || !$condition->parenthesis) &&
-                        isset($condition->value_type) &&
-                        $condition->value_type == 'Period') {
+                            isset($condition->value_type) &&
+                            $condition->value_type == 'Period') {
                         $condition->value = base64_encode($_POST['aor_conditions_value'][$i]);
                     }
                     if (trim($condition->field) != '' || $condition->parenthesis) {
                         if (isset($_POST['aor_conditions_order'][$i])) {
-                            $condition->condition_order = (int)$_POST['aor_conditions_order'][$i];
+                            $condition->condition_order = (int) $_POST['aor_conditions_order'][$i];
                         } else {
                             $condition->condition_order = ++$j;
                         }
@@ -178,16 +159,11 @@ class SharedSecurityRulesConditions extends Basic
 
 
                         if ($condition->parenthesis == 'START') {
-
                             array_push($lastParenthesisStartConditionIdArray, $conditionId);
                         }
                     }
-
-
                 }
-
             }
         }
     }
-
 }
