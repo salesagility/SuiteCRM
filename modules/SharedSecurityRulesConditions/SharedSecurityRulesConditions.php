@@ -105,6 +105,11 @@ class SharedSecurityRulesConditions extends Basic
      */
     public $SecurityGroups;
 
+    /**
+     * 
+     * @param string $interface
+     * @return boolean
+     */
     public function bean_implements($interface)
     {
         switch ($interface) {
@@ -115,7 +120,14 @@ class SharedSecurityRulesConditions extends Basic
         return false;
     }
 
-    public function save_lines($post_data, $parent, $key = '')
+    /**
+     * 
+     * @param array $post_data
+     * @param SugerBean $parent
+     * @param string $key
+     * @throws Exception
+     */
+    public function save_lines($post_data, SugerBean $parent, $key = '')
     {
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
