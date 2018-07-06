@@ -30,7 +30,7 @@ class PhpBrowserDriverHelper extends \Codeception\Module
     {
         return $this->getEnvironmentVariableOrDefault(
             'INSTANCE_URL',
-            'http://localhost/'
+            'http://localhost'
         );
     }
 
