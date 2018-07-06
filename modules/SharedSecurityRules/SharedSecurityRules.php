@@ -187,7 +187,6 @@ class SharedSecurityRules extends Basic
     public function checkRules(SugarBean &$module, $view)
     {
 
-        //        $moduleBean = clone $module;
         $GLOBALS['log']->info('SharedSecurityRules: In checkRules for module: ' . $module->name . ' and view: ' . $view);
 
         $class = get_class($module);
