@@ -157,6 +157,7 @@ class SharedSecurityRules extends Basic
      */
     public function checkRules(SugarBean &$module, $view)
     {
+        global $current_user;
 
         LoggerManager::getLogger()->info('SharedSecurityRules: In checkRules for module: ' . $module->name . ' and view: ' . $view);
 
@@ -169,7 +170,7 @@ class SharedSecurityRules extends Basic
         } elseif ($moduleBean->module_name != 'Documents') {
             $moduleBean->retrieve($module->id);
         } else {
-            LoggerManager::getLogger()->warn('Chcking rules does not applyed for ' . $class);
+            LoggerManager::getLogger()->warn('Checking rules does not applyed for ' . $class);
         }
 
         LoggerManager::getLogger()->info('SharedSecurityRules: Module bean ID: ' . $moduleBean->id);
@@ -177,7 +178,6 @@ class SharedSecurityRules extends Basic
         if (empty($moduleBean->id) || $moduleBean->id == "[SELECT_ID_LIST]") {
             return $result;
         }
-        global $current_user;
         $sql_query = "SELECT * FROM sharedsecurityrules WHERE sharedsecurityrules.status = 'Complete' && sharedsecurityrules.flow_module = '{$module->module_name}' && sharedsecurityrules.deleted = '0'";
 
         /* CREATING SQL QUERY VERSION */
@@ -367,6 +367,8 @@ class SharedSecurityRules extends Basic
      */
     private function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
     {
+        global $current_user;
+        
         LoggerManager::getLogger()->info('SharedSecurityRules: Entering getConditionResult()');
 
         for ($x = 0; $x < sizeof($allConditions); $x++) {
@@ -440,7 +442,6 @@ class SharedSecurityRules extends Basic
                         $allConditions[$x]['field'] = $moduleBean->field_defs[$allConditions[$x]['field']]['id_name'];
                     }
                     if ($allConditions[$x]['value_type'] == "currentUser") {
-                        global $current_user;
                         $allConditions[$x]['value_type'] = "Field";
                         $allConditions[$x]['value'] = $current_user->id;
                     }
@@ -460,7 +461,6 @@ class SharedSecurityRules extends Basic
                 }
             } else {
                 if ($allConditions[$x]['value_type'] == "currentUser") {
-                    global $current_user;
                     $allConditions[$x]['value_type'] = "Field";
                     $allConditions[$x]['value'] = $current_user->id;
                 }
