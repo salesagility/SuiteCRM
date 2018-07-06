@@ -129,6 +129,9 @@ class SharedSecurityRulesConditions extends Basic
      */
     public function save_lines($post_data, SugerBean $parent, $key = '')
     {
+        $request = $_REQUEST;
+        $post = $_POST;
+        
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $j = 0;
@@ -156,7 +159,7 @@ class SharedSecurityRulesConditions extends Basic
                             } else {
                                 if ($field_name == 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
                                     $post_data[$key . $field_name][$i] = fixUpFormatting(
-                                            $_REQUEST['flow_module'], $condition->field, $post_data[$key . $field_name][$i]
+                                            $request['flow_module'], $condition->field, $post_data[$key . $field_name][$i]
                                     );
                                 } else {
                                     if ($field_name == 'parameter') {
@@ -192,11 +195,11 @@ class SharedSecurityRulesConditions extends Basic
                     if ((!isset($condition->parenthesis) || !$condition->parenthesis) &&
                             isset($condition->value_type) &&
                             $condition->value_type == 'Period') {
-                        $condition->value = base64_encode($_POST['aor_conditions_value'][$i]);
+                        $condition->value = base64_encode($post['aor_conditions_value'][$i]);
                     }
                     if (trim($condition->field) != '' || $condition->parenthesis) {
-                        if (isset($_POST['aor_conditions_order'][$i])) {
-                            $condition->condition_order = (int) $_POST['aor_conditions_order'][$i];
+                        if (isset($post['aor_conditions_order'][$i])) {
+                            $condition->condition_order = (int) $post['aor_conditions_order'][$i];
                         } else {
                             $condition->condition_order = ++$j;
                         }
