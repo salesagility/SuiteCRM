@@ -47,11 +47,10 @@ require_once("modules/AOW_WorkFlow/aow_utils.php");
 
 class SharedSecurityRulesController extends SugarController
 {
-    
     public function action_fielddefs()
     {
         $request = $_REQUEST;
-        
+
         $bean = BeanFactory::getBean($request['moduletype']);
         $matrix = new SharedSecurityRules();
         $fields = $matrix->getFieldDefs($bean->field_defs, $request['moduletype']);
@@ -108,7 +107,7 @@ class SharedSecurityRulesController extends SugarController
     protected function action_getModuleFieldType()
     {
         $request = $_REQUEST;
-                
+
         if (isset($request['rel_field']) && $request['rel_field'] != '') {
             $rel_module = getRelatedModule($request['aow_module'], $request['rel_field']);
         } else {
@@ -237,7 +236,8 @@ class SharedSecurityRulesController extends SugarController
         if (!file_exists('modules/SecurityGroups/SecurityGroup.php')) {
             unset($app_list_strings['aow_condition_type_list']['SecurityGroup']);
         }
-        foreach ($app_list_strings['aow_condition_type_list'] as $key => $keyValue) {
+        $keys = array_keys($app_list_strings['aow_condition_type_list']);
+        foreach ($keys as $key) {
             if (!in_array($key, $valid_opp)) {
                 unset($app_list_strings['aow_condition_type_list'][$key]);
             }
@@ -344,7 +344,7 @@ class SharedSecurityRulesController extends SugarController
 
         $app_list_strings['aor_operator_list'];
         if ($view == 'EditView') {
-            echo "<select type='text' style='width:178px;' name='{$aor_field}' id='{$aor_field}' title='' 
+            echo "<select type='text' style='width:178px;' name='{$aor_field}' id='{$aor_field}' title=''
             onchange='{$onchange}' tabindex='116'>"
             . get_select_options_with_id($app_list_strings['aor_operator_list'], $value) . "</select>";
         } else {
