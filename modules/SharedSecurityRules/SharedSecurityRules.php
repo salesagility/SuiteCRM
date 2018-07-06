@@ -71,11 +71,34 @@ class SharedSecurityRules extends Basic
      */
     public $importable = false;
 
-    
+    /**
+     *
+     * @var mixed 
+     */
     public $created_by_link;
+    
+    /**
+     *
+     * @var mixed 
+     */
     public $modified_user_link;
+    
+    /**
+     *
+     * @var mixed 
+     */
     public $assigned_user_name;
+    
+    /**
+     *
+     * @var mixed 
+     */
     public $assigned_user_link;
+    
+    /**
+     *
+     * @var mixed 
+     */
     public $SecurityGroups;
 
     public function __construct($init=true){
