@@ -134,7 +134,8 @@ class SharedSecurityRulesConditions extends Basic
         $j = 0;
         $lastParenthesisStartConditionIdArray = array();
         if (isset($post_data[$key . 'field']) && !empty($post_data[$key . 'field'])) {
-            foreach ($post_data[$key . 'field'] as $i => $field) {
+            $postDataKeyFieldKeys = array_keys($post_data[$key . 'field']);
+            foreach ($postDataKeyFieldKeys as $i) {
                 if ($post_data[$key . 'deleted'][$i] == 1) {
                     $this->mark_deleted($post_data[$key . 'id'][$i]);
                 } else {
