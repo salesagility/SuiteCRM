@@ -8,9 +8,7 @@
 
 namespace SuiteCRM\Search;
 
-use Codeception\Test\Unit;
-
-abstract class SearchTestAbstract extends Unit
+abstract class SearchTestAbstract extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * Call protected/private method of a class.

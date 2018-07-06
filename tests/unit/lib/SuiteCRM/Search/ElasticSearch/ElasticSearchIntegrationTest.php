@@ -81,6 +81,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         // Save the system state for later recovery
         $state = new StateSaver();
         $state->pushTable($bean->getTableName());
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('contacts_cstm');
         $state->pushGlobals();
 
         try {
@@ -186,10 +188,14 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
             $state->popGlobals();
             $state->popTable($bean->getTableName());
+            $state->popTable('aod_indexevent');
+            $state->popTable('contacts_cstm');
             $indexer->removeIndex('test');
         } catch (Exception $e) {
             $state->popGlobals();
             $state->popTable($bean->getTableName());
+            $state->popTable('aod_indexevent');
+            $state->popTable('contacts_cstm');
             $indexer->removeIndex('test');
 
             throw $e;

@@ -381,7 +381,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         // no exception should appear here, as the 404 has to be caught.
     }
 
-    protected function tearDown()
+    public function tearDown()
     {
         m::close();
         parent::tearDown();

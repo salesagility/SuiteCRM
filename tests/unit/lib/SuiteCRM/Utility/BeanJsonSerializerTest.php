@@ -47,7 +47,7 @@
 use SuiteCRM\Utility\BeanJsonSerializer;
 use SuiteCRM\Utility\BeanJsonSerializerTestData\SaltBean;
 
-class BeanJsonSerializerTest extends \Codeception\Test\Unit
+class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
     public function testSanitizePhone()
