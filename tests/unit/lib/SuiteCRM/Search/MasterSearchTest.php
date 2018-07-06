@@ -2,6 +2,7 @@
 
 namespace SuiteCRM\Search;
 
+use Mockery;
 use ReflectionException;
 use RuntimeException;
 
@@ -53,5 +54,39 @@ class MasterSearchTest extends SearchTestAbstract
 
         self::assertEquals('barz', $result, "Wrong mocked search result!");
     }
+
+    public function testSearch2()
+    {
+        // this time try passing a custom engine
+        $mockEngine = Mockery::mock(SearchEngine::class);
+        $query = SearchQuery::fromString("Test");
+
+        $mockEngine
+            ->shouldReceive('search')
+            ->once()
+            ->with($query);
+
+        MasterSearch::search($mockEngine, $query);
+
+        Mockery::close();
+    }
+
+    public function testSearch3()
+    {
+        // this time check if the validation works
+
+        $mockEngine = Mockery::mock(MasterSearch::class); // just an object that shouldn't be passed
+        $query = SearchQuery::fromString("Test");
+
+        try {
+            MasterSearch::search($mockEngine, $query);
+            self::fail("Exception should have been thrown!");
+        } catch (\InvalidArgumentException $e) {
+            // All good!
+        }
+
+        Mockery::close();
+    }
+
 
 }

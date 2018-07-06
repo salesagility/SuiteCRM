@@ -68,6 +68,13 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
      */
     public function indexRunner($indexer)
     {
+        require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
+
+        $searchEngine = new ElasticSearchEngine();
+
+        $indexer->setIndexName('test');
+        $searchEngine->setIndex('test');
+
         /** @var Contact $bean */
         $bean = BeanFactory::newBean('Contacts');
 
@@ -103,7 +110,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
             // Attempt to search the newly added bean by full name
             $results = MasterSearch::search(
-                'ElasticSearchEngine',
+                $searchEngine,
                 SearchQuery::fromString("$firstName $lastName", 1));
 
             self::assertArrayHasKey(
@@ -123,7 +130,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
                 ? SearchQuery::fromString("address_city.primary_address_city:$city", 1)
                 : SearchQuery::fromString("address.primary.city:$city", 1);
             $results = MasterSearch::search(
-                'ElasticSearchEngine',
+                $searchEngine,
                 $query
             );
 
@@ -150,7 +157,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
             $this->waitForIndexing();
 
             $results = MasterSearch::search(
-                'ElasticSearchEngine',
+                $searchEngine,
                 SearchQuery::fromString($full_name_update, 1)
             );
 
@@ -171,7 +178,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
             // make a search query for the deleted bean
             $results = MasterSearch::search(
-                'ElasticSearchEngine',
+                $searchEngine,
                 SearchQuery::fromString($full_name_update, 1)
             );
 
@@ -179,9 +186,11 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
             $state->popGlobals();
             $state->popTable($bean->getTableName());
+            $indexer->removeIndex('test');
         } catch (Exception $e) {
             $state->popGlobals();
             $state->popTable($bean->getTableName());
+            $indexer->removeIndex('test');
 
             throw $e;
         }
@@ -221,6 +230,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $indexer = new ElasticSearchIndexer();
         $indexer->setDifferentialIndexingEnabled(true);
         $indexer->setEchoLogsEnabled(true);
+        $indexer->setIndexName('test');
 
         // DO THE THING
         $indexer->run();
@@ -231,5 +241,6 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $state->popTable($table);
         $state->popGlobals();
         $state->popFile($lockFile);
+        $indexer->removeIndex('test');
     }
 }
