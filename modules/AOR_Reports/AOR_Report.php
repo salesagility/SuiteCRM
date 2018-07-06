@@ -921,9 +921,25 @@ class AOR_Report extends Basic
             if (!$field['display']) {
                 continue;
             }
-            if ($field['total']) {
+            
+            $fieldTotal = null;
+            if (!isset($field['total'])) {
+                LoggerManager::getLogger()->warn('AOR_Report problem: field[total] is not set for getTotalHTML()');
+            } else {
+                $fieldTotal = $field['total'];
+            }
+            
+            $appListStringsAorTotalOptionsFieldTotal = null;
+            if (!isset($app_list_strings['aor_total_options'][$fieldTotal])) {
+                LoggerManager::getLogger()->warn('AOR_Report problem: app_list_strings[aor_total_options][fieldTotal] is not set for getTotalHTML()');
+            } else {
+                $appListStringsAorTotalOptionsFieldTotal = $app_list_strings['aor_total_options'][$fieldTotal];
+            }
+            
+            
+            if ($fieldTotal) {
                 $showTotal = true;
-                $totalLabel = $field['label'] . ' ' . $app_list_strings['aor_total_options'][isset($field['total']) ? $field['total'] : null];
+                $totalLabel = $field['label'] . ' ' . $appListStringsAorTotalOptionsFieldTotal;
                 $html .= "<th>{$totalLabel}</td>";
             } else {
                 $html .= '<th></th>';

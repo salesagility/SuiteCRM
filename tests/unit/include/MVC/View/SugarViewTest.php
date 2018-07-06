@@ -371,8 +371,9 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheckPostMaxSizeError()
     {
-        $SugarView = new SugarView();
-
+        global $sugar_config;
+        $SugarView = new SugarView();        
+        $this->assertFalse($sugar_config['developerMode']);
         //execute the method. it should return False because Request parameters are not available.
         $postMaxSizeError = $SugarView->checkPostMaxSizeError();
         $this->assertFalse($postMaxSizeError);
