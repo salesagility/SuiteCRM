@@ -76,7 +76,7 @@ class SharedSecurityRules extends Basic
     public $importable = false;
 
     /**
-     * 
+     *
      * @param boolean $init
      */
     public function __construct($init = true)
@@ -88,7 +88,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @param string $interface
      * @return boolean
      */
@@ -103,7 +103,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @global array $beanList
      * @global array $app_list_strings
      */
@@ -128,7 +128,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @param boolean $check_notify
      */
     public function save($check_notify = false)
@@ -278,7 +278,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @param array $originalCondition
      * @param array $allConditionsResults
      * @return array
@@ -304,9 +304,9 @@ class SharedSecurityRules extends Basic
         return $allParenthesisConditions;
     }
 
-    
+
     /**
-     * 
+     *
      * @param array $allParenthesisConditions
      * @param SugarBean $moduleBean
      * @param array $rule
@@ -353,7 +353,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @global User $current_user
      * @global User $current_user
      * @param array $allConditions
@@ -368,7 +368,7 @@ class SharedSecurityRules extends Basic
     private function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
     {
         global $current_user;
-        
+
         LoggerManager::getLogger()->info('SharedSecurityRules: Entering getConditionResult()');
 
         for ($x = 0; $x < sizeof($allConditions); $x++) {
@@ -514,7 +514,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @param array $rule
      * @param SugarBean $moduleBean
      * @param string $view
@@ -562,7 +562,7 @@ class SharedSecurityRules extends Basic
      */
     public static function buildRuleWhere(SugarBean $module)
     {
-        global $current_user, $db;
+        global $current_user;
         $where = "";
         $addWhere = "";
         $resWhere = "";
@@ -704,7 +704,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @global Database $db
      * @param SugarBean $module
      * @param string $field
@@ -802,7 +802,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @param string $operator
      * @param string $value
      * @param boolean $reverse
@@ -861,7 +861,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @param array $fieldDefs
      * @param string $module
      * @return array
