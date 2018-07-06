@@ -41,10 +41,34 @@
 
 class SharedSecurityRules extends Basic
 {
+    /**
+     *
+     * @var bool
+     */
     public $new_schema = true;
+    
+    /**
+     *
+     * @var string
+     */
     public $module_dir = 'SharedSecurityRules';
+    
+    /**
+     *
+     * @var string
+     */
     public $object_name = 'SharedSecurityRules';
+    
+    /**
+     *
+     * @var string
+     */
     public $table_name = 'sharedsecurityrules';
+    
+    /**
+     *
+     * @var bool
+     */
     public $importable = false;
 
     public $id;
