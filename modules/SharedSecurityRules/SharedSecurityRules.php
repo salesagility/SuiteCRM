@@ -73,58 +73,59 @@ class SharedSecurityRules extends Basic
 
     /**
      *
-     * @var mixed 
+     * @var mixed
      */
     public $created_by_link;
     
     /**
      *
-     * @var mixed 
+     * @var mixed
      */
     public $modified_user_link;
     
     /**
      *
-     * @var mixed 
+     * @var mixed
      */
     public $assigned_user_name;
     
     /**
      *
-     * @var mixed 
+     * @var mixed
      */
     public $assigned_user_link;
     
     /**
      *
-     * @var mixed 
+     * @var mixed
      */
     public $SecurityGroups;
 
-    public function __construct($init=true){
+    public function __construct($init=true)
+    {
         parent::__construct();
-        if($init){
+        if ($init) {
             $this->load_flow_beans();
         }
     }
     public function bean_implements($interface)
     {
-        switch($interface)
-        {
+        switch ($interface) {
             case 'ACL':
                 return true;
         }
 
         return false;
     }
-    function load_flow_beans(){
+    public function load_flow_beans()
+    {
         global $beanList, $app_list_strings;
 
         $app_list_strings['sa_moduleList'] = $app_list_strings['moduleList'];
 
-        if(!empty($app_list_strings['sa_moduleList'])){
-            foreach($app_list_strings['sa_moduleList'] as $mkey => $mvalue){
-                if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')){
+        if (!empty($app_list_strings['sa_moduleList'])) {
+            foreach ($app_list_strings['sa_moduleList'] as $mkey => $mvalue) {
+                if (!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')) {
                     unset($app_list_strings['sa_moduleList'][$mkey]);
                 }
             }
@@ -135,8 +136,9 @@ class SharedSecurityRules extends Basic
         asort($app_list_strings['sa_moduleList']);
     }
 
-    function save($check_notify = FALSE){
-        if (empty($this->id)){
+    public function save($check_notify = false)
+    {
+        if (empty($this->id)) {
             unset($_POST['aow_conditions_id']);
             unset($_POST['aow_actions_id']);
         }
@@ -159,7 +161,8 @@ class SharedSecurityRules extends Basic
      *
      * @return bool
      */
-    function checkRules(&$module,$view ){
+    public function checkRules(&$module, $view)
+    {
 
         //        $moduleBean = clone $module;
         $GLOBALS['log']->info('SharedSecurityRules: In checkRules for module: ' . $module->name . ' and view: ' . $view);
@@ -170,14 +173,13 @@ class SharedSecurityRules extends Basic
         $moduleBean = new $class();
         if (!empty($module->fetched_row) && !empty($module->fetched_row['id']) && !empty($module->fetched_row['assigned_user_id']) && !empty($module->fetched_row['created_by'])) {
             $moduleBean->populateFromRow($module->fetched_row);
-        }
-        elseif($moduleBean->module_name != 'Documents') {
+        } elseif ($moduleBean->module_name != 'Documents') {
             $moduleBean->retrieve($module->id);
         }
 
         $GLOBALS['log']->info('SharedSecurityRules: Module bean ID: ' . $moduleBean->id);
         $result = null;
-        if(empty($moduleBean->id) || $moduleBean->id == "[SELECT_ID_LIST]"){
+        if (empty($moduleBean->id) || $moduleBean->id == "[SELECT_ID_LIST]") {
             return $result;
         }
         global $current_user;
@@ -185,23 +187,22 @@ class SharedSecurityRules extends Basic
 
         /* CREATING SQL QUERY VERSION */
         $query_results = $module->db->query($sql_query);
-        while($rule = $module->db->fetchByAssoc($query_results)) {
+        while ($rule = $module->db->fetchByAssoc($query_results)) {
             $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' && sharedsecurityrulesactions.deleted = '0'";
             $actions_results = $module->db->query($sql_query);
-            while($action = $module->db->fetchByAssoc($actions_results)){
-                if(unserialize(base64_decode($action['parameters'])) != false){
+            while ($action = $module->db->fetchByAssoc($actions_results)) {
+                if (unserialize(base64_decode($action['parameters'])) != false) {
                     $action['parameters'] = unserialize(base64_decode($action['parameters']));
                 }
-                foreach($action['parameters']['email_target_type'] as $key =>  $targetType){
-                    if($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "role"){
+                foreach ($action['parameters']['email_target_type'] as $key =>  $targetType) {
+                    if ($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "role") {
                         $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][ $key ]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
                         $users_roles_results = $module->db->query($users_roles_query);
                         $user_id = mysqli_fetch_row($users_roles_results);
-                        if($user_id[0] == $current_user->id) {
-                            $conditionResult = $this->checkConditions($rule, $moduleBean,$view,$action,$key);
+                        if ($user_id[0] == $current_user->id) {
+                            $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
 
-                            if($conditionResult)
-                            {
+                            if ($conditionResult) {
                                 if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
                                     $result = false;
                                 } else {
@@ -209,19 +210,18 @@ class SharedSecurityRules extends Basic
                                 }
                             }
                         }
-                    }elseif($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "security_group"){
+                    } elseif ($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "security_group") {
                         $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][ $key ]['1']}' && securitygroups_users.user_id = '{$current_user->id}' && securitygroups_users.deleted = '0'";
                         $sec_group_results = $module->db->query($sec_group_query);
                         $secgroup = mysqli_fetch_row($sec_group_results);
-                        if(!empty($action['parameters']['email'][ $key ]['2']) && $secgroup[0] == $current_user->id){
+                        if (!empty($action['parameters']['email'][ $key ]['2']) && $secgroup[0] == $current_user->id) {
                             $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][ $key ]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
                             $users_roles_results = $module->db->query($users_roles_query);
                             $user_id = mysqli_fetch_row($users_roles_results);
-                            if($user_id[0] == $current_user->id) {
-                                $conditionResult = $this->checkConditions($rule, $moduleBean,$view,$action,$key);
+                            if ($user_id[0] == $current_user->id) {
+                                $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
 
-                                if($conditionResult)
-                                {
+                                if ($conditionResult) {
                                     if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
                                         $result = false;
                                     } else {
@@ -229,12 +229,11 @@ class SharedSecurityRules extends Basic
                                     }
                                 }
                             }
-                        }else {
-                            if($secgroup[0] == $current_user->id) {
-                                $conditionResult = $this->checkConditions($rule, $moduleBean,$view,$action,$key);
+                        } else {
+                            if ($secgroup[0] == $current_user->id) {
+                                $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
 
-                                if($conditionResult)
-                                {
+                                if ($conditionResult) {
                                     if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
                                         $result = false;
                                     } else {
@@ -243,37 +242,28 @@ class SharedSecurityRules extends Basic
                                 }
                             }
                         }
-                    }elseif( ($targetType == "Specify User" && $current_user->id ==  $action['parameters']['email'][$key]) ||
-                             ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]) ) )
-                    {
+                    } elseif (($targetType == "Specify User" && $current_user->id ==  $action['parameters']['email'][$key]) ||
+                             ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
                         //we have found a possible record to check against.
-                        $conditionResult = $this->checkConditions($rule, $moduleBean,$view,$action,$key);
+                        $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
 
-                        if($conditionResult)
-                        {
+                        if ($conditionResult) {
                             if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
                                 $result = false;
-                            }
-                            else {
+                            } else {
                                 $result = true;
                             }
                         }
-
                     }
                 }
             }
-
         }
 
         $converted_res = '';
-        if(isset($result))
-        {
-            if($result == false)
-            {
+        if (isset($result)) {
+            if ($result == false) {
                 $converted_res = 'false';
-            }
-            elseif($result == true)
-            {
+            } elseif ($result == true) {
                 $converted_res = 'true';
             }
         }
@@ -293,25 +283,21 @@ class SharedSecurityRules extends Basic
     }
 
 
-    private function getParenthesisConditions($originalCondition,$allConditionsResults)
+    private function getParenthesisConditions($originalCondition, $allConditionsResults)
     {
         $GLOBALS['log']->info('SharedSecurityRules: Entering getParenthesisConditions()');
         // Just get the conditions we need to check for this
         $allParenthesisConditions = array();
 
-        foreach($allConditionsResults as $condition)
-        {
-            if($condition['condition_order'] > $originalCondition['condition_order'] && $condition['parenthesis']  != $originalCondition['id'])
-            {
+        foreach ($allConditionsResults as $condition) {
+            if ($condition['condition_order'] > $originalCondition['condition_order'] && $condition['parenthesis']  != $originalCondition['id']) {
                 array_push($allParenthesisConditions, $condition);
             }
 
-            if($condition['condition_order'] > $originalCondition['condition_order'] && $condition['parenthesis'] == $originalCondition['id'])
-            {
+            if ($condition['condition_order'] > $originalCondition['condition_order'] && $condition['parenthesis'] == $originalCondition['id']) {
                 array_push($allParenthesisConditions, $condition);
                 return $allParenthesisConditions;
             }
-
         }
 
         $GLOBALS['log']->info('SharedSecurityRules: Exiting getParenthesisConditions() with all parenthesis conditions');
@@ -324,43 +310,34 @@ class SharedSecurityRules extends Basic
      *
      * @return bool
      */
-    private function checkParenthesisConditions($allParenthesisConditions, $moduleBean, $rule, $view,$action,$key)
+    private function checkParenthesisConditions($allParenthesisConditions, $moduleBean, $rule, $view, $action, $key)
     {
-
         $GLOBALS['log']->info('SharedSecurityRules: Entering checkParenthesisConditions()');
 
         $conditionsToCheck = array();
 
 
-        for($j=0; $j<count($allParenthesisConditions); $j++)
-        {
+        for ($j=0; $j<count($allParenthesisConditions); $j++) {
             // Check parenthesis is equal to start, if so then start this whole process again
-            if($allParenthesisConditions[$j]['parenthesis'] == "START")
-            {
+            if ($allParenthesisConditions[$j]['parenthesis'] == "START") {
                 $parenthesisConditionArray = $this->getParenthesisConditions($allParenthesisConditions[$j], $allParenthesisConditions);
-                $this->checkParenthesisConditions($parenthesisConditionArray,$moduleBean, $rule, $view,$action,$key);
+                $this->checkParenthesisConditions($parenthesisConditionArray, $moduleBean, $rule, $view, $action, $key);
             }
 
             // Check parenthesis is blank, if it is then process as normal...
-            if($allParenthesisConditions[$j]['parenthesis'] == "")
-            {
+            if ($allParenthesisConditions[$j]['parenthesis'] == "") {
                 // Add to array to be processed once checked
                 array_push($conditionsToCheck, $allParenthesisConditions[$j]);
-
             }
-
         }
 
-        if(sizeof($conditionsToCheck) > 0)
-        {
+        if (sizeof($conditionsToCheck) > 0) {
             // Get results of searching all conditions within the perms (true = condition met)
-            $tempResult = $this->getConditionResult($conditionsToCheck, $moduleBean, $rule, $view,$action,$key);
-            if(!$tempResult)
-            {
+            $tempResult = $this->getConditionResult($conditionsToCheck, $moduleBean, $rule, $view, $action, $key);
+            if (!$tempResult) {
                 $GLOBALS['log']->info('SharedSecurityRules: Exiting checkParenthesisConditions returning false.');
                 return false;
-            }
-            else {
+            } else {
                 $GLOBALS['log']->info('SharedSecurityRules: Exiting checkParenthesisConditions returning true.');
                 return true;
             }
@@ -369,19 +346,17 @@ class SharedSecurityRules extends Basic
         $GLOBALS['log']->info('SharedSecurityRules: Exiting checkParenthesisConditions with no conditions to check.');
     }
 
-    private function getConditionResult($allConditions,$moduleBean, $rule, $view,$action,$key, $result = false)
+    private function getConditionResult($allConditions, $moduleBean, $rule, $view, $action, $key, $result = false)
     {
         $GLOBALS['log']->info('SharedSecurityRules: Entering getConditionResult()');
 
-        for($x = 0; $x < sizeof($allConditions); $x++)
-        {
+        for ($x = 0; $x < sizeof($allConditions); $x++) {
             // Is it the starting parenthesis?
             if ($allConditions[$x]['parenthesis'] == "START") {
-
                 $GLOBALS['log']->info('SharedSecurityRules: Parenthesis condition found.');
 
                 $parenthesisConditionArray = $this->getParenthesisConditions($allConditions[$x], $allConditions);
-                $overallResult = $this->checkParenthesisConditions($parenthesisConditionArray, $moduleBean, $rule, $view,$action,$key);
+                $overallResult = $this->checkParenthesisConditions($parenthesisConditionArray, $moduleBean, $rule, $view, $action, $key);
 
                 // Retrieve the number of parenthesis conditions so we know how many conditions to skip for next run through
                 $x = $x + sizeof($parenthesisConditionArray);
@@ -394,27 +369,19 @@ class SharedSecurityRules extends Basic
                 $nextConditionLogicOperator = $nextRow['logic_op'];
 
                 // If the condition is a match then continue if it is an AND and finish if its an OR
-                if($overallResult)
-                {
-                    if($nextConditionLogicOperator === "AND")
-                    {
+                if ($overallResult) {
+                    if ($nextConditionLogicOperator === "AND") {
                         $GLOBALS['log']->info('SharedSecurityRules: In getConditionResult() within parenthesis setting result to true');
                         $result = true;
-                    }
-                    else
-                    {
+                    } else {
                         $GLOBALS['log']->info('SharedSecurityRules: In getConditionResult() within parenthesis returning true');
                         return true;
                     }
-                }
-                else {
-                    if($nextConditionLogicOperator === "AND")
-                    {
+                } else {
+                    if ($nextConditionLogicOperator === "AND") {
                         $GLOBALS['log']->info('SharedSecurityRules: In getConditionResult() within parenthesis returning false');
                         return false;
-                    }
-                    else
-                    {
+                    } else {
                         $GLOBALS['log']->info('SharedSecurityRules: In getConditionResult() within parenthesis setting result to false');
                         $result = false;
                     }
@@ -457,11 +424,9 @@ class SharedSecurityRules extends Basic
                         global $current_user;
                         $allConditions[$x]['value_type'] = "Field";
                         $allConditions[$x]['value'] = $current_user->id;
-
                     }
 
-                    if($allConditions[$x]['field'] == 'assigned_user_name')
-                    {
+                    if ($allConditions[$x]['field'] == 'assigned_user_name') {
                         $allConditions[$x]['field'] = 'assigned_user_id';
                     }
                     if ($this->checkOperator(
@@ -469,22 +434,14 @@ class SharedSecurityRules extends Basic
                         $allConditions[$x]['value'],
                         $allConditions[$x]['operator']
                     )) {
-
                         $result = true;
-
-                    }
-
-
-
-                    else {
+                    } else {
                         if (count($related) <= 1) {
                             $result = false;
                         }
                     }
                 }
-            }
-
-            else {
+            } else {
                 if ($allConditions[$x]['value_type'] == "currentUser") {
                     global $current_user;
                     $allConditions[$x]['value_type'] = "Field";
@@ -497,58 +454,41 @@ class SharedSecurityRules extends Basic
                     $allConditions[$x]['value'] = $moduleBean->{$allConditions[$x]['value']};
                 }
 
-                if($allConditions[$x]['field'] == 'assigned_user_name')
-                {
+                if ($allConditions[$x]['field'] == 'assigned_user_name') {
                     $allConditions[$x]['field'] = 'assigned_user_id';
                 }
 
                 $conditionResult = $this->checkOperator($moduleBean->{$allConditions[$x]['field']}, $allConditions[$x]['value'], $allConditions[$x]['operator']);
 
-                if ($conditionResult)
-                {
-
-                    if($nextConditionLogicOperator === "AND")
-                    {
+                if ($conditionResult) {
+                    if ($nextConditionLogicOperator === "AND") {
                         $result = true;
-                    }
-                    else{
+                    } else {
                         return true;
                     }
-
-                }
-                else {
-                    if($rule['run'] == "Once True"){
-                        if ($this->checkHistory($moduleBean,$allConditions[$x]['field'], $allConditions[$x]['value']) ) {
-                                      $result = true;
-                        }
-                        else
-                        {
+                } else {
+                    if ($rule['run'] == "Once True") {
+                        if ($this->checkHistory($moduleBean, $allConditions[$x]['field'], $allConditions[$x]['value'])) {
+                            $result = true;
+                        } else {
                             $result = false;
                         }
-                    }
-                    else{
-                        if( $nextConditionLogicOperator === "AND" ){
-
+                    } else {
+                        if ($nextConditionLogicOperator === "AND") {
                             $result = false;
                             return $result;
                         }
                         $result = false;
                     }
                 }
-
-
             }
         }
 
         $converted_res = '';
-        if(isset($result))
-        {
-            if($result == false)
-            {
+        if (isset($result)) {
+            if ($result == false) {
                 $converted_res = 'false';
-            }
-            elseif($result == true)
-            {
+            } elseif ($result == true) {
                 $converted_res = 'true';
             }
         }
@@ -556,8 +496,8 @@ class SharedSecurityRules extends Basic
         return $result;
     }
 
-    private function checkConditions($rule, $moduleBean,$view,$action,$key){
-
+    private function checkConditions($rule, $moduleBean, $view, $action, $key)
+    {
         $GLOBALS['log']->info('SharedSecurityRules: Entered checkConditions() for rule name: ' . $rule['name']);
 
         $sql_query = "SELECT * FROM sharedsecurityrulesconditions WHERE sharedsecurityrulesconditions.sa_shared_sec_rules_id = '{$rule['id']}' && sharedsecurityrulesconditions.deleted = '0' ORDER BY sharedsecurityrulesconditions.condition_order ASC ";
@@ -566,23 +506,18 @@ class SharedSecurityRules extends Basic
         $allConditions = array();
 
         // Loop through all conditions and add to array
-        while ($condition = $moduleBean->db->fetchByAssoc($conditions_results))
-        {
+        while ($condition = $moduleBean->db->fetchByAssoc($conditions_results)) {
             array_push($allConditions, $condition);
         }
 
 
-        $result = $this->getConditionResult($allConditions, $moduleBean, $rule,$view,$action,$key, $conditions_results);
+        $result = $this->getConditionResult($allConditions, $moduleBean, $rule, $view, $action, $key, $conditions_results);
 
         $converted_res = '';
-        if(isset($result))
-        {
-            if($result == false)
-            {
+        if (isset($result)) {
+            if ($result == false) {
                 $converted_res = 'false';
-            }
-            elseif($result == true)
-            {
+            } elseif ($result == true) {
                 $converted_res = 'true';
             }
         }
@@ -591,7 +526,7 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * 
+     *
      * @global array $current_user
      * @global Database $db
      * @param SugarBean $module
@@ -599,7 +534,6 @@ class SharedSecurityRules extends Basic
      */
     public static function buildRuleWhere(SugarBean $module)
     {
-
         global $current_user, $db;
         $where = "";
         $addWhere = "";
@@ -615,37 +549,36 @@ class SharedSecurityRules extends Basic
                 if (unserialize(base64_decode($action['parameters'])) != false) {
                     $action['parameters'] = unserialize(base64_decode($action['parameters']));
                 }
-                foreach($action['parameters']['accesslevel'] as $key => $accessLevel){
-                            $targetType = $action['parameters']['email_target_type'][$key];
+                foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
+                    $targetType = $action['parameters']['email_target_type'][$key];
 
-                        if($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "role"){
+                    if ($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "role") {
+                        $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][ $key ]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
+                        $users_roles_results = $module->db->query($users_roles_query);
+                        $user_id = mysqli_fetch_row($users_roles_results);
+                        if ($user_id[0] == $current_user->id) {
+                            $actionIsUser =  true;
+                        }
+                    } elseif ($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "security_group") {
+                        $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][ $key ]['1']}' && securitygroups_users.user_id = '{$current_user->id}' && securitygroups_users.deleted = '0'";
+                        $sec_group_results = $module->db->query($sec_group_query);
+                        $secgroup = mysqli_fetch_row($sec_group_results);
+                        if (!empty($action['parameters']['email'][ $key ]['2']) && $secgroup[0] == $current_user->id) {
                             $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][ $key ]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
                             $users_roles_results = $module->db->query($users_roles_query);
                             $user_id = mysqli_fetch_row($users_roles_results);
-                            if($user_id[0] == $current_user->id) {
-                                $actionIsUser =  true;
+                            if ($user_id[0] == $current_user->id) {
+                                $actionIsUser = true;
                             }
-                        }elseif($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "security_group"){
-                            $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][ $key ]['1']}' && securitygroups_users.user_id = '{$current_user->id}' && securitygroups_users.deleted = '0'";
-                            $sec_group_results = $module->db->query($sec_group_query);
-                            $secgroup = mysqli_fetch_row($sec_group_results);
-                            if(!empty($action['parameters']['email'][ $key ]['2']) && $secgroup[0] == $current_user->id){
-                                $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][ $key ]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
-                                $users_roles_results = $module->db->query($users_roles_query);
-                                $user_id = mysqli_fetch_row($users_roles_results);
-                                if($user_id[0] == $current_user->id) {
-                                    $actionIsUser = true;
-                                }
-                            }else {
-                                if($secgroup[0] == $current_user->id) {
-                                    $actionIsUser = true;
-                                }
+                        } else {
+                            if ($secgroup[0] == $current_user->id) {
+                                $actionIsUser = true;
                             }
-                        }elseif( ($targetType == "Specify User" && $current_user->id ==  $action['parameters']['email'][$key]) ||
-                            ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]) ) ){
-
-                            $actionIsUser = true;
                         }
+                    } elseif (($targetType == "Specify User" && $current_user->id ==  $action['parameters']['email'][$key]) ||
+                            ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
+                        $actionIsUser = true;
+                    }
                 }
             }
             if ($actionIsUser == true) {
@@ -654,8 +587,8 @@ class SharedSecurityRules extends Basic
                 $related = false;
                 if ($conditions_results->num_rows != 0) {
                     while ($condition = $module->db->fetchByAssoc($conditions_results)) {
-                            if(unserialize(base64_decode($condition['module_path'])) != false) {
-                                $condition['module_path'] = unserialize(base64_decode($condition['module_path']));
+                        if (unserialize(base64_decode($condition['module_path'])) != false) {
+                            $condition['module_path'] = unserialize(base64_decode($condition['module_path']));
                         }
 
                         if ($condition['module_path'][0] != $rule['flow_module']) {
@@ -668,73 +601,73 @@ class SharedSecurityRules extends Basic
                             }
                         }
 
-                        if($related == false) {
+                        if ($related == false) {
                             if ($condition['value_type'] == "Field" &&
                                 isset($module->{$condition['value']}) &&
                                 !empty($module->{$condition['value']})) {
-                                    $condition['value'] = $module->{$condition['value']};
-                                }
+                                $condition['value'] = $module->{$condition['value']};
+                            }
                             $value = $condition['value'];
-                            if($accessLevel == 'none') {
+                            if ($accessLevel == 'none') {
                                 $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, true);
                             } else {
                                 $operatorValue = SharedSecurityRules::changeOperator($condition['operator'], $value, false);
                             }
-                            if($module->field_defs[$condition['field']]['source'] == "custom_fields") {
+                            if ($module->field_defs[$condition['field']]['source'] == "custom_fields") {
                                 $table = $module->table_name."_cstm";
                             } else {
                                 $table = $module->table_name;
                             }
                             $conditionQuery = " " . $table . "." . $condition['field'] . " " . $operatorValue . " ";
-                            if($accessLevel == 'none') {
+                            if ($accessLevel == 'none') {
                                 $where = $resWhere;
                             } else {
                                 $where = $addWhere;
                             }
-                                if ($condition['parenthesis'] == "START") {
-                                    if (is_null($parenthesis)) {
-                                        $parenthesis = " ( ";
-                                        if(empty($where)) {
-                                            $where = $parenthesis;
-                                        } else {
-                                            $where .= $condition['logic_op'] . " " . $parenthesis;
-                                        }
+                            if ($condition['parenthesis'] == "START") {
+                                if (is_null($parenthesis)) {
+                                    $parenthesis = " ( ";
+                                    if (empty($where)) {
+                                        $where = $parenthesis;
                                     } else {
-                                        if(empty($where)) {
-                                            $where = $parenthesis;
-                                        } else {
-                                            $where .= $parenthesis;
-                                        }
+                                        $where .= $condition['logic_op'] . " " . $parenthesis;
                                     }
-                                } elseif ($condition['parenthesis'] != "START" && !empty($condition['parenthesis'])) {
-                                    $parenthesis = " ) ";
-                                    if(empty($where)) {
+                                } else {
+                                    if (empty($where)) {
                                         $where = $parenthesis;
                                     } else {
                                         $where .= $parenthesis;
                                     }
-                                    $parenthesis = null;
-                                } else {
-                                    if(!empty($parenthesis) && $parenthesis == " ( ") {
-                                        $where .= $conditionQuery;
-                                        $parenthesis = null;
-                                    } elseif (empty($where)) {
-                                        $where = $conditionQuery;
-                                    } elseif(!empty($condition['logic_op'])) {
-                                        $where .= $condition['logic_op'] . " " . $conditionQuery;
-                                    } else {
-                                        $where .= " OR " . $conditionQuery;
-                                    }
                                 }
-                            if($accessLevel == 'none') {
+                            } elseif ($condition['parenthesis'] != "START" && !empty($condition['parenthesis'])) {
+                                $parenthesis = " ) ";
+                                if (empty($where)) {
+                                    $where = $parenthesis;
+                                } else {
+                                    $where .= $parenthesis;
+                                }
+                                $parenthesis = null;
+                            } else {
+                                if (!empty($parenthesis) && $parenthesis == " ( ") {
+                                    $where .= $conditionQuery;
+                                    $parenthesis = null;
+                                } elseif (empty($where)) {
+                                    $where = $conditionQuery;
+                                } elseif (!empty($condition['logic_op'])) {
+                                    $where .= $condition['logic_op'] . " " . $conditionQuery;
+                                } else {
+                                    $where .= " OR " . $conditionQuery;
+                                }
+                            }
+                            if ($accessLevel == 'none') {
                                 $resWhere = $where;
                             } else {
                                 $addWhere = $where;
                             }
-                            }
                         }
                     }
                 }
+            }
         }
         $whereArray = array();
         $whereArray['resWhere'] = $resWhere;
@@ -742,9 +675,10 @@ class SharedSecurityRules extends Basic
         return $whereArray;
     }
     
-    public function checkHistory($module, $field, $value){
+    public function checkHistory($module, $field, $value)
+    {
         global $db;
-        if($module->field_defs[ $field ]['audited'] == true ){
+        if ($module->field_defs[ $field ]['audited'] == true) {
             $value = $db->quote($value);
             $field = $db->quote($field);
 
@@ -753,12 +687,11 @@ class SharedSecurityRules extends Basic
             $results = $db->getOne($sql);
 
 
-            if($results !== false){
+            if ($results !== false) {
                 return true;
             }
         }
         return false;
-
     }
     /**
      * @param $rowField
@@ -767,7 +700,8 @@ class SharedSecurityRules extends Basic
      *
      * @return bool
      */
-    private function checkOperator($rowField, $field, $operator){
+    private function checkOperator($rowField, $field, $operator)
+    {
         $GLOBALS['log']->info('SharedSecurityRules: In checkOperator() with row: ' . $rowField . ' field: ' . $field . ' operator: ' . $operator);
         switch ($operator) {
             case "Equal_To":
@@ -821,7 +755,7 @@ class SharedSecurityRules extends Basic
                 break;
 
             case "is_null":
-                if($rowField == null || $rowField == ""){
+                if ($rowField == null || $rowField == "") {
                     return true;
                 }
                 break;
@@ -830,35 +764,36 @@ class SharedSecurityRules extends Basic
         return false;
     }
 
-    public function changeOperator($operator, $value, $reverse){
+    public function changeOperator($operator, $value, $reverse)
+    {
         switch ($operator) {
             case "Equal_To":
-                if($reverse){
+                if ($reverse) {
                     return " != '".$value."' ";
                 }
                 return " = '".$value."' ";
             case "Not_Equal_To":
-                if($reverse){
+                if ($reverse) {
                     return " = '".$value."' ";
                 }
                 return " != '".$value."' ";
             case "Starts_With":
-                if($reverse){
+                if ($reverse) {
                     return " NOT LIKE '".$value."%'";
                 }
                 return " LIKE '".$value."%'";
             case "Ends_With":
-                if($reverse){
+                if ($reverse) {
                     return " NOT LIKE '%".$value."'";
                 }
                 return " LIKE '%".$value."'";
             case "Contains":
-                if($reverse){
+                if ($reverse) {
                     return " NOT LIKE '%".$value."%' ";
                 }
                 return " LIKE '%".$value."%'";
             case "is_null":
-                if($reverse){
+                if ($reverse) {
                     return " IS NOT NULL ";
                 }
                 return " IS NULL ";
@@ -873,8 +808,9 @@ class SharedSecurityRules extends Basic
      *
      * @return bool
      */
-    private function findAccess($view, $item ){
-        if (stripos($item,$view) !== false){
+    private function findAccess($view, $item)
+    {
+        if (stripos($item, $view) !== false) {
             return true;
         }
         return false;
@@ -883,19 +819,19 @@ class SharedSecurityRules extends Basic
 
     public function getFieldDefs($fieldDefs, $module)
     {
-        if($module == null){
+        if ($module == null) {
             return array();
         }
         $defs[''] = "";
         foreach ($fieldDefs as $field) {
             $label = translate($field['vname'], $module);
-            if(in_array($field['type'], $this->exemptFields) || in_array($field['dbType'], $this->exemptFields)){
+            if (in_array($field['type'], $this->exemptFields) || in_array($field['dbType'], $this->exemptFields)) {
                 continue;
             }
-            if( empty($label) ){
+            if (empty($label)) {
                 $label = $field['name'];
             }
-            if(($module == "Leads" || $module == "Contacts") && ($field['name'] == "full_name" || $field['name'] == "name" ) ){
+            if (($module == "Leads" || $module == "Contacts") && ($field['name'] == "full_name" || $field['name'] == "name")) {
                 continue;
             }
 
