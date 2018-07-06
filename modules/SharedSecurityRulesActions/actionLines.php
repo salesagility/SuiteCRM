@@ -44,15 +44,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 function display_action_lines(SugarBean $focus, $field, $value, $view)
 {
-    global $mod_strings;
+    global $mod_strings, $current_language;
 
     $html = '';
 
-    if (!is_file('cache/jsLanguage/SharedSecurityRulesActions/' . $GLOBALS['current_language'] . '.js')) {
+    if (!is_file('cache/jsLanguage/SharedSecurityRulesActions/' . $current_language . '.js')) {
         require_once('include/language/jsLanguage.php');
-        jsLanguage::createModuleStringsCache('SharedSecurityRulesActions', $GLOBALS['current_language']);
+        jsLanguage::createModuleStringsCache('SharedSecurityRulesActions', $current_language);
     }
-    $html .= '<script src="cache/jsLanguage/SharedSecurityRulesActions/' . $GLOBALS['current_language'] . '.js"></script>';
+    $html .= '<script src="cache/jsLanguage/SharedSecurityRulesActions/' . $current_language . '.js"></script>';
     $html .= '<style>
                     .sqsEnabled {
                         width: 25%!important;
