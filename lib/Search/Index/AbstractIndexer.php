@@ -64,7 +64,8 @@ abstract class AbstractIndexer
     protected $modulesToIndex = [
         'Accounts', 'Contacts', 'Users', 'Opportunities',
         'Leads', 'Emails', 'Calls', 'Meetings',
-        'Tasks', 'Spots', 'Surveys'
+        'Tasks', 'Spots', 'Surveys',
+        'Cases', 'Documents', 'Notes'
     ];
 
     public function __construct()
