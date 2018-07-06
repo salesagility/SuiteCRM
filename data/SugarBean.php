@@ -320,8 +320,16 @@ class SugarBean
             }
 
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
-                $this->field_name_map = $dictionary[$this->object_name]['fields'];
-                $this->field_defs = $dictionary[$this->object_name]['fields'];
+                
+                $dictionaryObjectFields = null;
+                if (isset($dictionary[$this->object_name]['fields'])) {
+                    $dictionaryObjectFields = $dictionary[$this->object_name]['fields'];
+                } else {
+                    LoggerManager::getLogger()->warn("Missing dictionary fields for object: {$this->object_name}");
+                }
+                
+                $this->field_name_map = $dictionaryObjectFields;
+                $this->field_defs = $dictionaryObjectFields;
 
                 if (!empty($dictionary[$this->object_name]['optimistic_locking'])) {
                     $this->optimistic_lock = true;
@@ -684,7 +692,7 @@ class SugarBean
             $subqueries = SugarBean::build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by);
             $all_fields = array();
             foreach ($subqueries as $i => $subquery) {
-                $query_fields = $GLOBALS['db']->getSelectFieldsFromQuery($subquery['select']);
+                $query_fields = DBManagerFactory::getInstance()->getSelectFieldsFromQuery($subquery['select']);
                 foreach ($query_fields as $field => $select) {
                     if (!in_array($field, $all_fields)) {
                         $all_fields[] = $field;
@@ -4246,8 +4254,8 @@ class SugarBean
             $query .= " , " . $table . ".created_by owner";
         }
         $query .= ' FROM ' . $table . ' WHERE deleted=0 AND id=';
-        $result = $GLOBALS['db']->query($query . "'$id'");
-        $row = $GLOBALS['db']->fetchByAssoc($result);
+        $result = DBManagerFactory::getInstance()->query($query . "'$id'");
+        $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
         if ($return_array) {
             return $row;
         }
@@ -4606,7 +4614,7 @@ class SugarBean
         /**
          * @var DBManager $db
          */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->query('DELETE FROM cron_remove_documents WHERE bean_id=' . $db->quoted($this->id));
 
         return true;
@@ -4765,7 +4773,7 @@ class SugarBean
         /**
          * @var DBManager $db
          */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $record = array(
             'bean_id' => $db->quoted($this->id),
             'module' => $db->quoted($this->module_name),

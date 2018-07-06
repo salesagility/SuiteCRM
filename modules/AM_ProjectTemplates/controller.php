@@ -258,7 +258,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
 
     function action_generate_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         include_once('modules/AM_ProjectTemplates/gantt.php');
         include_once('modules/AM_ProjectTemplates/project_table.php');
@@ -401,7 +401,8 @@ class AM_ProjectTemplatesController extends SugarController {
 
     //Returns new task start date including any lag via ajax call
     function action_get_end_date(){
-        global $db,  $timeDate;
+        global  $timeDate;
+        $db = DBManagerFactory::getInstance();
 
         $timeDate = new TimeDate();
         $id = $_POST['task_id'];

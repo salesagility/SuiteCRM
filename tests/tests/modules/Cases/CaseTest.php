@@ -1,6 +1,6 @@
 <?php
 
-class aCaseTest extends PHPUnit_Framework_TestCase
+class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testaCase()
     {
@@ -22,7 +22,6 @@ class aCaseTest extends PHPUnit_Framework_TestCase
 
     public function testget_summary_text()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aCase = new aCase();
         $this->assertEquals(null, $aCase->get_summary_text());
@@ -33,10 +32,21 @@ class aCaseTest extends PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aCase = new aCase();
         $expected = array('MAIN' => 'a', 'ACCOUNT' => 'a');
         $actual = $aCase->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testsave_relationship_changes()
@@ -50,7 +60,7 @@ class aCaseTest extends PHPUnit_Framework_TestCase
 
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -63,7 +73,7 @@ class aCaseTest extends PHPUnit_Framework_TestCase
             $aCase->set_case_contact_relationship(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -76,7 +86,7 @@ class aCaseTest extends PHPUnit_Framework_TestCase
             $aCase->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -98,7 +108,7 @@ class aCaseTest extends PHPUnit_Framework_TestCase
     {
         $aCase = new aCase();
         $result = $aCase->get_contacts();
-        $this->assertTrue(is_array($result));
+        $this->assertFalse(is_array($result));
     }
 
     public function testget_list_view_data()
@@ -199,6 +209,19 @@ class aCaseTest extends PHPUnit_Framework_TestCase
 
     public function testsave()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aop_case_events');
+        $state->pushTable('cases');
+        $state->pushTable('cases_cstm');
+        $state->pushTable('sugarfeed');
+        $state->pushGlobals();
+        
+        // test
+
         $aCase = new aCase();
         $aCase->name = 'test';
         $aCase->priority = 'P1';
@@ -213,6 +236,15 @@ class aCaseTest extends PHPUnit_Framework_TestCase
         $aCase->mark_deleted($aCase->id);
         $result = $aCase->retrieve($aCase->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('sugarfeed');
+        $state->popTable('cases_cstm');
+        $state->popTable('cases');
+        $state->popTable('aop_case_events');
+        $state->popTable('aod_indexevent');
     }
 
     public function testgetEmailSubjectMacro()

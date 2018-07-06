@@ -386,10 +386,10 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices {
         if(is_array($meta['status_field']))
         {
             foreach ($meta['status'] as $field)
-                $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".$GLOBALS['db']->quote($field)."' ";
+                $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".DBManagerFactory::getInstance()->quote($field)."' ";
         }
         else
-            $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".$GLOBALS['db']->quote($meta['status'])."' ";
+            $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".DBManagerFactory::getInstance()->quote($meta['status'])."' ";
 
         return implode(" AND ",$query);
     }

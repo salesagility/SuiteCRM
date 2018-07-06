@@ -1,6 +1,6 @@
 <?php
 
- class ViewEditTest extends PHPUnit_Framework_TestCase
+ class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
  {
      public function testViewEdit()
      {
@@ -18,7 +18,13 @@
 
      public function testpreDisplay()
      {
-         error_reporting(E_ERROR | E_PARSE);
+        // save state 
+        
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
 
         //execute the method with required attributes preset, it will initialize the ev(edit view) attribute.
         $view = new ViewEdit();
@@ -33,6 +39,10 @@
          $view->bean = new Meeting();
          $view->preDisplay();
          $this->assertInstanceOf('EditView', $view->ev);
+         
+        // cleanup
+        
+        $state->popGlobals();
      }
 
      public function testdisplay()

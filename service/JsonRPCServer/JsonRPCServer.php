@@ -88,7 +88,6 @@ class JsonRPCServer
 
         $log->debug('JSON_SERVER:');
 
-        error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
         ob_start();
         insert_charset_header();
 
