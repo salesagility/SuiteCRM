@@ -123,11 +123,11 @@ class SharedSecurityRulesConditions extends Basic
     /**
      * 
      * @param array $post_data
-     * @param SugerBean $parent
+     * @param SugarBean $parent
      * @param string $key
      * @throws Exception
      */
-    public function save_lines($post_data, SugerBean $parent, $key = '')
+    public function save_lines($post_data, SugarBean $parent, $key = '')
     {
         $request = $_REQUEST;
         $post = $_POST;
