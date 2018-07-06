@@ -93,7 +93,15 @@ class SharedSecurityRulesController extends SugarController
             $aow_action = new SharedSecurityRulesActions();
             $aow_action->retrieve($request['id']);
             $id = $aow_action->id;
-            $params = unserialize(base64_decode($aow_action->parameters));
+            
+            $aowActionParameters = null;
+            if (!isset($aow_action->parameters)) {
+                LoggerManager::getLogger()->warn('Shared Security Rules controller needs an aow_action parameter');
+            } else {
+                $aowActionParameters = $aow_action->parameters;
+            }
+            
+            $params = unserialize(base64_decode($aowActionParameters));
         }
 
         $action = new $action_name($id);
@@ -339,7 +347,15 @@ class SharedSecurityRulesController extends SugarController
         }
 
         $onchange = "";
-        if ($request['m'] != "aomr") {
+        
+        $m = null;
+        if (!isset($request['m'])) {
+            LoggerManager::getLogger()->warn('m needed for Shared Security Rules Action for action get Module Operator Field');
+        } else {
+            $m = $request['m'];
+        }
+        
+        if ($m != "aomr") {
             $onchange = "UpdatePreview(\"preview\");";
         }
         

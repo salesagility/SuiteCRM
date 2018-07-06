@@ -78,10 +78,15 @@ class SharedSecurityRulesActions extends Basic
 
     public function save_lines($post_data, $parent, $key = '')
     {
+        
+        $postDataKeyAction = null;
+        if (!isset($post_data[$key . 'action'])) {
+            LoggerManager::getLogger()->warn('key action needed for saving lines');
+        }
 
         // THIS IS WHERE THE ISSUE IS - should be shared_rules_actions_action (but do i change that in the call to this save lines function or in here
         // need to look at the other post data calls in here
-        $line_count = count($post_data[$key . 'action']);
+        $line_count = count($postDataKeyAction);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
             if ($post_data[$key . 'deleted'][$i] == 1) {
