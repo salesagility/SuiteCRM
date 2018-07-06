@@ -331,7 +331,8 @@ class SharedSecurityRulesController extends SugarController
                 break;
         }
 
-        foreach ($app_list_strings['aor_operator_list'] as $key => $keyValue) {
+        $keys = array_keys($app_list_strings['aor_operator_list']);
+        foreach ($keys as $key) {
             if (!in_array($key, $valid_opp)) {
                 unset($app_list_strings['aor_operator_list'][$key]);
             }
