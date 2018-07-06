@@ -183,7 +183,7 @@ class TestIndexer extends AbstractIndexer
     {
     }
 
-    function removeAllIndices()
+    function removeIndex()
     {
     }
 }

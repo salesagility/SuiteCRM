@@ -315,7 +315,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $mockIndices
             ->shouldReceive('delete')
             ->once()
-            ->with(['index' => 'main']);
+            ->with(['index' => 'main', 'client' => ['ignore' => [404]]]);
 
         $indexer = new ElasticSearchIndexer($mockClient);
 
@@ -346,7 +346,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $mockIndices
             ->shouldReceive('delete')
             ->once()
-            ->with(['index' => $index]);
+            ->with(['index' => $index, 'client' => ['ignore' => [404]]]);
 
         $indexer = new ElasticSearchIndexer($mockClient);
         $indexer->removeIndex($index);

@@ -116,7 +116,7 @@ class ElasticSearchIndexer extends AbstractIndexer
             $this->log('@', 'A differential indexing will be performed');
         } else {
             $this->log('@', 'A full indexing will be performed');
-            $this->removeAllIndices();
+            $this->removeIndex();
         }
 
         $modules = $this->getModulesToIndex();
@@ -169,19 +169,16 @@ class ElasticSearchIndexer extends AbstractIndexer
         return $this->differentialIndexingEnabled && $this->lastRunTimestamp !== false;
     }
 
-    /**
-     * Removes all the indexes from Elasticsearch, effectively nuking all data.
-     */
-    public function removeAllIndices()
+    public function removeIndex($index = null)
     {
-        $this->log('@', "Deleting all indices");
-        try {
-            $this->client->indices()->delete(['index' => '_all']);
-        } /** @noinspection PhpRedundantCatchClauseInspection */
-        catch (\Elasticsearch\Common\Exceptions\Missing404Exception $ignore) {
-            // Index not there, not big deal since we meant to delete it anyway.
-            $this->log('*', 'Index not found, no index has been deleted.');
+        if (empty($index)) {
+            $index = $this->indexName;
         }
+
+        $params = ['index' => $index];
+        $params['client'] = ['ignore' => [404]];
+
+        $this->client->indices()->delete($params);
     }
 
     /**
@@ -344,6 +341,21 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
+     * Removes all the indexes from Elasticsearch, effectively nuking all data.
+     */
+    public function removeAllIndices()
+    {
+        $this->log('@', "Deleting all indices");
+        try {
+            $this->client->indices()->delete(['index' => '_all']);
+        } /** @noinspection PhpRedundantCatchClauseInspection */
+        catch (\Elasticsearch\Common\Exceptions\Missing404Exception $ignore) {
+            // Index not there, not big deal since we meant to delete it anyway.
+            $this->log('*', 'Index not found, no index has been deleted.');
+        }
+    }
+
+    /**
      * @param $bean SugarBean
      */
     public function indexBean($bean)
@@ -470,15 +482,5 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
 
         $this->sendBatch($params);
-    }
-
-    public function removeIndex($index = null)
-    {
-        if (empty($index)) {
-            $index = $this->indexName;
-        }
-
-        $params = ['index' => $index];
-        $this->client->indices()->delete($params);
     }
 }

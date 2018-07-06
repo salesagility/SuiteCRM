@@ -85,7 +85,7 @@ abstract class AbstractIndexer
 
     abstract function removeBeans($bean);
 
-    abstract function removeAllIndices();
+    abstract function removeIndex();
 
     /**
      * Used to log actions and errors performed by the indexer.

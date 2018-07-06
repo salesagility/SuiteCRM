@@ -91,7 +91,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
             $city = uniqid() . 'City';
 
             // Delete the previous indexes
-            $indexer->removeAllIndices();
+            $indexer->removeIndex();
 
             // Assign the vars to the bean
             $bean->first_name = $firstName;
