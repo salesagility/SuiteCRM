@@ -56,6 +56,10 @@ class ElasticSearchEngine extends SearchEngine
      * @var Client
      */
     private $client;
+    /**
+     * @var string
+     */
+    private $index = 'main';
 
     /**
      * ElasticSearchEngine constructor.
@@ -106,7 +110,7 @@ class ElasticSearchEngine extends SearchEngine
     private function createSearchParams($query)
     {
         $params = [
-            'index' => 'main',
+            'index' => $this->index,
             'body' => [
                 'stored_fields' => [],
                 'from' => $query->getFrom(),
@@ -157,4 +161,21 @@ class ElasticSearchEngine extends SearchEngine
 
         return $results;
     }
+
+    /**
+     * @return string
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
+     * @param string $index
+     */
+    public function setIndex($index)
+    {
+        $this->index = $index;
+    }
+
 }
