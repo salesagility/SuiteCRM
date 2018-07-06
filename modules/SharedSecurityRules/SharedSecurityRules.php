@@ -105,6 +105,10 @@ class SharedSecurityRules extends Basic
      */
     public $SecurityGroups;
 
+    /**
+     * 
+     * @param boolean $init
+     */
     public function __construct($init = true)
     {
         parent::__construct();
@@ -113,6 +117,11 @@ class SharedSecurityRules extends Basic
         }
     }
 
+    /**
+     * 
+     * @param string $interface
+     * @return boolean
+     */
     public function bean_implements($interface)
     {
         switch ($interface) {
@@ -123,6 +132,11 @@ class SharedSecurityRules extends Basic
         return false;
     }
 
+    /**
+     * 
+     * @global array $beanList
+     * @global array $app_list_strings
+     */
     public function load_flow_beans()
     {
         global $beanList, $app_list_strings;
@@ -142,6 +156,10 @@ class SharedSecurityRules extends Basic
         asort($app_list_strings['sa_moduleList']);
     }
 
+    /**
+     * 
+     * @param boolean $check_notify
+     */
     public function save($check_notify = false)
     {
         if (empty($this->id)) {
@@ -161,12 +179,12 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * @param $module
-     * @param $view
+     * @param SugarBean $module
+     * @param string $view
      *
      * @return bool
      */
-    public function checkRules(&$module, $view)
+    public function checkRules(SugarBean &$module, $view)
     {
 
         //        $moduleBean = clone $module;
@@ -287,6 +305,12 @@ class SharedSecurityRules extends Basic
         return $result;
     }
 
+    /**
+     * 
+     * @param array $originalCondition
+     * @param array $allConditionsResults
+     * @return array
+     */
     private function getParenthesisConditions($originalCondition, $allConditionsResults)
     {
         $GLOBALS['log']->info('SharedSecurityRules: Entering getParenthesisConditions()');
@@ -308,13 +332,18 @@ class SharedSecurityRules extends Basic
         return $allParenthesisConditions;
     }
 
+    
     /**
-     * @param $originalCondition
-     * @param $allConditions
-     *
-     * @return bool
+     * 
+     * @param array $allParenthesisConditions
+     * @param SugarBean $moduleBean
+     * @param array $rule
+     * @param string $view
+     * @param string $action
+     * @param string $key
+     * @return boolean
      */
-    private function checkParenthesisConditions($allParenthesisConditions, $moduleBean, $rule, $view, $action, $key)
+    private function checkParenthesisConditions($allParenthesisConditions, SugarBean $moduleBean, $rule, $view, $action, $key)
     {
         $GLOBALS['log']->info('SharedSecurityRules: Entering checkParenthesisConditions()');
 
@@ -350,7 +379,20 @@ class SharedSecurityRules extends Basic
         $GLOBALS['log']->info('SharedSecurityRules: Exiting checkParenthesisConditions with no conditions to check.');
     }
 
-    private function getConditionResult($allConditions, $moduleBean, $rule, $view, $action, $key, $result = false)
+    /**
+     * 
+     * @global User $current_user
+     * @global User $current_user
+     * @param array $allConditions
+     * @param SugarBean $moduleBean
+     * @param array $rule
+     * @param string $view
+     * @param string $action
+     * @param string $key
+     * @param boolean $result
+     * @return boolean
+     */
+    private function getConditionResult($allConditions, SugarBean $moduleBean, $rule, $view, $action, $key, $result = false)
     {
         $GLOBALS['log']->info('SharedSecurityRules: Entering getConditionResult()');
 
@@ -498,7 +540,16 @@ class SharedSecurityRules extends Basic
         return $result;
     }
 
-    private function checkConditions($rule, $moduleBean, $view, $action, $key)
+    /**
+     * 
+     * @param array $rule
+     * @param SugarBean $moduleBean
+     * @param string $view
+     * @param string $action
+     * @param string $key
+     * @return boolean
+     */
+    private function checkConditions($rule, SugarBean $moduleBean, $view, $action, $key)
     {
         $GLOBALS['log']->info('SharedSecurityRules: Entered checkConditions() for rule name: ' . $rule['name']);
 
@@ -515,15 +566,17 @@ class SharedSecurityRules extends Basic
 
         $result = $this->getConditionResult($allConditions, $moduleBean, $rule, $view, $action, $key, $conditions_results);
 
-        $converted_res = '';
-        if (isset($result)) {
-            if ($result == false) {
-                $converted_res = 'false';
-            } elseif ($result == true) {
-                $converted_res = 'true';
+        if (inDeveloperMode()) {
+            $converted_res = '';
+            if (isset($result)) {
+                if ($result == false) {
+                    $converted_res = 'false';
+                } elseif ($result == true) {
+                    $converted_res = 'true';
+                }
             }
+            $GLOBALS['log']->info('SharedSecurityRules: Exiting checkConditions() with result: ' . $converted_res . '  ');
         }
-        $GLOBALS['log']->info('SharedSecurityRules: Exiting checkConditions() with result: ' . $converted_res . '  ');
         return $result;
     }
 
@@ -677,7 +730,15 @@ class SharedSecurityRules extends Basic
         return $whereArray;
     }
 
-    public function checkHistory($module, $field, $value)
+    /**
+     * 
+     * @global Database $db
+     * @param SugarBean $module
+     * @param string $field
+     * @param string $value
+     * @return boolean
+     */
+    public function checkHistory(SugarBean $module, $field, $value)
     {
         global $db;
         if ($module->field_defs[$field]['audited'] == true) {
@@ -697,9 +758,9 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * @param $rowField
-     * @param $field
-     * @param $operator
+     * @param string $rowField
+     * @param string $field
+     * @param string $operator
      *
      * @return bool
      */
@@ -767,6 +828,13 @@ class SharedSecurityRules extends Basic
         return false;
     }
 
+    /**
+     * 
+     * @param string $operator
+     * @param string $value
+     * @param boolean $reverse
+     * @return boolean|string
+     */
     public function changeOperator($operator, $value, $reverse)
     {
         switch ($operator) {
@@ -806,8 +874,8 @@ class SharedSecurityRules extends Basic
     }
 
     /**
-     * @param $view
-     * @param $item
+     * @param string $view
+     * @param string $item
      *
      * @return bool
      */
@@ -819,6 +887,12 @@ class SharedSecurityRules extends Basic
         return false;
     }
 
+    /**
+     * 
+     * @param array $fieldDefs
+     * @param string $module
+     * @return array
+     */
     public function getFieldDefs($fieldDefs, $module)
     {
         if ($module == null) {
