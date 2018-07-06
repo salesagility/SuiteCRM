@@ -44,54 +44,64 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 require_once('modules/AOW_Actions/actions/actionBase.php');
-class actionAccessLevel extends actionBase {
 
-    function __construct($id = ''){
+class actionAccessLevel extends actionBase
+{
+    public function __construct($id = '')
+    {
         parent::__construct($id);
     }
 
-    function loadJS(){
+    public function loadJS()
+    {
         return array('modules/SharedSecurityRulesActions/actions/actionAccessLevel.js');
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array()){
+    public function edit_display($line, SugarBean $bean = null, $params = array())
+    {
         global $app_list_strings;
 
-        if(!in_array($bean->module_dir,getEmailableModules())) unset($app_list_strings['shared_email_type_list']['Record Email']);
+        if (!in_array($bean->module_dir, getEmailableModules())) {
+            unset($app_list_strings['shared_email_type_list']['Record Email']);
+        }
         $targetOptions = getRelatedEmailableFields($bean->module_dir);
-        if(empty($targetOptions)) unset($app_list_strings['shared_email_type_list']['Related Field']);
+        if (empty($targetOptions)) {
+            unset($app_list_strings['shared_email_type_list']['Related Field']);
+        }
 
-        $html = '<input type="hidden" name="aow_email_type_list" id="aow_email_type_list" value="'.get_select_options_with_id($app_list_strings['shared_email_type_list'], '').'">
-				  <input type="hidden" name="aow_email_to_list" id="aow_email_to_list" value="'.get_select_options_with_id($app_list_strings['aow_email_to_list'], '').'">
-				  <input type="hidden" name="sharedGroupRule" id="sharedGroupRule" value="'.get_select_options_with_id($app_list_strings['sharedGroupRule'], '').'">';
+        $html = '<input type="hidden" name="aow_email_type_list" id="aow_email_type_list" value="' . get_select_options_with_id($app_list_strings['shared_email_type_list'], '') . '">
+				  <input type="hidden" name="aow_email_to_list" id="aow_email_to_list" value="' . get_select_options_with_id($app_list_strings['aow_email_to_list'], '') . '">
+				  <input type="hidden" name="sharedGroupRule" id="sharedGroupRule" value="' . get_select_options_with_id($app_list_strings['sharedGroupRule'], '') . '">';
 
         $checked = '';
-        if(isset($params['individual_email']) && $params['individual_email']) $checked = 'CHECKED';
+        if (isset($params['individual_email']) && $params['individual_email']) {
+            $checked = 'CHECKED';
+        }
 
         $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='setRule'>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_OPTIONS",
-                "SharedSecurityRulesActions") . ':<span class="required">*</span></label></td>';
+        $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_OPTIONS", "SharedSecurityRulesActions") . ':<span class="required">*</span></label></td>';
         $html .= '<td valign="top" scope="row">';
 
-        $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
-        $html .= '<table id="emailLine'.$line.'_table" width="100%" class="email-line"></table>';
+        $html .= '<button type="button" onclick="add_emailLine(' . $line . ')"><img src="' . SugarThemeRegistry::current()->getImageURL('id-ff-add.png') . '"></button>';
+        $html .= '<table id="emailLine' . $line . '_table" width="100%" class="email-line"></table>';
         $html .= '</td>';
         $html .= "</tr>";
         $html .= "</table>";
 
-        $html .= "<script id ='aow_script".$line."'>";
+        $html .= "<script id ='aow_script" . $line . "'>";
 
-        if(isset($params['email_target_type'])){
-            foreach($params['email_target_type'] as $key => $field){
-                if(is_array($params['email'][$key]))$params['email'][$key] = json_encode($params['email'][$key]);
-                $html .= "load_emailline('".$line."','".$params['accesslevel'][$key]."','"
-                         .$params['email_target_type'][$key]."','".$params['email'][$key]."');";
+        if (isset($params['email_target_type'])) {
+            foreach ($params['email_target_type'] as $key => $field) {
+                if (is_array($params['email'][$key])) {
+                    $params['email'][$key] = json_encode($params['email'][$key]);
+                }
+                $html .= "load_emailline('" . $line . "','" . $params['accesslevel'][$key] . "','"
+                        . $params['email_target_type'][$key] . "','" . $params['email'][$key] . "');";
             }
         }
         $html .= "</script>";
 
         return $html;
-
     }
 }

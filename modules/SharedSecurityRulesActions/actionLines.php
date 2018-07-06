@@ -42,24 +42,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-
-function display_action_lines(SugarBean $focus, $field, $value, $view){
-
+function display_action_lines(SugarBean $focus, $field, $value, $view)
+{
     global $locale, $app_list_strings, $mod_strings;
 
     $html = '';
 
     if (!is_file('cache/jsLanguage/SharedSecurityRulesActions/' . $GLOBALS['current_language'] . '.js')) {
-        require_once ('include/language/jsLanguage.php');
+        require_once('include/language/jsLanguage.php');
         jsLanguage::createModuleStringsCache('SharedSecurityRulesActions', $GLOBALS['current_language']);
     }
-    $html .= '<script src="cache/jsLanguage/SharedSecurityRulesActions/'. $GLOBALS['current_language'] . '.js"></script>';
+    $html .= '<script src="cache/jsLanguage/SharedSecurityRulesActions/' . $GLOBALS['current_language'] . '.js"></script>';
     $html .= '<style>
                     .sqsEnabled {
                         width: 25%!important;
                     }
                     </style>';
-    if($view == 'EditView'){
+    if ($view == 'EditView') {
         $html .= '<script src="modules/SharedSecurityRulesActions/actionLines.js"></script>';
 
         $aow_actions_list = array();
@@ -67,42 +66,37 @@ function display_action_lines(SugarBean $focus, $field, $value, $view){
         include_once('modules/SharedSecurityRulesActions/actions.php');
 
         $app_list_actions[''] = '';
-        foreach($aow_actions_list as $action_value){
+        foreach ($aow_actions_list as $action_value) {
+            $action_name = 'action' . $action_value;
 
-            $action_name = 'action'.$action_value;
-
-            if(file_exists('custom/modules/_SharedSecurityRulesActions/actions/'.$action_name.'.php')){
-
-                require_once('custom/modules/SharedSecurityRulesActions/actions/'.$action_name.'.php');
-
-            } else if(file_exists('modules/SharedSecurityRulesActions/actions/'.$action_name.'.php')){
-
-                require_once('modules/SharedSecurityRulesActions/actions/'.$action_name.'.php');
-
+            if (file_exists('custom/modules/_SharedSecurityRulesActions/actions/' . $action_name . '.php')) {
+                require_once('custom/modules/SharedSecurityRulesActions/actions/' . $action_name . '.php');
+            } elseif (file_exists('modules/SharedSecurityRulesActions/actions/' . $action_name . '.php')) {
+                require_once('modules/SharedSecurityRulesActions/actions/' . $action_name . '.php');
             } else {
                 continue;
             }
 
             $action = new $action_name();
-            foreach($action->loadJS() as $js_file){
-                $html .= '<script src="'.$js_file.'"></script>';
+            foreach ($action->loadJS() as $js_file) {
+                $html .= '<script src="' . $js_file . '"></script>';
             }
 
-            $app_list_actions[$action_value] = translate('LBL_'.strtoupper($action_value),'SharedSecurityRulesActions');
+            $app_list_actions[$action_value] = translate('LBL_' . strtoupper($action_value), 'SharedSecurityRulesActions');
         }
 
-        $html .= '<input type="hidden" name="app_list_actions" id="app_list_actions" value="'.get_select_options_with_id($app_list_actions, '').'">';
+        $html .= '<input type="hidden" name="app_list_actions" id="app_list_actions" value="' . get_select_options_with_id($app_list_actions, '') . '">';
 
         $html .= "<table style='padding-top: 10px; padding-bottom:10px;' id='actionLines'></table>";
 
         $html .= "<div style='padding-top: 10px; padding-bottom:10px;'>";
-        $html .= "<input type=\"button\" tabindex=\"116\" class=\"button\" value=\"".$mod_strings['LBL_ADD_ACTION']."\" id=\"btn_ActionLine\" onclick=\"insertActionLine()\" disabled/>";
+        $html .= "<input type=\"button\" tabindex=\"116\" class=\"button\" value=\"" . $mod_strings['LBL_ADD_ACTION'] . "\" id=\"btn_ActionLine\" onclick=\"insertActionLine()\" disabled/>";
         $html .= "</div>";
 
-        if(isset($focus->flow_module) && $focus->flow_module != ''){
+        if (isset($focus->flow_module) && $focus->flow_module != '') {
             $html .= "<script>document.getElementById('btn_ActionLine').disabled = '';</script>";
-            if($focus->id != ''){
-                $sql = "SELECT id FROM sharedsecurityrulesactions WHERE sa_shared_security_rules_id = '".$focus->id."' AND deleted = 0 ORDER BY action_order ASC";
+            if ($focus->id != '') {
+                $sql = "SELECT id FROM sharedsecurityrulesactions WHERE sa_shared_security_rules_id = '" . $focus->id . "' AND deleted = 0 ORDER BY action_order ASC";
                 $result = $focus->db->query($sql);
 
                 while ($row = $focus->db->fetchByAssoc($result)) {
@@ -111,26 +105,21 @@ function display_action_lines(SugarBean $focus, $field, $value, $view){
                     $action_item = json_encode($action_name->toArray());
 
                     $html .= "<script>
-                            loadActionLine(".$action_item.");
+                            loadActionLine(" . $action_item . ");
                         </script>";
                 }
             }
         }
-
-
-
-    }
-    else if($view == 'DetailView'){
-
+    } elseif ($view == 'DetailView') {
         $html .= "<table border='0' width='100%' cellpadding='0' cellspacing='0'>";
-        $sql = "SELECT id FROM sharedsecurityrulesactions WHERE sa_shared_security_rules_id = '".$focus->id."' AND deleted = 0 ORDER BY action_order ASC";
+        $sql = "SELECT id FROM sharedsecurityrulesactions WHERE sa_shared_security_rules_id = '" . $focus->id . "' AND deleted = 0 ORDER BY action_order ASC";
         $result = $focus->db->query($sql);
 
         while ($row = $focus->db->fetchByAssoc($result)) {
             $action_name = new SharedSecurityRulesActions();
             $action_name->retrieve($row['id']);
 
-            $html .= "<tr><td>". $action_name->action_order ."</td><td>".$action_name->name."</td><td>". translate('LBL_'.strtoupper($action_name->action),'SharedSecurityRulesActions')."</td></tr>";
+            $html .= "<tr><td>" . $action_name->action_order . "</td><td>" . $action_name->name . "</td><td>" . translate('LBL_' . strtoupper($action_name->action), 'SharedSecurityRulesActions') . "</td></tr>";
         }
         $html .= "</table>";
     }

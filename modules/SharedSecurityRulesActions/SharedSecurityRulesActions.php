@@ -38,7 +38,9 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class SharedSecurityRulesActions extends Basic
 {
@@ -47,7 +49,6 @@ class SharedSecurityRulesActions extends Basic
     public $object_name = 'SharedSecurityRulesActions';
     public $table_name = 'sharedsecurityrulesactions';
     public $importable = false;
-
     public $id;
     public $name;
     public $date_entered;
@@ -64,11 +65,10 @@ class SharedSecurityRulesActions extends Basic
     public $assigned_user_name;
     public $assigned_user_link;
     public $SecurityGroups;
-	
+
     public function bean_implements($interface)
     {
-        switch($interface)
-        {
+        switch ($interface) {
             case 'ACL':
                 return true;
         }
@@ -76,8 +76,7 @@ class SharedSecurityRulesActions extends Basic
         return false;
     }
 
-
-    function save_lines($post_data, $parent, $key = '')
+    public function save_lines($post_data, $parent, $key = '')
     {
 
         // THIS IS WHERE THE ISSUE IS - should be shared_rules_actions_action (but do i change that in the call to this save lines function or in here
@@ -85,7 +84,6 @@ class SharedSecurityRulesActions extends Basic
         $line_count = count($post_data[$key . 'action']);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
-
             if ($post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -100,7 +98,9 @@ class SharedSecurityRulesActions extends Basic
                 foreach ($post_data[$key . 'param'][$i] as $param_name => $param_value) {
                     if ($param_name == 'value') {
                         foreach ($param_value as $p_id => $p_value) {
-                            if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                            if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) {
+                                $param_value[$p_id] = encodeMultienumValue($p_value);
+                            }
                         }
                     }
                     $params[$param_name] = $param_value;
@@ -114,5 +114,4 @@ class SharedSecurityRulesActions extends Basic
             }
         }
     }
-	
 }
