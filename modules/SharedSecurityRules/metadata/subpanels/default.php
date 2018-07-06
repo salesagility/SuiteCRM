@@ -48,9 +48,7 @@ $subpanel_layout = array(
         array('widget_class' => 'SubPanelTopCreateButton'),
         array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
     ),
-
     'where' => '',
-
     'list_fields' => array(
         'name' => array(
             'vname' => 'LBL_NAME',

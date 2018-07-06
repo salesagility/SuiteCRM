@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 $module_name = 'SharedSecurityRules';
 $searchdefs[$module_name] = array(
     'templateMeta' => array(

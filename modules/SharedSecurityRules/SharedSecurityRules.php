@@ -304,7 +304,6 @@ class SharedSecurityRules extends Basic
         return $allParenthesisConditions;
     }
 
-
     /**
      *
      * @param array $allParenthesisConditions

@@ -45,48 +45,47 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once 'include/MVC/View/views/view.detail.php';
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
 require_once 'modules/AOR_Reports/aor_utils.php';
-class SharedSecurityRulesViewDetail extends ViewDetail {
 
-
-    private function getConditionLines(){
-        if(!$this->bean->id){
+class SharedSecurityRulesViewDetail extends ViewDetail
+{
+    private function getConditionLines()
+    {
+        if (!$this->bean->id) {
             return array();
         }
-        $sql = "SELECT id FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '".$this->bean->id."' AND deleted = 0 ORDER BY condition_order ASC";
+        $sql = "SELECT id FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '" . $this->bean->id . "' AND deleted = 0 ORDER BY condition_order ASC";
         $result = $this->bean->db->query($sql);
         $conditions = array();
         while ($row = $this->bean->db->fetchByAssoc($result)) {
             $condition_name = new SharedSecurityRulesConditions();
 
             $condition_name->retrieve($row['id']);
-            if($condition_name->value_type == 'Date'){
+            if ($condition_name->value_type == 'Date') {
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
 
-            if(!$condition_name->parenthesis) {
+            if (!$condition_name->parenthesis) {
                 $display = $this->getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->flow_module);
                 $condition_item['module_path_display'] = $display['module'];
                 $condition_item['field_label'] = $display['field'];
             }
-            if(isset($conditions[$condition_item['condition_order']])) {
+            if (isset($conditions[$condition_item['condition_order']])) {
                 $conditions[] = $condition_item;
-            }
-            else {
+            } else {
                 $conditions[$condition_item['condition_order']] = $condition_item;
             }
         }
         return $conditions;
     }
+
     public function preDisplay()
     {
         $conditions = $this->getConditionLines();
-        echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
+        echo "<script>var conditionLines = " . json_encode($conditions) . "</script>";
 
 
         parent::preDisplay();
-
-
     }
 
     private function getDisplayForField($modulePath, $field, $reportModule)
@@ -122,13 +121,11 @@ class SharedSecurityRulesViewDetail extends ViewDetail {
         $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
         $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
         $fieldDisplay = trim($fieldDisplay, ':');
-        foreach($modulePathDisplay as &$module) {
+        foreach ($modulePathDisplay as &$module) {
             $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
-            isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
-            );
+                    isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
+                    );
         }
         return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
     }
-
-
 }

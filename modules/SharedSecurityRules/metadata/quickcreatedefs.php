@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 $module_name = 'SharedSecurityRules';
 $viewdefs[$module_name]['QuickCreate'] = array(
     'templateMeta' => array(
@@ -48,16 +47,12 @@ $viewdefs[$module_name]['QuickCreate'] = array(
             array('label' => '10', 'field' => '30')
         ),
     ),
-
     'panels' => array(
         'default' => array(
-
             array(
                 'name',
                 'assigned_user_name',
             ),
         ),
-
     ),
-
 );

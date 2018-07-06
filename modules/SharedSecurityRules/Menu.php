@@ -38,15 +38,15 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
- if (!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 global $mod_strings, $app_strings, $sugar_config;
- 
-if(ACLController::checkAccess('SharedSecurityRules', 'edit', true)){
-    $module_menu[]=array('index.php?module=SharedSecurityRules&action=EditView&return_module=SharedSecurityRules&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Add', 'SharedSecurityRules');
+
+if (ACLController::checkAccess('SharedSecurityRules', 'edit', true)) {
+    $module_menu[] = array('index.php?module=SharedSecurityRules&action=EditView&return_module=SharedSecurityRules&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Add', 'SharedSecurityRules');
 }
-if(ACLController::checkAccess('SharedSecurityRules', 'list', true)){
-    $module_menu[]=array('index.php?module=SharedSecurityRules&action=index&return_module=SharedSecurityRules&return_action=DetailView', $mod_strings['LNK_LIST'],'List', 'SharedSecurityRules');
+if (ACLController::checkAccess('SharedSecurityRules', 'list', true)) {
+    $module_menu[] = array('index.php?module=SharedSecurityRules&action=index&return_module=SharedSecurityRules&return_action=DetailView', $mod_strings['LNK_LIST'], 'List', 'SharedSecurityRules');
 }

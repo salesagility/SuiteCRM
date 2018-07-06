@@ -38,7 +38,6 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -54,7 +53,6 @@ $searchFields[$module_name] = array(
         'type' => 'bool'
     ),
     'assigned_user_id' => array('query_type' => 'default'),
-
     //Range Search Support
     'range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
     'start_range_date_entered' => array(
@@ -78,5 +76,5 @@ $searchFields[$module_name] = array(
         'enable_range_search' => true,
         'is_date_field' => true
     ),
-    //Range Search Support
+        //Range Search Support
 );
