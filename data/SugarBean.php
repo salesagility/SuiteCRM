@@ -458,7 +458,7 @@ class SugarBean
 
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
                 $this->field_name_map = isset($dictionary[$this->object_name]['fields']) ? $dictionary[$this->object_name]['fields'] : null;
-                
+
                 if (!isset($dictionary[$this->object_name]['fields'])) {
                     LoggerManager::getLogger()->warn('SugarBean constructor error: Object has not fields in dictionary. Object name was: ' . $this->object_name);
                     $this->field_defs = null;
@@ -3222,14 +3222,14 @@ class SugarBean
             $notify_mail->setMailerForSystem();
 
             if (empty($admin->settings['notify_send_from_assigning_user'])) {
-                
+
                 if (!isset($admin->settings['notify_fromaddress'])) {
                     LoggerManager::getLogger()->warn('admin settings / notify from address is not set');
                     $adminSettingsNotifyFromAddress = null;
                 } else {
                     $adminSettingsNotifyFromAddress = $admin->settings['notify_fromaddress'];
                 }
-                
+
                 $notify_mail->From = $adminSettingsNotifyFromAddress;
                 $notify_mail->FromName = (empty($admin->settings['notify_fromname']))
                     ? "" : $admin->settings['notify_fromname'];
@@ -3718,13 +3718,13 @@ class SugarBean
                 $selectedFields["$this->table_name.$field"] = true;
             }
 
-            if ($data['type'] != 'relate' && isset($data['db_concat_fields'])) {
+            if (isset($data['type']) && $data['type'] != 'relate' && isset($data['db_concat_fields'])) {
                 $ret_array['select'] .= ", " . $this->db->concat($this->table_name, $data['db_concat_fields'])
                     . " as $field";
                 $selectedFields[$this->db->concat($this->table_name, $data['db_concat_fields'])] = true;
             }
             //Custom relate field or relate fields built in module builder which have no link field associated.
-            if ($data['type'] == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
+            if (isset($data['type']) && $data['type'] == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
                 $joinTableAlias = 'jt' . $jtcount;
                 $relateJoinInfo = $this->custom_fields->getRelateJoin($data, $joinTableAlias, false);
                 $ret_array['select'] .= $relateJoinInfo['select'];
@@ -3735,7 +3735,7 @@ class SugarBean
                 $jtcount++;
             }
             //Parent Field
-            if ($data['type'] == 'parent') {
+            if (isset($data['type']) && $data['type'] == 'parent') {
                 //See if we need to join anything by inspecting the where clause
                 $match = preg_match(
                     '/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/',
