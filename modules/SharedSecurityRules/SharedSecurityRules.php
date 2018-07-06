@@ -318,7 +318,7 @@ class SharedSecurityRules extends Basic
         {
             // Get results of searching all conditions within the perms (true = condition met)
             $tempResult = $this->getConditionResult($conditionsToCheck, $moduleBean, $rule, $view,$action,$key);
-            if(!$tempResult)// && $allParenthesisConditions[$j]['logic_op'] === "AND")
+            if(!$tempResult)
             {
                 $GLOBALS['log']->info('SharedSecurityRules: Exiting checkParenthesisConditions returning false.');
                 return false;
@@ -336,7 +336,6 @@ class SharedSecurityRules extends Basic
     {
         $GLOBALS['log']->info('SharedSecurityRules: Entering getConditionResult()');
 
-        //   foreach($allConditions as $condition) {
         for($x = 0; $x < sizeof($allConditions); $x++)
         {
             // Is it the starting parenthesis?
@@ -580,7 +579,6 @@ class SharedSecurityRules extends Basic
                     $action['parameters'] = unserialize(base64_decode($action['parameters']));
                 }
                 foreach($action['parameters']['accesslevel'] as $key => $accessLevel){
-//                        if($accessLevel == 'none') {
                             $targetType = $action['parameters']['email_target_type'][$key];
 
                         if($targetType == "Users" && $action['parameters']['email'][ $key ]['0'] == "role"){
@@ -611,7 +609,6 @@ class SharedSecurityRules extends Basic
 
                             $actionIsUser = true;
                         }
-//                    }
                 }
             }
             if ($actionIsUser == true) {
@@ -620,7 +617,6 @@ class SharedSecurityRules extends Basic
                 $related = false;
                 if ($conditions_results->num_rows != 0) {
                     while ($condition = $module->db->fetchByAssoc($conditions_results)) {
-//                        if($accessLevel == 'none') {
                             if(unserialize(base64_decode($condition['module_path'])) != false) {
                                 $condition['module_path'] = unserialize(base64_decode($condition['module_path']));
                         }
@@ -702,7 +698,6 @@ class SharedSecurityRules extends Basic
                         }
                     }
                 }
-//            }
         }
         $whereArray = array();
         $whereArray['resWhere'] = $resWhere;
