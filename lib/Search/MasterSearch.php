@@ -57,7 +57,7 @@ class MasterSearch
     /**
      * Perform a search with the given query and engine.
      *
-     * @param $engine string
+     * @param $engine string|SearchEngine
      * @param $query SearchQuery
      * @return \SugarView
      */
@@ -69,27 +69,19 @@ class MasterSearch
     }
 
     /**
-     * Perform a search with the given query and engine.
-     *
-     * @param $engine string
-     * @param $query SearchQuery
-     * @return array[] ids
-     */
-    public static function search($engine, $query)
-    {
-        $engine = self::fetchEngine($engine);
-
-        return $engine->search($query);
-    }
-
-    /**
      * Performs various validation and retrieves an instance of a given search engine.
      *
-     * @param $engineName string
+     * @param $engineName string|SearchEngine
      * @return SearchEngine
      */
     private static function fetchEngine($engineName)
     {
+        if (is_subclass_of($engineName, SearchEngine::class, false)) {
+            return $engineName;
+        } elseif (!is_string($engineName)) {
+            throw new \InvalidArgumentException("\$engine should either be a string or a SearchEngine");
+        }
+
         if (!isset(self::$engines[$engineName])) {
             throw new \RuntimeException("Unable to find search engine $engineName.");
         }
@@ -106,6 +98,20 @@ class MasterSearch
         /** @var SearchEngine $engineName */
         $engineName = new $engineName();
         return $engineName;
+    }
+
+    /**
+     * Perform a search with the given query and engine.
+     *
+     * @param $engine string|SearchEngine
+     * @param $query SearchQuery
+     * @return array[] ids
+     */
+    public static function search($engine, $query)
+    {
+        $engine = self::fetchEngine($engine);
+
+        return $engine->search($query);
     }
 
     /**
