@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 function display_condition_lines(SugarBean $focus, $field, $value, $view)
 {
-    global $locale, $app_list_strings, $mod_strings;
+    global $mod_strings;
 
     if ($field) {
         LoggerManager::getLogger()->warn('Field does not effect for display condition lines: ' . $field);
