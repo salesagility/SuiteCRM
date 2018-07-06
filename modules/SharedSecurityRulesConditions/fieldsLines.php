@@ -172,4 +172,3 @@ condition_order ASC";
     return $html;
 }
 
-?>

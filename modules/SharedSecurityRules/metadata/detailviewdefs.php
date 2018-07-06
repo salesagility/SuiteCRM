@@ -147,4 +147,3 @@ $viewdefs [$module_name] =
                     ),
             ),
     );
-?>
