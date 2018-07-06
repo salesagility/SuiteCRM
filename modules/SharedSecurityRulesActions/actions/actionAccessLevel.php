@@ -47,10 +47,6 @@ require_once('modules/AOW_Actions/actions/actionBase.php');
 
 class actionAccessLevel extends actionBase
 {
-    public function __construct($id = '')
-    {
-        parent::__construct($id);
-    }
 
     public function loadJS()
     {
