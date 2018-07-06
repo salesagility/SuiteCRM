@@ -44,28 +44,65 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SharedSecurityRulesConditions extends Basic
 {
+    /**
+     *
+     * @var boolean
+     */
     public $new_schema = true;
+    
+    /**
+     *
+     * @var string 
+     */
     public $module_dir = 'SharedSecurityRulesConditions';
+    
+    /**
+     *
+     * @var string 
+     */
     public $object_name = 'SharedSecurityRulesConditions';
+    
+    /**
+     *
+     * @var string 
+     */
     public $table_name = 'sharedsecurityrulesconditions';
+    
+    /**
+     *
+     * @var boolean 
+     */
     public $importable = false;
-    public $id;
-    public $name;
-    public $date_entered;
-    public $date_modified;
-    public $modified_user_id;
-    public $modified_by_name;
-    public $created_by;
-    public $created_by_name;
-    public $description;
-    public $deleted;
+    
+
+    /**
+     *
+     * @var string 
+     */
     public $logic_op;
+    
+    /**
+     *
+     * @var string 
+     */
     public $parenthesis;
-    public $created_by_link;
-    public $modified_user_link;
-    public $assigned_user_id;
+    
+    /**
+     *
+     * @var string
+     */
     public $assigned_user_name;
+    
+    /**
+     *
+     * @var mixed 
+     */
     public $assigned_user_link;
+    
+    /**
+     *
+     * @var mixed 
+     */
     public $SecurityGroups;
 
     public function bean_implements($interface)
