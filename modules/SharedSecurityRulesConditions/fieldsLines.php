@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 function display_condition_lines(SugarBean $focus, $field, $value, $view)
 {
-    global $mod_strings;
+    global $mod_strings, $current_language;
 
     if ($field) {
         LoggerManager::getLogger()->warn('Field does not effect for display condition lines: ' . $field);
@@ -56,11 +56,11 @@ function display_condition_lines(SugarBean $focus, $field, $value, $view)
     
     $html = '';
 
-    if (!is_file('cache/jsLanguage/SharedSecurityRulesConditions/' . $GLOBALS['current_language'] . '.js')) {
+    if (!is_file('cache/jsLanguage/SharedSecurityRulesConditions/' . $current_language . '.js')) {
         require_once('include/language/jsLanguage.php');
-        jsLanguage::createModuleStringsCache('SharedSecurityRulesConditions', $GLOBALS['current_language']);
+        jsLanguage::createModuleStringsCache('SharedSecurityRulesConditions', $current_language);
     }
-    $html .= '<script src="cache/jsLanguage/SharedSecurityRulesConditions/' . $GLOBALS['current_language'] . '.js"></script>';
+    $html .= '<script src="cache/jsLanguage/SharedSecurityRulesConditions/' . $current_language . '.js"></script>';
 
     if ($view == 'EditView') {
         $html .= '<script src="modules/SharedSecurityRulesConditions/conditionLines.js"></script>';
