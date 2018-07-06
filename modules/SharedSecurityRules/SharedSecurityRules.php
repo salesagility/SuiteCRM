@@ -114,7 +114,8 @@ class SharedSecurityRules extends Basic
         $app_list_strings['sa_moduleList'] = $app_list_strings['moduleList'];
 
         if (!empty($app_list_strings['sa_moduleList'])) {
-            foreach ($app_list_strings['sa_moduleList'] as $mkey => $mvalue) {
+            $saModuleListKeys = array_keys($app_list_strings['sa_moduleList']);
+            foreach ($saModuleListKeys as $mkey) {
                 if (!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')) {
                     unset($app_list_strings['sa_moduleList'][$mkey]);
                 }
@@ -346,6 +347,7 @@ class SharedSecurityRules extends Basic
         }
 
         $GLOBALS['log']->info('SharedSecurityRules: Exiting checkParenthesisConditions with no conditions to check.');
+        return false;
     }
 
     /**
