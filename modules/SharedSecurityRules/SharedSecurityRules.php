@@ -178,12 +178,12 @@ class SharedSecurityRules extends Basic
         if (empty($moduleBean->id) || $moduleBean->id == "[SELECT_ID_LIST]") {
             return $result;
         }
-        $sql_query = "SELECT * FROM sharedsecurityrules WHERE sharedsecurityrules.status = 'Complete' && sharedsecurityrules.flow_module = '{$module->module_name}' && sharedsecurityrules.deleted = '0'";
+        $sql_query = "SELECT * FROM sharedsecurityrules WHERE sharedsecurityrules.status = 'Complete' AND sharedsecurityrules.flow_module = '{$module->module_name}' AND sharedsecurityrules.deleted = '0'";
 
         /* CREATING SQL QUERY VERSION */
         $query_results = $module->db->query($sql_query);
         while ($rule = $module->db->fetchByAssoc($query_results)) {
-            $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' && sharedsecurityrulesactions.deleted = '0'";
+            $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";
             $actions_results = $module->db->query($sql_query);
             while ($action = $module->db->fetchByAssoc($actions_results)) {
                 if (unserialize(base64_decode($action['parameters'])) != false) {
@@ -191,7 +191,7 @@ class SharedSecurityRules extends Basic
                 }
                 foreach ($action['parameters']['email_target_type'] as $key => $targetType) {
                     if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
-                        $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
+                        $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                         $users_roles_results = $module->db->query($users_roles_query);
                         $user_id = mysqli_fetch_row($users_roles_results);
                         if ($user_id[0] == $current_user->id) {
@@ -206,11 +206,11 @@ class SharedSecurityRules extends Basic
                             }
                         }
                     } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                        $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' && securitygroups_users.user_id = '{$current_user->id}' && securitygroups_users.deleted = '0'";
+                        $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' && securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
                         $sec_group_results = $module->db->query($sec_group_query);
                         $secgroup = mysqli_fetch_row($sec_group_results);
                         if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
-                            $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
+                            $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                             $users_roles_results = $module->db->query($users_roles_query);
                             $user_id = mysqli_fetch_row($users_roles_results);
                             if ($user_id[0] == $current_user->id) {
@@ -383,7 +383,7 @@ class SharedSecurityRules extends Basic
 
                 //Check next logical operator
                 $nextOrder = $allConditions[$x]['condition_order'] + 1;
-                $nextQuery = "select logic_op from sharedsecurityrulesconditions where sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' and condition_order = $nextOrder and deleted=0";
+                $nextQuery = "SELECT logic_op FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' AND condition_order = $nextOrder AND deleted=0";
                 $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
                 $nextRow = $this->db->fetchByAssoc($nextResult);
                 $nextConditionLogicOperator = $nextRow['logic_op'];
@@ -414,7 +414,7 @@ class SharedSecurityRules extends Basic
             // Check if there is another condition and get the operator
             LoggerManager::getLogger()->info('SharedSecurityRules: All parenthesis looked at now working out next order number to be processed');
             $nextOrder = $allConditions[$x]['condition_order'] + 1;
-            $nextQuery = "select logic_op from sharedsecurityrulesconditions where sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' and condition_order = $nextOrder and deleted=0";
+            $nextQuery = "SELECT logic_op FROM sharedsecurityrulesconditions WHERE sa_shared_sec_rules_id = '{$allConditions[$x]['sa_shared_sec_rules_id']}' AND condition_order = $nextOrder AND deleted=0";
             $nextResult = $this->db->query($nextQuery, true, "Error retrieving next condition");
             $nextRow = $this->db->fetchByAssoc($nextResult);
             $nextConditionLogicOperator = $nextRow['logic_op'];
@@ -525,7 +525,7 @@ class SharedSecurityRules extends Basic
     {
         LoggerManager::getLogger()->info('SharedSecurityRules: Entered checkConditions() for rule name: ' . $rule['name']);
 
-        $sql_query = "SELECT * FROM sharedsecurityrulesconditions WHERE sharedsecurityrulesconditions.sa_shared_sec_rules_id = '{$rule['id']}' && sharedsecurityrulesconditions.deleted = '0' ORDER BY sharedsecurityrulesconditions.condition_order ASC ";
+        $sql_query = "SELECT * FROM sharedsecurityrulesconditions WHERE sharedsecurityrulesconditions.sa_shared_sec_rules_id = '{$rule['id']}' AND sharedsecurityrulesconditions.deleted = '0' ORDER BY sharedsecurityrulesconditions.condition_order ASC ";
         $conditions_results = $moduleBean->db->query($sql_query);
 
         $allConditions = array();
@@ -566,10 +566,10 @@ class SharedSecurityRules extends Basic
         $addWhere = "";
         $resWhere = "";
         $parenthesis = null;
-        $sql = "SELECT * FROM sharedsecurityrules WHERE sharedsecurityrules.status = 'Complete' && sharedsecurityrules.flow_module = '{$module->module_dir}'&& sharedsecurityrules.deleted ='0'";
+        $sql = "SELECT * FROM sharedsecurityrules WHERE sharedsecurityrules.status = 'Complete' AND sharedsecurityrules.flow_module = '{$module->module_dir}' AND sharedsecurityrules.deleted ='0'";
         $results = DBManagerFactory::getInstance()->query($sql);
         while (($rule = $module->db->fetchByAssoc($results)) != null) {
-            $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' && sharedsecurityrulesactions.deleted = '0'";
+            $sql_query = "SELECT * FROM sharedsecurityrulesactions WHERE sharedsecurityrulesactions.sa_shared_security_rules_id = '{$rule['id']}' AND sharedsecurityrulesactions.deleted = '0'";
             $actions_results = $module->db->query($sql_query);
             $actionIsUser = false;
             while (($action = $module->db->fetchByAssoc($actions_results)) != null) {
@@ -580,18 +580,18 @@ class SharedSecurityRules extends Basic
                     $targetType = $action['parameters']['email_target_type'][$key];
 
                     if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
-                        $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
+                        $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                         $users_roles_results = $module->db->query($users_roles_query);
                         $user_id = mysqli_fetch_row($users_roles_results);
                         if ($user_id[0] == $current_user->id) {
                             $actionIsUser = true;
                         }
                     } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                        $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' && securitygroups_users.user_id = '{$current_user->id}' && securitygroups_users.deleted = '0'";
+                        $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' AND securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
                         $sec_group_results = $module->db->query($sec_group_query);
                         $secgroup = mysqli_fetch_row($sec_group_results);
                         if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
-                            $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' && acl_roles_users.user_id = '{$current_user->id}' && acl_roles_users.deleted = '0'";
+                            $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                             $users_roles_results = $module->db->query($users_roles_query);
                             $user_id = mysqli_fetch_row($users_roles_results);
                             if ($user_id[0] == $current_user->id) {
@@ -609,7 +609,7 @@ class SharedSecurityRules extends Basic
                 }
             }
             if ($actionIsUser == true) {
-                $sql_query = "SELECT * FROM sharedsecurityrulesconditions WHERE sharedsecurityrulesconditions.sa_shared_sec_rules_id = '{$rule['id']}' && sharedsecurityrulesconditions.deleted = '0' ORDER BY sharedsecurityrulesconditions.condition_order ASC ";
+                $sql_query = "SELECT * FROM sharedsecurityrulesconditions WHERE sharedsecurityrulesconditions.sa_shared_sec_rules_id = '{$rule['id']}' AND sharedsecurityrulesconditions.deleted = '0' ORDER BY sharedsecurityrulesconditions.condition_order ASC ";
                 $conditions_results = $module->db->query($sql_query);
                 $related = false;
                 if ($conditions_results->num_rows != 0) {
