@@ -516,6 +516,16 @@ function insertConditionLine(condition){
     var b = x.insertCell(nxtCell++);
     b.style.width = '15%';
     b.className = 'condition-sortable-handle';
+    var viewStyle = 'display:none';
+    if (action_sugar_grp1 == 'EditView') {
+      viewStyle = '';
+    }
+    b.innerHTML = "<input type='hidden' name='aor_conditions_module_path[" + condln + "]' id='aor_conditions_module_path" + condln + "' value=''>";
+    if (action_sugar_grp1 == 'EditView') {
+      viewStyle = 'display:none';
+    } else {
+      viewStyle = '';
+    }
 
     b.innerHTML += "<span style='width:178px;' id='aor_conditions_module_path_display" + condln + "' ></span>";
 
@@ -523,7 +533,17 @@ function insertConditionLine(condition){
     var c = x.insertCell(nxtCell++);
     c.style.width = '15%';
     c.className = 'condition-sortable-handle';
-
+    var viewStyle = 'display:none';
+    if (action_sugar_grp1 == 'EditView') {
+      viewStyle = '';
+    }
+    c.innerHTML = "<input type='hidden' name='aor_conditions_field[" + condln + "]' id='aor_conditions_field" + condln + "' value=''>";
+    if (action_sugar_grp1 == 'EditView') {
+      viewStyle = 'display:none';
+    } else {
+      viewStyle = '';
+    }
+   
     c.innerHTML += "<span style='width:178px;' id='aor_conditions_field_label" + condln + "' ></span>";
 
 
@@ -621,6 +641,7 @@ function date_field_change(field){
 }
 
 function UpdatePreview(panel){
+    var numberOfConditions = $("#aor_conditions_body tr").length;
     var url = "index.php?module=AOR_Reports&action=getPreview";
     $.ajax({
         url: url,
