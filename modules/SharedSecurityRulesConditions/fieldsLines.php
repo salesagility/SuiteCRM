@@ -42,10 +42,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-function display_condition_lines($focus, $field, $value, $view)
+function display_condition_lines(SugarBean $focus, $field, $value, $view)
 {
     global $locale, $app_list_strings, $mod_strings;
 
+    if ($field) {
+        LoggerManager::getLogger()->warn('Field does not effect for display condition lines: ' . $field);
+    }
+    
+    if ($value) {
+        LoggerManager::getLogger()->warn('Value does not effect for display condition lines: ' . $value);
+    }
+    
     $html = '';
 
     if (!is_file('cache/jsLanguage/SharedSecurityRulesConditions/' . $GLOBALS['current_language'] . '.js')) {
