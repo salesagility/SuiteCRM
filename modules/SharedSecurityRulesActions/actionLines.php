@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 function display_action_lines(SugarBean $focus, $field, $value, $view)
 {
-    global $locale, $app_list_strings, $mod_strings;
+    global $mod_strings;
 
     $html = '';
 
