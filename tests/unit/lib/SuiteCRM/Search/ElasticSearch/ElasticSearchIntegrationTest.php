@@ -265,7 +265,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // DO THE THING
         // Remove the lock file to perform a full index
-        unlink(self::LOCK_FILE);
+        if (file_exists(self::LOCK_FILE))
+            unlink(self::LOCK_FILE);
         // Perform a full search
         $this->indexer->run();
         // Make sure that just one module has been indexed
