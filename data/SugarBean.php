@@ -3055,7 +3055,11 @@ class SugarBean
 
         //walk through the fields and for every relationship field add their relationship_info field
         //relationshipfield-aliases are resolved in SugarBean::create_new_list_query through their relationship_info field
-        $addrelate = array();
+        $addrelate = array();  
+        if (!isset($fields) || null === $fields) {
+            LoggerManager::getLogger()->warn('filter is not set for SugarBean::create_new_list_query');
+            $fields = array();
+        }
         foreach ($fields as $field => $value) {
             if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) &&
                 $this->field_defs[$field]['source'] == 'non-db'
@@ -3122,13 +3126,20 @@ class SugarBean
 
                 $selectedFields["$this->table_name.$field"] = true;
             }
+            
+            $dataType = null;
+            if (!isset($data['type'])) {
+                LoggerManager::getLogger()->warn('SugarBean needs a type of data to create new list query');
+            } else {
+                $dataType = $data['type'];
+            }
 
-            if ($data['type'] != 'relate' && isset($data['db_concat_fields'])) {
+            if ($dataType != 'relate' && isset($data['db_concat_fields'])) {
                 $ret_array['select'] .= ", " . $this->db->concat($this->table_name, $data['db_concat_fields']) . " as $field";
                 $selectedFields[$this->db->concat($this->table_name, $data['db_concat_fields'])] = true;
             }
             //Custom relate field or relate fields built in module builder which have no link field associated.
-            if ($data['type'] == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
+            if ($dataType == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
                 $joinTableAlias = 'jt' . $jtcount;
                 $relateJoinInfo = $this->custom_fields->getRelateJoin($data, $joinTableAlias, false);
                 $ret_array['select'] .= $relateJoinInfo['select'];
@@ -3139,7 +3150,7 @@ class SugarBean
                 $jtcount++;
             }
             //Parent Field
-            if ($data['type'] == 'parent') {
+            if ($dataType == 'parent') {
                 //See if we need to join anything by inspecting the where clause
                 $match = preg_match('/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/', $where, $matches);
                 if ($match) {
