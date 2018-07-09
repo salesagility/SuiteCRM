@@ -44,6 +44,8 @@ use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\StateSaver;
 
+require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
+
 /**
  * Created by PhpStorm.
  * User: viocolano
@@ -68,8 +70,6 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
      */
     public function indexRunner($indexer)
     {
-        require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
-
         $searchEngine = new ElasticSearchEngine();
 
         $indexer->setIndexName('test');
@@ -192,8 +192,9 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     }
 
     /**
-     * @param $state
-     * @param $bean
+     * @param $state StateSaver
+     * @param $bean SugarBean
+     * @throws \SuiteCRM\StateSaverException
      */
     private function saveState($state, $bean)
     {
@@ -213,9 +214,10 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     }
 
     /**
-     * @param $indexer
-     * @param $state
-     * @param $bean
+     * @param $indexer ElasticSearchIndexer
+     * @param $state StateSaver
+     * @param $bean SugarBean
+     * @throws \SuiteCRM\StateSaverException
      */
     private function restore($indexer, $state, $bean)
     {
@@ -238,15 +240,18 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->indexRunner($indexer);
     }
 
-    public function testDifferentialSearch()
+    public function testDifferentialIndexing()
     {
-        $table = 'contacts';
+        $GLOBALS['timedate']->allow_cache = false;
+
+        $module = 'Contacts';
+        /** @var Contact $bean */
+        $bean = BeanFactory::newBean($module);
         $state = new StateSaver();
         $lockFile = 'cache/ElasticSearchIndex.lock';
 
         // Storing the application state
-        $state->pushTable($table);
-        $state->pushGlobals();
+        $this->saveState($state, $bean);
         $state->pushFile($lockFile);
 
         // Setting up the indexer
@@ -254,16 +259,101 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $indexer->setDifferentialIndexingEnabled(true);
         $indexer->setEchoLogsEnabled(true);
         $indexer->setIndexName('test');
+        $indexer->setModulesToIndex([$bean->module_name]);
+
+        // Set up the search engine
+        $searchEngine = new ElasticSearchEngine();
+        $searchEngine->setIndex('test');
+
+        $this->populateContactsTable();
 
         // DO THE THING
-        // $indexer->run();
-        self::markTestIncomplete('TODO');
-        // TODO
+        // Remove the lock file to perform a full index
+        unlink($lockFile);
+        // Perform a full search
+        $indexer->run();
+        // Make sure that just one module has been indexed
+        $actual = $indexer->getIndexedModulesCount();
+        self::assertEquals(1, $actual, "Only one module [$module] should have been indexed.");
+
+        // Create a new record in the module
+        $firstName = 'Some';
+        $lastName = 'Person' . uniqid();
+
+        sleep(1); // precision is down to the second
+
+        $bean->first_name = $firstName;
+        $bean->last_name = $lastName;
+
+        $bean->save();
+
+        $id = $bean->id;
+
+        // Run another differential index
+
+        $indexer->run();
+
+        // Make sure that one and only one record has been updated;
+        $actual = $indexer->getIndexedRecordsCount();
+        self::assertEquals(1, $actual, "Only one record should have been updated");
+
+        // Perform a search to see if the new record can be found
+        // As usual, wait for Elasticsearch to do its magic
+        sleep(1);
+        $results = MasterSearch::search($searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
+
+        self::assertArrayHasKey($module, $results, "No results found");
+        self::assertContains($id, $results[$module], "Records not found");
+
+        // Now try to fetch the bean again, edit it and save, and mark as deleted
+        $bean = BeanFactory::getBean($module, $id);
+        $bean->first_name = 'Same';
+        $bean->save();
+        $bean->mark_deleted($id);
+
+        // Make another beam
+        /** @var Contact $bean2 */
+        $bean2 = BeanFactory::getBean($module);
+        $firstName2 = 'NotTheSame';
+        $bean2->first_name = $firstName2;
+        $bean2->last_name = $lastName;
+
+        $bean2->save();
+        $id2 = $bean2->id;
+
+        // Perform a differential indexing
+        $indexer->run();
+
+        // Assert that only one (bean2) has been indexed...
+        $actual = $indexer->getIndexedRecordsCount();
+        self::assertEquals(1, $actual, 'Wrong count of indexed beans');
+
+        // ...and that the right number of beans has been un-indexed
+        $actual = $indexer->getRemovedRecordsCount();
+        self::assertEquals(1, $actual, 'Wrong count for un-indexed beans');
+
+        sleep(1);
+        $results = MasterSearch::search($searchEngine, SearchQuery::fromString("$firstName2 AND $lastName", 1));
+        self::assertArrayHasKey($module, $results);
+        self::assertContains($id2, $results[$module]);
+
+        $results = MasterSearch::search($searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
+        self::assertEmpty($results);
 
         // Restoring the application state to avoid side effects
-        $state->popTable($table);
-        $state->popGlobals();
+        $this->restore($indexer, $state, $bean);
         $state->popFile($lockFile);
-        $indexer->removeIndex('test');
+    }
+
+    private function populateContactsTable()
+    {
+        $bean = BeanFactory::newBean('Contacts');
+        $bean->first_name = 'Test';
+        $bean->last_name = 'Person';
+
+        $sql = DBManagerFactory::getInstance()->truncateTableSQL($bean->table_name);
+        DBManagerFactory::getInstance()->query($sql);
+
+        $bean->save();
     }
 }
