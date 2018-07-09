@@ -118,6 +118,7 @@ class ElasticSearchEngine extends SearchEngine
                 'query' => [
                     'query_string' => [
                         'query' => $query->getSearchString(),
+                        'fields' => ['name.*^5', '_all'],
                         'analyzer' => 'standard',
                         'default_operator' => 'OR',
                         'minimum_should_match' => '66%'

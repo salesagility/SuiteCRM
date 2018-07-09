@@ -48,6 +48,7 @@
 use SuiteCRM\Search\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchQuery;
 
+/** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
 class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
@@ -97,6 +98,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
                     'query_string' => [
                         'query' => $searchString,
                         'analyzer' => 'standard',
+                        'fields' => ['name.*^5', '_all'],
                         'default_operator' => 'OR',
                         'minimum_should_match' => '66%'
                     ]
@@ -127,6 +129,7 @@ class ElasticSearchEngineTest extends \SuiteCRM\Search\SearchTestAbstract
                     'query_string' => [
                         'query' => $searchString,
                         'analyzer' => 'standard',
+                        'fields' => ['name.*^5', '_all'],
                         'default_operator' => 'OR',
                         'minimum_should_match' => '66%'
                     ]
