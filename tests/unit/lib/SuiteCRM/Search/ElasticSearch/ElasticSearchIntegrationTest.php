@@ -39,11 +39,13 @@
  */
 
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\StateSaver;
 
+/** @noinspection PhpIncludeInspection */
 require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
 
 /**
@@ -54,158 +56,180 @@ require_once 'lib/Search/ElasticSearch/ElasticSearchEngine.php';
  */
 class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 {
-    public function testWithoutSearchdefs()
-    {
-        // Make a new Indexer instance
-        $indexer = new ElasticSearchIndexer();
-        $indexer->setEchoLogsEnabled(true);
-        $indexer->setDocumentifier(new SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier());
+    const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
+    /** @var ElasticSearchIndexer */
+    private $indexer;
+    /** @var ElasticSearchEngine */
+    private $searchEngine;
+    /** @var StateSaver */
+    private $state;
 
-        $this->indexRunner($indexer);
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->indexer = new ElasticSearchIndexer();
+        $this->searchEngine = new ElasticSearchEngine();
+        $this->state = new StateSaver();
+
+        $this->saveState();
+
+        $this->searchEngine->setIndex('test');
+        $this->indexer->setIndexName('test');
+        $this->indexer->setDifferentialIndexingEnabled(false);
+        $this->indexer->setEchoLogsEnabled(true);
+        $this->indexer->removeIndex();
     }
 
     /**
-     * @param $indexer ElasticSearchIndexer
      * @throws \SuiteCRM\StateSaverException
      */
-    public function indexRunner($indexer)
+    private function saveState()
     {
-        $searchEngine = new ElasticSearchEngine();
+        $this->state->pushTable('contacts');
+        $this->state->pushTable('aod_indexevent');
+        $this->state->pushTable('contacts_cstm');
+        $this->state->pushTable('sugarfeed');
+        $this->state->pushFile(self::LOCK_FILE);
+        $this->state->pushGlobals();
+    }
 
-        $indexer->setIndexName('test');
-        $searchEngine->setIndex('test');
+    public function tearDown()
+    {
+        $this->restore();
 
+        parent::tearDown();
+    }
+
+    /**
+     * @throws \SuiteCRM\StateSaverException
+     */
+    private function restore()
+    {
+        $this->state->popGlobals();
+        $this->state->popTable('contacts');
+        $this->state->popTable('aod_indexevent');
+        $this->state->popTable('contacts_cstm');
+        $this->state->popTable('sugarfeed');
+        $this->state->popFile(self::LOCK_FILE);
+        $this->indexer->removeIndex('test');
+    }
+
+    public function testWithoutSearchdefs()
+    {
+        $this->indexer->setDocumentifier(new JsonSerializerDocumentifier());
+        $this->indexRunner();
+    }
+
+    /**
+     * Starts indexing using the indexer stored as a field.
+     */
+    private function indexRunner()
+    {
         /** @var Contact $bean */
         $bean = BeanFactory::newBean('Contacts');
 
-        // Save the system state for later recovery
-        $state = new StateSaver();
-        $this->saveState($state, $bean);
+        // Create unique test vars
+        $firstName = uniqid();
+        $lastName = uniqid();
+        $full_name_update = md5(time());
+        $city = uniqid() . 'City';
 
-        try {
-            // Create unique test vars
-            $firstName = uniqid();
-            $lastName = uniqid();
-            $full_name_update = md5(time());
-            $city = uniqid() . 'City';
+        // Assign the vars to the bean
+        $bean->first_name = $firstName;
+        $bean->last_name = $lastName;
+        $bean->primary_address_city = $city;
 
-            // Delete the previous indexes
-            $indexer->removeIndex();
+        // Save the bean to the database and retrieve the new id
+        $bean->save();
+        $id = $bean->id;
 
-            // Assign the vars to the bean
-            $bean->first_name = $firstName;
-            $bean->last_name = $lastName;
-            $bean->primary_address_city = $city;
+        // Perform a new indexing
+        echo PHP_EOL;
+        $this->indexer->run();
 
-            // Save the bean to the database and retrieve the new id
-            $bean->save();
-            $id = $bean->id;
+        $this->waitForIndexing();
 
-            // Perform a new indexing
-            echo PHP_EOL;
-            $indexer->run();
+        // Attempt to search the newly added bean by full name
+        $results = MasterSearch::search(
+            $this->searchEngine,
+            SearchQuery::fromString("$firstName $lastName", 1));
 
-            $this->waitForIndexing();
+        self::assertArrayHasKey(
+            'Contacts',
+            $results,
+            'Unable to find by full name!');
+        self::assertEquals(
+            $id,
+            $results['Contacts'][0],
+            'Wrong id returned by the search engine.'
+        );
 
-            // Attempt to search the newly added bean by full name
-            $results = MasterSearch::search(
-                $searchEngine,
-                SearchQuery::fromString("$firstName $lastName", 1));
+        // lets test a more complex query
+        // Search by city
 
-            self::assertArrayHasKey(
-                'Contacts',
-                $results,
-                'Unable to find by full name!');
-            self::assertEquals(
-                $id,
-                $results['Contacts'][0],
-                'Wrong id returned by the search engine.'
-            );
+        $query = $this->indexer->getDocumentifierName() == "SearchDefsDocumentifier"
+            ? SearchQuery::fromString("address_city.primary_address_city:$city", 1)
+            : SearchQuery::fromString("address.primary.city:$city", 1);
+        $results = MasterSearch::search(
+            $this->searchEngine,
+            $query
+        );
 
-            // lets test a more complex query
-            // Search by city
+        self::assertArrayHasKey(
+            'Contacts',
+            $results,
+            "Unable to find by city [$city]!");
+        self::assertEquals(
+            $id,
+            $results['Contacts'][0],
+            'Wrong id returned by the search engine.'
+        );
 
-            $query = $indexer->getDocumentifierName() == "SearchDefsDocumentifier"
-                ? SearchQuery::fromString("address_city.primary_address_city:$city", 1)
-                : SearchQuery::fromString("address.primary.city:$city", 1);
-            $results = MasterSearch::search(
-                $searchEngine,
-                $query
-            );
+        $bean = BeanFactory::getBean('Contacts', $id);
 
-            self::assertArrayHasKey(
-                'Contacts',
-                $results,
-                "Unable to find by city [$city]!");
-            self::assertEquals(
-                $id,
-                $results['Contacts'][0],
-                'Wrong id returned by the search engine.'
-            );
+        $bean->first_name = $full_name_update;
 
-            $bean = BeanFactory::getBean('Contacts', $id);
+        // injecting this indexer so that it'll have the same parameters
+        /** @noinspection PhpUndefinedFieldInspection */
+        $bean->indexer = $this->indexer;
 
-            $bean->first_name = $full_name_update;
+        $bean->save();
+        // the hooks should cause another indexing to happen
 
-            // injecting this indexer so that it'll have the same parameters
-            $bean->indexer = $indexer;
+        $this->waitForIndexing();
 
-            $bean->save();
-            // the hooks should cause another indexing to happen
+        $results = MasterSearch::search(
+            $this->searchEngine,
+            SearchQuery::fromString($full_name_update, 1)
+        );
 
-            $this->waitForIndexing();
+        self::assertArrayHasKey(
+            'Contacts',
+            $results,
+            "Unable to find by updated username!");
+        self::assertEquals(
+            $bean->id,
+            $results['Contacts'][0],
+            "Wrong ID retrieved"
+        );
 
-            $results = MasterSearch::search(
-                $searchEngine,
-                SearchQuery::fromString($full_name_update, 1)
-            );
+        // remove the bean...
+        $this->indexer->removeBean($bean);
 
-            self::assertArrayHasKey(
-                'Contacts',
-                $results,
-                "Unable to find by updated username!");
-            self::assertEquals(
-                $bean->id,
-                $results['Contacts'][0],
-                "Wrong ID retrieved"
-            );
+        $this->waitForIndexing();
 
-            // remove the bean...
-            $indexer->removeBean($bean);
+        // make a search query for the deleted bean
+        $results = MasterSearch::search(
+            $this->searchEngine,
+            SearchQuery::fromString($full_name_update, 1)
+        );
 
-            $this->waitForIndexing();
-
-            // make a search query for the deleted bean
-            $results = MasterSearch::search(
-                $searchEngine,
-                SearchQuery::fromString($full_name_update, 1)
-            );
-
-            self::assertEmpty($results, "The deleted bean should not have been found!");
-
-            $this->restore($indexer, $state, $bean);
-        } catch (Exception $e) {
-            $this->restore($indexer, $state, $bean);
-
-            throw $e;
-        }
+        self::assertEmpty($results, "The deleted bean should not have been found!");
     }
 
     /**
-     * @param $state StateSaver
-     * @param $bean SugarBean
-     * @throws \SuiteCRM\StateSaverException
-     */
-    private function saveState($state, $bean)
-    {
-        $state->pushTable($bean->getTableName());
-        $state->pushTable('aod_indexevent');
-        $state->pushTable('contacts_cstm');
-        $state->pushTable('sugarfeed');
-        $state->pushGlobals();
-    }
-
-    /** The indexing on Elasticsearch is scheduled each second.
+     * The indexing on Elasticsearch is scheduled each second.
      * No results will be available before that time.
      **/
     private function waitForIndexing()
@@ -213,31 +237,13 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         sleep(1);
     }
 
-    /**
-     * @param $indexer ElasticSearchIndexer
-     * @param $state StateSaver
-     * @param $bean SugarBean
-     * @throws \SuiteCRM\StateSaverException
-     */
-    private function restore($indexer, $state, $bean)
-    {
-        $state->popGlobals();
-        $state->popTable($bean->getTableName());
-        $state->popTable('aod_indexevent');
-        $state->popTable('contacts_cstm');
-        $state->popTable('sugarfeed');
-        $indexer->removeIndex('test');
-    }
-
     public function testWithSearchdefs()
     {
         // Make a new Indexer instance
-        $indexer = new ElasticSearchIndexer();
-        $indexer->setEchoLogsEnabled(true);
-        $indexer->setDocumentifier(new SearchDefsDocumentifier());
-        $indexer->setBatchSize(1);
+        $this->indexer->setDocumentifier(new SearchDefsDocumentifier());
+        $this->indexer->setBatchSize(1);
 
-        $this->indexRunner($indexer);
+        $this->indexRunner();
     }
 
     public function testDifferentialIndexing()
@@ -247,40 +253,30 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $module = 'Contacts';
         /** @var Contact $bean */
         $bean = BeanFactory::newBean($module);
-        $state = new StateSaver();
-        $lockFile = 'cache/ElasticSearchIndex.lock';
-
-        // Storing the application state
-        $this->saveState($state, $bean);
-        $state->pushFile($lockFile);
 
         // Setting up the indexer
-        $indexer = new ElasticSearchIndexer();
-        $indexer->setDifferentialIndexingEnabled(true);
-        $indexer->setEchoLogsEnabled(true);
-        $indexer->setIndexName('test');
-        $indexer->setModulesToIndex([$bean->module_name]);
+        $this->indexer->setDifferentialIndexingEnabled(true);
+        $this->indexer->setEchoLogsEnabled(true);
+        $this->indexer->setModulesToIndex([$bean->module_name]);
 
         // Set up the search engine
-        $searchEngine = new ElasticSearchEngine();
-        $searchEngine->setIndex('test');
 
         $this->populateContactsTable();
 
         // DO THE THING
         // Remove the lock file to perform a full index
-        unlink($lockFile);
+        unlink(self::LOCK_FILE);
         // Perform a full search
-        $indexer->run();
+        $this->indexer->run();
         // Make sure that just one module has been indexed
-        $actual = $indexer->getIndexedModulesCount();
+        $actual = $this->indexer->getIndexedModulesCount();
         self::assertEquals(1, $actual, "Only one module [$module] should have been indexed.");
 
         // Create a new record in the module
         $firstName = 'Some';
         $lastName = 'Person' . uniqid();
 
-        sleep(1); // precision is down to the second
+        $this->waitForIndexing(); // precision is down to the second
 
         $bean->first_name = $firstName;
         $bean->last_name = $lastName;
@@ -291,16 +287,16 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // Run another differential index
 
-        $indexer->run();
+        $this->indexer->run();
 
         // Make sure that one and only one record has been updated;
-        $actual = $indexer->getIndexedRecordsCount();
+        $actual = $this->indexer->getIndexedRecordsCount();
         self::assertEquals(1, $actual, "Only one record should have been updated");
 
         // Perform a search to see if the new record can be found
         // As usual, wait for Elasticsearch to do its magic
-        sleep(1);
-        $results = MasterSearch::search($searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
+        $this->waitForIndexing();
+        $results = MasterSearch::search($this->searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
 
         self::assertArrayHasKey($module, $results, "No results found");
         self::assertContains($id, $results[$module], "Records not found");
@@ -322,31 +318,28 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $id2 = $bean2->id;
 
         // Perform a differential indexing
-        $indexer->run();
+        $this->indexer->run();
 
         // Assert that only one (bean2) has been indexed...
-        $actual = $indexer->getIndexedRecordsCount();
+        $actual = $this->indexer->getIndexedRecordsCount();
         self::assertEquals(1, $actual, 'Wrong count of indexed beans');
 
         // ...and that the right number of beans has been un-indexed
-        $actual = $indexer->getRemovedRecordsCount();
+        $actual = $this->indexer->getRemovedRecordsCount();
         self::assertEquals(1, $actual, 'Wrong count for un-indexed beans');
 
-        sleep(1);
-        $results = MasterSearch::search($searchEngine, SearchQuery::fromString("$firstName2 AND $lastName", 1));
-        self::assertArrayHasKey($module, $results);
-        self::assertContains($id2, $results[$module]);
+        $this->waitForIndexing();
+        $results = MasterSearch::search($this->searchEngine, SearchQuery::fromString("$firstName2 AND $lastName", 1));
+        self::assertArrayHasKey($module, $results, 'Wrong count of indexed beans');
+        self::assertContains($id2, $results[$module], 'Wrong ID found');
 
-        $results = MasterSearch::search($searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
-        self::assertEmpty($results);
-
-        // Restoring the application state to avoid side effects
-        $this->restore($indexer, $state, $bean);
-        $state->popFile($lockFile);
+        $results = MasterSearch::search($this->searchEngine, SearchQuery::fromString("$firstName AND $lastName", 1));
+        self::assertEmpty($results, 'There should be no search results, as the record was deleted');
     }
 
     private function populateContactsTable()
     {
+        /** @var Contact $bean */
         $bean = BeanFactory::newBean('Contacts');
         $bean->first_name = 'Test';
         $bean->last_name = 'Person';
