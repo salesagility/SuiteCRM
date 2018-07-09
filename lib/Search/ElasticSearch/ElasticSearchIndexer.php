@@ -63,7 +63,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     /**
      * @var string The name of the Elasticsearch index to use.
      */
-    private $indexName = 'main';
+    private $index = 'main';
     /**
      * @var Client
      */
@@ -172,7 +172,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     public function removeIndex($index = null)
     {
         if (empty($index)) {
-            $index = $this->indexName;
+            $index = $this->index;
         }
 
         $params = ['index' => $index];
@@ -248,7 +248,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         $params = ['body' => []];
 
         foreach ($beans as $key => $bean) {
-            $head = ['_index' => $this->indexName, '_type' => $module, '_id' => $bean->id];
+            $head = ['_index' => $this->index, '_type' => $module, '_id' => $bean->id];
 
             if ($bean->deleted) {
                 $params['body'][] = ['delete' => $head];
@@ -383,7 +383,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     private function makeParamsHeaderFromBean($bean)
     {
         $args = [
-            'index' => $this->indexName,
+            'index' => $this->index,
             'type' => $bean->module_name,
             'id' => $bean->id,
         ];
@@ -442,17 +442,17 @@ class ElasticSearchIndexer extends AbstractIndexer
     /**
      * @return string
      */
-    public function getIndexName()
+    public function getIndex()
     {
-        return $this->indexName;
+        return $this->index;
     }
 
     /**
-     * @param string $indexName
+     * @param string $index
      */
-    public function setIndexName($indexName)
+    public function setIndex($index)
     {
-        $this->indexName = $indexName;
+        $this->index = $index;
     }
 
     /**

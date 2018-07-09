@@ -75,7 +75,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->saveState();
 
         $this->searchEngine->setIndex('test');
-        $this->indexer->setIndexName('test');
+        $this->indexer->setIndex('test');
         $this->indexer->setDifferentialIndexingEnabled(false);
         $this->indexer->setEchoLogsEnabled(true);
         $this->indexer->removeIndex();

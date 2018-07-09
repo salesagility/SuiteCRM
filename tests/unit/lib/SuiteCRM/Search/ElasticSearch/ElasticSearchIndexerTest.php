@@ -105,18 +105,18 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $i = new i();
 
         $i->setBatchSize($batchSize);
-        $i->setIndexName($index);
+        $i->setIndex($index);
         self::assertEquals($batchSize, $i->getBatchSize());
-        self::assertEquals($index, $i->getIndexName());
+        self::assertEquals($index, $i->getIndex());
 
         $i = new i();
         $batchSize = 50;
         $index = 'test2';
 
         $i->setBatchSize($batchSize);
-        $i->setIndexName($index);
+        $i->setIndex($index);
         self::assertEquals($batchSize, $i->getBatchSize());
-        self::assertEquals($index, $i->getIndexName());
+        self::assertEquals($index, $i->getIndex());
     }
 
     public function testIndexBean()
