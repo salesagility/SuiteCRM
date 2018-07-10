@@ -46,7 +46,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		//test without setting assigned_user_id
 		$project->fill_in_additional_detail_fields();
-		$this->assertEquals("", $project->assigned_user_name);
+		$this->assertEquals("firstn lastn", $project->assigned_user_name);
 
 
 		//test with assigned_user_id set
