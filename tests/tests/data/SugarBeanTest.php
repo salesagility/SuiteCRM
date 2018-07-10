@@ -49,6 +49,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -111,6 +112,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         $state->popGlobals();
         $state->popTable('users');
+        $state->popTable('aod_index');
         
     }
           
@@ -120,6 +122,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -172,6 +175,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         $state->popGlobals();
         $state->popTable('users');
+        $state->popTable('aod_index');
                 
     }
     
@@ -180,6 +184,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -347,6 +352,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         $state->popGlobals();
         $state->popTable('users');
+        $state->popTable('aod_index');
     }
         
     
@@ -355,6 +361,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -407,6 +414,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // clean up
         $state->popGlobals();
+        $state->popTable('aod_index');
         $state->popTable('users');
     }
 
@@ -417,6 +425,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -458,6 +467,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // clean up
         $state->popGlobals();
+        $state->popTable('aod_index');
         $state->popTable('users');
         
     }
@@ -468,6 +478,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -524,6 +535,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         $state->popGlobals();
         $state->popTable('users');
+        $state->popTable('aod_index');
     }
 
     
@@ -533,6 +545,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -590,6 +603,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // clean up
         $state->popGlobals();
+        $state->popTable('aod_index');
         $state->popTable('users');
     }
     
@@ -598,6 +612,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -654,6 +669,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         $state->popGlobals();
         $state->popTable('users');
+        $state->popTable('aod_index');
     }
     
       
@@ -661,6 +677,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
          
         // store states
         $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
         $state->pushTable('users');
         $state->pushTable('user_preferences');
         $state->pushGlobals();
@@ -721,6 +738,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $state->popGlobals();
         $state->popTable('user_preferences');
         $state->popTable('users');
+        $state->popTable('aod_index');
     }
     
     public function testCreateNewListQueryWithDataSource() {
