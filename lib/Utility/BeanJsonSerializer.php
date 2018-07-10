@@ -70,7 +70,7 @@ class BeanJsonSerializer
      * Converts a SugarBean to a nested, standardised, cleaned JSON string.
      *
      * @param $bean \SugarBean the bean to serialise
-     * @param bool $hideEmptyValues removes fields with empty (`""` or `null`) values.
+     * @param bool $hideEmptyValues removes fields with empty (`''` or `null`) values.
      * @param bool $pretty to make *very* pretty formatted.
      * @return string
      */
@@ -91,7 +91,7 @@ class BeanJsonSerializer
      * Keep it disabled.
      *
      * @param $bean \SugarBean the bean to serialise
-     * @param bool $hideEmptyValues removes fields with empty (`""` or `null`) values.
+     * @param bool $hideEmptyValues removes fields with empty (`''` or `null`) values.
      * @param bool $loadRelationships whether to load the bean relationship
      * @return array
      */
@@ -135,203 +135,194 @@ class BeanJsonSerializer
             if (is_array($value) || is_object($value) || is_resource($value)) continue;
 
             if (is_string($value)) {
-                $value = mb_convert_encoding($value, "UTF-8", "HTML-ENTITIES");
+                $value = mb_convert_encoding($value, 'UTF-8', 'HTML-ENTITIES');
                 $value = trim($value);
             }
 
-            if ($hideEmptyValues && ($value === null || $value === "")) continue;
-
-            //region emails
-            if (preg_match("/email([0-9])+/", $key)) {
-                $prettyBean['email'][] = $value;
-                continue;
-            }
-            if ($key == 'email') {
-                continue;
-            }
-            //endregion
-
-            //region phone
-            if (preg_match("/phone\_([a-z_]+)/", $key, $matches)) {
-                $prettyBean['phone'][$matches[1]] = self::sanitizePhone($value);
-                continue;
-            }
-            //endregion
-
-            //region address
-            if (preg_match("/([a-z_]+)\_address\_([a-z_]+)/", $key, $matches)) {
-                $prettyBean['address'][$matches[1]][$matches[2]] = $value;
-                continue;
-            }
-
-            if (preg_match("/address\_([a-z_]+)/", $key, $matches)) {
-                $prettyBean['address']['primary'][$matches[1]] = $value;
-                continue;
-            }
-            //endregion
+            if ($hideEmptyValues && ($value === null || $value === '')) continue;
 
             //region metas
-            if ($key == 'date_entered') {
+            if ($key === 'date_entered') {
                 $prettyBean['meta']['created']['date'] = $value;
                 continue;
             }
 
-            if ($key == 'created_by') {
+            if ($key === 'created_by') {
                 $prettyBean['meta']['created']['user_id'] = $value;
                 continue;
             }
 
-            if ($key == 'date_modified') {
+            if ($key === 'date_modified') {
                 $prettyBean['meta']['modified']['date'] = $value;
                 continue;
             }
 
-            if ($key == 'modified_user_id') {
+            if ($key === 'modified_user_id') {
                 $prettyBean['meta']['modified']['user_id'] = $value;
                 continue;
             }
 
-            if ($key == 'assigned_user_id') {
+            if ($key === 'assigned_user_id') {
                 $prettyBean['meta']['assigned']['user_id'] = $value;
                 continue;
             }
 
-            if ($key == 'modified_by_name') {
+            if ($key === 'modified_by_name') {
                 $prettyBean['meta']['modified']['user_name'] = $value;
                 continue;
             }
 
-            if ($key == 'created_by_name') {
+            if ($key === 'created_by_name') {
                 $prettyBean['meta']['created']['user_name'] = $value;
                 continue;
             }
 
-            if ($key == 'assigned_user_name') {
+            if ($key === 'assigned_user_name') {
                 $prettyBean['meta']['assigned']['user_name'] = $value;
                 continue;
             }
 
-            if ($key == 'assigned_user_name_owner') {
+            if ($key === 'assigned_user_name_owner') {
                 $prettyBean['meta']['assigned']['owner_name'] = $value;
                 continue;
             }
             //endregion
 
             //region assistant
-            if ($key == 'assistant') {
+            if ($key === 'assistant') {
                 $prettyBean['assistant']['name'] = $value;
                 continue;
             }
 
-            if ($key == 'assistant_phone') {
+            if ($key === 'assistant_phone') {
                 $prettyBean['assistant']['phone'] = $value;
                 continue;
             }
             // endregion
 
             //region reportTo
-            if ($key == 'reports_to_id') {
+            if ($key === 'reports_to_id') {
                 $prettyBean['reports_to']['id'] = $value;
                 continue;
             }
 
-            if ($key == 'report_to_name') {
+            if ($key === 'report_to_name') {
                 $prettyBean['reports_to']['name'] = $value;
                 continue;
             }
 
-            if ($key == 'reports_to_name') {
+            if ($key === 'reports_to_name') {
                 $prettyBean['reports_to']['name'] = $value;
                 continue;
             }
             //endregion
 
             //region campaign
-            if ($key == 'campaign_id') {
+            if ($key === 'campaign_id') {
                 $prettyBean['campaign']['id'] = $value;
                 continue;
             }
 
-            if ($key == 'campaign_name') {
+            if ($key === 'campaign_name') {
                 $prettyBean['campaign']['name'] = $value;
                 continue;
             }
             //endregion
 
             //region name
-            if ($key == 'name') {
-                if (is_subclass_of($bean, Person::class)
-                    || (isset($bean->module_name) && $bean->module_name == "Contacts")) {
-                    if (isset($bean->first_name)) {
-                        $prettyBean['name']['first'] = $bean->first_name;
-                    }
-                    if (isset($bean->last_name)) {
-                        $prettyBean['name']['last'] = $bean->last_name;
-                    }
-                } else {
-                    $prettyBean['name'] = ['name' => $value];
-                }
+            if ($key === 'name') {
+                self::fixName($bean, $value, $prettyBean);
                 continue;
             }
 
-            if ($key == 'first_name') {
+            if ($key === 'first_name') {
                 $prettyBean['name']['first'] = $value;
                 continue;
             }
 
-            if ($key == 'last_name') {
+            if ($key === 'last_name') {
                 $prettyBean['name']['last'] = $value;
                 continue;
             }
 
-            if ($key == 'salutation') {
+            if ($key === 'salutation') {
                 $prettyBean['name']['salutation'] = $value;
                 continue;
             }
             //endregion
 
             //region account
-            if ($key == 'account_id') {
+            if ($key === 'account_id') {
                 $prettyBean['account']['id'] = $value;
                 continue;
             }
 
-            if ($key == 'account_name') {
+            if ($key === 'account_name') {
                 $prettyBean['account']['name'] = $value;
                 continue;
             }
 
-            if ($key == 'title') {
+            if ($key === 'title') {
                 $prettyBean['account']['title'] = $value;
                 continue;
             }
 
-            if ($key == 'department') {
+            if ($key === 'department') {
                 $prettyBean['account']['department'] = $value;
                 continue;
             }
             //endregion
 
             //region parent
-            if ($key == 'parent_id') {
+            if ($key === 'parent_id') {
                 $prettyBean['parent']['id'] = $value;
                 continue;
             }
 
-            if ($key == 'parent_name') {
+            if ($key === 'parent_name') {
                 $prettyBean['parent']['name'] = $value;
                 continue;
             }
             //endregion
 
             //region messenger
-            if ($key == 'messenger_id') {
+            if ($key === 'messenger_id') {
                 $prettyBean['messenger']['id'] = $value;
                 continue;
             }
 
-            if ($key == 'messenger_type') {
+            if ($key === 'messenger_type') {
                 $prettyBean['messenger']['type'] = $value;
+                continue;
+            }
+            //endregion
+
+            //region emails
+            if ($key === 'email') {
+                continue;
+            }
+
+            if (preg_match('/^email([0-9]+)$/', $key)) {
+                $prettyBean['email'][] = $value;
+                continue;
+            }
+            //endregion
+
+            //region phone
+            if (preg_match('/^phone\_([a-z_]+)$/', $key, $matches)) {
+                $prettyBean['phone'][$matches[1]] = self::sanitizePhone($value);
+                continue;
+            }
+            //endregion
+
+            //region address
+            if (preg_match('/^address\_([a-z_]+)$/', $key, $matches)) {
+                $prettyBean['address']['primary'][$matches[1]] = $value;
+                continue;
+            }
+
+            if (preg_match('/^([a-z]+)\_address\_([a-z_]+)$/', $key, $matches)) {
+                $prettyBean['address'][$matches[1]][$matches[2]] = $value;
                 continue;
             }
             //endregion
@@ -343,6 +334,26 @@ class BeanJsonSerializer
     }
 
     /**
+     * @param $bean
+     * @param $value
+     * @param $prettyBean
+     */
+    private static function fixName($bean, $value, &$prettyBean)
+    {
+        if (is_subclass_of($bean, Person::class)
+            || (isset($bean->module_name) && $bean->module_name === 'Contacts')) {
+            if (isset($bean->first_name)) {
+                $prettyBean['name']['first'] = $bean->first_name;
+            }
+            if (isset($bean->last_name)) {
+                $prettyBean['name']['last'] = $bean->last_name;
+            }
+        } else {
+            $prettyBean['name'] = ['name' => $value];
+        }
+    }
+
+    /**
      * Strips non-numeric characters from a phone number (apart from `+`), to improve search results.
      *
      * @param $phone
@@ -350,6 +361,6 @@ class BeanJsonSerializer
      */
     public static function sanitizePhone($phone)
     {
-        return $phone = preg_replace("/[^0-9+]/", '', $phone);
+        return $phone = preg_replace('/[^0-9+]/', '', $phone);
     }
 }
