@@ -202,7 +202,7 @@ global $timedate;
 <span class='chartFootnote'>
 <p align="right"><i><?php  echo $current_module_strings['LBL_CREATED_ON'].' '.$file_date; ?></i></p>
 </span>
-<?Php
+<?php
 }
 
 

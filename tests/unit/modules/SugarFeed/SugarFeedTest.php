@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
