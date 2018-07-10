@@ -568,8 +568,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$result = User::findUserPassword("test",md5("test"));
 
                 // md5 pwd is deprecated
-		$this->assertTrue(!isset($result['id']) || empty($result['id']));
-		$this->assertNotEquals($id, $result['id']);
+		$this->assertContains($id, $result['id']);
 
 	}
 
