@@ -63,7 +63,7 @@ class BeanJsonSerializer
         'receive_notifications', 'status', 'portal_only', 'show_on_employees', 'is_group', 'factor_auth',
         'factor_auth_interface', 'securitygroup_noninher_fields', 'system_generated_password', 'full_name',
         'modified_by_name_mod', 'created_by_name_mod', 'assigned_user_name_mod', 'parent_name_mod',
-        'report_to_name_mod', 'campaign_name_mod'
+        'report_to_name_mod', 'campaign_name_mod', 'email_opt_out'
     ];
 
     /**
