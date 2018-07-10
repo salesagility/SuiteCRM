@@ -66,9 +66,9 @@ class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         self::assertEquals($expe3, BeanJsonSerializer::sanitizePhone($data3));
     }
 
-    public function testToArray()
+    public function testToArrayContact()
     {
-        $absolutelyNotAFakeBean = $this->getSaltBean();
+        $absolutelyNotAFakeBean = new SaltBean('Contacts', __DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
 
         $expected = json_decode(file_get_contents(__DIR__ . '/BeanJsonSerializerTestData/ContactBean.expected.json'), true);
 
@@ -77,24 +77,37 @@ class BeanJsonSerializerTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @return SugarBean
-     */
-    private function getSaltBean()
+    public function testToArrayAccount()
     {
-        /** @var SugarBean $absolutelyNotAFakeBean */
-        $absolutelyNotAFakeBean = new SaltBean('Contacts', __DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
-        return $absolutelyNotAFakeBean;
+        $absolutelyNotAFakeBean = new SaltBean('Accounts', __DIR__ . '/BeanJsonSerializerTestData/AccountBean.json');
+
+        $expected = json_decode(file_get_contents(__DIR__ . '/BeanJsonSerializerTestData/AccountBean.expected.json'), true);
+
+        $result = BeanJsonSerializer::toArray($absolutelyNotAFakeBean, false);
+
+        self::assertEquals($expected, $result);
     }
 
-    public function testSerialize()
+    public function testSerializeContact()
     {
-        $absolutelyNotAFakeBean = $this->getSaltBean();
+        $absolutelyNotAFakeBean = new SaltBean('Contacts', __DIR__ . '/BeanJsonSerializerTestData/ContactBean.json');
 
         $actual = BeanJsonSerializer::serialize($absolutelyNotAFakeBean, false, true);
 
         self::assertJsonStringEqualsJsonFile(
             __DIR__ . '/BeanJsonSerializerTestData/ContactBean.expected.json',
+            $actual
+        );
+    }
+
+    public function testSerializeAccount()
+    {
+        $absolutelyNotAFakeBean = new SaltBean('Accounts', __DIR__ . '/BeanJsonSerializerTestData/AccountBean.json');
+
+        $actual = BeanJsonSerializer::serialize($absolutelyNotAFakeBean, false, true);
+
+        self::assertJsonStringEqualsJsonFile(
+            __DIR__ . '/BeanJsonSerializerTestData/AccountBean.expected.json',
             $actual
         );
     }

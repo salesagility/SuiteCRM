@@ -47,7 +47,7 @@
 namespace SuiteCRM\Utility\BeanJsonSerializerTestData;
 
 
-class SaltBean
+class SaltBean extends \SugarBean
 {
     public $fetched_rel_row = [];
     public $id;
@@ -59,12 +59,9 @@ class SaltBean
     {
         $array = json_decode(file_get_contents($file), true);
 
-        $this->module_name = $module;
-        $this->module_dir = $module;
-
-        $this->fetched_row = $array;
-
-        $this->id = $array['id'];
+        foreach ($array as $key => $item) {
+            $this->$key = $item;
+        }
     }
 
     public function load_relationships()
