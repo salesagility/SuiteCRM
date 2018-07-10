@@ -728,6 +728,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
         // test
@@ -785,6 +786,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // clean up
         $state->popGlobals();
+        $state->popTable('aod_index');
         $state->popTable('users');
     }
     
