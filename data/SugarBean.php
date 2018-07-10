@@ -1506,6 +1506,10 @@ class SugarBean
         //find all definitions of type link.
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
+                if (!is_array($properties)) {
+                    LoggerManager::getLogger()->warn('properties should be an array for SugarBean::get_linked_fields');
+                    $properties = (array)$properties;
+                }
                 if (array_search('link', $properties) === 'type') {
                     $linked_fields[$name] = $properties;
                 }
