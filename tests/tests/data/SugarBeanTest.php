@@ -44,6 +44,75 @@ include_once __DIR__ . '/../../../modules/AM_ProjectTemplates/AM_ProjectTemplate
 class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
     
+    public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
+                
+        // store states
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        $state->pushGlobals();
+        
+        // test
+        
+        global $current_user, $sugar_config;
+                
+        // test
+        $user = new User();
+        $user->name = 'tester10';
+        $user->save();
+        $current_user = $user;
+        
+        $this->assertNotEmpty($current_user->id);
+        
+        $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
+        $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
+        
+           
+        // test
+        $tmpUser = new User();
+        $tmpUser->name = 'tempuser';
+        $tmpUser->save();
+        $order_by = '';
+        $where = "";
+        $current_user->is_admin = false;
+        $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
+        
+        if (!file_exists('custom')) {
+            mkdir('custom');
+        }
+        if (!file_exists('custom/include')) {
+            mkdir('custom/include');
+        }
+        if (!file_exists('custom/include/VarDefHandler')) {
+            mkdir('custom/include/VarDefHandler');
+        }
+        copy('include/VarDefHandler/listvardefoverride.php', 'custom/include/VarDefHandler/listvardefoverride.php');
+        
+        $this->assertTrue($tmpUser->bean_implements('ACL'));
+        $this->assertFalse(is_admin($current_user));
+        $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
+        
+        $results = $tmpUser->create_new_list_query($order_by, $where);
+        $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
+
+ AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
+                  FROM    securitygroups secg
+                          INNER JOIN securitygroups_users secu
+                            ON secg.id = secu.securitygroup_id
+                               AND secu.deleted = 0
+                               AND secu.user_id = '{$current_user->id}'
+                          INNER JOIN securitygroups_records secr
+                            ON secg.id = secr.securitygroup_id
+                               AND secr.deleted = 0
+                               AND secr.module = 'Users'
+                       WHERE   secr.record_id = users.id
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
+        
+                
+        // clean up
+        $state->popGlobals();
+        $state->popTable('users');
+        
+    }
           
 
     public function testCreateNewListQueryWithNoOwnerWhere() {
@@ -145,7 +214,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
+ AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -156,7 +225,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
                 
         
@@ -177,7 +246,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where (foo='bar' AND ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
+ AND jt0.deleted=0 where (foo='bar' AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -188,7 +257,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
                 
  
@@ -322,7 +391,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
+ AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -333,7 +402,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
                 
         // clean up
@@ -438,7 +507,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
+ AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -449,7 +518,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
                 
         // clean up
@@ -505,7 +574,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
+ AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -516,7 +585,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
                 
         // clean up
@@ -568,7 +637,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $tmpUser->field_defs['id']['force_blank'] = true;
         
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.id , '                                                                                                                                                                                                                                                              ' id , users.created_by  FROM users  where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.id , '                                                                                                                                                                                                                                                              ' id  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -579,7 +648,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
                 
         // clean up
@@ -634,7 +703,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $tmpUser->field_defs['id']['force_blank'] = true;
         
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.id , 1 id , users.created_by  FROM users  where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.id , 1 id  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -645,7 +714,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
                 
         // clean up
@@ -700,77 +769,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $tmpUser->field_defs['modified_user_id']['source'] = 'custom_field';
         
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.id , users.created_by  FROM users  where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
-                  FROM    securitygroups secg
-                          INNER JOIN securitygroups_users secu
-                            ON secg.id = secu.securitygroup_id
-                               AND secu.deleted = 0
-                               AND secu.user_id = '{$current_user->id}'
-                          INNER JOIN securitygroups_records secr
-                            ON secg.id = secr.securitygroup_id
-                               AND secr.deleted = 0
-                               AND secr.module = 'Users'
-                       WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
-        
-                
-        // clean up
-        $state->popGlobals();
-        $state->popTable('users');
-    }
-    
-    
-    public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
-                
-        // store states
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushTable('users');
-        $state->pushGlobals();
-        
-        // test
-        
-        global $current_user, $sugar_config;
-                
-        // test
-        $user = new User();
-        $user->name = 'tester';
-        $user->save();
-        $current_user = $user;
-        
-        $this->assertNotEmpty($current_user->id);
-        
-        $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
-        $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
-           
-        // test
-        $tmpUser = new User();
-        $tmpUser->name = 'tempuser';
-        $tmpUser->save();
-        $order_by = '';
-        $where = "";
-        $current_user->is_admin = false;
-        $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
-        if (!file_exists('custom')) {
-            mkdir('custom');
-        }
-        if (!file_exists('custom/include')) {
-            mkdir('custom/include');
-        }
-        if (!file_exists('custom/include/VarDefHandler')) {
-            mkdir('custom/include/VarDefHandler');
-        }
-        copy('include/VarDefHandler/listvardefoverride.php', 'custom/include/VarDefHandler/listvardefoverride.php');
-        
-        $this->assertTrue($tmpUser->bean_implements('ACL'));
-        $this->assertFalse(is_admin($current_user));
-        $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
-        $results = $tmpUser->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
-
- AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.id  FROM users  where ( AND  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -787,7 +786,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // clean up
         $state->popGlobals();
         $state->popTable('users');
-        
     }
+    
     
 }
