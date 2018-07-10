@@ -78,14 +78,14 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $mockedModule = 'MockedModule';
 
         $mockedBeans = [
-            (object)array("id" => 1, "fetched_row" => ['name' => 'name 1'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
-            (object)array("id" => 2, "fetched_row" => ['name' => 'name 2'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
-            (object)array("id" => 3, "fetched_row" => ['name' => 'name 3'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
-            (object)array("id" => 4, "fetched_row" => ['name' => 'name 4'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
-            (object)array("id" => 5, "fetched_row" => ['name' => 'name 5'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
-            (object)array("id" => 6, "fetched_row" => ['name' => 'name 6'], "fetched_rel_row" => [], "deleted" => true, "module_name" => $mockedModule),
-            (object)array("id" => 7, "fetched_row" => ['name' => 'name 7', "opt" => 'ciao'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
-            (object)array("id" => 8, "fetched_row" => ['name' => 'name 8', "opt" => 'ciao'], "fetched_rel_row" => [], "deleted" => false, "module_name" => $mockedModule),
+            (object)["id" => 1, 'name' => 'name 1', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
+            (object)["id" => 2, 'name' => 'name 2', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
+            (object)["id" => 3, 'name' => 'name 3', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
+            (object)["id" => 4, 'name' => 'name 4', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
+            (object)["id" => 5, 'name' => 'name 5', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
+            (object)["id" => 6, 'name' => 'name 6', "deleted" => true, "module_name" => $mockedModule, "column_fields" => ["name"]],
+            (object)["id" => 7, 'name' => 'name 7', "opt" => 'ciao', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name", "opt"]],
+            (object)["id" => 8, 'name' => 'name 8', "opt" => 'ciao', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name", "opt"]]
         ];
 
         $i = new i($client);
@@ -94,9 +94,9 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
         $i->indexBeans($mockedModule, $mockedBeans);
 
-        self::assertEquals(1, $i->getRemovedRecordsCount());
-        self::assertEquals(7, $i->getIndexedRecordsCount());
-        self::assertEquals(9, $i->getIndexedFieldsCount());
+        self::assertEquals(1, $i->getRemovedRecordsCount(), "Wrong number of records removed");
+        self::assertEquals(7, $i->getIndexedRecordsCount(), "Wrong number of records indexed");
+        self::assertEquals(9, $i->getIndexedFieldsCount(), "Wrong number of fields indexed");
     }
 
     public function testGettersAndSetters()

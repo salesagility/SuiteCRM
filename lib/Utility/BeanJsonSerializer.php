@@ -100,15 +100,18 @@ class BeanJsonSerializer
         if ($loadRelationships) $bean->load_relationships();
 
         // creates an associative array with all the raw values that might need serialisation
-        if ($bean->fetched_row && is_array($bean->fetched_row)) {
+        if (isset($bean->fetched_row) && is_array($bean->fetched_row)) {
             $keys = array_keys($bean->fetched_row);
             if ($bean->fetched_rel_row && is_array($bean->fetched_rel_row))
                 $keys = array_merge($keys, array_keys($bean->fetched_rel_row));
-        } else {
+            $fields = $bean;
+        } elseif (isset($bean->column_fields) && is_array($bean->column_fields)) {
             $keys = $bean->column_fields;
+            $fields = $bean;
+        } else {
+            $fields = get_object_vars($bean);
+            $keys = array_keys($fields);
         }
-
-        $fields = $bean;
 
         $prettyBean = [];
 
