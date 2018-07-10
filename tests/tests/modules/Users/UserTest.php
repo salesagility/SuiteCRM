@@ -439,7 +439,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testsaveAndOthers()
 	{
-            $this->markTestIncomplete();
+            
         // save state
         
         $state = new \SuiteCRM\StateSaver();
@@ -555,7 +555,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function NewPasswordAndFindUserPassword($id)
 	{
-		$user = new User();
+		$user = BeanFactory::getBean('Users');
 
 		$user->retrieve($id);
 
