@@ -1,5 +1,7 @@
 {
   "id": "00000000-0000-0000-0000-000000000000",
+  "module_name": "Contacts",
+  "module_dir": "Contacts",
   "date_entered": "2018-06-12 11:01:34",
   "date_modified": "2018-06-12 11:01:34",
   "modified_user_id": "1",
