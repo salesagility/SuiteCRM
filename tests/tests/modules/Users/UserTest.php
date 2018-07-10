@@ -525,10 +525,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function retrieve($id)
 	{
-		$user = new User();
-
-		$user->retrieve($id);
-
+		$user = BeanFactory::getBean('Users', $id);
 		$this->assertEquals("test", $user->user_name);
 
 		$this->assertEquals("firstn", $user->first_name);
