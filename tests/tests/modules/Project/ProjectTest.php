@@ -42,7 +42,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         // test
 
-		$project = new Project();
+		$project = BeanFactory::getBean('Projects');
 
 		//test without setting assigned_user_id
 		$project->fill_in_additional_detail_fields();
