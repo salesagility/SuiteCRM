@@ -557,7 +557,7 @@ class SharedSecurityRules extends Basic
      * @global array $current_user
      * @global Database $db
      * @param SugarBean $module
-     * @return string
+     * @return array
      */
     public static function buildRuleWhere(SugarBean $module)
     {
