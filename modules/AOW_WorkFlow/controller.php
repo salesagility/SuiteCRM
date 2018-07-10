@@ -25,7 +25,8 @@
 
 require_once("modules/AOW_WorkFlow/aow_utils.php");
 
-class AOW_WorkFlowController extends SugarController {
+class AOW_WorkFlowController extends SugarController
+{
 
     protected function action_getModuleFields()
     {

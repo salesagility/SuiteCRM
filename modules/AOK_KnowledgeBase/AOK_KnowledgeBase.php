@@ -41,7 +41,8 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AOK_KnowledgeBase/AOK_KnowledgeBase_sugar.php');
-class AOK_KnowledgeBase extends AOK_KnowledgeBase_sugar {
+class AOK_KnowledgeBase extends AOK_KnowledgeBase_sugar
+{
 
 	public function __construct(){
 		parent::__construct();

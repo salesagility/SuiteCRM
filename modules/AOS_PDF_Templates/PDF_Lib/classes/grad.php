@@ -1,6 +1,7 @@
 <?php
 
-class grad {
+class grad
+{
 
 var $mpdf = null;
 

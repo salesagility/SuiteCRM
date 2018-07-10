@@ -41,7 +41,8 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
 
 require_once('service/v2/registry.php'); //Extend off of v2 registry
 
-class registry_v3 extends registry {
+class registry_v3 extends registry
+{
 	
 	/**
 	 * This method registers all the functions on the service class

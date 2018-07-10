@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class ViewSerialized extends SugarView{
+class ViewSerialized extends SugarView
+{
 	var $type ='detail';
 
 	public function __construct(){

@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class Alert extends Basic {
+class Alert extends Basic
+{
 
     var $new_schema = true;
     var $module_dir = 'Alerts';

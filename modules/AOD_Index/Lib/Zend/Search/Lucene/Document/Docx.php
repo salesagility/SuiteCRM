@@ -32,7 +32,8 @@ require_once 'Zend/Search/Lucene/Document/OpenXml.php';
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenXml {
+class Zend_Search_Lucene_Document_Docx extends Zend_Search_Lucene_Document_OpenXml
+{
     /**
      * Xml Schema - WordprocessingML
      *

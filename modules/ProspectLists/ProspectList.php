@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class ProspectList extends SugarBean {
+class ProspectList extends SugarBean
+{
 	var $field_name_map;
 
 	// Stored fields

@@ -28,7 +28,8 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AOS_Invoices/AOS_Invoices_sugar.php');
-class AOS_Invoices extends AOS_Invoices_sugar {
+class AOS_Invoices extends AOS_Invoices_sugar
+{
 
 	function __construct(){
 		parent::__construct();

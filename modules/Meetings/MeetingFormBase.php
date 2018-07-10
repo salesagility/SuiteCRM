@@ -48,7 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarObjects/forms/FormBase.php');
 
-class MeetingFormBase extends FormBase {
+class MeetingFormBase extends FormBase
+{
 
 	function getFormBody($prefix, $mod='', $formname=''){
 		if(!ACLController::checkAccess('Meetings', 'edit', true)){

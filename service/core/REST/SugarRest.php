@@ -42,7 +42,8 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  * This class is a base class implementation of REST protocol
  * @api
  */
- class SugarRest{
+ class SugarRest
+{
 
  	/**
  	 * Constructor

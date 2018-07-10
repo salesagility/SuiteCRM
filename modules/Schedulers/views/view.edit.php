@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.edit.php');
 
-class SchedulersViewEdit extends ViewEdit {
+class SchedulersViewEdit extends ViewEdit
+{
 	protected static $xtDays = array(
 				1 => 'MON',
 				2 => 'TUE',

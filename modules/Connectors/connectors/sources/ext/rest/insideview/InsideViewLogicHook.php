@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class InsideViewLogicHook {
+class InsideViewLogicHook
+{
 
     const URL_BASE = 'https://my.insideview.com/iv/crm/';
 

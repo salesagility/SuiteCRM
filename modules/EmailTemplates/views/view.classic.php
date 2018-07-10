@@ -45,7 +45,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 require_once('include/MVC/View/views/view.classic.php');
 
-class EmailTemplatesViewClassic extends ViewClassic {
+class EmailTemplatesViewClassic extends ViewClassic
+{
 
  	function __construct(){
 

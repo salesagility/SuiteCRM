@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('modules/DynamicFields/templates/Fields/TemplateURL.php');
-class TemplateIFrame extends TemplateURL{
+class TemplateIFrame extends TemplateURL
+{
 	var $type='iframe';
 	
 function get_html_edit(){

@@ -40,7 +40,8 @@
 
 require_once('include/resource/Observers/ResourceObserver.php');
 
-class SoapResourceObserver extends ResourceObserver {
+class SoapResourceObserver extends ResourceObserver
+{
 
 private $soapServer;
 

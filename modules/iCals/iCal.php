@@ -49,7 +49,8 @@ require_once('modules/vCals/vCal.php');
 *
 * @see vCal
 */
-class iCal extends vCal {
+class iCal extends vCal
+{
 
     const UTC_FORMAT = 'Ymd\THi00\Z';
 

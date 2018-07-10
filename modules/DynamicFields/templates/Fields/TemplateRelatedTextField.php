@@ -43,7 +43,8 @@ require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
 require_once 'modules/ModuleBuilder/parsers/parser.label.php';
 require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php';
 
-class TemplateRelatedTextField extends TemplateText{
+class TemplateRelatedTextField extends TemplateText
+{
     var $type = 'relate';
     //ext1 is the name field
     //ext2 is the related module

@@ -52,7 +52,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access public
 */
-class nusoap_fault extends nusoap_base {
+class nusoap_fault extends nusoap_base
+{
 	/**
 	 * The fault code (client|server)
 	 * @var string
@@ -124,7 +125,8 @@ class nusoap_fault extends nusoap_base {
 /**
  * Backward compatibility
  */
-class soap_fault extends nusoap_fault {
+class soap_fault extends nusoap_fault
+{
 }
 
 

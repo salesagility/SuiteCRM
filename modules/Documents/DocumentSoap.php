@@ -43,7 +43,8 @@ require_once('include/upload_file.php');
 
 require_once('include/upload_file.php');
 
-class DocumentSoap{
+class DocumentSoap
+{
 var $upload_file;
 	function __construct(){
 		$this->upload_file = new UploadFile('filename_file');

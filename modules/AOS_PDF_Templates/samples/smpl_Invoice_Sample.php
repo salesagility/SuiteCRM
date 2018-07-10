@@ -2,7 +2,8 @@
 
 require_once __DIR__ . '/../TemplateSampleService.php';
 
-class smpl_Invoice_Sample{
+class smpl_Invoice_Sample
+{
 		function getType() {
 			return 'AOS_Invoices';
 		}

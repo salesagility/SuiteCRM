@@ -24,7 +24,8 @@
  */
 require_once 'modules/InboundEmail/InboundEmail.php';
 require_once 'include/clean.php';
-class AOPInboundEmail extends InboundEmail {
+class AOPInboundEmail extends InboundEmail
+{
 
     /**
      * Replaces embedded image links with links to the appropriate note in the CRM.

@@ -45,7 +45,8 @@ if(!defined('sugarEntry') || !sugarEntry) {
 $js_loaded = false;
 require_once("include/templates/Template.php");
 
-class TemplateGroupChooser extends Template {
+class TemplateGroupChooser extends Template
+{
     var $args;
     var $js_loaded = false;
     var $display_hide_tabs = true;

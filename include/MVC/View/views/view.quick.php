@@ -45,7 +45,8 @@
  */
 require_once('include/MVC/View/views/view.detail.php');
 
-class ViewQuick extends ViewDetail{
+class ViewQuick extends ViewDetail
+{
 	var $type ='detail';
 
  	public function __construct(){

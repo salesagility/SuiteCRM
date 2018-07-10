@@ -2,7 +2,8 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
-class TemplateCronSchedule extends TemplateText{
+class TemplateCronSchedule extends TemplateText
+{
     var $type='CronSchedule';
 
     function __construct(){

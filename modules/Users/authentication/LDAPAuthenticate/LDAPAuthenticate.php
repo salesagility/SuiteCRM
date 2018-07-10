@@ -48,7 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  */
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
-class LDAPAuthenticate extends SugarAuthenticate {
+class LDAPAuthenticate extends SugarAuthenticate
+{
 	var $userAuthenticateClass = 'LDAPAuthenticateUser';
 	var $authenticationDir = 'LDAPAuthenticate';
 	/**

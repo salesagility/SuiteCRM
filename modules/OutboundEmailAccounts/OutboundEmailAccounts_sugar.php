@@ -44,7 +44,8 @@
  */
 
 
-class OutboundEmailAccounts_sugar extends Basic {
+class OutboundEmailAccounts_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'OutboundEmailAccounts';
 	var $object_name = 'OutboundEmailAccounts';

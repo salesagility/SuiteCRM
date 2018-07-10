@@ -66,7 +66,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * 
  */
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
-class SugarFieldAddress extends SugarFieldBase {
+class SugarFieldAddress extends SugarFieldBase
+{
 
     function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);

@@ -44,7 +44,8 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 /**
  * Created: Aug 22, 2011
  */
-class SugarFieldRadioenum extends SugarFieldBase {
+class SugarFieldRadioenum extends SugarFieldBase
+{
 	/**
 	 * Decrypt encrypt fields values before inserting them into the emails
 	 * 

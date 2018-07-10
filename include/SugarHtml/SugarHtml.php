@@ -44,7 +44,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @auther Justin Park(jpark@sugarcrm.com)
  *
  */
-class SugarHtml {
+class SugarHtml
+{
     const SINGLE_QUOTE = "'";
     const DOUBLE_QUOTE = '"';
     const ASSIGN_SIGN = "=";

@@ -2,7 +2,8 @@
 
 require_once __DIR__ . '/../TemplateSampleService.php';
 
-class smpl_Account_Sample{
+class smpl_Account_Sample
+{
 		function getType() {
 			return 'Accounts';
 		}

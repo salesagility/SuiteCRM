@@ -39,7 +39,8 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldDownload extends SugarFieldBase {
+class SugarFieldDownload extends SugarFieldBase
+{
    
 	function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
       

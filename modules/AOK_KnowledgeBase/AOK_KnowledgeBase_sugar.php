@@ -44,7 +44,8 @@
  */
 
 
-class AOK_KnowledgeBase_sugar extends Basic {
+class AOK_KnowledgeBase_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOK_KnowledgeBase';
 	var $object_name = 'AOK_KnowledgeBase';

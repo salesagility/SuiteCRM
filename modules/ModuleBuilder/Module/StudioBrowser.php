@@ -44,7 +44,8 @@ function cmp($a,$b)
 	return strcasecmp($a,$b);
 }
 
-class StudioBrowser{
+class StudioBrowser
+{
 	var $modules = array();
 	
 	function loadModules(){

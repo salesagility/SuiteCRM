@@ -1,6 +1,7 @@
 <?php
 
-class tocontents {
+class tocontents
+{
 
 var $mpdf = null;
 var $_toc;

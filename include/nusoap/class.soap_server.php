@@ -63,7 +63,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access   public
 */
-class nusoap_server extends nusoap_base {
+class nusoap_server extends nusoap_base
+{
 	/**
 	 * HTTP headers of request
 	 * @var array
@@ -1170,7 +1171,8 @@ class nusoap_server extends nusoap_base {
 /**
  * Backward compatibility
  */
-class soap_server extends nusoap_server {
+class soap_server extends nusoap_server
+{
 }
 
 

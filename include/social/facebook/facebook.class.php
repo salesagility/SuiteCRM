@@ -2,7 +2,8 @@
 require_once("include/social/facebook/facebook_sdk/src/facebook.php");
 
 
-class facebook_helper{
+class facebook_helper
+{
 
     var $facebook;
 

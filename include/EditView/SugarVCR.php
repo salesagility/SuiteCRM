@@ -42,7 +42,8 @@
  /**
   * @api
   */
- class SugarVCR{
+ class SugarVCR
+{
 
  	/**
  	 * records the query in the session for later retrieval

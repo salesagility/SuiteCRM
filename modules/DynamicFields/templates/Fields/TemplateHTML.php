@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class TemplateHTML extends TemplateField{
+class TemplateHTML extends TemplateField
+{
     var $data_type = 'html';
     var $type = 'html';
     var $inline_edit = 0;

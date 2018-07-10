@@ -55,7 +55,8 @@ require_once('include/MVC/View/ViewFactory.php');
  * SugarCRM application
  * @api
  */
-class SugarApplication {
+class SugarApplication
+{
 
     var $controller = null;
     var $headerDisplayed = false;

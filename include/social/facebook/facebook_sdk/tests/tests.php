@@ -15,7 +15,8 @@
  * under the License.
  */
 
-class PHPSDKTestCase extends PHPUnit_Framework_TestCase {
+class PHPSDKTestCase extends PHPUnit_Framework_TestCase
+{
   const APP_ID = '117743971608120';
   const SECRET = '9c8ea2071859659bea1246d33a9207cf';
 
@@ -1939,7 +1940,8 @@ class PHPSDKTestCase extends PHPUnit_Framework_TestCase {
   }
 }
 
-class TransientFacebook extends BaseFacebook {
+class TransientFacebook extends BaseFacebook
+{
   protected function setPersistentData($key, $value) {}
   protected function getPersistentData($key, $default = false) {
     return $default;
@@ -1948,7 +1950,8 @@ class TransientFacebook extends BaseFacebook {
   protected function clearAllPersistentData() {}
 }
 
-class FBRecordURL extends TransientFacebook {
+class FBRecordURL extends TransientFacebook
+{
   private $url;
 
   protected function _oauthRequest($url, $params) {
@@ -1960,7 +1963,8 @@ class FBRecordURL extends TransientFacebook {
   }
 }
 
-class FBRecordMakeRequest extends TransientFacebook {
+class FBRecordMakeRequest extends TransientFacebook
+{
   private $requests = array();
 
   protected function makeRequest($url, $params, $ch=null) {
@@ -1980,7 +1984,8 @@ class FBRecordMakeRequest extends TransientFacebook {
   }
 }
 
-class FBPublic extends TransientFacebook {
+class FBPublic extends TransientFacebook
+{
   public static function publicBase64UrlDecode($input) {
     return self::base64UrlDecode($input);
   }
@@ -1995,7 +2000,8 @@ class FBPublic extends TransientFacebook {
   }
 }
 
-class PersistentFBPublic extends Facebook {
+class PersistentFBPublic extends Facebook
+{
   public function publicParseSignedRequest($input) {
     return $this->parseSignedRequest($input);
   }
@@ -2041,7 +2047,8 @@ class PersistentFBPublic extends Facebook {
   }
 }
 
-class FBCode extends Facebook {
+class FBCode extends Facebook
+{
   public function publicGetCode() {
     return $this->getCode();
   }
@@ -2059,19 +2066,22 @@ class FBCode extends Facebook {
   }
 }
 
-class FBAccessToken extends TransientFacebook {
+class FBAccessToken extends TransientFacebook
+{
   public function publicGetApplicationAccessToken() {
     return $this->getApplicationAccessToken();
   }
 }
 
-class FBGetCurrentURLFacebook extends TransientFacebook {
+class FBGetCurrentURLFacebook extends TransientFacebook
+{
   public function publicGetCurrentUrl() {
     return $this->getCurrentUrl();
   }
 }
 
-class FBPublicCookie extends TransientFacebook {
+class FBPublicCookie extends TransientFacebook
+{
   public function publicGetSignedRequest() {
     return $this->getSignedRequest();
   }
@@ -2089,7 +2099,8 @@ class FBPublicCookie extends TransientFacebook {
   }
 }
 
-class FBRewrite extends Facebook{
+class FBRewrite extends Facebook
+{
 
   public function uncacheSignedRequest(){
     $this->signedRequest = null;
@@ -2104,13 +2115,15 @@ class FBRewrite extends Facebook{
 }
 
 
-class FBPublicGetAccessTokenFromCode extends TransientFacebook {
+class FBPublicGetAccessTokenFromCode extends TransientFacebook
+{
   public function publicGetAccessTokenFromCode($code, $redirect_uri = null) {
     return $this->getAccessTokenFromCode($code, $redirect_uri);
   }
 }
 
-class FBPublicState extends TransientFacebook {
+class FBPublicState extends TransientFacebook
+{
   const STATE = 'foo';
   protected function getPersistentData($key, $default = false) {
     if ($key === 'state') {

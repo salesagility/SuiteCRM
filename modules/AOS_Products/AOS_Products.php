@@ -28,7 +28,8 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AOS_Products/AOS_Products_sugar.php');
-class AOS_Products extends AOS_Products_sugar {
+class AOS_Products extends AOS_Products_sugar
+{
 
 	function __construct(){
 		parent::__construct();

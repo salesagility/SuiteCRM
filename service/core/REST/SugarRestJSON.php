@@ -45,7 +45,8 @@ require_once('service/core/REST/SugarRest.php');
  * This class is a JSON implementation of REST protocol
  * @api
  */
-class SugarRestJSON extends SugarRest{
+class SugarRestJSON extends SugarRest
+{
 
 	/**
 	 * It will json encode the input object and echo's it

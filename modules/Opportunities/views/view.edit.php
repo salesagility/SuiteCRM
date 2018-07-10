@@ -48,7 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-class OpportunitiesViewEdit extends ViewEdit {
+class OpportunitiesViewEdit extends ViewEdit
+{
 
  	function __construct(){
  		parent::__construct();

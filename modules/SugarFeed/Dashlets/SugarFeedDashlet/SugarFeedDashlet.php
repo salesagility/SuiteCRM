@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('include/externalAPI/ExternalAPIFactory.php');
 
-class SugarFeedDashlet extends DashletGeneric {
+class SugarFeedDashlet extends DashletGeneric
+{
 var $displayRows = 15;
 
 var $categories;

@@ -39,7 +39,8 @@
 
 require_once('modules/ModuleBuilder/MB/MBPackageTree.php');
 require_once('modules/ModuleBuilder/Module/StudioBrowser.php');
-class MainTree extends MBPackageTree{
+class MainTree extends MBPackageTree
+{
 	function __construct(){
 		$this->tree = new Tree('package_tree');
 		$this->tree->id = 'package_tree';

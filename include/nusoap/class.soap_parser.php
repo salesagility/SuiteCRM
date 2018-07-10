@@ -62,7 +62,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access   public
 */
-class nusoap_parser extends nusoap_base {
+class nusoap_parser extends nusoap_base
+{
 
 	var $xml = '';
 	var $xml_encoding = '';
@@ -686,7 +687,8 @@ class nusoap_parser extends nusoap_base {
 /**
  * Backward compatibility
  */
-class soap_parser extends nusoap_parser {
+class soap_parser extends nusoap_parser
+{
 }
 
 

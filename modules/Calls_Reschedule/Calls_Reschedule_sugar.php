@@ -44,7 +44,8 @@
  */
 
 
-class Calls_Reschedule_sugar extends Basic {
+class Calls_Reschedule_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'Calls_Reschedule';
 	var $object_name = 'Calls_Reschedule';

@@ -48,7 +48,8 @@ require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.p
 /**
  * Class SAML2Authenticate for SAML2 auth
  */
-class SAML2Authenticate extends SugarAuthenticate {
+class SAML2Authenticate extends SugarAuthenticate
+{
     var $userAuthenticateClass = 'SAML2AuthenticateUser';
     var $authenticationDir = 'SAML2Authenticate';
 

@@ -42,7 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton {
+class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton
+{
 
     var $form_value = '';
 

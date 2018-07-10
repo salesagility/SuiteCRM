@@ -43,7 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
      *
      * Displays users subpanels in tabs
      */
-class SugarWidgetTabs {
+class SugarWidgetTabs
+{
 
     var $tabs;
     var $current_key;

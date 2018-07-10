@@ -40,7 +40,8 @@
 
 require_once('include/json_config.php');
 
-class ProjectViewEdit extends ViewEdit {
+class ProjectViewEdit extends ViewEdit
+{
 
  	function __construct(){
  		parent::__construct();

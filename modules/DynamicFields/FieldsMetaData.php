@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class FieldsMetaData extends SugarBean {
+class FieldsMetaData extends SugarBean
+{
 	// database table columns
 	var $id;
 	var $name;

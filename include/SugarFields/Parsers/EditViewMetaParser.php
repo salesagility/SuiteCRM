@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/MetaParser.php');
 
-class EditViewMetaParser extends MetaParser {
+class EditViewMetaParser extends MetaParser
+{
 
 function __construct() {
    $this->mView = 'EditView';

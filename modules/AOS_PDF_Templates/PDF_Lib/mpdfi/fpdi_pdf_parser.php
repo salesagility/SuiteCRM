@@ -18,7 +18,8 @@
 //
 
 
-class fpdi_pdf_parser extends pdf_parser {
+class fpdi_pdf_parser extends pdf_parser
+{
 
     /**
      * Pages

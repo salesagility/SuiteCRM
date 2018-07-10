@@ -36,7 +36,8 @@ define("GF_TWOBYTWO",(1 << 7));
 
 
 
-class TTFontFile {
+class TTFontFile
+{
 
 var $unAGlyphs;	// mPDF 5.4.05
 var $panose;

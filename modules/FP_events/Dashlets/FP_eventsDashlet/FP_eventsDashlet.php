@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/FP_events/FP_events.php');
 
-class FP_eventsDashlet extends DashletGeneric {
+class FP_eventsDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
         global $current_user, $app_strings;
         require('modules/FP_events/metadata/dashletviewdefs.php');

@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class ACLRole extends SugarBean{
+class ACLRole extends SugarBean
+{
     var $module_dir = 'ACLRoles';
     var $object_name = 'ACLRole';
     var $table_name = 'acl_roles';

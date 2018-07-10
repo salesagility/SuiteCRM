@@ -43,7 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Provide application specific logic to the session object.
  * @api
  */
-class SugarSession{
+class SugarSession
+{
 	private static $_instance;
 	public static $sessionId;
 

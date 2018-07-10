@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class RemindersController extends SugarController {
+class RemindersController extends SugarController
+{
 
     public function action_getInviteesPersonName() {
         $personModules = array('Users', 'Contacts', 'Leads');

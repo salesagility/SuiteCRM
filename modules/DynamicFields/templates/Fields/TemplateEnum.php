@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 require_once('include/utils/array_utils.php');
-class TemplateEnum extends TemplateText{
+class TemplateEnum extends TemplateText
+{
     var $max_size = 100;
     var $len = 100;
     var $type='enum';

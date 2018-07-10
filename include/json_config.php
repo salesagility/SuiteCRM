@@ -51,7 +51,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $app_strings, $json;
 $json = getJSONobj();
 
-class json_config {
+class json_config
+{
 	var $global_registry_var_name = 'GLOBAL_REGISTRY';
 
 	function get_static_json_server($configOnly = true, $getStrings = false, $module = null, $record = null, $scheduler = false) {

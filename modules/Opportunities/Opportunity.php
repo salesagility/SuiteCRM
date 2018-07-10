@@ -56,7 +56,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 // Opportunity is used to store customer information.
-class Opportunity extends SugarBean {
+class Opportunity extends SugarBean
+{
 	var $field_name_map;
 	// Stored fields
 	var $id;

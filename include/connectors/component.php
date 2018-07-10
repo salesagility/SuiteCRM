@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Connector component
  * @api
  */
-class component{
+class component
+{
 	protected $_has_testing_enabled = false;
 	protected $_source;
 

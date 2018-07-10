@@ -45,7 +45,8 @@ require_once('include/resource/Observers/ResourceObserver.php');
  * This is a subclass of ResourceObserver to provide notification handling
  * for web clients.
  */
-class WebResourceObserver extends ResourceObserver {
+class WebResourceObserver extends ResourceObserver
+{
 
 public function __construct($module) {
    parent::__construct($module);

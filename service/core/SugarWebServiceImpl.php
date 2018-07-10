@@ -45,7 +45,8 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
 require_once('service/core/SoapHelperWebService.php');
 SugarWebServiceImpl::$helperObject = new SoapHelperWebServices();
 
-class SugarWebServiceImpl{
+class SugarWebServiceImpl
+{
 
 	public static $helperObject = null;
 

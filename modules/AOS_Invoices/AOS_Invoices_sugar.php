@@ -23,7 +23,8 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-class AOS_Invoices_sugar extends Basic {
+class AOS_Invoices_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOS_Invoices';
 	var $object_name = 'AOS_Invoices';

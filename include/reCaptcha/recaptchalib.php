@@ -136,7 +136,8 @@ function recaptcha_get_html ($pubkey, $error = null, $use_ssl = false)
 /**
  * A ReCaptchaResponse is returned from recaptcha_check_answer()
  */
-class ReCaptchaResponse {
+class ReCaptchaResponse
+{
         var $is_valid;
         var $error;
 }

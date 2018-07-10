@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $timedate;
 
-class CalendarGrid {
+class CalendarGrid
+{
 
 	protected $cal; // Calendar object
 	public $style = ""; // style of calendar (basic or advanced); advanced contains time slots

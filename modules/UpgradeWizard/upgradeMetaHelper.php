@@ -39,7 +39,8 @@
 
 
 
-class UpgradeMetaHelper{
+class UpgradeMetaHelper
+{
 
 	var $upgrade_dir;
 	var $debug_mode;

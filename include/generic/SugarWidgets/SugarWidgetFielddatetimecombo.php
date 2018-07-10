@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime {
+class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime
+{
 	var $reporter;
 	var $assigned_user=null;
 

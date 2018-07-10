@@ -42,7 +42,8 @@
  * External API to meeting system
  * @api
  */
-interface WebMeeting {
+interface WebMeeting
+{
 	public function scheduleMeeting($bean);
 	public function unscheduleMeeting($bean);
 	public function inviteAttendee($bean, $attendee, $sendInvites = false);

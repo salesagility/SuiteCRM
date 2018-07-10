@@ -1,6 +1,7 @@
 <?php
 
-class cssmgr {
+class cssmgr
+{
 
 var $mpdf = null;
 

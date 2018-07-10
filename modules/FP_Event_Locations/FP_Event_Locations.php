@@ -41,7 +41,8 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/FP_Event_Locations/FP_Event_Locations_sugar.php');
-class FP_Event_Locations extends FP_Event_Locations_sugar {
+class FP_Event_Locations extends FP_Event_Locations_sugar
+{
 
 	function __construct(){
 		parent::__construct();

@@ -62,7 +62,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access public
 */
-class wsdl extends nusoap_base {
+class wsdl extends nusoap_base
+{
 	// URL or filename of the root of this WSDL
     var $wsdl;
     // define internal arrays of bindings, ports, operations, messages, etc.

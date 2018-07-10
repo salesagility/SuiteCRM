@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarCharts/SugarChartFactory.php');
 
-class campaign_charts {
+class campaign_charts
+{
 	/**
 	* Creates opportunity pipeline image as a VERTICAL accumlated bar graph for multiple users.
 	* param $datax- the month data to display in the x-axis

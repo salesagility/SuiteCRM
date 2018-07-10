@@ -51,7 +51,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 // Contact is used to store customer information.
-class ContactOpportunityRelationship extends SugarBean {
+class ContactOpportunityRelationship extends SugarBean
+{
 	// Stored fields
 	var $id;
 	var $contact_id;

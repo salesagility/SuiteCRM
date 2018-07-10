@@ -30,7 +30,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * @author Kannan
  */
-interface iXHProfRuns {
+interface iXHProfRuns
+{
 
   /**
    * Returns XHProf data given a run id ($run) of a given
@@ -66,7 +67,8 @@ interface iXHProfRuns {
  *
  * @author Kannan
  */
-class XHProfRuns_Default implements iXHProfRuns {
+class XHProfRuns_Default implements iXHProfRuns
+{
 
   private $dir = '';
   private $suffix = 'xhprof';

@@ -38,7 +38,8 @@
  ********************************************************************************/
 
 
-class contextMenu {
+class contextMenu
+{
     var $menuItems;
     var $objectName;
 

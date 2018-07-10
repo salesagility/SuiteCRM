@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class Role extends SugarBean {
+class Role extends SugarBean
+{
 
 	var $field_name_map;
 

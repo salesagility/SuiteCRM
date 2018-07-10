@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/json_config.php');
 
-class AM_ProjectTemplatesViewEdit extends ViewEdit {
+class AM_ProjectTemplatesViewEdit extends ViewEdit
+{
 
     function __construct()
     {

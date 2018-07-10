@@ -2,7 +2,8 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
-class AssignGroups {
+class AssignGroups
+{
 
 function popup_select(&$bean, $event, $arguments)
 {

@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class EAPMViewEdit extends ViewEdit {
+class EAPMViewEdit extends ViewEdit
+{
 
     private $_returnId;
 

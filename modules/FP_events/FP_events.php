@@ -41,7 +41,8 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/FP_events/FP_events_sugar.php');
-class FP_events extends FP_events_sugar {
+class FP_events extends FP_events_sugar
+{
 
 	function __construct(){
 		parent::__construct();

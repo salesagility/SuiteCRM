@@ -1,6 +1,7 @@
 <?php
 
-class directw {
+class directw
+{
 
 var $mpdf = null;
 

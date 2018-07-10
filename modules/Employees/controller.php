@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class EmployeesController extends SugarController{
+class EmployeesController extends SugarController
+{
 	function __construct(){
 		parent::__construct();
 	}

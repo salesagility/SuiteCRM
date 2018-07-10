@@ -39,7 +39,8 @@
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldFile extends SugarFieldBase {
+class SugarFieldFile extends SugarFieldBase
+{
     private function fillInOptions(&$vardef,&$displayParams) {
         if ( isset($vardef['allowEapm']) && $vardef['allowEapm'] == true ) {
             if ( empty($vardef['docType']) ) {

@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once 'modules/SchedulersJobs/SchedulersJob.php';
 
-class Scheduler extends SugarBean {
+class Scheduler extends SugarBean
+{
 	// table columns
 	var $id;
 	var $deleted;

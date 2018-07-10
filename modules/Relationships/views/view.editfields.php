@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  
 require_once('include/MVC/View/views/view.ajax.php');
 
-class ViewEditFields extends ViewAjax{
+class ViewEditFields extends ViewAjax
+{
  	
     function __construct(){
         $rel = $this->rel = $_REQUEST['rel'];

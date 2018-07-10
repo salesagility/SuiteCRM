@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveButton {
+class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveButton
+{
     /**
      *
      * @see SugarWidgetSubPanelRemoveButton::displayList()

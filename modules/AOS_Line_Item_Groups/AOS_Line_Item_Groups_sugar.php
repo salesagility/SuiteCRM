@@ -31,7 +31,8 @@
  */
 
 
-class AOS_Line_Item_Groups_sugar extends Basic {
+class AOS_Line_Item_Groups_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOS_Line_Item_Groups';
 	var $object_name = 'AOS_Line_Item_Groups';

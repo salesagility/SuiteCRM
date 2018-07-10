@@ -23,7 +23,8 @@ if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 
 
-class ProjectViewResourceList extends SugarView {
+class ProjectViewResourceList extends SugarView
+{
 
     public function display() {
         include('modules/Project/chart.php');

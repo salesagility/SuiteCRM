@@ -1,6 +1,7 @@
 <?php
 
-class jjwg_Address_Cache_sugar extends Basic {
+class jjwg_Address_Cache_sugar extends Basic
+{
 
     var $new_schema = true;
     var $module_dir = 'jjwg_Address_Cache';

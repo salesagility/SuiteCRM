@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class Controller extends SugarBean {
+class Controller extends SugarBean
+{
 
 	var $focus;
 	var $type;  //defines id this is a new list order or existing, or delete

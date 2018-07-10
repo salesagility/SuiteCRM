@@ -1,7 +1,8 @@
 <?php
 
 
-class SecurityGroup_sugar extends Basic {
+class SecurityGroup_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'SecurityGroups';
 	var $object_name = 'SecurityGroup';

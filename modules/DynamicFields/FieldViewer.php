@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class FieldViewer{
+class FieldViewer
+{
 	function __construct(){
 		$this->ss = new Sugar_Smarty();
 	}

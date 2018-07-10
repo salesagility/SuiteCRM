@@ -47,7 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 // User is used to store customer information.
-class UserSignature extends SugarBean {
+class UserSignature extends SugarBean
+{
 	var $id;
 	var $date_entered;
 	var $date_modified;

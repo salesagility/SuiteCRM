@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/Dashlet.php');
 
 
-class InvadersDashlet extends Dashlet {
+class InvadersDashlet extends Dashlet
+{
     var $savedText; // users's saved text
     var $height = '100'; // height of the pad
 

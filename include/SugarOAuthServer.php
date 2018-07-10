@@ -264,5 +264,6 @@ class SugarOAuthServer
 
 if(!class_exists('OAuthException')) {
     // we will use this in case oauth extension is not loaded
-    class OAuthException extends Exception {}
+    class OAuthException extends Exception
+{}
 }

@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class LeadsParseRule extends BaseRule {
+class LeadsParseRule extends BaseRule
+{
 
 function __construct() {
 

@@ -54,7 +54,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/MVC/View/views/view.list.php');
 require_once('modules/AM_ProjectTemplates/AM_ProjectTemplatesListViewSmarty.php');
 
-class AM_ProjectTemplatesViewList extends ViewList{
+class AM_ProjectTemplatesViewList extends ViewList
+{
 
  	function __construct()
  	{

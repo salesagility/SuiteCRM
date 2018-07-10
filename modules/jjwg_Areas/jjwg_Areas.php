@@ -6,7 +6,8 @@ if (!defined('sugarEntry') || !sugarEntry)
 require_once('modules/jjwg_Areas/jjwg_Areas_sugar.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
-class jjwg_Areas extends jjwg_Areas_sugar {
+class jjwg_Areas extends jjwg_Areas_sugar
+{
 
     /**
      * @var settings array

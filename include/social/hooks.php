@@ -38,7 +38,8 @@
  ********************************************************************************/
 
 
-class hooks{
+class hooks
+{
 
     function load_js($event, $arguments){
         $mapping = '';

@@ -40,7 +40,8 @@
 require_once('include/SugarFields/Fields/Collection/SugarFieldCollection.php');
 
 
-class ViewSugarFieldCollection{
+class ViewSugarFieldCollection
+{
     var $ss; // Sugar Smarty Object
     var $bean;
     var $bean_id;

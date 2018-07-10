@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/MetaParser.php');
 
-class QuickCreateMetaParser extends MetaParser {
+class QuickCreateMetaParser extends MetaParser
+{
 
 function __construct() {
    $this->mView = 'QuickCreate';

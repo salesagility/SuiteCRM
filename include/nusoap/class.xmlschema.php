@@ -58,7 +58,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access   public
 */
-class nusoap_xmlschema extends nusoap_base  {
+class nusoap_xmlschema extends nusoap_base
+{
 	
 	// files
 	var $schema = '';
@@ -1012,7 +1013,8 @@ class nusoap_xmlschema extends nusoap_base  {
 /**
  * Backward compatibility
  */
-class XMLSchema extends nusoap_xmlschema {
+class XMLSchema extends nusoap_xmlschema
+{
 }
 
 

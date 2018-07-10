@@ -42,7 +42,8 @@
  * Vardefs management
  * @api
  */
-class VardefManager{
+class VardefManager
+{
     static $custom_disabled_modules = array();
     static $linkFields;
 

@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class CalendarUtils {
+class CalendarUtils
+{
 
 	/**
 	 * Find first day of week according to user's settings

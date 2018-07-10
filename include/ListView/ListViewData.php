@@ -44,7 +44,8 @@ require_once('include/EditView/SugarVCR.php');
  * Data set for ListView
  * @api
  */
-class ListViewData {
+class ListViewData
+{
 
     public $additionalDetails = true;
     public $listviewName = null;

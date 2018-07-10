@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/Users/UserViewHelper.php');
 
 
-class UsersViewEdit extends ViewEdit {
+class UsersViewEdit extends ViewEdit
+{
 var $useForSubpanel = true;
  	function __construct(){
  		parent::__construct();

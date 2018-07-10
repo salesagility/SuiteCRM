@@ -3,7 +3,8 @@
 if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 
-class OpportunitiesJjwg_MapsLogicHook {
+class OpportunitiesJjwg_MapsLogicHook
+{
 
     var $jjwg_Maps;
     function __construct() {

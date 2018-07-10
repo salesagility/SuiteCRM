@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class MBVardefs{
+class MBVardefs
+{
 	var $templates = array();
 	var $iTemplates = array();
 	var $vardefs = array();

@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Formatter factory
  * @api
  */
-class FormatterFactory {
+class FormatterFactory
+{
 
 	static $formatter_map = array();
 

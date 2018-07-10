@@ -5,7 +5,8 @@ require_once('ProjectListViewData.php');
 
 // custom/modules/Project/ProjectListViewSmarty.php
 
-class ProjectListViewSmarty extends ListViewSmarty {
+class ProjectListViewSmarty extends ListViewSmarty
+{
 
     function __construct() {
 

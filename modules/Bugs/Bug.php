@@ -61,7 +61,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 // Bug is used to store customer information.
-class Bug extends SugarBean {
+class Bug extends SugarBean
+{
         var $field_name_map = array();
 	// Stored fields
 	var $id;

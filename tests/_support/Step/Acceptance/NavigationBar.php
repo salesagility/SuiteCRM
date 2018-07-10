@@ -6,7 +6,7 @@ use \AcceptanceTester as Tester;
 use Page\Design;
 use SuiteCRM\Enumerator\DesignBreakPoint;
 
-class NavigationBar extends  Tester
+class NavigationBar extends Tester
 {
     /**
      * Click on the home buton / navbar brand

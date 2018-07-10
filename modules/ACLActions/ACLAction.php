@@ -44,7 +44,8 @@ if(file_exists("modules/ACLActions/actiondefs.override.php")){
 require_once('modules/ACLActions/actiondefs.php');
 }
 /* END - SECURITY GROUPS */
-class ACLAction  extends SugarBean{
+class ACLAction extends SugarBean
+{
     var $module_dir = 'ACLActions';
     var $object_name = 'ACLAction';
     var $table_name = 'acl_actions';

@@ -48,7 +48,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * based on the users validation
  *
  */
-class SugarAuthenticate{
+class SugarAuthenticate
+{
 	var $userAuthenticateClass = 'SugarAuthenticateUser';
 	var $authenticationDir = 'SugarAuthenticate';
 

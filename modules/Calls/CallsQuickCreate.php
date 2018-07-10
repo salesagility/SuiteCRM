@@ -43,7 +43,8 @@ require_once('include/EditView/QuickCreate.php');
 
 
 
-class CallsQuickCreate extends QuickCreate {
+class CallsQuickCreate extends QuickCreate
+{
 
     var $javascript;
 

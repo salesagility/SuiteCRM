@@ -1,6 +1,7 @@
 <?php
 
-class wmf {
+class wmf
+{
 
 var $mpdf = null;
 var $gdiObjectArray;

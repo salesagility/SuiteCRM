@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class HelpItem {
+class HelpItem
+{
    var $associated_field = '';
    var $title = '';
    var $text = '';

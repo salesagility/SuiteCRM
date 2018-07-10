@@ -44,7 +44,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Vardef Handler Object
  * @api
  */
-class VarDefHandler {
+class VarDefHandler
+{
 
 	var $meta_array_name;
 	var $target_meta_array = false;

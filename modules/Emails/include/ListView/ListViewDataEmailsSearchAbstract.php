@@ -45,7 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /**
  * Class ListViewDataEmailsSearchAbstract
  */
-abstract class ListViewDataEmailsSearchAbstract {
+abstract class ListViewDataEmailsSearchAbstract
+{
 
     /**
      * @var ListViewDataEmails

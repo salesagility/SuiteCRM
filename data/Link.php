@@ -48,7 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 ********************************************************************************/
 
 
-class Link {
+class Link
+{
 
 	/* Private variables.*/
 	var $_log;

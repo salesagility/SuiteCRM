@@ -42,7 +42,8 @@
  * Class for parsing title from RSS feed, and keep default encoding (UTF-8)
  * Created: Sep 12, 2011
  */
-class DashletRssFeedTitle {
+class DashletRssFeedTitle
+{
 	public $defaultEncoding = "UTF-8";
 	public $readBytes = 8192;
 	public $url;

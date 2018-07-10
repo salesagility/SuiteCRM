@@ -21,7 +21,8 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-class AM_ProjectTemplatesController extends SugarController {
+class AM_ProjectTemplatesController extends SugarController
+{
 
     //Loads the gantt view
     function action_view_GanttChart() {

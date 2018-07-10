@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/SugarView.php');
 require_once('include/Sugarpdf/FontManager.php');
-class ConfiguratorViewAddFontView extends SugarView {
+class ConfiguratorViewAddFontView extends SugarView
+{
    
     /**
      * Constructor

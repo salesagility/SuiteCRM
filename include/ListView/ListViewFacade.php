@@ -51,7 +51,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  /**
   * A Facade to ListView and ListViewSmarty
   */
- class ListViewFacade{
+ class ListViewFacade
+{
 
  	var $focus = null;
  	var $module = '';

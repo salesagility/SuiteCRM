@@ -42,7 +42,8 @@
 
     require_once('modules/Calendar/Calendar.php');
 
-    class vCal extends SugarBean {
+    class vCal extends SugarBean
+{
 
         // Stored fields
         var $id;

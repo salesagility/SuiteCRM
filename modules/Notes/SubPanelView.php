@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class SubPanelViewNotes {
+class SubPanelViewNotes
+{
 
 var $notes_list = null;
 var $hideNewButton = false;

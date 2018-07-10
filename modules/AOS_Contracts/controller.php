@@ -26,7 +26,8 @@
  
 require_once('include/MVC/Controller/SugarController.php');
 
-class AOS_ContractsController extends SugarController {
+class AOS_ContractsController extends SugarController
+{
 	function action_editview() {
 		global $mod_string;
 

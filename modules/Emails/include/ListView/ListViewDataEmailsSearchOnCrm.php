@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once 'modules/Emails/include/ListView/ListViewDataEmailsSearchAbstract.php';
 
-class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
+class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
+{
 
     /**
      * @param array $filterFields

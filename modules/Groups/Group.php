@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class Group extends User {
+class Group extends User
+{
 	// User attribute overrides
 	var $status			= 'Group';
 	var $password		= ''; // to disallow logins

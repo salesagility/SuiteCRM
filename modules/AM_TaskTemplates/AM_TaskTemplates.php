@@ -38,7 +38,8 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AM_TaskTemplates/AM_TaskTemplates_sugar.php');
-class AM_TaskTemplates extends AM_TaskTemplates_sugar {
+class AM_TaskTemplates extends AM_TaskTemplates_sugar
+{
 
 	public function __construct(){
 		parent::__construct();
