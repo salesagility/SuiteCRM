@@ -3,12 +3,12 @@
   "meta": {
     "created": {
       "date": "2018-06-12 11:01:34",
-      "user_id": "1",
+      "user_id": 1,
       "user_name": "Administrator"
     },
     "modified": {
       "date": "2018-06-12 11:01:34",
-      "user_id": "1",
+      "user_id": 1,
       "user_name": "Administrator"
     },
     "assigned": {
@@ -28,9 +28,9 @@
     "name": "Start Over Trust"
   },
   "phone": {
-    "home": "4451633872",
-    "mobile": "9788363300",
-    "work": "7111123512",
+    "home": 4451633872,
+    "mobile": 9788363300,
+    "work": 7111123512,
     "other": null,
     "fax": null
   },
@@ -39,7 +39,7 @@
       "street": "345 Sugar Blvd.",
       "city": "Salt Lake City",
       "state": "CA",
-      "postalcode": "58821",
+      "postalcode": 58821,
       "country": "USA"
     },
     "alt": {
