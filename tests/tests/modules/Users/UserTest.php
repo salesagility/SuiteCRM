@@ -557,20 +557,17 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function NewPasswordAndFindUserPassword($id)
 	{
-            
 		$user = new User();
 
 		$user->retrieve($id);
 
 		//set user password and then retrieve user by created password
 		$user->setNewPassword("test");
-                $savedId = $user->save();
-                $this->assertEquals($savedId, $id);
 
 		$result = User::findUserPassword("test",md5("test"));
 
-		$this->assertFalse(isset($result['id']));
-		$this->assertNotEquals($id, $result['id']);
+		$this->assertTrue(isset($result['id']));
+		$this->assertEquals($id, $result['id']);
 
 	}
 
@@ -1352,7 +1349,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         // save state
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushTable('email_addr_bean_rel');
         $state->pushGlobals();
         
         // test
@@ -1375,7 +1371,6 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
         // clean up
         
-        $state->popTable('email_addr_bean_rel');
         $state->popGlobals();
     }
 
