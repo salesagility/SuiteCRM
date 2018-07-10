@@ -43,6 +43,7 @@
 use Mockery as m;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer as i;
+use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Utility\BeanJsonSerializerTestData\SaltBean;
 
 /**
@@ -246,7 +247,54 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
     public function testMakeIndexParamsBodyFromBean2()
     {
-        self::markTestIncomplete("TODO");
+        $bean = $this->getTestBean();
+        $indexer = new ElasticSearchIndexer();
+        $indexer->setDocumentifier(new SearchDefsDocumentifier());
+
+        $expected = [
+            'first_name' => 'Cindy',
+            'last_name' => 'Espana',
+            'search_name' =>
+                [
+                    'first_name' => 'Cindy',
+                    'last_name' => 'Espana',
+                ],
+            'phone' =>
+                [
+                    'phone_mobile' => '(978) 836-3300',
+                    'phone_work' => '(711) 112-3512',
+                ],
+            'address_street' =>
+                [
+                    'primary_address_street' => '345 Sugar Blvd.',
+                ],
+            'address_city' =>
+                [
+                    'primary_address_city' => 'Salt Lake City',
+                ],
+            'address_state' =>
+                [
+                    'primary_address_state' => 'CA',
+                ],
+            'address_postalcode' =>
+                [
+                    'primary_address_postalcode' => '58821',
+                ],
+            'address_country' =>
+                [
+                    'primary_address_country' => 'USA',
+                ],
+            'current_user_only' =>
+                [
+                    'assigned_user_id' => 'seed_max_id',
+                ],
+            'assigned_user_id' => 'seed_max_id',
+            'campaign_name' => '',
+        ];
+
+        $actual = self::invokeMethod($indexer, 'makeIndexParamsBodyFromBean', [$bean]);
+
+        self::assertEquals($expected, $actual);
     }
 
     public function testRemoveBeans()
