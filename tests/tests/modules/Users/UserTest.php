@@ -456,7 +456,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$db->checkConnection();
 
 
-		$user = new User();
+		$user = BeanFactory::getBean('Users');
 
 		$user->user_name  = "test";
 
