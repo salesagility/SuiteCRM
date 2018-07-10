@@ -57,6 +57,7 @@ $mod_strings = array(
     'LBL_OOTB_SEND_EMAIL_REMINDERS' => 'Run Email Reminder Notifications',
     'LBL_OOTB_CLEANUP_QUEUE' => 'Clean Jobs Queue',
     'LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS' => 'Removal of documents from filesystem',
+    'LBL_OOTB_GOOGLE_CAL_SYNC' => 'Google Calendar Sync',
 
 // List Labels
     'LBL_LIST_JOB_INTERVAL' => 'Interval:',
@@ -158,6 +159,7 @@ $mod_strings = array(
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
 
     'LBL_SCHEDULER_TIMES' => 'Scheduler Times',
+    'LBL_SYNCGOOGLECALENDAR' => 'Sync Google Calendars',
 );
 
 global $sugar_config;

@@ -327,6 +327,7 @@ class UserViewHelper {
         if($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY') {
             $this->ss->assign('HIDE_FOR_GROUP_AND_PORTAL', 'none');
             $this->ss->assign('HIDE_CHANGE_USERTYPE','none');
+            $this->ss->assign('HIDE_IF_GAUTH_UNCONFIGURED', 'none');
         } else {
             $this->ss->assign('HIDE_FOR_NORMAL_AND_ADMIN','none');
             if (!$this->is_current_admin) {
@@ -425,7 +426,7 @@ class UserViewHelper {
 	    if(empty($email_reminder_time)){
 		    $email_reminder_time = -1;
 	    }
-		
+
         $this->ss->assign("REMINDER_TIME_OPTIONS", $app_list_strings['reminder_time_options']);
         $this->ss->assign("EMAIL_REMINDER_TIME_OPTIONS", $app_list_strings['reminder_time_options']);
 	    $this->ss->assign("REMINDER_TIME", $reminder_time);
@@ -434,7 +435,7 @@ class UserViewHelper {
         $remindersDefaultPreferences = Reminder::loadRemindersDefaultValuesData();
 		$this->ss->assign("REMINDER_CHECKED", $remindersDefaultPreferences['popup']);
 	    $this->ss->assign("EMAIL_REMINDER_CHECKED", $remindersDefaultPreferences['email']);
-		
+
 	    $this->ss->assign("REMINDER_TABINDEX", "12");
 	    $publish_key = $this->bean->getPreference('calendar_publish_key' );
         $this->ss->assign('CALENDAR_PUBLISH_KEY', $publish_key);
@@ -472,6 +473,39 @@ class UserViewHelper {
 
         $this->ss->assign("SETTINGS_URL", $sugar_config['site_url']);
 
+        // Set Google Auth variables
+        $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "none"); // Hide new token button by default
+        $this->ss->assign("GOOGLE_API_TOKEN_NEW_URL", "/index.php?entryPoint=saveGoogleApiKey&getnew");
+        $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Disabled");
+        if(isset($sugar_config['google_auth_json']) && !empty($sugar_config['google_auth_json'])) {
+            $json = base64_decode($sugar_config['google_auth_json']);
+            if (!$config = json_decode($json, true)) { // Check if the JSON is valid
+                $this->ss->assign("GOOGLE_API_TOKEN", "INVALID AUTH KEY");
+                $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "red");
+                $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "inline");
+            } else {
+                $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')));
+                if (!empty($this->bean->getPreference('GoogleApiToken', 'GoogleSync')) && $accessToken = json_decode(base64_decode($this->bean->getPreference('GoogleApiToken', 'GoogleSync')))) { // Check if the user has a token
+                    $this->ss->assign("GOOGLE_API_TOKEN", "CONFIGURED");
+                    $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "green");
+                    $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Reauthorize");
+                    $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "inline");
+                } else {
+                    $this->ss->assign("GOOGLE_API_TOKEN", "UNCONFIGURED");
+                    $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "black");
+                    $this->ss->assign("GOOGLE_API_TOKEN_ENABLE_NEW", "inline");
+                    $this->ss->assign("GOOGLE_API_TOKEN_BTN", "Authorize");
+                }
+            }
+        } else {
+            $this->ss->assign("GOOGLE_API_TOKEN", "DISABLED");
+            $this->ss->assign("GOOGLE_API_TOKEN_COLOR", "black");
+            $this->ss->assign("HIDE_IF_GAUTH_UNCONFIGURED", "none");
+        }
+
+        if($this->bean->getPreference('syncGCal', 'GoogleSync') == '1') {
+            $this->ss->assign('GSYNC_CAL', ' checked');
+        }
     }
 
     protected function setupAdvancedTabTeamSettings() {

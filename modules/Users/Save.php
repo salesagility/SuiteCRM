@@ -369,6 +369,11 @@ if (!$focus->is_group && !$focus->portal_only) {
     if (isset($_POST['subtheme'])) {
         $focus->setPreference('subtheme', $_POST['subtheme'], 0, 'global');
     }
+    if (isset($_POST['gsync_cal'])) {
+        $focus->setPreference('syncGCal', 1, 0, 'GoogleSync');
+    } else {
+        $focus->setPreference('syncGCal', 0, 0, 'GoogleSync');
+    }
 }
 
 if (!$focus->verify_data()) {

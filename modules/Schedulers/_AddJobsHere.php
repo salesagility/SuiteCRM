@@ -74,6 +74,7 @@ $job_strings = array(
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
+    17 => 'syncGoogleCalendar',
 
 );
 
@@ -510,6 +511,19 @@ function trimSugarFeeds()
 }
 
 
+/**
+ * + * Job 17
+ * + * this will sync the Google Calendars of users who are configured to do so
+ * + */
+function syncGoogleCalendar()
+{
+    require_once 'include/GoogleSync/GoogleSync.php';
+    $googleSync = new GoogleSync();
+    $googleSync->syncAllUsers();
+
+    return true;
+}
+
 function cleanJobQueue($job)
 {
     $td = TimeDate::getInstance();
@@ -739,7 +753,7 @@ function aorRunScheduledReports()
             $jq->submitJob($job);
         }
     }
-    return true;  
+    return true;
 }
 
 function processAOW_Workflow()
