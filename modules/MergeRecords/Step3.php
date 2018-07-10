@@ -362,11 +362,11 @@ foreach ($temp_field_array as $field_array) {
                 $temp_array = Array ();
                 $tempId = $field_array['id_name'];
                 $json_data['popup_fields'] = Array ($tempName => $mergeBeanArray[$id]->$tempName,$tempId => $mergeBeanArray[$id]->$tempId,);
-            } else if($field_check == 'teamset') {
+            } elseif($field_check == 'teamset') {
             	$json_data['field_value'] = TeamSetManager::getCommaDelimitedTeams($mergeBeanArray[$id]->team_set_id, $mergeBeanArray[$id]->team_id, true);
             	$json_data['field_value2'] = TeamSetManager::getTeamsFromSet($mergeBeanArray[$id]->team_set_id);
             	$json_data['field_value3'] =  $mergeBeanArray[$id]->team_set_id;
-            } else if($field_check == 'multienum') {
+            } elseif($field_check == 'multienum') {
                 $json_data['field_value'] = unencodeMultienum($mergeBeanArray[$id]->$tempName);
             } else {
                 $json_data['field_value'] = $mergeBeanArray[$id]->$tempName;

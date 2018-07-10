@@ -128,7 +128,7 @@ class json_config
 		if (empty($module)) {
 			return '';
 		}
-		else if(empty($record)) {
+		elseif(empty($record)) {
 			return "\n".$this->global_registry_var_name.'["focus"] = {"module":"'.$module.'",users_arr:[],fields:{"id":"-1"}}'."\n";
 		}
 
@@ -154,14 +154,14 @@ class json_config
 		if($module == 'Meetings') {
 			$users = $focus->get_meeting_users();
 		}
-		else if ( $module == 'Calls') {
+		elseif ( $module == 'Calls') {
 			$users = $focus->get_call_users();
 		} 
-		else if ( $module == 'Project') { 
+		elseif ( $module == 'Project') { 
 			$focus->load_relationships('users');
 			$users=$focus->get_linked_beans('project_users_1','User');
 		}
-		else if ( $module == 'AM_ProjectTemplates') { 
+		elseif ( $module == 'AM_ProjectTemplates') { 
 			$focus->load_relationships('users');
 			$users=$focus->get_linked_beans('am_projecttemplates_users_1','User');
 		}		
@@ -185,7 +185,7 @@ class json_config
 
 		if($module == 'Project')			
 			$contacts=$focus->get_linked_beans('project_contacts_1','Contact');
-		else if($module == 'AM_ProjectTemplates')			
+		elseif($module == 'AM_ProjectTemplates')			
 			$contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1','Contact');
 		else
 			$contacts=$focus->get_linked_beans('contacts','Contact');

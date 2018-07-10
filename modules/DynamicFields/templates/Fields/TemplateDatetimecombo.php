@@ -146,7 +146,7 @@ class TemplateDatetimecombo extends TemplateRange
   		      if($hours == '00') {
   		      	 $hours = 12;
   		      	 $meridiem = 'am';
-  		      } else if($hours >= 12) {
+  		      } elseif($hours >= 12) {
                  //lets add the PM meridiem, but only subtract 12 if hours is greater than 12
   		      	 if($hours > 12) {
                     $hours -= 12;

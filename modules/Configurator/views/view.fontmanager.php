@@ -148,7 +148,7 @@ BSOFR;
             $return .= '{';
             if(!empty($v['displayname'])){
                 $return .= 'name:"'.$v['displayname'].'"';
-            }else if(!empty($v['name'])){
+            }elseif(!empty($v['name'])){
                 $return .= 'name:"'.$v['name'].'"';
             }
             $return .= ', filename:"'.$v['filename'].'"';

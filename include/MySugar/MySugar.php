@@ -161,7 +161,7 @@ class MySugar
 		        if($k == 'lvso'){
 		            $sortOrder = $v;
 		        }
-		        else if(preg_match('/Home2_.+_ORDER_BY/', $k)){
+		        elseif(preg_match('/Home2_.+_ORDER_BY/', $k)){
 		            $orderBy = $v;
 		        }
 		    }
@@ -377,7 +377,7 @@ EOJS;
 		if ($category == 'module' || $category == 'tools'){
 			$html = $this->searchModuleToolsDashlets($searchStr, $category);
 		}
-		else if ($category == 'chart'){
+		elseif ($category == 'chart'){
 			$html = $this->searchChartsDashlets($searchStr);
 		}
 

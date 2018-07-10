@@ -103,7 +103,7 @@ class ImportViewLast extends ImportView
 
         if ($errorCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0))
             $activeTab = 2;
-        else if($dupeCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0))
+        elseif($dupeCount > 0 &&  ($createdCount <= 0 && $updatedCount <= 0))
             $activeTab = 1;
         else
             $activeTab = 0;

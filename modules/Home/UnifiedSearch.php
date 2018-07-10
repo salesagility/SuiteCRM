@@ -159,7 +159,7 @@ function getRecordSummary(SugarBean $bean){
     if (!isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir]) ){
         if(file_exists('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php')){
             require('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php');
-        }else if(file_exists('modules/'.$bean->module_dir.'/metadata/listviewdefs.php')){
+        }elseif(file_exists('modules/'.$bean->module_dir.'/metadata/listviewdefs.php')){
             require('modules/'.$bean->module_dir.'/metadata/listviewdefs.php');
         }
     }

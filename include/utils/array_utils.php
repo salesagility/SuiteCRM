@@ -169,7 +169,7 @@ function object_to_array_recursive($obj)
 					if (!empty($value) || $allowEmpty)
 						$diff[$key] = $value;
 				}
-			} else if ((!isset($array2[$key]) || $value != $array2[$key]) && (isset($value) || $allowEmpty)){
+			} elseif ((!isset($array2[$key]) || $value != $array2[$key]) && (isset($value) || $allowEmpty)){
 				$diff[$key] = $value;
 			}
 		}

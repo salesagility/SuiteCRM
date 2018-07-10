@@ -88,7 +88,7 @@ else {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
             $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
-        } else if($func != 'createEmailMarketing') {
+        } elseif($func != 'createEmailMarketing') {
             $marketing = new EmailMarketing();
             $marketing->save();
             $marketingId = $marketing->id;

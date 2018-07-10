@@ -103,7 +103,7 @@ class ProjectController extends SugarController
         if($_POST['milestone'] == 'Milestone'){
             $milestone_flag = '1';
         }
-        else if($_POST['milestone'] == 'Task'){
+        elseif($_POST['milestone'] == 'Task'){
             $milestone_flag = '0';
         }
 
@@ -381,7 +381,7 @@ class ProjectController extends SugarController
 		
 		if( $chart_type == "monthly" )
 			$end = $first_day->add(new DateInterval('P365D'));
-		else if( $chart_type == "quarterly" )
+		elseif( $chart_type == "quarterly" )
 			$end = $first_day->add(new DateInterval('P1460D'));
 
 			

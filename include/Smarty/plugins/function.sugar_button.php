@@ -283,9 +283,9 @@ function smarty_function_sugar_button($params, &$smarty)
 {
    if(empty($params['module'])) {
    	  $smarty->trigger_error("sugar_button: missing required param (module)");
-   } else if(empty($params['id'])) {
+   } elseif(empty($params['id'])) {
    	  $smarty->trigger_error("sugar_button: missing required param (id)");
-   } else if(empty($params['view'])) {
+   } elseif(empty($params['view'])) {
    	  $smarty->trigger_error("sugar_button: missing required param (view)");
    }
 
@@ -395,7 +395,7 @@ function smarty_function_sugar_button($params, &$smarty)
 			case "DCMENUSAVE":
                             if ($view == 'QuickCreate') {
                                 $view = "form_DCQuickCreate_{$module}";
-                            } else if ($view == 'EditView') {
+                            } elseif ($view == 'EditView') {
                                 $view = "form_DCEditView_{$module}";
                             }
 				$output = '{if $bean->aclAccess("save")}<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="'.$js_form.' _form.action.value=\'Save\';if(check_form(\''.$view.'\'))return DCMenu.save(_form.id, \'' . $params['module'] . '_subpanel_save_button\');return false;" type="submit" name="' . $params['module'] . '_dcmenu_save_button" id="' . $params['module'] . '_dcmenu_save_button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">{/if} ';
@@ -440,7 +440,7 @@ function smarty_function_sugar_button($params, &$smarty)
           return;
       }
       return $output;
-   } else if(is_array($type) && isset($type['sugar_html'])) {
+   } elseif(is_array($type) && isset($type['sugar_html'])) {
        require_once('include/SugarHtml/SugarHtml.php');
 
        $dom_tree = SugarHtml::parseSugarHtml($type['sugar_html']);
@@ -452,7 +452,7 @@ function smarty_function_sugar_button($params, &$smarty)
            return;
        }
        return $output;
-   } else if(is_array($type) && isset($type['customCode'])) {
+   } elseif(is_array($type) && isset($type['customCode'])) {
        require_once('include/SugarHtml/SugarHtml.php');
 
        $dom_tree = SugarHtml::parseHtmlTag($type['customCode']);
@@ -557,7 +557,7 @@ function extractHiddenInputs(&$dom_tree = array()) {
             if( !isset($sub_tree['type']) || in_array($sub_tree['type'], $allow_types) === false ) {
                 unset($dom_tree[$key]);
             }
-        } else if(is_array($sub_tree)) {
+        } elseif(is_array($sub_tree)) {
             extractHiddenInputs($dom_tree[$key]);
         }
     }

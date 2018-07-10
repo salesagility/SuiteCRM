@@ -71,16 +71,16 @@ function smarty_function_sugar_include($params, &$smarty)
 	    $output_html = ob_get_contents();
 	    ob_end_clean();
 	    echo $output_html; 
-    } else if(isset($params['type']) && $params['type'] == 'smarty') {
+    } elseif(isset($params['type']) && $params['type'] == 'smarty') {
 		return $smarty->fetch($params['file']);
-	} else if(is_array($params['include'])) {
+	} elseif(is_array($params['include'])) {
 	   	  $code = '';
 	   	  foreach($params['include'] as $include) {
 	   	  	      if(isset($include['file'])) {
 	   	  	         $file = $include['file'];
 	   	  	         if(preg_match('/[\.]js$/si',$file)) {
 	   	  	            $code .= "<script src=\"". getJSPath($include['file']) ."\"></script>";
-	   	  	         } else if(preg_match('/[\.]php$/si', $file)) {
+	   	  	         } elseif(preg_match('/[\.]php$/si', $file)) {
 	   	  	            require_once($file);	
 	   	  	         }
 	   	  	      } 

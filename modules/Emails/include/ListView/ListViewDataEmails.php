@@ -315,7 +315,7 @@ class ListViewDataEmails extends ListViewData
                     } else {
                         if (!empty($request[$filteredField.'_advanced'])) {
                             $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_advanced'];
-                        } else if (!empty($request[$filteredField.'_basic'])) {
+                        } elseif (!empty($request[$filteredField.'_basic'])) {
                             $filter[self::$mapServerFields[$filteredField]] = $request[$filteredField.'_basic'];
                         } else {
                             $f = str_ireplace('_advanced', '', $filteredField);
@@ -345,14 +345,14 @@ class ListViewDataEmails extends ListViewData
             if(array_search($EmailSearchField, self::$alwaysIncludeSearchFields) !== false) {
                 $filterFields[$EmailSearchField] = true;
                 continue;
-            } else if(
+            } elseif(
                 array_key_exists($EmailSearchField . '_advanced', $request) &&
                 empty($request[$EmailSearchField . '_advanced'])
             ) {
                 $pos = array_search($EmailSearchField, $filterFields);
                 unset($filterFields[$pos]);
                 continue;
-            } else if(
+            } elseif(
                 array_key_exists($EmailSearchField . '_basic', $request) &&
                 empty($request[$EmailSearchField . '_basic'])
             ) {

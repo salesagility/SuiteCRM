@@ -42,7 +42,7 @@ function smarty_core_load_plugins($params, &$smarty)
                 }
             }
             continue;
-        } else if ($_type == 'insert') {
+        } elseif ($_type == 'insert') {
             /*
              * For backwards compatibility, we check for insert functions in
              * the symbol table before trying to load them as a plugin.
@@ -78,7 +78,7 @@ function smarty_core_load_plugins($params, &$smarty)
          * In case of insert plugins, their code may be loaded later via
          * 'script' attribute.
          */
-        else if ($_type == 'insert' && $_delayed_loading) {
+        elseif ($_type == 'insert' && $_delayed_loading) {
             $_plugin_func = 'smarty_' . $_type . '_' . $_name;
             $_found = true;
         }
@@ -103,7 +103,7 @@ function smarty_core_load_plugins($params, &$smarty)
                         $_found = true;
                     }
                 }
-            } else if ($_type == 'function') {
+            } elseif ($_type == 'function') {
                 /*
                  * This is a catch-all situation.
                  */

@@ -169,7 +169,7 @@ class SubPanelTilesTabs extends SubPanelTiles
                         $groups[$mainTab]['modules'] []= 'history';
                     }
                 }
-                else if(false !== ($i = array_search('history', array_map('strtolower', $group['modules']))))
+                elseif(false !== ($i = array_search('history', array_map('strtolower', $group['modules']))))
                 {
                     unset($groups[$mainTab]['modules'][$i]);
                     if(empty($groups[$mainTab]['modules']))

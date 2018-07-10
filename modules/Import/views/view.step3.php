@@ -229,7 +229,7 @@ class ImportViewStep3 extends ImportView
                 {
                      $displayname = str_replace(":","", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)] );
                 }
-                else if (!empty ($properties['vname']))
+                elseif (!empty ($properties['vname']))
                 {
                     $displayname = str_replace(":","",translate($properties['vname'] ,$this->bean->module_dir));
                 }
@@ -458,11 +458,11 @@ class ImportViewStep3 extends ImportView
        {
            require_once("custom/modules/Import/maps/{$customName}.php");
            return $customName;
-       } else if (file_exists("custom/modules/Import/maps/{$name}.php")) {
+       } elseif (file_exists("custom/modules/Import/maps/{$name}.php")) {
            require_once("custom/modules/Import/maps/{$name}.php");
-       } else if (file_exists("modules/Import/maps/{$name}.php")) {
+       } elseif (file_exists("modules/Import/maps/{$name}.php")) {
            require_once("modules/Import/maps/{$name}.php");
-       } else if (file_exists('custom/modules/Import/maps/ImportMapOther.php')) {
+       } elseif (file_exists('custom/modules/Import/maps/ImportMapOther.php')) {
            require_once('custom/modules/Import/maps/ImportMapOther.php');
            return 'ImportMapOther';
        }

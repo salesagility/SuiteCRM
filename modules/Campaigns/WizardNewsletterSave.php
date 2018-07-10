@@ -54,7 +54,7 @@ global $mod_strings;
     if(isset($_REQUEST['record']) && $_REQUEST['record'] && !(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'])) {
         $campaign_focus->retrieve($_REQUEST['record']);
     }
-    else if(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
+    elseif(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
         $campaign_focus->retrieve($_REQUEST['campaign_id']);
     }
 

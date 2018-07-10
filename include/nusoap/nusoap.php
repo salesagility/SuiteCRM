@@ -719,7 +719,7 @@ class nusoap_base
 	        	} elseif (! $val) {
 	        		$val = 0;
 	        	}
-			} else if (is_string($val)) {
+			} elseif (is_string($val)) {
 				$val = $this->expandEntities($val);
 			}
 			if ($use == 'literal') {
@@ -850,7 +850,7 @@ class nusoap_base
 						$array_type = $i;
 						if ($use == 'literal') {
 							$type_str = '';
-						} else if (isset($type) && isset($type_prefix)) {
+						} elseif (isset($type) && isset($type_prefix)) {
 							$type_str = " xsi:type=\"$type_prefix:$type\"";
 						} else {
 							$type_str = " xsi:type=\"SOAP-ENC:Array\" SOAP-ENC:arrayType=\"".$array_typename."[$array_type]\"";
@@ -859,7 +859,7 @@ class nusoap_base
 					} else {
 						if ($use == 'literal') {
 							$type_str = '';
-						} else if (isset($type) && isset($type_prefix)) {
+						} elseif (isset($type) && isset($type_prefix)) {
 							$type_str = " xsi:type=\"$type_prefix:$type\"";
 						} else {
 							$type_str = " xsi:type=\"SOAP-ENC:Array\" SOAP-ENC:arrayType=\"xsd:anyType[0]\"";
@@ -3458,7 +3458,7 @@ class soap_transport_http extends nusoap_base
 
 		$this->debug('socket connected');
 		return true;
-	  } else if ($this->io_method() == 'curl') {
+	  } elseif ($this->io_method() == 'curl') {
 		if (!extension_loaded('curl')) {
 //			$this->setError('cURL Extension, or OpenSSL extension w/ PHP version >= 4.3 is required for HTTPS');
 			$this->setError('The PHP cURL Extension is required for HTTPS or NLTM.  You will need to re-build or update your PHP to include cURL or change php.ini to load the PHP cURL extension.');
@@ -3969,7 +3969,7 @@ class soap_transport_http extends nusoap_base
 		}
 		$this->debug('wrote data to socket, length = ' . strlen($this->outgoing_payload));
 		return true;
-	  } else if ($this->io_method() == 'curl') {
+	  } elseif ($this->io_method() == 'curl') {
 		// set payload
 		// cURL does say this should only be the verb, and in fact it
 		// turns out that the URI and HTTP version are appended to this, which
@@ -4078,7 +4078,7 @@ class soap_transport_http extends nusoap_base
 						$this->debug('did not find cookie in ' . trim($arr[1]));
 					}
     			}
-			} else if (isset($header_name)) {
+			} elseif (isset($header_name)) {
 				// append continuation line to previous header
 				$this->incoming_headers[$header_name] .= $lb . ' ' . $header_line;
 			}
@@ -4176,7 +4176,7 @@ class soap_transport_http extends nusoap_base
 //			$this->incoming_payload = $header_data.$lb.$lb.$data;
 //		}
 
-	  } else if ($this->io_method() == 'curl') {
+	  } elseif ($this->io_method() == 'curl') {
 		// send and receive
 		$this->debug('send and receive with cURL');
 		$this->incoming_payload = curl_exec($this->ch);
@@ -4256,7 +4256,7 @@ class soap_transport_http extends nusoap_base
 						$this->debug('did not find cookie in ' . trim($arr[1]));
 					}
     			}
-			} else if (isset($header_name)) {
+			} elseif (isset($header_name)) {
 				// append continuation line to previous header
 				$this->incoming_headers[$header_name] .= $lb . ' ' . $header_line;
 			}
@@ -5086,7 +5086,7 @@ class nusoap_server extends nusoap_base
 					$v = str_replace('"', '', $v);
 					$v = str_replace('\\', '', $v);
 					$this->SOAPAction = $v;
-				} else if ($k == 'content-type') {
+				} elseif ($k == 'content-type') {
 					// get the character encoding of the incoming request
 					if (strpos($v, '=')) {
 						$enc = substr(strstr($v, '='), 1);
@@ -5120,7 +5120,7 @@ class nusoap_server extends nusoap_base
 					$v = str_replace('"', '', $v);
 					$v = str_replace('\\', '', $v);
 					$this->SOAPAction = $v;
-				} else if ($k == 'content-type') {
+				} elseif ($k == 'content-type') {
 					// get the character encoding of the incoming request
 					if (strpos($v, '=')) {
 						$enc = substr(strstr($v, '='), 1);
@@ -5255,7 +5255,7 @@ class nusoap_server extends nusoap_base
 		// to allow methods to be called a the class or an instance
 		if (strpos($this->methodname, '..') > 0) {
 			$delim = '..';
-		} else if (strpos($this->methodname, '.') > 0) {
+		} elseif (strpos($this->methodname, '.') > 0) {
 			$delim = '.';
 		} else {
 			$delim = '';
@@ -7453,7 +7453,7 @@ class wsdl extends nusoap_base
 					return $xml;
 				}
 				$this->debug('custom type extends XML Schema or SOAP Encoding namespace (yuck)');
-			} else if ($ns == 'http://xml.apache.org/xml-soap') {
+			} elseif ($ns == 'http://xml.apache.org/xml-soap') {
 				$this->debug('in serializeType: appears to be Apache SOAP type');
 				if ($uqType == 'Map') {
 					$tt_prefix = $this->getPrefixFromNamespace('http://xml.apache.org/xml-soap');
@@ -8431,7 +8431,7 @@ class nusoap_parser extends nusoap_base
 					$this->message[$pos]['typePrefix'] = $value_prefix;
 	                if(isset($this->namespaces[$value_prefix])){
 	                	$this->message[$pos]['type_namespace'] = $this->namespaces[$value_prefix];
-	                } else if(isset($attrs['xmlns:'.$value_prefix])) {
+	                } elseif(isset($attrs['xmlns:'.$value_prefix])) {
 						$this->message[$pos]['type_namespace'] = $attrs['xmlns:'.$value_prefix];
 	                }
 					// should do something here with the namespace of specified type?
@@ -8452,7 +8452,7 @@ class nusoap_parser extends nusoap_base
 					$this->message[$pos]['arrayTypePrefix'] = $regs[1];
 	                if (isset($this->namespaces[$regs[1]])) {
 	                	$this->message[$pos]['arrayTypeNamespace'] = $this->namespaces[$regs[1]];
-	                } else if (isset($attrs['xmlns:'.$regs[1]])) {
+	                } elseif (isset($attrs['xmlns:'.$regs[1]])) {
 						$this->message[$pos]['arrayTypeNamespace'] = $attrs['xmlns:'.$regs[1]];
 	                }
 					$this->message[$pos]['arrayType'] = $regs[2];

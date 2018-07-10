@@ -107,7 +107,7 @@ class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension
             if ($attribute->nodeValue == "true") {
                 $this->_specialized = true;
             }
-            else if ($attribute->nodeValue == "false") {
+            elseif ($attribute->nodeValue == "false") {
                 $this->_specialized = false;
             }
             else {

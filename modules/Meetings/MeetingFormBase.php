@@ -414,7 +414,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	    		if(!isset($acceptStatusUsers[$user_id])) {
 	    			$focus->users->add($user_id);
-	    		} else if (!$focus->date_changed) {
+	    		} elseif (!$focus->date_changed) {
 	    			// update query to preserve accept_status
 	    			$qU  = 'UPDATE meetings_users SET deleted = 0, accept_status = \''.$acceptStatusUsers[$user_id].'\' ';
 	    			$qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
@@ -436,7 +436,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	    		if(!isset($acceptStatusContacts[$contact_id])) {
 	    		    $focus->contacts->add($contact_id);
-	    		} else if (!$focus->date_changed) {
+	    		} elseif (!$focus->date_changed) {
 	    			// update query to preserve accept_status
 	    			$qU  = 'UPDATE meetings_contacts SET deleted = 0, accept_status = \''.$acceptStatusContacts[$contact_id].'\' ';
 	    			$qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
@@ -457,7 +457,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	    		if(!isset($acceptStatusLeads[$lead_id])) {
 	    		    $focus->leads->add($lead_id);
-	    		} else if (!$focus->date_changed) {
+	    		} elseif (!$focus->date_changed) {
 	    			// update query to preserve accept_status
 	    			$qU  = 'UPDATE meetings_leads SET deleted = 0, accept_status = \''.$acceptStatusLeads[$lead_id].'\' ';
 	    			$qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
@@ -490,7 +490,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Home'){
 		header("Location: index.php?module=Home&action=index");
 	}
-	else if($redirect) {
+	elseif($redirect) {
 		handleRedirect($return_id, 'Meetings');
 	} else {
 		return $focus;

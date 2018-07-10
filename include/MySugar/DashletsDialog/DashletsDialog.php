@@ -173,7 +173,7 @@ class DashletsDialog
                     if (!empty($category) && $dashletMeta[$files['class']]['category'] == $categories[$category]){
                         array_push($dashletsList[$categories[$category]], $cell);
                     }
-                    else if (empty($category)){
+                    elseif (empty($category)){
                         array_push($dashletsList[$dashletMeta[$files['class']]['category']], $cell);
                     }
                 }

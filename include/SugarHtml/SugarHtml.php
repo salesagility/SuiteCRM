@@ -150,7 +150,7 @@ class SugarHtml
             foreach($dom_tree as $dom) {
                 $out .= is_array($dom) ? self::createHtml($dom) : $dom;
             }
-        } else if( isset($dom_tree['tag']) ) {
+        } elseif( isset($dom_tree['tag']) ) {
             $tagName = $dom_tree['tag'];
             $self_closing = $dom_tree['self_closing'];
             unset($dom_tree['tag']);
@@ -174,7 +174,7 @@ class SugarHtml
                 $out .= (is_array($container)) ? self::createHtml($container) : $container;
                 $out .= self::createCloseTag($tagName);
             }
-        } else if( isset($dom_tree['smarty']) ) { //dom contains smarty function
+        } elseif( isset($dom_tree['smarty']) ) { //dom contains smarty function
             $count = 0;
             foreach($dom_tree['smarty'] as $blocks) {
                 $template = $blocks['template'];
@@ -383,7 +383,7 @@ class SugarHtml
                     $smarty_template['template'] .= $clause;
                 else
                     $smarty_template['template'] .= '{'.$clause.'}';
-            } else if( !empty($clause) ){
+            } elseif( !empty($clause) ){
                 $key = '[CONTENT'.($seq++).']';
                 $smarty_template['template'] .= $key;
                 $params = array();
@@ -418,12 +418,12 @@ class SugarHtml
                 if(empty($quote_type)) {
                     $quote_encoded = true;
                     $quote_type = $char;
-                } else if ($quote_type == $char) {
+                } elseif ($quote_type == $char) {
                     if(!empty($cache)) {
                         $string = implode('', $cache);
                         if(empty($var_name)) {
                             $var_name = $string;
-                        } else if($var_assign) {
+                        } elseif($var_assign) {
                             $output[trim($var_name)] = $string;
                             unset($var_name);
                         }
@@ -435,18 +435,18 @@ class SugarHtml
                 } else {
                     array_push($cache, $char);
                 }
-            } else if ( $quote_encoded && $char == self::SMARTY_TAG_BEGIN ) {
+            } elseif ( $quote_encoded && $char == self::SMARTY_TAG_BEGIN ) {
                 $smarty_encoded = true;
                 array_push($cache, $char);
-            } else if ( $quote_encoded && $char == self::SMARTY_TAG_END ) {
+            } elseif ( $quote_encoded && $char == self::SMARTY_TAG_END ) {
                 $smarty_encoded = false;
                 array_push($cache, $char);
-            } else if ( !$quote_encoded && $char == ' ' ) {
+            } elseif ( !$quote_encoded && $char == ' ' ) {
                 if(!empty($cache)) {
                     $string = implode('', $cache);
                     if(empty($var_name)) {
                         $var_name = $string;
-                    } else if($var_assign) {
+                    } elseif($var_assign) {
                         $output[trim($var_name)] = $string;
                         unset($var_name);
                     }
@@ -454,7 +454,7 @@ class SugarHtml
                     $var_assign = false;
                     $cache = array();
                 }
-            } else if ( !$quote_encoded && $char == self::ASSIGN_SIGN ) {
+            } elseif ( !$quote_encoded && $char == self::ASSIGN_SIGN ) {
 
                 if(!empty($var_name)) {
                     $output[$var_name] = '';
@@ -465,9 +465,9 @@ class SugarHtml
                 }
                 $var_assign = true;
                 $cache = array();
-            } else if ( !$quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
+            } elseif ( !$quote_encoded && $char == self::SMARTY_TAG_BEGIN) {
                 self::parseSmartyTag($code, $output, $i, true);
-            } else if ( !$quote_encoded && $char == self::HTML_TAG_END ) {
+            } elseif ( !$quote_encoded && $char == self::HTML_TAG_END ) {
                 break;
             } else {
                 array_push($cache, $char);

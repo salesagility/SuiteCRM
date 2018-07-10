@@ -43,7 +43,7 @@ function loadParentView($type)
     if(file_exists('custom/include/MVC/View/views/view.'.$type.'.php'))
     {
         require_once('custom/include/MVC/View/views/view.'.$type.'.php');
-    } else if(file_exists('include/MVC/View/views/view.'.$type.'.php')) {
+    } elseif(file_exists('include/MVC/View/views/view.'.$type.'.php')) {
         require_once('include/MVC/View/views/view.'.$type.'.php');
     }
 }
@@ -130,11 +130,11 @@ function ajaxLink($url)
     if(!empty($sugar_config['disableAjaxUI'])){
         return $url;
     }
-    else if(isset($match[1]) && in_array($match[1], ajaxBannedModules())){
+    elseif(isset($match[1]) && in_array($match[1], ajaxBannedModules())){
         return $url;
     }
     //Don't modify javascript calls.
-    else if (isset($javascriptMatch[0])) {
+    elseif (isset($javascriptMatch[0])) {
     	return $url;
     }
     else

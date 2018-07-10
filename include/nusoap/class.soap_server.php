@@ -412,7 +412,7 @@ class nusoap_server extends nusoap_base
 					$v = str_replace('"', '', $v);
 					$v = str_replace('\\', '', $v);
 					$this->SOAPAction = $v;
-				} else if ($k == 'content-type') {
+				} elseif ($k == 'content-type') {
 					// get the character encoding of the incoming request
 					if (strpos($v, '=')) {
 						$enc = substr(strstr($v, '='), 1);
@@ -446,7 +446,7 @@ class nusoap_server extends nusoap_base
 					$v = str_replace('"', '', $v);
 					$v = str_replace('\\', '', $v);
 					$this->SOAPAction = $v;
-				} else if ($k == 'content-type') {
+				} elseif ($k == 'content-type') {
 					// get the character encoding of the incoming request
 					if (strpos($v, '=')) {
 						$enc = substr(strstr($v, '='), 1);
@@ -578,7 +578,7 @@ class nusoap_server extends nusoap_base
 		// to allow methods to be called a the class or an instance
 		if (strpos($this->methodname, '..') > 0) {
 			$delim = '..';
-		} else if (strpos($this->methodname, '.') > 0) {
+		} elseif (strpos($this->methodname, '.') > 0) {
 			$delim = '.';
 		} else {
 			$delim = '';

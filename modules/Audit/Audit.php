@@ -204,7 +204,7 @@ class Audit extends SugarBean
         $assocFieldsArray =  $moduleAssocFieldsArray[$focus->object_name];
 
         }
-        else if(array_key_exists($fieldName, $genericAssocFieldsArray)){
+        elseif(array_key_exists($fieldName, $genericAssocFieldsArray)){
             $assocFieldsArray =  $genericAssocFieldsArray;
         }
         else{

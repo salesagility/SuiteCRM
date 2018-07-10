@@ -255,7 +255,7 @@ class ACLAction extends SugarBean
                             return $_SESSION['ACL'][$user_id][$category];
                         }
                         return isset($_SESSION['ACL'][$user_id][$category][$type]) ? $_SESSION['ACL'][$user_id][$category][$type] : null;
-                    }else if(!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])){
+                    }elseif(!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])){
                         return $_SESSION['ACL'][$user_id][$category][$type][$action];
                     }
                 }

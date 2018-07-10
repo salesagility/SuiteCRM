@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 if(isset($_REQUEST['refreshparent'])){
 	echo '<SCRIPT> parent.location.reload();</script>';	
-}else if(isset($_REQUEST['module_name']) && isset($_REQUEST['showlist'])){
+}elseif(isset($_REQUEST['module_name']) && isset($_REQUEST['showlist'])){
 	$the_strings = return_module_language($current_language, $_REQUEST['module_name']);
 	$mod_name = $_REQUEST['module_name'];
 	echo SugarThemeRegistry::current()->getCSS();
@@ -54,7 +54,7 @@ if(isset($_REQUEST['refreshparent'])){
 		
 	}
 	echo '</table>';
-}else if(isset($_REQUEST['module_name'])){
+}elseif(isset($_REQUEST['module_name'])){
 	$the_strings = return_module_language($current_language, $_REQUEST['module_name']);
 	$mod_name = $_REQUEST['module_name'];
 	global $app_strings;

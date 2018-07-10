@@ -95,7 +95,7 @@ class GroupedTabStructure
 	        foreach($frames as $key => $values){
 	        	$moduleExtraMenu[$key] = $values;
 	        }
-		} else if(isset($modList['iFrames'])) {
+		} elseif(isset($modList['iFrames'])) {
 		    unset($modList['iFrames']);
 		}
 				

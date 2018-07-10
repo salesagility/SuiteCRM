@@ -162,7 +162,7 @@ class _parse_lockinfo
                 }
             }
             $this->owner .= "<$ns_short$tag$ns_attr>";
-        } else if ($ns == "DAV:") {
+        } elseif ($ns == "DAV:") {
 			// parse only the essential tags
             switch ($tag) {
 			case "write":

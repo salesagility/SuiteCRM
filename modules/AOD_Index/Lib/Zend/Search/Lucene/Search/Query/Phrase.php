@@ -107,7 +107,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
                 $this->_terms[$termId] = ($field !== null)? new Zend_Search_Lucene_Index_Term($termText, $field):
                                                             new Zend_Search_Lucene_Index_Term($termText);
             }
-        } else if ($terms === null) {
+        } elseif ($terms === null) {
             $this->_terms = array();
         } else {
             require_once 'Zend/Search/Lucene/Exception.php';
@@ -120,7 +120,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
                 throw new Zend_Search_Lucene_Exception('terms and offsets arguments must have the same size.');
             }
             $this->_offsets = $offsets;
-        } else if ($offsets === null) {
+        } elseif ($offsets === null) {
             $this->_offsets = array();
             foreach ($this->_terms as $termId => $term) {
                 $position = count($this->_offsets);
@@ -172,7 +172,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
         $this->_terms[] = $term;
         if ($position !== null) {
             $this->_offsets[] = $position;
-        } else if (count($this->_offsets) != 0) {
+        } elseif (count($this->_offsets) != 0) {
             $this->_offsets[] = end($this->_offsets) + 1;
         } else {
             $this->_offsets[] = 0;
@@ -191,7 +191,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
         if (count($this->_terms) == 0) {
             require_once 'Zend/Search/Lucene/Search/Query/Empty.php';
             return new Zend_Search_Lucene_Search_Query_Empty();
-        } else if ($this->_terms[0]->field !== null) {
+        } elseif ($this->_terms[0]->field !== null) {
             return $this;
         } else {
             require_once 'Zend/Search/Lucene/Search/Query/Boolean.php';

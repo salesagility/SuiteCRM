@@ -107,7 +107,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                 $current_user = $user;
             }
         }
-        else if($usr_id && isset($user->user_name) && ($user->getPreference('lockout') == '1'))
+        elseif($usr_id && isset($user->user_name) && ($user->getPreference('lockout') == '1'))
         {
             $error->set_error('lockout_reached');
             $GLOBALS['log']->fatal('Lockout reached for user ' . $user_auth['user_name']);
@@ -116,7 +116,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             self::$helperObject->setFaultObject($error);
             return;
         }
-        else if(function_exists('openssl_decrypt'))
+        elseif(function_exists('openssl_decrypt'))
         {
             $password = self::$helperObject->decrypt_string($user_auth['password']);
             if($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id']))

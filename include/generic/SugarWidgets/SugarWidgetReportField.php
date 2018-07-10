@@ -137,7 +137,7 @@ class SugarWidgetReportField extends SugarWidgetField
 
 	if ( ! empty($layout_def['table_alias'])) {
 		$alias = $layout_def['table_alias'].".".$layout_def['name'];
-	} else if (! empty($layout_def['name'])) {
+	} elseif (! empty($layout_def['name'])) {
 		$alias = $layout_def['name'];
 	} else {
 		$alias = "*";
@@ -258,7 +258,7 @@ class SugarWidgetReportField extends SugarWidgetField
                     	$sort_by = $layout_def['table_key'].":".$layout_def['name'];
                         if ( ! empty($layout_def['column_function'])) {
                         	$sort_by .= ':'.$layout_def['column_function'];
-                		} else if ( ! empty($layout_def['group_function']) ) {
+                		} elseif ( ! empty($layout_def['group_function']) ) {
                         	$sort_by .= ':'.$layout_def['group_function'];
                 		}
                 	}
@@ -324,10 +324,10 @@ class SugarWidgetReportField extends SugarWidgetField
         if ( ! empty($layout_def['group_function']) && $layout_def['group_function'] != 'weighted_amount' && $layout_def['group_function'] != 'weighted_sum')
         {
                 array_push($alias_arr,$layout_def['group_function']);
-        } else if ( ! empty($layout_def['column_function']))
+        } elseif ( ! empty($layout_def['column_function']))
         {
                 array_push($alias_arr,$layout_def['column_function']);
-        } else if ( ! empty($layout_def['qualifier']))
+        } elseif ( ! empty($layout_def['qualifier']))
         {
                 array_push($alias_arr,$layout_def['qualifier']);
         }
@@ -348,7 +348,7 @@ class SugarWidgetReportField extends SugarWidgetField
 			$alias_map[$alias] = $short_alias;
 		    $used_aliases[$short_alias] = 1;
           	return $short_alias;
-		} else if ( ! empty($alias_map[$alias]) )
+		} elseif ( ! empty($alias_map[$alias]) )
 		{
 			return $alias_map[$alias];
 		} else {

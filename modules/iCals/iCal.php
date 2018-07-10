@@ -174,14 +174,14 @@ class iCal extends vCal
             $ical_array[] = array("STATUS", "COMPLETED");
             $ical_array[] = array("PERCENT-COMPLETE", "100");
             $ical_array[] = array("COMPLETED", $this->getUtcDateTime($due_date_time));
-        } else if (!empty($task->percent_complete)) {
+        } elseif (!empty($task->percent_complete)) {
             $ical_array[] = array("PERCENT-COMPLETE", $task->percent_complete);
         }
         if ($task->priority == "Low") {
             $ical_array[] = array("PRIORITY", "9");
-        } else if ($task->priority == "Medium") {
+        } elseif ($task->priority == "Medium") {
                 $ical_array[] = array("PRIORITY", "5");
-        } else if ($task->priority == "High") {
+        } elseif ($task->priority == "High") {
                 $ical_array[] = array("PRIORITY", "1");
         }
         $ical_array[] = array("END", "VTODO");

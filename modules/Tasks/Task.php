@@ -206,7 +206,7 @@ class Task extends SugarBean
 		if (is_subclass_of($parent, 'Person')) {
 			$query = "SELECT first_name, last_name, assigned_user_id parent_name_owner from $parent->table_name where id = '$this->parent_id'";
 		}
-		else if (is_subclass_of($parent, 'File')) {
+		elseif (is_subclass_of($parent, 'File')) {
 			$query = "SELECT document_name, assigned_user_id parent_name_owner from $parent->table_name where id = '$this->parent_id'";
 		}
 		else {
@@ -232,7 +232,7 @@ class Task extends SugarBean
 		{
 			$this->parent_name = $locale->getLocaleFormattedName(stripslashes($row['first_name']), stripslashes($row['last_name']));
 		}
-		else if (is_subclass_of($parent, 'File') && $row != null) {
+		elseif (is_subclass_of($parent, 'File') && $row != null) {
 			$this->parent_name = $row['document_name'];
 		}
 		elseif($row != null)
@@ -269,7 +269,7 @@ class Task extends SugarBean
 			{ 
 				$taskClass = 'overdueTask'; 
 			}
-		}else if( $dd	== $today ){
+		}elseif( $dd	== $today ){
             $taskClass = 'todaysTask';
 		}
         $task_fields['DATE_DUE']= "<font class='$taskClass'>$date_due</font>";
@@ -387,7 +387,7 @@ class Task extends SugarBean
 			}
 			/* BEGIN - SECURITY GROUPS */
 			//parent_name_owner not being set for whatever reason so we need to figure this out
-			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+			elseif(!empty($this->parent_type) && !empty($this->parent_id)) {
 				global $current_user;
                 $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
                 if($parent_bean !== false) {

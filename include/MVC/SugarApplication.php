@@ -410,7 +410,7 @@ class SugarApplication
             $theme = $GLOBALS['sugar_config']['default_theme'];
             if (!empty($_SESSION['authenticated_user_theme'])) {
                 $theme = $_SESSION['authenticated_user_theme'];
-            } else if (!empty($_COOKIE['sugar_user_theme'])) {
+            } elseif (!empty($_COOKIE['sugar_user_theme'])) {
                 $theme = $_COOKIE['sugar_user_theme'];
             }
 
@@ -555,8 +555,7 @@ class SugarApplication
                 sugar_cleanup(true);
             }
             return false;
-        } else
-        if (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['SERVER_NAME'])) {
+        } elseif (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['SERVER_NAME'])) {
             $http_ref = parse_url($_SERVER['HTTP_REFERER']);
             if ($http_ref['host'] !== $_SERVER['SERVER_NAME'] && !in_array($this->controller->action, $this->whiteListActions) &&
                     (empty($whiteListReferers) || !in_array($http_ref['host'], $whiteListReferers))) {

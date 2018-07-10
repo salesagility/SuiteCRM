@@ -517,7 +517,7 @@ function handleSave($prefix,$redirect=true,$useRequired=false) {
 		$_REQUEST['return_action'] = 'index';
         handleRedirect('', 'Home');
 	}
-	else if($redirect) {
+	elseif($redirect) {
 		handleRedirect($return_id, 'Calls');
 	} else {
 		return $focus;

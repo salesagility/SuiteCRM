@@ -72,7 +72,7 @@ function preParse($panels, $view) {
 		   	  	 	 	//Add the frequency label
 		   	  	 	    $panels[$name][$rowCount][$key] = 'frequency';
 		   	  	 	    $frequencyAdded = true;
-		   	  	 	 } else if($this->matches($column, '/^deleted$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^deleted$/')) {
 		   	  	 	 	//This is to fix the error where the Created By field
 		   	  	 	 	//in Campaigns EditView.html actually references the deleted field
 		   	  	 	 	//We will just remove the field since you shouldn't be able to edit this information anyway

@@ -421,7 +421,7 @@ if ($focus->mailbox_type == 'bounce')
 elseif ($focus->mailbox_type == 'createcase')
     $xtpl->assign("IS_CREATE_CASE", 'checked');
 
-else if( $focus->is_personal == '1')
+elseif( $focus->is_personal == '1')
      $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
 
 //else

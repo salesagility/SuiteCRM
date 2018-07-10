@@ -351,7 +351,7 @@ class Call extends SugarBean
 			$where_auto = '1=1';
        		 if($show_deleted == 0){
             	$where_auto = " $this->table_name.deleted=0  ";
-			}else if($show_deleted == 1){
+			}elseif($show_deleted == 1){
 				$where_auto = " $this->table_name.deleted=1 ";
 			}
 
@@ -534,7 +534,7 @@ class Call extends SugarBean
                             }
 				$call_fields['DATE_START']= "<font class='overdueTask'>".$dateStart."</font>";   
 			}
-		}else if($date_db < $nextday){
+		}elseif($date_db < $nextday){
 			$call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
 		}else{
 			$call_fields['DATE_START'] = "<font class='futureTask'>".$call_fields['DATE_START']."</font>";
@@ -667,13 +667,13 @@ class Call extends SugarBean
         vCal::cache_sugar_vcal($user);
       }
     }
-    else if ( $user->object_name == 'Contact')
+    elseif ( $user->object_name == 'Contact')
     {
       $relate_values = array('contact_id'=>$user->id,'call_id'=>$this->id);
       $data_values = array('accept_status'=>$status);
       $this->set_relationship($this->rel_contacts_table, $relate_values, true, true,$data_values);
     }
-    else if ( $user->object_name == 'Lead')
+    elseif ( $user->object_name == 'Lead')
     {
       $relate_values = array('lead_id'=>$user->id,'call_id'=>$this->id);
       $data_values = array('accept_status'=>$status);
@@ -754,7 +754,7 @@ class Call extends SugarBean
 			}
 			/* BEGIN - SECURITY GROUPS */
 			//parent_name_owner not being set for whatever reason so we need to figure this out
-			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+			elseif(!empty($this->parent_type) && !empty($this->parent_id)) {
 				global $current_user;
                 $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
                 if($parent_bean !== false) {

@@ -72,7 +72,7 @@ class CalendarController extends SugarController
                 unset($_POST['repeat_' . $suffix]);
             }    
                         
-        }else if (!empty($_REQUEST['repeat_type']) && !empty($_REQUEST['date_start'])) {
+        }elseif (!empty($_REQUEST['repeat_type']) && !empty($_REQUEST['date_start'])) {
         
             $params = array(
                     'type' => $_REQUEST['repeat_type'],
@@ -320,7 +320,7 @@ class CalendarController extends SugarController
         if (in_array($cal->view, array('day', 'week', 'month'))){
             $cal->add_activities($GLOBALS['current_user']);    
        
-        } else if ($cal->view == 'shared') {
+        } elseif ($cal->view == 'shared') {
             $cal->init_shared();
             $sharedUser = new User();    
             foreach ($cal->shared_ids as $member) {

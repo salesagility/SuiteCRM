@@ -70,7 +70,7 @@ class updateDependencies
                         $task->date_finish = $enddate;
                         $task->save();
 
-                    } else if ($rel_type == 'SS') {//if its a start to start
+                    } elseif ($rel_type == 'SS') {//if its a start to start
                         //check if the tasks duration has not been changed so that it does not update when the parent tasks duration is changed
                         if ($bean->fetched_row['duration'] == $bean->duration) {
 

@@ -126,7 +126,7 @@ class VarDefHandler
                     	$label_name = $this->module_object->$relName->getRelatedModuleName();
 					 }
                 }
-				else if(!empty($value_array['vname'])){
+				elseif(!empty($value_array['vname'])){
 					$label_name = $value_array['vname'];
 				} else {
 					$label_name = $value_array['name'];

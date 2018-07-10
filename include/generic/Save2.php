@@ -68,7 +68,7 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
 					 ,$_REQUEST['module'] //module_name
 					 ,$_REQUEST['subpanel_field_name'] //link attribute name
 	);
-} else if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'addtoprospectlist') {
+} elseif (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'addtoprospectlist') {
 
 	$GLOBALS['log']->debug(print_r($_REQUEST,true));
 	if(!empty($_REQUEST['prospect_list_id']) and !empty($_REQUEST['prospect_ids']))
@@ -86,7 +86,7 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
 	}
 
 	$refreshsubpanel=false;
-}else if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'addcampaignlog') {
+}elseif (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'addcampaignlog') {
     //if param is set to "addcampaignlog", then we need to create a campaign log entry
     //for each campaign id passed in.
 

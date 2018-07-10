@@ -110,7 +110,7 @@ class ViewSugarFieldCollection
             if($rel->lhs_module == $this->module_dir){
                 $this->related_module = $rel->rhs_module;
                 $module_dir = $rel->lhs_module;
-            }else if($rel->rhs_module == $this->module_dir){
+            }elseif($rel->rhs_module == $this->module_dir){
                 $this->related_module = $rel->lhs_module;
                 $module_dir = $rel->rhs_module;
             }else{
@@ -206,7 +206,7 @@ class ViewSugarFieldCollection
     function process(){
         if($this->action_type == 'editview'){
             $this->process_editview();
-        }else if($this->action_type == 'detailview'){
+        }elseif($this->action_type == 'detailview'){
             $this->process_detailview();
         }
     }
@@ -334,7 +334,7 @@ FRA;
             $this->ss->assign('quickSearchCode',$this->createQuickSearchCode());
             $this->createPopupCode();// this code populate $this->displayParams with popupdata.
             $this->tpl_path = $this->edit_tpl_path;
-        }else if($this->action_type == 'detailview'){
+        }elseif($this->action_type == 'detailview'){
             $this->tpl_path = $this->detail_tpl_path;
         }
 
@@ -389,13 +389,13 @@ FRA;
             if(!$this->skipModuleQuickSearch && preg_match('/(Campaigns|Teams|Users|Accounts)/si', $this->related_module, $matches)) {
                 if($matches[0] == 'Users'){
                     $sqs_objects[$name1] = $qsd->getQSUser();
-                } else if($matches[0] == 'Campaigns') {
+                } elseif($matches[0] == 'Campaigns') {
                     $sqs_objects[$name1] = $qsd->getQSCampaigns();
 
-                } else if($matches[0] == 'Users'){
+                } elseif($matches[0] == 'Users'){
                     $sqs_objects[$name1] = $qsd->getQSUser();
 
-                } else if($matches[0] == 'Accounts') {
+                } elseif($matches[0] == 'Accounts') {
                     $nameKey = "{$this->name}_collection_{$i}";
                     $idKey = "id_{$this->name}_collection_{$i}";
 
@@ -408,7 +408,7 @@ FRA;
                     $shippingKey = isset($this->displayParams['shippingKey']) ? $this->displayParams['shippingKey'] : null;
                     $additionalFields = isset($this->displayParams['additionalFields']) ? $this->displayParams['additionalFields'] : null;
                     $sqs_objects[$name1] = $qsd->getQSAccount($nameKey, $idKey, $billingKey, $shippingKey, $additionalFields);
-                } else if($matches[0] == 'Contacts'){
+                } elseif($matches[0] == 'Contacts'){
                     $sqs_objects[$name1] = $qsd->getQSContact($name1, "id_".$name1);
                 }
 
@@ -454,7 +454,7 @@ FRA;
                         $sqs_objects[$name1]['primary_populate_list'][] = $v;
                         $sqs_objects[$name1]['primary_field_list'][] = $k;
                     }
-                }else if(isset($field['field_list']) && isset($field['populate_list'])){
+                }elseif(isset($field['field_list']) && isset($field['populate_list'])){
                     $sqs_objects[$name1]['primary_populate_list'] = array_merge($sqs_objects[$name1]['populate_list'], $field['field_list']);
                     $sqs_objects[$name1]['primary_field_list'] = array_merge($sqs_objects[$name1]['field_list'], $field['populate_list']);
                 }else{
@@ -495,9 +495,9 @@ FRA;
 
             if(isset($this->displayParams['formName'])) {
                 $form = $this->displayParams['formName'];
-            } else if($this->action_type == 'editview'){
+            } elseif($this->action_type == 'editview'){
                 $form = 'EditView';
-            } else if($this->action_type == 'quickcreate'){
+            } elseif($this->action_type == 'quickcreate'){
                 $form = "QuickCreate_{$this->module_dir}";
             }
 

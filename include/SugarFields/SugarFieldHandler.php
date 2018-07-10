@@ -107,7 +107,7 @@ class SugarFieldHandler
         		$file = 'custom/include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
                 $type = $field;
 			//else check the fields directory
-			}else if(file_exists('include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php')){
+			}elseif(file_exists('include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php')){
            		$file = 'include/SugarFields/Fields/' . $field . '/SugarField' . $field. '.php';
                 $type = $field;
         	}else{

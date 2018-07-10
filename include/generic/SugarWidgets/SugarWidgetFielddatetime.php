@@ -229,7 +229,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 00:00:00';
         }
-        else if ($time=='end') {
+        elseif ($time=='end') {
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 23:59:59';
         } else {

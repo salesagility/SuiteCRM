@@ -199,8 +199,7 @@ class RepairAndClear
 						echo "<br /><input type=\"submit\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXECUTE']."\" name=\"raction\" /> <input type=\"submit\" name=\"raction\" value=\"".$mod_strings['LBL_REPAIR_DATABASE_EXPORT']."\" />";
 					}
 				}
-				else
-					if ($this->show_output) echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
+				elseif ($this->show_output) echo "<h3>{$mod_strings['LBL_REPAIR_DATABASE_SYNCED']}</h3>";
 			}
 
 		}
@@ -380,7 +379,7 @@ class RepairAndClear
 				    $this->_rebuildAuditTablesHelper(new $bean_name());
 				}
 			}
-		} else if(in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
+		} elseif(in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
 			foreach ($beanFiles as $bean => $file){
 				if( file_exists($file)) {
 					require_once($file);
@@ -409,8 +408,7 @@ class RepairAndClear
 					echo $echo;
 				}
 			}
-		}else
-			if($this->show_output) echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
+		}elseif($this->show_output) echo $focus->object_name.$mod_strings['LBL_QR_NOT_AUDIT_ENABLED'];
 	}
 
 	///////////////////////////////////////////////////////////////

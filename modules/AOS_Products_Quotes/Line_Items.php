@@ -85,7 +85,7 @@ function display_lines($focus, $field, $value, $view){
         }
 
     }
-    else if($view == 'DetailView'){
+    elseif($view == 'DetailView'){
         $params = array('currency_id' => $focus->currency_id);
 
         $sql = "SELECT pg.id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '".$focus->object_name."' AND pg.parent_id = '".$focus->id."' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
@@ -242,7 +242,7 @@ function get_discount_string($type, $amount, $params, $locale, $sep){
         {
             return currency_format_number($amount,$params )."</td>";
         }
-        else if($locale->getPrecision())
+        elseif($locale->getPrecision())
         {
             return rtrim(rtrim(format_number($amount), '0'),$sep[1])."%";
         } else{

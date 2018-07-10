@@ -279,7 +279,7 @@ class javascript
                         //datetime should also support the isbefore or other type of validate
                         $this->addField($field, '', $prefix,'',$translate);
                     }
-			    } else if (isset($value['type'])) {
+			    } elseif (isset($value['type'])) {
 					if ($value['type'] != 'link') {
 			  			$this->addField($field, '', $prefix,'',$translate);
 					}

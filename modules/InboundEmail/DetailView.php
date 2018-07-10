@@ -300,7 +300,7 @@ if ($focus->mailbox_type == 'bounce')
 {
     $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_BOUNCE_MODULE_NAME'],$focus->name), true));
 }
-else if( $focus->is_personal == '1')
+elseif( $focus->is_personal == '1')
      $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
 
 $xtpl->parse('main');

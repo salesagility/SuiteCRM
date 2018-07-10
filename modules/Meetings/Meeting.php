@@ -423,11 +423,11 @@ class Meeting extends SugarBean
 			$time_start_minutes = substr($this->time_start, 3, 5);
 			if ($time_start_minutes > 0 && $time_start_minutes < 15) {
 				$time_start_minutes = "15";
-			} else if ($time_start_minutes > 15 && $time_start_minutes < 30) {
+			} elseif ($time_start_minutes > 15 && $time_start_minutes < 30) {
 				$time_start_minutes = "30";
-			} else if ($time_start_minutes > 30 && $time_start_minutes < 45) {
+			} elseif ($time_start_minutes > 30 && $time_start_minutes < 45) {
 				$time_start_minutes = "45";
-			} else if ($time_start_minutes > 45) {
+			} elseif ($time_start_minutes > 45) {
 				$this->time_start_hour += 1;
 				$time_start_minutes = "00";
 		    } //if-else
@@ -576,7 +576,7 @@ class Meeting extends SugarBean
 			{
 				$meeting_fields['DATE_START']= "<font class='overdueTask'>".$meetingFieldsDateStart."</font>";
 			}
-		}else if($date_db	< $nextday) {
+		}elseif($date_db	< $nextday) {
 			$meeting_fields['DATE_START'] = "<font class='todaysTask'>".$meetingFieldsDateStart."</font>";
 		} else {
 			$meeting_fields['DATE_START'] = "<font class='futureTask'>".$meetingFieldsDateStart."</font>";
@@ -800,13 +800,13 @@ class Meeting extends SugarBean
 				vCal::cache_sugar_vcal($user);
 			}
 		}
-		else if($user->object_name == 'Contact')
+		elseif($user->object_name == 'Contact')
 		{
 			$relate_values = array('contact_id'=>$user->id,'meeting_id'=>$this->id);
 			$data_values = array('accept_status'=>$status);
 			$this->set_relationship($this->rel_contacts_table, $relate_values, true, true,$data_values);
 		}
-        else if($user->object_name == 'Lead')
+        elseif($user->object_name == 'Lead')
 		{
 			$relate_values = array('lead_id'=>$user->id,'meeting_id'=>$this->id);
 			$data_values = array('accept_status'=>$status);
@@ -886,7 +886,7 @@ class Meeting extends SugarBean
 			}
 			/* BEGIN - SECURITY GROUPS */
 			//parent_name_owner not being set for whatever reason so we need to figure this out
-			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+			elseif(!empty($this->parent_type) && !empty($this->parent_id)) {
 				global $current_user;
                 $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
                 if($parent_bean !== false) {

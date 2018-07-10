@@ -87,7 +87,7 @@ function portal_login($portal_auth, $user_name, $application_name){
         $_SESSION['type'] = 'lead';
         login_success();
         return array('id'=>session_id(), 'error'=>$error->get_soap_array());
-    }else if($user_name == 'portal'){
+    }elseif($user_name == 'portal'){
         session_start();
         $_SESSION['is_valid_session']= true;
         $_SESSION['ip_address'] = query_client_ip();
@@ -232,13 +232,13 @@ function portal_get_entry_list_filter($session, $module_name, $order_by, $select
     $sugar = null;
     if($module_name == 'Cases'){
         $sugar = new aCase();
-    }else if($module_name == 'Contacts'){
+    }elseif($module_name == 'Contacts'){
         $sugar = new Contact();
-    }else if($module_name == 'Accounts'){
+    }elseif($module_name == 'Accounts'){
         $sugar = new Account();
-    } else if($module_name == 'Bugs'){
+    } elseif($module_name == 'Bugs'){
         $sugar = new Bug();
-    } else if($module_name == 'KBDocuments' || $module_name == 'FAQ') {
+    } elseif($module_name == 'KBDocuments' || $module_name == 'FAQ') {
         $sugar = new KBDocument();
     } else {
         $error->set_error('no_module_support');

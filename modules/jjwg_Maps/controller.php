@@ -675,7 +675,7 @@ class jjwg_MapsController extends SugarController
                 $map_distance = $map->distance;
             }
             // Else if a 'relate_id' use it as the Relate Center Point (Lng/Lat)
-            else if (@(is_guid($_REQUEST['relate_id']) && !empty($_REQUEST['relate_module']))) {
+            elseif (@(is_guid($_REQUEST['relate_id']) && !empty($_REQUEST['relate_module']))) {
                 // Define map variables
                 $map_parent_type = $_REQUEST['relate_module'];
                 $map_parent_id = $_REQUEST['relate_id'];
@@ -684,7 +684,7 @@ class jjwg_MapsController extends SugarController
                 $map_unit_type = (!empty($_REQUEST['unit_type'])) ? $_REQUEST['unit_type'] : $this->settings['map_default_unit_type'];
             }
             // Else if a 'quick_address' use it as the Center Point (Lng/Lat)
-            else if (!empty($_REQUEST['quick_address']) && !empty($_REQUEST['display_module'])) {
+            elseif (!empty($_REQUEST['quick_address']) && !empty($_REQUEST['display_module'])) {
                 // Define map variables / No Parent
                 $map_parent_type = null;
                 $map_parent_id = null;

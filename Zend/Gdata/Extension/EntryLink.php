@@ -102,7 +102,7 @@ class Zend_Gdata_Extension_EntryLink extends Zend_Gdata_Extension
             if ($attribute->nodeValue == "true") {
                 $this->_readOnly = true;
             }
-            else if ($attribute->nodeValue == "false") {
+            elseif ($attribute->nodeValue == "false") {
                 $this->_readOnly = false;
             }
             else {

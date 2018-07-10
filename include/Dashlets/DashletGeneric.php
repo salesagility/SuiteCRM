@@ -402,7 +402,7 @@ class DashletGeneric extends Dashlet
                 $displayColumns[strtoupper($val)]['label'] = trim($displayColumns[strtoupper($val)]['label'], ':');// strip : at the end of headers
             }
         }
-        else if (isset($this->columns)){
+        elseif (isset($this->columns)){
            // use the default
             foreach($this->columns as $name => $val) {
                 if(!empty($val['default']) && $val['default']) {

@@ -32,7 +32,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET invite_status="Invited" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -70,7 +70,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET invite_status="Attended" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -108,7 +108,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET invite_status="Not Attended" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -146,7 +146,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET invite_status="Not Invited", email_responded="0" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -185,7 +185,7 @@ class FP_eventsController extends SugarController
 
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET accept_status="Accepted" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -222,7 +222,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET accept_status="Declined" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -580,13 +580,13 @@ class FP_eventsController extends SugarController
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
 
         }
-        else if($error_count > 0 && $error_count <= 10) {//redirect with failed email count.
+        elseif($error_count > 0 && $error_count <= 10) {//redirect with failed email count.
             $_SESSION['user_error_message'] = array();
             SugarApplication::appendErrorMessage($error_count.$mod_strings['LBL_ERROR_MSG_4']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
         // Redirect with error count if failed email attempts are greater than 10 
-        else if($error_count > 10) {
+        elseif($error_count > 10) {
             $_SESSION['user_error_message'] = array();
             SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_3']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);

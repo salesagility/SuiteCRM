@@ -190,8 +190,8 @@ class MBModule
         if (! empty ( $vardefs ))
         {
             if (empty ( $type ) && empty ( $name ))
-                return false ; else if (empty ( $type ))
-                return ! empty ( $vardefs [ 'fields' ] [ $name ] ) ; else if (empty ( $name ))
+                return false ; elseif (empty ( $type ))
+                return ! empty ( $vardefs [ 'fields' ] [ $name ] ) ; elseif (empty ( $name ))
             {
                 foreach ( $vardefs [ 'fields' ] as $def )
                 {

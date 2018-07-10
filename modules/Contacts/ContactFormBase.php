@@ -550,7 +550,7 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
                 $json = getJSONobj();
                 echo $json->encode(array('status' => 'dupe', 'get' => $location));
             }
-            else if(!empty($_REQUEST['ajax_load']))
+            elseif(!empty($_REQUEST['ajax_load']))
             {
                 echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
             }

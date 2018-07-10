@@ -180,7 +180,7 @@ class ViewConvertLead extends SugarView
         {
         	$smarty->assign('convertModuleListOptions', get_select_options_with_id(array('None'=>$app_strings['LBL_NONE'], 'Contacts' => $app_list_strings["moduleListSingular"]['Contacts']), ''));	
         }
-        else if($sugar_config['lead_conv_activity_opt'] == 'copy')
+        elseif($sugar_config['lead_conv_activity_opt'] == 'copy')
         {
         	$smarty->assign('convertModuleListOptions', get_select_options_with_id(array('Contacts' => $app_list_strings["moduleListSingular"]['Contacts']), ''));
         }
@@ -213,27 +213,27 @@ class ViewConvertLead extends SugarView
 	                {
 	                    $focus->name = $this->focus->account_name;
 	                }
-	                else if ($module == "Opportunities" && $field == 'amount')
+	                elseif ($module == "Opportunities" && $field == 'amount')
 	                {
 	                    $focus->amount = unformat_number($this->focus->opportunity_amount);
 	                } 
-                 	else if ($module == "Opportunities" && $field == 'name') {
+                 	elseif ($module == "Opportunities" && $field == 'name') {
                  		if ($opportunityNameInLayout && !empty($this->focus->opportunity_name)){
                            $focus->name = $this->focus->opportunity_name;
                  		}
                    	}
-	                else if ($field == "id")
+	                elseif ($field == "id")
                     {
 						//If it is not a contact, don't copy the ID from the lead
                     	if ($module == "Contacts") {
                     	   $focus->$field = $this->focus->$field;
                         }
-                    } else if (is_a($focus, "Company") && $field == 'phone_office')
+                    } elseif (is_a($focus, "Company") && $field == 'phone_office')
 	                {
 	                	//Special case where company and person have the same field with a different name
 	                	$focus->phone_office = $this->focus->phone_work;
 	                }
-					else if (strpos($field, "billing_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */         
+					elseif (strpos($field, "billing_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */         
 					{
 						$tmp_field = str_replace("billing_", "primary_", $field);
 						$focus->field_defs[$field]["type"] = "text";
@@ -242,7 +242,7 @@ class ViewConvertLead extends SugarView
                         }
 					 }
 
-					else if (strpos($field, "shipping_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */
+					elseif (strpos($field, "shipping_address") !== false && $focus->field_defs[$field]["type"] == "varchar") /* Bug 42219 fix */
 					{
 						$tmp_field = str_replace("shipping_", "primary_", $field);
 						if (isset($this->focus->$tmp_field)) {
@@ -250,7 +250,7 @@ class ViewConvertLead extends SugarView
                         }
 						$focus->field_defs[$field]["type"] = "text";
 					}    					
-                    else if (isset($this->focus->$field))
+                    elseif (isset($this->focus->$field))
                     {
                         $focus->$field = $this->focus->$field;
                     }
@@ -346,7 +346,7 @@ class ViewConvertLead extends SugarView
             }
             $jsOut .= "
             YAHOO.util.Event.onDOMReady(SUGAR.convert.toggle$module);";
-        } else if (isset($viewdef['default_action'])  && $viewdef['default_action'] == "create")
+        } elseif (isset($viewdef['default_action'])  && $viewdef['default_action'] == "create")
         {
              $jsOut .= "\n            SUGAR.convert.{$module}Enabled = true;";
         }
@@ -459,7 +459,7 @@ class ViewConvertLead extends SugarView
                 }
             }
             //If an existing bean was selected, relate it to the contact
-            else if (!empty($vdef['ConvertLead']['select'])) 
+            elseif (!empty($vdef['ConvertLead']['select'])) 
             {
                 //Save the new record
                 $select = $vdef['ConvertLead']['select'];
@@ -552,7 +552,7 @@ class ViewConvertLead extends SugarView
                     $bean->account_id = $beans['Accounts']->id;
                     $bean->account_name = $beans['Accounts']->name;
                 }
-                else if (!empty($selects['Accounts']))
+                elseif (!empty($selects['Accounts']))
                 {
                     $bean->account_id = $selects['Accounts'];
                 }
@@ -685,7 +685,7 @@ class ViewConvertLead extends SugarView
 	                                    }
 	                                }
 	                            }
-	                            else if ($sugar_config['lead_conv_activity_opt'] == 'move') {
+	                            elseif ($sugar_config['lead_conv_activity_opt'] == 'move') {
 	                                // if to move activities, should be only one module selected
 	                                if ($_POST['lead_conv_ac_op_sel'] == $module) {
 	                                    $this->moveActivity($activity, $bean);
@@ -889,7 +889,7 @@ class ViewConvertLead extends SugarView
 						$contact->$select = $bean->name;
 				}
 			}
-		} else if ($module != "Contacts"){
+		} elseif ($module != "Contacts"){
 			$contactRel = $this->findRelationship($contact, $bean);
 			if (!empty($contactRel))
 			{
@@ -928,19 +928,19 @@ class ViewConvertLead extends SugarView
 
 					if(strpos($field, "_address_street_2") !== false)
 						$type = "_address_street_2";
-					else if(strpos($field, "_address_street_3") !== false)
+					elseif(strpos($field, "_address_street_3") !== false)
 						$type = "_address_street_3";
-					else if(strpos($field, "_address_street_4") !== false)
+					elseif(strpos($field, "_address_street_4") !== false)
 						$type = "";
-					else if(strpos($field, "_address_street") !== false)
+					elseif(strpos($field, "_address_street") !== false)
 						$type = "_address_street";
-					else if(strpos($field, "_address_city") !== false)
+					elseif(strpos($field, "_address_city") !== false)
 						$type = "_address_city";
-					else if(strpos($field, "_address_state") !== false)
+					elseif(strpos($field, "_address_state") !== false)
 						$type = "_address_state";
-					else if(strpos($field, "_address_postalcode") !== false)
+					elseif(strpos($field, "_address_postalcode") !== false)
 						$type = "_address_postalcode";
-					else if(strpos($field, "_address_country") !== false)
+					elseif(strpos($field, "_address_country") !== false)
 						$type = "_address_country";
 
 						$var = $set.$type;
@@ -968,11 +968,11 @@ class ViewConvertLead extends SugarView
                 {
                     $rel_def = $dictionary[$from->object_name]['relationships'][$rel_name];
                 }
-                else if (isset($dictionary[$to->object_name]['relationships']) && isset($dictionary[$to->object_name]['relationships'][$rel_name]))
+                elseif (isset($dictionary[$to->object_name]['relationships']) && isset($dictionary[$to->object_name]['relationships'][$rel_name]))
                 {
                     $rel_def = $dictionary[$to->object_name]['relationships'][$rel_name];
                 }
-                else if (isset($dictionary[$rel_name]) && isset($dictionary[$rel_name]['relationships'])
+                elseif (isset($dictionary[$rel_name]) && isset($dictionary[$rel_name]['relationships'])
                         && isset($dictionary[$rel_name]['relationships'][$rel_name]))
                 {
                 	$rel_def = $dictionary[$rel_name]['relationships'][$rel_name];
@@ -982,7 +982,7 @@ class ViewConvertLead extends SugarView
                     {
                     	return $field;
                     }
-                    else if ($rel_def['rhs_module'] == $from->module_dir && $rel_def['lhs_module'] == $to->module_dir )
+                    elseif ($rel_def['rhs_module'] == $from->module_dir && $rel_def['lhs_module'] == $to->module_dir )
                     {
                     	return $field;
                     }

@@ -115,7 +115,7 @@ function get_tabs_system(){
 	if($should_hide_iframes) {
 	   if(isset($unsetTabs['iFrames'])) {
 	      unset($unsetTabs['iFrames']);
-	   } else if(isset($tabs['iFrames'])) {
+	   } elseif(isset($tabs['iFrames'])) {
 	   	  unset($tabs['iFrames']);
 	   }
 	} 

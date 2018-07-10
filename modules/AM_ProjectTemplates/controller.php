@@ -335,7 +335,7 @@ class AM_ProjectTemplatesController extends SugarController
         if($_POST['milestone'] == 'Milestone'){
             $milestone_flag = '1';
         }
-        else if($_POST['milestone'] == 'Task'){
+        elseif($_POST['milestone'] == 'Task'){
             $milestone_flag = '0';
         }
 

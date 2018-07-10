@@ -189,7 +189,7 @@ function getModuleTreeData($module){
             foreach($mod->get_linked_fields() as $name => $arr){
                 if(isset($arr['module']) && $arr['module'] != '') {
                     $rel_module = $arr['module'];
-                } else if($mod->load_relationship($name)){
+                } elseif($mod->load_relationship($name)){
                     $rel_module = $mod->$name->getRelatedModuleName();
                 }
 
@@ -237,7 +237,7 @@ function getModuleRelationships($module, $view='EditView',$value = '')
             foreach($mod->get_linked_fields() as $name => $arr){
                 if(isset($arr['module']) && $arr['module'] != '') {
                     $rel_module = $arr['module'];
-                } else if($mod->load_relationship($name)){
+                } elseif($mod->load_relationship($name)){
                     $rel_module = $mod->$name->getRelatedModuleName();
                 }
                 if(!in_array($rel_module,$invalid_modules)){
@@ -562,7 +562,7 @@ function getModuleField(
 
         if(isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users'){
             $rel_value = get_assigned_user_name($value);
-        } else if(isset($fieldlist[$fieldname]['module'])){
+        } elseif(isset($fieldlist[$fieldname]['module'])){
             require_once($beanFiles[$beanList[$fieldlist[$fieldname]['module']]]);
             $rel_focus = new $beanList[$fieldlist[$fieldname]['module']];
             $rel_focus->retrieve($value);
@@ -579,7 +579,7 @@ function getModuleField(
         $fieldlist[$fieldname]['id_name'] = $aow_field;
         $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field.'_display';
-    } else if(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
+    } elseif(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         if(!empty($params['date_format']) && isset($params['date_format'])){
             $convert_format = "Y-m-d H:i:s";
@@ -589,7 +589,7 @@ function getModuleField(
             $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
         }
         $fieldlist[$fieldname]['name'] = $aow_field;
-    } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
+    } elseif(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $displayValue = $timedate->to_display_date_time($value);
         $fieldlist[$fieldname]['value'] = $fieldlist[$aow_field]['value'] = $displayValue;
@@ -772,7 +772,7 @@ function getDropdownList($list_id, $selected_value) {
     foreach($app_list_strings[$list_id] as $key => $value) {
         if(base64_decode($selected_value) == $key) {
             $option .= '<option value="'.$key.'" selected>'.$value.'</option>';
-        } else if($selected_value == $key) {
+        } elseif($selected_value == $key) {
             $option .= '<option value="'.$key.'" selected>'.$value.'</option>';
         }
         else {
@@ -803,7 +803,7 @@ function getRoundRobinUser($users, $id) {
             return $users[$key];
         }
     }
-    else if (is_file($file)){
+    elseif (is_file($file)){
         require_once($file);
         if(isset($lastUser['User']) && $lastUser['User'] != '') {
             $users_by_key = array_flip($users); // now keys are values
@@ -876,7 +876,7 @@ function getRelatedEmailableFields($module){
                 if(!in_array($field['name'],$checked_link) && !in_array($field['relationship'],$checked_link)){
                     if(isset($field['module']) && $field['module'] != '') {
                         $rel_module = $field['module'];
-                    } else if($mod->load_relationship($field['name'])){
+                    } elseif($mod->load_relationship($field['name'])){
                         $relField = $field['name'];
                         $rel_module = $mod->$relField->getRelatedModuleName();
                     }
@@ -968,9 +968,9 @@ function fixUpFormatting($module, $field, $value)
         case 'bool':
             if (empty($value)) {
                 $value = false;
-            } else if(true === $value || 1 == $value) {
+            } elseif(true === $value || 1 == $value) {
                 $value = true;
-            } else if(in_array(strval($value), $boolean_false_values)) {
+            } elseif(in_array(strval($value), $boolean_false_values)) {
                 $value = false;
             } else {
                 $value = true;

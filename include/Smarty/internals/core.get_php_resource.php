@@ -38,7 +38,7 @@ function smarty_core_get_php_resource(&$params, &$smarty)
                 $_readable = true;
             }
         }
-    } else if ($params['resource_type'] != 'file') {
+    } elseif ($params['resource_type'] != 'file') {
         $_template_source = null;
         $_readable = is_callable($smarty->_plugins['resource'][$params['resource_type']][0][0])
             && call_user_func_array($smarty->_plugins['resource'][$params['resource_type']][0][0],

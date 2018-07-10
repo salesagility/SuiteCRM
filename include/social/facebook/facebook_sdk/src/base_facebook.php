@@ -52,10 +52,10 @@ class FacebookApiException extends Exception
     if (isset($result['error_description'])) {
       // OAuth 2.0 Draft 10 style
       $msg = $result['error_description'];
-    } else if (isset($result['error']) && is_array($result['error'])) {
+    } elseif (isset($result['error']) && is_array($result['error'])) {
       // OAuth 2.0 Draft 00 style
       $msg = $result['error']['message'];
-    } else if (isset($result['error_msg'])) {
+    } elseif (isset($result['error_msg'])) {
       // Rest server style
       $msg = $result['error_msg'];
     } else {
@@ -86,7 +86,7 @@ class FacebookApiException extends Exception
       if (is_string($error)) {
         // OAuth 2.0 Draft 10 style
         return $error;
-      } else if (is_array($error)) {
+      } elseif (is_array($error)) {
         // OAuth 2.0 Draft 00 style
         if (isset($error['type'])) {
           return $error['type'];
@@ -530,7 +530,7 @@ abstract class BaseFacebook
         $this->signedRequest = $this->parseSignedRequest(
           $_REQUEST['signed_request']
         );
-      } else if (!empty($_COOKIE[$this->getSignedRequestCookieName()])) {
+      } elseif (!empty($_COOKIE[$this->getSignedRequestCookieName()])) {
         $this->signedRequest = $this->parseSignedRequest(
           $_COOKIE[$this->getSignedRequestCookieName()]);
       }
@@ -1181,7 +1181,7 @@ abstract class BaseFacebook
     $name = 'api';
     if (isset($READ_ONLY_CALLS[strtolower($method)])) {
       $name = 'api_read';
-    } else if (strtolower($method) == 'video.upload') {
+    } elseif (strtolower($method) == 'video.upload') {
       $name = 'api_video';
     }
     return self::getUrl($name, 'restserver.php');

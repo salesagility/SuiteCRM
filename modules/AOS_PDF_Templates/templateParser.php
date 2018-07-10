@@ -60,9 +60,9 @@ class templateParser
                 $fieldName = $field_def['name'];
                 if ($field_def['type'] == 'currency') {
                     $repl_arr[$key . "_" . $fieldName] = currency_format_number($focus->$fieldName, $params = array('currency_symbol' => false));
-                } else if (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
+                } elseif (($field_def['type'] == 'radioenum' || $field_def['type'] == 'enum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
                     $repl_arr[$key . "_" . $fieldName] = translate($field_def['options'], $focus->module_dir, $focus->$fieldName);
-                } else if ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
+                } elseif ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
                     $mVals = unencodeMultienum($focus->$fieldName);
                     $translatedVals = array();
                     foreach($mVals as $mVal){
@@ -70,16 +70,16 @@ class templateParser
                     }
                     $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
                 } //Fix for Windows Server as it needed to be converted to a string.
-                else if ($field_def['type'] == 'int') {
+                elseif ($field_def['type'] == 'int') {
                     $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
-                } else if ($field_def['type'] == 'bool') {
+                } elseif ($field_def['type'] == 'bool') {
                     if($focus->$fieldName == "1"){
                         $repl_arr[$key . "_" . $fieldName] = "true";
                     }else{
                         $repl_arr[$key . "_" . $fieldName] = "false";
                     }
 
-                } else if ($field_def['type'] == 'image') {
+                } elseif ($field_def['type'] == 'image') {
                     $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
                     $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
                     // create a copy with correct extension by mime type
@@ -137,7 +137,7 @@ class templateParser
             }
             if ($value != '' && is_string($value)) {
                 $string = str_replace("\$$name", $value, $string);
-            } else if (strpos($name, 'address') > 0) {
+            } elseif (strpos($name, 'address') > 0) {
                 $string = str_replace("\$$name<br />", '', $string);
                 $string = str_replace("\$$name <br />", '', $string);
                 $string = str_replace("\$$name", '', $string);

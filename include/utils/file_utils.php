@@ -276,7 +276,7 @@ function getFiles(&$arr, $dir, $pattern = null) {
  			getFiles($arr, $file, $pattern);
  		}else{
  			if(empty($pattern)) $arr[] = $file;
-                else if(preg_match($pattern, $file))
+                elseif(preg_match($pattern, $file))
                 $arr[] = $file;
  		}
  	}

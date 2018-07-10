@@ -169,7 +169,7 @@ class Importer
             {
                 $rowValue = $locale->translateCharset(strip_tags(trim($row[$fieldNum])),$this->importSource->importlocale_charset,$sugar_config['default_charset']);
             }
-            else if( isset($this->sugarToExternalSourceFieldMap[$field]) && isset($row[$this->sugarToExternalSourceFieldMap[$field]]) )
+            elseif( isset($this->sugarToExternalSourceFieldMap[$field]) && isset($row[$this->sugarToExternalSourceFieldMap[$field]]) )
             {
                 $rowValue = $locale->translateCharset(strip_tags(trim($row[$this->sugarToExternalSourceFieldMap[$field]])),$this->importSource->importlocale_charset,$sugar_config['default_charset']);
             }
@@ -357,7 +357,7 @@ class Importer
             }
         }
         //Allow fields to be passed in for dup check as well (used by external adapters)
-        else if( !empty($_REQUEST['enabled_dup_fields']) )
+        elseif( !empty($_REQUEST['enabled_dup_fields']) )
         {
             $toDecode = html_entity_decode  ($_REQUEST['enabled_dup_fields'], ENT_QUOTES);
             $enabled_dup_fields = json_decode($toDecode);
@@ -556,7 +556,7 @@ class Importer
             //and set it to false for the save
             $focus->sync_contact=false;
         }
-        else if($focus->object_name == "User" && !empty($current_user) && $focus->is_admin && !is_admin($current_user) && is_admin_for_module($current_user, 'Users')) {
+        elseif($focus->object_name == "User" && !empty($current_user) && $focus->is_admin && !is_admin($current_user) && is_admin_for_module($current_user, 'Users')) {
             sugar_die($GLOBALS['mod_strings']['ERR_IMPORT_SYSTEM_ADMININSTRATOR']);
         }
         //bug# 46411 importing Calls will not populate Leads or Contacts Subpanel

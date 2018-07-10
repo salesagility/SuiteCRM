@@ -320,7 +320,7 @@ class ModuleBuilderController extends SugarController
             if (! empty ( $_REQUEST [ 'duplicate' ] ))
             {
                 $module->copy ( $_REQUEST [ 'name' ] ) ;
-            } else if (! empty ( $_REQUEST [ 'original_name' ] ) && $_REQUEST [ 'original_name' ] != $_REQUEST [ 'name' ])
+            } elseif (! empty ( $_REQUEST [ 'original_name' ] ) && $_REQUEST [ 'original_name' ] != $_REQUEST [ 'name' ])
             {
                 if (! $module->rename ( $_REQUEST [ 'name' ] ))
                 {

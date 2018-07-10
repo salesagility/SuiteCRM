@@ -69,7 +69,7 @@ function smarty_function_multienum_to_array($params, &$smarty)
 	if(empty($params['string'])) {
         if (empty($params['default']))
             $ret = array();
-        else if(is_array($params['default']))
+        elseif(is_array($params['default']))
             $ret = $params['default'];
         else
            $ret = unencodeMultienum($params['default']);

@@ -243,7 +243,7 @@ foreach($moduleFilters as $modFilter => $fieldArray){
 <?php
 ///////////////////// END STEP 1 - Select users/modules /////////////////////////
 }
-else if(!isset($_GET['execute'])){
+elseif(!isset($_GET['execute'])){
 ///////////////////// BEGIN STEP 2 - Confirm Selections /////////////////////////
 	if(empty($_POST['modules'])){
 		sugar_die($mod_strings_users['ERR_REASS_SELECT_MODULE']);
@@ -376,7 +376,7 @@ else if(!isset($_GET['execute'])){
 ///////////////////// END STEP 2 - Confirm Selections /////////////////////////
 }
 /////////////////// BEGIN STEP 3 - Execute reassignment ///////////////////////
-else if(isset($_GET['execute']) && $_GET['execute'] == true){
+elseif(isset($_GET['execute']) && $_GET['execute'] == true){
 	$fromuser = $_SESSION['reassignRecords']['fromuser'];
 	$touser = $_SESSION['reassignRecords']['touser'];
 	$fromusername = $_SESSION['reassignRecords']['fromusername'];
@@ -427,10 +427,10 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 					if(!empty($bean->name)){
 						$linkname = $bean->name;
 					}
-					else if(!empty($bean->last_name)){
+					elseif(!empty($bean->last_name)){
 						$linkname = $locale->getLocaleFormattedName($bean->first_name, $bean->last_name);
 					}
-					else if(!empty($bean->document_name)){
+					elseif(!empty($bean->document_name)){
 						$linkname = $bean->document_name;
 					}
 					$successstr = "{$mod_strings_users['LBL_REASS_SUCCESS_ASSIGN']} {$bean->object_name} \"<i><a href=\"index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}\">$linkname</a></i>\" {$mod_strings_users['LBL_REASS_FROM']} $fromusername {$mod_strings_users['LBL_REASS_TO']} $tousername";

@@ -172,11 +172,11 @@ class InsideViewLogicHook
         // Use the per-module functions to build the frame
         if ( is_a($bean,'Account') ) {
             $url = $this->getAccountFrameUrl($bean, $extraUrl);
-        } else if ( is_a($bean,'Contact') ) {
+        } elseif ( is_a($bean,'Contact') ) {
             $url = $this->getContactFrameUrl($bean, $extraUrl);
-        } else if ( is_a($bean,'Lead') ) {
+        } elseif ( is_a($bean,'Lead') ) {
             $url = $this->getLeadFrameUrl($bean, $extraUrl);
-        } else if ( is_a($bean, 'Opportunity') ) {
+        } elseif ( is_a($bean, 'Opportunity') ) {
             $url = $this->getOpportunityFrameUrl($bean, $extraUrl);
         } else {
             $url = '';

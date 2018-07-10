@@ -45,7 +45,7 @@ if (!empty($run)) {
   $raw_data = $xhprof_runs_impl->get_run($run, $source, $desc_unused);
   $functions = xhprof_get_matching_functions($q, $raw_data);
 
-} else if (!empty($run1) && !empty($run2)) {
+} elseif (!empty($run1) && !empty($run2)) {
 
   // diff mode
   $raw_data = $xhprof_runs_impl->get_run($run1, $source, $desc_unused);

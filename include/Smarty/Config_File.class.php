@@ -198,7 +198,7 @@ class Config_File
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
             return;
-        } else if (!isset($this->_config_data[$file_name])) {
+        } elseif (!isset($this->_config_data[$file_name])) {
             $this->_trigger_error_msg("Unknown config file '$file_name'");
             return;
         }
@@ -219,7 +219,7 @@ class Config_File
     {
         if ($file_name === NULL)
             $this->_config_data = array();
-        else if (isset($this->_config_data[$file_name]))
+        elseif (isset($this->_config_data[$file_name]))
             $this->_config_data[$file_name] = array();
     }
 
@@ -366,7 +366,7 @@ class Config_File
         if ($booleanize) {
             if (preg_match("/^(on|true|yes)$/i", $var_value))
                 $var_value = true;
-            else if (preg_match("/^(off|false|no)$/i", $var_value))
+            elseif (preg_match("/^(off|false|no)$/i", $var_value))
                 $var_value = false;
         }
 

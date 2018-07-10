@@ -640,7 +640,7 @@ if($next_clicked) {
 
     if($next_step == 9999) {
         $the_file = 'SilentInstall';
-    }else if($next_step == 9191) {
+    }elseif($next_step == 9191) {
         $_SESSION['oc_server_url']	= $_REQUEST['oc_server_url'];
         $_SESSION['oc_username']    = $_REQUEST['oc_username'];
         $_SESSION['oc_password']   	= $_REQUEST['oc_password'];

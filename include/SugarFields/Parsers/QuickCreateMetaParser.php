@@ -137,7 +137,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
                // If it's a custom field we just set the name
                $name = $customField;
 
-             } else if(empty($formElementNames) && preg_match_all('/[\{]([^\}]*?)[\}]/s', $spanValue, $matches, PREG_SET_ORDER)) {
+             } elseif(empty($formElementNames) && preg_match_all('/[\{]([^\}]*?)[\}]/s', $spanValue, $matches, PREG_SET_ORDER)) {
 	   	  	   // We are here if the $spanValue did not contain a form element for editing.
 	   	  	   // We will assume that it is read only (since there were no edit form elements)
 
@@ -150,7 +150,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 			       foreach($matches as $pair) {
 		   	  	 	   if(preg_match("/^(mod[\.]|app[\.]).*?/s", $pair[1])) {
 		   	  	 	       $customCode = str_replace($pair[1], '$'.strtoupper($pair[1]), $customCode);
-		   	  	 	   } else if(!empty($vardefs[$pair[1]])) {
+		   	  	 	   } elseif(!empty($vardefs[$pair[1]])) {
 		   	  	 	       $name = $pair[1];
 		   	  	 	       $customCode = str_replace($pair[1], '$fields.'.$pair[1].'.value', $customCode);
 		   	  	 	   }
@@ -159,7 +159,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 		       	   //If it is only a label, skip
 		       	   if(preg_match("/^(mod[\.]|app[\.]).*?/s", $matches[0][1])) {
 		       	   	  continue;
-		       	   } else if(preg_match("/^[\$].*?/s", $matches[0][1])) {
+		       	   } elseif(preg_match("/^[\$].*?/s", $matches[0][1])) {
 		       	   	  $name = '{' . strtoupper($matches[0][1]) . '}';
 		       	   } else {
 		   	  	   	  $name = $matches[0][1];
@@ -167,7 +167,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 		   	   }
 
 		   	   $readOnly = true;
-	   	  	 } else if(is_array($formElementNames)) {
+	   	  	 } elseif(is_array($formElementNames)) {
 
 	   	  	      if(count($formElementNames) == 1) {
 	   	  	      	 if(!empty($vardefs[$formElementNames[0]])) {
@@ -210,7 +210,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 	   	  	        $field = $name;
 	   	  	    }
 	   	  	    $col[] = $field;
-	   	  	 } else if($readOnly) {
+	   	  	 } elseif($readOnly) {
 	   	  	 	$field = array();
 	   	  	 	$field['name'] = $name;
 	   	  	 	$field['type'] = 'readonly';

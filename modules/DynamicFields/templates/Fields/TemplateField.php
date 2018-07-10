@@ -374,7 +374,7 @@ class TemplateField
 	{
 		if ($value === 'true' || $value === '1' || $value === 1)
 		return  true;
-		else if ($value === 'false' || $value === '0' || $value === 0)
+		elseif ($value === 'false' || $value === '0' || $value === 0)
 		return  false;
 		else
 		return $value;
@@ -438,7 +438,7 @@ class TemplateField
         } else {
             if ($this->merge_filter === "selected")
                 $this->duplicate_merge_dom_value = 3;
-            else if (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
+            elseif (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
                 $this->duplicate_merge_dom_value = 4;
             } else {
                 $this->duplicate_merge_dom_value = 2;

@@ -283,7 +283,7 @@ class XMLSecurityKey
             } else {
                 $this->key = openssl_get_privatekey($this->key, $this->passphrase);
             }
-        } else if ($this->cryptParams['cipher'] == MCRYPT_RIJNDAEL_128) {
+        } elseif ($this->cryptParams['cipher'] == MCRYPT_RIJNDAEL_128) {
             /* Check key length */
             switch ($this->type) {
                 case (XMLSecurityKey::AES256_CBC):
@@ -436,9 +436,9 @@ class XMLSecurityKey
 
         if ($length < 128){
            $output = sprintf("%c%c%s", $type, $length, $string);
-        } else if ($length < 0x0100){
+        } elseif ($length < 0x0100){
            $output = sprintf("%c%c%c%s", $type, 0x81, $length, $string);
-        } else if ($length < 0x010000) {
+        } elseif ($length < 0x010000) {
            $output = sprintf("%c%c%c%c%s", $type, 0x82, $length/0x0100, $length%0x0100, $string);
         } else {
             $output = null;

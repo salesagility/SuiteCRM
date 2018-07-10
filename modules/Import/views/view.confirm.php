@@ -171,7 +171,7 @@ class ImportViewConfirm extends ImportView
             $hasHeader = !empty($_REQUEST['has_header']) ? $_REQUEST['has_header'] : $hasHeader;
             if ($hasHeader == 'on') {
                 $hasHeader = true;
-            } else if ($hasHeader == 'off') {
+            } elseif ($hasHeader == 'off') {
                 $hasHeader = false;
             }
         }

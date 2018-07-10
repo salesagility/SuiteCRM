@@ -116,11 +116,11 @@ class AOR_Condition extends Basic
                                 default:
                                     $post_data[$key . $field_name][$i] = encodeMultienumValue($post_data[$key . $field_name][$i]);
                             }
-                        } else if ($field_name == 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
+                        } elseif ($field_name == 'value' && $post_data[$key . 'value_type'][$i] === 'Value') {
                             $post_data[$key . $field_name][$i] = fixUpFormatting($_REQUEST['report_module'], $condition->field, $post_data[$key . $field_name][$i]);
-                        } else if ($field_name == 'parameter') {
+                        } elseif ($field_name == 'parameter') {
                             $post_data[$key . $field_name][$i] = isset($post_data[$key . $field_name][$i]);
-                        } else if ($field_name == 'module_path') {
+                        } elseif ($field_name == 'module_path') {
                             $post_data[$key . $field_name][$i] = base64_encode(serialize(explode(":", $post_data[$key . $field_name][$i])));
                         }
                         if ($field_name == 'parenthesis' && $post_data[$key . $field_name][$i] == 'END') {
@@ -131,7 +131,7 @@ class AOR_Condition extends Basic
                         } else {
                             $condition->$field_name = $post_data[$key . $field_name][$i];
                         }
-                    } else if ($field_name == 'parameter') {
+                    } elseif ($field_name == 'parameter') {
                         $condition->$field_name = 0;
                     }
 

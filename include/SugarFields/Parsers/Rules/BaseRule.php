@@ -70,7 +70,7 @@ function parsePanels($panels, $view) {
 function isCustomField($mixed) {
    if(is_array($mixed) && isset($mixed['name']) && preg_match('/.*?_c$/s', $mixed['name'])) {
    	  return true;
-   } else if(!is_array($mixed) && isset($mixed) && preg_match('/.*?_c$/s', $mixed)) {
+   } elseif(!is_array($mixed) && isset($mixed) && preg_match('/.*?_c$/s', $mixed)) {
    	  return true;
    }
    return false;
@@ -79,7 +79,7 @@ function isCustomField($mixed) {
 function matches($mixed, $regExp) {
    if(is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'])) {
    	  return true;
-   } else if(!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
+   } elseif(!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
    	  return true;
    }
    return false;
@@ -88,7 +88,7 @@ function matches($mixed, $regExp) {
 function getMatch($mixed, $regExp) {
    if(is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'], $matches)) {
    	  return $matches;
-   } else if(!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
+   } elseif(!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
    	  return $matches;
    }
    return null;

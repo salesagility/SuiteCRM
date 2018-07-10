@@ -138,7 +138,7 @@ class ProspectList extends SugarBean
 			$where_auto = '1=1';
 				if($show_deleted == 0){
                 	$where_auto = "$this->table_name.deleted=0";
-				}else if($show_deleted == 1){
+				}elseif($show_deleted == 1){
                 	$where_auto = "$this->table_name.deleted=1";
 				}
 
@@ -224,7 +224,7 @@ class ProspectList extends SugarBean
 					}
 				}
 				// else, only if for this module no entry exists for this field, query an empty string
-				else if (!isset($memberarr['fields'][$val['name']]))
+				elseif (!isset($memberarr['fields'][$val['name']]))
 				{
 					$memberarr['fields'][$fieldname] = "null AS " . $fieldname;
 				}

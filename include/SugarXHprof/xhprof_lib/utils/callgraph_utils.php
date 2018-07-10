@@ -321,7 +321,7 @@ function xhprof_generate_dot_script($raw_data, $threshold, $source, $page,
                   "\\nCalls: ".(sprintf("%.3f",$left[$symbol]["ct"]))." - "
                    .(sprintf("%.3f",$right[$symbol]["ct"]))." = "
                    .(sprintf("%.3f",$info["ct"]))."\"";
-      } else if (isset($left[$symbol])) {
+      } elseif (isset($left[$symbol])) {
         $label = ", label=\"".addslashes($symbol).
                   "\\nInc: ".(sprintf("%.3f",$left[$symbol]["wt"] / 1000.0))
                    ." ms - 0 ms = ".(sprintf("%.3f",$info["wt"] / 1000.0))

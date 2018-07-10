@@ -215,7 +215,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             if($defines['focus']->object_name=='Contact') {
                 $additionalFormFields['parent_id'] = $defines['focus']->account_id;
                 $additionalFormFields['account_id'] = $defines['focus']->account_id;
-            } else if($defines['focus']->object_name=='Contract') {
+            } elseif($defines['focus']->object_name=='Contract') {
             	$additionalFormFields['contract_id'] = $defines['focus']->id;
             } else {
                 $additionalFormFields['parent_id'] = $defines['focus']->id;

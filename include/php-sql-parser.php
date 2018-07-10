@@ -952,7 +952,7 @@ EOREGEX
 							if(!$table) {
 								$table = $token ;
 							}
-						} else if($token_count == 1) {
+						} elseif($token_count == 1) {
 							$alias = $token;
 						}
 						$token_count++;
