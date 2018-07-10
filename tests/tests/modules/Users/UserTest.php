@@ -538,7 +538,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function retrieve_by_email_address($id)
 	{
-		$user = BeanFactory::registerBean('Users', $id);
+		$user = BeanFactory::getBean('Users', $id);
 
 		//test with invalid email
 		$user->retrieve_by_email_address("wrongone@email.com");
