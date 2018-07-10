@@ -155,6 +155,16 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         $i->setDocumentifier($doc2);
         self::assertEquals($doc2Exp, $i->getDocumentifierName());
     }
+
+    public function testGetIndexerName()
+    {
+        $i = new TestIndexer();
+
+        $expected = "TestIndexer";
+        $actual = $i->getIndexerName();
+
+        self::assertEquals($expected, $actual, "Indexer name does not match");
+    }
 }
 
 class TestIndexer extends AbstractIndexer

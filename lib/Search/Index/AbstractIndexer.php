@@ -48,6 +48,8 @@ namespace SuiteCRM\Search\Index;
 
 
 use InvalidArgumentException;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use ReflectionClass;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
@@ -67,10 +69,89 @@ abstract class AbstractIndexer
         'Tasks', 'Spots', 'Surveys',
         'Cases', 'Documents', 'Notes'
     ];
+    /** @var Logger Monolog instance to log on a separate file */
+    protected $logger;
+    /** @var string where the log files are going to be stored */
+    protected $logFile = 'search_index.log';
 
     public function __construct()
     {
         $this->documentifier = new JsonSerializerDocumentifier();
+        $this->logger = new Logger($this->getIndexerName());
+
+        try {
+            $this->logger->pushHandler(new StreamHandler($this->logFile));
+        } catch (\Exception $e) {
+            $GLOBALS['log']->error('Failed to create indexer log stream handler.');
+            $GLOBALS['log']->error($e);
+        }
+    }
+
+    /**
+     * Returns the short name (class name, without namespace) of the current Indexer.
+     *
+     * @return string
+     */
+    public function getIndexerName()
+    {
+        return $this->getObjectClassName($this);
+    }
+
+    /**
+     * @param $obj
+     * @return string
+     */
+    private function getObjectClassName($obj)
+    {
+        try {
+            $reflect = new ReflectionClass($obj);
+            return $reflect->getShortName();
+        } catch (\ReflectionException $e) {
+            return get_class($obj);
+        }
+    }
+
+    /**
+     * Used to log actions and errors performed by the indexer.
+     *
+     * They are displayed to the console if `echoLogsEnabled` is `true`;
+     *
+     * It will also attempt to save the output on a separate log file.
+     *
+     * @param $type string @ = debug, - = info, * = warning, ! = error
+     * @param $message string the message to log
+     */
+    public function log($type, $message)
+    {
+        $level = Logger::DEBUG;
+
+        switch ($type) {
+            case '@':
+                $type = "\033[32m$type\033[0m";
+                break;
+            case '-':
+                $type = "\033[92m$type\033[0m";
+                $level = Logger::INFO;
+                break;
+            case '*':
+                $type = "\033[33m$type\033[0m";
+                $level = Logger::WARNING;
+                break;
+            case '!':
+                $type = "\033[31m$type\033[0m";
+                $level = Logger::ERROR;
+                break;
+        }
+
+        try {
+            $this->logger->log($level, $message);
+        } catch (\Exception $e) {
+            $GLOBALS['log']->error('Failed to log indexer info with Monolog.');
+            $GLOBALS['log']->error($e);
+        }
+
+        if ($this->echoLogsEnabled)
+            echo " [$type] ", $message, PHP_EOL;
     }
 
     abstract function run();
@@ -86,33 +167,6 @@ abstract class AbstractIndexer
     abstract function removeBeans($bean);
 
     abstract function removeIndex();
-
-    /**
-     * Used to log actions and errors performed by the indexer.
-     *
-     * They are displayed to the console if `echoLogsEnabled` is `true`;
-     *
-     * @param $type string @ = info, * = warning, ! = error
-     * @param $message string the message to log
-     */
-    public function log($type, $message)
-    {
-        if (!$this->echoLogsEnabled) return;
-
-        switch ($type) {
-            case '@':
-                $type = "\033[32m$type\033[0m";
-                break;
-            case '*':
-                $type = "\033[33m$type\033[0m";
-                break;
-            case '!':
-                $type = "\033[31m$type\033[0m";
-                break;
-        }
-
-        echo " [$type] ", $message, PHP_EOL;
-    }
 
     /**
      * @return bool
@@ -163,18 +217,13 @@ abstract class AbstractIndexer
     }
 
     /**
-     * Returns the name of the selected documentifier.
+     * Returns the short (not fully qualified) name of the selected documentifier, i.e. the class name.
      *
      * @return string
      */
     public function getDocumentifierName()
     {
-        try {
-            $reflect = new ReflectionClass($this->documentifier);
-            return $reflect->getShortName();
-        } catch (\ReflectionException $e) {
-            return get_class($this->documentifier);
-        }
+        return $this->getObjectClassName($this->documentifier);
     }
 
     /**

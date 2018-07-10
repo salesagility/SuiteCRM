@@ -28,7 +28,8 @@
     "google/recaptcha": "^1.1",
     "ezyang/htmlpurifier": "^4.10",
     "elasticsearch/elasticsearch": "^5.3",
-    "nesbot/carbon": "^1.31"
+    "nesbot/carbon": "^1.31",
+    "monolog/monolog": "^1.23"
   },
   "require-dev": {
     "leafo/scssphp": "dev-master",

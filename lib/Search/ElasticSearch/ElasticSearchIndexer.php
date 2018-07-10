@@ -175,6 +175,8 @@ class ElasticSearchIndexer extends AbstractIndexer
             $index = $this->index;
         }
 
+        $this->log('@', "Removing index $index");
+
         $params = ['index' => $index];
         $params['client'] = ['ignore' => [404]];
 
@@ -207,7 +209,7 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         if ($beans === null) {
             if (!$this->differentialIndexing())
-                $this->log('*', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
+                $this->log('-', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
             return;
         } else {
             $this->log('@', sprintf('Indexing module %s...', $module));
@@ -360,6 +362,8 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     public function indexBean($bean)
     {
+        $this->log('@', "Indexing {$bean->module_name}($bean->name)");
+
         $args = $this->makeIndexParamsFromBean($bean);
 
         $this->client->index($args);
@@ -452,6 +456,7 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     public function setIndex($index)
     {
+        $this->log('@', "Setting index to $index");
         $this->index = $index;
     }
 
@@ -460,6 +465,8 @@ class ElasticSearchIndexer extends AbstractIndexer
      */
     public function removeBean($bean)
     {
+        $this->log('@', "Removing {$bean->module_name}($bean->name)");
+
         $args = $this->makeParamsHeaderFromBean($bean);
         $this->client->delete($args);
     }
