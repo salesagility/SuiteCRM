@@ -540,16 +540,19 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 	public function retrieve_by_email_address($id)
 	{
 		$user = BeanFactory::getBean('Users');
+                
+		//test with valid email and test for record ID to verify that record is same
+		$user->retrieve_by_email_address("one@email.com");
+		$this->assertTrue(isset($user->id));
+		$this->assertEquals($id, $user->id);
 
+		$user = BeanFactory::getBean('Users');
+                
 		//test with invalid email
 		$user->retrieve_by_email_address("wrongone@email.com");
 		$this->assertEquals('', $user->id);
 
 
-		//test with valid email and test for record ID to verify that record is same
-		$user->retrieve_by_email_address("one@email.com");
-		$this->assertTrue(isset($user->id));
-		$this->assertEquals($id, $user->id);
 
 	}
 
@@ -564,8 +567,9 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$result = User::findUserPassword("test",md5("test"));
 
-		$this->assertTrue(isset($result['id']));
-		$this->assertEquals($id, $result['id']);
+                // md5 pwd is deprecated
+		$this->assertTrue(!isset($result['id']) || empty($result['id']));
+		$this->assertNotEquals($id, $result['id']);
 
 	}
 
