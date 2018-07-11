@@ -501,7 +501,7 @@ class SugarFeed extends Basic {
         if (null !== ($userStartDate = $timedate->fromUser($startDate))) {
             $userStartDateTs = $userStartDate->ts;
         } else {
-            LoggerManager::getLogger()->warn('Invalid $startDate)');
+            LoggerManager::getLogger()->warn('Invalid $startDate');
 
             return '';
         }
