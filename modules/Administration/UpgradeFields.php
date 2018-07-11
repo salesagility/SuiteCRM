@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry)
 
 require_once ('modules/DynamicFields/DynamicField.php');
 require_once ('modules/DynamicFields/FieldCases.php');
-global $db;
+$db = DBManagerFactory::getInstance();
 
 if (!isset ($db)) {
 	$db = DBManagerFactory:: getInstance();

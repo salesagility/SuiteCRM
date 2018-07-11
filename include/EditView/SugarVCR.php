@@ -187,7 +187,11 @@
  	}
 
  	static function erase($module){
+            if (isset($_SESSION)) {
  		unset($_SESSION[$module. 'QUERY_ARRAY']);
+            } else {
+                LoggerManager::getLogger()->warn('Undefined variable: _SESSION');
+            }
  	}
 
  }

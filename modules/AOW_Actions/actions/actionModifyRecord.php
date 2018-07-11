@@ -90,8 +90,9 @@ EOS;
 
 
         $module = getRelatedModule($bean->module_name, $params['rel_type']);
-        $html .= "cr_module[".$line."] = \"".$module."\";";
-        $html .= "cr_fields[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleFields($module)))."\";";
+        $html .= "cr_module[" . $line . "] = \"" . $module . "\";";
+        $html .= "cr_fields[" . $line . "] = \"" . trim(preg_replace('/\s+/', ' ',
+                getModuleFields($module, 'EditView', '', array(), array('email1', 'email2')))) . "\";";
         $html .= "cr_relationships[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($module)))."\";";
         if($params && array_key_exists('field',$params)){
             foreach($params['field'] as $key => $field){

@@ -56,7 +56,7 @@ function get_node_data($params,$get_array=false) {
 	foreach ($nodes as $node) {
 		$ret['nodes'][]=$node->get_definition();
 	}
-	$json = new JSON(JSON_LOOSE_TYPE);
+	$json = new JSON();
 	$str=$json->encode($ret);
 	return $str;
 }
@@ -70,10 +70,10 @@ function get_node_data($params,$get_array=false) {
     global $mod_strings;
     global $app_list_strings;
     $query="select distinct category_id, subcategory_id from documents where deleted=0 order by category_id, subcategory_id";
-    $result=$GLOBALS['db']->query($query);
+    $result=DBManagerFactory::getInstance()->query($query);
     $current_cat_id=null;
     $cat_node=null;
-    while (($row=$GLOBALS['db']->fetchByAssoc($result))!= null) {
+    while (($row=DBManagerFactory::getInstance()->fetchByAssoc($result))!= null) {
 
         if (empty($row['category_id'])) {
             $cat_id='null';
@@ -126,9 +126,9 @@ function get_documents($cat_id, $subcat_id,$href=true) {
     } else {
         $query.=" and subcategory_id is null";
     }
-    $result=$GLOBALS['db']->query($query);
+    $result=DBManagerFactory::getInstance()->query($query);
     $current_cat_id=null;
-    while (($row=$GLOBALS['db']->fetchByAssoc($result))!= null) {
+    while (($row=DBManagerFactory::getInstance()->fetchByAssoc($result))!= null) {
         $node = new Node($row['id'], $row['document_name']);
         if ($href) {
             $node->set_property("href", $href_string);

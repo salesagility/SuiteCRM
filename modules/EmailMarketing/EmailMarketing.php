@@ -104,9 +104,12 @@ class EmailMarketing extends SugarBean
 		}
 
 		$timedate = TimeDate::getInstance();
-		$timedate->setUser($current_user);
-		if($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start)) {
-			$dateStart = $timedate->asDb($dateTime);
+
+        $userTimeZone = $current_user->getPreference('timezone');
+        $timeZone = new DateTimeZone($userTimeZone);
+
+        if($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start,$timeZone)) {
+            $dateStart = $timedate->asDb($dateTime);
 			$this->date_start = $dateStart;
 		}
 
@@ -139,8 +142,19 @@ class EmailMarketing extends SugarBean
 
 		$temp_array = $this->get_list_view_array();
 
-		$id = $temp_array['ID'];
-		$template_id = $temp_array['TEMPLATE_ID'];
+                $id = null;
+                if (isset($temp_array['ID'])) {
+                    $id = $temp_array['ID'];
+                } else {
+                    LoggerManager::getLogger()->warn('ID is not set for email marketing export query');
+                }
+                
+                $template_id = null;
+                if (isset($temp_array['TEMPLATE_ID'])) {
+                    $template_id = $temp_array['TEMPLATE_ID'];
+                } else {
+                    LoggerManager::getLogger()->warn('Template ID is not set for email marketing export query');
+                }
 
 		//mode is set by schedule.php from campaigns module.
 		if (!isset($this->mode) or empty($this->mode) or $this->mode!='test') {

@@ -37,11 +37,51 @@ function perform_aos_save($focus){
             $focus->$fieldNameDollar = '';
             if(!number_empty($focus->field_defs[$field['name']])){
                 $currency = new Currency();
-                $currency->retrieve($focus->currency_id);
-                $focus->$fieldNameDollar = $currency->convertToDollar(unformat_number($fieldName));
+                
+                $currencyId = null;
+                if (isset($focus->currency_id)) {
+                    $currencyId = $focus->currency_id;
+                } else {
+                    LoggerManager::getLogger()->warn('Undefined currency ID: ' . get_class($focus) . '::$currency_id');
+                }
+                
+                $currency->retrieve($currencyId);
+                
+                $fieldValue = null;
+                if (isset($focus->$fieldName)) {
+                    $fieldValue = $focus->$fieldName;
+                } else {
+                    LoggerManager::getLogger('Undefined field: ' . get_class($focus) . '::$' . $fieldName);
+                }
+
+                $amountToConvert = $fieldValue;
+                if (!amountToConvertIsDatabaseValue($focus, $fieldName)) {
+                    
+                    $amountToConvert = null;
+                    $fieldName = null;
+                    if (isset($focus->$fieldName)) {
+                        $fieldName = $focus->$fieldName;
+                        $amountToConvert = unformat_number($fieldName);
+                    } else {
+                        LoggerManager::getLogger()->error('Filedname is not defined for class ' . get_class($focus));
+                    }
+                    
+                }
+
+                $focus->$fieldNameDollar = $currency->convertToDollar($amountToConvert);
             }
 
         }
 
     }
+}
+
+function amountToConvertIsDatabaseValue($focus, $fieldName)
+{
+    if (isset($focus->fetched_row)
+        && isset($focus->fetched_row[$fieldName])
+        && $focus->fetched_row[$fieldName] == $focus->$fieldName) {
+        return true;
+    }
+    return false;
 }

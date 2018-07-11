@@ -19,6 +19,13 @@
   "autoload": {
     "psr-0": {
       "": "src/"
+    },
+    "psr-4": {
+      "SuiteCRM\\": [
+        "lib/",
+        "include/",
+        "tests/SuiteCRM/"
+      ]
     }
   },
   "extra": {}

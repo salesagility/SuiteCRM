@@ -1,5 +1,45 @@
 CHANGELOG
 =========
+v.2.11.0
+* [#236](https://github.com/onelogin/php-saml/pull/236) Exclude unnecesary files from Composer production downloads
+* [#226](https://github.com/onelogin/php-saml/pull/226) Add possibility to handle nameId NameQualifier attribute in SLO Request
+* Improve logout documentation on Readme.
+* Improve multi-certificate support
+
+v.2.10.7
+* Fix IdPMetadataParser. The SingleLogoutService retrieved method was wrong
+* [#201](https://github.com/onelogin/php-saml/issues/201) Fix issues with SP entity_id, acs url and sls url that contains &
+
+v.2.10.6
+* [#206](https://github.com/onelogin/php-saml/pull/206)Be able to register future SP x509cert on the settings and publish it on SP metadata
+* [#206](https://github.com/onelogin/php-saml/pull/206) Be able to register more than 1 Identity Provider x509cert, linked with an specific use (signing or encryption)
+* [#206](https://github.com/onelogin/php-saml/pull/206) Support the ability to parse IdP XML metadata (remote url or file) and be able to inject the data obtained on the settings.
+
+v.2.10.5
+* Be able to get at the auth object the last processed ID
+* Improve NameID Format support
+* Reset errorReason attribute of the auth object after each Process method
+* Validate serial number as string to work around libxml2 limitation
+* Make the Issuer on the Response Optional
+
+v.2.10.4
+* [+](https://github.com/onelogin/php-saml/commit/949359f5cad5e1d085c4e5447d9aa8f49a6e82a1) Security update for signature validation on LogoutRequest/LogoutResponse
+* [#192](https://github.com/onelogin/php-saml/pull/192) Added ability to configure DigestAlgorithm in settings
+* [#183](https://github.com/onelogin/php-saml/pull/183) Fix strpos bug when decrypting assertions
+* [#186](https://github.com/onelogin/php-saml/pull/186) Improve info on entityId validation Exception
+* [#188](https://github.com/onelogin/php-saml/pull/188) Fixed issue with undefined constant of UNEXPECTED_SIGNED_ELEMENT
+* Read ACS binding on AuthNRequest builder from settings
+* Be able to relax Destination validation on SAMLResponses and let this
+  attribute to be empty with the 'relaxDestinationValidation' setting
+
+v.2.10.3
+* Implement a more specific exception class for handling some validation errors
+* Minor changes on time validation/exceptions
+* Add hooks to retrieve last-sent and last-received requests and responses
+* Improve/Fix tests
+* Add DigestAlgorithm support on addSign
+* [#177](https://github.com/onelogin/php-saml/pull/177) Add error message for bad OneLogin_Saml2_Settings argument
+
 v.2.10.2
 * [#175](https://github.com/onelogin/php-saml/pull/175) Allow overriding of host, port, protocol and url path for URL building
 * [#173](https://github.com/onelogin/php-saml/pull/173) Provide better support to NameIdFormat

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,10 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/EditView/EditView2.php');
 
@@ -110,8 +113,20 @@ class MassUpdate
 		unset($_REQUEST['PHPSESSID']);
 		$query = json_encode($_REQUEST);
 
-        $bean = loadBean($_REQUEST['module']);
-       $order_by_name = $bean->module_dir.'2_'.strtoupper($bean->object_name).'_ORDER_BY' ;
+                if (!isset($_REQUEST['module'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: module');
+                }
+                
+        $bean = loadBean(isset($_REQUEST['module']) ? $_REQUEST['module'] : null);
+        
+        if (!isset($bean->module_dir)) {
+            LoggerManager::getLogger()->warn('module_dir is not set for bean');
+        }
+        if (!isset($bean->object_name)) {
+            LoggerManager::getLogger()->warn('object_name is not set for bean');
+        }
+        
+       $order_by_name = (isset($bean->module_dir) ? $bean->module_dir : null).'2_'.strtoupper(isset($bean->object_name) ? $bean->object_name : null).'_ORDER_BY' ;
        $lvso = isset($_REQUEST['lvso'])?$_REQUEST['lvso']:"";
        $request_order_by_name = isset($_REQUEST[$order_by_name])?$_REQUEST[$order_by_name]:"";
        $action = isset($_REQUEST['action'])?$_REQUEST['action']:"";
@@ -132,7 +147,12 @@ class MassUpdate
         . "<input type='hidden' name='{$order_by_name}' value='{$request_order_by_name}' />\n";
 
 		// cn: bug 9103 - MU navigation in emails is broken
-		if($_REQUEST['module'] == 'Emails') {
+        
+                if (!isset($_REQUEST['module'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: module');
+                }
+        
+		if(isset($_REQUEST['module']) && $_REQUEST['module'] == 'Emails') {
 			$type = "";
 			// determine "type" - inbound, archive, etc.
 			if (isset($_REQUEST['type'])) {
@@ -156,7 +176,7 @@ eoq;
 	function handleMassUpdate(){
 
 		require_once('include/formbase.php');
-		global $current_user, $db, $disable_date_format, $timedate;
+		global $current_user, $db, $disable_date_format, $timedate, $app_list_strings;
 
 		foreach($_POST as $post=>$value){
 			if(is_array($value)){
@@ -338,8 +358,16 @@ eoq;
 									list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
 
 									if($parentenum_value != $dynamic_field_value) {
+
 										// Change to the default value of the correct value set.
-										$newbean->$dynamic_field_name = $parentenum_value . '_' . $parentenum_value;
+                      $defaultValue = '';
+                      foreach ($app_list_strings[$field_name['options']] as $key => $value) {
+                          if (strpos($key, $parentenum_value) === 0) {
+                              $defaultValue = $key;
+                              break;
+                          }
+                      }
+                      $newbean->$dynamic_field_name = $defaultValue;
 									}
 								}
 							}
@@ -348,7 +376,7 @@ eoq;
 						$newbean->save($check_notify);
 						if (!empty($email_address_id)) {
 	    					$query = "UPDATE email_addresses SET opt_out = {$optout_flag_value} where id = '{$emailAddressRow['email_address_id']}'";
-	    					$GLOBALS['db']->query($query);
+	    					DBManagerFactory::getInstance()->query($query);
 
 						} // if
 
@@ -453,7 +481,7 @@ eoq;
 						case "int":
 							if(!empty($field['massupdate']) && empty($field['auto_increment']))
 							{
-								$even = !$even; $newhtml .=$this->addInputType($displayname, $field);
+								$even = !$even; $newhtml .=$this->addInputType($displayname, $field['name']);
 							}
 							 break;
 						case "contact_id":$even = !$even; $newhtml .=$this->addContactID($displayname, $field["name"]); break;
@@ -745,13 +773,16 @@ EOQ;
 	}
 
     /**
-	  * Add a generic widget to lookup Users.
-	  * @param displayname Name to display in the popup window
-	  * @param varname name of the variable
-	  * @param id_name name of the id in vardef
-	  * @param mod_type name of the module, either "Contact" or "Releases" currently
-	  */
-	function addUserName($displayname, $varname, $id_name='', $mod_type){
+     * Add a generic widget to lookup Users
+     *
+     * @param string $displayname Name to display in the popup window
+     * @param string $varname name of the variable
+     * @param string $id_name name of the id in vardef
+     * @param string $mod_type name of the module, either "Contact" or "Releases" currently
+     * @return string
+     */
+    public function addUserName($displayname, $varname, $id_name = '', $mod_type = null)
+    {
 		global $app_strings;
 
 		if(empty($id_name))
@@ -809,16 +840,18 @@ addToValidateBinaryDependency('MassUpdate', '{$varname}', 'alpha', false, '{$app
 EOHTML;
 	}
 
-
-	/**
-	  * Add a generic module popup selection popup window HTML code.
-	  * Currently supports Contact and Releases
-	  * @param displayname Name to display in the popup window
-	  * @param varname name of the variable
-	  * @param id_name name of the id in vardef
-	  * @param mod_type name of the module, either "Contact" or "Releases" currently
-	  */
-	function addGenericModuleID($displayname, $varname, $id_name='', $mod_type){
+    /**
+     * Add a generic module popup selection popup window HTML code.
+     * Currently supports Contact and Releases
+     *
+     * @param string $displayname Name to display in the popup window
+     * @param string $varname Name of the variable
+     * @param string $id_name Name of the id in vardef
+     * @param string $mod_type Name of the module, either "Contact" or "Releases" currently
+     * @return string
+     */
+    function addGenericModuleID($displayname, $varname, $id_name = '', $mod_type = null)
+    {
 		global $app_strings;
 
 		if(empty($id_name))
@@ -1360,5 +1393,3 @@ EOQ;
         return '';
     }
 }
-
-?>

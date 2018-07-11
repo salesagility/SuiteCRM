@@ -222,22 +222,28 @@ do {
             $outboundEmailAccount = BeanFactory::getBean('OutboundEmailAccounts',
                 $current_emailmarketing->outbound_email_id);
 
-            if (strtolower($outboundEmailAccount->mail_sendtype) == "smtp") {
-                $mail->Mailer = "smtp";
+            if (strtolower($outboundEmailAccount->mail_sendtype) === 'smtp') {
+                $mail->Mailer = 'smtp';
                 $mail->Host = $outboundEmailAccount->mail_smtpserver;
                 $mail->Port = $outboundEmailAccount->mail_smtpport;
                 if ($outboundEmailAccount->mail_smtpssl == 1) {
                     $mail->SMTPSecure = 'ssl';
                 } elseif ($outboundEmailAccount->mail_smtpssl == 2) {
                     $mail->SMTPSecure = 'tls';
+                } else {
+                    $mail->SMTPSecure = '';
                 }
                 if ($outboundEmailAccount->mail_smtpauth_req) {
                     $mail->SMTPAuth = true;
                     $mail->Username = $outboundEmailAccount->mail_smtpuser;
                     $mail->Password = $outboundEmailAccount->mail_smtppass;
+                } else {
+                    $mail->SMTPAuth = false;
+                    $mail->Username = '';
+                    $mail->Password = '';
                 }
             } else {
-                $mail->Mailer = "sendmail";
+                $mail->Mailer = 'sendmail';
             }
 
             $mail->oe->mail_smtpauth_req = $outboundEmailAccount->mail_smtpauth_req;

@@ -161,7 +161,7 @@
            meta/studio defines the first panel should always be tab.
        *}
         {if $config.enable_action_menu and $config.enable_action_menu != false}
-        {{if tabCount == 0}}
+        {{if $tabCount == 0}}
         {*<!-- TAB CONTENT USE TABS -->*}
         <div class="tab-content">
             {{else}}
@@ -265,7 +265,7 @@
                                     </div>
                                 </a>
                             </div>
-                            <div class="panel-body {{$collapse}}" id="{{$panelId}}">
+                            <div class="panel-body {{$collapse}} panelContainer" id="{{$panelId}}"  data-id="{{$label_upper}}">
                                 <div class="tab-content">
                                     <!-- TAB CONTENT -->
                                     {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
@@ -284,7 +284,7 @@
                             </a>
 
                         </div>
-                        <div class="panel-body {{$collapse}}" id="{{$panelId}}">
+                        <div class="panel-body {{$collapse}} panelContainer" id="{{$panelId}}" data-id="{{$label_upper}}">
                             <div class="tab-content">
                                 <!-- TAB CONTENT -->
                                 {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}

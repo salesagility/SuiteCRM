@@ -68,7 +68,6 @@ foreach($item_ids as $key=>$value)
 }
 
 ini_set('max_execution_time', 600);
-ini_set('error_reporting', 'E_ALL');
 $dataDir = create_cache_directory("MergedDocuments/");
 $fileName = UploadFile::realpath("upload://$document->document_revision_id");
 $outfile = pathinfo($document->filename, PATHINFO_FILENAME);

@@ -1,87 +1,134 @@
 <?php
 /**
- * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * @author SalesAgility <info@salesagility.com>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+class AOW_WorkFlow extends Basic
+{
+    public $new_schema = true;
+    public $module_dir = 'AOW_WorkFlow';
+    public $object_name = 'AOW_WorkFlow';
+    public $table_name = 'aow_workflow';
+    public $importable = false;
+    public $disable_row_level_security = true;
 
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $flow_module;
+    public $status;
+    public $run_when;
+    public $flow_run_on;
+    public $multiple_runs;
 
-class AOW_WorkFlow extends Basic {
-	var $new_schema = true;
-	var $module_dir = 'AOW_WorkFlow';
-	var $object_name = 'AOW_WorkFlow';
-	var $table_name = 'aow_workflow';
-	var $importable = false;
-	var $disable_row_level_security = true ;
+    /**
+     * return an SQL operator
+     * @param $key name of SQL operator
+     * @return mixed SQL operator or false if $key not found
+     */
+    private function getSQLOperator($key) {
+        $sqlOperatorList['Equal_To'] = '=';
+        $sqlOperatorList['Not_Equal_To'] = '!=';
+        $sqlOperatorList['Greater_Than'] = '>';
+        $sqlOperatorList['Less_Than'] = '<';
+        $sqlOperatorList['Greater_Than_or_Equal_To'] = '>=';
+        $sqlOperatorList['Less_Than_or_Equal_To'] = '<=';
+        $sqlOperatorList['Contains'] = 'LIKE';
+        $sqlOperatorList['Starts_With'] = 'LIKE';
+        $sqlOperatorList['Ends_With'] = 'LIKE';
+        $sqlOperatorList['is_null'] = 'IS NULL';
+        if(!isset($sqlOperatorList[$key])) {
+            return false;
+        }
+        return $sqlOperatorList[$key];
+    }
 
-	var $id;
-	var $name;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $modified_by_name;
-	var $created_by;
-	var $created_by_name;
-	var $description;
-	var $deleted;
-	var $created_by_link;
-	var $modified_user_link;
-	var $assigned_user_id;
-	var $assigned_user_name;
-	var $assigned_user_link;
-	var $flow_module;
-	var $status;
-	var $run_when;
+    /**
+     * check an SQL operator is exists
+     * @param $key name of SQL operator
+     * @return bool true if operator exists otherwise false
+     */
+    private function isSQLOperator($key) {
+        return $this->getSQLOperator($key) ? true : false;
+    }
 
-	public function __construct($init=true){
-		parent::__construct();
-        if($init){
+    /**
+     * AOW_WorkFlow constructor.
+     * @param bool $init
+     */
+    public function __construct($init = true)
+    {
+        parent::__construct();
+        if ($init) {
             $this->load_flow_beans();
             require_once('modules/AOW_WorkFlow/aow_utils.php');
         }
-	}
-
-    /**
-     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-     */
-    public function AOW_WorkFlow($init=true){
-        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
-            $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
-            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-        }
-        self::__construct($init);
     }
 
-	function bean_implements($interface){
-		switch($interface){
-			case 'ACL': return true;
-		}
-		return false;
-	}
+    /**
+     * @param $interface
+     * @return bool
+     */
+    public function bean_implements($interface)
+    {
+        switch ($interface) {
+            case 'ACL':
+                return true;
+        }
 
-    function save($check_notify = FALSE){
-        if (empty($this->id)){
+        return false;
+    }
+
+    function save($check_notify = false)
+    {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['aow_conditions_id']);
             unset($_POST['aow_actions_id']);
         }
@@ -117,15 +164,23 @@ class AOW_WorkFlow extends Basic {
 
     /**
      * Select and run all active flows
+     * @return bool
      */
-	function run_flows(){
-		$flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
+    public function run_flows()
+    {
+        $flows = AOW_WorkFlow::get_full_list('',
+            " aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
-        foreach($flows as $flow){
+        if (empty($flows)) {
+            LoggerManager::getLogger()->warn('There is no any workflow to run');
+        }
+        
+        foreach ((array)$flows as $flow) {
             $flow->run_flow();
         }
+
         return true;
-	}
+    }
 
     /**
      * Retrieve the beans to actioned and run the actions
@@ -165,8 +220,15 @@ class AOW_WorkFlow extends Basic {
      */
     function get_flow_beans(){
         global $beanList;
+        
+        $flowModule = null;
+        if (isset($beanList[$this->flow_module])) {
+            $flowModule = $beanList[$this->flow_module];
+        } else {
+            LoggerManager::getLogger()->warn('Undefined flow module in bean list: ' . $this->flow_module);
+        }
 
-        if($beanList[$this->flow_module]){
+        if($flowModule){
             $module = new $beanList[$this->flow_module]();
 
             $query = '';
@@ -232,8 +294,15 @@ class AOW_WorkFlow extends Basic {
 
     function build_flow_query_where($query = array()){
         global $beanList;
+        
+        $flowModule = null;
+        if (isset($beanList[$this->flow_module])) {
+            $flowModule = $beanList[$this->flow_module];
+        } else {
+            LoggerManager::getLogger()->warn('Undefined flow module in bean list: ' . $this->flow_module);
+        }
 
-        if($beanList[$this->flow_module]){
+        if($flowModule){
             $module = new $beanList[$this->flow_module]();
 
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
@@ -251,17 +320,31 @@ class AOW_WorkFlow extends Basic {
                 switch($this->flow_run_on){
 
                     case'New_Records':
-                        $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" .$this->date_entered."'";
+                        if($module->table_name === 'campaign_log'){
+                            $query['where'][] = $module->table_name . '.' . 'activity_date' . ' > ' . "'" . $this->activity_date . "'";
+                        } else {
+                            $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" . $this->date_entered . "'";
+                        }
                         Break;
 
                     case'Modified_Records':
-                        $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" .$this->date_entered."'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        if($module->table_name === 'campaign_log'){
+                            $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->activity_date . "'" . ' AND ' . $module->table_name . '.' . 'activity_date' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        } else {
+                            $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" . $this->date_entered . "'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        }
                         Break;
 
                 }
             }
 
             if(!$this->multiple_runs){
+                
+                if (!isset($query['where'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: where');
+                    $query['where'] = [];
+                } 
+                
                 $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
 
@@ -285,7 +368,7 @@ class AOW_WorkFlow extends Basic {
             }
         }
 
-        if(isset($app_list_strings['aow_sql_operator_list'][$condition->operator])){
+        if($this->isSQLOperator($condition->operator)){
             $where_set = false;
 
             $data = $condition_module->field_defs[$condition->field];
@@ -301,13 +384,19 @@ class AOW_WorkFlow extends Basic {
             }
 
             if($condition->operator == 'is_null'){
-                $query['where'][] = '('.$field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' OR '.$field.' '.$app_list_strings['aow_sql_operator_list']['Equal_To']." '')";
+                $query['where'][] = '('.$field.' '.$this->getSQLOperator($condition->operator).' OR '.$field.' '.$this->getSQLOperator('Equal_To')." '')";
                 return $query;
             }
 
             switch($condition->value_type) {
                 case 'Field':
-                    $data = $module->field_defs[$condition->value];
+                    
+                    $data = null;
+                    if (isset($module->field_defs[$condition->value])) {
+                        $data = $module->field_defs[$condition->value];
+                    } else {
+                        LoggerManager::getLogger()->warn('Undefined field def for condition value in module: ' . get_class($module) . '::field_defs[' . $condition->value . ']');
+                    }
 
                     if($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->value = $data['id_name'];
@@ -323,7 +412,14 @@ class AOW_WorkFlow extends Basic {
                     //can't detect in scheduler so return
                     return array();
                 case 'Date':
-                    $params =  unserialize(base64_decode($condition->value));
+                    
+                    $params = @unserialize(base64_decode($condition->value));
+                    if ($params === false) {
+                        LoggerManager::getLogger()->error('Unserializable data given');
+                    } else {
+                        $params = [null];
+                    }
+                    
                     if($params[0] == 'now'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             $value  = 'GetUTCDate()';
@@ -339,7 +435,13 @@ class AOW_WorkFlow extends Basic {
                             $value = 'Curdate()';
                         }
                     } else {
-                        $data = $module->field_defs[$params[0]];
+                        $data = null;
+                        if (isset($module->field_defs[$params[0]])) {
+                            $data = $module->field_defs[$params[0]];
+                        } else {
+                            LoggerManager::getLogger()->warn('Filed def data is missing: ' . get_class($module) . '::$field_defs[' . $params[0] . ']');
+                        }
+                        
                         if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                             $value = $module->table_name.'_cstm.'.$params[0];
                             $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
@@ -371,7 +473,24 @@ class AOW_WorkFlow extends Basic {
                                 if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                                     $value = "DATEADD(".$params[3].",  ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2], $value)";
                                 } else {
-                                    $value = "DATE_ADD($value, INTERVAL ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3].")";
+                                    
+                                    if (!isset($params)) {
+                                        LoggerManager::getLogger()->warn('Undefined variable: param');
+                                        $params = [null, null, null, null];
+                                    }
+                                    
+                                    $params1 = $params[1];
+                                    $params2 = $params[2];
+                                    $params3 = $params[3];
+                                    
+                                    $dateOp = null;
+                                    if (isset($app_list_strings['aow_date_operator'][$params1])) {
+                                        $dateOp = $app_list_strings['aow_date_operator'][$params1];
+                                    } else {
+                                        LoggerManager::getLogger()->warn('Date operator is not set in app_list_string[' . $params1 . ']');
+                                    }
+                                    
+                                    $value = "DATE_ADD($value, INTERVAL ".$dateOp." $params2 ".$params3.")";
                                 }
                                 break;
                         }
@@ -394,7 +513,7 @@ class AOW_WorkFlow extends Basic {
                         else {
                             foreach($multi_values as $multi_value){
                                 if($value != '(') $value .= $sep;
-                                $value .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator]." '".$multi_value."'";
+                                $value .= $field.' '.$this->getSQLOperator($condition->operator)." '".$multi_value."'";
                             }
                         }
                         $value .= ')';
@@ -434,56 +553,56 @@ class AOW_WorkFlow extends Basic {
             }
 
 
-            if(!$where_set) $query['where'][] = $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' '.$value;
+            if(!$where_set) $query['where'][] = $field.' '.$this->getSQLOperator($condition->operator).' '.$value;
         }
 
         return $query;
 
     }
 
-    function check_valid_bean(SugarBean &$bean){
+    /**
+     * @param SugarBean $bean
+     * @return bool
+     */
+    public function check_valid_bean(SugarBean $bean){
         global $app_list_strings, $timedate;
 
-        require_once('modules/AOW_Processed/AOW_Processed.php');
-        $processed = new AOW_Processed();
-        if(!$this->multiple_runs){
-            $processed->retrieve_by_string_fields(array('aow_workflow_id' => $this->id,'parent_id' => $bean->id));
+        if (!$this->multiple_runs) {
+            $processed = BeanFactory::getBean('AOW_Processed');
+            $processed->retrieve_by_string_fields(array('aow_workflow_id' => $this->id, 'parent_id' => $bean->id));
 
-            if($processed->status == 'Complete'){
+            if ($processed->status === 'Complete') {
                 //has already run so return false
                 return false;
             }
         }
 
-        if(!isset($bean->date_entered)){
+        if (!isset($bean->date_entered)) {
             $bean->date_entered = $bean->fetched_row['date_entered'];
         }
 
+        if ($this->flow_run_on) {
 
-        if($this->flow_run_on){
+            $dateEntered = $timedate->fromUserType($this->date_entered, 'datetime')
+                ?: $timedate->fromDbType($this->date_entered, 'datetime');
+            $beanDateEntered = $timedate->fromUserType($bean->date_entered, 'datetime')
+                ?: $timedate->fromDbType($bean->date_entered, 'datetime');
+            $beanDateModified = $timedate->fromUserType($bean->date_modified, 'datetime')
+                ?: $timedate->fromDbType($bean->date_modified, 'datetime');
 
-            // database time correction with the user's time-zoneqq
-            $beanDateEnteredTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))));
-            $beanDateModifiedTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))));
-            $thisDateEnteredTimestamp = strtotime($this->date_entered);
-
-            switch($this->flow_run_on){
+            switch ($this->flow_run_on) {
                 case'New_Records':
-                    // it is an invalid bean if the user modify it now because the affection need on new records only!
-                    if(!empty($bean->fetched_row) ||
-                        $beanDateEnteredTimestamp < $thisDateEnteredTimestamp) {
+                    if (!empty($bean->fetched_row) || $beanDateEntered < $dateEntered) {
                         return false;
                     }
                     Break;
 
                 case'Modified_Records':
-                    // it isn't a valid bean if the user create it now because the affection need on already exists records only!
-                    if(empty($bean->fetched_row) ||
-                        ($beanDateModifiedTimestamp < $thisDateEnteredTimestamp && $beanDateModifiedTimestamp != $beanDateEnteredTimestamp)) {
+                    if (empty($bean->fetched_row) ||
+                        ($beanDateModified < $dateEntered && $beanDateModified !== $beanDateEntered)) {
                         return false;
                     }
                     Break;
-
             }
         }
 
@@ -509,11 +628,11 @@ class AOW_WorkFlow extends Basic {
             $value = $condition->value;
 
             $dateFields = array('date','datetime', 'datetimecombo');
-            if(isset($app_list_strings['aow_sql_operator_list'][$condition->operator])){
+            if($this->isSQLOperator($condition->operator)){
 
                 $data = $condition_bean->field_defs[$field];
 
-                if($data['type'] == 'relate' && isset($data['id_name'])) {
+                if($data['type'] === 'relate' && isset($data['id_name'])) {
                     $field = $data['id_name'];
                     $condition->field = $data['id_name'];
                 }
@@ -527,7 +646,7 @@ class AOW_WorkFlow extends Basic {
                     case 'Field':
                         $data = $condition_bean->field_defs[$value];
 
-                        if($data['type'] == 'relate' && isset($data['id_name'])) {
+                        if($data['type'] === 'relate' && isset($data['id_name'])) {
                             $value = $data['id_name'];
                         }
                         $value = $condition_bean->$value;
@@ -771,4 +890,3 @@ class AOW_WorkFlow extends Basic {
 
 
 }
-?>

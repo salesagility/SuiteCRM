@@ -269,43 +269,50 @@ $query .= 			"LEFT JOIN users
 		$this->load_relationship('contacts');
 		$query_array=$this->contacts->getQuery(true);
 
-		//update the select clause in the retruned query.
-		$query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
+                if (is_string($query_array)) {
+                    LoggerManager::getLogger()->warn("Illegal string offset 'select' (\$query_array) value id: $query_array"); 
+                } else {
+                    //update the select clause in the retruned query.
+                    $query_array['select']="SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, opportunities_contacts.contact_role as opportunity_role, opportunities_contacts.id as opportunity_rel_id ";
 
+                }
+                
 		$query='';
-		foreach ($query_array as $qstring) {
+		foreach ((array)$query_array as $qstring) {
 			$query.=' '.$qstring;
 		}
 	    $temp = Array('id', 'first_name', 'last_name', 'title', 'email1', 'phone_work', 'opportunity_role', 'opportunity_rel_id');
-		return $this->build_related_list2($query, new Contact(), $temp);
+            $contact = new Contact();
+		return $this->build_related_list2($query, $contact, $temp);
 	}
 
-	function update_currency_id($fromid, $toid){
-		$idequals = '';
+    function update_currency_id($fromid, $toid) {
+        $idequals = '';
 
-		$currency = new Currency();
-		$currency->retrieve($toid);
-		foreach($fromid as $f){
-			if(!empty($idequals)){
-				$idequals .=' or ';
-			}
-			$idequals .= "currency_id='$f'";
-		}
+        $currency = new Currency();
+        $currency->retrieve($toid);
+        foreach ($fromid as $f) {
+            if (!empty($idequals)) {
+                $idequals .= ' or ';
+            }
+            $fQuoted = $this->db->quote($f);
+            $idequals .= "currency_id='$fQuoted'";
+        }
 
-		if(!empty($idequals)){
-			$query = "select amount, id from opportunities where (". $idequals. ") and deleted=0 and opportunities.sales_stage <> 'Closed Won' AND opportunities.sales_stage <> 'Closed Lost';";
-			$result = $this->db->query($query);
-			while($row = $this->db->fetchByAssoc($result)){
+        if (!empty($idequals)) {
+            $query = "select amount, id from opportunities where (" . $idequals . ") and deleted=0 and opportunities.sales_stage <> 'Closed Won' AND opportunities.sales_stage <> 'Closed Lost';";
+            $result = $this->db->query($query);
+            while ($row = $this->db->fetchByAssoc($result)) {
+                $currencyIdQuoted = $this->db->quote($currency->id);
+                $currencyConvertToDollarRowAmountQuoted = $this->db->quote($currency->convertToDollar($row['amount']));
+                $rowIdQuoted = $this->db->quote($row['id']);
+                $query = "update opportunities set currency_id='" . $currencyIdQuoted . "', amount_usdollar='" . $currencyConvertToDollarRowAmountQuoted . "' where id='" . $rowIdQuoted . "';";
+                $this->db->query($query);
+            }
+        }
+    }
 
-				$query = "update opportunities set currency_id='".$currency->id."', amount_usdollar='".$currency->convertToDollar($row['amount'])."' where id='".$row['id']."';";
-				$this->db->query($query);
-
-			}
-
-	}
-	}
-
-	function get_list_view_data(){
+    function get_list_view_data(){
 		global $locale, $current_language, $current_user, $mod_strings, $app_list_strings, $sugar_config;
 		$app_strings = return_application_language($current_language);
         $params = array();
@@ -337,7 +344,7 @@ $query .= 			"LEFT JOIN users
 	*/
 	function build_generic_where_clause ($the_query_string) {
 	$where_clauses = Array();
-	$the_query_string = $GLOBALS['db']->quote($the_query_string);
+	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 	array_push($where_clauses, "opportunities.name like '$the_query_string%'");
 	array_push($where_clauses, "accounts.name like '$the_query_string%'");
 

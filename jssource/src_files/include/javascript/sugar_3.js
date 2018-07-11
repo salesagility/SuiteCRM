@@ -133,7 +133,7 @@ var validate = new Array();
 var maxHours = 24;
 var requiredTxt = 'Missing Required Field:';
 var invalidTxt = 'Invalid Value:';
-var secondsSinceLoad = 0;
+var scriptStartedTime = Date.now();
 var alertsTimeoutId;
 var inputsWithErrors = new Array();
 var tabsWithErrors = new Array();
@@ -242,7 +242,7 @@ RegExp.escape = function (text) { // http://simon.incutio.com/archive/2006/01/20
   return text.replace(arguments.callee.sRE, '\\$1');
 }
 
-function addAlert(type, name, subtitle, description, time, redirect) {
+function addAlert(type, name, subtitle, description, time, redirect, reminder_id) {
   var addIndex = alertList.length;
   alertList[addIndex] = new Array();
   alertList[addIndex]['name'] = name;
@@ -252,9 +252,12 @@ function addAlert(type, name, subtitle, description, time, redirect) {
   alertList[addIndex]['time'] = time;
   alertList[addIndex]['done'] = 0;
   alertList[addIndex]['redirect'] = redirect;
+  if (typeof reminder_id !== 'undefined') {
+    alertList[addIndex]['reminder_id'] = reminder_id;
+  }
 }
 function checkAlerts() {
-  secondsSinceLoad += 1;
+  var secondsSinceLoad = (Date.now() - scriptStartedTime) / 1000;
   var mj = 0;
   var alertmsg = '';
   for (mj = 0; mj < alertList.length; mj++) {
@@ -264,13 +267,14 @@ function checkAlerts() {
         if (typeof Alerts !== "undefined") {
           //
           // Use Alerts module
-          Alerts.prototype.show(
+          Alerts.prototype.addToManager(
             {
               title: alertList[mj]['type'] + ": " + alertList[mj]['name'],
               options: {
                 body: alertList[mj]['subtitle'] + "\n" + alertList[mj]['description'] + "\n\n",
                 url_redirect: alertList[mj]['redirect'],
-                target_module: alertList[mj]['type']
+                target_module: alertList[mj]['type'],
+                reminder_id: alertList[mj]['reminder_id']
               }
             }
           );
@@ -944,9 +948,9 @@ function validate_form(formname, startsWith) {
         var bail = false;
 
 
-        //If a field is not required and it is blank or is binarydependant, skip validation.
+        //If a field is not required and it is blank or is binarydependant or is callback, skip validation.
         //Example of binary dependant fields would be the hour/min/meridian dropdowns in a date time combo widget, which require further processing than a blank check
-        if (!validate[formname][i][requiredIndex] && trim(form[validate[formname][i][nameIndex]].value) == '' && (typeof(validate[formname][i][jstypeIndex]) != 'undefined' && validate[formname][i][jstypeIndex] != 'binarydep')) {
+        if (!validate[formname][i][requiredIndex] && trim(form[validate[formname][i][nameIndex]].value) == '' && (typeof(validate[formname][i][jstypeIndex]) != 'undefined' && validate[formname][i][jstypeIndex] != 'binarydep' && validate[formname][i][jstypeIndex]  != 'callback')) {
           continue;
         }
 
@@ -1277,6 +1281,7 @@ function validate_form(formname, startsWith) {
       isError = false;
     }
   }
+
 
 //END BUG# 15102
 
@@ -2961,7 +2966,7 @@ SUGAR.util = function () {
       }
     },
     evalScript: function (text) {
-      if (isSafari) {
+      if (UA.webkit && !UA.chrome) {
         var waitUntilLoaded = function () {
           SUGAR.evalScript_waitCount--;
           if (SUGAR.evalScript_waitCount == 0) {

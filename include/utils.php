@@ -38,6 +38,10 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+
 require_once 'php_version.php';
 require_once 'include/SugarObjects/SugarConfig.php';
 require_once 'include/utils/security_utils.php';
@@ -647,7 +651,7 @@ function get_assigned_user_name($assigned_user_id, $is_group = '')
  */
 function get_user_name($id)
 {
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
@@ -1337,7 +1341,7 @@ function append_where_clause(&$where_clauses, $variable_name, $SQL_name = null)
     }
 
     if (isset($_REQUEST[$variable_name]) && $_REQUEST[$variable_name] != '') {
-        array_push($where_clauses, "$SQL_name like '".$GLOBALS['db']->quote($_REQUEST[$variable_name])."%'");
+        array_push($where_clauses, "$SQL_name like '".DBManagerFactory::getInstance()->quote($_REQUEST[$variable_name])."%'");
     }
 }
 
@@ -1682,8 +1686,7 @@ function sugar_die($error_message, $exit_code = 1)
 {
     global $focus;
     sugar_cleanup();
-    //echo $error_message;
-    //die($exit_code);
+    echo $error_message;
     throw new \Exception($error_message, $exit_code);
 }
 
@@ -2560,7 +2563,14 @@ function values_to_keys($array)
     return $new_array;
 }
 
-function clone_relationship(&$db, $tables = array(), $from_column, $from_id, $to_id)
+/**
+ * @param $db
+ * @param array $tables
+ * @param $from_column
+ * @param $from_id
+ * @param $to_id
+ */
+function clone_relationship(&$db, $tables = array(), $from_column = null, $from_id = null, $to_id = null)
 {
     foreach ($tables as $table) {
         if ($table == 'emails_beans') {
@@ -2734,8 +2744,23 @@ function number_empty($value)
     return empty($value) && $value != '0';
 }
 
-function get_bean_select_array($add_blank = true, $bean_name, $display_columns, $where = '', $order_by = '', $blank_is_none = false)
-{
+/**
+ * @param bool $add_blank
+ * @param $bean_name
+ * @param $display_columns
+ * @param string $where
+ * @param string $order_by
+ * @param bool $blank_is_none
+ * @return array
+ */
+function get_bean_select_array(
+    $add_blank = true,
+    $bean_name = null,
+    $display_columns = null,
+    $where = '',
+    $order_by = '',
+    $blank_is_none = false
+) {
     global $beanFiles;
     require_once $beanFiles[$bean_name];
     $focus = new $bean_name();
@@ -3148,7 +3173,6 @@ function pre_login_check()
 							document.getElementById("cant_login").value=1;
 							document.getElementById("login_button").disabled = true;
 							document.getElementById("user_name").disabled = true;
-							//document.getElementById("user_password").disabled = true;
 						}
 						</script>';
         }
@@ -3465,6 +3489,7 @@ function return_bytes($val)
 {
     $val = trim($val);
     $last = strtolower($val{strlen($val) - 1});
+    $val = preg_replace("/[^0-9,.]/", "", $val);
 
     switch ($last) {
         // The 'G' modifier is available since PHP 5.1.0
@@ -3695,30 +3720,13 @@ function search_filter_rel_info(&$focus, $tar_rel_module, $relationship_name)
     //end function search_filter_rel_info
 }
 
+/**
+ * @param $module_name
+ * @return mixed
+ */
 function get_module_info($module_name)
 {
-    global $beanList;
-    global $dictionary;
-
-    //Get dictionary and focus data for module
-    $vardef_name = $beanList[$module_name];
-
-    if ($vardef_name == 'aCase') {
-        $class_name = 'Case';
-    } else {
-        $class_name = $vardef_name;
-    }
-
-    if (!file_exists('modules/'.$module_name.'/'.$class_name.'.php')) {
-        return;
-    }
-
-    include_once 'modules/'.$module_name.'/'.$class_name.'.php';
-
-    $module_bean = new $vardef_name();
-
-    return $module_bean;
-    //end function get_module_table
+    return BeanFactory::getBean($module_name);
 }
 
 /**
@@ -3912,7 +3920,7 @@ function getJSONobj()
     static $json = null;
     if (!isset($json)) {
         require_once 'include/JSON.php';
-        $json = new JSON(JSON_LOOSE_TYPE);
+        $json = new JSON();
     }
 
     return $json;
@@ -4121,8 +4129,21 @@ function getTrackerSubstring($name)
     return $chopped;
 }
 
-function generate_search_where($field_list = array(), $values = array(), &$bean, $add_custom_fields = false, $module = '')
-{
+/**
+ * @param array $field_list
+ * @param array $values
+ * @param array $bean
+ * @param bool $add_custom_fields
+ * @param string $module
+ * @return array
+ */
+function generate_search_where(
+    $field_list = array(),
+    $values = array(),
+    &$bean = null,
+    $add_custom_fields = false,
+    $module = ''
+) {
     $where_clauses = array();
     $like_char = '%';
     $table_name = $bean->object_name;
@@ -4140,11 +4161,11 @@ function generate_search_where($field_list = array(), $values = array(), &$bean,
                         if (!empty($field_value)) {
                             $field_value .= ',';
                         }
-                        $field_value .= "'".$GLOBALS['db']->quote($val)."'";
+                        $field_value .= "'".DBManagerFactory::getInstance()->quote($val)."'";
                     }
                 }
             } else {
-                $field_value = $GLOBALS['db']->quote($values[$field]);
+                $field_value = DBManagerFactory::getInstance()->quote($values[$field]);
             }
             //set db_fields array.
             if (!isset($parms['db_field'])) {
@@ -4152,7 +4173,7 @@ function generate_search_where($field_list = array(), $values = array(), &$bean,
             }
             if (isset($parms['my_items']) and $parms['my_items'] == true) {
                 global $current_user;
-                $field_value = $GLOBALS['db']->quote($current_user->id);
+                $field_value = DBManagerFactory::getInstance()->quote($current_user->id);
                 $operator = '=';
             }
 
@@ -4163,7 +4184,7 @@ function generate_search_where($field_list = array(), $values = array(), &$bean,
                     if (strstr($db_field, '.') === false) {
                         $db_field = $bean->table_name.'.'.$db_field;
                     }
-                    if ($GLOBALS['db']->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
+                    if (DBManagerFactory::getInstance()->supports('case_sensitive') && isset($parms['query_type']) && $parms['query_type'] == 'case_insensitive') {
                         $db_field = 'upper('.$db_field.')';
                         $field_value = strtoupper($field_value);
                     }
@@ -4505,7 +4526,7 @@ function chartColors()
  */
 function ajaxInit()
 {
-    ini_set('display_errors', 'false');
+    //ini_set('display_errors', 'false');
 }
 
 /**
@@ -5400,4 +5421,14 @@ function suite_strrpos($haystack, $needle, $offset = 0, $encoding = DEFAULT_UTIL
     } else {
         return strrpos($haystack, $needle, $offset);
     }
+}
+
+/**
+ * @param string $id
+ * @return bool
+ * @todo add to a separated common validator class
+ */
+function isValidId($id) {
+    $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
+    return $valid;
 }

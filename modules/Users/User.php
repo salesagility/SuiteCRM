@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2017 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,9 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/SugarObjects/templates/person/Person.php');
 
@@ -469,7 +473,7 @@ class User extends Person {
     */
 	public static function getLicensedUsersWhere()
 	{
-		return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND ".$GLOBALS['db']->convert('user_name', 'length').">0";
+		return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND ".DBManagerFactory::getInstance()->convert('user_name', 'length').">0";
 	    return "1<>1";
 	}
 
@@ -576,15 +580,15 @@ class User extends Person {
 	/**
 	 * @deprecated
 	* @param string $user_name - Must be non null and at least 2 characters
-	* @param string $user_password - Must be non null and at least 1 character.
+	* @param string $username_password - Must be non null and at least 1 character.
 	* @desc Take an unencrypted username and password and return the encrypted password
 	* @return string encrypted password for storage in DB and comparison against DB password.
 	*/
-	function encrypt_password($user_password)
+	function encrypt_password($username_password)
 	{
 		// encrypt the password.
 		$salt = substr($this->user_name, 0, 2);
-		$encrypted_password = crypt($user_password, $salt);
+		$encrypted_password = crypt($username_password, $salt);
 
 		return $encrypted_password;
 	}
@@ -608,20 +612,23 @@ class User extends Person {
 
     /**
      * retrieves an User bean
-     * preformat name & full_name attribute with first/last
+     * pre-format name & full_name attribute with first/last
      * loads User's preferences
      *
-     * @param string id ID of the User
-     * @param bool encode encode the result
-     * @return object User bean
-     * @return null null if no User found
+     * @param string|integer $id ID of the User
+     * @param bool $encode encode the result
+     * @param bool $deleted
+     * @return User|SugarBean|null null if no User found
      */
-	function retrieve($id = -1, $encode = true, $deleted = true) {
+	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
-		if ($ret) {
-			if (isset ($_SESSION)) {
+                
+                if (!isset($_SESSION)) {
+                    LoggerManager::getLogger()->warn('Undefined variable: _SESSION');
+                }
+                
+		if ($ret && isset($_SESSION) && $_SESSION !== null) {
 				$this->loadPreferences();
-			}
 		}
 		return $ret;
 	}
@@ -656,11 +663,11 @@ EOQ;
 
 	/**
 	 * Load a user based on the user_name in $this
-	 * @param string $user_password Password
+	 * @param string $username_password Password
 	 * @param bool $password_encoded Is password md5-encoded or plain text?
 	 * @return -- this if load was successul and null if load failed.
 	 */
-	function load_user($user_password, $password_encoded = false)
+	function load_user($username_password, $password_encoded = false)
 	{
 		global $login_error;
 		unset($GLOBALS['login_error']);
@@ -676,13 +683,13 @@ EOQ;
 
 		$GLOBALS['log']->debug("Starting user load for $this->user_name");
 
-		if (!isset ($this->user_name) || $this->user_name == "" || !isset ($user_password) || $user_password == "")
+		if (!isset ($this->user_name) || $this->user_name == "" || !isset ($username_password) || $username_password == "")
 			return null;
 
 	    if(!$password_encoded) {
-	        $user_password = md5($user_password);
+            $username_password = md5($username_password);
 	    }
-        $row = self::findUserPassword($this->user_name, $user_password);
+        $row = self::findUserPassword($this->user_name, $username_password);
 		if(empty($row) || !empty ($GLOBALS['login_error'])) {
 			$GLOBALS['log']->fatal('SECURITY: User authentication for '.$this->user_name.' failed - could not Load User from Database');
 			return null;
@@ -754,7 +761,7 @@ EOQ;
 	 */
 	public static function findUserPassword($name, $password, $where = '', $checkPasswordMD5 = true)
 	{
-	    global $db;
+	    $db = DBManagerFactory::getInstance();
 		$name = $db->quote($name);
 		$query = "SELECT * from users where user_name='$name'";
 		if(!empty($where)) {
@@ -791,12 +798,12 @@ EOQ;
 	/**
 	 * Verify that the current password is correct and write the new password to the DB.
 	 *
-	 * @param string $user_password - Must be non null and at least 1 character.
+	 * @param string $username_password - Must be non null and at least 1 character.
 	 * @param string $new_password - Must be non null and at least 1 character.
      * @param string $system_generated
 	 * @return boolean - If passwords pass verification and query succeeds, return true, else return false.
 	 */
-	function change_password($user_password, $new_password, $system_generated = '0')
+	function change_password($username_password, $new_password, $system_generated = '0')
 	{
 	    global $mod_strings;
 		global $current_user;
@@ -811,7 +818,7 @@ EOQ;
 		//check old password current user is not an admin or current user is an admin editing themselves
 		if (!$current_user->isAdminForModule('Users')  || ($current_user->isAdminForModule('Users') && ($current_user->id == $this->id))) {
 			//check old password first
-			$row = self::findUserPassword($this->user_name, md5($user_password));
+			$row = self::findUserPassword($this->user_name, md5($username_password));
             if (empty($row)) {
 				$GLOBALS['log']->warn("Incorrect old password for ".$this->user_name."");
 				$this->error_string = $mod_strings['ERR_PASSWORD_INCORRECT_OLD_1'].$this->user_name.$mod_strings['ERR_PASSWORD_INCORRECT_OLD_2'];
@@ -939,12 +946,19 @@ EOQ;
 		global $mod_strings;
 
 		$user_fields = parent::get_list_view_data();
+                
+                $lblCheckmark = null;
+                if (isset($mod_strings['LBL_CHECKMARK'])) {
+                    $lblCheckmark = $mod_strings['LBL_CHECKMARK'];
+                } else {
+                    LoggerManager::getLogger()->warn('Undefined index: LBL_CHECKMARK');
+                }
 
 		if ($this->is_admin)
-			$user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
+			$user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$lblCheckmark);
 		elseif (!$this->is_admin) $user_fields['IS_ADMIN'] = '';
 		if ($this->is_group)
-			$user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$mod_strings['LBL_CHECKMARK']);
+			$user_fields['IS_GROUP_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '',null,null,'.gif',$lblCheckmark);
 		else
 			$user_fields['IS_GROUP_IMAGE'] = '';
 
@@ -1046,12 +1060,14 @@ EOQ;
 	function get_meetings() {
 		// First, get the list of IDs.
 		$query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
-		return $this->build_related_list($query, new Meeting());
+                $meeting = new Meeting();
+		return $this->build_related_list($query, $meeting);
 	}
 	function get_calls() {
 		// First, get the list of IDs.
 		$query = "SELECT call_id as id from calls_users where user_id='$this->id' AND deleted=0";
-		return $this->build_related_list($query, new Call());
+                $call = new Call();
+		return $this->build_related_list($query, $call);
 	}
 
 	/**

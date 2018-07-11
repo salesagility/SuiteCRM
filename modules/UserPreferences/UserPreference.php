@@ -219,8 +219,8 @@ class UserPreference extends SugarBean
         $GLOBALS['log']->debug('Loading Preferences DB ' . $user->user_name);
         if(!isset($_SESSION[$user->user_name . '_PREFERENCES'])) $_SESSION[$user->user_name . '_PREFERENCES'] = array();
         if(!isset($user->user_preferences) || !is_array($user->user_preferences)) $user->user_preferences = array();
-        $result = $GLOBALS['db']->query("SELECT contents FROM user_preferences WHERE assigned_user_id='$user->id' AND category = '" . $category . "' AND deleted = 0", false, 'Failed to load user preferences');
-        $row = $GLOBALS['db']->fetchByAssoc($result);
+        $result = DBManagerFactory::getInstance()->query("SELECT contents FROM user_preferences WHERE assigned_user_id='$user->id' AND category = '" . $category . "' AND deleted = 0", false, 'Failed to load user preferences');
+        $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
         if ($row) {
             $_SESSION[$user->user_name . '_PREFERENCES'][$category] = unserialize(base64_decode($row['contents']));
             $user->user_preferences[$category] = unserialize(base64_decode($row['contents']));
@@ -468,7 +468,7 @@ class UserPreference extends SugarBean
                 }
             }
 
-            $newstr = $GLOBALS['db']->quote(base64_encode(serialize($prefs)));
+            $newstr = DBManagerFactory::getInstance()->quote(base64_encode(serialize($prefs)));
             $db->query("UPDATE users SET user_preferences = '{$newstr}' WHERE id = '{$row['id']}'");
         }
 

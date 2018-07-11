@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -129,7 +129,7 @@ $mod_strings = array (
 	'TXT_REMOVE_ME_ALT'							=> 'To remove yourself from this email list go to',
 	'TXT_REMOVE_ME_CLICK'						=> 'click here',
 	'TXT_REMOVE_ME'								=> 'To remove yourself from this email list ',
-	'LBL_NOTIFY_SEND_FROM_ASSIGNING_USER'		=> 'Send notification from assigning user\'s e-mail address',
+	'LBL_NOTIFY_SEND_FROM_ASSIGNING_USER'		=> 'Send notification from the email address of the assigning user',
 
 	'LBL_SECURITY_TITLE'						=> 'Email Security Settings',
 	'LBL_SECURITY_DESC'							=> 'Check the following that should NOT be allowed in via InboundEmail or displayed in the Emails module.',
