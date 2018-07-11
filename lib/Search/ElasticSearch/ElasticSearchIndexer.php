@@ -490,4 +490,26 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         $this->sendBatch($params);
     }
+
+    /**
+     * Attempts to contact the Elasticsearch server and perform a simple request.
+     *
+     * Returns `false` in case of failure or the time it took to perform the operation in microseconds.
+     *
+     * @return bool|int
+     */
+    public function ping()
+    {
+        $start = Carbon::now()->micro;
+        $status = $this->client->ping();
+        $elapsed = Carbon::now()->micro - $start;
+
+        if ($status === false) {
+            $this->log('!', "Failed to ping server");
+            return false;
+        } else {
+            $this->log('@', "Ping performed in $elapsed µs");
+            return $elapsed;
+        }
+    }
 }

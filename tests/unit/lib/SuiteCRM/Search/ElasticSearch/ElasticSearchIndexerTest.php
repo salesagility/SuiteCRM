@@ -94,6 +94,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
         $i->indexBeans($mockedModule, $mockedBeans);
 
+        self::assertEquals(1, $i->getIndexedModulesCount(), "Wrong number of modules indexed");
         self::assertEquals(1, $i->getRemovedRecordsCount(), "Wrong number of records removed");
         self::assertEquals(7, $i->getIndexedRecordsCount(), "Wrong number of records indexed");
         self::assertEquals(9, $i->getIndexedFieldsCount(), "Wrong number of fields indexed");
@@ -434,4 +435,36 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         m::close();
         parent::tearDown();
     }
+
+    public function testPing()
+    {
+        $mockClient = m::mock('\Elasticsearch\Client');
+
+        $mockClient
+            ->shouldReceive('ping')
+            ->withNoArgs()
+            ->once()
+            ->andReturnFalse();
+
+        $indexer = new ElasticSearchIndexer($mockClient);
+        $actual = $indexer->ping();
+        self::assertFalse($actual);
+    }
+
+    public function testPing2()
+    {
+        $mockClient = m::mock('\Elasticsearch\Client');
+
+        $mockClient
+            ->shouldReceive('ping')
+            ->withNoArgs()
+            ->once()
+            ->andReturnTrue();
+
+        $indexer = new ElasticSearchIndexer($mockClient);
+        $actual = $indexer->ping();
+        self::assertNotFalse($actual);
+        self::assertTrue(is_numeric($actual));
+    }
+
 }
