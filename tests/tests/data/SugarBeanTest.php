@@ -226,7 +226,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
+ AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -237,7 +237,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
         
                 
         
@@ -260,7 +260,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where (foo='bar' AND  EXISTS (SELECT  1
+ AND jt0.deleted=0 where (foo='bar' AND ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -271,7 +271,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
         
         $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
@@ -384,7 +384,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
-        $fieldDefs = $tmpUser->field_defs; // save field defs
+        $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester7';
         $user->save();
         $current_user = $user;
@@ -394,7 +394,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
-        $tmpUser->field_defs = $fieldDefs; // restore field defs
+        $user->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
@@ -415,7 +415,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
+ AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -426,7 +426,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
         
         $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
@@ -452,7 +452,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
-        $fieldDefs = $tmpUser->field_defs; // save field defs
+        $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester6';
         $user->save();
         $current_user = $user;
@@ -462,7 +462,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
-        $tmpUser->field_defs = $fieldDefs; // restore field defs
+        $user->field_defs = $fieldDefs; // restore field defs
               
         // test
         $bean = new SugarBean();
@@ -507,7 +507,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
-        $fieldDefs = $tmpUser->field_defs; // save field defs
+        $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester5';
         $user->save();
         $current_user = $user;
@@ -517,7 +517,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
-        $tmpUser->field_defs = $fieldDefs; // restore field defs
+        $user->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
@@ -541,7 +541,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
+ AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -552,7 +552,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
         
         $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
@@ -578,7 +578,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
-        $fieldDefs = $tmpUser->field_defs; // save field defs
+        $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester4';
         $user->save();
         $current_user = $user;
@@ -588,7 +588,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
-        $tmpUser->field_defs = $fieldDefs; // restore field defs
+        $user->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
@@ -614,7 +614,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
- AND jt0.deleted=0 where ( AND  EXISTS (SELECT  1
+ AND jt0.deleted=0 where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -625,7 +625,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
         
         $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
@@ -649,7 +649,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
-        $fieldDefs = $tmpUser->field_defs; // save field defs
+        $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester3';
         $user->save();
         $current_user = $user;
@@ -659,7 +659,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
-        $tmpUser->field_defs = $fieldDefs; // restore field defs
+        $user->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
@@ -683,7 +683,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $tmpUser->field_defs['id']['force_blank'] = true;
         
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.id , '                                                                                                                                                                                                                                                              ' id  FROM users  where ( AND  EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.id , '                                                                                                                                                                                                                                                              ' id , users.created_by  FROM users  where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -694,7 +694,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
         
         $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
@@ -720,7 +720,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
-        $fieldDefs = $tmpUser->field_defs; // save field defs
+        $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester2';
         $user->user_name = 'tester2';
         $user->save();
@@ -731,7 +731,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
-        $tmpUser->field_defs = $fieldDefs; // restore field defs
+        $user->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
@@ -755,7 +755,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $tmpUser->field_defs['id']['force_blank'] = true;
         
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.id , 1 id  FROM users  where ( AND  EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.id , 1 id , users.created_by  FROM users  where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -766,7 +766,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
         
         $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
@@ -791,7 +791,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
-        $fieldDefs = $tmpUser->field_defs; // save field defs
+        $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester';
         $user->save();
         $current_user = $user;
@@ -801,7 +801,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
-        $tmpUser->field_defs = $fieldDefs; // restore field defs
+        $user->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
@@ -827,7 +827,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $tmpUser->field_defs['modified_user_id']['source'] = 'custom_field';
         
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.id  FROM users  where ( AND  EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.id , users.created_by  FROM users  where ( ( users.created_by ='{$current_user->id}'  or  EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
@@ -838,7 +838,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) ) AND users.deleted=0", $results);        
+                               AND secg.deleted = 0) ) ) AND users.deleted=0", $results);        
         
         $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
