@@ -162,7 +162,7 @@ class SchedulerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $scheduler->job_interval = '*::*::*::*::3';
         $result = $scheduler->deriveDBDateTimes($scheduler);
-        $this->assertEquals(array(), $result);
+        $this->assertNotEmpty($result);
 
         $scheduler->job_interval = '0::*::3::*::*';
         $result = $scheduler->deriveDBDateTimes($scheduler);
