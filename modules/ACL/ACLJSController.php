@@ -133,7 +133,7 @@ EOQ;
 				$return_array['href']= "#";
 				$return_array['className']= "nolink";
 				break;
-			default;
+			default:
 				$return_array[$def['display_option']] = $def['display_option'];
 				break;
 

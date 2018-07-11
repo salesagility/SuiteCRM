@@ -225,7 +225,7 @@ class actionCreateRecord extends actionBase
                             $dformat = 'Y-m-d';
                         }
                         switch ($params['value'][$key][3]) {
-                            case 'business_hours';
+                            case 'business_hours':
                                 require_once 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
 
                                 $businessHours = new AOBH_BusinessHours();

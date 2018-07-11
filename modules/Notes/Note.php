@@ -378,7 +378,7 @@ class Note extends File
         switch ($interface) {
             case 'ACL':
                 return true;
-            case 'FILE' :
+            case 'FILE':
                 return true;
         }
 

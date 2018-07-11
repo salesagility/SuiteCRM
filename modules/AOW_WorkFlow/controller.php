@@ -318,7 +318,7 @@ class AOW_WorkFlowController extends SugarController
                     echo getModuleFields($module, $view, $value);
                 }
                 break;
-            case 'Any_Change';
+            case 'Any_Change':
                 echo '';
                 break;
             case 'Date':
@@ -365,9 +365,9 @@ class AOW_WorkFlowController extends SugarController
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 echo getDateField($module, $aow_field, $view, $value);
                 break;
-            Case 'Round_Robin';
-            Case 'Least_Busy';
-            Case 'Random';
+            Case 'Round_Robin':
+            Case 'Least_Busy':
+            Case 'Random':
                 echo getAssignField($aow_field, $view, $value);
                 break;
             case 'Value':
@@ -524,7 +524,7 @@ class AOW_WorkFlowController extends SugarController
         else $value = '';
 
         switch($_REQUEST['aow_type']) {
-            case 'Record Email';
+            case 'Record Email':
                 echo '';
                 break;
             case 'Related Field':

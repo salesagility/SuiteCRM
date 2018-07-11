@@ -86,7 +86,7 @@ class Zend_Gdata_Extension_FeedLink extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('atom') . ':' . 'feed';
+            case $this->lookupNamespace('atom') . ':' . 'feed':
                 $feed = new Zend_Gdata_Feed();
                 $feed->transferFromDOM($child);
                 $this->_feed = $feed;

@@ -208,7 +208,7 @@ class Favorites extends Basic
         switch ($interface) {
             case 'ACL':
                 return false;
-            default :
+            default:
                 return false;
         }
     }

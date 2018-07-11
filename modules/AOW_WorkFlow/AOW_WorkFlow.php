@@ -424,7 +424,7 @@ class AOW_WorkFlow extends Basic
 
                     if($params[1] != 'now'){
                         switch($params[3]) {
-                            case 'business_hours';
+                            case 'business_hours':
                                 if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php') && $params[0] == 'now'){
                                     require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
 
@@ -623,10 +623,10 @@ class AOW_WorkFlow extends Basic
                             $value = strtotime($value);
                         }
                         switch($condition->operator) {
-                            case 'Not_Equal_To';
+                            case 'Not_Equal_To':
                                 $condition->operator = 'Equal_To';
                                 break;
-                            case 'Equal_To';
+                            case 'Equal_To':
                             default:
                                 $condition->operator = 'Not_Equal_To';
                                 break;
@@ -649,7 +649,7 @@ class AOW_WorkFlow extends Basic
 
                         if($params[1] != 'now'){
                             switch($params[3]) {
-                                case 'business_hours';
+                                case 'business_hours':
                                     if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')){
                                         require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
 
@@ -681,10 +681,10 @@ class AOW_WorkFlow extends Basic
                         $value = unencodeMultienum($value);
                         if($data['type'] == 'multienum') $field = unencodeMultienum($field);
                         switch($condition->operator) {
-                            case 'Not_Equal_To';
+                            case 'Not_Equal_To':
                                 $condition->operator = 'Not_One_of';
                                 break;
-                            case 'Equal_To';
+                            case 'Equal_To':
                             default:
                                 $condition->operator = 'One_of';
                                 break;
@@ -751,9 +751,9 @@ class AOW_WorkFlow extends Basic
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains" : return strpos($var1,$var2);
-            case "Starts_With" : return strrpos($var1,$var2, -strlen($var1));
-            case "Ends_With" : return strpos($var1,$var2,strlen($var1) - strlen($var2));
+            case "Contains": return strpos($var1,$var2);
+            case "Starts_With": return strrpos($var1,$var2, -strlen($var1));
+            case "Ends_With": return strpos($var1,$var2,strlen($var1) - strlen($var2));
             case "is_null": return $var1 == '';
             case "One_of":
                 if(is_array($var1)){

@@ -241,10 +241,10 @@ class ViewRelationship extends SugarView
         
         switch ( $relationship->relationship_type)
         {
-            case MB_ONETOONE :
+            case MB_ONETOONE:
                 break ;
             
-            case MB_ONETOMANY :
+            case MB_ONETOMANY:
                 if (empty ( $relationship->relationship_column_name ))
                 {
                     $validRoleColumnFields = array ( ) ;
@@ -257,7 +257,7 @@ class ViewRelationship extends SugarView
                 if (! empty ( $relationship->relationship_role_column_value ))
                     $this->smarty->assign ( 'relationship_role_column_value', $relationship->relationship_role_column_value ) ;
                 break ;
-            case MB_MANYTOMANY :
+            case MB_MANYTOMANY:
                 if (! empty ( $relationship->relationship_role_column_value ))
                     $this->smarty->assign ( 'relationship_role_column_value', $relationship->relationship_role_column_value ) ;
                 break ;

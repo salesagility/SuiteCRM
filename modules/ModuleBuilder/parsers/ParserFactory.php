@@ -82,16 +82,16 @@ class ParserFactory
 
         switch ( $lView)
         {
-            case MB_EDITVIEW :
-            case MB_DETAILVIEW :
-            case MB_QUICKCREATE :
+            case MB_EDITVIEW:
+            case MB_DETAILVIEW:
+            case MB_QUICKCREATE:
                 require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
                 return new GridLayoutMetaDataParser ( $view, $moduleName, $packageName ) ;
-            case MB_BASICSEARCH :
-            case MB_ADVANCEDSEARCH :
+            case MB_BASICSEARCH:
+            case MB_ADVANCEDSEARCH:
                 require_once 'modules/ModuleBuilder/parsers/views/SearchViewMetaDataParser.php' ;
                 return new SearchViewMetaDataParser ( $view, $moduleName, $packageName ) ;
-            case MB_LISTVIEW :
+            case MB_LISTVIEW:
                 if ($subpanelName == null)
                 {
                     require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php' ;
@@ -101,21 +101,21 @@ class ParserFactory
                     require_once 'modules/ModuleBuilder/parsers/views/SubpanelMetaDataParser.php' ;
                     return new SubpanelMetaDataParser ( $subpanelName, $moduleName, $packageName ) ;
                 }
-            case MB_DASHLET :
-            case MB_DASHLETSEARCH :
+            case MB_DASHLET:
+            case MB_DASHLETSEARCH:
                 require_once 'modules/ModuleBuilder/parsers/views/DashletMetaDataParser.php' ;
                 return new DashletMetaDataParser($view, $moduleName, $packageName  );
-            case MB_POPUPLIST :
-            case MB_POPUPSEARCH :
+            case MB_POPUPLIST:
+            case MB_POPUPSEARCH:
                 require_once 'modules/ModuleBuilder/parsers/views/PopupMetaDataParser.php' ;
                 return new PopupMetaDataParser($view, $moduleName, $packageName  );
-            case MB_LABEL :
+            case MB_LABEL:
                 require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
                 return new ParserLabel ( $moduleName, $packageName ) ;
-            case MB_VISIBILITY :
+            case MB_VISIBILITY:
                 require_once 'modules/ModuleBuilder/parsers/parser.visibility.php' ;
                 return new ParserVisibility ( $moduleName, $packageName ) ;
-            default :
+            default:
                 $parser = self::checkForParserClass($view, $moduleName, $packageName);
                 if ($parser)
                     return $parser;

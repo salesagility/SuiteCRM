@@ -2535,7 +2535,7 @@ private function dir_file_count($path){
             global $moduleList;
             switch ($action)
             {
-                case 'Restore' :
+                case 'Restore':
                     $currentTabs = $controller->get_system_tabs();
                     foreach ($installed_modules as $module)
                     {
@@ -2545,7 +2545,7 @@ private function dir_file_count($path){
                     }
                     $controller->set_system_tabs($currentTabs);;
                     break;
-                case 'Add' :
+                case 'Add':
                     $currentTabs = $controller->get_system_tabs();
                     foreach ($installed_modules as $module)
                     {
