@@ -117,6 +117,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         } else {
             $this->log('@', 'A full indexing will be performed');
             $this->removeIndex();
+            $this->createIndex($this->index, $this->getDefaultMapParams());
         }
 
         $modules = $this->getModulesToIndex();
@@ -181,6 +182,60 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->client->indices()->delete($params);
 
         $this->log('@', "Removed index '$index'");
+    }
+
+    public function createIndex($index, $body = null)
+    {
+        $params = ['index' => $index];
+
+        if (!empty($body) && is_array($body))
+            $params['body'] = $body;
+
+        $this->client->indices()->create($params);
+
+        $this->log('@', "Created new index '$index'");
+    }
+
+    private function getDefaultMapParams()
+    {
+        $fields = [
+            "keyword" => [
+                "type" => "keyword",
+                "ignore_above" => 256
+            ]
+        ];
+
+        return [
+            'mappings' => [
+                '_default_' => [
+                    'properties' => [
+                        'name' => [
+                            'properties' => [
+                                'name' => [
+                                    'type' => 'text',
+                                    'copy_to' => 'named',
+                                    'fields' => $fields
+                                ],
+                                'first' => [
+                                    'type' => 'text',
+                                    'copy_to' => 'named',
+                                    'fields' => $fields
+                                ],
+                                'last' => [
+                                    'type' => 'text',
+                                    'copy_to' => 'named',
+                                    'fields' => $fields
+                                ]
+                            ]
+                        ],
+                        'named' => [
+                            'type' => 'text',
+                            'fields' => $fields
+                        ],
+                    ]
+                ]
+            ]
+        ];
     }
 
     /**
@@ -544,15 +599,4 @@ class ElasticSearchIndexer extends AbstractIndexer
         return $meta;
     }
 
-    public function createIndex($index, $body = null)
-    {
-        $params = ['index' => $index];
-
-        if (!empty($body) && is_array($body))
-            $params['body'] = $body;
-
-        $this->client->indices()->create($params);
-
-        $this->log('@', "Created new index '$index'");
-    }
 }
