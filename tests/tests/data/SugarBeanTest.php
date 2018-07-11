@@ -143,7 +143,9 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                
         
         // test
+        
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -172,6 +174,8 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                        WHERE   secr.record_id = users.id
                                AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
+                               
         // clean up
         $state->popGlobals();
         $state->popTable('users');
@@ -193,6 +197,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $user->name = 'tester8';
         $user->save();
         $current_user = $user;
@@ -202,9 +207,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -234,9 +241,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         
                 
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
         
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -264,10 +273,12 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                        WHERE   secr.record_id = users.id
                                AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
  
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -283,9 +294,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
             where sec.deleted = 0
         )) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
         
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -301,6 +314,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
             where sec.deleted = 0
         )) ) AND users.deleted=0", $results);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
  
  
         // test
@@ -370,6 +384,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $user->name = 'tester7';
         $user->save();
         $current_user = $user;
@@ -379,9 +394,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -411,6 +428,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                        WHERE   secr.record_id = users.id
                                AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // clean up
         $state->popGlobals();
@@ -434,6 +452,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $user->name = 'tester6';
         $user->save();
         $current_user = $user;
@@ -443,6 +462,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
               
         // test
         $bean = new SugarBean();
@@ -487,6 +507,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $user->name = 'tester5';
         $user->save();
         $current_user = $user;
@@ -496,9 +517,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -531,6 +554,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                        WHERE   secr.record_id = users.id
                                AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // clean up
         $state->popGlobals();
@@ -554,6 +578,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $user->name = 'tester4';
         $user->save();
         $current_user = $user;
@@ -563,9 +588,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -600,6 +627,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                        WHERE   secr.record_id = users.id
                                AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // clean up
         $state->popGlobals();
@@ -621,6 +649,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $user->name = 'tester3';
         $user->save();
         $current_user = $user;
@@ -630,9 +659,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -665,6 +696,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                        WHERE   secr.record_id = users.id
                                AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // clean up
         $state->popGlobals();
@@ -688,6 +720,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $user->name = 'tester2';
         $user->user_name = 'tester2';
         $user->save();
@@ -698,9 +731,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -733,6 +768,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                        WHERE   secr.record_id = users.id
                                AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // clean up
         $state->popGlobals();
@@ -755,6 +791,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $user->name = 'tester';
         $user->save();
         $current_user = $user;
@@ -764,9 +801,11 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
+        $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
         $tmpUser->save();
         $order_by = '';
@@ -801,6 +840,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                        WHERE   secr.record_id = users.id
                                AND secg.deleted = 0) ) AND users.deleted=0", $results);        
         
+        $tmpUser->field_defs = $fieldDefs; // restore field defs
                 
         // clean up
         $state->popGlobals();
