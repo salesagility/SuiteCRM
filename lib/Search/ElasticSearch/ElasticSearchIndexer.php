@@ -175,12 +175,12 @@ class ElasticSearchIndexer extends AbstractIndexer
             $index = $this->index;
         }
 
-        $this->log('@', "Removing index $index");
-
         $params = ['index' => $index];
         $params['client'] = ['ignore' => [404]];
 
         $this->client->indices()->delete($params);
+
+        $this->log('@', "Removed index '$index'");
     }
 
     /**
@@ -542,5 +542,17 @@ class ElasticSearchIndexer extends AbstractIndexer
         $results = $this->client->indices()->getMapping($params);
         $meta = $results[$this->index]['mappings'][$module]['_meta'];
         return $meta;
+    }
+
+    public function createIndex($index, $body = null)
+    {
+        $params = ['index' => $index];
+
+        if (!empty($body) && is_array($body))
+            $params['body'] = $body;
+
+        $this->client->indices()->create($params);
+
+        $this->log('@', "Created new index '$index'");
     }
 }
