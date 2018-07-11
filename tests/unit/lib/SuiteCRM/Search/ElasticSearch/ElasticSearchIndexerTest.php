@@ -517,4 +517,39 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
 
         self::assertEquals($meta, $actual);
     }
+
+    public function testCreateIndex()
+    {
+        $index = 'test';
+        $params = ['index' => $index];
+
+        list($client, $indices) = $this->getMockIndices();
+
+        $indices
+            ->shouldReceive('create')
+            ->with($params)
+            ->once();
+
+        $i = new i($client);
+
+        $i->createIndex($index);
+    }
+
+    public function testCreateIndexWithBody()
+    {
+        $index = 'test';
+        $body = ["mappings" => ['my_type' => ['_source' => ['enabled' => true]]]];
+        $params = ['index' => $index, 'body' => $body];
+
+        list($client, $indices) = $this->getMockIndices();
+
+        $indices
+            ->shouldReceive('create')
+            ->with($params)
+            ->once();
+
+        $i = new i($client);
+
+        $i->createIndex($index, $body);
+    }
 }

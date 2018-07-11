@@ -67,6 +67,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
     public function setUp()
     {
         parent::setUp();
+        echo PHP_EOL;
 
         $this->indexer = new ElasticSearchIndexer();
         $this->searchEngine = new ElasticSearchEngine();
@@ -113,6 +114,14 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->state->popTable('sugarfeed');
         $this->state->popFile(self::LOCK_FILE);
         $this->indexer->removeIndex('test');
+    }
+
+    public function testPing()
+    {
+        $result = $this->indexer->ping();
+
+        self::assertNotFalse($result);
+        self::assertTrue(is_numeric($result));
     }
 
     public function testWithoutSearchdefs()
@@ -349,5 +358,23 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         DBManagerFactory::getInstance()->query($sql);
 
         $bean->save();
+    }
+
+    public function testMeta()
+    {
+        $module = "TestModule";
+        $meta1 = ['foo' => 'baz'];
+        $meta2 = ['foz' => 'bar'];
+
+        $this->indexer->createIndex('test');
+        $this->indexer->putMeta($module, $meta1);
+        $actual = $this->indexer->getMeta($module);
+
+        self::assertEquals($meta1, $actual);
+
+        $this->indexer->putMeta($module, $meta2);
+        $actual = $this->indexer->getMeta($module);
+
+        self::assertEquals($meta2, $actual);
     }
 }
