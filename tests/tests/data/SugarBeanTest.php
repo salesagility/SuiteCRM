@@ -197,7 +197,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
                 
         // test
         $user = new User();
-        $fieldDefs = $tmpUser->field_defs; // save field defs
+        $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester8';
         $user->save();
         $current_user = $user;
@@ -207,7 +207,7 @@ class SugarBeanTest  extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
         
-        $tmpUser->field_defs = $fieldDefs; // restore field defs
+        $user->field_defs = $fieldDefs; // restore field defs
                 
         // test
         $tmpUser = new User();
