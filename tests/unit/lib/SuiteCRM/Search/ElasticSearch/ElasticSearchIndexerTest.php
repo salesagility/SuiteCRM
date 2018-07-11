@@ -104,14 +104,14 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     {
         $batchSize = 20;
         $index = 'test1';
-        $i = new i();
+        $i = new i(null);
 
         $i->setBatchSize($batchSize);
         $i->setIndex($index);
         self::assertEquals($batchSize, $i->getBatchSize());
         self::assertEquals($index, $i->getIndex());
 
-        $i = new i();
+        $i = new i(null);
         $batchSize = 50;
         $index = 'test2';
 
@@ -372,7 +372,7 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
     }
 
     /**
-     * @return array
+     * @return array(\Elasticsearch\Client, \Elasticsearch\Namespaces\IndicesNamespace)
      */
     public function getMockIndices()
     {
@@ -465,5 +465,56 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
         $actual = $indexer->ping();
         self::assertNotFalse($actual);
         self::assertTrue(is_numeric($actual));
+    }
+
+    public function testPutMappings()
+    {
+        $meta = ['foo' => 'bar'];
+        $module = 'Accounts';
+        $index = 'test';
+
+        $params = [
+            'index' => $index,
+            'type' => $module,
+            'body' => ['_meta' => $meta]
+        ];
+
+        list($client, $indices) = $this->getMockIndices();
+
+        $indices
+            ->shouldReceive('putMapping')
+            ->with($params)
+            ->once();
+
+        $i = new i($client);
+        $i->setIndex($index);
+
+        $i->putMeta($module, $meta);
+    }
+
+    public function testGetMeta()
+    {
+        $meta = ['foo' => 'bar'];
+        $module = 'Accounts';
+        $index = 'test';
+
+        $params = ['index' => $index, 'filter_path' => "$index.mappings.$module._meta"];
+        $response = [$index => ['mappings' => [$module => ['_meta' => $meta]]]];
+
+        list($client, $indices) = $this->getMockIndices();
+
+        $indices
+            ->shouldReceive('getMapping')
+            ->with($params)
+            ->once()
+            ->andReturn($response);
+
+        $i = new i($client);
+
+        $i->setIndex($index);
+
+        $actual = $i->getMeta($module);
+
+        self::assertEquals($meta, $actual);
     }
 }

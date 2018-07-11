@@ -512,4 +512,35 @@ class ElasticSearchIndexer extends AbstractIndexer
             return $elapsed;
         }
     }
+
+    /**
+     * Writes the metadata fields for one index type.
+     *
+     * @param $module string name of the module/type
+     * @param $meta array an associative array with the fields to populate
+     */
+    public function putMeta($module, $meta)
+    {
+        $params = [
+            'index' => $this->index,
+            'type' => $module,
+            'body' => ['_meta' => $meta]
+        ];
+
+        $this->client->indices()->putMapping($params);
+    }
+
+    /**
+     * Returns the metadata fields for one index type.
+     *
+     * @param $module string name of the module/type
+     * @return array an associative array with the metadata
+     */
+    public function getMeta($module)
+    {
+        $params = ['index' => $this->index, 'filter_path' => "$this->index.mappings.$module._meta"];
+        $results = $this->client->indices()->getMapping($params);
+        $meta = $results[$this->index]['mappings'][$module]['_meta'];
+        return $meta;
+    }
 }
