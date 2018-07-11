@@ -208,6 +208,15 @@ $beanFiles['Configurator'] = 'modules/Configurator/Configurator.php';
 $beanFiles['Spots'] = 'modules/Spots/Spots.php';
 $beanFiles['AOBH_BusinessHours'] = 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
 
+// SharedSecurityRules
+$beanList['SharedSecurityRulesConditions'] = 'SharedSecurityRulesConditions';
+$beanFiles['SharedSecurityRulesConditions'] = 'modules/SharedSecurityRulesConditions/SharedSecurityRulesConditions.php';
+$beanList['SharedSecurityRules'] = 'SharedSecurityRules';
+$beanFiles['SharedSecurityRules'] = 'modules/SharedSecurityRules/SharedSecurityRules.php';
+$moduleList[] = 'SharedSecurityRules';
+$beanList['SharedSecurityRulesActions'] = 'SharedSecurityRulesActions';
+$beanFiles['SharedSecurityRulesActions'] = 'modules/SharedSecurityRulesActions/SharedSecurityRulesActions.php';
+
 
 // added these lists for security settings for tabs
 $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connectors',
@@ -226,6 +235,8 @@ $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connector
     'Alert',
 	'ResourceCalendar',
 	'AOBH_BusinessHours',
+    'SharedSecurityRulesConditions',
+    'SharedSecurityRulesActions',
     );
 $adminOnlyList = array(
     //module => list of actions  (all says all actions are admin only)

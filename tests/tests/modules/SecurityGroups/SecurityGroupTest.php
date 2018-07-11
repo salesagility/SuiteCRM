@@ -508,6 +508,8 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'jjwg_Maps',
             'AOS_Product_Categories',
             'Spots' => 'Spots',
+            'SharedSecurityRules',
+            'SharedSecurityRulesActions',
                 );
 
         $actual = $securityGroup->getSecurityModules();

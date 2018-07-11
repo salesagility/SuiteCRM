@@ -28,7 +28,6 @@ var report_fields =  new Array();
 var report_module = '';
 
 var LogicalOperatorHandler = {
-    //logicSelectCounter: 0.
 
     getLogicalOperatorSelectHTML: function(value, _condln, forcedValue) {
 
@@ -54,8 +53,6 @@ var LogicalOperatorHandler = {
             '   <option value="OR"' + selecteds.OR + '>' + SUGAR.language.get('AOR_Conditions', 'LBL_CONDITION_OR') + '</option>' +
             '</select>';
 
-        //logicSelectCounter++;
-
         return selectHTML;
     },
 
@@ -73,10 +70,6 @@ var LogicalOperatorHandler = {
             }
         });
     },
-
-    onLogicSelectChange: function(elem, counter) {
-        // console.log('logic select changed... ', elem, counter);
-    }
 
 };
 
