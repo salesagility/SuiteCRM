@@ -69,14 +69,19 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
             if (is_array($value)) {
                 foreach ($value as $subvalue) {
                     if ($this->hasField($bean, $subvalue)) {
-                        $body[$key][$subvalue] = mb_convert_encoding($bean->$subvalue, "UTF-8", "HTML-ENTITIES");
+                        $body[$key][$subvalue] = $this->cleanValue($bean->$subvalue);
                     }
                 }
             } else {
                 if ($this->hasField($bean, $value)) {
-                    $body[$value] = mb_convert_encoding($bean->$value, "UTF-8", "HTML-ENTITIES");
+                    $body[$value] = $this->cleanValue($bean->$value);
                 }
             }
+        }
+
+        if (isset($body['name'])) {
+            $name = $body['name'];
+            $body['name'] = ['name' => $name];
         }
 
         return $body;
@@ -138,5 +143,14 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
         } else {
             return true;
         }
+    }
+
+    /**
+     * @param $s
+     * @return null|string|string[]
+     */
+    private function cleanValue($s)
+    {
+        return mb_convert_encoding($s, "UTF-8", "HTML-ENTITIES");
     }
 }
