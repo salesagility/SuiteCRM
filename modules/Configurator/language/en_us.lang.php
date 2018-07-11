@@ -370,6 +370,6 @@ More help : www.tcpdf.org',
     // Google auth
     'LBL_GOOGLE_AUTH_TITLE' => 'Google Authentication',
     'LBL_GOOGLE_AUTH_JSON' => 'JSON File',
-    'LBL_GOOGLE_AUTH_JSON_HELP' => 'HELP GOES HERE',
+    'LBL_GOOGLE_AUTH_JSON_HELP' => 'Upload the JSON file you downloaded from Google Developers Console.',
 
 );

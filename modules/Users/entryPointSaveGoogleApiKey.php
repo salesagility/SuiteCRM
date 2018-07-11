@@ -43,3 +43,16 @@ if (isset($_REQUEST['setinvalid'])) {
     $url = "/index.php?module=Users&action=EditView&record=" . $current_user->id;
     SugarApplication::redirect($url);
 }
+
+if (isset($_REQUEST['error'])) {
+    global $GLOBALS;
+    global $current_user;
+    $url = "/index.php?module=Users&action=EditView&record=" . $current_user->id;
+    $exitstring = "<html><head><title>SuiteCRM Google Sync - ERROR</title></head><body><h1>There was an error: " . $_REQUEST['error'] . "</h1><br><p><a href=" . $url . ">Click here</a> to continue.</body></html>";
+    die($exitstring);
+}
+
+// If we don't get a known return, we just silently return to the user profile.
+global $current_user;
+$url = "/index.php?module=Users&action=EditView&record=" . $current_user->id;
+SugarApplication::redirect($url);

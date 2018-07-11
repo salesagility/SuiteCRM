@@ -306,7 +306,7 @@
 				};
 				{/literal}
 			</script>
-			<input type="file" accept="text/plain" onchange="openGoogleJson(event)"><br>
+			JSON file is: <span style="color:{$GOOGLE_JSON_CONF_COLOR}">{$GOOGLE_JSON_CONF}</span><input type="file" accept="text/plain" onchange="openGoogleJson(event)">
 		</td>
 	</tr>
 </table>

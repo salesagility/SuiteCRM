@@ -163,6 +163,15 @@ class ConfiguratorViewEdit extends ViewEdit
         else {
             $this->ss->assign('logger_visible', true);
         }
+        // Check for Google Sync JSON
+        $json = base64_decode($configurator->config['google_auth_json']);
+        if ($config = json_decode($json, true)) {
+            $this->ss->assign("GOOGLE_JSON_CONF", 'CONFIGURED');
+            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'green');
+        } else {
+            $this->ss->assign("GOOGLE_JSON_CONF", 'UNCONFIGURED');
+            $this->ss->assign("GOOGLE_JSON_CONF_COLOR", 'black');
+        }
 
         echo $this->getModuleTitle(false);
         
