@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,10 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 
 /*********************************************************************************
  * Description:  Defines the base class for all data entities used throughout the
@@ -1510,6 +1506,10 @@ class SugarBean
         //find all definitions of type link.
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
+                if (!is_array($properties)) {
+                    LoggerManager::getLogger()->warn('properties should be an array for SugarBean::get_linked_fields');
+                    $properties = (array)$properties;
+                }
                 if (array_search('link', $properties) === 'type') {
                     $linked_fields[$name] = $properties;
                 }
@@ -1942,9 +1942,6 @@ class SugarBean
             $this->custom_fields->bean = $this;
             $this->custom_fields->save($isUpdate);
         }
-
-        // use the db independent query generator
-        $this->preprocess_fields_on_save();
 
         $this->_sendNotifications($check_notify);
 
@@ -3014,7 +3011,13 @@ class SugarBean
         if(!empty($sgWhere) && !empty($rules_where['addWhere'])) {
             $permWhere = " ( " . $sgWhere . " OR (" . $rules_where['addWhere'] . ") ) ";
         } elseif (!empty($sgWhere) || !empty($rules_where['addWhere'])) {
-            $permWhere = " ( " . $sgWhere . "" . $rules_where['addWhere'] . " ) ";
+            $rulesWhereAddWhere = null;
+            if (!isset($rules_where['addWhere'])) {
+                LoggerManager::getLogger()->warn('rules_where[addWhere] is undefined but necessary for SugarBean::create_new_list_query()');
+            } else {
+                $rulesWhereAddWhere = $rules_where['addWhere'];
+            }
+            $permWhere = " ( " . $sgWhere . "" . $rulesWhereAddWhere . " ) ";
         }
         if(!empty($rules_where['resWhere']) && !empty($permWhere)) {
             $permWhere = " ( " . $rules_where['resWhere'] . " AND " . $permWhere . " ) ";
@@ -3098,7 +3101,11 @@ class SugarBean
 
         //walk through the fields and for every relationship field add their relationship_info field
         //relationshipfield-aliases are resolved in SugarBean::create_new_list_query through their relationship_info field
-        $addrelate = array();
+        $addrelate = array();  
+        if (!isset($fields) || null === $fields) {
+            LoggerManager::getLogger()->warn('filter is not set for SugarBean::create_new_list_query');
+            $fields = array();
+        }
         foreach ($fields as $field => $value) {
             if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) &&
                 $this->field_defs[$field]['source'] == 'non-db'
@@ -3165,13 +3172,20 @@ class SugarBean
 
                 $selectedFields["$this->table_name.$field"] = true;
             }
+            
+            $dataType = null;
+            if (!isset($data['type'])) {
+                LoggerManager::getLogger()->warn('SugarBean needs a type of data to create new list query');
+            } else {
+                $dataType = $data['type'];
+            }
 
-            if ($data['type'] != 'relate' && isset($data['db_concat_fields'])) {
+            if ($dataType != 'relate' && isset($data['db_concat_fields'])) {
                 $ret_array['select'] .= ", " . $this->db->concat($this->table_name, $data['db_concat_fields']) . " as $field";
                 $selectedFields[$this->db->concat($this->table_name, $data['db_concat_fields'])] = true;
             }
             //Custom relate field or relate fields built in module builder which have no link field associated.
-            if ($data['type'] == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
+            if ($dataType == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
                 $joinTableAlias = 'jt' . $jtcount;
                 $relateJoinInfo = $this->custom_fields->getRelateJoin($data, $joinTableAlias, false);
                 $ret_array['select'] .= $relateJoinInfo['select'];
@@ -3182,7 +3196,7 @@ class SugarBean
                 $jtcount++;
             }
             //Parent Field
-            if ($data['type'] == 'parent') {
+            if ($dataType == 'parent') {
                 //See if we need to join anything by inspecting the where clause
                 $match = preg_match('/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/', $where, $matches);
                 if ($match) {
@@ -4405,6 +4419,10 @@ class SugarBean
         //find all definitions of type link.
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
+                if (!is_array($properties)) {
+                    LoggerManager::getLogger()->warn('properties of field defs should be an array, ' . gettype($properties) . ' given.');
+                    $properties = (array)$properties;
+                }
                 if (array_search('relate', $properties, true) === 'type') {
                     $related_fields[$name] = $properties;
                 }

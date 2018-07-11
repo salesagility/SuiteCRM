@@ -478,7 +478,7 @@ class StateSaver
         $configOptionKeys = StateCheckerConfig::get('phpConfigOptionKeys');
         foreach ($configOptionKeys as $name) {
             if (ini_set($name, $configOptions[$name]) === false) {
-                throw new StateSaverException('Error to restore PHP Configuration Option: "' . $name . '"');
+                throw new StateSaverException('Error to restore PHP Configuration Option: "' . $name . '" to "' . $configOptions[$name] . '"');
             }
         }
     }

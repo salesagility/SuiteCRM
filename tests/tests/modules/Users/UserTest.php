@@ -439,6 +439,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function testsaveAndOthers()
 	{
+            
         // save state
         
         $state = new \SuiteCRM\StateSaver();
@@ -456,7 +457,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 		$db->checkConnection();
 
 
-		$user = new User();
+		$user = BeanFactory::getBean('Users');
 
 		$user->user_name  = "test";
 
@@ -525,10 +526,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function retrieve($id)
 	{
-		$user = new User();
-
-		$user->retrieve($id);
-
+		$user = BeanFactory::getBean('Users', $id);
 		$this->assertEquals("test", $user->user_name);
 
 		$this->assertEquals("firstn", $user->first_name);
@@ -541,23 +539,26 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 	public function retrieve_by_email_address($id)
 	{
-		$user = new User();
-
-		//test with invalid email
-		$user->retrieve_by_email_address("wrongone@email.com");
-		$this->assertEquals('', $user->id);
-
-
+		$user = BeanFactory::getBean('Users');
+                
 		//test with valid email and test for record ID to verify that record is same
 		$user->retrieve_by_email_address("one@email.com");
 		$this->assertTrue(isset($user->id));
 		$this->assertEquals($id, $user->id);
 
+		$user = BeanFactory::getBean('Users');
+                
+		//test with invalid email
+		$user->retrieve_by_email_address("wrongone@email.com");
+		$this->assertEquals('', $user->id);
+
+
+
 	}
 
 	public function NewPasswordAndFindUserPassword($id)
 	{
-		$user = new User();
+		$user = BeanFactory::getBean('Users');
 
 		$user->retrieve($id);
 
@@ -566,8 +567,8 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
 
 		$result = User::findUserPassword("test",md5("test"));
 
-		$this->assertTrue(isset($result['id']));
-		$this->assertEquals($id, $result['id']);
+                // md5 pwd is deprecated
+		$this->assertContains($id, $result['id']);
 
 	}
 
