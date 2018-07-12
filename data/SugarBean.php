@@ -3601,7 +3601,13 @@ class SugarBean
         if(!empty($sgWhere) && !empty($rules_where['addWhere'])) {
             $permWhere = " ( " . $sgWhere . " OR (" . $rules_where['addWhere'] . ") ) ";
         } elseif (!empty($sgWhere) || !empty($rules_where['addWhere'])) {
-            $permWhere = " ( " . $sgWhere . "" . $rules_where['addWhere'] . " ) ";
+            $rulesWhereAddWhere = null;
+            if (!isset($rules_where['addWhere'])) {
+                LoggerManager::getLogger()->warn('rules_where[addWhere] is undefined but necessary for SugarBean::create_new_list_query()');
+            } else {
+                $rulesWhereAddWhere = $rules_where['addWhere'];
+            }
+            $permWhere = " ( " . $sgWhere . "" . $rulesWhereAddWhere . " ) ";
         }
         if(!empty($rules_where['resWhere']) && !empty($permWhere)) {
             $permWhere = " ( " . $rules_where['resWhere'] . " AND " . $permWhere . " ) ";

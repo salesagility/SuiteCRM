@@ -112,8 +112,20 @@ function popup_onload($event, $arguments)
 */
 	global $sugar_config;
 
-	$module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
-	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
+        
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined module in request');
+        }
+        
 
 	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;  
 
@@ -159,8 +171,22 @@ EOQ;
 
 function mass_assign($event, $arguments)
 {
-    $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
-    $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+    
+        
+        $action = null;
+        if (isset($_REQUEST['action'])) {
+            $action = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined action in request');
+        }
+        
+        $module = null;
+        if (isset($_REQUEST['module'])) {
+            $module = $_REQUEST['module'];
+        } else {
+            LoggerManager::getLogger()->warn('Not defined module in request');
+        }
+        
   
   	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
     //check if security suite enabled

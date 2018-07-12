@@ -45,9 +45,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if(ACLController::checkAccess('SharedSecurityRules', 'edit', true)){
-    $module_menu[]=array('index.php?module=SharedSecurityRules&action=EditView&return_module=SharedSecurityRules&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Add', 'SharedSecurityRules');
+if (ACLController::checkAccess('SharedSecurityRules', 'edit', true)) {
+    $module_menu[] = array('index.php?module=SharedSecurityRules&action=EditView&return_module=SharedSecurityRules&return_action=DetailView', $mod_strings['LNK_NEW_RECORD'], 'Add', 'SharedSecurityRules');
 }
-if(ACLController::checkAccess('SharedSecurityRules', 'list', true)){
-    $module_menu[]=array('index.php?module=SharedSecurityRules&action=index&return_module=SharedSecurityRules&return_action=DetailView', $mod_strings['LNK_LIST'],'List', 'SharedSecurityRules');
+if (ACLController::checkAccess('SharedSecurityRules', 'list', true)) {
+    $module_menu[] = array('index.php?module=SharedSecurityRules&action=index&return_module=SharedSecurityRules&return_action=DetailView', $mod_strings['LNK_LIST'], 'List', 'SharedSecurityRules');
 }
