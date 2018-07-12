@@ -2,7 +2,6 @@
 
 class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    
     protected $stateSaver;
     
     public function setUp()
@@ -18,7 +17,7 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
     
     public function tearDown()
-    {   
+    {
         $this->stateSaver->popTable('email_addresses');
         
         parent::tearDown();
@@ -45,7 +44,6 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
     }
 
     public function testpreDisplay()
@@ -82,7 +80,6 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
     }
 
     public function testdisplay()
@@ -117,7 +114,5 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 }

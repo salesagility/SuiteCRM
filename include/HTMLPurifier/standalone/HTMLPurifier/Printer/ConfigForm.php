@@ -201,7 +201,6 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $ret .= $this->end('tbody');
         return $ret;
     }
-
 }
 
 /**

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -57,19 +59,17 @@ class ModuleBuilder
     function getPackageList()
     {
         static $list = array ( ) ;
-        if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH ))
+        if (! empty ( $list ) || ! file_exists ( MB_PACKAGE_PATH )) {
             return $list ;
+        }
         $d = dir ( MB_PACKAGE_PATH ) ;
-        while ( $e = $d->read () )
-        {
-            if (file_exists ( MB_PACKAGE_PATH . '/' . $e . '/manifest.php' ))
-            {
+        while ( $e = $d->read () ) {
+            if (file_exists ( MB_PACKAGE_PATH . '/' . $e . '/manifest.php' )) {
                 $list [] = $e ;
             }
         }
         sort ( $list ) ; // order important as generate_nodes_array in Tree.php later loops over this by foreach to generate the package list
         return $list ;
-    
     }
 
     /**
@@ -78,8 +78,9 @@ class ModuleBuilder
      */
     function getPackage($name)
     {
-        if (empty ( $this->packages [ $name ] ))
+        if (empty ( $this->packages [ $name ] )) {
             $this->packages [ $name ] = new MBPackage ( $name ) ;
+        }
 
         return $this->packages [ $name ] ;
     }
@@ -87,11 +88,11 @@ class ModuleBuilder
     function getPackageKey($name)
     {
         $manifestPath = MB_PACKAGE_PATH . '/' . $name . '/manifest.php' ;
-        if (file_exists ( $manifestPath ))
-        {
+        if (file_exists ( $manifestPath )) {
             require( $manifestPath ) ;
-            if(!empty($manifest))
+            if (!empty($manifest)) {
                 return $manifest['key'];
+            }
         }
         return false ;
     }
@@ -111,8 +112,7 @@ class ModuleBuilder
     function save()
     {
         $packages = array_keys ( $this->packages ) ;
-        foreach ( $packages as $package )
-        {
+        foreach ( $packages as $package ) {
             $this->packages [ $package ]->save () ;
         }
     }
@@ -120,13 +120,10 @@ class ModuleBuilder
     function build()
     {
         $packages = array_keys ( $this->packages ) ;
-        foreach ( $packages as $package )
-        {
-            if (count ( $packages ) == 1)
-            {
+        foreach ( $packages as $package ) {
+            if (count ( $packages ) == 1) {
                 $this->packages [ $package ]->build ( true ) ;
-            } else
-            {
+            } else {
                 $this->packages [ $package ]->build ( false ) ;
             }
         }
@@ -134,13 +131,12 @@ class ModuleBuilder
 
     function getPackages()
     {
-        if (empty ( $this->packages ))
-        {
+        if (empty ( $this->packages )) {
             $list = $this->getPackageList () ;
-            foreach ( $list as $package )
-            {
-                if (! empty ( $this->packages [ $package ] ))
+            foreach ( $list as $package ) {
+                if (! empty ( $this->packages [ $package ] )) {
                     continue ;
+                }
                 $this->packages [ $package ] = new MBPackage ( $package ) ;
             }
         }
@@ -150,8 +146,7 @@ class ModuleBuilder
     {
         $this->getPackages () ;
         $nodes = array ( ) ;
-        foreach ( array_keys ( $this->packages ) as $name )
-        {
+        foreach ( array_keys ( $this->packages ) as $name ) {
             $nodes [] = $this->packages [ $name ]->getNodes () ;
         }
         return $nodes ;
@@ -171,11 +166,10 @@ class ModuleBuilder
             'Employees' => 'Users'
         );
 
-        if (isset($relate_arr[$module])){
+        if (isset($relate_arr[$module])) {
             $aliases[] = $relate_arr[$module];
         }
 
         return $aliases;
     }
-
 }

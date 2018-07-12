@@ -1,5 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry) die ( 'Not A Valid Entry Point' ) ;
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
+    die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -52,8 +54,7 @@ class TemplateAddress extends TemplateField
 
         require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
         $parser = new ParserLabel ( $df->getModuleName() , $df->getPackageName() ) ;
-        foreach ( array ( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName )
-        {
+        foreach ( array ( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName ) {
             $systemLabel = strtoupper( "LBL_" . $this->name . '_' . $addressFieldName );
             $parser->handleSave ( array( "label_" . $systemLabel => $this->label_value . ' ' . $addressFieldName ) , $GLOBALS [ 'current_language' ] ) ;
             $addressField = new TemplateField ( ) ;
@@ -63,7 +64,6 @@ class TemplateAddress extends TemplateField
             $addressField->save ( $df ) ;
         }
         // finally save the base street address field
-        parent::save($df);      
-        
+        parent::save($df);
     }
 }

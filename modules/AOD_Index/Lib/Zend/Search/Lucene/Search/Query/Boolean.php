@@ -114,7 +114,8 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
      * @param  boolean|null $sign
      * @return void
      */
-    public function addSubquery(Zend_Search_Lucene_Search_Query $subquery, $sign=null) {
+    public function addSubquery(Zend_Search_Lucene_Search_Query $subquery, $sign=null)
+    {
         if ($sign !== true || $this->_signs !== null) {       // Skip, if all subqueries are required
             if ($this->_signs === null) {                     // Check, If all previous subqueries are required
                 $this->_signs = array();
@@ -262,7 +263,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                 // remove subquery from a subqueries list
                 unset($subqueries[$id]);
                 unset($signs[$id]);
-           } elseif ($subquery instanceof Zend_Search_Lucene_Search_Query_MultiTerm) {
+            } elseif ($subquery instanceof Zend_Search_Lucene_Search_Query_MultiTerm) {
                 $subTerms = $subquery->getTerms();
                 $subSigns = $subquery->getSigns();
 
@@ -304,7 +305,6 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                     // remove subquery from a subqueries list
                     unset($subqueries[$id]);
                     unset($signs[$id]);
-
                 } else { // $signs[$id] === null  ||  $signs[$id] === false
                     // It's an optional or prohibited multi-term subquery.
                     // Something like '... (+term1 -term2 term3 ...) ...'
@@ -503,7 +503,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
                         $resVectors);
 
         foreach ($resVectors as $nextResVector) {
-            if($this->_resVector === null) {
+            if ($this->_resVector === null) {
                 $this->_resVector = $nextResVector;
             } else {
                 //$this->_resVector = array_intersect_key($this->_resVector, $nextResVector);
@@ -568,7 +568,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
         $required = null;
         foreach ($requiredVectors as $nextResVector) {
-            if($required === null) {
+            if ($required === null) {
                 $required = $nextResVector;
             } else {
                 //$required = array_intersect_key($required, $nextResVector);

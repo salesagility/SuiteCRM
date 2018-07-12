@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,11 +41,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-function perform_save(&$focus) {
-	//US DOLLAR
-	if(isset($focus->amount) && !number_empty($focus->amount)){
-		$currency = new Currency();
-		$currency->retrieve($focus->currency_id);
-		$focus->amount_usdollar = $currency->convertToDollar(unformat_number($focus->amount));
-	}	
+function perform_save(&$focus)
+{
+    //US DOLLAR
+    if (isset($focus->amount) && !number_empty($focus->amount)) {
+        $currency = new Currency();
+        $currency->retrieve($focus->currency_id);
+        $focus->amount_usdollar = $currency->convertToDollar(unformat_number($focus->amount));
+    }
 }

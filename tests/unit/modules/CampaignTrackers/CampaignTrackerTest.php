@@ -36,14 +36,14 @@ class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('campaign_trkrs');
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
-	// test
+        // test
         
         $campaignTracker = new CampaignTracker();
 

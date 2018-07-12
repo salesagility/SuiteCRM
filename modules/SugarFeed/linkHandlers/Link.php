@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,11 +43,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class FeedLinkHandlerLink
 {
-    function getDisplay(&$data) {
+    function getDisplay(&$data)
+    {
         return '<div style="padding-left:10px"><a href="' . $data['LINK_URL'] . '" target="_blank">' .$data['LINK_URL'] .'</a></div>';
     }
 
-    function handleInput($feed, $link_type, $link_url) {
+    function handleInput($feed, $link_type, $link_url)
+    {
         $feed->link_type = $link_type;
 
         // 
@@ -58,6 +62,6 @@ class FeedLinkHandlerLink
         // Make sure they aren't trying to do something nasty like break out of a quote or something
         $link_url = str_replace(array('<','>','"',"'"),array('&lt;','&gt;','&quot;','&apos;'),$link_url);
 
-        $feed->link_url = $link_url;	
+        $feed->link_url = $link_url;
     }
 }

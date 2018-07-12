@@ -23,7 +23,7 @@ function smarty_core_write_cache_file($params, &$smarty)
 
     // put timestamp in cache header
     $smarty->_cache_info['timestamp'] = time();
-    if ($smarty->cache_lifetime > -1){
+    if ($smarty->cache_lifetime > -1) {
         // expiration set
         $smarty->_cache_info['expires'] = $smarty->_cache_info['timestamp'] + $smarty->cache_lifetime;
     } else {
@@ -50,7 +50,9 @@ function smarty_core_write_cache_file($params, &$smarty)
                     $level--;
                     unset($results[$i]);
                 } else { // opening tag
-                    if ($level++ > 0) unset($results[$i]);
+                    if ($level++ > 0) {
+                        unset($results[$i]);
+                    }
                 }
                 $j++;
             } elseif ($level > 0) {
@@ -72,9 +74,9 @@ function smarty_core_write_cache_file($params, &$smarty)
     } else {
         // use local cache file
 
-        if(!@is_writable($smarty->cache_dir)) {
+        if (!@is_writable($smarty->cache_dir)) {
             // cache_dir not writable, see if it exists
-            if(!@is_dir($smarty->cache_dir)) {
+            if (!@is_dir($smarty->cache_dir)) {
                 $smarty->trigger_error('the $cache_dir \'' . $smarty->cache_dir . '\' does not exist, or is not a directory.', E_USER_ERROR);
                 return false;
             }

@@ -16,7 +16,7 @@ class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
     public function _before()
     {
         parent::_before();
-        if(self::$sugarBeanRelationShipType === null) {
+        if (self::$sugarBeanRelationShipType === null) {
             self::$sugarBeanRelationShipType = new \SuiteCRM\API\JsonApi\v1\Enumerator\SugarBeanRelationshipType();
         }
     }
@@ -25,7 +25,7 @@ class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
     {
         $obj = new \stdClass();
         $obj->getType = function () {
-          return "one";
+            return "one";
         };
 
         $expected = self::$sugarBeanRelationShipType::TO_ONE;

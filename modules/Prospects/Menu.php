@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+} 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,6 +50,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings, $app_strings;
 
-if(ACLController::checkAccess('Prospects', 'edit', true))$module_menu[]=	Array("index.php?module=Prospects&action=EditView&return_module=Prospects&return_action=DetailView", $mod_strings['LNK_NEW_PROSPECT'],"Create");
-if(ACLController::checkAccess('Prospects', 'list', true))$module_menu[]=	Array("index.php?module=Prospects&action=index&return_module=Prospects&return_action=index", $mod_strings['LNK_PROSPECT_LIST'],"List");
-if(ACLController::checkAccess('Prospects', 'import', true))$module_menu[]=  Array("index.php?module=Import&action=Step1&import_module=Prospects&return_module=Prospects&return_action=index", $mod_strings['LNK_IMPORT_PROSPECTS'],"Import");
+if (ACLController::checkAccess('Prospects', 'edit', true)) {
+    $module_menu[]=	Array("index.php?module=Prospects&action=EditView&return_module=Prospects&return_action=DetailView", $mod_strings['LNK_NEW_PROSPECT'],"Create");
+}
+if (ACLController::checkAccess('Prospects', 'list', true)) {
+    $module_menu[]=	Array("index.php?module=Prospects&action=index&return_module=Prospects&return_action=index", $mod_strings['LNK_PROSPECT_LIST'],"List");
+}
+if (ACLController::checkAccess('Prospects', 'import', true)) {
+    $module_menu[]=  Array("index.php?module=Import&action=Step1&import_module=Prospects&return_module=Prospects&return_action=index", $mod_strings['LNK_IMPORT_PROSPECTS'],"Import");
+}

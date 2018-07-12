@@ -55,7 +55,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class aSubPanel
 {
-
     public $name ;
     public $_instance_properties ;
 
@@ -84,15 +83,15 @@ class aSubPanel
     public $base_collection_list = array();
 
     public function __construct($name , $instance_properties , $parent_bean , $reload = false , $original_only = false,
-        $search_query = '', $collections = array()) {
-
+        $search_query = '', $collections = array())
+    {
         if (isset($instance_properties['collection_list'])) {
             $this->base_collection_list = $instance_properties['collection_list'];
         }
 
-        if(!empty($collections) && isset($instance_properties['collection_list' ])){
-            foreach($instance_properties['collection_list' ] as $cname => $value){
-                if(!in_array($value['module'], $collections)){
+        if (!empty($collections) && isset($instance_properties['collection_list' ])) {
+            foreach ($instance_properties['collection_list' ] as $cname => $value) {
+                if (!in_array($value['module'], $collections)) {
                     unset($instance_properties['collection_list'][$cname]);
                 }
             }
@@ -102,7 +101,7 @@ class aSubPanel
 
         $this->search_query = '';
         if ((!isset($instance_properties['type']) || $instance_properties['type'] != 'collection')) {
-            if(isset($this->_instance_properties['module'])) {
+            if (isset($this->_instance_properties['module'])) {
                 $this->search_query = $this->buildSearchQuery($this->_instance_properties['module']);
             }
         }
@@ -112,53 +111,49 @@ class aSubPanel
 
         //set language
         global $current_language ;
-        if (! isset ( $parent_bean->mbvardefs ))
-        {
+        if (! isset ( $parent_bean->mbvardefs )) {
             $mod_strings = return_module_language ( $current_language, $parent_bean->module_dir ) ;
         }
         $this->mod_strings = $mod_strings ;
 
-        if ($this->isCollection ())
-		{
-			$this->canDisplay = $this->load_sub_subpanels () ; //load sub-panel definition.
-		} else
-		{
-			if (!isset( $this->_instance_properties [ 'module' ])){
-				$GLOBALS['log']->fatal('Undefined index: module');
+        if ($this->isCollection ()) {
+            $this->canDisplay = $this->load_sub_subpanels () ; //load sub-panel definition.
+        } else {
+            if (!isset( $this->_instance_properties [ 'module' ])) {
+                $GLOBALS['log']->fatal('Undefined index: module');
                 $instancePropertiesModule = null;
             } else {
-				$instancePropertiesModule = $this->_instance_properties [ 'module' ];
-			}
-			if (!is_dir('modules/' . $instancePropertiesModule)){_pstack_trace();
-			}
-			if(!isset($this->_instance_properties [ 'subpanel_name' ])) {
-				$GLOBALS['log']->fatal('Invalid or missing SubPanelDefinition property: subpanel_name');
+                $instancePropertiesModule = $this->_instance_properties [ 'module' ];
+            }
+            if (!is_dir('modules/' . $instancePropertiesModule)) {
+                _pstack_trace();
+            }
+            if (!isset($this->_instance_properties [ 'subpanel_name' ])) {
+                $GLOBALS['log']->fatal('Invalid or missing SubPanelDefinition property: subpanel_name');
                 $def_path = null;
             } else {
-                $subPanelName = $this->_instance_properties ['subpanel_name'];$def_path = 'modules/' . $this->_instance_properties [ 'module' ] . '/metadata/subpanels/' . $subPanelName . '.php' ;}
+                $subPanelName = $this->_instance_properties ['subpanel_name'];
+                $def_path = 'modules/' . $this->_instance_properties [ 'module' ] . '/metadata/subpanels/' . $subPanelName . '.php' ;
+            }
 
             $orig_exists = is_file($def_path);
             $loaded = false;
-            if ($orig_exists)
-            {
+            if ($orig_exists) {
                 require ($def_path);
                 $loaded = true;
             }
-            if (is_file("custom/$def_path") && (!$original_only  || !$orig_exists))
-            {
+            if (is_file("custom/$def_path") && (!$original_only  || !$orig_exists)) {
                 require ("custom/$def_path");
                 $loaded = true;
             }
 
-            if (! $original_only && isset ( $this->_instance_properties [ 'override_subpanel_name' ] ) && file_exists ( 'custom/modules/' . $this->_instance_properties [ 'module' ] . '/metadata/subpanels/' . $this->_instance_properties [ 'override_subpanel_name' ] . '.php' ))
-            {
+            if (! $original_only && isset ( $this->_instance_properties [ 'override_subpanel_name' ] ) && file_exists ( 'custom/modules/' . $this->_instance_properties [ 'module' ] . '/metadata/subpanels/' . $this->_instance_properties [ 'override_subpanel_name' ] . '.php' )) {
                 $custom_def_path = 'custom/modules/' . $this->_instance_properties [ 'module' ] . '/metadata/subpanels/' . $this->_instance_properties [ 'override_subpanel_name' ] . '.php' ;
                 require ($custom_def_path) ;
                 $loaded = true;
             }
 
-            if (!$loaded)
-            {
+            if (!$loaded) {
                 $GLOBALS['log']->fatal("Failed to load original or custom subpanel data for $name in $def_path");
                 $this->canDisplay = false;
             }
@@ -171,10 +166,8 @@ class aSubPanel
             $this->panel_definition = array();
             if (isset($subpanel_layout) && is_array($subpanel_layout)) {
                 $this->set_panel_definition($subpanel_layout);
-
             }
         }
-
     }
 
     /**
@@ -183,7 +176,7 @@ class aSubPanel
     public function buildSearchQuery($module)
     {
         $seed = BeanFactory::getBean($module);
-        if($seed) {
+        if ($seed) {
             require_once('include/SubPanel/SubPanelSearchForm.php');
 
             $_REQUEST['searchFormTab'] = 'basic_search';
@@ -204,18 +197,17 @@ class aSubPanel
             }
         }
         return '';
-
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function aSubPanel($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array()) {
+    function aSubPanel($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array())
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($name, $instance_properties, $parent_bean, $reload, $original_only, $search_query, $collections);
@@ -228,7 +220,7 @@ class aSubPanel
      */
     public function isDefaultHidden()
     {
-        if(isset($this->_instance_properties['default_hidden']) && $this->_instance_properties['default_hidden'] == true) {
+        if (isset($this->_instance_properties['default_hidden']) && $this->_instance_properties['default_hidden'] == true) {
             return true;
         }
 
@@ -238,8 +230,7 @@ class aSubPanel
 
     function distinct_query()
     {
-        if (isset ( $this->_instance_properties [ 'get_distinct_data' ] ))
-        {
+        if (isset ( $this->_instance_properties [ 'get_distinct_data' ] )) {
             return !empty($this->_instance_properties['get_distinct_data']) ? true : false;
         }
         return false ;
@@ -248,8 +239,7 @@ class aSubPanel
     //return the translated header value.
     function get_title()
     {
-        if (empty ( $this->mod_strings [ $this->_instance_properties [ 'title_key' ] ] ))
-        {
+        if (empty ( $this->mod_strings [ $this->_instance_properties [ 'title_key' ] ] )) {
             return translate ( $this->_instance_properties [ 'title_key' ], $this->_instance_properties [ 'module' ] ) ;
         }
         return $this->mod_strings [ $this->_instance_properties [ 'title_key' ] ] ;
@@ -259,12 +249,10 @@ class aSubPanel
     function get_buttons()
     {
         $buttons = array ( ) ;
-        if (isset ( $this->_instance_properties [ 'top_buttons' ] ))
-        {
+        if (isset ( $this->_instance_properties [ 'top_buttons' ] )) {
             //this will happen only in the case of sub-panels with multiple sources(activities).
             $buttons = $this->_instance_properties [ 'top_buttons' ] ;
-        } else
-        {
+        } else {
             $buttons = $this->panel_definition [ 'top_buttons' ] ;
         }
 
@@ -273,18 +261,13 @@ class aSubPanel
         // and calls cannot be disabled.
         //as of today these are the only 2 sub-panels that use the union clause.
         $mod_name = $this->get_module_name () ;
-        if ($mod_name == 'Activities' || $mod_name == 'History')
-        {
+        if ($mod_name == 'Activities' || $mod_name == 'History') {
             global $modListHeader ;
             global $modules_exempt_from_availability_check ;
-            if (isset ( $modListHeader ) && (! (array_key_exists ( 'Emails', $modListHeader ) || array_key_exists ( 'Emails', $modules_exempt_from_availability_check ))))
-            {
-                foreach ( $buttons as $key => $button )
-                {
-                    foreach ( $button as $property => $value )
-                    {
-                        if ($value === 'SubPanelTopComposeEmailButton' || $value === 'SubPanelTopArchiveEmailButton')
-                        {
+            if (isset ( $modListHeader ) && (! (array_key_exists ( 'Emails', $modListHeader ) || array_key_exists ( 'Emails', $modules_exempt_from_availability_check )))) {
+                foreach ( $buttons as $key => $button ) {
+                    foreach ( $button as $property => $value ) {
+                        if ($value === 'SubPanelTopComposeEmailButton' || $value === 'SubPanelTopArchiveEmailButton') {
                             //remove this button from the array.
                             unset ( $buttons [ $key ] ) ;
                         }
@@ -307,15 +290,12 @@ class aSubPanel
      */
     function load_sub_subpanels()
     {
-
         global $modListHeader ;
         // added a check for security of tabs to see if an user has access to them
         // this prevents passing an "unseen" tab to the query string and pulling up its contents
-        if (! isset ( $modListHeader ))
-        {
+        if (! isset ( $modListHeader )) {
             global $current_user ;
-            if (isset ( $current_user ))
-            {
+            if (isset ( $current_user )) {
                 $modListHeader = query_module_access_list ( $current_user ) ;
             }
         }
@@ -327,92 +307,76 @@ class aSubPanel
 
         $listFieldMap = array();
 
-		if (empty ( $this->sub_subpanels ))
-		{
-			$panels = $this->get_inst_prop_value ( 'collection_list' ) ;
-			if(null === $panels) {
-				$GLOBALS['log']->fatal('Incorrect or missing SubPanelDefinition property: collection_list');
-				$panels = array();
-			}foreach ( $panels as $panel => $properties )
-			{
-				if (array_key_exists ( $properties [ 'module' ], $modListHeader ) || array_key_exists ( $properties [ 'module' ], $modules_exempt_from_availability_check ))
-				{
-					$this->sub_subpanels [ $panel ] = new aSubPanel ( $panel, $properties, $this->parent_bean, false, false, $this->search_query, $this->base_collection_list ) ;
-				}
-			}
-			// if it's empty just dump out as there is nothing to process.
-			if(empty($this->sub_subpanels)) {return false;
-			}//Sync displayed list fields across the subpanels
-			$display_fields = $this->getDisplayFieldsFromCollection($this->sub_subpanels);
-			$query_fields = array();
-			foreach ( $this->sub_subpanels as $key => $subpanel )
-			{
-				$list_fields = $subpanel->get_list_fields();
-				$listFieldMap[$key] = array();
-				$index = 0;
-				foreach($list_fields as $field => $def)
-				{
-					if (isset($def['vname']) && isset($def['width']))
-					{
-						$index++;
-						if(!empty($def['alias'])){
-							$listFieldMap[$key][$def['alias']] = $field;
-						}else{
-							$listFieldMap[$key][$field] = $field;
-						}if (!isset($display_fields[$def['vname']]))
-						{
-							if(count($display_fields) > $index)
-							{
-								//Try to insert the new field in an order that makes sense
-								$start = array_slice($display_fields, 0, $index);
-								$end = array_slice($display_fields, $index);
-								$display_fields = array_merge(
+        if (empty ( $this->sub_subpanels )) {
+            $panels = $this->get_inst_prop_value ( 'collection_list' ) ;
+            if (null === $panels) {
+                $GLOBALS['log']->fatal('Incorrect or missing SubPanelDefinition property: collection_list');
+                $panels = array();
+            }
+            foreach ( $panels as $panel => $properties ) {
+                if (array_key_exists ( $properties [ 'module' ], $modListHeader ) || array_key_exists ( $properties [ 'module' ], $modules_exempt_from_availability_check )) {
+                    $this->sub_subpanels [ $panel ] = new aSubPanel ( $panel, $properties, $this->parent_bean, false, false, $this->search_query, $this->base_collection_list ) ;
+                }
+            }
+            // if it's empty just dump out as there is nothing to process.
+            if (empty($this->sub_subpanels)) {
+                return false;
+            }//Sync displayed list fields across the subpanels
+            $display_fields = $this->getDisplayFieldsFromCollection($this->sub_subpanels);
+            $query_fields = array();
+            foreach ( $this->sub_subpanels as $key => $subpanel ) {
+                $list_fields = $subpanel->get_list_fields();
+                $listFieldMap[$key] = array();
+                $index = 0;
+                foreach ($list_fields as $field => $def) {
+                    if (isset($def['vname']) && isset($def['width'])) {
+                        $index++;
+                        if (!empty($def['alias'])) {
+                            $listFieldMap[$key][$def['alias']] = $field;
+                        } else {
+                            $listFieldMap[$key][$field] = $field;
+                        }
+                        if (!isset($display_fields[$def['vname']])) {
+                            if (count($display_fields) > $index) {
+                                //Try to insert the new field in an order that makes sense
+                                $start = array_slice($display_fields, 0, $index);
+                                $end = array_slice($display_fields, $index);
+                                $display_fields = array_merge(
 									$start,
 									array($def['vname'] => array('name' => $field, 'vname' => $def['vname'], 'width' => $def['width'] )),
 									$end
 								);
-							} else
-							{
-								$display_fields[$def['vname']] = array(
+                            } else {
+                                $display_fields[$def['vname']] = array(
 									'name' => empty($def['alias']) ? $field : $def['alias'],
 									'vname' => $def['vname'],
 									'width' => $def['width'],
 								);
-							}
-						}
-					} else {
-						$query_fields[$field] = $def;
-					}
-				}
-			}
-			foreach ( $this->sub_subpanels as $key => $subpanel )
-			{
-				$list_fields = array();
-				foreach($display_fields as $vname => $def)
-				{
-					$field = $def['name'];
-					$list_key = isset($listFieldMap[$key][$field]) ? $listFieldMap[$key][$field] : $field;
+                            }
+                        }
+                    } else {
+                        $query_fields[$field] = $def;
+                    }
+                }
+            }
+            foreach ( $this->sub_subpanels as $key => $subpanel ) {
+                $list_fields = array();
+                foreach ($display_fields as $vname => $def) {
+                    $field = $def['name'];
+                    $list_key = isset($listFieldMap[$key][$field]) ? $listFieldMap[$key][$field] : $field;
 
-                    if (isset($subpanel->panel_definition['list_fields'][$field]))
-                    {
+                    if (isset($subpanel->panel_definition['list_fields'][$field])) {
                         $list_fields[$field] = $subpanel->panel_definition['list_fields'][$field];
-                    }
-                    elseif ($list_key != $field && isset($subpanel->panel_definition['list_fields'][$list_key]))
-                    {
+                    } elseif ($list_key != $field && isset($subpanel->panel_definition['list_fields'][$list_key])) {
                         $list_fields[$list_key] = $subpanel->panel_definition['list_fields'][$list_key];
-
-                    }
-                    else {
+                    } else {
                         $list_fields[$field] = $display_fields[$vname];
                     }
                 }
-                foreach($query_fields as $field => $def)
-                {
-                    if (isset($subpanel->panel_definition['list_fields'][$field]))
-                    {
+                foreach ($query_fields as $field => $def) {
+                    if (isset($subpanel->panel_definition['list_fields'][$field])) {
                         $list_fields[$field] = $subpanel->panel_definition['list_fields'][$field];
-                    }
-                    else {
+                    } else {
                         $list_fields[$field] = $def;
                     }
                 }
@@ -426,19 +390,14 @@ class aSubPanel
     protected function getDisplayFieldsFromCollection($sub_subpanels)
     {
         $display_fields = array();
-        foreach ($sub_subpanels as $key => $subpanel )
-        {
+        foreach ($sub_subpanels as $key => $subpanel ) {
             $list_fields = $subpanel->get_list_fields();
             $index = 0;
-            foreach($list_fields as $field => $def)
-            {
-                if (isset($def['vname']) && isset($def['width']))
-                {
+            foreach ($list_fields as $field => $def) {
+                if (isset($def['vname']) && isset($def['width'])) {
                     $index++;
-                    if (!isset($display_fields[$def['vname']]))
-                    {
-                        if(count($display_fields) > $index)
-                        {
+                    if (!isset($display_fields[$def['vname']])) {
+                        if (count($display_fields) > $index) {
                             //Try to insert the new field in an order that makes sense
                             $start = array_slice($display_fields, 0, $index);
                             $end = array_slice($display_fields, $index);
@@ -447,8 +406,7 @@ class aSubPanel
                                 array($def['vname'] => array('name' => $field, 'vname' => $def['vname'], 'width' => $def['width'] )),
                                 $end
                             );
-                        } else
-                        {
+                        } else {
                             $display_fields[$def['vname']] = array(
                                 'name' => $field,
                                 'vname' => $def['vname'],
@@ -464,8 +422,7 @@ class aSubPanel
 
     function isDatasourceFunction()
     {
-        if (strpos ( $this->get_inst_prop_value ( 'get_subpanel_data' ), 'function' ) === false)
-        {
+        if (strpos ( $this->get_inst_prop_value ( 'get_subpanel_data' ), 'function' ) === false) {
             return false ;
         }
         return true ;
@@ -489,11 +446,9 @@ class aSubPanel
     //get value of a property defined at the panel definition level.
     function get_def_prop_value($name)
     {
-        if (isset ( $this->panel_definition [ $name ] ))
-        {
+        if (isset ( $this->panel_definition [ $name ] )) {
             return $this->panel_definition [ $name ] ;
-        } else
-        {
+        } else {
             return null ;
         }
     }
@@ -503,8 +458,7 @@ class aSubPanel
     function get_function_parameters()
     {
         $parameters = array ( ) ;
-        if ($this->isDatasourceFunction ())
-        {
+        if ($this->isDatasourceFunction ()) {
             $parameters = $this->get_inst_prop_value ( 'function_parameters' ) ;
         }
         return $parameters ;
@@ -513,22 +467,17 @@ class aSubPanel
     function get_data_source_name($check_set_subpanel_data = false)
     {
         $prop_value = null ;
-        if ($check_set_subpanel_data)
-        {
+        if ($check_set_subpanel_data) {
             $prop_value = $this->get_inst_prop_value ( 'set_subpanel_data' ) ;
         }
-        if (! empty ( $prop_value ))
-        {
+        if (! empty ( $prop_value )) {
             return $prop_value ;
-        } else
-        {
+        } else {
             //fall back to default behavior.
         }
-        if ($this->isDatasourceFunction ())
-        {
+        if ($this->isDatasourceFunction ()) {
             return (substr_replace ( $this->get_inst_prop_value ( 'get_subpanel_data' ), '', 0, 9 )) ;
-        } else
-        {
+        } else {
             return $this->get_inst_prop_value ( 'get_subpanel_data' ) ;
         }
     }
@@ -536,9 +485,9 @@ class aSubPanel
     //returns the where clause for the query.
     function get_where()
     {
-        if($this->get_def_prop_value ( 'where' ) != '' && $this->search_query != ''){
+        if ($this->get_def_prop_value ( 'where' ) != '' && $this->search_query != '') {
             return $this->get_def_prop_value ( 'where' ).' AND '.$this->search_query;
-        } elseif($this->search_query != ''){
+        } elseif ($this->search_query != '') {
             return $this->search_query;
         }
         return $this->get_def_prop_value ( 'where' ) ;
@@ -553,11 +502,9 @@ class aSubPanel
 
     function get_list_fields()
     {
-        if (isset ( $this->panel_definition [ 'list_fields' ] ))
-        {
+        if (isset ( $this->panel_definition [ 'list_fields' ] )) {
             return $this->panel_definition [ 'list_fields' ] ;
-        } else
-        {
+        } else {
             return array ( ) ;
         }
     }
@@ -579,9 +526,7 @@ class aSubPanel
         global $beanFiles ;
 
         $module_name = $this->get_module_name () ;
-        if (! empty ( $module_name ))
-        {
-
+        if (! empty ( $module_name )) {
             $bean_name = $beanList [ $this->get_module_name () ] ;
 
             $this->bean_name = $bean_name ;
@@ -597,21 +542,15 @@ class aSubPanel
     //on collections.
     function get_header_panel_def()
     {
-        if (! empty ( $this->sub_subpanels ))
-        {
-            if (! empty ( $this->_instance_properties [ 'header_definition_from_subpanel' ] ) && ! empty ( $this->sub_subpanels [ $this->_instance_properties [ 'header_definition_from_subpanel' ] ] ))
-            {
+        if (! empty ( $this->sub_subpanels )) {
+            if (! empty ( $this->_instance_properties [ 'header_definition_from_subpanel' ] ) && ! empty ( $this->sub_subpanels [ $this->_instance_properties [ 'header_definition_from_subpanel' ] ] )) {
                 return $this->sub_subpanels [ $this->_instance_properties [ 'header_definition_from_subpanel' ] ] ;
-            } else
-            {
+            } else {
                 $display_fields = array();
                 //If we are not pulling from a specific subpanel, create a list of all list fields and use that.
-                foreach($this->sub_subpanels as $subpanel)
-                {
+                foreach ($this->sub_subpanels as $subpanel) {
                     $list_fields = $subpanel->get_list_fields();
-                    foreach($list_fields as $field => $def)
-                    {
-
+                    foreach ($list_fields as $field => $def) {
                     }
                 }
 
@@ -640,12 +579,10 @@ class aSubPanel
     {
         $this->panel_definition = $definition;
     }
-
 }
 
 class SubPanelDefinitions
 {
-
     var $_focus ;
     var $_visible_tabs_array ;
     var $panels ;
@@ -663,12 +600,9 @@ class SubPanelDefinitions
     function __construct($focus , $layout_def_key = '' , $layout_def_override = '')
     {
         $this->_focus = $focus ;
-        if (! empty ( $layout_def_override ))
-        {
+        if (! empty ( $layout_def_override )) {
             $this->layout_defs = $layout_def_override ;
-
-        } else
-        {
+        } else {
             $this->open_layout_defs ( false, $layout_def_key ) ;
         }
     }
@@ -689,33 +623,34 @@ class SubPanelDefinitions
         global $modListHeader ;
         global $modules_exempt_from_availability_check ;
 
-        if (isset ( $this->_visible_tabs_array ))
+        if (isset ( $this->_visible_tabs_array )) {
             return $this->_visible_tabs_array ;
+        }
 
-        if (empty($modListHeader))
+        if (empty($modListHeader)) {
             $modListHeader = query_module_access_list($GLOBALS['current_user']);
+        }
 
         $this->_visible_tabs_array = array ( ) ; // bug 16820 - make sure this is an array for the later ksort
 
-        if (isset ( $this->layout_defs [ 'subpanel_setup' ] )) // bug 17434 - belts-and-braces - check that we have some subpanels first
-        {
+        if (isset ( $this->layout_defs [ 'subpanel_setup' ] )) { // bug 17434 - belts-and-braces - check that we have some subpanels first
             //retrieve list of hidden subpanels
             $hidden_panels = $this->get_hidden_subpanels();
 
             //activities is a special use case in that if it is hidden,
             //then the history tab should be hidden too.
-            if(!empty($hidden_panels) && is_array($hidden_panels) && in_array('activities',$hidden_panels)){
+            if (!empty($hidden_panels) && is_array($hidden_panels) && in_array('activities',$hidden_panels)) {
                 //add history to list hidden_panels
                 $hidden_panels['history'] = 'history';
             }
 
-            foreach ( $this->layout_defs [ 'subpanel_setup' ] as $key => $values_array )
-            {
+            foreach ( $this->layout_defs [ 'subpanel_setup' ] as $key => $values_array ) {
                 //exclude if this subpanel is hidden from admin screens
                 $module = $key;
-                if ( isset($values_array['module']) )
+                if ( isset($values_array['module']) ) {
                     $module = strtolower($values_array['module']);
-                if ($hidden_panels && is_array($hidden_panels) && (in_array($module, $hidden_panels) || array_key_exists($module, $hidden_panels)) ){
+                }
+                if ($hidden_panels && is_array($hidden_panels) && (in_array($module, $hidden_panels) || array_key_exists($module, $hidden_panels)) ) {
                     //this panel is hidden, skip it
                     continue;
                 }
@@ -732,10 +667,8 @@ class SubPanelDefinitions
 
                 $GLOBALS [ 'log' ]->debug ( "SubPanelDefinitions->get_available_tabs(): " . $key . "= " . ( $exempt ? "exempt " : "not exempt " .( $ok ? " ACL OK" : "" ) ) ) ;
 
-                if ( $ok )
-                {
-                    while ( ! empty ( $this->_visible_tabs_array [ $values_array [ 'order' ] ] ) )
-                    {
+                if ( $ok ) {
+                    while ( ! empty ( $this->_visible_tabs_array [ $values_array [ 'order' ] ] ) ) {
                         $values_array [ 'order' ] ++ ;
                     }
 
@@ -761,13 +694,14 @@ class SubPanelDefinitions
      */
     function load_subpanel($name , $reload = false , $original_only = false, $search_query = '', $collections = array())
     {
-        if (!is_dir('modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower ( $name ) ] [ 'module' ]))
+        if (!is_dir('modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower ( $name ) ] [ 'module' ])) {
             return false;
+        }
 
         $subpanel = new aSubPanel ( $name, $this->layout_defs [ 'subpanel_setup' ] [ strtolower ( $name ) ], $this->_focus, $reload, $original_only, $search_query, $collections ) ;
 
         // only return the subpanel object if we can display it.
-        if($subpanel->canDisplay == true) {
+        if ($subpanel->canDisplay == true) {
             return $subpanel;
         }
 
@@ -783,21 +717,21 @@ class SubPanelDefinitions
         $layout_defs [ $this->_focus->module_dir ] = array ( ) ;
         $layout_defs [ $layout_def_key ] = array ( ) ;
 
-        if (empty ( $this->layout_defs ) || $reload || (! empty ( $layout_def_key ) && ! isset ( $layout_defs [ $layout_def_key ] )))
-        {
-            if (file_exists ( 'modules/' . $this->_focus->module_dir . '/metadata/subpaneldefs.php' ))
+        if (empty ( $this->layout_defs ) || $reload || (! empty ( $layout_def_key ) && ! isset ( $layout_defs [ $layout_def_key ] ))) {
+            if (file_exists ( 'modules/' . $this->_focus->module_dir . '/metadata/subpaneldefs.php' )) {
                 require ('modules/' . $this->_focus->module_dir . '/metadata/subpaneldefs.php') ;
+            }
 
-            if (! $original_only && file_exists ( 'custom/modules/' . $this->_focus->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php' ))
+            if (! $original_only && file_exists ( 'custom/modules/' . $this->_focus->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php' )) {
                 require ('custom/modules/' . $this->_focus->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php') ;
+            }
 
-            if (! empty ( $layout_def_key ))
+            if (! empty ( $layout_def_key )) {
                 $this->layout_defs = $layout_defs [ $layout_def_key ] ;
-            else
+            } else {
                 $this->layout_defs = $layout_defs [ $this->_focus->module_dir ] ;
-
+            }
         }
-
     }
 
     /**
@@ -809,16 +743,13 @@ class SubPanelDefinitions
     {
         $result = false ;
         //unset layout definition
-        if (! empty ( $this->layout_defs [ 'subpanel_setup' ] [ $tab_name ] ))
-        {
+        if (! empty ( $this->layout_defs [ 'subpanel_setup' ] [ $tab_name ] )) {
             unset ( $this->layout_defs [ 'subpanel_setup' ] [ $tab_name ] ) ;
         }
         //unset instance from _visible_tab_array
-        if (! empty ( $this->_visible_tabs_array ))
-        {
+        if (! empty ( $this->_visible_tabs_array )) {
             $key = array_search ( $tab_name, $this->_visible_tabs_array ) ;
-            if ($key !== false)
-            {
+            if ($key !== false) {
                 unset ( $this->_visible_tabs_array [ $key ] ) ;
             }
         }
@@ -847,14 +778,18 @@ class SubPanelDefinitions
         $spd = '';
         $spd_arr = array();
         //iterate through modules and build subpanel array
-        foreach($modules_to_check as $mod_name){
+        foreach ($modules_to_check as $mod_name) {
 
             //skip if module name is not in bean list, otherwise get the bean class name
-            if(!isset($beanList[$mod_name])) continue;
+            if (!isset($beanList[$mod_name])) {
+                continue;
+            }
             $class = $beanList[$mod_name];
 
             //skip if class name is not in file list, otherwise require the bean file and create new class
-            if(!isset($beanFiles[$class]) || !file_exists($beanFiles[$class])) continue;
+            if (!isset($beanFiles[$class]) || !file_exists($beanFiles[$class])) {
+                continue;
+            }
 
             //retrieve subpanels for this bean
             require_once($beanFiles[$class]);
@@ -865,18 +800,23 @@ class SubPanelDefinitions
             $sub_tabs = $spd->get_available_tabs();
 
             //add each subpanel to array of total subpanles
-            foreach( $sub_tabs as $panel_key){
+            foreach ( $sub_tabs as $panel_key) {
                 $panel_key = strtolower($panel_key);
                 $panel_module = $panel_key;
-                if ( isset($spd->layout_defs['subpanel_setup'][$panel_key]['module']) )
+                if ( isset($spd->layout_defs['subpanel_setup'][$panel_key]['module']) ) {
                     $panel_module = strtolower($spd->layout_defs['subpanel_setup'][$panel_key]['module']);
+                }
                 //if module_only flag is set, only if it is also in module array
-                if($return_tab_modules_only && !array_key_exists($panel_module, $modules_to_check)) continue;
+                if ($return_tab_modules_only && !array_key_exists($panel_module, $modules_to_check)) {
+                    continue;
+                }
                 $panel_key_name = $panel_module;
 
                 //group_by_key_name is set to true, then array will hold an entry for each
                 //subpanel, with the module name prepended in the key
-                if($group_by_module) $panel_key_name = $class.'_'.$panel_key_name;
+                if ($group_by_module) {
+                    $panel_key_name = $class.'_'.$panel_key_name;
+                }
                 //add panel name to subpanel array
                 $spd_arr[$panel_key_name] = $panel_module;
             }
@@ -887,7 +827,8 @@ class SubPanelDefinitions
     /*
      * save array of hidden panels to mysettings category in config table
      */
-    function set_hidden_subpanels($panels) {
+    function set_hidden_subpanels($panels)
+    {
         $administration = new Administration();
         $serialized = base64_encode(serialize($panels));
         $administration->saveSetting('MySettings', 'hide_subpanels', $serialized);
@@ -896,26 +837,26 @@ class SubPanelDefinitions
     /*
      * retrieve hidden subpanels
      */
-    function get_hidden_subpanels() {
+    function get_hidden_subpanels()
+    {
         global $moduleList;
 
         //create variable as static to minimize queries
         static $hidden_subpanels = null;
 
         // if the static value is not already cached, then retrieve it.
-        if(empty($hidden_subpanels))
-        {
+        if (empty($hidden_subpanels)) {
 
             //create Administration object and retrieve any settings for panels
             $administration = new Administration();
             $administration->retrieveSettings('MySettings');
 
-            if(isset($administration->settings) && isset($administration->settings['MySettings_hide_subpanels'])){
+            if (isset($administration->settings) && isset($administration->settings['MySettings_hide_subpanels'])) {
                 $hidden_subpanels = $administration->settings['MySettings_hide_subpanels'];
                 $hidden_subpanels = trim($hidden_subpanels);
 
                 //make sure serialized string is not empty
-                if (!empty($hidden_subpanels)){
+                if (!empty($hidden_subpanels)) {
                     //decode and unserialize to retrieve the array
                     $hidden_subpanels = base64_decode($hidden_subpanels);
                     $hidden_subpanels = unserialize($hidden_subpanels);
@@ -924,24 +865,18 @@ class SubPanelDefinitions
                     //get user preference
                     //unserialize and add to array if not empty
                     $pref_hidden = array();
-                    foreach($pref_hidden as $id => $pref_hidden_panel) {
+                    foreach ($pref_hidden as $id => $pref_hidden_panel) {
                         $hidden_subpanels[] = $pref_hidden_panel;
                     }
-
-
-                }else{
+                } else {
                     //no settings found, return empty
                     return $hidden_subpanels;
                 }
-            }
-            else
-            {	//no settings found, return empty
+            } else {	//no settings found, return empty
                 return $hidden_subpanels;
             }
         }
 
         return $hidden_subpanels;
     }
-
-
 }

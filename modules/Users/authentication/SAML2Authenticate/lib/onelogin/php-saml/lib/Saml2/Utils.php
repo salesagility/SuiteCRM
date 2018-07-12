@@ -165,7 +165,6 @@ class OneLogin_Saml2_Utils
             if ($heads) {
                 $x509cert = "-----BEGIN CERTIFICATE-----\n".chunk_split($x509cert, 64, "\n")."-----END CERTIFICATE-----\n";
             }
-
         }
         return $x509cert;
     }
@@ -332,10 +331,10 @@ class OneLogin_Saml2_Utils
                 self::setBaseURLPath($baseurlpath);
             }
         } else {
-                self::$_host = null;
-                self::$_protocol = null;
-                self::$_port = null;
-                self::$_baseurlpath = null;
+            self::$_host = null;
+            self::$_protocol = null;
+            self::$_port = null;
+            self::$_baseurlpath = null;
         }
     }
 
@@ -874,7 +873,6 @@ class OneLogin_Saml2_Utils
      */
     public static function deleteLocalSession()
     {
-
         if (OneLogin_Saml2_Utils::isSessionStarted()) {
             session_destroy();
         }
@@ -957,7 +955,6 @@ class OneLogin_Saml2_Utils
      */
     public static function generateNameId($value, $spnq, $format, $cert = null, $nq = null)
     {
-
         $doc = new DOMDocument();
 
         $nameId = $doc->createElement('saml:NameID');
@@ -1059,7 +1056,6 @@ class OneLogin_Saml2_Utils
      */
     public static function decryptElement(DOMElement $encryptedData, XMLSecurityKey $inputKey)
     {
-
         $enc = new XMLSecEnc();
 
         $enc->setNode($encryptedData);
@@ -1163,17 +1159,17 @@ class OneLogin_Saml2_Utils
         return $decryptedElement;
     }
 
-     /**
-      * Converts a XMLSecurityKey to the correct algorithm.
-      *
-      * @param XMLSecurityKey $key The key.
-      * @param string $algorithm The desired algorithm.
-      * @param string $type Public or private key, defaults to public.
-      *
-      * @return XMLSecurityKey The new key.
-      *
-      * @throws Exception
-      */
+    /**
+     * Converts a XMLSecurityKey to the correct algorithm.
+     *
+     * @param XMLSecurityKey $key The key.
+     * @param string $algorithm The desired algorithm.
+     * @param string $type Public or private key, defaults to public.
+     *
+     * @return XMLSecurityKey The new key.
+     *
+     * @throws Exception
+     */
     public static function castKey(XMLSecurityKey $key, $algorithm, $type = 'public')
     {
         assert('is_string($algorithm)');

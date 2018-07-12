@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -54,24 +56,22 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class CampaignsViewDetail extends ViewDetail
 {
-
- 	function __construct() {
-
+    function __construct()
+    {
         parent::__construct();
         //turn off normal display of subpanels
         $this->options['show_subpanels'] = false;
-
- 	}
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function CampaignsViewDetail() {
+    function CampaignsViewDetail()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -79,21 +79,22 @@ class CampaignsViewDetail extends ViewDetail
 
 
 
-    function preDisplay() {
+    function preDisplay()
+    {
         global $mod_strings;
-        if (isset($this->bean->campaign_type) && strtolower($this->bean->campaign_type) == 'newsletter'){
+        if (isset($this->bean->campaign_type) && strtolower($this->bean->campaign_type) == 'newsletter') {
             $mod_strings['LBL_MODULE_NAME'] = $mod_strings['LBL_NEWSLETTERS'];
         }
         parent::preDisplay();
         $this->options['show_subpanels'] = false;
-
     }
 
- 	function display() {
- 	    global $app_list_strings;
- 	    $this->ss->assign('APP_LIST', $app_list_strings);
+    function display()
+    {
+        global $app_list_strings;
+        $this->ss->assign('APP_LIST', $app_list_strings);
 
-        if (isset($_REQUEST['mode']) && $_REQUEST['mode']=='set_target'){
+        if (isset($_REQUEST['mode']) && $_REQUEST['mode']=='set_target') {
             require_once('modules/Campaigns/utils.php');
             //call function to create campaign logs
             $mess = track_campaign_prospects($this->bean);
@@ -104,30 +105,28 @@ class CampaignsViewDetail extends ViewDetail
             window.setTimeout(\"ajax_C_LOG_Status.showStatus('".$mess."')\",2000);
             window.setTimeout('ajax_C_LOG_Status.hideStatus()', 5000); ";
             $this->ss->assign("MSG_SCRIPT",$confirm_msg);
-
         }
 
-	    if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter' )) {
-	    	$this->ss->assign("ADD_BUTTON_STATE", "submit");
-	        $this->ss->assign("TARGET_BUTTON_STATE", "hidden");
-	    } else {
-	    	$this->ss->assign("ADD_BUTTON_STATE", "hidden");
-	    	$this->ss->assign("DISABLE_LINK", "display:none");
-	        $this->ss->assign("TARGET_BUTTON_STATE", "submit");
-	    }
+        if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter' )) {
+            $this->ss->assign("ADD_BUTTON_STATE", "submit");
+            $this->ss->assign("TARGET_BUTTON_STATE", "hidden");
+        } else {
+            $this->ss->assign("ADD_BUTTON_STATE", "hidden");
+            $this->ss->assign("DISABLE_LINK", "display:none");
+            $this->ss->assign("TARGET_BUTTON_STATE", "submit");
+        }
 
-	    $currency = new Currency();
-	    if(isset($this->bean->currency_id) && !empty($this->bean->currency_id))
-	    {
-	    	$currency->retrieve($this->bean->currency_id);
-	    	if( $currency->deleted != 1){
-	    		$this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
-	    	}else {
-	    	    $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
-	    	}
-	    }else{
-	    	$this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
-	    }
+        $currency = new Currency();
+        if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {
+            $currency->retrieve($this->bean->currency_id);
+            if ( $currency->deleted != 1) {
+                $this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
+            } else {
+                $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+            }
+        } else {
+            $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
+        }
 
         parent::display();
 
@@ -160,6 +159,5 @@ class CampaignsViewDetail extends ViewDetail
         }
         //show filtered subpanel list
         echo $subpanel->display();
-
     }
 }

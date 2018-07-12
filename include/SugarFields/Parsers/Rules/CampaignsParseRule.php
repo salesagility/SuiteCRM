@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,52 +44,51 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class CampaignsParseRule extends BaseRule
 {
-
-function __construct() {
-
-}
+    function __construct()
+    {
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function CampaignsParseRule() {
+    function CampaignsParseRule()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-function preParse($panels, $view) {
-	if($view == 'EditView') {
-	    $frequencyAdded = false;
-		foreach($panels as $name=>$panel) {
-		   	foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {
-		   	  	 	 if(empty($column) && !$frequencyAdded) {
-		   	  	 	 	//Add the frequency label
-		   	  	 	    $panels[$name][$rowCount][$key] = 'frequency';
-		   	  	 	    $frequencyAdded = true;
-		   	  	 	 } elseif($this->matches($column, '/^deleted$/')) {
-		   	  	 	 	//This is to fix the error where the Created By field
-		   	  	 	 	//in Campaigns EditView.html actually references the deleted field
-		   	  	 	 	//We will just remove the field since you shouldn't be able to edit this information anyway
-		   	  	 	 	$panels[$name][$rowCount][$key] = '';
-		   	  	 	 }
-		   	  	 } //foreach
-		   	} //foreach
-		} //foreach
+    function preParse($panels, $view)
+    {
+        if ($view == 'EditView') {
+            $frequencyAdded = false;
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        if (empty($column) && !$frequencyAdded) {
+                            //Add the frequency label
+                            $panels[$name][$rowCount][$key] = 'frequency';
+                            $frequencyAdded = true;
+                        } elseif ($this->matches($column, '/^deleted$/')) {
+                            //This is to fix the error where the Created By field
+                            //in Campaigns EditView.html actually references the deleted field
+                            //We will just remove the field since you shouldn't be able to edit this information anyway
+                            $panels[$name][$rowCount][$key] = '';
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
 
 		//If all the row/columns were taken up, then add frequency as a last row
-		if(!$frequencyAdded) {
-		   $panels['default'][][] = 'frequency';
-		}
-	}
-	return $panels;
-}
-
+            if (!$frequencyAdded) {
+                $panels['default'][][] = 'frequency';
+            }
+        }
+        return $panels;
+    }
 }

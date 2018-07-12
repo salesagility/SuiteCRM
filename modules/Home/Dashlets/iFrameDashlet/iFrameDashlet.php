@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,7 +52,8 @@ class iFrameDashlet extends Dashlet
     var $url;
     protected $allowed_schemes = array("http", "https");
 
-    function __construct($id, $options = null) {
+    function __construct($id, $options = null)
+    {
         parent::__construct($id);
         $this->isConfigurable = true;
 
@@ -65,31 +68,33 @@ class iFrameDashlet extends Dashlet
             $this->title = $options['title'];
         }
 
-        if(empty($options['url'])) {
+        if (empty($options['url'])) {
             $this->url = $this->defaultURL;
             $this->url = 'https://suitecrm.com/';
         } else {
             $this->url = $options['url'];
         }
 
-        if(empty($options['height']) || (int)$options['height'] < 1 ) {
+        if (empty($options['height']) || (int)$options['height'] < 1 ) {
             $this->height = 315;
         } else {
             $this->height = (int)$options['height'];
         }
 
-        if(isset($options['autoRefresh'])) $this->autoRefresh = $options['autoRefresh'];
+        if (isset($options['autoRefresh'])) {
+            $this->autoRefresh = $options['autoRefresh'];
+        }
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function iFrameDashlet($id, $options = null) {
+    function iFrameDashlet($id, $options = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $options);
@@ -98,36 +103,38 @@ class iFrameDashlet extends Dashlet
     protected function checkURL()
     {
         $scheme = parse_url($this->url, PHP_URL_SCHEME);
-        if(!in_array($scheme, $this->allowed_schemes)) {
+        if (!in_array($scheme, $this->allowed_schemes)) {
             $this->url = 'about:blank';
             return false;
         }
         return true;
     }
 
-    function displayOptions() {
+    function displayOptions()
+    {
         global $app_strings;
         $ss = new Sugar_Smarty();
         $ss->assign('titleLBL', translate('LBL_DASHLET_OPT_TITLE', 'Home'));
-		$ss->assign('urlLBL', translate('LBL_DASHLET_OPT_URL', 'Home'));
-		$ss->assign('heightLBL', translate('LBL_DASHLET_OPT_HEIGHT', 'Home'));
+        $ss->assign('urlLBL', translate('LBL_DASHLET_OPT_URL', 'Home'));
+        $ss->assign('heightLBL', translate('LBL_DASHLET_OPT_HEIGHT', 'Home'));
         $ss->assign('title', $this->title);
         $ss->assign('url', $this->url);
         $ss->assign('id', $this->id);
         $ss->assign('height', $this->height);
         $ss->assign('saveLBL', $app_strings['LBL_SAVE_BUTTON_LABEL']);
         $ss->assign('clearLBL', $app_strings['LBL_CLEAR_BUTTON_LABEL']);
-        if($this->isAutoRefreshable()) {
-       		$ss->assign('isRefreshable', true);
-			$ss->assign('autoRefresh', $GLOBALS['app_strings']['LBL_DASHLET_CONFIGURE_AUTOREFRESH']);
-			$ss->assign('autoRefreshOptions', $this->getAutoRefreshOptions());
-			$ss->assign('autoRefreshSelect', $this->autoRefresh);
-		}
+        if ($this->isAutoRefreshable()) {
+            $ss->assign('isRefreshable', true);
+            $ss->assign('autoRefresh', $GLOBALS['app_strings']['LBL_DASHLET_CONFIGURE_AUTOREFRESH']);
+            $ss->assign('autoRefreshOptions', $this->getAutoRefreshOptions());
+            $ss->assign('autoRefreshSelect', $this->autoRefresh);
+        }
 
         return  $ss->fetch($this->configureTpl);
     }
 
-    function saveOptions($req) {
+    function saveOptions($req)
+    {
         $options = array();
 
         if ( isset($req['title']) ) {
@@ -144,8 +151,8 @@ class iFrameDashlet extends Dashlet
         return $options;
     }
 
-    function display() {
-
+    function display()
+    {
         $sugar_edition = 'COM';
 
 
@@ -154,7 +161,7 @@ class iFrameDashlet extends Dashlet
             array($GLOBALS['current_language'],$GLOBALS['sugar_config']['sugar_version'],$sugar_edition),
             $this->url);
         $title = $this->title;
-        if(empty($title)){
+        if (empty($title)) {
             $title = 'empty';
         }
 

@@ -213,7 +213,7 @@ $dictionary['AOR_Condition'] = array(
 	'unified_search'=>true,
 );
 
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
 VardefManager::createVardef('AOR_Conditions','AOR_Condition', array('basic'));

@@ -46,7 +46,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 interface MetaDataParserInterface
 {
-
     public function handleSave() ;
 
     public function getLayout() ;
@@ -54,5 +53,4 @@ interface MetaDataParserInterface
     public function getLanguage() ;
 
     public function getHistory() ;
-
 }

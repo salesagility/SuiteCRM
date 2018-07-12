@@ -32,7 +32,9 @@ r41724 - 2008-11-13 08:55:42 -0800 (Thu, 13 Nov 2008) - Collin Lee - Made change
 */
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -72,16 +74,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-function smarty_function_sugarvar_connector($params, &$smarty) {
+function smarty_function_sugarvar_connector($params, &$smarty)
+{
+    $displayParams = $smarty->get_template_vars('displayParams');
+    if (!isset($displayParams['module'])) {
+        $smarty->trigger_error("sugarvar_connector: missing 'module' parameter");
+        $GLOBALS['log']->error("sugarvar_connector: missing 'module' parameter");
+        return;
+    }
       
-      $displayParams = $smarty->get_template_vars('displayParams');
-      if(!isset($displayParams['module'])) {
-         $smarty->trigger_error("sugarvar_connector: missing 'module' parameter");
-         $GLOBALS['log']->error("sugarvar_connector: missing 'module' parameter");
-         return;     	
-      }
-      
-      require_once('include/connectors/utils/ConnectorUtils.php');
-      echo ConnectorUtils::getConnectorButtonScript($displayParams, $smarty);
+    require_once('include/connectors/utils/ConnectorUtils.php');
+    echo ConnectorUtils::getConnectorButtonScript($displayParams, $smarty);
 }
 ?>

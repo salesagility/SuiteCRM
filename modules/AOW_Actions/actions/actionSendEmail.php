@@ -27,7 +27,6 @@ require_once __DIR__ . '/../../AOW_Actions/actions/actionBase.php';
 require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
 class actionSendEmail extends actionBase
 {
-
     private $emailableModules = array();
     
     /**
@@ -42,7 +41,8 @@ class actionSendEmail extends actionBase
      */
     protected $lastEmailsSuccess;
 
-    function __construct($id = '') {
+    function __construct($id = '')
+    {
         parent::__construct($id);
         $this->clearLastEmailsStatus();
     }
@@ -50,35 +50,43 @@ class actionSendEmail extends actionBase
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function actionSendEmail($id = '') {
+    function actionSendEmail($id = '')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id);
     }
 
 
-    function loadJS() {
+    function loadJS()
+    {
         return array('modules/AOW_Actions/actions/actionSendEmail.js');
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array()) {
+    function edit_display($line,SugarBean $bean = null, $params = array())
+    {
         global $app_list_strings;
         $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 
-        if(!in_array($bean->module_dir,getEmailableModules())) unset($app_list_strings['aow_email_type_list']['Record Email']);
+        if (!in_array($bean->module_dir,getEmailableModules())) {
+            unset($app_list_strings['aow_email_type_list']['Record Email']);
+        }
         $targetOptions = getRelatedEmailableFields($bean->module_dir);
-        if(empty($targetOptions)) unset($app_list_strings['aow_email_type_list']['Related Field']);
+        if (empty($targetOptions)) {
+            unset($app_list_strings['aow_email_type_list']['Related Field']);
+        }
 
         $html = '<input type="hidden" name="aow_email_type_list" id="aow_email_type_list" value="'.get_select_options_with_id($app_list_strings['aow_email_type_list'], '').'">
 				  <input type="hidden" name="aow_email_to_list" id="aow_email_to_list" value="'.get_select_options_with_id($app_list_strings['aow_email_to_list'], '').'">';
 
         $checked = '';
-        if(isset($params['individual_email']) && $params['individual_email']) $checked = 'CHECKED';
+        if (isset($params['individual_email']) && $params['individual_email']) {
+            $checked = 'CHECKED';
+        }
 
         $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%' data-workflow-action='send-email'>";
         $html .= "<tr>";
@@ -90,9 +98,13 @@ class actionSendEmail extends actionBase
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][individual_email]' name='aow_actions_param[".$line."][individual_email]' value='1' $checked></td>";
         $html .= '</td>';
 
-        if(!isset($params['email_template'])) $params['email_template'] = '';
+        if (!isset($params['email_template'])) {
+            $params['email_template'] = '';
+        }
         $hidden = "style='visibility: hidden;'";
-        if($params['email_template'] != '') $hidden = "";
+        if ($params['email_template'] != '') {
+            $hidden = "";
+        }
 
         $html .= '<td id="name_label" scope="row" valign="top"><label>' . translate("LBL_EMAIL_TEMPLATE",
                 "AOW_Actions") . ':<span class="required">*</span></label></td>';
@@ -117,9 +129,9 @@ class actionSendEmail extends actionBase
         $html .= "<script id ='aow_script".$line."'>";
 
         //backward compatible
-        if(isset($params['email_target_type']) && !is_array($params['email_target_type'])){
+        if (isset($params['email_target_type']) && !is_array($params['email_target_type'])) {
             $email = '';
-            switch($params['email_target_type']){
+            switch ($params['email_target_type']) {
                 case 'Email Address':
                     $email = $params['email'];
                     break;
@@ -134,25 +146,26 @@ class actionSendEmail extends actionBase
         }
         //end backward compatible
 
-        if(isset($params['email_target_type'])){
-            foreach($params['email_target_type'] as $key => $field){
-                if(is_array($params['email'][$key]))$params['email'][$key] = json_encode($params['email'][$key]);
+        if (isset($params['email_target_type'])) {
+            foreach ($params['email_target_type'] as $key => $field) {
+                if (is_array($params['email'][$key])) {
+                    $params['email'][$key] = json_encode($params['email'][$key]);
+                }
                 $html .= "load_emailline('".$line."','".$params['email_to_type'][$key]."','".$params['email_target_type'][$key]."','".$params['email'][$key]."');";
             }
         }
         $html .= "</script>";
 
         return $html;
-
     }
 
-    private function getEmailsFromParams(SugarBean $bean, $params) {
-
+    private function getEmailsFromParams(SugarBean $bean, $params)
+    {
         $emails = array();
         //backward compatible
-        if(isset($params['email_target_type']) && !is_array($params['email_target_type'])){
+        if (isset($params['email_target_type']) && !is_array($params['email_target_type'])) {
             $email = '';
-            switch($params['email_target_type']){
+            switch ($params['email_target_type']) {
                 case 'Email Address':
                     $params['email'] = array($params['email']);
                     break;
@@ -167,18 +180,19 @@ class actionSendEmail extends actionBase
             $params['email_to_type'] = array('to');
         }
         //end backward compatible
-        if(isset($params['email_target_type'])){
-            foreach($params['email_target_type'] as $key => $field){
-                switch($field){
+        if (isset($params['email_target_type'])) {
+            foreach ($params['email_target_type'] as $key => $field) {
+                switch ($field) {
                     case 'Email Address':
-                        if(trim($params['email'][$key]) != '')
+                        if (trim($params['email'][$key]) != '') {
                             $emails[$params['email_to_type'][$key]][] = $params['email'][$key];
+                        }
                         break;
                     case 'Specify User':
                         $user = new User();
                         $user->retrieve($params['email'][$key]);
                         $user_email = $user->emailAddress->getPrimaryAddress($user);
-                        if(trim($user_email) != '') {
+                        if (trim($user_email) != '') {
                             $emails[$params['email_to_type'][$key]][] = $user_email;
                             $emails['template_override'][$user_email] = array('Users' => $user->id);
                         }
@@ -186,25 +200,25 @@ class actionSendEmail extends actionBase
                         break;
                     case 'Users':
                         $users = array();
-                        switch($params['email'][$key][0]) {
+                        switch ($params['email'][$key][0]) {
                             Case 'security_group':
-                                if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
+                                if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
                                     $security_group = new SecurityGroup();
                                     $security_group->retrieve($params['email'][$key][1]);
                                     $users = $security_group->get_linked_beans( 'users','User');
                                     $r_users = array();
-                                    if($params['email'][$key][2] != ''){
+                                    if ($params['email'][$key][2] != '') {
                                         require_once('modules/ACLRoles/ACLRole.php');
                                         $role = new ACLRole();
                                         $role->retrieve($params['email'][$key][2]);
                                         $role_users = $role->get_linked_beans( 'users','User');
-                                        foreach($role_users as $role_user){
+                                        foreach ($role_users as $role_user) {
                                             $r_users[$role_user->id] = $role_user->name;
                                         }
                                     }
-                                    foreach($users as $user_id => $user){
-                                        if($params['email'][$key][2] != '' && !isset($r_users[$user->id])){
+                                    foreach ($users as $user_id => $user) {
+                                        if ($params['email'][$key][2] != '' && !isset($r_users[$user->id])) {
                                             unset($users[$user_id]);
                                         }
                                     }
@@ -229,9 +243,9 @@ class actionSendEmail extends actionBase
                                 }
                                 break;
                         }
-                        foreach($users as $user){
+                        foreach ($users as $user) {
                             $user_email = $user->emailAddress->getPrimaryAddress($user);
-                            if(trim($user_email) != '') {
+                            if (trim($user_email) != '') {
                                 $emails[$params['email_to_type'][$key]][] = $user_email;
                                 $emails['template_override'][$user_email] = array('Users' => $user->id);
                             }
@@ -241,26 +255,25 @@ class actionSendEmail extends actionBase
                         $emailTarget = $params['email'][$key];
                         $relatedFields = array_merge($bean->get_related_fields(), $bean->get_linked_fields());
                         $field = $relatedFields[$emailTarget];
-                        if($field['type'] == 'relate') {
+                        if ($field['type'] == 'relate') {
                             $linkedBeans = array();
                             $idName = $field['id_name'];
                             $id = $bean->$idName;
                             $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
-                        }
-                        elseif($field['type'] == 'link'){
+                        } elseif ($field['type'] == 'link') {
                             $relField = $field['name'];
-                            if(isset($field['module']) && $field['module'] != '') {
+                            if (isset($field['module']) && $field['module'] != '') {
                                 $rel_module = $field['module'];
-                            } elseif($bean->load_relationship($relField)){
+                            } elseif ($bean->load_relationship($relField)) {
                                 $rel_module = $bean->$relField->getRelatedModuleName();
                             }
                             $linkedBeans = $bean->get_linked_beans($relField,$rel_module);
-                        }else{
+                        } else {
                             $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
                         }
-                        if($linkedBeans){
-                            foreach($linkedBeans as $linkedBean) {
-                                if(!empty($linkedBean)){
+                        if ($linkedBeans) {
+                            foreach ($linkedBeans as $linkedBean) {
+                                if (!empty($linkedBean)) {
                                     $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
                                     if (trim($rel_email) != '') {
                                         $emails[$params['email_to_type'][$key]][] = $rel_email;
@@ -272,9 +285,12 @@ class actionSendEmail extends actionBase
                         break;
                     case 'Record Email':
                         $recordEmail = $bean->emailAddress->getPrimaryAddress($bean);
-                        if($recordEmail == '' && isset($bean->email1)) $recordEmail = $bean->email1;
-                        if(trim($recordEmail) != '')
+                        if ($recordEmail == '' && isset($bean->email1)) {
+                            $recordEmail = $bean->email1;
+                        }
+                        if (trim($recordEmail) != '') {
                             $emails[$params['email_to_type'][$key]][] = $recordEmail;
+                        }
                         break;
                 }
             }
@@ -294,7 +310,6 @@ class actionSendEmail extends actionBase
      */
     public function run_action(SugarBean $bean, $params = array(), $in_save = false)
     {
-
         include_once __DIR__ . '/../../EmailTemplates/EmailTemplate.php';
         
         $this->clearLastEmailsStatus();
@@ -308,14 +323,14 @@ class actionSendEmail extends actionBase
 
         $emails = $this->getEmailsFromParams($bean, $params);
 
-        if (!isset($emails['to']) || empty($emails['to']))
+        if (!isset($emails['to']) || empty($emails['to'])) {
             return false;
+        }
 
         $attachments = $this->getAttachments($emailTemp);
 
         $ret = true;
         if (isset($params['individual_email']) && $params['individual_email']) {
-
             foreach ($emails['to'] as $email_to) {
                 $emailTemp = new EmailTemplate();
                 $emailTemp->retrieve($params['email_template']);
@@ -349,7 +364,8 @@ class actionSendEmail extends actionBase
     /**
      *  clear last email sending status
      */
-    protected function clearLastEmailsStatus() {
+    protected function clearLastEmailsStatus()
+    {
         $this->lastEmailsFailed = 0;
         $this->lastEmailsSuccess = 0;
     }
@@ -358,7 +374,8 @@ class actionSendEmail extends actionBase
      * failed emails count at last run_action
      * @return int
      */
-    public function getLastEmailsFailed() {
+    public function getLastEmailsFailed()
+    {
         return $this->lastEmailsFailed;
     }
     
@@ -366,33 +383,40 @@ class actionSendEmail extends actionBase
      * successfully sent emails count at last run_action
      * @return type
      */
-    public function getLastEmailsSuccess() {
+    public function getLastEmailsSuccess()
+    {
         return $this->lastEmailsSuccess;
     }
 
-    function parse_template(SugarBean $bean, &$template, $object_override = array()) {
+    function parse_template(SugarBean $bean, &$template, $object_override = array())
+    {
         global $sugar_config;
 
         require_once __DIR__ . '/templateParser.php';
 
         $object_arr[$bean->module_dir] = $bean->id;
 
-        foreach($bean->field_defs as $bean_arr){
-            if($bean_arr['type'] == 'relate'){
-                if(isset($bean_arr['module']) &&  $bean_arr['module'] != '' && isset($bean_arr['id_name']) &&  $bean_arr['id_name'] != '' && $bean_arr['module'] != 'EmailAddress'){
+        foreach ($bean->field_defs as $bean_arr) {
+            if ($bean_arr['type'] == 'relate') {
+                if (isset($bean_arr['module']) &&  $bean_arr['module'] != '' && isset($bean_arr['id_name']) &&  $bean_arr['id_name'] != '' && $bean_arr['module'] != 'EmailAddress') {
                     $idName = $bean_arr['id_name'];
-                    if(isset($bean->field_defs[$idName]) && $bean->field_defs[$idName]['source'] != 'non-db'){
-                        if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$idName;
+                    if (isset($bean->field_defs[$idName]) && $bean->field_defs[$idName]['source'] != 'non-db') {
+                        if (!isset($object_arr[$bean_arr['module']])) {
+                            $object_arr[$bean_arr['module']] = $bean->$idName;
+                        }
                     }
                 }
-            }
-            elseif($bean_arr['type'] == 'link'){
-                if(!isset($bean_arr['module']) || $bean_arr['module'] == '') $bean_arr['module'] = getRelatedModule($bean->module_dir,$bean_arr['name']);
-                if(isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress'){
+            } elseif ($bean_arr['type'] == 'link') {
+                if (!isset($bean_arr['module']) || $bean_arr['module'] == '') {
+                    $bean_arr['module'] = getRelatedModule($bean->module_dir,$bean_arr['name']);
+                }
+                if (isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress') {
                     $linkedBeans = $bean->get_linked_beans($bean_arr['name'],$bean_arr['module'], array(), 0, 1);
-                    if($linkedBeans){
+                    if ($linkedBeans) {
                         $linkedBean = $linkedBeans[0];
-                        if(!isset($object_arr[$linkedBean->module_dir])) $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+                        if (!isset($object_arr[$linkedBean->module_dir])) {
+                            $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+                        }
                     }
                 }
             }
@@ -404,7 +428,7 @@ class actionSendEmail extends actionBase
 
         $parsedSiteUrl = parse_url($sugar_config['site_url']);
         $host = $parsedSiteUrl['host'];
-        if(!isset($parsedSiteUrl['port'])) {
+        if (!isset($parsedSiteUrl['port'])) {
             $parsedSiteUrl['port'] = 80;
         }
 
@@ -426,14 +450,14 @@ class actionSendEmail extends actionBase
         $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }
 
-    function getAttachments(EmailTemplate $template) {
-
+    function getAttachments(EmailTemplate $template)
+    {
         $attachments = array();
-        if($template->id != ''){
+        if ($template->id != '') {
             $note_bean = new Note();
             $notes = $note_bean->get_full_list('',"parent_type = 'Emails' AND parent_id = '".$template->id."'");
 
-            if($notes != null){
+            if ($notes != null) {
                 foreach ($notes as $note) {
                     $attachments[] = $note;
                 }
@@ -462,17 +486,19 @@ class actionSendEmail extends actionBase
         $mail->handleAttachments($attachments);
         $mail->prepForOutbound();
 
-        if(empty($emailTo)) return false;
-        foreach($emailTo as $to){
+        if (empty($emailTo)) {
+            return false;
+        }
+        foreach ($emailTo as $to) {
             $mail->AddAddress($to);
         }
-        if(!empty($emailCc)){
-            foreach($emailCc as $email){
+        if (!empty($emailCc)) {
+            foreach ($emailCc as $email) {
                 $mail->AddCC($email);
             }
         }
-        if(!empty($emailBcc)){
-            foreach($emailBcc as $email){
+        if (!empty($emailBcc)) {
+            foreach ($emailBcc as $email) {
                 $mail->AddBCC($email);
             }
         }
@@ -500,7 +526,7 @@ class actionSendEmail extends actionBase
             $emailObj->save();
 
             // Fix for issue 1561 - Email Attachments Sent By Workflow Do Not Show In Related Activity.
-            foreach($attachments as $attachment) {
+            foreach ($attachments as $attachment) {
                 $note = new Note();
                 $note->id = create_guid();
                 $note->date_entered = $attachment->date_entered;
@@ -510,12 +536,13 @@ class actionSendEmail extends actionBase
                 $note->new_with_id = true;
                 $note->parent_id = $emailObj->id;
                 $note->parent_type = $attachment->parent_type;
-                $note->name = $attachment->name;;
+                $note->name = $attachment->name;
+                ;
                 $note->filename = $attachment->filename;
                 $note->file_mime_type = $attachment->file_mime_type;
                 $fileLocation = "upload://{$attachment->id}";
                 $dest = "upload://{$note->id}";
-                if(!copy($fileLocation, $dest)) {
+                if (!copy($fileLocation, $dest)) {
                     $GLOBALS['log']->debug("EMAIL 2.0: could not copy attachment file to $fileLocation => $dest");
                 }
                 $note->save();
@@ -524,5 +551,4 @@ class actionSendEmail extends actionBase
         }
         return false;
     }
-
 }

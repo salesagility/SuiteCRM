@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -72,10 +74,9 @@ class ManyToManyRelationship extends AbstractRelationship
      * @return array    An array of subpanel definitions, keyed by module
      */
     function buildSubpanelDefinitions()
-    {        
+    {
         $subpanelDefinitions = array ( ) ;
-        if (!$this->relationship_only)
-        {
+        if (!$this->relationship_only) {
             $subpanelDefinitions [ $this->rhs_module ] = $this->getSubpanelDefinition ( $this->relationship_name, $this->lhs_module, $this->lhs_subpanel, $this->getLeftModuleSystemLabel() ) ;
             $subpanelDefinitions [ $this->lhs_module ] = $this->getSubpanelDefinition ( $this->relationship_name, $this->rhs_module, $this->rhs_subpanel, $this->getRightModuleSystemLabel() ) ;
         }
@@ -103,8 +104,4 @@ class ManyToManyRelationship extends AbstractRelationship
     {
         return array( $this->lhs_module => $this->getRelationshipMetaData ( MB_MANYTOMANY ) ) ;
     }
-    
-
-
-
 }

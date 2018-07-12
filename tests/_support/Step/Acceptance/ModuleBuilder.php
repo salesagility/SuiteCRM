@@ -23,7 +23,7 @@ class ModuleBuilder extends Administration
         $I->click('#moduleBuilder');
 
         $packageExists = $I->seePageHas($packageName, '#Buttons');
-        if($packageExists === false) {
+        if ($packageExists === false) {
             // Create new package
             $I->click('#newPackageLink');
 
@@ -45,8 +45,7 @@ class ModuleBuilder extends Administration
             $I->checkOption('[name=importable]');
 
 
-            switch ($moduleType)
-            {
+            switch ($moduleType) {
                 case SugarObjectType::basic:
                     $I->click('#type_basic');
                     break;
@@ -80,9 +79,6 @@ class ModuleBuilder extends Administration
             $I->deployPackage($packageName);
             // Redeploy @TODO seperate this out to new test
             $I->deployPackage($packageName, true);
-
-
-
         } else {
             $I->getScenario()->skip($packageName . ' already exists. Please remove package and module manually.');
         }
@@ -153,7 +149,7 @@ class ModuleBuilder extends Administration
         $I->waitForElementVisible('[name="name"]');
         $I->click('Deploy');
 
-        if($packageExists) {
+        if ($packageExists) {
             $I->acceptPopup();
         }
 
@@ -162,6 +158,5 @@ class ModuleBuilder extends Administration
 
         // Wait for page to refresh and look for new package link
         $I->waitForElement('#newPackageLink', 360);
-
     }
 }

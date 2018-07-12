@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -67,7 +69,9 @@ if ( !empty($_REQUEST['process']) ) {
             }
             
             $active_modules = $_REQUEST['modules'];
-            if ( ! is_array($active_modules) ) { $active_modules = array(); }
+            if ( ! is_array($active_modules) ) {
+                $active_modules = array();
+            }
             
             foreach ( $active_modules as $name => $is_active ) {
                 $module = substr($name,7);
@@ -137,11 +141,9 @@ foreach ( $possible_feeds as $module ) {
         continue;
     } else {
         $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
-
     }
 
     $module_list[] = $currModule;
-
 }
 $sugar_smarty->assign('module_list',$module_list);
 $sugar_smarty->assign('user_feed_enabled',$userFeedEnabled);

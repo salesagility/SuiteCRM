@@ -15,7 +15,8 @@ class Workflow extends Tester
         $this->see('WORKFLOW');
     }
 
-    public function selectWorkflowModule($module) {
+    public function selectWorkflowModule($module)
+    {
         $this->selectOption('#flow_module', $module);
     }
 

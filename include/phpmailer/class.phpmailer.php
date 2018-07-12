@@ -2186,7 +2186,8 @@ class PHPMailer
      * Create unique ID
      * @return string
      */
-    protected function generateId() {
+    protected function generateId()
+    {
         return md5(uniqid(time()));
     }
 
@@ -2533,7 +2534,6 @@ class PHPMailer
                 6 => $disposition,
                 7 => 0
             );
-
         } catch (phpmailerException $exc) {
             $this->setError($exc->getMessage());
             $this->edebug($exc->getMessage());

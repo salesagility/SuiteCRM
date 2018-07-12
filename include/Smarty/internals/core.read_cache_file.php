@@ -54,7 +54,7 @@ function smarty_core_read_cache_file(&$params, &$smarty)
     $_cache_info = unserialize(substr($_contents, $_info_start, $_info_len));
     $params['results'] = substr($_contents, $_info_start + $_info_len);
 
-    if ($smarty->caching == 2 && isset ($_cache_info['expires'])){
+    if ($smarty->caching == 2 && isset ($_cache_info['expires'])) {
         // caching by expiration time
         if ($_cache_info['expires'] > -1 && (time() > $_cache_info['expires'])) {
             // cache expired, regenerate

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
@@ -38,13 +40,16 @@ require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
 class AOS_PDF_TemplatesDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/AOS_PDF_Templates/metadata/dashletviewdefs.php');
+    function __construct($id, $def = null)
+    {
+        global $current_user, $app_strings;
+        require('modules/AOS_PDF_Templates/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOS_PDF_Templates');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOS_PDF_Templates');
+        }
 
         $this->searchFields = $dashletData['AOS_PDF_TemplatesDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_PDF_TemplatesDashlet']['columns'];
@@ -55,15 +60,14 @@ class AOS_PDF_TemplatesDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_PDF_TemplatesDashlet($id, $def = null) {
+    function AOS_PDF_TemplatesDashlet($id, $def = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
-
 }

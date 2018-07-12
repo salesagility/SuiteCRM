@@ -171,7 +171,6 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_detail_fields()
     {
-        
         $state = new SuiteCRM\StateSaver();
         $eapmTable = $state->pushTable('eapm');
         $state->pushTable('tracker');
@@ -286,7 +285,7 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     public function testgetEAPMExternalApiDropDown()
-    {        
+    {
         // store state
         
         $state = new SuiteCRM\StateSaver();

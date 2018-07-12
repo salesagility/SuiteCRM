@@ -54,6 +54,6 @@ r24313 - 2007-07-13 15:01:40 -0700 (Fri, 13 Jul 2007) - clee - Added file.
  */
 function smarty_modifier_strip_semicolon($text)
 {
-	return preg_replace("/([:]|\xEF\xBC\x9A)[\\s]*$/", '', trim($text));
+    return preg_replace("/([:]|\xEF\xBC\x9A)[\\s]*$/", '', trim($text));
 }
 ?>

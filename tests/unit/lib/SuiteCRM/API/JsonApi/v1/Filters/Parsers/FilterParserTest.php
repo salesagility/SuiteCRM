@@ -35,17 +35,17 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
     {
         parent::_before();
         $container = $this->tester->getContainerInterface();
-        if(self::$filterParser === null) {
+        if (self::$filterParser === null) {
             // load PSR 11 interface
             // Load mock class
             self::$filterParser = new FilterParserMock($container);
         }
 
-        if(self::$operator === null) {
+        if (self::$operator === null) {
             self::$operator = new Operator($container);
         }
 
-        if(self::$fieldOperator === null) {
+        if (self::$fieldOperator === null) {
             self::$fieldOperator = new FieldOperator($container);
         }
     }
@@ -279,7 +279,6 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testParseFieldFilterWithMissingOperator()
     {
-
         $this->tester->expectException(
             new Exception(
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
@@ -294,7 +293,6 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
 
     public function testParseFilter()
     {
-
         $expectedResult = array(
             self::$fieldOperator->toFilterTag('Accounts') => array(
                 self::$fieldOperator->toFilterTag('name') => array(

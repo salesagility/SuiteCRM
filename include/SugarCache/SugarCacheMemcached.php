@@ -69,8 +69,9 @@ class SugarCacheMemcached extends SugarCacheAbstract
     {
         if ( extension_loaded('memcached')
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_memcached'])
-                && $this->_getMemcachedObject() )
+                && $this->_getMemcachedObject() ) {
             return true;
+        }
             
         return false;
     }
@@ -106,8 +107,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
     protected function _setExternal(
         $key,
         $value
-        )
-    {
+        ) {
         $this->_getMemcachedObject()->set($key, $value, $this->_expireTimeout);
     }
     
@@ -116,8 +116,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     protected function _getExternal(
         $key
-        )
-    {
+        ) {
         $returnValue = $this->_getMemcachedObject()->get($key);
         if ( $this->_getMemcachedObject()->getResultCode() != Memcached::RES_SUCCESS ) {
             return null;
@@ -131,8 +130,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     protected function _clearExternal(
         $key
-        )
-    {
+        ) {
         $this->_getMemcachedObject()->delete($key);
     }
     

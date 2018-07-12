@@ -51,7 +51,6 @@ require_once 'modules/ModuleBuilder/parsers/relationships/ManyToManyRelationship
 
 class MBRelationship
 {
-
     public $relatableModules = array ( ) ; // required by MBModule
     public $relationships = array ( ) ; // required by view.relationships.php; must be kept in sync with the implementation
 
@@ -119,11 +118,13 @@ class MBRelationship
     function add($rel)
     {
         // convert old format definition to new format
-        if (! isset ( $rel [ 'lhs_module' ] ))
+        if (! isset ( $rel [ 'lhs_module' ] )) {
             $rel [ 'lhs_module' ] = $this->moduleName ;
+        }
         $definition = AbstractRelationships::convertFromOldFormat ( $rel ) ;
-        if (! isset ( $definition ['relationship_type']))
+        if (! isset ( $definition ['relationship_type'])) {
             $definition ['relationship_type'] = 'many-to-many';
+        }
         // get relationship object from RelationshipFactory
         $relationship = RelationshipFactory::newRelationship ( $definition ) ;
         // add relationship to the set of relationships
@@ -167,11 +168,9 @@ class MBRelationship
 
     private function updateRelationshipVariable()
     {
-        foreach ( $this->implementation->getRelationshipList () as $relationshipName )
-        {
+        foreach ( $this->implementation->getRelationshipList () as $relationshipName ) {
             $rel = $this->implementation->getOldFormat ( $relationshipName ) ;
             $this->relationships [ $relationshipName ] = $rel ;
         }
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,17 +49,19 @@ class TemplateParent extends TemplateEnum
     var $max_size = 25;
     var $type='parent';
     
-    function get_field_def() {
+    function get_field_def()
+    {
         $def = parent::get_field_def();
         $def['type_name'] = 'parent_type';
         $def['id_name'] = 'parent_id';
         $def['parent_type'] = 'record_type_display';
         $def['source'] = 'non-db';
         $def['studio'] = 'visible';
-        return $def;    
+        return $def;
     }
     
-    function delete($df) {
+    function delete($df)
+    {
         parent::delete($df);
         //currency id
         $parent_type = new TemplateText();
@@ -69,7 +73,8 @@ class TemplateParent extends TemplateEnum
         $parent_id->delete($df);
     }
     
-    function save($df) {
+    function save($df)
+    {
         $this->ext1 = 'parent_type_display';
         $this->name = 'parent_name';
         $this->default_value = '';
@@ -94,15 +99,15 @@ class TemplateParent extends TemplateEnum
         $parent_id->save($df);
     }
     
-    function get_db_add_alter_table($table) {
+    function get_db_add_alter_table($table)
+    {
         return '';
     }
     /**
      * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
      */ 
-    function get_db_modify_alter_table($table) {
+    function get_db_modify_alter_table($table)
+    {
         return '';
     }
-    
-    
 }

@@ -1,5 +1,7 @@
 <?php
- if(!defined('sugarEntry'))define('sugarEntry', true);
+ if (!defined('sugarEntry')) {
+     define('sugarEntry', true);
+ }
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,13 +48,13 @@
  */
 abstract class SugarWebService
 {
-	protected $server = null;
-	protected $excludeFunctions = array();
-	abstract function register($excludeFunctions = array());
-	abstract function registerImplClass($class);
-	abstract function getRegisteredImplClass();
-	abstract function registerClass($class);
-	abstract function getRegisteredClass();
-	abstract function serve();
-	abstract function error($errorObject);
+    protected $server = null;
+    protected $excludeFunctions = array();
+    abstract function register($excludeFunctions = array());
+    abstract function registerImplClass($class);
+    abstract function getRegisteredImplClass();
+    abstract function registerClass($class);
+    abstract function getRegisteredClass();
+    abstract function serve();
+    abstract function error($errorObject);
 }

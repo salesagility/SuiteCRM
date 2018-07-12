@@ -43,17 +43,16 @@
   
   
  class AOS_ProductsController extends SugarController
-{	
-	function action_editview() {
-		$this->view = 'edit';
-		$GLOBALS['view'] = $this->view;
-		if(!empty($_REQUEST['deleteAttachment'])){
-			ob_clean();
-			echo $this->bean->deleteAttachment($_REQUEST['isDuplicate']) ? 'true' : 'false';
-			sugar_cleanup(true);
-		}
-
-	}
-	
-}
+ {
+     function action_editview()
+     {
+         $this->view = 'edit';
+         $GLOBALS['view'] = $this->view;
+         if (!empty($_REQUEST['deleteAttachment'])) {
+             ob_clean();
+             echo $this->bean->deleteAttachment($_REQUEST['isDuplicate']) ? 'true' : 'false';
+             sugar_cleanup(true);
+         }
+     }
+ }
 

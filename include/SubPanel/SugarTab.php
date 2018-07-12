@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -53,12 +55,12 @@ class SugarTab
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarTab($type='singletabmenu') {
+    function SugarTab($type='singletabmenu')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($type);
@@ -70,28 +72,27 @@ class SugarTab
         global $sugar_version, $sugar_config, $current_user;
 
         $max_tabs = $current_user->getPreference('max_tabs');
-        if(!isset($max_tabs) || $max_tabs <= 0) $max_tabs = $GLOBALS['sugar_config']['default_max_tabs'];
+        if (!isset($max_tabs) || $max_tabs <= 0) {
+            $max_tabs = $GLOBALS['sugar_config']['default_max_tabs'];
+        }
 
-				$key_all = translate('LBL_TABGROUP_ALL');
-				if ($selected_group == 'All') {
-						$selected_group = $key_all;
-				}
+        $key_all = translate('LBL_TABGROUP_ALL');
+        if ($selected_group == 'All') {
+            $selected_group = $key_all;
+        }
 
         $moreTabs = array_slice($mainTabs,$max_tabs);
         /* If the current tab is in the 'More' menu, move it into the visible menu. */
-        if(!empty($moreTabs[$selected_group]))
-        {
-        	$temp = array($selected_group => $mainTabs[$selected_group]);
+        if (!empty($moreTabs[$selected_group])) {
+            $temp = array($selected_group => $mainTabs[$selected_group]);
             unset($mainTabs[$selected_group]);
             array_splice($mainTabs, $max_tabs-1, 0, $temp);
         }
 
         $subpanelTitles = array();
 
-        if(isset($otherTabs[$key_all]) && isset($otherTabs[$key_all]['tabs']))
-        {
-            foreach($otherTabs[$key_all]['tabs'] as $subtab)
-            {
+        if (isset($otherTabs[$key_all]) && isset($otherTabs[$key_all]['tabs'])) {
+            foreach ($otherTabs[$key_all]['tabs'] as $subtab) {
                 $subpanelTitles[$subtab['key']] = $subtab['label'];
             }
         }
@@ -103,8 +104,7 @@ class SugarTab
         $this->ss->assign('subpanelTitlesJSON', json_encode($subpanelTitles));
         $this->ss->assign('startSubPanel', $selected_group);
         $this->ss->assign('sugarVersionJsStr', "?s=$sugar_version&c={$sugar_config['js_custom_version']}");
-        if(!empty($mainTabs))
-        {
+        if (!empty($mainTabs)) {
             $mtak = array_keys($mainTabs);
             $this->ss->assign('moreTab', $mainTabs[$mtak[min(count($mtak)-1, $max_tabs-1)]]['label']);
         }
@@ -117,6 +117,6 @@ class SugarTab
 
     function display()
     {
-       $this->ss->display('include/SubPanel/tpls/' . $this->type . '.tpl');
+        $this->ss->display('include/SubPanel/tpls/' . $this->type . '.tpl');
     }
 }

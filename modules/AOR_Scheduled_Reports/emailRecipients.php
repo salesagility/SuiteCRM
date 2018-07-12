@@ -37,11 +37,12 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function display_email_lines($focus, $field, $value, $view) {
+function display_email_lines($focus, $field, $value, $view)
+{
     global $app_list_strings;
     $params = unserialize(base64_decode($value));
 
-    if($view == 'EditView') {
+    if ($view == 'EditView') {
         $html = '<script src="modules/AOR_Scheduled_Reports/emailRecipients.js"></script>';
         $html .= '<input type="hidden" name="aor_email_type_list" id="aor_email_type_list" value="' . get_select_options_with_id($app_list_strings['aor_email_type_list'], '') . '">
 				  <input type="hidden" name="aor_email_to_list" id="aor_email_to_list" value="' . get_select_options_with_id($app_list_strings['aor_email_to_list'], '') . '">';
@@ -53,7 +54,9 @@ function display_email_lines($focus, $field, $value, $view) {
 
         if (isset($params['email_target_type'])) {
             foreach ($params['email_target_type'] as $key => $field) {
-                if (is_array($params['email'][$key])) $params['email'][$key] = json_encode($params['email'][$key]);
+                if (is_array($params['email'][$key])) {
+                    $params['email'][$key] = json_encode($params['email'][$key]);
+                }
                 $html .= "load_emailline('" . $params['email_to_type'][$key] . "','" . $params['email_target_type'][$key] . "','" . $params['email'][$key] . "');";
             }
         }

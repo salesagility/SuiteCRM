@@ -14,7 +14,7 @@ class ValueValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
     public function _before()
     {
         parent::_before();
-        if(self::$valueValidator === null) {
+        if (self::$valueValidator === null) {
             self::$valueValidator = new \SuiteCRM\API\JsonApi\v1\Filters\Validators\ValueValidator();
         }
     }

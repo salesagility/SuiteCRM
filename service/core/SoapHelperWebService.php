@@ -48,7 +48,6 @@ $disable_date_format = true;
 
 class SoapHelperWebServices
 {
-
     function get_field_list($value, $fields, $translate = true)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_field_list(' . print_r($value,
@@ -56,7 +55,6 @@ class SoapHelperWebServices
         $module_fields = array();
         $link_fields = array();
         if (!empty($value->field_defs)) {
-
             foreach ($value->field_defs as $var) {
                 if (!empty($fields) && !in_array($var['name'], $fields)) {
                     continue;
@@ -206,7 +204,6 @@ class SoapHelperWebServices
 
             return false;
         }
-
     }
 
     /**
@@ -228,7 +225,6 @@ class SoapHelperWebServices
             }
 
             if (!empty($_SESSION['is_valid_session']) && $this->is_valid_ip_address('ip_address') && $_SESSION['type'] == 'user') {
-
                 global $current_user;
                 require_once('modules/Users/User.php');
                 $current_user = new User();
@@ -404,7 +400,6 @@ class SoapHelperWebServices
         $GLOBALS['log']->info('End: SoapHelperWebServices->get_user_module_list');
 
         return $modules;
-
     }
 
     function check_modules_access($user, $module_name, $action = 'write')
@@ -436,7 +431,6 @@ class SoapHelperWebServices
         $GLOBALS['log']->info('End: SoapHelperWebServices->check_modules_access - FAILED: Module info not available in $_SESSION');
 
         return false;
-
     }
 
 
@@ -477,7 +471,6 @@ class SoapHelperWebServices
         $GLOBALS['log']->info('End: SoapHelperWebServices->get_name_value_list');
 
         return $list;
-
     }
 
     function filter_fields($value, $fields)
@@ -494,9 +487,7 @@ class SoapHelperWebServices
             if (isset($value->field_defs[$field])) {
                 $var = $value->field_defs[$field];
                 if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type']) || $var['type'] != 'relate')) {
-
                     if ($value->module_dir == 'Emails' && (($var['name'] == 'description') || ($var['name'] == 'description_html') || ($var['name'] == 'from_addr_name') || ($var['name'] == 'reply_to_addr') || ($var['name'] == 'to_addrs_names') || ($var['name'] == 'cc_addrs_names') || ($var['name'] == 'bcc_addrs_names') || ($var['name'] == 'raw_source'))) {
-
                     } else {
                         continue;
                     }
@@ -556,7 +547,6 @@ class SoapHelperWebServices
         } // if
 
         return $list;
-
     } // fn
 
     function array_get_name_value_list($array)
@@ -569,7 +559,6 @@ class SoapHelperWebServices
         $GLOBALS['log']->info('End: SoapHelperWebServices->array_get_name_value_list');
 
         return $list;
-
     }
 
     function array_get_name_value_lists($array)
@@ -614,7 +603,6 @@ class SoapHelperWebServices
 
     function array_get_return_value($array, $module)
     {
-
         $GLOBALS['log']->info('Begin/End: SoapHelperWebServices->array_get_return_value');
 
         return Array(
@@ -702,7 +690,6 @@ class SoapHelperWebServices
 
             return false;
         } // else
-
     } // fn
 
     function get_return_value_for_link_fields($bean, $module, $link_name_to_value_fields_array)
@@ -1085,8 +1072,7 @@ class SoapHelperWebServices
             }
             $arr = array();
 
-            if (!empty($account_id))  // bug # 44280
-            {
+            if (!empty($account_id)) {  // bug # 44280
                 $query = "select id, deleted from {$focus->table_name} WHERE id='" . $seed->db->quote($account_id) . "'";
             } else {
                 $query = "select id, deleted from {$focus->table_name} WHERE name='" . $seed->db->quote($account_name) . "'";
@@ -1126,7 +1112,6 @@ class SoapHelperWebServices
                 $seed->account_id = $focus->id;
             } // if
             $GLOBALS['log']->info('End: SoapHelperWebServices->add_create_account');
-
         } else {
             $GLOBALS['log']->info('End: SoapHelperWebServices->add_create_account - Insufficient ACLAccess');
         } // else
@@ -1237,6 +1222,4 @@ class SoapHelperWebServices
 
         return false;
     } // fn
-
-
 } // clazz

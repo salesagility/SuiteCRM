@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if (!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,46 +56,50 @@ class SugarRestJSON extends SugarRest
 	 * @param array $input - assoc array of input values: key = param name, value = param type
 	 * @return String - echos json encoded string of $input
 	 */
-	function generateResponse($input) {
-		$json = getJSONObj();
-		ob_clean();
-		header('Content-Type: application/json; charset=UTF-8');
-		if (isset($this->faultObject)) {
-			$this->generateFaultResponse($this->faultObject);
-		} else {
-			// JSONP support
-			if ( isset($_GET["jsoncallback"]) ) {
-				echo $_GET["jsoncallback"] . "(";
-			}
-			echo $json->encode($input);
-			if ( isset($_GET["jsoncallback"]) ) {
-				echo ")";
-			}
-		}
-	} // fn
+    function generateResponse($input)
+    {
+        $json = getJSONObj();
+        ob_clean();
+        header('Content-Type: application/json; charset=UTF-8');
+        if (isset($this->faultObject)) {
+            $this->generateFaultResponse($this->faultObject);
+        } else {
+            // JSONP support
+            if ( isset($_GET["jsoncallback"]) ) {
+                echo $_GET["jsoncallback"] . "(";
+            }
+            echo $json->encode($input);
+            if ( isset($_GET["jsoncallback"]) ) {
+                echo ")";
+            }
+        }
+    } // fn
 
-	/**
-	 * This method calls functions on the implementation class and returns the output or Fault object in case of error to client
-	 *
-	 * @return unknown
-	 */
-	function serve() {
-		$GLOBALS['log']->info('Begin: SugarRestJSON->serve');
-		$json_data = !empty($_REQUEST['rest_data'])? $GLOBALS['RAW_REQUEST']['rest_data']: '';
-		if(empty($_REQUEST['method']) || !method_exists($this->implementation, $_REQUEST['method'])){
-			$er = new SoapError();
-			$er->set_error('invalid_call');
-			$this->fault($er);
-		}else{
-			$method = $_REQUEST['method'];
-			$json = getJSONObj();
-			$data = $json->decode($json_data);
-			if(!is_array($data))$data = array($data);
-			$res = call_user_func_array(array( $this->implementation, $method),$data);
-			$GLOBALS['log']->info('End: SugarRestJSON->serve');
-			return $res;
-		} // else
-	} // fn
+    /**
+     * This method calls functions on the implementation class and returns the output or Fault object in case of error to client
+     *
+     * @return unknown
+     */
+    function serve()
+    {
+        $GLOBALS['log']->info('Begin: SugarRestJSON->serve');
+        $json_data = !empty($_REQUEST['rest_data'])? $GLOBALS['RAW_REQUEST']['rest_data']: '';
+        if (empty($_REQUEST['method']) || !method_exists($this->implementation, $_REQUEST['method'])) {
+            $er = new SoapError();
+            $er->set_error('invalid_call');
+            $this->fault($er);
+        } else {
+            $method = $_REQUEST['method'];
+            $json = getJSONObj();
+            $data = $json->decode($json_data);
+            if (!is_array($data)) {
+                $data = array($data);
+            }
+            $res = call_user_func_array(array( $this->implementation, $method),$data);
+            $GLOBALS['log']->info('End: SugarRestJSON->serve');
+            return $res;
+        } // else
+    } // fn
 
 	/**
 	 * This function sends response to client containing error object
@@ -101,24 +107,24 @@ class SugarRestJSON extends SugarRest
 	 * @param SoapError $errorObject - This is an object of type SoapError
 	 * @access public
 	 */
-	function fault($errorObject) {
-		$this->faultServer->faultObject = $errorObject;
-	} // fn
+    function fault($errorObject)
+    {
+        $this->faultServer->faultObject = $errorObject;
+    } // fn
 
-	function generateFaultResponse($errorObject) {
-		$error = $errorObject->number . ': ' . $errorObject->name . '<br>' . $errorObject->description;
-		$GLOBALS['log']->error($error);
-		$json = getJSONObj();
-		ob_clean();
-		// JSONP support
-		if ( isset($_GET["jsoncallback"]) ) {
-			echo $_GET["jsoncallback"] . "(";
-		}
-		echo $json->encode($errorObject);
-		if ( isset($_GET["jsoncallback"]) ) {
-			echo ")";
-		}
-	} // fn
-
-
+    function generateFaultResponse($errorObject)
+    {
+        $error = $errorObject->number . ': ' . $errorObject->name . '<br>' . $errorObject->description;
+        $GLOBALS['log']->error($error);
+        $json = getJSONObj();
+        ob_clean();
+        // JSONP support
+        if ( isset($_GET["jsoncallback"]) ) {
+            echo $_GET["jsoncallback"] . "(";
+        }
+        echo $json->encode($errorObject);
+        if ( isset($_GET["jsoncallback"]) ) {
+            echo ")";
+        }
+    } // fn
 } // class

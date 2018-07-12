@@ -21,7 +21,9 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 
 

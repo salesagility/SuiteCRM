@@ -49,9 +49,8 @@ $formatted_display = format_tweets($db,$tweets);
 echo $formatted_display;
 
 
-function format_tweets($db,$tweets) {
-
-
+function format_tweets($db,$tweets)
+{
     $i = 0;
     $html ='';
 //    $html = "<link rel='stylesheet' type='text/css' href='include/social/twitter/twitter.css'>";
@@ -63,8 +62,7 @@ function format_tweets($db,$tweets) {
     $html .= "</table>";
 
 
-    foreach($tweets as $tweet){
-
+    foreach ($tweets as $tweet) {
         $limit = 255;
 
         $tweet['text'] = format_feed_tweets($db,$tweet, $limit);
@@ -83,5 +81,4 @@ function format_tweets($db,$tweets) {
     }
 
     return $html . '</div>';
-
 }

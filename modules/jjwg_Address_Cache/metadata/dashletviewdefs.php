@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 $dashletData['jjwg_Adress_CacheDashlet']['searchFields'] = array('date_entered' => array('default' => ''),
     'date_modified' => array('default' => ''),

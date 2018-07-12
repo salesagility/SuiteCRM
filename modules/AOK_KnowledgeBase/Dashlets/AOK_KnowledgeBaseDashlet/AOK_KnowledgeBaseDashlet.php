@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,13 +53,16 @@ require_once('modules/AOK_KnowledgeBase/AOK_KnowledgeBase.php');
 
 class AOK_KnowledgeBaseDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/AOK_KnowledgeBase/metadata/dashletviewdefs.php');
+    function __construct($id, $def = null)
+    {
+        global $current_user, $app_strings;
+        require('modules/AOK_KnowledgeBase/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOK_KnowledgeBase');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOK_KnowledgeBase');
+        }
 
         $this->searchFields = $dashletData['AOK_KnowledgeBaseDashlet']['searchFields'];
         $this->columns = $dashletData['AOK_KnowledgeBaseDashlet']['columns'];
@@ -68,15 +73,14 @@ class AOK_KnowledgeBaseDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOK_KnowledgeBaseDashlet($id, $def = null) {
+    function AOK_KnowledgeBaseDashlet($id, $def = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
-
 }

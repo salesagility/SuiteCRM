@@ -166,7 +166,7 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
         // Store filename
         $this->addField(Zend_Search_Lucene_Field::Text('filename', $fileName, 'UTF-8'));
 
-            // Store contents
+        // Store contents
         if ($storeContent) {
             $this->addField(Zend_Search_Lucene_Field::Text('contents', implode(' ', $documentBody), 'UTF-8'));
         } else {
@@ -174,14 +174,12 @@ class Zend_Search_Lucene_Document_Pptx extends Zend_Search_Lucene_Document_OpenX
         }
 
         // Store meta data properties
-        foreach ($coreProperties as $key => $value)
-        {
+        foreach ($coreProperties as $key => $value) {
             $this->addField(Zend_Search_Lucene_Field::Text($key, $value, 'UTF-8'));
         }
 
         // Store title (if not present in meta data)
-        if (!isset($coreProperties['title']))
-        {
+        if (!isset($coreProperties['title'])) {
             $this->addField(Zend_Search_Lucene_Field::Text('title', $fileName, 'UTF-8'));
         }
     }

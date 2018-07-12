@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,15 +50,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-if(!empty($_REQUEST['mtime']))
-{
-	$mTime = $_REQUEST['mtime'];
-	$file = $_SESSION['MAILMERGE_TEMP_FILE_'.$mTime];
-	$rtfFile = 'sugartokendoc'.$mTime.'.doc';
-	unlink($file);
-	if(file_exists($rtfFile)){
-		unlink($rtfFile);
-	}
+if (!empty($_REQUEST['mtime'])) {
+    $mTime = $_REQUEST['mtime'];
+    $file = $_SESSION['MAILMERGE_TEMP_FILE_'.$mTime];
+    $rtfFile = 'sugartokendoc'.$mTime.'.doc';
+    unlink($file);
+    if (file_exists($rtfFile)) {
+        unlink($rtfFile);
+    }
 }
 
 header("Location: index.php?module=MailMerge");

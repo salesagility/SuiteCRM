@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,10 +47,10 @@ require_once('include/EditView/QuickCreate.php');
 
 class BugsQuickCreate extends QuickCreate
 {
-    
     var $javascript;
     
-    function process() {
+    function process()
+    {
         global $current_user, $timedate, $app_list_strings, $current_language, $mod_strings;
         $mod_strings = return_module_language($current_language, 'Bugs');
         
@@ -58,7 +60,7 @@ class BugsQuickCreate extends QuickCreate
         $this->ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['bug_status_dom'], $app_list_strings['bug_status_default_key']));
         $this->ss->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['bug_type_dom'],$app_list_strings['bug_type_default_key']));
 
-        if($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) { // override for ajax call
             $this->ss->assign('saveOnclick', "onclick='if(check_form(\"bugsQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"bugs\"); else return false;'");
             $this->ss->assign('cancelOnclick', "onclick='return SUGAR.subpanelUtils.cancelCreate(\"subpanel_bugs\")';");
         }
@@ -73,5 +75,5 @@ class BugsQuickCreate extends QuickCreate
         $this->javascript->addAllFields('');
 
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
-    }   
+    }
 }

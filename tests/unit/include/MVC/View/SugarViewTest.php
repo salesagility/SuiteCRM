@@ -32,19 +32,17 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         // clean up
-        
-        
     }
 
     public function testprocess()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-	// test
+        // test
         
         
         
@@ -94,8 +92,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testpreDisplay()
@@ -118,8 +114,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testdisplay()
@@ -142,8 +136,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testdisplayHeader()
@@ -174,8 +166,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetModuleMenuHTML()
@@ -198,8 +188,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testincludeClassicFile()
@@ -223,8 +211,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true);
         
         // clean up
-        
-        
     }
 
     public function testgetJavascriptValidation()
@@ -259,8 +245,6 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testrenderJavascript()
@@ -289,15 +273,10 @@ class SugarViewTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetMenu()
     {
-
-        
-
         $SugarView = new SugarView();
 
         //execute the method and check if it works and throws an exception if no module is provided

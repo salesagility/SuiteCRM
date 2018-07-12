@@ -425,7 +425,6 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
         $this->_prevIndexTermInfo = null;
         $this->_lastIndexPosition = 24;
         $this->_termCount         = 0;
-
     }
 
     /**
@@ -482,7 +481,6 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
             $indexPosition = $this->_tisFile->tell();
             $this->_tiiFile->writeVInt($indexPosition - $this->_lastIndexPosition);
             $this->_lastIndexPosition = $indexPosition;
-
         }
         $this->_termCount++;
     }

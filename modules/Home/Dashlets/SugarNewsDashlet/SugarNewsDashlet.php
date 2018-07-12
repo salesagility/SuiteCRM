@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,7 +51,8 @@ class SugarNewsDashlet extends iFrameDashlet
     var $defaultURL = 'https://suitecrm.com/';
     var $url;
 
-    function __construct($id, $options = null) {
+    function __construct($id, $options = null)
+    {
         $this->title = translate('LBL_DASHLET_SUGAR_NEWS', 'Home');
         parent::__construct($id, $options);
     }
@@ -57,15 +60,14 @@ class SugarNewsDashlet extends iFrameDashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarNewsDashlet($id, $options = null) {
+    function SugarNewsDashlet($id, $options = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $options);
     }
-
 }

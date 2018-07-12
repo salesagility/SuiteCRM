@@ -64,10 +64,8 @@ if (!is_admin($focus)) {
             foreach ($categories as $key => $value) {
                 if (!in_array($key, $tabs) && !in_array($key, $modInvisList)) {
                     unset($categories[$key]);
-
                 }
             }
-
         }
     }
 

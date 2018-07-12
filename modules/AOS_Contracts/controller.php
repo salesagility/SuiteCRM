@@ -28,18 +28,19 @@ require_once('include/MVC/Controller/SugarController.php');
 
 class AOS_ContractsController extends SugarController
 {
-	function action_editview() {
-		global $mod_string;
+    function action_editview()
+    {
+        global $mod_string;
 
-		$this->view = 'edit';
-		$GLOBALS['view'] = $this->view;
+        $this->view = 'edit';
+        $GLOBALS['view'] = $this->view;
 
-		if (isset($_REQUEST['aos_quotes_id'])) {
-            		$query = "SELECT * FROM aos_quotes WHERE id = '{$_REQUEST['aos_quotes_id']}'";
-            		$result = $this->bean->db->query($query, true);
-            		$row = $this->bean->db->fetchByAssoc($result);
-            		$this->bean->name = $row['name'];
-            		$this->bean->total_contract_value = $row['total_amount'];
+        if (isset($_REQUEST['aos_quotes_id'])) {
+            $query = "SELECT * FROM aos_quotes WHERE id = '{$_REQUEST['aos_quotes_id']}'";
+            $result = $this->bean->db->query($query, true);
+            $row = $this->bean->db->fetchByAssoc($result);
+            $this->bean->name = $row['name'];
+            $this->bean->total_contract_value = $row['total_amount'];
             
             if (isset($row['billing_account_id'])) {
                 $_REQUEST['account_id'] = $row['billing_account_id'];
@@ -54,13 +55,13 @@ class AOS_ContractsController extends SugarController
             }
         }
         	
-		if (isset($_REQUEST['account_id'])) {
+        if (isset($_REQUEST['account_id'])) {
             $query = "SELECT id,name FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
             $result = $this->bean->db->query($query, true);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->contract_account = $row['name'];
             $this->bean->contract_account_id = $row['id'];
-		}
+        }
 
         if (isset($_REQUEST['contact_id'])) {
             $contact = new Contact();
@@ -69,13 +70,12 @@ class AOS_ContractsController extends SugarController
             $this->bean->contact_id = $contact->id;
         }
 		
-		if (isset($_REQUEST['opportunity_id'])) {
+        if (isset($_REQUEST['opportunity_id'])) {
             $query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
             $result = $this->bean->db->query($query, true);
             $row = $this->bean->db->fetchByAssoc($result);
             $this->bean->opportunity = $row['name'];
             $this->bean->opportunity_id = $row['id'];
         }
-        
     }
 }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,69 +47,71 @@ require_once('include/upload_file.php');
 
 class DocumentSoap
 {
-var $upload_file;
-	function __construct() {
-		$this->upload_file = new UploadFile('filename_file');
-	}
+    var $upload_file;
+    function __construct()
+    {
+        $this->upload_file = new UploadFile('filename_file');
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function DocumentSoap() {
+    function DocumentSoap()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	function saveFile($document, $portal = false) {
+    function saveFile($document, $portal = false)
+    {
         global $sugar_config;
 
         $focus = new Document();
 
 
 
-        if(!empty($document['id'])){
-                $focus->retrieve($document['id']);
-                if(empty($focus->id)) {
-                    return '-1';
-                }
-        }else{
+        if (!empty($document['id'])) {
+            $focus->retrieve($document['id']);
+            if (empty($focus->id)) {
                 return '-1';
+            }
+        } else {
+            return '-1';
         }
 
-        if(!empty($document['file'])){
-                $decodedFile = base64_decode($document['file']);
-                $this->upload_file->set_for_soap($document['filename'], $decodedFile);
+        if (!empty($document['file'])) {
+            $decodedFile = base64_decode($document['file']);
+            $this->upload_file->set_for_soap($document['filename'], $decodedFile);
 
-                $ext_pos = strrpos($this->upload_file->stored_file_name, ".");
-                $this->upload_file->file_ext = substr($this->upload_file->stored_file_name, $ext_pos + 1);
-                if (in_array($this->upload_file->file_ext, $sugar_config['upload_badext'])) {
-                        $this->upload_file->stored_file_name .= ".txt";
-                        $this->upload_file->file_ext = "txt";
-                }
+            $ext_pos = strrpos($this->upload_file->stored_file_name, ".");
+            $this->upload_file->file_ext = substr($this->upload_file->stored_file_name, $ext_pos + 1);
+            if (in_array($this->upload_file->file_ext, $sugar_config['upload_badext'])) {
+                $this->upload_file->stored_file_name .= ".txt";
+                $this->upload_file->file_ext = "txt";
+            }
 
-                $revision = new DocumentRevision();
-				$revision->filename = $this->upload_file->get_stored_file_name();
-          		$revision->file_mime_type = $this->upload_file->getMimeSoap($revision->filename);
-				$revision->file_ext = $this->upload_file->file_ext;
-				//$revision->document_name = ;
-				$revision->revision = $document['revision'];
-				$revision->document_id = $document['id'];
-				$revision->save();
+            $revision = new DocumentRevision();
+            $revision->filename = $this->upload_file->get_stored_file_name();
+            $revision->file_mime_type = $this->upload_file->getMimeSoap($revision->filename);
+            $revision->file_ext = $this->upload_file->file_ext;
+            //$revision->document_name = ;
+            $revision->revision = $document['revision'];
+            $revision->document_id = $document['id'];
+            $revision->save();
 
-               	$focus->document_revision_id = $revision->id;
-               	$focus->save();
-                $return_id = $revision->id;
-                $this->upload_file->final_move($revision->id);
-        }else{
-                return '-1';
+            $focus->document_revision_id = $revision->id;
+            $focus->save();
+            $return_id = $revision->id;
+            $this->upload_file->final_move($revision->id);
+        } else {
+            return '-1';
         }
         return $return_id;
-	}
+    }
 }

@@ -39,7 +39,7 @@ class ModulesCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -261,16 +261,16 @@ class ModulesCest
         $I->loginAsAdmin();
     }
 
-     /**
-      * Create a existing entry
-      * @param apiTester $I
-      * @see http://jsonapi.org/format/1.0/#crud-creating
-      *
-      * HTTP Verb: POST
-      * URL: /api/v8/modules/{module_name} (with id in $_POST)
-      * URL: /api/v8/modules/{module_name}/{id}
-      *
-      */
+    /**
+     * Create a existing entry
+     * @param apiTester $I
+     * @see http://jsonapi.org/format/1.0/#crud-creating
+     *
+     * HTTP Verb: POST
+     * URL: /api/v8/modules/{module_name} (with id in $_POST)
+     * URL: /api/v8/modules/{module_name}/{id}
+     *
+     */
     public function TestScenarioCreateExisting(apiTester $I)
     {
         $faker = \Faker\Factory::create();
@@ -593,7 +593,7 @@ class ModulesCest
         $I->assertArrayHasKey('data', $response);
         $I->assertTrue(is_array($response['data']));
 
-        if(!empty($response['data'])) {
+        if (!empty($response['data'])) {
             $I->assertTrue(isset($response['data']['0']));
             $I->assertTrue(isset($response['data']['0']['id']));
             $I->assertTrue(isset($response['data']['0']['type']));
@@ -634,7 +634,7 @@ class ModulesCest
         $I->assertArrayHasKey('data', $response);
         $I->assertTrue(is_array($response['data']));
 
-        if(!empty($response['data'])) {
+        if (!empty($response['data'])) {
             $I->assertTrue(isset($response['data']['0']));
             $I->assertTrue(isset($response['data']['0']['id']));
             $I->assertTrue(isset($response['data']['0']['type']));
@@ -959,7 +959,6 @@ class ModulesCest
      */
     public function TestScenarioDeleteOneToManyRelationship(apiTester $I)
     {
-
         $I->loginAsAdmin();
         $I->sendJwtAuthorisation();
         $I->sendJsonApiContentNegotiation();
@@ -1145,7 +1144,6 @@ class ModulesCest
         $I->seeResponseCodeIs(200);
         $I->assertArrayHasKey('data', $responseParentCategory);
         $I->assertNotEmpty($responseParentCategory['data']);
-
     }
 
     /**

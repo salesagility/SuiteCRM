@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,18 +53,17 @@ $sugarbean = new Project();
 $sugarbean = populateFromPost('', $sugarbean);
 
 $projectTasks = array();
-if (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true"){
+if (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
     $base_project_id = $_REQUEST['duplicateId'];
-}
-else{
+} else {
     $base_project_id = $sugarbean->id;
 }
-if(isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
+if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
     $query = "SELECT id FROM project_task WHERE project_id = '" . $base_project_id . "' AND deleted = 0";
     $result = $sugarbean->db->query($query,true,"Error retrieving project tasks");
     $row = $sugarbean->db->fetchByAssoc($result);
 
-    while ($row != null){
+    while ($row != null) {
         $projectTaskBean = new ProjectTask();
         $projectTaskBean->id = $row['id'];
         $projectTaskBean->retrieve();
@@ -72,64 +73,63 @@ if(isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUE
         $row = $sugarbean->db->fetchByAssoc($result);
     }
 }
-if (isset($_REQUEST['save_type'])){
+if (isset($_REQUEST['save_type'])) {
     $sugarbean->id = '';
     $sugarbean->assigned_user_id = $current_user->id;
 
-    if ($_REQUEST['save_type'] == 'TemplateToProject'){
+    if ($_REQUEST['save_type'] == 'TemplateToProject') {
         $sugarbean->name = $_REQUEST['project_name'];
         $sugarbean->is_template = 0;
-    }
-    elseif ($_REQUEST['save_type'] == 'ProjectToTemplate'){
+    } elseif ($_REQUEST['save_type'] == 'ProjectToTemplate') {
         $sugarbean->name = $_REQUEST['template_name'];
         $sugarbean->is_template = true;
     }
-}
-else{
-    if (isset($_REQUEST['is_template']) && $_REQUEST['is_template'] == '1'){
+} else {
+    if (isset($_REQUEST['is_template']) && $_REQUEST['is_template'] == '1') {
         $sugarbean->is_template = true;
-    }
-    else{
+    } else {
         $sugarbean->is_template = 0;
     }
 }
 
-if(isset($_REQUEST['email_id'])) $sugarbean->email_id = $_REQUEST['email_id'];
+if (isset($_REQUEST['email_id'])) {
+    $sugarbean->email_id = $_REQUEST['email_id'];
+}
 
-if(!$sugarbean->ACLAccess('Save')){
-        ACLController::displayNoAccess(true);
-        sugar_cleanup(true);
+if (!$sugarbean->ACLAccess('Save')) {
+    ACLController::displayNoAccess(true);
+    sugar_cleanup(true);
 }
 
 if (isset($GLOBALS['check_notify'])) {
     $check_notify = $GLOBALS['check_notify'];
-}
-else {
+} else {
     $check_notify = FALSE;
 }
 $sugarbean->save($check_notify);
 $return_id = $sugarbean->id;
 
-if(isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
-    for ($i = 0; $i < count($projectTasks); $i++){
-        if (isset($_REQUEST['save_type']) || (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true")){
+if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
+    for ($i = 0; $i < count($projectTasks); $i++) {
+        if (isset($_REQUEST['save_type']) || (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true")) {
             $projectTasks[$i]->id = '';
             $projectTasks[$i]->project_id = $sugarbean->id;
         }
-        if ($sugarbean->is_template){
+        if ($sugarbean->is_template) {
             $projectTasks[$i]->assigned_user_id = '';
         }
         $projectTasks[$i]->team_id = $sugarbean->team_id;
-        if(empty( $projectTasks[$i]->duration_unit)) $projectTasks[$i]->duration_unit = " "; //Since duration_unit cannot be null.
+        if (empty( $projectTasks[$i]->duration_unit)) {
+            $projectTasks[$i]->duration_unit = " ";
+        } //Since duration_unit cannot be null.
         $projectTasks[$i]->save(false);
     }
 }
 
-if ($sugarbean->is_template){
+if ($sugarbean->is_template) {
     header("Location: index.php?action=ProjectTemplatesDetailView&module=Project&record=$return_id&return_module=Project&return_action=ProjectTemplatesEditView");
-}
-else{
-	//customize default retrun view to make it to redirect to GanttChart view
-	$_REQUEST['return_url'] = "index.php?module=Project&action=view_GanttChart&record=" . $return_id;
+} else {
+    //customize default retrun view to make it to redirect to GanttChart view
+    $_REQUEST['return_url'] = "index.php?module=Project&action=view_GanttChart&record=" . $return_id;
     handleRedirect($return_id,'Project');
 }

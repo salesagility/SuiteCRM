@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,19 +45,20 @@ require_once('include/generic/SugarWidgets/SugarWidgetFieldvarchar.php');
 
 class SugarWidgetFieldText extends SugarWidgetFieldVarchar
 {
-    function __construct(&$layout_manager) {
+    function __construct(&$layout_manager)
+    {
         parent::__construct($layout_manager);
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetFieldText(&$layout_manager) {
+    function SugarWidgetFieldText(&$layout_manager)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
@@ -87,7 +90,8 @@ class SugarWidgetFieldText extends SugarWidgetFieldVarchar
         return "($column IS NULL OR ".$this->reporter->db->convert($column, "length")." = 0)";
     }
 
-    function displayList(&$layout_def) {
+    function displayList(&$layout_def)
+    {
         return nl2br(parent::displayListPlain($layout_def));
     }
 }

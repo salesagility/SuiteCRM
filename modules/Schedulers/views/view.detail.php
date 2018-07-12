@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,25 +49,25 @@ class SchedulersViewDetail extends ViewDetail
     /**
 	 * @see SugarView::_getModuleTitleListParam()
 	 */
-	protected function _getModuleTitleListParam()
-	{
-	    global $mod_strings;
+    protected function _getModuleTitleListParam()
+    {
+        global $mod_strings;
 
-    	return "<a href='index.php?module=Schedulers&action=index'>".$mod_strings['LBL_MODULE_TITLE']."</a>";
+        return "<a href='index.php?module=Schedulers&action=index'>".$mod_strings['LBL_MODULE_TITLE']."</a>";
     }
 
     /**
  	 * display
  	 */
- 	function display()
- 	{
-		$this->bean->parseInterval();
-		$this->bean->setIntervalHumanReadable();
-		$this->ss->assign('JOB_INTERVAL', $this->bean->intervalHumanReadable);
-		$this->bean->created_by_name = get_assigned_user_name($this->bean->created_by);
-		$this->bean->modified_by_name = get_assigned_user_name($this->bean->modified_user_id);
+    function display()
+    {
+        $this->bean->parseInterval();
+        $this->bean->setIntervalHumanReadable();
+        $this->ss->assign('JOB_INTERVAL', $this->bean->intervalHumanReadable);
+        $this->bean->created_by_name = get_assigned_user_name($this->bean->created_by);
+        $this->bean->modified_by_name = get_assigned_user_name($this->bean->modified_user_id);
 
- 		parent::display();
- 	}
+        parent::display();
+    }
 }
 

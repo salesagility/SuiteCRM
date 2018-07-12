@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,13 +53,16 @@ require_once('modules/FP_Event_Locations/FP_Event_Locations.php');
 
 class FP_Event_LocationsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/FP_Event_Locations/metadata/dashletviewdefs.php');
+    function __construct($id, $def = null)
+    {
+        global $current_user, $app_strings;
+        require('modules/FP_Event_Locations/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'FP_Event_Locations');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'FP_Event_Locations');
+        }
 
         $this->searchFields = $dashletData['FP_Event_LocationsDashlet']['searchFields'];
         $this->columns = $dashletData['FP_Event_LocationsDashlet']['columns'];
@@ -68,15 +73,14 @@ class FP_Event_LocationsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function FP_Event_LocationsDashlet($id, $def = null) {
+    function FP_Event_LocationsDashlet($id, $def = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
-
 }

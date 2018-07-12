@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,12 +51,14 @@ class StudioWizard
     var $status = '';
     var $assign = array();
     
-    function welcome() {
+    function welcome()
+    {
         return $GLOBALS['mod_strings']['LBL_SW_WELCOME'];
     }
 
-    function options() {
-    	$options = array('SelectModuleWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_MODULE'], 
+    function options()
+    {
+        $options = array('SelectModuleWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_MODULE'], 
     	                 'EditDropDownWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_DROPDOWNS'],
     	                 'RenameTabs'=>$GLOBALS['mod_strings']['LBL_SW_RENAME_TABS'],
     	                 'ConfigureTabs'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_TABS'],
@@ -66,13 +70,13 @@ class StudioWizard
         
         );
         return $options;
-        
-        
     }
-    function back() {}
-    function process($option) {
-        switch($option)
-        {
+    function back()
+    {
+    }
+    function process($option)
+    {
+        switch ($option) {
             case 'SelectModuleWizard':
                 require_once('modules/Studio/wizards/'. $option . '.php');
                 $newWiz = new $option();
@@ -113,12 +117,14 @@ class StudioWizard
                 $this->display();
         }
     }
-    function display($error = '') {
-       echo $this->fetch($error );
+    function display($error = '')
+    {
+        echo $this->fetch($error );
     }
     
-    function fetch($error = '') {
-    	 global $mod_strings;
+    function fetch($error = '')
+    {
+        global $mod_strings;
         echo getClassicModuleTitle('StudioWizard', array($mod_strings['LBL_MODULE_TITLE']), false);
         $sugar_smarty = new Sugar_Smarty();
         $sugar_smarty->assign('welcome', $this->welcome());
@@ -126,13 +132,12 @@ class StudioWizard
         $sugar_smarty->assign('MOD', $GLOBALS['mod_strings']);
         $sugar_smarty->assign('option', (!empty($_REQUEST['option'])?$_REQUEST['option']:''));
         $sugar_smarty->assign('wizard',$this->wizard);
-         $sugar_smarty->assign('error',$error);
+        $sugar_smarty->assign('error',$error);
         $sugar_smarty->assign('status', $this->status);
         $sugar_smarty->assign('mod', $mod_strings);
-        foreach($this->assign as $name=>$value){
+        foreach ($this->assign as $name=>$value) {
             $sugar_smarty->assign($name, $value);
         }
-       return  $sugar_smarty->fetch($this->tplfile);
+        return  $sugar_smarty->fetch($this->tplfile);
     }
-
 }

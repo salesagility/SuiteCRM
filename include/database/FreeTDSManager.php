@@ -97,13 +97,13 @@ class FreeTDSManager extends MssqlManager
 
     public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
     {
-		global $app_strings;
-        if(is_array($sql)) {
+        global $app_strings;
+        if (is_array($sql)) {
             return $this->queryArray($sql, $dieOnError, $msg, $suppress);
         }
 
-		$sql = $this->_appendN($sql);
-		return parent::query($sql, $dieOnError, $msg, $suppress, $keepResult);
+        $sql = $this->_appendN($sql);
+        return parent::query($sql, $dieOnError, $msg, $suppress, $keepResult);
     }
 
     /**

@@ -56,7 +56,6 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
  */
 class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
-
     const HISTORYFILENAME = 'restored.php' ;
     const HISTORYVARIABLENAME = 'layout_defs' ;
 
@@ -83,14 +82,17 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
 
         $templates = & $this->module->config['templates'];
         $template_def="";
-         foreach ( $templates as $template => $a ){
-             if($a===1) $template_def = $template;
-         }
+        foreach ( $templates as $template => $a ) {
+            if ($a===1) {
+                $template_def = $template;
+            }
+        }
         $template_subpanel_def = 'include/SugarObjects/templates/'.$template_def. '/metadata/subpanels/default.php';
-         if (file_exists($template_subpanel_def)){
+        if (file_exists($template_subpanel_def)) {
             include($template_subpanel_def);
-            if (!empty($subpanel_layout['list_fields']))
+            if (!empty($subpanel_layout['list_fields'])) {
                 $this->_mergeFielddefs($this->_fielddefs, $subpanel_layout['list_fields']);
+            }
         }
 
         $subpanel_layout = $this->module->getAvailibleSubpanelDef ( $this->_subpanelName ) ;
@@ -99,7 +101,7 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
         
         // Set the global mod_strings directly as Sugar does not automatically load the language files for undeployed modules (how could it?)
         $selected_lang = 'en_us';
-        if(isset($GLOBALS['current_language']) &&!empty($GLOBALS['current_language'])) {
+        if (isset($GLOBALS['current_language']) &&!empty($GLOBALS['current_language'])) {
             $selected_lang = $GLOBALS['current_language'];
         }
         $GLOBALS [ 'mod_strings' ] = array_merge ( $GLOBALS [ 'mod_strings' ], $this->module->getModStrings ($selected_lang) ) ;
@@ -130,7 +132,6 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
         $outputDefs [ 'list_fields' ] = $layoutDefinitions ;
         $this->_viewdefs = $layoutDefinitions ;
         $this->module->saveAvailibleSubpanelDef ( $this->_subpanelName, $outputDefs ) ;
-
     }
 
     public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION)

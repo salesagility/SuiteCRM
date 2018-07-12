@@ -17,7 +17,7 @@ class FieldOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         parent::_before();
         $containers = $this->tester->getContainerInterface();
-        if(self::$fieldOperator === null) {
+        if (self::$fieldOperator === null) {
             self::$fieldOperator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator($containers);
         }
     }

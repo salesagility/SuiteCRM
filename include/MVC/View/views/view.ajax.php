@@ -46,30 +46,29 @@ class ViewAjax extends SugarView
      *
      * @see SugarView::SugarView()
      */
- 	public function __construct()
- 	{
- 		$this->options['show_title'] = false;
-		$this->options['show_header'] = false;
-		$this->options['show_footer'] = false;
-		$this->options['show_javascript'] = false;
-		$this->options['show_subpanels'] = false;
-		$this->options['show_search'] = false;
+    public function __construct()
+    {
+        $this->options['show_title'] = false;
+        $this->options['show_header'] = false;
+        $this->options['show_footer'] = false;
+        $this->options['show_javascript'] = false;
+        $this->options['show_subpanels'] = false;
+        $this->options['show_search'] = false;
 
- 		parent::__construct();
- 	}
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ViewAjax() {
+    public function ViewAjax()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
-
 }

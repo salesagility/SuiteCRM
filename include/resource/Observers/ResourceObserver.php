@@ -45,38 +45,39 @@
  */
 class ResourceObserver
 {
+    var $module;
+    var $limit;
 
-var $module;
-var $limit;
-
-public function __construct($module) {
-	$this->module = $module;
-}
+    public function __construct($module)
+    {
+        $this->module = $module;
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ResourceObserver($module) {
+    function ResourceObserver($module)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($module);
     }
 
-function setLimit($limit) {
-	$this->limit = $limit;
-}
-
-function notify($msg = '') {
-    if($this->dieOnError) {
-       die($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
-    } else {
-       echo($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
+    function setLimit($limit)
+    {
+        $this->limit = $limit;
     }
-}
 
+    function notify($msg = '')
+    {
+        if ($this->dieOnError) {
+            die($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
+        } else {
+            echo($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
+        }
+    }
 }

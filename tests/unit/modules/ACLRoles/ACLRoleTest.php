@@ -74,8 +74,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertLessThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
         
         // clean up
-        
-        
     }
 
     public function testgetUserRoles()
@@ -96,8 +94,6 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
         
         // clean up
-        
-        
     }
 
     public function testgetUserRoleNames()

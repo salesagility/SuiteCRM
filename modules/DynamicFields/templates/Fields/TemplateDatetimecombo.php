@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,11 +43,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
-class TemplateDatetimecombo extends TemplateRange 
+class TemplateDatetimecombo extends TemplateRange
 {
-	var $type = 'datetimecombo';
-	var $len = '';
-	var $dateStrings = array(
+    var $type = 'datetimecombo';
+    var $len = '';
+    var $dateStrings = array(
 		'-none-' => '',
         'today'=>'now',
         'yesterday'=> '-1 day',
@@ -119,70 +121,69 @@ class TemplateDatetimecombo extends TemplateRange
     	'pm' => 'pm',
     );
 
-	function get_db_default($modify=false) {
-			return '';
-	}
+    function get_db_default($modify=false)
+    {
+        return '';
+    }
 
-	function get_field_def() {
-		$def = parent::get_field_def();
-	    $def['dbType'] = 'datetime';
-	    if(!empty($def['default'])){
-			$def['display_default'] = $def['default'];
-			$def['default'] = '';
-		}
-		return $def;
-	}
+    function get_field_def()
+    {
+        $def = parent::get_field_def();
+        $def['dbType'] = 'datetime';
+        if (!empty($def['default'])) {
+            $def['display_default'] = $def['default'];
+            $def['default'] = '';
+        }
+        return $def;
+    }
 	
-    function populateFromPost() {
-    	parent::populateFromPost();
-    	if(!empty($_REQUEST['defaultDate']) && !empty($_REQUEST['defaultTime'])){
-    		$_REQUEST['default'] = $_REQUEST['defaultDate'].'&'.$_REQUEST['defaultTime'];
+    function populateFromPost()
+    {
+        parent::populateFromPost();
+        if (!empty($_REQUEST['defaultDate']) && !empty($_REQUEST['defaultTime'])) {
+            $_REQUEST['default'] = $_REQUEST['defaultDate'].'&'.$_REQUEST['defaultTime'];
 
-    		$defaultTime = $_REQUEST['defaultTime'];
-			$hours = substr($defaultTime, 0, 2); 
-			$minutes = substr($defaultTime, 3, 2);
-			$meridiem = substr($defaultTime, 5, 2);
-    		if(empty($meridiem)) {
-  		      if($hours == '00') {
-  		      	 $hours = 12;
-  		      	 $meridiem = 'am';
-  		      } elseif($hours >= 12) {
-                 //lets add the PM meridiem, but only subtract 12 if hours is greater than 12
-  		      	 if($hours > 12) {
-                    $hours -= 12;
-                 }
-  		      	 $meridiem = 'pm';
-  		      } else {
-  		      	 $meridiem = 'am';
-  		      }
-  		      //lets format the string to make sure the leading 0's are added back in for hours and minutes
-  		      $_REQUEST['default'] = $_REQUEST['defaultDate'] . '&' . sprintf('%02d:%02d%s', $hours, $minutes, $meridiem);
-    		}
-    	}else{
-    		$_REQUEST['default'] = '';
-    	}
-    	unset($_REQUEST['defaultDate']);
-    	unset($_REQUEST['defaultTime']);
+            $defaultTime = $_REQUEST['defaultTime'];
+            $hours = substr($defaultTime, 0, 2); 
+            $minutes = substr($defaultTime, 3, 2);
+            $meridiem = substr($defaultTime, 5, 2);
+            if (empty($meridiem)) {
+                if ($hours == '00') {
+                    $hours = 12;
+                    $meridiem = 'am';
+                } elseif ($hours >= 12) {
+                    //lets add the PM meridiem, but only subtract 12 if hours is greater than 12
+                    if ($hours > 12) {
+                        $hours -= 12;
+                    }
+                    $meridiem = 'pm';
+                } else {
+                    $meridiem = 'am';
+                }
+                //lets format the string to make sure the leading 0's are added back in for hours and minutes
+                $_REQUEST['default'] = $_REQUEST['defaultDate'] . '&' . sprintf('%02d:%02d%s', $hours, $minutes, $meridiem);
+            }
+        } else {
+            $_REQUEST['default'] = '';
+        }
+        unset($_REQUEST['defaultDate']);
+        unset($_REQUEST['defaultTime']);
     	
-		foreach($this->vardef_map as $vardef=>$field){
-			if(isset($_REQUEST[$vardef])){
+        foreach ($this->vardef_map as $vardef=>$field) {
+            if (isset($_REQUEST[$vardef])) {
                 //  Bug #48826. Some fields are allowed to have special characters and must be decoded from the request
                 // Bug 49774, 49775: Strip html tags from 'formula' and 'dependency'.
-                if (is_string($_REQUEST[$vardef]) && in_array($vardef, $this->decode_from_request_fields_map))
-                {
+                if (is_string($_REQUEST[$vardef]) && in_array($vardef, $this->decode_from_request_fields_map)) {
                     $this->$vardef = html_entity_decode(strip_tags(from_html($_REQUEST[$vardef])));
-                }
-                else
-                {
+                } else {
                     $this->$vardef = $_REQUEST[$vardef];
                 }
 
-				if($vardef != $field){
-					$this->$field = $this->$vardef;
-				}
-			}
-		}
-		$GLOBALS['log']->debug('populate: '.print_r($this,true));
-	}
-	
+                if ($vardef != $field) {
+                    $this->$field = $this->$vardef;
+                }
+            }
+        }
+        $GLOBALS['log']->debug('populate: '.print_r($this,true));
+    }
 }

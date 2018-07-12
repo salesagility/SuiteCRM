@@ -383,7 +383,8 @@ class StateChecker
     
     protected $lashHashAll = null;
     
-    public function getLastHashAll() {
+    public function getLastHashAll()
+    {
         return $this->lashHashAll;
     }
     

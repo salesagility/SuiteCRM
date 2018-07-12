@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,7 +47,6 @@ require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipFactory.ph
 
 class UndeployedRelationships extends AbstractRelationships implements RelationshipsInterface
 {
-    
     protected $basepath ; // Base directory for the lhs_module
     protected $packageName ;
     private $activitiesToAdd ; // if we need to add in the composite Activities and History subpanels to the module during the build
@@ -68,7 +68,6 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         $this->packageKey = $mb->getPackageKey ( $this->packageName ) ;
         
         $this->load () ;
-    
     }
 
     /*
@@ -86,17 +85,14 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
         $mb = new ModuleBuilder ( ) ;
         $mb->getPackages () ;
-        foreach ( $mb->getPackageList () as $packageName )
-        {
+        foreach ( $mb->getPackageList () as $packageName ) {
             $package = $mb->packages [ $packageName ] ;
-            foreach ( $package->modules as $module )
-            {
+            foreach ( $package->modules as $module ) {
                 $relatableModules [ $package->key . "_" . $module->name ] = $module->getProvidedSubpanels () ;
             }
         }
         
         return $relatableModules ;
-    
     }
 
     /*
@@ -108,7 +104,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
     function add($relationship)
     {
         parent::add ( $relationship ) ;
-        $this->addFieldsToUndeployedLayouts ( $relationship ) ; // must come after parent::add as we need the relationship_name in the relationships getFieldsToLayouts() which is called by addFieldsToUndeployedLayouts() 
+        $this->addFieldsToUndeployedLayouts ( $relationship ) ; // must come after parent::add as we need the relationship_name in the relationships getFieldsToLayouts() which is called by addFieldsToUndeployedLayouts()
     }
 
     /*
@@ -118,8 +114,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      */
     function delete($relationshipName)
     {
-        if ($relationship = $this->get ( $relationshipName ))
-        {
+        if ($relationship = $this->get ( $relationshipName )) {
             $this->removeFieldsFromUndeployedLayouts ( $relationship ) ;
             unset ( $this->relationships [ $relationshipName ] ) ;
         }
@@ -148,13 +143,10 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      */
     protected function _updateRelationshipDefinition($definition)
     {
-        if (isset ( $definition [ 'relate' ] ))
-        {
+        if (isset ( $definition [ 'relate' ] )) {
             $newDefinition = array ( ) ;
-            foreach ( array ( 'relate' => 'rhs_module' , 'rsub' => 'rhs_subpanel' , 'msub' => 'lhs_subpanel' , 'label' => 'label' ) as $oldParameter => $newParameter )
-            {
-                if (isset ( $definition [ $oldParameter ] ))
-                {
+            foreach ( array ( 'relate' => 'rhs_module' , 'rsub' => 'rhs_subpanel' , 'msub' => 'lhs_subpanel' , 'label' => 'label' ) as $oldParameter => $newParameter ) {
+                if (isset ( $definition [ $oldParameter ] )) {
                     $definition [ $newParameter ] = $definition [ $oldParameter ] ;
                     unset ( $definition [ $oldParameter ] ) ;
                 }
@@ -180,14 +172,10 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
         $mb = new ModuleBuilder ( ) ;
         $mb->getPackages () ;
-        foreach ( $mb->getPackageList () as $packageName )
-        {
+        foreach ( $mb->getPackageList () as $packageName ) {
             $package = $mb->packages [ $packageName ] ;
-            foreach ( $package->modules as $module )
-            {
-                
-                foreach ( $module->relationships->getRelationshipList () as $relationshipName )
-                {
+            foreach ( $package->modules as $module ) {
+                foreach ( $module->relationships->getRelationshipList () as $relationshipName ) {
                     $relationship = $module->relationships->get ( $relationshipName ) ;
                     $allRelationships [ $relationship->getName () ] = $relationship->getDefinition () ;
                 }
@@ -195,7 +183,6 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         }
         
         return $allRelationships ;
-    
     }
 
     /*
@@ -207,10 +194,8 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
     public function enforceRelationshipOnly($relationship)
     {
         // if we already have a relationship between this lhs_module and this rhs_module then set RelationshipOnly flag
-        foreach ( $this->relationships as $rel )
-        {
-            if ($rel->lhs_module == $relationship->lhs_module && $rel->rhs_module == $relationship->rhs_module)
-            {
+        foreach ( $this->relationships as $rel ) {
+            if ($rel->lhs_module == $relationship->lhs_module && $rel->rhs_module == $relationship->rhs_module) {
                 $rel->setRelationship_only () ;
                 break ;
             }
@@ -235,24 +220,19 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         
         $relationships = array ( ) ;
         $this->activitiesToAdd = false ;
-        foreach ( $this->relationships as $relationshipName => $relationship )
-        {
+        foreach ( $this->relationships as $relationshipName => $relationship ) {
             $definition = $relationship->getDefinition () ;
             // activities will always appear on the rhs only - lhs will be always be this module in MB
-            if (strtolower ( $definition [ 'rhs_module' ] ) == 'activities')
-            {
+            if (strtolower ( $definition [ 'rhs_module' ] ) == 'activities') {
                 $this->activitiesToAdd = true ;
                 $relationshipName = $definition [ 'relationship_name' ] ;
-                foreach ( self::$activities as $activitiesSubModuleLower => $activitiesSubModuleName )
-                {
+                foreach ( self::$activities as $activitiesSubModuleLower => $activitiesSubModuleName ) {
                     $definition [ 'rhs_module' ] = $activitiesSubModuleName ;
                     $definition [ 'for_activities' ] = true ;
                     $definition [ 'relationship_name' ] = $relationshipName . '_' . $activitiesSubModuleLower ;
                     $relationships [ $definition [ 'relationship_name' ] ] = RelationshipFactory::newRelationship ( $definition ) ;
                 }
-            
-            } else
-            {
+            } else {
                 $relationships [ $definition [ 'relationship_name' ] ] = $relationship ;
             }
         }
@@ -260,32 +240,25 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
         $mb = new ModuleBuilder ( ) ;
         $module = $mb->getPackageModule ( $this->packageName, $this->moduleName ) ;
-        if ($this->activitiesToAdd)
-        {
+        if ($this->activitiesToAdd) {
             $appStrings = $module->getAppListStrings () ;
-            foreach(getTypeDisplayList() as $typeDisplay)
-            {
+            foreach (getTypeDisplayList() as $typeDisplay) {
                 $appStrings[$typeDisplay][$module->key_name] = $module->getlabel ( 'en_us', 'LBL_MODULE_TITLE' ) ;
             }
             $module->setAppListStrings ( 'en_us', $appStrings ) ;
             $module->save () ;
-
-        }
-        else
-        {
+        } else {
             //Bug42170================================
             $appStrings = $module->getAppListStrings () ;
-            foreach(getTypeDisplayList() as $typeDisplay)
-            {
-                if(isset($appStrings[$typeDisplay][$module->key_name]))
-                {
+            foreach (getTypeDisplayList() as $typeDisplay) {
+                if (isset($appStrings[$typeDisplay][$module->key_name])) {
                     unset($appStrings[$typeDisplay][$module->key_name]);
                 }
             }
             $module->setAppListStrings ( 'en_us', $appStrings ) ;
             $module->save () ;
-			//Bug42170================================
-		}
+            //Bug42170================================
+        }
         
         // use an installDefPrefix of <basepath>/SugarModules for compatibility with the rest of ModuleBuilder
         $this->installDefs = parent::build ( $basepath, "<basepath>/SugarModules", $relationships ) ;
@@ -298,12 +271,9 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      */
     function addInstallDefs(&$installDef)
     {
-        foreach ( $this->installDefs as $name => $def )
-        {
-            if (! empty ( $def ))
-            {
-                foreach ( $def as $val )
-                {
+        foreach ( $this->installDefs as $name => $def ) {
+            if (! empty ( $def )) {
+                foreach ( $def as $val ) {
                     $installDef [ $name ] [] = $val ;
                 }
             }
@@ -324,17 +294,17 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * @param AbstractRelationship $relationship
      * @return void
      */
-    private function removeAppLangStrings($relationship) {
+    private function removeAppLangStrings($relationship)
+    {
         $def = $relationship->getDefinition();
-        if (strtolower ( $def [ 'rhs_module' ] ) == 'activities' && !empty($_REQUEST [ 'view_package' ]) && !empty($_REQUEST [ 'view_module' ] ))
-        {
+        if (strtolower ( $def [ 'rhs_module' ] ) == 'activities' && !empty($_REQUEST [ 'view_package' ]) && !empty($_REQUEST [ 'view_module' ] )) {
             $mb = new ModuleBuilder ( ) ;
             $module = $mb->getPackageModule ( $_REQUEST [ 'view_package' ], $_REQUEST [ 'view_module' ] ) ;
             $appStrings = $module->getAppListStrings () ;
-            foreach(getTypeDisplayList() as $key)
-            {
-                if (isset($appStrings[$key][ $module->key_name ]))
+            foreach (getTypeDisplayList() as $key) {
+                if (isset($appStrings[$key][ $module->key_name ])) {
                     unset($appStrings[$key][ $module->key_name ]);
+                }
             }
             $module->setAppListStrings ( 'en_us', $appStrings ) ;
             $module->save () ;
@@ -351,29 +321,24 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
     {
         
         // many-to-many relationships don't have fields so if we have a many-to-many we can just skip this...
-        if ($relationship->getType () == MB_MANYTOMANY)
+        if ($relationship->getType () == MB_MANYTOMANY) {
             return false ;
+        }
         
         $successful = true ;
         $layoutAdditions = $relationship->buildFieldsToLayouts () ;
         
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
-        foreach ( $layoutAdditions as $deployedModuleName => $fieldName )
-        {
-            foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view )
-            {
+        foreach ( $layoutAdditions as $deployedModuleName => $fieldName ) {
+            foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view ) {
                 $parsedName = AbstractRelationships::parseDeployedModuleName ( $deployedModuleName ) ;
-                if (isset ( $parsedName [ 'packageName' ] ))
-                {
+                if (isset ( $parsedName [ 'packageName' ] )) {
                     $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": " . (($actionAdd) ? "adding" : "removing") . " $fieldName on $view layout for undeployed module {$parsedName [ 'moduleName' ]} in package {$parsedName [ 'packageName' ]}" ) ;
                     $parser = new GridLayoutMetaDataParser ( $view, $parsedName [ 'moduleName' ], $parsedName [ 'packageName' ] ) ;
                     
-                    if (($actionAdd) ? $parser->addField ( array ( 'name' => $fieldName ) ) : $parser->removeField ( $fieldName ))
-                    {
+                    if (($actionAdd) ? $parser->addField ( array ( 'name' => $fieldName ) ) : $parser->removeField ( $fieldName )) {
                         $parser->handleSave ( false ) ;
-                    } 
-                    else
-                    {
+                    } else {
                         $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": couldn't " . (($actionAdd) ? "add" : "remove") . " $fieldName on $view layout for undeployed module $deployedModuleName" ) ;
                         $successful = false ;
                     }
@@ -401,26 +366,22 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
         $invalidModules = array ( 'emails' , 'kbdocuments' ) ;
         
         $fieldsToAdd = array();
-        foreach ( $layoutAdditions as $deployedModuleName => $fieldName )
-        {
+        foreach ( $layoutAdditions as $deployedModuleName => $fieldName ) {
             if ( ! in_array( strtolower ( $deployedModuleName ) , $invalidModules ) ) {
-                foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view )
-                {
+                foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view ) {
                     $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": adding $fieldName to $view layout for module $deployedModuleName" ) ;
                     $parsedName = self::parseDeployedModuleName ( $deployedModuleName ) ;
-                    if (! isset ( $parsedName [ 'packageName' ] ))
-                    {
+                    if (! isset ( $parsedName [ 'packageName' ] )) {
                         $fieldsToAdd [$parsedName [ 'moduleName' ]] = $fieldName;
                     } 
                     //Bug 22348: We should add in the field for custom modules not in this package, if they have been deployed.
                     elseif ($parsedName [ 'packageName' ] != $this->packageName 
-                            && isset ( $GLOBALS [ 'beanList' ] [ $deployedModuleName ])){
+                            && isset ( $GLOBALS [ 'beanList' ] [ $deployedModuleName ])) {
                         $fieldsToAdd [$deployedModuleName] = $fieldName;
                     }
                 }
-        	}
+            }
         }
         return array(array('additional_fields' => $fieldsToAdd));
     }
-
 }

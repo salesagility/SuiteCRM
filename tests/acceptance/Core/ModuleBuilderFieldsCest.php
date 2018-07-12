@@ -29,7 +29,7 @@ class ModuleBuilderFieldsCest
      */
     public function _before(AcceptanceTester $I)
     {
-        if(!$this->fakeData) {
+        if (!$this->fakeData) {
             $this->fakeData = Faker\Factory::create();
             $this->fakeDataSeed = rand(0, 2048);
         }
@@ -41,7 +41,6 @@ class ModuleBuilderFieldsCest
      */
     public function _after(AcceptanceTester $I)
     {
-
     }
 
     // Tests
@@ -87,8 +86,7 @@ class ModuleBuilderFieldsCest
         \AcceptanceTester $I,
         \Step\Acceptance\ModuleBuilder $moduleBuilder,
         \Helper\WebDriverHelper $webDriverHelper
-    )
-    {
+    ) {
         $I->wantTo('Add relate field');
 
         $I->amOnUrl(
@@ -129,7 +127,7 @@ class ModuleBuilderFieldsCest
         // Click save
         $I->click(['name' => 'fsavebtn']);
 
-       $moduleBuilder->closePopupSuccess();
+        $moduleBuilder->closePopupSuccess();
 
         // Add to layout viewlayoutsbtn
         $moduleBuilder->selectModule(\Page\ModuleFields::$PACKAGE_NAME, \Page\ModuleFields::$NAME);
@@ -173,8 +171,7 @@ class ModuleBuilderFieldsCest
         \AcceptanceTester $I,
         \Step\Acceptance\ModuleBuilder $moduleBuilder,
         \Helper\WebDriverHelper $webDriverHelper
-    )
-    {
+    ) {
         $I->wantTo('Add html field');
 
         $I->amOnUrl(

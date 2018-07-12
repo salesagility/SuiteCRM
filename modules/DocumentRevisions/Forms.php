@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,18 +56,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_validate_record_document_revision_js() {
-global $mod_strings;
-global $app_strings;
+function get_validate_record_document_revision_js()
+{
+    global $mod_strings;
+    global $app_strings;
 
-$lbl_version = $mod_strings['LBL_DOC_VERSION'];
-$lbl_filename = $mod_strings['LBL_FILENAME'];
-
-
-$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+    $lbl_version = $mod_strings['LBL_DOC_VERSION'];
+    $lbl_filename = $mod_strings['LBL_FILENAME'];
 
 
-$the_script  = <<<EOQ
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+
+
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 
@@ -92,12 +95,12 @@ function verify_data(form) {
 
 EOQ;
 
-return $the_script;
+    return $the_script;
 }
 
 function get_chooser_js()
 {
-$the_script  = <<<EOQ
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 <!--  to hide script contents from old browsers
@@ -123,39 +126,34 @@ document.EditView.display_tabs_def.value = display_tabs_def;
 </script>
 EOQ;
 
-return $the_script;
+    return $the_script;
 }
-function get_validate_record_js() {
-	
-global $mod_strings;
-global $app_strings;
-
-$lbl_name = $mod_strings['ERR_DOC_NAME'];
-$lbl_start_date = $mod_strings['ERR_DOC_ACTIVE_DATE'];
-$lbl_file_name = $mod_strings['ERR_FILENAME'];
-$lbl_file_version=$mod_strings['ERR_DOC_VERSION'];
-$sqs_no_match = $app_strings['ERR_SQS_NO_MATCH'];
-$err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
-
-if(isset($_REQUEST['record'])) {
-//do not validate upload file
-	$the_upload_script="";
-
-
-} else 
+function get_validate_record_js()
 {
+    global $mod_strings;
+    global $app_strings;
 
-$the_upload_script  = <<<EOQ
+    $lbl_name = $mod_strings['ERR_DOC_NAME'];
+    $lbl_start_date = $mod_strings['ERR_DOC_ACTIVE_DATE'];
+    $lbl_file_name = $mod_strings['ERR_FILENAME'];
+    $lbl_file_version=$mod_strings['ERR_DOC_VERSION'];
+    $sqs_no_match = $app_strings['ERR_SQS_NO_MATCH'];
+    $err_missing_required_fields = $app_strings['ERR_MISSING_REQUIRED_FIELDS'];
+
+    if (isset($_REQUEST['record'])) {
+        //do not validate upload file
+        $the_upload_script="";
+    } else {
+        $the_upload_script  = <<<EOQ
 
 	if (trim(form.uploadfile.value) == "") {
 		isError = true;
 		errorMessage += "\\n$lbl_file_name";
 	}
 EOQ;
+    }
 
-}
-
-$the_script  = <<<EOQ
+    $the_script  = <<<EOQ
 
 <script type="text/javascript" language="Javascript">
 
@@ -192,6 +190,6 @@ function verify_data(form) {
 
 EOQ;
 
-return $the_script;
+    return $the_script;
 }
 

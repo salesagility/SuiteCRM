@@ -1,6 +1,7 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
+if (! defined ( 'sugarEntry' ) || ! sugarEntry) {
     die ( 'Not A Valid Entry Point' ) ;
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,7 +55,6 @@ require_once ('modules/ModuleBuilder/parsers/parser.modifylistview.php') ;
 
 class ParserModifySubPanel extends ParserModifyListView
 {
-    
     var $listViewDefs = false ;
     var $defaults = array ( ) ;
     var $additional = array ( ) ;
@@ -81,8 +81,7 @@ class ParserModifySubPanel extends ParserModifyListView
         // Get the lists of fields already in the subpanel and those that can be added in
         // Get the fields lists from an aSubPanel object describing this subpanel from the SubPanelDefinitions object
         $this->originalListViewDefs = array ( ) ;
-        if (array_key_exists ( strtolower ( $this->subPanelName ), $spd->layout_defs [ 'subpanel_setup' ] ))
-        {
+        if (array_key_exists ( strtolower ( $this->subPanelName ), $spd->layout_defs [ 'subpanel_setup' ] )) {
             $originalPanel = $spd->load_subpanel ( $this->subPanelName, true ) ;
             $this->originalListViewDefs = $originalPanel->get_list_fields () ;
             $this->panel = $spd->load_subpanel ( $subPanelName, false ) ;
@@ -92,11 +91,9 @@ class ParserModifySubPanel extends ParserModifyListView
             $subPanelParentModuleName = $this->panel->get_module_name () ;
             $this->subPanelParentModule = null ;
 
-            if (! empty ( $subPanelParentModuleName ) && isset($beanListLower[strtolower($subPanelParentModuleName)]))
-            {
+            if (! empty ( $subPanelParentModuleName ) && isset($beanListLower[strtolower($subPanelParentModuleName)])) {
                 $class = $beanListLower[strtolower($subPanelParentModuleName)];
-                if (isset($beanFiles [ $class ]))
-                {
+                if (isset($beanFiles [ $class ])) {
                     require_once ($beanFiles [ $class ]) ;
                     $this->subPanelParentModule = new $class ( ) ;
                 }
@@ -112,12 +109,13 @@ class ParserModifySubPanel extends ParserModifyListView
     function getDefaultFields()
     {
         $this->defaults = array ( ) ;
-        foreach ( $this->listViewDefs as $key => $def )
-        {
-            if (! empty ( $def [ 'usage' ] ) && strcmp ( $def [ 'usage' ], 'query_only' ) == 0)
+        foreach ( $this->listViewDefs as $key => $def ) {
+            if (! empty ( $def [ 'usage' ] ) && strcmp ( $def [ 'usage' ], 'query_only' ) == 0) {
                 continue ;
-            if (! empty ( $def [ 'vname' ] ))
+            }
+            if (! empty ( $def [ 'vname' ] )) {
                 $def [ 'label' ] = $def [ 'vname' ] ;
+            }
             $this->defaults [ $key ] = $def ;
         }
         return $this->defaults ;
@@ -129,25 +127,19 @@ class ParserModifySubPanel extends ParserModifyListView
     function getAvailableFields()
     {
         $this->availableFields = array ( ) ;
-        if ($this->subPanelParentModule != null)
-        {
+        if ($this->subPanelParentModule != null) {
             $lowerFieldList = array_change_key_case ( $this->listViewDefs ) ;
-            foreach ( $this->originalListViewDefs as $key => $def )
-            {
+            foreach ( $this->originalListViewDefs as $key => $def ) {
                 $key = strtolower ( $key ) ;
-                if (! isset ( $lowerFieldList [ $key ] ))
-                {
+                if (! isset ( $lowerFieldList [ $key ] )) {
                     $this->availableFields [ $key ] = $def ;
                 }
             }
             $GLOBALS [ 'log' ]->debug ( 'parser.modifylistview.php->getAvailableFields(): field_defs=' . print_r ( $this->availableFields, true ) ) ;
-            foreach ( $this->subPanelParentModule->field_defs as $key => $fieldDefinition )
-            {
+            foreach ( $this->subPanelParentModule->field_defs as $key => $fieldDefinition ) {
                 $fieldName = strtolower ( $key ) ;
-                if (! isset ( $lowerFieldList [ $fieldName ] )) // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
-                {
-                    if ((empty ( $fieldDefinition [ 'source' ] ) || $fieldDefinition [ 'source' ] == 'db' || $fieldDefinition [ 'source' ] == 'custom_fields') && $fieldDefinition [ 'type' ] != 'id' && strcmp ( $fieldName, 'deleted' ) != 0 || (isset ( $def [ 'name' ] ) && strpos ( $def [ 'name' ], "_name" ) != false) || ! empty ( $def [ 'custom_type' ] ) && (empty ( $fieldDefinition [ 'dbType' ] ) || $fieldDefinition [ 'dbType' ] != 'id') && (empty ( $fieldDefinition [ 'dbtype' ] ) || $fieldDefinition [ 'dbtype' ] != 'id') || (! empty ( $fieldDefinition [ 'studio' ] ) && $fieldDefinition [ 'studio' ] == 'visible'))
-                    {
+                if (! isset ( $lowerFieldList [ $fieldName ] )) { // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
+                    if ((empty ( $fieldDefinition [ 'source' ] ) || $fieldDefinition [ 'source' ] == 'db' || $fieldDefinition [ 'source' ] == 'custom_fields') && $fieldDefinition [ 'type' ] != 'id' && strcmp ( $fieldName, 'deleted' ) != 0 || (isset ( $def [ 'name' ] ) && strpos ( $def [ 'name' ], "_name" ) != false) || ! empty ( $def [ 'custom_type' ] ) && (empty ( $fieldDefinition [ 'dbType' ] ) || $fieldDefinition [ 'dbType' ] != 'id') && (empty ( $fieldDefinition [ 'dbtype' ] ) || $fieldDefinition [ 'dbtype' ] != 'id') || (! empty ( $fieldDefinition [ 'studio' ] ) && $fieldDefinition [ 'studio' ] == 'visible')) {
                         $label = (isset ( $fieldDefinition [ 'vname' ] )) ? $fieldDefinition [ 'vname' ] : (isset ( $fieldDefinition [ 'label' ] ) ? $fieldDefinition [ 'label' ] : $fieldDefinition [ 'name' ]) ;
                         $this->availableFields [ $fieldName ] = array ( 'width' => '10' , 'label' => $label ) ;
                     }
@@ -160,27 +152,21 @@ class ParserModifySubPanel extends ParserModifyListView
     
     function getField($fieldName)
     {
-        foreach ( $this->listViewDefs as $key => $def )
-        {
+        foreach ( $this->listViewDefs as $key => $def ) {
             $key = strtolower ( $key ) ;
-            if ($key == $fieldName)
-            {
+            if ($key == $fieldName) {
                 return $def ;
             }
         }
-        foreach ( $this->originalListViewDefs as $key => $def )
-        {
+        foreach ( $this->originalListViewDefs as $key => $def ) {
             $key = strtolower ( $key ) ;
-            if ($key == $fieldName)
-            {
+            if ($key == $fieldName) {
                 return $def ;
             }
         }
-        foreach ( $this->panel->template_instance->field_defs as $key => $def )
-        {
+        foreach ( $this->panel->template_instance->field_defs as $key => $def ) {
             $key = strtolower ( $key ) ;
-            if ($key == $fieldName)
-            {
+            if ($key == $fieldName) {
                 return $def ;
             }
         }
@@ -199,61 +185,44 @@ class ParserModifySubPanel extends ParserModifyListView
         $subpanel = new SubPanel ( $this->moduleName, 'fab4', $this->subPanelName, $this->panel ) ;
         
         $newFields = array ( ) ;
-        foreach ( $this->listViewDefs as $name => $field )
-        {
-            if (! isset ( $field [ 'usage' ] ) || $field [ 'usage' ] != 'query_only')
-            {
+        foreach ( $this->listViewDefs as $name => $field ) {
+            if (! isset ( $field [ 'usage' ] ) || $field [ 'usage' ] != 'query_only') {
                 $existingFields [ $name ] = $field ;
-            
-            } else
-            {
+            } else {
                 $newFields [ $name ] = $field ;
             }
         }
         
         // Loop through all of the fields defined in the 'Default' group of the ListView data in $_REQUEST
         // Replace the field specification in the originalListViewDef with this new updated specification
-        foreach ( $_REQUEST [ 'group_0' ] as $field )
-        {
-            if (! empty ( $this->originalListViewDefs [ $field ] ))
-            {
+        foreach ( $_REQUEST [ 'group_0' ] as $field ) {
+            if (! empty ( $this->originalListViewDefs [ $field ] )) {
                 $newFields [ $field ] = $this->originalListViewDefs [ $field ] ;
-            } else
-            {
-                
+            } else {
                 $vname = '' ;
-                if (isset ( $this->panel->template_instance->field_defs [ $field ] ))
-                {
+                if (isset ( $this->panel->template_instance->field_defs [ $field ] )) {
                     $vname = $this->panel->template_instance->field_defs [ $field ] [ 'vname' ] ;
                 }
-                if (($this->subPanelParentModule != null) && (isset ( $this->subPanelParentModule->field_name_map [ $field ] ) && ($this->subPanelParentModule->field_name_map [ $field ] [ 'type' ] == 'bool' || (isset ( $this->subPanelParentModule->field_name_map [ $field ] [ 'custom_type' ] ) && $this->subPanelParentModule->field_name_map [ $field ] [ 'custom_type' ] == 'bool'))))
-                {
+                if (($this->subPanelParentModule != null) && (isset ( $this->subPanelParentModule->field_name_map [ $field ] ) && ($this->subPanelParentModule->field_name_map [ $field ] [ 'type' ] == 'bool' || (isset ( $this->subPanelParentModule->field_name_map [ $field ] [ 'custom_type' ] ) && $this->subPanelParentModule->field_name_map [ $field ] [ 'custom_type' ] == 'bool')))) {
                     $newFields [ $field ] = array ( 'name' => $field , 'vname' => $vname , 'widget_type' => 'checkbox' ) ;
-                } else
-                {
+                } else {
                     $newFields [ $field ] = array ( 'name' => $field , 'vname' => $vname ) ;
                 }
             }
             
             // Now set the field width if specified in the $_REQUEST data
-            if (isset ( $_REQUEST [ strtolower ( $field ) . 'width' ] ))
-            {
+            if (isset ( $_REQUEST [ strtolower ( $field ) . 'width' ] )) {
                 $width = substr ( $_REQUEST [ strtolower ( $field ) . 'width' ], 6, 3 ) ;
-                if (strpos ( $width, "%" ) != false)
-                {
+                if (strpos ( $width, "%" ) != false) {
                     $width = substr ( $width, 0, 2 ) ;
                 }
-                if ($width < 101 && $width > 0)
-                {
+                if ($width < 101 && $width > 0) {
                     $newFields [ $field ] [ 'width' ] = $width ;
                 }
-            } elseif (isset ( $this->listViewDefs [ $field ] [ 'width' ] ))
-            {
+            } elseif (isset ( $this->listViewDefs [ $field ] [ 'width' ] )) {
                 $newFields [ $field ] [ 'width' ] = $this->listViewDefs [ $field ] [ 'width' ] ;
             }
         }
         $subpanel->saveSubPanelDefOverride ( $this->panel, 'list_fields', $newFields ) ;
-    
     }
-
 }

@@ -73,12 +73,12 @@ class AOW_Action extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOW_Action() {
+    function AOW_Action()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -87,8 +87,6 @@ class AOW_Action extends Basic
 
     function save_lines($post_data, $parent, $key = '')
     {
-
-
         if (!isset($post_data[$key . 'action'])) {
             LoggerManager::getLogger()->warn('Post data not found at key action. Key was: ' . $key);
             $postDataAtKeyAction = null;
@@ -99,7 +97,6 @@ class AOW_Action extends Basic
         $line_count = count((array)$postDataAtKeyAction);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
-
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -119,7 +116,9 @@ class AOW_Action extends Basic
                             } elseif (!isset($post_data[$key . 'param'][$i]['value_type'][$p_id])) {
                                 LoggerManager::getLogger()->warn('AOW action error when trying to save lines, parameter id not found in post data, parameter id was: ' . $p_id);
                             } else {
-                                if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                                if ($post_data[$key . 'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) {
+                                    $param_value[$p_id] = encodeMultienumValue($p_value);
+                                }
                             }
                         }
                     }
@@ -139,5 +138,4 @@ class AOW_Action extends Basic
     {
         return false;
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,18 +50,18 @@ class NoteSoap
 
     function __construct()
     {
-    	$this->upload_file = new UploadFile('uploadfile');
+        $this->upload_file = new UploadFile('uploadfile');
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function NoteSoap() {
+    function NoteSoap()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -79,62 +81,63 @@ class NoteSoap
 
 
 
-        if(!empty($note['id'])){
-                $focus->retrieve($note['id']);
-                if(empty($focus->id)) {
-                    return '-1';
-                }
-        }else{
-                return '-1';
-        }
-
-        if(!empty($note['file'])){
-                $decodedFile = base64_decode($note['file']);
-                $this->upload_file->set_for_soap($note['filename'], $decodedFile);
-
-                $ext_pos = strrpos($this->upload_file->stored_file_name, ".");
-                $this->upload_file->file_ext = substr($this->upload_file->stored_file_name, $ext_pos + 1);
-                if (in_array($this->upload_file->file_ext, $sugar_config['upload_badext'])) {
-                        $this->upload_file->stored_file_name .= ".txt";
-                        $this->upload_file->file_ext = "txt";
-                }
-
-                $focus->filename = $this->upload_file->get_stored_file_name();
-                $focus->file_mime_type = $this->upload_file->getMimeSoap($focus->filename);
-               	$focus->id = $note['id'];
-                $return_id = $focus->save();
-                $this->upload_file->final_move($focus->id);
-        }else{
-                return '-1';
-        }
-
-        return $return_id;
-    }
-
-    function newSaveFile($note, $portal = false) {
-        global $sugar_config;
-
-        $focus = new Note();
-
-
-        if(!empty($note['id'])){
-        	$focus->retrieve($note['id']);
-            if(empty($focus->id)) {
+        if (!empty($note['id'])) {
+            $focus->retrieve($note['id']);
+            if (empty($focus->id)) {
                 return '-1';
             }
         } else {
-           	return '-1';
+            return '-1';
         }
 
-        if(!empty($note['file'])){
+        if (!empty($note['file'])) {
             $decodedFile = base64_decode($note['file']);
             $this->upload_file->set_for_soap($note['filename'], $decodedFile);
 
             $ext_pos = strrpos($this->upload_file->stored_file_name, ".");
             $this->upload_file->file_ext = substr($this->upload_file->stored_file_name, $ext_pos + 1);
             if (in_array($this->upload_file->file_ext, $sugar_config['upload_badext'])) {
-                    $this->upload_file->stored_file_name .= ".txt";
-                    $this->upload_file->file_ext = "txt";
+                $this->upload_file->stored_file_name .= ".txt";
+                $this->upload_file->file_ext = "txt";
+            }
+
+            $focus->filename = $this->upload_file->get_stored_file_name();
+            $focus->file_mime_type = $this->upload_file->getMimeSoap($focus->filename);
+            $focus->id = $note['id'];
+            $return_id = $focus->save();
+            $this->upload_file->final_move($focus->id);
+        } else {
+            return '-1';
+        }
+
+        return $return_id;
+    }
+
+    function newSaveFile($note, $portal = false)
+    {
+        global $sugar_config;
+
+        $focus = new Note();
+
+
+        if (!empty($note['id'])) {
+            $focus->retrieve($note['id']);
+            if (empty($focus->id)) {
+                return '-1';
+            }
+        } else {
+            return '-1';
+        }
+
+        if (!empty($note['file'])) {
+            $decodedFile = base64_decode($note['file']);
+            $this->upload_file->set_for_soap($note['filename'], $decodedFile);
+
+            $ext_pos = strrpos($this->upload_file->stored_file_name, ".");
+            $this->upload_file->file_ext = substr($this->upload_file->stored_file_name, $ext_pos + 1);
+            if (in_array($this->upload_file->file_ext, $sugar_config['upload_badext'])) {
+                $this->upload_file->stored_file_name .= ".txt";
+                $this->upload_file->file_ext = "txt";
             }
 
             $focus->filename = $this->upload_file->get_stored_file_name();
@@ -144,39 +147,37 @@ class NoteSoap
 
         $return_id = $focus->id;
 
-        if(!empty($note['file'])){
-        	$this->upload_file->final_move($focus->id);
+        if (!empty($note['file'])) {
+            $this->upload_file->final_move($focus->id);
         }
 
-		if (!empty($note['related_module_id']) && !empty($note['related_module_name'])) {
-        	$focus->process_save_dates=false;
-        	$module_name = $note['related_module_name'];
-        	$module_id = $note['related_module_id'];
-			if($module_name != 'Contacts'){
-				$focus->parent_type=$module_name;
-				$focus->parent_id = $module_id;
-			}else{
-				$focus->contact_id=$module_id;
-			}
-			$focus->save();
-
+        if (!empty($note['related_module_id']) && !empty($note['related_module_name'])) {
+            $focus->process_save_dates=false;
+            $module_name = $note['related_module_name'];
+            $module_id = $note['related_module_id'];
+            if ($module_name != 'Contacts') {
+                $focus->parent_type=$module_name;
+                $focus->parent_id = $module_id;
+            } else {
+                $focus->contact_id=$module_id;
+            }
+            $focus->save();
         } // if
         return $return_id;
     }
 
     function retrieveFile($id, $filename)
     {
-    	if(empty($filename)){
-    		return '';
-    	}
+        if (empty($filename)) {
+            return '';
+        }
 
-    	$this->upload_file->stored_file_name = $filename;
-    	$filepath = $this->upload_file->get_upload_path($id);
-    	if(file_exists($filepath)){
-    		$file = file_get_contents($filepath);
-    		return base64_encode($file);
-    	}
-    	return -1;
+        $this->upload_file->stored_file_name = $filename;
+        $filepath = $this->upload_file->get_upload_path($id);
+        if (file_exists($filepath)) {
+            $file = file_get_contents($filepath);
+            return base64_encode($file);
+        }
+        return -1;
     }
-
 }

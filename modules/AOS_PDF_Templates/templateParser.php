@@ -28,16 +28,13 @@ class templateParser
 {
     static function parse_template($string, $bean_arr)
     {
-
         foreach ($bean_arr as $bean_name => $bean_id) {
-
             $focus = BeanFactory::getBean($bean_name, $bean_id);
             $string = templateParser::parse_template_bean($string, $focus->table_name, $focus);
 
             foreach ($focus->field_defs as $focus_name => $focus_arr) {
                 if ($focus_arr['type'] == 'relate') {
                     if (isset($focus_arr['module']) && $focus_arr['module'] != '' && $focus_arr['module'] != 'EmailAddress') {
-
                         $idName = $focus_arr['id_name'];
                         $relate_focus = BeanFactory::getBean($focus_arr['module'], $focus->$idName);
 
@@ -45,7 +42,6 @@ class templateParser
                     }
                 }
             }
-
         }
         return $string;
     }
@@ -65,7 +61,7 @@ class templateParser
                 } elseif ($field_def['type'] == 'multienum' && isset($field_def['options'])) {
                     $mVals = unencodeMultienum($focus->$fieldName);
                     $translatedVals = array();
-                    foreach($mVals as $mVal){
+                    foreach ($mVals as $mVal) {
                         $translatedVals[] = translate($field_def['options'], $focus->module_dir, $mVal);
                     }
                     $repl_arr[$key . "_" . $fieldName] = implode(", ", $translatedVals);
@@ -73,27 +69,25 @@ class templateParser
                 elseif ($field_def['type'] == 'int') {
                     $repl_arr[$key . "_" . $fieldName] = strval($focus->$fieldName);
                 } elseif ($field_def['type'] == 'bool') {
-                    if($focus->$fieldName == "1"){
+                    if ($focus->$fieldName == "1") {
                         $repl_arr[$key . "_" . $fieldName] = "true";
-                    }else{
+                    } else {
                         $repl_arr[$key . "_" . $fieldName] = "false";
                     }
-
                 } elseif ($field_def['type'] == 'image') {
                     $secureLink = $sugar_config['site_url'] . '/' . "public/". $focus->id .  '_' . $fieldName;
                     $file_location = $sugar_config['upload_dir'] . '/'  . $focus->id .  '_' . $fieldName;
                     // create a copy with correct extension by mime type
-                    if(!file_exists('public')) {
+                    if (!file_exists('public')) {
                         sugar_mkdir('public', 0777);
                     }
-                    if(!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
+                    if (!copy($file_location, "public/{$focus->id}".  '_' . "$fieldName")) {
                         $secureLink = $sugar_config['site_url'] . '/'. $file_location;
                     }
                     
-                    if(empty($focus->$fieldName)){
-                        $repl_arr[$key . "_" . $fieldName] = ""; 
-                    }
-                    else{
+                    if (empty($focus->$fieldName)) {
+                        $repl_arr[$key . "_" . $fieldName] = "";
+                    } else {
                         $link = $secureLink;
                         $repl_arr[$key . "_" . $fieldName] = '<img src="' . $link . '" width="'.$field_def['width'].'" height="'.$field_def['height'].'"/>';
                     }
@@ -144,8 +138,6 @@ class templateParser
             } else {
                 $string = str_replace("\$$name", '&nbsp;', $string);
             }
-
-
         }
 
         return $string;

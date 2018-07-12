@@ -58,7 +58,7 @@ class EmailsViewCompose extends ViewEdit
     public function __construct()
     {
         $this->type = 'compose';
-        if(empty($_REQUEST['return_module'])) {
+        if (empty($_REQUEST['return_module'])) {
             $this->options['show_title'] = false;
             $this->options['show_header'] = false;
             $this->options['show_footer'] = false;
@@ -78,7 +78,7 @@ class EmailsViewCompose extends ViewEdit
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
 
-        if(!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
+        if (!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
             $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
         } else {
@@ -87,7 +87,7 @@ class EmailsViewCompose extends ViewEdit
 
         $this->ev->ss->assign('TEMP_ID', create_guid());
         $record = isset($_REQUEST['record']) ? $_REQUEST['record'] : '';
-        if(empty($record) && !empty($this->bean->id)) {
+        if (empty($record) && !empty($this->bean->id)) {
             $record = $this->bean->id;
         }
         $this->ev->ss->assign('RECORD', $record);
@@ -99,18 +99,18 @@ class EmailsViewCompose extends ViewEdit
         $this->ev->ss->assign('IS_MODAL', isset($_GET['in_popup']) ? $_GET['in_popup'] : false);
         
         $attachmentName = $mod_strings['LBL_ATTACHMENT'];
-        if(isset($_GET['return_module']) && isset($_GET['return_id'])) {
+        if (isset($_GET['return_module']) && isset($_GET['return_id'])) {
             $attachmentName = $attachmentName . ' (' . $_GET['return_module'] . ')';
             $attachment = BeanFactory::getBean($_GET['return_module'], $_GET['return_id']);
-            if(!$attachment) {
+            if (!$attachment) {
                 SugarApplication::appendErrorMessage($mod_strings['ERR_NO_RETURN_ID']);
                 $log->fatal('Attacment is not found. Requested return id is not related to an exists Bean.');
             } else {
-                if(isset($attachment->name) && $attachment->name) {
+                if (isset($attachment->name) && $attachment->name) {
                     $attachmentName = $attachment->name;
-                } elseif(isset($attachment->title) && $attachment->title) {
+                } elseif (isset($attachment->title) && $attachment->title) {
                     $attachmentName = $attachment->title;
-                } elseif(isset($attachment->subject) && $attachment->subject) {
+                } elseif (isset($attachment->subject) && $attachment->subject) {
                     $attachmentName = $attachment->subject;
                 }
             }
@@ -145,7 +145,7 @@ class EmailsViewCompose extends ViewEdit
      */
     public function getSignatures(User $user)
     {
-        if(empty($user->id) || $user->new_with_id === true) {
+        if (empty($user->id) || $user->new_with_id === true) {
             throw new \SugarControllerException(
                 'EmailsController::composeSignature() requires an existing User and not a new User object. '.
                 'This is typically the $current_user global'
@@ -154,12 +154,12 @@ class EmailsViewCompose extends ViewEdit
 
         $emailSignatures = unserialize(base64_decode($user->getPreference('account_signatures', 'Emails')));
 
-        if(isset($emailSignatures[$email->mailbox_id])) {
+        if (isset($emailSignatures[$email->mailbox_id])) {
             $emailSignatureId = $emailSignatures[$email->mailbox_id];
         } else {
             $emailSignatureId = $user->getPreference('signature_default');
         }
-        if(gettype($emailSignatureId) === 'string') {
+        if (gettype($emailSignatureId) === 'string') {
             $emailSignatures = $user->getSignature($emailSignatureId);
             $email->description .= $emailSignatures['signature'];
             $email->description_html .= html_entity_decode($emailSignatures['signature_html']);
@@ -172,7 +172,4 @@ class EmailsViewCompose extends ViewEdit
             return false;
         }
     }
-
-
-
 }

@@ -4,13 +4,15 @@ require_once __DIR__ . '/../TemplateSampleService.php';
 
 class smpl_Account_Sample
 {
-		function getType() {
-			return 'Accounts';
-		}
+    function getType()
+    {
+        return 'Accounts';
+    }
 
-		function getBody() {
+    function getBody()
+    {
         global $locale;
-			return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
+        return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
 <tbody style="text-align: left;">
 <tr>
 <td valign="top">
@@ -35,13 +37,15 @@ class smpl_Account_Sample
 <p> </p>
 <p> </p>
 <p>Someone</p>';
-		}
+    }
 
-		function getHeader() {
-			return '';
-		}
+    function getHeader()
+    {
+        return '';
+    }
 
-		function getFooter() {
-			return '';
-		}
+    function getFooter()
+    {
+        return '';
+    }
 }

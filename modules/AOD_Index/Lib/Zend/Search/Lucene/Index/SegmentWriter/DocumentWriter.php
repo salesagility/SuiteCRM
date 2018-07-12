@@ -170,7 +170,7 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                                                        $this->_docCount);
             }
 
-            if (isset($docNorms[$fieldName])){
+            if (isset($docNorms[$fieldName])) {
                 $this->_norms[$fieldName] .= $docNorms[$fieldName];
             } else {
                 $this->_norms[$fieldName] .= chr($similarity->encodeNorm( $similarity->lengthNorm($fieldName, 0) ));
@@ -225,6 +225,5 @@ class Zend_Search_Lucene_Index_SegmentWriter_DocumentWriter extends Zend_Search_
                                                         true,
                                                         true);
     }
-
 }
 

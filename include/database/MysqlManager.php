@@ -1510,7 +1510,6 @@ class MysqlManager extends DBManager
     {
         $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT CHARACTER SET utf8", true);
         $db->query("ALTER DATABASE `{$setup_db_database_name}` DEFAULT COLLATE utf8_general_ci", true);
-
     }
 
     /**

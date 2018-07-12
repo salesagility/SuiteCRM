@@ -42,8 +42,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('', isset($tpl->_tpl_vars['ASSIGNED_USER_NAME']) ? $tpl->_tpl_vars['ASSIGNED_USER_NAME'] : null);
         
         // clean up
-        
-        
     }
 
     public function testget_summary_text()
@@ -94,8 +92,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testmark_relationships_deleted()
@@ -118,8 +114,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_list_fields()
@@ -141,8 +135,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -164,8 +156,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testupdate_currency_id()
@@ -187,8 +177,6 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testget_list_view_data()
@@ -251,7 +239,7 @@ class CampaignTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $campaign = new Campaign();
         $campaign->name = 'test';

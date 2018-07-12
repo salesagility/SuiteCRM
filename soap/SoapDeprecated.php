@@ -274,7 +274,6 @@ function validate_user($user_name, $password)
             return false;
         }
     }
-
 }
 
 /**
@@ -526,7 +525,6 @@ function get_contact_array($contact, $msi_id = '0')
         "msi_id" => $msi_id,
         "email_address" => $contact->email1
     );
-
 }
 
 /**
@@ -713,7 +711,6 @@ function get_opportunity_array($value, $msi_id = '0')
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 function opportunity_by_search($name, $where = '', $msi_id = '0')
@@ -756,7 +753,6 @@ function get_bean_array($value, $msi_id, $type)
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 /**
@@ -777,7 +773,6 @@ function get_case_array($value, $msi_id)
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 function bug_by_search($name, $where = '', $msi_id = '0')
@@ -969,7 +964,6 @@ function create_account($user_name, $password, $name, $phone, $website)
     $account->save();
 
     return $account->id;
-
 }
 
 function create_case($user_name, $password, $name)

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -60,31 +62,36 @@ $sugar_smarty->assign('APP_LIST', $app_list_strings);
 $role = new ACLRole();
 $role_name = '';
 $return= array('module'=>'ACLRoles', 'action'=>'index', 'record'=>'');
-if(!empty($_REQUEST['record'])){
-	$role->retrieve($_REQUEST['record']);
-	$categories = ACLRole::getRoleActions($_REQUEST['record']);
-	$role_name =  $role->name;
-	if(!empty($_REQUEST['isDuplicate'])){
-		//role id is stripped here in duplicate so anything using role id after this will not have it
-		$role->id = '';
-		$sugar_smarty->assign('ISDUPLICATE', $_REQUEST['record']);
-		$duplicateString=translate('LBL_DUPLICATE_OF', 'ACLRoles');
-	}else{
-		$return['record']= $role->id;
-		$return['action']='DetailView';
-	}
-
-}else{
-	$categories = ACLRole::getRoleActions('');
+if (!empty($_REQUEST['record'])) {
+    $role->retrieve($_REQUEST['record']);
+    $categories = ACLRole::getRoleActions($_REQUEST['record']);
+    $role_name =  $role->name;
+    if (!empty($_REQUEST['isDuplicate'])) {
+        //role id is stripped here in duplicate so anything using role id after this will not have it
+        $role->id = '';
+        $sugar_smarty->assign('ISDUPLICATE', $_REQUEST['record']);
+        $duplicateString=translate('LBL_DUPLICATE_OF', 'ACLRoles');
+    } else {
+        $return['record']= $role->id;
+        $return['action']='DetailView';
+    }
+} else {
+    $categories = ACLRole::getRoleActions('');
 }
 $sugar_smarty->assign('ROLE', $role->toArray());
 $tdwidth = 10;
 
-if(isset($_REQUEST['return_module'])){
-	$return['module']=$_REQUEST['return_module'];
-	if(isset($_REQUEST['return_id']))$return['record']=$_REQUEST['return_id'];
-	if(isset($_REQUEST['return_record'])){$return['record']=$_REQUEST['return_record'];}
-    if(isset($_REQUEST['return_action'])){$return['action']=$_REQUEST['return_action'];}
+if (isset($_REQUEST['return_module'])) {
+    $return['module']=$_REQUEST['return_module'];
+    if (isset($_REQUEST['return_id'])) {
+        $return['record']=$_REQUEST['return_id'];
+    }
+    if (isset($_REQUEST['return_record'])) {
+        $return['record']=$_REQUEST['return_record'];
+    }
+    if (isset($_REQUEST['return_action'])) {
+        $return['action']=$_REQUEST['return_action'];
+    }
     if ( !empty($return['record']) ) {
         $return['action'] = 'DetailView';
     }
@@ -99,10 +106,10 @@ $sugar_smarty->assign('ACTION_NAMES', $names);
 
 $params = array();
 $params[] = "<a href='index.php?module=ACLRoles&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>";
-if(empty($role->id)){
-	$params[] = $GLOBALS['app_strings']['LBL_CREATE_BUTTON_LABEL'];
-}else{
-	$params[] = $role->get_summary_text();
+if (empty($role->id)) {
+    $params[] = $GLOBALS['app_strings']['LBL_CREATE_BUTTON_LABEL'];
+} else {
+    $params[] = $role->get_summary_text();
 }
 echo getClassicModuleTitle("ACLRoles", $params, true);
 

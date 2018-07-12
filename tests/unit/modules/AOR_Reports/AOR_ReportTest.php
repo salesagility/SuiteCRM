@@ -3,7 +3,6 @@
 
 class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-
     public function testAOR_Report()
     {
         $state = new SuiteCRM\StateSaver();
@@ -25,8 +24,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'importable', $aor_Report);
         
         // clean up
-        
-        
     }
 
     public function testbean_implements()
@@ -148,8 +145,6 @@ class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetReportFields()

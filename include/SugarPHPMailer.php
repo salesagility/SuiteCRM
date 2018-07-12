@@ -108,7 +108,6 @@ class SugarPHPMailer extends PHPMailer
         // cn: gmail fix
         $this->protocol = ($this->oe->mail_smtpssl == 1) ? 'ssl://' : $this->protocol;
         $this->SMTPAutoTLS = false;
-
     }
 
     /**
@@ -223,7 +222,6 @@ class SugarPHPMailer extends PHPMailer
 
             // HTML email RFC compliance
             if ($this->ContentType === 'text/html' && strpos($this->Body, '<html') === false) {
-
                 $langHeader = get_language_header();
 
                 $head = <<<eoq
@@ -247,7 +245,6 @@ eoq;
             }
 
             $this->FromName = $locale->translateCharset(trim($fromName), 'UTF-8', $OBCharset);
-
         }
     }
 
@@ -436,7 +433,8 @@ eoq;
      * @param string $key
      * @param string $value
      */
-    public function replace($key, $value) {
+    public function replace($key, $value)
+    {
         $this->Subject = preg_replace('/\$' . $key . '\b/', $value, $this->Subject);
         $this->Body = preg_replace('/\$' . $key . '\b/', $value, $this->Body);
         $this->Body_html = preg_replace('/\$' . $key . '\b/', $value, $this->Body_html);
@@ -482,14 +480,12 @@ eoq;
             $this->SMTPDebug = 3;
             $ret = parent::send();
             $this->exceptions =  $saveExceptionsState;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $phpMailerExceptionMsg=$e->errorMessage(); //Pretty error messages from PHPMailer
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
             }
-        }
-        catch (\Exception $e) { //The leading slash means the Global PHP Exception class will be caught
+        } catch (\Exception $e) { //The leading slash means the Global PHP Exception class will be caught
             $phpMailerExceptionMsg=$e->getMessage(); //generic error messages from anything else
             if ($phpMailerExceptionMsg) {
                 $GLOBALS['log']->error("send: PHPMailer Exception: { $phpMailerExceptionMsg }");
@@ -506,5 +502,4 @@ eoq;
         */
         return $ret;
     }
-
 } // end class definition

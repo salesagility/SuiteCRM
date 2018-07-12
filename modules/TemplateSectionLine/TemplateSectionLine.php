@@ -43,9 +43,8 @@
 require_once('modules/TemplateSectionLine/TemplateSectionLine_sugar.php');
 class TemplateSectionLine extends TemplateSectionLine_sugar
 {
-	
-	function __construct() {
-		parent::__construct();
-	}
-	
+    function __construct()
+    {
+        parent::__construct();
+    }
 }

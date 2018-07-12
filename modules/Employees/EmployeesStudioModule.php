@@ -51,11 +51,10 @@ class EmployeesStudioModule extends StudioModule
     {
         $normalModules = parent::getModule();
         
-        if(isset($normalModules[translate('LBL_RELATIONSHIPS')])) {
+        if (isset($normalModules[translate('LBL_RELATIONSHIPS')])) {
             unset($normalModules[translate('LBL_RELATIONSHIPS')]);
         }
 
         return $normalModules;
     }
-
 }
