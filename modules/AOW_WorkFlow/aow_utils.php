@@ -841,12 +841,16 @@ eoq;
 function getEmailableModules(){
     global $beanFiles, $beanList, $app_list_strings;
     $emailableModules = array();
-    foreach($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
-        if(isset($beanList[$bean_name]) && isset($beanFiles[$beanList[$bean_name]])){
-            require_once($beanFiles[$beanList[$bean_name]]);
-            $obj = new $beanList[$bean_name];
-            if($obj instanceof Person || $obj instanceof Company){
-                $emailableModules[] = $bean_name;
+    if (!isset($app_list_strings['aow_moduleList'])) {
+        LoggerManager::getLogger()->warn('getting Emailable Modules of AOW utils needs aow_moduleList in app_list_strings');
+    } else {
+        foreach($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
+            if(isset($beanList[$bean_name]) && isset($beanFiles[$beanList[$bean_name]])){
+                require_once($beanFiles[$beanList[$bean_name]]);
+                $obj = new $beanList[$bean_name];
+                if($obj instanceof Person || $obj instanceof Company){
+                    $emailableModules[] = $bean_name;
+                }
             }
         }
     }
