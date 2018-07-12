@@ -399,7 +399,10 @@ class ElasticSearchIndexer extends AbstractIndexer
             CarbonInterval::setLocale('en');
             $estimationString = CarbonInterval::seconds(intval(round($estimation)))->cascade()->forHumans(true);
             $this->log('@', sprintf('%d modules, %d records and %d fields indexed in %01.3F s', $this->indexedModulesCount, $this->indexedRecordsCount, $this->indexedFieldsCount, $elapsed));
-            $this->log('@', "It would take ~$estimationString for 200,000 records, assuming a linear expansion");
+
+            if ($this->indexedRecordsCount > 100) {
+                $this->log('@', "It would take ~$estimationString for 200,000 records, assuming a linear expansion");
+            }
         } else {
             $this->log('@', 'No record has been indexed');
         }
