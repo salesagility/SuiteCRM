@@ -1,51 +1,72 @@
 <?php
 /**
- * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * @author SalesAgility <info@salesagility.com>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-function display_condition_lines($focus, $field, $value, $view)
+function display_condition_lines(SugarBean $focus, $field, $value, $view)
 {
+    global $mod_strings, $current_language;
 
-    global $locale, $app_list_strings, $mod_strings;
-
+    if ($field) {
+        LoggerManager::getLogger()->warn('Field does not effect for display condition lines: ' . $field);
+    }
+    
+    if ($value) {
+        LoggerManager::getLogger()->warn('Value does not effect for display condition lines: ' . $value);
+    }
+    
     $html = '';
 
-    if (!is_file('cache/jsLanguage/SharedSecurityRulesConditions/' . $GLOBALS['current_language'] . '.js')) {
+    if (!is_file('cache/jsLanguage/SharedSecurityRulesConditions/' . $current_language . '.js')) {
         require_once('include/language/jsLanguage.php');
-        jsLanguage::createModuleStringsCache('SharedSecurityRulesConditions', $GLOBALS['current_language']);
+        jsLanguage::createModuleStringsCache('SharedSecurityRulesConditions', $current_language);
     }
-    $html .= '<script src="cache/jsLanguage/SharedSecurityRulesConditions/' . $GLOBALS['current_language'] . '.js"></script>';
+    $html .= '<script src="cache/jsLanguage/SharedSecurityRulesConditions/' . $current_language . '.js"></script>';
 
     if ($view == 'EditView') {
-
         $html .= '<script src="modules/SharedSecurityRulesConditions/conditionLines.js"></script>';
         $html .= "<script>conditionOperator = \"" . trim(preg_replace('/\s+/', ' ', get_select_options_with_id(array("AND" => "AND", "OR" => "OR"), "AND")))
-            . "\";</script>";
+                . "\";</script>";
         $html .= "<table border='0' cellspacing='4' width='100%' id='conditionLines'></table>";
-
-        //    $html .= "<div style='padding-top: 10px; padding-bottom:10px;'>";
-        //    $html .= "<input type=\"button\" tabindex=\"116\" class=\"button\" value=\"".$mod_strings['LBL_ADD_CONDITION']."\" id=\"btn_ConditionLine\" onclick=\"insertSecurityConditionLine()\" disabled/>";
-        //    $html .= "</div>";
 
         $html .= '<div class="tab-panels" style="width:100%">';
         $html .= '<div class="edit view edit508" id="detailpanel_conditions">';
@@ -77,7 +98,9 @@ condition_order ASC";
                     $condition_name = new SharedSecurityRulesConditions();
                     $condition_name->retrieve($row['id']);
                     $condition_name->module_path = unserialize(base64_decode($condition_name->module_path));
-                    if ($condition_name->module_path == '') $condition_name->module_path = $focus->flow_module;
+                    if ($condition_name->module_path == '') {
+                        $condition_name->module_path = $focus->flow_module;
+                    }
                     $html .= "flow_fields = \"" . trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->flow_module, $condition_name->module_path[0])))) . "\";";
                     if ($condition_name->value_type == 'Date') {
                         $condition_name->value = unserialize(base64_decode($condition_name->value));
@@ -89,9 +112,7 @@ condition_order ASC";
             $html .= "flow_fields = \"" . trim(preg_replace('/\s+/', ' ', getModuleFields($focus->flow_module))) . "\";";
             $html .= "</script>";
         }
-
-    } else if ($view == 'DetailView') {
-
+    } elseif ($view == 'DetailView') {
         $html .= '<script src="modules/SharedSecurityRulesConditions/conditionLines.js"></script>';
         $html .= "<table border='0' cellspacing='0' width='100%' id='conditionLines'></table>";
 
@@ -109,11 +130,13 @@ condition_order ASC";
                 $condition_name->retrieve($row['id']);
 
                 $condition_name->module_path = unserialize(base64_decode($condition_name->module_path));
-                if (empty($condition_name->module_path)) $condition_name->module_path[0] = $focus->flow_module;
+                if (empty($condition_name->module_path)) {
+                    $condition_name->module_path[0] = $focus->flow_module;
+                }
 
                 $html .= "flow_fields = \"" . trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->flow_module, $condition_name->module_path[0])))) . "\";";
                 $html .= "conditionOperator = \"" . trim(preg_replace('/\s+/', ' ', get_select_options_with_id(array("AND" => "AND", "OR" => "OR"), "AND")))
-                    . "\";";
+                        . "\";";
                 if ($condition_name->value_type == 'Date') {
                     $condition_name->value = unserialize(base64_decode($condition_name->value));
                 }
@@ -127,26 +150,18 @@ condition_order ASC";
 
 
                 if (!$condition_name->parenthesis) {
-
-                         $display = getDisplayForField($condition_name->module_path, $condition_name->field, $ruleBean->flow_module);
-                         $condition_name_array['module_path_display'] = $display['module'];
-                         $condition_name_array['field_label'] = $display['field'];
-
-                }
-
-                elseif($condition_name->parenthesis === "START")
-                {
+                    $display = getDisplayForField($condition_name->module_path, $condition_name->field, $ruleBean->flow_module);
+                    $condition_name_array['module_path_display'] = $display['module'];
+                    $condition_name_array['field_label'] = $display['field'];
+                } elseif ($condition_name->parenthesis === "START") {
                     $condition_name_array['field'] = '(';
                     $condition_name_array['field_label'] = '(';
-                }
-                else
-                {
+                } else {
                     $condition_name_array['field'] = ')';
                     $condition_name_array['field_label'] = ')';
-
                 }
 
-               $condition_name_array['logic_op'] = $condition_name->logic_op;
+                $condition_name_array['logic_op'] = $condition_name->logic_op;
                 $condition_item = json_encode($condition_name_array);
                 $html .= "loadConditionLine(" . $condition_item . ");";
             }
@@ -155,5 +170,3 @@ condition_order ASC";
     }
     return $html;
 }
-
-?>
