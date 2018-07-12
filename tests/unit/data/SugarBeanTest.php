@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,7 +38,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 include_once __DIR__ . '/SugarBeanMock.php';
 include_once __DIR__ . '/../../../include/SubPanel/SubPanelDefinitions.php';
 
@@ -48,20 +48,19 @@ use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
 {
 
-
     /**
      * @var array
      */
-    protected $fieldDefsStore;    
-    
+    protected $fieldDefsStore;
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
         $this->fieldDefsStore();
     }
 
-
-    public function tearDown() {
+    public function tearDown()
+    {
         $this->fieldDefsRestore();
         parent::tearDown();
     }
@@ -72,10 +71,8 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     protected function fieldDefsStore($key = 'base')
     {
-
         $object = new Contact();
         $this->fieldDefsStore[$key]['Contact'] = $object->field_defs;
-
     }
 
     /**
@@ -84,35 +81,35 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
      */
     protected function fieldDefsRestore($key = 'base')
     {
-
         $object = new Contact();
         $object->field_defs = $this->fieldDefsStore[$key]['Contact'];
-
     }
-public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
-                
+
+    public function testCreateNewListQueryWithCustomVarDefHandlerOverride()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $user->name = 'tester10';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
-           
+
+
         // test
         $tmpUser = new User();
         $tmpUser->name = 'tempuser';
@@ -121,7 +118,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $where = "";
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
+
         if (!file_exists('custom')) {
             mkdir('custom');
         }
@@ -132,11 +129,11 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             mkdir('custom/include/VarDefHandler');
         }
         copy('include/VarDefHandler/listvardefoverride.php', 'custom/include/VarDefHandler/listvardefoverride.php');
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
+
         $results = $tmpUser->create_new_list_query($order_by, $where);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
@@ -151,44 +148,43 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
-                
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
+
         // clean up
         $state->popGlobals();
         $state->popTable('users');
         $state->popTable('aod_index');
-        
     }
-          
 
-    public function testCreateNewListQueryWithNoOwnerWhere() {
-        
+    public function testCreateNewListQueryWithNoOwnerWhere()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-        
+
         // test
         $user = new User();
         $user->name = 'tester9';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
-               
-        
+
+
+
         // test
-        
+
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
         $tmpUser->name = 'tempuser';
@@ -198,7 +194,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
         $tmpUser->field_defs['created_by'] = null;
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
@@ -217,43 +213,41 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-                               
         // clean up
         $state->popGlobals();
         $state->popTable('users');
         $state->popTable('aod_index');
-                
     }
-    
-    public function testCreateNewListQuery() {
-        
+
+    public function testCreateNewListQuery()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester8';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
+
         $user->field_defs = $fieldDefs; // restore field defs
-                
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -263,11 +257,11 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $where = "";
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
+
         $results = $tmpUser->create_new_list_query($order_by, $where);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
@@ -282,12 +276,11 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
-                
-        
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
+
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-        
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -297,11 +290,11 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $where = "foo='bar'";
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
+
         $results = $tmpUser->create_new_list_query($order_by, $where);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
@@ -316,11 +309,9 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-                
- 
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -337,10 +328,9 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
                 and secu.user_id = '{$current_user->id}'
             where sec.deleted = 0
-        ))  )  ) ) AND users.deleted=0", $results);        
-        
+        ))  )  ) ) AND users.deleted=0", $results);
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-        
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -358,21 +348,19 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                 and secu.user_id = '{$current_user->id}'
             where sec.deleted = 0
         ))  )  ) ) AND users.deleted=0", $results);
-        
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
- 
- 
         // test
         $bean = new SugarBean();
         $order_by = '';
         $where = '';
         $results = $bean->create_new_list_query($order_by, $where);
         $this->assertEquals(' SELECT  .*  FROM   where .deleted=0', $results);
-        
-        
-        
+
+
+
         // test
-        $prjtpl = new AM_ProjectTemplates_sugar();        
+        $prjtpl = new AM_ProjectTemplates_sugar();
         $order_by = '';
         $where = '';
         $results = $prjtpl->create_new_list_query($order_by, $where);
@@ -383,14 +371,14 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
  AND jt1.deleted=0 LEFT JOIN users jt2 ON am_projecttemplates.assigned_user_id = jt2.id AND jt2.deleted=0   LEFT JOIN  users jt3 ON am_projecttemplates.assigned_user_id=jt3.id AND jt3.deleted=0
 
  AND jt3.deleted=0 where ( am_projecttemplates.assigned_user_id ='{$current_user->id}'  AND  (  (  ( am_projecttemplates.assigned_user_id ='{$current_user->id}' )  )  ) ) AND am_projecttemplates.deleted=0", $results);
-        
+
         // test
         $bean = new SugarBean();
         $order_by = '';
         $where = '';
         $results = $bean->create_new_list_query($order_by, $where);
         $this->assertEquals(' SELECT  .*  FROM   where .deleted=0', $results);
-        
+
         // test
         $bean = new SugarBean();
         $order_by = '';
@@ -398,8 +386,8 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $filter = ['a' => 'b'];
         $results = $bean->create_new_list_query($order_by, $where, $filter);
         $this->assertEquals(' SELECT  .id  FROM   where .deleted=0', $results);
-        
-        
+
+
         // test
         $bean = new AM_ProjectTemplates_sugar();
         $order_by = '';
@@ -407,40 +395,39 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $filter = ['a' => 'b'];
         $results = $bean->create_new_list_query($order_by, $where, $filter);
         $this->assertEquals(" SELECT  am_projecttemplates.id , am_projecttemplates.assigned_user_id  FROM am_projecttemplates  where (foo='bar' AND  am_projecttemplates.assigned_user_id ='{$current_user->id}'  AND  (  (  ( am_projecttemplates.assigned_user_id ='{$current_user->id}' )  )  ) ) AND am_projecttemplates.deleted=0", $results);
-        
+
         // clean up
         $state->popGlobals();
         $state->popTable('users');
         $state->popTable('aod_index');
     }
-        
-    
-    public function testCreateNewListQueryWithJoinedTablesInParams() {
-         
+
+    public function testCreateNewListQueryWithJoinedTablesInParams()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester7';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
+
         $user->field_defs = $fieldDefs; // restore field defs
-                
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -450,11 +437,11 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $where = "";
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
+
         $filter = [];
         $params = ['joined_tables' => ['foo', 'bar', 'bazz']];
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
@@ -471,44 +458,41 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-                
         // clean up
         $state->popGlobals();
         $state->popTable('aod_index');
         $state->popTable('users');
     }
 
-    
-    
-    public function testCreateNewListQueryWithFiterKeys() {
-        
+    public function testCreateNewListQueryWithFiterKeys()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester6';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
+
         $user->field_defs = $fieldDefs; // restore field defs
-              
         // test
         $bean = new SugarBean();
         $order_by = '';
@@ -516,9 +500,9 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $filter = ['1' => 'b', '2' => 'id', '3' => 'c'];
         $results = $bean->create_new_list_query($order_by, $where, $filter);
         $this->assertEquals(' SELECT  .id  FROM   where .deleted=0', $results);
-        
-          
-        
+
+
+
         // test
         $bean = new SugarBean();
         $order_by = '';
@@ -527,43 +511,41 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $bean->field_defs['c'] = 'd';
         $results = $bean->create_new_list_query($order_by, $where, $filter);
         $this->assertEquals(' SELECT  .id , .c  FROM   where .deleted=0', $results);
-        
-        
-                
+
+
+
         // clean up
         $state->popGlobals();
         $state->popTable('aod_index');
         $state->popTable('users');
-        
     }
-    
-    
-    public function testCreateNewListQueryForAddRelateField() {
-         
+
+    public function testCreateNewListQueryForAddRelateField()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester5';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
+
         $user->field_defs = $fieldDefs; // restore field defs
-                
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -573,16 +555,16 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $where = "";
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
+
         $filter = [];
         $params = ['joined_tables' => ['foo', 'bar', 'bazz']];
         $tmpUser->field_defs['id']['relationship_fields'] = ['full_name'];
         $tmpUser->field_defs['id']['link_type'] = 'test';
-        
+
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
@@ -597,44 +579,41 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-                
         // clean up
         $state->popGlobals();
         $state->popTable('users');
         $state->popTable('aod_index');
     }
 
-    
-    
-    public function testCreateNewListQueryWithValueAlias() {
-         
+    public function testCreateNewListQueryWithValueAlias()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester4';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
+
         $user->field_defs = $fieldDefs; // restore field defs
-                
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -644,18 +623,18 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $where = "";
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
+
         $filter = []; //['id' => ['force_default']];
         $params = ['joined_tables' => ['foo', 'bar', 'bazz']];
         $tmpUser->field_defs['id']['relationship_fields'] = ['full_name'];
         $tmpUser->field_defs['id']['link_type'] = 'test';
         $tmpUser->field_defs['id']['alias'] = 'test1';
         $tmpUser->field_defs['id']['force_blank'] = true;
-        
+
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
 
@@ -670,62 +649,61 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-                
         // clean up
         $state->popGlobals();
         $state->popTable('aod_index');
         $state->popTable('users');
     }
-    
-    public function testCreateNewListQueryWithNoFilterFieldForceDefault() {
-         
+
+    public function testCreateNewListQueryWithNoFilterFieldForceDefault()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester3';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
+
         $user->field_defs = $fieldDefs; // restore field defs
-                
         // clean up
         $state->popGlobals();
         $state->popTable('users');
         $state->popTable('aod_index');
     }
-    
-      
-    public function testCreateNewListQueryWithFilterFieldForceDefault() {
-         
+
+    public function testCreateNewListQueryWithFilterFieldForceDefault()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('users');
         $state->pushTable('user_preferences');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $fieldDefs = $user->field_defs; // save field defs
@@ -733,14 +711,13 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $user->user_name = 'tester2';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
+
         $user->field_defs = $fieldDefs; // restore field defs
-                
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -750,18 +727,18 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $where = "";
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
+
         $filter = ['id' => ['force_blank' => true, 'force_exists' => true, 'force_default' => true]];
         $params = ['joined_tables' => ['foo', 'bar', 'bazz']];
         $tmpUser->field_defs['id']['relationship_fields'] = ['full_name'];
         $tmpUser->field_defs['id']['link_type'] = 'test';
         $tmpUser->field_defs['id']['alias'] = 'test1';
         $tmpUser->field_defs['id']['force_blank'] = true;
-        
+
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.id , 1 id , users.created_by  FROM users  where ( (  (  ( users.created_by ='{$current_user->id}'  OR  EXISTS (SELECT  1
                   FROM    securitygroups secg
@@ -774,43 +751,42 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-                
         // clean up
         $state->popGlobals();
         $state->popTable('user_preferences');
         $state->popTable('users');
         $state->popTable('aod_index');
     }
-    
-    public function testCreateNewListQueryWithDataSource() {
-         
+
+    public function testCreateNewListQueryWithDataSource()
+    {
+
         // store states
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('users');
         $state->pushTable('aod_index');
         $state->pushGlobals();
-        
+
         // test
-        
+
         global $current_user, $sugar_config;
-                
+
         // test
         $user = new User();
         $fieldDefs = $user->field_defs; // save field defs
         $user->name = 'tester';
         $user->save();
         $current_user = $user;
-        
+
         $this->assertNotEmpty($current_user->id);
-        
+
         $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess'] = ACL_ALLOW_OWNER;
         $this->assertEquals(ACL_ALLOW_OWNER, $_SESSION['ACL'][$current_user->id]['AM_ProjectTemplates']['module']['list']['aclaccess']);
-        
+
         $user->field_defs = $fieldDefs; // restore field defs
-                
         // test
         $tmpUser = new User();
         $fieldDefs = $tmpUser->field_defs; // save field defs
@@ -820,11 +796,11 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $where = "";
         $current_user->is_admin = false;
         $_SESSION['ACL'][$current_user->id]['Users']['module']['list']['aclaccess'] = ACL_ALLOW_GROUP;
-        
+
         $this->assertTrue($tmpUser->bean_implements('ACL'));
         $this->assertFalse(is_admin($current_user));
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
-        
+
         $filter = ['test']; //['id' => ['force_default']];
         $params = ['joined_tables' => ['foo', 'bar', 'bazz']];
         $tmpUser->field_defs['id']['relationship_fields'] = ['full_name'];
@@ -833,7 +809,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $tmpUser->field_defs['id']['force_blank'] = true;
         $tmpUser->field_defs['id']['source'] = 'custom_fields';
         $tmpUser->field_defs['modified_user_id']['source'] = 'custom_field';
-        
+
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
         $this->assertEquals(" SELECT  users.id , users.created_by  FROM users  where ( (  (  ( users.created_by ='{$current_user->id}'  OR  EXISTS (SELECT  1
                   FROM    securitygroups secg
@@ -846,10 +822,9 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                                AND secr.deleted = 0
                                AND secr.module = 'Users'
                        WHERE   secr.record_id = users.id
-                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);        
-        
+                               AND secg.deleted = 0) )  )  ) ) AND users.deleted=0", $results);
+
         $tmpUser->field_defs = $fieldDefs; // restore field defs
-                
         // clean up
         $state->popGlobals();
         $state->popTable('aod_index');
@@ -871,14 +846,14 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertEquals(array(
             'id' => 1,
             'name' => 1,
-        ), $bean->required_fields);
+            ), $bean->required_fields);
         self::assertInstanceOf(DynamicField::class, $bean->custom_fields);
         self::assertEquals(false, $bean->custom_fields->use_existing_labels);
         self::assertEquals('custom/Extension/modules/AM_ProjectTemplates/Ext/Vardefs', $bean->custom_fields->base_path);
         self::assertSame(DBManagerFactory::getInstance(), $bean->custom_fields->db);
         self::assertSame($bean, $bean->custom_fields->bean);
         self::assertEquals('AM_ProjectTemplates', $bean->custom_fields->module);
-        self::assertEquals(Array(
+        self::assertEquals(array(
             0 => 'id',
             1 => 'name',
             2 => 'date_entered',
@@ -901,10 +876,10 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             19 => 'am_projecttemplates_users_1',
             20 => 'am_projecttemplates_contacts_1',
             21 => 'override_business_hours',
-        ), $bean->column_fields);
+            ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
-        self::assertEquals(Array(
+        self::assertEquals(array(
             0 => 'id',
             1 => 'name',
             2 => 'date_entered',
@@ -927,7 +902,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             19 => 'am_projecttemplates_users_1',
             20 => 'am_projecttemplates_contacts_1',
             21 => 'override_business_hours',
-        ), $keys);
+            ), $keys);
 
         self::assertEquals($keys, array_keys($bean->field_defs));
         self::assertEquals(true, $bean->optimistic_lock);
@@ -1014,7 +989,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'email1' => 1,
             'email_addresses' => 1,
             'email_addresses_primary' => 1,
-        ), $bean->required_fields);
+            ), $bean->required_fields);
         self::assertInstanceOf(DynamicField::class, $bean->custom_fields);
         self::assertEquals(false, $bean->custom_fields->use_existing_labels);
         self::assertEquals('custom/Extension/modules/Users/Ext/Vardefs', $bean->custom_fields->base_path);
@@ -1097,7 +1072,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             72 => 'securitygroup_primary_group',
             73 => 'factor_auth',
             74 => 'factor_auth_interface',
-        ), $bean->column_fields);
+            ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
         self::assertEquals($bean->column_fields, $keys);
@@ -1130,7 +1105,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'email1' => 1,
             'email_addresses' => 1,
             'email_addresses_primary' => 1,
-        ), $bean->required_fields);
+            ), $bean->required_fields);
         self::assertInstanceOf(DynamicField::class, $bean->custom_fields);
         self::assertEquals(false, $bean->custom_fields->use_existing_labels);
         self::assertEquals('custom/Extension/modules/Users/Ext/Vardefs', $bean->custom_fields->base_path);
@@ -1213,7 +1188,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             72 => 'securitygroup_primary_group',
             73 => 'factor_auth',
             74 => 'factor_auth_interface',
-        ), $bean->column_fields);
+            ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
         self::assertEquals($bean->column_fields, $keys);
@@ -1246,7 +1221,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'email1' => 1,
             'email_addresses' => 1,
             'email_addresses_primary' => 1,
-        ), $bean->required_fields);
+            ), $bean->required_fields);
         self::assertInstanceOf(DynamicField::class, $bean->custom_fields);
         self::assertEquals(false, $bean->custom_fields->use_existing_labels);
         self::assertEquals('custom/Extension/modules/Users/Ext/Vardefs', $bean->custom_fields->base_path);
@@ -1329,7 +1304,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             72 => 'securitygroup_primary_group',
             73 => 'factor_auth',
             74 => 'factor_auth_interface',
-        ), $bean->column_fields);
+            ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
         self::assertEquals($bean->column_fields, $keys);
@@ -1341,8 +1316,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertEquals(array(), $bean->list_fields);
         self::assertNotTrue(isset($bean->added_custom_field_defs));
         self::assertTrue(isset($bean->acl_fields));
-
-        
     }
 
     /**
@@ -1378,8 +1351,8 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
      */
     public function testPopulateDefaultValues()
     {
-
-        $testBean1 = BeanFactory::getBean('Users');;
+        $testBean1 = BeanFactory::getBean('Users');
+        ;
         $testBean1->field_defs = null;
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $testBean1->populateDefaultValues();
@@ -1409,7 +1382,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'test' => array(
                 'default' => true,
             ),
-        ), $bean->field_defs);
+            ), $bean->field_defs);
 
 
         // test
@@ -1425,7 +1398,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'test' => array(
                 'default' => true,
             ),
-        ), $bean->field_defs);
+            ), $bean->field_defs);
         $field = 'test';
         self::assertEquals(1, $bean->$field);
 
@@ -1443,10 +1416,9 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'test' => array(
                 'default' => '',
             ),
-        ), $bean->field_defs);
+            ), $bean->field_defs);
         $field = 'test';
         self::assertEquals('', $bean->$field);
-
     }
 
     /**
@@ -1501,9 +1473,8 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'key' => array(
                 'relationships' => true,
             ),
-        ), 'Tests');
+            ), 'Tests');
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
-
     }
 
     /**
@@ -1518,7 +1489,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
 
         // test
         $GLOBALS['log']->reset();
-        SugarBean::createRelationshipMeta(null, null,null, array(), 'Contacts');
+        SugarBean::createRelationshipMeta(null, null, null, array(), 'Contacts');
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
@@ -1545,7 +1516,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $GLOBALS['log']->reset();
         SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
-        
     }
 
     /**
@@ -1556,7 +1526,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
     {
         $request = $_REQUEST;
         self::assertFalse(isset($_SESSION));
-        
+
         // test
         $GLOBALS['log']->reset();
         $results = SugarBean::get_union_related_list(null);
@@ -1586,7 +1556,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => '',
-        ), $results);
+            ), $results);
 
 
         // test
@@ -1602,7 +1572,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => '',
-        ), $results);
+            ), $results);
 
 
         // test
@@ -1626,7 +1596,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'previous_offset' => -10,
             'current_offset' => 0,
             'query' => '',
-        ), $results);
+            ), $results);
 
         $_REQUEST = $request;
         unset($_SESSION);
@@ -1640,9 +1610,8 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
 
         // test
         $bean = new SugarBeanMock();
-        $panel =
-            new aSubPanel('Test', array(
-                'get_subpanel_data' => 1,
+        $panel = new aSubPanel('Test', array(
+            'get_subpanel_data' => 1,
             ), $bean);
         $subpanel_list = array(
             $panel
@@ -1676,7 +1645,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                     'collection_list' => null,
                 ),
             ),
-        ), $results);
+            ), $results);
         self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
 
@@ -1711,21 +1680,21 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
     {
         self::markTestIncomplete('environment dependency');
 
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('tracker');
 
-	// test
+        // test
         global $sugar_config;
-        
+
         $query = "SELECT * FROM aod_index";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
-        while($row = $resource->fetch_assoc()) {
+        while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
-        } 
+        }
         $tableAodIndex = $rows;
 
         // test
@@ -1739,8 +1708,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $tmp = $sugar_config['list_max_entries_per_subpanel'];
         $sugar_config['list_max_entries_per_subpanel'] = 0;
-        $results = $bean->process_union_list_query($bean, /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', null, 0, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, 0, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
         self::assertEquals(array(), $results['list']);
@@ -1768,8 +1736,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $subpanelDefinition->_instance_properties['type'] = 'collection';
-        $results = $bean->process_union_list_query($bean, /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
         self::assertEquals(array(), $results['parent_data']);
@@ -1795,8 +1762,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $subpanelDefinition->_instance_properties['type'] = 'collection';
-        $results = $bean->process_union_list_query($bean, /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
@@ -1821,8 +1787,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $subpanelDefinition->_instance_properties['type'] = 'collection';
-        $results = $bean->process_union_list_query($bean, /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
@@ -1846,8 +1811,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
         $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
-        $results = $bean->process_union_list_query($bean, /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
@@ -1872,8 +1836,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $subpanelDefinition->template_instance = $bean;
-        $results = $bean->process_union_list_query($bean, /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
@@ -1897,8 +1860,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
         $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
-        $results = $bean->process_union_list_query(null, /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
@@ -1919,8 +1881,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $bean->id = 'test_contact1';
         $bean->save();
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
-        $results = $bean->process_union_list_query(null, /** @lang sql */
-            'SELECT DISTINCT * FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT * FROM contacts', null, -1, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
@@ -1935,8 +1896,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $bean = new Contact();
         $bean->id = 'test_contact1';
         $bean->save();
-        $results = $bean->process_union_list_query(null, /** @lang sql */
-            'SELECT DISTINCT * FROM contacts', null);
+        $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT * FROM contacts', null);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
@@ -1982,8 +1942,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $GLOBALS['log']->reset();
         $bean = new Contact();
         $bean->retrieve('test_contact1');
-        $results = $bean->process_union_list_query(null, /** @lang sql */
-            'SELECT DISTINCT * FROM contacts', 'end');
+        $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT * FROM contacts', 'end');
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(9.0, $results['next_offset']);
@@ -2003,8 +1962,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
         $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
-        $results = $bean->process_union_list_query(null, /** @lang sql */
-            'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
+        $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
@@ -2021,25 +1979,23 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         // cleanup
         $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
         $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'test_contact%'");
-        
+
         $this->db->query("DELETE FROM aod_index");
-        foreach($tableAodIndex as $row) {
+        foreach ($tableAodIndex as $row) {
             $query = "INSERT aod_index INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
-            foreach($row as $value) {
+            foreach ($row as $value) {
                 $quoteds[] = "'$value'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
             DBManagerFactory::getInstance()->query($query);
         }
-        
+
         // clean up
-        
+
         $state->popTable('tracker');
         $state->popTable('aod_index');
-
     }
-
 
     /**
      * @see SugarBean::_get_num_rows_in_query()
@@ -2166,11 +2122,9 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                 'parent_name_owner' => 'eee',
                 'parent_name_mod' => 'Contacts',
             ),
-        ), $results);
+            ), $results);
         $this->db->query(/** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_parent_contact_1'");
-
-
     }
 
     /**
@@ -2178,7 +2132,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
      */
     public function testGetAuditEnabledFieldDefinitions()
     {
-
         $GLOBALS['log']->reset();
 
         // test
@@ -2190,7 +2143,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $bean = new Contact();
         $results = $bean->getAuditEnabledFieldDefinitions();
         self::assertEquals(array(
-            'assigned_user_id' => Array(
+            'assigned_user_id' => array(
                 'name' => 'assigned_user_id',
                 'rname' => 'user_name',
                 'id_name' => 'assigned_user_id',
@@ -2206,7 +2159,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                 'comment' => 'User ID assigned to record',
                 'duplicate_merge' => 'disabled',
             ),
-            'do_not_call' => Array(
+            'do_not_call' => array(
                 'name' => 'do_not_call',
                 'vname' => 'LBL_DO_NOT_CALL',
                 'type' => 'bool',
@@ -2214,7 +2167,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                 'audited' => true,
                 'comment' => 'An indicator of whether contact can be called',
             ),
-            'phone_work' => Array(
+            'phone_work' => array(
                 'name' => 'phone_work',
                 'vname' => 'LBL_OFFICE_PHONE',
                 'type' => 'phone',
@@ -2222,7 +2175,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                 'len' => 100,
                 'audited' => true,
                 'unified_search' => true,
-                'full_text_search' => Array(
+                'full_text_search' => array(
                     'boost' => 1
                 ),
                 'comment' => 'Work phone number of the contact',
@@ -2268,8 +2221,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                 'audited' => true,
                 'importable' => true,
             ),
-        ), $results);
-
+            ), $results);
     }
 
     /**
@@ -2343,7 +2295,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertTrue($result);
         self::assertEquals('test_contact_1', $bean->id);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
-
     }
 
     /**
@@ -2358,7 +2309,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $result = $bean->get_custom_table_name();
         self::assertEquals('contacts_cstm', $result);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
-
     }
 
     /**
@@ -2385,7 +2335,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $result = $bean->getTableName();
         self::assertEquals('contacts', $result);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
-
     }
 
     /**
@@ -2425,7 +2374,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $result = $bean->getObjectName();
         self::assertEquals('contacts', $result);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
-
     }
 
     /**
@@ -2503,9 +2451,8 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                     0 => 'assigned_user_id',
                 ),
             ),
-        ), $results);
+            ), $results);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
-
     }
 
     /**
@@ -2526,7 +2473,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             'reportable' => true,
             'comment' => 'Unique identifier',
             'inline_edit' => false,
-        ), $results);
+            ), $results);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
@@ -2553,9 +2500,8 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                 1 => 'last_name',
             ),
             'importable' => 'false',
-        ), $results);
+            ), $results);
         self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
-
     }
 
     /**
@@ -2605,9 +2551,8 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
                 1 => 'last_name',
             ),
             'importable' => 'false',
-        ), $results);
+            ), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-
     }
 
     /**
@@ -2647,7 +2592,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $results = $bean->getFieldValue('portal_user_type');
         self::assertEquals('Single', $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-
     }
 
     /**
@@ -2689,7 +2633,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
         self::assertCount(2, $GLOBALS['log']->calls['fatal']);
-
     }
 
     /**
@@ -2718,7 +2661,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertNotTrue(isset($clone->foo));
         unset($bean->foo);
         self::assertEquals($bean, $clone);
-
     }
 
     /**
@@ -2772,9 +2714,8 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             0 => array(
                 'type' => 'link',
             ),
-        ), $results);
+            ), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-
     }
 
     /**
@@ -2790,7 +2731,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $results = $bean->getFieldDefinitions();
         self::assertEquals($bean->field_defs, $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-
     }
 
     /**
@@ -2918,7 +2858,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         /** @noinspection MissingIssetImplementationInspection */
         self::assertNotTrue(isset($bean->testKey));
         self::assertCount(3, $GLOBALS['log']->calls['fatal']);
-
     }
 
     /**
@@ -2962,7 +2901,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $results = $bean->get_linked_beans('testKey', 'Case', '', 0, 1);
         self::assertEquals(array(), $results);
         self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
-
     }
 
     /**
@@ -2979,7 +2917,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $results = $bean->get_import_required_fields();
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-
     }
 
     /**
@@ -2995,9 +2932,7 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $results = $bean->get_importable_fields();
         self::assertEquals(array(), $results);
         self::assertCount(1, $GLOBALS['log']->calls['fatal']);
-
     }
-
 
     /**
      * @see SugarBean::create_tables()
@@ -3013,7 +2948,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         ob_get_clean();
         self::assertEquals(/** @lang text */
             "Table already exists : $bean->table_name<br>", $results);
-
     }
 
     /**
@@ -3042,7 +2976,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $bean = new Contact();
         $results = $bean->is_AuditEnabled();
         self::assertEquals(true, $results);
-
     }
 
     /**
@@ -3055,7 +2988,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $bean = new Contact();
         $results = $bean->get_audit_table_name();
         self::assertEquals('contacts_audit', $results);
-
     }
 
     /**
@@ -3072,7 +3004,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->create_audit_table();
         self::assertEquals(null, $results);
-
     }
 
     /**
@@ -3088,14 +3019,14 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
      */
     public function testSave()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
 
-	// test
-        
+        // test
+
         global $current_user;
 
         // test
@@ -3122,8 +3053,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
-
-
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
@@ -3133,7 +3062,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             $results = $bean->save();
             self::assertTrue(false);
         } catch (Exception $e) {
-            
         }
         self::assertFalse(isValidId($results));
 
@@ -3160,7 +3088,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             $results = $bean->save();
             self::assertTrue(false);
         } catch (Exception $e) {
-            
         }
         self::assertFalse(isValidId($results));
 
@@ -3176,7 +3103,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(true, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
-
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
@@ -3204,8 +3130,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
-
-
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
@@ -3244,7 +3168,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
-
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
@@ -3267,7 +3190,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             $results = $bean->save();
             self::assertTrue(false);
         } catch (Exception $e) {
-            
         }
         self::assertFalse(isValidId($results));
 
@@ -3285,8 +3207,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
-
-
         // test
         $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
@@ -3309,7 +3229,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             $results = $bean->save();
             self::assertTrue(false);
         } catch (Exception $e) {
-            
         }
         self::assertFalse(isValidId($results));
 
@@ -3327,7 +3246,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertEquals($bean, $bean->custom_fields->bean);
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
-
         // test
         $GLOBALS['log']->reset();
         $this->fieldDefsStore('temp1');
@@ -3352,7 +3270,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
             $results = $bean->save();
             self::assertTrue(false);
         } catch (Exception $e) {
-            
         }
         self::assertFalse(isValidId($results));
 
@@ -3377,12 +3294,11 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1'");
         $this->db->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
         $this->db->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
-        
+
         // clean up
-        
+
         $state->popTable('aod_index');
         $state->popTable('tracker');
-
     }
 
     /**
@@ -3709,7 +3625,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         self::assertNotFalse($bean->testField1);
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertNotEquals('', $bean->testField1);
-
     }
 
     /**
@@ -3862,7 +3777,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_contact_11'";
         $this->db->query($query);
-
     }
 
     /**
@@ -4013,14 +3927,6 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
      * @see SugarBean::getOwnerWhere()
      */
     public function testGetOwnerWhere()
-    {
-        self::markTestIncomplete('need to implement');
-    }
-
-    /**
-     * @see SugarBean::create_new_list_query()
-     */
-    public function testCreateNewListQuery()
     {
         self::markTestIncomplete('need to implement');
     }
@@ -4552,5 +4458,4 @@ public function testCreateNewListQueryWithCustomVarDefHandlerOverride() {
     {
         self::markTestIncomplete('need to implement');
     }
-
 }
