@@ -461,7 +461,7 @@ class SugarWebServiceImpl
             if (is_array($value) &&  $value['name'] == 'id') {
                 $seed->retrieve($value['value']);
                 break;
-            } elseif ($name === 'id' ) {
+            } elseif ($name === 'id') {
                 $seed->retrieve($value);
             }
         }
@@ -710,7 +710,7 @@ class SugarWebServiceImpl
         $class_name = $beanList[$module_name];
         require_once($beanFiles[$class_name]);
         $seed = new $class_name();
-        if ($seed->ACLAccess('ListView', true) || $seed->ACLAccess('DetailView', true) || 	$seed->ACLAccess('EditView', true) ) {
+        if ($seed->ACLAccess('ListView', true) || $seed->ACLAccess('DetailView', true) || 	$seed->ACLAccess('EditView', true)) {
             $return = self::$helperObject->get_return_module_fields($seed, $module_name, $fields);
             $GLOBALS['log']->info('End: SugarWebServiceImpl->get_module_fields SUCCESS for ' . $module_name);
             return $return;
@@ -944,7 +944,7 @@ class SugarWebServiceImpl
             foreach ($modules_to_search as $name => $beanName) {
                 $where_clauses_array = array();
                 $unifiedSearchFields = array () ;
-                foreach ($unified_search_modules[$name]['fields'] as $field=>$def ) {
+                foreach ($unified_search_modules[$name]['fields'] as $field=>$def) {
                     $unifiedSearchFields[$name] [ $field ] = $def ;
                     $unifiedSearchFields[$name] [ $field ]['value'] = $search_string;
                 }
@@ -966,19 +966,19 @@ class SugarWebServiceImpl
                 if ($beanName != "User"
 			    && $beanName != "ProjectTask"
 			    ) {
-                    $searchForm = new SearchForm ($seed, $name ) ;
+                    $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
+                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
-                    $searchForm = new SearchForm ($seed, $name ) ;
+                    $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
+                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     $emailQuery = false;
 
                     $where = '';
-                    if (count($where_clauses) > 0 ) {
+                    if (count($where_clauses) > 0) {
                         $where = '('. implode(' ) OR ( ', $where_clauses) . ')';
                     }
 

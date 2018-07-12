@@ -186,7 +186,7 @@ class ViewModulefield extends SugarView
             }
             
             require_once ('modules/DynamicFields/FieldCases.php') ;
-            $tf = get_widget ( empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
+            $tf = get_widget (empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
             $tf->module = $module;
             $tf->populateFromRow($vardef);
             $vardef = array_merge($vardef, $tf->get_field_def());
@@ -212,7 +212,7 @@ class ViewModulefield extends SugarView
                     }
                 }
             }
-            $fv->ss->assign( 'allowAutoInc', $allowAutoInc);   
+            $fv->ss->assign('allowAutoInc', $allowAutoInc);   
 
             $GLOBALS['log']->warn('view.modulefield: hidelevel '.$fv->ss->get_template_vars('hideLevel')." ".print_r($vardef,true));
             if (!empty($vardef['vname'])) {
@@ -256,7 +256,7 @@ class ViewModulefield extends SugarView
             }
 
             require_once ('modules/DynamicFields/FieldCases.php') ;
-            $tf = get_widget ( empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
+            $tf = get_widget (empty($vardef [ 'type' ]) ?  "" : $vardef [ 'type' ]) ;
             $tf->module = $module;
             $tf->populateFromRow($vardef);
             $vardef = array_merge($vardef, $tf->get_field_def());
@@ -325,8 +325,8 @@ class ViewModulefield extends SugarView
 
         $triggers = array () ;
         $existing_field_names = array () ;
-        foreach ( $module->mbvardefs->vardefs['fields'] as $field ) {
-            if ($field [ 'type' ] == 'enum' || $field [ 'type'] == 'multienum' ) {
+        foreach ($module->mbvardefs->vardefs['fields'] as $field) {
+            if ($field [ 'type' ] == 'enum' || $field [ 'type'] == 'multienum') {
                 $triggers [] = $field [ 'name' ] ;
             }
         	
@@ -369,7 +369,7 @@ class ViewModulefield extends SugarView
         $fv->ss->assign('is_update', $is_update);
 
         $body = $this->fetchTemplate($fv, 'modules/ModuleBuilder/tpls/MBModule/field.tpl');
-        $ac->addSection('east', translate('LBL_SECTION_FIELDEDITOR','ModuleBuilder'), $body );
+        $ac->addSection('east', translate('LBL_SECTION_FIELDEDITOR','ModuleBuilder'), $body);
         return $ac;
     }
 

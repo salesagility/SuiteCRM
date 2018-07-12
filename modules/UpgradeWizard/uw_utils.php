@@ -957,7 +957,7 @@ function getValidPatchName($returnFull = true)
         /* If a patch is in the /patch dir AND has no record in the upgrade_history table we assume that it's the one we want.
          * Edge-case: manual upgrade with a FTP of a patch; UH table has no entry for it.  Assume nothing. :( */
         if (0 == sizeof($md5_matches)) {
-            $target_manifest = remove_file_extension( $upgrade_content ) . '-manifest.php';
+            $target_manifest = remove_file_extension($upgrade_content) . '-manifest.php';
             require_once($target_manifest);
 
             if (empty($manifest['version'])) {
@@ -977,14 +977,14 @@ function getValidPatchName($returnFull = true)
             $icon = '';
             $description = empty($manifest['description']) ? 'None' : $manifest['description'];
             $uninstallable = empty($manifest['is_uninstallable']) ? 'No' : 'Yes';
-            $type = getUITextForType( $manifest['type'] );
+            $type = getUITextForType($manifest['type']);
             $manifest_type = $manifest['type'];
 
             if (empty($manifest['icon'])) {
-                $icon = getImageForType( $manifest['type'] );
+                $icon = getImageForType($manifest['type']);
             } else {
-                $path_parts = pathinfo( $manifest['icon'] );
-                $icon = "<!--not_in_theme!--><img src=\"" . remove_file_extension( $upgrade_content ) . "-icon." . $path_parts['extension'] . "\">";
+                $path_parts = pathinfo($manifest['icon']);
+                $icon = "<!--not_in_theme!--><img src=\"" . remove_file_extension($upgrade_content) . "-icon." . $path_parts['extension'] . "\">";
             }
         }
     }
@@ -1189,14 +1189,14 @@ function checkSystemCompliance()
     $memory_limit   = "-1";//ini_get('memory_limit');
     $sugarMinMem = constant('SUGARCRM_MIN_MEM');
     // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit
-	if ( $memory_limit == "" ) {          // memory_limit disabled at compile time, no memory limit
+	if ($memory_limit == "") {          // memory_limit disabled at compile time, no memory limit
 		$ret['memory_msg'] = "<b><span class=\"go\">{$installer_mod_strings['LBL_CHECKSYS_MEM_OK']}</span></b>";
-	} elseif ( $memory_limit == "-1" ) {   // memory_limit enabled, but set to unlimited
+	} elseif ($memory_limit == "-1") {   // memory_limit enabled, but set to unlimited
 	    $ret['memory_msg'] = "<b><span class=\"go\">{$installer_mod_strings['LBL_CHECKSYS_MEM_UNLIMITED']}</span></b>";
 	} else {
 	    rtrim($memory_limit, 'M');
 	    $memory_limit_int = (int) $memory_limit;
-	    if ( $memory_limit_int < constant('SUGARCRM_MIN_MEM') ) {
+	    if ($memory_limit_int < constant('SUGARCRM_MIN_MEM')) {
 	        $ret['memory_msg'] = "<b><span class=\"stop\">{$installer_mod_strings['ERR_CHECKSYS_MEM_LIMIT_1']}" . constant('SUGARCRM_MIN_MEM') . "{$installer_mod_strings['ERR_CHECKSYS_MEM_LIMIT_2']}</span></b>";
 	        $ret['error_found'] = true;
 	    } else {
@@ -1338,7 +1338,7 @@ function updateQuickCreateDefs()
         }
     }
 
-    foreach ( $studio_modules as $modname ) { //for each studio enabled module
+    foreach ($studio_modules as $modname) { //for each studio enabled module
         //Check !exists modules/$modname/metadata/quickcreatedefs.php &&
         //exists custom/$modname/editviewdefs.php (module was customized) &&
         //!exists custom/$modname/quickcreateviewdefs.php
@@ -1346,12 +1346,12 @@ function updateQuickCreateDefs()
         $editviewdefs = "custom/working/modules/".$modname."/metadata/editviewdefs.php";
         $quickcreatedefs = "custom/working/modules/".$modname."/metadata/quickcreatedefs.php";
 
-        if ( !file_exists("modules/".$modname."/metadata/quickcreatedefs.php") &&
+        if (!file_exists("modules/".$modname."/metadata/quickcreatedefs.php") &&
 			file_exists($editviewdefs) &&
-			!file_exists($quickcreatedefs) ) {
+			!file_exists($quickcreatedefs)) {
             //clone editviewdef and save it in custom/working/modules/metadata
             $GLOBALS['log']->debug("Copying editviewdefs.php as quickcreatedefs.php for the $modname module in custom/working/modules/$modname/metadata!");
-            if (copy( $editviewdefs, $quickcreatedefs)) {
+            if (copy($editviewdefs, $quickcreatedefs)) {
                 if (file_exists($quickcreatedefs) && is_readable($quickcreatedefs)) {
                     $file = file($quickcreatedefs);
                     //replace 'EditView' with 'QuickCreate'
@@ -1598,10 +1598,10 @@ eoq;
             $uwMain = $upgrade_directories_not_found;
             return '';
         }
-        $install_file			= "$base_upgrade_dir/patch/".basename(urldecode( $_SESSION['install_file'] ));
+        $install_file			= "$base_upgrade_dir/patch/".basename(urldecode($_SESSION['install_file']));
         $show_files				= true;
         if (empty($unzip_dir)) {
-            $unzip_dir				= mk_temp_dir( $base_tmp_upgrade_dir );
+            $unzip_dir				= mk_temp_dir($base_tmp_upgrade_dir);
         }
         $zip_from_dir			= ".";
         $zip_to_dir				= ".";
@@ -1616,25 +1616,25 @@ eoq;
         if (file_exists($unzip_dir ."/scripts") && file_exists($unzip_dir."/manifest.php")) {
             //already unzipped
         } else {
-            unzip( $install_file, $unzip_dir );
+            unzip($install_file, $unzip_dir);
         }
 
         // assumption -- already validated manifest.php at time of upload
-        require_once( "$unzip_dir/manifest.php" );
+        require_once("$unzip_dir/manifest.php");
 
-        if ( isset( $manifest['copy_files']['from_dir'] ) && $manifest['copy_files']['from_dir'] != "" ) {
+        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
             $zip_from_dir   = $manifest['copy_files']['from_dir'];
         }
-        if ( isset( $manifest['copy_files']['to_dir'] ) && $manifest['copy_files']['to_dir'] != "" ) {
+        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != "") {
             $zip_to_dir     = $manifest['copy_files']['to_dir'];
         }
-        if ( isset( $manifest['copy_files']['force_copy'] ) && $manifest['copy_files']['force_copy'] != "" ) {
+        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != "") {
             $zip_force_copy     = $manifest['copy_files']['force_copy'];
         }
-        if ( isset( $manifest['version'] ) ) {
+        if (isset($manifest['version'])) {
             $version    = $manifest['version'];
         }
-        if ( !is_writable( "config.php" ) ) {
+        if (!is_writable("config.php")) {
             return $mod_strings['ERR_UW_CONFIG'];
         }
 
@@ -1748,10 +1748,10 @@ eoq;
             $uwMain = $upgrade_directories_not_found;
             return '';
         }
-        $install_file			= "$base_upgrade_dir/patch/".basename(urldecode( $_SESSION['install_file'] ));
+        $install_file			= "$base_upgrade_dir/patch/".basename(urldecode($_SESSION['install_file']));
         $show_files				= true;
         if (empty($unzip_dir)) {
-            $unzip_dir				= mk_temp_dir( $base_tmp_upgrade_dir );
+            $unzip_dir				= mk_temp_dir($base_tmp_upgrade_dir);
         }
         $zip_from_dir			= ".";
         $zip_to_dir				= ".";
@@ -1766,25 +1766,25 @@ eoq;
         if (file_exists($unzip_dir ."/scripts") && file_exists($unzip_dir."/manifest.php")) {
             //already unzipped
         } else {
-            unzip( $install_file, $unzip_dir );
+            unzip($install_file, $unzip_dir);
         }
 
         // assumption -- already validated manifest.php at time of upload
-        require_once( "$unzip_dir/manifest.php" );
+        require_once("$unzip_dir/manifest.php");
 
-        if ( isset( $manifest['copy_files']['from_dir'] ) && $manifest['copy_files']['from_dir'] != "" ) {
+        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
             $zip_from_dir   = $manifest['copy_files']['from_dir'];
         }
-        if ( isset( $manifest['copy_files']['to_dir'] ) && $manifest['copy_files']['to_dir'] != "" ) {
+        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != "") {
             $zip_to_dir     = $manifest['copy_files']['to_dir'];
         }
-        if ( isset( $manifest['copy_files']['force_copy'] ) && $manifest['copy_files']['force_copy'] != "" ) {
+        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != "") {
             $zip_force_copy     = $manifest['copy_files']['force_copy'];
         }
-        if ( isset( $manifest['version'] ) ) {
+        if (isset($manifest['version'])) {
             $version    = $manifest['version'];
         }
-        if ( !is_writable( "config.php" ) ) {
+        if (!is_writable("config.php")) {
             return $mod_strings['ERR_UW_CONFIG'];
         }
 
@@ -2014,7 +2014,7 @@ function prepSystemForUpgrade()
     }
 }
 
-if ( !function_exists('extractFile') ) {
+if (!function_exists('extractFile')) {
     function extractFile($zip_file, $file_in_zip)
     {
         global $base_tmp_upgrade_dir;
@@ -2032,7 +2032,7 @@ if ( !function_exists('extractFile') ) {
     }
 }
 
-if ( !function_exists('extractManifest') ) {
+if (!function_exists('extractManifest')) {
     function extractManifest($zip_file)
     {
         logThis('extracting manifest.');
@@ -2040,7 +2040,7 @@ if ( !function_exists('extractManifest') ) {
     }
 }
 
-if ( !function_exists('getInstallType') ) {
+if (!function_exists('getInstallType')) {
     function getInstallType($type_string)
     {
         // detect file type
@@ -2084,7 +2084,7 @@ function getImageForType($type)
     return($icon);
 }
 
-if ( !function_exists('getLanguagePackName') ) {
+if (!function_exists('getLanguagePackName')) {
     function getLanguagePackName($the_file)
     {
         require_once("$the_file");
@@ -2114,7 +2114,7 @@ function getUITextForType($type)
     }
 }
 
-if ( !function_exists('validate_manifest') ) {
+if (!function_exists('validate_manifest')) {
     /**
      * Verifies a manifest from a patch or module to be compatible with the current Sugar version and flavor
      * @param array manifest Standard manifest array
@@ -2686,7 +2686,7 @@ function deletePackageOnCancel()
         $error = $mod_strings['ERR_UW_NO_FILE_UPLOADED'];
     }
     // delete file in upgrades/patch
-    $delete_me = "$base_upgrade_dir/patch/".basename(urldecode( $_REQUEST['install_file'] ));
+    $delete_me = "$base_upgrade_dir/patch/".basename(urldecode($_REQUEST['install_file']));
     if (@unlink($delete_me)) {
         //logThis('unlinking: '.$delete_me);
         $out = basename($delete_me).$mod_strings['LBL_UW_FILE_DELETED'];
@@ -2868,7 +2868,7 @@ function set_upgrade_vars()
             }
         }
         ksort($upgrade_config);
-        if (is_writable($upgrade_progress_file) && write_array_to_file( "upgrade_config", $upgrade_config,
+        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
 				$upgrade_progress_file)) {
             //writing to the file
         }
@@ -2960,7 +2960,7 @@ function set_upgrade_progress($currStep,$currState,$currStepSub='',$currStepSubS
             $upgrade_config[sizeof($upgrade_config)+1][$currStep]= $currState;
         }
 
-        if (is_writable($upgrade_progress_file) && write_array_to_file( "upgrade_config", $upgrade_config,
+        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
 				$upgrade_progress_file)) {
             //writing to the file
         }
@@ -3107,7 +3107,7 @@ function post_install_progress($progArray='',$action='')
                 $upgrade_config[sizeof($upgrade_config)]['commit']['post_install'][$key]=$val;
             }
         }
-        if (is_writable($upgrade_progress_file) && write_array_to_file( "upgrade_config", $upgrade_config,
+        if (is_writable($upgrade_progress_file) && write_array_to_file("upgrade_config", $upgrade_config,
 				$upgrade_progress_file)) {
             //writing to the file
         }
@@ -3436,9 +3436,9 @@ function upgradeTeamColumn($bean, $column_name)
                 $contents .= "\n\$GLOBALS['dictionary']['". $object . "']['indices']['". $key . "']=" . var_export_helper($val) . ";";
             }
         }
-        if ( $fh = @sugar_fopen( $file, 'wt' ) ) {
-            fputs( $fh, $contents);
-            fclose( $fh );
+        if ($fh = @sugar_fopen($file, 'wt')) {
+            fputs($fh, $contents);
+            fclose($fh);
         }
 
 
@@ -3579,7 +3579,7 @@ function addNewSystemTabsFromUpgrade($from_dir)
             $tabs = $newTB->get_system_tabs();
 
             //add the new tabs to the array
-            foreach ($newModuleList as $nm ) {
+            foreach ($newModuleList as $nm) {
                 $tabs[$nm] = $nm;
             }
 
@@ -3671,7 +3671,7 @@ function fix_dropdown_list()
             require($file);
             $touched = false;
             $contents = file_get_contents($file);
-            if ( !isset($GLOBALS['app_list_strings']) ) {
+            if (!isset($GLOBALS['app_list_strings'])) {
                 $GLOBALS['app_list_strings'] = $app_list_strings;
             } else {
                 $GLOBALS['app_list_strings'] = array_merge($app_list_strings, $GLOBALS['app_list_strings']);
@@ -3923,9 +3923,9 @@ function clearHelpFiles()
     $allHelpFiles = array();
     getFiles($allHelpFiles, $modulePath, "/en_us.help.*/");
 
-    foreach ( $allHelpFiles as $the_file ) {
-        if ( is_file( $the_file ) ) {
-            unlink( $the_file );
+    foreach ($allHelpFiles as $the_file) {
+        if (is_file($the_file)) {
+            unlink($the_file);
             logThis("Deleted file: $the_file");
         }
     }
@@ -4192,7 +4192,7 @@ function upgradeEnableInsideViewConnector($path='')
 
     // Load up the existing mapping and hand it to the InsideView connector to have it setup the correct logic hooks
     $mapFile = 'modules/Connectors/connectors/sources/ext/rest/insideview/mapping.php';
-    if ( file_exists('custom/'.$mapFile) ) {
+    if (file_exists('custom/'.$mapFile)) {
         logThis('Found CUSTOM mappings', $path);
         require('custom/'.$mapFile);
     } else {
@@ -4212,7 +4212,7 @@ function upgradeEnableInsideViewConnector($path='')
     // Now time to set the various modules to active, because this part ignores the default config
     require(CONNECTOR_DISPLAY_CONFIG_FILE);
     // $modules_sources come from that config file
-    foreach ( $source->allowedModuleList as $module ) {
+    foreach ($source->allowedModuleList as $module) {
         $modules_sources[$module]['ext_rest_insideview'] = 'ext_rest_insideview';
     }
     if (!write_array_to_file('modules_sources', $modules_sources, CONNECTOR_DISPLAY_CONFIG_FILE)) {
@@ -4393,7 +4393,7 @@ function upgradeSugarCache($file)
         if (!is_dir(dirname($destFile))) {
             mkdir_recursive(dirname($destFile)); // make sure the directory exists
         }
-        if ( stristr($file,'uw_main.tpl') ) {
+        if (stristr($file,'uw_main.tpl')) {
             logThis('Skipping "'.$file.'" - file copy will during commit step.');
         } else {
             logThis('updating UpgradeWizard code: '.$destFile);
@@ -4492,18 +4492,18 @@ if (!function_exists("getValidDBName")) {
     function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
     {
         // first strip any invalid characters - all but alphanumerics and -
-        $name = preg_replace ( '/[^\w-]+/i', '', $name ) ;
-        $len = strlen ( $name ) ;
+        $name = preg_replace ('/[^\w-]+/i', '', $name) ;
+        $len = strlen ($name) ;
         $result = $name;
         if ($ensureUnique) {
             $md5str = md5($name);
-            $tail = substr ( $name, -11) ;
-            $temp = substr($md5str , strlen($md5str)-4 );
-            $result = substr ( $name, 0, 10) . $temp . $tail ;
+            $tail = substr ($name, -11) ;
+            $temp = substr($md5str , strlen($md5str)-4);
+            $result = substr ($name, 0, 10) . $temp . $tail ;
         } elseif ($len > ($maxLen - 5)) {
-            $result = substr ( $name, 0, 11) . substr ( $name, 11 - $maxLen + 5);
+            $result = substr ($name, 0, 11) . substr ($name, 11 - $maxLen + 5);
         }
-        return strtolower ( $result ) ;
+        return strtolower ($result) ;
     }
 }
 
@@ -4534,7 +4534,7 @@ function getUWDirs()
 function whetherNeedToSkipDir($dir, $skipDirs)
 {
     foreach ($skipDirs as $skipMe) {
-        if (strpos( clean_path($dir), $skipMe ) !== false) {
+        if (strpos(clean_path($dir), $skipMe) !== false) {
             return true;
         }
     }

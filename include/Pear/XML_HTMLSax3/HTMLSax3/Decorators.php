@@ -186,7 +186,7 @@ class XML_HTMLSax3_Linefeed
     function breakData(&$parser, $data)
     {
         $data = explode("\n",$data);
-        foreach ( $data as $chunk ) {
+        foreach ($data as $chunk) {
             $this->orig_obj->{$this->orig_method}($parser, $chunk);
         }
     }
@@ -231,7 +231,7 @@ class XML_HTMLSax3_Tab
     function breakData(&$parser, $data)
     {
         $data = explode("\t",$data);
-        foreach ( $data as $chunk ) {
+        foreach ($data as $chunk) {
             $this->orig_obj->{$this->orig_method}($this, $chunk);
         }
     }
@@ -277,7 +277,7 @@ class XML_HTMLSax3_Entities_Parsed
     function breakData(&$parser, $data)
     {
         $data = preg_split('/(&.+?;)/',$data,-1,PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-        foreach ( $data as $chunk ) {
+        foreach ($data as $chunk) {
             $chunk = html_entity_decode($chunk,ENT_NOQUOTES);
             $this->orig_obj->{$this->orig_method}($this, $chunk);
         }
@@ -286,7 +286,7 @@ class XML_HTMLSax3_Entities_Parsed
 /**
 * Compatibility with older PHP versions
 */
-if (version_compare(phpversion(), '4.3', '<') && !function_exists('html_entity_decode') ) {
+if (version_compare(phpversion(), '4.3', '<') && !function_exists('html_entity_decode')) {
     function html_entity_decode($str, $style=ENT_NOQUOTES)
     {
         return strtr($str,
@@ -333,7 +333,7 @@ class XML_HTMLSax3_Entities_Unparsed
     function breakData(&$parser, $data)
     {
         $data = preg_split('/(&.+?;)/',$data,-1,PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-        foreach ( $data as $chunk ) {
+        foreach ($data as $chunk) {
             $this->orig_obj->{$this->orig_method}($this, $chunk);
         }
     }
@@ -379,7 +379,7 @@ class XML_HTMLSax3_Escape_Stripper
     function strip(&$parser, $data)
     {
         // Check for HTML comments first
-        if ( substr($data,0,2) == '--' ) {
+        if (substr($data,0,2) == '--') {
             $patterns = array(
                 '/^\-\-/',          // Opening comment: --
                 '/\-\-$/',          // Closing comment: --
@@ -387,7 +387,7 @@ class XML_HTMLSax3_Escape_Stripper
             $data = preg_replace($patterns,'',$data);
 
         // Check for XML CDATA sections (note: don't do both!)
-        } elseif ( substr($data,0,1) == '[' ) {
+        } elseif (substr($data,0,1) == '[') {
             $patterns = array(
                 '/^\[.*CDATA.*\[/s', // Opening CDATA
                 '/\].*\]$/s',       // Closing CDATA

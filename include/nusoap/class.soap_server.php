@@ -318,7 +318,7 @@ class nusoap_server extends nusoap_base
                 $this->serialize_return();
             }
             $this->send_response();
-        } elseif (preg_match('/wsdl/', $qs) ) {
+        } elseif (preg_match('/wsdl/', $qs)) {
             $this->debug("In service, this is a request for WSDL");
             if ($this->externalWSDLURL) {
                 if (strpos($this->externalWSDLURL, "http://") !== false) { // assume URL

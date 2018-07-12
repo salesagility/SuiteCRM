@@ -364,7 +364,7 @@ class Reminder extends Basic
                 }
 
                 if ($relatedEventStart
-                    && ($relatedEventStart <= $dateTimeNowStamp || $relatedEventStart >= $dateTimeMaxStamp )) {
+                    && ($relatedEventStart <= $dateTimeNowStamp || $relatedEventStart >= $dateTimeMaxStamp)) {
                     continue;
                 }
 

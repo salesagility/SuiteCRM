@@ -312,13 +312,13 @@ class LanguageManager
             unlink($file);
         }
 
-        if ( empty($GLOBALS['sugar_config']['js_lang_version']) ) {
+        if (empty($GLOBALS['sugar_config']['js_lang_version'])) {
             $GLOBALS['sugar_config']['js_lang_version'] = 1;
         } else {
             $GLOBALS['sugar_config']['js_lang_version'] += 1;
         }
 
-        write_array_to_file( "sugar_config", $GLOBALS['sugar_config'], "config.php");
+        write_array_to_file("sugar_config", $GLOBALS['sugar_config'], "config.php");
     }
 }
 

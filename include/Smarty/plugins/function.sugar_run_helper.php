@@ -56,13 +56,13 @@ function smarty_function_sugar_run_helper($params, &$smarty)
         $params['bean'] = $GLOBALS['focus'];
     }
 
-    if ( $error ) {
+    if ($error) {
         return;
     }
 
     $funcName = $params['func'];
 
-    if ( !empty($params['include']) ) {
+    if (!empty($params['include'])) {
         require_once($params['include']);
     }
 

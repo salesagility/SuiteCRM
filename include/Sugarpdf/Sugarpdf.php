@@ -688,7 +688,7 @@ class Sugarpdf extends TCPDF
                                 continue;
                             } else {
                                 $first = true;
-                                $lines += ceil($this->GetStringWidth( substr($wordBlock, 0, (strlen($wordBlock) - strlen(" ".$words[$i]))) ) / $wmax);
+                                $lines += ceil($this->GetStringWidth(substr($wordBlock, 0, (strlen($wordBlock) - strlen(" ".$words[$i])))) / $wmax);
                                 $i--;
                                 $lastNum = 0;
                                 $run = false;
@@ -716,7 +716,7 @@ class Sugarpdf extends TCPDF
      */
     public function Output($name='doc.pdf', $dest='I')
     {
-        if ( $dest == 'I' || $dest == 'D') {
+        if ($dest == 'I' || $dest == 'D') {
             ini_set('zlib.output_compression', 'Off');
         }
 

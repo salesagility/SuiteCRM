@@ -211,9 +211,9 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('multiSelectData', '<textarea style="display: none" name="uid"></textarea>');
         }
         // include button for Adding to Target List if in one of four applicable modules
-        if ( isset ( $_REQUEST['module']) && in_array ( $_REQUEST['module'] , array ( 'Contacts','Prospects','Leads','Accounts' ))
+        if (isset ($_REQUEST['module']) && in_array ($_REQUEST['module'] , array ( 'Contacts','Prospects','Leads','Accounts' ))
             && ACLController::checkAccess('ProspectLists','edit',true)) {
-            $this->ss->assign( 'targetLink', $this->buildTargetList() ) ;
+            $this->ss->assign('targetLink', $this->buildTargetList()) ;
         }
 
         if (!isset($data['pageData']['ordering'])) {
@@ -303,8 +303,8 @@ class ListViewSmarty extends ListViewDisplay
         $displayEmptyDataMessages = TRUE;
         //TODO: Cleanup, better logic for which modules are exempt from the new messaging.
         $modulesExemptFromEmptyDataMessages = array('WorkFlow','ContractTypes', 'OAuthKeys', 'TimePeriods');
-        if ( (isset($GLOBALS['moduleTabMap'][$currentModule]) && $GLOBALS['moduleTabMap'][$currentModule] == 'Administration')
-            || isset($GLOBALS['adminOnlyList'][$currentModule]) || in_array($currentModule, $modulesExemptFromEmptyDataMessages) ) {
+        if ((isset($GLOBALS['moduleTabMap'][$currentModule]) && $GLOBALS['moduleTabMap'][$currentModule] == 'Administration')
+            || isset($GLOBALS['adminOnlyList'][$currentModule]) || in_array($currentModule, $modulesExemptFromEmptyDataMessages)) {
             $displayEmptyDataMessages = FALSE;
         }
         $this->ss->assign('displayEmptyDataMesssages', $displayEmptyDataMessages);

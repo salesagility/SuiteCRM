@@ -58,7 +58,7 @@ installStatus($mod_strings['LBL_START'], null, true, '');
 // This file will load the configuration settings from session data,
 // write to the config file, and execute any necessary database steps.
 $GLOBALS['installing'] = true;
-if ( !isset( $install_script ) || !$install_script ) {
+if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 ini_set("output_buffering","0");
@@ -201,13 +201,13 @@ if ($setup_db_create_sugarsales_user) {
     installerHook('post_handleDbCreateSugarUser');
 }
 
-foreach ( $beanFiles as $bean => $file ) {
-    require_once( $file );
+foreach ($beanFiles as $bean => $file) {
+    require_once($file);
 }
 echo "<br>";
 // load up the config_override.php file.
 // This is used to provide default user settings
-if ( is_file("config_override.php") ) {
+if (is_file("config_override.php")) {
     require_once("config_override.php");
 }
 
@@ -236,7 +236,7 @@ installStatus($mod_strings['STAT_CREATE_DB']);
 installerHook('pre_createAllModuleTables');
 
 
-foreach ( $beanFiles as $bean => $file ) {
+foreach ($beanFiles as $bean => $file) {
     $doNotInit = array('Scheduler', 'SchedulersJob', 'ProjectTask','jjwg_Maps','jjwg_Address_Cache','jjwg_Areas','jjwg_Markers');
 
     if (in_array($bean, $doNotInit)) {
@@ -245,7 +245,7 @@ foreach ( $beanFiles as $bean => $file ) {
         $focus = new $bean();
     }
 
-    if ( $bean == 'Configurator' ) {
+    if ($bean == 'Configurator') {
         continue;
     }
 
@@ -278,7 +278,7 @@ foreach ( $beanFiles as $bean => $file ) {
 
         if (create_table_if_not_exist($focus)) {
             installLog("creating table ".$focus->table_name);
-            if ( $bean == "User" ) {
+            if ($bean == "User") {
                 $new_tables = 1;
             }
             if ($bean == "Administration") {
@@ -304,16 +304,16 @@ echo "<br>";
 ////    START RELATIONSHIP CREATION
 
     ksort($rel_dictionary);
-    foreach ( $rel_dictionary as $rel_name => $rel_data ) {
+    foreach ($rel_dictionary as $rel_name => $rel_data) {
         $table = $rel_data['table'];
 
-        if ( $setup_db_drop_tables ) {
-            if ( $db->tableExists($table) ) {
+        if ($setup_db_drop_tables) {
+            if ($db->tableExists($table)) {
                 $db->dropTableName($table);
             }
         }
 
-        if ( !$db->tableExists($table) ) {
+        if (!$db->tableExists($table)) {
             $db->createTableParams($table, $rel_data['fields'], $rel_data['indices']);
         }
 
@@ -423,7 +423,7 @@ FP;
 FP;
     }
 
-    if ( isset($_SESSION['setup_site_sugarbeet_automatic_checks']) && $_SESSION['setup_site_sugarbeet_automatic_checks'] == true) {
+    if (isset($_SESSION['setup_site_sugarbeet_automatic_checks']) && $_SESSION['setup_site_sugarbeet_automatic_checks'] == true) {
         set_CheckUpdates_config_setting('automatic');
     } else {
         set_CheckUpdates_config_setting('manual');
@@ -569,16 +569,16 @@ post_install_modules();
 
 // populating the db with seed data
 installLog("populating the db with seed data");
-if ( $_SESSION['demoData'] != 'no' ) {
+if ($_SESSION['demoData'] != 'no') {
     installerHook('pre_installDemoData');
-    set_time_limit( 301 );
+    set_time_limit(301);
 
     echo "<br>";
     echo "<b>{$mod_strings['LBL_PERFORM_DEMO_DATA']}</b>";
     echo "<br><br>";
 
-    print( $render_table_close );
-    print( $render_table_open );
+    print($render_table_close);
+    print($render_table_open);
 
     global $current_user;
     $current_user = new User();
@@ -670,9 +670,9 @@ installLog('new Currency');
 $currency = new Currency;
 installLog('retrieve');
 $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
-if ( !empty($currency->id)
+if (!empty($currency->id)
     && $currency->symbol == $_REQUEST['default_currency_symbol']
-    && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
+    && $currency->iso4217 == $_REQUEST['default_currency_iso4217']) {
     $currency->deleted = 1;
     installLog('DBG: save currency');
     $currency->save();
@@ -714,7 +714,7 @@ $_POST['dateformat'] = $_REQUEST['default_date_format'];
 //$_POST[''] = $_REQUEST['export_delimiter'];
 
 $_POST['record'] = $current_user->id;
-$_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
+$_POST['is_admin'] = ($current_user->is_admin ? 'on' : '');
 $_POST['use_real_names'] = true;
 $_POST['reminder_checked'] = '1';
 $_POST['reminder_time'] = 1800;
@@ -746,8 +746,8 @@ if (!is_array($bottle) || !is_object($bottle)) {
 }
 
 
-if ( count( $bottle ) > 0 ) {
-    foreach ( $bottle as $bottle_message ) {
+if (count($bottle) > 0) {
+    foreach ($bottle as $bottle_message) {
         $bottleMsg .= "{$bottle_message}\n";
     }
 } else {
@@ -777,4 +777,4 @@ EOQ;
 echo $out;
 
 $loginURL = str_replace('install.php', 'index.php', "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
-installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL ) , array('function' => 'redirect', 'arguments' => $loginURL) );
+installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL) , array('function' => 'redirect', 'arguments' => $loginURL));

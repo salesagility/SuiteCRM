@@ -139,7 +139,7 @@ class SchedulersViewEdit extends ViewEdit
             $this->ss->assign('basic_interval', $exInterval[1]);
             $this->ss->assign('basic_period', 'hour');
         // Minutes
-        } elseif (strpos($exInterval[0], '*/') !== false && $exInterval[1] == '*' ) {
+        } elseif (strpos($exInterval[0], '*/') !== false && $exInterval[1] == '*') {
             // we have a "BASIC" type of min setting
             $exMins = explode('/', $exInterval[0]);
             $this->ss->assign('basic_interval', $exMins[1]);

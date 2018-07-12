@@ -679,7 +679,7 @@ class nusoap_client extends nusoap_base
         $this->appendDebug($parser->getDebug());
         // if parse errors
         if ($errstr = $parser->getError()) {
-            $this->setError( $errstr);
+            $this->setError($errstr);
             // destroy the parser object
             unset($parser);
             return false;

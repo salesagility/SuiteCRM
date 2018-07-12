@@ -225,7 +225,7 @@ class ACLAction extends SugarBean
         $db = DBManagerFactory::getInstance();
         $result = $db->query($query);
         $default_actions = array();
-        while ($row = $db->fetchByAssoc($result) ) {
+        while ($row = $db->fetchByAssoc($result)) {
             $acl = new ACLAction();
             $acl->populateFromRow($row);
             $default_actions[] = $acl;
@@ -313,7 +313,7 @@ class ACLAction extends SugarBean
         $has_user_role = false; //used for user_role_precedence
 		$has_role = false; //used to determine if default actions can be ignored. If a user has a defined role don't use the defaults
 		/* END - SECURITY GROUPS */
-        while ($row = $db->fetchByAssoc($result, FALSE) ) {
+        while ($row = $db->fetchByAssoc($result, FALSE)) {
             /* BEGIN - SECURITY GROUPS */
             if ($has_user_role == false && $row['user_role'] == 1) {
                 $has_user_role = true;
@@ -325,7 +325,7 @@ class ACLAction extends SugarBean
             //break when we get to processing the group roles
             if ($has_user_role == true && $row['user_role'] == 0
 					&& isset($sugar_config['securitysuite_user_role_precedence'])
-					&& $sugar_config['securitysuite_user_role_precedence'] == true ) {
+					&& $sugar_config['securitysuite_user_role_precedence'] == true) {
                 break;
             }
             if ($row['user_role'] == -1 && $has_role == true) {
@@ -427,7 +427,7 @@ class ACLAction extends SugarBean
         }
         */
         if ($access != 0 && ($access == ACL_ALLOW_ALL
-			|| ($is_owner && ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP) )  //if owner that's better than in group so count it...better way to clean this up?
+			|| ($is_owner && ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))  //if owner that's better than in group so count it...better way to clean this up?
 			|| ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
 		)) {
             return true;

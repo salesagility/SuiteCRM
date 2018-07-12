@@ -165,7 +165,7 @@ if (!empty($focus->body)) {
 } else {
     $xtpl->assign('ALT_CHECKED', '');
 }
-if ( $focus->published == 'on') {
+if ($focus->published == 'on') {
     $xtpl->assign("PUBLISHED","CHECKED");
 }
 

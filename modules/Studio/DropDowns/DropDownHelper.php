@@ -86,7 +86,7 @@ class DropDownHelper
                 $moduleList = array_flip($GLOBALS['moduleList']);
 
                 foreach ($dropdown as $k => $v) {
-                    if ( isset($moduleList[$k]) ) { // && !$hiddenModList[$k])
+                    if (isset($moduleList[$k])) { // && !$hiddenModList[$k])
                         $results[$k] = $v;
                     }
                 }
@@ -145,7 +145,7 @@ class DropDownHelper
             //this is for handling moduleList and such where nothing should be deleted or anything but they can be renamed
             foreach ($dropdown as $key=>$value) {
                 //only if the value has changed or does not exist do we want to add it this way
-                if (!isset($my_list_strings[$dropdown_name][$key]) || strcmp($my_list_strings[$dropdown_name][$key], $value) != 0 ) {
+                if (!isset($my_list_strings[$dropdown_name][$key]) || strcmp($my_list_strings[$dropdown_name][$key], $value) != 0) {
                     //clear out the old value
                     $pattern_match = '/\s*\$app_list_strings\s*\[\s*\''.$dropdown_name.'\'\s*\]\[\s*\''.$key.'\'\s*\]\s*=\s*[\'\"]{1}.*?[\'\"]{1};\s*/ism';
                     $contents = preg_replace($pattern_match, "\n", $contents);

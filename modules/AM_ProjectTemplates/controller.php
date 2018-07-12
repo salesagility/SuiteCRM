@@ -100,7 +100,7 @@ class AM_ProjectTemplatesController extends SugarController
 		
 
         //default business hours array
-        if ( $override_business_hours != 1 || empty($bhours)) {
+        if ($override_business_hours != 1 || empty($bhours)) {
             $bhours = array ('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
         }
         //---------------------------
@@ -168,7 +168,7 @@ class AM_ProjectTemplatesController extends SugarController
             $project_task->estimated_effort = $row['estimated_effort'];
             $project_task->utilization = $row['utilization'];
             
-            if ($copy_all == 0 && !in_array( $row['id'],$copy_tasks)) {
+            if ($copy_all == 0 && !in_array($row['id'],$copy_tasks)) {
                 $project_task->assigned_user_id = NULL;
             } else {
                 $project_task->assigned_user_id = $row['assigned_user_id'];
@@ -195,7 +195,7 @@ class AM_ProjectTemplatesController extends SugarController
             while ($duration > $d) {
                 $day = $enddate->format('l');
 
-                if ($bhours[$day] != 0 ) {
+                if ($bhours[$day] != 0) {
                     $d += 1;
                 }
                 $enddate = $enddate->modify('+1 Days');
@@ -275,7 +275,7 @@ class AM_ProjectTemplatesController extends SugarController
         
         $duration = $db->getOne($query);
 		
-        if ( $duration < 31 ) {
+        if ($duration < 31) {
             $end_date = Date('Y-m-d', strtotime("+30 days"));
         } else {
             $end_date = Date('Y-m-d', strtotime("+ " . $duration . " days"));

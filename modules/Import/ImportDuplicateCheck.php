@@ -85,14 +85,14 @@ class ImportDuplicateCheck
             $indexes = array_merge($custmIndexes,$indexes);
         }
 
-        if ( $this->_focus->getFieldDefinition('email1') ) {
+        if ($this->_focus->getFieldDefinition('email1')) {
             $indexes[] = array(
                 'name' => 'special_idx_email1',
                 'type' => 'index',
                 'fields' => array('email1')
                 );
         }
-        if ( $this->_focus->getFieldDefinition('email2') ) {
+        if ($this->_focus->getFieldDefinition('email2')) {
             $indexes[] = array(
                 'name' => 'special_idx_email2',
                 'type' => 'index',
@@ -124,7 +124,7 @@ class ImportDuplicateCheck
                         continue;
                     }
                     $fieldDef = $this->_focus->getFieldDefinition($field);
-                    if ( isset($fieldDef['vname']) && isset($super_language_pack[$fieldDef['vname']]) ) {
+                    if (isset($fieldDef['vname']) && isset($super_language_pack[$fieldDef['vname']])) {
                         $labelsArray[$fieldDef['name']] = $super_language_pack[$fieldDef['vname']];
                     } else {
                         $labelsArray[$fieldDef['name']] = $fieldDef['name'];
@@ -146,15 +146,15 @@ class ImportDuplicateCheck
     public function isADuplicateRecordByFields($fieldList)
     {
         foreach ($fieldList as $field) {
-            if ( $field == 'email1' || $field == 'email2' ) {
+            if ($field == 'email1' || $field == 'email2') {
                 $emailAddress = new SugarEmailAddress();
                 $email = $field;
-                if ( $emailAddress->getCountEmailAddressByBean($this->_focus->$email,$this->_focus,($field == 'email1')) > 0 ) {
+                if ($emailAddress->getCountEmailAddressByBean($this->_focus->$email,$this->_focus,($field == 'email1')) > 0) {
                     return true;
                 }
             } else {
                 $index_fields = array('deleted' => '0');
-                if ( is_array($field) ) {
+                if (is_array($field)) {
                     foreach ($field as $tmpField) {
                         if ($tmpField == 'deleted') {
                             continue;
@@ -167,14 +167,14 @@ class ImportDuplicateCheck
                     $index_fields[$field] = $this->_focus->$field;
                 }
 
-                if ( count($index_fields) <= 1 ) {
+                if (count($index_fields) <= 1) {
                     continue;
                 }
 
                 $newfocus = loadBean($this->_focus->module_dir);
                 $result = $newfocus->retrieve_by_string_fields($index_fields,true);
 
-                if ( !is_null($result) ) {
+                if (!is_null($result)) {
                     return true;
                 }
             }
@@ -192,11 +192,11 @@ class ImportDuplicateCheck
     public function isADuplicateRecord($indexlist)
     {
         // Bug #51264 : Importing updates to rows prevented by duplicates check
-        if ( !empty($this->_focus) && ($this->_focus instanceof SugarBean) && !empty($this->_focus->id) ) {
+        if (!empty($this->_focus) && ($this->_focus instanceof SugarBean) && !empty($this->_focus->id)) {
             $_focus = clone $this->_focus;
             $_focus->id = null;
             $_focus->retrieve($this->_focus->id);
-            if ( !empty($_focus->id) ) {
+            if (!empty($_focus->id)) {
                 return false;
             }
             unset($_focus);
@@ -230,7 +230,7 @@ class ImportDuplicateCheck
             $newfocus = loadBean($this->_focus->module_dir);
             $result = $newfocus->retrieve_by_string_fields(array('deleted' =>'0', 'first_name'=>$this->_focus->first_name, 'last_name'=>$this->_focus->last_name),true);
 
-            if ( !is_null($result) ) {
+            if (!is_null($result)) {
                 //set dupe field to full_name and name fields
                 $this->_dupedFields[] = 'full_name';
                 $this->_dupedFields[] = 'first_name';
@@ -241,19 +241,19 @@ class ImportDuplicateCheck
         // loop through var def indexes and compare with selected indexes
         foreach ($this->_getIndexVardefs() as $index) {
             // if we get an index not in the indexlist, loop
-            if ( !in_array($index['name'],$indexlist) ) {
+            if (!in_array($index['name'],$indexlist)) {
                 continue;
             }
 
             // This handles the special case of duplicate email checking
-            if ( $index['name'] == 'special_idx_email1' || $index['name'] == 'special_idx_email2' ) {
+            if ($index['name'] == 'special_idx_email1' || $index['name'] == 'special_idx_email2') {
                 $emailAddress = new SugarEmailAddress();
                 $email = $index['fields'][0];
-                if ( $emailAddress->getCountEmailAddressByBean(
+                if ($emailAddress->getCountEmailAddressByBean(
                         $this->_focus->$email,
                         $this->_focus,
                         ($index['name'] == 'special_idx_email1')
-                        ) > 0 ) {
+                        ) > 0) {
                     foreach ($index['fields'] as $field) {
                         if ($field !='deleted') {
                             $this->_dupedFields[] = $field;
@@ -262,9 +262,9 @@ class ImportDuplicateCheck
                 }
             }
             // Adds a hook so you can define a method in the bean to handle dupe checking
-            elseif ( isset($index['dupeCheckFunction']) ) {
+            elseif (isset($index['dupeCheckFunction'])) {
                 $functionName = substr_replace($index['dupeCheckFunction'],'',0,9);
-                if ( method_exists($this->_focus,$functionName) && $this->_focus->$functionName($index) === true) {
+                if (method_exists($this->_focus,$functionName) && $this->_focus->$functionName($index) === true) {
                     return $this->_focus->$functionName($index);
                 }
             } else {
@@ -282,14 +282,14 @@ class ImportDuplicateCheck
                 }
 
                 // if there are no valid fields in the index field list, loop
-                if ( count($index_fields) <= 1 ) {
+                if (count($index_fields) <= 1) {
                     continue;
                 }
 
                 $newfocus = loadBean($this->_focus->module_dir);
                 $result = $newfocus->retrieve_by_string_fields($index_fields,true);
 
-                if ( !is_null($result) ) {
+                if (!is_null($result)) {
                     //remove deleted as a duped field
                     unset($index_fields['deleted']);
 

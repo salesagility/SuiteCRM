@@ -195,7 +195,7 @@ class SugarSpot
 
         if (!empty($users_modules)) {
             // use user's previous selections
-            foreach ($users_modules as $key => $value ) {
+            foreach ($users_modules as $key => $value) {
                 if (isset($unified_search_modules_display[$key]) && !empty($unified_search_modules_display[$key]['visible'])) {
                     $modules[$key] = $key;
                 }
@@ -225,7 +225,7 @@ class SugarSpot
      */
     public function search($query, $offset = -1, $limit = 20, $options = array())
     {
-        if ( isset($options['modules']) && !empty($options['modules']) ) {
+        if (isset($options['modules']) && !empty($options['modules'])) {
             $modules = $options['modules'];
         } else {
             $modules = $this->getSearchModules();
@@ -257,7 +257,7 @@ class SugarSpot
 
         // bug49650 - strip out asterisks from query in case
         // user thinks asterisk is a wildcard value
-        $query = str_replace( '*' , '' , $query );
+        $query = str_replace('*' , '' , $query);
         
         $limit = !empty($GLOBALS['sugar_config']['max_spotresults_initial']) ? $GLOBALS['sugar_config']['max_spotresults_initial'] : 5;
         if ($offset !== -1) {
@@ -322,7 +322,7 @@ class SugarSpot
                             unset($searchFields[$moduleName][$k]);
                         }
                     }
-                } elseif (empty($GLOBALS['dictionary'][$class]['fields'][$k]) ) {
+                } elseif (empty($GLOBALS['dictionary'][$class]['fields'][$k])) {
                     //If module did not have unified_search defined, then check the exception for an email search before we unset
                     if (strpos($k,'email') === false || !$searchEmail) {
                         unset($searchFields[$moduleName][$k]);
@@ -386,8 +386,8 @@ class SugarSpot
             }
 
 
-            $searchForm = new SearchForm ( $seed, $moduleName ) ;
-            $searchForm->setup (array ( $moduleName => array() ) , $searchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
+            $searchForm = new SearchForm ($seed, $moduleName) ;
+            $searchForm->setup (array ( $moduleName => array() ) , $searchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
             $where_clauses = $searchForm->generateSearchWhere() ;
 
             if (empty($where_clauses)) {
@@ -464,7 +464,7 @@ class SugarSpot
                 }
             }
 
-            if ( $count >= $limit && $totalCounted) {
+            if ($count >= $limit && $totalCounted) {
                 if (!isset($totalCount)) {
                     $totalCount  = $this->_getCount($seed, $main_query);
                 }

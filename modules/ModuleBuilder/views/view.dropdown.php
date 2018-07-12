@@ -68,11 +68,11 @@ class ViewDropdown extends SugarView
 
         global $mod_strings;
 
-        $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage( 'delete_inline', '',null,null,'.gif',$mod_strings['LBL_MB_DELETE']));
-        $smarty->assign('editImage', SugarThemeRegistry::current()->getImage( 'edit_inline', '',null,null,'.gif',$mod_strings['LBL_EDIT'], true, '.gif'));
+        $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage('delete_inline', '',null,null,'.gif',$mod_strings['LBL_MB_DELETE']));
+        $smarty->assign('editImage', SugarThemeRegistry::current()->getImage('edit_inline', '',null,null,'.gif',$mod_strings['LBL_EDIT'], true, '.gif'));
         $smarty->assign('action', 'savedropdown');
         $body = $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/dropdown.tpl');
-        $ajax->addSection('east2', $mod_strings['LBL_SECTION_DROPDOWNED'], $body );
+        $ajax->addSection('east2', $mod_strings['LBL_SECTION_DROPDOWNED'], $body);
         echo $ajax->getJavascript();
     }
  	
@@ -84,7 +84,7 @@ class ViewDropdown extends SugarView
         $package_name = 'studio';
         $package_strings = array();
         $new =false;
-        $my_list_strings = return_app_list_strings_language( $selected_lang ) ;
+        $my_list_strings = return_app_list_strings_language($selected_lang) ;
         //		$my_list_strings = $GLOBALS['app_list_strings'];
 
         $smarty = new Sugar_Smarty();
@@ -104,7 +104,7 @@ class ViewDropdown extends SugarView
 			
             $vardef = (!empty($module->mbvardefs->fields[$_REQUEST['dropdown_name']]))? $module->mbvardefs->fields[$_REQUEST['dropdown_name']]: array();
             $module->mblanguage->generateAppStrings(false) ;
-            $my_list_strings = array_merge( $my_list_strings, $module->mblanguage->appListStrings[$selected_lang.'.lang.php'] );
+            $my_list_strings = array_merge($my_list_strings, $module->mblanguage->appListStrings[$selected_lang.'.lang.php']);
             $smarty->assign('module_name', $module->name);
         }
 

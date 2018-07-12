@@ -42,8 +42,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-define ( 'MB_TEMPLATES', 'include/SugarObjects/templates' ) ;
-define ( 'MB_IMPLEMENTS', 'include/SugarObjects/implements' ) ;
+define ('MB_TEMPLATES', 'include/SugarObjects/templates') ;
+define ('MB_IMPLEMENTS', 'include/SugarObjects/implements') ;
 require_once ('modules/ModuleBuilder/MB/MBVardefs.php') ;
 require_once ('modules/ModuleBuilder/MB/MBRelationship.php') ;
 require_once ('modules/ModuleBuilder/MB/MBLanguage.php') ;
@@ -69,7 +69,7 @@ class MBModule
         global $mod_strings;
         $this->config [ 'templates' ] = array ( 'basic' => 1 ) ;
 
-        $this->name = MBModule::getDBName ( $name ) ;
+        $this->name = MBModule::getDBName ($name) ;
         $this->key_name = $package_key . '_' . $name ;
         $this->package = $package ;
         $this->package_key = $package_key ;
@@ -79,15 +79,15 @@ class MBModule
         'has_tab' => !empty($mod_strings[ 'LBL_NAV_TAB' ]) ? $mod_strings[ 'LBL_NAV_TAB' ] : false) ;
         $this->path = $this->getModuleDir () ;
         //		$this->mbrelationship = new MBRelationship($this->name, $this->path, $this->key_name);
-        $this->relationships = new UndeployedRelationships ( $this->path ) ;
-        $this->mbvardefs = new MBVardefs ( $this->name, $this->path, $this->key_name ) ;
+        $this->relationships = new UndeployedRelationships ($this->path) ;
+        $this->mbvardefs = new MBVardefs ($this->name, $this->path, $this->key_name) ;
 
         $this->load () ;
     }
 
     function getDBName($name)
     {
-        return preg_replace ( "/[^\w]+/", "_", $name ) ;
+        return preg_replace ("/[^\w]+/", "_", $name) ;
     }
 
     function getModuleName()
@@ -114,14 +114,14 @@ class MBModule
      */
     function load()
     {
-        if (file_exists ( $this->path . '/config.php' )) {
+        if (file_exists ($this->path . '/config.php')) {
             include ($this->path . '/config.php') ;
             $this->config = $config ;
         }
-        $label = (! empty ( $this->config [ 'label' ] )) ? $this->config [ 'label' ] : $this->name ;
-        $this->mblanguage = new MBLanguage ( $this->name, $this->path, $label, $this->key_name ) ;
-        foreach ( $this->iTemplate as $temp ) {
-            if (! empty ( $this->config [ $temp ] )) {
+        $label = (! empty ($this->config [ 'label' ])) ? $this->config [ 'label' ] : $this->name ;
+        $this->mblanguage = new MBLanguage ($this->name, $this->path, $label, $this->key_name) ;
+        foreach ($this->iTemplate as $temp) {
+            if (! empty ($this->config [ $temp ])) {
                 $this->mbvardefs->iTemplates [ $temp ] = 1 ;
                 $this->mblanguage->iTemplates [ $temp ] = $temp ;
             }
@@ -144,18 +144,18 @@ class MBModule
 
     function removeTemplate($template)
     {
-        unset ( $this->config [ 'templates' ] [ $template ] ) ;
+        unset ($this->config [ 'templates' ] [ $template ]) ;
     }
 
     function getVardefs($by_group = false)
     {
-        $this->mbvardefs->updateVardefs ( $by_group ) ;
+        $this->mbvardefs->updateVardefs ($by_group) ;
         return $this->mbvardefs->getVardefs () ;
     }
 
     function addField($vardef)
     {
-        $this->mbvardefs->addFieldVardef ( $vardef ) ;
+        $this->mbvardefs->addFieldVardef ($vardef) ;
     }
 
     function addFieldObject($field)
@@ -165,39 +165,39 @@ class MBModule
         $existingVardefs = $this->mbvardefs->getVardefs () ;
         //Merge with the existing vardef if it already exists
         if (!empty($existingVardefs['fields'][$vardef['name']])) {
-            $vardef = array_merge( $existingVardefs['fields'][$vardef['name']], $vardef);
+            $vardef = array_merge($existingVardefs['fields'][$vardef['name']], $vardef);
         }
-        if (! empty ( $vardef [ 'source' ] ) && $vardef [ 'source' ] == 'custom_fields') {
-            unset ( $vardef [ 'source' ] ) ;
+        if (! empty ($vardef [ 'source' ]) && $vardef [ 'source' ] == 'custom_fields') {
+            unset ($vardef [ 'source' ]) ;
         }
 
         $this->mbvardefs->load();
-        $this->addField ( $vardef ) ;
+        $this->addField ($vardef) ;
         $this->mbvardefs->save();
     }
 
     function deleteField($name)
     {
-        $this->mbvardefs->deleteField ( $name ) ;
+        $this->mbvardefs->deleteField ($name) ;
     }
 
     function fieldExists($name = '' , $type = '')
     {
         $vardefs = $this->getVardefs();
-        if (! empty ( $vardefs )) {
-            if (empty ( $type ) && empty ( $name )) {
+        if (! empty ($vardefs)) {
+            if (empty ($type) && empty ($name)) {
                 return false ;
-            } elseif (empty ( $type )) {
-                return ! empty ( $vardefs [ 'fields' ] [ $name ] ) ;
-            } elseif (empty ( $name )) {
-                foreach ( $vardefs [ 'fields' ] as $def ) {
+            } elseif (empty ($type)) {
+                return ! empty ($vardefs [ 'fields' ] [ $name ]) ;
+            } elseif (empty ($name)) {
+                foreach ($vardefs [ 'fields' ] as $def) {
                     if ($def [ 'type' ] == $type) {
                         return true ;
                     }
                 }
                 return false ;
             } else {
-                return (! empty ( $vardefs [ 'fields' ] [ $name ] ) && ($vardefs [ 'fields' ] [ $name ] [ 'type' ] == $type)) ;
+                return (! empty ($vardefs [ 'fields' ] [ $name ]) && ($vardefs [ 'fields' ] [ $name ] [ 'type' ] == $type)) ;
             }
         } else {
             return false ;
@@ -206,7 +206,7 @@ class MBModule
 
     function getModStrings($language = 'en_us')
     {
-        return $this->mblanguage->getModStrings ( $language ) ;
+        return $this->mblanguage->getModStrings ($language) ;
     }
 
     function setModStrings($language  , $mod_strings= array())
@@ -268,7 +268,7 @@ class MBModule
         }
 
         $language .= '.lang.php' ;
-        if (empty ( $this->mblanguage->strings [ $language ] [ $key ] )) {
+        if (empty ($this->mblanguage->strings [ $language ] [ $key ])) {
             return '' ;
         }
         return $this->mblanguage->strings [ $language ] [ $key ] ;
@@ -276,7 +276,7 @@ class MBModule
 
     function getAppListStrings($language = 'en_us')
     {
-        return $this->mblanguage->getAppListStrings ( $language ) ;
+        return $this->mblanguage->getAppListStrings ($language) ;
     }
 
     function setAppListStrings($language  , $app_list_strings= array())
@@ -307,107 +307,107 @@ class MBModule
         }
 
         $language .= '.lang.php' ;
-        unset ( $this->mblanguage->appListStrings [ $language ] [ $key ] ) ;
+        unset ($this->mblanguage->appListStrings [ $language ] [ $key ]) ;
     }
 
     function save()
     {
         $this->path = $this->getModuleDir () ;
-        if (mkdir_recursive ( $this->path )) {
+        if (mkdir_recursive ($this->path)) {
             $this->setConfigMD5 () ;
             $old_config_md5 = $this->config_md5 ;
             $this->saveConfig () ;
             $this->getVardefs () ;
-            $this->mbvardefs->save ( $this->key_name ) ;
+            $this->mbvardefs->save ($this->key_name) ;
             //           $this->mbrelationship->save ( $this->key_name ) ;
             $this->relationships->save () ;
             $this->copyMetaData () ;
             $this->copyDashlet () ;
             $this->copyViews() ;
-            if (0 != strcmp ( $old_config_md5, $this->config_md5 )) {
+            if (0 != strcmp ($old_config_md5, $this->config_md5)) {
                 $this->mblanguage->reload () ;
             }
             $this->mblanguage->label = $this->config [ 'label' ] ;
             //pass in the key_name incase it has changed mblanguage will check if it is different and handle it accordingly
-            $this->mblanguage->save ( $this->key_name ) ;
+            $this->mblanguage->save ($this->key_name) ;
 
-            if (! file_exists ( $this->package_path . "/icons/icon_" . ucfirst ( $this->key_name ) . ".gif" )) {
+            if (! file_exists ($this->package_path . "/icons/icon_" . ucfirst ($this->key_name) . ".gif")) {
                 $this->createIcon () ;
             }
 
-            $this->errors = array_merge ( $this->errors, $this->mbvardefs->errors ) ;
+            $this->errors = array_merge ($this->errors, $this->mbvardefs->errors) ;
         }
     }
 
     function copyDashlet()
     {
-        $templates = array_reverse ( $this->config [ 'templates' ], true ) ;
-        foreach ( $templates as $template => $a ) {
-            if (file_exists ( MB_TEMPLATES . '/' . $template . '/Dashlets/Dashlet' )) {
-                $this->copyMetaRecursive ( MB_TEMPLATES . '/' . $template . '/Dashlets/Dashlet', $this->path . '/Dashlets/' . $this->key_name . 'Dashlet/' ) ;
+        $templates = array_reverse ($this->config [ 'templates' ], true) ;
+        foreach ($templates as $template => $a) {
+            if (file_exists (MB_TEMPLATES . '/' . $template . '/Dashlets/Dashlet')) {
+                $this->copyMetaRecursive (MB_TEMPLATES . '/' . $template . '/Dashlets/Dashlet', $this->path . '/Dashlets/' . $this->key_name . 'Dashlet/') ;
             }
         }
     }
 
     function copyViews()
     {
-        $templates = array_reverse ( $this->config [ 'templates' ], true ) ;
-        foreach ( $templates as $template => $a ) {
-            if (file_exists ( MB_TEMPLATES . '/' . $template . '/views' )) {
-                $this->copyMetaRecursive ( MB_TEMPLATES . '/' . $template . '/views', $this->path . '/views/' ) ;
+        $templates = array_reverse ($this->config [ 'templates' ], true) ;
+        foreach ($templates as $template => $a) {
+            if (file_exists (MB_TEMPLATES . '/' . $template . '/views')) {
+                $this->copyMetaRecursive (MB_TEMPLATES . '/' . $template . '/views', $this->path . '/views/') ;
             }
         }
     }
 
     function copyCustomFiles($from , $to)
     {
-        $d = dir ( $from ) ;
-        while ( $filename = $d->read () ) {
-            if (substr ( $filename, 0, 1 ) == '.') {
+        $d = dir ($from) ;
+        while ($filename = $d->read ()) {
+            if (substr ($filename, 0, 1) == '.') {
                 continue ;
             }
-            if ( $filename != 'metadata' && $filename != 'Dashlets' && $filename != 'relationships' && $filename != 'language' && $filename != 'config.php' && $filename != 'relationships.php' && $filename != 'vardefs.php' ) {
-                copy_recursive ( "$from/$filename" , "$to/$filename" ) ;
+            if ($filename != 'metadata' && $filename != 'Dashlets' && $filename != 'relationships' && $filename != 'language' && $filename != 'config.php' && $filename != 'relationships.php' && $filename != 'vardefs.php') {
+                copy_recursive ("$from/$filename" , "$to/$filename") ;
             }
         }
     }
 
     function copyMetaData()
     {
-        $templates = array_reverse ( $this->config [ 'templates' ], true ) ;
-        foreach ( $templates as $template => $a ) {
-            if (file_exists ( MB_TEMPLATES . '/' . $template . '/metadata' )) {
-                $this->copyMetaRecursive ( MB_TEMPLATES . '/' . $template . '/metadata', $this->path . '/metadata/' ) ;
+        $templates = array_reverse ($this->config [ 'templates' ], true) ;
+        foreach ($templates as $template => $a) {
+            if (file_exists (MB_TEMPLATES . '/' . $template . '/metadata')) {
+                $this->copyMetaRecursive (MB_TEMPLATES . '/' . $template . '/metadata', $this->path . '/metadata/') ;
             }
         }
     }
 
     function copyMetaRecursive($from , $to , $overwrite = false)
     {
-        if (! file_exists ( $from )) {
+        if (! file_exists ($from)) {
             return ;
         }
-        if (is_dir ( $from )) {
+        if (is_dir ($from)) {
             $findArray = array ( '<module_name>' , '<_module_name>' , '<MODULE_NAME>' , '<object_name>' , '<_object_name>' , '<OBJECT_NAME>' );
-            $replaceArray = array ( $this->key_name , strtolower ( $this->key_name ) , strtoupper ( $this->key_name ) ,
-            						$this->key_name , strtolower ( $this->key_name ) , strtoupper ( $this->key_name ) );
-            mkdir_recursive ( $to ) ;
-            $d = dir ( $from ) ;
-            while ( $e = $d->read () ) {
-                if (substr ( $e, 0, 1 ) == '.') {
+            $replaceArray = array ( $this->key_name , strtolower ($this->key_name) , strtoupper ($this->key_name) ,
+            						$this->key_name , strtolower ($this->key_name) , strtoupper ($this->key_name) );
+            mkdir_recursive ($to) ;
+            $d = dir ($from) ;
+            while ($e = $d->read ()) {
+                if (substr ($e, 0, 1) == '.') {
                     continue ;
                 }
                 $nfrom = $from . '/' . $e ;
-                $nto = $to . '/' . str_replace ( 'm-n-', $this->key_name, $e ) ;
-                if (is_dir ( $nfrom )) {
-                    $this->copyMetaRecursive ( $nfrom, $nto, $overwrite ) ;
+                $nto = $to . '/' . str_replace ('m-n-', $this->key_name, $e) ;
+                if (is_dir ($nfrom)) {
+                    $this->copyMetaRecursive ($nfrom, $nto, $overwrite) ;
                 } else {
-                    if ($overwrite || ! file_exists ( $nto )) {
-                        $contents = file_get_contents ( $nfrom ) ;
-                        $contents = str_replace ( $findArray, $replaceArray, $contents ) ;
-                        $fw = sugar_fopen ( $nto, 'w' ) ;
-                        fwrite ( $fw, $contents ) ;
-                        fclose ( $fw ) ;
+                    if ($overwrite || ! file_exists ($nto)) {
+                        $contents = file_get_contents ($nfrom) ;
+                        $contents = str_replace ($findArray, $replaceArray, $contents) ;
+                        $fw = sugar_fopen ($nto, 'w') ;
+                        fwrite ($fw, $contents) ;
+                        fclose ($fw) ;
                     }
                 }
             }
@@ -416,8 +416,8 @@ class MBModule
 
     function saveConfig()
     {
-        $header = file_get_contents ( 'modules/ModuleBuilder/MB/header.php' ) ;
-        if (! write_array_to_file ( 'config', $this->config, $this->path . '/config.php', 'w', $header )) {
+        $header = file_get_contents ('modules/ModuleBuilder/MB/header.php') ;
+        if (! write_array_to_file ('config', $this->config, $this->path . '/config.php', 'w', $header)) {
             $this->errors [] = 'Could not save config to ' . $this->path . '/config.php' ;
         }
         $this->setConfigMD5 () ;
@@ -425,8 +425,8 @@ class MBModule
 
     function setConfigMD5()
     {
-        if (file_exists ( $this->path . '/config.php' )) {
-            $this->config_md5 = md5 ( base64_encode ( serialize ( $this->config ) ) ) ;
+        if (file_exists ($this->path . '/config.php')) {
+            $this->config_md5 = md5 (base64_encode (serialize ($this->config))) ;
         }
     }
 
@@ -434,16 +434,16 @@ class MBModule
     {
         global $app_list_strings;
         $path = $basepath . '/modules/' . $this->key_name ;
-        if (mkdir_recursive ( $path )) {
-            $this->createClasses ( $path ) ;
-            $this->createMenu ( $path );
-            $this->copyCustomFiles ( $this->path , $path ) ;
-            $this->copyMetaRecursive ( $this->path . '/metadata/', $path . '/metadata/', true ) ;
-            $this->copyMetaRecursive ( $this->path . '/Dashlets/' . $this->key_name . 'Dashlet/',
-            						   $path . '/Dashlets/' . $this->key_name . 'Dashlet/', true ) ;
+        if (mkdir_recursive ($path)) {
+            $this->createClasses ($path) ;
+            $this->createMenu ($path);
+            $this->copyCustomFiles ($this->path , $path) ;
+            $this->copyMetaRecursive ($this->path . '/metadata/', $path . '/metadata/', true) ;
+            $this->copyMetaRecursive ($this->path . '/Dashlets/' . $this->key_name . 'Dashlet/',
+            						   $path . '/Dashlets/' . $this->key_name . 'Dashlet/', true) ;
             $app_list_strings['moduleList'][$this->key_name] = $this->mblanguage->label;
-            $this->relationships->build ( $basepath ) ;
-            $this->mblanguage->build ( $path ) ;
+            $this->relationships->build ($basepath) ;
+            $this->mblanguage->build ($path) ;
         }
     }
 
@@ -451,72 +451,72 @@ class MBModule
     {
         $class = array ( ) ;
         $class [ 'name' ] = $this->key_name ;
-        $class [ 'table_name' ] = strtolower ( $class [ 'name' ] ) ;
+        $class [ 'table_name' ] = strtolower ($class [ 'name' ]) ;
         $class [ 'extends' ] = 'Basic' ;
         $class [ 'requires' ] [] = MB_TEMPLATES . '/basic/Basic.php' ;
         $class [ 'requires' ] = array ( ) ;
-        $class [ 'audited' ] = (! empty ( $this->config [ 'audit' ] )) ? 'true' : 'false' ;
-        $class [ 'acl' ] = ! empty ( $this->config [ 'acl' ] ) ;
+        $class [ 'audited' ] = (! empty ($this->config [ 'audit' ])) ? 'true' : 'false' ;
+        $class [ 'acl' ] = ! empty ($this->config [ 'acl' ]) ;
         $class [ 'templates' ] = "'basic'" ;
-        foreach ( $this->iTemplate as $template ) {
-            if (! empty ( $this->config [ $template ] )) {
+        foreach ($this->iTemplate as $template) {
+            if (! empty ($this->config [ $template ])) {
                 $class [ 'templates' ] .= ",'$template'" ;
             }
         }
-        foreach ( $this->config [ 'templates' ] as $template => $a ) {
+        foreach ($this->config [ 'templates' ] as $template => $a) {
             if ($template == 'basic') {
                 continue ;
             }
             $class [ 'templates' ] .= ",'$template'" ;
-            $class [ 'extends' ] = ucFirst ( $template ) ;
-            $class [ 'requires' ] [] = MB_TEMPLATES . '/' . $template . '/' . ucfirst ( $template ) . '.php' ;
+            $class [ 'extends' ] = ucFirst ($template) ;
+            $class [ 'requires' ] [] = MB_TEMPLATES . '/' . $template . '/' . ucfirst ($template) . '.php' ;
         }
         $class [ 'importable' ] = $this->config [ 'importable' ] ;
         $class [ 'inline_edit' ] = isset($this->config [ 'inline_edit' ]) ? $this->config [ 'inline_edit' ] : null;
         $this->mbvardefs->updateVardefs () ;
         $class [ 'fields' ] = $this->mbvardefs->vardefs [ 'fields' ] ;
-        $class [ 'fields_string' ] = var_export_helper ( $this->mbvardefs->vardef [ 'fields' ] ) ;
+        $class [ 'fields_string' ] = var_export_helper ($this->mbvardefs->vardef [ 'fields' ]) ;
         $relationship = array ( ) ;
-        $class [ 'relationships' ] = var_export_helper ( $this->mbvardefs->vardef [ 'relationships' ] ) ;
-        $smarty = new Sugar_Smarty ( ) ;
+        $class [ 'relationships' ] = var_export_helper ($this->mbvardefs->vardef [ 'relationships' ]) ;
+        $smarty = new Sugar_Smarty () ;
         $smarty->left_delimiter = '{{' ;
         $smarty->right_delimiter = '}}' ;
-        $smarty->assign ( 'class', $class ) ;
+        $smarty->assign ('class', $class) ;
 
-        if (! file_exists ( $path . '/' . $class [ 'name' ] . '.php' )) {
+        if (! file_exists ($path . '/' . $class [ 'name' ] . '.php')) {
             $fp = sugar_fopen($path . '/' . $class ['name'] . '.php', 'w');
             fwrite($fp, $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/Class.tpl'));
             fclose($fp);
         }
         //write vardefs
-        $fp = sugar_fopen ( $path . '/vardefs.php', 'w' ) ;
-        fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/vardef.tpl' ) ) ;
-        fclose ( $fp ) ;
+        $fp = sugar_fopen ($path . '/vardefs.php', 'w') ;
+        fwrite ($fp, $smarty->fetch ('modules/ModuleBuilder/tpls/MBModule/vardef.tpl')) ;
+        fclose ($fp) ;
         
-        if (! file_exists ( $path . '/metadata' )) {
-            mkdir_recursive ( $path . '/metadata' ) ;
+        if (! file_exists ($path . '/metadata')) {
+            mkdir_recursive ($path . '/metadata') ;
         }
-        if (! empty ( $this->config [ 'studio' ] )) {
-            $fp = sugar_fopen ( $path . '/metadata/studio.php', 'w' ) ;
-            fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/Studio.tpl' ) ) ;
-            fclose ( $fp ) ;
+        if (! empty ($this->config [ 'studio' ])) {
+            $fp = sugar_fopen ($path . '/metadata/studio.php', 'w') ;
+            fwrite ($fp, $smarty->fetch ('modules/ModuleBuilder/tpls/MBModule/Studio.tpl')) ;
+            fclose ($fp) ;
         } else {
-            if (file_exists ( $path . '/metadata/studio.php' )) {
-                unlink ( $path . '/metadata/studio.php' ) ;
+            if (file_exists ($path . '/metadata/studio.php')) {
+                unlink ($path . '/metadata/studio.php') ;
             }
         }
     }
 
     function createMenu($path)
     {
-        $smarty = new Sugar_Smarty ( ) ;
-        $smarty->assign ( 'moduleName', $this->key_name ) ;
-        $smarty->assign ( 'showvCard', in_array ( 'person', array_keys($this->config[ 'templates' ]) ) ) ;
-        $smarty->assign ( 'showimport', $this->config['importable'] );
+        $smarty = new Sugar_Smarty () ;
+        $smarty->assign ('moduleName', $this->key_name) ;
+        $smarty->assign ('showvCard', in_array ('person', array_keys($this->config[ 'templates' ]))) ;
+        $smarty->assign ('showimport', $this->config['importable']);
         //write sugar generated class
-        $fp = sugar_fopen ( $path . '/' . 'Menu.php', 'w' ) ;
-        fwrite ( $fp, $smarty->fetch ( 'modules/ModuleBuilder/tpls/MBModule/Menu.tpl' ) ) ;
-        fclose ( $fp ) ;
+        $fp = sugar_fopen ($path . '/' . 'Menu.php', 'w') ;
+        fwrite ($fp, $smarty->fetch ('modules/ModuleBuilder/tpls/MBModule/Menu.tpl')) ;
+        fclose ($fp) ;
     }
 
     function addInstallDefs(&$installDefs)
@@ -524,14 +524,14 @@ class MBModule
         $name = $this->key_name ;
         $installDefs [ 'copy' ] [] = array ( 'from' => '<basepath>/SugarModules/modules/' . $name , 'to' => 'modules/' . $name ) ;
         $installDefs [ 'beans' ] [] = array ( 'module' => $name , 'class' => $name , 'path' => 'modules/' . $name . '/' . $name . '.php' , 'tab' => $this->config [ 'has_tab' ] ) ;
-        $this->relationships->addInstallDefs ( $installDefs ) ;
+        $this->relationships->addInstallDefs ($installDefs) ;
     }
 
     function getNodes()
     {
         $lSubs = array ( ) ;
         $psubs = $this->getProvidedSubpanels () ;
-        foreach ( $psubs as $sub ) {
+        foreach ($psubs as $sub) {
             $subLabel = $sub ;
             if ($subLabel == 'default') {
                 $subLabel = $GLOBALS [ 'mod_strings' ] [ 'LBL_DEFAULT' ] ;
@@ -567,7 +567,7 @@ class MBModule
         	array ( 'name' => translate('LBL_LAYOUTS') , 'type' => 'Folder' , 'action' => "module=ModuleBuilder&action=wizard&view_module={$this->name}&view_package={$this->package}&MB=1" , 'children' => $layouts ) ,
         	) ;
 
-        if (count ( $lSubs ) > 0) {
+        if (count ($lSubs) > 0) {
             $children [] = array ( 'name' => translate('LBL_AVAILABLE_SUBPANELS') , 'type' => 'folder' , 'children' => $lSubs ) ;
         }
 
@@ -582,14 +582,14 @@ class MBModule
         $this->providedSubpanels = array () ;
 
         $subpanelDir = $this->getModuleDir () . '/metadata/subpanels/' ;
-        if (file_exists ( $subpanelDir )) {
-            $f = dir ( $subpanelDir ) ;
+        if (file_exists ($subpanelDir)) {
+            $f = dir ($subpanelDir) ;
             require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationships.php' ;
 
-            while ( $g = $f->read () ) {
+            while ($g = $f->read ()) {
                 // sanity check to confirm that this is a usable subpanel...
-                if (substr ( $g, 0, 1 ) != '.' && AbstractRelationships::validSubpanel ( $subpanelDir . $g )) {
-                    $subname = str_replace ( '.php', '', $g ) ;
+                if (substr ($g, 0, 1) != '.' && AbstractRelationships::validSubpanel ($subpanelDir . $g)) {
+                    $subname = str_replace ('.php', '', $g) ;
                     $this->providedSubpanels [ $subname ] = $subname ;
                 }
             }
@@ -601,9 +601,9 @@ class MBModule
     static function getTypes()
     {
         $types = array ( ) ;
-        $d = dir ( MB_TEMPLATES ) ;
-        while ( $e = $d->read () ) {
-            if (substr ( $e, 0, 1 ) != '.') {
+        $d = dir (MB_TEMPLATES) ;
+        while ($e = $d->read ()) {
+            if (substr ($e, 0, 1) != '.') {
                 $types [ $e ] = $e ;
             }
         }
@@ -618,13 +618,13 @@ class MBModule
         $this->name = $new_name ;
         $this->key_name = $this->package_key . '_' . $this->name ;
         $new = $this->getModuleDir () ;
-        if (file_exists ( $new )) {
+        if (file_exists ($new)) {
             return false ;
         }
-        $renamed = rename ( $old, $new ) ;
+        $renamed = rename ($old, $new) ;
         if ($renamed) {
-            $this->renameMetaData ( $new , $old_name) ;
-            $this->renameLanguageFiles ( $new ) ;
+            $this->renameMetaData ($new , $old_name) ;
+            $this->renameLanguageFiles ($new) ;
         }
         return $renamed ;
     }
@@ -634,7 +634,7 @@ class MBModule
         $this->mblanguage->name = $this->name ;
         $this->mblanguage->path = $new_dir ;
         $this->mblanguage->generateAppStrings () ;
-        $this->mblanguage->save ( $this->key_name, $duplicate, true) ;
+        $this->mblanguage->save ($this->key_name, $duplicate, true) ;
     }
 
     /**
@@ -644,18 +644,18 @@ class MBModule
      */
     public function renameMetaData($new_dir, $old_name)
     {
-        $GLOBALS [ 'log' ]->debug ( 'MBModule.php->renameMetaData: new_dir=' . $new_dir ) ;
-        if (! file_exists ( $new_dir )) {
+        $GLOBALS [ 'log' ]->debug ('MBModule.php->renameMetaData: new_dir=' . $new_dir) ;
+        if (! file_exists ($new_dir)) {
             return ;
         }
-        $dir = dir ( $new_dir ) ;
-        while ( $e = $dir->read () ) {
-            if (substr ( $e, 0, 1 ) != '.') {
-                if (is_dir ( $new_dir . '/' . $e )) {
-                    $this->renameMetaData ( $new_dir . '/' . $e,  $old_name) ;
+        $dir = dir ($new_dir) ;
+        while ($e = $dir->read ()) {
+            if (substr ($e, 0, 1) != '.') {
+                if (is_dir ($new_dir . '/' . $e)) {
+                    $this->renameMetaData ($new_dir . '/' . $e,  $old_name) ;
                 }
-                if (is_file ( $new_dir . '/' . $e )) {
-                    $contents = file_get_contents ( $new_dir . '/' . $e ) ;
+                if (is_file ($new_dir . '/' . $e)) {
+                    $contents = file_get_contents ($new_dir . '/' . $e) ;
                     $search_array = array(
                         '/(\$module_name[ ]*=[ ]*\').*(\'[ ]*;)/',
                         '/(\$_module_name[ ]*=[ ]*\').*(\'[ ]*;)/',
@@ -666,11 +666,11 @@ class MBModule
                     );
                     $replace_array = array(
                         '$1' . $this->key_name . '$2',
-                        '$1' . strtolower ( $this->key_name ) . '$2',
-                        '$1' . strtoupper ( $this->key_name ) . '$2',
+                        '$1' . strtolower ($this->key_name) . '$2',
+                        '$1' . strtoupper ($this->key_name) . '$2',
                         '$1' . $this->key_name . '$2',
-                        '$1' . strtolower ( $this->key_name ) . '$2',
-                        '$1' . strtoupper ( $this->key_name ) . '$2',
+                        '$1' . strtolower ($this->key_name) . '$2',
+                        '$1' . strtoupper ($this->key_name) . '$2',
                     );
                     $contents = preg_replace($search_array, $replace_array, $contents);
                     $search_array = array(
@@ -681,17 +681,17 @@ class MBModule
                         $this->key_name . '_',
                         $this->key_name . 'Dashlet'
                     );
-                    $contents = str_replace($search_array, $replace_array, $contents );
+                    $contents = str_replace($search_array, $replace_array, $contents);
                     
                     
                     if ("relationships.php" == $e) {
                         //bug 39598 Relationship Name Is Not Updated If Module Name Is Changed In Module Builder
-                        $contents = str_replace  ( "'{$old_name}'", "'{$this->key_name}'" , $contents ) ;
+                        $contents = str_replace  ("'{$old_name}'", "'{$this->key_name}'" , $contents) ;
                     }
                     
-                    $fp = sugar_fopen ( $new_dir . '/' . $e, 'w' ) ;
-                    fwrite ( $fp, $contents ) ;
-                    fclose ( $fp ) ;
+                    $fp = sugar_fopen ($new_dir . '/' . $e, 'w') ;
+                    fwrite ($fp, $contents) ;
+                    fclose ($fp) ;
                 }
             }
         }
@@ -706,7 +706,7 @@ class MBModule
         $this->name = $new_name ;
         $this->key_name = $this->package_key . '_' . $this->name ;
         $new = $this->getModuleDir () ;
-        while ( file_exists ( $new ) ) {
+        while (file_exists ($new)) {
             $count ++ ;
             $this->name = $new_name . $count ;
             $this->key_name = $this->package_key . '_' . $this->name ;
@@ -714,43 +714,43 @@ class MBModule
         }
 
         $new = $this->getModuleDir () ;
-        $copied = copy_recursive ( $old, $new ) ;
+        $copied = copy_recursive ($old, $new) ;
 
         if ($copied) {
-            $this->renameMetaData ( $new , $old_name) ;
-            $this->renameLanguageFiles ( $new, true ) ;
+            $this->renameMetaData ($new , $old_name) ;
+            $this->renameLanguageFiles ($new, true) ;
         }
         return $copied ;
     }
 
     function delete()
     {
-        return rmdir_recursive ( $this->getModuleDir () ) ;
+        return rmdir_recursive ($this->getModuleDir ()) ;
     }
 
     function populateFromPost()
     {
-        foreach ( $this->implementable as $key => $value ) {
-            $this->config [ $key ] = ! empty ( $_REQUEST [ $key ] ) ;
+        foreach ($this->implementable as $key => $value) {
+            $this->config [ $key ] = ! empty ($_REQUEST [ $key ]) ;
         }
-        foreach ( $this->always_implement as $key => $value ) {
+        foreach ($this->always_implement as $key => $value) {
             $this->config [ $key ] = true ;
         }
-        if (! empty ( $_REQUEST [ 'type' ] )) {
-            $this->addTemplate ( $_REQUEST [ 'type' ] ) ;
+        if (! empty ($_REQUEST [ 'type' ])) {
+            $this->addTemplate ($_REQUEST [ 'type' ]) ;
         }
 
-        if (! empty ( $_REQUEST [ 'label' ] )) {
+        if (! empty ($_REQUEST [ 'label' ])) {
             $this->config [ 'label' ] = $_REQUEST [ 'label' ] ;
         }
 
-        $this->config [ 'importable' ] = ! empty( $_REQUEST[ 'importable' ] ) ;
+        $this->config [ 'importable' ] = ! empty($_REQUEST[ 'importable' ]) ;
     }
 
     function getAvailibleSubpanelDef($panelName)
     {
         $filepath = $this->getModuleDir () . "/metadata/subpanels/{$panelName}.php" ;
-        if (file_exists ( $filepath )) {
+        if (file_exists ($filepath)) {
             include ($filepath) ;
             return $subpanel_layout ;
         }
@@ -761,18 +761,18 @@ class MBModule
     {
         $dir = $this->getModuleDir () . "/metadata/subpanels" ;
         $filepath = "$dir/{$panelName}.php" ;
-        if (mkdir_recursive ( $dir )) {
+        if (mkdir_recursive ($dir)) {
             // preserve any $module_name entry if one exists
-            if (file_exists ( $filepath )) {
+            if (file_exists ($filepath)) {
                 include ($filepath) ;
             }
-            $module_name = (isset ( $module_name )) ? $module_name : $this->key_name ;
-            $layout = "<?php\n" . '$module_name=\'' . $module_name . "';\n" . '$subpanel_layout = ' . var_export_helper ( $layout ) . ";" ;
-            $GLOBALS [ 'log' ]->debug ( "About to save this file to $filepath" ) ;
-            $GLOBALS [ 'log' ]->debug ( $layout ) ;
-            $fw = sugar_fopen ( $filepath, 'w' ) ;
-            fwrite ( $fw, $layout ) ;
-            fclose ( $fw ) ;
+            $module_name = (isset ($module_name)) ? $module_name : $this->key_name ;
+            $layout = "<?php\n" . '$module_name=\'' . $module_name . "';\n" . '$subpanel_layout = ' . var_export_helper ($layout) . ";" ;
+            $GLOBALS [ 'log' ]->debug ("About to save this file to $filepath") ;
+            $GLOBALS [ 'log' ]->debug ($layout) ;
+            $fw = sugar_fopen ($filepath, 'w') ;
+            fwrite ($fw, $layout) ;
+            fclose ($fw) ;
         }
     }
 
@@ -834,17 +834,17 @@ class MBModule
         // TODO: replace by similar mechanism to StudioModule to determine the list of available views for this module
         $views = array ( 'editview' , 'detailview' , 'listview' , 'basic_search' , 'advanced_search' , 'dashlet' , 'popuplist');
         
-        foreach ($views as $type ) {
-            $parser = ParserFactory::getParser( $type , $this->name , $this->package ) ;
-            if ($parser->removeField ( $fieldName ) ) {
+        foreach ($views as $type) {
+            $parser = ParserFactory::getParser($type , $this->name , $this->package) ;
+            if ($parser->removeField ($fieldName)) {
                 $parser->handleSave(false) ;
             } // don't populate from $_REQUEST, just save as is...
         }
         //Remove the fields in subpanel
         $psubs = $this->getProvidedSubpanels() ; 
-        foreach ( $psubs as $sub ) {
-            $parser = ParserFactory::getParser( MB_LISTVIEW , $this->name, $this->package ,  $sub) ;
-            if ($parser->removeField ( $fieldName ) ) {
+        foreach ($psubs as $sub) {
+            $parser = ParserFactory::getParser(MB_LISTVIEW , $this->name, $this->package ,  $sub) ;
+            if ($parser->removeField ($fieldName)) {
                 $parser->handleSave(false) ;
             }
         }

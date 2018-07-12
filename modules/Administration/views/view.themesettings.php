@@ -81,7 +81,7 @@ class AdministrationViewThemesettings extends SugarView
             sugar_die("Default theme is invalid.");
         }
         
-        if (isset($_REQUEST['disabled_themes']) ) {
+        if (isset($_REQUEST['disabled_themes'])) {
             $configurator = new Configurator();
             $configurator->config['disabled_themes'] = implode(',',$_REQUEST['disabled_themes']);
             $configurator->config['default_theme'] = $_REQUEST['default_theme'];
@@ -98,7 +98,7 @@ class AdministrationViewThemesettings extends SugarView
     {
         global $mod_strings, $app_strings, $current_user;
         
-        if ( !is_admin($current_user) ) {
+        if (!is_admin($current_user)) {
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         } 
             

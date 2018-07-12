@@ -114,11 +114,11 @@ class ImportFile extends ImportDataSource
      */
     public function __construct($filename, $delimiter  = ',', $enclosure  = '',$deleteFile = true, $checkUploadPath = TRUE)
     {
-        if ( !is_file($filename) || !is_readable($filename) ) {
+        if (!is_file($filename) || !is_readable($filename)) {
             return false;
         }
 
-        if ( $checkUploadPath && UploadStream::path($filename) == null ) {
+        if ($checkUploadPath && UploadStream::path($filename) == null) {
             $GLOBALS['log']->fatal("ImportFile detected attempt to access to the following file not within the sugar upload dir: $filename");
             return null;
         }
@@ -129,11 +129,11 @@ class ImportFile extends ImportDataSource
         $this->_fp         = sugar_fopen($filename,'r');
         $this->_sourcename   = $filename;
         $this->_deleteFile = $deleteFile;
-        $this->_delimiter  = ( empty($delimiter) ? ',' : $delimiter );
+        $this->_delimiter  = (empty($delimiter) ? ',' : $delimiter);
         if ($this->_delimiter == '\t') {
             $this->_delimiter = "\t";
         }
-        $this->_enclosure  = ( empty($enclosure) ? '' : trim($enclosure) );
+        $this->_enclosure  = (empty($enclosure) ? '' : trim($enclosure));
 
         // Autodetect does setFpAfterBOM()
         $this->_encoding = $this->autoDetectCharacterSet();
@@ -162,7 +162,7 @@ class ImportFile extends ImportDataSource
      */
     public function __destruct()
     {
-        if ( $this->_deleteFile && $this->fileExists() ) {
+        if ($this->_deleteFile && $this->fileExists()) {
             fclose($this->_fp);
             //Make sure the file exists before unlinking
             if (file_exists($this->_sourcename)) {
@@ -262,10 +262,10 @@ class ImportFile extends ImportDataSource
     {
         $lineCount = 0;
 
-        if ($this->_fp ) {
+        if ($this->_fp) {
             rewind($this->_fp);
-            while ( !feof($this->_fp) ) {
-                if ( fgets($this->_fp) !== FALSE) {
+            while (!feof($this->_fp)) {
+                if (fgets($this->_fp) !== FALSE) {
                     $lineCount++;
                 }
             }
@@ -454,11 +454,11 @@ class ImportFile extends ImportDataSource
         $this->_dataSet = array();
         $this->rewind();
         //If there's a header don't include it.
-        if ( $this->hasHeaderRow(FALSE) ) {
+        if ($this->hasHeaderRow(FALSE)) {
             $this->next();
         }
 
-        while ( $this->valid() &&  $totalItems > count($this->_dataSet) ) {
+        while ($this->valid() &&  $totalItems > count($this->_dataSet)) {
             if ($currentLine >= $this->_offset) {
                 $this->_dataSet[] = $this->_currentRow;
             }

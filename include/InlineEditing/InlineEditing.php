@@ -343,7 +343,7 @@ function saveField($field, $id, $module, $value)
 
         $check_notify = FALSE;
 
-        if (isset( $bean->fetched_row['assigned_user_id']) && $field == "assigned_user_name") {
+        if (isset($bean->fetched_row['assigned_user_id']) && $field == "assigned_user_name") {
             $old_assigned_user_id = $bean->fetched_row['assigned_user_id'];
             if (!empty($value) && ($old_assigned_user_id != $value) && ($value != $current_user->id)) {
                 $check_notify = TRUE;

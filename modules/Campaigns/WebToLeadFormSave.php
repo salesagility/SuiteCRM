@@ -68,7 +68,7 @@ while (strpos($bodyHTML, "ta_replace") !== false) {
 	$end_border = strpos($bodyHTML, '>', $start_border); //get the closing tag after marker ">";
 
 	//extract the input tag string
-    $working_str = substr($bodyHTML, $marker-3, $end_border-($marker-3) );
+    $working_str = substr($bodyHTML, $marker-3, $end_border-($marker-3));
 
     //replace input markup with text areas markups
     $new_str = str_replace('input','textarea',$working_str);

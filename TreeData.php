@@ -93,7 +93,7 @@ foreach ($_REQUEST as $key=>$value) {
 }	
 $modulename=$params1['TREE']['module']; ///module is a required parameter for the tree.
 require('include/modules.php');
-if (!empty($modulename) && !empty($func_name) && isset($beanList[$modulename]) ) {
+if (!empty($modulename) && !empty($func_name) && isset($beanList[$modulename])) {
     require_once('modules/'.$modulename.'/TreeData.php');
     $TreeDataFunctions = array(
         'ProductTemplates' => array('get_node_data'=>'','get_categories_and_products'=>''),

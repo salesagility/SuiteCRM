@@ -81,7 +81,7 @@ class DetailView extends ListView
         global $previous_offset;
         global $list_view_row_count;
         global $current_offset;
-        if (!empty($sugar_config['disable_vcr']) ) {
+        if (!empty($sugar_config['disable_vcr'])) {
             $seed->retrieve($_REQUEST['record']);
             return $seed;
         }
@@ -169,7 +169,7 @@ class DetailView extends ListView
             $this->query_where .= $seed->getOwnerWhere($current_user->id);
         }
         /* BEGIN - SECURITY GROUPS */
-        if (ACLController::requireSecurityGroup($seed->module_dir, 'view') ) {
+        if (ACLController::requireSecurityGroup($seed->module_dir, 'view')) {
             require_once('modules/SecurityGroups/SecurityGroup.php');
             global $current_user;
             $owner_where = $seed->getOwnerWhere($current_user->id);
@@ -209,7 +209,7 @@ class DetailView extends ListView
         if (empty($_REQUEST['InDetailNav']) and strcmp($_REQUEST['record'],$object->id)!=0) {
             $this->offset_key_mismatch=true;
         }
-        if ($this->no_record_found or $this->offset_key_mismatch ) {
+        if ($this->no_record_found or $this->offset_key_mismatch) {
             if ($nav_history_set) {
                 $this->return_to_list_only=true;
             }
@@ -368,7 +368,7 @@ class DetailView extends ListView
         if (isset($sugar_config['disable_vcr'])) {
             $showVCRControl = !$sugar_config['disable_vcr'];
         }
-        if ( $showVCRControl && $html_text != "" ) {
+        if ($showVCRControl && $html_text != "") {
             $xtpl->assign("PAGINATION",$pre_html_text.$html_text.$post_html_text);
         }
     }
@@ -392,7 +392,7 @@ class DetailView extends ListView
                                 $this->base_URL	.= "&{$name}[]=".$valuevalue;
                             }
                         } else {
-                            if (substr_count( $this->base_URL, '?') > 0) {
+                            if (substr_count($this->base_URL, '?') > 0) {
                                 $this->base_URL	.= "&$name=$value";
                             } else {
                                 $this->base_URL	.= "?$name=$value";

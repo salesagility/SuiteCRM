@@ -440,7 +440,7 @@ function format_place_symbol($amount, $symbol, $symbol_space)
 function unformat_number($string)
 {
     // Just in case someone passes an already unformatted number through.
-    if ( !is_string($string) ) {
+    if (!is_string($string)) {
         return $string;
     }
 
@@ -468,7 +468,7 @@ function unformat_number($string)
     preg_match('/[\-\+]?[0-9\.]*/', $string, $string);
 
     $out_number = trim($string[0]);
-    if ( $out_number == '' ) {
+    if ($out_number == '') {
         return '';
     } else {
         return (float)$out_number;
@@ -559,11 +559,11 @@ function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='Det
 {
     $view = ucfirst($view);
     if ($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate' || $view == 'ConvertLead') {
-        if ( isset($_REQUEST[$field]) && !empty($_REQUEST[$field]) ) {
+        if (isset($_REQUEST[$field]) && !empty($_REQUEST[$field])) {
             $value = $_REQUEST[$field];
-        } elseif ( empty($focus->id) ) {
+        } elseif (empty($focus->id)) {
             $value = $GLOBALS['current_user']->getPreference('currency');
-            if ( empty($value) ) {
+            if (empty($value)) {
                 // -99 is the system default currency
                 $value = -99;
             }
@@ -645,14 +645,14 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
         $currency = new ListCurrency();
         $currency->lookupCurrencies();
         $listitems = array();
-        foreach ( $currency->list as $item ) {
+        foreach ($currency->list as $item) {
             $listitems[$item->name] = $item->name;
         }
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems,$value).'</select>';
     } else {
         $currency = new Currency();
-        if ( isset($focus->currency_id) ) {
+        if (isset($focus->currency_id)) {
             $currency_id = $focus->currency_id;
         } else {
             $currency_id = -99;
@@ -691,14 +691,14 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
         $currency = new ListCurrency();
         $currency->lookupCurrencies();
         $listitems = array();
-        foreach ( $currency->list as $item ) {
+        foreach ($currency->list as $item) {
             $listitems[$item->symbol] = $item->symbol;
         }
         return '<select name="'.$field.'" id="'.$field.'" />'.
             get_select_options_with_id($listitems,$value).'</select>';
     } else {
         $currency = new Currency();
-        if ( isset($focus->currency_id) ) {
+        if (isset($focus->currency_id)) {
             $currency_id = $focus->currency_id;
         } else {
             $currency_id = -99;

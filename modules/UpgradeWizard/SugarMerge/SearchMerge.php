@@ -186,7 +186,7 @@ class SearchMerge extends ListViewMerge
 	
     protected function mergeTemplateMeta()
     {
-        if ( isset($this->customData[$this->module][$this->viewDefs][$this->templateMetaName]) ) {
+        if (isset($this->customData[$this->module][$this->viewDefs][$this->templateMetaName])) {
             $this->newData[$this->module][$this->viewDefs][$this->templateMetaName] = $this->customData[$this->module][$this->viewDefs][$this->templateMetaName];
         }
 	    

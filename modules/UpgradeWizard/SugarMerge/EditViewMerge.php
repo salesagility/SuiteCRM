@@ -544,7 +544,7 @@ class EditViewMerge
     {
         //this is to handle the situation in Calls/Meetings where we updated the templateMeta and will fail if we don't update this.
         //long term we should not do this and should provide a way for calls/meetings to update themselves.
-        if ( isset($this->customData[$this->module][$this->viewDefs][$this->templateMetaName]) && strcmp(strtolower($this->module), 'calls') != 0 && strcmp(strtolower($this->module), 'meetings') != 0 ) {
+        if (isset($this->customData[$this->module][$this->viewDefs][$this->templateMetaName]) && strcmp(strtolower($this->module), 'calls') != 0 && strcmp(strtolower($this->module), 'meetings') != 0) {
             $this->newData[$this->module][$this->viewDefs][$this->templateMetaName] = $this->customData[$this->module][$this->viewDefs][$this->templateMetaName];
         }
     }
@@ -636,16 +636,16 @@ class EditViewMerge
                         if (!empty($col['customCode'])) {
                             if ($field_name == 'uploadfile') {
                                 $replaceField = false;
-                                if ( !empty($col['customCode']) ) {
+                                if (!empty($col['customCode'])) {
                                     $replaceField = true;
                                     unset($col['customCode']);
                                 }
 
-                                if ( !empty($col['displayParams']) && !empty($col['displayParams']['link']) ) {
+                                if (!empty($col['displayParams']) && !empty($col['displayParams']['link'])) {
                                     $replaceField = true;
                                 }
 
-                                if ( $replaceField ) {
+                                if ($replaceField) {
                                     $field_name = 'filename';
                                     $col['name'] = 'filename';
                                 }

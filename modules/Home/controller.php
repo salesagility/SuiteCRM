@@ -63,7 +63,7 @@ class HomeController extends SugarController
 
     public function action_getDisplayValue()
     {
-        if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ) {
+        if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
             $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
 
             if (is_object($bean) && $bean->id != "") {
@@ -78,7 +78,7 @@ class HomeController extends SugarController
     {
         global $app_strings, $mod_strings;
 
-        if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ) {
+        if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
             $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
 
             if (is_object($bean) && $bean->id != "") {

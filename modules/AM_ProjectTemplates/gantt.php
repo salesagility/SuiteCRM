@@ -191,14 +191,14 @@ class Gantt
     //Returns an array containing the years, months and days between two dates
     public function year_month($start_date, $end_date)
     {
-        $begin = new DateTime( $start_date );
-        $end = new DateTime( $end_date);
+        $begin = new DateTime($start_date);
+        $end = new DateTime($end_date);
         $end->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $interval = new DateInterval('P1D'); // 1 month interval
         $period = new DatePeriod($begin, $interval, $end);
         $aResult = array();
 
-        foreach ( $period as $dt ) {
+        foreach ($period as $dt) {
             $aResult[$dt->format('Y')][strftime("%B", $dt->getTimestamp())][$dt->format('j')] = strftime("%a", $dt->getTimestamp());
         }
 

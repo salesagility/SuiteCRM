@@ -128,10 +128,10 @@ class TemplateRelatedTextField extends TemplateText
             $returnXTPL['ENCODED_'.strtoupper($id).'_POPUP_REQUEST_DATA'] = $encoded_popup_request_data;
             $returnXTPL[strtoupper($id).'_MODULE'] = $module;
 
-            if (isset( $_REQUEST[$name])) {
+            if (isset($_REQUEST[$name])) {
                 $returnXTPL[strtoupper($name)] =  $_REQUEST[$name];
             }
-            if (isset( $_REQUEST[$id])) {
+            if (isset($_REQUEST[$id])) {
                 $returnXTPL[strtoupper($id)] =  $_REQUEST[$id];
             }
         }
@@ -281,7 +281,7 @@ class TemplateRelatedTextField extends TemplateText
             $basename = strtolower(get_singular_bean_name($this->ext2)).'_id' ;
             $idName = $basename.'_c' ;
 	        
-            while ( $df->fieldExists($idName, 'id') ) {
+            while ($df->fieldExists($idName, 'id')) {
                 $idName = $basename.++$count.'_c' ;
             }
             $id->name = $idName ;

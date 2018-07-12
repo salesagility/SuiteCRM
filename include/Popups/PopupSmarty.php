@@ -420,7 +420,7 @@ class PopupSmarty extends ListViewSmarty
                     }
                 }
             }
-            foreach ($this->searchColumns as $columnName => $def ) {
+            foreach ($this->searchColumns as $columnName => $def) {
                 $this->filter_fields[strtolower($columnName)] = true;
             }
         }
@@ -435,11 +435,11 @@ class PopupSmarty extends ListViewSmarty
          * By default bean's create_new_list_query function loads fields displayed on the page or used in the search
          * add fields used to populate forms from _viewdefs :: field_to_name_array to retrive from db
          */
-        if ( isset($_REQUEST['field_to_name']) && $_REQUEST['field_to_name'] ) {
+        if (isset($_REQUEST['field_to_name']) && $_REQUEST['field_to_name']) {
             $_REQUEST['field_to_name'] = is_array($_REQUEST['field_to_name']) ? $_REQUEST['field_to_name'] : array($_REQUEST['field_to_name']);
-            foreach ( $_REQUEST['field_to_name'] as $add_field ) {
+            foreach ($_REQUEST['field_to_name'] as $add_field) {
                 $add_field = strtolower($add_field);
-                if ( $add_field != 'id' && !isset($this->filter_fields[$add_field]) && isset($this->seed->field_defs[$add_field]) ) {
+                if ($add_field != 'id' && !isset($this->filter_fields[$add_field]) && isset($this->seed->field_defs[$add_field])) {
                     $this->filter_fields[$add_field] = true;
                 }
             }
@@ -475,7 +475,7 @@ class PopupSmarty extends ListViewSmarty
 
         // Bug 43452 - FG - Changed the way generated Where array is imploded into the string.
         //                  Now it's imploding in the same way view.list.php do.
-        if (count($where_clauses) > 0 ) {
+        if (count($where_clauses) > 0) {
             $where = '( ' . implode(' and ', $where_clauses) . ' )';
         }
 

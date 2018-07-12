@@ -77,7 +77,7 @@ class DashletCacheBuilder
                 if (is_file(preg_replace('/(.*\/.*)(\.php)/Uis', '$1.meta$2', $file))) { // is there an associated meta data file?
                     $dashletFiles[$class]['meta'] = preg_replace('/(.*\/.*)(\.php)/Uis', '$1.meta$2', $file);
                     require($dashletFiles[$class]['meta']);
-                    if ( isset($dashletMeta[$class]['module']) ) {
+                    if (isset($dashletMeta[$class]['module'])) {
                         $dashletFiles[$class]['module'] = $dashletMeta[$class]['module'];
                     }
                 }

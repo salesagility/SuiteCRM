@@ -220,7 +220,7 @@ EOQ;
         if ($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
             return null;
         }
-        if ( !isset($_POST[$prefix.'reminder_checked']) or ($_POST[$prefix.'reminder_checked'] == 0)) {
+        if (!isset($_POST[$prefix.'reminder_checked']) or ($_POST[$prefix.'reminder_checked'] == 0)) {
             $GLOBALS['log']->debug(__FILE__.'('.__LINE__.'): No reminder checked, resetting the reminder_time');
             $_POST[$prefix.'reminder_time'] = -1;
         }
@@ -293,7 +293,7 @@ EOQ;
             $_POST['user_invitees'] = str_replace(',,', ',', $_POST['user_invitees']);
         }
 
-        if ( (isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
+        if ((isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
         (isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
         (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))
     ) {
@@ -396,7 +396,7 @@ EOQ;
                     $sql = '';
                     foreach ($deleteLeads as $u) {
                         // make sure we don't delete the assigned user
-                        if ( $u != $focus->assigned_user_id ) {
+                        if ($u != $focus->assigned_user_id) {
                             $sql .= ",'" . $u . "'";
                         }
                     }

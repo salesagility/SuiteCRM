@@ -82,11 +82,11 @@ class DBManagerFactory
                     }
                     break;
                 case "mssql":
-                  	if ( function_exists('sqlsrv_connect')
-                                && (empty($config['db_mssql_force_driver']) || $config['db_mssql_force_driver'] == 'sqlsrv' )) {
+                  	if (function_exists('sqlsrv_connect')
+                                && (empty($config['db_mssql_force_driver']) || $config['db_mssql_force_driver'] == 'sqlsrv')) {
                   	    $my_db_manager = 'SqlsrvManager';
                   	} elseif (self::isFreeTDS()
-                                && (empty($config['db_mssql_force_driver']) || $config['db_mssql_force_driver'] == 'freetds' )) {
+                                && (empty($config['db_mssql_force_driver']) || $config['db_mssql_force_driver'] == 'freetds')) {
                   	    $my_db_manager = 'FreeTDSManager';
                   	} else {
                   	    $my_db_manager = 'MssqlManager';

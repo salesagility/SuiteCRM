@@ -86,7 +86,7 @@ class ImportViewDupcheck extends ImportView
 
     private function getImportMap()
     {
-        if ( !empty($_REQUEST['source_id']) ) {
+        if (!empty($_REQUEST['source_id'])) {
             $import_map_seed = new ImportMap();
             $import_map_seed->retrieve($_REQUEST['source_id'], false);
 
@@ -106,7 +106,7 @@ class ImportViewDupcheck extends ImportView
         $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
         $uploadFileName = "upload://".basename($_REQUEST['tmp_file']);
         $splitter = new ImportFileSplitter($uploadFileName, $sugar_config['import_max_records_per_file']);
-        $splitter->splitSourceFile( $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'],ENT_QUOTES), $has_header);
+        $splitter->splitSourceFile($_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'],ENT_QUOTES), $has_header);
         $count = $splitter->getFileCount()-1;
         $recCount = $splitter->getRecordCount();
 

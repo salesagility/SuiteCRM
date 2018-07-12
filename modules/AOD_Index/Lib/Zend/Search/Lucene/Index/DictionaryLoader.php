@@ -131,15 +131,15 @@ class Zend_Search_Lucene_Index_DictionaryLoader
             } else {
                 $termSuffix = substr($data, $pos, $len);
                 $pos += $len;
-                for ($count1 = 0; $count1 < $len; $count1++ ) {
-                    if (( ord($termSuffix[$count1]) & 0xC0 ) == 0xC0) {
+                for ($count1 = 0; $count1 < $len; $count1++) {
+                    if ((ord($termSuffix[$count1]) & 0xC0) == 0xC0) {
                         $addBytes = 1;
-                        if (ord($termSuffix[$count1]) & 0x20 ) {
+                        if (ord($termSuffix[$count1]) & 0x20) {
                             $addBytes++;
 
                             // Never used for Java Lucene created index.
                             // Java2 doesn't encode strings in four bytes
-                            if (ord($termSuffix[$count1]) & 0x10 ) {
+                            if (ord($termSuffix[$count1]) & 0x10) {
                                 $addBytes++;
                             }
                         }
@@ -150,7 +150,7 @@ class Zend_Search_Lucene_Index_DictionaryLoader
                         // Check for null character. Java2 encodes null character
                         // in two bytes.
                         if (ord($termSuffix[$count1]) == 0xC0 &&
-                            ord($termSuffix[$count1+1]) == 0x80   ) {
+                            ord($termSuffix[$count1+1]) == 0x80) {
                             $termSuffix[$count1] = 0;
                             $termSuffix = substr($termSuffix,0,$count1+1)
                                         . substr($termSuffix,$count1+2);
@@ -167,9 +167,9 @@ class Zend_Search_Lucene_Index_DictionaryLoader
                 $charBytes = 1;
                 if ((ord($prevTerm[$pb]) & 0xC0) == 0xC0) {
                     $charBytes++;
-                    if (ord($prevTerm[$pb]) & 0x20 ) {
+                    if (ord($prevTerm[$pb]) & 0x20) {
                         $charBytes++;
-                        if (ord($prevTerm[$pb]) & 0x10 ) {
+                        if (ord($prevTerm[$pb]) & 0x10) {
                             $charBytes++;
                         }
                     }
@@ -219,7 +219,7 @@ class Zend_Search_Lucene_Index_DictionaryLoader
             }
             $proxPointer += $vint;
 
-            if ( $docFreq >= $skipInterval ) {
+            if ($docFreq >= $skipInterval) {
                 // $skipDelta = $tiiFile->readVInt();
                 $nbyte = ord($data[$pos++]);
                 $vint = $nbyte & 0x7F;

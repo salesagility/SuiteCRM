@@ -156,7 +156,7 @@ class UpgradeMetaHelper
             $files_queries = array();
         }
         $files_queries[$currStep]=$value;
-        if (is_writable($file_queries_file) && write_array_to_file( "file_queries", $file_queries,
+        if (is_writable($file_queries_file) && write_array_to_file("file_queries", $file_queries,
 		$file_queries_file)) {
             //writing to the file
         }

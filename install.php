@@ -298,11 +298,11 @@ if (isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") 
         }
 
         $errors = '';
-        if ( isset($validation_errors) && is_array($validation_errors)) {
-            if ( count($validation_errors) > 0 ) {
+        if (isset($validation_errors) && is_array($validation_errors)) {
+            if (count($validation_errors) > 0) {
                 // $errors  = '<div id="errorMsgs">';
                 $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
-                foreach ( $validation_errors as $error ) {
+                foreach ($validation_errors as $error) {
                     $errors .= '<li class="error">' . $error . '</li>';
                 }
                 $errors .= '</ul>'; //</div>';
@@ -452,7 +452,7 @@ if (!empty($_REQUEST['goto'])) {
     }
 }
 // Add check here to see if a silent install config file exists; if so then launch silent installer
-elseif ( is_file('config_si.php') && empty($sugar_config['installer_locked'])) {
+elseif (is_file('config_si.php') && empty($sugar_config['installer_locked'])) {
     $langHeader = get_language_header();
 
     echo <<<EOHTML

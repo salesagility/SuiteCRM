@@ -88,9 +88,9 @@ header("Pragma: cache");
 header("Content-type: application/octet-stream; charset=".$GLOBALS['locale']->getExportCharset());
 header("Content-Disposition: attachment; filename={$filename}.csv");
 header("Content-transfer-encoding: binary");
-header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
-header("Last-Modified: " . TimeDate::httpTime() );
-header("Cache-Control: post-check=0, pre-check=0", false );
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Last-Modified: " . TimeDate::httpTime());
+header("Cache-Control: post-check=0, pre-check=0", false);
 if (!empty($sugar_config['export_excel_compatible'])) {
     $transContent=chr(255) . chr(254) . mb_convert_encoding($transContent, 'UTF-16LE', 'UTF-8');
 }

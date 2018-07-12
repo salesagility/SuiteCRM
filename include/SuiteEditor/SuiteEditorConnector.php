@@ -122,7 +122,7 @@ class SuiteEditorConnector
 
         // just make sure the type of editor implements a SuiteEditorInterface..
 
-        if ( !($editor instanceof SuiteEditorInterface) ) {
+        if (!($editor instanceof SuiteEditorInterface)) {
             throw new Exception("class $editor is not a SuiteEditorInterface");
         }
 

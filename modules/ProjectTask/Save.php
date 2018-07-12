@@ -73,7 +73,7 @@ if (!empty($_POST['assigned_user_id']) && ($project->assigned_user_id != $_POST[
 	    sugar_cleanup(true);
 	}
 
-if ( empty($project->project_id) ) {
+if (empty($project->project_id)) {
     $project->project_id = $_POST['relate_id'];
 } //quick for 5.1 till projects are revamped for 5.5 nsingh- 7/3/08
 $project->save($GLOBALS['check_notify']);

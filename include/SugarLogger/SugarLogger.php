@@ -138,7 +138,7 @@ class SugarLogger implements LoggerTemplate
      */
     protected function _doInitialization()
     {
-        if ( $this->filesuffix && array_key_exists($this->filesuffix, self::$filename_suffix) ) { //if the global config contains date-format suffix, it will create suffix by parsing datetime
+        if ($this->filesuffix && array_key_exists($this->filesuffix, self::$filename_suffix)) { //if the global config contains date-format suffix, it will create suffix by parsing datetime
             $this->date_suffix = "_" . date(str_replace("%", "", $this->filesuffix));
         }
         $this->full_log_file = $this->log_dir . $this->logfile . $this->date_suffix . $this->ext;
@@ -207,16 +207,16 @@ class SugarLogger implements LoggerTemplate
 
         //if we haven't opened a file pointer yet let's do that
         if (! $this->fp) {
-            $this->fp = fopen ($this->full_log_file , 'a' );
+            $this->fp = fopen ($this->full_log_file , 'a');
         }
 
 
         // change to a string if there is just one entry
-        if ( is_array($message) && count($message) == 1 ) {
+        if (is_array($message) && count($message) == 1) {
             $message = array_shift($message);
         }
         // change to a human-readable array output if it's any other array
-        if ( is_array($message) ) {
+        if (is_array($message)) {
             $message = print_r($message,true);
         }
 
@@ -248,14 +248,14 @@ class SugarLogger implements LoggerTemplate
             'm' => 1024 * 1024,         //MBytes
             'g' => 1024 * 1024 * 1024,  //GBytes
         );
-        if ( preg_match('/^\s*([0-9]+\.[0-9]+|\.?[0-9]+)\s*(k|m|g|b)(b?ytes)?/i', $this->logSize, $match) ) {
+        if (preg_match('/^\s*([0-9]+\.[0-9]+|\.?[0-9]+)\s*(k|m|g|b)(b?ytes)?/i', $this->logSize, $match)) {
             $rollAt = ( int ) $match[1] * $units[strtolower($match[2])];
         }
         //check if our log file is greater than that or if we are forcing the log to roll if and only if roll size assigned the value correctly
-        if ( $force || ($rollAt && filesize ( $this->full_log_file ) >= $rollAt) ) {
+        if ($force || ($rollAt && filesize ($this->full_log_file) >= $rollAt)) {
             //now lets move the logs starting at the oldest and going to the newest
             for ($i = $this->maxLogs - 2; $i > 0; $i --) {
-                if (file_exists ( $this->log_dir . $this->logfile . $this->date_suffix . '_'. $i . $this->ext )) {
+                if (file_exists ($this->log_dir . $this->logfile . $this->date_suffix . '_'. $i . $this->ext)) {
                     $to = $i + 1;
                     $old_name = $this->log_dir . $this->logfile . $this->date_suffix . '_'. $i . $this->ext;
                     $new_name = $this->log_dir . $this->logfile . $this->date_suffix . '_'. $to . $this->ext;

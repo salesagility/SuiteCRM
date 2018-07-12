@@ -75,7 +75,7 @@ function smarty_function_sugar_help($params, &$smarty)
     //append any additional parameters.
     $click  = "return SUGAR.util.showHelpTips(this,'$text'";
 
-    if (count( $params) > 1) {
+    if (count($params) > 1) {
         $click .=",'".$params['myPos']."','".$params['atPos']."'";
     }
     $helpImage = SugarThemeRegistry::current()->getImageURL('helpInline.png');

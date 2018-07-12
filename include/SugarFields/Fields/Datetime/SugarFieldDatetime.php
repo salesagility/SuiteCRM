@@ -132,7 +132,7 @@ class SugarFieldDatetime extends SugarFieldBase
     public function save(&$bean, $inputData, $field, $def, $prefix = '')
     {
         global $timedate;
-        if ( !isset($inputData[$prefix.$field]) ) {
+        if (!isset($inputData[$prefix.$field])) {
             return;
         }
 
@@ -157,7 +157,7 @@ class SugarFieldDatetime extends SugarFieldBase
 
         $format = $timedate->merge_date_time($settings->dateformat, $settings->timeformat);
 
-        if ( !$timedate->check_matching_format($value, $format) ) {
+        if (!$timedate->check_matching_format($value, $format)) {
             $parts = $timedate->split_date_time($value);
             if (empty($parts[0])) {
                 $datepart = $timedate->getNow()->format($settings->dateformat);
@@ -181,7 +181,7 @@ class SugarFieldDatetime extends SugarFieldBase
             }
 
             $value = $timedate->merge_date_time($datepart, $timepart);
-            if ( !$timedate->check_matching_format($value, $format) ) {
+            if (!$timedate->check_matching_format($value, $format)) {
                 return false;
             }
         }
@@ -201,7 +201,7 @@ class SugarFieldDatetime extends SugarFieldBase
 
         //check to see if the date is in the proper format
         $user_dateFormat = $timedate->get_date_format();
-        if (!empty($vardef['value']) && !$timedate->check_matching_format( $vardef['value'],$user_dateFormat)) {
+        if (!empty($vardef['value']) && !$timedate->check_matching_format($vardef['value'],$user_dateFormat)) {
 
             //date is not in proper user format, so get the SugarDateTiemObject and inject the vardef with a new element
             $sdt = $timedate->fromString($vardef['value'],$current_user);

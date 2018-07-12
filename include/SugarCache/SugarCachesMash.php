@@ -52,11 +52,11 @@ class SugarCachesMash extends SugarCacheAbstract
      */
     public function useBackend()
     {
-        if ( !parent::useBackend() ) {
+        if (!parent::useBackend()) {
             return false;
         }
         
-        if ( function_exists("zget")
+        if (function_exists("zget")
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_smash'])) {
             return true;
         }

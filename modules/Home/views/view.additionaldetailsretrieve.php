@@ -63,7 +63,7 @@ class HomeViewAdditionaldetailsretrieve extends SugarView
         $additionalDetailsFile = $this->getAdditionalDetailsMetadataFile($moduleDir);
         
         if (empty($beanFiles[$beanName]) || 
-            empty($id) || !is_file($additionalDetailsFile) ) {
+            empty($id) || !is_file($additionalDetailsFile)) {
             echo 'bad data';
             die();
         } 

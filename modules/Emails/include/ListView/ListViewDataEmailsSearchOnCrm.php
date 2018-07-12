@@ -254,7 +254,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
         }
         $totalCount = $count + $offset;
 
-        if ( $count >= $limit && $totalCounted) {
+        if ($count >= $limit && $totalCounted) {
             $totalCount  = $this->lvde->getTotalCount($crmEmailsQuery);
         }
         SugarVCR::recordIDs($this->lvde->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
@@ -279,7 +279,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
 
         $queryString = '';
 
-        if ( (isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
+        if ((isset($request["searchFormTab"]) && $request["searchFormTab"] == "advanced_search") ||
             (isset($request["type_basic"]) && (count($request["type_basic"]) > 1 || $request["type_basic"][0] != "")) ||
             (isset($request["module"]) && $request["module"] == "MergeRecords")) {
             $queryString = "-advanced_search";
@@ -293,14 +293,14 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
 
             $basicSearchFields = array();
 
-            if ( isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search']) ) {
+            if (isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])) {
                 $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
             }
 
-            foreach ( $basicSearchFields as $basicSearchField) {
+            foreach ($basicSearchFields as $basicSearchField) {
                 $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
                 $field_name .= "_basic";
-                if ( isset($request[$field_name])  && ( !is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name') ) {
+                if (isset($request[$field_name])  && (!is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name')) {
                     // Ensure the encoding is UTF-8
                     $queryString = htmlentities($request[$field_name], null, 'UTF-8');
                     break;

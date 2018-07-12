@@ -57,7 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     ini_set('max_execution_time','600');
         
         //figure out which commands to call.  
-        if ($_REQUEST['js_admin_repair'] == 'concat' ) {
+        if ($_REQUEST['js_admin_repair'] == 'concat') {
             //concatenate mode, call the files that will concatenate javascript group files
             $_REQUEST['js_rebuild_concat'] = 'rebuild';
             require_once('jssource/minify.php');

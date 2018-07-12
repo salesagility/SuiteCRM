@@ -292,7 +292,7 @@ class One2MBeanRelationship extends One2MRelationship
         $join = '';
 
         //Set up any table aliases required
-        if ( ! empty($params['join_table_alias'])) {
+        if (! empty($params['join_table_alias'])) {
             $targetTableWithAlias = $targetTable. " ".$params['join_table_alias'];
             $targetTable = $params['join_table_alias'];
         }

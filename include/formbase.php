@@ -86,7 +86,7 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 	    ($_POST['assigned_user_id'] != $current_user->id)) {
         $GLOBALS['check_notify'] = true;
     }
-    if (isset($_POST['dup_checked']) && $_POST['dup_checked'] && isset($_POST['id']) && $_POST['id'] != '' ) {
+    if (isset($_POST['dup_checked']) && $_POST['dup_checked'] && isset($_POST['id']) && $_POST['id'] != '') {
         $focus->new_with_id = true;
     }
     require_once('include/SugarFields/SugarFieldHandler.php');
@@ -108,7 +108,7 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
     }
 
     foreach ($focus->field_defs as $field=>$def) {
-        if ( $field == 'id' && !empty($focus->id) ) {
+        if ($field == 'id' && !empty($focus->id)) {
             // Don't try and overwrite the ID
             continue;
         }
@@ -377,18 +377,18 @@ function add_prospects_to_prospect_list($parent_id,$child_id)
     $relationship = '';
     foreach ($focus->get_linked_fields() as $field => $def) {
         if ($focus->load_relationship($field)) {
-            if ( $focus->$field->getRelatedModuleName() == 'ProspectLists' ) {
+            if ($focus->$field->getRelatedModuleName() == 'ProspectLists') {
                 $relationship = $field;
                 break;
             }
         }
     }
 
-    if ( $relationship != '' ) {
-        foreach ( $uids as $id) {
+    if ($relationship != '') {
+        foreach ($uids as $id) {
             $focus->retrieve($id);
             $focus->load_relationship($relationship);
-            $focus->prospect_lists->add( $parent_id );
+            $focus->prospect_lists->add($parent_id);
         }
     }
 }

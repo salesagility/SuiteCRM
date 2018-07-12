@@ -80,7 +80,7 @@ class MailMerge
     function Execute()
     {
         $this->Initialize();
-        if ( count( $this->list ) > 0 ) {
+        if (count($this->list) > 0) {
             if (isset($this->template)) {
                 $this->CreateHeaderFile();
                 $this->CreateDataSource();

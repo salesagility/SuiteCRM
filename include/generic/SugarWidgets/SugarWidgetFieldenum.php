@@ -156,7 +156,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
             $field_def = $layout_def['fields'];
         }
 
-        if (!empty($layout_def['table_key'] ) &&( empty ($field_def['fields']) || empty ($field_def['fields'][0]) || empty ($field_def['fields'][1]))) {
+        if (!empty($layout_def['table_key']) &&(empty ($field_def['fields']) || empty ($field_def['fields'][0]) || empty ($field_def['fields'][1]))) {
             $value = $this->_get_list_value($layout_def);
         } elseif (!empty($layout_def['name']) && !empty($layout_def['fields'])) {
             $key = strtoupper($layout_def['name']);
@@ -184,7 +184,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
             foreach ($value as $val) {
                 $returnVal = translate($field_def['options'],$field_def['module'],$val);
                 if (!is_array($returnVal)) {
-                    array_push( $cell, translate($field_def['options'],$field_def['module'],$val));
+                    array_push($cell, translate($field_def['options'],$field_def['module'],$val));
                 }
             }
             $cell = implode(", ",$cell);
@@ -225,7 +225,7 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
         global $app_list_strings;
 
         if (!empty($layout_def['remove_blank']) && $layout_def['remove_blank']) {
-            if ( isset($layout_def['options']) &&  is_array($layout_def['options']) ) {
+            if (isset($layout_def['options']) &&  is_array($layout_def['options'])) {
                 $ops = $layout_def['options'];
             } elseif (isset($layout_def['options']) && isset($app_list_strings[$layout_def['options']])) {
                 $ops = $app_list_strings[$layout_def['options']];

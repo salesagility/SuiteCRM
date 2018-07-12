@@ -110,7 +110,7 @@ class ListViewDisplay
             if (empty($GLOBALS['displayListView'])
 		            && (!empty($_REQUEST['clear_query'])
 		                || $_REQUEST['module'] == $moduleDir
-		                    && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI' )
+		                    && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI')
 		                        && (!$searching)))) {
                 $_SESSION['last_search_mod'] = $_REQUEST['module'] ;
                 $this->should_process = false;
@@ -199,7 +199,7 @@ class ListViewDisplay
                     }
                 }
             }
-            foreach ($this->searchColumns as $columnName => $def ) {
+            foreach ($this->searchColumns as $columnName => $def) {
                 $filter_fields[strtolower($columnName)] = true;
             }
         }
@@ -537,7 +537,7 @@ class ListViewDisplay
             return "";
         }
 
-        if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) && $dictionary[$this->seed->object_name]['duplicate_merge']==true ) {
+        if (isset($dictionary[$this->seed->object_name]['duplicate_merge']) && $dictionary[$this->seed->object_name]['duplicate_merge']==true) {
             return "<a href='javascript:void(0)' ".
                             "class=\"parent-dropdown-action-handler\" id='mergeduplicates_listview_". $loc ."'".
                             "onclick='if (sugarListView.get_checks_count()> 1) {sListView.send_form(true, \"MergeRecords\", \"index.php\", \"{$app_strings['LBL_LISTVIEW_NO_SELECTED']}\", \"{$this->seed->module_dir}\",\"$return_string\");} else {alert(\"{$app_strings['LBL_LISTVIEW_TWO_REQUIRED']}\");return false;}'>".
@@ -553,7 +553,7 @@ class ListViewDisplay
 	 */
     protected function buildMergeLink(array $modules_array = null, $loc = 'top')
     {
-        if ( empty($modules_array) ) {
+        if (empty($modules_array)) {
             require('modules/MailMerge/modules_array.php');
         }
         global $current_user, $app_strings;
@@ -736,7 +736,7 @@ EOF;
             }//fi == 'html'
 
             //Bug 40511, make sure relate fields have the correct module defined
-            if ($this->displayColumns[$columnName]['type'] == "relate" && !empty($seedDef['link']) && empty( $this->displayColumns[$columnName]['module'])) {
+            if ($this->displayColumns[$columnName]['type'] == "relate" && !empty($seedDef['link']) && empty($this->displayColumns[$columnName]['module'])) {
                 $link = $seedDef['link'];
                 if (!empty($this->lvd->seed->field_defs[$link]) && !empty($this->lvd->seed->field_defs[$seedDef['link']]['module'])) {
                     $this->displayColumns[$columnName]['module'] = $this->lvd->seed->field_defs[$seedDef['link']]['module'];

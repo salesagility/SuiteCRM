@@ -72,12 +72,12 @@ class ImportController extends SugarController
         $this->importModule = $_REQUEST['import_module'];
 
         $this->bean = loadBean($this->importModule);
-        if ( $this->bean ) {
-            if ( !$this->bean->importable ) {
+        if ($this->bean) {
+            if (!$this->bean->importable) {
                 $this->bean = false;
-            } elseif ( $_REQUEST['import_module'] == 'Users' && !is_admin($GLOBALS['current_user']) ) {
+            } elseif ($_REQUEST['import_module'] == 'Users' && !is_admin($GLOBALS['current_user'])) {
                 $this->bean = false;
-            } elseif ( $this->bean->bean_implements('ACL')) {
+            } elseif ($this->bean->bean_implements('ACL')) {
                 if (!ACLController::checkAccess($this->bean->module_dir, 'import', true)) {
                     ACLController::displayNoAccess();
                     sugar_die('');
@@ -85,7 +85,7 @@ class ImportController extends SugarController
             }
         }
 
-        if ( !$this->bean && $this->importModule != "Administration") {
+        if (!$this->bean && $this->importModule != "Administration") {
             $_REQUEST['message'] = $mod_strings['LBL_ERROR_IMPORTS_NOT_SET_UP'];
             $this->view = 'error';
             $this->_processed = true;
@@ -109,7 +109,7 @@ class ImportController extends SugarController
             $import_map->mark_deleted($_REQUEST['delete_map_id']);
         }
 
-        if (isset($_REQUEST['publish']) ) {
+        if (isset($_REQUEST['publish'])) {
             $import_map = new ImportMap();
 
             $import_map = $import_map->retrieve($_REQUEST['import_map_id'], false);
@@ -119,7 +119,7 @@ class ImportController extends SugarController
                 if (!$result) {
                     $results['message'] = $mod_strings['LBL_ERROR_UNABLE_TO_PUBLISH'];
                 }
-            } elseif ( $_REQUEST['publish'] == 'no') {
+            } elseif ($_REQUEST['publish'] == 'no') {
                 // if you don't own this importmap, you do now, unless you have a map by the same name
                 $result = $import_map->mark_published($current_user->id,false);
                 if (!$result) {
@@ -146,7 +146,7 @@ class ImportController extends SugarController
         $enclosure = html_entity_decode($enclosure, ENT_QUOTES);
         $hasHeader = isset($_REQUEST['header']) && !empty($_REQUEST['header']) ? TRUE : FALSE;
 
-        $importFile = new ImportFile( $fileName, $delim, $enclosure, FALSE);
+        $importFile = new ImportFile($fileName, $delim, $enclosure, FALSE);
         $importFile->setHeaderRow($hasHeader);
         $rows = $v->getSampleSet($importFile);
 
@@ -181,7 +181,7 @@ class ImportController extends SugarController
     function action_Step1()
     {
         $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : FALSE;
-        if ( $this->importModule == 'Administration' || $fromAdminView
+        if ($this->importModule == 'Administration' || $fromAdminView
         ) {
             $this->view = 'step1';
         } else {

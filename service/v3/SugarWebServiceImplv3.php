@@ -142,9 +142,9 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             $cur_id = $current_user->getPreference('currency');
             $nameValueArray['user_currency_id'] = self::$helperObject->get_name_value('user_currency_id', $cur_id);
             $nameValueArray['user_is_admin'] = self::$helperObject->get_name_value('user_is_admin', is_admin($current_user));
-            $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value('user_default_team_id', $current_user->default_team );
-            $nameValueArray['user_default_dateformat'] = self::$helperObject->get_name_value('user_default_dateformat', $current_user->getPreference('datef') );
-            $nameValueArray['user_default_timeformat'] = self::$helperObject->get_name_value('user_default_timeformat', $current_user->getPreference('timef') );
+            $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value('user_default_team_id', $current_user->default_team);
+            $nameValueArray['user_default_dateformat'] = self::$helperObject->get_name_value('user_default_dateformat', $current_user->getPreference('datef'));
+            $nameValueArray['user_default_timeformat'] = self::$helperObject->get_name_value('user_default_timeformat', $current_user->getPreference('timef'));
             $currencyObject = new Currency();
             $currencyObject->retrieve($cur_id);
             $nameValueArray['user_currency_name'] = self::$helperObject->get_name_value('user_currency_name', $currencyObject->name);
@@ -171,7 +171,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_fields_md5(v3) for module: '. print_r($module_name, true));
 
         $results = array();
-        if ( is_array($module_name) ) {
+        if (is_array($module_name)) {
             foreach ($module_name as $module) {
                 $results[$module] = md5(serialize(self::get_module_fields($session, $module)));
             }
@@ -229,7 +229,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
 
             foreach ($a_view as $view) {
                 $aclViewCheck = (strtolower($view) == 'subpanel') ? 'DetailView' : ucfirst(strtolower($view)) . 'View';
-                if ($seed->ACLAccess($aclViewCheck, true) ) {
+                if ($seed->ACLAccess($aclViewCheck, true)) {
                     foreach ($a_type as $type) {
                         $a_vardefs = self::$helperObject->get_module_view_defs($module_name, $type, $view);
                         if ($md5) {
@@ -319,7 +319,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
         } // if
 
         $results = array();
-        foreach ($module_names as $module ) {
+        foreach ($module_names as $module) {
             if (!self::$helperObject->check_modules_access($GLOBALS['current_user'], $module, 'read')) {
                 $GLOBALS['log']->debug("SugarWebServiceImpl->get_last_viewed: NO ACCESS to $module");
                 continue;
@@ -421,7 +421,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
             foreach ($modules_to_search as $name => $beanName) {
                 $where_clauses_array = array();
                 $unifiedSearchFields = array () ;
-                foreach ($unified_search_modules[$name]['fields'] as $field=>$def ) {
+                foreach ($unified_search_modules[$name]['fields'] as $field=>$def) {
                     $unifiedSearchFields[$name] [ $field ] = $def ;
                     $unifiedSearchFields[$name] [ $field ]['value'] = $search_string;
                 }
@@ -443,19 +443,19 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                 if ($beanName != "User"
     			    && $beanName != "ProjectTask"
     			    ) {
-                    $searchForm = new SearchForm ($seed, $name ) ;
+                    $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
+                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
-                    $searchForm = new SearchForm ($seed, $name ) ;
+                    $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
+                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     $emailQuery = false;
 
                     $where = '';
-                    if (count($where_clauses) > 0 ) {
+                    if (count($where_clauses) > 0) {
                         $where = '('. implode(' ) OR ( ', $where_clauses) . ')';
                     }
 
@@ -484,14 +484,14 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                     //Pull in any db fields used for the unified search query so the correct joins will be added
                     $selectOnlyQueryFields = array();
                     foreach ($unifiedSearchFields[$name] as $field => $def) {
-                        if ( isset($def['db_field']) && !in_array($field,$filterFields) ) {
+                        if (isset($def['db_field']) && !in_array($field,$filterFields)) {
                             $filterFields[] = $field;
                             $selectOnlyQueryFields[] = $field;
                         }
                     }
 
                     //Add the assigned user filter if applicable
-                    if (!empty($assigned_user_id) && isset( $seed->field_defs['assigned_user_id']) ) {
+                    if (!empty($assigned_user_id) && isset($seed->field_defs['assigned_user_id'])) {
                         $ownerWhere = $seed->getOwnerWhere($assigned_user_id);
                         $where = "($where) AND $ownerWhere";
                     }

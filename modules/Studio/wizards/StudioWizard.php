@@ -125,7 +125,7 @@ class StudioWizard
     }
     function display($error = '')
     {
-        echo $this->fetch($error );
+        echo $this->fetch($error);
     }
     
     function fetch($error = '')

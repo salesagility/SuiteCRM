@@ -278,9 +278,9 @@ class soap_transport_http extends nusoap_base
 
             // open socket
             if ($connection_timeout > 0) {
-                $this->fp = @fsockopen( $host, $this->port, $this->errno, $this->error_str, $connection_timeout);
+                $this->fp = @fsockopen($host, $this->port, $this->errno, $this->error_str, $connection_timeout);
             } else {
-                $this->fp = @fsockopen( $host, $this->port, $this->errno, $this->error_str);
+                $this->fp = @fsockopen($host, $this->port, $this->errno, $this->error_str);
             }
 		
             // test pointer
@@ -298,7 +298,7 @@ class soap_transport_http extends nusoap_base
 		
             // set response timeout
             $this->debug('set response timeout to ' . $response_timeout);
-            socket_set_timeout( $this->fp, $response_timeout);
+            socket_set_timeout($this->fp, $response_timeout);
 
             $this->debug('socket connected');
             return true;
@@ -719,12 +719,12 @@ class soap_transport_http extends nusoap_base
             return $new;
         }
         $temp = substr($buffer,0,$chunkend);
-        $chunk_size = hexdec( trim($temp) );
+        $chunk_size = hexdec(trim($temp));
         $chunkstart = $chunkend + strlen($lb);
         // while (chunk-size > 0) {
         while ($chunk_size > 0) {
             $this->debug("chunkstart: $chunkstart chunk_size: $chunk_size");
-            $chunkend = strpos( $buffer, $lb, $chunkstart + $chunk_size);
+            $chunkend = strpos($buffer, $lb, $chunkstart + $chunk_size);
 		  	
             // Just in case we got a broken connection
             if ($chunkend == FALSE) {
@@ -749,7 +749,7 @@ class soap_transport_http extends nusoap_base
                 break; //Just in case we got a broken connection
             }
             $temp = substr($buffer,$chunkstart,$chunkend-$chunkstart);
-            $chunk_size = hexdec( trim($temp) );
+            $chunk_size = hexdec(trim($temp));
             $chunkstart = $chunkend;
         }
         return $new;
@@ -1069,7 +1069,7 @@ class soap_transport_http extends nusoap_base
                 $this->debug("Found HTTP header to skip");
                 if ($pos = strpos($data,"\r\n\r\n")) {
                     $data = ltrim(substr($data,$pos));
-                } elseif ($pos = strpos($data,"\n\n") ) {
+                } elseif ($pos = strpos($data,"\n\n")) {
                     $data = ltrim(substr($data,$pos));
                 }
             }
@@ -1080,7 +1080,7 @@ class soap_transport_http extends nusoap_base
                 while (preg_match('/^HTTP\/1.1 100/',$data)) {
                     if ($pos = strpos($data,"\r\n\r\n")) {
                         $data = ltrim(substr($data,$pos));
-                    } elseif ($pos = strpos($data,"\n\n") ) {
+                    } elseif ($pos = strpos($data,"\n\n")) {
                         $data = ltrim(substr($data,$pos));
                     }
                 }
@@ -1089,7 +1089,7 @@ class soap_transport_http extends nusoap_base
             // separate content from HTTP headers
             if ($pos = strpos($data,"\r\n\r\n")) {
                 $lb = "\r\n";
-            } elseif ( $pos = strpos($data,"\n\n")) {
+            } elseif ($pos = strpos($data,"\n\n")) {
                 $lb = "\n";
             } else {
                 $this->debug('no proper separation of headers and document');
@@ -1307,7 +1307,7 @@ class soap_transport_http extends nusoap_base
 
         $cookie_param = 'path=';
         $start = strpos($cookie_str, $cookie_param);
-        if ( $start > 0 ) {
+        if ($start > 0) {
             $path = substr($cookie_str, $start + strlen($cookie_param));
             $path = substr($path, 0, strpos($path, ';'));
         } else {

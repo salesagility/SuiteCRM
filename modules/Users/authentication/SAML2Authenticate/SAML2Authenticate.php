@@ -121,7 +121,7 @@ class SAML2Authenticate extends SugarAuthenticate
     public function redirectToLogin(SugarApplication $app)
     {
         if (isset($_SESSION['samlNameId']) && !empty($_SESSION['samlNameId'])) {
-            if ( $this->userAuthenticate->loadUserOnLogin($_SESSION['samlNameId'], null) ) {
+            if ($this->userAuthenticate->loadUserOnLogin($_SESSION['samlNameId'], null)) {
                 global $authController;
                 $authController->login($_SESSION['samlNameId'], null);
             }

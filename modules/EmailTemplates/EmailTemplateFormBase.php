@@ -276,7 +276,7 @@ EOQ;
             $note = new Note();
 
             //Images are presaved above so we need to prevent duplicate files from being created.
-            if ( isset($preProcessedImages[$file['name']]) ) {
+            if (isset($preProcessedImages[$file['name']])) {
                 $oldId = $preProcessedImages[$file['name']];
                 $note->id = $oldId;
                 $note->new_with_id = TRUE;
@@ -303,7 +303,7 @@ EOQ;
 
         $focus->saved_attachments = array();
         foreach ($focus->attachments as $note) {
-            if ( !empty($note->id) && $note->new_with_id === FALSE) {
+            if (!empty($note->id) && $note->new_with_id === FALSE) {
                 if (empty($_REQUEST['old_id'])) {
                     array_push($focus->saved_attachments, $note);
                 } // to support duplication of email templates

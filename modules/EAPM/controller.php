@@ -96,11 +96,11 @@ class EAPMController extends SugarController
     {
         if (!$this->bean->deleted) {
             // do not load bean here since password is already encoded
-            if ( $this->api->authMethod != 'oauth' ) {
+            if ($this->api->authMethod != 'oauth') {
                 // OAuth beans have to be handled specially.
                 
                 $reply = $this->api->checkLogin();
-                if ( !$reply['success'] ) {
+                if (!$reply['success']) {
                     return $this->failed(translate('LBL_AUTH_ERROR', $this->bean->module_dir));
                 } else {
                     $this->bean->validated();
@@ -120,11 +120,11 @@ class EAPMController extends SugarController
         }
         // Override the redirect location to add the hash
         $this->redirect_url = $this->redirect_url.'#tab5';
-        if ( $this->api->authMethod == 'oauth' && !$this->bean->deleted ) {
+        if ($this->api->authMethod == 'oauth' && !$this->bean->deleted) {
             // It's OAuth, we have to handle this specially.
             // We need to create a new window to handle the OAuth, and redirect this window back to the edit view
             // So we will handle that in javascript.
-            $popup_warning_msg = string_format($GLOBALS['mod_strings']['LBL_ERR_POPUPS_DISABLED'], array($_SERVER['HTTP_HOST']) );
+            $popup_warning_msg = string_format($GLOBALS['mod_strings']['LBL_ERR_POPUPS_DISABLED'], array($_SERVER['HTTP_HOST']));
             echo('<script src="modules/EAPM/EAPMEdit.js" type="text/javascript"></script><script type="text/javascript">EAPMPopupAndRedirect("index.php?module=EAPM&action=oauth&record='.$this->bean->id.'", "'.$this->redirect_url.'", \''.$popup_warning_msg.'\'); </script>');
 
             // To prevent the normal handler from issuing a header call and destroying our neat little javascript we'll
@@ -146,7 +146,7 @@ class EAPMController extends SugarController
         if (empty($_REQUEST['oauth_error'])) {
             $this->api = ExternalAPIFactory::loadAPI($this->bean->application,true);
             $reply = $this->api->checkLogin($this->bean);
-            if ( !$reply['success'] ) {
+            if (!$reply['success']) {
                 return $this->failed(translate('LBL_AUTH_ERROR', $this->bean->module_dir));
             } else {
                 $this->bean->validated();
@@ -154,7 +154,7 @@ class EAPMController extends SugarController
         }
         
         // This is a tweak so that we can automatically close windows if requested by the external account system
-        if ( isset($_REQUEST['closeWhenDone']) && $_REQUEST['closeWhenDone'] == 1 ) {
+        if (isset($_REQUEST['closeWhenDone']) && $_REQUEST['closeWhenDone'] == 1) {
             if (!empty($_REQUEST['callbackFunction']) && !empty($_REQUEST['application'])) {
                 $js = '<script type="text/javascript">window.opener.' . $_REQUEST['callbackFunction'] . '("' . $_REQUEST['application'] . '"); window.close();</script>';
             } elseif (!empty($_REQUEST['refreshParentWindow'])) {
@@ -191,7 +191,7 @@ class EAPMController extends SugarController
         $this->api = ExternalAPIFactory::loadAPI($this->bean->application,true);
         $this->action_save();
 
-        if ( $this->api->authMethod == 'oauth' ) {
+        if ($this->api->authMethod == 'oauth') {
             $this->action_oauth();
         }
     }
@@ -208,11 +208,11 @@ class EAPMController extends SugarController
 
     protected function action_Reauthenticate()
     {
-        if ( $this->api->authMethod == 'oauth' ) {
+        if ($this->api->authMethod == 'oauth') {
             // OAuth beans have to be handled specially.
             
             $reply = $this->api->checkLogin();
-            if ( !$reply['success'] ) {
+            if (!$reply['success']) {
                 return $this->failed(translate('LBL_AUTH_ERROR', $this->bean->module_dir));
             } else {
                 $this->bean->validated();
@@ -231,12 +231,12 @@ class EAPMController extends SugarController
     protected function action_FlushFileCache()
     {
         $api = ExternalAPIFactory::loadAPI($_REQUEST['api']);
-        if ( $api == false ) {
+        if ($api == false) {
             echo 'FAILED';
             return;
         }
 
-        if ( method_exists($api,'loadDocCache') ) {
+        if (method_exists($api,'loadDocCache')) {
             $api->loadDocCache(true);
         }
 
@@ -245,7 +245,7 @@ class EAPMController extends SugarController
 
     protected function remapAction()
     {
-        if ( $this->do_action == 'DetailView' ) {
+        if ($this->do_action == 'DetailView') {
             $this->do_action = 'EditView';
             $this->action = 'EditView';
         }

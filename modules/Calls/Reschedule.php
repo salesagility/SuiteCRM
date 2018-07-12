@@ -26,7 +26,7 @@ if (!empty($hour) && !empty($minutes)) {
     $time_start = $hour. $time_separator .$minutes;
 }
 
-if (isset($ampm ) && !empty($ampm )) {
+if (isset($ampm) && !empty($ampm)) {
     $time_start = $timedate->merge_time_meridiem($time_start, $timedate->get_time_format(), $ampm);
 }
 

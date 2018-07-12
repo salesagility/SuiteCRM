@@ -93,14 +93,14 @@ if (!empty($_REQUEST['assigned_user_id']) && ($marketing->assigned_user_id != $_
 }
 
     foreach ($_REQUEST as $key => $val) {
-        if ((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)) {
+        if ((strstr($key, $prefix)) && (strpos($key, $prefix)== 0)) {
             $newkey  =substr($key, strlen($prefix)) ;
             $_REQUEST[$newkey] = $val;
         }
     }
 
     foreach ($_REQUEST as $key => $val) {
-        if ((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)) {
+        if ((strstr($key, $prefix)) && (strpos($key, $prefix)== 0)) {
             $newkey  =substr($key, strlen($prefix)) ;
             $_REQUEST[$newkey] = $val;
         }
@@ -118,7 +118,7 @@ if (empty($_REQUEST['time_start'])) {
 
 foreach ($marketing->column_fields as $field) {
     if ($field == 'all_prospect_lists') {
-        if (isset($_REQUEST[$field]) && $_REQUEST[$field]='on' ) {
+        if (isset($_REQUEST[$field]) && $_REQUEST[$field]='on') {
             $marketing->$field = 1;
         } else {
             $marketing->$field = 0;
@@ -183,8 +183,8 @@ if ($master !='save') {
 }
 
 if (isset($_REQUEST['show_wizard_summary']) && $_REQUEST['show_wizard_summary']) {
-    if ( (isset($_REQUEST['sendMarketingEmailTest']) && $_REQUEST['sendMarketingEmailTest']) ||
-        (isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) ) {
+    if ((isset($_REQUEST['sendMarketingEmailTest']) && $_REQUEST['sendMarketingEmailTest']) ||
+        (isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule'])) {
         // set correct post variables..
         $_POST['module'] = 'Campaigns';
         $_POST['action'] = 'QueueCampaign';

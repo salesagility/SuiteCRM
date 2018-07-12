@@ -78,7 +78,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 // --------------------------------------------------------------------------------
 
   // ----- Constants
-  define( 'PCLZIP_READ_BLOCK_SIZE', 2048 );
+  define('PCLZIP_READ_BLOCK_SIZE', 2048);
 
   // ----- File list separator
   // In version 1.x of PclZip, the separator for file list is a space
@@ -90,14 +90,14 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
   // Recommanded values for compatibility with older versions :
   //define( 'PCLZIP_SEPARATOR', ' ' );
   // Recommanded values for smart separation of filenames.
-  define( 'PCLZIP_SEPARATOR', ',' );
+  define('PCLZIP_SEPARATOR', ',');
 
   // ----- Error configuration
   // 0 : PclZip Class integrated error handling
   // 1 : PclError external library error handling. By enabling this
   //     you must ensure that you have included PclError library.
   // [2,...] : reserved for futur use
-  define( 'PCLZIP_ERROR_EXTERNAL', 0 );
+  define('PCLZIP_ERROR_EXTERNAL', 0);
 
   // ----- Optional static temporary directory
   //       By default temporary files are generated in the script current
@@ -108,7 +108,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
   //       Samples :
   // define( 'PCLZIP_TEMPORARY_DIR', '/temp/' );
   // define( 'PCLZIP_TEMPORARY_DIR', 'C:/Temp/' );
-  define( 'PCLZIP_TEMPORARY_DIR', '' );
+  define('PCLZIP_TEMPORARY_DIR', '');
 
 // --------------------------------------------------------------------------------
 // ***** UNDER THIS LINE NOTHING NEEDS TO BE MODIFIED *****
@@ -132,55 +132,55 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
   //  -12 : Unable to rename file (rename)
   //  -13 : Invalid header checksum
   //  -14 : Invalid archive size
-  define( 'PCLZIP_ERR_USER_ABORTED', 2 );
-  define( 'PCLZIP_ERR_NO_ERROR', 0 );
-  define( 'PCLZIP_ERR_WRITE_OPEN_FAIL', -1 );
-  define( 'PCLZIP_ERR_READ_OPEN_FAIL', -2 );
-  define( 'PCLZIP_ERR_INVALID_PARAMETER', -3 );
-  define( 'PCLZIP_ERR_MISSING_FILE', -4 );
-  define( 'PCLZIP_ERR_FILENAME_TOO_LONG', -5 );
-  define( 'PCLZIP_ERR_INVALID_ZIP', -6 );
-  define( 'PCLZIP_ERR_BAD_EXTRACTED_FILE', -7 );
-  define( 'PCLZIP_ERR_DIR_CREATE_FAIL', -8 );
-  define( 'PCLZIP_ERR_BAD_EXTENSION', -9 );
-  define( 'PCLZIP_ERR_BAD_FORMAT', -10 );
-  define( 'PCLZIP_ERR_DELETE_FILE_FAIL', -11 );
-  define( 'PCLZIP_ERR_RENAME_FILE_FAIL', -12 );
-  define( 'PCLZIP_ERR_BAD_CHECKSUM', -13 );
-  define( 'PCLZIP_ERR_INVALID_ARCHIVE_ZIP', -14 );
-  define( 'PCLZIP_ERR_MISSING_OPTION_VALUE', -15 );
-  define( 'PCLZIP_ERR_INVALID_OPTION_VALUE', -16 );
-  define( 'PCLZIP_ERR_ALREADY_A_DIRECTORY', -17 );
-  define( 'PCLZIP_ERR_UNSUPPORTED_COMPRESSION', -18 );
-  define( 'PCLZIP_ERR_UNSUPPORTED_ENCRYPTION', -19 );
+  define('PCLZIP_ERR_USER_ABORTED', 2);
+  define('PCLZIP_ERR_NO_ERROR', 0);
+  define('PCLZIP_ERR_WRITE_OPEN_FAIL', -1);
+  define('PCLZIP_ERR_READ_OPEN_FAIL', -2);
+  define('PCLZIP_ERR_INVALID_PARAMETER', -3);
+  define('PCLZIP_ERR_MISSING_FILE', -4);
+  define('PCLZIP_ERR_FILENAME_TOO_LONG', -5);
+  define('PCLZIP_ERR_INVALID_ZIP', -6);
+  define('PCLZIP_ERR_BAD_EXTRACTED_FILE', -7);
+  define('PCLZIP_ERR_DIR_CREATE_FAIL', -8);
+  define('PCLZIP_ERR_BAD_EXTENSION', -9);
+  define('PCLZIP_ERR_BAD_FORMAT', -10);
+  define('PCLZIP_ERR_DELETE_FILE_FAIL', -11);
+  define('PCLZIP_ERR_RENAME_FILE_FAIL', -12);
+  define('PCLZIP_ERR_BAD_CHECKSUM', -13);
+  define('PCLZIP_ERR_INVALID_ARCHIVE_ZIP', -14);
+  define('PCLZIP_ERR_MISSING_OPTION_VALUE', -15);
+  define('PCLZIP_ERR_INVALID_OPTION_VALUE', -16);
+  define('PCLZIP_ERR_ALREADY_A_DIRECTORY', -17);
+  define('PCLZIP_ERR_UNSUPPORTED_COMPRESSION', -18);
+  define('PCLZIP_ERR_UNSUPPORTED_ENCRYPTION', -19);
 
   // ----- Options values
-  define( 'PCLZIP_OPT_PATH', 77001 );
-  define( 'PCLZIP_OPT_ADD_PATH', 77002 );
-  define( 'PCLZIP_OPT_REMOVE_PATH', 77003 );
-  define( 'PCLZIP_OPT_REMOVE_ALL_PATH', 77004 );
-  define( 'PCLZIP_OPT_SET_CHMOD', 77005 );
-  define( 'PCLZIP_OPT_EXTRACT_AS_STRING', 77006 );
-  define( 'PCLZIP_OPT_NO_COMPRESSION', 77007 );
-  define( 'PCLZIP_OPT_BY_NAME', 77008 );
-  define( 'PCLZIP_OPT_BY_INDEX', 77009 );
-  define( 'PCLZIP_OPT_BY_EREG', 77010 );
-  define( 'PCLZIP_OPT_BY_PREG', 77011 );
-  define( 'PCLZIP_OPT_COMMENT', 77012 );
-  define( 'PCLZIP_OPT_ADD_COMMENT', 77013 );
-  define( 'PCLZIP_OPT_PREPEND_COMMENT', 77014 );
-  define( 'PCLZIP_OPT_EXTRACT_IN_OUTPUT', 77015 );
-  define( 'PCLZIP_OPT_REPLACE_NEWER', 77016 );
-  define( 'PCLZIP_OPT_STOP_ON_ERROR', 77017 );
+  define('PCLZIP_OPT_PATH', 77001);
+  define('PCLZIP_OPT_ADD_PATH', 77002);
+  define('PCLZIP_OPT_REMOVE_PATH', 77003);
+  define('PCLZIP_OPT_REMOVE_ALL_PATH', 77004);
+  define('PCLZIP_OPT_SET_CHMOD', 77005);
+  define('PCLZIP_OPT_EXTRACT_AS_STRING', 77006);
+  define('PCLZIP_OPT_NO_COMPRESSION', 77007);
+  define('PCLZIP_OPT_BY_NAME', 77008);
+  define('PCLZIP_OPT_BY_INDEX', 77009);
+  define('PCLZIP_OPT_BY_EREG', 77010);
+  define('PCLZIP_OPT_BY_PREG', 77011);
+  define('PCLZIP_OPT_COMMENT', 77012);
+  define('PCLZIP_OPT_ADD_COMMENT', 77013);
+  define('PCLZIP_OPT_PREPEND_COMMENT', 77014);
+  define('PCLZIP_OPT_EXTRACT_IN_OUTPUT', 77015);
+  define('PCLZIP_OPT_REPLACE_NEWER', 77016);
+  define('PCLZIP_OPT_STOP_ON_ERROR', 77017);
   // Having big trouble with crypt. Need to multiply 2 long int
   // which is not correctly supported by PHP ...
   //define( 'PCLZIP_OPT_CRYPT', 77018 );
 
   // ----- Call backs values
-  define( 'PCLZIP_CB_PRE_EXTRACT', 78001 );
-  define( 'PCLZIP_CB_POST_EXTRACT', 78002 );
-  define( 'PCLZIP_CB_PRE_ADD', 78003 );
-  define( 'PCLZIP_CB_POST_ADD', 78004 );
+  define('PCLZIP_CB_PRE_EXTRACT', 78001);
+  define('PCLZIP_CB_POST_EXTRACT', 78002);
+  define('PCLZIP_CB_PRE_ADD', 78003);
+  define('PCLZIP_CB_POST_ADD', 78004);
   /* For futur use
   define( 'PCLZIP_CB_PRE_LIST', 78005 );
   define( 'PCLZIP_CB_POST_LIST', 78006 );
@@ -2780,8 +2780,8 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $this->privDisableMagicQuotes();
 
            // ----- Check the path
-           if (   ($p_path == "")
-	    || (   (substr($p_path, 0, 1) != "/")
+           if (($p_path == "")
+	    || ((substr($p_path, 0, 1) != "/")
 		    && (substr($p_path, 0, 3) != "../")
 			&& (substr($p_path,1,2)!=":/"))) {
                $p_path = "./".$p_path;
@@ -2869,7 +2869,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                $v_extract = false;
 
                // ----- Look for extract by name rule
-               if (   (isset($p_options[PCLZIP_OPT_BY_NAME]))
+               if ((isset($p_options[PCLZIP_OPT_BY_NAME]))
           && ($p_options[PCLZIP_OPT_BY_NAME] != 0)) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByName'");
 
@@ -2882,7 +2882,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "The searched item is a directory");
 
                            // ----- Look if the directory is in the filename path
-                           if (   (strlen($v_header['stored_filename']) > strlen($p_options[PCLZIP_OPT_BY_NAME][$j]))
+                           if ((strlen($v_header['stored_filename']) > strlen($p_options[PCLZIP_OPT_BY_NAME][$j]))
                       && (substr($v_header['stored_filename'], 0, strlen($p_options[PCLZIP_OPT_BY_NAME][$j])) == $p_options[PCLZIP_OPT_BY_NAME][$j])) {
                                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "The directory is in the file path");
                                $v_extract = true;
@@ -2897,7 +2897,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                }
 
                // ----- Look for extract by ereg rule
-               elseif (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
+               elseif ((isset($p_options[PCLZIP_OPT_BY_EREG]))
                && ($p_options[PCLZIP_OPT_BY_EREG] != "")) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract by ereg '".$p_options[PCLZIP_OPT_BY_EREG]."'");
 
@@ -2908,7 +2908,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                }
 
                // ----- Look for extract by preg rule
-               elseif (   (isset($p_options[PCLZIP_OPT_BY_PREG]))
+               elseif ((isset($p_options[PCLZIP_OPT_BY_PREG]))
                && ($p_options[PCLZIP_OPT_BY_PREG] != "")) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByEreg'");
 
@@ -2919,7 +2919,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                }
 
                // ----- Look for extract by index rule
-               elseif (   (isset($p_options[PCLZIP_OPT_BY_INDEX]))
+               elseif ((isset($p_options[PCLZIP_OPT_BY_INDEX]))
                && ($p_options[PCLZIP_OPT_BY_INDEX] != 0)) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByIndex'");
 
@@ -2950,14 +2950,14 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                }
 
                // ----- Check compression method
-               if (   ($v_extract)
-	      && (   ($v_header['compression'] != 8)
+               if (($v_extract)
+	      && (($v_header['compression'] != 8)
 		      && ($v_header['compression'] != 0))) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Unsupported compression method (".$v_header['compression'].")");
                    $v_header['status'] = 'unsupported_compression';
 
                    // ----- Look for PCLZIP_OPT_STOP_ON_ERROR
-                   if (   (isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
+                   if ((isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
 		      && ($p_options[PCLZIP_OPT_STOP_ON_ERROR]===true)) {
                        //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "PCLZIP_OPT_STOP_ON_ERROR is selected, extraction will be stopped");
 
@@ -2979,7 +2979,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    $v_header['status'] = 'unsupported_encryption';
 
                    // ----- Look for PCLZIP_OPT_STOP_ON_ERROR
-                   if (   (isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
+                   if ((isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
 		      && ($p_options[PCLZIP_OPT_STOP_ON_ERROR]===true)) {
                        //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "PCLZIP_OPT_STOP_ON_ERROR is selected, extraction will be stopped");
 
@@ -3067,7 +3067,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        }
                    }
                    // ----- Look for extraction in standard output
-                   elseif (   (isset($p_options[PCLZIP_OPT_EXTRACT_IN_OUTPUT]))
+                   elseif ((isset($p_options[PCLZIP_OPT_EXTRACT_IN_OUTPUT]))
 		        && ($p_options[PCLZIP_OPT_EXTRACT_IN_OUTPUT])) {
                        // ----- Extracting the file in standard output
                        $v_result1 = $this->privExtractFileInOutput($v_header, $p_options);
@@ -3259,7 +3259,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        // ----- Look for PCLZIP_OPT_STOP_ON_ERROR
                        // For historical reason first PclZip implementation does not stop
                        // when this kind of error occurs.
-                       if (   (isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
+                       if ((isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
 		    && ($p_options[PCLZIP_OPT_STOP_ON_ERROR]===true)) {
                            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "PCLZIP_OPT_STOP_ON_ERROR is selected, extraction will be stopped");
 
@@ -3281,7 +3281,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        // ----- Look for PCLZIP_OPT_STOP_ON_ERROR
                        // For historical reason first PclZip implementation does not stop
                        // when this kind of error occurs.
-                       if (   (isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
+                       if ((isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
 		    && ($p_options[PCLZIP_OPT_STOP_ON_ERROR]===true)) {
                            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "PCLZIP_OPT_STOP_ON_ERROR is selected, extraction will be stopped");
 
@@ -3298,7 +3298,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    elseif (filemtime($p_entry['filename']) > $p_entry['mtime']) {
                        //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Existing file '".$p_entry['filename']."' is newer (".date("l dS of F Y h:i:s A", filemtime($p_entry['filename'])).") than the extracted file (".date("l dS of F Y h:i:s A", $p_entry['mtime']).")");
                        // ----- Change the file status
-                       if (   (isset($p_options[PCLZIP_OPT_REPLACE_NEWER]))
+                       if ((isset($p_options[PCLZIP_OPT_REPLACE_NEWER]))
 		    && ($p_options[PCLZIP_OPT_REPLACE_NEWER]===true)) {
                            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "PCLZIP_OPT_REPLACE_NEWER is selected, file will be replaced");
                        } else {
@@ -3308,7 +3308,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                            // ----- Look for PCLZIP_OPT_STOP_ON_ERROR
                            // For historical reason first PclZip implementation does not stop
                            // when this kind of error occurs.
-                           if (   (isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
+                           if ((isset($p_options[PCLZIP_OPT_STOP_ON_ERROR]))
 		        && ($p_options[PCLZIP_OPT_STOP_ON_ERROR]===true)) {
                                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "PCLZIP_OPT_STOP_ON_ERROR is selected, extraction will be stopped");
 
@@ -4243,7 +4243,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                $v_found = false;
 
                // ----- Look for extract by name rule
-               if (   (isset($p_options[PCLZIP_OPT_BY_NAME]))
+               if ((isset($p_options[PCLZIP_OPT_BY_NAME]))
           && ($p_options[PCLZIP_OPT_BY_NAME] != 0)) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByName'");
 
@@ -4256,11 +4256,11 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "The searched item is a directory");
 
                            // ----- Look if the directory is in the filename path
-                           if (   (strlen($v_header_list[$v_nb_extracted]['stored_filename']) > strlen($p_options[PCLZIP_OPT_BY_NAME][$j]))
+                           if ((strlen($v_header_list[$v_nb_extracted]['stored_filename']) > strlen($p_options[PCLZIP_OPT_BY_NAME][$j]))
                       && (substr($v_header_list[$v_nb_extracted]['stored_filename'], 0, strlen($p_options[PCLZIP_OPT_BY_NAME][$j])) == $p_options[PCLZIP_OPT_BY_NAME][$j])) {
                                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "The directory is in the file path");
                                $v_found = true;
-                           } elseif (   (($v_header_list[$v_nb_extracted]['external']&0x00000010)==0x00000010) /* Indicates a folder */
+                           } elseif ((($v_header_list[$v_nb_extracted]['external']&0x00000010)==0x00000010) /* Indicates a folder */
                           && ($v_header_list[$v_nb_extracted]['stored_filename'].'/' == $p_options[PCLZIP_OPT_BY_NAME][$j])) {
                                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "The entry is the searched directory");
                                $v_found = true;
@@ -4275,7 +4275,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                }
 
                // ----- Look for extract by ereg rule
-               elseif (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
+               elseif ((isset($p_options[PCLZIP_OPT_BY_EREG]))
                && ($p_options[PCLZIP_OPT_BY_EREG] != "")) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract by ereg '".$p_options[PCLZIP_OPT_BY_EREG]."'");
 
@@ -4286,7 +4286,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                }
 
                // ----- Look for extract by preg rule
-               elseif (   (isset($p_options[PCLZIP_OPT_BY_PREG]))
+               elseif ((isset($p_options[PCLZIP_OPT_BY_PREG]))
                && ($p_options[PCLZIP_OPT_BY_PREG] != "")) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByEreg'");
 
@@ -4297,7 +4297,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                }
 
                // ----- Look for extract by index rule
-               elseif (   (isset($p_options[PCLZIP_OPT_BY_INDEX]))
+               elseif ((isset($p_options[PCLZIP_OPT_BY_INDEX]))
                && ($p_options[PCLZIP_OPT_BY_INDEX] != 0)) {
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByIndex'");
 
@@ -4902,7 +4902,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_result=1;
 
            // ----- Look if function exists
-           if (   (!function_exists("get_magic_quotes_runtime"))
+           if ((!function_exists("get_magic_quotes_runtime"))
 	    || (!function_exists("set_magic_quotes_runtime"))) {
                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Functions *et_magic_quotes_runtime are not supported");
                //--(MAGIC-PclTrace)--//PclTraceFctEnd(__FILE__, __LINE__, $v_result);
@@ -4944,7 +4944,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_result=1;
 
            // ----- Look if function exists
-           if (   (!function_exists("get_magic_quotes_runtime"))
+           if ((!function_exists("get_magic_quotes_runtime"))
 	    || (!function_exists("set_magic_quotes_runtime"))) {
                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Functions *et_magic_quotes_runtime are not supported");
                //--(MAGIC-PclTrace)--//PclTraceFctEnd(__FILE__, __LINE__, $v_result);
@@ -5087,7 +5087,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
           }
 
           // ----- Compare the items
-          if (($v_list_dir[$i] != $v_list_path[$j]) && ($v_list_dir[$i] != '') && ( $v_list_path[$j] != '')) {
+          if (($v_list_dir[$i] != $v_list_path[$j]) && ($v_list_dir[$i] != '') && ($v_list_path[$j] != '')) {
               //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 5, "Items ($i,$j) are different");
               $v_result = 0;
           }

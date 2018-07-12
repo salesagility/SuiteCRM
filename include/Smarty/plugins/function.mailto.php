@@ -97,12 +97,12 @@ function smarty_function_mailto($params, &$smarty)
     $address .= $mail_parm_vals;
 
     $encode = (empty($params['encode'])) ? 'none' : $params['encode'];
-    if (!in_array($encode,array('javascript','javascript_charcode','hex','none')) ) {
+    if (!in_array($encode,array('javascript','javascript_charcode','hex','none'))) {
         $smarty->trigger_error("mailto: 'encode' parameter must be none, javascript or hex");
         return;
     }
 
-    if ($encode == 'javascript' ) {
+    if ($encode == 'javascript') {
         $string = 'document.write(\'<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>\');';
 
         $js_encode = '';
@@ -111,10 +111,10 @@ function smarty_function_mailto($params, &$smarty)
         }
 
         return '<script type="text/javascript">eval(unescape(\''.$js_encode.'\'))</script>';
-    } elseif ($encode == 'javascript_charcode' ) {
+    } elseif ($encode == 'javascript_charcode') {
         $string = '<a href="mailto:'.$address.'" '.$extra.'>'.$text.'</a>';
 
-        for ($x = 0, $y = strlen($string); $x < $y; $x++ ) {
+        for ($x = 0, $y = strlen($string); $x < $y; $x++) {
             $ord[] = ord($string[$x]);
         }
 

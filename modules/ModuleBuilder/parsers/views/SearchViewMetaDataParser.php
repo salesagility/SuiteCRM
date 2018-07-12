@@ -77,11 +77,11 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
      */
     function __construct($searchLayout, $moduleName , $packageName = '')
     {
-        $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": __construct( $searchLayout , $moduleName , $packageName )" ) ;
+        $GLOBALS [ 'log' ]->debug (get_class ($this) . ": __construct( $searchLayout , $moduleName , $packageName )") ;
 
         // BEGIN ASSERTIONS
-        if (! isset ( self::$variableMap [ $searchLayout ] ) ) {
-            sugar_die ( get_class ( $this ) . ": View $searchLayout is not supported" ) ;
+        if (! isset (self::$variableMap [ $searchLayout ])) {
+            sugar_die (get_class ($this) . ": View $searchLayout is not supported") ;
         }
         // END ASSERTIONS
 
@@ -89,28 +89,28 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
 
         // unsophisticated error handling for now...
         try {
-            if (empty ( $packageName )) {
+            if (empty ($packageName)) {
                 require_once 'modules/ModuleBuilder/parsers/views/DeployedMetaDataImplementation.php' ;
-                $this->implementation = new DeployedMetaDataImplementation ( $searchLayout, $moduleName ) ;
+                $this->implementation = new DeployedMetaDataImplementation ($searchLayout, $moduleName) ;
             } else {
                 require_once 'modules/ModuleBuilder/parsers/views/UndeployedMetaDataImplementation.php' ;
-                $this->implementation = new UndeployedMetaDataImplementation ( $searchLayout, $moduleName, $packageName ) ;
+                $this->implementation = new UndeployedMetaDataImplementation ($searchLayout, $moduleName, $packageName) ;
             }
         } catch (Exception $e) {
             throw $e ;
         }
 
-        $this->_saved = array_change_key_case ( $this->implementation->getViewdefs () ) ; // force to lower case so don't have problems with case mismatches later
+        $this->_saved = array_change_key_case ($this->implementation->getViewdefs ()) ; // force to lower case so don't have problems with case mismatches later
         if (isset($this->_saved['templatemeta'])) {
             $this->_saved['templateMeta'] = $this->_saved['templatemeta'];
             unset($this->_saved['templatemeta']);
         }
 
-        if ( ! isset ( $this->_saved [ 'layout' ] [ self::$variableMap [ $this->_searchLayout ] ] ) ) {
+        if (! isset ($this->_saved [ 'layout' ] [ self::$variableMap [ $this->_searchLayout ] ])) {
             // attempt to fallback on a basic_search layout...
 
-            if ( ! isset ( $this->_saved [ 'layout' ] [ self::$variableMap [ MB_BASICSEARCH ] ] ) ) {
-                throw new Exception ( get_class ( $this ) . ": {$this->_searchLayout} does not exist for module $moduleName" ) ;
+            if (! isset ($this->_saved [ 'layout' ] [ self::$variableMap [ MB_BASICSEARCH ] ])) {
+                throw new Exception (get_class ($this) . ": {$this->_searchLayout} does not exist for module $moduleName") ;
             }
 
             $this->_saved [ 'layout'] [ MB_ADVANCEDSEARCH ] = $this->_saved [ 'layout' ] [ MB_BASICSEARCH ] ;
@@ -118,9 +118,9 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
 
         $this->view = $searchLayout;
         // convert the search view layout (which has its own unique layout form) to the standard listview layout so that the parser methods and views can be reused
-        $this->_viewdefs = $this->convertSearchViewToListView ( $this->_saved [ 'layout' ] [ self::$variableMap [ $this->_searchLayout ] ] ) ;
+        $this->_viewdefs = $this->convertSearchViewToListView ($this->_saved [ 'layout' ] [ self::$variableMap [ $this->_searchLayout ] ]) ;
         $this->_fielddefs = $this->implementation->getFielddefs () ;
-        $this->_standardizeFieldLabels( $this->_fielddefs );
+        $this->_standardizeFieldLabels($this->_fielddefs);
     }
 
     /**
@@ -150,7 +150,7 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
         }
     	
         //Special case to prevent multiple copies of assigned, modified, or created by user on the search view
-        if (empty ($def[ 'studio' ] ) && $key == "assigned_user_name") {
+        if (empty ($def[ 'studio' ]) && $key == "assigned_user_name") {
             $origDefs = $this->getOriginalViewDefs();
             if ($key == "assigned_user_name" && isset($origDefs['assigned_user_id'])) {
                 return false;
@@ -182,28 +182,28 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
             
         $this->_saved [ 'layout' ] [ self::$variableMap [ $this->_searchLayout ] ] = $this->convertSearchViewToListView($this->_viewdefs);
         ;
-        $this->implementation->deploy ( $this->_saved ) ;
+        $this->implementation->deploy ($this->_saved) ;
     }
 
     private function convertSearchViewToListView($viewdefs)
     {
         $temp = array ( ) ;
-        foreach ( $viewdefs as $key => $value ) {
-            if (! is_array ( $value )) {
+        foreach ($viewdefs as $key => $value) {
+            if (! is_array ($value)) {
                 $key = $value ;
                 $def = array ( ) ;
                 $def[ 'name' ] = $key;
                 $value = $def ;
             }
 
-            if (!isset ( $value [ 'name' ] )) {
+            if (!isset ($value [ 'name' ])) {
                 $value [ 'name' ] = $key;
             } else {
                 $key = $value [ 'name' ] ; // override key with name, needed when the entry lacks a key
             }
             // now add in the standard listview default=>true
             $value [ 'default' ] = true ;
-            $temp [ strtolower ( $key ) ] = $value ;
+            $temp [ strtolower ($key) ] = $value ;
         }
         return $temp ;
     }

@@ -83,7 +83,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
      */
     public function loadEAPM($eapmBean)
     {
-        if ( !parent::loadEAPM($eapmBean) ) {
+        if (!parent::loadEAPM($eapmBean)) {
             return false;
         }
 
@@ -101,11 +101,11 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
     public function checkLogin($eapmBean = null)
     {
         $reply = parent::checkLogin($eapmBean);
-        if ( !$reply['success'] ) {
+        if (!$reply['success']) {
             return $reply;
         }
 
-        if ( $this->checkOauthLogin() ) {
+        if ($this->checkOauthLogin()) {
             return array('success' => true);
         }
     }
@@ -114,11 +114,11 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
     {
         $reply = parent::quickCheckLogin();
 
-        if ( !$reply['success'] ) {
+        if (!$reply['success']) {
             return $reply;
         }
 
-        if ( !empty($this->oauth_token) && !empty($this->oauth_secret) ) {
+        if (!empty($this->oauth_token) && !empty($this->oauth_secret)) {
             return array('success'=>true);
         } else {
             return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN','EAPM'));
@@ -127,7 +127,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
 
     protected function checkOauthLogin()
     {
-        if ( empty($this->oauth_token) || empty($this->oauth_secret) ) {
+        if (empty($this->oauth_token) || empty($this->oauth_secret)) {
             return $this->oauthLogin();
         } else {
             return false;
@@ -163,7 +163,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
         $this->setupOauthKeys();
         $oauth = new SugarOAuth($this->oauthParams['consumerKey'], $this->oauthParams['consumerSecret'], $this->getOauthParams());
 
-        if ( isset($this->oauth_token) && !empty($this->oauth_token) ) {
+        if (isset($this->oauth_token) && !empty($this->oauth_token)) {
             $oauth->setToken($this->oauth_token, $this->oauth_secret);
         }
 

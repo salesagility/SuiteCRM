@@ -63,7 +63,7 @@ class TemplateBoolean extends TemplateField
         } else {
             if (empty($this->bean->id)) {
                 if (!empty($this->default_value)) {
-                    if (!(strcmp($this->default_value,'false')==0 || strcmp($this->default_value,'no')==0 || strcmp($this->default_value,'off')==0 )) {
+                    if (!(strcmp($this->default_value,'false')==0 || strcmp($this->default_value,'no')==0 || strcmp($this->default_value,'off')==0)) {
                         $returnXTPL[$this->name . '_checked'] = 'checked';
                         $returnXTPL[$this->name] = 'checked';
                     }

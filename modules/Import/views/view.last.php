@@ -116,16 +116,16 @@ class ImportViewLast extends ImportView
         $this->ss->assign("errorrecordsFile", ImportCacheFiles::convertFileNameToUrl(ImportCacheFiles::getErrorRecordsWithoutErrorFileName()));
         $this->ss->assign("dupeFile", ImportCacheFiles::convertFileNameToUrl(ImportCacheFiles::getDuplicateFileName()));
 
-        if ( $this->bean->object_name == "Prospect" ) {
+        if ($this->bean->object_name == "Prospect") {
             $this->ss->assign("PROSPECTLISTBUTTON", $this->_addToProspectListButton());
         } else {
             $this->ss->assign("PROSPECTLISTBUTTON","");
         }
 
         $resultsTable = "";
-        foreach ( UsersLastImport::getBeansByImport($_REQUEST['import_module']) as $beanname ) {
+        foreach (UsersLastImport::getBeansByImport($_REQUEST['import_module']) as $beanname) {
             // load bean
-            if ( !( $this->bean instanceof $beanname ) ) {
+            if (!($this->bean instanceof $beanname)) {
                 $this->bean = new $beanname;
             }
             $resultsTable .= $this->getListViewResults();
@@ -135,7 +135,7 @@ class ImportViewLast extends ImportView
         }
 
         $this->ss->assign("RESULTS_TABLE", $resultsTable);
-        $this->ss->assign("ERROR_TABLE", $this->getListViewTableFromFile(ImportCacheFiles::getErrorRecordsFileName(), 'errors') );
+        $this->ss->assign("ERROR_TABLE", $this->getListViewTableFromFile(ImportCacheFiles::getErrorRecordsFileName(), 'errors'));
         $this->ss->assign("DUP_TABLE", $this->getListViewTableFromFile(ImportCacheFiles::getDuplicateFileDisplayName(), 'dup'));
         $content = $this->ss->fetch('modules/Import/tpls/last.tpl');
         $this->ss->assign("CONTENT",$content);
@@ -167,7 +167,7 @@ class ImportViewLast extends ImportView
 
         $lvf->lv->mergeduplicates = false;
         $lvf->lv->showMassupdateFields = false;
-        if ( $lvf->type == 2 ) {
+        if ($lvf->type == 2) {
             $lvf->template = 'include/ListView/ListViewNoMassUpdate.tpl';
         }
 

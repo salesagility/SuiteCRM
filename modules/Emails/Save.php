@@ -157,7 +157,7 @@ $focus->handleAttachments();
 ////	END ATTACHMENT HANDLING
 ///////////////////////////////////////////////////////////////////////////////
 $focus->status = 'draft';
-if ($focus->type == 'archived' ) {
+if ($focus->type == 'archived') {
     $focus->status= 'archived';
     $focus->date_start = $_REQUEST['date_start'];
     $focus->time_start = $_REQUEST['time_start'] . $_REQUEST['meridiem'];
@@ -174,7 +174,7 @@ if ($focus->type == 'archived' ) {
             $focus->from_name = '';
         } else { // we have a compound string
             $newFromAddr =  str_replace($old, $new, $_REQUEST['from_addr']);
-            $focus->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')), (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) -1 );
+            $focus->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')), (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) -1);
             isValidEmailAddress($focus->from_addr);
             $focus->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') -1));
         }

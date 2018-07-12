@@ -64,11 +64,11 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
                 if ($var['type'] == 'link') {
                     continue;
                 }
-                if ( isset($var['source'])
+                if (isset($var['source'])
                     && ($var['source'] != 'db' && $var['source'] != 'custom_fields' && $var['source'] != 'non-db')
                     && $var['name'] != 'email1' && $var['name'] != 'email2'
                     && (!isset($var['type'])|| $var['type'] != 'relate')) {
-                    if ( $value->module_dir == 'Emails'
+                    if ($value->module_dir == 'Emails'
                         && (($var['name'] == 'description') || ($var['name'] == 'description_html') || ($var['name'] == 'from_addr_name')
                             || ($var['name'] == 'reply_to_addr') || ($var['name'] == 'to_addrs_names') || ($var['name'] == 'cc_addrs_names')
                             || ($var['name'] == 'bcc_addrs_names') || ($var['name'] == 'raw_source'))) {
@@ -141,7 +141,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         $link_fields = array();
         if (!empty($value->field_defs)) {
             foreach ($value->field_defs as $var) {
-                if (!empty($fields) && !in_array( $var['name'], $fields)) {
+                if (!empty($fields) && !in_array($var['name'], $fields)) {
                     continue;
                 }
                 if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'non-db' &&$var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type'])|| $var['type'] != 'relate')) {
@@ -155,7 +155,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
                 $options_ret = array();
                 // Apparently the only purpose of this check is to make sure we only return fields
                 //   when we've read a record.  Otherwise this function is identical to get_module_field_list
-                if ( isset($var['required']) && ($var['required'] || $var['required'] == 'true' ) ) {
+                if (isset($var['required']) && ($var['required'] || $var['required'] == 'true')) {
                     $required = 1;
                 }
 
@@ -251,10 +251,10 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         switch ($type) {
 	        case 'default':
 	        default:
-	            if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php' )) {
+	            if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php')) {
 	                require ('modules/'.$module.'/metadata/subpaneldefs.php');
 	            }
-	            if ( file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php' )) {
+	            if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
 	                require ('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
 	            }
 	    }
@@ -318,7 +318,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         $enabled_modules= array();
         $availModulesKey = array_flip($availModules);
         foreach ($tabs[0] as $key=>$value) {
-            if ( isset($availModulesKey[$key]) ) {
+            if (isset($availModulesKey[$key])) {
                 $enabled_modules[] = $key;
             }
         }
@@ -352,11 +352,11 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
             $query = $this->generateUpcomingActivitiesWhereClause($seed, $meta);
 
             $response = $seed->get_list(/* Order by date field */"{$meta['date_field']} ASC",  /*Where clause */$query, /* No Offset */ 0,
-                                        /* No limit */-1, /* Max 10 items */10, /*No Deleted */ 0 );
+                                        /* No limit */-1, /* Max 10 items */10, /*No Deleted */ 0);
 
             $result = array();
 
-            if ( isset($response['list']) ) {
+            if (isset($response['list'])) {
                 $result = $this->format_upcoming_activities_entries($response['list'],$meta['date_field']);
             }
 
@@ -364,7 +364,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         }
 
         //Sort the result list by the date due flag in ascending order
-        usort( $results, array( $this , "cmp_datedue" ) ) ;
+        usort($results, array( $this , "cmp_datedue" )) ;
 
         //Only return a subset of the results.
         $results = array_slice($results, 0, $maxCount);
@@ -415,12 +415,12 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
      */
     static function cmp_datedue($a, $b)
     {
-        $a_date = strtotime( $a['date_due'] ) ;
-        $b_date = strtotime( $b['date_due'] ) ;
+        $a_date = strtotime($a['date_due']) ;
+        $b_date = strtotime($b['date_due']) ;
 
-        if ( $a_date == $b_date ) {
+        if ($a_date == $b_date) {
             return 0 ;
         }
-        return ($a_date > $b_date ) ? 1 : -1;
+        return ($a_date > $b_date) ? 1 : -1;
     }
 }

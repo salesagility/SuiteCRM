@@ -282,7 +282,7 @@ class SugarDateTime extends DateTime
      */
     public function get_datetime_by_index_today($hour_index)
     {
-        if ( $hour_index < 0 || $hour_index > 23  ) {
+        if ($hour_index < 0 || $hour_index > 23) {
             sugar_die("hour is outside of range");
         }
 
@@ -389,7 +389,7 @@ class SugarDateTime extends DateTime
     {
         $hash_list = array();
 
-        if ( $view != 'day') {
+        if ($view != 'day') {
             $end_time = $end_time->get_day_end_time();
         }
 
@@ -575,7 +575,7 @@ class SugarDateTime extends DateTime
             }
         }
         // now process non-numeric ones
-        if ( isset($regexp['positions']['F']) && !empty($dateparts[$regexp['positions']['F']])) {
+        if (isset($regexp['positions']['F']) && !empty($dateparts[$regexp['positions']['F']])) {
             // FIXME: locale?
             $mon = $dateparts[$regexp['positions']['F']];
             if (isset(self::$sugar_strptime_long_mon[$mon])) {
@@ -584,7 +584,7 @@ class SugarDateTime extends DateTime
                 return false;
             }
         }
-        if ( isset($regexp['positions']['M']) && !empty($dateparts[$regexp['positions']['M']])) {
+        if (isset($regexp['positions']['M']) && !empty($dateparts[$regexp['positions']['M']])) {
             // FIXME: locale?
             $mon = $dateparts[$regexp['positions']['M']];
             if (isset(self::$sugar_strptime_short_mon[$mon])) {
@@ -593,7 +593,7 @@ class SugarDateTime extends DateTime
                 return false;
             }
         }
-        if ( isset($regexp['positions']['a']) && !empty($dateparts[$regexp['positions']['a']])) {
+        if (isset($regexp['positions']['a']) && !empty($dateparts[$regexp['positions']['a']])) {
             $ampm = trim($dateparts[$regexp['positions']['a']]);
             if ($ampm == 'pm') {
                 if ($data["tm_hour"] != 12) {
@@ -609,7 +609,7 @@ class SugarDateTime extends DateTime
             }
         }
 
-        if ( isset($regexp['positions']['A']) && !empty($dateparts[$regexp['positions']['A']])) {
+        if (isset($regexp['positions']['A']) && !empty($dateparts[$regexp['positions']['A']])) {
             $ampm = trim($dateparts[$regexp['positions']['A']]);
             if ($ampm == 'PM') {
                 if ($data["tm_hour"] != 12) {

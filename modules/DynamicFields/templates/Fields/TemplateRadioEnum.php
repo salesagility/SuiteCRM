@@ -49,7 +49,7 @@ class TemplateRadioEnum extends TemplateEnum
     function get_html_edit()
     {
         $this->prepare();
-        $xtpl_var = strtoupper( $this->name);
+        $xtpl_var = strtoupper($this->name);
         return "{RADIOOPTIONS_".$xtpl_var. "}";
     }
 	

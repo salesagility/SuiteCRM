@@ -72,8 +72,8 @@ class ext_rest_insideview extends ext_rest
     {
         // InsideView currently has no ability to talk to modules other than these four
         $outModuleList = array();
-        foreach ( $moduleList as $module ) {
-            if ( !in_array($module,$this->allowedModuleList) ) {
+        foreach ($moduleList as $module) {
+            if (!in_array($module,$this->allowedModuleList)) {
                 continue;
             } else {
                 $outModuleList[$module] = $module;
@@ -89,16 +89,16 @@ class ext_rest_insideview extends ext_rest
             $removeList[$module_name] = $module_name;
         }
 
-        if ( is_array($mapping['beans']) ) {
+        if (is_array($mapping['beans'])) {
             foreach ($mapping['beans'] as $module => $ignore) {
                 unset($removeList[$module]);
                 
-                check_logic_hook_file($module, 'after_ui_frame', array(1, $module. ' InsideView frame', 'modules/Connectors/connectors/sources/ext/rest/insideview/InsideViewLogicHook.php', 'InsideViewLogicHook', 'showFrame') );
+                check_logic_hook_file($module, 'after_ui_frame', array(1, $module. ' InsideView frame', 'modules/Connectors/connectors/sources/ext/rest/insideview/InsideViewLogicHook.php', 'InsideViewLogicHook', 'showFrame'));
             }
         }
 
-        foreach ( $removeList as $module ) {
-            remove_logic_hook($module, 'after_ui_frame', array(1, $module. ' InsideView frame', 'modules/Connectors/connectors/sources/ext/rest/insideview/InsideViewLogicHook.php', 'InsideViewLogicHook', 'showFrame') );
+        foreach ($removeList as $module) {
+            remove_logic_hook($module, 'after_ui_frame', array(1, $module. ' InsideView frame', 'modules/Connectors/connectors/sources/ext/rest/insideview/InsideViewLogicHook.php', 'InsideViewLogicHook', 'showFrame'));
         }
 
         return parent::saveMappingHook($mapping);

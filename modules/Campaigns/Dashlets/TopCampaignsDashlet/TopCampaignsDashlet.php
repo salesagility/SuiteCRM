@@ -129,7 +129,7 @@ class TopCampaignsDashlet extends Dashlet
     {
         $options = array();
         
-        if ( isset($req['title']) ) {
+        if (isset($req['title'])) {
             $options['title'] = $req['title'];
         }
         $options['autoRefresh'] = empty($req['autoRefresh']) ? '0' : $req['autoRefresh'];

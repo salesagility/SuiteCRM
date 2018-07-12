@@ -85,7 +85,7 @@ class SugarFieldEnum extends SugarFieldBase
 
     function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0)
     {
-        if ( isset($vardef['function']['returns']) && $vardef['function']['returns'] == 'html' ) {
+        if (isset($vardef['function']['returns']) && $vardef['function']['returns'] == 'html') {
             return parent::displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex);
         }
 
@@ -107,24 +107,24 @@ class SugarFieldEnum extends SugarFieldBase
         // Bug 27467 - Trim the value given
         $value = trim($value);
         
-        if ( isset($app_list_strings[$vardef['options']]) 
-                && !isset($app_list_strings[$vardef['options']][$value]) ) {
+        if (isset($app_list_strings[$vardef['options']]) 
+                && !isset($app_list_strings[$vardef['options']][$value])) {
             // Bug 23485/23198 - Check to see if the value passed matches the display value
-            if ( in_array($value,$app_list_strings[$vardef['options']]) ) {
+            if (in_array($value,$app_list_strings[$vardef['options']])) {
                 $value = array_search($value,$app_list_strings[$vardef['options']]);
             }
             // Bug 33328 - Check for a matching key in a different case
-            elseif ( in_array(strtolower($value), array_keys(array_change_key_case($app_list_strings[$vardef['options']]))) ) {
-                foreach ( $app_list_strings[$vardef['options']] as $optionkey => $optionvalue ) {
-                    if ( strtolower($value) == strtolower($optionkey) ) {
+            elseif (in_array(strtolower($value), array_keys(array_change_key_case($app_list_strings[$vardef['options']])))) {
+                foreach ($app_list_strings[$vardef['options']] as $optionkey => $optionvalue) {
+                    if (strtolower($value) == strtolower($optionkey)) {
                         $value = $optionkey;
                     }
                 }
             }
             // Bug 33328 - Check for a matching value in a different case
-            elseif ( in_array(strtolower($value), array_map('strtolower', $app_list_strings[$vardef['options']])) ) {
-                foreach ( $app_list_strings[$vardef['options']] as $optionkey => $optionvalue ) {
-                    if ( strtolower($value) == strtolower($optionvalue) ) {
+            elseif (in_array(strtolower($value), array_map('strtolower', $app_list_strings[$vardef['options']]))) {
+                foreach ($app_list_strings[$vardef['options']] as $optionkey => $optionvalue) {
+                    if (strtolower($value) == strtolower($optionvalue)) {
                         $value = $optionkey;
                     }
                 }

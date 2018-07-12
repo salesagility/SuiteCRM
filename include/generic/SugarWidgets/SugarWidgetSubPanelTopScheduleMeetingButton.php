@@ -76,7 +76,7 @@ class SugarWidgetSubPanelTopScheduleMeetingButton extends SugarWidgetSubPanelTop
             $defines['subpanelDiv'] = $this->subpanelDiv;
         }
 
-        $defines['parent_bean_name'] = get_class( $defines['focus']);
+        $defines['parent_bean_name'] = get_class($defines['focus']);
 
         $form = 'form' . $defines['child_module_name'];
         $button = '<form onsubmit="return SUGAR.subpanelUtils.sendAndRetrieve(this.id, \'subpanel_' . strtolower($defines['subpanelDiv']) . '\', \'' . addslashes($app_strings['LBL_LOADING']) . '\');" action="index.php" method="post" name="form" id="form' . $form . "\">\n";
@@ -140,7 +140,7 @@ class SugarWidgetSubPanelTopScheduleMeetingButton extends SugarWidgetSubPanelTop
     function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         $focus = new Meeting;
-        if ( !$focus->ACLAccess('EditView') ) {
+        if (!$focus->ACLAccess('EditView')) {
             return '';
         }
 

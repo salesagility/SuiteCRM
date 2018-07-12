@@ -145,7 +145,7 @@ class DocumentRevision extends SugarBean
 
         //update documents table. (not through save, because it causes a loop)
         // If we don't have a document_id, find it.
-        if ( empty($this->document_id) ) {
+        if (empty($this->document_id)) {
             $query = "SELECT document_id FROM document_revisions WHERE id = '".$this->db->quote($this->id)."'";
             $ret = $this->db->query($query,true);
             $row = $this->db->fetchByAssoc($ret);
@@ -185,7 +185,7 @@ class DocumentRevision extends SugarBean
 
         parent::fill_in_additional_detail_fields();
 
-        if ( empty($this->id) && empty($this->document_id) && isset($_REQUEST['return_id']) && !empty($_REQUEST['return_id']) ) {
+        if (empty($this->id) && empty($this->document_id) && isset($_REQUEST['return_id']) && !empty($_REQUEST['return_id'])) {
             $this->document_id = $_REQUEST['return_id'];
         }
 
@@ -199,7 +199,7 @@ class DocumentRevision extends SugarBean
             $this->latest_revision = $row['revision'];
             $this->latest_revision_id = $row['document_revision_id'];
 
-            if ( empty($this->revision) ) {
+            if (empty($this->revision)) {
                 $this->revision = $this->latest_revision + 1;
             }
         }

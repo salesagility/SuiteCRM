@@ -318,7 +318,7 @@ function get_module_in($module_name)
 
     $module_name_in = array_keys($_SESSION['viewable'][$module_name]);
     $module_name_list = array();
-    foreach ( $module_name_in as $name ) {
+    foreach ($module_name_in as $name) {
         $module_name_list[] = DBManagerFactory::getInstance()->quote($name);
     }
 
@@ -343,13 +343,13 @@ function set_module_in($arrayList, $module_name)
     if (!empty($_SESSION['viewable'][strtolower($module_name).'_in'])) {
         if ($arrayList['in'] != '()') {
             $newList = array();
-            if ( is_array($_SESSION['viewable'][strtolower($module_name).'_in']) ) {
-                foreach ($_SESSION['viewable'][strtolower($module_name).'_in'] as $name ) {
+            if (is_array($_SESSION['viewable'][strtolower($module_name).'_in'])) {
+                foreach ($_SESSION['viewable'][strtolower($module_name).'_in'] as $name) {
                     $newList[] = DBManagerFactory::getInstance()->quote($name);
                 }
             }
-            if ( is_array($arrayList['list']) ) {
-                foreach ( $arrayList['list'] as $name ) {
+            if (is_array($arrayList['list'])) {
+                foreach ($arrayList['list'] as $name) {
                     $newList[] = DBManagerFactory::getInstance()->quote($name);
                 }
             }
@@ -390,7 +390,7 @@ function portal_get_entry_list_limited($session, $module_name,$where, $order_by,
         $error->set_error('invalid_session');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
-    if ($_SESSION['type'] == 'lead' ) {
+    if ($_SESSION['type'] == 'lead') {
         $error->set_error('no_access');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }

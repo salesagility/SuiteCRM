@@ -206,7 +206,7 @@ class SearchForm
                     if ($addAllBeanFields) {
                         foreach ($this->bean->field_name_map as $key => $params) {
                             if (!in_array($key, $searchFieldsKeys)) {
-                                if (in_array($key . '_basic', $arrayKeys) ) {
+                                if (in_array($key . '_basic', $arrayKeys)) {
                                     $this->searchFields[$key] = array('query_type' => 'default',
                                                                       'value'      => $array[$key . '_basic']);
                                 }
@@ -372,10 +372,10 @@ class SearchForm
                         switch ($operator) {
                         	case 'subquery':
                                 $in = 'IN';
-                                if ( isset($parms['subquery_in_clause']) ) {
-                                    if ( !is_array($parms['subquery_in_clause']) ) {
+                                if (isset($parms['subquery_in_clause'])) {
+                                    if (!is_array($parms['subquery_in_clause'])) {
                                         $in = $parms['subquery_in_clause'];
-                                    } elseif ( isset($parms['subquery_in_clause'][$field_value]) ) {
+                                    } elseif (isset($parms['subquery_in_clause'][$field_value])) {
                                         $in = $parms['subquery_in_clause'][$field_value];
                                     }
                                 }
@@ -602,7 +602,7 @@ class SearchForm
     {
         global $current_user;
 
-        $this->bean->custom_fields->populateAllXTPL($this->xtpl, 'search' );
+        $this->bean->custom_fields->populateAllXTPL($this->xtpl, 'search');
         $this->xtpl->parse("main");
         if (!empty($GLOBALS['layout_edit_mode'])) {
             $this->xtpl->parse("advanced");
@@ -634,7 +634,7 @@ class SearchForm
     {
         global $current_user, $current_language;
         $GLOBALS['log']->debug('SearchForm.php->displayAdvanced()');
-        $this->bean->custom_fields->populateAllXTPL($this->xtpl, 'search' );
+        $this->bean->custom_fields->populateAllXTPL($this->xtpl, 'search');
         if (!empty($listViewDefs) && !empty($lv)) {
             $GLOBALS['log']->debug('SearchForm.php->displayAdvanced(): showing saved search');
             $savedSearch = new SavedSearch($listViewDefs[$this->module], $lv->data['pageData']['ordering']['orderBy'], $lv->data['pageData']['ordering']['sortOrder']);

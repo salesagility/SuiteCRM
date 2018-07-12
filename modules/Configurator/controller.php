@@ -162,9 +162,9 @@ class ConfiguratorController extends SugarController
         // Bug 37310 - Delete any existing currency that matches the one we've just set the default to during the admin wizard
         $currency = new Currency;
         $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
-        if ( !empty($currency->id)
+        if (!empty($currency->id)
                 && $currency->symbol == $_REQUEST['default_currency_symbol']
-                && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
+                && $currency->iso4217 == $_REQUEST['default_currency_iso4217']) {
             $currency->deleted = 1;
             $currency->save();
         }

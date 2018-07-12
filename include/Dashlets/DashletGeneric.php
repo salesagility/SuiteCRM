@@ -360,7 +360,7 @@ class DashletGeneric extends Dashlet
                         break;
                     case 'assigned_user_name':
                         // This type runs through the SugarWidgetFieldname class, and needs a little extra help to make it through
-                        if ( ! isset($widgetDef['column_key']) ) {
+                        if (! isset($widgetDef['column_key'])) {
                             $widgetDef['column_key'] = $name;
                         }
                         // no break here, we want to run through the default handler
@@ -394,13 +394,13 @@ class DashletGeneric extends Dashlet
     protected function loadCustomMetadata()
     {
         $customMetadate = 'custom/modules/'.$this->seedBean->module_dir.'/metadata/dashletviewdefs.php';
-        if ( file_exists ( $customMetadate )) {
+        if (file_exists ($customMetadate)) {
             require($customMetadate);
             $this->searchFields = $dashletData[$this->seedBean->module_dir.'Dashlet']['searchFields'];
             foreach ($this->searchFields  as $key =>$def) {
                 if ($key == 'assigned_user_name') {
                     $this->searchFields['assigned_user_id'] = $def;
-                    unset($this->searchFields['assigned_user_name'] );
+                    unset($this->searchFields['assigned_user_name']);
                     break;
                 }
             }

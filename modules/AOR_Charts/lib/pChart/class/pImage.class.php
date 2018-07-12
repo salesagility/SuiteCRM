@@ -85,7 +85,7 @@
      {
          $this->TransparentBackground = $TransparentBackground;
 
-         if ( $DataSet != NULL ) {
+         if ($DataSet != NULL) {
              $this->DataSet = $DataSet;
          }
 
@@ -93,7 +93,7 @@
          $this->YSize   = $YSize;
          $this->Picture = imagecreatetruecolor($XSize,$YSize);
 
-         if ( $this->TransparentBackground ) {
+         if ($this->TransparentBackground) {
              imagealphablending($this->Picture,FALSE);
              imagefilledrectangle($this->Picture, 0,0,$XSize, $YSize, imagecolorallocatealpha($this->Picture, 255, 255, 255, 127));
              imagealphablending($this->Picture,TRUE);
@@ -126,7 +126,7 @@
      /* Set the graph area position */
      function setGraphArea($X1,$Y1,$X2,$Y2)
      {
-         if ( $X2 < $X1 || $X1 == $X2 || $Y2 < $Y1 || $Y1 == $Y2 ) {
+         if ($X2 < $X1 || $X1 == $X2 || $Y2 < $Y1 || $Y1 == $Y2) {
              return(-1);
          }
 
@@ -155,7 +155,7 @@
      /* Render the picture to a file */
      function render($FileName)
      {
-         if ( $this->TransparentBackground ) {
+         if ($this->TransparentBackground) {
              imagealphablending($this->Picture,false);
              imagesavealpha($this->Picture,true);
          }
@@ -165,12 +165,12 @@
      /* Render the picture to a web browser stream */
      function stroke($BrowserExpire=FALSE)
      {
-         if ( $this->TransparentBackground ) {
+         if ($this->TransparentBackground) {
              imagealphablending($this->Picture,false);
              imagesavealpha($this->Picture,true);
          }
 
-         if ( $BrowserExpire ) {
+         if ($BrowserExpire) {
              header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
              header("Cache-Control: no-cache");
              header("Pragma: no-cache");
@@ -279,24 +279,24 @@
          $FontName	= isset($Format["FontName"]) ? $Format["FontName"] : NULL;
          $FontSize	= isset($Format["FontSize"]) ? $Format["FontSize"] : NULL;
 
-         if ( $R != -1) {
+         if ($R != -1) {
              $this->FontColorR = $R;
          }
-         if ( $G != -1) {
+         if ($G != -1) {
              $this->FontColorG = $G;
          }
-         if ( $B != -1) {
+         if ($B != -1) {
              $this->FontColorB = $B;
          }
-         if ( $Alpha != NULL) {
+         if ($Alpha != NULL) {
              $this->FontColorA = $Alpha;
          }
 
-         if ( $FontName != NULL  ) {
+         if ($FontName != NULL) {
              $this->FontName = $FontName;
          }
  
-         if ( $FontSize != NULL  ) {
+         if ($FontSize != NULL) {
              $this->FontSize = $FontSize;
          }
      }
@@ -305,7 +305,7 @@
      function getFirstDecimal($Value)
      {
          $Values = preg_split("/\./",$Value);
-         if ( isset($Values[1]) ) {
+         if (isset($Values[1])) {
              return(substr($Values[1],0,1));
          } else {
              return(0);
@@ -348,20 +348,20 @@
      /* Add a zone to the image map */
      function addToImageMap($Type,$Plots,$Color=NULL,$Title=NULL,$Message=NULL,$HTMLEncode=FALSE)
      {
-         if ( $this->ImageMapStorageMode == NULL ) {
+         if ($this->ImageMapStorageMode == NULL) {
              $this->initialiseImageMap();
          }
 
          /* Encode the characters in the imagemap in HTML standards */
          $Title   = str_replace("&#8364;","\u20AC",$Title);
          $Title   = htmlentities($Title,ENT_QUOTES,"ISO-8859-15");
-         if ( $HTMLEncode ) {
+         if ($HTMLEncode) {
              $Message = htmlentities($Message,ENT_QUOTES,"ISO-8859-15");
              $Message = str_replace("&lt;","<",$Message);
              $Message = str_replace("&gt;",">",$Message);
          }
 
-         if ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION ) {
+         if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
              if (!isset($_SESSION)) {
                  $this->initialiseImageMap();
              }
@@ -376,13 +376,13 @@
      /* Remove VOID values from an imagemap custom values array */
      function removeVOIDFromArray($SerieName, $Values)
      {
-         if ( !isset($this->DataSet->Data["Series"][$SerieName]) ) {
+         if (!isset($this->DataSet->Data["Series"][$SerieName])) {
              return(-1);
          }
 
          $Result = "";
          foreach ($this->DataSet->Data["Series"][$SerieName]["Data"] as $Key => $Value) {
-             if ( $Value != VOID && isset($Values[$Key]) ) {
+             if ($Value != VOID && isset($Values[$Key])) {
                  $Result[] = $Values[$Key];
              }
          }
@@ -392,34 +392,34 @@
      /* Replace the title of one image map serie */
      function replaceImageMapTitle($OldTitle, $NewTitle)
      {
-         if ( $this->ImageMapStorageMode == NULL ) {
+         if ($this->ImageMapStorageMode == NULL) {
              return(-1);
          }
 
-         if ( is_array($NewTitle) ) {
+         if (is_array($NewTitle)) {
              $NewTitle = $this->removeVOIDFromArray($OldTitle, $NewTitle);
          }
  
-         if ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION ) {
+         if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
              if (!isset($_SESSION)) {
                  return(-1);
              }
-             if ( is_array($NewTitle) ) {
+             if (is_array($NewTitle)) {
                  $ID = 0;
                  foreach ($_SESSION[$this->ImageMapIndex] as $Key => $Settings) {
-                     if ( $Settings[3] == $OldTitle && isset($NewTitle[$ID])) {
+                     if ($Settings[3] == $OldTitle && isset($NewTitle[$ID])) {
                          $_SESSION[$this->ImageMapIndex][$Key][3] = $NewTitle[$ID];
                          $ID++;
                      }
                  }
              } else {
                  foreach ($_SESSION[$this->ImageMapIndex] as $Key => $Settings) {
-                     if ( $Settings[3] == $OldTitle ) {
+                     if ($Settings[3] == $OldTitle) {
                          $_SESSION[$this->ImageMapIndex][$Key][3] = $NewTitle;
                      }
                  }
              }
-         } elseif ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_FILE ) {
+         } elseif ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_FILE) {
              $TempArray = "";
              $Handle    = @fopen($this->ImageMapStorageFolder."/".$this->ImageMapFileName.".map", "r");
              if ($Handle) {
@@ -429,17 +429,17 @@
                  }
                  fclose($Handle);
 
-                 if ( is_array($NewTitle) ) {
+                 if (is_array($NewTitle)) {
                      $ID = 0;
                      foreach ($TempArray as $Key => $Settings) {
-                         if ( $Settings[3] == $OldTitle && isset($NewTitle[$ID]) ) {
+                         if ($Settings[3] == $OldTitle && isset($NewTitle[$ID])) {
                              $TempArray[$Key][3] = $NewTitle[$ID];
                              $ID++;
                          }
                      }
                  } else {
                      foreach ($TempArray as $Key => $Settings) {
-                         if ( $Settings[3] == $OldTitle ) {
+                         if ($Settings[3] == $OldTitle) {
                              $TempArray[$Key][3] = $NewTitle;
                          }
                      }
@@ -457,25 +457,25 @@
      /* Replace the values of the image map contents */
      function replaceImageMapValues($Title, $Values)
      {
-         if ( $this->ImageMapStorageMode == NULL ) {
+         if ($this->ImageMapStorageMode == NULL) {
              return(-1);
          }
 
          $Values = $this->removeVOIDFromArray($Title, $Values);
          $ID = 0; 
-         if ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION ) {
+         if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
              if (!isset($_SESSION)) {
                  return(-1);
              }
              foreach ($_SESSION[$this->ImageMapIndex] as $Key => $Settings) {
-                 if ( $Settings[3] == $Title ) {
-                     if ( isset($Values[$ID]) ) {
+                 if ($Settings[3] == $Title) {
+                     if (isset($Values[$ID])) {
                          $_SESSION[$this->ImageMapIndex][$Key][4] = $Values[$ID];
                      }
                      $ID++;
                  }
              }
-         } elseif ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_FILE ) {
+         } elseif ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_FILE) {
              $TempArray = "";
              $Handle    = @fopen($this->ImageMapStorageFolder."/".$this->ImageMapFileName.".map", "r");
              if ($Handle) {
@@ -486,8 +486,8 @@
                  fclose($Handle);
 
                  foreach ($TempArray as $Key => $Settings) {
-                     if ( $Settings[3] == $Title ) {
-                         if ( isset($Values[$ID]) ) {
+                     if ($Settings[3] == $Title) {
+                         if (isset($Values[$ID])) {
                              $TempArray[$Key][4] = $Values[$ID];
                          }
                          $ID++;
@@ -509,16 +509,16 @@
          $this->ImageMapIndex 		= $Name;
          $this->ImageMapStorageMode		= $StorageMode;
 
-         if ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION ) {
+         if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
              if (!isset($_SESSION)) {
                  session_start();
              }
-             if ( $_SESSION[$Name] != NULL ) {
+             if ($_SESSION[$Name] != NULL) {
                  foreach ($_SESSION[$Name] as $Key => $Params) {
                      echo $Params[0].IMAGE_MAP_DELIMITER.$Params[1].IMAGE_MAP_DELIMITER.$Params[2].IMAGE_MAP_DELIMITER.$Params[3].IMAGE_MAP_DELIMITER.$Params[4]."\r\n";
                  }
              }
-         } elseif ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_FILE ) {
+         } elseif ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_FILE) {
              if (file_exists($StorageFolder."/".$UniqueID.".map")) {
                  $Handle = @fopen($StorageFolder."/".$UniqueID.".map", "r");
                  if ($Handle) {
@@ -528,7 +528,7 @@
                  }
                  fclose($Handle);
 
-                 if ( $this->ImageMapAutoDelete ) {
+                 if ($this->ImageMapAutoDelete) {
                      unlink($StorageFolder."/".$UniqueID.".map");
                  }
              }
@@ -576,7 +576,7 @@
          imagecopy($Picture,$this->Picture,0,0,0,0,$this->XSize,$this->YSize);
      
          for ($i=1;$i<=$Height;$i++) {
-             if ( $Y+($i-1) < $this->YSize && $Y-$i > 0 ) {
+             if ($Y+($i-1) < $this->YSize && $Y-$i > 0) {
                  imagecopymerge($Picture,$this->Picture,$X,$Y+($i-1),$X,$Y-$i,$Width,1,$StartAlpha-$AlphaStep*$i);
              }
          }

@@ -25,7 +25,7 @@ function smarty_core_is_trusted($params, &$smarty)
                 if (!empty($curr_dir) && is_readable ($curr_dir)) {
                     $_cd = realpath($curr_dir);
                     if (strncmp($_rp, $_cd, strlen($_cd)) == 0
-                        && substr($_rp, strlen($_cd), 1) == DIRECTORY_SEPARATOR ) {
+                        && substr($_rp, strlen($_cd), 1) == DIRECTORY_SEPARATOR) {
                         $_smarty_trusted = true;
                         break;
                     }

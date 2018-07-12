@@ -58,14 +58,14 @@ $base_upgrade_dir       = "upload://upgrades";
 $base_tmp_upgrade_dir   = sugar_cached('upgrades/temp');
 
 // make sure dirs exist
-foreach ( $GLOBALS['subdirs'] as $subdir ) {
+foreach ($GLOBALS['subdirs'] as $subdir) {
     if (!file_exists("$base_upgrade_dir/$subdir")) {
         sugar_mkdir("$base_upgrade_dir/$subdir", 0770, true);
     }
 }
 
 // get labels and text that are specific to either Module Loader or Upgrade Wizard
-if ( $view == "module") {
+if ($view == "module") {
     $uploaddLabel = $mod_strings['LBL_UW_UPLOAD_MODULE'];
     $descItemsQueued = $mod_strings['LBL_UW_DESC_MODULES_QUEUED'];
     $descItemsInstalled = $mod_strings['LBL_UW_DESC_MODULES_INSTALLED'];
@@ -93,10 +93,10 @@ if ($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTE
 // process "run" commands
 //
 
-if ( isset( $_REQUEST['run'] ) && ($_REQUEST['run'] != "") ) {
+if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
     $run = $_REQUEST['run'];
 
-    if ( $run == "upload" ) {
+    if ($run == "upload") {
         $perform = false;
         if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != "") {
             require_once('ModuleInstall/PackageManager.php');
@@ -109,9 +109,9 @@ if ( isset( $_REQUEST['run'] ) && ($_REQUEST['run'] != "") ) {
             copy($_REQUEST['load_module_from_dir'].'/'.$_REQUEST['upgrade_zip_escaped'], "upload://".$_REQUEST['upgrade_zip_escaped']);
 
             $perform = true;
-            $base_filename = urldecode( $_REQUEST['upgrade_zip_escaped'] );
+            $base_filename = urldecode($_REQUEST['upgrade_zip_escaped']);
         } else {
-            if ( empty( $_FILES['upgrade_zip']['tmp_name'] ) ) {
+            if (empty($_FILES['upgrade_zip']['tmp_name'])) {
                 echo $mod_strings['ERR_UW_NO_UPLOAD_FILE'];
             } else {
                 $upload = new UploadFile('upgrade_zip');
@@ -124,12 +124,12 @@ if ( isset( $_REQUEST['run'] ) && ($_REQUEST['run'] != "") ) {
                 } else {
                     $tempFile = "upload://".$upload->get_stored_file_name();
                     $perform = true;
-                    $base_filename = urldecode( $_REQUEST['upgrade_zip_escaped'] );
+                    $base_filename = urldecode($_REQUEST['upgrade_zip_escaped']);
                 }
             }
         }
         if ($perform) {
-            $manifest_file = extractManifest( $tempFile );
+            $manifest_file = extractManifest($tempFile);
             if (is_file($manifest_file)) {
                 //SCAN THE MANIFEST FILE TO MAKE SURE NO COPIES OR ANYTHING ARE HAPPENING IN IT
                 $ms = new ModuleScanner();
@@ -146,18 +146,18 @@ if ( isset( $_REQUEST['run'] ) && ($_REQUEST['run'] != "") ) {
                     $ms->displayIssues();
                     die();
                 }
-                validate_manifest( $manifest );
+                validate_manifest($manifest);
 
                 $upgrade_zip_type = $manifest['type'];
 
                 // exclude the bad permutations
-                if ( $view == "module" ) {
+                if ($view == "module") {
                     if ($upgrade_zip_type != "module" && $upgrade_zip_type != "theme" && $upgrade_zip_type != "langpack") {
                         unlinkTempFiles();
                         die($mod_strings['ERR_UW_NOT_ACCEPTIBLE_TYPE']);
                     }
-                } elseif ( $view == "default" ) {
-                    if ($upgrade_zip_type != "patch" ) {
+                } elseif ($view == "default") {
+                    if ($upgrade_zip_type != "patch") {
                         unlinkTempFiles();
                         die($mod_strings['ERR_UW_ONLY_PATCHES']);
                     }
@@ -165,17 +165,17 @@ if ( isset( $_REQUEST['run'] ) && ($_REQUEST['run'] != "") ) {
 
                 $base_filename = pathinfo($tempFile, PATHINFO_BASENAME);
 
-                mkdir_recursive( "$base_upgrade_dir/$upgrade_zip_type" );
+                mkdir_recursive("$base_upgrade_dir/$upgrade_zip_type");
                 $target_path = "$base_upgrade_dir/$upgrade_zip_type/$base_filename";
-                $target_manifest = remove_file_extension( $target_path ) . "-manifest.php";
+                $target_manifest = remove_file_extension($target_path) . "-manifest.php";
 
-                if ( isset($manifest['icon']) && $manifest['icon'] != "" ) {
-                    $icon_location = extractFile( $tempFile ,$manifest['icon'] );
-                    copy($icon_location, remove_file_extension( $target_path )."-icon.".pathinfo($icon_location, PATHINFO_EXTENSION));
+                if (isset($manifest['icon']) && $manifest['icon'] != "") {
+                    $icon_location = extractFile($tempFile ,$manifest['icon']);
+                    copy($icon_location, remove_file_extension($target_path)."-icon.".pathinfo($icon_location, PATHINFO_EXTENSION));
                 }
 
-                if (rename( $tempFile , $target_path )) {
-                    copy( $manifest_file, $target_manifest );
+                if (rename($tempFile , $target_path)) {
+                    copy($manifest_file, $target_manifest);
                     $GLOBALS['ML_STATUS_MESSAGE'] = $base_filename.$mod_strings['LBL_UW_UPLOAD_SUCCESS'];
                 } else {
                     $GLOBALS['ML_STATUS_MESSAGE'] = $mod_strings['ERR_UW_UPLOAD_ERROR'];
@@ -185,8 +185,8 @@ if ( isset( $_REQUEST['run'] ) && ($_REQUEST['run'] != "") ) {
                 die($mod_strings['ERR_UW_NO_MANIFEST']);
             }
         }
-    } elseif ( $run == $mod_strings['LBL_UW_BTN_DELETE_PACKAGE'] ) {
-        if (!empty ($_REQUEST['install_file']) ) {
+    } elseif ($run == $mod_strings['LBL_UW_BTN_DELETE_PACKAGE']) {
+        if (!empty ($_REQUEST['install_file'])) {
             die($mod_strings['ERR_UW_NO_UPLOAD_FILE']);
         }
 
@@ -206,10 +206,10 @@ if ( isset( $_REQUEST['run'] ) && ($_REQUEST['run'] != "") ) {
     }
 }
 
-if ( $view == "module") {
-    print( getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_LOADER_TITLE']), false) );
+if ($view == "module") {
+    print(getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_LOADER_TITLE']), false));
 } else {
-    print( getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_UPGRADE_WIZARD_TITLE']), false) );
+    print(getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_UPGRADE_WIZARD_TITLE']), false));
 }
 
 // upload link
@@ -346,7 +346,7 @@ print( "</ul>\n" );
 ?>
 */
 
-$GLOBALS['log']->info( "Upgrade Wizard view");
+$GLOBALS['log']->info("Upgrade Wizard view");
 ?>
 </td>
 </tr>

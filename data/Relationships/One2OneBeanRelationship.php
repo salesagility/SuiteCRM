@@ -95,7 +95,7 @@ class One2OneBeanRelationship extends One2MBeanRelationship
         $join = '';
 
         //Set up any table aliases required
-        if ( ! empty($params['join_table_alias'])) {
+        if (! empty($params['join_table_alias'])) {
             $targetTableWithAlias = $targetTable . " ". $params['join_table_alias'];
             $targetTable = $params['join_table_alias'];
         }

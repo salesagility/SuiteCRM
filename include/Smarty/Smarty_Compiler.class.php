@@ -378,7 +378,7 @@ class Smarty_Compiler extends Smarty
         $compiled_content = str_replace($tag_guard, '<?', $compiled_content); 
         
         // remove \n from the end of the file, if any
-        if (strlen($compiled_content) && (substr($compiled_content, -1) == "\n") ) {
+        if (strlen($compiled_content) && (substr($compiled_content, -1) == "\n")) {
             $compiled_content = substr($compiled_content, 0, -1);
         }
 
@@ -1008,7 +1008,7 @@ class Smarty_Compiler extends Smarty
             $arg_list[] = "'$arg_name' => $arg_value";
         }
 
-        if ( $theme_template == 'true' ) {
+        if ($theme_template == 'true') {
             $include_file = '"'.SugarThemeRegistry::current()->getTemplate(str_replace(array('"',"'"),'',$include_file)).'"';
         }
 
@@ -1421,7 +1421,7 @@ class Smarty_Compiler extends Smarty
                     break;
 
                 default:
-                    if (preg_match('~^' . $this->_func_regexp . '$~', $token) ) {
+                    if (preg_match('~^' . $this->_func_regexp . '$~', $token)) {
                         // function call
                         if ($this->security &&
                                !in_array($token, $this->security_settings['IF_FUNCS'])) {
@@ -2354,7 +2354,7 @@ class Smarty_Compiler extends Smarty
             if ($close_tag == $_open_tag) {
                 return $_open_tag;
             }
-            if ($close_tag == 'if' && ($_open_tag == 'else' || $_open_tag == 'elseif' )) {
+            if ($close_tag == 'if' && ($_open_tag == 'else' || $_open_tag == 'elseif')) {
                 return $this->_pop_tag($close_tag);
             }
             if ($close_tag == 'section' && $_open_tag == 'sectionelse') {

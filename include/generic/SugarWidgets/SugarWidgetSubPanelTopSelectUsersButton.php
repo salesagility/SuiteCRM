@@ -85,16 +85,16 @@ class SugarWidgetSubPanelTopSelectUsersButton extends SugarWidgetSubPanelTopSele
         $this->module_name = 'Users';
 
         if (is_array($this->button_properties)) {
-            if ( isset($this->button_properties['title'])) {
+            if (isset($this->button_properties['title'])) {
                 $this->title = $app_strings[$this->button_properties['title']];
             }
-            if ( isset($this->button_properties['accesskey'])) {
+            if (isset($this->button_properties['accesskey'])) {
                 //$this->accesskey = $app_strings[$this->button_properties['accesskey']];
             }
-            if ( isset($this->button_properties['form_value'])) {
+            if (isset($this->button_properties['form_value'])) {
                 $this->value = $app_strings[$this->button_properties['form_value']];
             }
-            if ( isset($this->button_properties['module'])) {
+            if (isset($this->button_properties['module'])) {
                 $this->module_name = $this->button_properties['module'];
             }
         }

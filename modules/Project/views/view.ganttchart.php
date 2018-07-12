@@ -47,7 +47,7 @@ class ProjectViewGanttChart extends ViewDetail
 
         $project = new Project();
 
-        if ( !isset($_REQUEST["project_id"]) || trim($_REQUEST["project_id"]) == "") {
+        if (!isset($_REQUEST["project_id"]) || trim($_REQUEST["project_id"]) == "") {
             $_REQUEST["project_id"] = $_REQUEST["record"];
         }
 

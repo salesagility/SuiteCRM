@@ -1729,7 +1729,7 @@ class Smarty
      */
     function _read_file($filename)
     {
-        if ( file_exists($filename) && is_readable($filename) && ($fd = @fopen($filename, 'rb')) ) {
+        if (file_exists($filename) && is_readable($filename) && ($fd = @fopen($filename, 'rb'))) {
             $contents = '';
             while (!feof($fd)) {
                 $contents .= fread($fd, 8192);

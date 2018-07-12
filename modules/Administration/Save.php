@@ -61,11 +61,11 @@ $focus = new Administration();
 foreach ($_POST as $key => $val) {
     $prefix = $focus->get_config_prefix($key);
     if (in_array($prefix[0], $focus->config_categories)) {
-        if ( $prefix[0] == "license" ) {
-            if ( $prefix[1] == "expire_date" ) {
+        if ($prefix[0] == "license") {
+            if ($prefix[1] == "expire_date") {
                 global $timedate;
-                $val = $timedate->swap_formats( $val, $timedate->get_date_format(), $timedate->dbDayFormat );
-            } elseif ( $prefix[1] == "key" ) {
+                $val = $timedate->swap_formats($val, $timedate->get_date_format(), $timedate->dbDayFormat);
+            } elseif ($prefix[1] == "key") {
                 $val = trim($val); // bug 16860 tyoung - trim whitespace from the start and end of the licence key value
             }
         }

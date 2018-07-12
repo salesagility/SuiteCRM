@@ -447,7 +447,7 @@ class Scheduler extends SugarBean
         }
         //_pp($minName);
         // prep some boundaries - these are not in GMT b/c gmt is a 24hour period, possibly bridging 2 local days
-        if (empty($focus->time_from)  && empty($focus->time_to) ) {
+        if (empty($focus->time_from)  && empty($focus->time_to)) {
             $timeFromTs = 0;
             $timeToTs = $timedate->getNow(true)->get('+1 day')->ts;
         } else {
@@ -504,11 +504,11 @@ class Scheduler extends SugarBean
                 $dateobj->setTime($hr, $min, 0);
                 $tsGmt = $dateobj->ts;
 
-                if ( $tsGmt >= $timeStartTs ) { // start is greater than the date specified by admin
-					if ( $tsGmt >= $timeFromTs ) { // start is greater than the time_to spec'd by admin
+                if ($tsGmt >= $timeStartTs) { // start is greater than the date specified by admin
+					if ($tsGmt >= $timeFromTs) { // start is greater than the time_to spec'd by admin
                         if ($tsGmt > $lastRunTs) { // start from last run, last run should not be included
-                            if ( $tsGmt <= $timeEndTs ) { // this is taken care of by the initial query - start is less than the date spec'd by admin
-                                if ( $tsGmt <= $timeToTs ) { // start is less than the time_to
+                            if ($tsGmt <= $timeEndTs) { // this is taken care of by the initial query - start is less than the date spec'd by admin
+                                if ($tsGmt <= $timeToTs) { // start is less than the time_to
                                     $validJobTime[] = $dateobj->asDb();
                                 } else {
                                     //_pp('Job Time is NOT smaller that TimeTO: '.$tsGmt .'<='. $timeToTs);

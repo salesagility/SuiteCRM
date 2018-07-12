@@ -947,7 +947,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
 
         foreach ($query->matchedDocs() as $id => $num) {
             $docScore = $query->score($id, $this);
-            if ( $docScore != 0 ) {
+            if ($docScore != 0) {
                 $hit = new Zend_Search_Lucene_Search_QueryHit($this);
                 $hit->id = $id;
                 $hit->score = $docScore;
@@ -1083,7 +1083,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
     public function getFieldNames($indexed = false)
     {
         $result = array();
-        foreach ( $this->_segmentInfos as $segmentInfo ) {
+        foreach ($this->_segmentInfos as $segmentInfo) {
             $result = array_merge($result, $segmentInfo->getFields($indexed));
         }
         return $result;
@@ -1140,7 +1140,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                                                       'UTF-8',
                                                       true,
                                                       $fieldInfo->isIndexed,
-                                                      $bits & 1 );
+                                                      $bits & 1);
             } else {            // Binary data
                 $field = new Zend_Search_Lucene_Field($fieldInfo->name,
                                                       $fdtFile->readBinary(),
@@ -1148,7 +1148,7 @@ class Zend_Search_Lucene implements Zend_Search_Lucene_Interface
                                                       true,
                                                       $fieldInfo->isIndexed,
                                                       $bits & 1,
-                                                      true );
+                                                      true);
             }
 
             $doc->addField($field);

@@ -64,15 +64,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 ///////  Retrieve user
 $username = '';
 $useremail = '';
-if (isset( $_POST['user_name'])) {
+if (isset($_POST['user_name'])) {
     $username = $_POST['user_name'];
-} elseif (isset( $_POST['username'])) {
+} elseif (isset($_POST['username'])) {
     $username = $_POST['username'];
 }
 
-if (isset( $_POST['Users0emailAddress0'])) {
+if (isset($_POST['Users0emailAddress0'])) {
     $useremail = $_POST['Users0emailAddress0'];
-} elseif (isset( $_POST['user_email'])) {
+} elseif (isset($_POST['user_email'])) {
     $useremail = $_POST['user_email'];
 }
 
@@ -98,7 +98,7 @@ if (isset( $_POST['Users0emailAddress0'])) {
         if (isset($_POST['userId']) && $_POST['userId'] != '') {
             $usr->retrieve($_POST['userId']);
         } else {
-            if (!empty( $_POST['sugar_user_name'])) {
+            if (!empty($_POST['sugar_user_name'])) {
                 $usr_id=$usr->retrieve_user_id($_POST['sugar_user_name']);
                 $usr->retrieve($usr_id);
             } else {

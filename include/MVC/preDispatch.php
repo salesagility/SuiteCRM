@@ -45,7 +45,7 @@ if (!defined('sugarEntry')) {
  * First step in removing getimage and getYUIComboFile -- at least this bypasses most of the app,
  * making assets load faster.
  */
-if ( isset($_GET["entryPoint"]) ) {
+if (isset($_GET["entryPoint"])) {
     if ($_GET["entryPoint"] == "getImage") {
         require_once('include/SugarTheme/SugarTheme.php');
         require_once('include/utils.php');

@@ -131,10 +131,10 @@ class ModuleBuilderParser
             unlink($file);
         }
 
-        mkdir_recursive ( dirname ( $file ) ) ;
+        mkdir_recursive (dirname ($file)) ;
         $GLOBALS['log']->debug("ModuleBuilderParser->_writeFile(): file=".$file);
         $useVariables = (count($variables)>0);
-        if ( $fh = @sugar_fopen( $file, 'w' ) ) {
+        if ($fh = @sugar_fopen($file, 'w')) {
             $out = "<?php\n";
             if ($useVariables) {
                 // write out the $<variable>=<modulename> lines
@@ -155,7 +155,7 @@ class ModuleBuilderParser
                 }
             $viewVariable = $this->_defMap[strtolower($view)];
             $out .= "\$$viewVariable = ";
-            $out .= ($useVariables) ? "array (\n\$module_name =>\n".var_export_helper($defs) : var_export_helper( array($moduleName => $defs) );
+            $out .= ($useVariables) ? "array (\n\$module_name =>\n".var_export_helper($defs) : var_export_helper(array($moduleName => $defs));
 
             // tidy up the parenthesis
             if ($useVariables) {
@@ -164,8 +164,8 @@ class ModuleBuilderParser
             $out .= ";\n?>\n";
 
 //           $GLOBALS['log']->debug("parser.modifylayout.php->_writeFile(): out=".print_r($out,true));
-            fputs( $fh, $out);
-            fclose( $fh );
+            fputs($fh, $out);
+            fclose($fh);
         } else {
             $GLOBALS['log']->fatal("ModuleBuilderParser->_writeFile() Could not write new viewdef file ".$file);
         }

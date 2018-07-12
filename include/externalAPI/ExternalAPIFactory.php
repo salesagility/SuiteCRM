@@ -94,13 +94,13 @@ class ExternalAPIFactory
     {
         if (inDeveloperMode()) {
             static $beenHereBefore = false;
-            if ( !$beenHereBefore ) {
+            if (!$beenHereBefore) {
                 $forceRebuild = true;
                 $beenHereBefore = true;
             }
         }
         $cached=sugar_cached('include/externalAPI.cache.php');
-        if (!$forceRebuild && file_exists($cached) ) {
+        if (!$forceRebuild && file_exists($cached)) {
             // Already have a cache file built, no need to rebuild
             require $cached;
 
@@ -112,19 +112,19 @@ class ExternalAPIFactory
         $needUrlList = array();
 
         $baseDirList = array('include/externalAPI/','custom/include/externalAPI/');
-        foreach ( $baseDirList as $baseDir ) {
+        foreach ($baseDirList as $baseDir) {
             $dirList = glob($baseDir.'*',GLOB_ONLYDIR);
             foreach ($dirList as $dir) {
-                if ( $dir == $baseDir.'.' || $dir == $baseDir.'..' || $dir == $baseDir.'Base' ) {
+                if ($dir == $baseDir.'.' || $dir == $baseDir.'..' || $dir == $baseDir.'Base') {
                     continue;
                 }
 
                 $apiName = str_replace($baseDir,'',$dir);
-                if ( file_exists($dir.'/ExtAPI'.$apiName.'.php') ) {
+                if (file_exists($dir.'/ExtAPI'.$apiName.'.php')) {
                     $apiFullList[$apiName]['className'] = 'ExtAPI'.$apiName;
                     $apiFullList[$apiName]['file'] = $dir.'/'.$apiFullList[$apiName]['className'].'.php';
                 }
-                if ( file_exists($dir.'/ExtAPI'.$apiName.'_cstm.php') ) {
+                if (file_exists($dir.'/ExtAPI'.$apiName.'_cstm.php')) {
                     $apiFullList[$apiName]['className'] = 'ExtAPI'.$apiName.'_cstm';
                     $apiFullList[$apiName]['file_cstm'] = $dir.'/'.$apiFullList[$apiName]['className'].'.php';
                 }
@@ -132,21 +132,21 @@ class ExternalAPIFactory
         }
 
         $optionList = array('supportedModules','useAuth','requireAuth','supportMeetingPassword','docSearch', 'authMethod', 'oauthFixed','needsUrl','canInvite','sendsInvites','sharingOptions','connector', 'oauthParams','restrictUploadsByExtension');
-        foreach ( $apiFullList as $apiName => $apiOpts ) {
+        foreach ($apiFullList as $apiName => $apiOpts) {
             require_once($apiOpts['file']);
-            if ( !empty($apiOpts['file_cstm']) ) {
+            if (!empty($apiOpts['file_cstm'])) {
                 require_once($apiOpts['file_cstm']);
             }
             $className = $apiOpts['className'];
             $apiClass = new $className();
-            foreach ( $optionList as $opt ) {
-                if ( isset($apiClass->$opt) ) {
+            foreach ($optionList as $opt) {
+                if (isset($apiClass->$opt)) {
                     $apiFullList[$apiName][$opt] = $apiClass->$opt;
                 }
             }
 
             // Special handling for the show/hide of the Meeting Password field, we need to create a dropdown for the Sugar Logic code.
-            if ( isset($apiClass->supportMeetingPassword) && $apiClass->supportMeetingPassword == true ) {
+            if (isset($apiClass->supportMeetingPassword) && $apiClass->supportMeetingPassword == true) {
                 $meetingPasswordList[$apiName] = $apiName;
             }
         }
@@ -164,11 +164,11 @@ class ExternalAPIFactory
         rename(sugar_cached('include/externalAPI.cache-tmp.js'),sugar_cached('include/externalAPI.cache.js'));
 
 
-        if (!isset($GLOBALS['app_list_strings']['extapi_meeting_password']) || (is_array($GLOBALS['app_list_strings']['extapi_meeting_password']) && count(array_diff($meetingPasswordList,$GLOBALS['app_list_strings']['extapi_meeting_password'])) != 0 )) {
+        if (!isset($GLOBALS['app_list_strings']['extapi_meeting_password']) || (is_array($GLOBALS['app_list_strings']['extapi_meeting_password']) && count(array_diff($meetingPasswordList,$GLOBALS['app_list_strings']['extapi_meeting_password'])) != 0)) {
             // Our meeting password list is different... we need to do something about this.
             require_once('modules/Administration/Common.php');
             $languages = get_languages();
-            foreach ( $languages as $lang => $langLabel ) {
+            foreach ($languages as $lang => $langLabel) {
                 $contents = return_custom_app_list_strings_file_contents($lang);
                 $new_contents = replace_or_add_dropdown_type('extapi_meeting_password', $meetingPasswordList, $contents);
                 save_custom_app_list_strings_contents($new_contents, $lang);
@@ -184,11 +184,11 @@ class ExternalAPIFactory
     public static function clearCache()
     {
         $cached=sugar_cached('include/externalAPI.cache.php');
-        if ( file_exists($cached) ) {
+        if (file_exists($cached)) {
             unlink($cached);
         }
         $cached=sugar_cached('include/externalAPI.cache.js');
-        if ( file_exists($cached) ) {
+        if (file_exists($cached)) {
             unlink($cached);
         }
     }
@@ -203,13 +203,13 @@ class ExternalAPIFactory
     public static function loadAPI($apiName, $ignoreAuth=false)
     {
         $apiList = self::loadFullAPIList();
-        if ( ! isset($apiList[$apiName]) ) {
+        if (! isset($apiList[$apiName])) {
             return false;
         }
 
         $myApi = $apiList[$apiName];
         require_once($myApi['file']);
-        if ( !empty($myApi['file_cstm']) ) {
+        if (!empty($myApi['file_cstm'])) {
             require_once($myApi['file_cstm']);
         }
 
@@ -229,7 +229,7 @@ class ExternalAPIFactory
             }
         }
 
-        if ( $myApi['useAuth'] && isset($eapmBean->application) ) {
+        if ($myApi['useAuth'] && isset($eapmBean->application)) {
             $apiClass->loadEAPM($eapmBean);
         }
 
@@ -246,7 +246,7 @@ class ExternalAPIFactory
     {
         $apiList = self::loadFullAPIList();
 
-        if ( $module == '' && $ignoreAuth == true ) {
+        if ($module == '' && $ignoreAuth == true) {
             // Simplest case, return everything.
             return($apiList);
         }
@@ -254,16 +254,16 @@ class ExternalAPIFactory
         $apiFinalList = array();
 
         // Not such an easy case, we need to limit to specific modules and see if we have authentication (or not)
-        foreach ( $apiList as $apiName => $apiOpts ) {
-            if ( $module == '' || in_array($module,$apiOpts['supportedModules']) ) {
+        foreach ($apiList as $apiName => $apiOpts) {
+            if ($module == '' || in_array($module,$apiOpts['supportedModules'])) {
                 // This matches the module criteria
-                if ( $ignoreAuth || !$apiOpts['useAuth'] || !$apiOpts['requireAuth'] ) {
+                if ($ignoreAuth || !$apiOpts['useAuth'] || !$apiOpts['requireAuth']) {
                     // Don't need to worry about authentication
                     $apiFinalList[$apiName] = $apiOpts;
                 } else {
                     // We need to worry about authentication
                     $eapmBean = EAPM::getLoginInfo($apiName);
-                    if ( isset($eapmBean->application) ) {
+                    if (isset($eapmBean->application)) {
                         // We have authentication
                         $apiFinalList[$apiName] = $apiOpts;
                     }
@@ -292,11 +292,11 @@ class ExternalAPIFactory
             $apiDropdown[''] = '';
         }
 
-        foreach ( $apiList as $apiName => $ignore ) {
+        foreach ($apiList as $apiName => $ignore) {
             $appStringTranslKey = 'eapm_list_' .strtolower($moduleName);
-            if ( isset($app_list_strings[$appStringTranslKey]) && !empty($app_list_strings[$appStringTranslKey][$apiName]) ) {
+            if (isset($app_list_strings[$appStringTranslKey]) && !empty($app_list_strings[$appStringTranslKey][$apiName])) {
                 $apiDropdown[$apiName] = $app_list_strings[$appStringTranslKey][$apiName];
-            } elseif ( !empty($app_list_strings['eapm_list'][$apiName]) ) {
+            } elseif (!empty($app_list_strings['eapm_list'][$apiName])) {
                 $apiDropdown[$apiName] = $app_list_strings['eapm_list'][$apiName];
             } else {
                 $apiDropdown[$apiName] = $apiName;

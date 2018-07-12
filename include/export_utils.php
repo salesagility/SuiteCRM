@@ -97,7 +97,7 @@ function export($type, $records = null, $members = false, $sample=false)
         $records = explode(',', $records);
         $records = "'" . implode("','", $records) . "'";
         $where = "{$focus->table_name}.id in ($records)";
-    } elseif (isset($_REQUEST['all']) ) {
+    } elseif (isset($_REQUEST['all'])) {
         $where = '';
     } else {
         if (!empty($_REQUEST['current_post'])) {
@@ -122,7 +122,7 @@ function export($type, $records = null, $members = false, $sample=false)
             $where .= $focus->getOwnerWhere($current_user->id);
         }
         /* BEGIN - SECURITY GROUPS */
-        if (ACLController::requireSecurityGroup($focus->module_dir, 'export') ) {
+        if (ACLController::requireSecurityGroup($focus->module_dir, 'export')) {
             require_once('modules/SecurityGroups/SecurityGroup.php');
             global $current_user;
             $owner_where = $focus->getOwnerWhere($current_user->id);
@@ -160,7 +160,7 @@ function export($type, $records = null, $members = false, $sample=false)
     $populate = false;
     if ($sample) {
         $result = $db->limitQuery($query, 0, $sampleRecordNum, true, $app_strings['ERR_EXPORT_TYPE'].$type.": <BR>.".$query);
-        if ( $focus->_get_num_rows_in_query($query)<1 ) {
+        if ($focus->_get_num_rows_in_query($query)<1) {
             $populate = true;
         }
     } else {
@@ -184,7 +184,7 @@ function export($type, $records = null, $members = false, $sample=false)
         }
 
         //If labels should not be exportable skip them
-        if (isset($focus->field_name_map[$key])  && isset( $focus->field_name_map[$key]['exportable'])
+        if (isset($focus->field_name_map[$key])  && isset($focus->field_name_map[$key]['exportable'])
             && $focus->field_name_map[$key]['exportable'] === false) {
             continue;
         }
@@ -271,9 +271,9 @@ function export($type, $records = null, $members = false, $sample=false)
                     case 'multienum':
 			$valueArray = unencodeMultiEnum($value);
 
-                        if (isset($focus->field_name_map[$fields_array[$key]]['options']) && isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) ) {
-                            foreach ($valueArray as $multikey => $multivalue ) {
-                                if (isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$multivalue]) ) {
+                        if (isset($focus->field_name_map[$fields_array[$key]]['options']) && isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']])) {
+                            foreach ($valueArray as $multikey => $multivalue) {
+                                if (isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$multivalue])) {
                                     $valueArray[$multikey] = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$multivalue];
                                 }
                             }
@@ -283,7 +283,7 @@ function export($type, $records = null, $members = false, $sample=false)
                         break;
 
 		case 'enum':
-			if (	isset($focus->field_name_map[$fields_array[$key]]['options']) &&
+			if (isset($focus->field_name_map[$fields_array[$key]]['options']) &&
 				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
 				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value])
 			) {
@@ -525,7 +525,7 @@ function generateSearchWhere($module, $query)
     }
     $searchForm->populateFromArray(json_decode(html_entity_decode($query),true));
     $where_clauses = $searchForm->generateSearchWhere(true, $module);
-    if (count($where_clauses) > 0 ) {
+    if (count($where_clauses) > 0) {
         $where = '('. implode(' ) AND ( ', $where_clauses) . ')';
     }
     $GLOBALS['log']->info("Export Where Clause: {$where}");
@@ -563,7 +563,7 @@ function generateSearchWhere($module, $query)
      include('install/demoData.en_us.php');
 
      $person_bean = false;
-     if ( isset($focus->first_name)) {
+     if (isset($focus->first_name)) {
          $person_bean = true;
      }
 
@@ -733,7 +733,7 @@ function generateSearchWhere($module, $query)
                     global $app_list_strings;
 
                     if (isset($focus->field_name_map[$field_name]['type']) && !empty($focus->field_name_map[$field_name]['options'])) {
-                        if ( !empty($app_list_strings[$focus->field_name_map[$field_name]['options']]) ) {
+                        if (!empty($app_list_strings[$focus->field_name_map[$field_name]['options']])) {
 
                             //get the values into an array
                             $dd_values = $app_list_strings[$focus->field_name_map[$field_name]['options']];

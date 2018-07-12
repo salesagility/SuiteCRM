@@ -89,7 +89,7 @@ class UnifiedSearchAdvanced
         if (empty($users_modules)) {
             $users_modules = array();
             foreach ($unified_search_modules_display as $module=>$data) {
-                if (!empty($data['visible']) ) {
+                if (!empty($data['visible'])) {
                     $users_modules[$module] = $beanList[$module];
                 }
             }
@@ -181,7 +181,7 @@ class UnifiedSearchAdvanced
         if (!empty($_REQUEST['advanced']) && $_REQUEST['advanced'] != 'false') {
             $modules_to_search = array();
             if (!empty($_REQUEST['search_modules'])) {
-                foreach (explode (',', $_REQUEST['search_modules'] ) as $key) {
+                foreach (explode (',', $_REQUEST['search_modules']) as $key) {
                     if (isset($unified_search_modules_display[$key]) && !empty($unified_search_modules_display[$key]['visible'])) {
                         $modules_to_search[$key] = $beanList[$key];
                     }
@@ -196,14 +196,14 @@ class UnifiedSearchAdvanced
 
             if (!empty($users_modules)) {
                 // use user's previous selections
-                foreach ( $users_modules as $key => $value ) {
+                foreach ($users_modules as $key => $value) {
                     if (isset($unified_search_modules_display[$key]) && !empty($unified_search_modules_display[$key]['visible'])) {
                         $modules_to_search[$key] = $beanList[$key];
                     }
                 }
             } else {
                 foreach ($unified_search_modules_display as $module=>$data) {
-                    if (!empty($data['visible']) ) {
+                    if (!empty($data['visible'])) {
                         $modules_to_search[$module] = $beanList[$module];
                     }
                 }
@@ -240,18 +240,18 @@ class UnifiedSearchAdvanced
                     require('custom/modules/'.$seed->module_dir.'/metadata/listviewdefs.php');
                 }
 
-                if ( !isset($listViewDefs) || !isset($listViewDefs[$seed->module_dir]) ) {
+                if (!isset($listViewDefs) || !isset($listViewDefs[$seed->module_dir])) {
                     continue;
                 }
 
                 $unifiedSearchFields = array () ;
                 $innerJoins = array();
-                foreach ( $unified_search_modules[ $moduleName ]['fields'] as $field=>$def ) {
+                foreach ($unified_search_modules[ $moduleName ]['fields'] as $field=>$def) {
                     $listViewCheckField = strtoupper($field);
                     //check to see if the field is in listview defs
-                    if ( empty($listViewDefs[$seed->module_dir][$listViewCheckField]['default']) ) {
+                    if (empty($listViewDefs[$seed->module_dir][$listViewCheckField]['default'])) {
                         //check to see if field is in original list view defs (in case we are using custom layout defs)
-                        if (!empty($orig_listViewDefs[$seed->module_dir][$listViewCheckField]['default']) ) {
+                        if (!empty($orig_listViewDefs[$seed->module_dir][$listViewCheckField]['default'])) {
                             //if we are here then the layout has been customized, but the field is still needed for query creation
                             $listViewDefs[$seed->module_dir][$listViewCheckField] = $orig_listViewDefs[$seed->module_dir][$listViewCheckField];
                         }
@@ -259,8 +259,8 @@ class UnifiedSearchAdvanced
 
                     //bug: 34125 we might want to try to use the LEFT JOIN operator instead of the INNER JOIN in the case we are
                     //joining against a field that has not been populated.
-                    if (!empty($def['innerjoin']) ) {
-                        if (empty($def['db_field']) ) {
+                    if (!empty($def['innerjoin'])) {
+                        if (empty($def['db_field'])) {
                             continue;
                         }
                         $innerJoins[$field] = $def;
@@ -286,9 +286,9 @@ class UnifiedSearchAdvanced
                 $seed = new $beanName();
                 
                 require_once $this->searchFormPath;
-                $searchForm = new $this->searchFormClass ( $seed, $moduleName ) ;
+                $searchForm = new $this->searchFormClass ($seed, $moduleName) ;
 
-                $searchForm->setup (array ( $moduleName => array() ) , $unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
+                $searchForm->setup (array ( $moduleName => array() ) , $unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                 $where_clauses = $searchForm->generateSearchWhere() ;
                 //add inner joins back into the where clause
                 $params = array('custom_select' => "");
@@ -372,8 +372,8 @@ class UnifiedSearchAdvanced
             }
 
             $beanName = BeanFactory::getObjectName($moduleName);
-            $manager = new VardefManager ( );
-            $manager->loadVardef( $moduleName , $beanName ) ;
+            $manager = new VardefManager ();
+            $manager->loadVardef($moduleName , $beanName) ;
 
             // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
             if (file_exists('custom/modules/'.$moduleName.'/metadata/metafiles.php')) {
@@ -404,7 +404,7 @@ class UnifiedSearchAdvanced
             //If the bean supports unified search or if it's a custom module bean and unified search is not defined
             if (!empty($dictionary[$beanName]['unified_search']) || $isCustomModule) {
                 $fields = array();
-                foreach ( $dictionary [ $beanName ][ 'fields' ] as $field => $def ) {
+                foreach ($dictionary [ $beanName ][ 'fields' ] as $field => $def) {
                     // We cannot enable or disable unified_search for email in the vardefs as we don't actually have a vardef entry for 'email'
                     // the searchFields entry for 'email' doesn't correspond to any vardef entry. Instead it contains SQL to directly perform the search.
                     // So as a proxy we allow any field in the vardefs that has a name starting with 'email...' to be tagged with the 'unified_search' parameter
@@ -418,7 +418,7 @@ class UnifiedSearchAdvanced
                         $field = 'phone' ;
                     }
 
-                    if ( !empty($def['unified_search']) && isset ( $searchFields [ $moduleName ] [ $field ]  )) {
+                    if (!empty($def['unified_search']) && isset ($searchFields [ $moduleName ] [ $field ])) {
                         $fields [ $field ] = $searchFields [ $moduleName ] [ $field ] ;
                     }
                 }
@@ -505,7 +505,7 @@ class UnifiedSearchAdvanced
 
             $new_unified_search_modules_display = array();
 
-            foreach (explode (',', $_REQUEST['enabled_modules'] ) as $module) {
+            foreach (explode (',', $_REQUEST['enabled_modules']) as $module) {
                 $new_unified_search_modules_display[$module]['visible'] = true;
             }
 

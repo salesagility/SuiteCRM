@@ -365,7 +365,7 @@ HTML;
     private static function getBooleanFields($boolFields)
     {
         $boolean_fields='';
-        if ($boolFields != null ) {
+        if ($boolFields != null) {
             foreach ($boolFields as $boo) {
                 $boolean_fields=$boolean_fields.$boo.';';
             }

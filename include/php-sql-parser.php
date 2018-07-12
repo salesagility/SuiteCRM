@@ -147,7 +147,7 @@ class PHPSQLParser
                 $close[] = $i;
             }
         }
-        return array('open' => $open, 'close' => $close, 'balanced' =>( count($close) - count($open)));
+        return array('open' => $open, 'close' => $close, 'balanced' =>(count($close) - count($open)));
     }
 
     #This function counts open and close parenthesis and
@@ -481,7 +481,7 @@ EOREGEX
 
 
 					case 'UPDATE':
-						if ($token_category == "" ) {
+						if ($token_category == "") {
 						    $token_category = $upper;
 						    continue 2;
 						}
@@ -1004,7 +1004,7 @@ EOREGEX
 						    continue;
 						}
 
-						if ($token_count == 0 ) {
+						if ($token_count == 0) {
 						    if (!$table) {
 						        $table = $token ;
 						    }
@@ -1172,7 +1172,7 @@ EOREGEX
 
 
             /* is it an inlist */
-            } elseif ( $upper[0] == '(' && substr($upper,-1) == ')' ) {
+            } elseif ($upper[0] == '(' && substr($upper,-1) == ')') {
                 if ($prev_token == 'IN') {
                     $type = "in-list";
                     $processed = $this->split_sql(substr($token,1,-1));

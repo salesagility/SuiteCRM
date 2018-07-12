@@ -105,7 +105,7 @@ class Chart_outcome_by_month
             $GLOBALS['log']->debug($date_end);
         } elseif (isset($_REQUEST['obm_year']) && $_REQUEST['obm_year'] != '') {
             $date_end = $_REQUEST['obm_year'].'-12-31';
-            $current_user->setPreference('obm_date_end', $date_end );
+            $current_user->setPreference('obm_date_end', $date_end);
             $GLOBALS['log']->debug("_REQUEST['obm_date_end'] is:");
             $GLOBALS['log']->debug($_REQUEST['obm_date_end']);
             $GLOBALS['log']->debug("USER PREFERENCES['obm_date_end'] is:");
@@ -287,7 +287,7 @@ echo get_validate_chart_js();
             $rowTotalArr[] = 0;
             global $current_user;
             $salesStages = array("Closed Lost"=>$app_list_strings['sales_stage_dom']["Closed Lost"],"Closed Won"=>$app_list_strings['sales_stage_dom']["Closed Won"],"Other"=>$other);
-            if ($current_user->getPreference('currency') ) {
+            if ($current_user->getPreference('currency')) {
                 $currency = new Currency();
                 $currency->retrieve($current_user->getPreference('currency'));
                 $div = $currency->conversion_rate;
@@ -402,7 +402,7 @@ echo get_validate_chart_js();
             $GLOBALS['log']->debug($date_end);
         } elseif (isset($_REQUEST['obm_year']) && $_REQUEST['obm_year'] != '') {
             $date_end = $_REQUEST['obm_year'].'-12-31';
-            $current_user->setPreference('obm_date_end', $date_end );
+            $current_user->setPreference('obm_date_end', $date_end);
             $GLOBALS['log']->debug("_REQUEST['obm_date_end'] is:");
             $GLOBALS['log']->debug($_REQUEST['obm_date_end']);
             $GLOBALS['log']->debug("USER PREFERENCES['obm_date_end'] is:");

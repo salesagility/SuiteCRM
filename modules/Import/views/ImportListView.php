@@ -100,7 +100,7 @@ class ImportListView
         $this->dataSource = $dataSource;
         $this->headerColumns = $this->dataSource->getHeaderColumns();
 
-        if ( !isset($params['offset']) ) {
+        if (!isset($params['offset'])) {
             throw new Exception("Missing required parameter offset for ImportListView");
         } else {
             $this->dataSource->setCurrentOffset($params['offset']);
@@ -124,7 +124,7 @@ class ImportListView
         $navStrings = array('next' => $app_strings['LNK_LIST_NEXT'],'previous' => $app_strings['LNK_LIST_PREVIOUS'],'end' => $app_strings['LNK_LIST_END'],
                             'start' => $app_strings['LNK_LIST_START'],'of' => $app_strings['LBL_LIST_OF']);
         $this->ss->assign('navStrings', $navStrings);
-        $this->ss->assign('pageData', $this->generatePaginationData() );
+        $this->ss->assign('pageData', $this->generatePaginationData());
         $this->ss->assign('tableID', $this->tableID);
         $this->ss->assign('colCount', count($this->headerColumns));
         $this->ss->assign('APP',$app_strings);

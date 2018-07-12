@@ -130,7 +130,7 @@ class PredefinedChart
             $GLOBALS['log']->debug("_REQUEST['pbss_date_end'] is:");
             $GLOBALS['log']->debug($_REQUEST['pbss_date_end']);
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] is:");
-            $GLOBALS['log']->debug( $current_user->getPreference('pbss_date_end'));
+            $GLOBALS['log']->debug($current_user->getPreference('pbss_date_end'));
         } else {
             $date_end = $timedate->asUserDate($timedate->fromString("2010-01-01"));
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: ".$date_end);
@@ -144,7 +144,7 @@ class PredefinedChart
         if (!empty($user_tempx) && count($user_tempx) > 0 && !isset($_REQUEST['pbss_sales_stages'])) {
             $tempx = $user_tempx ;
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_sales_stages'] is:");
-            $GLOBALS['log']->debug($user_tempx );
+            $GLOBALS['log']->debug($user_tempx);
         } elseif (isset($_REQUEST['pbss_sales_stages']) && count($_REQUEST['pbss_sales_stages']) > 0) {
             $tempx = $_REQUEST['pbss_sales_stages'];
             $current_user->setPreference('pbss_sales_stages', $_REQUEST['pbss_sales_stages']);
@@ -352,7 +352,7 @@ class PredefinedChart
             $GLOBALS['log']->debug($date_end);
         } elseif (isset($_REQUEST['obm_year']) && $_REQUEST['obm_year'] != '') {
             $date_end = $_REQUEST['obm_year'].'-12-31';
-            $current_user->setPreference('obm_date_end', $date_end );
+            $current_user->setPreference('obm_date_end', $date_end);
             $GLOBALS['log']->debug("_REQUEST['obm_date_end'] is:");
             $GLOBALS['log']->debug($_REQUEST['obm_date_end']);
             $GLOBALS['log']->debug("USER PREFERENCES['obm_date_end'] is:");

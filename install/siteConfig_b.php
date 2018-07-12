@@ -43,11 +43,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-if ( !isset( $install_script ) || !$install_script ) {
+if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
-if ( is_file("config.php") ) {
+if (is_file("config.php")) {
     if (!empty($sugar_config['default_theme'])) {
         $_SESSION['site_default_theme'] = $sugar_config['default_theme'];
     }
@@ -96,11 +96,11 @@ if ( is_file("config.php") ) {
 
 ////	errors
 $errors = '';
-if ( isset($validation_errors) ) {
-    if ( count($validation_errors) > 0 ) {
+if (isset($validation_errors)) {
+    if (count($validation_errors) > 0) {
         $errors  = '<div id="errorMsgs">';
         $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
-        foreach ( $validation_errors as $error ) {
+        foreach ($validation_errors as $error) {
             $errors .= '<li>' . $error . '</li>';
         }
         $errors .= '</ul></div>';

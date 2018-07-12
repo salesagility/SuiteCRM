@@ -79,7 +79,7 @@ if ($current_user->is_admin) {
 	
 	
         $opp = new Opportunity();
-        $opp->update_currency_id($currencies, $_REQUEST['mergeTo'] );
+        $opp->update_currency_id($currencies, $_REQUEST['mergeTo']);
         foreach ($currencies as $cur) {
             if ($cur != $_REQUEST['mergeTo']) {
                 $focus->mark_deleted($cur);
@@ -129,7 +129,7 @@ EOQ;
         $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=ListView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>";
     }
     $ListView = new ListView();
-    $ListView->initNewXTemplate( 'modules/Currencies/ListView.html',$mod_strings);
+    $ListView->initNewXTemplate('modules/Currencies/ListView.html',$mod_strings);
     $ListView->xTemplateAssign('PRETABLE', $pretable);
     $ListView->xTemplateAssign('POSTTABLE', '</form>');
     $ListView->xTemplateAssign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"', null,null,'.gif',$app_strings['LNK_DELETE']));
@@ -145,7 +145,7 @@ EOQ;
     if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
         $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=EditView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'", null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>";
     }
-    if ( empty($focus->id) ) {
+    if (empty($focus->id)) {
         echo get_form_header($app_strings['LBL_CREATE_BUTTON_LABEL'] . $header_text,$edit_botton , false);
     } else {
         echo get_form_header($app_strings['LBL_EDIT_BUTTON_LABEL']." &raquo; ".$focus->name . $header_text,$edit_botton , false);

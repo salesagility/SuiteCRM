@@ -532,7 +532,7 @@ class ViewConvertLead extends SugarView
         echo "<div><ul>";
         foreach ($beans as $bean) {
             $beanName = $bean->object_name;
-            if ( $beanName == 'Contact' && !$this->new_contact ) {
+            if ($beanName == 'Contact' && !$this->new_contact) {
                 echo "<li>" . translate("LBL_EXISTING_CONTACT") . " -
                     <a href='index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}'>
                        {$bean->get_summary_text()}
@@ -588,7 +588,7 @@ class ViewConvertLead extends SugarView
                     $bean->id = create_guid();
                     $bean->new_with_id = true;
                 }
-                if ( isset($_POST['lead_conv_ac_op_sel']) && $_POST['lead_conv_ac_op_sel'] != 'None') {
+                if (isset($_POST['lead_conv_ac_op_sel']) && $_POST['lead_conv_ac_op_sel'] != 'None') {
                     foreach ($activities as $activity) {
                         if (!isset($sugar_config['lead_conv_activity_opt']) || $sugar_config['lead_conv_activity_opt'] == 'copy') {
                             if (isset($_POST['lead_conv_ac_op_sel'])) {
@@ -643,7 +643,7 @@ class ViewConvertLead extends SugarView
             $activity->load_relationship ($rel) ;
 
             $relObj = $activity->$rel->getRelationshipObject();
-            if ( $relObj->relationship_type=='one-to-one' || $relObj->relationship_type == 'one-to-many' ) {
+            if ($relObj->relationship_type=='one-to-one' || $relObj->relationship_type == 'one-to-many') {
                 $key = $relObj->rhs_key;
                 $activity->$key = $bean->id;
             }
@@ -727,7 +727,7 @@ class ViewConvertLead extends SugarView
 
             $newActivity->load_relationship ($rel) ;
             $relObj = $newActivity->$rel->getRelationshipObject();
-            if ( $relObj->relationship_type=='one-to-one' || $relObj->relationship_type == 'one-to-many' ) {
+            if ($relObj->relationship_type=='one-to-one' || $relObj->relationship_type == 'one-to-many') {
                 $key = $relObj->rhs_key;
                 $newActivity->$key = $bean->id;
             }
@@ -875,9 +875,9 @@ class ViewConvertLead extends SugarView
                     $rel_def = $dictionary[$rel_name]['relationships'][$rel_name];
                 }
                 if (!empty($rel_def)) {
-                    if ($rel_def['lhs_module'] == $from->module_dir && $rel_def['rhs_module'] == $to->module_dir ) {
+                    if ($rel_def['lhs_module'] == $from->module_dir && $rel_def['rhs_module'] == $to->module_dir) {
                         return $field;
-                    } elseif ($rel_def['rhs_module'] == $from->module_dir && $rel_def['lhs_module'] == $to->module_dir ) {
+                    } elseif ($rel_def['rhs_module'] == $from->module_dir && $rel_def['lhs_module'] == $to->module_dir) {
                         return $field;
                     }
                 }

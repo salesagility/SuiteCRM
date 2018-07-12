@@ -75,7 +75,7 @@ class iFrameDashlet extends Dashlet
             $this->url = $options['url'];
         }
 
-        if (empty($options['height']) || (int)$options['height'] < 1 ) {
+        if (empty($options['height']) || (int)$options['height'] < 1) {
             $this->height = 315;
         } else {
             $this->height = (int)$options['height'];
@@ -137,13 +137,13 @@ class iFrameDashlet extends Dashlet
     {
         $options = array();
 
-        if ( isset($req['title']) ) {
+        if (isset($req['title'])) {
             $options['title'] = $req['title'];
         }
-        if ( isset($req['url']) ) {
+        if (isset($req['url'])) {
             $options['url'] = $req['url'];
         }
-        if ( isset($req['height']) ) {
+        if (isset($req['height'])) {
             $options['height'] = (int)$req['height'];
         }
         $options['autoRefresh'] = empty($req['autoRefresh']) ? '0' : $req['autoRefresh'];

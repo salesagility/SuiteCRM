@@ -71,7 +71,7 @@
          $upload_file = new UploadFile('uploadfile');
          $do_final_move = 0;
          if (isset($_FILES['uploadfile']) && $upload_file->confirm_upload()) {
-             if (!empty($this->bean->id) && !empty($_REQUEST['old_filename']) ) {
+             if (!empty($this->bean->id) && !empty($_REQUEST['old_filename'])) {
                  $upload_file->unlink_file($this->bean->id,$_REQUEST['old_filename']);
              }
 
@@ -79,7 +79,7 @@
              $this->bean->file_mime_type = $upload_file->mime_type;
 
              $do_final_move = 1;
-         } elseif ( isset( $_REQUEST['old_filename'])) {
+         } elseif (isset($_REQUEST['old_filename'])) {
              $this->bean->filename = $_REQUEST['old_filename'];
          }
 		
@@ -93,7 +93,7 @@
 	    
          if ($do_final_move) {
              $upload_file->final_move($this->bean->id);
-         } elseif ( ! empty($_REQUEST['old_id'])) {
+         } elseif (! empty($_REQUEST['old_id'])) {
              $upload_file->duplicate_file($_REQUEST['old_id'], $this->bean->id, $this->bean->filename);
          }
      }

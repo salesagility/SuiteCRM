@@ -137,7 +137,7 @@ class Audit extends SugarBean
                 foreach ($fieldDefs as $field) {
                     if (isset($row[$field['name']])) {
                         if (($field['name'] == 'before_value_string' || $field['name'] == 'after_value_string') &&
-                                	(array_key_exists($row['field_name'], $genericAssocFieldsArray) || (!empty($moduleAssocFieldsArray[$focus->object_name]) && array_key_exists($row['field_name'], $moduleAssocFieldsArray[$focus->object_name])) )
+                                	(array_key_exists($row['field_name'], $genericAssocFieldsArray) || (!empty($moduleAssocFieldsArray[$focus->object_name]) && array_key_exists($row['field_name'], $moduleAssocFieldsArray[$focus->object_name])))
                                    ) {
                             $temp_list[$field['name']] = Audit::getAssociatedFieldName($row['field_name'], $row[$field['name']]);
                         } else {

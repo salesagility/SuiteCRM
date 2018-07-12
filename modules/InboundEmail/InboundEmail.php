@@ -5449,7 +5449,7 @@ class InboundEmail extends SugarBean
                     // decodes the date field it will exit the loop.
                     // As we no longer need to continue trying to decode the datetime format.
                     foreach ($possibleFormats  as $possibleFormat) {
-                        $dateTime = \DateTime::createFromFormat( $possibleFormat, $parsedFullHeader->date);
+                        $dateTime = \DateTime::createFromFormat($possibleFormat, $parsedFullHeader->date);
                         if ($dateTime !== false) {
                             break;
                         }

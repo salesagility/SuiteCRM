@@ -128,13 +128,13 @@ if (isset($focus->campaign_type) && $focus->campaign_type == "NewsLetter") {
     	$currency  = new Currency();
     if (isset($focus->currency_id) && !empty($focus->currency_id)) {
         $currency->retrieve($focus->currency_id);
-        if ( $currency->deleted != 1) {
-            $smarty->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol );
+        if ($currency->deleted != 1) {
+            $smarty->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol);
         } else {
-            $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
+            $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
         }
     } else {
-        $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
+        $smarty->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
     }
     global $current_user;
     if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {

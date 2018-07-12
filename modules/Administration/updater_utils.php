@@ -85,7 +85,7 @@ function getSystemInfo($send_usage_info=true)
         }
 
         $lastMonth = $db->convert("'". $timedate->getNow()->modify("-30 days")->asDb(false) . "'", 'datetime');
-        if ( !$send_usage_info) {
+        if (!$send_usage_info) {
             $info['users_active_30_days'] = -1;
         } else {
             $info['users_active_30_days'] = $db->getOne("SELECT count( DISTINCT users.id ) user_count FROM tracker, users WHERE users.id = tracker.user_id AND  tracker.date_modified >= $lastMonth", false, 'fetching last 30 users count');
@@ -98,7 +98,7 @@ function getSystemInfo($send_usage_info=true)
             $info['latest_tracker_id'] = -1;
         } else {
             $id=$db->getOne("select id from tracker order by date_modified desc", false, 'fetching most recent tracker entry');
-            if ( $id !== false ) {
+            if ($id !== false) {
                 $info['latest_tracker_id'] = $id;
             }
         }
@@ -203,7 +203,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
         $resultData['versions'] = array();
     }
 
-    if ($response_data || !$sclient->getError() ) {
+    if ($response_data || !$sclient->getError()) {
         if (!empty($resultData['msg'])) {
             if (!empty($resultData['msg']['admin'])) {
                 $license->saveSetting('license', 'msg_admin', base64_encode($resultData['msg']['admin']));
@@ -228,7 +228,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
         $license->saveSetting('license', 'last_connection_fail', TimeDate::getInstance()->nowDb());
         $license->saveSetting('license', 'last_validation', 'no_connection');
 
-        if ( empty($license->settings['license_last_validation_success']) && empty($license->settings['license_last_validation_fail']) && empty($license->settings['license_vk_end_date'])) {
+        if (empty($license->settings['license_last_validation_success']) && empty($license->settings['license_last_validation_fail']) && empty($license->settings['license_vk_end_date'])) {
             $license->saveSetting('license', 'vk_end_date', TimeDate::getInstance()->nowDb());
 
             $license->saveSetting('license', 'validation_key', base64_encode(serialize(array('verified'=>false))));
@@ -319,7 +319,7 @@ function set_sugarbeat($value)
     global $sugar_config;
     $_SUGARBEAT="sugarbeet";
     $sugar_config[$_SUGARBEAT] = $value;
-    write_array_to_file( "sugar_config", $sugar_config, "config.php" );
+    write_array_to_file("sugar_config", $sugar_config, "config.php");
 }
 function get_sugarbeat()
 {
@@ -339,7 +339,7 @@ function shouldCheckSugar()
     global $license, $timedate;
     if (
 
-	get_CheckUpdates_config_setting() == 'automatic' ) {
+	get_CheckUpdates_config_setting() == 'automatic') {
         return true;
     }
 

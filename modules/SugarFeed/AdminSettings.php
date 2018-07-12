@@ -49,34 +49,34 @@ $admin = new Administration();
 $admin->retrieveSettings();
 
 // Handle posts
-if ( !empty($_REQUEST['process']) ) {
+if (!empty($_REQUEST['process'])) {
     // Check the cleanup logic hook, make sure it is still there
     check_logic_hook_file('Users','after_login', array(1, 'SugarFeed old feed entry remover', 'modules/SugarFeed/SugarFeedFlush.php', 'SugarFeedFlush', 'flushStaleEntries'));
 
     // We have data posted
-    if ( $_REQUEST['process'] == 'true' ) {
+    if ($_REQUEST['process'] == 'true') {
         // They want us to process it, the false will just fall outside of this statement
-        if ( $_REQUEST['feed_enable'] == '1' ) {
+        if ($_REQUEST['feed_enable'] == '1') {
             // The feed is enabled, pay attention to what categories should be enabled or disabled
 
-            if ( ! isset($db) ) {
+            if (! isset($db)) {
                 $db = DBManagerFactory::getInstance();
             }
             $ret = $db->query("SELECT * FROM config WHERE category = 'sugarfeed' AND name LIKE 'module_%'");
             $current_modules = array();
-            while ( $row = $db->fetchByAssoc($ret) ) {
+            while ($row = $db->fetchByAssoc($ret)) {
                 $current_modules[$row['name']] = $row['value'];
             }
             
             $active_modules = $_REQUEST['modules'];
-            if ( ! is_array($active_modules) ) {
+            if (! is_array($active_modules)) {
                 $active_modules = array();
             }
             
-            foreach ( $active_modules as $name => $is_active ) {
+            foreach ($active_modules as $name => $is_active) {
                 $module = substr($name,7);
                 
-                if ( $is_active == '1' ) {
+                if ($is_active == '1') {
                     // They are activating something that was disabled before
                     SugarFeed::activateModuleFeed($module);
                 } else {
@@ -92,15 +92,15 @@ if ( !empty($_REQUEST['process']) ) {
             // We also need to leave the database alone, so they can enable/disable modules with the system disabled
             $modulesWithFeeds = SugarFeed::getAllFeedModules();
             
-            foreach ( $modulesWithFeeds as $currFeedModule ) {
+            foreach ($modulesWithFeeds as $currFeedModule) {
                 SugarFeed::disableModuleFeed($currFeedModule,FALSE);
             }
         }
 
         $admin->retrieveSettings(FALSE,TRUE);
         SugarFeed::flushBackendCache();
-    } elseif ( $_REQUEST['process'] == 'deleteRecords' ) {
-        if ( ! isset($db) ) {
+    } elseif ($_REQUEST['process'] == 'deleteRecords') {
+        if (! isset($db)) {
             $db = DBManagerFactory::getInstance();
         }
         $db->query("UPDATE sugarfeed SET deleted = '1'");        
@@ -109,7 +109,7 @@ if ( !empty($_REQUEST['process']) ) {
 
 
 
-    if ( $_REQUEST['process'] == 'true' || $_REQUEST['process'] == 'false' ) {
+    if ($_REQUEST['process'] == 'true' || $_REQUEST['process'] == 'false') {
         header('Location: index.php?module=Administration&action=index');
         return;
     }
@@ -119,23 +119,23 @@ $sugar_smarty	= new Sugar_Smarty();
 $sugar_smarty->assign('mod', $mod_strings);
 $sugar_smarty->assign('app', $app_strings);
 
-if ( isset($admin->settings['sugarfeed_enabled']) && $admin->settings['sugarfeed_enabled'] == '1' ) {
+if (isset($admin->settings['sugarfeed_enabled']) && $admin->settings['sugarfeed_enabled'] == '1') {
     $sugar_smarty->assign('enabled_checkbox','checked');
 }
 
 $possible_feeds = SugarFeed::getAllFeedModules();
 $module_list = array();
 $userFeedEnabled = 0;
-foreach ( $possible_feeds as $module ) {
+foreach ($possible_feeds as $module) {
     $currModule = array();
-    if ( isset($admin->settings['sugarfeed_module_'.$module]) && $admin->settings['sugarfeed_module_'.$module] == '1' ) {
+    if (isset($admin->settings['sugarfeed_module_'.$module]) && $admin->settings['sugarfeed_module_'.$module] == '1') {
         $currModule['enabled'] = 1;
     } else {
         $currModule['enabled'] = 0;
     }
 
     $currModule['module'] = $module;
-    if ( $module == 'UserFeed' ) {
+    if ($module == 'UserFeed') {
         // Fake module, need to handle specially
         $userFeedEnabled = $currModule['enabled'];
         continue;

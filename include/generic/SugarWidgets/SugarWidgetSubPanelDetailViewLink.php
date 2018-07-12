@@ -113,7 +113,7 @@ class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
         $action = 'DetailView';
         $value = $layout_def['fields'][$key];
         global $current_user;
-        if (  !empty($record) &&
+        if (!empty($record) &&
 			($layout_def['DetailView'] && !$layout_def['owner_module'] 
 			||  $layout_def['DetailView'] && !ACLController::moduleSupportsACL($layout_def['owner_module']) 
 			|| ACLController::checkAccess($layout_def['owner_module'], 'view', $layout_def['owner_id'] == $current_user->id))) {

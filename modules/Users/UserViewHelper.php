@@ -248,10 +248,10 @@ class UserViewHelper
             ),
         );
 
-        if ( $userType == 'GROUP' || $userType == 'PORTAL_ONLY' ) {
+        if ($userType == 'GROUP' || $userType == 'PORTAL_ONLY') {
             $availableUserTypes = array($this->usertype);
         } else {
-            if ( $this->ss->get_template_vars('USER_ADMIN') ) {
+            if ($this->ss->get_template_vars('USER_ADMIN')) {
                 $availableUserTypes = array('RegularUser');
             } elseif ($this->ss->get_template_vars('ADMIN_EDIT_SELF')) {
                 $availableUserTypes = array('Administrator');
@@ -266,7 +266,7 @@ class UserViewHelper
         }
 
         $userTypeDropdown = '<select id="UserType" name="UserType" onchange="user_status_display(this);" ';
-        if ( count($availableUserTypes) == 1 ) {
+        if (count($availableUserTypes) == 1) {
             $userTypeDropdown .= ' disabled ';
         }
         $userTypeDropdown .= '>';
@@ -275,8 +275,8 @@ class UserViewHelper
 
         $setSelected = !empty($this->bean->id);
 
-        foreach ( $availableUserTypes as $currType ) {
-            if ($setSelected && $currType == $userType ) {
+        foreach ($availableUserTypes as $currType) {
+            if ($setSelected && $currType == $userType) {
                 $userTypeDropdown .= '<option value="'.$currType.'" SELECTED>'.$userTypes[$currType]['label'].'</option>';
             } else {
                 $userTypeDropdown .= '<option value="'.$currType.'">'.$userTypes[$currType]['label'].'</option>';
@@ -308,22 +308,22 @@ class UserViewHelper
         }
 
         // If my account page or portal only user or regular user without system generated password or a duplicate user
-        if ((($current_user->id == $this->bean->id) || $this->usertype=='PORTAL_ONLY' || (($this->usertype=='REGULAR' || $this->usertype == 'Administrator' || (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true' && $this->usertype!='GROUP')) && !$enable_syst_generate_pwd)) && !$this->bean->external_auth_only ) {
+        if ((($current_user->id == $this->bean->id) || $this->usertype=='PORTAL_ONLY' || (($this->usertype=='REGULAR' || $this->usertype == 'Administrator' || (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == 'true' && $this->usertype!='GROUP')) && !$enable_syst_generate_pwd)) && !$this->bean->external_auth_only) {
             $this->ss->assign('CHANGE_PWD', '1');
         } else {
             $this->ss->assign('CHANGE_PWD', '0');
         }
 
         // Make sure group users don't get a password change prompt
-        if ( $this->usertype == 'GROUP' ) {
+        if ($this->usertype == 'GROUP') {
             $this->ss->assign('CHANGE_PWD', '0');
         }
 
         $configurator = new Configurator();
-        if ( isset($configurator->config['passwordsetting'])
+        if (isset($configurator->config['passwordsetting'])
              && ($configurator->config['passwordsetting']['SystemGeneratedPasswordON']
                  || $configurator->config['passwordsetting']['forgotpasswordON'])
-             && $this->usertype != 'GROUP' && $this->usertype != 'PORTAL_ONLY' ) {
+             && $this->usertype != 'GROUP' && $this->usertype != 'PORTAL_ONLY') {
             $this->ss->assign('REQUIRED_EMAIL_ADDRESS','1');
         } else {
             $this->ss->assign('REQUIRED_EMAIL_ADDRESS','0');
@@ -365,11 +365,11 @@ class UserViewHelper
         $themeList = SugarThemeRegistry::availableThemes();
         $themeGroupList = array();
 
-        foreach ( $themeList as $themeId => $themeName ) {
+        foreach ($themeList as $themeId => $themeName) {
             $currThemeObj = SugarThemeRegistry::get($themeId);
-            if ( isset($currThemeObj->group_tabs) && $currThemeObj->group_tabs == 1 ) {
+            if (isset($currThemeObj->group_tabs) && $currThemeObj->group_tabs == 1) {
                 $themeGroupList[$themeId] = true;
-                if ( $themeId == $selectedTheme ) {
+                if ($themeId == $selectedTheme) {
                     $this->ss->assign("DISPLAY_GROUP_TAB", '');
                 }
             } else {
@@ -407,11 +407,11 @@ class UserViewHelper
         $this->ss->assign('EXPORT_CHARSET_DISPLAY', $export_charset);
         //end:12293
 
-        if ( $this->bean->getPreference('use_real_names') == 'on'
-            || ( empty($this->bean->id)
+        if ($this->bean->getPreference('use_real_names') == 'on'
+            || (empty($this->bean->id)
                  && isset($GLOBALS['sugar_config']['use_real_names'])
                  && $GLOBALS['sugar_config']['use_real_names']
-                 && $this->bean->getPreference('use_real_names') != 'off') ) {
+                 && $this->bean->getPreference('use_real_names') != 'off')) {
             $this->ss->assign('USE_REAL_NAMES', 'CHECKED');
         }
 
@@ -442,7 +442,7 @@ class UserViewHelper
         $this->ss->assign("EMAIL_REMINDER_CHECKED", $remindersDefaultPreferences['email']);
 		
         $this->ss->assign("REMINDER_TABINDEX", "12");
-        $publish_key = $this->bean->getPreference('calendar_publish_key' );
+        $publish_key = $this->bean->getPreference('calendar_publish_key');
         $this->ss->assign('CALENDAR_PUBLISH_KEY', $publish_key);
 
         $publish_url = $sugar_config['site_url'].'/vcal_server.php';
@@ -509,8 +509,8 @@ class UserViewHelper
 
         // Grouped tabs?
         $useGroupTabs = $this->bean->getPreference('navigation_paradigm');
-        if ( ! isset($useGroupTabs) ) {
-            if ( ! isset($GLOBALS['sugar_config']['default_navigation_paradigm']) ) {
+        if (! isset($useGroupTabs)) {
+            if (! isset($GLOBALS['sugar_config']['default_navigation_paradigm'])) {
                 $GLOBALS['sugar_config']['default_navigation_paradigm'] = 'gm';
             }
             $useGroupTabs = $GLOBALS['sugar_config']['default_navigation_paradigm'];
@@ -646,18 +646,18 @@ class UserViewHelper
         }
 
         $currencyList = array();
-        foreach ($locale->currencies as $id => $val ) {
+        foreach ($locale->currencies as $id => $val) {
             $currencyList[$id] = $val['symbol'];
         }
         $currencySymbolJSON = json_encode($currencyList);
         $this->ss->assign('currencySymbolJSON', $currencySymbolJSON);
 
         $currencyDisplay = new Currency();
-        if (isset($cur_id) ) {
+        if (isset($cur_id)) {
             $currencyDisplay->retrieve($cur_id);
-            $this->ss->assign('CURRENCY_DISPLAY', $currencyDisplay->iso4217 .' '.$currencyDisplay->symbol );
+            $this->ss->assign('CURRENCY_DISPLAY', $currencyDisplay->iso4217 .' '.$currencyDisplay->symbol);
         } else {
-            $this->ss->assign("CURRENCY_DISPLAY", $currencyDisplay->getDefaultISO4217() .' '.$currencyDisplay->getDefaultCurrencySymbol() );
+            $this->ss->assign("CURRENCY_DISPLAY", $currencyDisplay->getDefaultISO4217() .' '.$currencyDisplay->getDefaultCurrencySymbol());
         }
 
         // fill significant digits dropdown
@@ -700,28 +700,28 @@ class UserViewHelper
         ///////////////////////////////////////////////////////////////////////////////
         ////	EMAIL OPTIONS
         // We need to turn off the requiredness of emails if it is a group or portal user
-        if ($this->usertype == 'GROUP' || $this->usertype == 'PORTAL_ONLY' ) {
+        if ($this->usertype == 'GROUP' || $this->usertype == 'PORTAL_ONLY') {
             global $dictionary;
             $dictionary['User']['fields']['email1']['required'] = false;
         }
         // hack to disable email field being required if it shouldn't be required
-        if ( $this->ss->get_template_vars("REQUIRED_EMAIL_ADDRESS") == '0' ) {
+        if ($this->ss->get_template_vars("REQUIRED_EMAIL_ADDRESS") == '0') {
             $GLOBALS['dictionary']['User']['fields']['email1']['required'] = false;
         }
         $this->ss->assign("NEW_EMAIL",  '<span id="email_span">' . getEmailAddressWidget($this->bean, "email1", $this->bean->email1, $this->viewType) . '</span>');
         // hack to undo that previous hack
-        if ( $this->ss->get_template_vars("REQUIRED_EMAIL_ADDRESS") == '0' ) {
+        if ($this->ss->get_template_vars("REQUIRED_EMAIL_ADDRESS") == '0') {
             $GLOBALS['dictionary']['User']['fields']['email1']['required'] = true;
         }
         $raw_email_link_type = $this->bean->getPreference('email_link_type');
-        if ( $this->viewType == 'EditView' ) {
+        if ($this->viewType == 'EditView') {
             $this->ss->assign('EMAIL_LINK_TYPE', get_select_options_with_id($app_list_strings['dom_email_link_type'], $raw_email_link_type));
         } else {
             $this->ss->assign('EMAIL_LINK_TYPE', $app_list_strings['dom_email_link_type'][$raw_email_link_type]);
         }
 
         $rawEditorType = $this->bean->getEditorType();
-        if ( $this->viewType == 'EditView' ) {
+        if ($this->viewType == 'EditView') {
             $this->ss->assign('EDITOR_TYPE', get_select_options_with_id($app_list_strings['dom_editor_type'], $rawEditorType));
         } else {
             $this->ss->assign('EDITOR_TYPE', $app_list_strings['dom_editor_type'][$rawEditorType]);
@@ -733,7 +733,7 @@ class UserViewHelper
         /////////////////////////////////////////////
         /// Handle email account selections for users
         /////////////////////////////////////////////
-        if ( !($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY') ) {
+        if (!($this->usertype=='GROUP' || $this->usertype=='PORTAL_ONLY')) {
             // email smtp
             $systemOutboundEmail = new OutboundEmail();
             $systemOutboundEmail = $systemOutboundEmail->getSystemMailerSettings();
@@ -746,7 +746,7 @@ class UserViewHelper
             $mail_smtpdisplay = $systemOutboundEmail->mail_smtpdisplay;
             $mail_smtpauth_req=true;
 
-            if ( !$systemOutboundEmail->isAllowUserAccessToSystemDefaultOutbound() ) {
+            if (!$systemOutboundEmail->isAllowUserAccessToSystemDefaultOutbound()) {
                 $mail_smtpauth_req = $systemOutboundEmail->mail_smtpauth_req;
                 $userOverrideOE = $systemOutboundEmail->getUsersMailerForSystemOverride($this->bean->id);
                 if ($userOverrideOE != null) {

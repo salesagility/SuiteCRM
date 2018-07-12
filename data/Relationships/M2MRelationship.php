@@ -79,13 +79,13 @@ class M2MRelationship extends SugarRelationship
      */
     public function getLinkedDefForModuleByRelationship($module)
     {
-        $results = VardefManager::getLinkFieldForRelationship( $module, BeanFactory::getObjectName($module), $this->name);
+        $results = VardefManager::getLinkFieldForRelationship($module, BeanFactory::getObjectName($module), $this->name);
         //Only a single link was found
-        if ( isset($results['name']) ) {
+        if (isset($results['name'])) {
             return $results;
         }
         //Multiple links with same relationship name
-        elseif ( is_array($results) ) {
+        elseif (is_array($results)) {
             $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
             return $this->getMostAppropriateLinkedDefinition($results);
         } else {
@@ -104,13 +104,13 @@ class M2MRelationship extends SugarRelationship
     {
         //First priority is to find a link name that matches the relationship name
         foreach ($links as $link) {
-            if ( isset($link['name']) && $link['name'] == $this->name ) {
+            if (isset($link['name']) && $link['name'] == $this->name) {
                 return $link;
             }
         }
         //Next would be a relationship that has a side defined
         foreach ($links as $link) {
-            if ( isset($link['id_name'])) {
+            if (isset($link['id_name'])) {
                 return $link;
             }
         }
@@ -202,7 +202,7 @@ class M2MRelationship extends SugarRelationship
         );
 
 
-        if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value']) && !$this->ignore_role_filter ) {
+        if (!empty($this->def['relationship_role_column']) && !empty($this->def['relationship_role_column_value']) && !$this->ignore_role_filter) {
             $row[$this->relationship_role_column] = $this->relationship_role_column_value;
         }
 
@@ -508,7 +508,7 @@ class M2MRelationship extends SugarRelationship
             $joinTableWithAlias = $joinTable . " ". $params['join_table_link_alias'];
             $joinTable = $params['join_table_link_alias'];
         }
-        if ( ! empty($params['join_table_alias'])) {
+        if (! empty($params['join_table_alias'])) {
             $targetTableWithAlias = $targetTable . " ". $params['join_table_alias'];
             $targetTable = $params['join_table_alias'];
         }

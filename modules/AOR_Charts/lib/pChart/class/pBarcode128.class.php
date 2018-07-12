@@ -61,12 +61,12 @@
          $TextString    = $this->encode128($TextString);
          $BarcodeLength = strlen($this->Result);
 
-         if ( $DrawArea ) {
+         if ($DrawArea) {
              $WOffset = 20;
          } else {
              $WOffset = 0;
          }
-         if ( $ShowLegend ) {
+         if ($ShowLegend) {
              $HOffset = $FontSize+$LegendOffset+$WOffset;
          } else {
              $HOffset = 0;
@@ -93,7 +93,7 @@
 
          for ($i=1;$i<=strlen($Value);$i++) {
              $CharCode = ord($this->mid($Value,$i,1));
-             if ( isset($this->Codes[$CharCode]) ) {
+             if (isset($this->Codes[$CharCode])) {
                  $this->Result = $this->Result.$this->Codes[$CharCode]["Code"];
                  $this->CRC = $this->CRC + $i*$this->Codes[$CharCode]["ID"];
                  $TextString = $TextString.chr($CharCode);
@@ -130,14 +130,14 @@
 
          $TextString = $this->encode128($Value);
 
-         if ( $DrawArea ) {
+         if ($DrawArea) {
              $X1 = $X + cos(($Angle-135) * PI / 180) * 10;
              $Y1 = $Y + sin(($Angle-135) * PI / 180) * 10;
 
              $X2 = $X1 + cos($Angle * PI / 180) * (strlen($this->Result)+20);
              $Y2 = $Y1 + sin($Angle * PI / 180) * (strlen($this->Result)+20);
 
-             if ( $ShowLegend ) {
+             if ($ShowLegend) {
                  $X3 = $X2 + cos(($Angle+90) * PI / 180) * ($Height+$LegendOffset+$this->pChartObject->FontSize+10);
                  $Y3 = $Y2 + sin(($Angle+90) * PI / 180) * ($Height+$LegendOffset+$this->pChartObject->FontSize+10);
              } else {
@@ -154,7 +154,7 @@
          }
 
          for ($i=1;$i<=strlen($this->Result);$i++) {
-             if ( $this->mid($this->Result,$i,1) == 1 ) {
+             if ($this->mid($this->Result,$i,1) == 1) {
                  $X1 = $X + cos($Angle * PI / 180) * $i;
                  $Y1 = $Y + sin($Angle * PI / 180) * $i;
                  $X2 = $X1 + cos(($Angle+90) * PI / 180) * $Height;
@@ -165,7 +165,7 @@
              }
          }
 
-         if ( $ShowLegend ) {
+         if ($ShowLegend) {
              $X1 = $X + cos($Angle * PI / 180) * (strlen($this->Result)/2);
              $Y1 = $Y + sin($Angle * PI / 180) * (strlen($this->Result)/2);
 

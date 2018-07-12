@@ -76,7 +76,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
             $defines['subpanelDiv'] = $this->subpanelDiv;
         }
 
-        $defines['parent_bean_name'] = get_class( $defines['focus']);
+        $defines['parent_bean_name'] = get_class($defines['focus']);
 
         $form = 'form' . $defines['child_module_name'];
         $button = '<form onsubmit="return SUGAR.subpanelUtils.sendAndRetrieve(this.id, \'subpanel_' . strtolower($defines['subpanelDiv']) . '\', \'' . addslashes($app_strings['LBL_LOADING']) . '\');" action="index.php" method="post" name="form" id="form' . $form . "\">\n";
@@ -138,7 +138,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
     function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         $focus = new Call;
-        if ( !$focus->ACLAccess('EditView') ) {
+        if (!$focus->ACLAccess('EditView')) {
             return '';
         }
 

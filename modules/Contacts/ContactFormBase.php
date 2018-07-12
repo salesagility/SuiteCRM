@@ -442,7 +442,7 @@ EOQ;
             $focus->reports_to_id = $_POST[$prefix.'record'];
         } else {
             $focus = populateFromPost($prefix, $focus);
-            if ( isset($_POST[$prefix.'old_portal_password']) && !empty($focus->portal_password) && $focus->portal_password != $_POST[$prefix.'old_portal_password']) {
+            if (isset($_POST[$prefix.'old_portal_password']) && !empty($focus->portal_password) && $focus->portal_password != $_POST[$prefix.'old_portal_password']) {
                 $focus->portal_password = User::getPasswordHash($focus->portal_password);
             }
             if (!isset($_POST[$prefix.'email_opt_out'])) {

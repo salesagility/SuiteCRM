@@ -277,7 +277,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             global $sugar_config;
             $symbol = $sugar_config['default_currency_symbol'];
             global $current_user;
-            if ($current_user->getPreference('currency') ) {
+            if ($current_user->getPreference('currency')) {
                 $currency = new Currency();
                 $currency->retrieve($current_user->getPreference('currency'));
                 $div = $currency->conversion_rate;

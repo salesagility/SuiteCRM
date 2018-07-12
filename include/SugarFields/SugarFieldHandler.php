@@ -114,9 +114,9 @@ class SugarFieldHandler
                 $type = $field;
             } else {
                 // No direct class, check the directories to see if they are defined
-                if ( $returnNullIfBase &&
+                if ($returnNullIfBase &&
                     !is_dir('custom/include/SugarFields/Fields/'.$field) &&
-                    !is_dir('include/SugarFields/Fields/'.$field) ) {
+                    !is_dir('include/SugarFields/Fields/'.$field)) {
                     return null;
                 }
                 $file = 'include/SugarFields/Fields/Base/SugarFieldBase.php';
@@ -164,7 +164,7 @@ class SugarFieldHandler
         }
 
         $field = self::getSugarField($vardef['type']);
-        if ( !empty($vardef['function']) ) {
+        if (!empty($vardef['function'])) {
             $string = $field->displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex);
         } else {
             $string = $field->$displayTypeFunc($parentFieldArray, $vardef, $displayParams, $tabindex);

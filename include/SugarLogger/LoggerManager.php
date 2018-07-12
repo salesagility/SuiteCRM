@@ -83,7 +83,7 @@ class LoggerManager
             $this->setLevel($level);
         }
 
-        if ( empty(self::$_loggers) ) {
+        if (empty(self::$_loggers)) {
             $this->_findAvailableLoggers();
         }
     }
@@ -98,7 +98,7 @@ class LoggerManager
  	    $method,
  	    $message
  	    ) {
-        if ( !isset(self::$_levelMapping[$method]) ) {
+        if (!isset(self::$_levelMapping[$method])) {
             $method = $this->_level;
         }
         //if the method is a direct match to our level let's let it through this allows for custom levels
@@ -107,7 +107,7 @@ class LoggerManager
                 || (!empty(self::$_levelMapping[$method])
                     && (
                             (isset(self::$_levelMapping[$this->_level]) ? self::$_levelMapping[$this->_level] : null) >= 
-                            (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null) ) ) ) {
+                            (isset(self::$_levelMapping[$method]) ? self::$_levelMapping[$method] : null)))) {
             //now we get the logger type this allows for having a file logger an email logger, a firebug logger or any other logger you wish you can set different levels to log differently
             $logger = (!empty(self::$_logMapping[$method])) ?
  			    self::$_logMapping[$method] : self::$_logMapping['default'];
@@ -127,13 +127,13 @@ class LoggerManager
      */
     public function wouldLog($method)
     {
-        if ( !isset(self::$_levelMapping[$method]) ) {
+        if (!isset(self::$_levelMapping[$method])) {
             $method = $this->_level;
         }
         if ($method == $this->_level
  	    		//otherwise if we have a level mapping for the method and that level is less than or equal to the current level let's let it log
  	    		|| (!empty(self::$_levelMapping[$method])
- 	    				&& self::$_levelMapping[$this->_level] >= self::$_levelMapping[$method]) ) {
+ 	    				&& self::$_levelMapping[$this->_level] >= self::$_levelMapping[$method])) {
             return true;
         }
         return false;
@@ -150,7 +150,7 @@ class LoggerManager
         $message,
         $condition
         ) {
-        if ( !$condition ) {
+        if (!$condition) {
             $this->__call('debug', $message);
         }
     }
@@ -163,7 +163,7 @@ class LoggerManager
     public function setLevel(
  	    $name
  	    ) {
-        if ( isset(self::$_levelMapping[$name]) ) {
+        if (isset(self::$_levelMapping[$name])) {
             $this->_level = $name;
         }
     }
@@ -200,7 +200,7 @@ class LoggerManager
     protected function _findAvailableLoggers()
     {
         $locations = array('include/SugarLogger','custom/include/SugarLogger');
-        foreach ( $locations as $location ) {
+        foreach ($locations as $location) {
             if (is_dir($location) && $dir = opendir($location)) {
                 while (($file = readdir($dir)) !== false) {
                     if ($file == ".."
@@ -213,7 +213,7 @@ class LoggerManager
                     }
                     require_once("$location/$file");
                     $loggerClass = basename($file, ".php");
-                    if ( class_exists($loggerClass) && class_implements($loggerClass,'LoggerTemplate') ) {
+                    if (class_exists($loggerClass) && class_implements($loggerClass,'LoggerTemplate')) {
                         self::$_loggers[$loggerClass] = new $loggerClass();
                     }
                 }
@@ -229,7 +229,7 @@ class LoggerManager
     public static function getLoggerLevels()
     {
         $loggerLevels = self::$_levelMapping;
-        foreach ( $loggerLevels as $key => $value ) {
+        foreach ($loggerLevels as $key => $value) {
             $loggerLevels[$key] = ucfirst($key);
         }
 

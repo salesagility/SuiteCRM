@@ -53,7 +53,7 @@
  		
      $selected_options = "";
      if ($multi && !empty($vardef['default'])) {
-         $selected_options = unencodeMultienum( $vardef['default']);
+         $selected_options = unencodeMultienum($vardef['default']);
      } elseif (isset($vardef['default'])) {
          $selected_options = $vardef['default'];
      }

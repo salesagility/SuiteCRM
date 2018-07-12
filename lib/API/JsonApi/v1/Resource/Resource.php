@@ -131,7 +131,7 @@ class Resource extends ResourceIdentifier
             throw $exception;
         }
 
-        if (!isset($data[self::ATTRIBUTES] )) {
+        if (!isset($data[self::ATTRIBUTES])) {
             $exception = new BadRequestException('[Missing attributes]');
             $exception->setSource('/data/attributes');
             throw $exception;

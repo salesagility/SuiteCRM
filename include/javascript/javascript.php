@@ -96,7 +96,7 @@ class javascript
     function addSpecialField($dispField, $realField, $type, $required, $prefix = '')
     {
         if (isset($this->sugarbean->field_name_map[$realField]['vname'])) {
-            $this->addFieldGeneric($dispField, 'date', $this->sugarbean->field_name_map[$realField]['vname'], $required, $prefix );
+            $this->addFieldGeneric($dispField, 'date', $this->sugarbean->field_name_map[$realField]['vname'], $required, $prefix);
         }
     }
 
@@ -107,7 +107,7 @@ class javascript
         }
         if (isset($this->sugarbean->field_name_map[$field]['vname'])) {
             $vname = $this->sugarbean->field_name_map[$field]['vname'];
-            if ( $translate ) {
+            if ($translate) {
                 $vname = $this->buildStringToTranslateInSmarty($this->sugarbean->field_name_map[$field]['vname']);
             }
             if (empty($required)) {
@@ -142,7 +142,7 @@ class javascript
 						} else {
 						    $dispField = $field;
 						}
-						$this->addFieldRange($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $min, $max );
+						$this->addFieldRange($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $min, $max);
 						break;
 					case 'isbefore':
 						$compareTo = $this->sugarbean->field_name_map[$field]['validation']['compareto'];
@@ -152,9 +152,9 @@ class javascript
 						    $dispField = $field;
 						}
 						if (!empty($this->sugarbean->field_name_map[$field]['validation']['blank']) && $this->sugarbean->field_name_map[$field]['validation']['blank']) {
-						    $this->addFieldDateBeforeAllowBlank($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo );
+						    $this->addFieldDateBeforeAllowBlank($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo);
 						} else {
-						    $this->addFieldDateBefore($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo );
+						    $this->addFieldDateBefore($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo);
 						}
 						break;
                     // Bug #47961 Adding new type of validation: through callback function
@@ -171,7 +171,7 @@ class javascript
 
 						$type = (!empty($this->sugarbean->field_name_map[$field]['custom_type']))?$this->sugarbean->field_name_map[$field]['custom_type']:$this->sugarbean->field_name_map[$field]['type'];
 
-						$this->addFieldGeneric($dispField,$type,$vname,$required,$prefix );
+						$this->addFieldGeneric($dispField,$type,$vname,$required,$prefix);
 						break;
 				}
             } else {
@@ -184,10 +184,10 @@ class javascript
                 if (!empty($this->sugarbean->field_name_map[$dispField]['isMultiSelect'])) {
                     $dispField .='[]';
                 }
-                $this->addFieldGeneric($dispField,$type,$vname,$required,$prefix );
+                $this->addFieldGeneric($dispField,$type,$vname,$required,$prefix);
             }
         } else {
-            $GLOBALS['log']->debug('No VarDef Label For ' . $field . ' in module ' . $this->sugarbean->module_dir );
+            $GLOBALS['log']->debug('No VarDef Label For ' . $field . ' in module ' . $this->sugarbean->module_dir);
         }
     }
 
@@ -333,9 +333,9 @@ class javascript
     function buildStringToTranslateInSmarty(
         $string
         ) {
-        if ( is_array($string) ) {
+        if (is_array($string)) {
             $returnstring = '';
-            foreach ( $string as $astring ) {
+            foreach ($string as $astring) {
                 $returnstring .= $this->buildStringToTranslateInSmarty($astring);
             }
             return $returnstring;

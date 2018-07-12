@@ -184,7 +184,7 @@ abstract class ImportDataSource implements Iterator
         // cache $last_import instance
         static $last_import;
 
-        if ( !($last_import instanceof UsersLastImport) ) {
+        if (!($last_import instanceof UsersLastImport)) {
             $last_import = new UsersLastImport();
         }
 
@@ -192,7 +192,7 @@ abstract class ImportDataSource implements Iterator
         $last_import->deleted = null;
         $last_import->assigned_user_id = $GLOBALS['current_user']->id;
         $last_import->import_module = $import_module;
-        if ( $module == 'Case' ) {
+        if ($module == 'Case') {
             $module = 'aCase';
         }
         
@@ -215,7 +215,7 @@ abstract class ImportDataSource implements Iterator
         fputcsv($fp,array($error,$fieldName,$fieldValue,$this->_rowsCount));
         fclose($fp);
 
-        if ( !$this->_rowCountedForErrors ) {
+        if (!$this->_rowCountedForErrors) {
             $this->_errorCount++;
             $this->_rowCountedForErrors = true;
             $this->writeErrorRecord($this->formatErrorMessage($error, $fieldName, $fieldValue));
@@ -306,7 +306,7 @@ abstract class ImportDataSource implements Iterator
      */
     public function markRowAsImported($createdRecord = true)
     {
-        if ( $createdRecord ) {
+        if ($createdRecord) {
             ++$this->_createdCount;
         } else {
             ++$this->_updatedCount;

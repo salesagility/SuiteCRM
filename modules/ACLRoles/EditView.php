@@ -92,7 +92,7 @@ if (isset($_REQUEST['return_module'])) {
     if (isset($_REQUEST['return_action'])) {
         $return['action']=$_REQUEST['return_action'];
     }
-    if ( !empty($return['record']) ) {
+    if (!empty($return['record'])) {
         $return['action'] = 'DetailView';
     }
 }

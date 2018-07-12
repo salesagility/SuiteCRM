@@ -111,7 +111,7 @@ class HTTP_WebDAV_Server
         if (empty($this->dav_powered_by)) {
             header("X-Dav-Powered-By: PHP class: ".get_class($this));
         } else {
-            header("X-Dav-Powered-By: ".$this->dav_powered_by );
+            header("X-Dav-Powered-By: ".$this->dav_powered_by);
         }
 
         // check authentication
@@ -516,7 +516,7 @@ class HTTP_WebDAV_Server
 
                     // search property name in requested properties
                     foreach ((array)$options["props"] as $reqprop) {
-                        if (   $reqprop["name"]  == $prop["name"]
+                        if ($reqprop["name"]  == $prop["name"]
                             && $reqprop["xmlns"] == $prop["ns"]) {
                             $found = true;
                             break;
@@ -561,7 +561,7 @@ class HTTP_WebDAV_Server
 
                     // check if property exists in result
                     foreach ($file["props"] as $prop) {
-                        if (   $reqprop["name"]  == $prop["name"]
+                        if ($reqprop["name"]  == $prop["name"]
                             && $reqprop["xmlns"] == $prop["ns"]) {
                             $found = true;
                             break;

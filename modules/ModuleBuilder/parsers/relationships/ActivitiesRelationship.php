@@ -83,7 +83,7 @@ class ActivitiesRelationship extends OneToManyRelationship
      */
     function __construct($definition)
     {
-        parent::__construct ( $definition ) ;
+        parent::__construct ($definition) ;
     }
 
     /*
@@ -97,7 +97,7 @@ class ActivitiesRelationship extends OneToManyRelationship
     function buildLabels()
     {
         $labelDefinitions = array ( ) ;
-        if (!$this->relationship_only ) {
+        if (!$this->relationship_only) {
             if (!isset(ActivitiesRelationship::$labelsAdded[$this->lhs_module])) {
                 foreach (getTypeDisplayList() as $typeDisplay) {
                     $labelDefinitions [] = array (
@@ -146,8 +146,8 @@ class ActivitiesRelationship extends OneToManyRelationship
     {
         $vardefs = array ( ) ;
 
-        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition ( $this->lhs_module, $this->relationship_name ) ;
-        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition ( $this->rhs_module, $this->relationship_name ) ;
+        $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition ($this->lhs_module, $this->relationship_name) ;
+        $vardefs [ $this->lhs_module ] [] = $this->getLinkFieldDefinition ($this->rhs_module, $this->relationship_name) ;
 
 
         return $vardefs ;
@@ -188,8 +188,8 @@ class ActivitiesRelationship extends OneToManyRelationship
         ActivitiesRelationship::$subpanelsAdded[$this->lhs_module] = true;
         $relationshipName = substr($this->relationship_name, 0, strrpos($this->relationship_name, '_'));
         return array( $this->lhs_module => array (
-        			  'activities' => $this->buildActivitiesSubpanelDefinition ( $relationshipName ),
-        			  'history' => $this->buildHistorySubpanelDefinition ( $relationshipName ) ,
+        			  'activities' => $this->buildActivitiesSubpanelDefinition ($relationshipName),
+        			  'history' => $this->buildHistorySubpanelDefinition ($relationshipName) ,
         			));
     }
 

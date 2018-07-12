@@ -357,7 +357,7 @@ class CalendarUtils
                 continue;
             }
 
-            if (($i < $count || $count == 0 && $current->format("U") < $end->format("U"))  ) {
+            if (($i < $count || $count == 0 && $current->format("U") < $end->format("U"))) {
                 $arr[] = $current->format($GLOBALS['timedate']->get_date_time_format());
             }
             $i++;
@@ -505,7 +505,7 @@ class CalendarUtils
 
         $qu = "SELECT id FROM {$bean->table_name} WHERE repeat_parent_id = '{$bean->id}' AND deleted = 0";
         $re = $db->query($qu);
-        while ( $ro = $db->fetchByAssoc($re)) {
+        while ($ro = $db->fetchByAssoc($re)) {
             $id = $ro['id'];
             $date_modified = $GLOBALS['timedate']->nowDb();
             $db->query("UPDATE {$bean->table_name} SET deleted = 1, date_modified = '{$date_modified}', modified_user_id = '{$modified_user_id}' WHERE id = '{$id}'");

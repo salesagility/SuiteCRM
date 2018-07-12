@@ -4131,7 +4131,7 @@ if (!class_exists('TCPDF', false)) {
 			$linebreak = false;
             // for each character
             while ($i < $nb) {
-                if (($maxh > 0) AND ($this->y >= $maxy) ) {
+                if (($maxh > 0) AND ($this->y >= $maxy)) {
                     $firstline = true;
                 }
                 //Get the current character
@@ -4209,7 +4209,7 @@ if (!class_exists('TCPDF', false)) {
                     } else {
                         $l += $this->GetCharWidth($c);
                     }
-                    if (!$stretch && (($l > $wmax) OR ($shy AND (($l + $shy_replacement_width) > $wmax))) ) {
+                    if (!$stretch && (($l > $wmax) OR ($shy AND (($l + $shy_replacement_width) > $wmax)))) {
                         // we have reached the end of column
                         if ($sep == -1) {
                             // check if the line was already started
@@ -8703,7 +8703,7 @@ if (!class_exists('TCPDF', false)) {
                     //	a. If this new level would be valid, then this embedding code is valid. Remember (push) the current embedding level and override status. Reset the current level to this new level, and reset the override status to neutral.
                     //	b. If the new level would not be valid, then this code is invalid. Do not change the current level or override status.
                     $next_level = $cel + 2 - ($cel % 2);
-                    if ( $next_level < 62 ) {
+                    if ($next_level < 62) {
                         $remember[] = array('num' => K_LRE, 'cel' => $cel, 'dos' => $dos);
                         $cel = $next_level;
                         $dos = 'N';
@@ -8727,7 +8727,7 @@ if (!class_exists('TCPDF', false)) {
                     //	a. If this new level would be valid, then this embedding code is valid. Remember (push) the current embedding level and override status. Reset the current level to this new level, and reset the override status to left-to-right.
                     //	b. If the new level would not be valid, then this code is invalid. Do not change the current level or override status.
                     $next_level = $cel + 2 - ($cel % 2);
-                    if ( $next_level < 62 ) {
+                    if ($next_level < 62) {
                         $remember[] = array('num' => K_LRO, 'cel' => $cel, 'dos' => $dos);
                         $cel = $next_level;
                         $dos = 'L';
@@ -8737,7 +8737,7 @@ if (!class_exists('TCPDF', false)) {
                 } elseif ($ta[$i] == K_PDF) {
                     // X7. With each PDF, determine the matching embedding or override code. If there was a valid matching code, restore (pop) the last remembered (pushed) embedding level and directional override.
                     if (count($remember)) {
-                        $last = count($remember ) - 1;
+                        $last = count($remember) - 1;
                         if (($remember[$last]['num'] == K_RLE) OR
 							  ($remember[$last]['num'] == K_LRE) OR
 							  ($remember[$last]['num'] == K_RLO) OR
@@ -10317,7 +10317,7 @@ if (!class_exists('TCPDF', false)) {
             $b = $b / 360 * 2 * M_PI;
             $a = $a / 360 * 2 * M_PI;
             $d = $b - $a;
-            if ($d == 0 ) {
+            if ($d == 0) {
                 $d = 2 * M_PI;
             }
             $k = $this->k;
@@ -10348,7 +10348,7 @@ if (!class_exists('TCPDF', false)) {
                 $this->_outarc($xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a), $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a), $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2), $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2), $xc+$r*cos($b), $yc-$r*sin($b));
                 $a = $b;
                 $b = $a + $d/4;
-                $this->_outarc($xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a), $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a), $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2), $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2), $xc+$r*cos($b), $yc-$r*sin($b) );
+                $this->_outarc($xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a), $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a), $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2), $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2), $xc+$r*cos($b), $yc-$r*sin($b));
                 $a = $b;
                 $b = $a + $d/4;
                 $this->_outarc($xc+$r*cos($a)+$MyArc*cos(M_PI/2+$a), $yc-$r*sin($a)-$MyArc*sin(M_PI/2+$a), $xc+$r*cos($b)+$MyArc*cos($b-M_PI/2), $yc-$r*sin($b)-$MyArc*sin($b-M_PI/2), $xc+$r*cos($b), $yc-$r*sin($b));

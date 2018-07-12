@@ -77,7 +77,7 @@ $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 
 
 //copy compaign targets on duplicate
-if ( !empty($_REQUEST['duplicateSave']) &&  !empty($_REQUEST['duplicateId']) ) {
+if (!empty($_REQUEST['duplicateSave']) &&  !empty($_REQUEST['duplicateId'])) {
     $copyFromCompaign = new Campaign();
     $copyFromCompaign->retrieve($_REQUEST['duplicateId']);
     $copyFromCompaign->load_relationship('prospectlists');
@@ -100,7 +100,7 @@ if ($focus->campaign_type =='NewsLetter') {
     //then prospect lists will get related to the original campaign on save of the prospect list, and then
     //will get related to the new newsletter campaign, meaning the same (un)subscription list will belong to
     //two campaigns, which is wrong
-    if ((isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave']) || (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate']) ) {
+    if ((isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave']) || (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'])) {
         $_REQUEST['relate_to'] = '';
         $_REQUEST['relate_id'] = '';
     }

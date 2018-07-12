@@ -333,7 +333,7 @@ class Campaign extends SugarBean
         }
 
         //B.F. #37943
-        if ( isset($query_array['group_by'])) {
+        if (isset($query_array['group_by'])) {
             //perform the inner join with the group by if a marketing id is defined, which means we need to filter out duplicates.
             //if no marketing id is specified then we are displaying results from multiple marketing emails and it is understood there might be duplicate target entries
             if (!empty($mkt_id)) {
@@ -434,7 +434,7 @@ class Campaign extends SugarBean
     {
         //include the distinct filter if a marketing id is defined, which means we need to filter out duplicates by the passed in group by.
         //if no marketing id is specified, it is understood there might be duplicate target entries so no need to filter out
-        if ((strpos($query,'marketing_id') !== false )&& isset($params['distinct'])) {
+        if ((strpos($query,'marketing_id') !== false)&& isset($params['distinct'])) {
             $pattern = '/SELECT(.*?)(\s){1}FROM(\s){1}/is';  // ignores the case
             $replacement = 'SELECT COUNT(DISTINCT ' . $params['distinct'] . ') c FROM ';
             $query = preg_replace($pattern, $replacement, $query, 1);

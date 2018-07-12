@@ -78,7 +78,7 @@ class ImportViewStep4 extends SugarView
         $importSource = new ImportFile($uploadFile, $_REQUEST['custom_delimiter'],html_entity_decode($_REQUEST['custom_enclosure'],ENT_QUOTES));
 
         //Ensure we have a valid file.
-        if ( !$importSource->fileExists() ) {
+        if (!$importSource->fileExists()) {
             trigger_error($mod_strings['LBL_CANNOT_OPEN'],E_USER_ERROR);
         }
 

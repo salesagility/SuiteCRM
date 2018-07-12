@@ -54,7 +54,7 @@ $where .= "and (tasks.date_start is NULL or ";
 $where .= $seedTasks->db->convert($seedTasks->db->convert("tasks.date_start", "date_format", '%Y-%m-%d'),  "CONCAT",
     array("' '", $seedTasks->db->convert("tasks.time_start", "time_format"))). " <= ".$seedTasks->db->quoted($tomorrow);
 
-$ListView->initNewXTemplate( 'modules/Tasks/MyTasks.html',$current_module_strings);
+$ListView->initNewXTemplate('modules/Tasks/MyTasks.html',$current_module_strings);
 $header_text = '';
 
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {

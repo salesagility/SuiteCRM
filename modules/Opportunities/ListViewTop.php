@@ -62,7 +62,7 @@ if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty(
     $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=ListView&from_module=Opportunities'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 $ListView = new ListView();
-$ListView->initNewXTemplate( 'modules/Opportunities/ListViewTop.html',$current_module_strings);
-$ListView->setHeaderTitle($current_module_strings['LBL_TOP_OPPORTUNITIES']. $header_text );
+$ListView->initNewXTemplate('modules/Opportunities/ListViewTop.html',$current_module_strings);
+$ListView->setHeaderTitle($current_module_strings['LBL_TOP_OPPORTUNITIES']. $header_text);
 $ListView->setQuery($where, 5, "amount  DESC", "OPPORTUNITY", false);
 $ListView->processListView($seedOpportunity, "main", "OPPORTUNITY");

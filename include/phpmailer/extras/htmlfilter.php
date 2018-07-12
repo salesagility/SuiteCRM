@@ -884,7 +884,7 @@ function tln_sanitize(
             list($free_content, $curpos) =
                 tln_fixstyle($body, $gt+1, $trans_image_path, $block_external_images);
             if ($free_content != FALSE) {
-                if ( !empty($attary) ) {
+                if (!empty($attary)) {
                     $attary = tln_fixatts($tagname,
                                          $attary,
                                          $rm_attnames,

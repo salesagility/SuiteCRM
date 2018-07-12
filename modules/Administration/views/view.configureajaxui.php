@@ -90,7 +90,7 @@ class ViewConfigureAjaxUI extends SugarView
             }
         }
         if (!empty($sugar_config['addAjaxBannedModules'])) {
-            foreach ( $sugar_config['addAjaxBannedModules'] as $module) {
+            foreach ($sugar_config['addAjaxBannedModules'] as $module) {
                 $disabled[] = array("module" => $module, 'label' => translate($module));
             }
         }

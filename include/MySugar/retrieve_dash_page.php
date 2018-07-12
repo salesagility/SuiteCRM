@@ -134,7 +134,7 @@ if (!$hasUserPreferences) {
             if (isset($dashletsFiles[$dashletName]) && $displayDashlet) {
                 $options = array();
                 $prefsforthisdashlet = array_keys($prefstomove,$dashletName);
-                foreach ( $prefsforthisdashlet as $pref ) {
+                foreach ($prefsforthisdashlet as $pref) {
                     $options[$pref] = $current_user->getPreference($pref);
                 }
                 $dashlets[create_guid()] = array('className' => $dashletName,
@@ -155,7 +155,7 @@ if (!$hasUserPreferences) {
         $columns[1]['dashlets'] = array();
 
         foreach ($dashlets as $guid=>$dashlet) {
-            if ( $dashlet['forceColumn'] == 0 ) {
+            if ($dashlet['forceColumn'] == 0) {
                 array_push($columns[0]['dashlets'], $guid);
             } else {
                 array_push($columns[1]['dashlets'], $guid);
@@ -173,21 +173,21 @@ if (!$hasUserPreferences) {
 // handles upgrading from versions that had the 'Dashboard' module; move those items over to the Home page
 $pagesDashboard = $current_user->getPreference('pages', 'Dashboard');
 $dashletsDashboard = $current_user->getPreference('dashlets', 'Dashboard');
-if ( !empty($pagesDashboard) ) {
+if (!empty($pagesDashboard)) {
     // move dashlets from the dashboard to be at the end of the home screen dashlets
-    foreach ($pagesDashboard[0]['columns'] as $dashboardColumnKey => $dashboardColumn ) {
-        foreach ($dashboardColumn['dashlets'] as $dashletItem ) {
+    foreach ($pagesDashboard[0]['columns'] as $dashboardColumnKey => $dashboardColumn) {
+        foreach ($dashboardColumn['dashlets'] as $dashletItem) {
             $pages[0]['columns'][$dashboardColumnKey]['dashlets'][] = $dashletItem;
         }
     }
     $pages = array_merge($pages,$pagesDashboard);
     $current_user->setPreference('pages', $pages, 0, 'Home');
 }
-if ( !empty($dashletsDashboard) ) {
+if (!empty($dashletsDashboard)) {
     $dashlets = array_merge($dashlets,$dashletsDashboard);
     $current_user->setPreference('dashlets', $dashlets, 0, 'Home');
 }
-if ( !empty($pagesDashboard) || !empty($dashletsDashboard) ) {
+if (!empty($pagesDashboard) || !empty($dashletsDashboard)) {
     $current_user->resetPreferences('Dashboard');
 }
 
@@ -226,12 +226,12 @@ foreach ($pages[$activePage]['columns'] as $colNum => $column) {
         // only display dashlets that are from visibile modules and that the user has permission to list
         if (!empty($id) && isset($dashlets[$id]) && is_file($dashlets[$id]['fileLocation'])) {
             $module = 'Home';
-            if ( !empty($dashletsFiles[$dashlets[$id]['className']]['module']) ) {
+            if (!empty($dashletsFiles[$dashlets[$id]['className']]['module'])) {
                 $module = $dashletsFiles[$dashlets[$id]['className']]['module'];
             }
             // Bug 24772 - Look into the user preference for the module the dashlet is a part of in case
             //             of the Report Chart dashlets.
-            elseif ( !empty($dashlets[$id]['module']) ) {
+            elseif (!empty($dashlets[$id]['module'])) {
                 $module = $dashlets[$id]['module'];
             }
 

@@ -161,7 +161,7 @@ class AuthenticationController
             $config = new Administration();
             $config->retrieveSettings();
             $postSilentInstallAdminWizardCompleted = $GLOBALS['current_user']->getPreference('postSilentInstallAdminWizardCompleted');
-            if ( (is_admin($GLOBALS['current_user']) && empty($config->settings['system_adminwizard']) && $_REQUEST['action'] != 'AdminWizard') ||($postSilentInstallAdminWizardCompleted !== NULL && !$postSilentInstallAdminWizardCompleted) ) {
+            if ((is_admin($GLOBALS['current_user']) && empty($config->settings['system_adminwizard']) && $_REQUEST['action'] != 'AdminWizard') ||($postSilentInstallAdminWizardCompleted !== NULL && !$postSilentInstallAdminWizardCompleted)) {
                 $GLOBALS['module'] = 'Configurator';
                 $GLOBALS['action'] = 'AdminWizard';
                 ob_clean();
@@ -174,7 +174,7 @@ class AuthenticationController
             if (is_array($PARAMS) && !empty($PARAMS) && isset($PARAMS['passwordEncrypted'])) {
                 $checkTimeZone = false;
             } // if
-            if (empty($ut) && $checkTimeZone && $_REQUEST['action'] != 'SetTimezone' && $_REQUEST['action'] != 'SaveTimezone' ) {
+            if (empty($ut) && $checkTimeZone && $_REQUEST['action'] != 'SetTimezone' && $_REQUEST['action'] != 'SaveTimezone') {
                 $GLOBALS['module'] = 'Users';
                 $GLOBALS['action'] = 'Wizard';
                 ob_clean();

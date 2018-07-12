@@ -241,7 +241,7 @@ class ProjectTaskViewList extends ViewList
 	    	    $searchForm->populateFromRequest();
 	    	}
             $where_clauses = $searchForm->generateSearchWhere(true, $this->seed->module_dir);
-            if (count($where_clauses) > 0 ) {
+            if (count($where_clauses) > 0) {
                 $where = '('. implode(' ) AND ( ', $where_clauses) . ')';
             }
             $GLOBALS['log']->info("List View Where Clause: $where");

@@ -133,7 +133,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             $defines['child_module_name'] = $defines['module'];
         }
 
-        $defines['parent_bean_name'] = get_class( $defines['focus']);
+        $defines['parent_bean_name'] = get_class($defines['focus']);
         $relationship_name = $this->get_subpanel_relationship_name($defines);
 
 
@@ -161,14 +161,14 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             $formValues['return_action'] = "DetailView";
         } else {
             $formValues['return_action'] = $defines['action'];
-            if ( $formValues['return_action'] == 'SubPanelViewer' ) {
+            if ($formValues['return_action'] == 'SubPanelViewer') {
                 $formValues['return_action'] = 'DetailView';
             }
         }
 
         $formValues['return_id'] = $defines['focus']->id;
         $formValues['return_relationship'] = $relationship_name;
-        switch ( strtolower( $currentModule ) ) {
+        switch (strtolower($currentModule)) {
             case 'prospects':
                 $name = $defines['focus']->account_name ;
                 break ;
@@ -219,20 +219,20 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             $additionalFormFields['account_name'] = $defines['focus']->account_name;
         }
 
-        if (!empty($defines['child_module_name']) and $defines['child_module_name']=='Contacts' and !empty($defines['parent_bean_name']) and $defines['parent_bean_name']=='contact' ) {
-            if (!empty($defines['focus']->id ) and !empty($defines['focus']->name)) {
+        if (!empty($defines['child_module_name']) and $defines['child_module_name']=='Contacts' and !empty($defines['parent_bean_name']) and $defines['parent_bean_name']=='contact') {
+            if (!empty($defines['focus']->id) and !empty($defines['focus']->name)) {
                 $formValues['reports_to_id'] = $defines['focus']->id;
                 $formValues['reports_to_name'] = $defines['focus']->name;
             }
         }
         $formValues['action'] = "EditView";
 
-        if ( $asUrl ) {
+        if ($asUrl) {
             $returnLink = '';
-            foreach ($formValues as $key => $value ) {
+            foreach ($formValues as $key => $value) {
                 $returnLink .= $key.'='.$value.'&';
             }
-            foreach ($additionalFormFields as $key => $value ) {
+            foreach ($additionalFormFields as $key => $value) {
                 $returnLink .= $key.'='.$value.'&';
             }
             $returnLink = rtrim($returnLink,'&');
@@ -270,7 +270,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 
         global $app_strings;
 
-        if ( isset($_REQUEST['layout_def_key']) && $_REQUEST['layout_def_key'] == 'UserEAPM' ) {
+        if (isset($_REQUEST['layout_def_key']) && $_REQUEST['layout_def_key'] == 'UserEAPM') {
             // Subpanels generally don't go on the editview, so we have to handle this special
             $megaLink = $this->_get_form($defines, $additionalFormFields,true);
         //$button = "<input title='$this->title' accesskey='$this->access_key' class='button' type='submit' name='$inputID' id='$inputID' value='$this->form_value' onclick='javascript:document.location=\"index.php?".$megaLink."\"; return false;'/>";

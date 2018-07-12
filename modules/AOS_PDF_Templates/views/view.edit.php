@@ -132,7 +132,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
                 $group_quote = new AOS_Line_Item_Groups();
                 foreach ($group_quote->field_defs as $line_name => $line_arr) {
                     if (!((isset($line_arr['dbType']) && strtolower($line_arr['dbType']) == 'id') || $line_arr['type'] == 'id' || $line_arr['type'] == 'link')) {
-                        if ((!isset($line_arr['reportable']) || $line_arr['reportable']) ) {//&& $line_arr['vname']  != 'LBL_NAME'
+                        if ((!isset($line_arr['reportable']) || $line_arr['reportable'])) {//&& $line_arr['vname']  != 'LBL_NAME'
                             $options_array['$'.$group_quote->table_name.'_'.$line_name] = translate($line_arr['vname'],$group_quote->module_dir);
                         }
                     }

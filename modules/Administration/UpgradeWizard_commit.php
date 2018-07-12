@@ -103,22 +103,22 @@ unset($_SESSION['rebuild_extensions']);
 global $log, $db;
 
 // process commands
-if ( !isset($_REQUEST['mode']) || ($_REQUEST['mode'] == "") ) {
+if (!isset($_REQUEST['mode']) || ($_REQUEST['mode'] == "")) {
     die($mod_strings['ERR_UW_NO_MODE']);
 }
 $mode = $_REQUEST['mode'];
 
 
-if ( !isset($_REQUEST['version']) ) {
+if (!isset($_REQUEST['version'])) {
     die($mod_strings['ERR_UW_NO_MODE']);
 }
 $version = $_REQUEST['version'];
 
-if ( !isset($_REQUEST['copy_count']) || ($_REQUEST['copy_count'] == "") ) {
+if (!isset($_REQUEST['copy_count']) || ($_REQUEST['copy_count'] == "")) {
     die($mod_strings['ERR_UW_NO_FILES']);
 }
 
-if ( empty($_REQUEST['unzip_dir']) || $_REQUEST['unzip_dir'] == "." || $_REQUEST['unzip_dir'] == "..") {
+if (empty($_REQUEST['unzip_dir']) || $_REQUEST['unzip_dir'] == "." || $_REQUEST['unzip_dir'] == "..") {
     die($mod_strings['ERR_UW_NO_TEMP_DIR']);
 }
 $unzip_dir = $base_tmp_upgrade_dir. "/". basename($_REQUEST['unzip_dir']);
@@ -127,8 +127,8 @@ if (empty($_REQUEST['install_file'])) {
     die($mod_strings['ERR_UW_NO_INSTALL_FILE']);
 }
 
-$install_file   = hashToFile($_REQUEST['install_file'] );
-$install_type   = getInstallType( $install_file );
+$install_file   = hashToFile($_REQUEST['install_file']);
+$install_type   = getInstallType($install_file);
 
 //from here on out, the install_file is used as the file path to copy or rename the physical file, so let's remove the stream wrapper if it's set
 //and replace it with the proper upload location
@@ -157,13 +157,13 @@ $previous_id = '';
 if (isset($_REQUEST['previous_id'])) {
     $previous_id = $_REQUEST['previous_id'];
 }
-if ( $install_type != "module" ) {
-    if ( !isset($_REQUEST['zip_from_dir']) || ($_REQUEST['zip_from_dir'] == "") ) {
+if ($install_type != "module") {
+    if (!isset($_REQUEST['zip_from_dir']) || ($_REQUEST['zip_from_dir'] == "")) {
         $zip_from_dir     = ".";
     } else {
         $zip_from_dir   = $_REQUEST['zip_from_dir'];
     }
-    if ( !isset($_REQUEST['zip_to_dir']) || ($_REQUEST['zip_to_dir'] == "") ) {
+    if (!isset($_REQUEST['zip_to_dir']) || ($_REQUEST['zip_to_dir'] == "")) {
         $zip_to_dir     = ".";
     } else {
         $zip_to_dir     = $_REQUEST['zip_to_dir'];
@@ -240,69 +240,69 @@ if ($install_type == 'patch' || $install_type == 'module') {
 // perform the action
 //
 
-for ( $iii = 0; $iii < $_REQUEST['copy_count']; $iii++ ) {
-    if ( isset($_REQUEST["copy_" . $iii]) && ($_REQUEST["copy_" . $iii] != "") ) {
+for ($iii = 0; $iii < $_REQUEST['copy_count']; $iii++) {
+    if (isset($_REQUEST["copy_" . $iii]) && ($_REQUEST["copy_" . $iii] != "")) {
         $file_to_copy = $_REQUEST["copy_" . $iii];
-        $src_file   = clean_path( "$unzip_dir/$zip_from_dir/$file_to_copy" );
+        $src_file   = clean_path("$unzip_dir/$zip_from_dir/$file_to_copy");
 
         $sugar_home_dir = getCwd();
-        $dest_file  = clean_path( "$sugar_home_dir/$zip_to_dir/$file_to_copy" );
+        $dest_file  = clean_path("$sugar_home_dir/$zip_to_dir/$file_to_copy");
         if ($zip_to_dir != '.') {
             $rest_file  = clean_path("$rest_dir/$zip_to_dir/$file_to_copy");
         } else {
             $rest_file  = clean_path("$rest_dir/$file_to_copy");
         }
 
-        switch ( $mode ) {
+        switch ($mode) {
             case "Install":
-                mkdir_recursive( dirname( $dest_file ) );
+                mkdir_recursive(dirname($dest_file));
 
                 if ($install_type=="patch" && is_file($dest_file)) {
-                    if (!is_dir(dirname( $rest_file ))) {
-                        mkdir_recursive( dirname( $rest_file ) );
+                    if (!is_dir(dirname($rest_file))) {
+                        mkdir_recursive(dirname($rest_file));
                     }
 
-                    copy( $dest_file, $rest_file);
-                    sugar_touch( $rest_file, filemtime($dest_file) );
+                    copy($dest_file, $rest_file);
+                    sugar_touch($rest_file, filemtime($dest_file));
                 }
 
-                if ( !copy( $src_file, $dest_file ) ) {
-                    die( $mod_strings['ERR_UW_COPY_FAILED'].$src_file.$mod_strings['LBL_TO'].$dest_file);
+                if (!copy($src_file, $dest_file)) {
+                    die($mod_strings['ERR_UW_COPY_FAILED'].$src_file.$mod_strings['LBL_TO'].$dest_file);
                 }
                 $uh_status = "installed";
                 break;
             case "Uninstall":
                 if ($install_type=="patch" && is_file($rest_file)) {
-                    copy( $rest_file, $dest_file);
-                    sugar_touch( $dest_file, filemtime($rest_file) );
+                    copy($rest_file, $dest_file);
+                    sugar_touch($dest_file, filemtime($rest_file));
                 } elseif (file_exists($dest_file) && !unlink($dest_file)) {
                     die($mod_strings['ERR_UW_REMOVE_FAILED'].$dest_file);
                 }
                 $uh_status = "uninstalled";
                 break;
             default:
-                die("{$mod_strings['LBL_UW_OP_MODE']} '$mode' {$mod_strings['ERR_UW_NOT_RECOGNIZED']}." );
+                die("{$mod_strings['LBL_UW_OP_MODE']} '$mode' {$mod_strings['ERR_UW_NOT_RECOGNIZED']}.");
         }
-        $files_to_handle[] = clean_path( "$zip_to_dir/$file_to_copy" );
+        $files_to_handle[] = clean_path("$zip_to_dir/$file_to_copy");
     }
 }
 
-switch ( $install_type ) {
+switch ($install_type) {
     case "langpack":
-        if ( !isset($_REQUEST['new_lang_name']) || ($_REQUEST['new_lang_name'] == "") ) {
+        if (!isset($_REQUEST['new_lang_name']) || ($_REQUEST['new_lang_name'] == "")) {
             die($mod_strings['ERR_UW_NO_LANG']);
         }
-        if ( !isset($_REQUEST['new_lang_desc']) || ($_REQUEST['new_lang_desc'] == "") ) {
+        if (!isset($_REQUEST['new_lang_desc']) || ($_REQUEST['new_lang_desc'] == "")) {
             die($mod_strings['ERR_UW_NO_LANG_DESC']);
         }
 
-        if ( $mode == "Install" || $mode=="Enable" ) {
+        if ($mode == "Install" || $mode=="Enable") {
             $sugar_config['languages'] = $sugar_config['languages'] + array( $_REQUEST['new_lang_name'] => $_REQUEST['new_lang_desc'] );
-        } elseif ( $mode == "Uninstall" || $mode=="Disable" ) {
+        } elseif ($mode == "Uninstall" || $mode=="Disable") {
             $new_langs = array();
             $old_langs = $sugar_config['languages'];
-            foreach ( $old_langs as $key => $value ) {
-                if ( $key != $_REQUEST['new_lang_name'] ) {
+            foreach ($old_langs as $key => $value) {
+                if ($key != $_REQUEST['new_lang_name']) {
                     $new_langs += array( $key => $value );
                 }
             }
@@ -322,21 +322,21 @@ switch ( $install_type ) {
                 $lang_changed_string .= $mod_strings['LBL_DEFAULT_LANGUAGE_CHANGE'].$sugar_config['languages'][$default_sugar_instance_lang].'<br/>';
             }
         }
-        ksort( $sugar_config );
-        if ( !write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ) {
+        ksort($sugar_config);
+        if (!write_array_to_file("sugar_config", $sugar_config, "config.php")) {
             die($mod_strings['ERR_UW_CONFIG_FAILED']);
         }
         break;
     case "module":
-        require_once( "ModuleInstall/ModuleInstaller.php" );
+        require_once("ModuleInstall/ModuleInstaller.php");
         $mi = new ModuleInstaller();
-        switch ( $mode ) {
+        switch ($mode) {
             case "Install":
             //here we can determine if this is an upgrade or a new version
             	if (!empty($previous_version)) {
-            	    $mi->install( "$unzip_dir", true, $previous_version);
+            	    $mi->install("$unzip_dir", true, $previous_version);
             	} else {
-            	    $mi->install( "$unzip_dir" );
+            	    $mi->install("$unzip_dir");
             	}
 
 				$file = "$unzip_dir/" . constant('SUGARCRM_POST_INSTALL_FILE');
@@ -352,7 +352,7 @@ switch ( $install_type ) {
                 } else {
                     $GLOBALS['mi_remove_tables'] = true;
                 }
-                $mi->uninstall( "$unzip_dir" );
+                $mi->uninstall("$unzip_dir");
                 break;
              case "Disable":
                 if (!$overwrite_files) {
@@ -360,7 +360,7 @@ switch ( $install_type ) {
                 } else {
                     $GLOBALS['mi_overwrite_files'] = true;
                 }
-                $mi->disable( "$unzip_dir" );
+                $mi->disable("$unzip_dir");
                 break;
              case "Enable":
                 if (!$overwrite_files) {
@@ -368,7 +368,7 @@ switch ( $install_type ) {
                 } else {
                     $GLOBALS['mi_overwrite_files'] = true;
                 }
-                $mi->enable( "$unzip_dir" );
+                $mi->enable("$unzip_dir");
                 break;
             default:
                 break;
@@ -407,11 +407,11 @@ switch ( $install_type ) {
  				break;
  		}
 
-		require( "sugar_version.php" );
+		require("sugar_version.php");
 		$sugar_config['sugar_version'] = $sugar_version;
-		ksort( $sugar_config );
+		ksort($sugar_config);
 
-		if ( !write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ) {
+		if (!write_array_to_file("sugar_config", $sugar_config, "config.php")) {
 		    die($mod_strings['ERR_UW_UPDATE_CONFIG']);
 		}
         break;
@@ -419,7 +419,7 @@ switch ( $install_type ) {
         break;
 }
 
-switch ( $mode ) {
+switch ($mode) {
     case "Install":
         $file_action = "copied";
         // if error was encountered, script should have died before now
@@ -436,7 +436,7 @@ switch ( $mode ) {
        	    }
        	}
         $new_upgrade->filename      = $install_file;
-        $new_upgrade->md5sum        = md5_file( $install_file );
+        $new_upgrade->md5sum        = md5_file($install_file);
         $new_upgrade->type          = $install_type;
         $new_upgrade->version       = $version;
         $new_upgrade->status        = "installed";
@@ -470,24 +470,24 @@ switch ( $mode ) {
     case "Uninstall":
         $file_action = "removed";
         $uh = new UpgradeHistory();
-        $the_md5 = md5_file( $install_file );
-        $md5_matches = $uh->findByMd5( $the_md5 );
-        if ( sizeof( $md5_matches ) == 0 ) {
-            die( "{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file." );
+        $the_md5 = md5_file($install_file);
+        $md5_matches = $uh->findByMd5($the_md5);
+        if (sizeof($md5_matches) == 0) {
+            die("{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file.");
         }
-        foreach ( $md5_matches as $md5_match ) {
+        foreach ($md5_matches as $md5_match) {
             $md5_match->delete();
         }
         break;
     case "Disable":
         $file_action = "disabled";
         $uh = new UpgradeHistory();
-        $the_md5 = md5_file( $install_file );
-        $md5_matches = $uh->findByMd5( $the_md5 );
-        if ( sizeof( $md5_matches ) == 0 ) {
-            die( "{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file." );
+        $the_md5 = md5_file($install_file);
+        $md5_matches = $uh->findByMd5($the_md5);
+        if (sizeof($md5_matches) == 0) {
+            die("{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file.");
         }
-        foreach ( $md5_matches as $md5_match ) {
+        foreach ($md5_matches as $md5_match) {
             $md5_match->enabled = 0;
             $md5_match->save();
         }
@@ -495,12 +495,12 @@ switch ( $mode ) {
     case "Enable":
         $file_action = "enabled";
         $uh = new UpgradeHistory();
-        $the_md5 = md5_file( $install_file );
-        $md5_matches = $uh->findByMd5( $the_md5 );
-        if ( sizeof( $md5_matches ) == 0 ) {
-            die( "{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file." );
+        $the_md5 = md5_file($install_file);
+        $md5_matches = $uh->findByMd5($the_md5);
+        if (sizeof($md5_matches) == 0) {
+            die("{$mod_strings['ERR_UW_NO_UPDATE_RECORD']} $install_file.");
         }
-        foreach ( $md5_matches as $md5_match ) {
+        foreach ($md5_matches as $md5_match) {
             $md5_match->enabled = 1;
             $md5_match->save();
         }
@@ -509,41 +509,41 @@ switch ( $mode ) {
 
 // present list to user
 ?>
-<form action="<?php print( $form_action ); ?>" method="post">
+<form action="<?php print($form_action); ?>" method="post">
 
 
 <?php
 echo "<div>";
-print( getUITextForType($install_type) . " ". getUITextForMode($mode) . " ". $mod_strings['LBL_UW_SUCCESSFULLY']);
+print(getUITextForType($install_type) . " ". getUITextForMode($mode) . " ". $mod_strings['LBL_UW_SUCCESSFULLY']);
 echo "<br>";
 echo "<br>";
-print( "<input type=submit value=\"{$mod_strings['LBL_UW_BTN_BACK_TO_MOD_LOADER']}\" /><br>" );
+print("<input type=submit value=\"{$mod_strings['LBL_UW_BTN_BACK_TO_MOD_LOADER']}\" /><br>");
 echo "</div>";
 echo "<br>";
 if (isset($lang_changed_string)) {
     print($lang_changed_string);
 }
 if ($install_type != "module" && $install_type != "langpack") {
-    if ( sizeof( $files_to_handle ) > 0 ) {
+    if (sizeof($files_to_handle) > 0) {
         echo '<div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'this.style.display="none"; toggleDisplay("more");\' id="all_text">' . SugarThemeRegistry::current()->getImage('advanced_search', '', null, null, ".gif", $mod_strings['LBL_ADVANCED_SEARCH']) . ' '.$mod_strings['LBL_UW_SHOW_DETAILS'].'</div><div id=\'more\' style=\'display: none\'>
             <div style="text-align: left; cursor: hand; cursor: pointer; text-decoration: underline;" onclick=\'document.getElementById("all_text").style.display=""; toggleDisplay("more");\'>' . SugarThemeRegistry::current()->getImage('basic_search', '', null, null, ".gif", $mod_strings['LBL_BASIC_SEARCH']) .' '.$mod_strings['LBL_UW_HIDE_DETAILS'].'</div><br>';
-        print( "{$mod_strings['LBL_UW_FOLLOWING_FILES']} $file_action:<br>\n" );
-        print( "<ul id=\"subMenu\">\n" );
-        foreach ( $files_to_handle as $file_to_copy ) {
-            print( "<li>$file_to_copy<br>\n" );
+        print("{$mod_strings['LBL_UW_FOLLOWING_FILES']} $file_action:<br>\n");
+        print("<ul id=\"subMenu\">\n");
+        foreach ($files_to_handle as $file_to_copy) {
+            print("<li>$file_to_copy<br>\n");
         }
-        print( "</ul>\n" );
+        print("</ul>\n");
         echo '</div>';
-    } elseif ( $mode != 'Disable' && $mode !='Enable' ) {
-        print( "{$mod_strings['LBL_UW_NO_FILES_SELECTED']} $file_action.<br>\n" );
+    } elseif ($mode != 'Disable' && $mode !='Enable') {
+        print("{$mod_strings['LBL_UW_NO_FILES_SELECTED']} $file_action.<br>\n");
     }
 
     print($mod_strings['LBL_UW_UPGRADE_SUCCESSFUL']);
-    print( "<input class='button' type=submit value=\"{$mod_strings['LBL_UW_BTN_BACK_TO_UW']}\" />\n" );
+    print("<input class='button' type=submit value=\"{$mod_strings['LBL_UW_BTN_BACK_TO_UW']}\" />\n");
 }
 ?>
 </form>
 
 <?php
-    $GLOBALS['log']->info( "Upgrade Wizard patches" );
+    $GLOBALS['log']->info("Upgrade Wizard patches");
 ?>

@@ -454,7 +454,7 @@ EOQ;
             }
         }
         $focus = populateFromPost($prefix, $focus);
-        if ( !ACLController::checkAccess($focus->module_dir, 'edit', $focus->isOwner($current_user->id))) {
+        if (!ACLController::checkAccess($focus->module_dir, 'edit', $focus->isOwner($current_user->id))) {
             ACLController::displayNoAccess(true);
         }
         $check_notify = FALSE;
@@ -471,7 +471,7 @@ EOQ;
 	
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
         if ($redirect) {
-            handleRedirect($return_id,"Opportunities" );
+            handleRedirect($return_id,"Opportunities");
         } else {
             return $focus;
         }

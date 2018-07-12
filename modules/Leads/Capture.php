@@ -69,13 +69,13 @@ if (!empty($_POST['user']) && !empty($users[$_POST['user']])) {
             $prefix = 	$_POST['prefix'];
         }
 
-        if ( !isset($_POST['assigned_user_id']) || !empty($_POST['assigned_user_id']) ) {
+        if (!isset($_POST['assigned_user_id']) || !empty($_POST['assigned_user_id'])) {
             $_POST['prefix'] = $current_user->id;
         }
 
         $_POST['record'] ='';
 
-        if ( isset($_POST['_splitName']) ) {
+        if (isset($_POST['_splitName'])) {
             $name = explode(' ',$_POST['name']);
             if (sizeof($name) == 1) {
                 $_POST['first_name'] = '';
@@ -100,7 +100,7 @@ if (!empty($_POST['user']) && !empty($users[$_POST['user']])) {
                 }
             }
 
-            if ( ($return_val == '') || ($return_val  == 0) || ($return_val < 0) ) {
+            if (($return_val == '') || ($return_val  == 0) || ($return_val < 0)) {
                 echo '<input type="hidden" name="error" value="1">';
             }
             echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';

@@ -99,7 +99,7 @@ function portal_login($portal_auth, $user_name, $application_name)
         login_success();
         return array('id'=>session_id(), 'error'=>$error->get_soap_array());
     } else {
-        $contact = $contact->retrieve_by_string_fields(array('portal_name'=>$user_name, 'portal_active'=>'1', 'deleted'=>0) );
+        $contact = $contact->retrieve_by_string_fields(array('portal_name'=>$user_name, 'portal_active'=>'1', 'deleted'=>0));
         if ($contact != null) {
             session_start();
             $_SESSION['is_valid_session']= true;
@@ -376,7 +376,7 @@ function portal_set_entry($session,$module_name, $name_value_list)
         return array('id'=>-1, 'error'=>$error->get_soap_array());
     }
 
-    if ($_SESSION['type'] == 'contact' && !key_exists($module_name, $valid_modules_for_contact) ) {
+    if ($_SESSION['type'] == 'contact' && !key_exists($module_name, $valid_modules_for_contact)) {
         $error->set_error('no_access');
         return array('id'=>-1, 'error'=>$error->get_soap_array());
     }
@@ -425,7 +425,7 @@ function portal_set_entry($session,$module_name, $name_value_list)
     if ($_SESSION['type'] == 'contact' && $module_name != 'Contacts' && !$is_update) {
         if ($module_name == 'Notes') {
             $seed->contact_id = $_SESSION['user_id'];
-            if (isset( $_SESSION['account_id'])) {
+            if (isset($_SESSION['account_id'])) {
                 $seed->parent_type = 'Accounts';
                 $seed->parent_id = $_SESSION['account_id'];
             }
@@ -436,7 +436,7 @@ function portal_set_entry($session,$module_name, $name_value_list)
             $contact->retrieve($_SESSION['user_id']);
             $seed->contact_id = $contact;
 
-            if (isset( $_SESSION['account_id'])) {
+            if (isset($_SESSION['account_id'])) {
                 $seed->account_id = $_SESSION['account_id'];
             }
             $seed->save_relationship_changes(false);
@@ -584,7 +584,7 @@ function portal_get_related_notes($session,$module_name, $module_id, $select_fie
         $error->set_error('invalid_session');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
-    if ($_SESSION['type'] == 'lead' ) {
+    if ($_SESSION['type'] == 'lead') {
         $error->set_error('no_access');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
@@ -639,7 +639,7 @@ function portal_get_related_list($session, $module_name, $rel_module, $module_id
         $error->set_error('invalid_session');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
-    if ($_SESSION['type'] == 'lead' ) {
+    if ($_SESSION['type'] == 'lead') {
         $error->set_error('no_access');
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }

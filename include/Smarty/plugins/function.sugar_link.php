@@ -101,7 +101,7 @@ function smarty_function_sugar_link($params, &$smarty)
         }
     }
 	
-    if (isset($params['link_only']) && $params['link_only'] == 1 ) {
+    if (isset($params['link_only']) && $params['link_only'] == 1) {
         // Let them just get the url, they want to put it someplace
         return ajaxLink($link_url);
     }
@@ -115,7 +115,7 @@ function smarty_function_sugar_link($params, &$smarty)
     $options = (!empty($params['options']))?' '.$params['options'].'':'';
     if (!empty($params['data']) && is_array($params['data'])) {
         $label =$params['data']['4'];
-    } elseif ( !empty($params['label']) ) {
+    } elseif (!empty($params['label'])) {
         $label = $params['label'];
     } else {
         $label = (!empty($GLOBALS['app_list_strings']['moduleList'][$params['module']]))?$GLOBALS['app_list_strings']['moduleList'][$params['module']]:$params['module'];

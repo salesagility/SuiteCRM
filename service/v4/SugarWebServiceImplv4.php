@@ -112,14 +112,14 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
             self::$helperObject->setFaultObject($error);
             return;
         } elseif (function_exists('openssl_decrypt') && $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
-        		&& (empty($user_auth['encryption']) || $user_auth['encryption'] !== 'PLAIN' ) ) {
+        		&& (empty($user_auth['encryption']) || $user_auth['encryption'] !== 'PLAIN')) {
             $password = self::$helperObject->decrypt_string($user_auth['password']);
             $authController->loggedIn = false; // reset login attempt to try again with decrypted password
             if ($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id'])) {
                 $success = true;
             }
-        } elseif ( $authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
-                 && (empty($user_auth['encryption']) || $user_auth['encryption'] == 'PLAIN' ) ) {
+        } elseif ($authController->authController->userAuthenticateClass == "LDAPAuthenticateUser"
+                 && (empty($user_auth['encryption']) || $user_auth['encryption'] == 'PLAIN')) {
             $authController->loggedIn = false; // reset login attempt to try again with md5 password
             if ($authController->login($user_auth['user_name'], md5($user_auth['password']), array('passwordEncrypted' => true))
         		&& isset($_SESSION['authenticated_user_id'])) {
@@ -157,17 +157,17 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
             $cur_id = $current_user->getPreference('currency');
             $nameValueArray['user_currency_id'] = self::$helperObject->get_name_value('user_currency_id', $cur_id);
             $nameValueArray['user_is_admin'] = self::$helperObject->get_name_value('user_is_admin', is_admin($current_user));
-            $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value('user_default_team_id', $current_user->default_team );
-            $nameValueArray['user_default_dateformat'] = self::$helperObject->get_name_value('user_default_dateformat', $current_user->getPreference('datef') );
-            $nameValueArray['user_default_timeformat'] = self::$helperObject->get_name_value('user_default_timeformat', $current_user->getPreference('timef') );
+            $nameValueArray['user_default_team_id'] = self::$helperObject->get_name_value('user_default_team_id', $current_user->default_team);
+            $nameValueArray['user_default_dateformat'] = self::$helperObject->get_name_value('user_default_dateformat', $current_user->getPreference('datef'));
+            $nameValueArray['user_default_timeformat'] = self::$helperObject->get_name_value('user_default_timeformat', $current_user->getPreference('timef'));
 
             $num_grp_sep = $current_user->getPreference('num_grp_sep');
             $dec_sep = $current_user->getPreference('dec_sep');
             $nameValueArray['user_number_seperator'] = self::$helperObject->get_name_value('user_number_seperator', empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep);
             $nameValueArray['user_decimal_seperator'] = self::$helperObject->get_name_value('user_decimal_seperator', empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep);
 
-            $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value('mobile_max_list_entries', $sugar_config['wl_list_max_entries_per_page'] );
-            $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value('mobile_max_subpanel_entries', $sugar_config['wl_list_max_entries_per_subpanel'] );
+            $nameValueArray['mobile_max_list_entries'] = self::$helperObject->get_name_value('mobile_max_list_entries', $sugar_config['wl_list_max_entries_per_page']);
+            $nameValueArray['mobile_max_subpanel_entries'] = self::$helperObject->get_name_value('mobile_max_subpanel_entries', $sugar_config['wl_list_max_entries_per_subpanel']);
 
 
             $currencyObject = new Currency();
@@ -327,7 +327,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
         }
 
         $totalRecordCount = $response['row_count'];
-        if ( !empty($sugar_config['disable_count_query']) ) {
+        if (!empty($sugar_config['disable_count_query'])) {
             $totalRecordCount = -1;
         }
 
@@ -357,7 +357,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                 continue;
             }
 
-            if ( empty($module_name) ) {
+            if (empty($module_name)) {
                 continue;
             }
 
@@ -367,7 +367,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
 
             foreach ($a_view as $view) {
                 $aclViewCheck = (strtolower($view) == 'subpanel') ? 'DetailView' : ucfirst(strtolower($view)) . 'View';
-                if (!$acl_check || $seed->ACLAccess($aclViewCheck, true) ) {
+                if (!$acl_check || $seed->ACLAccess($aclViewCheck, true)) {
                     foreach ($a_type as $type) {
                         $a_vardefs = self::$helperObject->get_module_view_defs($module_name, $type, $view);
                         if ($md5) {
@@ -380,7 +380,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
             }
         }
 
-        $GLOBALS['log']->info('End: SugarWebServiceImpl->get_module_layout ->> '.print_r($results,true) );
+        $GLOBALS['log']->info('End: SugarWebServiceImpl->get_module_layout ->> '.print_r($results,true));
 
         return $results;
     }
@@ -435,9 +435,9 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
 
         //If we are ignoring the unified search flag within the vardef we need to re-create the search fields.  This allows us to search
         //against a specific module even though it is not enabled for the unified search within the application.
-        if ( !$unified_search_only ) {
+        if (!$unified_search_only) {
             foreach ($modules as $singleModule) {
-                if ( !isset($unified_search_modules[$singleModule]) ) {
+                if (!isset($unified_search_modules[$singleModule])) {
                     $newSearchFields = array('fields' => self::$helperObject->generateUnifiedSearchFields($singleModule) );
                     $unified_search_modules[$singleModule] = $newSearchFields;
                 }
@@ -458,7 +458,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
             foreach ($modules_to_search as $name => $beanName) {
                 $where_clauses_array = array();
                 $unifiedSearchFields = array () ;
-                foreach ($unified_search_modules[$name]['fields'] as $field=>$def ) {
+                foreach ($unified_search_modules[$name]['fields'] as $field=>$def) {
                     $unifiedSearchFields[$name] [ $field ] = $def ;
                     $unifiedSearchFields[$name] [ $field ]['value'] = $search_string;
                 }
@@ -480,19 +480,19 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                 if ($beanName != "User"
     			    && $beanName != "ProjectTask"
     			    ) {
-                    $searchForm = new SearchForm ($seed, $name ) ;
+                    $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
+                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
-                    $searchForm = new SearchForm ($seed, $name ) ;
+                    $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */ ) ;
+                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     $emailQuery = false;
 
                     $where = '';
-                    if (count($where_clauses) > 0 ) {
+                    if (count($where_clauses) > 0) {
                         $where = '('. implode(' ) OR ( ', $where_clauses) . ')';
                     }
 
@@ -521,19 +521,19 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
                     //Pull in any db fields used for the unified search query so the correct joins will be added
                     $selectOnlyQueryFields = array();
                     foreach ($unifiedSearchFields[$name] as $field => $def) {
-                        if ( isset($def['db_field']) && !in_array($field,$filterFields) ) {
+                        if (isset($def['db_field']) && !in_array($field,$filterFields)) {
                             $filterFields[] = $field;
                             $selectOnlyQueryFields[] = $field;
                         }
                     }
 
                     //Add the assigned user filter if applicable
-                    if (!empty($assigned_user_id) && isset( $seed->field_defs['assigned_user_id']) ) {
+                    if (!empty($assigned_user_id) && isset($seed->field_defs['assigned_user_id'])) {
                         $ownerWhere = $seed->getOwnerWhere($assigned_user_id);
                         $where = "($where) AND $ownerWhere";
                     }
 
-                    if ( $beanName == "Employee" ) {
+                    if ($beanName == "Employee") {
                         $where = "($where) AND users.deleted = 0 AND users.is_group = 0 AND users.employee_status = 'Active'";
                     }
 

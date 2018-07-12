@@ -107,7 +107,7 @@ class CampaignsViewDetail extends ViewDetail
             $this->ss->assign("MSG_SCRIPT",$confirm_msg);
         }
 
-        if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter' )) {
+        if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter')) {
             $this->ss->assign("ADD_BUTTON_STATE", "submit");
             $this->ss->assign("TARGET_BUTTON_STATE", "hidden");
         } else {
@@ -119,7 +119,7 @@ class CampaignsViewDetail extends ViewDetail
         $currency = new Currency();
         if (isset($this->bean->currency_id) && !empty($this->bean->currency_id)) {
             $currency->retrieve($this->bean->currency_id);
-            if ( $currency->deleted != 1) {
+            if ($currency->deleted != 1) {
                 $this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
             } else {
                 $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
@@ -150,7 +150,7 @@ class CampaignsViewDetail extends ViewDetail
                 }
             }
             //only show email marketing subpanel for email/newsletter campaigns
-            if ($this->bean->campaign_type != 'Email' && $this->bean->campaign_type != 'NewsLetter' ) {
+            if ($this->bean->campaign_type != 'Email' && $this->bean->campaign_type != 'NewsLetter') {
                 //exclude emailmarketing subpanel if not on an email or newsletter campaign
                 $subpanel->subpanel_definitions->exclude_tab('emailmarketing');
                 // Bug #49893  - 20120120 - Captivea (ybi) - Remove trackers subpanels if not on an email/newsletter campaign (useless subpannl)

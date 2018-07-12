@@ -62,13 +62,13 @@ if (!isset($_REQUEST['adv_interval']) || $_REQUEST['adv_interval'] == 'false' ||
 					6 => 'sat',
 					0 => 'sun');
 					
-    if (	(isset($_REQUEST['mon']) && $_REQUEST['mon'] == 'true') &&
+    if ((isset($_REQUEST['mon']) && $_REQUEST['mon'] == 'true') &&
 		(isset($_REQUEST['tue']) && $_REQUEST['tue'] == 'true') &&
 		(isset($_REQUEST['wed']) && $_REQUEST['wed'] == 'true') &&
 		(isset($_REQUEST['thu']) && $_REQUEST['thu'] == 'true') &&
 		(isset($_REQUEST['fri']) && $_REQUEST['fri'] == 'true') &&
 		(isset($_REQUEST['sat']) && $_REQUEST['sat'] == 'true') &&
-		(isset($_REQUEST['sun']) && $_REQUEST['sun'] == 'true') ) {
+		(isset($_REQUEST['sun']) && $_REQUEST['sun'] == 'true')) {
         $_REQUEST['day_of_week'] = '*';
     } else {
         $day_string = '';
@@ -103,15 +103,15 @@ if (!isset($_REQUEST['adv_interval']) || $_REQUEST['adv_interval'] == 'false' ||
 $focus->job_interval = $_REQUEST['mins']."::".$_REQUEST['hours']."::".$_REQUEST['day_of_month']."::".$_REQUEST['months']."::".$_REQUEST['day_of_week'];
 // deal with job types
 // neither
-if ( ($_REQUEST['job_function'] == 'url::') && ($_REQUEST['job_url'] == '' || $_REQUEST['job_url'] == 'http://') ) {
+if (($_REQUEST['job_function'] == 'url::') && ($_REQUEST['job_url'] == '' || $_REQUEST['job_url'] == 'http://')) {
     $GLOBALS['log']->fatal('Scheduler save did not get a job_url or job_function');
-} elseif ( ($_REQUEST['job_function'] != 'url::') && ($_REQUEST['job_url'] != '' && $_REQUEST['job_url'] != 'http://') ) {
+} elseif (($_REQUEST['job_function'] != 'url::') && ($_REQUEST['job_url'] != '' && $_REQUEST['job_url'] != 'http://')) {
     $GLOBALS['log']->fatal('Scheduler got both a job_url and job_function');
 }
 //function
-if ( ($_REQUEST['job_function'] != 'url::')) {
+if (($_REQUEST['job_function'] != 'url::')) {
     $focus->job = $_REQUEST['job_function'];
-} elseif ( $_REQUEST['job_url'] != '' && $_REQUEST['job_url'] != 'http://') { // url
+} elseif ($_REQUEST['job_url'] != '' && $_REQUEST['job_url'] != 'http://') { // url
     $focus->job = 'url::'.$_REQUEST['job_url'];
 } // url wins if both passed
 

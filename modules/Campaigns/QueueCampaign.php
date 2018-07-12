@@ -139,7 +139,7 @@ foreach ($_POST['mass'] as $message_id) {
         }
     }
     $result=$campaign->db->query($query);
-    while (($row=$campaign->db->fetchByAssoc($result))!=null ) {
+    while (($row=$campaign->db->fetchByAssoc($result))!=null) {
         $prospect_list_id=$row['prospect_list_id'];
 
         //delete all messages for the current campaign and current email marketing message.
