@@ -1070,6 +1070,3 @@ function usleepWindows($usec)
 		+ $stop['usec'] - $start['usec'];
     } while ($timePassed < $usec);
 }
-
-
-?>

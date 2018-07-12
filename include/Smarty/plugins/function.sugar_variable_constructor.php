@@ -67,4 +67,3 @@ function smarty_function_sugar_variable_constructor($params, &$smarty)
     
     return $_contents;
 }
-?>

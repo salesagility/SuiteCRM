@@ -61,6 +61,3 @@ if (ACLController::checkAccess('Emails', 'edit', true)) {
 if (ACLController::checkAccess('Emails', 'list', true)) {
     $module_menu[]=Array("index.php?module=Emails&action=index&return_module=Emails&return_action=DetailView", $mod_strings['LNK_VIEW_MY_INBOX'],"List", 'Emails');
 }
-
-
-?>

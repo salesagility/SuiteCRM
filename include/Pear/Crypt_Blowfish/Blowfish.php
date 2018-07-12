@@ -335,5 +335,3 @@ class Crypt_Blowfish
         return true;
     }
 }
-
-?>

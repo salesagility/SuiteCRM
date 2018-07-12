@@ -94,5 +94,3 @@ function smarty_core_write_cache_file($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

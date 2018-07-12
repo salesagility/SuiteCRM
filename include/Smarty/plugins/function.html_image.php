@@ -137,5 +137,3 @@ function smarty_function_html_image($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

@@ -136,6 +136,3 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
         return $code;
     }
 }
-
-
-?>

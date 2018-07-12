@@ -301,4 +301,3 @@
          return($Picture);
      }
  }
-?>

@@ -1061,4 +1061,3 @@
          return substr($value,$Depart-1,$NbChar);
      }
  }
-?>

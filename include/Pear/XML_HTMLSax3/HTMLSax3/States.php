@@ -299,4 +299,3 @@ class XML_HTMLSax3_PiState
         return XML_HTMLSAX3_STATE_START;
     }
 }
-?>

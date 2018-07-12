@@ -66,4 +66,3 @@ class ViewXML extends SugarView
         echo 'Not implemented';
     }
 }
-?>

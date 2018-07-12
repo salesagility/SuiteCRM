@@ -740,4 +740,3 @@ if (count($arg) >= 3) {
 // BEGIN SUGARCRM SPECIFIC
 */
 // END SUGARCRM SPECIFIC
-?>

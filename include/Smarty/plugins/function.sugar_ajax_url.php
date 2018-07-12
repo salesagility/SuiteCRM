@@ -51,5 +51,3 @@ function smarty_function_sugar_ajax_url($params, &$smarty)
     }
     return ajaxLink($params['url']);
 }
-
-?>

@@ -113,5 +113,3 @@ function smarty_function_sugar_connector_display($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

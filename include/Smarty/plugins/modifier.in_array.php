@@ -50,5 +50,3 @@ function smarty_modifier_in_array($needle = null, $haystack = null)
     }
     return in_array($needle, $haystack);
 }
-
-?>

@@ -90,6 +90,3 @@ $source
     smarty_core_write_file($_params, $smarty);
     return true;
 }
-
-
-?>

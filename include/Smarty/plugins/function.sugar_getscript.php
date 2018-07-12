@@ -61,4 +61,3 @@ function smarty_function_sugar_getscript($params, &$smarty)
     }
     return getVersionedScript($params['file']);
 }
-?>

@@ -50,4 +50,3 @@ function smarty_function_sugar_getwebpath($params, &$smarty)
     } 
     return getWebPath($params['file']);
 }
-?>

@@ -121,4 +121,3 @@ function smarty_function_sugar_field($params, &$smarty)
     
     return $_contents;
 }
-?>

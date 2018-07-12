@@ -111,4 +111,3 @@ function smarty_function_sugarvar($params, &$smarty)
     }
     return $_contents;
 }
-?>

@@ -1386,6 +1386,3 @@ class soap_transport_http extends nusoap_base
         return $cookie_str;
     }
 }
-
-
-?>

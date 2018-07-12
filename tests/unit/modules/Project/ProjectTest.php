@@ -183,4 +183,3 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(is_array($result));
     }
 }
-?>

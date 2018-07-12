@@ -118,4 +118,3 @@ function smarty_function_sugar_phone($params, &$smarty)
         return $params['value'];
     }
 }
-?>

@@ -127,4 +127,3 @@ $viewdefs['EmailTemplates']['DetailView'] = array(
 
 
 );
-?>

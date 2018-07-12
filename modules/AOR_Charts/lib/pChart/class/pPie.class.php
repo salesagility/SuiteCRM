@@ -1860,4 +1860,3 @@
          return(array($Data,$NewPalette));
      }
  }
-?>

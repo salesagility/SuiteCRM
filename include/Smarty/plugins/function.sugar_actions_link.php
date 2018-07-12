@@ -168,5 +168,3 @@ function smarty_function_sugar_actions_link($params, &$smarty)
         return $type['customCode'];
     }
 }
-
-?>

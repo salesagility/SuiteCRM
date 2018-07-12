@@ -335,9 +335,3 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 		$this->assertEquals(true, $prospectList->bean_implements('ACL')); //test with valid value
     }
 }
-
-
-
-
-
-?>

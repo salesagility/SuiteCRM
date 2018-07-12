@@ -118,5 +118,3 @@ function smarty_function_html_options_optgroup($key, $values, $selected)
 }
 
 /* vim: set expandtab: */
-
-?>

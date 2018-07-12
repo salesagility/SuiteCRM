@@ -59,4 +59,3 @@ function smarty_function_sugar_email_btn($params, &$smarty)
     }
     return $pdfButtons;
 }
-?>

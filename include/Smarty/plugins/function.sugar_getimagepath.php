@@ -77,4 +77,3 @@ function smarty_function_sugar_getimagepath($params, &$smarty)
 
     return SugarThemeRegistry::current()->getImageURL($params['file']);
 }
-?>

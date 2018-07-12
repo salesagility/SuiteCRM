@@ -54,5 +54,3 @@ function smarty_function_sugar_number_format($params, &$smarty)
         return $_contents;
     }
 }
-
-?>

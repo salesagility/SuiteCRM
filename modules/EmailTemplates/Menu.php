@@ -56,4 +56,3 @@ if (ACLController::checkAccess('EmailTemplates', 'edit', true)) {
 if (ACLController::checkAccess('EmailTemplates', 'list', true)) {
     $module_menu[] = array("index.php?module=EmailTemplates&action=index", $mod_strings['LNK_EMAIL_TEMPLATE_LIST'],"View_Email_Templates", 'Emails');
 }
-?>

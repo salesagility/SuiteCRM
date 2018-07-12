@@ -156,5 +156,3 @@ function smarty_function_mailto($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>
