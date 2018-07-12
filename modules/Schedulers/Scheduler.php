@@ -1007,37 +1007,6 @@ class Scheduler extends SugarBean
         $sched16->modified_user_id   = '1';
         $sched16->catch_up           = '0';
         $sched16->save();
-	}
-
-	////	END SCHEDULER HELPER FUNCTIONS
-	///////////////////////////////////////////////////////////////////////////
-
-
-	///////////////////////////////////////////////////////////////////////////
-	////	STANDARD SUGARBEAN OVERRIDES
-	/**
-	 * function overrides the one in SugarBean.php
-	 */
-	function create_export_query($order_by, $where, $show_deleted = 0) {
-		return $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted);
-	}
-
-	/**
-	 * function overrides the one in SugarBean.php
-	 */
-
-	/**
-	 * function overrides the one in SugarBean.php
-	 */
-	function fill_in_additional_list_fields() {
-		$this->fill_in_additional_detail_fields();
-	}
-
-	/**
-	 * function overrides the one in SugarBean.php
-	 */
-	function fill_in_additional_detail_fields() {
-
     }
 
     ////	END SCHEDULER HELPER FUNCTIONS
