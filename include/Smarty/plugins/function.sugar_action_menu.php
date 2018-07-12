@@ -124,7 +124,7 @@ function smarty_function_sugar_action_menu($params, &$smarty)
 {
     global $sugar_config;
 
-    if ( !empty($params['params']) ) {
+    if (!empty($params['params'])) {
         $addition_params = $params['params'];
         unset($params['params']);
         $params = array_merge_recursive($params, $addition_params);

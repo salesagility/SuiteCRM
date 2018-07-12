@@ -60,7 +60,7 @@ class ImportViewStep1 extends ImportView
         parent::__construct($bean, $view_object_map);
         $this->currentStep = isset($_REQUEST['current_step']) ? ($_REQUEST['current_step'] + 1) : 1;
         $this->importModule = isset($_REQUEST['import_module']) ? $_REQUEST['import_module'] : '';
-        if ( isset($_REQUEST['from_admin_wizard']) &&  $_REQUEST['from_admin_wizard'] ) {
+        if (isset($_REQUEST['from_admin_wizard']) &&  $_REQUEST['from_admin_wizard']) {
             $this->importModule = 'Administration';
         }
     }
@@ -118,7 +118,7 @@ class ImportViewStep1 extends ImportView
         $this->ss->assign("IMPORTABLE_MODULES_OPTIONS", $importableModulesOptions);
 
         $this->ss->assign("EXTERNAL_SOURCES", $this->getAllImportableExternalEAPMs());
-        $this->ss->assign("EXTERNAL_AUTHENTICATED_SOURCES", json_encode($this->getAuthenticatedImportableExternalEAPMs()) );
+        $this->ss->assign("EXTERNAL_AUTHENTICATED_SOURCES", json_encode($this->getAuthenticatedImportableExternalEAPMs()));
         $selectExternal = !empty($_REQUEST['application']) ? $_REQUEST['application'] : '';
         $this->ss->assign("selectExternalSource", $selectExternal);
 
@@ -128,7 +128,7 @@ class ImportViewStep1 extends ImportView
         $submitContent .= "<input title=\"".$mod_strings['LBL_IMPORT_COMPLETE']."\" onclick=\"SUGAR.importWizard.closeDialog();\" class=\"button\" type=\"submit\" name=\"finished\" value=\"  ".$mod_strings['LBL_IMPORT_COMPLETE']."  \" id=\"finished\">";
         $submitContent .= "<input title=\"".$mod_strings['LBL_NEXT']."\" class=\"button primary\" type=\"submit\" name=\"button\" value=\"  ".$mod_strings['LBL_NEXT']."  \"  id=\"gonext\"></td></tr></table>";
 
-        $this->ss->assign("JAVASCRIPT",$this->_getJS() );
+        $this->ss->assign("JAVASCRIPT",$this->_getJS());
         $this->ss->assign("CONTENT",$content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
@@ -138,9 +138,9 @@ class ImportViewStep1 extends ImportView
         global $beanList;
         $results = array();
         foreach ($beanList as $moduleName => $beanName) {
-            if ( class_exists($beanName) ) {
+            if (class_exists($beanName)) {
                 $tmp = new $beanName();
-                if ( isset($tmp->importable) && $tmp->importable && ($tmp instanceof Person)) {
+                if (isset($tmp->importable) && $tmp->importable && ($tmp instanceof Person)) {
                     $results[$moduleName] = $moduleName;
                 }
             }

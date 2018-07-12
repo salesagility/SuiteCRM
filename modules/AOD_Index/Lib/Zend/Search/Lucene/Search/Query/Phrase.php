@@ -305,7 +305,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
         foreach ($this->_terms as $termId => $term) {
             if ($lowCardTermId === null ||
                 count($this->_termsPositions[$termId][$docId]) <
-                count($this->_termsPositions[$lowCardTermId][$docId]) ) {
+                count($this->_termsPositions[$lowCardTermId][$docId])) {
                 $lowCardTermId = $termId;
             }
         }
@@ -355,7 +355,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
 
             // Walk through the term positions.
             // Each term position produces a set of phrases.
-            foreach ($this->_termsPositions[$termId][$docId] as $termPosition ) {
+            foreach ($this->_termsPositions[$termId][$docId] as $termPosition) {
                 if ($firstPass) {
                     for ($count = 0; $count < $queueSize; $count++) {
                         $phraseQueue[$count][$termId] = $termPosition;
@@ -363,7 +363,7 @@ class Zend_Search_Lucene_Search_Query_Phrase extends Zend_Search_Lucene_Search_Q
                 } else {
                     for ($count = 0; $count < $queueSize; $count++) {
                         if ($lastTerm !== null &&
-                            abs( $termPosition - $phraseQueue[$count][$lastTerm] -
+                            abs($termPosition - $phraseQueue[$count][$lastTerm] -
                                  ($this->_offsets[$termId] - $this->_offsets[$lastTerm])) > $this->_slop) {
                             continue;
                         }

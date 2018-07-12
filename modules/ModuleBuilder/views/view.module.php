@@ -73,7 +73,7 @@ class ViewModule extends SugarView
         // set up the list of either available types for a new module, or implemented types for an existing one
         $types = (empty($module_name)) ? MBModule::getTypes() : $this->mbModule->mbvardefs->templates ;
         
-        foreach ( $types as $type=>$definition) {
+        foreach ($types as $type=>$definition) {
             $translated_type[$type]=translate('LBL_TYPE_'.strtoupper($type),'ModuleBuilder');
         }
         natcasesort($translated_type);

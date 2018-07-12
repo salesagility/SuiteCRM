@@ -208,7 +208,7 @@ class Meeting extends SugarBean
                 $old_record->retrieve($this->id);
                 $old_assigned_user_id = $old_record->assigned_user_id;
             }
-            if ((empty($this->id) && isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id']) && $GLOBALS['current_user']->id != $_REQUEST['assigned_user_id']) || (isset($old_assigned_user_id) && !empty($old_assigned_user_id) && isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id']) && $old_assigned_user_id != $_REQUEST['assigned_user_id']) ) {
+            if ((empty($this->id) && isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id']) && $GLOBALS['current_user']->id != $_REQUEST['assigned_user_id']) || (isset($old_assigned_user_id) && !empty($old_assigned_user_id) && isset($_REQUEST['assigned_user_id']) && !empty($_REQUEST['assigned_user_id']) && $old_assigned_user_id != $_REQUEST['assigned_user_id'])) {
                 $this->special_notification = true;
                 $check_notify = true;
                 if (isset($_REQUEST['assigned_user_name'])) {
@@ -227,20 +227,20 @@ class Meeting extends SugarBean
             $check_notify = false;
         }
 
-        if (empty($this->status) ) {
+        if (empty($this->status)) {
             $this->status = $this->getDefaultStatus();
         }
 
         // Do any external API saving
         // Clear out the old external API stuff if we have changed types
-        if (isset($this->fetched_row) && $this->fetched_row['type'] != $this->type ) {
+        if (isset($this->fetched_row) && $this->fetched_row['type'] != $this->type) {
             $this->join_url = '';
             $this->host_url = '';
             $this->external_id = '';
             $this->creator = '';
         }
 
-        if (!empty($this->type) && $this->type != 'Sugar' ) {
+        if (!empty($this->type) && $this->type != 'Sugar') {
             require_once('include/externalAPI/ExternalAPIFactory.php');
             $api = ExternalAPIFactory::loadAPI($this->type);
         }
@@ -249,17 +249,17 @@ class Meeting extends SugarBean
             $this->type = 'Sugar';
         }
 
-        if ( isset($api) && is_a($api,'WebMeeting') && empty($this->in_relationship_update) ) {
+        if (isset($api) && is_a($api,'WebMeeting') && empty($this->in_relationship_update)) {
             // Make sure the API initialized and it supports Web Meetings
             // Also make suer we have an ID, the external site needs something to reference
-            if ( !isset($this->id) || empty($this->id) ) {
+            if (!isset($this->id) || empty($this->id)) {
                 $this->id = create_guid();
                 $this->new_with_id = true;
             }
             $response = $api->scheduleMeeting($this);
-            if ( $response['success'] == TRUE ) {
+            if ($response['success'] == TRUE) {
                 // Need to send out notifications
-                if ( $api->canInvite ) {
+                if ($api->canInvite) {
                     $notifyList = $this->get_notification_recipients();
                     foreach ($notifyList as $person) {
                         $api->inviteAttendee($this,$person,$check_notify);
@@ -513,9 +513,9 @@ class Meeting extends SugarBean
             $this->reminder_time = -1;
         }
 
-        if ( empty($this->id) ) {
+        if (empty($this->id)) {
             $reminder_t = $GLOBALS['current_user']->getPreference('reminder_time');
-            if ( isset($reminder_t) ) {
+            if (isset($reminder_t)) {
                 $this->reminder_time = $reminder_t;
             }
         }
@@ -572,7 +572,7 @@ class Meeting extends SugarBean
                 
         $mergeTime = $meetingFieldsDateStart; //$timedate->merge_date_time($meeting_fields['DATE_START'], $meeting_fields['TIME_START']);
         $date_db = $timedate->to_db($mergeTime);
-        if ($date_db	< $today	) {
+        if ($date_db	< $today) {
             if ($meeting_fields['STATUS']=='Held' || $meeting_fields['STATUS']=='Not Held') {
                 $meeting_fields['DATE_START']= "<font>".$meeting_fields['DATE_START']."</font>";
             } else {
@@ -689,7 +689,7 @@ class Meeting extends SugarBean
         $xtpl->assign("MEETING_MINUTES", $meeting->duration_minutes);
         $xtpl->assign("MEETING_DESCRIPTION", $meeting->description);
         $xtpl->assign("MEETING_LOCATION", $meeting->location);
-        if ( !empty($meeting->join_url) ) {
+        if (!empty($meeting->join_url)) {
             $xtpl->assign('MEETING_URL', $meeting->join_url);
             $xtpl->parse('Meeting.Meeting_External_API');
         }

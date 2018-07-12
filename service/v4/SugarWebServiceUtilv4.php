@@ -46,7 +46,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         require_once('include/MVC/View/SugarView.php');
         $metadataFile = null;
         $results = array();
-        if ( empty($moduleName) ) {
+        if (empty($moduleName)) {
             return $results;
         }
 
@@ -122,8 +122,8 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         $enabled_modules = array();
         $availModulesKey = array_flip($availModules);
         foreach ($list as $key=>$value) {
-            if ( isset($availModulesKey[$key]) ) {
-                $label = !empty( $app_list_strings['moduleList'][$key] ) ? $app_list_strings['moduleList'][$key] : '';
+            if (isset($availModulesKey[$key])) {
+                $label = !empty($app_list_strings['moduleList'][$key]) ? $app_list_strings['moduleList'][$key] : '';
                 $acl = $this->checkModuleRoleAccess($key);
                 $fav = $this->is_favorites_enabled($key);
                 $enabled_modules[] = array('module_key' => $key,'module_label' => $label, 'favorite_enabled' => $fav, 'acls' => $acl);
@@ -174,7 +174,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         $link_fields = array();
         if (!empty($value->field_defs)) {
             foreach ($value->field_defs as $var) {
-                if (!empty($fields) && !in_array( $var['name'], $fields)) {
+                if (!empty($fields) && !in_array($var['name'], $fields)) {
                     continue;
                 }
                 if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'non-db' &&$var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type'])|| $var['type'] != 'relate')) {
@@ -188,7 +188,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                 $options_ret = array();
                 // Apparently the only purpose of this check is to make sure we only return fields
                 //   when we've read a record.  Otherwise this function is identical to get_module_field_list
-                if ( isset($var['required']) && ($var['required'] || $var['required'] == 'true' ) ) {
+                if (isset($var['required']) && ($var['required'] || $var['required'] == 'true')) {
                     $required = 1;
                 }
 
@@ -236,7 +236,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                     if (isset($var['default'])) {
                         $entry['default_value'] = $var['default'];
                     }
-                    if ( $var['type'] == 'parent' && isset($var['type_name']) ) {
+                    if ($var['type'] == 'parent' && isset($var['type_name'])) {
                         $entry['type_name'] = $var['type_name'];
                     }
 
@@ -246,7 +246,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         } //if
 
 		if ($value->module_dir == 'Meetings' || $value->module_dir == 'Calls') {
-		    if ( isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
+		    if (isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
 		        $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
 		        $options_ret = array();
 		        foreach ($options_dom as $key=>$oneOption) {
@@ -325,7 +325,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                 if (is_array($value) &&  $value['name'] == 'id') {
                     $seed->retrieve($value['value']);
                     break;
-                } elseif ($name === 'id' ) {
+                } elseif ($name === 'id') {
                     $seed->retrieve($value);
                 }
             }
@@ -342,8 +342,8 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 
                 if ($seed->field_name_map[$field_name]['type'] == 'enum') {
                     $vardef = $seed->field_name_map[$field_name];
-                    if (isset($app_list_strings[$vardef['options']]) && !isset($app_list_strings[$vardef['options']][$val]) ) {
-                        if ( in_array($val,$app_list_strings[$vardef['options']]) ) {
+                    if (isset($app_list_strings[$vardef['options']]) && !isset($app_list_strings[$vardef['options']][$val])) {
+                        if (in_array($val,$app_list_strings[$vardef['options']])) {
                             $val = array_search($val,$app_list_strings[$vardef['options']]);
                         }
                     }
@@ -377,7 +377,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                     }
                 } else {
                     //since we found a duplicate we should set the sync flag
-                    if ( $seed->ACLAccess('Save')) {
+                    if ($seed->ACLAccess('Save')) {
                         $seed = new $class_name();
                         $seed->id = $duplicate_id;
                         $seed->contacts_users_id = $current_user->id;
@@ -389,7 +389,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                 //we are going to check if we have a meeting in the system
                 //with the same outlook_id. If we do find one then we will grab that
                 //id and save it
-                if ( $seed->ACLAccess('Save') && ($seed->deleted != 1 || $seed->ACLAccess('Delete'))) {
+                if ($seed->ACLAccess('Save') && ($seed->deleted != 1 || $seed->ACLAccess('Delete'))) {
                     if (empty($seed->id) && !isset($seed->id)) {
                         if (!empty($seed->outlook_id) && isset($seed->outlook_id)) {
                             //at this point we have an object that does not have
@@ -426,7 +426,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                     $ids[] = $seed->id;
                 }//fi
             } else {
-                if ( $seed->ACLAccess('Save') && ($seed->deleted != 1 || $seed->ACLAccess('Delete'))) {
+                if ($seed->ACLAccess('Save') && ($seed->deleted != 1 || $seed->ACLAccess('Delete'))) {
                     $seed->save();
                     $ids[] = $seed->id;
                 }
@@ -537,10 +537,10 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 
 	        case 'default':
 	        default:
-	            if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php' )) {
+	            if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php')) {
 	                require ('modules/'.$module.'/metadata/subpaneldefs.php');
 	            }
-	            if ( file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php' )) {
+	            if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
 	                require ('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
 	            }
 	    }

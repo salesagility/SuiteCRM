@@ -97,7 +97,7 @@ $ListView->xTemplateAssign("EDIT_INLINE_PNG",  SugarThemeRegistry::current()->ge
 $ListView->xTemplateAssign("REMOVE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_REMOVE']));
 
 $ListView->xTemplateAssign("RETURN_URL", "&return_module=".$currentModule."&return_action=DetailView&return_id=".$focus->id);
-$ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME'] );
+$ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME']);
 $ListView->setQuery("", "", "user_name", "USER");
 $ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "USER");

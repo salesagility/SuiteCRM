@@ -43,8 +43,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 
-require_once( 'include/utils/progress_bar_utils.php' );
-require_once( 'include/utils/zip_utils.php' );
+require_once('include/utils/progress_bar_utils.php');
+require_once('include/utils/zip_utils.php');
 
 global $current_user;
 
@@ -214,7 +214,7 @@ function getFullTableDump($tableName)
             //perform this check when counter is set to two, which means it is on the 'value' column
             if ($counter == 2) {
                 //if the previous "name" column value was set to smtppass, set replace_val to true
-                if (strcmp($row[$counter - 1], "smtppass") == 0  ) {
+                if (strcmp($row[$counter - 1], "smtppass") == 0) {
                     $replace_val = true;
                 }
 
@@ -226,7 +226,7 @@ function getFullTableDump($tableName)
 
                 //if the previous "name" column value was set to password,
                 //and the "category" value set to proxy, set replace_val to true
-                if (strcmp($row[$counter - 2], "proxy") == 0 && strcmp($row[$counter - 1], "password") == 0 ) {
+                if (strcmp($row[$counter - 2], "proxy") == 0 && strcmp($row[$counter - 1], "password") == 0) {
                     $replace_val = true;
                 }
             }
@@ -587,7 +587,7 @@ function executemd5($filesmd5, $md5calculated)
     global $skip_md5_diff;
     global $sod_guid;
     if (file_exists('files.md5')) {
-        include( 'files.md5');
+        include('files.md5');
     }
     //create dir for md5s
     $md5_directory = create_cache_directory("diagnostic/".$sod_guid."/diagnostic".$curdatetime."/md5/");
@@ -637,15 +637,15 @@ function executevardefs()
     global $sugar_flavor;
 
     ob_start();
-    foreach ( $beanList as $beanz ) {
+    foreach ($beanList as $beanz) {
         // echo "Module: ".$beanz."<br>";
 
-        $path_parts = pathinfo( $beanFiles[ $beanz ] );
+        $path_parts = pathinfo($beanFiles[ $beanz ]);
         $vardefFileName = $path_parts[ 'dirname' ]."/vardefs.php";
-        if ( file_exists( $vardefFileName )) {
+        if (file_exists($vardefFileName)) {
             // echo "<br>".$vardefFileName."<br>";
         }
-        include_once( $vardefFileName );
+        include_once($vardefFileName);
     }
 
     echo "<html lang='en'>";
@@ -667,7 +667,7 @@ function executevardefs()
 
     foreach ($tables as $t) {
         $name = $t;
-        if ( $name == "does_not_exist" ) {
+        if ($name == "does_not_exist") {
             continue;
         }
         $comment = $comments[$t];
@@ -682,11 +682,11 @@ function executevardefs()
 		<TD NOWRAP class=\"tabDetailViewDL\">Comment</TD>
 	</TR>';
 
-        ksort( $fields[ $t ] );
+        ksort($fields[ $t ]);
 
         foreach ($fields[$t] as $k => $v) {
             // we only care about physical tables ('source' can be 'non-db' or 'nondb' or 'function' )
-            if ( isset( $v[ 'source' ] )) {
+            if (isset($v[ 'source' ])) {
                 continue;
             }
             $columnname = $v[ 'name' ];
@@ -696,16 +696,16 @@ function executevardefs()
             $columncomment = $v[ 'comment' ];
             $columnrequired = $v[ 'required' ];
 
-            if ( empty( $columnlen ) ) {
+            if (empty($columnlen)) {
                 $columnlen = '<i>n/a</i>';
             }
-            if ( empty( $columncomment ) ) {
+            if (empty($columncomment)) {
                 $columncomment = '<i>(none)</i>';
             }
-            if ( !empty( $columndbtype ) ) {
+            if (!empty($columndbtype)) {
                 $columntype = $columndbtype;
             }
-            if ( empty( $columnrequired ) || ( $columnrequired == false )) {
+            if (empty($columnrequired) || ($columnrequired == false)) {
                 $columndisplayrequired = 'no';
             } else {
                 $columndisplayrequired = 'yes';

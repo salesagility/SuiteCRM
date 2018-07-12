@@ -279,7 +279,7 @@ class wsdl extends nusoap_base
             //$this->debug("WSDL response\n" . $tr->incoming_payload);
             $this->appendDebug($tr->getDebug());
             // catch errors
-            if ($err = $tr->getError() ) {
+            if ($err = $tr->getError()) {
                 $errstr = 'Getting ' . $wsdl . ' - HTTP ERROR: '.$err;
                 $this->debug($errstr);
                 $this->setError($errstr);
@@ -1505,7 +1505,7 @@ class wsdl extends nusoap_base
             return false;
         }
         $phpType = $typeDef['phpType'];
-        $this->debug("in serializeType: uqType: $uqType, ns: $ns, phptype: $phpType, arrayType: " . (isset($typeDef['arrayType']) ? $typeDef['arrayType'] : '') );
+        $this->debug("in serializeType: uqType: $uqType, ns: $ns, phptype: $phpType, arrayType: " . (isset($typeDef['arrayType']) ? $typeDef['arrayType'] : ''));
         // if php type == struct, map value to the <all> element names
         if ($phpType == 'struct') {
             if (isset($typeDef['typeClass']) && $typeDef['typeClass'] == 'element') {
@@ -1772,7 +1772,7 @@ class wsdl extends nusoap_base
                 // if user took advantage of a minOccurs=0, then only serialize named parameters
                 if (isset($optionals)
 				    && (!isset($xvalue[$eName]))
-					&& ( (!isset($attrs['nillable'])) || $attrs['nillable'] != 'true')
+					&& ((!isset($attrs['nillable'])) || $attrs['nillable'] != 'true')
 					) {
                     if (isset($attrs['minOccurs']) && $attrs['minOccurs'] <> '0') {
                         $this->debug("apparent error: no value provided for element $eName with minOccurs=" . $attrs['minOccurs']);

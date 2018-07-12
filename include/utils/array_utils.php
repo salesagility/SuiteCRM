@@ -103,7 +103,7 @@ function override_value_to_string_recursive($key_names, $array_name, $value, $ev
 
 function override_recursive_helper($key_names, $array_name, $value)
 {
-    if ( empty( $key_names ) ) {
+    if (empty($key_names)) {
         return "=".var_export_helper($value,true).";";
     } else {
         $key = array_shift($key_names);

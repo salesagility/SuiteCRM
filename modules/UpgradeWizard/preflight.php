@@ -285,7 +285,7 @@ eoq;
         fclose($fp);
 
         $customTables = getCustomTables();
-        if ( !empty($customTables) ) {
+        if (!empty($customTables)) {
             $_SESSION['alterCustomTableQueries'] = alterCustomTables($customTables);
         } else {
             $_SESSION['alterCustomTableQueries'] = false;

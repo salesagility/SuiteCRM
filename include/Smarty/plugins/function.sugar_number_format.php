@@ -42,7 +42,7 @@ function smarty_function_sugar_number_format($params, &$smarty)
         return '';
     } 
 
-    if ( !isset($params['precision']) ) {
+    if (!isset($params['precision'])) {
         $params['precision'] = $locale->getPrecedentPreference('default_currency_significant_digits');
     }
 

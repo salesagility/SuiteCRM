@@ -53,14 +53,14 @@ function clean_path($path)
 {
     // clean directory/file path with a functional equivalent
     $appendpath = '';
-    if ( is_windows() && strlen($path) >= 2 && $path[0].$path[1] == "\\\\" ) {
+    if (is_windows() && strlen($path) >= 2 && $path[0].$path[1] == "\\\\") {
         $path = substr($path,2);
         $appendpath = "\\\\";
     }
-    $path = str_replace( "\\", "/", $path );
-    $path = str_replace( "//", "/", $path );
-    $path = str_replace( "/./", "/", $path );
-    return( $appendpath.$path );
+    $path = str_replace("\\", "/", $path);
+    $path = str_replace("//", "/", $path);
+    $path = str_replace("/./", "/", $path);
+    return($appendpath.$path);
 }
 
 function create_cache_directory($file)
@@ -96,21 +96,21 @@ function get_module_dir_list()
 
 function mk_temp_dir($base_dir, $prefix="")
 {
-    $temp_dir = tempnam( $base_dir, $prefix );
-    if ( !$temp_dir || !unlink( $temp_dir ) ) {
-        return( false );
+    $temp_dir = tempnam($base_dir, $prefix);
+    if (!$temp_dir || !unlink($temp_dir)) {
+        return(false);
     }
 
-    if ( sugar_mkdir( $temp_dir ) ) {
-        return( $temp_dir );
+    if (sugar_mkdir($temp_dir)) {
+        return($temp_dir);
     }
 
-    return( false );
+    return(false);
 }
 
 function remove_file_extension($filename)
 {
-    return( substr( $filename, 0, strrpos($filename, ".") ) );
+    return(substr($filename, 0, strrpos($filename, ".")));
 }
 
 function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $header='')
@@ -122,7 +122,7 @@ function write_array_to_file($the_name, $the_array, $the_file, $mode="w", $heade
                     '// created: ' . date('Y-m-d H:i:s') . "\n";
     }
     $the_string .=  "\$$the_name = " .
-                    var_export_helper( $the_array ) .
+                    var_export_helper($the_array) .
                     ";";
 
     $result = sugar_file_put_contents($the_file, $the_string, LOCK_EX) !== false;
@@ -141,25 +141,25 @@ function write_encoded_file($soap_result, $write_to_dir, $write_to_file="")
 
 
 
-    if ( $write_to_file == "" ) {
+    if ($write_to_file == "") {
         $write_to_file = $write_to_dir . "/" . $soap_result['filename'];
     }
 
     $file = $soap_result['data'];
-    $write_to_file = str_replace( "\\", "/", $write_to_file );
+    $write_to_file = str_replace("\\", "/", $write_to_file);
 
-    $dir_to_make = dirname( $write_to_file );
-    if ( !is_dir( $dir_to_make ) ) {
-        mkdir_recursive( $dir_to_make );
+    $dir_to_make = dirname($write_to_file);
+    if (!is_dir($dir_to_make)) {
+        mkdir_recursive($dir_to_make);
     }
-    $fh = sugar_fopen( $write_to_file, "wb" );
-    fwrite( $fh, base64_decode( $file ) );
-    fclose( $fh );
+    $fh = sugar_fopen($write_to_file, "wb");
+    fwrite($fh, base64_decode($file));
+    fclose($fh);
 
-    if ( md5_file( $write_to_file ) != $soap_result['md5'] ) {
-        die( "MD5 error after writing file $write_to_file" );
+    if (md5_file($write_to_file) != $soap_result['md5']) {
+        die("MD5 error after writing file $write_to_file");
     }
-    return( $write_to_file );
+    return($write_to_file);
 }
 
 function create_custom_directory($file)

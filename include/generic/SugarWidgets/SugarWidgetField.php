@@ -189,13 +189,13 @@ class SugarWidgetField extends SugarWidget
     function _get_list_value(& $layout_def)
     {
         $key = '';
-        if ( isset($layout_def['varname']) ) {
+        if (isset($layout_def['varname'])) {
             $key = strtoupper($layout_def['varname']);
         } else {
             $key = strtoupper($this->_get_column_alias($layout_def));
         }
 
-        if ( isset($layout_def['fields'][$key]) ) {
+        if (isset($layout_def['fields'][$key])) {
             return $layout_def['fields'][$key];
         }
 
@@ -232,7 +232,7 @@ class SugarWidgetField extends SugarWidget
         $myName = $layout_def['column_key'];
         $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];
 
-        if ( !isset($vardef) ) {
+        if (!isset($vardef)) {
             // No vardef, return an empty array
             return array();
         } else {

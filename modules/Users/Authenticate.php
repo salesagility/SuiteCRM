@@ -58,7 +58,7 @@ $authController->login($user_name, $password);
 // authController will set the authenticated_user_id session variable
 if (isset($_SESSION['authenticated_user_id'])) {
     // Login is successful
-    if ( $_SESSION['hasExpiredPassword'] == '1' && $_REQUEST['action'] != 'Save') {
+    if ($_SESSION['hasExpiredPassword'] == '1' && $_REQUEST['action'] != 'Save') {
         $GLOBALS['module'] = 'Users';
         $GLOBALS['action'] = 'ChangePassword';
         ob_clean();

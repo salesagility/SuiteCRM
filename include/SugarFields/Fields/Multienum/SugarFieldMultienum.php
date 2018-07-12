@@ -43,7 +43,7 @@ class SugarFieldMultienum extends SugarFieldEnum
 {
     function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass=true)
     {
-        if ( !isset($vardef['options_list']) && isset($vardef['options']) && !is_array($vardef['options'])) {
+        if (!isset($vardef['options_list']) && isset($vardef['options']) && !is_array($vardef['options'])) {
             $vardef['options_list'] = $GLOBALS['app_list_strings'][$vardef['options']];
         }
         return parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
@@ -70,7 +70,7 @@ class SugarFieldMultienum extends SugarFieldEnum
      */
     function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0)
     {
-        if ( isset($vardef['function']['returns']) && $vardef['function']['returns'] == 'html' ) {
+        if (isset($vardef['function']['returns']) && $vardef['function']['returns'] == 'html') {
             return parent::displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex);
         }
 
@@ -80,8 +80,8 @@ class SugarFieldMultienum extends SugarFieldEnum
 
     public function save(&$bean, $params, $field, $properties, $prefix = '')
     {
-        if ( isset($params[$prefix.$field]) ) {
-            if ($params[$prefix.$field][0] === '' && !empty($params[$prefix.$field][1]) ) {
+        if (isset($params[$prefix.$field])) {
+            if ($params[$prefix.$field][0] === '' && !empty($params[$prefix.$field][1])) {
                 unset($params[$prefix.$field][0]);
             }
 
@@ -116,10 +116,10 @@ class SugarFieldMultienum extends SugarFieldEnum
             $enum_list = explode(",",$value);
         }
         // parse to see if all the values given are valid
-        foreach ( $enum_list as $key => $enum_value ) {
+        foreach ($enum_list as $key => $enum_value) {
             $enum_list[$key] = $enum_value = trim($enum_value);
             $sanitizedValue = parent::importSanitize($enum_value,$vardef,$focus,$settings);
-            if ($sanitizedValue  === false ) {
+            if ($sanitizedValue  === false) {
                 return false;
             } else {
                 $enum_list[$key] = $sanitizedValue;

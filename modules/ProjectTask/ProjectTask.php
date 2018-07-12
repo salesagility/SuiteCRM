@@ -298,10 +298,10 @@ class ProjectTask extends SugarBean
         }
         */
 
-        if ( !isset($task_fields["FIRST_NAME"]) ) {
+        if (!isset($task_fields["FIRST_NAME"])) {
             $task_fields["FIRST_NAME"] = '';
         }
-        if ( !isset($task_fields["LAST_NAME"]) ) {
+        if (!isset($task_fields["LAST_NAME"])) {
             $task_fields["LAST_NAME"] = '';
         }
         $task_fields['CONTACT_NAME']= $locale->getLocaleFormattedName($task_fields["FIRST_NAME"],$task_fields["LAST_NAME"]);
@@ -360,7 +360,7 @@ class ProjectTask extends SugarBean
                 $is_owner = $current_user->id == $this->depends_on_name_owner;
             }
         }
-        if ( ACLController::checkAccess('ProjectTask', 'view', $is_owner)) {
+        if (ACLController::checkAccess('ProjectTask', 'view', $is_owner)) {
             $array_assign['PARENT_TASK'] = 'a';
         } else {
             $array_assign['PARENT_TASK'] = 'span';

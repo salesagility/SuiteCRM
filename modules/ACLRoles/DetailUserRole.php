@@ -49,7 +49,7 @@ $mod_strings = return_module_language($GLOBALS['current_language'], 'Users');
 
 $focus = new User();
 $focus->retrieve($_REQUEST['record']);
-if ( !is_admin($focus) ) {
+if (!is_admin($focus)) {
     $sugar_smarty = new Sugar_Smarty();
     $sugar_smarty->assign('MOD', $mod_strings);
     $sugar_smarty->assign('APP', $app_strings);
@@ -63,7 +63,7 @@ if ( !is_admin($focus) ) {
         global $modInvisList;
         if (!empty($tabs)) {
             foreach ($categories as $key=>$value) {
-                if (!in_array($key, $tabs) &&  !in_array($key, $modInvisList) ) {
+                if (!in_array($key, $tabs) &&  !in_array($key, $modInvisList)) {
                     unset($categories[$key]);
                 }
             }
@@ -80,7 +80,7 @@ if ( !is_admin($focus) ) {
     $sugar_smarty->assign('TDWIDTH', $tdwidth);
     $sugar_smarty->assign('ACTION_NAMES', $names);
     
-    $title = getClassicModuleTitle( '',array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_ROLES_SUBPANEL_TITLE']), '');
+    $title = getClassicModuleTitle('',array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_ROLES_SUBPANEL_TITLE']), '');
     
     $sugar_smarty->assign('TITLE', $title);
     $sugar_smarty->assign('USER_ID', $focus->id);

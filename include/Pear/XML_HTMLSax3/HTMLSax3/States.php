@@ -233,7 +233,7 @@ class XML_HTMLSax3_EscapeState
                 $context->unscanCharacter();
                 $text = $context->scanUntilString('>');
             }
-        } elseif ( $char == '[') {
+        } elseif ($char == '[') {
             $context->unscanCharacter();
             $text = $context->scanUntilString(']>');
             $text.= $context->scanCharacter();

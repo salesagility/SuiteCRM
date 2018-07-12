@@ -96,8 +96,8 @@ class UsersLastImport extends SugarBean
     {
         $array_assign = parent::listviewACLHelper();
         $is_owner = false;
-        if ( !ACLController::moduleSupportsACL('Accounts')
-                || ACLController::checkAccess('Accounts', 'view', $is_owner) ) {
+        if (!ACLController::moduleSupportsACL('Accounts')
+                || ACLController::checkAccess('Accounts', 'view', $is_owner)) {
             $array_assign['ACCOUNT'] = 'a';
         } else {
             $array_assign['ACCOUNT'] = 'span';
@@ -129,11 +129,11 @@ class UsersLastImport extends SugarBean
                    AND id = '$id' AND deleted=0";
 
         $result1 = $this->db->query($query1);
-        if ( !$result1 ) {
+        if (!$result1) {
             return false;
         }
 
-        while ( $row1 = $this->db->fetchByAssoc($result1)) {
+        while ($row1 = $this->db->fetchByAssoc($result1)) {
             $this->_deleteRecord($row1['bean_id'],$row1['bean_type']);
         }
 
@@ -153,11 +153,11 @@ class UsersLastImport extends SugarBean
                    AND import_module = '$module' AND deleted=0";
 
         $result1 = $this->db->query($query1);
-        if ( !$result1 ) {
+        if (!$result1) {
             return false;
         }
 
-        while ( $row1 = $this->db->fetchByAssoc($result1)) {
+        while ($row1 = $this->db->fetchByAssoc($result1)) {
             $this->_deleteRecord($row1['bean_id'],$row1['bean_type']);
         }
 
@@ -175,7 +175,7 @@ class UsersLastImport extends SugarBean
         static $focus;
 
         // load bean
-        if ( !( $focus instanceof $module) ) {
+        if (!($focus instanceof $module)) {
             require_once($GLOBALS['beanFiles'][$module]);
             $focus = new $module;
         }
@@ -201,11 +201,11 @@ class UsersLastImport extends SugarBean
                     AND email_addr_bean_rel.bean_module='{$focus->module_dir}'"
             );
 
-        while ( $row2 = $this->db->fetchByAssoc($result2)) {
-            if ( !$this->db->getOne(
+        while ($row2 = $this->db->fetchByAssoc($result2)) {
+            if (!$this->db->getOne(
                     "SELECT email_address_id
                         FROM email_addr_bean_rel
-                        WHERE email_address_id = '{$row2['email_address_id']}'") ) {
+                        WHERE email_address_id = '{$row2['email_address_id']}'")) {
                 $this->db->query(
                     "DELETE FROM email_addresses
                         WHERE id = '{$row2['email_address_id']}'");
@@ -232,12 +232,12 @@ class UsersLastImport extends SugarBean
                    AND import_module = '$module' AND deleted=0";
 
         $result1 = DBManagerFactory::getInstance()->query($query1);
-        if ( !$result1 ) {
+        if (!$result1) {
             return array($module);
         }
 
         $returnarray = array();
-        while ( $row1 = DBManagerFactory::getInstance()->fetchByAssoc($result1)) {
+        while ($row1 = DBManagerFactory::getInstance()->fetchByAssoc($result1)) {
             $returnarray[] = $row1['bean_type'];
         }
 

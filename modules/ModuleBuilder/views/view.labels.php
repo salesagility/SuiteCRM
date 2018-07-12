@@ -89,9 +89,9 @@ class ViewLabels extends ViewModulefields
         $vnames = array();
         //jchi 24557 . We should list all the lables in viewdefs(list,detail,edit,quickcreate) that the user can edit them.
         require_once 'modules/ModuleBuilder/parsers/views/ListLayoutMetaDataParser.php' ;
-        $parser = new ListLayoutMetaDataParser ( MB_LISTVIEW, $editModule ) ;
-        foreach ( $parser->getLayout() as $key => $def ) {
-            if (isset($def['label']) ) {
+        $parser = new ListLayoutMetaDataParser (MB_LISTVIEW, $editModule) ;
+        foreach ($parser->getLayout() as $key => $def) {
+            if (isset($def['label'])) {
                 $vnames[$def['label']] = $def['label'];
             }
         }
@@ -99,11 +99,11 @@ class ViewLabels extends ViewModulefields
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
         $variableMap = $this->getVariableMap($editModule);
         foreach ($variableMap as $key => $value) {
-            $gridLayoutMetaDataParserTemp = new GridLayoutMetaDataParser ( $value, $editModule) ;
-            foreach ( $gridLayoutMetaDataParserTemp->getLayout() as $panel) {
-                foreach ( $panel as $row ) {
-                    foreach ( $row as $fieldArray ) { // fieldArray is an array('name'=>name,'label'=>label)
-                        if (isset ( $fieldArray [ 'label' ] )) {
+            $gridLayoutMetaDataParserTemp = new GridLayoutMetaDataParser ($value, $editModule) ;
+            foreach ($gridLayoutMetaDataParserTemp->getLayout() as $panel) {
+                foreach ($panel as $row) {
+                    foreach ($row as $fieldArray) { // fieldArray is an array('name'=>name,'label'=>label)
+                        if (isset ($fieldArray [ 'label' ])) {
                             $vnames[$fieldArray [ 'label' ] ] = $fieldArray [ 'label' ] ;
                         }
                     }
@@ -114,7 +114,7 @@ class ViewLabels extends ViewModulefields
 
         //Get Subpanel Labels:
         require_once ('include/SubPanel/SubPanel.php') ;
-        $subList =  SubPanel::getModuleSubpanels ( $editModule );
+        $subList =  SubPanel::getModuleSubpanels ($editModule);
         foreach ($subList as $subpanel => $titleLabel) {
             $vnames[$titleLabel] = $titleLabel;
         }
@@ -130,7 +130,7 @@ class ViewLabels extends ViewModulefields
         //return_module_language($selected_lang, $editModule,false) : the mod_strings will be included from cache files here.
         foreach (return_module_language($selected_lang, $editModule,false) as $name=>$label) {
             //#25294
-            if ($allLabels || isset($vnames[$name]) || preg_match( '/lbl_city|lbl_country|lbl_billing_address|lbl_alt_address|lbl_shipping_address|lbl_postal_code|lbl_state$/si' , $name)) {
+            if ($allLabels || isset($vnames[$name]) || preg_match('/lbl_city|lbl_country|lbl_billing_address|lbl_alt_address|lbl_shipping_address|lbl_postal_code|lbl_state$/si' , $name)) {
                 $formatted_mod_strings[$name] = htmlentities($label, ENT_QUOTES, 'UTF-8');
             }
         }

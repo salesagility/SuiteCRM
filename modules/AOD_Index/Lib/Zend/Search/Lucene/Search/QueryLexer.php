@@ -96,7 +96,7 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
 
     public function __construct()
     {
-        parent::__construct( array(self::ST_WHITE_SPACE,
+        parent::__construct(array(self::ST_WHITE_SPACE,
                                    self::ST_SYNT_LEXEME,
                                    self::ST_LEXEME,
                                    self::ST_QUOTED_LEXEME,
@@ -318,9 +318,9 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
             return self::IN_LEXEME_MODIFIER;
         } elseif (strpos(self::QUERY_ASCIIDIGITS_CHARS,    $char) !== false) {
             return self::IN_ASCII_DIGIT;
-        } elseif ($char === '"' ) {
+        } elseif ($char === '"') {
             return self::IN_QUOTE;
-        } elseif ($char === '.' ) {
+        } elseif ($char === '.') {
             return self::IN_DECIMAL_POINT;
         } elseif ($char === '\\') {
             return self::IN_ESCAPE_CHAR;

@@ -279,7 +279,7 @@ class ListView
             }
         }
 
-        if ( empty($data) ) {
+        if (empty($data)) {
             $this->xTemplate->assign("ROW_COLOR", 'oddListRow');
             $thepanel=$subpanel_def;
             if ($subpanel_def->isCollection()) {
@@ -440,20 +440,20 @@ class ListView
                     $list_field['end_link_wrapper'] = $this->end_link_wrapper;
                     $list_field['subpanel_id'] = $this->subpanel_id;
                     $list_field += $field_acl;
-                    if ( isset($aItem->field_defs[strtolower($list_field['name'])])) {
+                    if (isset($aItem->field_defs[strtolower($list_field['name'])])) {
                         require_once('include/SugarFields/SugarFieldHandler.php');
                         // We need to see if a sugar field exists for this field type first,
                         // if it doesn't, toss it at the old sugarWidgets. This is for
                         // backwards compatibility and will be removed in a future release
                         $vardef = $aItem->field_defs[strtolower($list_field['name'])];
-                        if ( isset($vardef['type']) ) {
+                        if (isset($vardef['type'])) {
                             $fieldType = isset($vardef['custom_type'])?$vardef['custom_type']:$vardef['type'];
                             $tmpField = SugarFieldHandler::getSugarField($fieldType,true);
                         } else {
                             $tmpField = NULL;
                         }
 
-                        if ( $tmpField != NULL ) {
+                        if ($tmpField != NULL) {
                             $widget_contents = SugarFieldHandler::displaySmarty($list_field['fields'],$vardef,'ListView',$list_field);
                         } else {
                             // No SugarField for this particular type
@@ -461,7 +461,7 @@ class ListView
                             $widget_contents = $layout_manager->widgetDisplay($list_field);
                         }
 
-                        if ( isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelDetailViewLink' ) {
+                        if (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelDetailViewLink') {
                             // We need to call into the old SugarWidgets for the time being, so it can generate a proper link with all the various corner-cases handled
                             // So we'll populate the field data with the pre-rendered display for the field
                             $list_field['fields'][$field_name] = $widget_contents;
@@ -474,32 +474,32 @@ class ListView
                                 $list_field['varname'] = $field_name;
                             }
                             $widget_contents = $layout_manager->widgetDisplay($list_field);
-                        } elseif (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink' ) {
+                        } elseif (isset($list_field['widget_class']) && $list_field['widget_class'] == 'SubPanelEmailLink') {
                             $widget_contents = $layout_manager->widgetDisplay($list_field);
                         }
 
                         $count++;
                         $this->xTemplate->assign('CELL_COUNT', $count);
                         $this->xTemplate->assign('CLASS', "");
-                        if ( empty($widget_contents) ) {
+                        if (empty($widget_contents)) {
                             $widget_contents = '&nbsp;';
                         }
                         $this->xTemplate->assign('CELL', $widget_contents);
                         $this->xTemplate->parse($xtemplateSection.".row.cell");
                     } else {
                         // This handles the edit and remove buttons and icon widget
-                        if ( isset($list_field['widget_class']) && $list_field['widget_class'] == "SubPanelIcon") {
+                        if (isset($list_field['widget_class']) && $list_field['widget_class'] == "SubPanelIcon") {
                             $count++;
                             $widget_contents = $layout_manager->widgetDisplay($list_field);
                             $this->xTemplate->assign('CELL_COUNT', $count);
                             $this->xTemplate->assign('CLASS', "");
-                            if ( empty($widget_contents) ) {
+                            if (empty($widget_contents)) {
                                 $widget_contents = '&nbsp;';
                             }
                             $this->xTemplate->assign('CELL', $widget_contents);
                             $this->xTemplate->parse($xtemplateSection.".row.cell");
                         } elseif (preg_match("/button/i", $list_field['name'])) {
-                            if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['Delete'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field)) ) {
+                            if ((($list_field['name'] === 'edit_button' && $field_acl['EditView']) || ($list_field['name'] === 'close_button' && $field_acl['EditView']) || ($list_field['name'] === 'remove_button' && $field_acl['Delete'])) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
                                 $button_contents[] = $_content;
                                 unset($_content);
                             } else {
@@ -510,7 +510,7 @@ class ListView
                             $this->xTemplate->assign('CLASS', "");
                             $widget_contents = $layout_manager->widgetDisplay($list_field);
                             $this->xTemplate->assign('CELL_COUNT', $count);
-                            if ( empty($widget_contents) ) {
+                            if (empty($widget_contents)) {
                                 $widget_contents = '&nbsp;';
                             }
                             $this->xTemplate->assign('CELL', $widget_contents);

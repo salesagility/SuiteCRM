@@ -77,13 +77,13 @@ class TrackerSessionsDatabaseStore implements Store
             $columns[] = 'id';
         }
 
-        if ( empty($monitor->round_trips) ) {
+        if (empty($monitor->round_trips)) {
             $monitor->round_trips = 0;
         }
-        if ( empty($monitor->active) ) {
+        if (empty($monitor->active)) {
             $monitor->active = 1;
         }
-        if ( empty($monitor->seconds) ) {
+        if (empty($monitor->seconds)) {
             $monitor->seconds = 0;
         }
 

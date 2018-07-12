@@ -204,7 +204,7 @@ class TrackerManager
     {
 
     // Session tracker always saves.
-        if ( isset($this->monitors['tracker_sessions']) ) {
+        if (isset($this->monitors['tracker_sessions'])) {
             $this->monitors['tracker_sessions']->save();
             unset($this->monitors['tracker_sessions']);
         }

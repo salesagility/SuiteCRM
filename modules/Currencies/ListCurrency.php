@@ -171,7 +171,7 @@ EOQ;
          $options = '';
          $this->lookupCurrencies();
          $setLastRate = false;
-         if (isset($this->list ) && !empty($this->list )) {
+         if (isset($this->list) && !empty($this->list)) {
              foreach ($this->list as $data) {
                  if ($data->status == 'Active') {
                      if ($id == $data->id) {
@@ -213,7 +213,7 @@ EOQ;
 					<form name="UpdateCurrency" action="index.php" method="post"><input type='hidden' name='action' value='{$_REQUEST['action']}'>
 					<input type='hidden' name='module' value='{$_REQUEST['module']}'>
 EOQ;
-         if (isset($this->list ) && !empty($this->list )) {
+         if (isset($this->list) && !empty($this->list)) {
              foreach ($this->list as $data) {
                  $form .= '<tr><td>'.$data->iso4217. '<input type="hidden" name="iso[]" value="'.$data->iso4217.'"></td><td><input type="hidden" name="id[]" value="'.$data->id.'">'.$data->name. '<input type="hidden" name="name[]" value="'.$data->name.'"></td><td>'.$data->symbol. '<input type="hidden" name="symbol[]" value="'.$data->symbol.'"></td><td>'.$data->conversion_rate.'&nbsp;</td><td><input type="text" name="rate[]" value="'.$data->conversion_rate.'"><td>&nbsp;<input type="button" name="delete" class="button" value="'.$delete.'" onclick="document.forms[\'DeleteCurrency\'].deleteCur.value=\''.$data->id.'\';document.forms[\'DeleteCurrency\'].submit();"> </td></tr>';
              }

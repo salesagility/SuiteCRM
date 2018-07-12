@@ -243,7 +243,7 @@ class Account extends Company implements EmailInterface
         }
 
         // Set campaign name if there is a campaign id
-        if ( !empty($this->campaign_id)) {
+        if (!empty($this->campaign_id)) {
             $camp = new Campaign();
             $where = "campaigns.id='{$this->campaign_id}'";
             $campaign_list = $camp->get_full_list("campaigns.name", $where, true);

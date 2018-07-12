@@ -222,15 +222,15 @@ class Gantt
     //Returns an array containing the years, months and days between two dates
     public function year_month($start_date, $end_date, $diff_interval=1)
     {
-        $begin = new DateTime( $start_date );
-        $end = new DateTime( $end_date);
+        $begin = new DateTime($start_date);
+        $end = new DateTime($end_date);
         $end->add(new DateInterval('P'. $diff_interval .'D')); //Add 1 day to include the end date as a day
         
         $interval = new DateInterval('P1D'); // 1 month interval
         $period = new DatePeriod($begin, $interval, $end);
         $aResult = array();
         
-        foreach ( $period as $dt ) {
+        foreach ($period as $dt) {
             $y = $dt->format('Y');
             $m = $GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')];
             $j = $dt->format('j');

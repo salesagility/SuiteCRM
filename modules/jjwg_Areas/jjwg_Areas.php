@@ -166,8 +166,8 @@ class jjwg_Areas extends jjwg_Areas_sugar
         $p[] = $p[0];
 
         for ($i = 0; $i < $n; $i++) {
-            $cx += ($p[$i]['lng'] + $p[$i+1]['lng']) * ( ($p[$i]['lng'] * $p[$i+1]['lat']) - ($p[$i+1]['lng'] * $p[$i]['lat']) );
-            $cy += ($p[$i]['lat'] + $p[$i+1]['lat']) * ( ($p[$i]['lng'] * $p[$i+1]['lat']) - ($p[$i+1]['lng'] * $p[$i]['lat']) );
+            $cx += ($p[$i]['lng'] + $p[$i+1]['lng']) * (($p[$i]['lng'] * $p[$i+1]['lat']) - ($p[$i+1]['lng'] * $p[$i]['lat']));
+            $cy += ($p[$i]['lat'] + $p[$i+1]['lat']) * (($p[$i]['lng'] * $p[$i+1]['lat']) - ($p[$i+1]['lng'] * $p[$i]['lat']));
         }
         $centroid_lng = -(1/(6*$a))*$cx;
         $centroid_lat = -(1/(6*$a))*$cy;

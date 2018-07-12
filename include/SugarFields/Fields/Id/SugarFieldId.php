@@ -50,7 +50,7 @@ class SugarFieldId extends SugarFieldBase
         $focus,
         ImportFieldSanitize $settings
         ) {
-        if ( strlen($value) > 36 ) {
+        if (strlen($value) > 36) {
             return false;
         }
         

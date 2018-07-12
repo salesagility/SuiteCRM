@@ -590,7 +590,7 @@ class PackageManagerDisplay
 				$description = empty($manifest['description']) ? $mod_strings['LBL_UW_NONE'] : $manifest['description'];
 				if (($upgrades_installed==0 || $uh->UninstallAvailable($installeds, $installed))
 					&& is_file($filename) && !empty($manifest['is_uninstallable'])) {
-				    $link = urlencode( $filename );
+				    $link = urlencode($filename);
 				} else {
 				    $link = 'false';
 				}
@@ -609,16 +609,16 @@ class PackageManagerDisplay
                 continue;
             }
 
-            $target_manifest = remove_file_extension( $filename ) . "-manifest.php";
-            require_once( "$target_manifest" );
+            $target_manifest = remove_file_extension($filename) . "-manifest.php";
+            require_once("$target_manifest");
 
             if (isset($manifest['icon']) && $manifest['icon'] != "") {
                 $manifest_copy_files_to_dir = isset($manifest['copy_files']['to_dir']) ? clean_path($manifest['copy_files']['to_dir']) : "";
                 $manifest_copy_files_from_dir = isset($manifest['copy_files']['from_dir']) ? clean_path($manifest['copy_files']['from_dir']) : "";
                 $manifest_icon = clean_path($manifest['icon']);
-                $icon = "<img src=\"" . $manifest_copy_files_to_dir . ($manifest_copy_files_from_dir != "" ? substr($manifest_icon, strlen($manifest_copy_files_from_dir)+1) : $manifest_icon ) . "\">";
+                $icon = "<img src=\"" . $manifest_copy_files_to_dir . ($manifest_copy_files_from_dir != "" ? substr($manifest_icon, strlen($manifest_copy_files_from_dir)+1) : $manifest_icon) . "\">";
             } else {
-                $icon = getImageForType( $manifest['type'] );
+                $icon = getImageForType($manifest['type']);
             }
             $installed_objects[] = array('icon' => $icon, 'name' => $name, 'type' => $type, 'version' => $version, 'date_entered' => $date_entered, 'description' => $description, 'file' => $link);
             //print( "<form action=\"" . $form_action . "_prepare\" method=\"post\">\n" );

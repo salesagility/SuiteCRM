@@ -107,7 +107,7 @@ class DashletsDialog
                     // in the current theme.
 
                     $imageName = $files['class'];
-                    if ( !empty($imageName) ) {
+                    if (!empty($imageName)) {
                         $icon = $imageName;
                     }
                 } else {
@@ -154,9 +154,9 @@ class DashletsDialog
                 }
 
                 if ($displayDashlet && isset($dashletMeta[$files['class']]['dynamic_hide']) && $dashletMeta[$files['class']]['dynamic_hide']) {
-                    if ( file_exists($files['file']) ) {
+                    if (file_exists($files['file'])) {
                         require_once($files['file']);
-                        if ( class_exists($files['class']) ) {
+                        if (class_exists($files['class'])) {
                             $dashletClassName = $files['class'];
                             $displayDashlet = call_user_func(array($files['class'],'shouldDisplay'));
                         }
@@ -166,7 +166,7 @@ class DashletsDialog
                 if ($displayDashlet) {
                     $cell = array( 'title' => $title,
                         'description' => $description,
-                        'onclick' => 'return SUGAR.mySugar.addDashlet(\'' . $className . '\', \'' . $type . '\', \''.(!empty($dashletMeta[$files['class']]['module']) ? $dashletMeta[$files['class']]['module'] : '' ) .'\');',
+                        'onclick' => 'return SUGAR.mySugar.addDashlet(\'' . $className . '\', \'' . $type . '\', \''.(!empty($dashletMeta[$files['class']]['module']) ? $dashletMeta[$files['class']]['module'] : '') .'\');',
                         'icon' => $icon,
                         'id' => $files['class'] . '_select',
                         'module_name'=> array_key_exists('module', $dashletsFiles[$className]) ? $dashletsFiles[$className]['module']:""

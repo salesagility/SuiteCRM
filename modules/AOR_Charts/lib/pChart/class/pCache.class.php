@@ -118,12 +118,12 @@
          $IndexTemp    = $this->CacheFolder."/".$this->CacheIndex.".tmp";
 
          /* Single file removal */
-         if ( $ID != NULL ) {
+         if ($ID != NULL) {
              /* Retrieve object informations */
              $Object = $this->isInCache($ID,TRUE);
 
              /* If it's not in the cache DB, go away */
-             if ( !$Object ) {
+             if (!$Object) {
                  return(0);
              }
          }
@@ -149,14 +149,14 @@
              $Entry    = str_replace("\n","",$Entry);
              $Settings = preg_split("/,/",$Entry);
 
-             if ( $Entry != "" ) {
+             if ($Entry != "") {
                  $PicID       = $Settings[0];
                  $DBPos       = $Settings[1];
                  $PicSize     = $Settings[2];
                  $GeneratedTS = $Settings[3];
                  $Hits        = $Settings[4];
 
-                 if ( $Settings[0] != $ID && $GeneratedTS > $TS) {
+                 if ($Settings[0] != $ID && $GeneratedTS > $TS) {
                      $CurrentPos  = ftell($DBTempHandle);
                      fwrite($IndexTempHandle, $PicID.",".$CurrentPos.",".$PicSize.",".$GeneratedTS.",".$Hits."\r\n");
 
@@ -192,10 +192,10 @@
          while (!feof($Handle)) {
              $IndexPos = ftell($Handle);
              $Entry = fgets($Handle, 4096);
-             if ( $Entry != "" ) {
+             if ($Entry != "") {
                  $Settings = preg_split("/,/",$Entry);
                  $PicID    = $Settings[0];
-                 if ( $PicID == $ID ) {
+                 if ($PicID == $ID) {
                      fclose($Handle);
 
                      $DBPos       = $Settings[1];
@@ -203,9 +203,9 @@
                      $GeneratedTS = $Settings[3];
                      $Hits        = intval($Settings[4]);
 
-                     if ( $UpdateHitsCount ) {
+                     if ($UpdateHitsCount) {
                          $Hits++;
-                         if ( strlen($Hits) < 7 ) {
+                         if (strlen($Hits) < 7) {
                              $Hits = $Hits.str_repeat(" ",7-strlen($Hits));
                          }
 
@@ -245,7 +245,7 @@
          $Picture = $this->getFromCache($ID);
 
          /* Do we have a hit? */
-         if ( $Picture == NULL ) {
+         if ($Picture == NULL) {
              return(FALSE);
          }
 
@@ -261,7 +261,7 @@
          $Picture = $this->getFromCache($ID);
 
          /* Do we have a hit? */
-         if ( $Picture == NULL ) {
+         if ($Picture == NULL) {
              return(FALSE);
          }
 

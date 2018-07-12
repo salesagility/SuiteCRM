@@ -173,7 +173,7 @@ foreach ($temp_field_array as $field_array) {
         //Prcoess locaton of the field. if values are different show field in first section. else 2nd.
         $select_row_curr_field_value = $focus->merge_bean->$tempName;
         foreach ($merge_ids_array as $id) {
-            if (($mergeBeanArray[$id]->$tempName=='' and $select_row_curr_field_value =='') or $mergeBeanArray[$id]->$tempName == $select_row_curr_field_value ) {
+            if (($mergeBeanArray[$id]->$tempName=='' and $select_row_curr_field_value =='') or $mergeBeanArray[$id]->$tempName == $select_row_curr_field_value) {
                 $section_name='merge_row_similar';
             } else {
                 $section_name='merge_row_diff';
@@ -258,7 +258,7 @@ foreach ($temp_field_array as $field_array) {
                 $tempId = $field_array['id_name'];
                 if (empty($select_row_curr_field_value)) {
                     $related_name=get_related_name($field_array,$focus->merge_bean->$tempId);
-                    if ($related_name !== false ) {
+                    if ($related_name !== false) {
                         $select_row_curr_field_value=$related_name;
                     }
                 }
@@ -326,7 +326,7 @@ foreach ($temp_field_array as $field_array) {
                     break;
                 case ('enum'):
                     if ($mergeBeanArray[$id]->$tempName != '' and isset($field_array['options']) and isset($app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName])) {
-                        display_field_value( $app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName]);
+                        display_field_value($app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName]);
                     } else {
                         display_field_value($mergeBeanArray[$id]->$tempName);
                     }
@@ -458,7 +458,7 @@ function show_field($field_def)
         return false;
     }
     //field has 'duplicate_merge property set to disabled?'
-    if (isset($field_def['duplicate_merge']) ) {
+    if (isset($field_def['duplicate_merge'])) {
         if ($field_def['duplicate_merge']=='disabled' or $field_def['duplicate_merge']==false) {
             return false;
         }
@@ -515,7 +515,7 @@ function get_related_name($field_def,$id_value)
                 $bean = $beanList[$field_def['module']];
                 require_once ($beanFiles[$bean]);
                 $focus = new $bean();
-                if (!empty( $focus->field_defs[$field_def['rname']])) {
+                if (!empty($focus->field_defs[$field_def['rname']])) {
                     $related_def = $focus->field_defs[$field_def['rname']];
                     //if field defs has concat field array set, then concatenate values
                     if (isset($related_def['db_concat_fields']) && !empty($related_def['db_concat_fields'])) {

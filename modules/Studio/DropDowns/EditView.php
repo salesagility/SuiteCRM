@@ -73,7 +73,7 @@ foreach ($modules as $module) {
     $dropdown_modules[$module] = (!empty($app_list_strings['moduleList'][$module]))?$app_list_strings['moduleList'][$module]: $module;
 }
 $smarty->assign('dropdown_modules',$dropdown_modules);
-if (!empty($_REQUEST['dropdown_module']) &&  !empty($dropdown_modules[$_REQUEST['dropdown_module']]) ) {
+if (!empty($_REQUEST['dropdown_module']) &&  !empty($dropdown_modules[$_REQUEST['dropdown_module']])) {
     $smarty->assign('dropdown_module',$_REQUEST['dropdown_module']);
     $dropdowns = (!empty($dh->modules[$_REQUEST['dropdown_module']]))?$dh->modules[$_REQUEST['dropdown_module']]: array();
     foreach ($dropdowns as $ok=>$dk) {
@@ -122,7 +122,7 @@ if (strcmp($_REQUEST['dropdown_name'], 'moduleList') == 0) {
     $smarty->assign('use_push', 0);
 }
 
-$imageSave = SugarThemeRegistry::current()->getImage( 'studio_save', '',null,null,'.gif',$mod_strings['LBL_SAVE']);
+$imageSave = SugarThemeRegistry::current()->getImage('studio_save', '',null,null,'.gif',$mod_strings['LBL_SAVE']);
 $imageUndo = SugarThemeRegistry::current()->getImage('studio_undo', '',null,null,'.gif',$mod_strings['LBL_UNDO']);
 $imageRedo = SugarThemeRegistry::current()->getImage('studio_redo', '',null,null,'.gif',$mod_strings['LBL_REDO']);
 $buttons = array();
@@ -133,8 +133,8 @@ $buttonTxt = StudioParser::buildImageButtons($buttons);
 $smarty->assign('buttons', $buttonTxt);
 $smarty->assign('dropdown_lang', $selected_lang);
 
-$editImage = SugarThemeRegistry::current()->getImage( 'edit_inline', '',null,null,'.gif',$mod_strings['LBL_INLINE']);
+$editImage = SugarThemeRegistry::current()->getImage('edit_inline', '',null,null,'.gif',$mod_strings['LBL_INLINE']);
 $smarty->assign('editImage',$editImage);
-$deleteImage = SugarThemeRegistry::current()->getImage( 'delete_inline', '',null,null,'.gif',$mod_strings['LBL_DELETE']);
+$deleteImage = SugarThemeRegistry::current()->getImage('delete_inline', '',null,null,'.gif',$mod_strings['LBL_DELETE']);
 $smarty->assign('deleteImage',$deleteImage);
 $smarty->display("modules/Studio/DropDowns/EditView.tpl");

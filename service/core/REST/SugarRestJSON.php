@@ -65,11 +65,11 @@ class SugarRestJSON extends SugarRest
             $this->generateFaultResponse($this->faultObject);
         } else {
             // JSONP support
-            if ( isset($_GET["jsoncallback"]) ) {
+            if (isset($_GET["jsoncallback"])) {
                 echo $_GET["jsoncallback"] . "(";
             }
             echo $json->encode($input);
-            if ( isset($_GET["jsoncallback"]) ) {
+            if (isset($_GET["jsoncallback"])) {
                 echo ")";
             }
         }
@@ -119,11 +119,11 @@ class SugarRestJSON extends SugarRest
         $json = getJSONObj();
         ob_clean();
         // JSONP support
-        if ( isset($_GET["jsoncallback"]) ) {
+        if (isset($_GET["jsoncallback"])) {
             echo $_GET["jsoncallback"] . "(";
         }
         echo $json->encode($errorObject);
-        if ( isset($_GET["jsoncallback"]) ) {
+        if (isset($_GET["jsoncallback"])) {
             echo ")";
         }
     } // fn

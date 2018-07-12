@@ -144,7 +144,7 @@ function createMissingRels()
         $result= DBManagerFactory::getInstance()->query($query, true);
         $a = null;
         $a = DBManagerFactory::getInstance()->fetchByAssoc($result);
-        if (!isset($a['id']) && empty($a['id']) ) {
+        if (!isset($a['id']) && empty($a['id'])) {
             $qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_assigned_user','Users','users','id','{$relModName}','{$relObjName}','assigned_user_id',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
             DBManagerFactory::getInstance()->query($qRel);
@@ -155,7 +155,7 @@ function createMissingRels()
         $result= DBManagerFactory::getInstance()->query($query, true);
         $a = null;
         $a = DBManagerFactory::getInstance()->fetchByAssoc($result);
-        if (!isset($a['id']) && empty($a['id']) ) {
+        if (!isset($a['id']) && empty($a['id'])) {
             $qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_modified_user','Users','users','id','{$relModName}','{$relObjName}','modified_user_id',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
             DBManagerFactory::getInstance()->query($qRel);
@@ -166,7 +166,7 @@ function createMissingRels()
         $result= DBManagerFactory::getInstance()->query($query, true);
         $a = null;
         $a = DBManagerFactory::getInstance()->fetchByAssoc($result);
-        if (!isset($a['id']) && empty($a['id']) ) {
+        if (!isset($a['id']) && empty($a['id'])) {
             $qRel = "INSERT INTO relationships (id,relationship_name, lhs_module, lhs_table, lhs_key, rhs_module, rhs_table, rhs_key, join_table, join_key_lhs, join_key_rhs, relationship_type, relationship_role_column, relationship_role_column_value, reverse, deleted)
 						VALUES ('{$guid}', '{$relObjName}_created_by','Users','users','id','{$relModName}','{$relObjName}','created_by',NULL,NULL,NULL,'one-to-many',NULL,NULL,'0','0')";
             DBManagerFactory::getInstance()->query($qRel);
@@ -202,14 +202,14 @@ function merge_passwordsetting($sugar_config, $sugar_version)
     );
 
 
-    $sugar_config = sugarArrayMerge($passwordsetting_defaults, $sugar_config );
+    $sugar_config = sugarArrayMerge($passwordsetting_defaults, $sugar_config);
 
     // need to override version with default no matter what
     $sugar_config['sugar_version'] = $sugar_version;
 
-    ksort( $sugar_config );
+    ksort($sugar_config);
 
-    if ( write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ) {
+    if (write_array_to_file("sugar_config", $sugar_config, "config.php")) {
         return true;
     } else {
         return false;
@@ -512,7 +512,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
     }
     //If Instance then the files will be accessed from Template/DCEUpgrade folder
     $zip_from_dir = '';
-    if ( isset( $manifest['copy_files']['from_dir'] ) && $manifest['copy_files']['from_dir'] != "" ) {
+    if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
         $zip_from_dir   = $manifest['copy_files']['from_dir'];
     }
 
@@ -597,7 +597,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         logThis('Set default_max_tabs to 7', $path);
         $sugar_config['default_max_tabs'] = '7';
 
-        if ( !write_array_to_file( "sugar_config", $sugar_config, "config.php" ) ) {
+        if (!write_array_to_file("sugar_config", $sugar_config, "config.php")) {
             logThis('*** ERROR: could not write config.php! - upgrade will fail!', $path);
             $errors[] = 'Could not write config.php!';
         }
@@ -690,7 +690,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
         $tabs = $newTB->get_system_tabs();
 
         //add the new tabs to the array
-        foreach ($newModuleList as $nm ) {
+        foreach ($newModuleList as $nm) {
             $tabs[$nm] = $nm;
         }
 

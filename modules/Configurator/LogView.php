@@ -88,7 +88,7 @@ $log_dir = $config->get('log_dir');
 $log_dir = $log_dir . (empty($log_dir)?'':'/');
 $file_suffix = $config->get('logger.file.suffix');
 $date_suffix = "";
-if ( !empty($file_suffix) ) {
+if (!empty($file_suffix)) {
     $date_suffix = "_" . date(str_replace("%", "", $file_suffix));
 }
 
@@ -154,7 +154,7 @@ if (!empty ($_REQUEST['display'])) {
                 echo $line;
             } else {
                 $lastMatch = false;
-                if (empty($result) || ($ignore_self &&$result[LOG_NAME] == $_SERVER['REMOTE_ADDR'] )) {
+                if (empty($result) || ($ignore_self &&$result[LOG_NAME] == $_SERVER['REMOTE_ADDR'])) {
                 } else {
                     if (empty($filter) || (!$reg_ex && substr_count($line, $filter) > 0) || ($reg_ex && preg_match($filter, $line))) {
                         $lastMatch = true;

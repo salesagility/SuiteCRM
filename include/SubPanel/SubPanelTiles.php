@@ -211,8 +211,8 @@ class SubPanelTiles
 
             if (!empty($usersLayout)) {
                 $availableTabs = $tabs ;
-                $tabs = array_intersect ( $usersLayout , $availableTabs ) ; // remove any tabs that have been removed since the user's layout was saved
-                foreach (array_diff ( $availableTabs , $usersLayout ) as $tab) {
+                $tabs = array_intersect ($usersLayout , $availableTabs) ; // remove any tabs that have been removed since the user's layout was saved
+                foreach (array_diff ($availableTabs , $usersLayout) as $tab) {
                     $tabs [] = $tab;
                 }
             }
@@ -245,7 +245,7 @@ class SubPanelTiles
             }
             // this if-block will try to skip over ophaned subpanels. Studio/MB are being delete unloaded modules completely.
             // this check will ignore subpanels that are collections (activities, history, etc)
-            if (!isset($thisPanel->_instance_properties['collection_list']) and isset($thisPanel->_instance_properties['get_subpanel_data']) ) {
+            if (!isset($thisPanel->_instance_properties['collection_list']) and isset($thisPanel->_instance_properties['get_subpanel_data'])) {
                 // ignore when data source is a function
 
                 if (!isset($this->focus->field_defs[$thisPanel->_instance_properties['get_subpanel_data']])) {
@@ -307,7 +307,7 @@ class SubPanelTiles
                 $tabs_properties[$t]['expanded_subpanels'] = true;
             }
 
-            if (!empty($this->layout_def_key) ) {
+            if (!empty($this->layout_def_key)) {
                 $layout_def_key = $this->layout_def_key;
             } else {
                 $layout_def_key = '';
@@ -328,7 +328,7 @@ class SubPanelTiles
                     . "" . $hide_icon_html . "</a></span>";
                 $tabs_properties[$t]['title'] = $thisPanel->get_title();
                 $tabs_properties[$t]['module_name'] = $thisPanel->get_module_name();
-                $tabs_properties[$t]['get_form_header']  = get_form_header( $thisPanel->get_title(), $max_min, false, false);
+                $tabs_properties[$t]['get_form_header']  = get_form_header($thisPanel->get_title(), $max_min, false, false);
             }
 
             $tabs_properties[$t]['cookie_name'] = $cookie_name;
@@ -384,7 +384,7 @@ class SubPanelTiles
     function getLayoutManager()
     {
         require_once('include/generic/LayoutManager.php');
-        if ( $this->layout_manager == null) {
+        if ($this->layout_manager == null) {
             $this->layout_manager = new LayoutManager();
         }
         return $this->layout_manager;

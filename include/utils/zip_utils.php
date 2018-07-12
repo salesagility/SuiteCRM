@@ -47,31 +47,31 @@ if (class_exists("ZipArchive")) {
     return;
 } else {
     require_once('include/pclzip/pclzip.lib.php');
-    if ( isset($GLOBALS['log']) && class_implements($GLOBALS['log'],'LoggerTemplate') ) {
+    if (isset($GLOBALS['log']) && class_implements($GLOBALS['log'],'LoggerTemplate')) {
         $GLOBALS['log']->deprecated('Use of PCLZip has been deprecated. Please enable the zip extension in your PHP install ( see http://www.php.net/manual/en/zip.installation.php for more details ).');
     }
     function unzip($zip_archive, $zip_dir, $forceOverwrite = false)
     {
-        if ( !is_dir( $zip_dir ) ) {
+        if (!is_dir($zip_dir)) {
             if (!defined('SUITE_PHPUNIT_RUNNER')) {
-                die( "Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist." );
+                die("Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist.");
             }
             return false;
         }
 
-        $archive = new PclZip( $zip_archive );
+        $archive = new PclZip($zip_archive);
 
-        if ( $forceOverwrite ) {
-            if ( $archive->extract( PCLZIP_OPT_PATH, $zip_dir, PCLZIP_OPT_REPLACE_NEWER ) == 0 ) {
+        if ($forceOverwrite) {
+            if ($archive->extract(PCLZIP_OPT_PATH, $zip_dir, PCLZIP_OPT_REPLACE_NEWER) == 0) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
-                    die( "Error: " . $archive->errorInfo(true) );
+                    die("Error: " . $archive->errorInfo(true));
                 }
                 return false;
             }
         } else {
-            if ( $archive->extract( PCLZIP_OPT_PATH, $zip_dir ) == 0 ) {
+            if ($archive->extract(PCLZIP_OPT_PATH, $zip_dir) == 0) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
-                    die( "Error: " . $archive->errorInfo(true) );
+                    die("Error: " . $archive->errorInfo(true));
                 }
                 return false;
             }
@@ -80,28 +80,28 @@ if (class_exists("ZipArchive")) {
 
     function unzip_file($zip_archive, $archive_file, $to_dir, $forceOverwrite = false)
     {
-        if ( !is_dir( $to_dir ) ) {
+        if (!is_dir($to_dir)) {
             if (!defined('SUITE_PHPUNIT_RUNNER')) {
-                die( "Specified directory '$to_dir' for zip file '$zip_archive' extraction does not exist." );
+                die("Specified directory '$to_dir' for zip file '$zip_archive' extraction does not exist.");
             }
             return false;
         }
 
         $archive = new PclZip($zip_archive);
-        if ( $forceOverwrite ) {
-            if ( $archive->extract(  PCLZIP_OPT_BY_NAME, $archive_file,
+        if ($forceOverwrite) {
+            if ($archive->extract(PCLZIP_OPT_BY_NAME, $archive_file,
                                 PCLZIP_OPT_PATH,    $to_dir,
-                                PCLZIP_OPT_REPLACE_NEWER ) == 0 ) {
+                                PCLZIP_OPT_REPLACE_NEWER) == 0) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
-                    die( "Error: " . $archive->errorInfo(true) );
+                    die("Error: " . $archive->errorInfo(true));
                 }
                 return false;
             }
         } else {
-            if ( $archive->extract(  PCLZIP_OPT_BY_NAME, $archive_file,
-                                PCLZIP_OPT_PATH,    $to_dir        ) == 0 ) {
+            if ($archive->extract(PCLZIP_OPT_BY_NAME, $archive_file,
+                                PCLZIP_OPT_PATH,    $to_dir) == 0) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
-                    die( "Error: " . $archive->errorInfo(true) );
+                    die("Error: " . $archive->errorInfo(true));
                 }
                 return false;
             }
@@ -110,11 +110,11 @@ if (class_exists("ZipArchive")) {
 
     function zip_dir($zip_dir, $zip_archive)
     {
-        $archive    = new PclZip( $zip_archive );
-        $v_list     = $archive->create( $zip_dir );
-        if ( $v_list == 0 ) {
+        $archive    = new PclZip($zip_archive);
+        $v_list     = $archive->create($zip_dir);
+        if ($v_list == 0) {
             if (!defined('SUITE_PHPUNIT_RUNNER')) {
-                die( "Error: " . $archive->errorInfo(true) );
+                die("Error: " . $archive->errorInfo(true));
             }
             return false;
         }
@@ -128,7 +128,7 @@ if (class_exists("ZipArchive")) {
      */
     function zip_files_list($zip_file, $file_list, $prefix = '')
     {
-        $archive    = new PclZip( $zip_file );
+        $archive    = new PclZip($zip_file);
         foreach ($file_list as $file) {
             if (!empty($prefix) && preg_match($prefix, $file, $matches) > 0) {
                 $remove_path = $matches[0];

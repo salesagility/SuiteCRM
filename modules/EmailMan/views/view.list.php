@@ -52,7 +52,7 @@ class EmailManViewList extends ViewList
     {
         global $current_user;
         
-        if ( !is_admin($current_user) && !is_admin_for_module($current_user,'Campaigns') ) {
+        if (!is_admin($current_user) && !is_admin_for_module($current_user,'Campaigns')) {
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         } 
  	    

@@ -54,7 +54,7 @@ $btn_rebuild_config     = $mod_strings['BTN_REBUILD_CONFIG'];
 $disable_config_rebuild = 'disabled="disabled"';
 
 // check the status of the config file
-if ( is_writable('config.php') ) {
+if (is_writable('config.php')) {
     $config_check = $mod_strings['MSG_CONFIG_FILE_READY_FOR_REBUILD'];
     $disable_config_rebuild = '';
     $config_file_ready = true;
@@ -63,12 +63,12 @@ if ( is_writable('config.php') ) {
 }
 
 // only do the rebuild if config file checks out and user has posted back
-if ( !empty($_POST['perform_rebuild']) && $config_file_ready ) {
+if (!empty($_POST['perform_rebuild']) && $config_file_ready) {
 
     // retrieve configuration from file so that contents of config_override.php
     // is not merged (bug #54403)
     $clean_config = loadCleanConfig();
-    if ( rebuildConfigFile($clean_config, $sugar_version) ) {
+    if (rebuildConfigFile($clean_config, $sugar_version)) {
         $config_check = $mod_strings['MSG_CONFIG_FILE_REBUILD_SUCCESS'];
         $disable_config_rebuild = 'disabled="disabled"';
     } else {

@@ -86,7 +86,7 @@ if (!empty($user_date_end) && !isset($_REQUEST['mypbss_date_end'])) {
     $GLOBALS['log']->debug("_REQUEST['mypbss_date_end'] is:");
     $GLOBALS['log']->debug($_REQUEST['mypbss_date_end']);
     $GLOBALS['log']->debug("USER PREFERENCES['mypbss_date_end'] is:");
-    $GLOBALS['log']->debug( $current_user->getPreference('mypbss_date_end'));
+    $GLOBALS['log']->debug($current_user->getPreference('mypbss_date_end'));
 } else {
     $date_end = $timedate->asUserDate($timedate->fromString("2010-01-01"));
     $GLOBALS['log']->debug("USER PREFERENCES['mypbss_date_end'] not found. Using: ".$date_end);
@@ -312,7 +312,7 @@ function gen_xml_pipeline_by_sales_stage(
         global $sugar_config;
         $symbol = $sugar_config['default_currency_symbol'];
         global $current_user;
-        if ($current_user->getPreference('currency') ) {
+        if ($current_user->getPreference('currency')) {
             $currency = new Currency();
             $currency->retrieve($current_user->getPreference('currency'));
             $div = $currency->conversion_rate;
@@ -443,7 +443,7 @@ function gen_xml_pipeline_by_sales_stage(
 	        $GLOBALS['log']->debug("_REQUEST['mypbss_date_end'] is:");
 	        $GLOBALS['log']->debug($_REQUEST['mypbss_date_end']);
 	        $GLOBALS['log']->debug("USER PREFERENCES['mypbss_date_end'] is:");
-	        $GLOBALS['log']->debug( $current_user->getPreference('mypbss_date_end'));
+	        $GLOBALS['log']->debug($current_user->getPreference('mypbss_date_end'));
 	    } else {
 	        $date_end = $timedate->asUserDate($timedate->fromString("2010-01-01"));
 	        $GLOBALS['log']->debug("USER PREFERENCES['mypbss_date_end'] not found. Using: ".$date_end);

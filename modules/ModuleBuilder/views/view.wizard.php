@@ -55,11 +55,11 @@ class ModuleBuilderViewWizard extends SugarView
 
     function __construct()
     {
-        if ( isset ( $_REQUEST [ 'view' ] ) ) {
+        if (isset ($_REQUEST [ 'view' ])) {
             $this->view = $_REQUEST [ 'view' ] ;
         }
 
-        $this->editModule = (! empty ( $_REQUEST [ 'view_module' ] ) ) ? $_REQUEST [ 'view_module' ] : null ;
+        $this->editModule = (! empty ($_REQUEST [ 'view_module' ])) ? $_REQUEST [ 'view_module' ] : null ;
         $this->buttons = array(); // initialize so that modules without subpanels for example don't result in this being unset and causing problems in the smarty->assign
     }
 	
@@ -78,62 +78,62 @@ class ModuleBuilderViewWizard extends SugarView
 
     function display()
     {
-        $this->ajax = new AjaxCompose ( ) ;
-        $smarty = new Sugar_Smarty ( ) ;
+        $this->ajax = new AjaxCompose () ;
+        $smarty = new Sugar_Smarty () ;
 
-        if (isset ( $_REQUEST [ 'MB' ] )) {
-            $this->processMB ( $this->ajax ) ;
+        if (isset ($_REQUEST [ 'MB' ])) {
+            $this->processMB ($this->ajax) ;
         } else {
-            $this->processStudio ( $this->ajax ) ;
+            $this->processStudio ($this->ajax) ;
         }
 
-        $smarty->assign ( 'buttons', $this->buttons ) ;
-        $smarty->assign ( 'image_path', $GLOBALS [ 'image_path' ] ) ;
-        $smarty->assign ( "title", $this->title ) ;
-        $smarty->assign ( "question", $this->question ) ;
-        $smarty->assign ( "defaultHelp", $this->help ) ;
-        $smarty->assign ( "actions", $this->actions ) ;
+        $smarty->assign ('buttons', $this->buttons) ;
+        $smarty->assign ('image_path', $GLOBALS [ 'image_path' ]) ;
+        $smarty->assign ("title", $this->title) ;
+        $smarty->assign ("question", $this->question) ;
+        $smarty->assign ("defaultHelp", $this->help) ;
+        $smarty->assign ("actions", $this->actions) ;
 
-        $this->ajax->addSection ( 'center', $this->title, $smarty->fetch ( 'modules/ModuleBuilder/tpls/wizard.tpl' ) ) ;
+        $this->ajax->addSection ('center', $this->title, $smarty->fetch ('modules/ModuleBuilder/tpls/wizard.tpl')) ;
         echo $this->ajax->getJavascript () ;
     }
 
     function processStudio( 
 	    $ajax
 	    ) {
-        $this->ajax->addCrumb ( translate( 'LBL_STUDIO' ), 'ModuleBuilder.main("studio")' ) ;
+        $this->ajax->addCrumb (translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")') ;
 
-        if (! isset ( $this->editModule )) {
+        if (! isset ($this->editModule)) {
             //Studio Select Module Page
             $this->generateStudioModuleButtons () ;
             $this->question = translate('LBL_QUESTION_EDIT') ;
-            $this->title = translate( 'LBL_STUDIO' );
+            $this->title = translate('LBL_STUDIO');
             global $current_user;
             if (is_admin($current_user)) {
-                $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=exportcustomizations');\" value=\"" . translate ( 'LBL_BTN_EXPORT' ) . '">' ;
+                $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=exportcustomizations');\" value=\"" . translate ('LBL_BTN_EXPORT') . '">' ;
             }
 
             $this->help = 'studioHelp' ;
         } else {
-            $module = StudioModuleFactory::getStudioModule( $this->editModule ) ;
-            $this->ajax->addCrumb ( $module->name, !empty($this->view) ? 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $this->editModule . '")' : '' ) ;
-            switch ( $this->view ) {
+            $module = StudioModuleFactory::getStudioModule($this->editModule) ;
+            $this->ajax->addCrumb ($module->name, !empty($this->view) ? 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $this->editModule . '")' : '') ;
+            switch ($this->view) {
 				case 'layouts':
 					//Studio Select Layout page
 					$this->buttons = $module->getLayouts() ;
 					$this->title = $module->name . " " . translate('LBL_LAYOUTS') ;
-					$this->question = translate( 'LBL_QUESTION_LAYOUT' ) ;
+					$this->question = translate('LBL_QUESTION_LAYOUT') ;
 					$this->help = 'layoutsHelp' ;
-					$this->ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), '' ) ;
+					$this->ajax->addCrumb (translate('LBL_LAYOUTS'), '') ;
 					break;
 
 
 				case 'subpanels':
 					//Studio Select Subpanel page.
 					$this->buttons = $module->getSubpanels() ;
-					$this->title = $module->name . " " . translate( 'LBL_SUBPANELS' ) ;
-					$this->question = translate( 'LBL_QUESTION_SUBPANEL' ) ;
-					$this->ajax->addCrumb ( translate( 'LBL_SUBPANELS' ), '' ) ;
+					$this->title = $module->name . " " . translate('LBL_SUBPANELS') ;
+					$this->question = translate('LBL_QUESTION_SUBPANEL') ;
+					$this->ajax->addCrumb (translate('LBL_SUBPANELS'), '') ;
 					$this->help = 'subpanelHelp' ;
 					break;
 
@@ -141,40 +141,40 @@ class ModuleBuilderViewWizard extends SugarView
 					//Studio Select Search Layout page.
 					$this->buttons = $module->getSearch() ;
 					$this->title = $module->name . " " . translate('LBL_FILTER');
-					$this->question = translate( 'LBL_QUESTION_SEARCH' ) ;
-					$this->ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=layouts&view_module=' . $this->editModule . '")' ) ;
-					$this->ajax->addCrumb ( translate( 'LBL_FILTER' ), '' ) ;
+					$this->question = translate('LBL_QUESTION_SEARCH') ;
+					$this->ajax->addCrumb (translate('LBL_LAYOUTS'), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=layouts&view_module=' . $this->editModule . '")') ;
+					$this->ajax->addCrumb (translate('LBL_FILTER'), '') ;
 					$this->help = 'searchHelp' ;
 					break;
 
 				case 'dashlet':
 					$this->generateStudioDashletButtons();
 					$this->title = $this->editModule ." " .translate('LBL_DASHLET');
-					$this->question = translate( 'LBL_QUESTION_DASHLET' ) ;
-					$this->ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=layouts&view_module=' . $this->editModule . '")' ) ;
-					$this->ajax->addCrumb ( translate( 'LBL_DASHLET' ), '' ) ;
+					$this->question = translate('LBL_QUESTION_DASHLET') ;
+					$this->ajax->addCrumb (translate('LBL_LAYOUTS'), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=layouts&view_module=' . $this->editModule . '")') ;
+					$this->ajax->addCrumb (translate('LBL_DASHLET'), '') ;
 					$this->help = 'dashletHelp' ;
 					break;
 				
 				case 'popup':
 					$this->generateStudioPopupButtons();
 					$this->title = $this->editModule ." " .translate('LBL_POPUP');
-					$this->question = translate( 'LBL_QUESTION_POPUP' ) ;
-					$this->ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=layouts&view_module=' . $this->editModule . '")' ) ;
-					$this->ajax->addCrumb ( translate( 'LBL_POPUP' ), '' ) ;
+					$this->question = translate('LBL_QUESTION_POPUP') ;
+					$this->ajax->addCrumb (translate('LBL_LAYOUTS'), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=layouts&view_module=' . $this->editModule . '")') ;
+					$this->ajax->addCrumb (translate('LBL_POPUP'), '') ;
 					$this->help = 'popupHelp' ;
 					break;
 				default:
 					//Studio Edit Module Page
 					$this->buttons = $module->getModule () ;
-					$this->question = translate( 'LBL_QUESTION_MODULE' ) ;
-					$this->title = translate( 'LBL_EDIT' ) . " " . $module->name ;
+					$this->question = translate('LBL_QUESTION_MODULE') ;
+					$this->title = translate('LBL_EDIT') . " " . $module->name ;
 					$this->help = 'moduleHelp' ;
 					global $current_user;
 					if (is_admin($current_user)) {
 					    $this->actions = "<input class=\"button\" type=\"button\" id=\"exportBtn\" name=\"exportBtn\" " 
                         . "onclick=\"ModuleBuilder.getContent('module=ModuleBuilder&action=resetmodule&view_module=$this->editModule');\" value=\"" 
-                        . translate( 'LBL_RESET_MODULE' ) . '">' ;
+                        . translate('LBL_RESET_MODULE') . '">' ;
 					}
 			}
         }
@@ -183,42 +183,42 @@ class ModuleBuilderViewWizard extends SugarView
     function processMB( 
 	    $ajax 
 	    ) {
-        if (! isset ( $_REQUEST [ 'view_package' ] )) {
-            sugar_die ( "no ModuleBuilder package set" ) ;
+        if (! isset ($_REQUEST [ 'view_package' ])) {
+            sugar_die ("no ModuleBuilder package set") ;
         }
 
         $this->editModule = $_REQUEST [ 'view_module' ] ;
         $this->package = $_REQUEST [ 'view_package' ] ;
 
-        $ajax->addCrumb ( translate ( 'LBL_MODULEBUILDER', 'ModuleBuilder' ), 'ModuleBuilder.main("mb")' ) ;
-        $ajax->addCrumb ( $this->package, 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&view_package=' . $this->package . '")' ) ;
-        $ajax->addCrumb ( $this->editModule, 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_module=' . $this->editModule . '&view_package=' . $this->package . '")') ;
+        $ajax->addCrumb (translate ('LBL_MODULEBUILDER', 'ModuleBuilder'), 'ModuleBuilder.main("mb")') ;
+        $ajax->addCrumb ($this->package, 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&view_package=' . $this->package . '")') ;
+        $ajax->addCrumb ($this->editModule, 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_module=' . $this->editModule . '&view_package=' . $this->package . '")') ;
 
-        switch ( $this->view ) {
+        switch ($this->view) {
 			case 'search':
 				//MB Select Search Layout page.
 				$this->generateMBSearchButtons () ;
-				$this->title = $this->editModule . " " . translate( 'LBL_SEARCH_BUTTON' ) ;
-				$this->question = translate( 'LBL_QUESTION_SEARCH' ) ;
-				$ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), 'ModuleBuilder.getContent("module=ModuleBuilder&MB=true&action=wizard&view_module=' . $this->editModule . '&view_package=' . $this->package . '")' ) ;
-				$ajax->addCrumb ( translate( 'LBL_SEARCH_FORMS' ), '' ) ;
+				$this->title = $this->editModule . " " . translate('LBL_SEARCH_BUTTON') ;
+				$this->question = translate('LBL_QUESTION_SEARCH') ;
+				$ajax->addCrumb (translate('LBL_LAYOUTS'), 'ModuleBuilder.getContent("module=ModuleBuilder&MB=true&action=wizard&view_module=' . $this->editModule . '&view_package=' . $this->package . '")') ;
+				$ajax->addCrumb (translate('LBL_SEARCH_FORMS'), '') ;
 				$this->help = "searchHelp" ;
 				break;
 
 			case 'subpanel':
 				//ModuleBuilder Select Subpanel
-				$ajax->addCrumb ( $this->editModule, 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_module=' . $this->editModule . '&view_package=' . $this->package . '")' ) ;
-				$ajax->addCrumb ( translate( 'LBL_SUBPANELS' ), '' ) ;
-				$this->question = translate( 'LBL_QUESTION_SUBPANEL' ) ;
+				$ajax->addCrumb ($this->editModule, 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_module=' . $this->editModule . '&view_package=' . $this->package . '")') ;
+				$ajax->addCrumb (translate('LBL_SUBPANELS'), '') ;
+				$this->question = translate('LBL_QUESTION_SUBPANEL') ;
 				$this->help = 'subpanelHelp' ;
 				break;
 
 			case 'dashlet':
 				$this->generateMBDashletButtons ();
 				$this->title = $this->editModule ." " .translate('LBL_DASHLET');
-				$this->question = translate( 'LBL_QUESTION_DASHLET' ) ;
-				$this->ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=layouts&MB=1&view_package='.$this->package.'&view_module=' . $this->editModule . '")' ) ;
-				$this->ajax->addCrumb ( translate( 'LBL_DASHLET' ), '' ) ;
+				$this->question = translate('LBL_QUESTION_DASHLET') ;
+				$this->ajax->addCrumb (translate('LBL_LAYOUTS'), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view=layouts&MB=1&view_package='.$this->package.'&view_module=' . $this->editModule . '")') ;
+				$this->ajax->addCrumb (translate('LBL_DASHLET'), '') ;
 				$this->help = 'dashletHelp' ;
 				break;
 
@@ -226,16 +226,16 @@ class ModuleBuilderViewWizard extends SugarView
 			case 'popup':
 				$this->generateMBPopupButtons();
 				$this->title = $this->editModule ." " .translate('LBL_POPUP');
-				$this->question = translate( 'LBL_QUESTION_POPUP' ) ;
-				$this->ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), 'ModuleBuilder.getContent("module=ModuleBuilder&MB=true&action=wizard&view=layouts&MB=1&view_package='.$this->package.'&view_module=' . $this->editModule . '")' ) ;
-				$this->ajax->addCrumb ( translate( 'LBL_POPUP' ), '' ) ;
+				$this->question = translate('LBL_QUESTION_POPUP') ;
+				$this->ajax->addCrumb (translate('LBL_LAYOUTS'), 'ModuleBuilder.getContent("module=ModuleBuilder&MB=true&action=wizard&view=layouts&MB=1&view_package='.$this->package.'&view_module=' . $this->editModule . '")') ;
+				$this->ajax->addCrumb (translate('LBL_POPUP'), '') ;
 				$this->help = 'popupHelp' ;
 				break;
 			default:
-				$ajax->addCrumb ( translate( 'LBL_LAYOUTS' ), '' ) ;
+				$ajax->addCrumb (translate('LBL_LAYOUTS'), '') ;
 				$this->generateMBViewButtons () ;
-				$this->title = $this->editModule . " " . translate( 'LBL_LAYOUTS' ) ;
-				$this->question = translate( 'LBL_QUESTION_LAYOUT' ) ;
+				$this->title = $this->editModule . " " . translate('LBL_LAYOUTS') ;
+				$this->question = translate('LBL_QUESTION_LAYOUT') ;
 				$this->help = "layoutsHelp" ;
 		}
     }
@@ -244,12 +244,12 @@ class ModuleBuilderViewWizard extends SugarView
     function generateStudioModuleButtons()
     {
         require_once ('modules/ModuleBuilder/Module/StudioBrowser.php') ;
-        $sb = new StudioBrowser ( ) ;
+        $sb = new StudioBrowser () ;
         $sb->loadModules () ;
         $nodes = $sb->getNodes () ;
         $this->buttons = array ( ) ;
         //$GLOBALS['log']->debug(print_r($nodes,true));
-        foreach ( $nodes as $module ) {
+        foreach ($nodes as $module) {
             $this->buttons[$module['name']] = [
                 'action' => $module['action'],
                 'linkId' => 'studiolink_' . $module['module'],

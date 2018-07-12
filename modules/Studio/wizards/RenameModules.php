@@ -339,9 +339,9 @@ class RenameModules
         $smarty->assign('buttons', $buttonTxt);
         $smarty->assign('dropdown_lang', $selected_lang);
 
-        $editImage = SugarThemeRegistry::current()->getImage( 'edit_inline', '');
+        $editImage = SugarThemeRegistry::current()->getImage('edit_inline', '');
         $smarty->assign('editImage',$editImage);
-        $deleteImage = SugarThemeRegistry::current()->getImage( 'delete_inline', '');
+        $deleteImage = SugarThemeRegistry::current()->getImage('delete_inline', '');
         $smarty->assign('deleteImage',$deleteImage);
         $smarty->display("modules/Studio/wizards/RenameModules.tpl");
     }
@@ -385,7 +385,7 @@ class RenameModules
         global $beanList;
 
         foreach ($beanList as $moduleName => $beanName) {
-            if ( class_exists($beanName) ) {
+            if (class_exists($beanName)) {
                 $this->renameModuleSubpanel($moduleName, $beanName, $this->changedModules);
             } else {
                 $GLOBALS['log']->error("Class $beanName does not exist, unable to rename.");
@@ -422,10 +422,10 @@ class RenameModules
             $GLOBALS['log']->debug("Examining subpanel definition for potential rename: $subpanelName ");
             //For each subpanel def, check if they are in our changed modules set.
             foreach ($this->changedModules as $changedModuleName => $renameFields) {
-                if ( !( isset($subpanelMetaData['type']) &&  $subpanelMetaData['type'] == 'collection') //Dont bother with collections
-                    && isset($subpanelMetaData['module']) && $subpanelMetaData['module'] == $changedModuleName && isset($subpanelMetaData['title_key']) ) {
+                if (!(isset($subpanelMetaData['type']) &&  $subpanelMetaData['type'] == 'collection') //Dont bother with collections
+                    && isset($subpanelMetaData['module']) && $subpanelMetaData['module'] == $changedModuleName && isset($subpanelMetaData['title_key'])) {
                     $replaceKey = $subpanelMetaData['title_key'];
-                    if ( !isset($mod_strings[$replaceKey]) ) {
+                    if (!isset($mod_strings[$replaceKey])) {
                         $GLOBALS['log']->info("No module string entry defined for: {$mod_strings[$replaceKey]}");
                         continue;
                     }
@@ -466,11 +466,11 @@ class RenameModules
 
         $layout_defs = array();
 
-        if ( file_exists( 'modules/' . $bean->module_dir . '/metadata/subpaneldefs.php') ) {
+        if (file_exists('modules/' . $bean->module_dir . '/metadata/subpaneldefs.php')) {
             require('modules/' . $bean->module_dir . '/metadata/subpaneldefs.php');
         }
 
-        if ( file_exists( 'custom/modules/' . $bean->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php')) {
+        if (file_exists('custom/modules/' . $bean->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php')) {
             require('custom/modules/' . $bean->module_dir . '/Ext/Layoutdefs/layoutdefs.ext.php');
         }
 
@@ -487,7 +487,7 @@ class RenameModules
         global $beanList;
 
         foreach ($beanList as $moduleName => $beanName) {
-            if ( class_exists($beanName) ) {
+            if (class_exists($beanName)) {
                 $this->renameModuleRelatedLinks($moduleName, $beanName);
             } else {
                 $GLOBALS['log']->fatal("Class $beanName does not exist, unable to rename.");
@@ -539,7 +539,7 @@ class RenameModules
 
         foreach ($arrayToRename as $link => $linkEntry) {
             $GLOBALS['log']->debug("Begining to rename for link field {$link}");
-            if ( !isset($linkEntry['vname'])
+            if (!isset($linkEntry['vname'])
                 || (!isset($mod_strings[$linkEntry['vname']]) && !isset($app_strings[$linkEntry['vname']]))) {
                 $GLOBALS['log']->debug("No label attribute for link $link, continuing.");
                 continue;
@@ -613,8 +613,8 @@ class RenameModules
         $replacementStrings = array();
 
         foreach ($dashletsFiles as $dashletName => $dashletData) {
-            if ( isset($dashletData['module']) && $dashletData['module'] == $moduleName && file_exists($dashletData['meta']) ) {
-                require( $dashletData['meta'] );
+            if (isset($dashletData['module']) && $dashletData['module'] == $moduleName && file_exists($dashletData['meta'])) {
+                require($dashletData['meta']);
                 $dashletTitle = $dashletMeta[$dashletName]['title'];
                 $currentModuleStrings = return_module_language($this->selectedLanguage, $moduleName);
                 $modStringKey = array_search($dashletTitle,$currentModuleStrings);
@@ -691,7 +691,7 @@ class RenameModules
             $formattedLanguageKey = $this->formatModuleLanguageKey($entry['name'], $replacementLabels);
 
             //If the static of dynamic key exists it should be replaced.
-            if ( isset($currentModuleStrings[$formattedLanguageKey]) ) {
+            if (isset($currentModuleStrings[$formattedLanguageKey])) {
                 $oldStringValue = $currentModuleStrings[$formattedLanguageKey];
                 $newStringValue = $this->replaceSingleLabel($oldStringValue, $replacementLabels, $entry);
                 if ($oldStringValue != $newStringValue) {
@@ -736,10 +736,10 @@ class RenameModules
             $formattedLanguageKey = $this->formatModuleLanguageKey($entry['name'], $replacementLabels);
 
             //If the static of dynamic key exists it should be replaced.
-            if ( isset($currentModuleStrings[$formattedLanguageKey]) ) {
+            if (isset($currentModuleStrings[$formattedLanguageKey])) {
                 $oldStringValue = $currentModuleStrings[$formattedLanguageKey];
                 $replacedLabels[$formattedLanguageKey] = $this->replaceSingleLabel($oldStringValue, $replacementLabels, $entry);
-                if ( isset($entry['case']) && $entry['case'] == 'both') {
+                if (isset($entry['case']) && $entry['case'] == 'both') {
                     $replacedLabels[$formattedLanguageKey] = $this->replaceSingleLabel($replacedLabels[$formattedLanguageKey], $replacementLabels, $entry, 'strtolower');
                 }
             }
@@ -776,7 +776,7 @@ class RenameModules
         $replaceKey = 'prev_' . $replacementMetaData['type'];
         $search = html_entity_decode_utf8($replacementLabels[$replaceKey], ENT_QUOTES);
         $replace = $replacementLabels[$replacementMetaData['type']];
-        if ( !empty($modifier) ) {
+        if (!empty($modifier)) {
             $search = call_user_func($modifier, $search);
             $replace = call_user_func($modifier, $replace);
         }
@@ -885,7 +885,7 @@ class RenameModules
             $svalue = trim($svalue);
 
             //If the module key dne then do not continue with this rename.
-            if ( isset($current_app_list_string['moduleList'][$key]) ) {
+            if (isset($current_app_list_string['moduleList'][$key])) {
                 $allModuleEntries[$key] = array('s' => $svalue, 'p' => $value);
             } else {
                 $_REQUEST['delete_' . $count] = TRUE;
@@ -901,7 +901,7 @@ class RenameModules
             $pvalue = $e['p'];
             $prev_plural = $current_app_list_string['moduleList'][$k];
             $prev_singular = isset($current_app_list_string['moduleListSingular'][$k]) ? $current_app_list_string['moduleListSingular'][$k] : $prev_plural;
-            if ( strcmp($prev_plural, $pvalue) != 0 || (strcmp($prev_singular, $svalue) != 0) ) {
+            if (strcmp($prev_plural, $pvalue) != 0 || (strcmp($prev_singular, $svalue) != 0)) {
                 $results[$k] = array('singular' => $svalue, 'plural' => $pvalue, 'prev_singular' => $prev_singular, 'prev_plural' => $prev_plural,
                                      'key_plural' => $k, 'key_singular' => $this->getModuleSingularKey($k)
                 );
@@ -923,13 +923,13 @@ class RenameModules
     private function getModuleSingularKey($moduleName)
     {
         $className = isset($GLOBALS['beanList'][$moduleName]) ? $GLOBALS['beanList'][$moduleName] : null;
-        if ( is_null($className) || ! class_exists($className) ) {
+        if (is_null($className) || ! class_exists($className)) {
             $GLOBALS['log']->error("Unable to get module singular key for class: $className");
             return $moduleName;
         }
 
         $tmp = new $className();
-        if ( property_exists($tmp, 'object_name') ) {
+        if (property_exists($tmp, 'object_name')) {
             return $tmp->object_name;
         } else {
             return $moduleName;

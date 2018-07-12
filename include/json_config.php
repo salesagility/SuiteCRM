@@ -158,12 +158,12 @@ class json_config
 
         if ($module == 'Meetings') {
             $users = $focus->get_meeting_users();
-        } elseif ( $module == 'Calls') {
+        } elseif ($module == 'Calls') {
             $users = $focus->get_call_users();
-        } elseif ( $module == 'Project') {
+        } elseif ($module == 'Project') {
             $focus->load_relationships('users');
             $users=$focus->get_linked_beans('project_users_1','User');
-        } elseif ( $module == 'AM_ProjectTemplates') {
+        } elseif ($module == 'AM_ProjectTemplates') {
             $focus->load_relationships('users');
             $users=$focus->get_linked_beans('am_projecttemplates_users_1','User');
         }		
@@ -199,7 +199,7 @@ class json_config
 
         $module_arr['leads_arr'] = array();
 
-        if ($module != 'Project' && $module != 'AM_ProjectTemplates' ) {
+        if ($module != 'Project' && $module != 'AM_ProjectTemplates') {
             $focus->load_relationships('leads');
             $leads=$focus->get_linked_beans('leads','Lead');
             foreach ($leads as $lead) {

@@ -87,7 +87,7 @@ class ViewLanguages extends SugarView
         
         $disabled = array();
         $disabled_list = array();
-        if ( isset($sugar_config['disabled_languages'])) {
+        if (isset($sugar_config['disabled_languages'])) {
             if (!is_array($sugar_config['disabled_languages'])) {
                 $disabled_list = array_flip(explode(',', $sugar_config['disabled_languages']));
             } else {

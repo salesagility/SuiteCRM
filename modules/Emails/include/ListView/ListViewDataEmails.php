@@ -374,7 +374,7 @@ class ListViewDataEmails extends ListViewData
 
             // since the where is hard coded at this point we need to map the fields in the where
             // clause of the SQL
-            $where = str_replace($EmailSearchField, $EmailTextSearchField, $where );
+            $where = str_replace($EmailSearchField, $EmailTextSearchField, $where);
         }
 
         return $filterFields;

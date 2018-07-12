@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-if ( !isset( $install_script ) || !$install_script ) {
+if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 // $mod_strings come from calling page.
@@ -112,9 +112,9 @@ if (!defined('SUGARCRM_MIN_MEM')) {
 }
 $sugarMinMem = constant('SUGARCRM_MIN_MEM');
 // logic based on: http://us2.php.net/manual/en/ini.core.php#ini.memory-limit
-if ( $memory_limit == "" ) {          // memory_limit disabled at compile time, no memory limit
+if ($memory_limit == "") {          // memory_limit disabled at compile time, no memory limit
     $memory_msg = "<b>{$mod_strings['LBL_CHECKSYS_MEM_OK']}</b>";
-} elseif ( $memory_limit == "-1" ) {   // memory_limit enabled, but set to unlimited
+} elseif ($memory_limit == "-1") {   // memory_limit enabled, but set to unlimited
     $memory_msg = "{$mod_strings['LBL_CHECKSYS_MEM_UNLIMITED']}";
 } else {
     $mem_display = $memory_limit;
@@ -133,7 +133,7 @@ if ( $memory_limit == "" ) {          // memory_limit disabled at compile time, 
     }
     $memory_limit_int = intval($num);
     $SUGARCRM_MIN_MEM = (int) constant('SUGARCRM_MIN_MEM');
-    if ( $memory_limit_int < constant('SUGARCRM_MIN_MEM') ) {
+    if ($memory_limit_int < constant('SUGARCRM_MIN_MEM')) {
         // Bug59667: The string ERR_CHECKSYS_MEM_LIMIT_2 already has 'M' in it,
         // so we divide the constant by 1024*1024.
         $min_mem_in_megs = constant('SUGARCRM_MIN_MEM')/(1024*1024);
@@ -246,16 +246,16 @@ EOQ;
 $sugar_config_defaults = get_sugar_config_defaults();
 
 // CRON Settings
-if ( !isset($sugar_config['default_language']) ) {
+if (!isset($sugar_config['default_language'])) {
     $sugar_config['default_language'] = $_SESSION['default_language'];
 }
-if ( !isset($sugar_config['cache_dir']) ) {
+if (!isset($sugar_config['cache_dir'])) {
     $sugar_config['cache_dir'] = $sugar_config_defaults['cache_dir'];
 }
-if ( !isset($sugar_config['site_url']) ) {
+if (!isset($sugar_config['site_url'])) {
     $sugar_config['site_url'] = $_SESSION['setup_site_url'];
 }
-if ( !isset($sugar_config['translation_string_prefix']) ) {
+if (!isset($sugar_config['translation_string_prefix'])) {
     $sugar_config['translation_string_prefix'] = $sugar_config_defaults['translation_string_prefix'];
 }
 $mod_strings_scheduler = return_module_language($GLOBALS['current_language'], 'Schedulers');

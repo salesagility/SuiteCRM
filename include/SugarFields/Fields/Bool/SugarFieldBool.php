@@ -54,7 +54,7 @@ class SugarFieldBool extends SugarFieldBase
     {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         //If there was a type override to specifically render it as a boolean, show the EditView checkbox
-        if ( preg_match("/(favorites|current_user|open)_only.*/", $vardef['name'])) {
+        if (preg_match("/(favorites|current_user|open)_only.*/", $vardef['name'])) {
             return $this->fetch($this->findTemplate('EditView'));
         } else {
             return $this->fetch($this->findTemplate('SearchView'));
@@ -72,14 +72,14 @@ class SugarFieldBool extends SugarFieldBase
         ) {
         $bool_values = array(0=>'0',1=>'no',2=>'off',3=>'n',4=>'yes',5=>'y',6=>'on',7=>'1');
         $bool_search = array_search($value,$bool_values);
-        if ( $bool_search === false ) {
+        if ($bool_search === false) {
             return false;
         } else {
             //Convert all the values to a real bool.
-            $value = (int) ( $bool_search > 3 );
+            $value = (int) ($bool_search > 3);
         }
-        if ( isset($vardef['dbType']) && $vardef['dbType'] == 'varchar' ) {
-            $value = ( $value ? 'on' : 'off' );
+        if (isset($vardef['dbType']) && $vardef['dbType'] == 'varchar') {
+            $value = ($value ? 'on' : 'off');
         }
 
         return $value;
@@ -89,9 +89,9 @@ class SugarFieldBool extends SugarFieldBase
     {
         global $app_list_strings;
         // This does not return a smarty section, instead it returns a direct value
-        if ( $inputField == 'bool_true' || $inputField === true ) { // Note: true must be absolute true
+        if ($inputField == 'bool_true' || $inputField === true) { // Note: true must be absolute true
             return $app_list_strings['checkbox_dom']['1'];
-        } elseif ( $inputField == 'bool_false' || $inputField === false) { // Note: false must be absolute false
+        } elseif ($inputField == 'bool_false' || $inputField === false) { // Note: false must be absolute false
             return $app_list_strings['checkbox_dom']['2'];
         } else { // otherwise we return blank display
             return '';
@@ -100,11 +100,11 @@ class SugarFieldBool extends SugarFieldBase
 
     public function unformatField($formattedField, $vardef)
     {
-        if ( empty($formattedField) ) {
+        if (empty($formattedField)) {
             $unformattedField = false;
             return $unformattedField;
         }
-        if ( $formattedField == '0' || $formattedField == 'off' || $formattedField == 'false' || $formattedField == 'no' ) {
+        if ($formattedField == '0' || $formattedField == 'off' || $formattedField == 'false' || $formattedField == 'no') {
             $unformattedField = false;
         } else {
             $unformattedField = true;

@@ -166,7 +166,7 @@
         public function fetch($url, $params = null, $method = 'GET', $headers = null)
         {
             $acc = $this->makeAccessToken();
-            if ( strpos($url,'?') ) {
+            if (strpos($url,'?')) {
                 list($clean_url, $query) = explode('?', $url);
                 if ($query) {
                     $url = $clean_url;
@@ -180,7 +180,7 @@
             $proxy_config = SugarModule::get('Administration')->loadBean();
             $proxy_config->retrieveSettings('proxy');
             
-            if ( !empty($proxy_config) && 
+            if (!empty($proxy_config) && 
                 !empty($proxy_config->settings['proxy_on']) &&
                 $proxy_config->settings['proxy_on'] == 1) {
                 $proxy_settings = array();                

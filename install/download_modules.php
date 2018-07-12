@@ -44,7 +44,7 @@ global $sugar_version, $js_custom_version;
 $lang_curr = $_SESSION['language'];
 require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
 
-if (!isset( $install_script ) || !$install_script || empty($_SESSION['setup_db_admin_user_name'])) {
+if (!isset($install_script) || !$install_script || empty($_SESSION['setup_db_admin_user_name'])) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 ///////////////////////////////////////////////////////////////////////////////

@@ -46,7 +46,7 @@ class HomeViewModulelistmenu extends ViewModulelistmenu
         $tracker = new Tracker();
         $history = $tracker->get_recently_viewed($GLOBALS['current_user']->id);
 
-        foreach ( $history as $key => $row ) {
+        foreach ($history as $key => $row) {
             $history[$key]['item_summary_short'] = getTrackerSubstring($row['item_summary']);
             $history[$key]['image'] = SugarThemeRegistry::current()->getImage($row['module_name'],'border="0" align="absmiddle"', null,null,'.gif',$row['item_summary']);
         }

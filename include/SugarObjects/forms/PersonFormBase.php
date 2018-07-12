@@ -96,7 +96,7 @@ abstract class PersonFormBase extends FormBase
             }
 
             //Bug 1074, if the action is detailview and the id is empty, then do not show detailview
-            elseif (!empty($_POST['return_module']) && !empty($_POST['return_action'])    &&(($_POST['return_action'] == "DetailView" && !empty($_REQUEST['return_id']) ) || $_POST['return_action'] != "DetailView")) {
+            elseif (!empty($_POST['return_module']) && !empty($_POST['return_action'])    &&(($_POST['return_action'] == "DetailView" && !empty($_REQUEST['return_id'])) || $_POST['return_action'] != "DetailView")) {
                 $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.module.value='".$_POST['return_module']."';this.form.action.value='". $_POST['return_action']."';\" type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";
             } else {
                 $form .= "<input title='${app_strings['LBL_CANCEL_BUTTON_TITLE']}' accessKey='${app_strings['LBL_CANCEL_BUTTON_KEY']}' class='button' onclick=\"this.form.action.value='ListView';\" type='submit' type='submit' name='button' value='  ${app_strings['LBL_CANCEL_BUTTON_LABEL']}  '>";

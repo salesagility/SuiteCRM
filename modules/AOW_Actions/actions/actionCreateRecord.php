@@ -192,7 +192,7 @@ class actionCreateRecord extends actionBase
                         $fieldName = $params['value'][$key];
                         $data = $bean->field_defs[$fieldName];
 
-                        switch ($data['type'] ) {
+                        switch ($data['type']) {
                             case 'double':
                             case 'decimal':
                             case 'currency':
@@ -244,7 +244,7 @@ class actionCreateRecord extends actionBase
                                 } else {
                                     $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
                                 }
-                                $value = $timedate->asDb( $value );
+                                $value = $timedate->asDb($value);
                                 break;
                             default:
                                 if ($params['value'][$key][0] === 'now') {
@@ -275,14 +275,14 @@ class actionCreateRecord extends actionBase
                                 require_once 'modules/SecurityGroups/SecurityGroup.php';
                                 $security_group = new SecurityGroup();
                                 $security_group->retrieve($params['value'][$key][1]);
-                                $group_users = $security_group->get_linked_beans( 'users','User');
+                                $group_users = $security_group->get_linked_beans('users','User');
                                 $users = array();
                                 $r_users = array();
                                 if ($params['value'][$key][2] != '') {
                                     require_once 'modules/ACLRoles/ACLRole.php';
                                     $role = new ACLRole();
                                     $role->retrieve($params['value'][$key][2]);
-                                    $role_users = $role->get_linked_beans( 'users','User');
+                                    $role_users = $role->get_linked_beans('users','User');
                                     foreach ($role_users as $role_user) {
                                         $r_users[$role_user->id] = $role_user->name;
                                     }
@@ -298,7 +298,7 @@ class actionCreateRecord extends actionBase
                                 require_once 'modules/ACLRoles/ACLRole.php';
                                 $role = new ACLRole();
                                 $role->retrieve($params['value'][$key][2]);
-                                $role_users = $role->get_linked_beans( 'users','User');
+                                $role_users = $role->get_linked_beans('users','User');
                                 $users = array();
                                 foreach ($role_users as $role_user) {
                                     $users[$role_user->id] = $role_user->name;

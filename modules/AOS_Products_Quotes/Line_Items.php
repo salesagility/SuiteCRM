@@ -175,14 +175,14 @@ function display_lines($focus, $field, $value, $view)
 
                 $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".get_discount_string($line_item->discount, $line_item->product_discount, $params, $locale, $sep)."</td>";
 
-                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_unit_price,$params )."</td>";
+                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_unit_price,$params)."</td>";
                 if ($locale->getPrecision()) {
                     $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".rtrim(rtrim(format_number($line_item->vat), '0'),$sep[1])."%</td>";
                 } else {
                     $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".format_number($line_item->vat)."%</td>";
                 }
-                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->vat_amt,$params )."</td>";
-                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_total_price,$params )."</td>";
+                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->vat_amt,$params)."</td>";
+                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_total_price,$params)."</td>";
                 $product .= "</tr>";
             } else {
                 if ($serviceCount == 0) {
@@ -208,8 +208,8 @@ function display_lines($focus, $field, $value, $view)
 
                 $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_unit_price,$params)."</td>";
                 $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".rtrim(rtrim(format_number($line_item->vat), '0'), $sep[1])."%</td>";
-                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->vat_amt,$params )."</td>";
-                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_total_price,$params )."</td>";
+                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->vat_amt,$params)."</td>";
+                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_total_price,$params)."</td>";
                 $service .= "</tr>";
             }
         }
@@ -234,7 +234,7 @@ function get_discount_string($type, $amount, $params, $locale, $sep)
 {
     if ($amount != '' && $amount != '0.00') {
         if ($type == 'Amount') {
-            return currency_format_number($amount,$params )."</td>";
+            return currency_format_number($amount,$params)."</td>";
         } elseif ($locale->getPrecision()) {
             return rtrim(rtrim(format_number($amount), '0'),$sep[1])."%";
         } else {

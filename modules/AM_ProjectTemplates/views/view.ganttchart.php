@@ -49,7 +49,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 
         $project_template = new AM_ProjectTemplates();
 
-        if ( !isset($_REQUEST["record"]) || trim($_REQUEST["record"]) == "") {
+        if (!isset($_REQUEST["record"]) || trim($_REQUEST["record"]) == "") {
             $_REQUEST["record"] = $_REQUEST["project_id"];
         }
 
@@ -250,7 +250,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
         $task_list = $this->bean->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
 
         //From the query above, populates the select box
-        foreach ( $task_list as $task) {
+        foreach ($task_list as $task) {
             echo '<option value="'.$task->id.'">'.$task->name.'</option>';
         }
 

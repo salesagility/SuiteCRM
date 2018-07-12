@@ -72,13 +72,13 @@ if (isset($_REQUEST['module_name'])) {
         $xtpl->assign("SUGAR_BODY_ONLY",$_REQUEST['sugar_body_only']);
     }
 	
-    if (isset($_REQUEST['record']) ) {
+    if (isset($_REQUEST['record'])) {
         $xtpl->assign("NO_EDIT", "readonly");
         $xtpl->assign("KEY", $_REQUEST['record']);
         if (isset($the_strings[$_REQUEST['record']])) {
             $xtpl->assign("VALUE",$the_strings[$_REQUEST['record']]);
         } else {
-            if (isset($_REQUEST['value']) ) {
+            if (isset($_REQUEST['value'])) {
                 $xtpl->assign("VALUE", $_REQUEST['value']);
             }
         }

@@ -88,7 +88,7 @@ class SugarFieldTime extends SugarFieldBase
     public function save(&$bean, &$inputData, &$field, &$def, $prefix = '')
     {
         global $timedate;
-        if ( !isset($inputData[$prefix.$field]) ) {
+        if (!isset($inputData[$prefix.$field])) {
             $bean->$field = '';
             return;
         }

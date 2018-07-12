@@ -56,7 +56,7 @@ function checkDBSettings($silent=false)
     installLog("testing with {$db->dbType}:{$db->variant}");
 
 
-    if ( trim($_SESSION['setup_db_database_name']) == '' ) {
+    if (trim($_SESSION['setup_db_database_name']) == '') {
         $errors['ERR_DB_NAME'] = $mod_strings['ERR_DB_NAME'];
         installLog("ERROR::  {$errors['ERR_DB_NAME']}");
     }
@@ -70,7 +70,7 @@ function checkDBSettings($silent=false)
 
     if ($_SESSION['setup_db_type'] != 'oci8') {
         // Oracle doesn't need host name, others do
-        if ( trim($_SESSION['setup_db_host_name']) == '' ) {
+        if (trim($_SESSION['setup_db_host_name']) == '') {
             $errors['ERR_DB_HOSTNAME'] = $mod_strings['ERR_DB_HOSTNAME'];
             installLog("ERROR::  {$errors['ERR_DB_HOSTNAME']}");
         }
@@ -78,14 +78,14 @@ function checkDBSettings($silent=false)
 
     //check to see that password and retype are same, if needed
     if (!empty($_SESSION['dbUSRData']) && ($_SESSION['dbUSRData']=='create' || $_SESSION['dbUSRData']=='provide')) {
-        if ( $_SESSION['setup_db_sugarsales_password'] != $_SESSION['setup_db_sugarsales_password_retype'] ) {
+        if ($_SESSION['setup_db_sugarsales_password'] != $_SESSION['setup_db_sugarsales_password_retype']) {
             $errors['ERR_DBCONF_PASSWORD_MISMATCH'] = $mod_strings['ERR_DBCONF_PASSWORD_MISMATCH'];
             installLog("ERROR::  {$errors['ERR_DBCONF_PASSWORD_MISMATCH']}");
         }
     }
 
     // bail if the basic info isn't valid
-    if ( count($errors) > 0 ) {
+    if (count($errors) > 0) {
         installLog("Basic form info is INVALID, exit Process.");
         return printErrors($errors);
     } else {
@@ -113,7 +113,7 @@ function checkDBSettings($silent=false)
     switch (strtolower($db->dbType)) {
 
             case 'mysql':
-                if (preg_match("![/\\.]+!i", $_SESSION['setup_db_database_name']) ) {
+                if (preg_match("![/\\.]+!i", $_SESSION['setup_db_database_name'])) {
                     $errors['ERR_DB_MYSQL_DB_NAME'] = $mod_strings['ERR_DB_MYSQL_DB_NAME_INVALID'];
                     installLog("ERROR::  {$errors['ERR_DB_MYSQL_DB_NAME']}");
                 }
@@ -122,7 +122,7 @@ function checkDBSettings($silent=false)
             case 'mssql':
             default:
                 // Bug 29855 - Check to see if given db name is valid
-                if (preg_match("![\"'*/\\?:<>-]+!i", $_SESSION['setup_db_database_name']) ) {
+                if (preg_match("![\"'*/\\?:<>-]+!i", $_SESSION['setup_db_database_name'])) {
                     $errors['ERR_DB_MSSQL_DB_NAME'] = $mod_strings['ERR_DB_MSSQL_DB_NAME_INVALID'];
                     installLog("ERROR::  {$errors['ERR_DB_MSSQL_DB_NAME']}");
                 }
@@ -130,7 +130,7 @@ function checkDBSettings($silent=false)
         }
 
     // test the account that will talk to the db if we're not creating it
-    if ( $_SESSION['setup_db_sugarsales_user'] != '' && !$_SESSION['setup_db_create_sugarsales_user'] ) {
+    if ($_SESSION['setup_db_sugarsales_user'] != '' && !$_SESSION['setup_db_create_sugarsales_user']) {
         $dbconfig["db_user_name"] = $_SESSION['setup_db_sugarsales_user'];
         $dbconfig["db_password"] = $_SESSION['setup_db_sugarsales_password'];
         installLog("Testing user account...");
@@ -147,7 +147,7 @@ function checkDBSettings($silent=false)
     }
 
     // privileged account tests
-    elseif ( empty($_SESSION['setup_db_admin_user_name']) ) {
+    elseif (empty($_SESSION['setup_db_admin_user_name'])) {
         $errors['ERR_DB_PRIV_USER'] = $mod_strings['ERR_DB_PRIV_USER'];
         installLog("ERROR:: {$errors['ERR_DB_PRIV_USER']}");
     } else {
@@ -166,7 +166,7 @@ function checkDBSettings($silent=false)
                 $errStr = $mod_strings['ERR_DB_EXISTS_PROCEED'];
                 $errors['ERR_DB_EXISTS_PROCEED'] = $errStr;
                 installLog("ERROR:: {$errors['ERR_DB_EXISTS_PROCEED']}");
-            } elseif ($silent==false && !$db_selected && !$_SESSION['setup_db_create_database'] ) {
+            } elseif ($silent==false && !$db_selected && !$_SESSION['setup_db_create_database']) {
                 // DB does not exist but user did not allow to create it
                 $errors['ERR_DB_EXISTS_NOT'] = $mod_strings['ERR_DB_EXISTS_NOT'];
                 installLog("ERROR:: {$errors['ERR_DB_EXISTS_NOT']}");
@@ -223,7 +223,7 @@ function printErrors($errors)
         echo 'dbCheckPassed';
         installLog("SUCCESS:: no errors detected!");
     } elseif ((count($errors) == 1 && (isset($errors["ERR_DB_EXISTS_PROCEED"])||isset($errors["ERR_DB_EXISTS_WITH_CONFIG"])))  ||
-    (count($errors) == 2 && isset($errors["ERR_DB_EXISTS_PROCEED"]) && isset($errors["ERR_DB_EXISTS_WITH_CONFIG"])) ) {
+    (count($errors) == 2 && isset($errors["ERR_DB_EXISTS_PROCEED"]) && isset($errors["ERR_DB_EXISTS_WITH_CONFIG"]))) {
         ///throw alert asking to overwwrite db
         echo 'preexeest';
         installLog("WARNING:: no errors detected, but DB tables will be dropped!, issuing warning to user");
@@ -313,7 +313,7 @@ function copyInputsIntoSession()
     //make sure we are creating or using provided user for app db connections
             $_SESSION['setup_db_create_sugarsales_user']  = true;//get_boolean_from_request('setup_db_create_sugarsales_user');
             $db = getInstallDbInstance();
-    if ( !$db->supports("create_user") ) {
+    if (!$db->supports("create_user")) {
         //if the DB doesn't support creating users, make the admin user/password same as connecting user/password
         $_SESSION['setup_db_sugarsales_user']             = $_SESSION['setup_db_admin_user_name'];
         $_SESSION['setup_db_sugarsales_password']         = $_SESSION['setup_db_admin_password'];

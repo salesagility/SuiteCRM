@@ -515,7 +515,7 @@ function replaceFormClick(&$dom_tree = array(), $js_form = '', &$hidden_field_ex
                 $dom_tree['onclick'] .= ";";
             }
             //Onclick handler contains returning a variable, for example it prompts a confirm message.
-            if (strpos($dom_tree['onclick'], "return ") !== false ) {
+            if (strpos($dom_tree['onclick'], "return ") !== false) {
                 $dom_tree['onclick'] = $js_form.' var _onclick=(function(){ldelim}'.$dom_tree['onclick']."{rdelim}()); if(_onclick!==false) _form.submit();";
             } else {
                 $dom_tree['onclick'] = $js_form.$dom_tree['onclick']."_form.submit();";
@@ -536,7 +536,7 @@ function replaceFormClick(&$dom_tree = array(), $js_form = '', &$hidden_field_ex
         $dom_tree['type'] = "button";
         $set_submit = false;
     }
-    if ($is_hidden_field && isset($dom_tree['tag']) && $dom_tree['tag'] == 'input' ) {
+    if ($is_hidden_field && isset($dom_tree['tag']) && $dom_tree['tag'] == 'input') {
         $hidden_field_exists = true;
         $is_hidden_field = false;
     }
@@ -559,7 +559,7 @@ function extractHiddenInputs(&$dom_tree = array())
     }
     foreach ($dom_tree as $key => $sub_tree) {
         if (is_numeric($key) && isset($sub_tree['tag']) && $sub_tree['tag'] == 'input') {
-            if ( !isset($sub_tree['type']) || in_array($sub_tree['type'], $allow_types) === false ) {
+            if (!isset($sub_tree['type']) || in_array($sub_tree['type'], $allow_types) === false) {
                 unset($dom_tree[$key]);
             }
         } elseif (is_array($sub_tree)) {
@@ -567,7 +567,7 @@ function extractHiddenInputs(&$dom_tree = array())
         }
     }
     if (isset($dom_tree['tag']) && $dom_tree['tag'] == 'input') {
-        if ( !isset($dom_tree['type']) || in_array($dom_tree['type'], $allow_types) === false ) {
+        if (!isset($dom_tree['type']) || in_array($dom_tree['type'], $allow_types) === false) {
             $dom_tree = array();
         }
     }

@@ -132,20 +132,20 @@ class SugarFieldImage extends SugarFieldFile
 
         $img_size = getimagesize($upload_file->temp_file_location);
         $filetype = $img_size['mime'];
-        if ( in_array($filetype, array_values($valid_ext)) ) {
+        if (in_array($filetype, array_values($valid_ext))) {
             return true;
         }
     }
     private function fillInOptions(&$vardef,&$displayParams)
     {
-        if ( isset($vardef['allowEapm']) && $vardef['allowEapm'] == true ) {
-            if ( empty($vardef['docType']) ) {
+        if (isset($vardef['allowEapm']) && $vardef['allowEapm'] == true) {
+            if (empty($vardef['docType'])) {
                 $vardef['docType'] = 'doc_type';
             }
-            if ( empty($vardef['docId']) ) {
+            if (empty($vardef['docId'])) {
                 $vardef['docId'] = 'doc_id';
             }
-            if ( empty($vardef['docUrl']) ) {
+            if (empty($vardef['docUrl'])) {
                 $vardef['docUrl'] = 'doc_url';
             }
         } else {
@@ -153,15 +153,15 @@ class SugarFieldImage extends SugarFieldFile
         }
 
         // Override the default module
-        if ( isset($vardef['linkModuleOverride']) ) {
+        if (isset($vardef['linkModuleOverride'])) {
             $vardef['linkModule'] = $vardef['linkModuleOverride'];
         } else {
             $vardef['linkModule'] = '{$module}';
         }
 
         // This is needed because these aren't always filled out in the edit/detailview defs
-        if ( !isset($vardef['fileId']) ) {
-            if ( isset($displayParams['id']) ) {
+        if (!isset($vardef['fileId'])) {
+            if (isset($displayParams['id'])) {
                 $vardef['fileId'] = $displayParams['id'];
             } else {
                 $vardef['fileId'] = 'id';

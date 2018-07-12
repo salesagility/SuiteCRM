@@ -60,12 +60,12 @@
          $TextString    = $this->encode39($TextString);
          $BarcodeLength = strlen($this->Result);
 
-         if ( $DrawArea ) {
+         if ($DrawArea) {
              $WOffset = 20;
          } else {
              $WOffset = 0;
          }
-         if ( $ShowLegend ) {
+         if ($ShowLegend) {
              $HOffset = $FontSize+$LegendOffset+$WOffset;
          } else {
              $HOffset = 0;
@@ -91,17 +91,17 @@
          $TextString   = "";
          for ($i=1;$i<=strlen($Value);$i++) {
              $CharCode = ord($this->mid($Value,$i,1));
-             if ( $CharCode >= 97 && $CharCode <= 122 ) {
+             if ($CharCode >= 97 && $CharCode <= 122) {
                  $CharCode = $CharCode - 32;
              }
 
-             if ( isset($this->Codes[chr($CharCode)]) ) {
+             if (isset($this->Codes[chr($CharCode)])) {
                  $this->Result = $this->Result.$this->Codes[chr($CharCode)]."0";
                  $TextString = $TextString.chr($CharCode);
              }
          }
 
-         if ( $this->MOD43 ) {
+         if ($this->MOD43) {
              $Checksum = $this->checksum($TextString);
              $this->Result = $this->Result.$this->Codes[$Checksum]."0";
          }
@@ -135,14 +135,14 @@
 
          $TextString   = $this->encode39($Value);
 
-         if ( $DrawArea ) {
+         if ($DrawArea) {
              $X1 = $X + cos(($Angle-135) * PI / 180) * 10;
              $Y1 = $Y + sin(($Angle-135) * PI / 180) * 10;
 
              $X2 = $X1 + cos($Angle * PI / 180) * (strlen($this->Result)+20);
              $Y2 = $Y1 + sin($Angle * PI / 180) * (strlen($this->Result)+20);
 
-             if ( $ShowLegend ) {
+             if ($ShowLegend) {
                  $X3 = $X2 + cos(($Angle+90) * PI / 180) * ($Height+$LegendOffset+$this->pChartObject->FontSize+10);
                  $Y3 = $Y2 + sin(($Angle+90) * PI / 180) * ($Height+$LegendOffset+$this->pChartObject->FontSize+10);
              } else {
@@ -159,7 +159,7 @@
          }
 
          for ($i=1;$i<=strlen($this->Result);$i++) {
-             if ( $this->mid($this->Result,$i,1) == 1 ) {
+             if ($this->mid($this->Result,$i,1) == 1) {
                  $X1 = $X + cos($Angle * PI / 180) * $i;
                  $Y1 = $Y + sin($Angle * PI / 180) * $i;
                  $X2 = $X1 + cos(($Angle+90) * PI / 180) * $Height;
@@ -170,7 +170,7 @@
              }
          }
 
-         if ( $ShowLegend ) {
+         if ($ShowLegend) {
              $X1 = $X + cos($Angle * PI / 180) * (strlen($this->Result)/2);
              $Y1 = $Y + sin($Angle * PI / 180) * (strlen($this->Result)/2);
 
@@ -185,14 +185,14 @@
      function checksum($string)
      {
          $checksum = 0;
-         $length   = strlen( $string );
+         $length   = strlen($string);
          $charset  = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-. $/+%';
 
-         for ( $i=0; $i < $length; ++$i ) {
-             $checksum += strpos( $charset, $string[$i] );
+         for ($i=0; $i < $length; ++$i) {
+             $checksum += strpos($charset, $string[$i]);
          }
  
-         return substr( $charset, ($checksum % 43), 1 );
+         return substr($charset, ($checksum % 43), 1);
      }
 
      function left($value,$NbChar)

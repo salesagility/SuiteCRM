@@ -863,7 +863,7 @@ class nusoap_base
     {
         if ($sstr = strrchr($str,':')) {
             // get unqualified name
-            return substr( $sstr, 1 );
+            return substr($sstr, 1);
         } else {
             return $str;
         }

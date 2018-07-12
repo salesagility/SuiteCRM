@@ -62,7 +62,7 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
     {
         $focus = $this; 
 
-        if ( (isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
+        if ((isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
 			(isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
 			(isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
 			 !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty

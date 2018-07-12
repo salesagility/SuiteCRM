@@ -108,7 +108,7 @@ class UserPreference extends SugarBean
         // check to see if a default preference ( i.e. $sugar_config setting ) exists for this value )
         // if so, return it
         $value = $this->getDefaultPreference($name,$category);
-        if ( !is_null($value) ) {
+        if (!is_null($value)) {
             return $value;
         }
         return null;
@@ -128,26 +128,26 @@ class UserPreference extends SugarBean
         global $sugar_config;
 
         // Doesn't support any prefs but global ones
-        if ( $category != 'global' ) {
+        if ($category != 'global') {
             return null;
         }
 
         // First check for name matching $sugar_config variable
-        if ( isset($sugar_config[$name]) ) {
+        if (isset($sugar_config[$name])) {
             return $sugar_config[$name];
         }
 
         // Next, check to see if it's one of the common problem ones
-        if ( isset($sugar_config['default_'.$name]) ) {
+        if (isset($sugar_config['default_'.$name])) {
             return $sugar_config['default_'.$name];
         }
-        if ( $name == 'datef' ) {
+        if ($name == 'datef') {
             return $sugar_config['default_date_format'];
         }
-        if ( $name == 'timef' ) {
+        if ($name == 'timef') {
             return $sugar_config['default_time_format'];
         }
-        if ( $name == 'email_link_type' ) {
+        if ($name == 'email_link_type') {
             return $sugar_config['email_default_client'];
         }
     }
@@ -166,7 +166,7 @@ class UserPreference extends SugarBean
         ) {
         $user = $this->_userFocus;
 
-        if ( empty($user->user_name) ) {
+        if (empty($user->user_name)) {
             return;
         }
 
@@ -332,7 +332,7 @@ class UserPreference extends SugarBean
             if (!$all && isset($GLOBALS['savePreferencesToDBCats']) && is_array($GLOBALS['savePreferencesToDBCats'])) {
                 $catsToSave = array();
                 foreach ($GLOBALS['savePreferencesToDBCats'] as $category => $value) {
-                    if ( isset($_SESSION[$user->user_name. '_PREFERENCES'][$category]) ) {
+                    if (isset($_SESSION[$user->user_name. '_PREFERENCES'][$category])) {
                         $catsToSave[$category] = $_SESSION[$user->user_name. '_PREFERENCES'][$category];
                     }
                 }
@@ -420,7 +420,7 @@ class UserPreference extends SugarBean
         }
 
         // we can skip this if we've already upgraded to the user_preferences format.
-        if ( !array_key_exists('user_preferences',$db->getHelper()->get_columns('users')) ) {
+        if (!array_key_exists('user_preferences',$db->getHelper()->get_columns('users'))) {
             return;
         }
 
@@ -432,7 +432,7 @@ class UserPreference extends SugarBean
             $prefs = unserialize(base64_decode($row['user_preferences']));
 
             if (!empty($sub_key)) {
-                if ($is_value_array ) {
+                if ($is_value_array) {
                     if (!isset($prefs[$key][$sub_key])) {
                         continue;
                     }
@@ -458,7 +458,7 @@ class UserPreference extends SugarBean
                     }
                 }
             } else {
-                if ($is_value_array ) {
+                if ($is_value_array) {
                     if (!isset($prefs[$key])) {
                         continue;
                     }

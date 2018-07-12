@@ -163,7 +163,7 @@ class Project extends SugarBean
             }
             $new_rel_link = $new_rel_relname;
             //Try to find the link in this bean based on the relationship
-            foreach ( $this->field_defs as $key => $def ) {
+            foreach ($this->field_defs as $key => $def) {
                 if (isset($def['type']) && $def['type'] == 'link'
                 && isset($def['relationship']) && $def['relationship'] == $new_rel_relname) {
                     $new_rel_link = $key;
@@ -356,7 +356,7 @@ class Project extends SugarBean
         //if(!empty($this->id))
         //	$focus->retrieve($this->id);
 
-        if ( (isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
+        if ((isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
 			(isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
 			(isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
 			 !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty
@@ -535,7 +535,7 @@ class Project extends SugarBean
 			
 
             //default business hours array
-            if ( $override_business_hours != 1 || empty($bhours)) {
+            if ($override_business_hours != 1 || empty($bhours)) {
                 $bhours = array ('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
             }
             //---------------------------			
@@ -606,7 +606,7 @@ class Project extends SugarBean
                 while ($duration > $d) {
                     $day = $enddate->format('l');
 
-                    if ($bhours[$day] != 0 ) {
+                    if ($bhours[$day] != 0) {
                         $d += 1;
                     }
 

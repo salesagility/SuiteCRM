@@ -230,7 +230,7 @@ class Opportunity extends SugarBean
 
     function fill_in_additional_list_fields()
     {
-        if ( $this->force_load_details == true) {
+        if ($this->force_load_details == true) {
             $this->fill_in_additional_detail_fields();
         }
     }
@@ -375,10 +375,10 @@ class Opportunity extends SugarBean
         // Bug 32581 - Make sure the currency_id is set to something
         global $current_user, $app_list_strings;
 
-        if ( empty($this->currency_id) ) {
+        if (empty($this->currency_id)) {
             $this->currency_id = $current_user->getPreference('currency');
         }
-        if ( empty($this->currency_id) ) {
+        if (empty($this->currency_id)) {
             $this->currency_id = -99;
         }
 

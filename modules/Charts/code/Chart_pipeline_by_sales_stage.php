@@ -120,7 +120,7 @@ class Chart_pipeline_by_sales_stage
             $GLOBALS['log']->debug("_REQUEST['pbss_date_end'] is:");
             $GLOBALS['log']->debug($_REQUEST['pbss_date_end']);
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] is:");
-            $GLOBALS['log']->debug( $current_user->getPreference('pbss_date_end'));
+            $GLOBALS['log']->debug($current_user->getPreference('pbss_date_end'));
         } else {
             $date_end = $timedate->asUserDate($timedate->fromString("2010-01-01"));
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: ".$date_end);
@@ -143,7 +143,7 @@ class Chart_pipeline_by_sales_stage
         if (!empty($user_tempx) && count($user_tempx) > 0 && !isset($_REQUEST['pbss_sales_stages'])) {
             $tempx = $user_tempx ;
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_sales_stages'] is:");
-            $GLOBALS['log']->debug($user_tempx );
+            $GLOBALS['log']->debug($user_tempx);
         } elseif (isset($_REQUEST['pbss_sales_stages']) && count($_REQUEST['pbss_sales_stages']) > 0) {
             $tempx = $_REQUEST['pbss_sales_stages'];
             $current_user->setPreference('pbss_sales_stages', $_REQUEST['pbss_sales_stages']);
@@ -372,7 +372,7 @@ echo get_validate_chart_js();
             global $sugar_config;
             $symbol = $sugar_config['default_currency_symbol'];
             global $current_user;
-            if ($current_user->getPreference('currency') ) {
+            if ($current_user->getPreference('currency')) {
                 $currency = new Currency();
                 $currency->retrieve($current_user->getPreference('currency'));
                 $div = $currency->conversion_rate;
@@ -506,7 +506,7 @@ echo get_validate_chart_js();
             $GLOBALS['log']->debug("_REQUEST['pbss_date_end'] is:");
             $GLOBALS['log']->debug($_REQUEST['pbss_date_end']);
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] is:");
-            $GLOBALS['log']->debug( $current_user->getPreference('pbss_date_end'));
+            $GLOBALS['log']->debug($current_user->getPreference('pbss_date_end'));
         } else {
             $date_end = $timedate->asUserDate($timedate->fromString("2010-01-01"));
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_date_end'] not found. Using: ".$date_end);
@@ -520,7 +520,7 @@ echo get_validate_chart_js();
         if (!empty($user_tempx) && count($user_tempx) > 0 && !isset($_REQUEST['pbss_sales_stages'])) {
             $tempx = $user_tempx ;
             $GLOBALS['log']->debug("USER PREFERENCES['pbss_sales_stages'] is:");
-            $GLOBALS['log']->debug($user_tempx );
+            $GLOBALS['log']->debug($user_tempx);
         } elseif (isset($_REQUEST['pbss_sales_stages']) && count($_REQUEST['pbss_sales_stages']) > 0) {
             $tempx = $_REQUEST['pbss_sales_stages'];
             $current_user->setPreference('pbss_sales_stages', $_REQUEST['pbss_sales_stages']);

@@ -155,7 +155,7 @@ if (isset($mbox) && count($mbox)>0) {
                    .  " <td width='20%'><b>".$mod_strings['LBL_LIST_STATUS']."</b></td></tr>";
     $colorclass=' ';
     foreach ($mbox as $details) {
-        if ( $colorclass == "class='evenListRowS1'") {
+        if ($colorclass == "class='evenListRowS1'") {
             $colorclass= "class='oddListRowS1'";
         } else {
             $colorclass= "class='evenListRowS1'";

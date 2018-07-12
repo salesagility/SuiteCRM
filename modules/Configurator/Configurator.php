@@ -174,7 +174,7 @@ class Configurator
         $currentConfigArray = $this->readOverride();
         foreach ($currentConfigArray as $key => $val) {
             if (in_array($key, $this->allow_undefined) || isset ($sugar_config[$key])) {
-                if (empty($val) ) {
+                if (empty($val)) {
                     if (!empty($this->previous_sugar_override_config_array['stack_trace_errors']) && $key == 'stack_trace_errors') {
                         require_once('include/TemplateHandler/TemplateHandler.php');
                         TemplateHandler::clearAll();

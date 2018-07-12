@@ -58,7 +58,7 @@ class StudioBrowser
                 continue;
             }
             if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e]) && (in_array($e, $access) || $current_user->isAdmin())) { // installed modules must also exist in the beanList
-                $this->modules[$e] =  StudioModuleFactory::getStudioModule( $e ) ;
+                $this->modules[$e] =  StudioModuleFactory::getStudioModule($e) ;
             }
         }
     }
@@ -71,7 +71,7 @@ class StudioBrowser
                 continue;
             }
             if (file_exists('modules/' . $e . '/metadata/studio.php') && isset($GLOBALS [ 'beanList' ][$e])) { // installed modules must also exist in the beanList
-                $this->modules[$e] = StudioModuleFactory::getStudioModule( $e ) ;
+                $this->modules[$e] = StudioModuleFactory::getStudioModule($e) ;
             }
         }
     }

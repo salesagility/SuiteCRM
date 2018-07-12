@@ -74,7 +74,7 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
         }
 
         $on_or_off = 'CHECKED';
-        if ( empty($value) ||  $value == 'off') {
+        if (empty($value) ||  $value == 'off') {
             $on_or_off = '';
         }
         $cell = "<input name='checkbox_display' class='checkbox' type='checkbox' disabled $on_or_off>";

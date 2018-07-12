@@ -274,7 +274,7 @@ echo "<p align='center'>".$this->gen_xml($datax, $ids, $cache_file_name, $refres
             $rowTotalArr[] = 0;
             global $current_user;
             $salesStages = array("Closed Lost"=>$app_list_strings['sales_stage_dom']["Closed Lost"],"Closed Won"=>$app_list_strings['sales_stage_dom']["Closed Won"],"Other"=>$other);
-            if ($current_user->getPreference('currency') ) {
+            if ($current_user->getPreference('currency')) {
                 $currency = new Currency();
                 $currency->retrieve($current_user->getPreference('currency'));
                 $div = $currency->conversion_rate;

@@ -97,7 +97,7 @@ class ListViewData
         if (!empty($orderBy) || !empty($_REQUEST[$this->var_order_by])) {
             if (!empty($_REQUEST[$this->var_order_by])) {
                 $orderBy = $_REQUEST[$this->var_order_by];
-                if (!empty($_REQUEST['lvso']) && (empty($_SESSION['lvd']['last_ob']) || strcmp($orderBy, $_SESSION['lvd']['last_ob']) == 0) ) {
+                if (!empty($_REQUEST['lvso']) && (empty($_SESSION['lvd']['last_ob']) || strcmp($orderBy, $_SESSION['lvd']['last_ob']) == 0)) {
                     $direction = $_REQUEST['lvso'];
                 }
             }
@@ -490,7 +490,7 @@ class ListViewData
         }
         $totalCount = $count + $offset;
 
-        if ( $count >= $limit && $totalCounted) {
+        if ($count >= $limit && $totalCounted) {
             $totalCount  = $this->getTotalCount($main_query);
         }
         SugarVCR::recordIDs($this->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
@@ -515,7 +515,7 @@ class ListViewData
 
         $queryString = '';
 
-        if ( isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search" ||
+        if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "advanced_search" ||
         	isset($_REQUEST["type_basic"]) && (count($_REQUEST["type_basic"] > 1) || $_REQUEST["type_basic"][0] != "") ||
         	isset($_REQUEST["module"]) && $_REQUEST["module"] == "MergeRecords") {
             $queryString = "-advanced_search";
@@ -528,14 +528,14 @@ class ListViewData
 
             $basicSearchFields = array();
 
-            if ( isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search']) ) {
+            if (isset($searchMetaData['searchdefs']) && isset($searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'])) {
                 $basicSearchFields = $searchMetaData['searchdefs'][$seed->module_dir]['layout']['basic_search'];
             }
 
-            foreach ( $basicSearchFields as $basicSearchField) {
+            foreach ($basicSearchFields as $basicSearchField) {
                 $field_name = (is_array($basicSearchField) && isset($basicSearchField['name'])) ? $basicSearchField['name'] : $basicSearchField;
                 $field_name .= "_basic";
-                if ( isset($_REQUEST[$field_name])  && ( !is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name') ) {
+                if (isset($_REQUEST[$field_name])  && (!is_array($basicSearchField) || !isset($basicSearchField['type']) || $basicSearchField['type'] == 'text' || $basicSearchField['type'] == 'name')) {
                     // Ensure the encoding is UTF-8
                     $queryString = htmlentities($_REQUEST[$field_name], null, 'UTF-8');
                     break;

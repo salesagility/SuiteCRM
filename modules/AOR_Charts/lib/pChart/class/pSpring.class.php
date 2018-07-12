@@ -85,16 +85,16 @@
      /* Set default links options */
      function setLinkDefaults($Settings="")
      {
-         if ( isset($Settings["R"]) ) {
+         if (isset($Settings["R"])) {
              $this->Default["LinkR"] = $Settings["R"];
          }
-         if ( isset($Settings["G"]) ) {
+         if (isset($Settings["G"])) {
              $this->Default["LinkG"] = $Settings["G"];
          }
-         if ( isset($Settings["B"]) ) {
+         if (isset($Settings["B"])) {
              $this->Default["LinkB"] = $Settings["B"];
          }
-         if ( isset($Settings["Alpha"]) ) {
+         if (isset($Settings["Alpha"])) {
              $this->Default["LinkAlpha"] = $Settings["Alpha"];
          }
      }
@@ -102,19 +102,19 @@
      /* Set default links options */
      function setLabelsSettings($Settings="")
      {
-         if ( isset($Settings["Type"]) ) {
+         if (isset($Settings["Type"])) {
              $this->Labels["Type"] = $Settings["Type"];
          }
-         if ( isset($Settings["R"]) ) {
+         if (isset($Settings["R"])) {
              $this->Labels["R"] = $Settings["R"];
          }
-         if ( isset($Settings["G"]) ) {
+         if (isset($Settings["G"])) {
              $this->Labels["G"] = $Settings["G"];
          }
-         if ( isset($Settings["B"]) ) {
+         if (isset($Settings["B"])) {
              $this->Labels["B"] = $Settings["B"];
          }
-         if ( isset($Settings["Alpha"]) ) {
+         if (isset($Settings["Alpha"])) {
              $this->Labels["Alpha"] = $Settings["Alpha"];
          }
      }
@@ -124,7 +124,7 @@
      {
          /* Check connections reciprocity */
          foreach ($this->Data as $Key => $Settings) {
-             if ( isset($Settings["Connections"]) ) {
+             if (isset($Settings["Connections"])) {
                  $this->Data[$Key]["FreeZone"] = count($Settings["Connections"])*10 + 20;
              } else {
                  $this->Data[$Key]["FreeZone"] = 20;
@@ -135,10 +135,10 @@
      /* Set link properties */
      function linkProperties($FromNode,$ToNode,$Settings)
      {
-         if ( !isset($this->Data[$FromNode]) ) {
+         if (!isset($this->Data[$FromNode])) {
              return(0);
          }
-         if ( !isset($this->Data[$ToNode]) ) {
+         if (!isset($this->Data[$ToNode])) {
              return(0);
          }
 
@@ -165,55 +165,55 @@
 
      function setNodeDefaults($Settings="")
      {
-         if ( isset($Settings["R"]) ) {
+         if (isset($Settings["R"])) {
              $this->Default["R"]					= $Settings["R"];
          }
-         if ( isset($Settings["G"]) ) {
+         if (isset($Settings["G"])) {
              $this->Default["G"]					= $Settings["G"];
          }
-         if ( isset($Settings["B"]) ) {
+         if (isset($Settings["B"])) {
              $this->Default["B"]					= $Settings["B"];
          }
-         if ( isset($Settings["Alpha"]) ) {
+         if (isset($Settings["Alpha"])) {
              $this->Default["Alpha"]				= $Settings["Alpha"];
          }
-         if ( isset($Settings["BorderR"]) ) {
+         if (isset($Settings["BorderR"])) {
              $this->Default["BorderR"]			= $Settings["BorderR"];
          }
-         if ( isset($Settings["BorderG"]) ) {
+         if (isset($Settings["BorderG"])) {
              $this->Default["BorderG"]			= $Settings["BorderG"];
          }
-         if ( isset($Settings["BorderB"]) ) {
+         if (isset($Settings["BorderB"])) {
              $this->Default["BorderB"]			= $Settings["BorderB"];
          }
-         if ( isset($Settings["BorderAlpha"]) ) {
+         if (isset($Settings["BorderAlpha"])) {
              $this->Default["BorderAlpha"]		= $Settings["BorderAlpha"];
          }
-         if ( isset($Settings["Surrounding"]) ) {
+         if (isset($Settings["Surrounding"])) {
              $this->Default["Surrounding"]		= $Settings["Surrounding"];
          }
-         if ( isset($Settings["BackgroundR"]) ) {
+         if (isset($Settings["BackgroundR"])) {
              $this->Default["BackgroundR"]		= $Settings["BackgroundR"];
          }
-         if ( isset($Settings["BackgroundG"]) ) {
+         if (isset($Settings["BackgroundG"])) {
              $this->Default["BackgroundG"]		= $Settings["BackgroundG"];
          }
-         if ( isset($Settings["BackgroundB"]) ) {
+         if (isset($Settings["BackgroundB"])) {
              $this->Default["BackgroundB"]		= $Settings["BackgroundB"];
          }
-         if ( isset($Settings["BackgroundAlpha"]) ) {
+         if (isset($Settings["BackgroundAlpha"])) {
              $this->Default["BackgroundAlpha"]	= $Settings["BackgroundAlpha"];
          }
-         if ( isset($Settings["NodeType"]) ) {
+         if (isset($Settings["NodeType"])) {
              $this->Default["NodeType"]			= $Settings["NodeType"];
          }
-         if ( isset($Settings["Size"]) ) {
+         if (isset($Settings["Size"])) {
              $this->Default["Size"]				= $Settings["Size"];
          }
-         if ( isset($Settings["Shape"]) ) {
+         if (isset($Settings["Shape"])) {
              $this->Default["Shape"]				= $Settings["Shape"];
          }
-         if ( isset($Settings["FreeZone"]) ) {
+         if (isset($Settings["FreeZone"])) {
              $this->Default["FreeZone"]			= $Settings["FreeZone"];
          }
      }
@@ -248,7 +248,7 @@
          $Shape		= isset($Settings["Shape"]) ? $Settings["Shape"] : $this->Default["Shape"];
          $FreeZone		= isset($Settings["FreeZone"]) ? $Settings["FreeZone"] : $this->Default["FreeZone"];
 
-         if ( $Surrounding != NULL ) {
+         if ($Surrounding != NULL) {
              $BorderR = $R + $Surrounding;
              $BorderG = $G + $Surrounding;
              $BorderB = $B + $Surrounding;
@@ -272,8 +272,8 @@
          $this->Data[$NodeID]["Size"]		= $Size;
          $this->Data[$NodeID]["Shape"]		= $Shape;
          $this->Data[$NodeID]["FreeZone"]		= $FreeZone;
-         if ( $Connections != NULL ) {
-             if ( is_array($Connections ) ) {
+         if ($Connections != NULL) {
+             if (is_array($Connections)) {
                  foreach ($Connections as $Key => $Value) {
                      $this->Data[$NodeID]["Connections"][] = $Value;
                  }
@@ -286,34 +286,34 @@
      /* Set color attribute for a list of nodes */
      function setNodesColor($Nodes,$Settings="")
      {
-         if ( is_array($Nodes) ) {
+         if (is_array($Nodes)) {
              foreach ($Nodes as $Key => $NodeID) {
-                 if (isset($this->Data[$NodeID]) ) {
-                     if ( isset($Settings["R"]) ) {
+                 if (isset($this->Data[$NodeID])) {
+                     if (isset($Settings["R"])) {
                          $this->Data[$NodeID]["R"] = $Settings["R"];
                      }
-                     if ( isset($Settings["G"]) ) {
+                     if (isset($Settings["G"])) {
                          $this->Data[$NodeID]["G"] = $Settings["G"];
                      }
-                     if ( isset($Settings["B"]) ) {
+                     if (isset($Settings["B"])) {
                          $this->Data[$NodeID]["B"] = $Settings["B"];
                      }
-                     if ( isset($Settings["Alpha"]) ) {
+                     if (isset($Settings["Alpha"])) {
                          $this->Data[$NodeID]["Alpha"] = $Settings["Alpha"];
                      }
-                     if ( isset($Settings["BorderR"]) ) {
+                     if (isset($Settings["BorderR"])) {
                          $this->Data[$NodeID]["BorderR"] = $Settings["BorderR"];
                      }
-                     if ( isset($Settings["BorderG"]) ) {
+                     if (isset($Settings["BorderG"])) {
                          $this->Data[$NodeID]["BorderG"] = $Settings["BorderG"];
                      }
-                     if ( isset($Settings["BorderB"]) ) {
+                     if (isset($Settings["BorderB"])) {
                          $this->Data[$NodeID]["BorderB"] = $Settings["BorderB"];
                      }
-                     if ( isset($Settings["BorderAlpha"]) ) {
+                     if (isset($Settings["BorderAlpha"])) {
                          $this->Data[$NodeID]["BorderAlpha"] = $Settings["BorderAlpha"];
                      }
-                     if ( isset($Settings["Surrounding"]) ) {
+                     if (isset($Settings["Surrounding"])) {
                          $this->Data[$NodeID]["BorderR"] = $this->Data[$NodeID]["R"] + $Settings["Surrounding"];
                          $this->Data[$NodeID]["BorderG"] = $this->Data[$NodeID]["G"] + $Settings["Surrounding"];
                          $this->Data[$NodeID]["BorderB"] = $this->Data[$NodeID]["B"] + $Settings["Surrounding"];
@@ -321,31 +321,31 @@
                  }
              }
          } else {
-             if ( isset($Settings["R"]) ) {
+             if (isset($Settings["R"])) {
                  $this->Data[$Nodes]["R"] = $Settings["R"];
              }
-             if ( isset($Settings["G"]) ) {
+             if (isset($Settings["G"])) {
                  $this->Data[$Nodes]["G"] = $Settings["G"];
              }
-             if ( isset($Settings["B"]) ) {
+             if (isset($Settings["B"])) {
                  $this->Data[$Nodes]["B"] = $Settings["B"];
              }
-             if ( isset($Settings["Alpha"]) ) {
+             if (isset($Settings["Alpha"])) {
                  $this->Data[$Nodes]["Alpha"] = $Settings["Alpha"];
              }
-             if ( isset($Settings["BorderR"]) ) {
+             if (isset($Settings["BorderR"])) {
                  $this->Data[$Nodes]["BorderR"] = $Settings["BorderR"];
              }
-             if ( isset($Settings["BorderG"]) ) {
+             if (isset($Settings["BorderG"])) {
                  $this->Data[$Nodes]["BorderG"] = $Settings["BorderG"];
              }
-             if ( isset($Settings["BorderB"]) ) {
+             if (isset($Settings["BorderB"])) {
                  $this->Data[$Nodes]["BorderB"] = $Settings["BorderB"];
              }
-             if ( isset($Settings["BorderAlpha"]) ) {
+             if (isset($Settings["BorderAlpha"])) {
                  $this->Data[$Nodes]["BorderAlpha"] = $Settings["BorderAlpha"];
              }
-             if ( isset($Settings["Surrounding"]) ) {
+             if (isset($Settings["Surrounding"])) {
                  $this->Data[$Nodes]["BorderR"] = $this->Data[$NodeID]["R"] + $Settings["Surrounding"];
                  $this->Data[$NodeID]["BorderG"] = $this->Data[$NodeID]["G"] + $Settings["Surrounding"];
                  $this->Data[$NodeID]["BorderB"] = $this->Data[$NodeID]["B"] + $Settings["Surrounding"];
@@ -362,9 +362,9 @@
      /* Check if a connection exists and create it if required */
      function checkConnection($SourceID, $TargetID)
      {
-         if ( isset($this->Data[$SourceID]["Connections"]) ) {
+         if (isset($this->Data[$SourceID]["Connections"])) {
              foreach ($this->Data[$SourceID]["Connections"] as $Key => $ConnectionID) {
-                 if ( $TargetID == $ConnectionID ) {
+                 if ($TargetID == $ConnectionID) {
                      return(TRUE);
                  }
              }
@@ -375,9 +375,9 @@
      function getMedianOffset($Key,$X,$Y)
      {
          $Cpt = 1;
-         if ( isset($this->Data[$Key]["Connections"]) ) {
+         if (isset($this->Data[$Key]["Connections"])) {
              foreach ($this->Data[$Key]["Connections"] as $ID => $NodeID) {
-                 if ( isset($this->Data[$NodeID]["X"]) && isset($this->Data[$NodeID]["Y"]) ) {
+                 if (isset($this->Data[$NodeID]["X"]) && isset($this->Data[$NodeID]["Y"])) {
                      $X = $X + $this->Data[$NodeID]["X"];
                      $Y = $Y + $this->Data[$NodeID]["Y"];
                      $Cpt++;
@@ -390,14 +390,14 @@
      /* Return the ID of the attached partner with the biggest weight */
      function getBiggestPartner($Key)
      {
-         if ( !isset($this->Data[$Key]["Connections"]) ) {
+         if (!isset($this->Data[$Key]["Connections"])) {
              return("");
          }
 
          $MaxWeight = 0;
          $Result = "";
          foreach ($this->Data[$Key]["Connections"] as $Key => $PeerID) {
-             if ( $this->Data[$PeerID]["Weight"] > $MaxWeight ) {
+             if ($this->Data[$PeerID]["Weight"] > $MaxWeight) {
                  $MaxWeight = $this->Data[$PeerID]["Weight"];
                  $Result = $PeerID;
              }
@@ -413,35 +413,35 @@
 
          /* Check connections reciprocity */
          foreach ($this->Data as $Key => $Settings) {
-             if ( isset($Settings["Connections"]) ) {
+             if (isset($Settings["Connections"])) {
                  foreach ($Settings["Connections"] as $ID => $ConnectionID) {
                      $this->checkConnection($ConnectionID,$Key);
                  }
              }
          }
 
-         if ( $this->AutoComputeFreeZone ) {
+         if ($this->AutoComputeFreeZone) {
              $this->autoFreeZone();
          }
 
          /* Get the max number of connections */
          $MaxConnections = 0;
          foreach ($this->Data as $Key => $Settings) {
-             if ( isset($Settings["Connections"]) ) {
-                 if ( $MaxConnections < count($Settings["Connections"] ) ) {
+             if (isset($Settings["Connections"])) {
+                 if ($MaxConnections < count($Settings["Connections"])) {
                      $MaxConnections = count($Settings["Connections"]);
                  }
              }
          }
 
-         if ( $Algorithm == ALGORITHM_WEIGHTED ) {
+         if ($Algorithm == ALGORITHM_WEIGHTED) {
              foreach ($this->Data as $Key => $Settings) {
-                 if ( $Settings["Type"] == NODE_TYPE_CENTRAL ) {
+                 if ($Settings["Type"] == NODE_TYPE_CENTRAL) {
                      $this->Data[$Key]["X"] = $CenterX;
                      $this->Data[$Key]["Y"] = $CenterY;
                  }
-                 if ( $Settings["Type"] == NODE_TYPE_FREE ) {
-                     if ( isset($Settings["Connections"]) ) {
+                 if ($Settings["Type"] == NODE_TYPE_FREE) {
+                     if (isset($Settings["Connections"])) {
                          $Connections = count($Settings["Connections"]);
                      } else {
                          $Connections = 0;
@@ -454,10 +454,10 @@
                      $this->Data[$Key]["Y"] = sin(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterY;
                  }
              }
-         } elseif ( $Algorithm == ALGORITHM_CENTRAL ) {
+         } elseif ($Algorithm == ALGORITHM_CENTRAL) {
              /* Put a weight on each nodes */
              foreach ($this->Data as $Key => $Settings) {
-                 if ( isset($Settings["Connections"]) ) {
+                 if (isset($Settings["Connections"])) {
                      $this->Data[$Key]["Weight"] = count($Settings["Connections"]);
                  } else {
                      $this->Data[$Key]["Weight"] = 0;
@@ -467,20 +467,20 @@
              $MaxConnections = $MaxConnections + 1;
              for ($i=$MaxConnections;$i>=0;$i--) {
                  foreach ($this->Data as $Key => $Settings) {
-                     if ( $Settings["Type"] == NODE_TYPE_CENTRAL ) {
+                     if ($Settings["Type"] == NODE_TYPE_CENTRAL) {
                          $this->Data[$Key]["X"] = $CenterX;
                          $this->Data[$Key]["Y"] = $CenterY;
                      }
-                     if ( $Settings["Type"] == NODE_TYPE_FREE ) {
-                         if ( isset($Settings["Connections"]) ) {
+                     if ($Settings["Type"] == NODE_TYPE_FREE) {
+                         if (isset($Settings["Connections"])) {
                              $Connections = count($Settings["Connections"]);
                          } else {
                              $Connections = 0;
                          }
 
-                         if ( $Connections == $i ) {
+                         if ($Connections == $i) {
                              $BiggestPartner = $this->getBiggestPartner($Key);
-                             if ( $BiggestPartner != "" ) {
+                             if ($BiggestPartner != "") {
                                  $Ring          = $this->Data[$BiggestPartner]["FreeZone"];
                                  $Weight        = $this->Data[$BiggestPartner]["Weight"];
                                  $AngleDivision = 360 / $this->Data[$BiggestPartner]["Weight"];
@@ -489,12 +489,12 @@
                                  while (!$Done && $Tries <= $Weight*2) {
                                      $Tries++;
                                      $Angle = floor(rand(0,$Weight)*$AngleDivision);
-                                     if ( !isset($this->Data[$BiggestPartner]["Angular"][$Angle]) || !isset($this->Data[$BiggestPartner]["Angular"]) ) {
+                                     if (!isset($this->Data[$BiggestPartner]["Angular"][$Angle]) || !isset($this->Data[$BiggestPartner]["Angular"])) {
                                          $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
                                          $Done = TRUE;
                                      }
                                  }
-                                 if ( !$Done ) {
+                                 if (!$Done) {
                                      $Angle = rand(0,360);
                                      $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
                                  }
@@ -509,22 +509,22 @@
                      }
                  }
              }
-         } elseif ( $Algorithm == ALGORITHM_CIRCULAR ) {
+         } elseif ($Algorithm == ALGORITHM_CIRCULAR) {
              $MaxConnections = $MaxConnections + 1;
              for ($i=$MaxConnections;$i>=0;$i--) {
                  foreach ($this->Data as $Key => $Settings) {
-                     if ( $Settings["Type"] == NODE_TYPE_CENTRAL ) {
+                     if ($Settings["Type"] == NODE_TYPE_CENTRAL) {
                          $this->Data[$Key]["X"] = $CenterX;
                          $this->Data[$Key]["Y"] = $CenterY;
                      }
-                     if ( $Settings["Type"] == NODE_TYPE_FREE ) {
-                         if ( isset($Settings["Connections"]) ) {
+                     if ($Settings["Type"] == NODE_TYPE_FREE) {
+                         if (isset($Settings["Connections"])) {
                              $Connections = count($Settings["Connections"]);
                          } else {
                              $Connections = 0;
                          }
 
-                         if ( $Connections == $i ) {
+                         if ($Connections == $i) {
                              $Ring  = $MaxConnections - $Connections;
                              $Angle = rand(0,360);
 
@@ -539,13 +539,13 @@
                      }
                  }
              }
-         } elseif ( $Algorithm == ALGORITHM_RANDOM ) {
+         } elseif ($Algorithm == ALGORITHM_RANDOM) {
              foreach ($this->Data as $Key => $Settings) {
-                 if ( $Settings["Type"] == NODE_TYPE_FREE ) {
+                 if ($Settings["Type"] == NODE_TYPE_FREE) {
                      $this->Data[$Key]["X"] = $CenterX + rand(-20,20);
                      $this->Data[$Key]["Y"] = $CenterY + rand(-20,20);
                  }
-                 if ( $Settings["Type"] == NODE_TYPE_CENTRAL ) {
+                 if ($Settings["Type"] == NODE_TYPE_CENTRAL) {
                      $this->Data[$Key]["X"] = $CenterX;
                      $this->Data[$Key]["Y"] = $CenterY;
                  }
@@ -558,7 +558,7 @@
      {
          /* Compute vectors */
          foreach ($this->Data as $Key => $Settings) {
-             if ( $Settings["Type"] != NODE_TYPE_CENTRAL ) {
+             if ($Settings["Type"] != NODE_TYPE_CENTRAL) {
                  unset($this->Data[$Key]["Vectors"]);
 
                  $X1 = $Settings["X"];
@@ -566,7 +566,7 @@
 
                  /* Repulsion vectors */
                  foreach ($this->Data as $Key2 => $Settings2) {
-                     if ( $Key != $Key2 ) {
+                     if ($Key != $Key2) {
                          $X2 = $this->Data[$Key2]["X"];
                          $Y2 = $this->Data[$Key2]["Y"];
                          $FreeZone = $this->Data[$Key2]["FreeZone"];
@@ -575,9 +575,9 @@
                          $Angle    = $this->getAngle($X1,$Y1,$X2,$Y2) + 180;
 
                          /* Nodes too close, repulsion occurs */
-                         if ( $Distance < $FreeZone ) {
+                         if ($Distance < $FreeZone) {
                              $Force = log(pow(2,$FreeZone-$Distance));
-                             if ( $Force > 1 ) {
+                             if ($Force > 1) {
                                  $this->Data[$Key]["Vectors"][] = array("Type"=>"R","Angle"=>$Angle % 360,"Force"=>$Force);
                              }
                          }
@@ -585,9 +585,9 @@
                  }
 
                  /* Attraction vectors */
-                 if ( isset($Settings["Connections"]) ) {
+                 if (isset($Settings["Connections"])) {
                      foreach ($Settings["Connections"] as $ID => $NodeID) {
-                         if ( isset($this->Data[$NodeID]) ) {
+                         if (isset($this->Data[$NodeID])) {
                              $X2 = $this->Data[$NodeID]["X"];
                              $Y2 = $this->Data[$NodeID]["Y"];
                              $FreeZone = $this->Data[$Key2]["FreeZone"];
@@ -595,14 +595,14 @@
                              $Distance = $this->getDistance($X1,$Y1,$X2,$Y2);
                              $Angle    = $this->getAngle($X1,$Y1,$X2,$Y2);
 
-                             if ( $Distance > $FreeZone ) {
+                             if ($Distance > $FreeZone) {
                                  $Force = log(($Distance-$FreeZone)+1);
                              } else {
                                  $Force = log(($FreeZone-$Distance)+1);
                                  ($Angle = $Angle + 180);
                              }
 
-                             if ( $Force > 1 ) {
+                             if ($Force > 1) {
                                  $this->Data[$Key]["Vectors"][] = array("Type"=>"A","Angle"=>$Angle % 360,"Force"=>$Force);
                              }
                          }
@@ -616,7 +616,7 @@
              $X = $Settings["X"];
              $Y = $Settings["Y"];
 
-             if ( isset($Settings["Vectors"]) && $Settings["Type"] != NODE_TYPE_CENTRAL ) {
+             if (isset($Settings["Vectors"]) && $Settings["Type"] != NODE_TYPE_CENTRAL) {
                  foreach ($Settings["Vectors"] as $ID => $Vector) {
                      $Type  = $Vector["Type"];
                      $Force = $Vector["Force"];
@@ -640,16 +640,16 @@
              $X = $Settings["X"];
              $Y = $Settings["Y"];
 
-             if ( $X < $this->X1 ) {
+             if ($X < $this->X1) {
                  $X = $this->X1;
              }
-             if ( $X > $this->X2 ) {
+             if ($X > $this->X2) {
                  $X = $this->X2;
              }
-             if ( $Y < $this->Y1 ) {
+             if ($Y < $this->Y1) {
                  $Y = $this->Y1;
              }
-             if ( $Y > $this->Y2 ) {
+             if ($Y > $this->Y2) {
                  $Y = $this->Y2;
              }
 
@@ -663,9 +663,9 @@
              $X1 = $Settings["X"];
              $Y1 = $Settings["Y"];
 
-             if ( isset($Settings["Connections"]) ) {
+             if (isset($Settings["Connections"])) {
                  foreach ($Settings["Connections"] as $ID => $NodeID) {
-                     if ( isset($this->Data[$NodeID]) ) {
+                     if (isset($this->Data[$NodeID])) {
                          $X2 = $this->Data[$NodeID]["X"];
                          $Y2 = $this->Data[$NodeID]["Y"];
 
@@ -681,9 +681,9 @@
              $X1 = $Settings["X"];
              $Y1 = $Settings["Y"];
 
-             if ( isset($Settings["Connections"]) ) {
+             if (isset($Settings["Connections"])) {
                  foreach ($Settings["Connections"] as $ID => $NodeID) {
-                     if ( isset($this->Data[$NodeID]) ) {
+                     if (isset($this->Data[$NodeID])) {
                          $X2 = $this->Data[$NodeID]["X"];
                          $Y2 = $this->Data[$NodeID]["Y"];
 
@@ -693,9 +693,9 @@
                              $X4 = $Link["X2"];
                              $Y4 = $Link["Y2"];
 
-                             if ( !($X1 == $X3 && $X2 == $X4 && $Y1 == $Y3 && $Y2 == $Y4 ) ) {
-                                 if ( $this->intersect($X1,$Y1,$X2,$Y2,$X3,$Y3,$X4,$Y4) ) {
-                                     if ( $Link["Source"] != $Settings["Name"] && $Link["Source"] != $this->Data[$NodeID]["Name"] && $Link["Destination"] != $Settings["Name"] && $Link["Destination"] != $this->Data[$NodeID]["Name"] ) {
+                             if (!($X1 == $X3 && $X2 == $X4 && $Y1 == $Y3 && $Y2 == $Y4)) {
+                                 if ($this->intersect($X1,$Y1,$X2,$Y2,$X3,$Y3,$X4,$Y4)) {
+                                     if ($Link["Source"] != $Settings["Name"] && $Link["Source"] != $this->Data[$NodeID]["Name"] && $Link["Destination"] != $Settings["Name"] && $Link["Destination"] != $this->Data[$NodeID]["Name"]) {
                                          $Conflicts++;
                                      }
                                  }
@@ -724,16 +724,16 @@
              $X = $Settings["X"];
              $Y = $Settings["Y"];
 
-             if ( $X < $XMin) {
+             if ($X < $XMin) {
                  $XMin = $X;
              }
-             if ( $X > $XMax) {
+             if ($X > $XMax) {
                  $XMax = $X;
              }
-             if ( $Y < $YMin) {
+             if ($Y < $YMin) {
                  $YMin = $Y;
              }
-             if ( $Y > $YMax) {
+             if ($Y > $YMax) {
                  $YMax = $Y;
              }
          }
@@ -776,21 +776,21 @@
          $Conflicts = 1;
          $Jobs = 0;
          $this->History["MinimumConflicts"] = -1;
-         while ($Conflicts != 0 && $Jobs < $Retries ) {
+         while ($Conflicts != 0 && $Jobs < $Retries) {
              $Jobs++;
 
              /* Compute the initial settings */
              $this->firstPass($Algorithm);
 
              /* Apply the vectors */
-             if ( $Pass > 0 ) {
+             if ($Pass > 0) {
                  for ($i=0; $i<=$Pass; $i++) {
                      $this->doPass();
                  }
              }
 
              $Conflicts = $this->lastPass();
-             if ( $this->History["MinimumConflicts"] == -1 || $Conflicts < $this->History["MinimumConflicts"] ) {
+             if ($this->History["MinimumConflicts"] == -1 || $Conflicts < $this->History["MinimumConflicts"]) {
                  $this->History["MinimumConflicts"] = $Conflicts;
                  $this->History["Result"] = $this->Data;
              }
@@ -799,7 +799,7 @@
          $Conflicts  = $this->History["MinimumConflicts"];
          $this->Data = $this->History["Result"];
 
-         if ( $CenterGraph ) {
+         if ($CenterGraph) {
              $this->center();
          }
 
@@ -809,24 +809,24 @@
              $X	= $Settings["X"];
              $Y	= $Settings["Y"];
 
-             if ( isset($Settings["Connections"]) ) {
+             if (isset($Settings["Connections"])) {
                  foreach ($Settings["Connections"] as $ID => $NodeID) {
-                     if ( !isset($Drawn[$Key]) ) {
+                     if (!isset($Drawn[$Key])) {
                          $Drawn[$Key] = "";
                      }
-                     if ( !isset($Drawn[$NodeID]) ) {
+                     if (!isset($Drawn[$NodeID])) {
                          $Drawn[$NodeID] = "";
                      }
 
-                     if ( isset($this->Data[$NodeID]) && !isset($Drawn[$Key][$NodeID]) && !isset($Drawn[$NodeID][$Key]) ) {
+                     if (isset($this->Data[$NodeID]) && !isset($Drawn[$Key][$NodeID]) && !isset($Drawn[$NodeID][$Key])) {
                          $Color = array("R"=>$this->Default["LinkR"],"G"=>$this->Default["LinkG"],"B"=>$this->Default["LinkB"],"Alpha"=>$this->Default["Alpha"]);
 
-                         if ( $this->Links != "" ) {
-                             if ( isset($this->Links[$Key][$NodeID]["R"]) ) {
+                         if ($this->Links != "") {
+                             if (isset($this->Links[$Key][$NodeID]["R"])) {
                                  $Color = array("R"=>$this->Links[$Key][$NodeID]["R"],"G"=>$this->Links[$Key][$NodeID]["G"],"B"=>$this->Links[$Key][$NodeID]["B"],"Alpha"=>$this->Links[$Key][$NodeID]["Alpha"]);
                              }
 
-                             if ( isset($this->Links[$Key][$NodeID]["Ticks"]) ) {
+                             if (isset($this->Links[$Key][$NodeID]["Ticks"])) {
                                  $Color["Ticks"] = $this->Links[$Key][$NodeID]["Ticks"];
                              }
                          }
@@ -836,13 +836,13 @@
                          $this->pChartObject->drawLine($X,$Y,$X2,$Y2,$Color);
                          $Drawn[$Key][$NodeID] = TRUE;
 
-                         if ( isset($this->Links) && $this->Links != "" ) {
-                             if ( isset($this->Links[$Key][$NodeID]["Name"]) || isset($this->Links[$NodeID][$Key]["Name"]) ) {
+                         if (isset($this->Links) && $this->Links != "") {
+                             if (isset($this->Links[$Key][$NodeID]["Name"]) || isset($this->Links[$NodeID][$Key]["Name"])) {
                                  $Name  = isset($this->Links[$Key][$NodeID]["Name"]) ? $this->Links[$Key][$NodeID]["Name"] : $this->Links[$NodeID][$Key]["Name"];
                                  $TxtX  = ($X2 - $X)/2 + $X;
                                  $TxtY  = ($Y2 - $Y)/2 + $Y;
 
-                                 if ( $X <= $X2 ) {
+                                 if ($X <= $X2) {
                                      $Angle = (360-$this->getAngle($X,$Y,$X2,$Y2)) % 360;
                                  } else {
                                      $Angle = (360-$this->getAngle($X2,$Y2,$X,$Y)) % 360;
@@ -860,7 +860,7 @@
          }
 
          /* Draw the quiet zones */
-         if ( $DrawQuietZone ) {
+         if ($DrawQuietZone) {
              foreach ($this->Data as $Key => $Settings) {
                  $X	 = $Settings["X"];
                  $Y	 = $Settings["Y"];
@@ -882,9 +882,9 @@
 
              $Color	 = array("R"=>$Settings["R"],"G"=>$Settings["G"],"B"=>$Settings["B"],"Alpha"=>$Settings["Alpha"],"BorderR"=>$Settings["BorderR"],"BorderG"=>$Settings["BorderG"],"BorderB"=>$Settings["BorderB"],"BorderApha"=>$Settings["BorderAlpha"]);
 
-             if ( $Shape == NODE_SHAPE_CIRCLE ) {
+             if ($Shape == NODE_SHAPE_CIRCLE) {
                  $this->pChartObject->drawFilledCircle($X,$Y,$Size,$Color);
-             } elseif ( $Shape == NODE_SHAPE_TRIANGLE ) {
+             } elseif ($Shape == NODE_SHAPE_TRIANGLE) {
                  $Points = "";
                  $Points[] = cos(deg2rad(270)) * $Size + $X;
                  $Points[] = sin(deg2rad(270)) * $Size + $Y;
@@ -893,19 +893,19 @@
                  $Points[] = cos(deg2rad(135)) * $Size + $X;
                  $Points[] = sin(deg2rad(135)) * $Size + $Y;
                  $this->pChartObject->drawPolygon($Points,$Color);
-             } elseif ( $Shape == NODE_SHAPE_SQUARE ) {
+             } elseif ($Shape == NODE_SHAPE_SQUARE) {
                  $Offset = $Size/2;
                  $Size = $Size / 2;
                  $this->pChartObject->drawFilledRectangle($X-$Offset,$Y-$Offset,$X+$Offset,$Y+$Offset,$Color);
              }
 
-             if ( $Name != "" ) {
+             if ($Name != "") {
                  $LabelOptions = array("R"=>$this->Labels["R"],"G"=>$this->Labels["G"],"B"=>$this->Labels["B"],"Alpha"=>$this->Labels["Alpha"]);
 
-                 if ( $this->Labels["Type"] == LABEL_LIGHT ) {
+                 if ($this->Labels["Type"] == LABEL_LIGHT) {
                      $LabelOptions["Align"] = TEXT_ALIGN_BOTTOMLEFT;
                      $this->pChartObject->drawText($X,$Y,$Name,$LabelOptions);
-                 } elseif ( $this->Labels["Type"] == LABEL_CLASSIC ) {
+                 } elseif ($this->Labels["Type"] == LABEL_CLASSIC) {
                      $LabelOptions["Align"]         = TEXT_ALIGN_TOPMIDDLE;
                      $LabelOptions["DrawBox"]       = TRUE;
                      $LabelOptions["BoxAlpha"]      = 50;
@@ -920,12 +920,12 @@
          }
 
          /* Draw the vectors */
-         if ( $DrawVectors ) {
+         if ($DrawVectors) {
              foreach ($this->Data as $Key => $Settings) {
                  $X1 = $Settings["X"];
                  $Y1 = $Settings["Y"];
 
-                 if ( isset($Settings["Vectors"]) && $Settings["Type"] != NODE_TYPE_CENTRAL ) {
+                 if (isset($Settings["Vectors"]) && $Settings["Type"] != NODE_TYPE_CENTRAL) {
                      foreach ($Settings["Vectors"] as $ID => $Vector) {
                          $Type  = $Vector["Type"];
                          $Force = $Vector["Force"];
@@ -969,19 +969,19 @@
          $A = (($X3 * $Y4 - $X4 * $Y3) * ($X1 - $X2) - ($X1 * $Y2 - $X2 * $Y1) * ($X3 - $X4));
          $B = (($Y1 - $Y2) * ($X3 - $X4) - ($Y3 - $Y4) * ($X1 - $X2));
 
-         if ( $B == 0 ) {
+         if ($B == 0) {
              return(FALSE);
          }
          $Xi = $A / $B;
 
          $C = ($X1 - $X2);
-         if ( $C == 0 ) {
+         if ($C == 0) {
              return(FALSE);
          }
          $Yi = $Xi * (($Y1 - $Y2)/$C) + (($X1 * $Y2 - $X2 * $Y1)/$C);
 
-         if ( $Xi >= min($X1,$X2) && $Xi >= min($X3,$X4) && $Xi <= max($X1,$X2) && $Xi <= max($X3,$X4)) {
-             if ( $Yi >= min($Y1,$Y2) && $Yi >= min($Y3,$Y4) && $Yi <= max($Y1,$Y2) && $Yi <= max($Y3,$Y4)) {
+         if ($Xi >= min($X1,$X2) && $Xi >= min($X3,$X4) && $Xi <= max($X1,$X2) && $Xi <= max($X3,$X4)) {
+             if ($Yi >= min($Y1,$Y2) && $Yi >= min($Y3,$Y4) && $Yi <= max($Y1,$Y2) && $Yi <= max($Y3,$Y4)) {
                  return(TRUE);
              }
          }

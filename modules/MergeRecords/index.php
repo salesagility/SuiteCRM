@@ -51,11 +51,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 if (isset($_REQUEST['uid'])) {
     $merge_ids = explode(',',$_REQUEST['uid']);
     // Bug 18852 - Check to make sure we have ACL Edit privledges on both records involved in the merge before proceeding
-    if ( ($bean1 = SugarModule::get($_REQUEST['action_module'])->loadBean()) !== false
-    	    && ($bean2 = SugarModule::get($_REQUEST['action_module'])->loadBean()) !== false ) {
+    if (($bean1 = SugarModule::get($_REQUEST['action_module'])->loadBean()) !== false
+    	    && ($bean2 = SugarModule::get($_REQUEST['action_module'])->loadBean()) !== false) {
         $bean1->retrieve($merge_ids[0]);
         $bean2->retrieve($merge_ids[1]);
-        if ( !$bean1->ACLAccess('edit') || !$bean2->ACLAccess('edit') ) {
+        if (!$bean1->ACLAccess('edit') || !$bean2->ACLAccess('edit')) {
             ACLController::displayNoAccess();
             sugar_die('');
         }

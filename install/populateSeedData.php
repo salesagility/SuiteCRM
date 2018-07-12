@@ -83,10 +83,10 @@ ini_set("max_execution_time", "3600");
 // ensure we have enough memory
 $memory_needed  = 256;
 $memory_limit   = ini_get('memory_limit');
-if ( $memory_limit != "" && $memory_limit != "-1" ) { // if memory_limit is set
+if ($memory_limit != "" && $memory_limit != "-1") { // if memory_limit is set
     rtrim($memory_limit, 'M');
     $memory_limit_int = (int) $memory_limit;
-    if ( $memory_limit_int < $memory_needed ) {
+    if ($memory_limit_int < $memory_needed) {
         ini_set("memory_limit", "$memory_needed" . "M");
     }
 }

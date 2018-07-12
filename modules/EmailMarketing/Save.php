@@ -88,7 +88,7 @@ if (!empty($_POST['assigned_user_id']) && ($marketing->assigned_user_id != $_POS
 }
 foreach ($marketing->column_fields as $field) {
     if ($field == 'all_prospect_lists') {
-        if (isset($_POST[$field]) && $_POST[$field]=='on' ) {
+        if (isset($_POST[$field]) && $_POST[$field]=='on') {
             $marketing->$field = 1;
         } else {
             $marketing->$field = 0;

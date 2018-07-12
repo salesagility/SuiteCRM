@@ -52,7 +52,7 @@ function get_node_data($params,$get_array=false)
     $subcat_id=$params['NODES'][$click_level]['id'];
     $cat_id=$params['NODES'][$click_level-1]['id'];
     $href=true;
-    if (isset($params['TREE']['caller']) and $params['TREE']['caller']=='Documents' ) {
+    if (isset($params['TREE']['caller']) and $params['TREE']['caller']=='Documents') {
         $href=false;
     }
     $nodes=get_documents($cat_id,$subcat_id,$href);

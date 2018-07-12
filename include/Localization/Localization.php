@@ -160,13 +160,13 @@ class Localization
             $userPref = $current_user->getPreference($prefName);
         }
         // Bug 39171 - If we are asking for default_email_charset, check in emailSettings['defaultOutboundCharset'] as well
-        if ( $prefName == 'default_email_charset' ) {
+        if ($prefName == 'default_email_charset') {
             if ($user != null) {
                 $emailSettings = $user->getPreference('emailSettings', 'Emails');
             } elseif (!empty($current_user)) {
                 $emailSettings = $current_user->getPreference('emailSettings', 'Emails');
             }
-            if ( isset($emailSettings['defaultOutboundCharset']) ) {
+            if (isset($emailSettings['defaultOutboundCharset'])) {
                 $userPref = $emailSettings['defaultOutboundCharset'];
             }
         }
@@ -201,7 +201,7 @@ class Localization
         }
 
         $load = sugar_cache_retrieve('currency_list');
-        if ( !is_array($load) ) {
+        if (!is_array($load)) {
             // load default from config.php
             $this->currencies['-99'] = array(
 				'name'		=> $sugar_config['default_currency_name'],
@@ -652,7 +652,7 @@ eoq;
         global $current_user;
         global $app_list_strings;
 
-        if ( $user == null ) {
+        if ($user == null) {
             $user = $current_user;
         }
 
@@ -837,7 +837,7 @@ eoq;
      */
     public function detectCharset($str, $strict=false)
     {
-        if ( function_exists('mb_convert_encoding') ) {
+        if (function_exists('mb_convert_encoding')) {
             return mb_detect_encoding($str,'ASCII,JIS,UTF-8,EUC-JP,SJIS,ISO-8859-1',$strict);
         }
 

@@ -273,7 +273,7 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
 
         //if activity is removed and target type is users, then a user is trying to opt out
         //of emails.  This is not possible as Users Table does not have opt out column.
-        if ($row && (strtolower($row['target_type']) == 'users' && $activity == 'removed' )) {
+        if ($row && (strtolower($row['target_type']) == 'users' && $activity == 'removed')) {
             $return_array['target_id'] = $row['target_id'];
             $return_array['target_type'] = $row['target_type'];
             return $return_array;
@@ -413,7 +413,7 @@ function get_subscription_lists_query($focus, $additional_fields = null)
     $all_news_type_pl_query .= "and (pl.list_type like 'exempt%' or pl.list_type ='default') ";
 
     /* BEGIN - SECURITY GROUPS */
-    if ($focus->bean_implements('ACL') && ACLController::requireSecurityGroup('Campaigns', 'list') ) {
+    if ($focus->bean_implements('ACL') && ACLController::requireSecurityGroup('Campaigns', 'list')) {
         require_once('modules/SecurityGroups/SecurityGroup.php');
         global $current_user;
         $owner_where = $focus->getOwnerWhere($current_user->id);
@@ -434,7 +434,7 @@ function get_subscription_lists_query($focus, $additional_fields = null)
     $all_plp_current = "select prospect_list_id from prospect_lists_prospects where related_id = '$focus->id' and deleted = 0 ";
 
     //build array of prospect lists that this user belongs to
-    $current_plp =$focus->db->query($all_plp_current );
+    $current_plp =$focus->db->query($all_plp_current);
     $current_plp_arr = array();
     while ($row = $focus->db->fetchByAssoc($current_plp)) {
         $current_plp_arr[] = $row;
@@ -621,7 +621,7 @@ function process_subscriptions($subscription_string_to_parse)
         //--grab all the lists for the passed in campaign id
         $pl_qry ="select id, list_type from prospect_lists where id in (select prospect_list_id from prospect_list_campaigns ";
         $pl_qry .= "where campaign_id = '$campaign') and deleted = 0 ";
-        $GLOBALS['log']->debug("In Campaigns Util: subscribe function, about to run query: ".$pl_qry );
+        $GLOBALS['log']->debug("In Campaigns Util: subscribe function, about to run query: ".$pl_qry);
         $pl_qry_result = $focus->db->query($pl_qry);
 
         //build the array of all prospect_lists
@@ -633,7 +633,7 @@ function process_subscriptions($subscription_string_to_parse)
         //--grab all the prospect_lists this user belongs to
         $curr_pl_qry ="select prospect_list_id, related_id  from prospect_lists_prospects ";
         $curr_pl_qry .="where related_id = '$focus->id'  and deleted = 0 ";
-        $GLOBALS['log']->debug("In Campaigns Util: subscribe function, about to run query: ".$curr_pl_qry );
+        $GLOBALS['log']->debug("In Campaigns Util: subscribe function, about to run query: ".$curr_pl_qry);
         $curr_pl_qry_result = $focus->db->query($curr_pl_qry);
 
         //build the array of all prospect lists that this current user belongs to
@@ -724,7 +724,7 @@ function process_subscriptions($subscription_string_to_parse)
         //retrieve lists that this user belongs to
         $curr_pl_qry ="select prospect_list_id, related_id  from prospect_lists_prospects ";
         $curr_pl_qry .="where related_id = '$focus->id'  and deleted = 0 ";
-        $GLOBALS['log']->debug("In Campaigns Util, unsubscribe function about to run query: ".$curr_pl_qry );
+        $GLOBALS['log']->debug("In Campaigns Util, unsubscribe function about to run query: ".$curr_pl_qry);
         $curr_pl_qry_result = $focus->db->query($curr_pl_qry);
 
         //build the array with current user list information
@@ -883,7 +883,7 @@ function process_subscriptions($subscription_string_to_parse)
         }
         //iterate through and see which jobs were found
         foreach ($scheds as $funct) {
-            if ( ($funct['job']==$check_sched1)  ||   ($funct['job']==$check_sched2)) {
+            if (($funct['job']==$check_sched1)  ||   ($funct['job']==$check_sched2)) {
                 if ($funct['job']==$check_sched1) {
                     $check_sched1 ="found";
                 } else {
@@ -1108,7 +1108,7 @@ function filterFieldsFromBeans($beans)
                 $email_fields = true;
             }
             if ($field_def['name']!= 'account_name') {
-                if ( ( $field_def['type'] == 'relate' && empty($field_def['custom_type']) )
+                if (($field_def['type'] == 'relate' && empty($field_def['custom_type']))
                     || $field_def['type'] == 'assigned_user_name' || $field_def['type'] =='link' || $field_def['type'] =='function'
                     || (isset($field_def['source'])  && $field_def['source']=='non-db' && !$email_fields) || $field_def['type'] == 'id') {
                     continue;
@@ -1122,7 +1122,7 @@ function filterFieldsFromBeans($beans)
             }
 
             //If the field is hidden in the studio settings, then do not show
-            if (isset($field_def['studio']) && isset($field_def['studio']['editview']) && $field_def['studio']['editview']=== false ) {
+            if (isset($field_def['studio']) && isset($field_def['studio']['editview']) && $field_def['studio']['editview']=== false) {
                 continue;
             }
 

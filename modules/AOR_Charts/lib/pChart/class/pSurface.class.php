@@ -53,16 +53,16 @@
      /* Add a point on the grid */
      function addPoint($X,$Y,$Value,$Force=TRUE)
      {
-         if ( $X < 0 || $X >$this->GridSizeX ) {
+         if ($X < 0 || $X >$this->GridSizeX) {
              return(0);
          }
-         if ( $Y < 0 || $Y >$this->GridSizeY ) {
+         if ($Y < 0 || $Y >$this->GridSizeY) {
              return(0);
          }
 
-         if ( $this->Points[$X][$Y] == UNKNOWN || $Force ) {
+         if ($this->Points[$X][$Y] == UNKNOWN || $Force) {
              $this->Points[$X][$Y] = $Value;
-         } elseif ( $this->Points[$X][$Y] == UNKNOWN ) {
+         } elseif ($this->Points[$X][$Y] == UNKNOWN) {
              $this->Points[$X][$Y] = $Value;
          } else {
              $this->Points[$X][$Y] = ($this->Points[$X][$Y] + $Value)/2;
@@ -82,7 +82,7 @@
          $Labels		= isset($Format["Labels"]) ? $Format["Labels"] : NULL;
          $CountOffset	= isset($Format["CountOffset"]) ? $Format["CountOffset"] : 0;
 
-         if ( $Labels != NULL && !is_array($Labels) ) {
+         if ($Labels != NULL && !is_array($Labels)) {
              $Label = $Labels;
              $Labels = "";
              $Labels[] = $Label;
@@ -92,20 +92,20 @@
          $XSize = ($this->pChartObject->GraphAreaX2 - $this->pChartObject->GraphAreaX1) / ($this->GridSizeX+1);
 
          $Settings = array("Angle"=>$Angle,"R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha);
-         if ( $Position == LABEL_POSITION_TOP ) {
+         if ($Position == LABEL_POSITION_TOP) {
              $YPos  = $this->pChartObject->GraphAreaY1 - $Padding;
-             if ($Angle == 0 ) {
+             if ($Angle == 0) {
                  $Settings["Align"] = TEXT_ALIGN_BOTTOMMIDDLE;
              }
-             if ($Angle != 0 ) {
+             if ($Angle != 0) {
                  $Settings["Align"] = TEXT_ALIGN_MIDDLELEFT;
              }
-         } elseif ( $Position == LABEL_POSITION_BOTTOM ) {
+         } elseif ($Position == LABEL_POSITION_BOTTOM) {
              $YPos  = $this->pChartObject->GraphAreaY2 + $Padding;
-             if ($Angle == 0 ) {
+             if ($Angle == 0) {
                  $Settings["Align"] = TEXT_ALIGN_TOPMIDDLE;
              }
-             if ($Angle != 0 ) {
+             if ($Angle != 0) {
                  $Settings["Align"] = TEXT_ALIGN_MIDDLERIGHT;
              }
          } else {
@@ -115,7 +115,7 @@
          for ($X=0;$X<=$this->GridSizeX;$X++) {
              $XPos = floor($X0+$X*$XSize + $XSize/2);
 
-             if ( $Labels == NULL || !isset($Labels[$X]) ) {
+             if ($Labels == NULL || !isset($Labels[$X])) {
                  $Value = $X+$CountOffset;
              } else {
                  $Value = $Labels[$X];
@@ -138,7 +138,7 @@
          $Labels		= isset($Format["Labels"]) ? $Format["Labels"] : NULL;
          $CountOffset	= isset($Format["CountOffset"]) ? $Format["CountOffset"] : 0;
 
-         if ( $Labels != NULL && !is_array($Labels) ) {
+         if ($Labels != NULL && !is_array($Labels)) {
              $Label = $Labels;
              $Labels = "";
              $Labels[] = $Label;
@@ -148,10 +148,10 @@
          $YSize = ($this->pChartObject->GraphAreaY2 - $this->pChartObject->GraphAreaY1) / ($this->GridSizeY+1);
 
          $Settings = array("Angle"=>$Angle,"R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha);
-         if ( $Position == LABEL_POSITION_LEFT ) {
+         if ($Position == LABEL_POSITION_LEFT) {
              $XPos  = $this->pChartObject->GraphAreaX1 - $Padding;
              $Settings["Align"] = TEXT_ALIGN_MIDDLERIGHT;
-         } elseif ( $Position == LABEL_POSITION_RIGHT ) {
+         } elseif ($Position == LABEL_POSITION_RIGHT) {
              $XPos  = $this->pChartObject->GraphAreaX2 + $Padding;
              $Settings["Align"] = TEXT_ALIGN_MIDDLELEFT;
          } else {
@@ -161,7 +161,7 @@
          for ($Y=0;$Y<=$this->GridSizeY;$Y++) {
              $YPos = floor($Y0+$Y*$YSize + $YSize/2);
 
-             if ( $Labels == NULL || !isset($Labels[$Y]) ) {
+             if ($Labels == NULL || !isset($Labels[$Y])) {
                  $Value = $Y+$CountOffset;
              } else {
                  $Value = $Labels[$Y];
@@ -192,22 +192,22 @@
              for ($Y=0;$Y<=$this->GridSizeY;$Y++) {
                  $Value = $this->Points[$X][$Y];
 
-                 if ( $Value != UNKNOWN && $Value != IGNORED && $Value >= $Threshold) {
+                 if ($Value != UNKNOWN && $Value != IGNORED && $Value >= $Threshold) {
                      $X1 = floor($X0+$X*$XSize)+$Padding;
                      $Y1 = floor($Y0+$Y*$YSize)+$Padding;
                      $X2 = floor($X0+$X*$XSize+$XSize);
                      $Y2 = floor($Y0+$Y*$YSize+$YSize);
 
-                     if ( $X > 0 && $this->Points[$X-1][$Y] != UNKNOWN && $this->Points[$X-1][$Y] != IGNORED && $this->Points[$X-1][$Y] < $Threshold) {
+                     if ($X > 0 && $this->Points[$X-1][$Y] != UNKNOWN && $this->Points[$X-1][$Y] != IGNORED && $this->Points[$X-1][$Y] < $Threshold) {
                          $this->pChartObject->drawLine($X1,$Y1,$X1,$Y2,$Color);
                      }
-                     if ( $Y > 0 && $this->Points[$X][$Y-1] != UNKNOWN && $this->Points[$X][$Y-1] != IGNORED && $this->Points[$X][$Y-1] < $Threshold) {
+                     if ($Y > 0 && $this->Points[$X][$Y-1] != UNKNOWN && $this->Points[$X][$Y-1] != IGNORED && $this->Points[$X][$Y-1] < $Threshold) {
                          $this->pChartObject->drawLine($X1,$Y1,$X2,$Y1,$Color);
                      }
-                     if ( $X < $this->GridSizeX && $this->Points[$X+1][$Y] != UNKNOWN && $this->Points[$X+1][$Y] != IGNORED && $this->Points[$X+1][$Y] < $Threshold) {
+                     if ($X < $this->GridSizeX && $this->Points[$X+1][$Y] != UNKNOWN && $this->Points[$X+1][$Y] != IGNORED && $this->Points[$X+1][$Y] < $Threshold) {
                          $this->pChartObject->drawLine($X2,$Y1,$X2,$Y2,$Color);
                      }
-                     if ( $Y < $this->GridSizeY && $this->Points[$X][$Y+1] != UNKNOWN && $this->Points[$X][$Y+1] != IGNORED && $this->Points[$X][$Y+1] < $Threshold) {
+                     if ($Y < $this->GridSizeY && $this->Points[$X][$Y+1] != UNKNOWN && $this->Points[$X][$Y+1] != IGNORED && $this->Points[$X][$Y+1] < $Threshold) {
                          $this->pChartObject->drawLine($X1,$Y2,$X2,$Y2,$Color);
                      }
                  }
@@ -243,29 +243,29 @@
              for ($Y=0;$Y<=$this->GridSizeY;$Y++) {
                  $Value = $this->Points[$X][$Y];
 
-                 if ( $Value != UNKNOWN && $Value != IGNORED ) {
+                 if ($Value != UNKNOWN && $Value != IGNORED) {
                      $X1 = floor($X0+$X*$XSize)+$Padding;
                      $Y1 = floor($Y0+$Y*$YSize)+$Padding;
                      $X2 = floor($X0+$X*$XSize+$XSize);
                      $Y2 = floor($Y0+$Y*$YSize+$YSize);
 
-                     if ( $Palette != NULL ) {
-                         if ( isset($Palette[$Value]) && isset($Palette[$Value]["R"]) ) {
+                     if ($Palette != NULL) {
+                         if (isset($Palette[$Value]) && isset($Palette[$Value]["R"])) {
                              $R = $Palette[$Value]["R"];
                          } else {
                              $R = 0;
                          }
-                         if ( isset($Palette[$Value]) && isset($Palette[$Value]["G"]) ) {
+                         if (isset($Palette[$Value]) && isset($Palette[$Value]["G"])) {
                              $G = $Palette[$Value]["G"];
                          } else {
                              $G = 0;
                          }
-                         if ( isset($Palette[$Value]) && isset($Palette[$Value]["B"]) ) {
+                         if (isset($Palette[$Value]) && isset($Palette[$Value]["B"])) {
                              $B = $Palette[$Value]["B"];
                          } else {
                              $B = 0;
                          }
-                         if ( isset($Palette[$Value]) && isset($Palette[$Value]["Alpha"]) ) {
+                         if (isset($Palette[$Value]) && isset($Palette[$Value]["Alpha"])) {
                              $Alpha = $Palette[$Value]["Alpha"];
                          } else {
                              $Alpha = 1000;
@@ -278,12 +278,12 @@
                      }
 
                      $Settings = array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha);
-                     if ( $Border ) {
+                     if ($Border) {
                          $Settings["BorderR"] = $BorderR;
                          $Settings["BorderG"] = $BorderG;
                          $Settings["BorderB"] = $BorderB;
                      }
-                     if ( $Surrounding != -1 ) {
+                     if ($Surrounding != -1) {
                          $Settings["BorderR"] = $R+$Surrounding;
                          $Settings["BorderG"] = $G+$Surrounding;
                          $Settings["BorderB"] = $B+$Surrounding;
@@ -301,7 +301,7 @@
          $Missing = "";
          for ($X=0;$X<=$this->GridSizeX;$X++) {
              for ($Y=0;$Y<=$this->GridSizeY;$Y++) {
-                 if ( $this->Points[$X][$Y] == UNKNOWN ) {
+                 if ($this->Points[$X][$Y] == UNKNOWN) {
                      $Missing[] = $X.",".$Y;
                  }
              }
@@ -313,7 +313,7 @@
              $X   = $Pos[0];
              $Y   = $Pos[1];
 
-             if ( $this->Points[$X][$Y] == UNKNOWN ) {
+             if ($this->Points[$X][$Y] == UNKNOWN) {
                  $NearestNeighbor = $this->getNearestNeighbor($X,$Y);
 
                  $Value = 0;
@@ -327,7 +327,7 @@
                      }
                  }
 
-                 if ( $Points != 0 ) {
+                 if ($Points != 0) {
                      $this->Points[$X][$Y] = $Value / $Points;
                  }
              }
@@ -340,11 +340,11 @@
          $Nearest = UNKNOWN;
          for ($X=0;$X<=$this->GridSizeX;$X++) {
              for ($Y=0;$Y<=$this->GridSizeY;$Y++) {
-                 if ( $this->Points[$X][$Y] != UNKNOWN && $this->Points[$X][$Y] != IGNORED ) {
+                 if ($this->Points[$X][$Y] != UNKNOWN && $this->Points[$X][$Y] != IGNORED) {
                      $DistanceX = max($Xp,$X)-min($Xp,$X);
                      $DistanceY = max($Yp,$Y)-min($Yp,$Y);
                      $Distance  = max($DistanceX,$DistanceY);
-                     if ( $Distance < $Nearest || $Nearest == UNKNOWN ) {
+                     if ($Distance < $Nearest || $Nearest == UNKNOWN) {
                          $Nearest = $Distance;
                      }
                  }

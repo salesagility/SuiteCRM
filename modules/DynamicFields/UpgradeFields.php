@@ -46,7 +46,7 @@ require_once('modules/DynamicFields/DynamicField.php');
  if (!isset($db)) {
      $db = DBManagerFactory::getInstance();
  }
- $result = $db->query( 'SELECT * FROM fields_meta_data WHERE deleted = 0 ORDER BY custom_module');
+ $result = $db->query('SELECT * FROM fields_meta_data WHERE deleted = 0 ORDER BY custom_module');
  $modules = array();
  /*
   * get the real field_meta_data

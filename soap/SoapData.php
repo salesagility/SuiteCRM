@@ -198,7 +198,7 @@ function get_modified_entries($session, $module_name, $ids, $select_fields)
     }
     $index = 0;
     foreach ($select_fields as $field) {
-        if ( !isset($seed->field_defs[$field]) ) {
+        if (!isset($seed->field_defs[$field])) {
             continue;
         }
         $field_select .= $table_name.".".$field;

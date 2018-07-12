@@ -224,7 +224,7 @@ class ModuleInstaller
             //Clear out all the langauge cache files.
             clearAllJsAndJsLangFilesWithoutOutput();
             $cache_key = 'app_list_strings.'.$GLOBALS['current_language'];
-            sugar_cache_clear($cache_key );
+            sugar_cache_clear($cache_key);
             sugar_cache_reset();
 
             //clear the unified_search_module.php file
@@ -298,10 +298,10 @@ class ModuleInstaller
     {
         if (isset($this->installdefs['copy'])) {
             /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:11 PM */
-            $backup_path = clean_path( remove_file_extension(urldecode($_REQUEST['install_file']))."-restore" );
+            $backup_path = clean_path(remove_file_extension(urldecode($_REQUEST['install_file']))."-restore");
             /* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
             foreach ($this->installdefs['copy'] as $cp) {
-                $GLOBALS['log']->debug("Copying ..." . $cp['from'].  " to " .$cp['to'] );
+                $GLOBALS['log']->debug("Copying ..." . $cp['from'].  " to " .$cp['to']);
                 /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:11 PM */
                 //$this->copy_path($cp['from'], $cp['to']);
                 $this->copy_path($cp['from'], $cp['to'], $backup_path);
@@ -321,12 +321,12 @@ class ModuleInstaller
                 /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:11 PM */
                 //rmdir_recursive($cp['to']);
 
-                $backup_path = clean_path( remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore/".$cp['to'] );
+                $backup_path = clean_path(remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore/".$cp['to']);
                 $this->uninstall_new_files($cp, $backup_path);
                 $this->copy_path($backup_path, $cp['to'], $backup_path, true);
                 /* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
             }
-            $backup_path = clean_path( remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore");
+            $backup_path = clean_path(remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore");
             if (file_exists($backup_path)) {
                 rmdir_recursive($backup_path);
             }
@@ -398,7 +398,7 @@ class ModuleInstaller
                 if (!empty($module)) {
                     $item['to_module'] = $module;
                 }
-                $GLOBALS['log']->debug("Installing section $section from $from for " .$item['to_module'] );
+                $GLOBALS['log']->debug("Installing section $section from $from for " .$item['to_module']);
                 if ($item['to_module'] == 'application') {
                     $path = "custom/Extension/application/Ext/$extname";
                 } else {
@@ -440,7 +440,7 @@ class ModuleInstaller
                 if (!empty($module)) {
                     $item['to_module'] = $module;
                 }
-                $GLOBALS['log']->debug("Uninstalling section $section from $from for " .$item['to_module'] );
+                $GLOBALS['log']->debug("Uninstalling section $section from $from for " .$item['to_module']);
                 if ($item['to_module'] == 'application') {
                     $path = "custom/Extension/application/Ext/$extname";
                 } else {
@@ -459,9 +459,9 @@ class ModuleInstaller
                 } elseif (file_exists("$disabled_path/$target.php")) {
                     rmdir_recursive("$disabled_path/$target.php");
                 } elseif (!empty($from) && file_exists($path . '/'. basename($from))) {
-                    rmdir_recursive( $path . '/'. basename($from));
+                    rmdir_recursive($path . '/'. basename($from));
                 } elseif (!empty($from) && file_exists($disabled_path . '/'. basename($from))) {
-                    rmdir_recursive( $disabled_path . '/'. basename($from));
+                    rmdir_recursive($disabled_path . '/'. basename($from));
                 }
             }
         }
@@ -515,7 +515,7 @@ class ModuleInstaller
                     rename("$path/$target.php", "$disabled_path/$target.php");
                 } elseif (!empty($from) && file_exists($path . '/'. basename($from))) {
                     mkdir_recursive($disabled_path, true);
-                    rename( $path . '/'. basename($from), $disabled_path.'/'. basename($from));
+                    rename($path . '/'. basename($from), $disabled_path.'/'. basename($from));
                 }
             }
         }
@@ -783,7 +783,7 @@ class ModuleInstaller
                 $this->log(translate('LBL_MI_IN_DASHLETS') . $cp['name']);
                 $cp['from'] = str_replace('<basepath>', $this->base_dir, $cp['from']);
                 $path = 'custom/modules/Home/Dashlets/' . $cp['name'] . '/';
-                $GLOBALS['log']->debug("Installing Dashlet " . $cp['name'] . "..." . $cp['from'] );
+                $GLOBALS['log']->debug("Installing Dashlet " . $cp['name'] . "..." . $cp['from']);
                 if (!file_exists($path)) {
                     mkdir_recursive($path, true);
                 }
@@ -812,7 +812,7 @@ class ModuleInstaller
     function install_images()
     {
         if (isset($this->installdefs['image_dir'])) {
-            $this->log( translate('LBL_MI_IN_IMAGES') );
+            $this->log(translate('LBL_MI_IN_IMAGES'));
             $this->copy_path($this->installdefs['image_dir'] , 'custom/themes');
         }
     }
@@ -840,12 +840,12 @@ class ModuleInstaller
             $this->log(translate('LBL_MI_UN_MENUS'));
             foreach ($this->installdefs['dcaction'] as $action) {
                 $action['from'] = str_replace('<basepath>', $this->base_dir, $action['from']);
-                $GLOBALS['log']->debug("Uninstalling DCActions ..." . $action['from'] );
+                $GLOBALS['log']->debug("Uninstalling DCActions ..." . $action['from']);
                 $path = 'custom/Extension/application/Ext/DashletContainer/Containers';
                 if (is_file($path . '/'. $this->id_name . '.php')) {
-                    rmdir_recursive( $path . '/'. $this->id_name . '.php');
+                    rmdir_recursive($path . '/'. $this->id_name . '.php');
                 } elseif (is_file($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php')) {
-                    rmdir_recursive( $path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php');
+                    rmdir_recursive($path . '/'. DISABLED_PATH . '/'. $this->id_name . '.php');
                 }
             }
             $this->rebuild_dashletcontainers();
@@ -860,7 +860,7 @@ class ModuleInstaller
                 $dir = str_replace('_','/',$cp['name']);
                 $cp['connector'] = str_replace('<basepath>', $this->base_dir, $cp['connector']);
                 $source_path = 'custom/modules/Connectors/connectors/sources/' . $dir. '/';
-                $GLOBALS['log']->debug("Installing Connector " . $cp['name'] . "..." . $cp['connector'] );
+                $GLOBALS['log']->debug("Installing Connector " . $cp['name'] . "..." . $cp['connector']);
                 if (!file_exists($source_path)) {
                     mkdir_recursive($source_path, true);
                 }
@@ -929,7 +929,7 @@ class ModuleInstaller
     {
         $languages = array();
         if (isset($this->installdefs['language'])) {
-            $this->log(translate('LBL_MI_IN_LANG') );
+            $this->log(translate('LBL_MI_IN_LANG'));
             foreach ($this->installdefs['language'] as $packs) {
                 $modules[]=$packs['to_module'];
                 $languages[$packs['language']] = $packs['language'];
@@ -966,7 +966,7 @@ class ModuleInstaller
     {
         $languages = array();
         if (isset($this->installdefs['language'])) {
-            $this->log(translate('LBL_MI_UN_LANG') );
+            $this->log(translate('LBL_MI_UN_LANG'));
             foreach ($this->installdefs['language'] as $packs) {
                 $modules[]=$packs['to_module'];
                 $languages[$packs['language']] = $packs['language'];
@@ -977,7 +977,7 @@ class ModuleInstaller
                     $path ='custom/Extension/' . $packs['to_module']. '/Ext/Language';
                 }
                 if (is_file($path.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
-                    rmdir_recursive( $path.'/'.$packs['language'].'.'. $this->id_name . '.php');
+                    rmdir_recursive($path.'/'.$packs['language'].'.'. $this->id_name . '.php');
                 } elseif (is_file($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php')) {
                     rmdir_recursive($path.'/'.DISABLED_PATH.'/'.$packs['language'].'.'. $this->id_name . '.php');
                 }
@@ -1014,7 +1014,7 @@ class ModuleInstaller
                     rename("$path/$target.php", "$disabled_path/$target.php");
                 } elseif (file_exists($path . '/'. basename($from))) {
                     mkdir_recursive($disabled_path, true);
-                    rename( $path . '/'. basename($from), $disabled_path.'/'. basename($from));
+                    rename($path . '/'. basename($from), $disabled_path.'/'. basename($from));
                 }
             }
             $this->rebuild_languages($languages, $modules);
@@ -1087,7 +1087,7 @@ class ModuleInstaller
 
 
 
-        foreach ($this->installdefs['logic_hooks'] as $hook ) {
+        foreach ($this->installdefs['logic_hooks'] as $hook) {
             check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'],  $hook['file'], $hook['class'], $hook['function']));
         }
     }
@@ -1098,7 +1098,7 @@ class ModuleInstaller
             return;
         }
 
-        foreach ($this->installdefs['logic_hooks'] as $hook ) {
+        foreach ($this->installdefs['logic_hooks'] as $hook) {
             remove_logic_hook($hook['module'], $hook['hook'], array($hook['order'], $hook['description'],  $hook['file'], $hook['class'], $hook['function']));
         }
     }
@@ -1324,35 +1324,35 @@ class ModuleInstaller
      */
     function install_relationships()
     {
-        if (isset ( $this->installdefs [ 'relationships' ] )) {
-            $this->log ( translate ( 'LBL_MI_IN_RELATIONSHIPS' ) ) ;
+        if (isset ($this->installdefs [ 'relationships' ])) {
+            $this->log (translate ('LBL_MI_IN_RELATIONSHIPS')) ;
             $str = "<?php \n //WARNING: The contents of this file are auto-generated\n" ;
             $save_table_dictionary = false ;
 
-            if (! file_exists ( "custom/Extension/application/Ext/TableDictionary" )) {
-                mkdir_recursive ( "custom/Extension/application/Ext/TableDictionary", true ) ;
+            if (! file_exists ("custom/Extension/application/Ext/TableDictionary")) {
+                mkdir_recursive ("custom/Extension/application/Ext/TableDictionary", true) ;
             }
 
-            foreach ( $this->installdefs [ 'relationships' ] as $key => $relationship ) {
-                $filename = basename ( $relationship [ 'meta_data' ] ) ;
-                $this->copy_path ( $relationship [ 'meta_data' ], 'custom/metadata/' . $filename ) ;
-                $this->install_relationship ( 'custom/metadata/' . $filename ) ;
+            foreach ($this->installdefs [ 'relationships' ] as $key => $relationship) {
+                $filename = basename ($relationship [ 'meta_data' ]) ;
+                $this->copy_path ($relationship [ 'meta_data' ], 'custom/metadata/' . $filename) ;
+                $this->install_relationship ('custom/metadata/' . $filename) ;
                 $save_table_dictionary = true ;
 
-                if (! empty ( $relationship [ 'module_vardefs' ] )) {
-                    $relationship [ 'module_vardefs' ] = str_replace ( '<basepath>', $this->base_dir, $relationship [ 'module_vardefs' ] ) ;
-                    $this->install_vardef ( $relationship [ 'module_vardefs' ], $relationship [ 'module' ] ) ;
+                if (! empty ($relationship [ 'module_vardefs' ])) {
+                    $relationship [ 'module_vardefs' ] = str_replace ('<basepath>', $this->base_dir, $relationship [ 'module_vardefs' ]) ;
+                    $this->install_vardef ($relationship [ 'module_vardefs' ], $relationship [ 'module' ]) ;
                 }
 
-                if (! empty ( $relationship [ 'module_layoutdefs' ] )) {
-                    $relationship [ 'module_layoutdefs' ] = str_replace ( '<basepath>', $this->base_dir, $relationship [ 'module_layoutdefs' ] ) ;
-                    $this->install_layoutdef ( $relationship [ 'module_layoutdefs' ], $relationship [ 'module' ] ) ;
+                if (! empty ($relationship [ 'module_layoutdefs' ])) {
+                    $relationship [ 'module_layoutdefs' ] = str_replace ('<basepath>', $this->base_dir, $relationship [ 'module_layoutdefs' ]) ;
+                    $this->install_layoutdef ($relationship [ 'module_layoutdefs' ], $relationship [ 'module' ]) ;
                 }
 
                 $relName = strpos($filename, "MetaData") !== false ? substr($filename, 0, strlen($filename) - 12) : $filename;
-                $out = sugar_fopen ( "custom/Extension/application/Ext/TableDictionary/$relName.php", 'w' ) ;
-                fwrite ( $out, $str . "include('custom/metadata/$filename');\n\n?>" ) ;
-                fclose ( $out ) ;
+                $out = sugar_fopen ("custom/Extension/application/Ext/TableDictionary/$relName.php", 'w') ;
+                fwrite ($out, $str . "include('custom/metadata/$filename');\n\n?>") ;
+                fclose ($out) ;
             }
 
 
@@ -1378,7 +1378,7 @@ class ModuleInstaller
     {
         $_REQUEST['moduleInstaller'] = true;
         if (!file_exists($file)) {
-            $GLOBALS['log']->debug( 'File does not exists : '.$file);
+            $GLOBALS['log']->debug('File does not exists : '.$file);
             return;
         }
         include($file);
@@ -1386,7 +1386,7 @@ class ModuleInstaller
         foreach ($rel_dictionary as $rel_name => $rel_data) {
             $table = ''; // table is actually optional
             // check if we have a table definition - not all relationships require a join table
-            if ( isset( $rel_data[ 'table' ] ) ) {
+            if (isset($rel_data[ 'table' ])) {
                 $table = $rel_data[ 'table' ];
 
                 if (!$this->db->tableExists($table)) {
@@ -1400,15 +1400,15 @@ class ModuleInstaller
             SugarBean::createRelationshipMeta($rel_name, $this->db,$table,$rel_dictionary,'');
             Relationship::delete_cache();
             if (!$this->silent) {
-                $GLOBALS['log']->debug( 'done<br>');
+                $GLOBALS['log']->debug('done<br>');
             }
         }
     }
 
     function install_layoutfields()
     {
-        if (!empty ( $this->installdefs [ 'layoutfields' ] )) {
-            foreach ( $this->installdefs [ 'layoutfields' ] as $fieldSet ) {
+        if (!empty ($this->installdefs [ 'layoutfields' ])) {
+            foreach ($this->installdefs [ 'layoutfields' ] as $fieldSet) {
                 if (!empty($fieldSet['additional_fields'])) {
                     $this->addFieldsToLayout($fieldSet['additional_fields']);
                 }
@@ -1418,8 +1418,8 @@ class ModuleInstaller
 
     function uninstall_layoutfields()
     {
-        if (!empty ( $this->installdefs [ 'layoutfields' ] )) {
-            foreach ( $this->installdefs [ 'layoutfields' ] as $fieldSet ) {
+        if (!empty ($this->installdefs [ 'layoutfields' ])) {
+            foreach ($this->installdefs [ 'layoutfields' ] as $fieldSet) {
                 if (!empty($fieldSet['additional_fields'])) {
                     $this->removeFieldsFromLayout($fieldSet['additional_fields']);
                 }
@@ -1431,7 +1431,7 @@ class ModuleInstaller
     {
         if ($rel_dictionary == null) {
             if (!file_exists($file)) {
-                $GLOBALS['log']->debug( 'File does not exists : '.$file);
+                $GLOBALS['log']->debug('File does not exists : '.$file);
                 return;
             }
             include($file);
@@ -1449,7 +1449,7 @@ class ModuleInstaller
                 SugarBean::removeRelationshipMeta($rel_name, $this->db,$table,$rel_dictionary,'');
                 $this->db->dropTableName($table);
                 if (!$this->silent) {
-                    $this->log( translate('LBL_MI_UN_RELATIONSHIPS_DROP') . $table);
+                    $this->log(translate('LBL_MI_UN_RELATIONSHIPS_DROP') . $table);
                 }
             }
 
@@ -1467,7 +1467,7 @@ class ModuleInstaller
             $filename = "$rel_name.php";
 
             foreach ($mods as $mod) {
-                if ($mod != 'application' ) {
+                if ($mod != 'application') {
                     $basepath = "custom/Extension/modules/$mod/Ext/";
                 } else {
                     $basepath = "custom/Extension/application/Ext/";
@@ -1476,14 +1476,14 @@ class ModuleInstaller
                 foreach (array($filename , "custom" . $filename, $rel_name ."_". $mod. ".php") as $fn) {
                     //remove any vardefs
                     $path = $basepath . "Vardefs/$fn" ;
-                    if (file_exists( $path )) {
-                        rmdir_recursive( $path );
+                    if (file_exists($path)) {
+                        rmdir_recursive($path);
                     }
 
                     //remove any layoutdefs
                     $path = $basepath . "Layoutdefs/$fn" ;
-                    if ( file_exists( $path )) {
-                        rmdir_recursive( $path );
+                    if (file_exists($path)) {
+                        rmdir_recursive($path);
                     }
                     $path = $basepath . "WirelessLayoutdefs/$fn";
                     if (file_exists($path)) {
@@ -1510,12 +1510,12 @@ class ModuleInstaller
 
             foreach (array($filename , "custom" . $filename, $rel_name ."_". $mod. ".php") as $fn) {
                 // remove the table dictionary extension
-                if ( file_exists("custom/Extension/application/Ext/TableDictionary/$fn")) {
+                if (file_exists("custom/Extension/application/Ext/TableDictionary/$fn")) {
                     unlink("custom/Extension/application/Ext/TableDictionary/$fn");
                 }
 
                 if (file_exists("custom/metadata/{$rel_name}MetaData.php")) {
-                    unlink( "custom/metadata/{$rel_name}MetaData.php" );
+                    unlink("custom/metadata/{$rel_name}MetaData.php");
                 }
             }
         }
@@ -1551,7 +1551,7 @@ class ModuleInstaller
 
                             //Check against mods to be removed.
                             foreach ($this->modulesInPackage as $removed_mod) {
-                                if ($rel_def['lhs_module'] == $removed_mod || $rel_def['rhs_module'] == $removed_mod ) {
+                                if ($rel_def['lhs_module'] == $removed_mod || $rel_def['rhs_module'] == $removed_mod) {
                                     $dictionary[$rel_name]['from_studio'] = true;
                                     $relationships[$rel_name] = $dictionary[$rel_name];
                                 }
@@ -1562,17 +1562,17 @@ class ModuleInstaller
                             foreach ($this->modulesInPackage as $removed_mod) {
                                 if ($def['module'] == $removed_mod) {
                                     require_once 'modules/ModuleBuilder/Module/StudioModule.php' ;
-                                    $studioMod = new StudioModule ( $mod );
-                                    $studioMod->removeFieldFromLayouts( $field );
+                                    $studioMod = new StudioModule ($mod);
+                                    $studioMod->removeFieldFromLayouts($field);
                                     if (isset($def['custom_module'])) {
                                         require_once ('modules/DynamicFields/DynamicField.php') ;
                                         require_once ($beanFiles [ $bean ]) ;
-                                        $seed = new $bean ( ) ;
-                                        $df = new DynamicField ( $mod ) ;
-                                        $df->setup ( $seed ) ;
+                                        $seed = new $bean () ;
+                                        $df = new DynamicField ($mod) ;
+                                        $df->setup ($seed) ;
                                         //Need to load the entire field_meta_data for some field types
                                         $field_obj = $df->getFieldWidget($mod, $field);
-                                        $field_obj->delete ( $df ) ;
+                                        $field_obj->delete ($df) ;
                                     }
                                 }
                             }
@@ -1588,16 +1588,16 @@ class ModuleInstaller
 
         if (isset($this->installdefs['relationships'])) {
             $relationships = $this->installdefs['relationships'];
-            $this->log(translate('LBL_MI_UN_RELATIONSHIPS') );
+            $this->log(translate('LBL_MI_UN_RELATIONSHIPS'));
             foreach ($relationships as $relationship) {
                 // remove the metadata entry
-                $filename = basename ( $relationship['meta_data'] );
+                $filename = basename ($relationship['meta_data']);
                 $pathname = (file_exists("custom/metadata/$filename")) ? "custom/metadata/$filename" : "metadata/$filename" ;
                 if (isset($GLOBALS['mi_remove_tables']) && $GLOBALS['mi_remove_tables']) {
-                    $this->uninstall_relationship( $pathname );
+                    $this->uninstall_relationship($pathname);
                 }
                 if (file_exists($pathname)) {
-                    unlink( $pathname );
+                    unlink($pathname);
                 }
             }
         }
@@ -1687,7 +1687,7 @@ class ModuleInstaller
             $this->silent = $silentBak;
 
             //#27877, If the request from MB redeploy a custom module , we will not remove the ACL actions for this package.
-            if ( !isset($_REQUEST['action']) || $_REQUEST['action']!='DeployPackage' ) {
+            if (!isset($_REQUEST['action']) || $_REQUEST['action']!='DeployPackage') {
                 $this->remove_acl_actions();
             }
             //end
@@ -1806,7 +1806,7 @@ class ModuleInstaller
     function merge_files($path, $name, $filter = '', $application = false)
     {
         if (!$application) {
-            $GLOBALS['log']->debug( get_class($this)."->merge_files() : merging module files in custom/Extension/modules/<module>/$path to custom/modules/<module>/$path$name");
+            $GLOBALS['log']->debug(get_class($this)."->merge_files() : merging module files in custom/Extension/modules/<module>/$path to custom/modules/<module>/$path$name");
             foreach ($this->modules as $module) {
                 //$GLOBALS['log']->debug("Merging Files for: ".$module);
                 //$GLOBALS['log']->debug("Merging Files for path: ".$path);
@@ -1929,20 +1929,20 @@ class ModuleInstaller
     {
         include('include/modules.php');
         foreach ($beans as $bean) {
-            $this->log( translate('LBL_MI_IN_BEAN') . " $bean");
+            $this->log(translate('LBL_MI_IN_BEAN') . " $bean");
             if (isset($beanList[$bean])) {
                 $class = $beanList[$bean];
                 if (file_exists($beanFiles[$class])) {
                     require_once($beanFiles[$class]);
                     $mod = new $class();
                     //#30273
-                    if (is_subclass_of($mod, 'SugarBean')  && $mod->disable_vardefs == false ) {
-                        $GLOBALS['log']->debug( "Creating Tables Bean : $bean");
+                    if (is_subclass_of($mod, 'SugarBean')  && $mod->disable_vardefs == false) {
+                        $GLOBALS['log']->debug("Creating Tables Bean : $bean");
                         $mod->create_tables();
                         SugarBean::createRelationshipMeta($mod->getObjectName(), $mod->db,$mod->table_name,array(),$mod->module_dir);
                     }
                 } else {
-                    $GLOBALS['log']->debug( "File Does Not Exist:" . $beanFiles[$class] );
+                    $GLOBALS['log']->debug("File Does Not Exist:" . $beanFiles[$class]);
                 }
             }
         }
@@ -1952,7 +1952,7 @@ class ModuleInstaller
     {
         include('include/modules.php');
         foreach ($beans as $bean) {
-            $this->log( translate('LBL_MI_UN_BEAN') . " $bean");
+            $this->log(translate('LBL_MI_UN_BEAN') . " $bean");
             if (isset($beanList[$bean])) {
                 $class = $beanList[$bean];
 
@@ -1961,13 +1961,13 @@ class ModuleInstaller
                     $mod = new $class();
 
                     if (is_subclass_of($mod, 'SugarBean')) {
-                        $GLOBALS['log']->debug( "Drop Tables : $bean");
+                        $GLOBALS['log']->debug("Drop Tables : $bean");
                         if (isset($GLOBALS['mi_remove_tables']) && $GLOBALS['mi_remove_tables']) {
                             $mod->drop_tables();
                         }
                     }
                 } else {
-                    $GLOBALS['log']->debug( "File Does Not Exist:" . $beanFiles[$class] );
+                    $GLOBALS['log']->debug("File Does Not Exist:" . $beanFiles[$class]);
                 }
             }
         }
@@ -2005,33 +2005,33 @@ class ModuleInstaller
     {
         if (is_file($source)) {
             if ($uninstall) {
-                $GLOBALS['log']->debug("Restoring ... " . $source.  " to " .$dest );
-                if (copy( $source, $dest)) {
+                $GLOBALS['log']->debug("Restoring ... " . $source.  " to " .$dest);
+                if (copy($source, $dest)) {
                     if (is_writable($dest)) {
-                        sugar_touch( $dest, filemtime($source) );
+                        sugar_touch($dest, filemtime($source));
                     }
                     return(unlink($source));
                 } else {
-                    $GLOBALS['log']->debug( "Can't restore file: " . $source );
+                    $GLOBALS['log']->debug("Can't restore file: " . $source);
                     return true;
                 }
             } else {
                 if (file_exists($dest)) {
                     $rest = clean_path($backup_path."/$dest");
-                    if ( !is_dir(dirname($rest)) ) {
+                    if (!is_dir(dirname($rest))) {
                         mkdir_recursive(dirname($rest), true);
                     }
 
-                    $GLOBALS['log']->debug("Backup ... " . $dest.  " to " .$rest );
-                    if (copy( $dest, $rest)) {
+                    $GLOBALS['log']->debug("Backup ... " . $dest.  " to " .$rest);
+                    if (copy($dest, $rest)) {
                         if (is_writable($rest)) {
-                            sugar_touch( $rest, filemtime($dest) );
+                            sugar_touch($rest, filemtime($dest));
                         }
                     } else {
-                        $GLOBALS['log']->debug( "Can't backup file: " . $dest );
+                        $GLOBALS['log']->debug("Can't backup file: " . $dest);
                     }
                 }
-                return( copy( $source, $dest ) );
+                return(copy($source, $dest));
             }
         } elseif (!is_dir($source)) {
             if ($uninstall) {
@@ -2046,21 +2046,21 @@ class ModuleInstaller
             }
         }
 
-        if ( !is_dir($dest) && !$uninstall) {
-            sugar_mkdir( $dest );
+        if (!is_dir($dest) && !$uninstall) {
+            sugar_mkdir($dest);
         }
 
         $status = true;
 
-        $d = dir( $source );
-        while ( $f = $d->read() ) {
-            if ( $f == "." || $f == ".." ) {
+        $d = dir($source);
+        while ($f = $d->read()) {
+            if ($f == "." || $f == "..") {
                 continue;
             }
-            $status &= $this->copy_recursive_with_backup( "$source/$f", "$dest/$f", $backup_path, $uninstall );
+            $status &= $this->copy_recursive_with_backup("$source/$f", "$dest/$f", $backup_path, $uninstall);
         }
         $d->close();
-        return( $status );
+        return($status);
     }
 
     private function dir_get_files($path, $base_path)
@@ -2162,13 +2162,13 @@ class ModuleInstaller
         // would be better if GridLayoutMetaDataParser could handle this gracefully, so we don't have to maintain this list here
         $invalidModules = array ( 'emails' , 'kbdocuments' ) ;
 
-        foreach ( $layoutAdditions as $deployedModuleName => $fieldName ) {
-            if ( ! in_array( strtolower ( $deployedModuleName ) , $invalidModules ) ) {
-                foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view ) {
-                    $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": adding $fieldName to $view layout for module $deployedModuleName" ) ;
-                    $parser = new GridLayoutMetaDataParser ( $view, $deployedModuleName ) ;
-                    $parser->addField ( array ( 'name' => $fieldName ) ) ;
-                    $parser->handleSave ( false ) ;
+        foreach ($layoutAdditions as $deployedModuleName => $fieldName) {
+            if (! in_array(strtolower ($deployedModuleName) , $invalidModules)) {
+                foreach (array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
+                    $GLOBALS [ 'log' ]->debug (get_class ($this) . ": adding $fieldName to $view layout for module $deployedModuleName") ;
+                    $parser = new GridLayoutMetaDataParser ($view, $deployedModuleName) ;
+                    $parser->addField (array ( 'name' => $fieldName )) ;
+                    $parser->handleSave (false) ;
                 }
             }
         }
@@ -2183,13 +2183,13 @@ class ModuleInstaller
         // would be better if GridLayoutMetaDataParser could handle this gracefully, so we don't have to maintain this list here
         $invalidModules = array ( 'emails' , 'kbdocuments' ) ;
 
-        foreach ( $layoutAdditions as $deployedModuleName => $fieldName ) {
-            if ( ! in_array( strtolower ( $deployedModuleName ) , $invalidModules ) ) {
-                foreach ( array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view ) {
-                    $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": adding $fieldName to $view layout for module $deployedModuleName" ) ;
-                    $parser = new GridLayoutMetaDataParser ( $view, $deployedModuleName ) ;
-                    $parser->removeField ( $fieldName ) ;
-                    $parser->handleSave ( false ) ;
+        foreach ($layoutAdditions as $deployedModuleName => $fieldName) {
+            if (! in_array(strtolower ($deployedModuleName) , $invalidModules)) {
+                foreach (array ( MB_EDITVIEW , MB_DETAILVIEW ) as $view) {
+                    $GLOBALS [ 'log' ]->debug (get_class ($this) . ": adding $fieldName to $view layout for module $deployedModuleName") ;
+                    $parser = new GridLayoutMetaDataParser ($view, $deployedModuleName) ;
+                    $parser->removeField ($fieldName) ;
+                    $parser->handleSave (false) ;
                 }
             }
         }
@@ -2385,10 +2385,10 @@ class ModuleInstaller
                 }
                 if (!empty($relationship['module_vardefs']) && file_exists($path . '/'. $this->id_name . '.php')) {
                     mkdir_recursive($path . '/'.DISABLED_PATH, true);
-                    rename( $path . '/'. $this->id_name . '.php', $path . '/'.DISABLED_PATH.'/'. $this->id_name . '.php');
+                    rename($path . '/'. $this->id_name . '.php', $path . '/'.DISABLED_PATH.'/'. $this->id_name . '.php');
                 }
                 //remove the layoutdefs
-                if ( !empty($relationship['module']) ) {
+                if (!empty($relationship['module'])) {
                     $path = 'custom/Extension/modules/' . $relationship['module']. '/Ext/Layoutdefs';
                     if ($relationship['module'] == 'application') {
                         $path ='custom/Extension/' . $relationship['module']. '/Ext/Layoutdefs';
@@ -2397,7 +2397,7 @@ class ModuleInstaller
 
                 if (!empty($relationship['module_layoutdefs']) && file_exists($path . '/'. $this->id_name . '.php')) {
                     mkdir_recursive($path . '/'.DISABLED_PATH, true);
-                    rename( $path . '/'. $this->id_name . '.php', $path . '/'.DISABLED_PATH.'/'. $this->id_name . '.php');
+                    rename($path . '/'. $this->id_name . '.php', $path . '/'.DISABLED_PATH.'/'. $this->id_name . '.php');
                 }
             }
             if (file_exists("custom/Extension/application/Ext/TableDictionary/$this->id_name.php")) {
@@ -2417,7 +2417,7 @@ class ModuleInstaller
                 $cp['from'] = str_replace('<basepath>', $this->base_dir, $cp['from']);
                 $path = 'custom/modules/Home/Dashlets/' . $cp['name'] . '/';
                 $disabled_path = 'custom/modules/Home/'.DISABLED_PATH.'Dashlets/' . $cp['name'];
-                $GLOBALS['log']->debug("Enabling Dashlet " . $cp['name'] . "..." . $cp['from'] );
+                $GLOBALS['log']->debug("Enabling Dashlet " . $cp['name'] . "..." . $cp['from']);
                 if (file_exists($disabled_path)) {
                     rename($disabled_path,  $path);
                 }
@@ -2435,7 +2435,7 @@ class ModuleInstaller
                 $GLOBALS['log']->debug('Disabling ' .$path);
                 if (file_exists($path)) {
                     mkdir_recursive('custom/modules/Home/'.DISABLED_PATH.'Dashlets/', true);
-                    rename( $path, $disabled_path);
+                    rename($path, $disabled_path);
                 }
             }
             include('modules/Administration/RebuildDashlets.php');
@@ -2450,7 +2450,7 @@ class ModuleInstaller
             if (!empty($this->installdefs['copy'])) {
                 foreach ($this->installdefs['copy'] as $cp) {
                     $cp['to'] = clean_path(str_replace('<basepath>', $this->base_dir, $cp['to']));
-                    $backup_path = clean_path( remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore/".$cp['to'] );
+                    $backup_path = clean_path(remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore/".$cp['to']);
 
                     //check if this file exists in the -restore directory
                     if (file_exists($backup_path)) {
@@ -2482,7 +2482,7 @@ class ModuleInstaller
                 //				$GLOBALS['log']->debug('ModuleInstaller.php->disable_copy(): installdefs not empty');
                 foreach ($this->installdefs['copy'] as $cp) {
                     $cp['to'] = clean_path(str_replace('<basepath>', $this->base_dir, $cp['to']));
-                    $backup_path = clean_path( remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore/".$cp['to'] ); // bug 16966 tyoung - replaced missing assignment to $backup_path
+                    $backup_path = clean_path(remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore/".$cp['to']); // bug 16966 tyoung - replaced missing assignment to $backup_path
                     //check if this file exists in the -restore directory
                     //					$GLOBALS['log']->debug("ModuleInstaller.php->disable_copy(): backup_path=".$backup_path);
                     if (file_exists($backup_path)) {

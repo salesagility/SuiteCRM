@@ -90,8 +90,8 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         $enabled_modules = array();
         $availModulesKey = array_flip($availModules);
         foreach ($list as $key=>$value) {
-            if ( isset($availModulesKey[$key]) ) {
-                $label = !empty( $app_list_strings['moduleList'][$key] ) ? $app_list_strings['moduleList'][$key] : '';
+            if (isset($availModulesKey[$key])) {
+                $label = !empty($app_list_strings['moduleList'][$key]) ? $app_list_strings['moduleList'][$key] : '';
                 $acl = self::checkModuleRoleAccess($key);
                 $enabled_modules[] = array('module_key' => $key,'module_label' => $label, 'acls' => $acl);
             }
@@ -136,8 +136,8 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 
         $beanName = BeanFactory::getObjectName($moduleName);
 
-        $manager = new VardefManager ( );
-        $manager->loadVardef( $moduleName , $beanName ) ;
+        $manager = new VardefManager ();
+        $manager->loadVardef($moduleName , $beanName) ;
 
         // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
         if (file_exists('custom/modules/'.$moduleName.'/metadata/metafiles.php')) {
@@ -153,7 +153,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         }
 
         $fields = array();
-        foreach ( $dictionary [ $beanName ][ 'fields' ] as $field => $def ) {
+        foreach ($dictionary [ $beanName ][ 'fields' ] as $field => $def) {
             if (strpos($field,'email') !== false) {
                 $field = 'email' ;
             }
@@ -163,20 +163,20 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
                 $field = 'phone' ;
             }
 
-            if ( isset($def['unified_search']) && $def['unified_search'] && isset ( $searchFields [ $moduleName ] [ $field ]  )) {
+            if (isset($def['unified_search']) && $def['unified_search'] && isset ($searchFields [ $moduleName ] [ $field ])) {
                 $fields [ $field ] = $searchFields [ $moduleName ] [ $field ] ;
             }
         }
 
         //If no fields with the unified flag have been set then lets add a default field.
-        if ( empty($fields) ) {
-            if ( isset($dictionary[$beanName]['fields']['name']) && isset($searchFields[$moduleName]['name'])  ) {
+        if (empty($fields)) {
+            if (isset($dictionary[$beanName]['fields']['name']) && isset($searchFields[$moduleName]['name'])) {
                 $fields['name'] = $searchFields[$moduleName]['name'];
             } else {
-                if ( isset($dictionary[$beanName]['fields']['first_name']) && isset($searchFields[$moduleName]['first_name']) ) {
+                if (isset($dictionary[$beanName]['fields']['first_name']) && isset($searchFields[$moduleName]['first_name'])) {
                     $fields['first_name'] = $searchFields[$moduleName]['first_name'];
                 }
-                if ( isset($dictionary[$beanName]['fields']['last_name']) && isset($searchFields[$moduleName]['last_name'])  ) {
+                if (isset($dictionary[$beanName]['fields']['last_name']) && isset($searchFields[$moduleName]['last_name'])) {
                     $fields['last_name'] = $searchFields[$moduleName]['last_name'];
                 }
             }
@@ -210,7 +210,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         $link_fields = array();
         if (!empty($value->field_defs)) {
             foreach ($value->field_defs as $var) {
-                if (!empty($fields) && !in_array( $var['name'], $fields)) {
+                if (!empty($fields) && !in_array($var['name'], $fields)) {
                     continue;
                 }
                 if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'non-db' &&$var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type'])|| $var['type'] != 'relate')) {
@@ -224,7 +224,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
                 $options_ret = array();
                 // Apparently the only purpose of this check is to make sure we only return fields
                 //   when we've read a record.  Otherwise this function is identical to get_module_field_list
-                if ( isset($var['required']) && ($var['required'] || $var['required'] == 'true' ) ) {
+                if (isset($var['required']) && ($var['required'] || $var['required'] == 'true')) {
                     $required = 1;
                 }
 
@@ -270,7 +270,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
                     if (isset($var['default'])) {
                         $entry['default_value'] = $var['default'];
                     }
-                    if ( $var['type'] == 'parent' && isset($var['type_name']) ) {
+                    if ($var['type'] == 'parent' && isset($var['type_name'])) {
                         $entry['type_name'] = $var['type_name'];
                     }
 
@@ -280,7 +280,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         } //if
 
 		if ($value->module_dir == 'Meetings' || $value->module_dir == 'Calls') {
-		    if ( isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
+		    if (isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
 		        $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
 		        $options_ret = array();
 		        foreach ($options_dom as $key=>$oneOption) {
@@ -349,7 +349,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
     function get_file_contents_base64($filename, $remove = FALSE)
     {
         $contents = "";
-        if ( file_exists($filename) ) {
+        if (file_exists($filename)) {
             $contents =  base64_encode(file_get_contents($filename));
             if ($remove) {
                 @unlink($filename);
@@ -401,7 +401,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         }
         $order_by=$seed->process_order_by($order_by, null);
 
-        if ($seed->bean_implements('ACL') && ACLController::requireOwner($seed->module_dir, 'list') ) {
+        if ($seed->bean_implements('ACL') && ACLController::requireOwner($seed->module_dir, 'list')) {
             global $current_user;
             $owner_where = $seed->getOwnerWhere($current_user->id);
             if (!empty($owner_where)) {
@@ -433,7 +433,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
     function addFieldLevelACLs($module_name,$view_type, $view, $metadata)
     {
         $functionName = "metdataAclParser" . ucfirst($view_type) . ucfirst($view);
-        if ( method_exists($this, $functionName) ) {
+        if (method_exists($this, $functionName)) {
             return $this->$functionName($module_name, $metadata);
         } else {
             return $metadata;
@@ -456,7 +456,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
             $current_user = $GLOBALS['current_user'];
         }
 
-        if ( is_admin($current_user) ) {
+        if (is_admin($current_user)) {
             return 99;
         }
 

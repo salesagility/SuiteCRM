@@ -70,14 +70,14 @@ class EmployeesSearchForm extends SearchForm
     {
         $onlyActive = false;
         if (isset($this->searchFields['open_only_active_users']['value'])) {
-            if ( $this->searchFields['open_only_active_users']['value'] == 1) {
+            if ($this->searchFields['open_only_active_users']['value'] == 1) {
                 $onlyActive = true;
             }
             unset($this->searchFields['open_only_active_users']['value']);
         }
         $where_clauses = parent::generateSearchWhere($add_custom_fields, $module);
         
-        if ( $onlyActive ) {
+        if ($onlyActive) {
             $where_clauses[] = "users.employee_status = 'Active'";
         }
         

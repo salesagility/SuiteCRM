@@ -154,7 +154,7 @@ EOF;
 			<input type="hidden" name="${prefix}action" value="Save">
 
 EOQ;
-        $the_form	.= $this->getFormBody($prefix, 'Meetings',"{$prefix}MeetingSave" );
+        $the_form	.= $this->getFormBody($prefix, 'Meetings',"{$prefix}MeetingSave");
         $the_form .= <<<EOQ
 		<p><input title="$lbl_save_button_title" accessKey="$lbl_save_button_key" class="button" type="submit" name="button" value="  $lbl_save_button_label  " ></p>
 		</form>
@@ -186,7 +186,7 @@ EOQ;
             return null;
         }
 
-        if ( !isset($_POST['reminder_checked']) or ( isset($_POST['reminder_checked']) && $_POST['reminder_checked'] == '0')) {
+        if (!isset($_POST['reminder_checked']) or (isset($_POST['reminder_checked']) && $_POST['reminder_checked'] == '0')) {
             $_POST['reminder_time'] = -1;
         }
         if (!isset($_POST['reminder_time'])) {
@@ -255,7 +255,7 @@ EOQ;
                 $_POST['user_invitees'] .= ','.$_POST['assigned_user_id'].', ';
                 $_POST['user_invitees'] = str_replace(',,', ',', $_POST['user_invitees']);
             }
-        } elseif (empty($focus->id) ) {
+        } elseif (empty($focus->id)) {
             //this is not from long form so add assigned and current user automatically as there is no invitee list UI.
             //This call could be through an ajax call from subpanels or shortcut bar
             if (!isset($_POST['user_invitees'])) {
@@ -274,7 +274,7 @@ EOQ;
         }
 
 
-        if ( (isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
+        if ((isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
         (isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
         (isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
          !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty

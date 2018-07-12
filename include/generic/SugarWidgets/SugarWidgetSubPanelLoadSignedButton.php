@@ -70,7 +70,7 @@ class SugarWidgetSubPanelLoadSignedButton extends SugarWidgetField
 			. '&selected_revision_id=' . $layout_def['fields']['SELECTED_REVISION_ID']	
 			;
 
-        $edit_icon_html = SugarThemeRegistry::current()->getImage( 'loadSignedDocument','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_LOAD_SIGNED']);
+        $edit_icon_html = SugarThemeRegistry::current()->getImage('loadSignedDocument','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_LOAD_SIGNED']);
         //if the contract state is executed or document is not a template hide this action.
         if ((!empty($layout_def['fields']['CONTRACT_STATUS']) && $layout_def['fields']['CONTRACT_STATUS']=='executed') or
 			empty($layout_def['fields']['IS_TEMPLATE']) or $layout_def['fields']['IS_TEMPLATE']==0) {

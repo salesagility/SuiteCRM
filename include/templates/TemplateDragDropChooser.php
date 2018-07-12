@@ -274,7 +274,7 @@ class TemplateDragDropChooser extends Template
             // bug50219 Set up default strings for sortable grids
             $sortParams = "sortable: false";
             // set strings to sortable if it is SUGAR_GRID_grid0
-            if ( $count == 0 ) {
+            if ($count == 0) {
                 $sortParams = "sortable: true, sortOptions:{sortFunction: {$this->args['classname']}.customSort} ";
             }
 

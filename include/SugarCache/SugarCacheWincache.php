@@ -52,11 +52,11 @@ class SugarCacheWincache extends SugarCacheAbstract
      */
     public function useBackend()
     {
-        if ( !parent::useBackend() ) {
+        if (!parent::useBackend()) {
             return false;
         }
         
-        if ( function_exists("wincache_ucache_get")
+        if (function_exists("wincache_ucache_get")
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_wincache'])) {
             return true;
         }
@@ -80,7 +80,7 @@ class SugarCacheWincache extends SugarCacheAbstract
     protected function _getExternal(
         $key
         ) {
-        if ( !wincache_ucache_exists($key) ) {
+        if (!wincache_ucache_exists($key)) {
             return null;
         }
         

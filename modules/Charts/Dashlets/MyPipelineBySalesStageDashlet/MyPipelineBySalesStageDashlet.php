@@ -378,7 +378,7 @@ EOD;
             " AND opportunities.date_closed >= ". db_convert("'".$this->mypbss_date_start."'",'date').
             " AND opportunities.date_closed <= ".db_convert("'".$this->mypbss_date_end."'",'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
-        if ( count($this->mypbss_sales_stages) > 0 ) {
+        if (count($this->mypbss_sales_stages) > 0) {
             $query .= " AND opportunities.sales_stage IN ('" . implode("','",$this->mypbss_sales_stages) . "') ";
         }
         $query .= " GROUP BY opportunities.sales_stage ,users.user_name,opportunities.assigned_user_id";

@@ -47,7 +47,7 @@ class FeedLinkHandlerImage extends FeedLinkHandlerLink
     function getDisplay(&$data)
     {
         $imageData = unserialize(base64_decode($data['LINK_URL']));
-        if ( $imageData['width'] != 0 ) {
+        if ($imageData['width'] != 0) {
             $image_style = 'width: '.$imageData['width'].'px; height: '.$imageData['height'].'px; border: 0px;';
         } else {
             // Unknown width/height
@@ -66,12 +66,12 @@ class FeedLinkHandlerImage extends FeedLinkHandlerLink
 
         $imageData = @getimagesize($link_url);
 
-        if ( ! isset($imageData) ) {
+        if (! isset($imageData)) {
             // The image didn't pull down properly, could be a link and allow_url_fopen could be disabled
             $imageData[0] = 0;
             $imageData[1] = 0;
         } else {
-            if ( max($imageData[0],$imageData[1]) > 425 ) {
+            if (max($imageData[0],$imageData[1]) > 425) {
                 // This is a large image, we need to set some specific width/height properties so that the browser can scale it.
                 $scale = 425 / max($imageData[0],$imageData[1]);
                 $imageData[0] = floor($imageData[0]*$scale);

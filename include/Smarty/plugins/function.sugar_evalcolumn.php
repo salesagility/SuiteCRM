@@ -68,7 +68,7 @@ r12955 - 2006-04-26 18:32:25 -0700 (Wed, 26 Apr 2006) - wayne - custom code in l
  */
 function smarty_function_sugar_evalcolumn($params, &$smarty)
 {
-    if (!isset($params['colData']['field']) ) {
+    if (!isset($params['colData']['field'])) {
         if (empty($params['colData'])) {
             $smarty->trigger_error("evalcolumn: missing 'colData' parameter");
         }
@@ -111,7 +111,7 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
     	
         // Add a string replace to swap out @@FIELD@@ for the actual field,
         // we can't do this through customCode directly because the sugar_field smarty function returns smarty code to run on the second pass
-        if (!empty($code) && strpos($code,'@@FIELD@@') !== FALSE ) {
+        if (!empty($code) && strpos($code,'@@FIELD@@') !== FALSE) {
             // First we need to fetch extra data about the field
             // sfp == SugarFieldParams
             $sfp = $params;

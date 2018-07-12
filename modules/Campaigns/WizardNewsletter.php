@@ -80,7 +80,7 @@ $json = getJSONobj();
 
 $GLOBALS['log']->info("Campaign NewsLetter Wizard");
 
-if ( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==1)  ||  ($focus->campaign_type=='NewsLetter')) {
+if ((isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==1)  ||  ($focus->campaign_type=='NewsLetter')) {
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_NEWSLETTER WIZARD_TITLE'].$focus->name), true, false);
 } else {
     echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_CAMPAIGN'].$focus->name), true, false);
@@ -125,13 +125,13 @@ $ss->assign("JAVASCRIPT", $quicksearch_js);
 
 //set the campaign type based on wizardtype value from request object
 $campaign_type = 'newsletter';
-if ( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==1)  ||  ($focus->campaign_type=='NewsLetter')) {
+if ((isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==1)  ||  ($focus->campaign_type=='NewsLetter')) {
     $campaign_type = 'newsletter';
     $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
-} elseif ( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==2)  || ($focus->campaign_type=='Email') ) {
+} elseif ((isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==2)  || ($focus->campaign_type=='Email')) {
     $campaign_type = 'email';
     $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
-} elseif ( (isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==4) || ($focus->campaign_type == 'Survey')) {
+} elseif ((isset($_REQUEST['wizardtype'])  && $_REQUEST['wizardtype']==4) || ($focus->campaign_type == 'Survey')) {
     $campaign_type = 'survey';
     $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
 } else {
@@ -195,7 +195,7 @@ $ss->assign("ASSIGNED_USER_OPTIONS", get_select_options_with_id(get_user_array(T
 
 $focus->list_view_parse_additional_sections($ss);
 
-$ss->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
+$ss->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
 
 $ss->assign("SURVEY_ID", $focus->survey_id);
 $ss->assign("SURVEY_NAME", $focus->survey_name);
@@ -255,7 +255,7 @@ if ($campaign_type == 'general') {
     $myTypeOptionsArr = array();
     $OptionsArr = $app_list_strings['campaign_type_dom'];
     foreach ($OptionsArr as $key=>$val) {
-        if ($val =='Newsletter' || $val =='Email' || $val =='' ) {
+        if ($val =='Newsletter' || $val =='Email' || $val =='') {
             //do not add
         } else {
             $myTypeOptionsArr[$key] = $val;
@@ -526,7 +526,7 @@ if ((isset($_REQUEST['wizardtype']) && $_REQUEST['wizardtype'] ==1) || ($focus->
     } else {
         $trgt_html  .= "<div id='no_targets'><table width='100%' border='0' cellspacing='0' cellpadding='0'><tr class='evenListRowS1'><td>".$mod_strings['LBL_NONE']."</td></tr></table></div>";
     }
-    $ss->assign('EXISTING_TARGETS', $trgt_html );
+    $ss->assign('EXISTING_TARGETS', $trgt_html);
 }
 
     

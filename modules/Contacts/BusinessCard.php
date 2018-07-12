@@ -121,10 +121,10 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     if (!empty($_POST['selectedAccount'])) {
         $account = new Account();
         $account->retrieve($_POST['selectedAccount']);
-    } elseif (isset($_POST['newaccount']) && $_POST['newaccount']=='on' ) {
+    } elseif (isset($_POST['newaccount']) && $_POST['newaccount']=='on') {
         $account= $accountForm->handleSave('Accounts',false, false);
     }
-    if (isset($_POST['newopportunity']) && $_POST['newopportunity']=='on' ) {
+    if (isset($_POST['newopportunity']) && $_POST['newopportunity']=='on') {
         if (!empty($_POST['selectedOpportunity'])) {
             $opportunity = new Opportunity();
             $opportunity->retrieve($_POST['selectedOpportunity']);
@@ -156,7 +156,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
         $_POST['OpportunityNotesparent_id'] = $opportunity->id;
         $opportunitynote= $noteForm->handleSave('OpportunityNotes',false, false);
     }
-    if (isset($_POST['newappointment']) && $_POST['newappointment']=='on' ) {
+    if (isset($_POST['newappointment']) && $_POST['newappointment']=='on') {
         if (isset($_POST['appointment']) && $_POST['appointment'] == 'Meeting') {
             require_once('modules/Meetings/MeetingFormBase.php');
             $meetingForm = new MeetingFormBase();
@@ -223,10 +223,10 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     if (isset($contact)) {
         $contact->track_view($current_user->id, 'Contacts');
         if (isset($_POST['selectedContact']) && $_POST['selectedContact'] == $contact->id) {
-            $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_EXISTING_CONTACT']." - <a href='index.php?action=DetailView&module=Contacts&record=".$contact->id."'>".$locale->getLocaleFormattedName($contact->first_name, $contact->last_name)."</a>" );
+            $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_EXISTING_CONTACT']." - <a href='index.php?action=DetailView&module=Contacts&record=".$contact->id."'>".$locale->getLocaleFormattedName($contact->first_name, $contact->last_name)."</a>");
             $xtpl->parse('main.row');
         } else {
-            $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_CONTACT']." - <a href='index.php?action=DetailView&module=Contacts&record=".$contact->id."'>".$locale->getLocaleFormattedName($contact->first_name, $contact->last_name)."</a>" );
+            $xtpl->assign('ROWVALUE', "<LI>".$mod_strings['LBL_CREATED_CONTACT']." - <a href='index.php?action=DetailView&module=Contacts&record=".$contact->id."'>".$locale->getLocaleFormattedName($contact->first_name, $contact->last_name)."</a>");
             $xtpl->parse('main.row');
         }
     }
@@ -324,7 +324,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     require_once('modules/Accounts/AccountFormBase.php');
     $accountForm = new AccountFormBase();
     $xtpl->assign('CLASS', 'evenListRow');
-    $xtpl->assign('FORMBODY',$selectAccountButton."<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newaccount' onclick='document.forms[\"BusinessCard\"].selectedAccount.value=\"\";document.forms[\"BusinessCard\"].display_account_name.value=\"\";toggleDisplay(\"newaccountdiv\");'>&nbsp;".$mod_strings['LNK_NEW_ACCOUNT']."</span>&nbsp;<div id='newaccountdiv' style='display:none'>".$accountForm->getWideFormBody('Accounts', 'Accounts','BusinessCard', '' ));
+    $xtpl->assign('FORMBODY',$selectAccountButton."<slot class='dataLabel'><input class='checkbox' type='checkbox' name='newaccount' onclick='document.forms[\"BusinessCard\"].selectedAccount.value=\"\";document.forms[\"BusinessCard\"].display_account_name.value=\"\";toggleDisplay(\"newaccountdiv\");'>&nbsp;".$mod_strings['LNK_NEW_ACCOUNT']."</span>&nbsp;<div id='newaccountdiv' style='display:none'>".$accountForm->getWideFormBody('Accounts', 'Accounts','BusinessCard', ''));
     require_once('modules/Notes/NoteFormBase.php');
     $noteForm = new NoteFormBase();
     $postform = "<div id='accountnotelink'><p><a href='javascript:toggleDisplay(\"accountnote\");'>${mod_strings['LNK_NEW_NOTE']}</a></p></div>";

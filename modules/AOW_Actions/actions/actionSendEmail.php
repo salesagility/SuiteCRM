@@ -206,13 +206,13 @@ class actionSendEmail extends actionBase
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
                                     $security_group = new SecurityGroup();
                                     $security_group->retrieve($params['email'][$key][1]);
-                                    $users = $security_group->get_linked_beans( 'users','User');
+                                    $users = $security_group->get_linked_beans('users','User');
                                     $r_users = array();
                                     if ($params['email'][$key][2] != '') {
                                         require_once('modules/ACLRoles/ACLRole.php');
                                         $role = new ACLRole();
                                         $role->retrieve($params['email'][$key][2]);
-                                        $role_users = $role->get_linked_beans( 'users','User');
+                                        $role_users = $role->get_linked_beans('users','User');
                                         foreach ($role_users as $role_user) {
                                             $r_users[$role_user->id] = $role_user->name;
                                         }
@@ -230,7 +230,7 @@ class actionSendEmail extends actionBase
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();
                                 $role->retrieve($params['email'][$key][2]);
-                                $users = $role->get_linked_beans( 'users','User');
+                                $users = $role->get_linked_beans('users','User');
                                 break;
                             Case 'all':
                             default:
@@ -516,7 +516,7 @@ class actionSendEmail extends actionBase
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
-            if ( $relatedBean instanceOf SugarBean && !empty($relatedBean->id) ) {
+            if ($relatedBean instanceOf SugarBean && !empty($relatedBean->id)) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;
             }

@@ -112,7 +112,7 @@ class Importer
 
         //Get our import column definitions
         $this->importColumns = $this->getImportColumns();
-        $this->isUpdateOnly = ( isset($_REQUEST['import_type']) && $_REQUEST['import_type'] == 'update' );
+        $this->isUpdateOnly = (isset($_REQUEST['import_type']) && $_REQUEST['import_type'] == 'update');
     }
 
     public function import()
@@ -122,7 +122,7 @@ class Importer
         }
 
         // save mapping if requested
-        if ( isset($_REQUEST['save_map_as']) && $_REQUEST['save_map_as'] != '' ) {
+        if (isset($_REQUEST['save_map_as']) && $_REQUEST['save_map_as'] != '') {
             $this->saveMappingFile();
         }
 
@@ -144,9 +144,9 @@ class Importer
         $this->importSource->resetRowErrorCounter();
         $do_save = true;
 
-        for ( $fieldNum = 0; $fieldNum < $_REQUEST['columncount']; $fieldNum++ ) {
+        for ($fieldNum = 0; $fieldNum < $_REQUEST['columncount']; $fieldNum++) {
             // loop if this column isn't set
-            if ( !isset($this->importColumns[$fieldNum]) ) {
+            if (!isset($this->importColumns[$fieldNum])) {
                 continue;
             }
 
@@ -156,7 +156,7 @@ class Importer
             $fieldTranslated = translate((isset($fieldDef['vname'])?$fieldDef['vname']:$fieldDef['name']), $focus->module_dir)." (".$fieldDef['name'].")";
             $defaultRowValue = '';
             // Bug 37241 - Don't re-import over a field we already set during the importing of another field
-            if ( !empty($focus->$field) ) {
+            if (!empty($focus->$field)) {
                 continue;
             }
 
@@ -165,20 +165,20 @@ class Importer
             if (empty($locale)) {
                 $locale = new Localization();
             }
-            if ( isset($row[$fieldNum]) ) {
+            if (isset($row[$fieldNum])) {
                 $rowValue = $locale->translateCharset(strip_tags(trim($row[$fieldNum])),$this->importSource->importlocale_charset,$sugar_config['default_charset']);
-            } elseif ( isset($this->sugarToExternalSourceFieldMap[$field]) && isset($row[$this->sugarToExternalSourceFieldMap[$field]]) ) {
+            } elseif (isset($this->sugarToExternalSourceFieldMap[$field]) && isset($row[$this->sugarToExternalSourceFieldMap[$field]])) {
                 $rowValue = $locale->translateCharset(strip_tags(trim($row[$this->sugarToExternalSourceFieldMap[$field]])),$this->importSource->importlocale_charset,$sugar_config['default_charset']);
             } else {
                 $rowValue = '';
             }
 
             // If there is an default value then use it instead
-            if ( !empty($_REQUEST[$field]) ) {
+            if (!empty($_REQUEST[$field])) {
                 $defaultRowValue = $this->populateDefaultMapValue($field, $_REQUEST[$field], $fieldDef);
 
 
-                if ( empty($rowValue)) {
+                if (empty($rowValue)) {
                     $rowValue = $defaultRowValue;
                     //reset the default value to empty
                     $defaultRowValue='';
@@ -186,27 +186,27 @@ class Importer
             }
 
             // Bug 22705 - Don't update the First Name or Last Name value if Full Name is set
-            if ( in_array($field, array('first_name','last_name')) && !empty($focus->full_name) ) {
+            if (in_array($field, array('first_name','last_name')) && !empty($focus->full_name)) {
                 continue;
             }
 
             // loop if this value has not been set
-            if ( !isset($rowValue) ) {
+            if (!isset($rowValue)) {
                 continue;
             }
 
             // If the field is required and blank then error out
-            if ( array_key_exists($field,$focus->get_import_required_fields()) && empty($rowValue) && $rowValue!='0') {
-                $this->importSource->writeError( $mod_strings['LBL_REQUIRED_VALUE'],$fieldTranslated,'NULL');
+            if (array_key_exists($field,$focus->get_import_required_fields()) && empty($rowValue) && $rowValue!='0') {
+                $this->importSource->writeError($mod_strings['LBL_REQUIRED_VALUE'],$fieldTranslated,'NULL');
                 $do_save = false;
             }
 
             // Handle the special case "Sync to Outlook"
-            if ( $focus->object_name == "Contact" && $field == 'sync_contact' ) {
+            if ($focus->object_name == "Contact" && $field == 'sync_contact') {
                 /**
                  * Bug #41194 : if true used as value of sync_contact - add curent user to list to sync
                  */
-                if ( true == $rowValue || 'true' == strtolower($rowValue)) {
+                if (true == $rowValue || 'true' == strtolower($rowValue)) {
                     $focus->sync_contact = $focus->id;
                 } elseif (false == $rowValue || 'false' == strtolower($rowValue)) {
                     $focus->sync_contact = '';
@@ -214,10 +214,10 @@ class Importer
                     $bad_names = array();
                     $returnValue = $this->ifs->synctooutlook($rowValue,$fieldDef,$bad_names);
                     // try the default value on fail
-                    if ( !$returnValue && !empty($defaultRowValue) ) {
+                    if (!$returnValue && !empty($defaultRowValue)) {
                         $returnValue = $this->ifs->synctooutlook($defaultRowValue, $fieldDef, $bad_names);
                     }
-                    if ( !$returnValue ) {
+                    if (!$returnValue) {
                         $this->importSource->writeError($mod_strings['LBL_ERROR_SYNC_USERS'], $fieldTranslated, $bad_names);
                         $do_save = 0;
                     } else {
@@ -236,21 +236,21 @@ class Importer
             }
 
             // Handle email1 and email2 fields ( these don't have the type of email )
-            if ( $field == 'email1' || $field == 'email2' ) {
+            if ($field == 'email1' || $field == 'email2') {
                 $returnValue = $this->ifs->email($rowValue, $fieldDef, $focus);
                 // try the default value on fail
-                if ( !$returnValue && !empty($defaultRowValue) ) {
-                    $returnValue = $this->ifs->email( $defaultRowValue, $fieldDef);
+                if (!$returnValue && !empty($defaultRowValue)) {
+                    $returnValue = $this->ifs->email($defaultRowValue, $fieldDef);
                 }
-                if ( $returnValue === FALSE ) {
+                if ($returnValue === FALSE) {
                     $do_save=0;
-                    $this->importSource->writeError( $mod_strings['LBL_ERROR_INVALID_EMAIL'], $fieldTranslated, $rowValue);
+                    $this->importSource->writeError($mod_strings['LBL_ERROR_INVALID_EMAIL'], $fieldTranslated, $rowValue);
                 } else {
                     $rowValue = $returnValue;
                     // check for current opt_out and invalid email settings for this email address
                     // if we find any, set them now
-                    $emailres = $focus->db->query( "SELECT opt_out, invalid_email FROM email_addresses WHERE email_address = '".$focus->db->quote($rowValue)."'");
-                    if ( $emailrow = $focus->db->fetchByAssoc($emailres) ) {
+                    $emailres = $focus->db->query("SELECT opt_out, invalid_email FROM email_addresses WHERE email_address = '".$focus->db->quote($rowValue)."'");
+                    if ($emailrow = $focus->db->fetchByAssoc($emailres)) {
                         $focus->email_opt_out = $emailrow['opt_out'];
                         $focus->invalid_email = $emailrow['invalid_email'];
                     }
@@ -258,7 +258,7 @@ class Importer
             }
 
             // Handle splitting Full Name into First and Last Name parts
-            if ( $field == 'full_name' && !empty($rowValue) ) {
+            if ($field == 'full_name' && !empty($rowValue)) {
                 $this->ifs->fullname($rowValue,$fieldDef,$focus);
             }
 
@@ -272,7 +272,7 @@ class Importer
             }
 
             // If the field is empty then there is no need to check the data
-            if ( !empty($rowValue) ) {
+            if (!empty($rowValue)) {
                 // If it's an array of non-primary e-mails, check each mail
                 if ($field == "email_addresses_non_primary" && is_array($rowValue)) {
                     foreach ($rowValue as $tempRow) {
@@ -304,22 +304,22 @@ class Importer
         }
 
         // Now try to validate flex relate fields
-        if ( isset($focus->field_defs['parent_name']) && isset($focus->parent_name) && ($focus->field_defs['parent_name']['type'] == 'parent') ) {
+        if (isset($focus->field_defs['parent_name']) && isset($focus->parent_name) && ($focus->field_defs['parent_name']['type'] == 'parent')) {
             // populate values from the picker widget if the import file doesn't have them
             $parent_idField = $focus->field_defs['parent_name']['id_name'];
-            if ( empty($focus->$parent_idField) && !empty($_REQUEST[$parent_idField]) ) {
+            if (empty($focus->$parent_idField) && !empty($_REQUEST[$parent_idField])) {
                 $focus->$parent_idField = $_REQUEST[$parent_idField];
             }
 
             $parent_typeField = $focus->field_defs['parent_name']['type_name'];
 
-            if ( empty($focus->$parent_typeField) && !empty($_REQUEST[$parent_typeField]) ) {
+            if (empty($focus->$parent_typeField) && !empty($_REQUEST[$parent_typeField])) {
                 $focus->$parent_typeField = $_REQUEST[$parent_typeField];
             }
             // now validate it
             $returnValue = $this->ifs->parent($focus->parent_name,$focus->field_defs['parent_name'],$focus, empty($_REQUEST['parent_name']));
-            if ( !$returnValue && !empty($_REQUEST['parent_name']) ) {
-                $returnValue = $this->ifs->parent( $_REQUEST['parent_name'],$focus->field_defs['parent_name'], $focus);
+            if (!$returnValue && !empty($_REQUEST['parent_name'])) {
+                $returnValue = $this->ifs->parent($_REQUEST['parent_name'],$focus->field_defs['parent_name'], $focus);
             }
         }
 
@@ -329,18 +329,18 @@ class Importer
             $enabled_dupes = json_decode($toDecode);
             $idc = new ImportDuplicateCheck($focus);
 
-            if ( $idc->isADuplicateRecord($enabled_dupes) ) {
+            if ($idc->isADuplicateRecord($enabled_dupes)) {
                 $this->importSource->markRowAsDuplicate($idc->_dupedFields);
                 $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
                 return;
             }
         }
         //Allow fields to be passed in for dup check as well (used by external adapters)
-        elseif ( !empty($_REQUEST['enabled_dup_fields']) ) {
+        elseif (!empty($_REQUEST['enabled_dup_fields'])) {
             $toDecode = html_entity_decode  ($_REQUEST['enabled_dup_fields'], ENT_QUOTES);
             $enabled_dup_fields = json_decode($toDecode);
             $idc = new ImportDuplicateCheck($focus);
-            if ( $idc->isADuplicateRecordByFields($enabled_dup_fields) ) {
+            if ($idc->isADuplicateRecordByFields($enabled_dup_fields)) {
                 $this->importSource->markRowAsDuplicate($idc->_dupedFields);
                 $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
                 return;
@@ -349,7 +349,7 @@ class Importer
 
         // if the id was specified
         $newRecord = true;
-        if ( !empty($focus->id) ) {
+        if (!empty($focus->id)) {
             $focus->id = $this->_convertId($focus->id);
 
             // check if it already exists
@@ -365,7 +365,7 @@ class Importer
                     $this->removeDeletedBean($focus);
                     $focus->new_with_id = true;
                 } else {
-                    if ( ! $this->isUpdateOnly ) {
+                    if (! $this->isUpdateOnly) {
                         $this->importSource->writeError($mod_strings['LBL_ID_EXISTS_ALREADY'],'ID',$focus->id);
                         $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
                         return;
@@ -447,10 +447,10 @@ class Importer
             default:
                 $returnValue = $this->ifs->$fieldtype($rowValue, $fieldDef, $focus);
                 // try the default value on fail
-                if ( !$returnValue && !empty($defaultRowValue) ) {
+                if (!$returnValue && !empty($defaultRowValue)) {
                     $returnValue = $this->ifs->$fieldtype($defaultRowValue,$fieldDef, $focus);
                 }
-                if ( !$returnValue ) {
+                if (!$returnValue) {
                     $this->importSource->writeError($mod_strings['LBL_ERROR_INVALID_'.strtoupper($fieldtype)],$fieldTranslated,$rowValue,$focus);
                     return FALSE;
                 }
@@ -461,12 +461,12 @@ class Importer
     protected function cloneExistingBean($focus)
     {
         $existing_focus = clone $this->bean;
-        if ( !( $existing_focus->retrieve($focus->id) instanceOf SugarBean ) ) {
+        if (!($existing_focus->retrieve($focus->id) instanceOf SugarBean)) {
             return FALSE;
         } else {
             $newData = $focus->toArray();
-            foreach ( $newData as $focus_key => $focus_value ) {
-                if ( in_array($focus_key,$this->importColumns) ) {
+            foreach ($newData as $focus_key => $focus_value) {
+                if (in_array($focus_key,$this->importColumns)) {
                     $existing_focus->$focus_key = $focus_value;
                 }
             }
@@ -494,14 +494,14 @@ class Importer
         // Populate in any default values to the bean
         $focus->populateDefaultValues();
 
-        if ( !isset($focus->assigned_user_id) || $focus->assigned_user_id == '' && $newRecord ) {
+        if (!isset($focus->assigned_user_id) || $focus->assigned_user_id == '' && $newRecord) {
             $focus->assigned_user_id = $current_user->id;
         }
         /*
         * Bug 34854: Added all conditions besides the empty check on date modified.
         */
-        if ( ( !empty($focus->new_with_id) && !empty($focus->date_modified) ) ||
-             ( empty($focus->new_with_id) && $timedate->to_db($focus->date_modified) != $timedate->to_db($timedate->to_display_date_time($focus->fetched_row['date_modified'])) )
+        if ((!empty($focus->new_with_id) && !empty($focus->date_modified)) ||
+             (empty($focus->new_with_id) && $timedate->to_db($focus->date_modified) != $timedate->to_db($timedate->to_display_date_time($focus->fetched_row['date_modified'])))
         ) {
             $focus->update_date_modified = false;
         }
@@ -512,7 +512,7 @@ class Importer
         }
             
         $focus->optimistic_lock = false;
-        if ( $focus->object_name == "Contact" && isset($focus->sync_contact) ) {
+        if ($focus->object_name == "Contact" && isset($focus->sync_contact)) {
             //copy the potential sync list to another varible
             $list_of_users=$focus->sync_contact;
             //and set it to false for the save
@@ -555,7 +555,7 @@ class Importer
             $focus->set_created_by = false;
         }
 
-        if ( $focus->object_name == "Contact" && isset($list_of_users) ) {
+        if ($focus->object_name == "Contact" && isset($list_of_users)) {
             $focus->process_sync_to_outlook($list_of_users);
         }
 
@@ -569,8 +569,8 @@ class Importer
         $focus->afterImportSave();
 
         // Add ID to User's Last Import records
-        if ( $newRecord ) {
-            $this->importSource->writeRowToLastImport( $_REQUEST['import_module'],($focus->object_name == 'Case' ? 'aCase' : $focus->object_name),$focus->id);
+        if ($newRecord) {
+            $this->importSource->writeRowToLastImport($_REQUEST['import_module'],($focus->object_name == 'Case' ? 'aCase' : $focus->object_name),$focus->id);
         }
     }
 
@@ -581,7 +581,7 @@ class Importer
         $firstrow    = json_decode(html_entity_decode($_REQUEST['firstrow']),true);
         $mappingValsArr = $this->importColumns;
         $mapping_file = new ImportMap();
-        if ( isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on') {
+        if (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on') {
             $header_to_field = array ();
             foreach ($this->importColumns as $pos => $field_name) {
                 if (isset($firstrow[$pos]) && isset($field_name)) {
@@ -604,7 +604,7 @@ class Importer
 
         // save default fields
         $defaultValues = array();
-        for ( $i = 0; $i < $_REQUEST['columncount']; $i++ ) {
+        for ($i = 0; $i < $_REQUEST['columncount']; $i++) {
             if (isset($this->importColumns[$i]) && !empty($_REQUEST[$this->importColumns[$i]])) {
                 $field = $this->importColumns[$i];
                 $fieldDef = $this->bean->getFieldDefinition($field);
@@ -642,8 +642,8 @@ class Importer
             }
         }
         $mapping_file->setDefaultValues($defaultValues);
-        $result = $mapping_file->save( $current_user->id,  $_REQUEST['save_map_as'], $_REQUEST['import_module'], $_REQUEST['source'],
-            ( isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on'), $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'],ENT_QUOTES)
+        $result = $mapping_file->save($current_user->id,  $_REQUEST['save_map_as'], $_REQUEST['import_module'], $_REQUEST['source'],
+            (isset($_REQUEST['has_header']) && $_REQUEST['has_header'] == 'on'), $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'],ENT_QUOTES)
         );
     }
 
@@ -652,34 +652,34 @@ class Importer
     {
         global $timedate, $current_user;
 
-        if ( is_array($fieldValue) ) {
+        if (is_array($fieldValue)) {
             $defaultRowValue = encodeMultienumValue($fieldValue);
         } else {
             $defaultRowValue = $_REQUEST[$field];
         }
         // translate default values to the date/time format for the import file
-        if ( $fieldDef['type'] == 'date' && $this->ifs->dateformat != $timedate->get_date_format() ) {
+        if ($fieldDef['type'] == 'date' && $this->ifs->dateformat != $timedate->get_date_format()) {
             $defaultRowValue = $timedate->swap_formats($defaultRowValue, $this->ifs->dateformat, $timedate->get_date_format());
         }
 
-        if ( $fieldDef['type'] == 'time' && $this->ifs->timeformat != $timedate->get_time_format() ) {
+        if ($fieldDef['type'] == 'time' && $this->ifs->timeformat != $timedate->get_time_format()) {
             $defaultRowValue = $timedate->swap_formats($defaultRowValue, $this->ifs->timeformat, $timedate->get_time_format());
         }
 
-        if ( ($fieldDef['type'] == 'datetime' || $fieldDef['type'] == 'datetimecombo') && $this->ifs->dateformat.' '.$this->ifs->timeformat != $timedate->get_date_time_format() ) {
+        if (($fieldDef['type'] == 'datetime' || $fieldDef['type'] == 'datetimecombo') && $this->ifs->dateformat.' '.$this->ifs->timeformat != $timedate->get_date_time_format()) {
             $defaultRowValue = $timedate->swap_formats($defaultRowValue, $this->ifs->dateformat.' '.$this->ifs->timeformat,$timedate->get_date_time_format());
         }
 
-        if ( in_array($fieldDef['type'],array('currency','float','int','num')) && $this->ifs->num_grp_sep != $current_user->getPreference('num_grp_sep') ) {
+        if (in_array($fieldDef['type'],array('currency','float','int','num')) && $this->ifs->num_grp_sep != $current_user->getPreference('num_grp_sep')) {
             $defaultRowValue = str_replace($current_user->getPreference('num_grp_sep'), $this->ifs->num_grp_sep,$defaultRowValue);
         }
 
-        if ( in_array($fieldDef['type'],array('currency','float')) && $this->ifs->dec_sep != $current_user->getPreference('dec_sep') ) {
+        if (in_array($fieldDef['type'],array('currency','float')) && $this->ifs->dec_sep != $current_user->getPreference('dec_sep')) {
             $defaultRowValue = str_replace($current_user->getPreference('dec_sep'), $this->ifs->dec_sep,$defaultRowValue);
         }
 
         $user_currency_symbol = $this->defaultUserCurrency->symbol;
-        if ( $fieldDef['type'] == 'currency' && $this->ifs->currency_symbol != $user_currency_symbol ) {
+        if ($fieldDef['type'] == 'currency' && $this->ifs->currency_symbol != $user_currency_symbol) {
             $defaultRowValue = str_replace($user_currency_symbol, $this->ifs->currency_symbol,$defaultRowValue);
         }
 
@@ -699,7 +699,7 @@ class Importer
             // pull out the column position for this field name
             $pos = substr($name, 7);
 
-            if ( isset($importable_fields[$value]) ) {
+            if (isset($importable_fields[$value])) {
                 // now mark that we've seen this field
                 $importColumns[$pos] = $value;
             }
@@ -772,7 +772,7 @@ class Importer
         $advancedMappingSettings = array();
 
         //harvest the dupe index settings
-        if ( isset($_REQUEST['enabled_dupes']) ) {
+        if (isset($_REQUEST['enabled_dupes'])) {
             $toDecode = html_entity_decode  ($_REQUEST['enabled_dupes'], ENT_QUOTES);
             $dupe_ind = json_decode($toDecode);
 
@@ -795,9 +795,9 @@ class Importer
         global $beanList;
         $importableModules = array();
         foreach ($beanList as $moduleName => $beanName) {
-            if ( class_exists($beanName) ) {
+            if (class_exists($beanName)) {
                 $tmp = new $beanName();
-                if ( isset($tmp->importable) && $tmp->importable ) {
+                if (isset($tmp->importable) && $tmp->importable) {
                     $label = isset($GLOBALS['app_list_strings']['moduleList'][$moduleName]) ? $GLOBALS['app_list_strings']['moduleList'][$moduleName] : $moduleName;
                     $importableModules[$moduleName] = $label;
                 }
@@ -821,10 +821,10 @@ class Importer
     {
         $GLOBALS['log']->fatal("Caught error: $errstr");
 
-        if ( !defined('E_DEPRECATED') ) {
+        if (!defined('E_DEPRECATED')) {
             define('E_DEPRECATED','8192');
         }
-        if ( !defined('E_USER_DEPRECATED') ) {
+        if (!defined('E_USER_DEPRECATED')) {
             define('E_USER_DEPRECATED','16384');
         }
 

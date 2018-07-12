@@ -118,7 +118,7 @@ class TemplateRange extends TemplateText
                 }
 
                 if (file_exists($cachefile = sugar_cached("modules/$module/SearchForm_advanced.tpl"))) {
-                    unlink($cachefile );
+                    unlink($cachefile);
                 }
             }
         } else {
@@ -164,7 +164,7 @@ class TemplateRange extends TemplateText
                 }
 
                 if (file_exists($cachefile = sugar_cached("modules/$module/SearchForm_advanced.tpl"))) {
-                    unlink($cachefile );
+                    unlink($cachefile);
                 }
             }
         }

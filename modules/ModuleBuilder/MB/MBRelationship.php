@@ -63,7 +63,7 @@ class MBRelationship
      */
     function __construct($name , $path , $key_name)
     {
-        $this->implementation = new UndeployedRelationships ( $path ) ;
+        $this->implementation = new UndeployedRelationships ($path) ;
         $this->moduleName = $key_name ;
         $this->path = $path ;
         $this->updateRelationshipVariable();
@@ -95,7 +95,7 @@ class MBRelationship
 
     function get($relationshipName)
     {
-        return $this->implementation->get ( $relationshipName ) ;
+        return $this->implementation->get ($relationshipName) ;
     }
 
     /*
@@ -118,24 +118,24 @@ class MBRelationship
     function add($rel)
     {
         // convert old format definition to new format
-        if (! isset ( $rel [ 'lhs_module' ] )) {
+        if (! isset ($rel [ 'lhs_module' ])) {
             $rel [ 'lhs_module' ] = $this->moduleName ;
         }
-        $definition = AbstractRelationships::convertFromOldFormat ( $rel ) ;
-        if (! isset ( $definition ['relationship_type'])) {
+        $definition = AbstractRelationships::convertFromOldFormat ($rel) ;
+        if (! isset ($definition ['relationship_type'])) {
             $definition ['relationship_type'] = 'many-to-many';
         }
         // get relationship object from RelationshipFactory
-        $relationship = RelationshipFactory::newRelationship ( $definition ) ;
+        $relationship = RelationshipFactory::newRelationship ($definition) ;
         // add relationship to the set of relationships
-        $this->implementation->add ( $relationship ) ;
+        $this->implementation->add ($relationship) ;
         $this->updateRelationshipVariable () ;
         return $relationship;
     }
 
     function delete($name)
     {
-        $this->implementation->delete ( $name ) ;
+        $this->implementation->delete ($name) ;
         $this->updateRelationshipVariable () ;
     }
 
@@ -151,7 +151,7 @@ class MBRelationship
 
     function addInstallDefs(&$installDef)
     {
-        $this->implementation->addInstallDefs ( $installDef ) ;
+        $this->implementation->addInstallDefs ($installDef) ;
     }
 
     /*
@@ -168,8 +168,8 @@ class MBRelationship
 
     private function updateRelationshipVariable()
     {
-        foreach ( $this->implementation->getRelationshipList () as $relationshipName ) {
-            $rel = $this->implementation->getOldFormat ( $relationshipName ) ;
+        foreach ($this->implementation->getRelationshipList () as $relationshipName) {
+            $rel = $this->implementation->getOldFormat ($relationshipName) ;
             $this->relationships [ $relationshipName ] = $rel ;
         }
     }

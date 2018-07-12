@@ -259,7 +259,7 @@ class TemplateField
     function get_db_default($modify=false)
     {
         $GLOBALS['log']->debug('get_db_default(): default_value='.$this->default_value);
-        if (!$modify or empty($this->new_field_definition['default_value']) or $this->new_field_definition['default_value'] != $this->default_value ) {
+        if (!$modify or empty($this->new_field_definition['default_value']) or $this->new_field_definition['default_value'] != $this->default_value) {
             if (!is_null($this->default_value)) { // add a default value if it is not null - we want to set a default even if default_value is '0', which is not null, but which is empty()
                 if (NULL == trim($this->default_value)) {
                     return " DEFAULT NULL";
@@ -294,7 +294,7 @@ class TemplateField
                 $req = ($this->required) ? " NOT NULL " : ''; // bug 17184 tyoung - set required correctly when modifying custom field in Studio
             }
         } else {
-            if (empty($this->new_field_definition['required']) or $this->new_field_definition['required'] != $this->required ) {
+            if (empty($this->new_field_definition['required']) or $this->new_field_definition['required'] != $this->required) {
                 if (!empty($this->required) && $this->required) {
                     $req = " NOT NULL";
                 }
@@ -450,7 +450,7 @@ class TemplateField
 
 
         //Figure out the duplicate_merge_dom_value based on the values of merge filter and duplicate merge
-        if (empty($this->merge_filter) || $this->merge_filter === 'disabled' ) {
+        if (empty($this->merge_filter) || $this->merge_filter === 'disabled') {
             if (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
                 $this->duplicate_merge_dom_value = 0;
             } else {
@@ -589,7 +589,7 @@ class TemplateField
         $df->addFieldObject($this);
 
         require_once('modules/ModuleBuilder/parsers/parser.searchfields.php');
-        $searchFieldParser = new ParserSearchFields( $df->getModuleName() , $df->getPackageName() ) ;
+        $searchFieldParser = new ParserSearchFields($df->getModuleName() , $df->getPackageName()) ;
         //If unified_search is enabled for this field, then create the SearchFields entry
         $fieldName = $this->get_field_name($df->getModuleName(), $this->name);
         if ($this->unified_search && !isset($searchFieldParser->searchFields[$df->getModuleName()][$fieldName])) {

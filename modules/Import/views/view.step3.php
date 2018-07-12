@@ -69,8 +69,8 @@ class ImportViewStep3 extends ImportView
         global $mod_strings, $app_strings, $current_user, $sugar_config, $app_list_strings, $locale;
 
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
-        $has_header = ( isset( $_REQUEST['has_header']) ? 1 : 0 );
-        $sugar_config['import_max_records_per_file'] = ( empty($sugar_config['import_max_records_per_file']) ? 1000 : $sugar_config['import_max_records_per_file'] );
+        $has_header = (isset($_REQUEST['has_header']) ? 1 : 0);
+        $sugar_config['import_max_records_per_file'] = (empty($sugar_config['import_max_records_per_file']) ? 1000 : $sugar_config['import_max_records_per_file']);
         $this->ss->assign("CURRENT_STEP", $this->currentStep);
         // attempt to lookup a preexisting field map
         // use the custom one if specfied to do so in step 1
@@ -79,10 +79,10 @@ class ImportViewStep3 extends ImportView
         $default_values = array();
         $ignored_fields = array();
 
-        if ( !empty( $_REQUEST['source_id'])) {
+        if (!empty($_REQUEST['source_id'])) {
             $GLOBALS['log']->fatal("Loading import map properties.");
             $mapping_file = new ImportMap();
-            $mapping_file->retrieve( $_REQUEST['source_id'],false);
+            $mapping_file->retrieve($_REQUEST['source_id'],false);
             $_REQUEST['source'] = $mapping_file->source;
             $has_header = $mapping_file->has_header;
             if (isset($mapping_file->delimiter)) {
@@ -115,16 +115,16 @@ class ImportViewStep3 extends ImportView
         $delimiter = $this->getRequestDelimiter();
         
         $this->ss->assign("CUSTOM_DELIMITER", $delimiter);
-        $this->ss->assign("CUSTOM_ENCLOSURE", ( !empty($_REQUEST['custom_enclosure']) ? $_REQUEST['custom_enclosure'] : "" ));
+        $this->ss->assign("CUSTOM_ENCLOSURE", (!empty($_REQUEST['custom_enclosure']) ? $_REQUEST['custom_enclosure'] : ""));
 
         //populate import locale  values from import mapping if available, these values will be used througout the rest of the code path
 
         $uploadFileName = $_REQUEST['file_name'];
 
         // Now parse the file and look for errors
-        $importFile = new ImportFile( $uploadFileName, $delimiter, html_entity_decode($_REQUEST['custom_enclosure'],ENT_QUOTES), FALSE);
+        $importFile = new ImportFile($uploadFileName, $delimiter, html_entity_decode($_REQUEST['custom_enclosure'],ENT_QUOTES), FALSE);
 
-        if ( !$importFile->fileExists() ) {
+        if (!$importFile->fileExists()) {
             $this->_showImportError($mod_strings['LBL_CANNOT_OPEN'],$_REQUEST['import_module'],'Step2');
             return;
         }
@@ -136,7 +136,7 @@ class ImportViewStep3 extends ImportView
 
         //Keep track of the largest row count found.
         $maxFieldCount = 0;
-        for ( $i = 0; $i < 3; $i++ ) {
+        for ($i = 0; $i < 3; $i++) {
             $rows[] = $importFile->getNextRow();
             $maxFieldCount = $importFile->getFieldCount() > $maxFieldCount ?  $importFile->getFieldCount() : $maxFieldCount;
         }
@@ -144,9 +144,9 @@ class ImportViewStep3 extends ImportView
 
         // Bug 14689 - Parse the first data row to make sure it has non-empty data in it
         $isempty = true;
-        if ( $rows[(int)$has_header] != false ) {
-            foreach ( $rows[(int)$has_header] as $value ) {
-                if ( strlen(trim($value)) > 0 ) {
+        if ($rows[(int)$has_header] != false) {
+            foreach ($rows[(int)$has_header] as $value) {
+                if (strlen(trim($value)) > 0) {
                     $isempty = false;
                     break;
                 }
@@ -162,9 +162,9 @@ class ImportViewStep3 extends ImportView
         $this->ss->assign("FIRSTROW", htmlentities(json_encode($rows[0])));
 
         // Now build template
-        $this->ss->assign("TMP_FILE", $uploadFileName );
-        $this->ss->assign("SOURCE", $_REQUEST['source'] );
-        $this->ss->assign("TYPE", $_REQUEST['type'] );
+        $this->ss->assign("TMP_FILE", $uploadFileName);
+        $this->ss->assign("SOURCE", $_REQUEST['source']);
+        $this->ss->assign("TYPE", $_REQUEST['type']);
         $this->ss->assign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('basic_search','align="absmiddle" alt="'.$app_strings['LNK_DELETE'].'" border="0"'));
         $this->ss->assign("PUBLISH_INLINE_PNG",  SugarThemeRegistry::current()->getImage('advanced_search','align="absmiddle" alt="'.$mod_strings['LBL_PUBLISH'].'" border="0"'));
 
@@ -199,16 +199,16 @@ class ImportViewStep3 extends ImportView
             // See if we have any field map matches
             $defaultValue = "";
             // Bug 31260 - If the data rows have more columns than the header row, then just add a new header column
-            if ( !isset($rows[0][$field_count]) ) {
+            if (!isset($rows[0][$field_count])) {
                 $rows[0][$field_count] = '';
             }
             // See if we can match the import row to a field in the list of fields to import
             $firstrow_name = trim(str_replace(":","",$rows[0][$field_count]));
-            if ($has_header && isset( $field_map[$firstrow_name] ) ) {
+            if ($has_header && isset($field_map[$firstrow_name])) {
                 $defaultValue = $field_map[$firstrow_name];
             } elseif (isset($field_map[$field_count])) {
                 $defaultValue = $field_map[$field_count];
-            } elseif (empty( $_REQUEST['source_id'])) {
+            } elseif (empty($_REQUEST['source_id'])) {
                 $defaultValue = trim($rows[0][$field_count]);
             }
 
@@ -219,10 +219,10 @@ class ImportViewStep3 extends ImportView
             global $current_language;
             $moduleStrings = return_module_language($current_language, $this->bean->module_dir);
 
-            foreach ( $fields as $fieldname => $properties ) {
+            foreach ($fields as $fieldname => $properties) {
                 // get field name
-                if (!empty($moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)]) ) {
-                    $displayname = str_replace(":","", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)] );
+                if (!empty($moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)])) {
+                    $displayname = str_replace(":","", $moduleStrings['LBL_EXPORT_'.strtoupper($fieldname)]);
                 } elseif (!empty ($properties['vname'])) {
                     $displayname = str_replace(":","",translate($properties['vname'] ,$this->bean->module_dir));
                 } else {
@@ -231,7 +231,7 @@ class ImportViewStep3 extends ImportView
                 // see if this is required
                 $req_mark  = "";
                 $req_class = "";
-                if ( array_key_exists($fieldname, $this->bean->get_import_required_fields()) ) {
+                if (array_key_exists($fieldname, $this->bean->get_import_required_fields())) {
                     $req_mark  = ' ' . $app_strings['LBL_REQUIRED_SYMBOL'];
                     $req_class = ' class="required" ';
                 }
@@ -244,12 +244,12 @@ class ImportViewStep3 extends ImportView
                         $mappedFields[] = $fieldname;
                     }
                 } else {
-                    if ( !empty($defaultValue) && !in_array($fieldname,$mappedFields)
-                                                    && !in_array($fieldname,$ignored_fields) ) {
-                        if ( strtolower($fieldname) == strtolower($defaultValue)
+                    if (!empty($defaultValue) && !in_array($fieldname,$mappedFields)
+                                                    && !in_array($fieldname,$ignored_fields)) {
+                        if (strtolower($fieldname) == strtolower($defaultValue)
                             || strtolower($fieldname) == str_replace(" ","_",strtolower($defaultValue))
                             || strtolower($displayname) == strtolower($defaultValue)
-                            || strtolower($displayname) == str_replace(" ","_",strtolower($defaultValue)) ) {
+                            || strtolower($displayname) == str_replace(" ","_",strtolower($defaultValue))) {
                             $selected = ' selected="selected" ';
                             $defaultField = $fieldname;
                             $mappedFields[] = $fieldname;
@@ -258,11 +258,11 @@ class ImportViewStep3 extends ImportView
                 }
                 // get field type information
                 $fieldtype = '';
-                if ( isset($properties['type'])
-                        && isset($mod_strings['LBL_IMPORT_FIELDDEF_' . strtoupper($properties['type'])]) ) {
+                if (isset($properties['type'])
+                        && isset($mod_strings['LBL_IMPORT_FIELDDEF_' . strtoupper($properties['type'])])) {
                     $fieldtype = ' [' . $mod_strings['LBL_IMPORT_FIELDDEF_' . strtoupper($properties['type'])] . '] ';
                 }
-                if ( isset($properties['comment']) ) {
+                if (isset($properties['comment'])) {
                     $fieldtype .= ' - ' . $properties['comment'];
                 }
                 $options[$displayname.$fieldname] = '<option value="'.$fieldname.'" title="'. $displayname . htmlentities($fieldtype) . '"'
@@ -271,16 +271,16 @@ class ImportViewStep3 extends ImportView
 
             // get default field value
             $defaultFieldHTML = '';
-            if ( !empty($defaultField) ) {
+            if (!empty($defaultField)) {
                 $defaultFieldHTML = getControl(
                     $_REQUEST['import_module'],
                     $defaultField,
                     $fields[$defaultField],
-                    ( isset($default_values[$defaultField]) ? $default_values[$defaultField] : '' )
+                    (isset($default_values[$defaultField]) ? $default_values[$defaultField] : '')
                     );
             }
 
-            if ( isset($default_values[$defaultField]) ) {
+            if (isset($default_values[$defaultField])) {
                 unset($default_values[$defaultField]);
             }
 
@@ -308,13 +308,13 @@ class ImportViewStep3 extends ImportView
         }
 
         // add in extra defaulted fields if they are in the mapping record
-        if ( count($default_values) > 0 ) {
-            foreach ( $default_values as $field_name => $default_value ) {
+        if (count($default_values) > 0) {
+            foreach ($default_values as $field_name => $default_value) {
                 // build string of options
                 $fields  = $this->bean->get_importable_fields();
                 $options = array();
                 $defaultField = '';
-                foreach ( $fields as $fieldname => $properties ) {
+                foreach ($fields as $fieldname => $properties) {
                     // get field name
                     if (!empty ($properties['vname'])) {
                         $displayname = str_replace(":","",translate($properties['vname'] ,$this->bean->module_dir));
@@ -324,26 +324,26 @@ class ImportViewStep3 extends ImportView
                     // see if this is required
                     $req_mark  = "";
                     $req_class = "";
-                    if ( array_key_exists($fieldname, $this->bean->get_import_required_fields()) ) {
+                    if (array_key_exists($fieldname, $this->bean->get_import_required_fields())) {
                         $req_mark  = ' ' . $app_strings['LBL_REQUIRED_SYMBOL'];
                         $req_class = ' class="required" ';
                     }
                     // see if we have a match
                     $selected = '';
-                    if ( strtolower($fieldname) == strtolower($field_name)
+                    if (strtolower($fieldname) == strtolower($field_name)
 							&& !in_array($fieldname,$mappedFields)
-							&& !in_array($fieldname,$ignored_fields) ) {
+							&& !in_array($fieldname,$ignored_fields)) {
                         $selected = ' selected="selected" ';
                         $defaultField = $fieldname;
                         $mappedFields[] = $fieldname;
                     }
                     // get field type information
                     $fieldtype = '';
-                    if ( isset($properties['type'])
-                            && isset($mod_strings['LBL_IMPORT_FIELDDEF_' . strtoupper($properties['type'])]) ) {
+                    if (isset($properties['type'])
+                            && isset($mod_strings['LBL_IMPORT_FIELDDEF_' . strtoupper($properties['type'])])) {
                         $fieldtype = ' [' . $mod_strings['LBL_IMPORT_FIELDDEF_' . strtoupper($properties['type'])] . '] ';
                     }
-                    if ( isset($properties['comment']) ) {
+                    if (isset($properties['comment'])) {
                         $fieldtype .= ' - ' . $properties['comment'];
                     }
                     $options[$displayname.$fieldname] = '<option value="'.$fieldname.'" title="'. $displayname . $fieldtype . '"' . $selected . $req_class . '>'
@@ -352,7 +352,7 @@ class ImportViewStep3 extends ImportView
 
                 // get default field value
                 $defaultFieldHTML = '';
-                if ( !empty($defaultField) ) {
+                if (!empty($defaultField)) {
                     $defaultFieldHTML = getControl(
                         $_REQUEST['import_module'],
                         $defaultField,
@@ -383,9 +383,9 @@ class ImportViewStep3 extends ImportView
         global $dictionary, $current_language;
 
         // show notes
-        if ( $this->bean instanceof Person ) {
+        if ($this->bean instanceof Person) {
             $module_key = "LBL_CONTACTS_NOTE_";
-        } elseif ( $this->bean instanceof Company ) {
+        } elseif ($this->bean instanceof Company) {
             $module_key = "LBL_ACCOUNTS_NOTE_";
         } else {
             $module_key = "LBL_".strtoupper($_REQUEST['import_module'])."_NOTE_";
@@ -395,11 +395,11 @@ class ImportViewStep3 extends ImportView
             $notetext .= '<li>' . $mod_strings[$module_key.$i] . '</li>';
         }
         $this->ss->assign("NOTETEXT",$notetext);
-        $this->ss->assign("HAS_HEADER",($has_header ? 'on' : 'off' ));
+        $this->ss->assign("HAS_HEADER",($has_header ? 'on' : 'off'));
 
         // get list of required fields
         $required = array();
-        foreach ( array_keys($this->bean->get_import_required_fields()) as $name ) {
+        foreach (array_keys($this->bean->get_import_required_fields()) as $name) {
             $properties = $this->bean->getFieldDefinition($name);
             if (!empty ($properties['vname'])) {
                 $required[$name] = str_replace(":","",translate($properties['vname'] ,$this->bean->module_dir));

@@ -143,7 +143,7 @@ if (!isset($_SESSION['reassignRecords']['assignedModuleListCache'])) {
             } else {
                 require_once($beanFiles[$p]);
                 $obj = new $p();
-                if ( !isset($obj->field_defs['assigned_user_id']) ||
+                if (!isset($obj->field_defs['assigned_user_id']) ||
 			     	(
 					isset($obj->field_defs['assigned_user_id']) &&
 					isset($obj->field_defs['assigned_user_id']['source']) &&

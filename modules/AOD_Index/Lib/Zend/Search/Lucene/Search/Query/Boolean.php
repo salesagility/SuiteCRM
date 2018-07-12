@@ -91,7 +91,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
             $this->_signs = null;
             // Check if all subqueries are required
             if (is_array($signs)) {
-                foreach ($signs as $sign ) {
+                foreach ($signs as $sign) {
                     if ($sign !== true) {
                         $this->_signs = $signs;
                         break;
@@ -349,7 +349,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
 
 
         // Check, if there are no decomposed subqueries
-        if (count($terms) == 0 ) {
+        if (count($terms) == 0) {
             // return prepared candidate
             return $optimizedQuery;
         }
@@ -613,7 +613,7 @@ class Zend_Search_Lucene_Search_Query_Boolean extends Zend_Search_Lucene_Search_
     {
         if ($this->_coord === null) {
             $this->_coord = $reader->getSimilarity()->coord(count($this->_subqueries),
-                                                            count($this->_subqueries) );
+                                                            count($this->_subqueries));
         }
 
         $score = 0;

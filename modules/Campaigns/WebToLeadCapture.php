@@ -89,7 +89,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         $current_user->retrieve($_REQUEST['assigned_user_id']);
     } 
 
-    if (isset($camp_data) && $camp_data != null ) {
+    if (isset($camp_data) && $camp_data != null) {
         $leadForm = new LeadFormBase();
         $lead = new Lead();
         $prefix = '';

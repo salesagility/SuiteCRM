@@ -31,7 +31,7 @@ class LessThanOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 
     public function testIsValidTagWithInvalidName()
     {
-        $this->assertFalse(self::$operator->isValid( self::$operator->toFilterTag('eq2')));
+        $this->assertFalse(self::$operator->isValid(self::$operator->toFilterTag('eq2')));
     }
 
     public function testToFilterOperator()

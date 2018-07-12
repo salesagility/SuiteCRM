@@ -49,7 +49,7 @@ if (empty($_SESSION['setup_db_host_name'])) {
     $_SESSION['setup_db_host_name'] = (isset($sugar_config['db_host_name']))  ? $sugar_config['db_host_name'] :  $_SERVER['SERVER_NAME'];
 }
 
-if ( !isset( $install_script ) || !$install_script ) {
+if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 

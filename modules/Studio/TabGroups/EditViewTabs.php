@@ -84,22 +84,22 @@ if (empty($selected_lang)) {
 $smarty->assign('dropdown_languages', get_languages());
 
 
-$imageSave = SugarThemeRegistry::current()->getImage( 'studio_save', '',null,null,'.gif',$mod_strings['LBL_SAVE']);
+$imageSave = SugarThemeRegistry::current()->getImage('studio_save', '',null,null,'.gif',$mod_strings['LBL_SAVE']);
 
 $buttons = array();
 $buttons [] = array ( 'text' => $GLOBALS['mod_strings']['LBL_BTN_SAVEPUBLISH'],'actionScript'=>"onclick='studiotabs.generateForm(\"edittabs\");document.edittabs.submit()'" ) ;
 $html = "" ;
-foreach ( $buttons as $button ) {
+foreach ($buttons as $button) {
     $html .= "<td><input type='button' valign='center' class='button' style='cursor:pointer' onmousedown='this.className=\"buttonOn\";return false;' onmouseup='this.className=\"button\"' onmouseout='this.className=\"button\"' {$button['actionScript']} value = '{$button['text']}' ></td>" ;
 }
 $smarty->assign('buttons', $html);
 $smarty->assign('title', $title);
 $smarty->assign('dropdown_lang', $selected_lang);
 
-$editImage = SugarThemeRegistry::current()->getImage( 'edit_inline', '',null,null,'.gif',$mod_strings['LBL_EDIT']);
+$editImage = SugarThemeRegistry::current()->getImage('edit_inline', '',null,null,'.gif',$mod_strings['LBL_EDIT']);
 $smarty->assign('editImage',$editImage);
-$deleteImage = SugarThemeRegistry::current()->getImage( 'delete_inline', '',null,null,'.gif',$mod_strings['LBL_MB_DELETE']);
-$recycleImage = SugarThemeRegistry::current()->getImage('icon_Delete','',48,48,'.gif',$mod_strings['LBL_MB_DELETE'] );
+$deleteImage = SugarThemeRegistry::current()->getImage('delete_inline', '',null,null,'.gif',$mod_strings['LBL_MB_DELETE']);
+$recycleImage = SugarThemeRegistry::current()->getImage('icon_Delete','',48,48,'.gif',$mod_strings['LBL_MB_DELETE']);
 $smarty->assign('deleteImage',$deleteImage);
 $smarty->assign('recycleImage',$recycleImage);	
 

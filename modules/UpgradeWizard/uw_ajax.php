@@ -291,7 +291,7 @@ function commitAjaxPostInstall($persistence)
         post_install();
     }
 
-    require( "sugar_version.php" );
+    require("sugar_version.php");
 
     if (!rebuildConfigFile($sugar_config, $sugar_version)) {
         logThis('*** ERROR: could not write config.php! - upgrade will fail!');
@@ -332,31 +332,31 @@ function preflightCheckJsonFindUpgradeFiles($persistence)
         $errors					= array();
         $base_upgrade_dir      = "upload://upgrades";
         $base_tmp_upgrade_dir  = sugar_cached("upgrades/temp");
-        $install_file			= urldecode( $persistence['install_file'] );
+        $install_file			= urldecode($persistence['install_file']);
         $show_files				= true;
-        $unzip_dir				= mk_temp_dir( $base_tmp_upgrade_dir );
+        $unzip_dir				= mk_temp_dir($base_tmp_upgrade_dir);
         $zip_from_dir			= ".";
         $zip_to_dir			= ".";
         $zip_force_copy			= array();
 
-        unzip( $install_file, $unzip_dir );
+        unzip($install_file, $unzip_dir);
 
         // assumption -- already validated manifest.php at time of upload
-        include( "$unzip_dir/manifest.php" );
+        include("$unzip_dir/manifest.php");
 
-        if ( isset( $manifest['copy_files']['from_dir'] ) && $manifest['copy_files']['from_dir'] != "" ) {
+        if (isset($manifest['copy_files']['from_dir']) && $manifest['copy_files']['from_dir'] != "") {
             $zip_from_dir   = $manifest['copy_files']['from_dir'];
         }
-        if ( isset( $manifest['copy_files']['to_dir'] ) && $manifest['copy_files']['to_dir'] != "" ) {
+        if (isset($manifest['copy_files']['to_dir']) && $manifest['copy_files']['to_dir'] != "") {
             $zip_to_dir     = $manifest['copy_files']['to_dir'];
         }
-        if ( isset( $manifest['copy_files']['force_copy'] ) && $manifest['copy_files']['force_copy'] != "" ) {
+        if (isset($manifest['copy_files']['force_copy']) && $manifest['copy_files']['force_copy'] != "") {
             $zip_force_copy     = $manifest['copy_files']['force_copy'];
         }
-        if ( isset( $manifest['version'] ) ) {
+        if (isset($manifest['version'])) {
             $version    = $manifest['version'];
         }
-        if ( !is_writable( "config.php" ) ) {
+        if (!is_writable("config.php")) {
             logThis('BAD error');
             return $mod_strings['ERR_UW_CONFIG'];
         }

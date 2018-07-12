@@ -187,10 +187,10 @@ if ($email_health>0) {
 }
 
 $ss->assign("EMAIL_SETUP_WIZ_LINK", $email_setup_wiz_link);
-$ss->assign( 'EMAIL_IMAGE', define_image($email_health, 2));
-$ss->assign( 'EMAIL_COMPONENTS', $mod_strings['LBL_EMAIL_COMPONENTS']);
-$ss->assign( 'SCHEDULER_COMPONENTS', $mod_strings['LBL_SCHEDULER_COMPONENTS']);
-$ss->assign( 'RECHECK_BTN', $mod_strings['LBL_RECHECK_BTN']);
+$ss->assign('EMAIL_IMAGE', define_image($email_health, 2));
+$ss->assign('EMAIL_COMPONENTS', $mod_strings['LBL_EMAIL_COMPONENTS']);
+$ss->assign('SCHEDULER_COMPONENTS', $mod_strings['LBL_SCHEDULER_COMPONENTS']);
+$ss->assign('RECHECK_BTN', $mod_strings['LBL_RECHECK_BTN']);
 
 /************* SCHEDULER COMPONENTS ************/
 
@@ -210,7 +210,7 @@ while ($sched_row = $focus->db->fetchByAssoc($sched_res)) {
     $scheds[] = $sched_row;
 }
 foreach ($scheds as $funct) {
-    if ( ($funct['job']==$check_sched1)  ||   ($funct['job']==$check_sched2)) {
+    if (($funct['job']==$check_sched1)  ||   ($funct['job']==$check_sched2)) {
         $sched_mes = 'use';
         $sched_mes_body .= "<tr><td style='text-align: left;'>".$funct['name']."</td>";
         $sched_mes_body .= "<td style='text-align: left;'>".$funct['status']."</td></tr>";
@@ -255,7 +255,7 @@ if ($sched_health>0) {
 //put table html together and display
     $final_sched_msg = $sched_mes . $sched_mes_body . '</table>' . $admin_sched_link;        
     $ss->assign("SCHEDULER_EMAILS_MESSAGE", $final_sched_msg);
-    $ss->assign( 'SCHEDULE_IMAGE', define_image($sched_health, 2));
+    $ss->assign('SCHEDULE_IMAGE', define_image($sched_health, 2));
 
 
 /********** FINAL END OF PAGE UI Stuff ********/

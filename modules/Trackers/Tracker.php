@@ -150,7 +150,7 @@ if (!class_exists('Tracker')) {
         {
             $time_on_last_page = 0;
             //no need to calculate it if it is a redirection page
-            if (empty($GLOBALS['app']->headerDisplayed )) {
+            if (empty($GLOBALS['app']->headerDisplayed)) {
                 return;
             }
             if (!empty($_SESSION['lpage'])) {

@@ -139,9 +139,9 @@ if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty(
     $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=SubPanelView&from_module=Opportunities&record=". $_REQUEST['record']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 $ListView = new ListView();
-$ListView->initNewXTemplate( 'modules/Opportunities/SubPanelView.html',$current_module_strings);
+$ListView->initNewXTemplate('modules/Opportunities/SubPanelView.html',$current_module_strings);
 $ListView->xTemplateAssign("RETURN_URL", "&return_module=".$currentModule."&return_action=DetailView&return_id={$_REQUEST['record']}");
 $ListView->xTemplateAssign("EDIT_INLINE_PNG",  SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
-$ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME']. $header_text );
+$ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME']. $header_text);
 $ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "OPPORTUNITY");

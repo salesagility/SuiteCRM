@@ -147,7 +147,7 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail
         $task_list = $this->bean->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
 
         //From the query above, populates the select box
-        foreach ( $task_list as $task) {
+        foreach ($task_list as $task) {
             echo '<option value="'.$task->id.'">'.$task->name.'</option>';
         }
 

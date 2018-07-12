@@ -298,7 +298,7 @@ class Config_File
                 continue;
             }
 
-            if ( substr($line, 0, 1) == '[' && preg_match('!^\[(.*?)\]!', $line, $match) ) {
+            if (substr($line, 0, 1) == '[' && preg_match('!^\[(.*?)\]!', $line, $match)) {
                 /* section found */
                 if (substr($match[1], 0, 1) == '.') {
                     /* hidden section */

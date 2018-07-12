@@ -49,7 +49,7 @@ class TemplateMultiEnum extends TemplateEnum
     function get_html_edit()
     {
         $this->prepare();
-        $xtpl_var = strtoupper( $this->name);
+        $xtpl_var = strtoupper($this->name);
         // MFH BUG#13645
         return "<input type='hidden' name='". $this->name. "' value='0'><select name='". $this->name . "[]' size='5' title='{" . $xtpl_var ."_HELP}' MULTIPLE=true>{OPTIONS_".$xtpl_var. "}</select>";
     }
@@ -76,7 +76,7 @@ class TemplateMultiEnum extends TemplateEnum
         if (empty($this->ext1)) {
             $this->ext1 = $this->options;
         }
-        $returnXTPL[strtoupper('options_'.$this->name)] = get_select_options_with_id($app_list_strings[$this->ext1], unencodeMultienum( $value));
+        $returnXTPL[strtoupper('options_'.$this->name)] = get_select_options_with_id($app_list_strings[$this->ext1], unencodeMultienum($value));
 
         return $returnXTPL;
     }
@@ -104,7 +104,7 @@ class TemplateMultiEnum extends TemplateEnum
         }
         global $app_list_strings;
 
-        $values = unencodeMultienum( $value);
+        $values = unencodeMultienum($value);
         $translatedValues = array();
 
         foreach ($values as $val) {
@@ -121,25 +121,25 @@ class TemplateMultiEnum extends TemplateEnum
     function get_field_def()
     {
         $def = parent::get_field_def();
-        if ( !empty ( $this->ext4 ) ) {
+        if (!empty ($this->ext4)) {
             // turn off error reporting in case we are unpacking a value that hasn't been packed...
             // this is kludgy, but unserialize doesn't throw exceptions correctly
             if ($this->ext4[0] == 'a' && $this->ext4[1] == ':') {
-                $unpacked = @unserialize ( $this->ext4 ) ;
+                $unpacked = @unserialize ($this->ext4) ;
             } else {
                 $unpacked = false;
             }
 
             // if we have a new error, then unserialize must have failed => we don't have a packed ext4
             // safe to assume that false means the unpack failed, as ext4 will either contain an imploded string of default values, or an array, not a boolean false value
-            if ( $unpacked === false && !isset($this->no_default) ) {
+            if ($unpacked === false && !isset($this->no_default)) {
                 $def [ 'default' ] = $this->ext4 ;
             } else {
                 // we have a packed representation containing one or both of default and dependency
-                if ( isset ( $unpacked [ 'default' ] ) && !isset($this->no_default)) {
+                if (isset ($unpacked [ 'default' ]) && !isset($this->no_default)) {
                     $def [ 'default' ] = $unpacked [ 'default' ] ;
                 }
-                if ( isset ( $unpacked [ 'dependency' ] ) ) {
+                if (isset ($unpacked [ 'dependency' ])) {
                     $def [ 'dependency' ] = $unpacked [ 'dependency' ] ;
                 }
             }
@@ -156,14 +156,14 @@ class TemplateMultiEnum extends TemplateEnum
 
     function save($df)
     {
-        if ( isset ( $this->default ) ) {
-            if ( is_array ( $this->default ) ) {
+        if (isset ($this->default)) {
+            if (is_array ($this->default)) {
                 $this->default = encodeMultienumValue($this->default);
             }
-            $this->ext4 = ( isset ( $this->dependency ) ) ? serialize ( array ( 'default' => $this->default , 'dependency' => html_entity_decode($this->dependency) ) )  : $this->default ;
+            $this->ext4 = (isset ($this->dependency)) ? serialize (array ( 'default' => $this->default , 'dependency' => html_entity_decode($this->dependency) ))  : $this->default ;
         } else {
-            if ( isset ( $this->dependency ) ) {
-                $this->ext4 = serialize ( array ( 'dependency' => html_entity_decode($this->dependency) ) ) ;
+            if (isset ($this->dependency)) {
+                $this->ext4 = serialize (array ( 'dependency' => html_entity_decode($this->dependency) )) ;
             }
         }
         parent::save($df);

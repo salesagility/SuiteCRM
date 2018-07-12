@@ -98,7 +98,7 @@ EORSS;
 
     protected function generateItem($item)
     {
-        $name = !empty($item['name_value_list']['name']['value'])?htmlentities( $item['name_value_list']['name']['value']): '';
+        $name = !empty($item['name_value_list']['name']['value'])?htmlentities($item['name_value_list']['name']['value']): '';
         $url = $GLOBALS['sugar_config']['site_url']  . htmlentities('/index.php?module=' . $item['module_name']. '&action=DetailView&record=' . $item['id']);
         $date = TimeDate::httpTime(TimeDate::getInstance()->fromDb($item['name_value_list']['date_modified']['value'])->getTimestamp());
         $description = '';
@@ -107,13 +107,13 @@ EORSS;
             $displayFieldNames = false;
         }
         foreach ($item['name_value_list'] as $k=>$v) {
-            if ( $k == 'name' || $k == 'date_modified') {
+            if ($k == 'name' || $k == 'date_modified') {
                 continue;
             }
             if ($displayFieldNames) {
-                $description .= '<b>' .htmlentities( $k) . ':<b>&nbsp;';
+                $description .= '<b>' .htmlentities($k) . ':<b>&nbsp;';
             }
-            $description .= htmlentities( $v['value']) . "<br>";
+            $description .= htmlentities($v['value']) . "<br>";
         }
 
         echo <<<EORSS

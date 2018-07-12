@@ -264,10 +264,10 @@ class Bug extends SugarBean
     {
         static $releases;
 
-        if ( empty($this->found_in_release) ) {
+        if (empty($this->found_in_release)) {
             return;
         }
-        if ( isset($releases[$this->found_in_release]) ) {
+        if (isset($releases[$this->found_in_release])) {
             $this->release_name = $releases[$this->found_in_release];
             return;
         }
@@ -292,10 +292,10 @@ class Bug extends SugarBean
     {
         static $releases;
 
-        if ( empty($this->fixed_in_release) ) {
+        if (empty($this->fixed_in_release)) {
             return;
         }
-        if ( isset($releases[$this->fixed_in_release]) ) {
+        if (isset($releases[$this->fixed_in_release])) {
             $this->fixed_in_release_name = $releases[$this->fixed_in_release];
             return;
         }

@@ -50,12 +50,12 @@ function unzip($zip_archive, $zip_dir)
 
 function unzip_file($zip_archive, $archive_file, $zip_dir)
 {
-    if ( !is_dir( $zip_dir ) ) {
+    if (!is_dir($zip_dir)) {
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
             $GLOBALS['log']->fatal("Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist.");
             return false;
         } else {
-            die( "Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist." );
+            die("Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist.");
         }
     }
     
@@ -91,9 +91,9 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
 
 function zip_dir($zip_dir, $zip_archive)
 {
-    if ( !is_dir( $zip_dir ) ) {
+    if (!is_dir($zip_dir)) {
         if (!defined('SUITE_PHPUNIT_RUNNER')) {
-            die( "Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist." );
+            die("Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist.");
         }
         return false;
     }

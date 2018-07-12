@@ -71,28 +71,28 @@ function getControl(
     // set the filename for this control
     $file = create_cache_directory('modules/Import/') . $module . $fieldname . '.tpl';
 
-    if ( !is_file($file)
+    if (!is_file($file)
             || inDeveloperMode()
-            || !empty($_SESSION['developerMode']) ) {
-        if ( !isset($vardef) ) {
+            || !empty($_SESSION['developerMode'])) {
+        if (!isset($vardef)) {
             $focus = loadBean($module);
             $vardef = $focus->getFieldDefinition($fieldname);
         }
         
         // if this is the id relation field, then don't have a pop-up selector.
-        if ( $vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
+        if ($vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
             $vardef['type'] = 'varchar';
         }
         
         // create the dropdowns for the parent type fields
-        if ( $vardef['type'] == 'parent_type' ) {
+        if ($vardef['type'] == 'parent_type') {
             $vardef['type'] = 'enum';
         }
         
         // remove the special text entry field function 'getEmailAddressWidget'
-        if ( isset($vardef['function']) 
-                && ( $vardef['function'] == 'getEmailAddressWidget' 
-                    || $vardef['function']['name'] == 'getEmailAddressWidget' ) ) {
+        if (isset($vardef['function']) 
+                && ($vardef['function'] == 'getEmailAddressWidget' 
+                    || $vardef['function']['name'] == 'getEmailAddressWidget')) {
             unset($vardef['function']);
         }
         
@@ -113,9 +113,9 @@ function getControl(
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
         
         // hack to disable one of the js calls in this control
-        if ( isset($vardef['function']) 
-                && ( $vardef['function'] == 'getCurrencyDropDown' 
-                    || $vardef['function']['name'] == 'getCurrencyDropDown' ) ) {
+        if (isset($vardef['function']) 
+                && ($vardef['function'] == 'getCurrencyDropDown' 
+                    || $vardef['function']['name'] == 'getCurrencyDropDown')) {
             $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
         }
 
@@ -152,15 +152,15 @@ function getControl(
  
     // populate the fieldlist from the vardefs
     $fieldlist = array();
-    if ( !isset($focus) || !($focus instanceof SugarBean) ) {
+    if (!isset($focus) || !($focus instanceof SugarBean)) {
         $focus = loadBean($module);
     }
     // create the dropdowns for the parent type fields
-    if ( $vardef['type'] == 'parent_type' ) {
+    if ($vardef['type'] == 'parent_type') {
         $focus->field_defs[$vardef['name']]['options'] = $focus->field_defs[$vardef['group']]['options'];
     }
     $vardefFields = $focus->getFieldDefinitions();
-    foreach ( $vardefFields as $name => $properties ) {
+    foreach ($vardefFields as $name => $properties) {
         $fieldlist[$name] = $properties;
         // fill in enums
         if (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']])) {
@@ -176,16 +176,16 @@ function getControl(
         }
     }
     // fill in function return values
-    if ( !in_array($fieldname,array('email1','email2')) ) {
+    if (!in_array($fieldname,array('email1','email2'))) {
         if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html') {
             $function = $fieldlist[$fieldname]['function']['name'];
             // include various functions required in the various vardefs
-            if ( isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include'])) {
+            if (isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include'])) {
                 require_once($fieldlist[$fieldname]['function']['include']);
             }
             $value = $function($focus, $fieldname, $value, 'EditView');
             // Bug 22730 - add a hack for the currency type dropdown, since it's built by a function.
-            if ( preg_match('/getCurrency.*DropDown/s',$function)  ) {
+            if (preg_match('/getCurrency.*DropDown/s',$function)) {
                 $value = str_ireplace('</select>','<option value="">'.$app_strings['LBL_NONE'].'</option></select>',$value);
             }
         } elseif ($fieldname == 'assigned_user_name' && empty($value)) {

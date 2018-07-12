@@ -64,7 +64,7 @@ if ($_REQUEST['field_type'] == 'enum') {
 }
 $default_value = '';
 
-$custom_fields->addField($name,$name, $_REQUEST['field_type'],'255','optional', $default_value, $options, '', '' );
+$custom_fields->addField($name,$name, $_REQUEST['field_type'],'255','optional', $default_value, $options, '', '');
 $html = $custom_fields->getFieldHTML($name, $_REQUEST['file_type']);
 
 set_register_value('dyn_layout', 'field_counter', $_REQUEST['field_count']);

@@ -127,7 +127,7 @@ class CampaignTracker extends SugarBean
     function save($check_notify = false)
     {
         //make sure that the url has a scheme, if not then add http:// scheme
-        if ($this->is_optout!=1 ) {
+        if ($this->is_optout!=1) {
             $url = strtolower(trim($this->tracker_url));
             if (!preg_match('/^(http|https|ftp):\/\//i', $url)) {
                 $this->tracker_url = 'http://'.$url;
@@ -168,7 +168,7 @@ class CampaignTracker extends SugarBean
         }
         $admin=new Administration();
         $admin->retrieveSettings('massemailer'); //retrieve all admin settings.
-        if (isset($admin->settings['massemailer_tracking_entities_location_type']) and $admin->settings['massemailer_tracking_entities_location_type']=='2'  and isset($admin->settings['massemailer_tracking_entities_location']) ) {
+        if (isset($admin->settings['massemailer_tracking_entities_location_type']) and $admin->settings['massemailer_tracking_entities_location_type']=='2'  and isset($admin->settings['massemailer_tracking_entities_location'])) {
             $this->message_url=$admin->settings['massemailer_tracking_entities_location'];
         } else {
             $this->message_url=$sugar_config['site_url'];

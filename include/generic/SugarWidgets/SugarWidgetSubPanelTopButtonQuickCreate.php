@@ -69,7 +69,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
             $defines['child_module_name'] = $defines['module'];
         }
 
-        $defines['parent_bean_name'] = get_class( $defines['focus']);
+        $defines['parent_bean_name'] = get_class($defines['focus']);
 
         $relationship_name = $this->get_subpanel_relationship_name($defines);
 
@@ -133,7 +133,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
 
         if (strtolower($defines['child_module_name']) =='contracts') {
             //set variables to account name, or parent account name
-            if (strtolower($defines['parent_bean_name']) == 'account' ) {
+            if (strtolower($defines['parent_bean_name']) == 'account') {
                 //if account is parent bean, then get focus id/focus name
                 if (isset($defines['focus']->id)) {
                     $additionalFormFields['account_id'] = $defines['focus']->id;
@@ -141,7 +141,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
                 if (isset($defines['focus']->name)) {
                     $additionalFormFields['account_name'] = $defines['focus']->name;
                 }
-            } elseif (strtolower($defines['parent_bean_name']) == 'quote' ) {
+            } elseif (strtolower($defines['parent_bean_name']) == 'quote') {
                 //if quote is parent bean, then get billing_account_id/billing_account_name
                 if (isset($defines['focus']->billing_account_id)) {
                     $additionalFormFields['account_id'] = $defines['focus']->billing_account_id;

@@ -68,7 +68,7 @@ class SugarWebServiceImplv2_1 extends SugarWebServiceImpl
      */
     public function get_entry_list($session, $module_name, $query, $order_by,$offset, $select_fields, $link_name_to_fields_array, $max_results, $deleted)
     {
-        $result = parent::get_entry_list($session, $module_name, $query, $order_by,$offset, $select_fields, $link_name_to_fields_array, $max_results, $deleted );
+        $result = parent::get_entry_list($session, $module_name, $query, $order_by,$offset, $select_fields, $link_name_to_fields_array, $max_results, $deleted);
         if (empty($result)) {
             return null;
         }

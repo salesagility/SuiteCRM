@@ -206,7 +206,7 @@ class SubPanel
         $ListView->start_link_wrapper = "javascript:showSubPanel('".$this->subpanel_id."','";
         $ListView->subpanel_id = $this->subpanel_id;
         $ListView->end_link_wrapper = "',true);";
-        if ( !empty($this->layout_def_key) ) {
+        if (!empty($this->layout_def_key)) {
             $ListView->end_link_wrapper = '&layout_def_key='.$this->layout_def_key.$ListView->end_link_wrapper;
         }
 
@@ -262,7 +262,7 @@ class SubPanel
         $reject_tabs = array('history'=>1, 'activities'=>1);
         foreach ($tabs as $key=>$tab) {
             foreach ($tab as $k=>$v) {
-                if (! isset ( $reject_tabs [$k] )) {
+                if (! isset ($reject_tabs [$k])) {
                     $ret_tabs [$k] = $v;
                 }
             }
@@ -297,7 +297,7 @@ class SubPanel
         //end of bug# 40171
 
         mkdir_recursive($path, true);
-        write_array_to_file( $name, $override,$path.'/' . $filename .'.php');
+        write_array_to_file($name, $override,$path.'/' . $filename .'.php');
 
         //save the override for the layoutdef
         //tyoung 10.12.07 pushed panel->name to lowercase to match case in subpaneldefs.php files -
@@ -410,7 +410,7 @@ class SubPanel
 
         $where_clauses = $searchForm->generateSearchWhere(true, $seed->module_dir);
 
-        if (count($where_clauses) > 0 ) {
+        if (count($where_clauses) > 0) {
             $this->search_query = '('. implode(' ) AND ( ', $where_clauses) . ')';
         }
         $GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");

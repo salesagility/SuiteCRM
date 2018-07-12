@@ -226,7 +226,7 @@ eoq;
      */
     private function overloadButtonConfigs()
     {
-        if ( file_exists( $this->customConfigFile ) ) {
+        if (file_exists($this->customConfigFile)) {
             require_once($this->customConfigFile);
 
             if (!isset($buttonConfigs)) {
@@ -234,7 +234,7 @@ eoq;
             }
 
             foreach ($buttonConfigs as $k => $v) {
-                if ( isset($this->buttonConfigs[$k]) ) {
+                if (isset($this->buttonConfigs[$k])) {
                     $this->buttonConfigs[$k] = $v;
                 }
             }
@@ -248,7 +248,7 @@ eoq;
      */
     private function overloadDefaultConfigs()
     {
-        if ( file_exists( $this->customDefaultConfigFile ) ) {
+        if (file_exists($this->customDefaultConfigFile)) {
             require_once($this->customDefaultConfigFile);
 
             if (!isset($defaultConfig)) {
@@ -256,7 +256,7 @@ eoq;
             }
 
             foreach ($defaultConfig as $k => $v) {
-                if ( isset($this->defaultConfig[$k]) ) {
+                if (isset($this->defaultConfig[$k])) {
                     if ($k == "extended_valid_elements") {
                         $this->defaultConfig[$k] .= "," . $v;
                     } else {

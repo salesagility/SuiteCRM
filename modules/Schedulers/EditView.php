@@ -256,7 +256,7 @@ if ($exInterval[0] == '*' && $exInterval[1] == '*') {
     $xtpl->assign('BASIC_INTERVAL', get_select_options_with_id($ints, $exHours[1]));
     $xtpl->assign('BASIC_PERIOD', get_select_options_with_id($app_list_strings['scheduler_period_dom'], 'hour'));
 // Minutes
-} elseif (strpos($exInterval[0], '*/') !== false && $exInterval[1] == '*' ) {
+} elseif (strpos($exInterval[0], '*/') !== false && $exInterval[1] == '*') {
     // we have a "BASIC" type of min setting
     $exMins = explode('/', $exInterval[0]);
     $xtpl->assign('BASIC_INTERVAL', get_select_options_with_id($ints, $exMins[1]));

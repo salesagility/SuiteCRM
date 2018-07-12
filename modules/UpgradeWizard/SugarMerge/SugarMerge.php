@@ -141,15 +141,15 @@ class SugarMerge
                             $e = $checkModList[strtolower($e)];
                         }
 
-                        if ( is_array($merge) ) {
-                            if ( in_array($e,$merge) ) {
-                                $this->merged[$e] = $this->mergeModule($e, TRUE, $save,$logHistory );
+                        if (is_array($merge)) {
+                            if (in_array($e,$merge)) {
+                                $this->merged[$e] = $this->mergeModule($e, TRUE, $save,$logHistory);
                             } else {
                                 $GLOBALS['log']->debug("SugarMerge is skipping $e module as filter array passed in but module not specified for merge.");
                                 continue;
                             }
                         } else {
-                            $this->merged[$e] = $this->mergeModule($e, $merge, $save,$logHistory );
+                            $this->merged[$e] = $this->mergeModule($e, $merge, $save,$logHistory);
                         }
                     }
                 }

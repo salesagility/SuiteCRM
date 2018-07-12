@@ -62,11 +62,11 @@ class SugarCacheFile extends SugarCacheAbstract
      */
     public function useBackend()
     {
-        if ( !parent::useBackend() ) {
+        if (!parent::useBackend()) {
             return false;
         }
 
-        if ( !empty($GLOBALS['sugar_config']['external_cache_enabled_file']) ) {
+        if (!empty($GLOBALS['sugar_config']['external_cache_enabled_file'])) {
             return true;
         }
 
@@ -83,7 +83,7 @@ class SugarCacheFile extends SugarCacheAbstract
     {
         parent::__construct();
 
-        if ( isset($GLOBALS['sugar_config']['external_cache_filename']) ) {
+        if (isset($GLOBALS['sugar_config']['external_cache_filename'])) {
             $this->_cacheFileName = $GLOBALS['sugar_config']['external_cache_filename'];
         }
     }
@@ -97,7 +97,7 @@ class SugarCacheFile extends SugarCacheAbstract
     {
         parent::__destruct();
 
-        if ( $this->_cacheChanged ) {
+        if ($this->_cacheChanged) {
             sugar_file_put_contents(sugar_cached($this->_cacheFileName), serialize($this->_localStore));
         }
     }
@@ -133,11 +133,11 @@ class SugarCacheFile extends SugarCacheAbstract
         $key
         ) {
         // load up the external cache file
-        if ( is_file($cachedfile = sugar_cached($this->_cacheFileName))) {
+        if (is_file($cachedfile = sugar_cached($this->_cacheFileName))) {
             $this->localCache = unserialize(file_get_contents($cachedfile));
         }
 
-        if ( isset($this->_localStore[$key]) ) {
+        if (isset($this->_localStore[$key])) {
             return $this->_localStore[$key];
         }
 

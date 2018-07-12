@@ -118,7 +118,7 @@ class MyCallsDashlet extends DashletGeneric
 
 
         if (!empty($keys)) {
-            $query = "SELECT call_id, accept_status FROM calls_users WHERE deleted = 0 and user_id = '" . $current_user->id . "' AND call_id IN ('" . implode("','", $keys ). "')";
+            $query = "SELECT call_id, accept_status FROM calls_users WHERE deleted = 0 and user_id = '" . $current_user->id . "' AND call_id IN ('" . implode("','", $keys). "')";
             $result = DBManagerFactory::getInstance()->query($query);
 
             while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {

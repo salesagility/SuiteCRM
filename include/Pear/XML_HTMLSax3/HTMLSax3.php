@@ -182,7 +182,7 @@ class XML_HTMLSax3_StateParser
         } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct( $htmlsax);
+        self::__construct($htmlsax);
     }
 
 
@@ -546,7 +546,7 @@ class XML_HTMLSax3
     */
     function set_object(&$object)
     {
-        if ( is_object($object) ) {
+        if (is_object($object)) {
             $this->state_parser->handler_default =& $object;
             return true;
         } else {
@@ -584,7 +584,7 @@ class XML_HTMLSax3
     */
     function set_option($name, $value=1)
     {
-        if ( array_key_exists($name,$this->state_parser->parser_options) ) {
+        if (array_key_exists($name,$this->state_parser->parser_options)) {
             $this->state_parser->parser_options[$name] = $value;
             return true;
         } else {

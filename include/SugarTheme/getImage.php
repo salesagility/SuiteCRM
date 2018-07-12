@@ -50,9 +50,9 @@ if ((!empty($_REQUEST['spriteNamespace']) && substr_count($_REQUEST['spriteNames
 
 
 // try to use the user's theme if we can figure it out
-if ( isset($_REQUEST['themeName']) && SugarThemeRegistry::current()->name != $_REQUEST['themeName']) {
+if (isset($_REQUEST['themeName']) && SugarThemeRegistry::current()->name != $_REQUEST['themeName']) {
     SugarThemeRegistry::set($_REQUEST['themeName']);
-} elseif ( isset($_SESSION['authenticated_user_theme']) ) {
+} elseif (isset($_SESSION['authenticated_user_theme'])) {
     SugarThemeRegistry::set($_SESSION['authenticated_user_theme']);
 }
 
@@ -68,7 +68,7 @@ if (isset($_REQUEST['spriteNamespace'])) {
     }
 } else {
     $filename = SugarThemeRegistry::current()->getImageURL($_REQUEST['imageName']);
-    if ( empty($filename) ) {
+    if (empty($filename)) {
         header($_SERVER["SERVER_PROTOCOL"].' 404 Not Found');
         die;
     }
@@ -111,9 +111,9 @@ if (($ifmod || $iftag) && ($ifmod !== false && $iftag !== false)) {
 header("Last-Modified: ".gmdate('D, d M Y H:i:s \G\M\T', $last_modified_time));
 
 // now send the content
-if ( substr($filename,-3) == 'gif' ) {
+if (substr($filename,-3) == 'gif') {
     header("Content-Type: image/gif");
-} elseif ( substr($filename,-3) == 'png' ) {
+} elseif (substr($filename,-3) == 'png') {
     header("Content-Type: image/png");
 }
 

@@ -47,7 +47,7 @@ require_once('soap/SoapError.php');
 function check_for_relationship($relationships, $module)
 {
     foreach ($relationships as $table=>$rel) {
-        if ( $rel['rhs_key'] == $module) {
+        if ($rel['rhs_key'] == $module) {
             return $table;
         }
     }
@@ -312,7 +312,7 @@ function server_save_relationships($list, $from_date, $to_date)
                 if (empty($insert)) {
                     $insert = '('	.$name;
                     $insert_values = '('	.$value;
-                    if ($name != 'date_modified' && $name != 'id' ) {
+                    if ($name != 'date_modified' && $name != 'id') {
                         $select_values = $name ."=$value";
                     }
                     if ($name != 'id') {
@@ -327,7 +327,7 @@ function server_save_relationships($list, $from_date, $to_date)
                         $update .= ','.$name."=$value";
                     }
 
-                    if ($name != 'date_modified' && $name != 'id' ) {
+                    if ($name != 'date_modified' && $name != 'id') {
                         if (empty($select_values)) {
                             $select_values = $name ."=$value";
                         } else {
@@ -359,7 +359,7 @@ function server_save_relationships($list, $from_date, $to_date)
             if (!($row = $db->fetchByAssoc($result))) {
                 $result = $db->query($select_by_id);
                 if ($row = $db->fetchByAssoc($result)) {
-                    $db->query($update ."'".DBManagerFactory::getInstance()->quote($row['id'])."'" );
+                    $db->query($update ."'".DBManagerFactory::getInstance()->quote($row['id'])."'");
                     $ids[] = $row['id'];
                     $modify++;
                 } else {
@@ -384,7 +384,7 @@ function get_from_statement($query)
     if (sizeof($query) == 1) {
         $query = explode('from', $query[0]);
     }
-    $query = explode( 'ORDER BY',$query[1]);
+    $query = explode('ORDER BY',$query[1]);
 
     return ' FROM ' . $query[0];
 }

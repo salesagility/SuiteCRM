@@ -130,9 +130,9 @@ EOHTML;
         }
 
         $showDeleteButton = FALSE;
-        if (  $_REQUEST['record'] != $GLOBALS['current_user']->id && $GLOBALS['current_user']->isAdminForModule('Users') ) {
+        if ($_REQUEST['record'] != $GLOBALS['current_user']->id && $GLOBALS['current_user']->isAdminForModule('Users')) {
             $showDeleteButton = TRUE;
-            if ( empty($this->bean->user_name) ) { //Indicates just employee
+            if (empty($this->bean->user_name)) { //Indicates just employee
                 $deleteWarning = $GLOBALS['mod_strings']['LBL_DELETE_EMPLOYEE_CONFIRM'];
             } else {
                 $deleteWarning = $GLOBALS['mod_strings']['LBL_DELETE_USER_CONFIRM'];

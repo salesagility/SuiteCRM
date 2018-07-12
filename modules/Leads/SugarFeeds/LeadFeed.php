@@ -56,7 +56,7 @@ class LeadFeed extends FeedLogicBase
 
             $text =  '{SugarFeed.CREATED_LEAD} [' . $bean->module_dir . ':' . $bean->id . ':' . $full_name . ']';
         } else {
-            if (!empty($bean->fetched_row['status'] ) && $bean->fetched_row['status'] != $bean->status && $bean->status == 'Converted') {
+            if (!empty($bean->fetched_row['status']) && $bean->fetched_row['status'] != $bean->status && $bean->status == 'Converted') {
                 // Repeated here so we don't format the name on "uninteresting" events
                 $full_name = $locale->getLocaleFormattedName($bean->first_name, $bean->last_name, '');
 

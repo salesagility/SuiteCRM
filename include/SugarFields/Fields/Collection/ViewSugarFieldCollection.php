@@ -528,35 +528,35 @@ FRA;
     {
         static $tplCache = array();
 
-        if ( isset($tplCache[$this->type][$view]) ) {
+        if (isset($tplCache[$this->type][$view])) {
             return $tplCache[$this->type][$view];
         }
 
         $lastClass = get_class($this);
         $classList = array($this->type,str_replace('ViewSugarField','',$lastClass));
-        while ( $lastClass = get_parent_class($lastClass) ) {
+        while ($lastClass = get_parent_class($lastClass)) {
             $classList[] = str_replace('ViewSugarField','',$lastClass);
         }
 
         $tplName = '';
-        foreach ( $classList as $className ) {
+        foreach ($classList as $className) {
             global $current_language;
             if (isset($current_language)) {
                 $tplName = 'include/SugarFields/Fields/'. $className .'/'. $current_language . '.' . $view .'.tpl';
-                if ( file_exists('custom/'.$tplName) ) {
+                if (file_exists('custom/'.$tplName)) {
                     $tplName = 'custom/'.$tplName;
                     break;
                 }
-                if ( file_exists($tplName) ) {
+                if (file_exists($tplName)) {
                     break;
                 }
             }
             $tplName = 'include/SugarFields/Fields/'. $className .'/'. $view .'.tpl';
-            if ( file_exists('custom/'.$tplName) ) {
+            if (file_exists('custom/'.$tplName)) {
                 $tplName = 'custom/'.$tplName;
                 break;
             }
-            if ( file_exists($tplName) ) {
+            if (file_exists($tplName)) {
                 break;
             }
         }

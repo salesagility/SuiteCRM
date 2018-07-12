@@ -153,7 +153,7 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
             $searchForm->setup($searchdefs, $searchFields, 'SearchFormGeneric.tpl');
             $searchForm->populateFromArray($current_query_by_page_array, 'advanced');
             $where_clauses_arr = $searchForm->generateSearchWhere(true, $module);
-            if (count($where_clauses_arr) > 0 ) {
+            if (count($where_clauses_arr) > 0) {
                 $where_clauses = '('. implode(' ) AND ( ', $where_clauses_arr) . ')';
             }
         }
@@ -199,7 +199,7 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
 if ($refreshsubpanel) {
     //refresh contents of the sub-panel.
     $GLOBALS['log']->debug("Location: index.php?sugar_body_only=1&module=".$_REQUEST['module']."&subpanel=".$_REQUEST['subpanel_module_name']."&action=SubPanelViewer&inline=1&record=".$_REQUEST['record']);
-    if ( empty($_REQUEST['refresh_page']) || $_REQUEST['refresh_page'] != 1) {
+    if (empty($_REQUEST['refresh_page']) || $_REQUEST['refresh_page'] != 1) {
         $inline = isset($_REQUEST['inline'])?$_REQUEST['inline']: $inline;
         header("Location: index.php?sugar_body_only=1&module=".$_REQUEST['module']."&subpanel=".$_REQUEST['subpanel_module_name']."&action=SubPanelViewer&inline=$inline&record=".$_REQUEST['record']);
     }

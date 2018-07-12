@@ -31,13 +31,13 @@ if (isset($_REQUEST['record']) && $_REQUEST['record'] != "") {
     $recordID = $_REQUEST['record'];
 }
 
-    if ( isset($_POST['noninheritable']) && $_POST['noninheritable'] == '1') {
+    if (isset($_POST['noninheritable']) && $_POST['noninheritable'] == '1') {
         $focus->noninheritable = 1;
     } else {
         $focus->noninheritable = 0;
     }
 
-    if ( isset($_POST['primary_group']) && $_POST['primary_group'] == '1') {
+    if (isset($_POST['primary_group']) && $_POST['primary_group'] == '1') {
         $focus->primary_group = 1;
         //unset all other primary groups for this user
         $db = DBManagerFactory::getInstance();

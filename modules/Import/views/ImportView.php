@@ -81,7 +81,7 @@ class ImportView extends SugarView
     {
         global $mod_strings, $current_language;
 
-        if ( empty($module) ) {
+        if (empty($module)) {
             $module = $this->importModule;
         }
 
@@ -101,13 +101,13 @@ class ImportView extends SugarView
         global $app_list_strings, $moduleTabMap;
 
         // Need to figure out what tab this module belongs to, most modules have their own tabs, but there are exceptions.
-        if ( !empty($_REQUEST['module_tab']) ) {
+        if (!empty($_REQUEST['module_tab'])) {
             return $_REQUEST['module_tab'];
-        } elseif ( isset($moduleTabMap[$this->importModule]) ) {
+        } elseif (isset($moduleTabMap[$this->importModule])) {
             return $moduleTabMap[$this->importModule];
         }
         // Default anonymous pages to be under Home
-        elseif ( !isset($app_list_strings['moduleList'][$this->importModule]) ) {
+        elseif (!isset($app_list_strings['moduleList'][$this->importModule])) {
             return 'Home';
         } else {
             return $this->importModule;
@@ -183,7 +183,7 @@ class ImportView extends SugarView
         $ss->assign("IMPORT_MODULE",$module);
         $ss->assign("MOD", $GLOBALS['mod_strings']);
         $ss->assign("SOURCE","");
-        if ( isset($_REQUEST['source']) ) {
+        if (isset($_REQUEST['source'])) {
             $ss->assign("SOURCE", $_REQUEST['source']);
         }
 

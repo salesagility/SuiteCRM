@@ -300,10 +300,10 @@ class ListViewDataEmailsSearchOnIMap extends ListViewDataEmailsSearchAbstract
         }
 
 
-        if ( $this->lvde->isRequestedSearchAdvanced($request) ) {
+        if ($this->lvde->isRequestedSearchAdvanced($request)) {
             $queryString = "-advanced_search";
         } else {
-            if ( $this->lvde->isRequestedSearchBasic($request) ) {
+            if ($this->lvde->isRequestedSearchBasic($request)) {
 
                 // SearchForm is a (SearchForm2)
                 $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);

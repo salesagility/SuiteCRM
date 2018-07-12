@@ -52,7 +52,7 @@ global $sugar_config, $sugar_version, $sugar_flavor, $server_unique_key, $curren
      $global_control_links = array();
      $sub_menu = array();
  }
-if (isset( $sugar_config['disc_client']) && $sugar_config['disc_client']) {
+if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
     require_once('modules/Sync/headermenu.php');
 }
 

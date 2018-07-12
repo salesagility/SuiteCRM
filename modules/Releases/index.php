@@ -93,7 +93,7 @@ if ((is_admin($current_user)|| is_admin_for_module($GLOBALS['current_user'],'Bug
     $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=ListView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'"
 ,null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
-$ListView->initNewXTemplate( 'modules/Releases/ListView.html',$mod_strings);
+$ListView->initNewXTemplate('modules/Releases/ListView.html',$mod_strings);
 $ListView->xTemplateAssign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_DELETE']));
 $ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE'] . $header_text);
 $ListView->setHeaderText($button);

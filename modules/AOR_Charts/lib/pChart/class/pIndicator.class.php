@@ -63,14 +63,14 @@
          $Unit			= isset($Format["Unit"]) ? $Format["Unit"] : "";
 
          /* Convert the Values to display to an array if needed */
-         if ( !is_array($Values) ) {
+         if (!is_array($Values)) {
              $Value = $Values;
              $Values = "";
              $Values[] = $Value;
          }
 
          /* No section, let's die */
-         if ( $IndicatorSections == NULL ) {
+         if ($IndicatorSections == NULL) {
              return(0);
          }
 
@@ -78,10 +78,10 @@
          $OverallMin = $IndicatorSections[0]["End"];
          $OverallMax = $IndicatorSections[0]["Start"];
          foreach ($IndicatorSections as $Key => $Settings) {
-             if ( $Settings["End"] > $OverallMax ) {
+             if ($Settings["End"] > $OverallMax) {
                  $OverallMax = $Settings["End"];
              }
-             if ( $Settings["Start"] < $OverallMin ) {
+             if ($Settings["Start"] < $OverallMin) {
                  $OverallMin = $Settings["Start"];
              }
          }
@@ -97,7 +97,7 @@
 
              $X2 = $X1 + ($Settings["End"] - $Settings["Start"]) * $XScale;
 
-             if ( $Key == 0 && $DrawLeftHead ) {
+             if ($Key == 0 && $DrawLeftHead) {
                  $Poly = "";
                  $Poly[] = $X1-1;
                  $Poly[] = $Y;
@@ -113,15 +113,15 @@
              /* Determine the position of the breaks */
              $Break = "";
              foreach ($Values as $iKey => $Value) {
-                 if ( $Value >= $Settings["Start"] && $Value <= $Settings["End"] ) {
+                 if ($Value >= $Settings["Start"] && $Value <= $Settings["End"]) {
                      $XBreak  = $X1 + ($Value - $Settings["Start"]) * $XScale;
                      $ValuesPos[$Value] = $XBreak;
                      $Break[] = floor($XBreak);
                  }
              }
 
-             if ( $ValueDisplay == INDICATOR_VALUE_LABEL ) {
-                 if ( $Break == "" ) {
+             if ($ValueDisplay == INDICATOR_VALUE_LABEL) {
+                 if ($Break == "") {
                      $this->pChartObject->drawFilledRectangle($X1,$Y,$X2,$Y+$Height,$Color);
                  } else {
                      sort($Break);
@@ -130,10 +130,10 @@
                      $Poly[] = $Y;
                      $LastPointWritten = FALSE;
                      foreach ($Break as $iKey => $Value) {
-                         if ( $Value-5 >= $X1 ) {
+                         if ($Value-5 >= $X1) {
                              $Poly[] = $Value-5;
                              $Poly[] = $Y;
-                         } elseif ($X1 - ($Value-5) > 0 ) {
+                         } elseif ($X1 - ($Value-5) > 0) {
                              $Offset = $X1 - ($Value-5);
                              $Poly = "";
                              $Poly[] = $X1;
@@ -143,17 +143,17 @@
                          $Poly[] = $Value;
                          $Poly[] = $Y+5;
 
-                         if ( $Value+5 <= $X2 ) {
+                         if ($Value+5 <= $X2) {
                              $Poly[] = $Value+5;
                              $Poly[] = $Y;
-                         } elseif (($Value+5) > $X2 ) {
+                         } elseif (($Value+5) > $X2) {
                              $Offset = ($Value+5) - $X2;
                              $Poly[] = $X2;
                              $Poly[] = $Y + $Offset;
                              $LastPointWritten = TRUE;
                          }
                      }
-                     if ( !$LastPointWritten ) {
+                     if (!$LastPointWritten) {
                          $Poly[] = $X2;
                          $Poly[] = $Y;
                      }
@@ -168,7 +168,7 @@
                  $this->pChartObject->drawFilledRectangle($X1,$Y,$X2,$Y+$Height,$Color);
              }
 
-             if ( $Key == count($IndicatorSections)-1 && $DrawRightHead ) {
+             if ($Key == count($IndicatorSections)-1 && $DrawRightHead) {
                  $Poly = "";
                  $Poly[] = $X2+1;
                  $Poly[] = $Y;
@@ -181,11 +181,11 @@
                  $this->pChartObject->drawLine($X2+1,$Y+$Height,$X2+1+$HeadSize,$Y+($Height/2),$Color);
              }
 
-             if ( $CaptionPosition == INDICATOR_CAPTION_INSIDE ) {
+             if ($CaptionPosition == INDICATOR_CAPTION_INSIDE) {
                  $TxtPos  = $this->pChartObject->getTextBox($X1,$Y+$Height+$TextPadding,$CaptionFontName,$CaptionFontSize,0,$Caption);
                  $YOffset = ($TxtPos[0]["Y"] - $TxtPos[2]["Y"]) + $TextPadding;
 
-                 if ( $CaptionLayout == INDICATOR_CAPTION_EXTENDED ) {
+                 if ($CaptionLayout == INDICATOR_CAPTION_EXTENDED) {
                      $TxtPos  = $this->pChartObject->getTextBox($X1,$Y+$Height+$TextPadding,$CaptionFontName,$CaptionFontSize,0,$SubCaption);
                      $YOffset = $YOffset + ($TxtPos[0]["Y"] - $TxtPos[2]["Y"]) + $TextPadding*2;
                  }
@@ -196,13 +196,13 @@
                  $XOffset = 0;
              }
 
-             if ( $CaptionColorFactor == NULL ) {
+             if ($CaptionColorFactor == NULL) {
                  $CaptionColor    = array("Align"=>TEXT_ALIGN_TOPLEFT,"FontName"=>$CaptionFontName,"FontSize"=>$CaptionFontSize,"R"=>$CaptionR,"G"=>$CaptionG,"B"=>$CaptionB,"Alpha"=>$CaptionAlpha);
              } else {
                  $CaptionColor    = array("Align"=>TEXT_ALIGN_TOPLEFT,"FontName"=>$CaptionFontName,"FontSize"=>$CaptionFontSize,"R"=>$Settings["R"]+$CaptionColorFactor,"G"=>$Settings["G"]+$CaptionColorFactor,"B"=>$Settings["B"]+$CaptionColorFactor);
              }
 
-             if ( $SubCaptionColorFactor == NULL ) {
+             if ($SubCaptionColorFactor == NULL) {
                  $SubCaptionColor = array("Align"=>TEXT_ALIGN_TOPLEFT,"FontName"=>$CaptionFontName,"FontSize"=>$CaptionFontSize,"R"=>$SubCaptionR,"G"=>$SubCaptionG,"B"=>$SubCaptionB,"Alpha"=>$SubCaptionAlpha);
              } else {
                  $SubCaptionColor = array("Align"=>TEXT_ALIGN_TOPLEFT,"FontName"=>$CaptionFontName,"FontSize"=>$CaptionFontSize,"R"=>$Settings["R"]+$SubCaptionColorFactor,"G"=>$Settings["G"]+$SubCaptionColorFactor,"B"=>$Settings["B"]+$SubCaptionColorFactor);
@@ -211,9 +211,9 @@
              $RestoreShadow = $this->pChartObject->Shadow;
              $this->pChartObject->Shadow = FALSE;
 
-             if ( $CaptionLayout == INDICATOR_CAPTION_DEFAULT ) {
+             if ($CaptionLayout == INDICATOR_CAPTION_DEFAULT) {
                  $this->pChartObject->drawText($X1,$Y+$Height+$TextPadding,$Caption,$CaptionColor);
-             } elseif ( $CaptionLayout == INDICATOR_CAPTION_EXTENDED ) {
+             } elseif ($CaptionLayout == INDICATOR_CAPTION_EXTENDED) {
                  $TxtPos        = $this->pChartObject->getTextBox($X1,$Y+$Height+$TextPadding,$CaptionFontName,$CaptionFontSize,0,$Caption);
                  $CaptionHeight = $TxtPos[0]["Y"] - $TxtPos[2]["Y"];
 
@@ -230,12 +230,12 @@
          $this->pChartObject->Shadow = FALSE;
 
          foreach ($Values as $Key => $Value) {
-             if ( $Value >= $OverallMin && $Value <= $OverallMax ) {
+             if ($Value >= $OverallMin && $Value <= $OverallMax) {
                  foreach ($IndicatorSections as $Key => $Settings) {
-                     if ( $Value >= $Settings["Start"] && $Value <= $Settings["End"] ) {
+                     if ($Value >= $Settings["Start"] && $Value <= $Settings["End"]) {
                          $X1 = $ValuesPos[$Value]; //$X + $Key*$SectionsMargin + ($Value - $OverallMin) * $XScale;
 
-                         if ( $ValueDisplay == INDICATOR_VALUE_BUBBLE ) {
+                         if ($ValueDisplay == INDICATOR_VALUE_BUBBLE) {
                              $TxtPos = $this->pChartObject->getTextBox($X1,$Y,$ValueFontName,$ValueFontSize,0,$Value.$Unit);
                              $Radius = floor(($TxtPos[1]["X"] - $TxtPos[0]["X"] + $TextPadding*4)/2);
 
@@ -244,7 +244,7 @@
 
                              $TextSettings = array("Align"=>TEXT_ALIGN_MIDDLEMIDDLE,"FontName"=>$ValueFontName,"FontSize"=>$ValueFontSize);
                              $this->pChartObject->drawText($X1-1,$Y-1,$Value.$Unit,$TextSettings);
-                         } elseif ( $ValueDisplay == INDICATOR_VALUE_LABEL ) {
+                         } elseif ($ValueDisplay == INDICATOR_VALUE_LABEL) {
                              $Caption = "";
                              $Caption[] = array("Format"=>array("R"=>$Settings["R"],"G"=>$Settings["G"],"B"=>$Settings["B"],"Alpha"=>100),"Caption"=>$Value.$Unit);
                              $this->pChartObject->drawLabelBox(floor($X1),floor($Y)+2,"Value - ".$Settings["Caption"],$Caption);

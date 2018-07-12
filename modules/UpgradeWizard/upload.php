@@ -122,8 +122,8 @@ switch ($run) {
             $manifest_file = extractManifest($tempFile);
 
             if (is_file($manifest_file)) {
-                require_once( $manifest_file );
-                $error = validate_manifest( $manifest );
+                require_once($manifest_file);
+                $error = validate_manifest($manifest);
                 if (!empty($error)) {
                     $out = "<b><span class='error'>{$error}</span></b><br />";
                     break;
@@ -140,13 +140,13 @@ switch ($run) {
 
                 sugar_mkdir("$base_upgrade_dir/$upgrade_zip_type", 0775, true);
                 $target_path = "$base_upgrade_dir/$upgrade_zip_type/$base_filename";
-                $target_manifest = remove_file_extension( $target_path ) . "-manifest.php";
+                $target_manifest = remove_file_extension($target_path) . "-manifest.php";
 
-                if (isset($manifest['icon']) && $manifest['icon'] != "" ) {
+                if (isset($manifest['icon']) && $manifest['icon'] != "") {
                     logThis('extracting icons.');
-                    $icon_location = extractFile( $tempFile ,$manifest['icon'] );
-                    $path_parts = pathinfo( $icon_location );
-                    copy( $icon_location, remove_file_extension( $target_path ) . "-icon." . pathinfo($icon_location, PATHINFO_EXTENSION) );
+                    $icon_location = extractFile($tempFile ,$manifest['icon']);
+                    $path_parts = pathinfo($icon_location);
+                    copy($icon_location, remove_file_extension($target_path) . "-icon." . pathinfo($icon_location, PATHINFO_EXTENSION));
                 }
 
                 if (rename($tempFile , $target_path)) {
@@ -191,7 +191,7 @@ switch ($run) {
         }
 
         // delete file in upgrades/patch
-        $delete_me = 'upload://upgrades/patch/'.basename(urldecode( $_REQUEST['install_file'] ));
+        $delete_me = 'upload://upgrades/patch/'.basename(urldecode($_REQUEST['install_file']));
         if (@unlink($delete_me)) {
             logThis('unlinking: '.$delete_me);
             $out = basename($delete_me).$mod_strings['LBL_UW_FILE_DELETED'];

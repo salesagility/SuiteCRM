@@ -138,7 +138,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
     public function save(&$bean, $params, $field, $properties, $prefix = '')
     {
         global $timedate;
-        if ( !isset($params[$prefix.$field]) ) {
+        if (!isset($params[$prefix.$field])) {
             //$bean->$field = '';
             return;
         }
@@ -173,7 +173,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
 
         $format = $timedate->merge_date_time($settings->dateformat, $settings->timeformat);
 
-        if ( !$timedate->check_matching_format($value, $format) ) {
+        if (!$timedate->check_matching_format($value, $format)) {
             $parts = $timedate->split_date_time($value);
             if (empty($parts[0])) {
                 $datepart = $timedate->getNow()->format($settings->dateformat);
@@ -197,7 +197,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
             }
 
             $value = $timedate->merge_date_time($datepart, $timepart);
-            if ( !$timedate->check_matching_format($value, $format) ) {
+            if (!$timedate->check_matching_format($value, $format)) {
                 return false;
             }
         }

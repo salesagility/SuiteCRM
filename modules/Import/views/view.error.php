@@ -59,7 +59,7 @@ class ImportViewError extends SugarView
         ) {
         global $mod_strings, $current_language;
         
-        if ( empty($module) ) {
+        if (empty($module)) {
             $module = $_REQUEST['import_module'];
         }
         
@@ -79,13 +79,13 @@ class ImportViewError extends SugarView
         global $app_list_strings, $moduleTabMap;
         
         // Need to figure out what tab this module belongs to, most modules have their own tabs, but there are exceptions.
-        if ( !empty($_REQUEST['module_tab']) ) {
+        if (!empty($_REQUEST['module_tab'])) {
             return $_REQUEST['module_tab'];
-        } elseif ( isset($moduleTabMap[$_REQUEST['import_module']]) ) {
+        } elseif (isset($moduleTabMap[$_REQUEST['import_module']])) {
             return $moduleTabMap[$_REQUEST['import_module']];
         }
         // Default anonymous pages to be under Home
-        elseif ( !isset($app_list_strings['moduleList'][$_REQUEST['import_module']]) ) {
+        elseif (!isset($app_list_strings['moduleList'][$_REQUEST['import_module']])) {
             return 'Home';
         } else {
             return $_REQUEST['import_module'];
@@ -101,7 +101,7 @@ class ImportViewError extends SugarView
         $this->ss->assign("ACTION", 'Step1');
         $this->ss->assign("MESSAGE",$_REQUEST['message']);
         $this->ss->assign("SOURCE","");
-        if ( isset($_REQUEST['source']) ) {
+        if (isset($_REQUEST['source'])) {
             $this->ss->assign("SOURCE", $_REQUEST['source']);
         }
         

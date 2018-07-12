@@ -150,7 +150,7 @@ function runCheck($install_script, $mod_strings = array())
 
     $drivers = DBManagerFactory::getDbDrivers();
 
-    if ( empty($drivers) ) {
+    if (empty($drivers)) {
         $db_name = $mod_strings['LBL_DB_UNAVAILABLE'];
         installLog("ERROR:: {$mod_strings['LBL_CHECKSYS_DB_SUPPORT_NOT_AVAILABLE']}");
         $dbStatus = "<b><span class=stop>{$mod_strings['LBL_CHECKSYS_DB_SUPPORT_NOT_AVAILABLE']}</span></b>";

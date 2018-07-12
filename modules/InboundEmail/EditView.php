@@ -410,7 +410,7 @@ if ($focus->mailbox_type == 'bounce') {
     $xtpl->assign('AUTO_IMPORT_STYLE', "display:none");
 } elseif ($focus->mailbox_type == 'createcase') {
     $xtpl->assign("IS_CREATE_CASE", 'checked');
-} elseif ( $focus->is_personal == '1') {
+} elseif ($focus->is_personal == '1') {
     $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
 }
 

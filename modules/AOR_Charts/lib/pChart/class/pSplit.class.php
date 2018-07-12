@@ -51,7 +51,7 @@
          $DataSerie  = "";
 
          foreach ($Data["Series"] as $SerieName => $Value) {
-             if ( $SerieName != $LabelSerie && $DataSerie == "" ) {
+             if ($SerieName != $LabelSerie && $DataSerie == "") {
                  $DataSerie = $SerieName;
              }
          }
@@ -60,7 +60,7 @@
          $DataSerieCount = count($Data["Series"][$DataSerie]["Data"]);
 
          /* Scale Processing */
-         if ( $TextPos == TEXT_POS_RIGHT ) {
+         if ($TextPos == TEXT_POS_RIGHT) {
              $YScale     = (($Y2-$Y1) - (($DataSerieCount+1)*$Spacing)) / $DataSerieSum;
          } else {
              $YScale     = (($Y2-$Y1) - ($DataSerieCount*$Spacing)) / $DataSerieSum;
@@ -68,11 +68,11 @@
          $LeftHeight = $DataSerieSum * $YScale;
 
          /* Re-compute graph width depending of the text mode choosen */
-         if ( $TextPos == TEXT_POS_RIGHT ) {
+         if ($TextPos == TEXT_POS_RIGHT) {
              $MaxWidth = 0;
              foreach ($Data["Series"][$LabelSerie]["Data"] as $Key => $Label) {
                  $Boundardies = $Object->getTextBox(0,0,$Object->FontName,$Object->FontSize,0,$Label);
-                 if ( $Boundardies[1]["X"] > $MaxWidth ) {
+                 if ($Boundardies[1]["X"] > $MaxWidth) {
                      $MaxWidth = $Boundardies[1]["X"] + $TextPadding*2;
                  }
              }
@@ -85,7 +85,7 @@
          $VectorX  = (($X2-$X1) / 2);
 
          foreach ($Data["Series"][$DataSerie]["Data"] as $Key => $Value) {
-             if ( isset($Data["Series"][$LabelSerie]["Data"][$Key]) ) {
+             if (isset($Data["Series"][$LabelSerie]["Data"][$Key])) {
                  $Label = $Data["Series"][$LabelSerie]["Data"][$Key];
              } else {
                  $Label = "-";
@@ -130,7 +130,7 @@
 
              $Object->drawPolygon($PolyGon,$Settings);
 
-             if ( $TextPos == TEXT_POS_RIGHT ) {
+             if ($TextPos == TEXT_POS_RIGHT) {
                  $Object->drawText($X2+$TextPadding,($RightY2-$RightY1)/2+$RightY1,$Label,array("Align"=>TEXT_ALIGN_MIDDLELEFT));
              } else {
                  $Object->drawText($X2,$RightY1-$TextPadding,$Label,array("Align"=>TEXT_ALIGN_BOTTOMRIGHT));

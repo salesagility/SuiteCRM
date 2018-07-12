@@ -62,7 +62,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
         $this->getSeedBean()->disable_row_level_security = false;
 
         $campaigns = $this->getSeedBean()->get_full_list("","");
-        if ( $campaigns != null ) {
+        if ($campaigns != null) {
             foreach ($campaigns as $c) {
                 $this->_searchFields['campaign_id']['options'][$c->id] = $c->name;
             }

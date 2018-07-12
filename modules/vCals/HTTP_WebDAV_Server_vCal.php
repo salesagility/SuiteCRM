@@ -131,7 +131,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
 
             $query_arr =  array();
             // set path
-            if ( empty($_SERVER["PATH_INFO"])) {
+            if (empty($_SERVER["PATH_INFO"])) {
                 $this->path = "/";
                 if (strtolower($_SERVER["REQUEST_METHOD"]) == 'get') {
                     $query_arr = $_REQUEST;
@@ -139,7 +139,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                     parse_str($_REQUEST['parms'],$query_arr);
                 }
             } else {
-                $this->path = $this->_urldecode( $_SERVER["PATH_INFO"]);
+                $this->path = $this->_urldecode($_SERVER["PATH_INFO"]);
 
                 if (ini_get("magic_quotes_gpc")) {
                     $this->path = stripslashes($this->path);
@@ -151,33 +151,33 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             }
 
 
-            if ( ! empty($query_arr['type'])) {
+            if (! empty($query_arr['type'])) {
                 $this->vcal_type = $query_arr['type'];
             } else {
                 $this->vcal_type = 'vfb';
             }
 
-            if ( ! empty($query_arr['source'])) {
+            if (! empty($query_arr['source'])) {
                 $this->source = $query_arr['source'];
             } else {
                 $this->source = 'outlook';
             }
 
-            if ( ! empty($query_arr['key'])) {
+            if (! empty($query_arr['key'])) {
                 $this->publish_key = $query_arr['key'];
             }
 
 
             // select user by email
-            if ( ! empty($query_arr['user_id'])) {
+            if (! empty($query_arr['user_id'])) {
                 $this->user_focus->retrieve(clean_string($query_arr['user_id']));
                 $this->user_focus->loadPreferences();
-            } elseif ( ! empty($query_arr['email'])) {
+            } elseif (! empty($query_arr['email'])) {
                 // clean the string!
                 $query_arr['email'] = clean_string($query_arr['email']);
                 //get user info
-                $this->user_focus->retrieve_by_email_address( $query_arr['email']);
-            } elseif ( ! empty($query_arr['user_name'])) {
+                $this->user_focus->retrieve_by_email_address($query_arr['email']);
+            } elseif (! empty($query_arr['user_name'])) {
                 // clean the string!
                 $query_arr['user_name'] = clean_string($query_arr['user_name']);
 
@@ -228,7 +228,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                 return true;
             }
 
-            if (!empty($this->publish_key) && !empty($this->user_focus) && $this->user_focus->getPreference('calendar_publish_key' ) == $this->publish_key) {
+            if (!empty($this->publish_key) && !empty($this->user_focus) && $this->user_focus->getPreference('calendar_publish_key') == $this->publish_key) {
                 return true;
             }
 
@@ -355,8 +355,8 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             }
 
             // DO AUTHORIZATION for publishing Free/busy to Sugar:
-            if ( empty($this->publish_key) ||
-                $this->publish_key != $this->user_focus->getPreference('calendar_publish_key' )) {
+            if (empty($this->publish_key) ||
+                $this->publish_key != $this->user_focus->getPreference('calendar_publish_key')) {
                 $this->http_status("401 not authorized");
                 return;
             }
@@ -367,8 +367,8 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
 
             $isUpdate  = false;
 
-            if ( ! empty($this->vcal_focus->user_id ) &&
-                $this->vcal_focus->user_id != -1 ) {
+            if (! empty($this->vcal_focus->user_id) &&
+                $this->vcal_focus->user_id != -1) {
                 $isUpdate  = true;
             }
 
@@ -389,7 +389,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             $this->vcal_focus->user_id = $this->user_focus->id;
             $this->vcal_focus->save();
 
-            if ( $isUpdate ) {
+            if ($isUpdate) {
                 $this->http_status("204 No Content");
             } else {
                 $this->http_status("201 Created");

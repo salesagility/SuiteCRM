@@ -106,7 +106,7 @@ class RelationshipHandler extends Relationship
         } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct( $db, $base_module);
+        self::__construct($db, $base_module);
     }
 
 

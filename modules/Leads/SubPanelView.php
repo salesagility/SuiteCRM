@@ -74,7 +74,7 @@ if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty(
     $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=SubPanelView&from_module=Leads&record=". $_REQUEST['record']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' alt='Edit Layout' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 $ListView = new ListView();
-$ListView->initNewXTemplate( 'modules/Leads/SubPanelView.html',$current_module_strings);
+$ListView->initNewXTemplate('modules/Leads/SubPanelView.html',$current_module_strings);
 $ListView->setHeaderTitle($current_module_strings['LBL_MODULE_NAME'] . $header_text);
 //$ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "LEAD");

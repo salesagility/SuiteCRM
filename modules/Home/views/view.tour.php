@@ -58,7 +58,7 @@ class HomeViewTour extends SugarView
             $urlForString = $mod_strings['LBL_TOUR_CALENDAR_URL_1'];
             $urlForString .= '<br><a href="index.php?module=Users&action=EditView&record='.$current_user->id.'&scrollToCal=true" target="_blank">';
             $urlForString .= $mod_strings['LBL_TOUR_CALENDAR_URL_2'].'</a>';
-            $this->ss->assign('view_calendar_url', $urlForString );
+            $this->ss->assign('view_calendar_url', $urlForString);
         }
         $this->ss->display('modules/Home/tour.tpl');
     }

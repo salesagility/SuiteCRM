@@ -83,7 +83,7 @@ $button .= "<input title='"
 $button .= "</form>\n";
 
 $ListView = new ListView();
-$ListView->initNewXTemplate( 'modules/ProjectTask/SubPanelView.html',$current_module_strings);
+$ListView->initNewXTemplate('modules/ProjectTask/SubPanelView.html',$current_module_strings);
 $ListView->xTemplateAssign("EDIT_INLINE_PNG",
 	SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
 $ListView->xTemplateAssign("RETURN_URL",

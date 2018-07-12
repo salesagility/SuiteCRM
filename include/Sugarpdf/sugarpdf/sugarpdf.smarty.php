@@ -116,7 +116,7 @@ class SugarpdfSmarty extends Sugarpdf
      */
     private function _initSmartyInstance()
     {
-        if ( !($this->ss instanceof Sugar_Smarty) ) {
+        if (!($this->ss instanceof Sugar_Smarty)) {
             require_once('include/Sugar_Smarty.php');
             $this->ss = new Sugar_Smarty();
             $this->ss->assign('MOD', $GLOBALS['mod_strings']);

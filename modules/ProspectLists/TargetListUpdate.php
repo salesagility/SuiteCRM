@@ -64,7 +64,7 @@ if ($_REQUEST['select_entire_list'] == '1') {
     $ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
     /* BEGIN - SECURITY GROUPS */
     //need to hijack the $ret_array['where'] of securitygorup required
-    if ($focus->bean_implements('ACL') && ACLController::requireSecurityGroup($focus->module_dir, 'list') ) {
+    if ($focus->bean_implements('ACL') && ACLController::requireSecurityGroup($focus->module_dir, 'list')) {
         require_once('modules/SecurityGroups/SecurityGroup.php');
         global $current_user;
         $owner_where = $focus->getOwnerWhere($current_user->id);
@@ -87,14 +87,14 @@ if ($_REQUEST['select_entire_list'] == '1') {
         array_push($uids, $val['id']);
     }
 } else {
-    $uids = explode ( ',', $_POST['uids'] );
+    $uids = explode (',', $_POST['uids']);
 }
 
 // find the relationship to use
 $relationship = '';
 foreach ($focus->get_linked_fields() as $field => $def) {
     if ($focus->load_relationship($field)) {
-        if ( $focus->$field->getRelatedModuleName() == 'ProspectLists' ) {
+        if ($focus->$field->getRelatedModuleName() == 'ProspectLists') {
             $relationship = $field;
             break;
             $relationship ='';
@@ -110,17 +110,17 @@ foreach ($focus->get_linked_fields() as $field => $def) {
     }
 }
 
-if ( $relationship != '' ) {
-    foreach ( $uids as $id) {
+if ($relationship != '') {
+    foreach ($uids as $id) {
         $focus->retrieve($id);
         $focus->load_relationship($relationship);
-        $focus->prospect_lists->add( $_REQUEST['prospect_list'] );
+        $focus->prospect_lists->add($_REQUEST['prospect_list']);
     }
 }
 
 
-if ( $relationship != '' ) {
-    foreach ( $uids as $id) {
+if ($relationship != '') {
+    foreach ($uids as $id) {
         $focus->retrieve($id);
         if ($_REQUEST['do_contacts']) {
             $contacts = $focus->get_linked_beans('contacts','Contacts3');

@@ -70,7 +70,7 @@ class MeetingsViewListbytype extends ViewList
 
     function listViewProcess()
     {
-        if (!$eapmBean = EAPM::getLoginInfo('IBMSmartCloud', true) ) {
+        if (!$eapmBean = EAPM::getLoginInfo('IBMSmartCloud', true)) {
             $smarty = new Sugar_Smarty();
             echo $smarty->fetch('include/externalAPI/IBMSmartCloud/IBMSmartCloudSignup.'.$GLOBALS['current_language'].'.tpl');
             return;
@@ -81,7 +81,7 @@ class MeetingsViewListbytype extends ViewList
         $api->loadEAPM($eapmBean);
 
         $quickCheck = $api->quickCheckLogin();
-        if ( ! $quickCheck['success'] ) {
+        if (! $quickCheck['success']) {
             $errorMessage = string_format(translate('LBL_ERR_FAILED_QUICKCHECK','EAPM'), array('IBM SmartCloud'));
             $errorMessage .= '<form method="POST" target="_EAPM_CHECK" action="index.php">';
             $errorMessage .= '<input type="hidden" name="module" value="EAPM">';
@@ -113,7 +113,7 @@ class MeetingsViewListbytype extends ViewList
 
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
             $this->lv->ss->assign("SEARCH",false);
-            if ( !isset($_REQUEST['name_basic']) ) {
+            if (!isset($_REQUEST['name_basic'])) {
                 $_REQUEST['name_basic'] = '';
             }
             $this->lv->ss->assign('DCSEARCH',$_REQUEST['name_basic']);
@@ -140,9 +140,9 @@ class MeetingsViewListbytype extends ViewList
 
         $where =  " meetings.type = '$type' AND meetings.status != 'Held' AND meetings.status != 'Not Held' AND meetings.date_start > {$two_hours_ago} AND ( meetings.assigned_user_id = '".DBManagerFactory::getInstance()->quote($GLOBALS['current_user']->id)."' OR exists ( SELECT id FROM meetings_users WHERE meeting_id = meetings.id AND user_id = '".DBManagerFactory::getInstance()->quote($GLOBALS['current_user']->id)."' AND deleted = 0 ) ) ";
 
-        if ( isset($_REQUEST['name_basic']) ) {
+        if (isset($_REQUEST['name_basic'])) {
             $name_search = trim($_REQUEST['name_basic']);
-            if ( ! empty($name_search) ) {
+            if (! empty($name_search)) {
                 $where .= " AND meetings.name LIKE '".DBManagerFactory::getInstance()->quote($name_search)."%' ";
             }
         }

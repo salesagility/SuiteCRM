@@ -354,7 +354,7 @@ class AOW_WorkFlowController extends SugarController
                 // no break
             case 'Value':
             default:
-                echo getModuleField($rel_module,$fieldname, $aow_field, $view, $value );
+                echo getModuleField($rel_module,$fieldname, $aow_field, $view, $value);
                 break;
         }
         die;
@@ -403,7 +403,7 @@ class AOW_WorkFlowController extends SugarController
                 break;
             case 'Value':
             default:
-                echo getModuleField($module,$fieldname, $aow_field, $view, $value );
+                echo getModuleField($module,$fieldname, $aow_field, $view, $value);
                 break;
         }
         die;
@@ -423,7 +423,7 @@ class AOW_WorkFlowController extends SugarController
             $value = '';
         }
 
-        echo getModuleField($_REQUEST['aow_module'],$_REQUEST['aow_fieldname'], $_REQUEST['aow_newfieldname'], $view, $value );
+        echo getModuleField($_REQUEST['aow_module'],$_REQUEST['aow_fieldname'], $_REQUEST['aow_newfieldname'], $view, $value);
         die;
     }
 
@@ -458,7 +458,7 @@ class AOW_WorkFlowController extends SugarController
                 break;
             case 'Value':
             default:
-                echo getModuleField($module,$fieldname, $aow_field, $view, $value );
+                echo getModuleField($module,$fieldname, $aow_field, $view, $value);
                 break;
         }
         die;

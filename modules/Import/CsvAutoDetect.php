@@ -287,7 +287,7 @@ class CsvAutoDetect
             
             // bug51433 - everything relies on $val having a value so if it's empty,
             // we can skip this iteration and not get warnings
-            if ( !empty( $val ) ) {
+            if (!empty($val)) {
                 foreach ($bean->field_defs as $field_name=>$defs) {
 
                     // check if the CSV item matches field name

@@ -51,9 +51,9 @@ require_once('include/utils/zip_utils.php');
 // increase the cuttoff time to 1 hour
 ini_set("max_execution_time", "3600");
 
-if ( isset( $_REQUEST['view'] ) && ($_REQUEST['view'] != "") ) {
+if (isset($_REQUEST['view']) && ($_REQUEST['view'] != "")) {
     $view = $_REQUEST['view'];
-    if ( $view != "default" && $view != "module" ) {
+    if ($view != "default" && $view != "module") {
         die($mod_strings['ERR_UW_INVALID_VIEW']);
     }
 } else {
@@ -89,15 +89,15 @@ function extractFile($zip_file, $file_in_zip)
     if (empty($base_tmp_upgrade_dir)) {
         $base_tmp_upgrade_dir   = sugar_cached("upgrades/temp");
     }
-    $my_zip_dir = mk_temp_dir( $base_tmp_upgrade_dir );
+    $my_zip_dir = mk_temp_dir($base_tmp_upgrade_dir);
     register_shutdown_function('rmdir_recursive', $my_zip_dir);
-    unzip_file( $zip_file, $file_in_zip, $my_zip_dir );
-    return( "$my_zip_dir/$file_in_zip" );
+    unzip_file($zip_file, $file_in_zip, $my_zip_dir);
+    return("$my_zip_dir/$file_in_zip");
 }
 
 function extractManifest($zip_file)
 {
-    return( extractFile( $zip_file, "manifest.php" ) );
+    return(extractFile($zip_file, "manifest.php"));
 }
 
 function getInstallType($type_string)
@@ -105,48 +105,48 @@ function getInstallType($type_string)
     // detect file type
     global $subdirs;
 
-    foreach ( $subdirs as $subdir ) {
-        if ( preg_match( "#/$subdir/#", $type_string ) ) {
-            return( $subdir );
+    foreach ($subdirs as $subdir) {
+        if (preg_match("#/$subdir/#", $type_string)) {
+            return($subdir);
         }
     }
     // return empty if no match
-    return( "" );
+    return("");
 }
 
 function getImageForType($type)
 {
     $icon = "";
-    switch ( $type ) {
+    switch ($type) {
         case "full":
             $icon = SugarThemeRegistry::current()->getImage("Upgrade", "",null,null,'.gif',$mod_strings['LBL_DST_UPGRADE']);
             break;
         case "langpack":
-            $icon = SugarThemeRegistry::current()->getImage("LanguagePacks", "",null,null,'.gif',$mod_strings['LBL_LANGUAGE_PACKS'] );
+            $icon = SugarThemeRegistry::current()->getImage("LanguagePacks", "",null,null,'.gif',$mod_strings['LBL_LANGUAGE_PACKS']);
             break;
         case "module":
             $icon = SugarThemeRegistry::current()->getImage("ModuleLoader", "",null,null,'.gif',$mod_strings['LBL_MODULE_LOADER_TITLE']);
             break;
         case "patch":
-            $icon = SugarThemeRegistry::current()->getImage("PatchUpgrades", "",null,null,'.gif',$mod_strings['LBL_PATCH_UPGRADES'] );
+            $icon = SugarThemeRegistry::current()->getImage("PatchUpgrades", "",null,null,'.gif',$mod_strings['LBL_PATCH_UPGRADES']);
             break;
         case "theme":
-            $icon = SugarThemeRegistry::current()->getImage("Themes", "",null,null,'.gif',$mod_strings['LBL_THEME_SETTINGS'] );
+            $icon = SugarThemeRegistry::current()->getImage("Themes", "",null,null,'.gif',$mod_strings['LBL_THEME_SETTINGS']);
             break;
         default:
             break;
     }
-    return( $icon );
+    return($icon);
 }
 
 function getLanguagePackName($the_file)
 {
     global $app_list_strings;
-    require_once( "$the_file" );
-    if ( isset( $app_list_strings["language_pack_name"] ) ) {
-        return( $app_list_strings["language_pack_name"] );
+    require_once("$the_file");
+    if (isset($app_list_strings["language_pack_name"])) {
+        return($app_list_strings["language_pack_name"]);
     }
-    return( "" );
+    return("");
 }
 
 function getUITextForType($type)
@@ -171,36 +171,36 @@ function validate_manifest($manifest)
     global $sugar_flavor;
     global $mod_strings;
 
-    if ( !isset($manifest['type']) ) {
+    if (!isset($manifest['type'])) {
         die($mod_strings['ERROR_MANIFEST_TYPE']);
     }
     $type = $manifest['type'];
-    if ( getInstallType( "/$type/" ) == "" ) {
-        die($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'." );
+    if (getInstallType("/$type/") == "") {
+        die($mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.");
     }
 
-    if ( isset($manifest['acceptable_sugar_versions']) ) {
+    if (isset($manifest['acceptable_sugar_versions'])) {
         $version_ok = false;
         $matches_empty = true;
-        if ( isset($manifest['acceptable_sugar_versions']['exact_matches']) ) {
+        if (isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
             $matches_empty = false;
-            foreach ( $manifest['acceptable_sugar_versions']['exact_matches'] as $match ) {
-                if ( $match == $sugar_version ) {
+            foreach ($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
+                if ($match == $sugar_version) {
                     $version_ok = true;
                 }
             }
         }
-        if ( !$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches']) ) {
+        if (!$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
             $matches_empty = false;
-            foreach ( $manifest['acceptable_sugar_versions']['regex_matches'] as $match ) {
-                if ( preg_match( "/$match/", $sugar_version ) ) {
+            foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
+                if (preg_match("/$match/", $sugar_version)) {
                     $version_ok = true;
                 }
             }
         }
 
-        if ( !$matches_empty && !$version_ok ) {
-            die( $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version );
+        if (!$matches_empty && !$version_ok) {
+            die($mod_strings['ERROR_VERSION_INCOMPATIBLE'] . $sugar_version);
         }
     }
 }
@@ -224,7 +224,7 @@ function getDiffFiles($unzip_dir, $install_file, $is_install = true, $previous_v
         foreach ($installdefs['copy'] as $cp) {
             $cp['to'] = clean_path(str_replace('<basepath>', $unzip_dir, $cp['to']));
             $restore_path = remove_file_extension(urldecode($install_file))."-restore/";
-            $backup_path = clean_path($restore_path.$cp['to'] );
+            $backup_path = clean_path($restore_path.$cp['to']);
             //check if this file exists in the -restore directory
             if (file_exists($backup_path)) {
                 //since the file exists, then we want do an md5 of the install version and the file system version
