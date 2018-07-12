@@ -127,6 +127,25 @@ function get_campaign_mailboxes_with_stored_options() {
 	return $ret;
 }
 
+function get_campaign_mailboxes_with_stored_options_outbound() {
+	$ret = array();
+
+    if(!class_exists('OutboundEmail')) {
+        require('modules/OutboundEmail/OutboundEmail.php');
+    }
+
+    $q = "SELECT * FROM outbound_email WHERE deleted='0'";
+
+    $db = DBManagerFactory::getInstance();
+
+    $r = $db->query($q);
+
+    while($a = $db->fetchByAssoc($r)) {
+        $ret[$a['id']] = $a;
+    }
+	return $ret;
+}
+
 function log_campaign_activity($identifier, $activity, $update=true, $clicked_url_key=null) {
 
     $return_array = array();
@@ -1017,4 +1036,81 @@ function write_mail_merge_log_entry($campaign_id,$pl_row) {
     }
 
 
-?>
+function filterFieldsFromBeans($beans)
+{
+    global $app_strings;
+    $formattedBeans = array();
+    foreach($beans as $b)
+    {
+        $formattedFields = array();
+//bug: 47574 - make sure, that webtolead_email1 field has same required attribute as email1 field
+        if(isset($b->field_defs['webtolead_email1']) && isset($b->field_defs['email1']) && isset($b->field_defs['email1']['required'])){
+            $b->field_defs['webtolead_email1']['required'] = $b->field_defs['email1']['required'];
+        }
+
+        foreach($b->field_defs as $field_def)
+        {
+            $email_fields = false;
+            if($field_def['name']== 'email1' || $field_def['name']== 'email2')
+            {
+                $email_fields = true;
+            }
+            if($field_def['name']!= 'account_name'){
+                if( ( $field_def['type'] == 'relate' && empty($field_def['custom_type']) )
+                    || $field_def['type'] == 'assigned_user_name' || $field_def['type'] =='link' || $field_def['type'] =='function'
+                    || (isset($field_def['source'])  && $field_def['source']=='non-db' && !$email_fields) || $field_def['type'] == 'id')
+                {
+                    continue;
+                }
+            }
+            if($field_def['name']== 'deleted' || $field_def['name']=='converted' || $field_def['name']=='date_entered'
+                || $field_def['name']== 'date_modified' || $field_def['name']=='modified_user_id'
+                || $field_def['name']=='assigned_user_id' || $field_def['name']=='created_by'
+                || $field_def['name']=='team_id')
+            {
+                continue;
+            }
+
+            //If the field is hidden in the studio settings, then do not show
+            if(isset($field_def['studio']) && isset($field_def['studio']['editview']) && $field_def['studio']['editview']=== false )
+            {
+                continue;
+            }
+
+
+            $field_def['vname'] = preg_replace('/:$/','',translate($field_def['vname'], $b->module_dir));
+
+            //$cols_name = "{'".$field_def['vname']."'}";
+            $col_arr = array();
+            if((isset($field_def['required']) && $field_def['required'] != null && $field_def['required'] != 0)
+                || $field_def['name']=='last_name'
+            ){
+                $cols_name=$field_def['vname'].' '.$app_strings['LBL_REQUIRED_SYMBOL'];
+                $col_arr[0]=$cols_name;
+                $col_arr[1]=$field_def['name'];
+                $col_arr[2]=true;
+            }
+            else{
+                $cols_name=$field_def['vname'];
+                $col_arr[0]=$cols_name;
+                $col_arr[1]=$field_def['name'];
+            }
+            if (! in_array($cols_name, $formattedFields))
+            {
+                array_push($formattedFields,$col_arr);
+            }
+        }
+
+        $holder = new stdClass();
+        $holder->name = $b->object_name;
+        $holder->fields = $formattedFields;
+        $holder->moduleKnownAs = translate($b->module_name,'LBL_MODULE_NAME');
+        $holder->moduleDir = $b->module_dir;
+        $holder->moduleName = $b->module_name;
+        $formattedBeans[] = $holder;
+
+    }
+    return $formattedBeans;
+
+}
+

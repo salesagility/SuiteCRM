@@ -3945,7 +3945,7 @@ select#sales_stage_advanced {
   border-radius: 50%;
 }
 
-#user_password {
+#username_password {
   width: 150px;
 }
 
@@ -5435,7 +5435,7 @@ table tr#delegates_search {
 /* popup in studio */
 .masked .yui-simple-dialog {
   // Overridding inline style
-  z-index: 100000!important;
+  z-index: 16000;
 }
 
 /* popup dialog on home page */

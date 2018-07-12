@@ -477,6 +477,7 @@ CAL.change_activity_type = function (mod_name) {
   CAL.load_create_form(CAL.current_params);
 }
 CAL.load_create_form = function (params) {
+  CAL.reset_edit_dialog();
   CAL.disable_buttons();
   ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_LOADING'));
   CAL.repeat_tab_handle(CAL.current_params.module_name);
@@ -920,7 +921,7 @@ $($.fullCalendar).ready(function () {
         center: '',
         right: ''
       },
-      lang: global_langPrefix,
+      locale: global_langPrefix,
       views: views,
       minTime: global_start_time,
       maxTime: global_end_time,
@@ -943,9 +944,9 @@ $($.fullCalendar).ready(function () {
           var date_end = jsEvent.format(global_datetime_format);
           var date_duration = jsEvent.diff(date);
 
-          if (date.hasTime() == false) {
-            var date_end = date.add(1, 'days').format(global_datetime_format);
-          }
+           if (date.hasTime() == false) {
+             var date_end = date.add(1, 'days').format(global_datetime_format);
+           }
 
           /*
            * When user clicks on the top of the date in the month view

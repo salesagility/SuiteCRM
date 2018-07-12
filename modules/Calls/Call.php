@@ -174,18 +174,24 @@ class Call extends SugarBean {
 		}
 		return parent::ACLAccess($view,$is_owner,$in_group);
 	}
+	
     // save date_end by calculating user input
     // this is for calendar
-	function save($check_notify = FALSE) {
-		global $timedate,$current_user;
+    function save($check_notify = false)
+    {
+        global $timedate;
 
-	    if(isset($this->date_start) && isset($this->duration_hours) && isset($this->duration_minutes))
-        {
-    	    $td = $timedate->fromDb($this->date_start);
-    	    if($td)
-    	    {
-	        	$this->date_end = $td->modify("+{$this->duration_hours} hours {$this->duration_minutes} mins")->asDb();
-    	    }
+        if (!empty($this->date_start)) {
+            if (!empty($this->duration_hours) && !empty($this->duration_minutes)) {
+                $td = $timedate->fromDb($this->date_start);
+                if ($td) {
+                    $this->date_end = $td->modify(
+                        "+{$this->duration_hours} hours {$this->duration_minutes} mins"
+                    )->asDb();
+                }
+            } else {
+                $this->date_end = $this->date_start;
+            }
         }
 
 		if(!empty($_REQUEST['send_invites']) && $_REQUEST['send_invites'] == '1') {

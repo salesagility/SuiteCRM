@@ -79,7 +79,7 @@ class SugarFieldHtml extends SugarFieldBase
 
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
 
-        return $this->fetch($this->findTemplate('DetailView'));
+        return $this->fetch($this->findTemplate('EditView'));
     }
 
     /**

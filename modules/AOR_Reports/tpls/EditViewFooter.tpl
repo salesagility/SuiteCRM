@@ -376,36 +376,38 @@
 {literal}
 <script type="text/javascript">
 
-    setModuleFieldsPendingFinishedCallback(function(){
-        var parenthesisBtnHtml;
-        $( "#aor_conditions_body, #aor_condition_parenthesis_btn" ).sortable({
-            handle: '.condition-sortable-handle',
-            placeholder: "ui-state-highlight",
-            cancel: ".parenthesis-line",
-            connectWith: ".connectedSortableConditions",
-            start: function(event, ui) {
-                parenthesisBtnHtml = $('#aor_condition_parenthesis_btn').html();
-            },
-            stop: function(event, ui) {
-                if(event.target.id == 'aor_condition_parenthesis_btn') {
-                    $('#aor_condition_parenthesis_btn').html('<tr class="parentheses-btn">' + ui.item.html() + '</tr>');
-                    ParenthesisHandler.replaceParenthesisBtns();
-                }
-                else {
-                    if($(this).attr('id') == 'aor_conditions_body' && parenthesisBtnHtml != $('#aor_condition_parenthesis_btn').html()) {
-                        $(this).sortable("cancel");
-                    }
-                }
-                LogicalOperatorHandler.hideUnnecessaryLogicSelects();
-                ConditionOrderHandler.setConditionOrders();
-                ParenthesisHandler.addParenthesisLineIdent();
-            }
-        });//.disableSelection();
+  function moduleFieldsPendingFinishedCallback() {
+    'use strict';
+    var parenthesisBtnHtml;
+    $("#aor_conditions_body, #aor_condition_parenthesis_btn").sortable({
+      handle: '.condition-sortable-handle',
+      placeholder: "ui-state-highlight",
+      cancel: ".parenthesis-line",
+      connectWith: ".connectedSortableConditions",
+      start: function (event, ui) {
+        parenthesisBtnHtml = $('#aor_condition_parenthesis_btn').html();
+      },
+      stop: function (event, ui) {
+        if (event.target.id == 'aor_condition_parenthesis_btn') {
+          $('#aor_condition_parenthesis_btn').html('<tr class="parentheses-btn">' + ui.item.html() + '</tr>');
+          ParenthesisHandler.replaceParenthesisBtns();
+        }
+        else {
+          if ($(this).attr('id') == 'aor_conditions_body'
+            && parenthesisBtnHtml != $('#aor_condition_parenthesis_btn').html()) {
+            $(this).sortable("cancel");
+          }
+        }
         LogicalOperatorHandler.hideUnnecessaryLogicSelects();
         ConditionOrderHandler.setConditionOrders();
         ParenthesisHandler.addParenthesisLineIdent();
-        FieldLineHandler.makeGroupDisplaySelectOptions();
-    });
+      }
+    });//.disableSelection();
+    LogicalOperatorHandler.hideUnnecessaryLogicSelects();
+    ConditionOrderHandler.setConditionOrders();
+    ParenthesisHandler.addParenthesisLineIdent();
+    FieldLineHandler.makeGroupDisplaySelectOptions();
+  };
 
     $(function(){
 

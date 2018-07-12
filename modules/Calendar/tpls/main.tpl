@@ -199,7 +199,6 @@
 				<h4 class="modal-title" id="title-cal-edit"></h4>
 			</div>
 			<div class="modal-body">
-				<!--->
 				<div class="container-fluid">
 						{sugar_include type="smarty" file=$form}
 						<div id="scheduler"></div>
@@ -207,7 +206,6 @@
 						{sugar_include type="smarty" file=$repeat}
 					{/if}
 				</div>
-				<!--->
 			</div>
 			<div class="modal-footer">
 				<button id="btn-save" class="button" type="button">{$MOD.LBL_SAVE_BUTTON}</button>
@@ -228,11 +226,9 @@
 				<h4 class="modal-title" id="title-cal-tasks-edit">{$MOD.LNK_TASK}</h4>
 			</div>
 			<div class="modal-body">
-				<!--->
 				<div class="container-fluid">
 
 				</div>
-				<!--->
 			</div>
 			<div class="modal-footer">
 				<button id="btn-view-task" class="button" type="button">{$MOD.LNK_TASK_VIEW}</button>
@@ -250,11 +246,9 @@
 				<h4 class="modal-title" id="title-cal-events-edit">{$MOD.LNK_EVENT}</h4>
 			</div>
 			<div class="modal-body">
-				<!--->
 				<div class="container-fluid">
 
 				</div>
-				<!--->
 			</div>
 			<div class="modal-footer">
 				<button id="btn-view-events" class="button" type="button">{$MOD.LNK_EVENT_VIEW}</button>
