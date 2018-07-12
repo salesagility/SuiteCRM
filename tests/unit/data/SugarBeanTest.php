@@ -3961,7 +3961,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $order_by = '';
         $where = '';
         $results = $prjtpl->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  am_projecttemplates.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod, LTRIM(RTRIM(CONCAT(IFNULL(jt2.first_name,''),' ',IFNULL(jt2.last_name,'')))) assigned_user_name  , jt3.user_name assigned_user_name , jt3.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM am_projecttemplates   LEFT JOIN  users jt0 ON am_projecttemplates.modified_user_id=jt0.id AND jt0.deleted=0
+        $this->assertEquals(" SELECT  am_projecttemplates.*  , jt0.user_name modified_by_name , jt0.created_by modified_by_name_owner  , 'Users' modified_by_name_mod , jt1.user_name created_by_name , jt1.created_by created_by_name_owner  , 'Users' created_by_name_mod,  assigned_user_name  , jt3.user_name assigned_user_name , jt3.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM am_projecttemplates   LEFT JOIN  users jt0 ON am_projecttemplates.modified_user_id=jt0.id AND jt0.deleted=0
 
  AND jt0.deleted=0  LEFT JOIN  users jt1 ON am_projecttemplates.created_by=jt1.id AND jt1.deleted=0
 
