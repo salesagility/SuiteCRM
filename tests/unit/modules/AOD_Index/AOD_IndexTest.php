@@ -225,9 +225,9 @@ class AOD_IndexTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'ProjectTask' => 'ProjectTask',
             'ProspectLists' => 'ProspectList',
             'Prospects' => 'Prospect',
-            'SharedSecurityRules' => 'SharedSecurityRules'
-            'SharedSecurityRulesActions' => 'SharedSecurityRulesActions'
-            'SharedSecurityRulesConditions' => 'SharedSecurityRulesConditions'
+            'SharedSecurityRules' => 'SharedSecurityRules',
+            'SharedSecurityRulesActions' => 'SharedSecurityRulesActions',
+            'SharedSecurityRulesConditions' => 'SharedSecurityRulesConditions',
             'SurveyQuestionOptions' => 'SurveyQuestionOptions',
             'SurveyQuestionResponses' => 'SurveyQuestionResponses',
             'SurveyQuestions' => 'SurveyQuestions',
