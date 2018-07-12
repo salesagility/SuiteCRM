@@ -3922,9 +3922,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $where = "foo='bar'";
         $sugar_config['securitysuite_filter_user_list'] = 1;
         $results = $tmpUser->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
-
- AND jt0.deleted=0 where (foo='bar' AND  (  (  ( users.id in (
+        $this->assertEquals(" SELECT  users.*  FROM users  where (foo='bar' AND  (  (  ( users.id in (
             select sec.user_id from securitygroups_users sec
             inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
                 and secu.user_id = '{$current_user->id}'
@@ -3941,9 +3939,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $where = '';
         $sugar_config['securitysuite_filter_user_list'] = 1;
         $results = $tmpUser->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
-
- AND jt0.deleted=0 where ( (  (  ( users.id in (
+        $this->assertEquals(" SELECT  users.*  FROM users  where (foo='bar' AND  (  (  ( users.id in (
             select sec.user_id from securitygroups_users sec
             inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
                 and secu.user_id = '{$current_user->id}'
