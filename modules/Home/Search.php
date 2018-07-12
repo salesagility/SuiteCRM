@@ -93,6 +93,7 @@ class MasterSearchController
             $hits = MasterSearch::search('ElasticSearchEngine', $query);
             $hits = $this->parseHits($hits);
             $this->view->ss->assign('hits', $hits);
+            $this->view->ss->assign('time', MasterSearch::getSearchTime() * 1000);
         } catch (Exception $e) {
             $this->view->ss->assign('error', true);
         }

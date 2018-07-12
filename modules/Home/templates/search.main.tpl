@@ -11,7 +11,8 @@
                    name="search-query-string"
                    id="search-query-string"
                    placeholder="Search..."
-                   value="{$searchQueryString}"/>
+                   value="{$searchQueryString}"
+                   autofocus/>
         </div>
         <div class="col-md-2 msfcol">
             <label for="search-query-size" class="text-muted">Results per page</label>

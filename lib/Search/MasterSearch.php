@@ -54,6 +54,9 @@ class MasterSearch
         'ElasticSearchEngine' => 'lib/Search/ElasticSearch/ElasticSearchEngine.php',
     ];
 
+    /** @var float|null the number of seconds it took to perform the previous search */
+    private static $searchTime = null;
+
     /**
      * Perform a search with the given query and engine.
      *
@@ -111,7 +114,12 @@ class MasterSearch
     {
         $engine = self::fetchEngine($engine);
 
-        return $engine->search($query);
+        $start = microtime(true);
+        $results = $engine->search($query);
+        $end = microtime(true);
+        self::$searchTime = ($end - $start);
+
+        return $results;
     }
 
     /**
@@ -133,4 +141,11 @@ class MasterSearch
     {
         return array_keys(self::$engines);
     }
+
+    /*  @return float|null the number of seconds it took to perform the previous search */
+    public static function getSearchTime()
+    {
+        return self::$searchTime;
+    }
+
 }
