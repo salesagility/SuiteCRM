@@ -585,13 +585,14 @@ class ModuleScanner
 
         return false;
     }
-
     /**
      * Given a file it will open it's contents and check if it is a PHP file (not safe to just rely on extensions)
      * if it finds <?php tags it will use the tokenizer to scan the file
      * $var()  and ` are always prevented then whatever is in the blacklist.
      * It will also ensure that all files are of valid extension types
      *
+     * @param string $file
+     * @return array
      */
     public function scanFile($file)
     {
