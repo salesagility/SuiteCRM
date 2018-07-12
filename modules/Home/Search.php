@@ -85,15 +85,17 @@ class MasterSearchController
             $searchQuerySize = 10;
         }
 
-        $query = SearchQuery::fromString($searchQuery, $searchQuerySize);
-        $hits = MasterSearch::search('ElasticSearchEngine', $query);
-
-        $hits = $this->parseHits($hits);
-
         $this->view->ss->assign('searchQueryString', $searchQuery);
         $this->view->ss->assign('searchQuerySize', $searchQuerySize);
 
-        $this->view->ss->assign('hits', $hits);
+        try {
+            $query = SearchQuery::fromString($searchQuery, $searchQuerySize);
+            $hits = MasterSearch::search('ElasticSearchEngine', $query);
+            $hits = $this->parseHits($hits);
+            $this->view->ss->assign('hits', $hits);
+        } catch (Exception $e) {
+            $this->view->ss->assign('error', true);
+        }
     }
 
     private function parseHits($hits)
