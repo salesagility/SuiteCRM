@@ -38,38 +38,50 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+/**
+ * Implements Google Calendar Syncing
+ *
+ * @license https://raw.githubusercontent.com/salesagility/SuiteCRM/master/LICENSE.txt GNU Affero General Public License version 3
+ * @author Benjamin Long <ben@offsite.guru>
+ */
+
 class GoogleSync
 {
 
-    // An array of user id's we are going to sync for
+    /** @var array An array of user id's we are going to sync for */
     public $users = array();
 
-    // The User we're currently working with
+    /** @var object The User we're currently working with */
     public $workingUser;
 
-    // The Google client object for the current sync job
+    /** @var object The Google client object for the current sync job */
     public $gClient;
 
-    // The Google Calendar Service Object
+    /** @var object The Google Calendar Service Object */
     public $gService;
 
-    // The Google AuthcConfig json string
+    /** @var array The Google AuthcConfig json */
     public $authJson = array();
 
-    // The local timezone
+    /** @var string The local timezone */
     public $timezone;
 
-    // The Calendar ID
+    /** @var string The Calendar ID */
     public $calendarId;
 
-    // An array of SuiteCRM meeting id's that we've already synced this session
+    /** @var array An array of SuiteCRM meeting id's that we've already synced this session */
     public $syncedList = array();
 
-    // A Database Instance
+    /** @var object A Database Instance */
     private $db;
 
-    public function __construct() {
-        if (isset($_SERVER['GSYNC_LOGLEVEL'])) {
+    /**
+     * Class Constructor
+     */
+    public function __construct()
+    {
+        if (isset($_SERVER['GSYNC_LOGLEVEL']))
+        {
             $GLOBALS['log']->setLevel($_SERVER['GSYNC_LOGLEVEL']);
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set to: ' . $_SERVER['GSYNC_LOGLEVEL']);
         }
@@ -79,87 +91,109 @@ class GoogleSync
         $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__construct');
     }
 
-    /* Gets the auth json string from the system
+    /**
+     * Gets the auth json string from the system
      *
-     * @return string of json on success, false on failure
+     * @return string|false json on success, false on failure
      */
-    public function getAuthJson() {
+    public function getAuthJson()
+    {
         global $sugar_config;
-        if (!$authJson_local = json_decode(base64_decode($sugar_config['google_auth_json']), true)) {
+        if (!$authJson_local = json_decode(base64_decode($sugar_config['google_auth_json']), true))
+        {
             // The authconfig json string is invalid json
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid AuthConfig JSON');
             return false;
-        } else {
-            if (!array_key_exists('web', $authJson_local)) {
+        }
+        else {
+            if (!array_key_exists('web', $authJson_local))
+            {
                 // The authconfig is valid json, but the 'web' key is missing. This is not a valid authconfig.
                 $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid AuthConfig JSON');
                 return false;
-            } else {
+            }
+            else {
                 return $authJson_local;
             }
         }
     }
 
-    /* Add a user to the list of users to sync
-     * the user id is used as the key
+    /**
+     * Add a user to the list of users to sync
+     *
+     * The user id is used as the key
      *
      * @param string $id : the SuiteCRM user id
      * @param string $name : the SuiteCRM user name
      *  Not really used for anything other than reference
      *
-     * @return bool success/failure
+     * @return bool Success/Failure
      */
-    public function addUser($id, $name) {
-        if (array_key_exists($id, $this->users)) {
+    public function addUser($id, $name)
+    {
+        if (array_key_exists($id, $this->users))
+        {
             $GLOBALS['log']->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' already set');
             return false;
-        } else {
+        }
+        else {
             $this->users[$id] = $name;
             $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' set to ' . $this->users[$id]);
             return true;
         }
     }
 
-    /* Remove a user from the list of users to sync
+    /**
+     * Remove a user from the list of users to sync
      *
      * @param string $id : the SuiteCRM user id
      *
-     * @return bool success/failure
+     * @return bool Success/Failure
      */
-    public function delUser($id) {
-        if (!array_key_exists($id, $this->users)) {
+    public function delUser($id)
+    {
+        if (!array_key_exists($id, $this->users))
+        {
             $GLOBALS['log']->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . $id . ' missing');
             return false;
-        } else {
+        }
+        else {
             unset($this->users[$id]);
             return true;
         }
     }
 
-    /* Creates and Sets the Google client in the object
+    /**
+     * Creates and Sets the Google client in the object
      *
      * @param string $id : the SuiteCRM user id
      *
-     * @return bool success/failure
+     * @return bool Success/Failure
      */
-    public function setClient($id) {
-        if (!$gClient_local = $this->getClient($id)) {
+    public function setClient($id)
+    {
+        if (!$gClient_local = $this->getClient($id))
+        {
             return false;
-        } else {
+        }
+        else {
             $this->gClient = $gClient_local;
             return true;
         }
     }
 
-    /* Set the Google client up for the user by id
+    /**
+     * Set the Google client up for the user by id
      *
      * @param string $id : the SuiteCRM user id
      *
-     * @return Google_Client Object
+     * @return Google_Client
      */
-    public function getClient($id) {
+    public function getClient($id)
+    {
         // Retrieve user bean
-        if (!isset($this->workingUser)) {
+        if (!isset($this->workingUser))
+        {
             $this->workingUser = new User();
         }
 
@@ -167,13 +201,15 @@ class GoogleSync
 
         // Retrieve Access Token JSON from user preference
         $accessToken = json_decode(base64_decode($this->workingUser->getPreference('GoogleApiToken', 'GoogleSync')), true);
-        if (!array_key_exists('access_token', $accessToken)) {
+        if (!array_key_exists('access_token', $accessToken))
+        {
             // The Token is invalid JSON or missing
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Invalid or Missing AuthToken');
             return false;
         }
         // The refresh token is only provided once, on first authentication. It must be added afterwards.
-        if (!array_key_exists('refresh_token', $accessToken)) {
+        if (!array_key_exists('refresh_token', $accessToken))
+        {
             $accessToken['refresh_token'] = base64_decode($this->workingUser->getPreference('GoogleApiRefreshToken', 'GoogleSync'));
         }
 
@@ -186,7 +222,8 @@ class GoogleSync
         $client->setAccessToken($accessToken);
 
         // Refresh the token if needed
-        if ($client->isAccessTokenExpired()) {
+        if ($client->isAccessTokenExpired())
+        {
             $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Refreshing Access Token');
             $refreshToken = $client->getRefreshToken();
             $client->fetchAccessTokenWithRefreshToken($refreshToken);
@@ -197,12 +234,14 @@ class GoogleSync
         return $client;
     }
 
-    /* Retrieve List of meetings owned by the Current Working User
+    /**
+     * Retrieve List of meetings owned by the Current Working User
      *
      *
-     * @return array of meetings
+     * @return array Array of SuiteCRM Meetings
      */
-    public function getUserMeetings() {
+    public function getUserMeetings()
+    {
 
         // We do it this way so we also get deleted meetings
         $query = "SELECT id FROM meetings WHERE assigned_user_id = '" . $this->workingUser->id . "' AND date_start <= now() + interval 3 month";
@@ -210,7 +249,8 @@ class GoogleSync
 
         $meetings = Array();
         require_once('modules/Meetings/Meeting.php');
-        while ($row = $this->db->fetchByAssoc($result)) {
+        while ($row = $this->db->fetchByAssoc($result))
+        {
             $results[] = $row['id'];
             $meeting = new Meeting();
             $meeting->retrieve($row['id'], true, false);
@@ -220,15 +260,18 @@ class GoogleSync
         return $meetings;
     }
 
-    /* Set user's google calendar id
+    /**
+     * Set user's google calendar id
      *
      *
-     * @return bool : success/failure
+     * @return bool Success/Failure
      */
-    public function setUsersGoogleCalendar() {
+    public function setUsersGoogleCalendar()
+    {
 
         // Make sure we have a Google Calendar Service instance
-        if (!isset($this->gService)) {
+        if (!isset($this->gService))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
@@ -237,15 +280,18 @@ class GoogleSync
         $calendarList = $this->gService->calendarList->listCalendarList();
 
         // find the id of the 'SuiteCRM' calendar ... this may stay or go
-        foreach ($calendarList->getItems() as $calendarListEntry) {
-            if ($calendarListEntry->getSummary() == 'SuiteCRM') {
+        foreach ($calendarList->getItems() as $calendarListEntry)
+        {
+            if ($calendarListEntry->getSummary() == 'SuiteCRM')
+            {
                 $this->calendarId = $calendarListEntry->getId();
             break;
             }
         }
 
         // if the SuiteCRM calendar doesn't exist... Create it!
-        if (!isset($this->calendarId)) {
+        if (!isset($this->calendarId))
+        {
             $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, Creating it!');
             $calendar = new Google_Service_Calendar_Calendar();
             $calendar->setSummary('SuiteCRM');
@@ -256,29 +302,35 @@ class GoogleSync
         }
 
         // Final check to make sure we have an ID
-        if (!isset($this->calendarId)) {
+        if (!isset($this->calendarId))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find the SuiteCRM Google Calendar, and creation failed.');
             return false;
-        } else {
+        }
+        else {
             return true;
         }
     }
 
-    /* Get events in users google calendar
+    /**
+     * Get events in users google calendar
      *
      *
-     * @return array of google events
+     * @return array Array of Google Event Objects
      */
-    public function getUserGoogleEvents() {
+    public function getUserGoogleEvents()
+    {
 
         // Make sure we have a Google Calendar Service instance
-        if (!isset($this->gService)) {
+        if (!isset($this->gService))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
 
         // Make sure we have a calendar id
-        if (!isset($this->calendarId)) {
+        if (!isset($this->calendarId))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The calendar ID is not set. See setUsersGoogleCalendar Method');
             return false;
         }
@@ -298,25 +350,30 @@ class GoogleSync
         // We only want the events, not the leading cruft
         $results = $results_g->getItems();
 
-        if (empty($results)) {
+        if (empty($results))
+        {
             $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'No events found.');
             return Array();
-        } else {
+        }
+        else {
             $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found ' . count($results) . ' Google Events');
             return $results;
         }
     }
 
-    /* Get a google event by the matching SuiteCRM meeting id
+    /**
+     * Get a google event by the matching SuiteCRM meeting id
      *
      * @param string $meeting_id
      *
-     * @return object Google_Service_Calendar_Event
+     * @return Google_Service_Calendar_Event
      */
-    public function getGoogleEventByMeetingId($meeting_id) {
+    public function getGoogleEventByMeetingId($meeting_id)
+    {
 
         // Make sure the calendar service is set up
-        if (!isset($this->gService)) {
+        if (!isset($this->gService))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
@@ -333,90 +390,110 @@ class GoogleSync
         $results_g = $this->gService->events->listEvents($this->calendarId, $optParams);
         $results = $results_g->getItems();
 
-        if (count($results) > 1) {
+        if (count($results) > 1)
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We received more than one Google event with the same SuiteCRM meeting ID. Something is horribly wrong!');
             return false;
-        } elseif (count($results) == 0) { // No events match. Return emtpy array.
+        }
+        elseif (count($results) == 0) { // No events match. Return emtpy array.
             return Array();
-        } else {
+        }
+        else {
             $gEvent = $results[0];
             return $gEvent;
         }
     }
 
-    /* Get a google event by the event id
+    /**
+     * Get a google event by the event id
      *
-     * @param string $event_id : The Google Event ID
+     * @param string $event_id Google Event ID
      *
-     * @return object Google_Service_Calendar_Event if found, null if not found
+     * @return Google_Service_Calendar_Event|null Google_Service_Calendar_Event if found, null if not found
      */
-    public function getGoogleEventById($event_id) {
+    public function getGoogleEventById($event_id)
+    {
 
         // Make sure the calendar service is set up
-        if (!isset($this->gService)) {
+        if (!isset($this->gService))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
 
-        if (empty($event_id)) { // If we didn't get passed an event, return null
+        if (empty($event_id))
+        { // If we didn't get passed an event, return null
             return;
         }
 
         $gEvent = $this->gService->events->get($this->calendarId, $event_id);
 
-        if (!empty($gEvent->getId())) {
+        if (!empty($gEvent->getId()))
+        {
             return $gEvent;
-        } else {
+        }
+        else {
             return;
         }
     }
 
-    /* Find a missing event on users calendars
+    /**
+     * Find a missing event on users calendars
+     *
      * This is an expensive method. It searches *all* the users caleners for a missing event,
      * moves it back to the SuiteCRM calendar, and returns the moved event.
      *
-     * @param string $event_id : The Google Event Id
+     * @param string $event_id The Google Event Id
      *
-     * @return object Google_Service_Calendar_Event
+     * @return Google_Service_Calendar_Event
      */
-    public function getMissingMeeting($event_id) {
+    public function getMissingMeeting($event_id)
+    {
         // get list of users calendars
         $calendarList = $this->gService->calendarList->listCalendarList();
 
         // Search all calendars looking for event
-        foreach ($calendarList->getItems() as $calendarListEntry) {
-            if ($gEvent = $this->gService->events->get($calendarListEntry->getId(), $event_id)) {
+        foreach ($calendarList->getItems() as $calendarListEntry)
+        {
+            if ($gEvent = $this->gService->events->get($calendarListEntry->getId(), $event_id))
+            {
                 $foundOnCalendar = $calendarListEntry->getId();
                 break;
             }
         }
-        if (isset($foundOnCalendar)) {
+        if (isset($foundOnCalendar))
+        {
             $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Found Event on Calendar ID: ' . $foundOnCalendar);
             $result = $this->gService->events->move($foundOnCalendar, $event_id, $this->calendarId);
             return $result;
-        } else {
+        }
+        else {
             $GLOBALS['log']->warn(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to find missing Calendar Event');
             return;
         }
     }
 
-    /* Get a SuiteCRM meeting by Google Event ID
+    /**
+     * Get a SuiteCRM meeting by Google Event ID
      *
-     * @param string $event_id : The Google Event ID
+     * @param string $event_id The Google Event ID
      *
-     * @return bean Meeting
+     * @return Meeting
      */
-    public function getMeetingByEventId($event_id) {
+    public function getMeetingByEventId($event_id)
+    {
 
         // We do it this way so we also get deleted meetings
         $query = "SELECT id FROM meetings WHERE gsync_id = '" . $event_id . "'";
         $result = $this->db->query($query);
 
         // This checks to make sure we only get one result. If we get more than one, something is inconsistant in the DB
-        if ($result->num_rows > 1) {
+        if ($result->num_rows > 1)
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'More than one meeting matches Google Id: ' . $event_id);
             return false;
-        } elseif ($result->num_rows == 0) {
+        }
+        elseif ($result->num_rows == 0) {
             return; // No matches Found
         }
 
@@ -427,20 +504,24 @@ class GoogleSync
         return $meeting;
     }
 
-    /* Creates and Sets $this->gService to a valid Google Calendar Service
+    /**
+     * Creates and Sets $this->gService to a valid Google Calendar Service
      *
-     * @return success/failure
+     * @return bool Success/Failure
      */
-    public function setGService() {
+    public function setGService()
+    {
         // make sure we have a client set
-        if (!isset($this->gClient)) {
+        if (!isset($this->gClient))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Client is not set up. See setClient Method');
             return false;
         }
 
         // create new calendar service
         $this->gService = new Google_Service_Calendar($this->gClient);
-        if (isset($this->gService)) {
+        if (isset($this->gService))
+        {
             return true;
         } else {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Setting $this->gService Failed');
@@ -448,34 +529,44 @@ class GoogleSync
         }
     }
 
-    /* Figure out if we need to push/pull an update, or do nothing.
+    /**
+     * Figure out if we need to push/pull an update, or do nothing.
+     *
      * Used when an event w/ a matching ID is on both ends of the sync.
      *
-     * @param (Meeting or Google_Service_Calendar_Event) object $event_1 : Either the Meeting or Google Calendar Event
-     * @opt_param Google_Service_Calendar_Event $event_remote : the Google event
+     * @param Meeting|Google_Service_Calendar_Event object $event_1 Either the Meeting or Google Calendar Event
+     * @param Google_Service_Calendar_Event $event_2 (optional) Google Event
      *
-     * @return string : "push(_delete), pull(_delete), skip"
+     * @return string push(_delete), pull(_delete), skip
      */
-    public function pushPullSkip($event_1, $event_2 = NULL) {
-        if ( (!isset($event_1) || empty($event_1)) && (!isset($event_2) || empty($event_2)) ) {
+    public function pushPullSkip($event_1, $event_2 = NULL)
+    {
+        if ( (!isset($event_1) || empty($event_1)) && (!isset($event_2) || empty($event_2)) )
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'You must pass at least one event');
             return false;
         }
 
         // If we only got one event, figure out which kind it is
-        if (!isset($event_2) || empty($event_2)){
-            switch (get_class($event_1)) {
+        if (!isset($event_2) || empty($event_2))
+        {
+            switch (get_class($event_1))
+            {
                 case "Google_Service_Calendar_Event":
-                    if ($event_1->status !== 'cancelled') { // We only pull if the Google Event is not deleted/cancelled
+                    if ($event_1->status !== 'cancelled')
+                    { // We only pull if the Google Event is not deleted/cancelled
                         $return = "pull";
-                    } else {
+                    }
+                    else {
                         $return = "skip";
                     }
                     break;
                 case "Meeting":
-                    if ($event_1->deleted == '0') { // We only push if the meeting is not deleted
+                    if ($event_1->deleted == '0')
+                    { // We only push if the meeting is not deleted
                         $return = "push";
-                    } else {
+                    }
+                    else {
                         $return = "skip";
                     }
                     break;
@@ -485,30 +576,38 @@ class GoogleSync
             }
             // Only one event, we're done here
             return $return;
-        } else {
+        }
+        else {
 
             // We have two events... figure out which is which and set the internal objects
             $obj_class1 = get_class($event_1);
-            if ($obj_class1 == 'Meeting') {
+            if ($obj_class1 == 'Meeting')
+            {
                 $event_local = $event_1;
-            } elseif ($obj_class1 == 'Google_Service_Calendar_Event') {
+            }
+            elseif ($obj_class1 == 'Google_Service_Calendar_Event') {
                 $event_remote = $event_1;
-            } else {
+            }
+            else {
                 $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
                 return false;
             }
 
             $obj_class2 = get_class($event_2);
-            if ($obj_class2 == 'Meeting') {
+            if ($obj_class2 == 'Meeting')
+            {
                 $event_local = $event_2;
-            } elseif ($obj_class2 == 'Google_Service_Calendar_Event') {
+            }
+            elseif ($obj_class2 == 'Google_Service_Calendar_Event') {
                 $event_remote = $event_2;
-            } else {
+            }
+            else {
                 $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Events must be of type \'Meeting\' or \'Google_Service_Calendar_Event\'');
                 return false;
             }
 
-            if (in_array($event_local->id, $this->syncedList, true)) {
+            if (in_array($event_local->id, $this->syncedList, true))
+            {
                 $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'We already synced this meeting. Marking to skip.');
                 return "skip";
             }
@@ -518,7 +617,8 @@ class GoogleSync
             unset($event_2);
 
             // Before we get further, if both events are deleted, skip
-            if ($event_local->deleted == '1' && $event_remote->status == 'cancelled') {
+            if ($event_local->deleted == '1' && $event_remote->status == 'cancelled')
+            {
                 return "skip";
             }
 
@@ -529,30 +629,40 @@ class GoogleSync
             $sModified = strtotime($event_local->fetched_row['date_modified'] . ' UTC'); // SuiteCRM stores the timedate as UTC in the DB
 
             // Get the last sync time of SuiteCRM event
-            if (isset($event_local->fetched_row['gsync_lastsync'])) {
+            if (isset($event_local->fetched_row['gsync_lastsync']))
+            {
                 $lastSync = $event_local->fetched_row['gsync_lastsync'];
-            } else {
+            }
+            else {
                 $lastSync = 0;
             }
 
             // Event has not been modified since last sync... skip
-            if ($gModified <= $lastSync && $sModified <= $lastSync) {
+            if ($gModified <= $lastSync && $sModified <= $lastSync)
+            {
                 $this->syncedList[] = $event_local->id;
                 return "skip";
             }
 
             // Event was modified since last sync
-            if ($gModified > $lastSync || $sModified > $lastSync) {
-                if ($gModified > $sModified) {
-                    if ($event_remote->status == 'cancelled') { // if the remote event is deleted, delete it here
+            if ($gModified > $lastSync || $sModified > $lastSync)
+            {
+                if ($gModified > $sModified)
+                {
+                    if ($event_remote->status == 'cancelled')
+                    { // if the remote event is deleted, delete it here
                         return "pull_delete";
-                    } else {
+                    }
+                    else {
                         return "pull";
                     }
-                } else {
-                    if ($event_local->deleted == '1') {
+                }
+                else {
+                    if ($event_local->deleted == '1')
+                    {
                         return "push_delete";
-                    } else {
+                    }
+                    else {
                         return "push";
                     }
                 }
@@ -562,22 +672,27 @@ class GoogleSync
         return "unknown"; // we should never get here
     }
 
-    /* Push event from SuiteCRM to Google Calendar
+    /**
+     * Push event from SuiteCRM to Google Calendar
      *
-     * @param bean $event_local : the SuiteCRM meeting bean
-     * @opt_param Google_Service_Calendar_Event $event_remote : the Google event
-     *      If the google event is not provided, a new one will be created
-     *      and inserted. If one is provided, the existing Google Event will
-     *      be updated.
+     * If the google event is not provided, a new one will be created
+     * and inserted. If one is provided, the existing Google Event will
+     * be updated.
      *
-     * @return bool : success/failure
+     * @param Meeting $event_local : the SuiteCRM meeting bean
+     * @param Google_Service_Calendar_Event $event_remote (optional) Google Event
+     *
+     * @return bool Success/Failure
      */
-    public function pushEvent($event_local, $event_remote = NULL) {
+    public function pushEvent($event_local, $event_remote = NULL)
+    {
 
-        if (!isset($event_remote) || empty($event_remote)) {
+        if (!isset($event_remote) || empty($event_remote))
+        {
             $event = $this->createGoogleCalendarEvent($event_local);
             $return = $this->gService->events->insert($this->calendarId, $event);
-        } else {
+        }
+        else {
             $event = $this->updateGoogleCalendarEvent($event_local, $event_remote);
             $return = $this->gService->events->update($this->calendarId, $event->getId(), $event);
         }
@@ -585,29 +700,35 @@ class GoogleSync
         // Set the SuiteCRM Meeting's last sync timestamp, and google id
         $this->setLastSync($event_local, $return->getId());
 
-        // We don't get a status code back showing success. Instead, the return of the create or update is the Google_Service_Calendar_Event object after saving. So we check to make sure it has an ID to determine success/failure.
-        if (isset($return->id)) {
+        // We don't get a status code back showing success. Instead, the return of the create or update is the Google_Service_Calendar_Event object after saving. So we check to make sure it has an ID to determine Success/Failure.
+        if (isset($return->id))
+        {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
 
-    /* Pull event from Google Calendar to SuiteCRM
+    /**
+     * Pull event from Google Calendar to SuiteCRM
      *
-     * @param Google_Service_Calendar_Event $event_remote : the Google event
-     * @opt_param bean $event_local : the SuiteCRM meeting bean
-     *      If the SuiteCRM Meeting is not provided, a new one will be created
-     *      and inserted. If one is provided, the existing meeting will
-     *      be updated.
+     * If the SuiteCRM Meeting is not provided, a new one will be created
+     * and inserted. If one is provided, the existing meeting will be updated.
      *
-     * @return bool : success/failure of setLastSync, since that's what saves the record
+     * @param Google_Service_Calendar_Event $event_remote Tthe Google event
+     * @param Meeting $event_local Meeting (optional) SuiteCRM meeting bean
+     *
+     * @return bool Success/Failure of setLastSync, since that's what saves the record
      */
-    public function pullEvent($event_remote, $event_local = NULL) {
+    public function pullEvent($event_remote, $event_local = NULL)
+    {
 
-        if (!isset($event_local) || empty($event_local)) {
+        if (!isset($event_local) || empty($event_local))
+        {
             $event = $this->createSuitecrmMeetingEvent($event_remote);
-        } else {
+        }
+        else {
             $event = $this->updateSuitecrmMeetingEvent($event_local, $event_remote);
         }
 
@@ -618,9 +739,11 @@ class GoogleSync
         // That way we don't mess with anything else that's using other values.
         $extendedProperties = $event_remote->getExtendedProperties();
 
-        if (!empty($extendedProperties)) {
+        if (!empty($extendedProperties))
+        {
             $private = $extendedProperties->getPrivate();
-        } else {
+        }
+        else {
             $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
             $private = array();
         }
@@ -637,44 +760,51 @@ class GoogleSync
         return $this->setLastSync($event, $event_remote->getId());
     }
 
-    /* Delete SuiteCRM Meeting
+    /**
+     * Delete SuiteCRM Meeting
      *
-     * @param Meeting $meeting : The SuiteCRM Meeting Bean
+     * @param Meeting $meeting The SuiteCRM Meeting Bean
      *
-     * @return bool : Success/Failure  of setLastSync, since that's what saves the record
+     * @return bool Success/Failure  of setLastSync, since that's what saves the record
      */
-    public function delMeeting($meeting) {
+    public function delMeeting($meeting)
+    {
         $meeting->deleted = '1';
         $meeting->gsync_id = '';
         return $this->setLastSync($meeting);
     }
 
-    /* Delete Google Event
+    /**
+     * Delete Google Event
      *
-     * @param Google_Service_Calendar_Event $event : the Google event
-     * @param String $meeting_id : The SuiteCRM Meeting Id
+     * @param Google_Service_Calendar_Event $event The Google event
+     * @param String $meeting_id The SuiteCRM Meeting Id
      *
-     * @return bool : Success/Failure
+     * @return bool Success/Failure
      */
-    public function delEvent($event, $meeting_id) {
+    public function delEvent($event, $meeting_id)
+    {
         // Make sure the calendar service is set up
-        if (!isset($this->gService)) {
+        if (!isset($this->gService))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'The Google Service is not set up. See setGService Method.');
             return false;
         }
 
         // Make sure we got a meeting_id
-        if (!isset($meeting_id)) {
+        if (!isset($meeting_id))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'This function requires a meeting id as the 2nd parameter');
             return false;
         }
 
         $return = $this->gService->events->delete($this->calendarId, $event->getId());
 
-        // Pull the status code returned to determine success/failure
+        // Pull the status code returned to determine Success/Failure
         $statusCode = $return->getStatusCode();
 
-        if ($statusCode >= 200 && $statusCode <= 299) { // 2xx statusCode = success
+        if ($statusCode >= 200 && $statusCode <= 299)
+        { // 2xx statusCode = success
             $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Success Status Code: ' . $statusCode . ' on delete.');
 
             // This removes the gsync_id reference from the table.
@@ -683,22 +813,26 @@ class GoogleSync
 
             $this->syncedList[] = $meeting_id;
             return true;
-        } else {
+        }
+        else {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Received Failure Status Code: ' . $statusCode . ' on delete!');
             return false;
         }
     }
 
-    /* Update SuiteCRM Meeting from Google Calendar Event
+    /**
+     * Update SuiteCRM Meeting from Google Calendar Event
      *
-     * @param bean $event_local : the SuiteCRM meeting bean
-     * @param Google_Service_Calendar_Event $event_remote : the Google event
+     * @param bean $event_local The SuiteCRM meeting bean
+     * @param Google_Service_Calendar_Event $event_remote The Google event
      *
      * @return Meeting
      */
-    public function updateSuitecrmMeetingEvent($event_local, $event_remote) {
+    public function updateSuitecrmMeetingEvent($event_local, $event_remote)
+    {
 
-        if ( (!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote)) ) {
+        if ( (!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote)) )
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
             return false;
         }
@@ -734,8 +868,10 @@ class GoogleSync
         $overrides = $gReminders->getOverrides();
 
         // Create a new popup reminder for each google reminder
-        foreach ($overrides as $override) {
-            if ($override->getMethod() == 'popup'){
+        foreach ($overrides as $override)
+        {
+            if ($override->getMethod() == 'popup')
+            {
                 $sReminder = new Reminder;
                 $sReminder->popup = '1';
                 $sReminder->timer_popup = $override->getMinutes() * 60;
@@ -748,20 +884,21 @@ class GoogleSync
                 $reminderInvitee->related_invitee_module = 'Users';
                 $reminderInvitee->related_invitee_module_id = $this->workingUser->id;
                 $reminderInvitee->save(false);
-
             }
         }
         return  $event_local;
     }
 
-    /* Create SuiteCRM Meeting event
+    /**
+     * Create SuiteCRM Meeting event
      *
-     * @param Google_Service_Calendar_Event $event_remote : the Google Event we're creating a SuiteCRM Meeting for
+     * @param Google_Service_Calendar_Event $event_remote The Google Event we're creating a SuiteCRM Meeting for
      *
      * @return Meeting
      */
-    public function createSuitecrmMeetingEvent($event_remote) {
-         $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Creating New SuiteCRM Meeting');
+    public function createSuitecrmMeetingEvent($event_remote)
+    {
+        $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Creating New SuiteCRM Meeting');
         $meeting = new Meeting;
         $meeting->id = create_guid();
         $meeting->new_with_id = true;
@@ -769,16 +906,19 @@ class GoogleSync
         return $event_local;
     }
 
-    /* Update Google Calendar Event from SuiteCRM Meeting
+    /**
+     * Update Google Calendar Event from SuiteCRM Meeting
      *
-     * @param bean $event_local : the SuiteCRM meeting bean
-     * @param Google_Service_Calendar_Event $event_remote : the Google event
+     * @param bean $event_local The SuiteCRM meeting bean
+     * @param Google_Service_Calendar_Event $event_remote The Google event
      *
      * @return Google_Service_Calendar_Event
      */
-    public function updateGoogleCalendarEvent($event_local, $event_remote) {
+    public function updateGoogleCalendarEvent($event_local, $event_remote)
+    {
 
-        if ( (!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote)) ) {
+        if ( (!isset($event_local) || empty($event_local)) || (!isset($event_remote) || empty($event_remote)) )
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'ERROR:Missing Variables');
             return false;
         }
@@ -801,9 +941,11 @@ class GoogleSync
         // That way we don't mess with anything else that's using other values.
         $extendedProperties = $event_remote->getExtendedProperties();
 
-        if (!empty($extendedProperties)) {
+        if (!empty($extendedProperties))
+        {
             $private = $extendedProperties->getPrivate();
-        } else {
+        }
+        else {
             $extendedProperties = new Google_Service_Calendar_EventExtendedProperties;
             $private = array();
         }
@@ -818,11 +960,13 @@ class GoogleSync
         $event_local_id = $event_local->id;
         $reminders_local = BeanFactory::getBean('Reminders')->get_full_list("", "reminders.related_event_module = 'Meetings' AND reminders.related_event_module_id = '$event_local_id' AND popup = '1'");
 
-        if ($reminders_local) {
+        if ($reminders_local)
+        {
             $reminders_remote = new Google_Service_Calendar_EventReminders;
             $reminders_remote->setUseDefault(false);
             $reminders_array = array();
-            foreach ($reminders_local as $reminder_local) {
+            foreach ($reminders_local as $reminder_local)
+            {
                 $reminder_remote = new Google_Service_Calendar_EventReminder;
                 $reminder_remote->setMethod('popup');
                 $reminder_remote->setMinutes($reminder_local->timer_popup / 60);
@@ -831,17 +975,18 @@ class GoogleSync
             $reminders_remote->setOverrides($reminders_array);
             $event_remote->setReminders($reminders_remote);
         }
-
         return $event_remote;
     }
 
-    /* Create New Google Event object for SuiteCRM Meeting
+    /**
+     * Create New Google Event object for SuiteCRM Meeting
      *
-     * @param $event_local : SuiteCRM Meeting Object
+     * @param $event_local SuiteCRM Meeting Object
      *
      * @return Google_Service_Calendar_Event
      */
-    public function createGoogleCalendarEvent($event_local) {
+    public function createGoogleCalendarEvent($event_local)
+    {
 
         //We're creating a new event
         $event_remote_empty = new Google_Service_Calendar_Event;
@@ -858,35 +1003,44 @@ class GoogleSync
         return $event_remote;
     }
 
-    /* Set the timezone
+    /**
+     * Set the timezone
+     *
      * @param string $timezone : the timezone_identifier (ie. America/New_York)
      *
-     * @return bool success/failure
+     * @return bool Success/Failure
      */
-    public function setTimezone($timezone) {
-        if (!date_default_timezone_set($timezone)) {
+    public function setTimezone($timezone)
+    {
+        if (!date_default_timezone_set($timezone))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set timezone to \'' . $timezone . '\'');
             return false;
-        } else {
+        }
+        else {
             $this->timezone = date_default_timezone_get();
             $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Timezone set to \'' . $this->timezone . '\'');
             return true;
         }
     }
 
-    /* Set the last sync time for the record
+    /**
+     * Set the last sync time for the record
+     *
      * This *must* be called *after* the sync is done
      * This also saves the event, so you don't need to do it twice. Just call this.
      * Also adds the id of the event so it doesn't get synced again this session.
      *
-     * @param bean $event_local : the SuiteCRM meeting bean
-     * @param_opt string $gEventId : the id that google has for the event.
+     * @param object $event_local The SuiteCRM Meeting bean
+     * @param string $gEventId (optional) The ID that Google has for the event.
      *
-     * @return bool : success/failure
+     * @return bool Success/Failure
      */
-    protected function setLastSync($event_local, $gEventId = NULL) {
+    protected function setLastSync($event_local, $gEventId = NULL)
+    {
 
-        if (isset($gEventId)) {
+        if (isset($gEventId))
+        {
             $event_local->gsync_id = $gEventId;
         }
 
@@ -896,56 +1050,68 @@ class GoogleSync
         // Set the meeting as accepted by the user, otherwise it doesn't show up on the calendar. We do it here because it must be saved first.
         $event_local->set_accept_status($this->workingUser, 'accept');
 
-        if (isset($return)) {
+        if (isset($return))
+        {
             $this->syncedList[] = $event_local->id;
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
 
-    /*  Perform the sync for a user
+    /**
+     * Perform the sync for a user
      *
-     *  @param string $id : the SuiteCRM user id
+     * @param string $id The SuiteCRM user id
      */
-    public function doSync($id) {
+    public function doSync($id)
+    {
 
-        if (!$this->setClient($id)) {
+        if (!$this->setClient($id))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
             return false;
         }
 
-        if ($this->workingUser->id == $id) {
+        if ($this->workingUser->id == $id)
+        {
             $tz = $this->workingUser->getPreference('timezone', 'global');
             $this->setTimezone($tz);
-        } else {
+        }
+        else {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set the working user and timezone');
             return false;
         }
 
-        if (!$this->setGService($this->gClient)) {
+        if (!$this->setGService($this->gClient))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Service');
             return false;
         }
 
-        if (!$this->setUsersGoogleCalendar()) {
+        if (!$this->setUsersGoogleCalendar())
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Calendar Id');
             return false;
         }
 
         $meetings = $this->getUserMeetings();
-        if (!isset($meetings)) {
+        if (!isset($meetings))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Users Meetings');
             return false;
         }
 
         // First, we look for SuiteCRM meetings that are not on Google
-        foreach ($meetings as $meeting) {
+        foreach ($meetings as $meeting)
+        {
             $gevent = NULL; // Sanity Check. At the begining of each loop, $gevent is NULL.
             $gevent = $this->getGoogleEventById($meeting->gsync_id);
             $dowhat = $this->pushPullSkip($meeting, $gevent);
 
-            switch ($dowhat) {
+            switch ($dowhat)
+            {
                 case "push":
                     $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Meeting: ' . $meeting->name);
                     $this->pushEvent($meeting, $gevent);
@@ -972,19 +1138,23 @@ class GoogleSync
 
         // Now, we look at the Google Calendar
         $googleEvents = $this->getUserGoogleEvents();
-        if (!isset($googleEvents)) {
+        if (!isset($googleEvents))
+        {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to get Google Events');
             return false;
         }
 
-        foreach ($googleEvents as $gevent) {
-            if (!$meeting = $this->getMeetingByEventId($gevent->getId())) {
+        foreach ($googleEvents as $gevent)
+        {
+            if (!$meeting = $this->getMeetingByEventId($gevent->getId()))
+            {
                 $meeting = NULL;
             }
 
             $dowhat = $this->pushPullSkip($gevent, $meeting);
 
-            switch ($dowhat) {
+            switch ($dowhat)
+            {
                 case "push":
                     $GLOBALS['log']->info(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Pushing Event: ' . $gevent->getSummary());
                     $this->pushEvent($meeting, $gevent);
@@ -1010,40 +1180,48 @@ class GoogleSync
         }
     }
 
-    /* Setup array of users to sync
+    /**
+     * Setup array of users to sync
      *
      *
      */
-    public function setSyncUsers() {
+    public function setSyncUsers()
+    {
 
         $query = "SELECT id FROM users WHERE deleted = '0'";
         $result = $this->db->query($query);
 
         require_once('modules/Users/User.php');
-        while ($row = $this->db->fetchByAssoc($result)) {
+        while ($row = $this->db->fetchByAssoc($result))
+        {
             $results[] = $row['id'];
             $user = new User();
             $user->retrieve($row['id']);
-            if (!empty($user->getPreference('GoogleApiToken', 'GoogleSync')) && $accessToken = json_decode(base64_decode($user->getPreference('GoogleApiToken', 'GoogleSync'))) && $user->getPreference('syncGCal', 'GoogleSync') == '1') {
+            if (!empty($user->getPreference('GoogleApiToken', 'GoogleSync')) && $accessToken = json_decode(base64_decode($user->getPreference('GoogleApiToken', 'GoogleSync'))) && $user->getPreference('syncGCal', 'GoogleSync') == '1')
+            {
                 $this->addUser($user->id, $user->full_name);
             }
         }
     }
 
-    /* Sync All Configured Users
+    /**
+     * Sync All Configured Users
      *
      * Running this method will collect all users who
      * have Calendar Sync Configured and Enabled and
      * Sync them one by one.
      */
-    public function syncAllUsers() {
+    public function syncAllUsers()
+    {
 
         // First we populate the array of syncable users
         $this->setSyncUsers();
 
         // Then we go though the array and sync the users with doSync()
-        if (isset($this->users) && !empty($this->users)) {
-            foreach ($this->users as $key => $value) {
+        if (isset($this->users) && !empty($this->users))
+        {
+            foreach ($this->users as $key => $value)
+            {
                 $this->doSync($key);
             }
         }
