@@ -172,7 +172,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access   public
 */
-class nusoap_client extends nusoap_base  {
+class nusoap_client extends nusoap_base
+{
 
 	var $username = '';				// Username for HTTP authentication
 	var $password = '';				// Password for HTTP authentication
@@ -1134,13 +1135,15 @@ if (!extension_loaded('soap')) {
 	/**
 	 *	For backwards compatiblity, define soapclient unless the PHP SOAP extension is loaded.
 	 */
-	class soapclient extends nusoap_client {
+	class soapclient extends nusoap_client
+{
 	}
 }
 
 /**
  *	For backwards compatiblity, define nusoapclient unless the PHP SOAP extension is loaded.
  */
-class nusoapclient extends nusoap_client {
+class nusoapclient extends nusoap_client
+{
 }
 ?>

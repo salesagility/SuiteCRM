@@ -3,7 +3,8 @@
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
-class jjwg_MapsDashlet extends DashletGeneric {
+class jjwg_MapsDashlet extends DashletGeneric
+{
 
     function __construct($id, $def = null) {
 

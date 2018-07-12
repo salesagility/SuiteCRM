@@ -52,9 +52,9 @@ function smarty_function_sugar_actions_link($params, &$smarty)
 {
    if(empty($params['module'])) {
    	  $smarty->trigger_error("sugar_button: missing required param (module)");
-   } else if(empty($params['id'])) {
+   } elseif(empty($params['id'])) {
    	  $smarty->trigger_error("sugar_button: missing required param (id)");
-   } else if(empty($params['view'])) {
+   } elseif(empty($params['view'])) {
    	  $smarty->trigger_error("sugar_button: missing required param (view)");
    }
 
@@ -91,11 +91,11 @@ function smarty_function_sugar_actions_link($params, &$smarty)
 			return '{if $bean->aclAccess("edit")}<a title="{$APP.LBL_DUPLICATE_BUTTON_TITLE}" accessKey="{$APP.LBL_DUPLICATE_BUTTON_KEY}" onclick="$(\'#form\')[0].return_module.value=\''. $module . '\'; $(\'#form\')[0].return_action.value=\'DetailView\'; $(\'#form\')[0].isDuplicate.value=true; $(\'#form\')[0].action.value=\'' . $view . '\'; $(\'#form\')[0].return_id.value=\'{$id}\';SUGAR.ajaxUI.submitForm($(\'#form\')[0]);" name="Duplicate" id="duplicate_button">{$APP.LBL_DUPLICATE_BUTTON_LABEL}</a>{/if} ';
 			break;
 
-			case "EDIT";
+			case "EDIT":
 			return '{if $bean->aclAccess("edit")}<a title="{$APP.LBL_EDIT_BUTTON_TITLE}" accessKey="{$APP.LBL_EDIT_BUTTON_KEY}" onclick="$(\'#form\')[0].return_module.value=\'' . $module . '\'; $(\'#form\')[0].return_action.value=\'DetailView\'; $(\'#form\')[0].return_id.value=\'{$id}\'; $(\'#form\')[0].action.value=\'EditView\';SUGAR.ajaxUI.submitForm($(\'#form\')[0]);" name="Edit" id="edit_button">{$APP.LBL_EDIT_BUTTON_LABEL}</a>{/if} ';
 			break;
 
-            case "EDIT2";
+            case "EDIT2":
 			return '{if $bean->aclAccess("edit")}<a title="{$APP.LBL_EDIT_BUTTON_TITLE}" accessKey="{$APP.LBL_EDIT_BUTTON_KEY}" onclick="$(\'#form\')[0].return_module.value=\'' . $module . '\'; $(\'#form\')[0].return_action.value=\'DetailView\'; $(\'#form\')[0].return_id.value=\'{$id}\'; $(\'#form\')[0].action.value=\'EditView\';SUGAR.ajaxUI.submitForm($(\'#form\')[0]);" name="Edit">{$APP.LBL_EDIT_BUTTON_LABEL}</a>{/if} ';
 			break;
 
@@ -123,7 +123,7 @@ function smarty_function_sugar_actions_link($params, &$smarty)
 			case "DCMENUSAVE":
                             if ($view == 'QuickCreate') {
                                 $view = "form_DCQuickCreate_{$module}";
-                            } else if ($view == 'EditView') {
+                            } elseif ($view == 'EditView') {
                                 $view = "form_DCEditView_{$module}";
                             }
 				return '{if $bean->aclAccess("save")}<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button primary" onclick="this.form.action.value=\'Save\';if(check_form(\''.$view.'\'))return DCMenu.save(this.form.id, \'' . $params['module'] . '_subpanel_save_button\');return false;" type="submit" name="' . $params['module'] . '_dcmenu_save_button" id="' . $params['module'] . '_dcmenu_save_button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">{/if} ';
@@ -161,7 +161,7 @@ function smarty_function_sugar_actions_link($params, &$smarty)
 
    	  } //switch
 
-   } else if(is_array($type) && isset($type['customCode'])) {
+   } elseif(is_array($type) && isset($type['customCode'])) {
    	  return $type['customCode'];
    }
 

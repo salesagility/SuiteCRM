@@ -43,7 +43,8 @@ require_once('include/tabs.php');
  * Old search form
  * @api
  */
-class SearchForm {
+class SearchForm
+{
    /**
      * SearchForm Template to use (xtpl)
      * @var string
@@ -293,7 +294,7 @@ class SearchForm {
 	                    $db_field = $this->bean->table_name .  "_cstm." . $field;
 	                    foreach($parms['value'] as $key => $val) {
 	                        if($val != ' ' and $val != '') {
-	                               $qVal = $GLOBALS['db']->quote($val);
+	                               $qVal = DBManagerFactory::getInstance()->quote($val);
 	                               if (!empty($field_value)) {
 	                                   $field_value .= ' or ';
 	                               }
@@ -307,13 +308,13 @@ class SearchForm {
 	                            if (!empty($field_value)) {
 	                                $field_value .= ',';
 	                            }
-	                            $field_value .= "'" . $GLOBALS['db']->quote($val) . "'";
+	                            $field_value .= "'" . DBManagerFactory::getInstance()->quote($val) . "'";
 	                        }
 	                    }
                     }
                 }
                 else {
-                    $field_value = $GLOBALS['db']->quote($parms['value']);
+                    $field_value = DBManagerFactory::getInstance()->quote($parms['value']);
                 }
 
                 //set db_fields array.
@@ -323,7 +324,7 @@ class SearchForm {
 
                 if(isset($parms['my_items']) and $parms['my_items'] == true) {
                     global $current_user;
-                    $field_value = $GLOBALS['db']->quote($current_user->id);
+                    $field_value = DBManagerFactory::getInstance()->quote($current_user->id);
                     $operator = '=';
                 }
 

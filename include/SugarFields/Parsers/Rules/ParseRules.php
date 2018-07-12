@@ -47,7 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
  * @author Collin Lee
  */
-class ParseRules {
+class ParseRules
+{
 
 function __construct() {
 

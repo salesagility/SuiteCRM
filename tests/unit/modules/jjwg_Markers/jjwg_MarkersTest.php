@@ -1,7 +1,7 @@
 <?php
 
 
-class jjwg_MarkersTest extends PHPUnit_Framework_TestCase
+class jjwg_MarkersTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testjjwg_Markers()
     {
@@ -24,7 +24,10 @@ class jjwg_MarkersTest extends PHPUnit_Framework_TestCase
 
     public function testconfiguration()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $jjwgMarkers = new jjwg_Markers();
 
@@ -33,6 +36,10 @@ class jjwg_MarkersTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('jjwg_Maps', $jjwgMarkers->jjwg_Maps);
         $this->assertTrue(is_array($jjwgMarkers->settings));
         $this->assertGreaterThan(0, count($jjwgMarkers->settings));
+        
+        // clean up
+        
+        
     }
 
     public function testdefine_loc()

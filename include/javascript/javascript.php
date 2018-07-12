@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
  * Description:  Creates the runtime database connection.
  ********************************************************************************/
-class javascript{
+class javascript
+{
 	var $formname = 'form';
 	var $script = '';
 	var $sugarbean = null;
@@ -148,7 +149,7 @@ class javascript{
 						else $this->addFieldDateBefore($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo );
 						break;
                     // Bug #47961 Adding new type of validation: through callback function
-                    case 'callback' :
+                    case 'callback':
                         $dispField = $displayField ? $displayField : $field;
                         $this->addFieldCallback($dispField, $this->sugarbean->field_name_map[$field]['type'], $vname, $required, $prefix, $this->sugarbean->field_name_map[$field]['validation']['callback']);
                         break;
@@ -278,7 +279,7 @@ class javascript{
                         //datetime should also support the isbefore or other type of validate
                         $this->addField($field, '', $prefix,'',$translate);
                     }
-			    } else if (isset($value['type'])) {
+			    } elseif (isset($value['type'])) {
 					if ($value['type'] != 'link') {
 			  			$this->addField($field, '', $prefix,'',$translate);
 					}

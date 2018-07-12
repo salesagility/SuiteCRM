@@ -76,7 +76,14 @@ function displayEmailAddressOptInField(Email $focus, $field, $value, $view)
     }
 
     $emailAddress = $focus->getEmailAddressFromEmailField($addressField);
-    $tick = $emailAddress->getOptInStatusTickHTML();
+    $tick = '';
+    
+    if($emailAddress instanceof SugarEmailAddress) {
+        $tick = $emailAddress->getOptInStatusTickHTML();
+    }
+    else {
+        $log->warn('Trying to get an email field of non-Basic object');
+    }
     
     return $tick;
 }

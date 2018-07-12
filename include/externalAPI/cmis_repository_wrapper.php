@@ -37,12 +37,18 @@ define("HTTP_UNSUPPORTED_MEDIA_TYPE", 415);
 define("HTTP_UNPROCESSABLE_ENTITY", 422);
 define("HTTP_INTERNAL_SERVER_ERROR", 500); // runtime, storage
 
-class CmisInvalidArgumentException extends Exception {}
-class CmisObjectNotFoundException extends Exception {}
-class CmisPermissionDeniedException extends Exception {}
-class CmisNotSupportedException extends Exception {}
-class CmisConstraintException extends Exception {}
-class CmisRuntimeException extends Exception {}
+class CmisInvalidArgumentException extends Exception
+{}
+class CmisObjectNotFoundException extends Exception
+{}
+class CmisPermissionDeniedException extends Exception
+{}
+class CmisNotSupportedException extends Exception
+{}
+class CmisConstraintException extends Exception
+{}
+class CmisRuntimeException extends Exception
+{}
 
 class CMISRepositoryWrapper
 {

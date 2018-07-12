@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +41,8 @@
 
 
 
-class SugarSecure{
+class SugarSecure
+{
 	var $results = array();
 	function display(){
 		echo '<table>';
@@ -79,7 +80,8 @@ class SugarSecure{
 	
 }
 
-class ScanFileIncludes extends SugarSecure{
+class ScanFileIncludes extends SugarSecure
+{
 	function scanContents($contents, $file){
 		$results = array();
 		$found = '';
@@ -130,7 +132,8 @@ class ScanFileIncludes extends SugarSecure{
 	
 
 
-class SugarSecureManager{
+class SugarSecureManager
+{
 	var $scanners = array();
 	function registerScan($class){
 		$this->scanners[] = new $class();

@@ -66,7 +66,7 @@ global $mod_strings;
 global $theme;
 
 
-global $db;
+$db = DBManagerFactory::getInstance();
 if(empty($db)) {
 
 	$db = DBManagerFactory::getInstance();
@@ -180,7 +180,7 @@ function array_as_table($header, $values)
 // returns a string containing (in html) the dump of all rows
 function getFullTableDump($tableName){
 
-	global $db;
+	$db = DBManagerFactory::getInstance();
 
     $cols = $db->get_columns($tableName);
     $indexes = $db->get_indices($tableName);
@@ -386,7 +386,7 @@ function execute_sql($getinfo, $getdumps, $getschema)
     global $getDumpsFrom;
     global $curdatetime;
     global $sod_guid;
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     $sqlInfoDir = create_cache_directory("diagnostic/".$sod_guid."/diagnostic".$curdatetime."/{$db->dbName}/");
 

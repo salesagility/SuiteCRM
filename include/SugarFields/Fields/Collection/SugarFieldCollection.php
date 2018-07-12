@@ -38,7 +38,8 @@
  ********************************************************************************/
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
-class SugarFieldCollection extends SugarFieldBase {
+class SugarFieldCollection extends SugarFieldBase
+{
 	var $tpl_path;
 	
 	function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
@@ -112,9 +113,9 @@ class SugarFieldCollection extends SugarFieldBase {
                         if(strpos($name, $field . "_collection_extra_") !== false){
                             $extra_field = substr($name, $field . "_collection_extra_" . $num);
                             $link_field[$num]['extra_field'][$extra_field]=$value;
-                        }else if ($name == $field . "_collection_" . $num){
+                        }elseif ($name == $field . "_collection_" . $num){
                             $link_field[$num]['name']=$value;
-                        }else if ($name == "id_" . $field . "_collection_" . $num){
+                        }elseif ($name == "id_" . $field . "_collection_" . $num){
                             $link_field[$num]['id']=$value;
                         }
                     }

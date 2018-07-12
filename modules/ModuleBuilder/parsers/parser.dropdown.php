@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 
- class ParserDropDown extends ModuleBuilderParser {
+ class ParserDropDown extends ModuleBuilderParser
+{
 
     /**
      * Takes in the request params from a save request and processes

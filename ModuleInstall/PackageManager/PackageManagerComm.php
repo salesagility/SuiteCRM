@@ -43,7 +43,8 @@ require_once('ModuleInstall/PackageManager/PackageManagerDownloader.php');
 define("HTTPS_URL", "https://depot.sugarcrm.com/depot/SugarDepotSoap.php");
 define("ACTIVE_STATUS", "ACTIVE");
 
-class PackageManagerComm{
+class PackageManagerComm
+{
      /**
       * Initialize the soap client and store in the $GLOBALS object for use
       *

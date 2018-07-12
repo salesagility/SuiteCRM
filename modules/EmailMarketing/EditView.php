@@ -55,7 +55,7 @@ $focus = new EmailMarketing();
 if (isset($_REQUEST['record']) && $_REQUEST['record'] && isset($_REQUEST['parent_id']) && $_REQUEST['parent_id']) {
     SugarApplication::redirect('index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $_REQUEST['parent_id'] . '&campaign_id=' . $_REQUEST['parent_id'] . '&marketing_id=' . $_REQUEST['record'] . '&func=editEmailMarketing');
     return;
-} else if (isset($_REQUEST['record']) && $_REQUEST['record']) {
+} elseif (isset($_REQUEST['record']) && $_REQUEST['record']) {
     $focus->retrieve($_REQUEST['record']);
 }
 
@@ -122,6 +122,7 @@ $xtpl->assign("ID", $focus->id);
 $xtpl->assign("NAME", $focus->name);
 $xtpl->assign("FROM_NAME", $focus->from_name);
 $xtpl->assign("FROM_ADDR", $focus->from_addr);
+isValidEmailAddress($focus->from_addr);
 $xtpl->assign("REPLY_NAME", $focus->reply_to_name);
 $xtpl->assign("REPLY_ADDR", $focus->reply_to_addr);
 $xtpl->assign("DATE_START", $focus->date_start);

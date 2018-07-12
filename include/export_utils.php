@@ -922,14 +922,14 @@ function get_field_order_mapping($name='',$reorderArr = '', $exclude = true){
                 $name = 'contacts';
             }
             //if module is of type company
-            else if ($focus instanceof Company){
+            elseif ($focus instanceof Company){
                 $name = 'accounts';
             }
             //if module is of type Sale
-            else if ($focus instanceof Sale){
+            elseif ($focus instanceof Sale){
                 $name = 'opportunities';
             }//if module is of type File
-            else if ($focus instanceof Issue){
+            elseif ($focus instanceof Issue){
                 $name = 'bugs';
             }//all others including type File can use basic
             else{

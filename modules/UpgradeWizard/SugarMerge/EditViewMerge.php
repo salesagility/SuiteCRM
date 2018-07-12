@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * This is the base class that all other SugarMerge objects extend 
  *
  */
-class EditViewMerge{
+class EditViewMerge
+{
 	/**
 	 * The variable name that is used with the file for example in editviewdefs and detailviewdefs it is $viewdefs
 	 *
@@ -419,7 +420,7 @@ class EditViewMerge{
 						'loc'=>$loc);
 				}
 			//if it's not set in the new fields then it was a custom field or an original field so we take the custom fields data and set the location source to custom
-			} else if(!isset($this->newFields[$field])){
+			} elseif(!isset($this->newFields[$field])){
 				$this->mergedFields[$field] = $data;
 				$this->mergedFields[$field]['loc']['source'] = 'custom';
 			} else {	
@@ -638,7 +639,7 @@ class EditViewMerge{
                                     $field_name = 'filename';
                                     $col['name'] = 'filename';
                                 }
-                            } else if ($field_name == 'filename') {
+                            } elseif ($field_name == 'filename') {
                                 $col = 'filename';
                             }
                         }

@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class DashletCacheBuilder {
+class DashletCacheBuilder
+{
     
     /**
      * Builds the cache of Dashlets by scanning the system

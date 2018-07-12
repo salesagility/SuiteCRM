@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Localization manager
  * @api
  */
-class Localization {
+class Localization
+{
 	var $availableCharsets = array(
 		'BIG-5',        //Taiwan and Hong Kong
 		/*'CP866'			  // ms-dos Cyrillic */
@@ -72,6 +73,7 @@ class Localization {
 		'KOI8-U',       //Cyrillic Ukranian
 		'SJIS',         //MS Japanese
 		'UTF-8',        //UTF-8
+		'UTF-16LE',     //UTF-16LE
 		);
 	var $localeNameFormat;
 	var $localeNameFormatDefault;

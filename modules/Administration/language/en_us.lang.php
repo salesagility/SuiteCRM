@@ -895,8 +895,8 @@ $mod_strings = array(
     'LBL_SYNC_ERROR_FOUND' => "IMAP errors detected",
     'LBL_SYNC_ALERT_FOUND' => "IMAP alerts detected",
     'LBL_SYNC_NO_EMAIL' => "No imported related Email to Inbound Email Account",
-    'LBL_PROCESS_OUTPUT_CLEANUP_ERROR' => "Unable to cleanup output file. Please check permission..",
-    'LBL_PROCESS_OUTPUT_WRITE_ERROR' => "Unable to write output file. Please check permission..",
+    'LBL_PROCESS_OUTPUT_CLEANUP_ERROR' => "Unable to cleanup output file. Please check permission.",
+    'LBL_PROCESS_OUTPUT_WRITE_ERROR' => "Unable to write output file. Please check permission.",
     'LBL_IE_NOT_FOUND' => "Error: invalid Inbound Email Account",
 
     'LBL_PWDSEC_SETS' => 'Password Security Settings',

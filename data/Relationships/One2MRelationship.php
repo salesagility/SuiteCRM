@@ -73,7 +73,7 @@ class One2MRelationship extends M2MRelationship
                 {
                     $this->lhsLinkDef = $this->rhsLinkDef = $links;
                 }
-                else if (!empty($links[0]) && !empty($links[1]))
+                elseif (!empty($links[0]) && !empty($links[1]))
                 {
 
                     if ((!empty($links[0]['side']) && $links[0]['side'] == "right")

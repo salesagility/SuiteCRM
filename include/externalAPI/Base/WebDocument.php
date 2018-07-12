@@ -42,7 +42,8 @@
  * External API to document storage
  * @api
  */
-interface WebDocument {
+interface WebDocument
+{
 	public function uploadDoc($bean, $fileToUpload, $docName, $mineType);
     public function downloadDoc($documentId, $documentFormat);
 	public function shareDoc($documentId, $emails);

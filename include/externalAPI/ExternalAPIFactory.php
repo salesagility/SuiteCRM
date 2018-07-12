@@ -292,7 +292,7 @@ class ExternalAPIFactory
             if ( isset($app_list_strings[$appStringTranslKey]) && !empty($app_list_strings[$appStringTranslKey][$apiName]) ) {
                 $apiDropdown[$apiName] = $app_list_strings[$appStringTranslKey][$apiName];
             }
-            else if ( !empty($app_list_strings['eapm_list'][$apiName]) ) {
+            elseif ( !empty($app_list_strings['eapm_list'][$apiName]) ) {
                 $apiDropdown[$apiName] = $app_list_strings['eapm_list'][$apiName];
             }
             else {

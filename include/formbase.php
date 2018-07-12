@@ -201,9 +201,23 @@ function getPostToForm($ignore='', $isRegularExpression=false)
 
 function getGetToForm($ignore='', $usePostAsAuthority = false)
 {
+    global $log;
 	$fields = '';
-	foreach ($_GET as $key=>$value)
+	foreach ($_GET as $key => $value)
 	{
+	    if(is_array($key)) {
+            if(!empty($key)) {
+                $log->warn('$key must be a string');
+            }
+	        continue;
+        }
+
+        if (is_array($value)) {
+            if(!empty($value)) {
+                $log->warn('$value must be a string');
+            }
+	        continue;
+        }
 		if($key != $ignore){
 			if(!$usePostAsAuthority || !isset($_POST[$key])){
 				$fields.= "<input type='hidden' name='$key' value='$value'>";
@@ -262,7 +276,7 @@ function buildRedirectURL($return_id='', $return_module='')
             // END Meeting Integration
         } 
 		// if we create a new record "Save", we want to redirect to the DetailView
-		else if(isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
+		elseif(isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
 			&& $_REQUEST['return_module'] != 'Activities'
 			&& $_REQUEST['return_module'] != 'Home' 
 			&& $_REQUEST['return_module'] != 'Forecasts' 

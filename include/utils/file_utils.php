@@ -276,7 +276,7 @@ function getFiles(&$arr, $dir, $pattern = null) {
  			getFiles($arr, $file, $pattern);
  		}else{
  			if(empty($pattern)) $arr[] = $file;
-                else if(preg_match($pattern, $file))
+                elseif(preg_match($pattern, $file))
                 $arr[] = $file;
  		}
  	}
@@ -361,12 +361,20 @@ function hashToFile($hash){
  */
 function get_file_extension($filename, $string_to_lower=true)
 {
-    if(strpos($filename, '.') !== false)
-    {
-       return $string_to_lower ? strtolower(array_pop(explode('.',$filename))) : array_pop(explode('.',$filename));
+    $ret = '';
+    
+    if (strpos($filename, '.') !== false) {
+        if ($string_to_lower) {
+            $exp = explode('.', $filename);
+            $pop = array_pop($exp);
+            $ret = strtolower($pop); 
+        } else {
+            $exp = explode('.', $filename);
+            $ret = array_pop($exp);
+        }
     }
 
-    return '';
+    return $ret;
 }
 
 
@@ -439,7 +447,9 @@ function get_mime_content_type_from_filename($filename)
             'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
         );
 
-        $ext = strtolower(array_pop(explode('.',$filename)));
+        $exp = explode('.',$filename);
+        $pop = array_pop($exp);
+        $ext = strtolower($pop);
         if (array_key_exists($ext, $mime_types)) {
             return $mime_types[$ext];
         }

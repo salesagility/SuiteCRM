@@ -1,10 +1,12 @@
 <?php
 
 
-class CampaignTrackerTest extends PHPUnit_Framework_TestCase
+class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -12,7 +14,10 @@ class CampaignTrackerTest extends PHPUnit_Framework_TestCase
 
     public function testCampaignTracker()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
+        
 
         //execute the contructor and check for the Object type and  attributes
         $campaignTracker = new CampaignTracker();
@@ -23,10 +28,23 @@ class CampaignTrackerTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('CampaignTracker', 'object_name', $campaignTracker);
         $this->assertAttributeEquals('campaign_trkrs', 'table_name', $campaignTracker);
         $this->assertAttributeEquals(true, 'new_schema', $campaignTracker);
+        
+        // clean up
+        
+        $state->popTable('aod_index');
     }
 
     public function testsave()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('campaign_trkrs');
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+
+	// test
+        
         $campaignTracker = new CampaignTracker();
 
         $campaignTracker->tracker_name = 'test';
@@ -42,6 +60,12 @@ class CampaignTrackerTest extends PHPUnit_Framework_TestCase
         $campaignTracker->mark_deleted($campaignTracker->id);
         $result = $campaignTracker->retrieve($campaignTracker->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
+        $state->popTable('campaign_trkrs');
     }
 
     public function testget_summary_text()

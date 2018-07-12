@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarObjects/forms/PersonFormBase.php');
 
-class LeadFormBase extends PersonFormBase {
+class LeadFormBase extends PersonFormBase
+{
 
 var $moduleName = 'Leads';
 var $objectName = 'Lead';
@@ -315,7 +316,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $
                 ob_clean();
                 $json = getJSONobj();
                 echo $json->encode(array('status' => 'dupe', 'get' => $location));
-            } else if(!empty($_REQUEST['ajax_load'])) {
+            } elseif(!empty($_REQUEST['ajax_load'])) {
                 echo "<script>SUGAR.ajaxUI.loadContent('index.php?$location');</script>";
             } else {
                 if(!empty($_POST['to_pdf']))

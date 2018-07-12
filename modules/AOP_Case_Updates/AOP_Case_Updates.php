@@ -145,7 +145,7 @@ class AOP_Case_Updates extends Basic
             // remove external warning, if HTML is not valid
             libxml_use_internal_errors(true);
             $dom = new DOMDocument();
-            $dom->loadHTML($description);
+            $dom->loadHTML(mb_convert_encoding($description, 'HTML-ENTITIES', 'UTF-8'));
             foreach ($dom->getElementsByTagName('head') as $headElement) {
                 $headElement->parentNode->removeChild($headElement);
             }
@@ -297,6 +297,7 @@ class AOP_Case_Updates extends Basic
         $mailer->isHTML(true);
         $mailer->AltBody = $text['body_alt'] . $signaturePlain;
         $mailer->From = $emailSettings['from_address'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $emailSettings['from_name'];
         foreach ($emails as $email) {
             $mailer->addAddress($email);

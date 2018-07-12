@@ -375,6 +375,7 @@ for($i=0; $i<$number_contacts; $i++) {
 	$email->parent_type = 'Accounts';
 	$email->to_addrs = $contact->emailAddress->getPrimaryAddress($contact);
 	$email->from_addr = $assignedUser->emailAddress->getPrimaryAddress($assignedUser);
+        isValidEmailAddress($email->from_addr);
 	$email->from_addr_name = $email->from_addr;
 	$email->to_addrs_names = $email->to_addrs;
 	$email->type = 'out';
@@ -430,7 +431,7 @@ for($i=0; $i<$number_leads; $i++)
 			{
 				$lead->assigned_user_name = "seed_sarah";
 			}
-			else if($assigned_user_id == 7)
+			elseif($assigned_user_id == 7)
 			{
 				$lead->assigned_user_name = "seed_sally";
 			}

@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once("include/utils/db_utils.php");
 
-class jsAlerts{
+class jsAlerts
+{
 	var $script;
 
     public function __construct() {
@@ -60,14 +61,14 @@ EOQ;
 		}
 	}
 
-    function addAlert($type, $name, $subtitle, $description, $countdown, $redirect = '')
+    function addAlert($type, $name, $subtitle, $description, $countdown, $redirect = '', $reminder_id = '')
     {
         if ($countdown < 0) {
             $countdown = 0;
         }
         $script = 'addAlert(' . json_encode($type) . ',' . json_encode($name) . ',' . json_encode($subtitle)
             . ',' . json_encode(str_replace(array("\r", "\n"), array('', '<br>'), $description))
-            . ',' . $countdown . ',' . json_encode($redirect) . ');' . "\n";
+            . ',' . $countdown . ',' . json_encode($redirect) . ',' . json_encode($reminder_id) . ');' . "\n";
         $this->script .= $script;
     }
 
@@ -107,7 +108,7 @@ EOQ;
 		$dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb();
     $dateTimeNow = $timedate->getNow()->modify("-60 seconds")->asDb();
 
-		global $db;
+		$db = DBManagerFactory::getInstance();
 		$dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
 		$dateTimeMax = $db->convert($db->quoted($dateTimeMax), 'datetime');
 		$desc = $db->convert("description", "text2char");

@@ -1,7 +1,7 @@
 <?php
 
 
-class GreaterThanOrEqualsOperatorTest extends \Codeception\Test\Unit
+class GreaterThanOrEqualsOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -10,15 +10,13 @@ class GreaterThanOrEqualsOperatorTest extends \Codeception\Test\Unit
 
     private static $operator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
         self::$operator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\Comparators\GreaterThanOrEqualsOperator($containers);
     }
 
-    protected function _after()
-    {
-    }
 
     public function testIsValidTagWithInvalidType()
     {

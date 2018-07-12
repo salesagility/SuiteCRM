@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class Metric {
+class Metric
+{
 
     public function __construct($type, $name) {
         $this->_name = $name;

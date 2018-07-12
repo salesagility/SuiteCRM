@@ -10,7 +10,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasinvited()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -32,7 +32,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET invite_status="Invited" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -48,7 +48,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasattended()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -70,7 +70,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET invite_status="Attended" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -86,7 +86,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasnotattended()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -108,7 +108,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET invite_status="Not Attended" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -124,7 +124,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasnotinvited()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -146,7 +146,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET invite_status="Not Invited", email_responded="0" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -162,7 +162,7 @@ class FP_eventsController extends SugarController
 
     public function action_markasaccepted()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -185,7 +185,7 @@ class FP_eventsController extends SugarController
 
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET accept_status="Accepted" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -200,7 +200,7 @@ class FP_eventsController extends SugarController
     }
     public function action_markasdeclined()
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $ids = $_POST['id'];
         $entire_list = $_POST['entire_list'];
@@ -222,7 +222,7 @@ class FP_eventsController extends SugarController
                 $res = $db->query($query3);
             }
         }
-        else if($entire_list == '1'){ //updates all records
+        elseif($entire_list == '1'){ //updates all records
 
             //update contacts query
             $query = 'UPDATE fp_events_contacts_c SET accept_status="Declined" WHERE fp_events_contactsfp_events_ida="'.$event_id.'"';
@@ -353,7 +353,7 @@ class FP_eventsController extends SugarController
     }
 
     public function action_sendinvitemails(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
         global $sugar_config;
         global $mod_strings;
 
@@ -580,13 +580,13 @@ class FP_eventsController extends SugarController
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
 
         }
-        else if($error_count > 0 && $error_count <= 10) {//redirect with failed email count.
+        elseif($error_count > 0 && $error_count <= 10) {//redirect with failed email count.
             $_SESSION['user_error_message'] = array();
             SugarApplication::appendErrorMessage($error_count.$mod_strings['LBL_ERROR_MSG_4']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
         }
         // Redirect with error count if failed email attempts are greater than 10 
-        else if($error_count > 10) {
+        elseif($error_count > 10) {
             $_SESSION['user_error_message'] = array();
             SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_3']);
             SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
@@ -605,6 +605,7 @@ class FP_eventsController extends SugarController
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
         $mail->From = $defaults['email'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $defaults['name'];
         $mail->ClearAllRecipients();
         $mail->ClearReplyTos();
@@ -624,6 +625,7 @@ class FP_eventsController extends SugarController
             $emailObj->description = $mail->AltBody;
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr = $mail->From;
+            isValidEmailAddress($emailObj->from_addr);
             if ( $relatedBean instanceOf SugarBean && !empty($relatedBean->id) ) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;

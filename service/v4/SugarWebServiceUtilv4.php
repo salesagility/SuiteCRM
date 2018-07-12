@@ -321,7 +321,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                     $seed->retrieve($value['value']);
                     break;
                 }
-                else if($name === 'id' ){
+                elseif($name === 'id' ){
                     $seed->retrieve($value);
                 }
 			}
@@ -384,7 +384,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 					}
 				}
 			}
-			else if($module_name == 'Meetings' || $module_name == 'Calls'){
+			elseif($module_name == 'Meetings' || $module_name == 'Calls'){
 				//we are going to check if we have a meeting in the system
 				//with the same outlook_id. If we do find one then we will grab that
 				//id and save it
@@ -527,7 +527,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 
                 if (file_exists('custom/modules/'.$module.'/metadata/wireless.subpaneldefs.php'))
 	                 require_once('custom/modules/'.$module.'/metadata/wireless.subpaneldefs.php');
-	            else if (file_exists('modules/'.$module.'/metadata/wireless.subpaneldefs.php'))
+	            elseif (file_exists('modules/'.$module.'/metadata/wireless.subpaneldefs.php'))
 	                 require_once('modules/'.$module.'/metadata/wireless.subpaneldefs.php');
 
                 //If an Ext/WirelessLayoutdefs/wireless.subpaneldefs.ext.php file exists, then also load it as well

@@ -126,7 +126,12 @@ class ViewList extends SugarView
      */
     public function listViewPrepare()
     {
-        $module = $GLOBALS['module'];
+        $module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
+        
+        if(!isset($module)) {
+            LoggerManager::getLogger()->fatal('Undefined module for list view prepare');
+            return false;
+        }
 
         $metadataFile = $this->getMetaDataFile();
 
@@ -176,7 +181,7 @@ class ViewList extends SugarView
                     //Reset the current display columns to default.
                     $current_user->setPreference('ListViewDisplayColumns', array(), 0, $mod);
                 }
-            } else if (empty($_REQUEST['button']) && (empty($_REQUEST['clear_query']) || $_REQUEST['clear_query'] != 'true')) {
+            } elseif (empty($_REQUEST['button']) && (empty($_REQUEST['clear_query']) || $_REQUEST['clear_query'] != 'true')) {
                 $this->saved_search = loadBean('SavedSearch');
                 $this->saved_search->retrieveSavedSearch($_REQUEST['saved_search_select']);
                 $this->saved_search->populateRequest();
@@ -191,11 +196,26 @@ class ViewList extends SugarView
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
         } elseif (!empty($_REQUEST['update_stored_query'])) {
-            $updateKey = $_REQUEST['update_stored_query_key'];
-            $updateValue = $_REQUEST[$updateKey];
+            
+            $updateKey = null;
+            if (isset($_REQUEST['update_stored_query_key'])) {
+                $updateKey = $_REQUEST['update_stored_query_key'];
+            } else {
+                LoggerManager::getLogger()->warn('update_stored_query_key is not defined for list view at listViewPrepare');
+            }
+            
+            $updateValue = null;
+            if (isset($_REQUEST[$updateKey])) {
+                $updateValue = $_REQUEST[$updateKey];
+            } else {
+                LoggerManager::getLogger()->warn('requested update key is not defined for list view at listViewPrepare: ' . $updateKey);
+            }
+            
+            
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
             $_REQUEST[$updateKey] = $updateValue;
+            unset($_REQUEST['update_stored_query']);
             $this->storeQuery->saveFromRequest($this->module);
         } else {
             $this->storeQuery->saveFromRequest($this->module);
@@ -210,9 +230,13 @@ class ViewList extends SugarView
                     $displayColumns[$col] = $this->listViewDefs[$module][$col];
             }
         } else {
-            foreach ($this->listViewDefs[$module] as $col => $this->params) {
-                if (!empty($this->params['default']) && $this->params['default'])
-                    $displayColumns[$col] = $this->params;
+            if(!isset($this->listViewDefs[$module])) {
+                LoggerManager::getLogger()->warn('Listview definition is not set for module: ' . $module);
+            } else {
+                foreach ($this->listViewDefs[$module] as $col => $this->params) {
+                    if (!empty($this->params['default']) && $this->params['default'])
+                        $displayColumns[$col] = $this->params;
+                }
             }
         }
         $this->params = array('massupdate' => true);
@@ -220,6 +244,9 @@ class ViewList extends SugarView
             $this->params['orderBy'] = $_REQUEST['orderBy'];
             $this->params['overrideOrder'] = true;
             if (!empty($_REQUEST['sortOrder'])) $this->params['sortOrder'] = $_REQUEST['sortOrder'];
+        }
+        if(!isset($this->lv) || !$this->lv) {
+            $this->lv = new stdClass();
         }
         $this->lv->displayColumns = $displayColumns;
 
@@ -314,7 +341,7 @@ class ViewList extends SugarView
             $GLOBALS['log']->info("List View Where Clause: $this->where");
         }
         if ($this->use_old_search) {
-            switch ($view) {
+            switch (isset($view) ? $view : null) {
                 case 'basic_search':
                     $this->searchForm->setup();
                     $this->searchForm->displayBasic($this->headers);

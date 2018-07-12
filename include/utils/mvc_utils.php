@@ -43,7 +43,7 @@ function loadParentView($type)
     if(file_exists('custom/include/MVC/View/views/view.'.$type.'.php'))
     {
         require_once('custom/include/MVC/View/views/view.'.$type.'.php');
-    } else if(file_exists('include/MVC/View/views/view.'.$type.'.php')) {
+    } elseif(file_exists('include/MVC/View/views/view.'.$type.'.php')) {
         require_once('include/MVC/View/views/view.'.$type.'.php');
     }
 }
@@ -55,7 +55,10 @@ function getPrintLink()
     {
         return "javascript:SUGAR.ajaxUI.print();";
     }
-    return "javascript:void window.open('index.php?{$GLOBALS['request_string']}',"
+    
+    $requestString = isset($GLOBALS['request_string']) ? $GLOBALS['request_string'] : null;
+    
+    return "javascript:void window.open('index.php?{$requestString}',"
          . "'printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')";
 }
 
@@ -127,11 +130,11 @@ function ajaxLink($url)
     if(!empty($sugar_config['disableAjaxUI'])){
         return $url;
     }
-    else if(isset($match[1]) && in_array($match[1], ajaxBannedModules())){
+    elseif(isset($match[1]) && in_array($match[1], ajaxBannedModules())){
         return $url;
     }
     //Don't modify javascript calls.
-    else if (isset($javascriptMatch[0])) {
+    elseif (isset($javascriptMatch[0])) {
     	return $url;
     }
     else

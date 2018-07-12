@@ -255,7 +255,7 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
                         if($k == 'lvso'){
                             $sortOrder = $v;
                         }
-                        else if(preg_match('/Home2_.+_ORDER_BY/', $k)){
+                        elseif(preg_match('/Home2_.+_ORDER_BY/', $k)){
                             $orderBy = $v;
                         }
                     }

@@ -2,7 +2,8 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-class Jjwg_MapsViewMap_Markers extends SugarView {
+class Jjwg_MapsViewMap_Markers extends SugarView
+{
 
   function __construct() {
     parent::__construct();
@@ -195,7 +196,7 @@ var markerClusterer = null;
 var markerClustererToggle = null;
 var clusterControlDiv = null;
 // Clusterer Images - Protocol Independent
-MarkerClusterer.IMAGE_PATH = "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m";
+MarkerClusterer.IMAGE_PATH = "//raw.githubusercontent.com/googlemaps/js-marker-clusterer/gh-pages/images/m";
 
 // Drawing Controls
 var drawingManager = null;

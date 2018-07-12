@@ -42,7 +42,8 @@
  /**
   * @api
   */
- class SugarVCR{
+ class SugarVCR
+{
 
  	/**
  	 * records the query in the session for later retrieval
@@ -187,7 +188,9 @@
  	}
 
  	static function erase($module){
+            if(isset($_SESSION) && isset($_SESSION[$module. 'QUERY_ARRAY'])) {
  		unset($_SESSION[$module. 'QUERY_ARRAY']);
+            }
  	}
 
  }

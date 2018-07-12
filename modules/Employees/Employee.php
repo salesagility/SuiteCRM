@@ -46,7 +46,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/SugarObjects/templates/person/Person.php');
 
 // Employee is used to store customer information.
-class Employee extends Person {
+class Employee extends Person
+{
 	// Stored fields
 	var $name = '';
 	var $id;

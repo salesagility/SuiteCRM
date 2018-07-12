@@ -1,9 +1,11 @@
 <?php
 
-class EmailTemplateTest extends PHPUnit_Framework_TestCase
+class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -27,16 +29,23 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
 
     public function testgenerateFieldDefsJS()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $emailTemplate = new EmailTemplate();
 
         //execute the method and verify that it retunrs expected results
         $expected = 'var field_defs = {"Contacts":[{"name":"contact_name","value":"Name"},{"name":"contact_description","value":"Description"},{"name":"contact_salutation","value":"Salutation"},{"name":"contact_first_name","value":"First Name"},{"name":"contact_last_name","value":"Last Name"},{"name":"contact_full_name","value":"Name"},{"name":"contact_title","value":"Title"},{"name":"contact_photo","value":"Photo"},{"name":"contact_department","value":"Department"},{"name":"contact_phone_home","value":"Home"},{"name":"contact_email","value":"Any Email"},{"name":"contact_phone_mobile","value":"Mobile"},{"name":"contact_phone_work","value":"Office Phone"},{"name":"contact_phone_other","value":"Other Phone"},{"name":"contact_phone_fax","value":"Fax"},{"name":"contact_email1","value":"Email Address"},{"name":"contact_email2","value":"Other Email"},{"name":"contact_primary_address_street","value":"Primary Address Street"},{"name":"contact_primary_address_street_2","value":"Primary Address Street 2"},{"name":"contact_primary_address_street_3","value":"Primary Address Street 3"},{"name":"contact_primary_address_city","value":"Primary Address City"},{"name":"contact_primary_address_state","value":"Primary Address State"},{"name":"contact_primary_address_postalcode","value":"Primary Address Postal Code"},{"name":"contact_primary_address_country","value":"Primary Address Country"},{"name":"contact_alt_address_street","value":"Alternate Address Street"},{"name":"contact_alt_address_street_2","value":"Alternate Address Street 2"},{"name":"contact_alt_address_street_3","value":"Alternate Address Street 3"},{"name":"contact_alt_address_city","value":"Alternate Address City"},{"name":"contact_alt_address_state","value":"Alternate Address State"},{"name":"contact_alt_address_postalcode","value":"Alternate Address Postal Code"},{"name":"contact_alt_address_country","value":"Alternate Address Country"},{"name":"contact_assistant","value":"Assistant"},{"name":"contact_assistant_phone","value":"Assistant Phone"},{"name":"contact_email_addresses_non_primary","value":"Non Primary E-mails"},{"name":"contact_email_and_name1","value":"Name"},{"name":"contact_lead_source","value":"Lead Source"},{"name":"contact_birthdate","value":"Birthdate"},{"name":"contact_joomla_account_id","value":"LBL_JOOMLA_ACCOUNT_ID"},{"name":"contact_joomla_account_access","value":"LBL_JOOMLA_ACCOUNT_ACCESS"},{"name":"contact_portal_user_type","value":"Portal User Type"},{"name":"contact_event_status_name","value":"LBL_LIST_INVITE_STATUS_EVENT"},{"name":"contact_event_invite_id","value":"LBL_LIST_INVITE_STATUS"},{"name":"contact_event_accept_status","value":"LBL_LIST_ACCEPT_STATUS_EVENT"},{"name":"contact_event_status_id","value":"Accept Status"},{"name":"contact_jjwg_maps_address_c","value":""},{"name":"contact_jjwg_maps_geocode_status_c","value":""},{"name":"contact_jjwg_maps_lat_c","value":""},{"name":"contact_jjwg_maps_lng_c","value":""},{"name":"contact_refered_by","value":"Referred By"},{"name":"contact_lead_source_description","value":"Lead Source Description"},{"name":"contact_status","value":"Status"},{"name":"contact_status_description","value":"Status Description"},{"name":"contact_account_name","value":"Account Name"},{"name":"contact_account_id","value":"Account ID"},{"name":"contact_webtolead_email1","value":"Email Address"},{"name":"contact_webtolead_email2","value":"Other Email"},{"name":"contact_portal_name","value":"Portal Name"},{"name":"contact_portal_app","value":"Portal Application"},{"name":"contact_website","value":"Website"},{"name":"contact_tracker_key","value":"Tracker Key"}],"Accounts":[{"name":"account_name","value":"Name"},{"name":"account_description","value":"Description"},{"name":"account_account_type","value":"Type"},{"name":"account_industry","value":"Industry"},{"name":"account_annual_revenue","value":"Annual Revenue"},{"name":"account_phone_fax","value":"Fax"},{"name":"account_billing_address_street","value":"Billing Street"},{"name":"account_billing_address_street_2","value":"Billing Street 2"},{"name":"account_billing_address_street_3","value":"Billing Street 3"},{"name":"account_billing_address_street_4","value":"Billing Street 4"},{"name":"account_billing_address_city","value":"Billing City"},{"name":"account_billing_address_state","value":"Billing State"},{"name":"account_billing_address_postalcode","value":"Billing Postal Code"},{"name":"account_billing_address_country","value":"Billing Country"},{"name":"account_rating","value":"Rating"},{"name":"account_phone_office","value":"Office Phone"},{"name":"account_phone_alternate","value":"Alternate Phone"},{"name":"account_website","value":"Website"},{"name":"account_ownership","value":"Ownership"},{"name":"account_employees","value":"Employees"},{"name":"account_ticker_symbol","value":"Ticker Symbol"},{"name":"account_shipping_address_street","value":"Shipping Street"},{"name":"account_shipping_address_street_2","value":"Shipping Street 2"},{"name":"account_shipping_address_street_3","value":"Shipping Street 3"},{"name":"account_shipping_address_street_4","value":"Shipping Street 4"},{"name":"account_shipping_address_city","value":"Shipping City"},{"name":"account_shipping_address_state","value":"Shipping State"},{"name":"account_shipping_address_postalcode","value":"Shipping Postal Code"},{"name":"account_shipping_address_country","value":"Shipping Country"},{"name":"account_email1","value":"Email Address"},{"name":"account_email_addresses_non_primary","value":"Non Primary E-mails"},{"name":"account_parent_id","value":"Parent Account ID"},{"name":"account_sic_code","value":"SIC Code"},{"name":"account_email","value":"Any Email"},{"name":"account_jjwg_maps_address_c","value":""},{"name":"account_jjwg_maps_geocode_status_c","value":""},{"name":"account_jjwg_maps_lat_c","value":""},{"name":"account_jjwg_maps_lng_c","value":""}],"Users":[{"name":"contact_user_user_name","value":"User Name"},{"name":"contact_user_pwd_last_changed","value":"Password Last Changed"},{"name":"contact_user_first_name","value":"First Name"},{"name":"contact_user_last_name","value":"Last Name"},{"name":"contact_user_full_name","value":"Full Name"},{"name":"contact_user_name","value":"Full Name"},{"name":"contact_user_description","value":"Description"},{"name":"contact_user_title","value":"Title"},{"name":"contact_user_photo","value":"Photo"},{"name":"contact_user_department","value":"Department"},{"name":"contact_user_phone_home","value":"Home Phone"},{"name":"contact_user_phone_mobile","value":"Mobile"},{"name":"contact_user_phone_work","value":"Work Phone"},{"name":"contact_user_phone_other","value":"Other Phone"},{"name":"contact_user_phone_fax","value":"Fax"},{"name":"contact_user_status","value":"Status"},{"name":"contact_user_address_street","value":"Address Street"},{"name":"contact_user_address_city","value":"Address City"},{"name":"contact_user_address_state","value":"Address State"},{"name":"contact_user_address_country","value":"Address Country"},{"name":"contact_user_address_postalcode","value":"Address Postal Code"},{"name":"contact_user_usertype","value":"User Type"},{"name":"contact_user_employee_status","value":"Employee Status"},{"name":"contact_user_messenger_id","value":"IM Name"},{"name":"contact_user_messenger_type","value":"IM Type"},{"name":"contact_user_email1","value":"Email Address"},{"name":"contact_user_email_link_type","value":"Email Client"},{"name":"contact_user_securitygroup_noninherit_id","value":"LBL_securitygroup_noninherit_id"}]};';
         $actual = $emailTemplate->generateFieldDefsJS();
-        //$this->assertSame($expected,$actual);
+        
 
         $this->assertGreaterThan(0, strlen($actual));
+        
+        // clean up
+        
+        
     }
 
     public function testget_summary_text()
@@ -53,6 +62,16 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
 
     public function testcreate_export_query()
     {
+
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //test with empty string params
@@ -64,10 +83,21 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
         $expected = " SELECT  email_templates.*  , jt0.user_name assigned_user_name , jt0.created_by assigned_user_name_owner  , 'Users' assigned_user_name_mod FROM email_templates   LEFT JOIN  users jt0 ON email_templates.assigned_user_id=jt0.id AND jt0.deleted=0\n\n AND jt0.deleted=0 where (email_templates.name=\"\") AND email_templates.deleted=0";
         $actual = $emailTemplate->create_export_query('email_templates.id', 'email_templates.name=""');
         $this->assertSame($expected, $actual);
+        
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -75,8 +105,12 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
             $emailTemplate->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -100,6 +134,12 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_parent_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -107,8 +147,12 @@ class EmailTemplateTest extends PHPUnit_Framework_TestCase
             $emailTemplate->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testget_list_view_data()

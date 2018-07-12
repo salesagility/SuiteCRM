@@ -36,7 +36,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Quotes/AOS_Quotes.php');
 
-class AOS_QuotesDashlet extends DashletGeneric {
+class AOS_QuotesDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOS_Quotes/metadata/dashletviewdefs.php');

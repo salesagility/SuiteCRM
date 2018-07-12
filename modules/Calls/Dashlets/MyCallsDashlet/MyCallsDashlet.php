@@ -44,7 +44,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 
 
-class MyCallsDashlet extends DashletGeneric {
+class MyCallsDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
         global $current_user, $app_strings;
 		require('modules/Calls/Dashlets/MyCallsDashlet/MyCallsDashlet.data.php');
@@ -112,9 +113,9 @@ class MyCallsDashlet extends DashletGeneric {
 
        if(!empty($keys)){
             $query = "SELECT call_id, accept_status FROM calls_users WHERE deleted = 0 and user_id = '" . $current_user->id . "' AND call_id IN ('" . implode("','", $keys ). "')";
-            $result = $GLOBALS['db']->query($query);
+            $result = DBManagerFactory::getInstance()->query($query);
 
-            while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+            while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
                  $rowNums = $this->lvs->data['pageData']['idIndex'][$row['call_id']]; // figure out which rows have this guid
                  foreach($rowNums as $rowNum) {
                     $this->lvs->data['data'][$rowNum]['ACCEPT_STATUS'] = $row['accept_status'];

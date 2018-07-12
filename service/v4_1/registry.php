@@ -41,7 +41,8 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
 
 require_once('service/v4/registry.php');
 
-class registry_v4_1 extends registry_v4 {
+class registry_v4_1 extends registry_v4
+{
 
 
 	/**

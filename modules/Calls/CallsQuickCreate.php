@@ -43,7 +43,8 @@ require_once('include/EditView/QuickCreate.php');
 
 
 
-class CallsQuickCreate extends QuickCreate {
+class CallsQuickCreate extends QuickCreate
+{
 
     var $javascript;
 
@@ -86,14 +87,11 @@ class CallsQuickCreate extends QuickCreate {
 
 		if ($time_start_minutes > 0 && $time_start_minutes < 15) {
 			$time_start_minutes = "15";
-		} else
-			if ($time_start_minutes > 15 && $time_start_minutes < 30) {
+		} elseif ($time_start_minutes > 15 && $time_start_minutes < 30) {
 				$time_start_minutes = "30";
-			} else
-				if ($time_start_minutes > 30 && $time_start_minutes < 45) {
+			} elseif ($time_start_minutes > 30 && $time_start_minutes < 45) {
 					$time_start_minutes = "45";
-				} else
-					if ($time_start_minutes > 45) {
+				} elseif ($time_start_minutes > 45) {
 						$time_start_hour += 1;
 						$time_start_minutes = "00";
 					}

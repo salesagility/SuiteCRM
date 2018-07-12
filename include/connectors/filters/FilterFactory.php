@@ -43,7 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Filter factory
  * @api
  */
-class FilterFactory{
+class FilterFactory
+{
 
 	static $filter_map = array();
 

@@ -39,7 +39,8 @@
 
 
 require_once('include/MVC/Controller/SugarController.php');
-class CampaignsController extends SugarController{
+class CampaignsController extends SugarController
+{
 
     function action_newsletterlist(){
         $this->view = 'newsletterlist';
@@ -48,7 +49,7 @@ class CampaignsController extends SugarController{
     public function process() {
         if($this->action == 'EditView' && empty($_REQUEST['record'])) {
             $this->action = 'WizardHome';
-        } else if($this->action == 'EditView' && !empty($_REQUEST['record'])) {
+        } elseif($this->action == 'EditView' && !empty($_REQUEST['record'])) {
             // Show Send Email and Summary
             $this->action = 'WizardHome';
             // modules/Campaigns/WizardHome.php isWizardSummary

@@ -53,7 +53,7 @@ if ( !empty($_REQUEST['user_id'])) {
     }
     $current_entity = $current_user;
 }
-else if ( ! empty($_REQUEST['contact_id'])) {
+elseif ( ! empty($_REQUEST['contact_id'])) {
     $current_entity = new Contact();
     $current_entity->disable_row_level_security = true;
     $result = $current_entity->retrieve($_REQUEST['contact_id']);
@@ -63,7 +63,7 @@ else if ( ! empty($_REQUEST['contact_id'])) {
         die("The contact id doesn't exist");
     }
 }
-else if ( ! empty($_REQUEST['lead_id'])) {
+elseif ( ! empty($_REQUEST['lead_id'])) {
     $current_entity = new Lead();
     $current_entity->disable_row_level_security = true;
     $result = $current_entity->retrieve($_REQUEST['lead_id']);

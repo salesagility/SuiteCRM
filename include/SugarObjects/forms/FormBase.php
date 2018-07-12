@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @see LeadFormBase.php, ContactFormBase.php, MeetingFormBase, CallFormBase.php
  */
 
-abstract class FormBase {
+abstract class FormBase
+{
 
 
 /**

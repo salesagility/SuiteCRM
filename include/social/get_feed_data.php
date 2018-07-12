@@ -46,7 +46,7 @@ require_once('include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php'
 require_once('include/social/twitter/twitter_helper.php');
 
 //Load Globals.
-global $db;
+$db = DBManagerFactory::getInstance();
 global $current_user;
 global $sugar_config;
 
@@ -213,7 +213,7 @@ if ($facebook_enabled) {
 
     function data_insert($single, $type)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $id = guid_maker();
         $temp = generate_stream($single);
         $message = $db->quote($temp[1]);
@@ -283,7 +283,7 @@ if ($facebook_enabled) {
             case "":
                 $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
                 break;
-            case "link";
+            case "link":
                 $string[0] = "<img style=float:left;padding-right:5px;padding-bottom:5px; src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
                 if (!empty($stream['name'])) {
 

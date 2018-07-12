@@ -48,9 +48,11 @@ require_once('service/core/SugarWebServiceImpl.php');
  * This ia an abstract class for the soapservice. All the global fun
  *
  */
-abstract class SugarSoapService extends SugarWebService{
+abstract class SugarSoapService extends SugarWebService
+{
 	protected $soap_version = '1.1';
-	protected $namespace = 'https://suitecrm.com';
+    // Sugarcrm namespace is necessary for backwards compatibility with existing SOAP clients
+	protected $namespace = 'http://www.sugarcrm.com/sugarcrm';
 	protected $implementationClass = 'SugarWebServiceImpl';
 	protected $registryClass = "";
 	protected $soapURL = "";

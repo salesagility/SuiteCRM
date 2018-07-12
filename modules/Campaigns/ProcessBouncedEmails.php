@@ -54,8 +54,8 @@ function retrieveErrorReportAttachment($email)
 {
     $contents = "";
     $query = "SELECT description FROM notes WHERE file_mime_type = 'messsage/rfc822' AND parent_type='Emails' AND parent_id = '".$email->id."' AND deleted=0";
-    $rs = $GLOBALS['db']->query($query);
-    while ($row = $GLOBALS['db']->fetchByAssoc($rs)) 
+    $rs = DBManagerFactory::getInstance()->query($query);
+    while ($row = DBManagerFactory::getInstance()->fetchByAssoc($rs)) 
 		$contents .= $row['description'];
 
     return $contents;
@@ -150,7 +150,7 @@ function checkBouncedEmailForIdentifier($email_description)
         $found = TRUE;
         $GLOBALS['log']->debug("Found campaign identifier in header of email");  
     }
-    else if( preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/',$email_description, $matches) )
+    elseif( preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/',$email_description, $matches) )
     {
         $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/',$matches[0],-1,PREG_SPLIT_NO_EMPTY);
         $found = TRUE;

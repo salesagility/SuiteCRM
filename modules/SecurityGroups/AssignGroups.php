@@ -2,7 +2,8 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
-class AssignGroups {
+class AssignGroups
+{
 
 function popup_select(&$bean, $event, $arguments)
 {
@@ -30,7 +31,7 @@ function popup_select(&$bean, $event, $arguments)
 					$bean->$rel_name->add($group_id);
 				}
 			}
-		} else if(!empty($_REQUEST['dup_checked'])) {
+		} elseif(!empty($_REQUEST['dup_checked'])) {
 			//well...ShowDuplicates doesn't pass through request vars unless they are defined in the module vardefs
 			//so we are screwed here...
 			global $current_language;
@@ -40,7 +41,7 @@ function popup_select(&$bean, $event, $arguments)
 		}
 	}
 
-	else if(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
+	elseif(isset($sugar_config['securitysuite_user_popup']) && $sugar_config['securitysuite_user_popup'] == true
 		&& empty($bean->fetched_row['id']) && $bean->module_dir == "Users"
 		&& isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveSignature' ) { //Bug: 589
 
@@ -71,8 +72,8 @@ function popup_onload($event, $arguments)
 */
 	global $sugar_config;
 
-	$module = $_REQUEST['module'];
-	$action = $_REQUEST['action'];
+	$module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+	$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
 
 	if(isset($action) && ($action == "Save" || $action == "SetTimezone")) return;  
 
@@ -118,8 +119,8 @@ EOQ;
 
 function mass_assign($event, $arguments)
 {
-    $action = $_REQUEST['action'];
-    $module = $_REQUEST['module'];
+    $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+    $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
   
   	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
     //check if security suite enabled

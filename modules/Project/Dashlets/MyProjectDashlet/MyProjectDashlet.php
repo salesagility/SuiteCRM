@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/Project/Project.php');
 
-class MyProjectDashlet extends DashletGeneric {
+class MyProjectDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
         global $current_user, $app_strings;
 		require('modules/Project/Dashlets/MyProjectDashlet/MyProjectDashlet.data.php');

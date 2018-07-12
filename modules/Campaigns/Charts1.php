@@ -51,7 +51,8 @@ require_once('include/charts/Charts.php');
 
 
 
-class charts {
+class charts
+{
 
     /* @function:
      *

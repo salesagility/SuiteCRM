@@ -40,7 +40,8 @@
 
 
 require_once 'modules/AOW_Actions/actions/actionBase.php';
-class actionCreateRecord extends actionBase {
+class actionCreateRecord extends actionBase
+{
 
     /**
      * @return array
@@ -205,12 +206,14 @@ class actionCreateRecord extends actionBase {
                             case 'int':
                                 $value = format_number($bean->$fieldName);
                                 break;
-                            case 'relate':
-                                if(isset($data['id_name'])) {
-                                    $idName = $data['id_name'];
+			    case 'relate':
+			        if(isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate'){
+				    $idName = $data['id_name'];
                                     $value = $bean->$idName;
-                                }
-                                break;
+				}else{
+				    $value = $bean->$fieldName;
+				}
+				break;
                             default:
                                 $value = $bean->$fieldName;
                                 break;
@@ -222,7 +225,7 @@ class actionCreateRecord extends actionBase {
                             $dformat = 'Y-m-d';
                         }
                         switch ($params['value'][$key][3]) {
-                            case 'business_hours';
+                            case 'business_hours':
                                 require_once 'modules/AOBH_BusinessHours/AOBH_BusinessHours.php';
 
                                 $businessHours = new AOBH_BusinessHours();
@@ -236,7 +239,7 @@ class actionCreateRecord extends actionBase {
                                 }
                                 if($dateToUse === 'now'){
                                     $value = $businessHours->addBusinessHours($amount);
-                                }else if($dateToUse === 'field'){
+                                }elseif($dateToUse === 'field'){
                                     $dateToUse = $params['field'][$key];
                                     $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
                                 }else{
@@ -247,10 +250,10 @@ class actionCreateRecord extends actionBase {
                             default:
                                 if($params['value'][$key][0] === 'now'){
                                     $date = gmdate($dformat);
-                                } else if($params['value'][$key][0] === 'field'){
+                                } elseif($params['value'][$key][0] === 'field'){
                                     $dateToUse = $params['field'][$key];
                                     $date = $record->$dateToUse;
-                                } else if ($params['value'][$key][0] === 'today') {
+                                } elseif ($params['value'][$key][0] === 'today') {
                                     $date = $params['value'][$key][0];
                                 } else {
                                     $dateToUse = $params['value'][$key][0];
@@ -313,7 +316,7 @@ class actionCreateRecord extends actionBase {
 
                         if(empty($users)){
                             $value = '';
-                        }else if (count($users) == 1) {
+                        }elseif (count($users) == 1) {
                             $value = $users[0];
                         } else {
                             switch($params['value_type'][$key]) {

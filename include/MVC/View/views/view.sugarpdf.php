@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Sugarpdf/SugarpdfFactory.php');
 
-class ViewSugarpdf extends SugarView{
+class ViewSugarpdf extends SugarView
+{
 
     var $type ='sugarpdf';
     /**
@@ -62,8 +63,11 @@ class ViewSugarpdf extends SugarView{
          parent::__construct();
          if (isset($_REQUEST["sugarpdf"]))
          	$this->sugarpdf = $_REQUEST["sugarpdf"];
-         else
-        	header('Location:index.php?module='.$_REQUEST['module'].'&action=DetailView&record='.$_REQUEST['record']);
+         else {
+             $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+             $record = isset($_REQUEST['record']) ? $_REQUEST['record'] : null;
+        	header('Location:index.php?module='.$module.'&action=DetailView&record='.$record);
+         }
      }
 
     /**

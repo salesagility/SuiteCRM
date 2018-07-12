@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class ACLRole extends SugarBean{
+class ACLRole extends SugarBean
+{
     var $module_dir = 'ACLRoles';
     var $object_name = 'ACLRole';
     var $table_name = 'acl_roles';
@@ -111,10 +112,10 @@ function getUserRoles($user_id, $getAsNameArray = true){
                 "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
             "WHERE acl_roles.deleted=0 ";
 
-        $result = $GLOBALS['db']->query($query);
+        $result = DBManagerFactory::getInstance()->query($query);
         $user_roles = array();
 
-        while($row = $GLOBALS['db']->fetchByAssoc($result) ){
+        while($row = DBManagerFactory::getInstance()->fetchByAssoc($result) ){
             $role = new ACLRole();
             $role->populateFromRow($row);
             if($getAsNameArray)
@@ -146,10 +147,10 @@ function getUserRoleNames($user_id){
                     "AND acl_roles_users.role_id = acl_roles.id AND acl_roles_users.deleted = 0 ".
                 "WHERE acl_roles.deleted=0 ";
 
-            $result = $GLOBALS['db']->query($query);
+            $result = DBManagerFactory::getInstance()->query($query);
             $user_roles = array();
 
-            while($row = $GLOBALS['db']->fetchByAssoc($result) ){
+            while($row = DBManagerFactory::getInstance()->fetchByAssoc($result) ){
                 $user_roles[] = $row['name'];
             }
 

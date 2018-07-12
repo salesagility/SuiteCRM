@@ -42,7 +42,8 @@
 
 require_once("include/SugarCharts/SugarChart.php");
 
-class JsChart extends SugarChart {
+class JsChart extends SugarChart
+{
 	protected $ss;
 	var $xmlFile;
 	var $jsonFilename;

@@ -44,7 +44,8 @@ require_once('modules/Trackers/Trackable.php');
 
 define('MAX_SESSION_LENGTH', 36);
 
-class Monitor implements Trackable {
+class Monitor implements Trackable
+{
 
     var $metricsFile;
     var $name;
@@ -129,7 +130,7 @@ class Monitor implements Trackable {
         if(!isset($this->metrics[$name])) {
           $GLOBALS['log']->error($GLOBALS['app_strings']['ERR_UNDEFINED_METRIC'] . "($name)");
           throw new Exception($GLOBALS['app_strings']['ERR_UNDEFINED_METRIC'] . "($name)");
-        } else if($this->metrics[$name]->isMutable()) {
+        } elseif($this->metrics[$name]->isMutable()) {
           $this->$name = is_object($value) ? get_class($value) : $value;
           $this->dirty = true;
         }

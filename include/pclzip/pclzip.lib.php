@@ -360,7 +360,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         if ($v_size == 2) {
           $v_remove_path = $v_arg_list[1];
         }
-        else if ($v_size > 2) {
+        elseif ($v_size > 2) {
           // ----- Error log
           PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER,
 		                       "Invalid number / type of arguments");
@@ -384,7 +384,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     }
 
     // ----- Look if the $p_filelist is a string
-    else if (is_string($p_filelist))
+    elseif (is_string($p_filelist))
     {
       // ----- Create a list with the elements from the string
       $v_list = explode(PCLZIP_SEPARATOR, $p_filelist);
@@ -525,7 +525,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         if ($v_size == 2) {
           $v_remove_path = $v_arg_list[1];
         }
-        else if ($v_size > 2) {
+        elseif ($v_size > 2) {
           // ----- Error log
           PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER, "Invalid number / type of arguments");
 
@@ -548,7 +548,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     }
 
     // ----- Look if the $p_filelist is a string
-    else if (is_string($p_filelist))
+    elseif (is_string($p_filelist))
     {
       // ----- Create a list with the elements from the string
       $v_list = explode(PCLZIP_SEPARATOR, $p_filelist);
@@ -773,7 +773,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         if ($v_size == 2) {
           $v_remove_path = $v_arg_list[1];
         }
-        else if ($v_size > 2) {
+        elseif ($v_size > 2) {
           // ----- Error log
           PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER, "Invalid number / type of arguments");
 
@@ -938,7 +938,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         if ($v_size == 2) {
           $v_remove_path = $v_arg_list[1];
         }
-        else if ($v_size > 2) {
+        elseif ($v_size > 2) {
           // ----- Error log
           PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER, "Invalid number / type of arguments");
 
@@ -1183,7 +1183,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     }
 
     // ----- Look if the $p_archive is a string (so a filename)
-    else if (is_string($p_archive))
+    elseif (is_string($p_archive))
     {
       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "The parameter is a filename '$p_archive'");
 
@@ -1252,7 +1252,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     }
 
     // ----- Look if the $p_archive_to_add is a string (so a filename)
-    else if (is_string($p_archive_to_add))
+    elseif (is_string($p_archive_to_add))
     {
       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "The parameter is a filename");
 
@@ -1462,9 +1462,9 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       // ----- Look for next option
       switch ($p_options_list[$i]) {
         // ----- Look for options that request a path value
-        case PCLZIP_OPT_PATH :
-        case PCLZIP_OPT_REMOVE_PATH :
-        case PCLZIP_OPT_ADD_PATH :
+        case PCLZIP_OPT_PATH:
+        case PCLZIP_OPT_REMOVE_PATH:
+        case PCLZIP_OPT_ADD_PATH:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1482,7 +1482,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request an array of string for value
-        case PCLZIP_OPT_BY_NAME :
+        case PCLZIP_OPT_BY_NAME:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1497,7 +1497,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
           if (is_string($p_options_list[$i+1])) {
               $v_result_list[$p_options_list[$i]][0] = $p_options_list[$i+1];
           }
-          else if (is_array($p_options_list[$i+1])) {
+          elseif (is_array($p_options_list[$i+1])) {
               $v_result_list[$p_options_list[$i]] = $p_options_list[$i+1];
           }
           else {
@@ -1513,8 +1513,8 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request an EREG or PREG expression
-        case PCLZIP_OPT_BY_EREG :
-        case PCLZIP_OPT_BY_PREG :
+        case PCLZIP_OPT_BY_EREG:
+        case PCLZIP_OPT_BY_PREG:
         //case PCLZIP_OPT_CRYPT :
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
@@ -1543,9 +1543,9 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that takes a string
-        case PCLZIP_OPT_COMMENT :
-        case PCLZIP_OPT_ADD_COMMENT :
-        case PCLZIP_OPT_PREPEND_COMMENT :
+        case PCLZIP_OPT_COMMENT:
+        case PCLZIP_OPT_ADD_COMMENT:
+        case PCLZIP_OPT_PREPEND_COMMENT:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1579,7 +1579,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request an array of index
-        case PCLZIP_OPT_BY_INDEX :
+        case PCLZIP_OPT_BY_INDEX:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1601,11 +1601,11 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
               // ----- Parse items
               $v_work_list = explode(",", $p_options_list[$i+1]);
           }
-          else if (is_integer($p_options_list[$i+1])) {
+          elseif (is_integer($p_options_list[$i+1])) {
               //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Index value is an integer '".$p_options_list[$i+1]."'");
               $v_work_list[0] = $p_options_list[$i+1].'-'.$p_options_list[$i+1];
           }
-          else if (is_array($p_options_list[$i+1])) {
+          elseif (is_array($p_options_list[$i+1])) {
               //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Index value is an array");
               $v_work_list = $p_options_list[$i+1];
           }
@@ -1681,18 +1681,18 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request no value
-        case PCLZIP_OPT_REMOVE_ALL_PATH :
-        case PCLZIP_OPT_EXTRACT_AS_STRING :
-        case PCLZIP_OPT_NO_COMPRESSION :
-        case PCLZIP_OPT_EXTRACT_IN_OUTPUT :
-        case PCLZIP_OPT_REPLACE_NEWER :
-        case PCLZIP_OPT_STOP_ON_ERROR :
+        case PCLZIP_OPT_REMOVE_ALL_PATH:
+        case PCLZIP_OPT_EXTRACT_AS_STRING:
+        case PCLZIP_OPT_NO_COMPRESSION:
+        case PCLZIP_OPT_EXTRACT_IN_OUTPUT:
+        case PCLZIP_OPT_REPLACE_NEWER:
+        case PCLZIP_OPT_STOP_ON_ERROR:
           $v_result_list[$p_options_list[$i]] = true;
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "".PclZipUtilOptionText($p_options_list[$i])." = '".$v_result_list[$p_options_list[$i]]."'");
         break;
 
         // ----- Look for options that request an octal value
-        case PCLZIP_OPT_SET_CHMOD :
+        case PCLZIP_OPT_SET_CHMOD:
           // ----- Check the number of parameters
           if (($i+1) >= $p_size) {
             // ----- Error log
@@ -1710,10 +1710,10 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         break;
 
         // ----- Look for options that request a call-back
-        case PCLZIP_CB_PRE_EXTRACT :
-        case PCLZIP_CB_POST_EXTRACT :
-        case PCLZIP_CB_PRE_ADD :
-        case PCLZIP_CB_POST_ADD :
+        case PCLZIP_CB_PRE_EXTRACT:
+        case PCLZIP_CB_POST_EXTRACT:
+        case PCLZIP_CB_PRE_ADD:
+        case PCLZIP_CB_POST_ADD:
         /* for futur use
         case PCLZIP_CB_PRE_DELETE :
         case PCLZIP_CB_POST_DELETE :
@@ -1749,7 +1749,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
           $i++;
         break;
 
-        default :
+        default:
           // ----- Error log
           PclZip::privErrorLog(PCLZIP_ERR_INVALID_PARAMETER,
 		                       "Unknown parameter '"
@@ -2256,7 +2256,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
             }
 
             // ----- Recursive call to privAddFileList()
-            else if (@is_dir($v_path.$p_hitem)) {
+            elseif (@is_dir($v_path.$p_hitem)) {
               //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Add the directory '".$v_path.$p_hitem."'");
 
               // ----- Need an array as parameter
@@ -2320,7 +2320,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       $v_stored_filename = basename($p_filename);
     }
     // ----- Look for partial path remove
-    else if ($p_remove_dir != "")
+    elseif ($p_remove_dir != "")
     {
       if (substr($p_remove_dir, -1) != '/')
         $p_remove_dir .= "/";
@@ -2975,7 +2975,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       }
 
       // ----- Look for extract by ereg rule
-      else if (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
+      elseif (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
                && ($p_options[PCLZIP_OPT_BY_EREG] != "")) {
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract by ereg '".$p_options[PCLZIP_OPT_BY_EREG]."'");
 
@@ -2986,7 +2986,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       }
 
       // ----- Look for extract by preg rule
-      else if (   (isset($p_options[PCLZIP_OPT_BY_PREG]))
+      elseif (   (isset($p_options[PCLZIP_OPT_BY_PREG]))
                && ($p_options[PCLZIP_OPT_BY_PREG] != "")) {
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByEreg'");
 
@@ -2997,7 +2997,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       }
 
       // ----- Look for extract by index rule
-      else if (   (isset($p_options[PCLZIP_OPT_BY_INDEX]))
+      elseif (   (isset($p_options[PCLZIP_OPT_BY_INDEX]))
                && ($p_options[PCLZIP_OPT_BY_INDEX] != 0)) {
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByIndex'");
 
@@ -3262,7 +3262,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     }
 
     // ----- Look for path to remove
-    else if ($p_remove_path != "")
+    elseif ($p_remove_path != "")
     {
       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Look for some path to remove");
       if (PclZipUtilPathInclusion($p_remove_path, $p_entry['filename']) == 2)
@@ -3361,7 +3361,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 		}
       }
       // ----- Look if file is write protected
-      else if (!is_writeable($p_entry['filename']))
+      elseif (!is_writeable($p_entry['filename']))
       {
         //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Existing file '".$p_entry['filename']."' is write protected");
 
@@ -3385,7 +3385,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       }
 
       // ----- Look if the extracted file is older
-      else if (filemtime($p_entry['filename']) > $p_entry['mtime'])
+      elseif (filemtime($p_entry['filename']) > $p_entry['mtime'])
       {
         //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Existing file '".$p_entry['filename']."' is newer (".date("l dS of F Y h:i:s A", filemtime($p_entry['filename'])).") than the extracted file (".date("l dS of F Y h:i:s A", $p_entry['mtime']).")");
         // ----- Change the file status
@@ -3422,7 +3422,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     else {
       if ((($p_entry['external']&0x00000010)==0x00000010) || (substr($p_entry['filename'], -1) == '/'))
         $v_dir_to_check = $p_entry['filename'];
-      else if (!strstr($p_entry['filename'], "/"))
+      elseif (!strstr($p_entry['filename'], "/"))
         $v_dir_to_check = "";
       else
         $v_dir_to_check = dirname($p_entry['filename']);
@@ -4398,7 +4398,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       }
 
       // ----- Look for extract by ereg rule
-      else if (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
+      elseif (   (isset($p_options[PCLZIP_OPT_BY_EREG]))
                && ($p_options[PCLZIP_OPT_BY_EREG] != "")) {
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract by ereg '".$p_options[PCLZIP_OPT_BY_EREG]."'");
 
@@ -4409,7 +4409,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       }
 
       // ----- Look for extract by preg rule
-      else if (   (isset($p_options[PCLZIP_OPT_BY_PREG]))
+      elseif (   (isset($p_options[PCLZIP_OPT_BY_PREG]))
                && ($p_options[PCLZIP_OPT_BY_PREG] != "")) {
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByEreg'");
 
@@ -4420,7 +4420,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       }
 
       // ----- Look for extract by index rule
-      else if (   (isset($p_options[PCLZIP_OPT_BY_INDEX]))
+      elseif (   (isset($p_options[PCLZIP_OPT_BY_INDEX]))
                && ($p_options[PCLZIP_OPT_BY_INDEX] != 0)) {
           //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract with rule 'ByIndex'");
 
@@ -4615,7 +4615,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
     }
 
     // ----- Remove every files : reset the file
-    else if ($v_central_dir['entries'] != 0) {
+    elseif ($v_central_dir['entries'] != 0) {
         $this->privCloseFd();
 
         if (($v_result = $this->privOpenFd('wb')) != 1) {
@@ -5149,10 +5149,10 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
           // ----- Ignore this directory
           // Should be the first $i=0, but no check is done
         }
-        else if ($v_list[$i] == "..") {
+        elseif ($v_list[$i] == "..") {
 		  $v_skip++;
         }
-        else if ($v_list[$i] == "") {
+        elseif ($v_list[$i] == "") {
 		  // ----- First '/' i.e. root slash
 		  if ($i == 0) {
             $v_result = "/".$v_result;
@@ -5165,7 +5165,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
 		    }
 		  }
 		  // ----- Last '/' i.e. indicates a directory
-		  else if ($i == (sizeof($v_list)-1)) {
+		  elseif ($i == (sizeof($v_list)-1)) {
             $v_result = $v_list[$i];
 		  }
 		  // ----- Double '/' inside the path
@@ -5265,7 +5265,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         // ----- There are exactly the same
         $v_result = 2;
       }
-      else if ($i < $v_list_dir_size) {
+      elseif ($i < $v_list_dir_size) {
         // ----- The path is shorter than the dir
         $v_result = 0;
       }
@@ -5308,7 +5308,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 5, "Src offset after read :".(@ftell($p_src)));
       //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 5, "Dest offset after write :".(@ftell($p_dest)));
     }
-    else if ($p_mode==1)
+    elseif ($p_mode==1)
     {
       while ($p_size != 0)
       {
@@ -5319,7 +5319,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         $p_size -= $v_read_size;
       }
     }
-    else if ($p_mode==2)
+    elseif ($p_mode==2)
     {
       while ($p_size != 0)
       {
@@ -5330,7 +5330,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         $p_size -= $v_read_size;
       }
     }
-    else if ($p_mode==3)
+    elseif ($p_mode==3)
     {
       while ($p_size != 0)
       {
@@ -5374,7 +5374,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
         //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 5, "Fail to copy file");
         $v_result = 0;
       }
-      else if (!@unlink($p_src)) {
+      elseif (!@unlink($p_src)) {
         //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 5, "Fail to unlink old filename");
         $v_result = 0;
       }

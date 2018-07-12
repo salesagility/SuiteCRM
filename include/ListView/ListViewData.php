@@ -44,7 +44,8 @@ require_once('include/EditView/SugarVCR.php');
  * Data set for ListView
  * @api
  */
-class ListViewData {
+class ListViewData
+{
 
     public $additionalDetails = true;
     public $listviewName = null;
@@ -92,7 +93,6 @@ class ListViewData {
 	function getOrderBy($orderBy = '', $direction = '') {
 		if (!empty($orderBy) || !empty($_REQUEST[$this->var_order_by])) {
             if(!empty($_REQUEST[$this->var_order_by])) {
-    			$direction = 'ASC';
     			$orderBy = $_REQUEST[$this->var_order_by];
     			if(!empty($_REQUEST['lvso']) && (empty($_SESSION['lvd']['last_ob']) || strcmp($orderBy, $_SESSION['lvd']['last_ob']) == 0) ){
     				$direction = $_REQUEST['lvso'];
@@ -182,7 +182,7 @@ class ListViewData {
 	 */
 	function setVariableName($baseName, $where, $listviewName = null, $id = null){
         global $timedate;
-        $module = (!empty($listviewName)) ? $listviewName: $_REQUEST['module'];
+        $module = (!empty($listviewName)) ? $listviewName: isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
         $this->var_name = $module .'2_'. strtoupper($baseName) . ($id?'_'.$id:'');
 
 		$this->var_order_by = $this->var_name .'_ORDER_BY';
@@ -446,7 +446,8 @@ class ListViewData {
                 $additionalDetailsEdit = $editViewAccess;
                 if($additionalDetailsAllow) {
                     if($this->additionalDetailsAjax) {
-					   $ar = $this->getAdditionalDetailsAjax($data[$dataIndex]['ID']);
+                        LoggerManager::getLogger()->warn('Undefined data index ID for list view data.');
+					   $ar = $this->getAdditionalDetailsAjax(isset($data[$dataIndex]['ID']) ? $data[$dataIndex]['ID'] : null);
                     }
                     else {
                         $additionalDetailsFile = 'modules/' . $this->seed->module_dir . '/metadata/additionalDetails.php';
@@ -508,7 +509,7 @@ class ListViewData {
         {
             $queryString = "-advanced_search";
         }
-        else if (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search")
+        elseif (isset($_REQUEST["searchFormTab"]) && $_REQUEST["searchFormTab"] == "basic_search")
         {
             if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();
             else $searchMetaData = SearchForm::retrieveSearchDefs($seed->module_dir);

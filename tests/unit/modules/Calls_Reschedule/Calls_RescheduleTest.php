@@ -1,9 +1,11 @@
-<?PHP
+<?php
 
-class Calls_RescheduleTest extends PHPUnit_Framework_TestCase
+class Calls_RescheduleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();

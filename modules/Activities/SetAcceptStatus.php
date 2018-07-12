@@ -51,7 +51,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
         $focus->id = $_REQUEST['object_id'];
         $test = $focus->set_accept_status($current_user, $_REQUEST['accept_status']);
     }
-    else if ($_REQUEST['object_type'] == "Call")
+    elseif ($_REQUEST['object_type'] == "Call")
     {
         $focus = new Call();
         $focus->id = $_REQUEST['object_id'];

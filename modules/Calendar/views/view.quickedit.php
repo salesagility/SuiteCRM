@@ -41,7 +41,8 @@ require_once('include/MVC/View/views/view.ajax.php');
 require_once('include/EditView/EditView2.php');
 
 
-class CalendarViewQuickEdit extends SugarView {
+class CalendarViewQuickEdit extends SugarView
+{
 
 	var $ev;
 	protected $editable;	

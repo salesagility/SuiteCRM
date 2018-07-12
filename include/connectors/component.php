@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Connector component
  * @api
  */
-class component{
+class component
+{
 	protected $_has_testing_enabled = false;
 	protected $_source;
 
@@ -68,7 +69,7 @@ class component{
 		   $args = $this->mapInput($args, $module);
 	       $item = $this->_source->getItem($args, $module);
 	       $result = $this->mapOutput($bean, $item);
-	    } else if(!empty($module) && ($bean = loadBean($module))) {
+	    } elseif(!empty($module) && ($bean = loadBean($module))) {
 	       return $this->fillBean($args, $module, $bean);
 	    } else {
 	       throw new Exception("Invalid bean");

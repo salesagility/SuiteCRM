@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Formatter factory
  * @api
  */
-class FormatterFactory {
+class FormatterFactory
+{
 
 	static $formatter_map = array();
 
@@ -91,7 +92,7 @@ class FormatterFactory {
 			$formatter->setComponent($component);
 			if(file_exists("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$file}.tpl")){
 				$formatter->setTplFileName("custom/modules/Connectors/connectors/formatters/{$dir}/tpls/{$file}.tpl");
-			} else if("modules/Connectors/connectors/formatters/{$dir}/tpls/{$file}.tpl") {
+			} elseif("modules/Connectors/connectors/formatters/{$dir}/tpls/{$file}.tpl") {
 				$formatter->setTplFileName("modules/Connectors/connectors/formatters/{$dir}/tpls/{$file}.tpl");
 			}
 			self::$formatter_map[$key] = $formatter;

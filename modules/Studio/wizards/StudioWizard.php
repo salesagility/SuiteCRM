@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class StudioWizard{
+class StudioWizard
+{
     var $tplfile = 'modules/Studio/wizards/tpls/wizard.tpl';
     var $wizard = 'StudioWizard';
     var $status = '';

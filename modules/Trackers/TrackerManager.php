@@ -42,7 +42,8 @@ require_once('modules/Trackers/monitor/Monitor.php');
 
 
 
-class TrackerManager {
+class TrackerManager
+{
 
 private static $instance;
 private static $monitor_id;

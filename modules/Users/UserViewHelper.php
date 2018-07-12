@@ -42,7 +42,8 @@
  * This helper handles the rest of the fields for the Users Edit and Detail views.
  * There are a lot of fields on those views that do not map directly to being used on the metadata based UI, so they are handled here.
  */
-class UserViewHelper {
+class UserViewHelper
+{
     /**
      * The smarty template handler for the template
      * @var SugarSmarty
@@ -746,12 +747,6 @@ class UserViewHelper {
                     $mail_smtppass = $userOverrideOE->mail_smtppass;
                 }
 
-
-                if(!$mail_smtpauth_req && (empty($systemOutboundEmail->mail_smtpserver) || empty($systemOutboundEmail->mail_smtpuser) || empty($systemOutboundEmail->mail_smtppass))) {
-                    $hide_if_can_use_default = true;
-                } else{
-                    $hide_if_can_use_default = false;
-                }
             }
 
             $this->ss->assign("mail_smtpdisplay", $mail_smtpdisplay);
@@ -783,7 +778,7 @@ class UserViewHelper {
         {
             $user->user_type = 'Administrator';
         }
-        else if ($user->is_group)
+        elseif ($user->is_group)
         {
             $user->user_type = 'GROUP';
         }

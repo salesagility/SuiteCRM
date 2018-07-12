@@ -51,7 +51,8 @@ require_once('modules/UpgradeWizard/SugarMerge/EditViewMerge.php');
  * This class is used to merge list view meta data. It subclasses EditView merge and transforms listview meta data into EditView meta data  for the merge and then transforms it back into list view meta data
  *
  */
-class ListViewMerge extends EditViewMerge{
+class ListViewMerge extends EditViewMerge
+{
 	protected $varName = 'listViewDefs';
 	protected $viewDefs = 'ListView';
 	
@@ -172,7 +173,7 @@ class ListViewMerge extends EditViewMerge{
 				
 				
 			//if it's not set in the new fields then it was a custom field or an original field so we take the custom fields data and set the location source to custom
-			} else if(!isset($this->newFields[$field])){
+			} elseif(!isset($this->newFields[$field])){
 				$this->mergedFields[$field] = $data;
 				$this->mergedFields[$field]['loc']['source'] = 'custom';
 			} else {	

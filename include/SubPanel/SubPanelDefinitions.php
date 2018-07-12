@@ -397,7 +397,7 @@ class aSubPanel
                     {
                         $list_fields[$field] = $subpanel->panel_definition['list_fields'][$field];
                     }
-                    else if ($list_key != $field && isset($subpanel->panel_definition['list_fields'][$list_key]))
+                    elseif ($list_key != $field && isset($subpanel->panel_definition['list_fields'][$list_key]))
                     {
                         $list_fields[$list_key] = $subpanel->panel_definition['list_fields'][$list_key];
 
@@ -538,7 +538,7 @@ class aSubPanel
     {
         if($this->get_def_prop_value ( 'where' ) != '' && $this->search_query != ''){
             return $this->get_def_prop_value ( 'where' ).' AND '.$this->search_query;
-        } else if($this->search_query != ''){
+        } elseif($this->search_query != ''){
             return $this->search_query;
         }
         return $this->get_def_prop_value ( 'where' ) ;

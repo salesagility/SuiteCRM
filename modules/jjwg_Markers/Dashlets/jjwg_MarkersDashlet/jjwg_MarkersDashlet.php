@@ -4,7 +4,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/jjwg_Markers/jjwg_Markers.php');
 
-class jjwg_MarkersDashlet extends DashletGeneric {
+class jjwg_MarkersDashlet extends DashletGeneric
+{
 
     function __construct($id, $def = null) {
 

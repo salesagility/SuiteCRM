@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 $GLOBALS['studioReadOnlyFields'] = array('date_entered'=>1, 'date_modified'=>1, 'created_by'=>1, 'id'=>1, 'modified_user_id'=>1);
-class TemplateField{
+class TemplateField
+{
 	/*
 		The view is the context this field will be used in
 		-edit
@@ -228,10 +229,10 @@ class TemplateField{
 
 	function get_db_type(){
 	    if(!empty($this->type)) {
-	        $type = $GLOBALS['db']->getColumnType($this->type);
+	        $type = DBManagerFactory::getInstance()->getColumnType($this->type);
 	    }
 	    if(!empty($type)) return " $type";
-	    $type = $GLOBALS['db']->getColumnType("varchar");
+	    $type = DBManagerFactory::getInstance()->getColumnType("varchar");
         return " $type({$this->len})";
 	}
 
@@ -310,12 +311,12 @@ class TemplateField{
 	 */
 	function get_db_add_alter_table($table)
 	{
-		return $GLOBALS['db']->getHelper()->addColumnSQL($table, $this->get_field_def(), true);
+		return DBManagerFactory::getInstance()->getHelper()->addColumnSQL($table, $this->get_field_def(), true);
 	}
 
 	function get_db_delete_alter_table($table)
 	{
-		return $GLOBALS['db']->getHelper()->dropColumnSQL(
+		return DBManagerFactory::getInstance()->getHelper()->dropColumnSQL(
 		$table,
 		$this->get_field_def()
 		);
@@ -325,7 +326,7 @@ class TemplateField{
 	 * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
 	 */
 	function get_db_modify_alter_table($table){
-		return $GLOBALS['db']->alterColumnSQL($table, $this->get_field_def());
+		return DBManagerFactory::getInstance()->alterColumnSQL($table, $this->get_field_def());
 	}
 
 
@@ -373,7 +374,7 @@ class TemplateField{
 	{
 		if ($value === 'true' || $value === '1' || $value === 1)
 		return  true;
-		else if ($value === 'false' || $value === '0' || $value === 0)
+		elseif ($value === 'false' || $value === '0' || $value === 0)
 		return  false;
 		else
 		return $value;
@@ -437,7 +438,7 @@ class TemplateField{
         } else {
             if ($this->merge_filter === "selected")
                 $this->duplicate_merge_dom_value = 3;
-            else if (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
+            elseif (empty($this->duplicate_merge) || $this->duplicate_merge === 'disabled') {
                 $this->duplicate_merge_dom_value = 4;
             } else {
                 $this->duplicate_merge_dom_value = 2;

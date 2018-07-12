@@ -44,7 +44,8 @@ require_once('include/ytree/Tree.php');
 require_once('include/ytree/Node.php');
 require_once('ModuleInstall/PackageManager/ListViewPackages.php');
 
-class PackageManagerDisplay{
+class PackageManagerDisplay
+{
 
    /**
      * A Static method to Build the display for the package manager

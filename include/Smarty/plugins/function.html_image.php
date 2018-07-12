@@ -99,7 +99,7 @@ function smarty_function_html_image($params, &$smarty)
             if(!file_exists($_image_path)) {
                 $smarty->trigger_error("html_image: unable to find '$_image_path'", E_USER_NOTICE);
                 return;
-            } else if(!is_readable($_image_path)) {
+            } elseif(!is_readable($_image_path)) {
                 $smarty->trigger_error("html_image: unable to read '$_image_path'", E_USER_NOTICE);
                 return;
             } else {

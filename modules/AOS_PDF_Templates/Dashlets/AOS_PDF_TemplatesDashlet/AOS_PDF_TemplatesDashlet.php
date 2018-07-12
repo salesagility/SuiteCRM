@@ -36,7 +36,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
-class AOS_PDF_TemplatesDashlet extends DashletGeneric {
+class AOS_PDF_TemplatesDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOS_PDF_Templates/metadata/dashletviewdefs.php');

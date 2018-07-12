@@ -39,7 +39,8 @@
 
 require_once('include/SugarFields/Parsers/MetaParser.php');
 
-class SearchFormMetaParser extends MetaParser {
+class SearchFormMetaParser extends MetaParser
+{
 
 function __construct() {
 	$this->mView = 'Search';
@@ -118,7 +119,7 @@ function mergeSection($section, $masterSection) {
   	   if(is_array($row) && !empty($row['name'])) {
   	 	   $existingElements[$row['name']] = $row['name'];
   	 	   $existingLocation[$row['name']] = array("row"=>$rowKey);
-  	   } else if(!is_array($row) && !empty($row)) {
+  	   } elseif(!is_array($row) && !empty($row)) {
 	 	   $existingElements[$row] = $row;
 	 	   $existingLocation[$row] = array("row"=>$rowKey);
   	   }
@@ -207,7 +208,7 @@ function processSection($section, $table, $filePath, $vardefs=array()) {
              if(!empty($customField)) {
                // If it's a custom field we just set the name
                $name = $customField;
-	   	  	 } else if(is_array($formElementNames) && count($formElementNames) == 1
+	   	  	 } elseif(is_array($formElementNames) && count($formElementNames) == 1
 	   	  	           && (isset($vardefs[$formElementNames[0]]) || $formElementNames[0] == 'current_user_only')) {
 	   	  	   $name = $formElementNames[0];
 	   	  	 }

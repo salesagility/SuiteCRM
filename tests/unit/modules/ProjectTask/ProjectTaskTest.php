@@ -1,12 +1,35 @@
 <?php
 
-class ProjectTaskTest extends PHPUnit_Framework_TestCase
+class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
+    }
+    
+        public function testcreate_export_query()
+    {
+        $projectTask = new ProjectTask();
+
+        //test with empty string params
+        $expected = "SELECT
+				project_task.*,
+                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
+                   	ON project_task.assigned_user_id=users.id where  project_task.deleted=0 ";
+        $actual = $projectTask->create_export_query('', '');
+        $this->assertSame($expected, $actual);
+
+        //test with valid string params
+        $expected = "SELECT
+				project_task.*,
+                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users
+                   	ON project_task.assigned_user_id=users.id where (users.user_name= \"\") AND  project_task.deleted=0  ORDER BY project_task.id";
+        $actual = $projectTask->create_export_query('project_task.id', 'users.user_name= ""');
+        $this->assertSame($expected, $actual);
     }
 
     public function testProjectTask()
@@ -29,7 +52,10 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
 
     public function testskipParentUpdate()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $projectTask = new ProjectTask();
 
@@ -40,14 +66,29 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
         //test with parameter value  = true
         $projectTask->skipParentUpdate(false);
         $this->assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
+        
+        // clean up
+        
+        
     }
 
     public function testsave()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('project_task');
+        $state->pushTable('tracker');
+        $state->pushTable('aod_index');
+        $state->pushGlobals();
+
+	// test
+        
         $projectTask = new ProjectTask();
 
         $projectTask->name = 'test';
-        //$projectTask->project_id = "1";
+        
         $projectTask->assigned_user_id = '1';
         $projectTask->description = 'test description';
         $projectTask->parent_task_id = 1;
@@ -64,7 +105,15 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $projectTask->mark_deleted($projectTask->id);
         $result = $projectTask->retrieve($projectTask->id);
-        $this->assertEquals(null, $result);
+        $this->assertEquals(null, $result);   
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aod_index');
+        $state->popTable('tracker');
+        $state->popTable('project_task');
+        $state->popTable('aod_indexevent');
     }
 
     public function _get_depends_on_name($id)
@@ -80,6 +129,12 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
 
     public function testupdateParentProjectTaskPercentage()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $projectTask = new ProjectTask();
 
         //execute the method and test if it works and does not throws an exception.
@@ -87,8 +142,12 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
             $projectTask->updateParentProjectTaskPercentage();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testgetProjectTaskParent()
@@ -110,6 +169,13 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
 
     public function testupdateStatistic()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushGlobals();
+        
+        
+        
+        
         $projectTask = new ProjectTask();
 
         //execute the method and test if it works and does not throws an exception.
@@ -117,8 +183,13 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
             $projectTask->updateStatistic();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        $state->popGlobals();
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -197,7 +268,7 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         //test with valid string params
-        $expected = "project_task.name like '%'";
+        $expected = "project_task.name like 'test%'";
         $actual = $projectTask->build_generic_where_clause('test');
         $this->assertSame($expected, $actual);
     }
@@ -239,27 +310,25 @@ class ProjectTaskTest extends PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
         $projectTask = new ProjectTask();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'PARENT_TASK' => 'a');
         $actual = $projectTask->listviewACLHelper();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
-    public function testcreate_export_query()
-    {
-        $projectTask = new ProjectTask();
 
-        //test with empty string params
-        $expected = "SELECT\n				project_task.*,\n                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users\n                   	ON project_task.assigned_user_id=users.id where  project_task.deleted=0 ";
-        $actual = $projectTask->create_export_query('', '');
-        $this->assertSame($expected, $actual);
-
-        //test with valid string params
-        $expected = "SELECT\n				project_task.*,\n                users.user_name as assigned_user_name  FROM project_task LEFT JOIN project ON project_task.project_id=project.id AND project.deleted=0  LEFT JOIN users\n                   	ON project_task.assigned_user_id=users.id where (users.user_name= \"\") AND  project_task.deleted=0  ORDER BY project_task.id";
-        $actual = $projectTask->create_export_query('project_task.id', 'users.user_name= ""');
-        $this->assertSame($expected, $actual);
-    }
 
     public function testgetUtilizationDropdown()
     {

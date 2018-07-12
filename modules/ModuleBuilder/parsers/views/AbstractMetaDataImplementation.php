@@ -226,11 +226,10 @@ abstract class AbstractMetaDataImplementation
         $this->_variables = $variables;
         // now remove the modulename preamble from the loaded defs
         reset($defs);
-        $temp = each($defs);
 
-        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($temp['value'], true));
+        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($defs, true));
 
-        return $temp['value']; // 'value' contains the value part of 'key'=>'value' part
+        return array_shift($defs); // 'value' contains the value part of 'key'=>'value' part
     }
 
     /**
@@ -470,10 +469,10 @@ abstract class AbstractMetaDataImplementation
         );
 
         switch ($type) {
-            case MB_HISTORYMETADATALOCATION :
+            case MB_HISTORYMETADATALOCATION:
                 return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/'
                     . $moduleName . '/metadata/' . $filenames [$view] . '.php';
-            default :
+            default:
                 // get the module again, all so we can call this method statically
                 // without relying on the module stored in the class variables
                 $mb = new ModuleBuilder ();

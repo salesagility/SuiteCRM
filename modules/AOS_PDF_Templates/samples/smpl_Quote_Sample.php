@@ -2,7 +2,8 @@
 
 require_once __DIR__ . '/../TemplateSampleService.php';
 
-class smpl_Quote_Sample{
+class smpl_Quote_Sample
+{
 		function getType() {
 			return 'AOS_Quotes';
 		}

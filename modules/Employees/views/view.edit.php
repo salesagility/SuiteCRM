@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class EmployeesViewEdit extends ViewEdit {
+class EmployeesViewEdit extends ViewEdit
+{
     var $useForSubpanel = true;
  	function __construct(){
  		parent::__construct();

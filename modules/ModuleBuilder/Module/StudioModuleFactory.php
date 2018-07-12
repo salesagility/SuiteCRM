@@ -66,7 +66,7 @@ class StudioModuleFactory
 			require_once "custom/modules/{$module}/{$studioModClass}.php";
 			$sm = new $studioModClass($module);
 
-		} else if (file_exists("modules/{$module}/{$studioModClass}.php"))
+		} elseif (file_exists("modules/{$module}/{$studioModClass}.php"))
 		{
 			require_once "modules/{$module}/{$studioModClass}.php";
 			$sm = new $studioModClass($module);

@@ -238,7 +238,7 @@ if(!$stop){
     }
     $GLOBALS['top_message'] .= "<b>{$mod_strings['LBL_UPLOAD_SUCCESS']}</b>";
 }
-else if(!$frozen){
+elseif(!$frozen){
     $GLOBALS['top_message'] .= "<br />";
 }
 else{

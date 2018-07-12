@@ -56,7 +56,8 @@ require_once('include/SugarFields/Parsers/MetaParser.php');
  *
  * @author Collin Lee
  */
-class DetailViewMetaParser extends MetaParser {
+class DetailViewMetaParser extends MetaParser
+{
 
 function __construct() {
    $this->mView = 'DetailView';
@@ -124,7 +125,7 @@ foreach($tables as $table) {
 	   	  //If it's a space, simply add a blank string
 	   	  if($field == '&nbsp;') {
 	   	  	 $metacolumns[] = "";
-	   	  } else if(!empty($field)) {
+	   	  } elseif(!empty($field)) {
 
           	 preg_match_all('/[\{]([^\}].*?)[\}]/s', $field, $matches, PREG_SET_ORDER);
           	 if(!empty($matches)) {

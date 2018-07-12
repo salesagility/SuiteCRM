@@ -41,7 +41,8 @@ require_once(XML_HTMLSAX3 . 'HTMLSax3/Decorators.php');
 * @access protected
 * @abstract
 */
-class XML_HTMLSax3_StateParser {
+class XML_HTMLSax3_StateParser
+{
     /**
     * Instance of user front end class to be passed to callbacks
     * @var XML_HTMLSax3
@@ -335,7 +336,8 @@ class XML_HTMLSax3_StateParser {
 * @access protected
 * @see XML_HTMLSax3_StateParser_Gtet430
 */
-class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser {
+class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
+{
     /**
     * Constructs XML_HTMLSax3_StateParser_Lt430 defining available
     * parser options
@@ -399,7 +401,8 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser {
 * @access protected
 * @see XML_HTMLSax3_StateParser_Lt430
 */
-class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser {
+class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser
+{
     /**
     * Constructs XML_HTMLSax3_StateParser_Gtet430 defining available
     * parser options
@@ -457,7 +460,8 @@ class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser {
 * @package XML_HTMLSax3
 * @access protected
 */
-class XML_HTMLSax3_NullHandler {
+class XML_HTMLSax3_NullHandler
+{
     /**
     * Generic handler method which does nothing
     * @access protected
@@ -472,7 +476,8 @@ class XML_HTMLSax3_NullHandler {
 * @package XML_HTMLSax3
 * @access public
 */
-class XML_HTMLSax3 {
+class XML_HTMLSax3
+{
     /**
     * Instance of concrete subclass of XML_HTMLSax3_StateParser
     * @var XML_HTMLSax3_StateParser

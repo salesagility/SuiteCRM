@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once("include/Sugarpdf/sugarpdf_config.php");
-class FontManager{
+class FontManager
+{
     /**
      * Contain all the errors generated during the process of FontManager
      * @var String[]
@@ -89,7 +90,7 @@ class FontManager{
     private function setFontPath(){
         if(file_exists(K_PATH_CUSTOM_FONTS.$this->filename)){
             $this->fontPath = K_PATH_CUSTOM_FONTS;
-        }else if(file_exists(K_PATH_FONTS.$this->filename)){
+        }elseif(file_exists(K_PATH_FONTS.$this->filename)){
             $this->fontPath = K_PATH_FONTS;
         }else{
             $this->fontPath = "";
@@ -126,11 +127,11 @@ class FontManager{
         }
         if(preg_match("/bi.php$/i",$this->filename)){
             return array("bold","italic");
-        }else if(preg_match("/ib.php$/i",$this->filename)){
+        }elseif(preg_match("/ib.php$/i",$this->filename)){
             return array("bold","italic");
-        }else if(preg_match("/b.php$/i",$this->filename)){
+        }elseif(preg_match("/b.php$/i",$this->filename)){
             return array("bold");
-        }else if(preg_match("/i.php$/i",$this->filename)){
+        }elseif(preg_match("/i.php$/i",$this->filename)){
             return array("italic");
         }else{
             return array("regular");

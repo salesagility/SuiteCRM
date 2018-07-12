@@ -39,7 +39,8 @@
 
  require_once('ModuleInstall/PackageManager/PackageManagerDisplay.php');
  require_once('ModuleInstall/PackageManager/PackageManager.php');
- class PackageController{
+ class PackageController
+{
         var $_pm;
 
         /**

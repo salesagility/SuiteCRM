@@ -39,7 +39,8 @@
 
 
 
-class UpgradeMetaHelper{
+class UpgradeMetaHelper
+{
 
 	var $upgrade_dir;
 	var $debug_mode;
@@ -320,9 +321,9 @@ function getAllCustomizedModules() {
                     $view = $matches[1];
 
                     switch($view) {
-                       case 'EditView' : $parser = $this->evparser; break;
-                       case 'DetailView' : $parser = $this->dvparser; break;
-                       case 'SearchForm' : $parser = $this->svparser; break;
+                       case 'EditView': $parser = $this->evparser; break;
+                       case 'DetailView': $parser = $this->dvparser; break;
+                       case 'SearchForm': $parser = $this->svparser; break;
                     }
 
                     $lowerCaseView = $view == 'SearchForm' ? 'search' : strtolower($view);

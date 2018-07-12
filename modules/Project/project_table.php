@@ -19,7 +19,8 @@
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
-class ProjectTable {
+class ProjectTable
+{
 
     private $tasks;
 

@@ -43,7 +43,8 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  * This class is responsible for providing all the registration of all the functions and complex types
  *
  */
-class registry {
+class registry
+{
 	
 	protected $serviceClass = null;
 	

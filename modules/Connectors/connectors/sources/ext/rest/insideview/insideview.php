@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 require_once('include/connectors/sources/ext/rest/rest.php');
-class ext_rest_insideview extends ext_rest {
+class ext_rest_insideview extends ext_rest
+{
 	protected $_enable_in_wizard = false;
 	protected $_enable_in_hover = false;
     protected $_enable_in_admin_properties = false;

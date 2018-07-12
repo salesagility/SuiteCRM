@@ -82,7 +82,8 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
 	* @link http://www.tcpdf.org
 	* @license http://www.gnu.org/copyleft/lesser.html LGPL
 	*/
-class TCPDF2DBarcode {
+class TCPDF2DBarcode
+{
 	
 	/**
 	 * @var array representation of barcode.

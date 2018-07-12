@@ -32,7 +32,8 @@
  * Template compiling class
  * @package Smarty
  */
-class Smarty_Compiler extends Smarty {
+class Smarty_Compiler extends Smarty
+{
 
     // internal vars
     /**#@+
@@ -261,13 +262,15 @@ class Smarty_Compiler extends Smarty {
         $this->_folded_blocks = $match;
         reset($this->_folded_blocks);
 
+        $quotedLeftDelim = $this->_quote_replace($this->left_delimiter);
+        $quotedRightDelim = $this->_quote_replace($this->right_delimiter);
+
+        $function = function ($matches) use ($quotedLeftDelim, $quotedRightDelim) {
+            return ($quotedLeftDelim . 'php') . str_repeat("\n", substr_count($matches[1], "\n")) . $quotedRightDelim;
+        };
+
         /* replace special blocks by "{php}" */
-        $source_content = preg_replace_callback($search, create_function ('$matches', "return '"
-                                       . $this->_quote_replace($this->left_delimiter) . 'php'
-                                       . "' . str_repeat(\"\n\", substr_count('\$matches[1]', \"\n\")) .'"
-                                       . $this->_quote_replace($this->right_delimiter)
-                                       . "';")
-                                       , $source_content);
+        $source_content = preg_replace_callback($search, $function, $source_content);
 
         /* Gather all template tags. */
         preg_match_all("~{$ldq}\s*(.*?)\s*{$rdq}~s", $source_content, $_match);
@@ -290,10 +293,10 @@ class Smarty_Compiler extends Smarty {
                     if ($this->php_handling == SMARTY_PHP_PASSTHRU) {
                         /* echo php contents */
                         $text_blocks[$curr_tb] = str_replace('%%%SMARTYSP'.$curr_sp.'%%%', '<?php echo \''.str_replace("'", "\'", $sp_match[1][$curr_sp]).'\'; ?>'."\n", $text_blocks[$curr_tb]);
-                    } else if ($this->php_handling == SMARTY_PHP_QUOTE) {
+                    } elseif ($this->php_handling == SMARTY_PHP_QUOTE) {
                         /* quote php tags */
                         $text_blocks[$curr_tb] = str_replace('%%%SMARTYSP'.$curr_sp.'%%%', htmlspecialchars($sp_match[1][$curr_sp]), $text_blocks[$curr_tb]);
-                    } else if ($this->php_handling == SMARTY_PHP_REMOVE) {
+                    } elseif ($this->php_handling == SMARTY_PHP_REMOVE) {
                         /* remove php tags */
                         $text_blocks[$curr_tb] = str_replace('%%%SMARTYSP'.$curr_sp.'%%%', '', $text_blocks[$curr_tb]);
                     } else {
@@ -556,7 +559,7 @@ class Smarty_Compiler extends Smarty {
 
             case 'php':
                 /* handle folded tags replaced by {php} */
-                list(, $block) = each($this->_folded_blocks);
+                $block = array_shift($this->_folded_blocks);
                 $this->_current_line_no += substr_count($block[0], "\n");
                 /* the number of matched elements in the regexp in _compile_file()
                    determins the type of folded tag that was found */
@@ -582,9 +585,9 @@ class Smarty_Compiler extends Smarty {
             default:
                 if ($this->_compile_compiler_tag($tag_command, $tag_args, $output)) {
                     return $output;
-                } else if ($this->_compile_block_tag($tag_command, $tag_args, $tag_modifier, $output)) {
+                } elseif ($this->_compile_block_tag($tag_command, $tag_args, $tag_modifier, $output)) {
                     return $output;
-                } else if ($this->_compile_custom_tag($tag_command, $tag_args, $tag_modifier, $output)) {
+                } elseif ($this->_compile_custom_tag($tag_command, $tag_args, $tag_modifier, $output)) {
                     return $output;                    
                 } else {
                     $this->_syntax_error("unrecognized tag '$tag_command'", E_USER_ERROR, __FILE__, __LINE__);
@@ -624,7 +627,7 @@ class Smarty_Compiler extends Smarty {
          * Otherwise we need to load plugin file and look for the function
          * inside it.
          */
-        else if ($plugin_file = $this->_get_plugin_filepath('compiler', $tag_command)) {
+        elseif ($plugin_file = $this->_get_plugin_filepath('compiler', $tag_command)) {
             $found = true;
 
             include_once $plugin_file;
@@ -699,7 +702,7 @@ class Smarty_Compiler extends Smarty {
          * Otherwise we need to load plugin file and look for the function
          * inside it.
          */
-        else if ($plugin_file = $this->_get_plugin_filepath('block', $tag_command)) {
+        elseif ($plugin_file = $this->_get_plugin_filepath('block', $tag_command)) {
             $found = true;
 
             include_once $plugin_file;
@@ -716,7 +719,7 @@ class Smarty_Compiler extends Smarty {
 
         if (!$found) {
             return false;
-        } else if (!$have_function) {
+        } elseif (!$have_function) {
             $this->_syntax_error($message, E_USER_WARNING, __FILE__, __LINE__);
             return true;
         }
@@ -784,7 +787,7 @@ class Smarty_Compiler extends Smarty {
          * Otherwise we need to load plugin file and look for the function
          * inside it.
          */
-        else if ($plugin_file = $this->_get_plugin_filepath('function', $tag_command)) {
+        elseif ($plugin_file = $this->_get_plugin_filepath('function', $tag_command)) {
             $found = true;
 
             include_once $plugin_file;
@@ -801,7 +804,7 @@ class Smarty_Compiler extends Smarty {
 
         if (!$found) {
             return false;
-        } else if (!$have_function) {
+        } elseif (!$have_function) {
             $this->_syntax_error($message, E_USER_WARNING, __FILE__, __LINE__);
             return true;
         }
@@ -980,10 +983,10 @@ class Smarty_Compiler extends Smarty {
             if ($arg_name == 'file') {
                 $include_file = $arg_value;
                 continue;
-            } else if ($arg_name == 'assign') {
+            } elseif ($arg_name == 'assign') {
                 $assign_var = $arg_value;
                 continue;
-            } else if ($arg_name == 'theme_template') {
+            } elseif ($arg_name == 'theme_template') {
                 $theme_template = $arg_value;
                 continue;
             }
@@ -1573,13 +1576,13 @@ class Smarty_Compiler extends Smarty {
                            boolean value. */
                         if (preg_match('~^(on|yes|true)$~', $token)) {
                             $token = 'true';
-                        } else if (preg_match('~^(off|no|false)$~', $token)) {
+                        } elseif (preg_match('~^(off|no|false)$~', $token)) {
                             $token = 'false';
-                        } else if ($token == 'null') {
+                        } elseif ($token == 'null') {
                             $token = 'null';
-                        } else if (preg_match('~^' . $this->_num_const_regexp . '|0[xX][0-9a-fA-F]+$~', $token)) {
+                        } elseif (preg_match('~^' . $this->_num_const_regexp . '|0[xX][0-9a-fA-F]+$~', $token)) {
                             /* treat integer literally */
-                        } else if (!preg_match('~^' . $this->_obj_call_regexp . '|' . $this->_var_regexp . '(?:' . $this->_mod_regexp . ')*$~', $token)) {
+                        } elseif (!preg_match('~^' . $this->_obj_call_regexp . '|' . $this->_var_regexp . '(?:' . $this->_mod_regexp . ')*$~', $token)) {
                             /* treat as a string, double-quote it escaping quotes */
                             $token = '"'.addslashes($token).'"';
                         }
@@ -1811,12 +1814,12 @@ class Smarty_Compiler extends Smarty {
                         $_var_section_prop = isset($_var_parts[1]) ? $_var_parts[1] : 'index';
                         $_output .= "[\$this->_sections['$_var_section']['$_var_section_prop']]";
                     }
-                } else if (substr($_index, 0, 1) == '.') {
+                } elseif (substr($_index, 0, 1) == '.') {
                     if (substr($_index, 1, 1) == '$')
                         $_output .= "[\$this->_tpl_vars['" . substr($_index, 2) . "']]";
                     else
                         $_output .= "['" . substr($_index, 1) . "']";
-                } else if (substr($_index,0,2) == '->') {
+                } elseif (substr($_index,0,2) == '->') {
                     if(substr($_index,2,2) == '__') {
                         $this->_syntax_error('call to internal object members is not allowed', E_USER_ERROR, __FILE__, __LINE__);
                     } elseif($this->security && substr($_index, 2, 1) == '_') {

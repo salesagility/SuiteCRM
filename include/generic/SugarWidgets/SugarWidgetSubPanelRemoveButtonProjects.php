@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
 {
-	function displayHeaderCell(&$layout_def)
+	function displayHeaderCell($layout_def)
 	{
 		return '&nbsp;';
 	}
@@ -62,7 +62,7 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
 		if ($layout_def['module'] == 'Holidays'){
 			$action = 'DeleteHolidayRelationship';
 		}
-		else if ($layout_def['module'] == 'Users' || $layout_def['module'] == 'Contacts'){
+		elseif ($layout_def['module'] == 'Users' || $layout_def['module'] == 'Contacts'){
 			$action = 'DeleteResourceRelationship';
 		}
 		else{

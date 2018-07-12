@@ -46,12 +46,20 @@ require_once("include/upload_file.php");
 require_once('include/utils/db_utils.php');
 require_once('modules/Audit/Audit.php');
 
+require_once __DIR__ . '/../../include/utils/layout_utils.php';
+
 global $beanList, $beanFiles, $currentModule, $focus, $action, $app_strings, $app_list_strings, $current_language, $timedate, $mod_strings;
 //we don't want the parent module's string file, but rather the string file specific to this subpanel
 
-$bean = $beanList[$_REQUEST['module_name']];
-require_once($beanFiles[$bean]);
-$focus = new $bean;
+
+if (!isset($_REQUEST['module_name'])) {
+    LoggerManager::getLogger()->warn("Popup picker needs requested module name but \$_REQUEST[module_name] is not set.");    
+} else {
+
+    $bean = $beanList[$_REQUEST['module_name']];
+    require_once($beanFiles[$bean]);
+    $focus = new $bean;
+}
 
 class Popup_Picker
 {
@@ -107,13 +115,28 @@ class Popup_Picker
 
 		//output header
 		echo "<table width='100%' cellpadding='0' cellspacing='0'><tr><td>";
-		$mod_strings = return_module_language($current_language, $focus->module_dir);
+                
+                
+                if (!isset($focus->module_dir)) {
+                    LoggerManager::getLogger()->fatal("Popup picker needs module dir from focus bean but global focus is none.");    
+                    throw new Exception('There is not selected focus bean for popup picker process page.');
+                }
+                
+                $mod_strings = return_module_language($current_language, $focus->module_dir);
 
 		$printImageURL = SugarThemeRegistry::current()->getImageURL('print.gif');
+                
+                $requestString = '';
+                if (!isset($GLOBALS['request_string'])) {
+                    LoggerManager::getLogger()->warn("Popup picker needs focus bean but \$GLOBALS['request_string'] is not set.");    
+                } else {
+                    $requestString = $GLOBALS['request_string'];
+                }
+                
 		$titleExtra = <<<EOHTML
-<a href="javascript:void window.open('index.php?{$GLOBALS['request_string']}','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class='utilsLink'>
+<a href="javascript:void window.open('index.php?{$requestString}','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class='utilsLink'>
 <!--not_in_theme!--><img src="{$printImageURL}" alt="{$GLOBALS['app_strings']['LNK_PRINT']}"></a>
-<a href="javascript:void window.open('index.php?{$GLOBALS['request_string']}','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class='utilsLink'>
+<a href="javascript:void window.open('index.php?{$requestString}','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class='utilsLink'>
 {$GLOBALS['app_strings']['LNK_PRINT']}
 </a>
 EOHTML;
@@ -141,7 +164,7 @@ EOHTML;
 				$vname = '';
 				if(isset($value['vname']))
 					$vname = $value['vname'];
-				else if(isset($value['label']))
+				elseif(isset($value['label']))
 					$vname = $value['label'];
 				$fields .= str_replace(':', '', translate($vname, $focus->module_dir));
 

@@ -38,7 +38,8 @@
  ********************************************************************************/
 
 require_once 'modules/AOR_Scheduled_Reports/lib/Cron/includeCron.php';
-class AOR_Scheduled_Reports extends basic {
+class AOR_Scheduled_Reports extends basic
+{
 
     var $new_schema = true;
     var $module_dir = 'AOR_Scheduled_Reports';
@@ -150,7 +151,7 @@ class AOR_Scheduled_Reports extends basic {
                                 break;
                             Case 'all':
                             default:
-                                global $db;
+                                $db = DBManagerFactory::getInstance();
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
                                 $result = $db->query($sql);
                                 while ($row = $db->fetchByAssoc($result)) {

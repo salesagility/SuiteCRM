@@ -6,7 +6,8 @@ if (!defined('sugarEntry') || !sugarEntry)
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/jjwg_Areas/jjwg_Areas.php');
 
-class jjwg_AreasDashlet extends DashletGeneric {
+class jjwg_AreasDashlet extends DashletGeneric
+{
 
     function __construct($id, $def = null) {
 

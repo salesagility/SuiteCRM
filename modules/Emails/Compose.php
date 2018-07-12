@@ -47,7 +47,7 @@ if (!empty($data['listViewExternalClient'])) {
 }
 //For the full compose/email screen, the compose package is generated and script execution
 //continues to the Emails/index.php page.
-else if (!isset($data['forQuickCreate'])) {
+elseif (!isset($data['forQuickCreate'])) {
     $ret = generateComposeDataPackage($data);
 }
 
@@ -112,7 +112,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
         } else {
             if (isset($bean->full_name)) {
                 $namePlusEmail = from_html($bean->full_name) . " <" . from_html($bean->emailAddress->getPrimaryAddress($bean)) . ">";
-            } else if (isset($bean->emailAddress)) {
+            } elseif (isset($bean->emailAddress)) {
                 $namePlusEmail = "<" . from_html($bean->emailAddress->getPrimaryAddress($bean)) . ">";
             }
         }
@@ -161,7 +161,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
             'email_id' => $email_id,
 
         );
-    } else if (isset($data['recordId'])) {
+    } elseif (isset($data['recordId'])) {
 
 
         $quotesData = getQuotesRelatedData($data);
@@ -182,14 +182,14 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
             'email_id' => $email_id,
         );
 
-    } else if (isset($_REQUEST['ListView'])) {
+    } elseif (isset($_REQUEST['ListView'])) {
 
         $email = new Email();
         $namePlusEmail = $email->getNamePlusEmailAddressesForCompose($_REQUEST['action_module'], (explode(",", $_REQUEST['uid'])));
         $ret = array(
             'to_email_addrs' => $namePlusEmail,
         );
-    } else if (isset($data['replyForward'])) {
+    } elseif (isset($data['replyForward'])) {
 
         require_once("modules/Emails/EmailUI.php");
 
@@ -205,6 +205,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
             $emailType = $ie->email->type;
         }
         $ie->email->from_addr = $ie->email->from_addr_name;
+        isValidEmailAddress($ie->email->from_addr);
         $ie->email->to_addrs = to_html($ie->email->to_addrs_names);
         $ie->email->cc_addrs = to_html($ie->email->cc_addrs_names);
         $ie->email->bcc_addrs = $ie->email->bcc_addrs_names;
@@ -233,6 +234,7 @@ function generateComposeDataPackage($data, $forFullCompose = TRUE)
         } else {
             if ($email->type != 'draft') {
                 $return['to'] = from_html($ie->email->from_addr);
+                isValidEmailAddress($return['to']);
             }
         } // else
         $ret = array(

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,7 +44,8 @@
  */
 
 
-class FP_events_sugar extends Basic {
+class FP_events_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'FP_events';
 	var $object_name = 'FP_events';

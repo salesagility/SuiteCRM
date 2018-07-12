@@ -229,7 +229,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 00:00:00';
         }
-        else if ($time=='end') {
+        elseif ($time=='end') {
             $begin_parts = explode(' ', $begin);
             $be = $begin_parts[0] . ' 23:59:59';
         } else {
@@ -553,7 +553,7 @@ class SugarWidgetFieldDateTime extends SugarWidgetReportField
         }
     }
 
-    function displayList($layout_def) {
+    function displayList(&$layout_def) {
         global $timedate;
         // i guess qualifier and column_function are the same..
         if (!empty ($layout_def['column_function'])) {

@@ -84,7 +84,7 @@ class M2MRelationship extends SugarRelationship
             return $results;
         }
         //Multiple links with same relationship name
-        else if( is_array($results) )
+        elseif( is_array($results) )
         {
             $GLOBALS['log']->error("Warning: Multiple links found for relationship {$this->name} within module {$module}");
             return $this->getMostAppropriateLinkedDefinition($results);
@@ -147,7 +147,7 @@ class M2MRelationship extends SugarRelationship
 			$this->addRow($dataToInsert);
     		$rhs->$rhsLinkName->addBean($lhs);
     		$this->callAfterAdd($lhs, $rhs, $lhsLinkName);
-    	} else if(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
+    	} elseif(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
 			$lhs->$lhsLinkName->addBean($rhs);			
 			$this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
 
@@ -430,7 +430,22 @@ class M2MRelationship extends SugarRelationship
         }
         $rel_table = $this->getRelationshipTable();
 
-        $where = "$rel_table.$knownKey = '{$link->getFocus()->id}'" . $this->getRoleWhere();
+        $tmpFocus = $link->getFocus();
+        if(!isset($tmpFocus->id)) {
+            if (is_object($tmpFocus)) {
+                $focusInfo = get_class($tmpFocus);
+            } elseif(is_bool($tmpFocus)) {
+                $focusInfo = ' (bool)' . ($tmpFocus ? 'TRUE' : 'FALSE');
+            } else {
+                $focusInfo = ' (' . gettype($tmpFocus) . ')' . $tmpFocus;
+            }
+            LoggerManager::getLogger()->warn('No focus from link when M2MRelationship get query. Focus was: ' . $focusInfo);
+            $tmpId = null;
+        } else {
+            $tmpId = $tmpFocus->id;
+        }
+        
+        $where = "$rel_table.$knownKey = '{$tmpId}'" . $this->getRoleWhere();
         $order_by = '';
 
         //Add any optional where clause
@@ -632,7 +647,7 @@ class M2MRelationship extends SugarRelationship
         //Roles can allow for multiple links between two records with different roles
         $query .= $this->getRoleWhere() . " and deleted = 0";
 
-        return $GLOBALS['db']->getOne($query);
+        return DBManagerFactory::getInstance()->getOne($query);
     }
 
     /**
@@ -655,7 +670,7 @@ class M2MRelationship extends SugarRelationship
     {
         if (!empty($this->def['table']))
             return $this->def['table'];
-        else if(!empty($this->def['join_table']))
+        elseif(!empty($this->def['join_table']))
             return $this->def['join_table'];
 
         return false;

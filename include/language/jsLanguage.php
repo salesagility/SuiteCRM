@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class jsLanguage {
+class jsLanguage
+{
 
     /**
      * Creates javascript versions of language files

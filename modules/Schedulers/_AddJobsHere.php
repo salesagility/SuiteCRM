@@ -219,11 +219,14 @@ function pollMonitoredInboxes()
                                 $header = imap_headerinfo($ieX->conn, $msgNo);
                                 $email->name = $ieX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $ieX->convertImapToSugarEmailAddress($header->from);
+                                isValidEmailAddress($email->from_addr);
                                 $email->reply_to_email = $ieX->convertImapToSugarEmailAddress($header->reply_to);
                                 if (!empty($email->reply_to_email)) {
                                     $contactAddr = $email->reply_to_email;
+                                    isValidEmailAddress($contactAddr);
                                 } else {
                                     $contactAddr = $email->from_addr;
+                                    isValidEmailAddress($contactAddr);
                                 }
                                 $mailBoxType = $ieX->mailbox_type;
                                 $ieX->handleAutoresponse($email, $contactAddr);
@@ -436,7 +439,7 @@ function removeDocumentsFromFS()
      * @var DBManager $db
      * @var SugarBean $bean
      */
-    global $db;
+    $db = DBManagerFactory::getInstance();
 
     // temp table to store id of files without memory leak
     $tableName = 'cron_remove_documents';
@@ -626,11 +629,14 @@ function pollMonitoredInboxesAOP()
                                 $header = imap_headerinfo($aopInboundEmailX->conn, $msgNo);
                                 $email->name = $aopInboundEmailX->handleMimeHeaderDecode($header->subject);
                                 $email->from_addr = $aopInboundEmailX->convertImapToSugarEmailAddress($header->from);
+                                isValidEmailAddress($email->from_addr);
                                 $email->reply_to_email = $aopInboundEmailX->convertImapToSugarEmailAddress($header->reply_to);
                                 if (!empty($email->reply_to_email)) {
                                     $contactAddr = $email->reply_to_email;
+                                    isValidEmailAddress($contactAddr);
                                 } else {
                                     $contactAddr = $email->from_addr;
+                                    isValidEmailAddress($contactAddr);
                                 }
                                 $mailBoxType = $aopInboundEmailX->mailbox_type;
                                 $aopInboundEmailX->handleAutoresponse($email, $contactAddr);
@@ -803,6 +809,7 @@ EOF;
         $mail->setMailerForSystem();
         $mail->IsHTML(true);
         $mail->From = $defaults['email'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $defaults['name'];
         $mail->Subject = from_html($bean->name);
         $mail->Body = $html;

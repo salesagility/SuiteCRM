@@ -51,7 +51,8 @@ require_once('modules/UpgradeWizard/SugarMerge/ListViewMerge.php');
  * SearchMerge is a class for merging search meta data together. This search meta-data has a listing of fields similar to ListViews
  *
  */
-class SearchMerge extends ListViewMerge{
+class SearchMerge extends ListViewMerge
+{
 	protected $varName = 'searchdefs';
 	protected $viewDefs = 'Search';
 	protected $panelName = 'layout';

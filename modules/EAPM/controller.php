@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -156,7 +156,7 @@ class EAPMController extends SugarController
         if ( isset($_REQUEST['closeWhenDone']) && $_REQUEST['closeWhenDone'] == 1 ) {
             if(!empty($_REQUEST['callbackFunction']) && !empty($_REQUEST['application'])){
                 $js = '<script type="text/javascript">window.opener.' . $_REQUEST['callbackFunction'] . '("' . $_REQUEST['application'] . '"); window.close();</script>';
-            }else if(!empty($_REQUEST['refreshParentWindow'])){
+            }elseif(!empty($_REQUEST['refreshParentWindow'])){
                 $js = '<script type="text/javascript">window.opener.location.reload();window.close();</script>';
             }else{
                 $js = '<script type="text/javascript">window.close();</script>';

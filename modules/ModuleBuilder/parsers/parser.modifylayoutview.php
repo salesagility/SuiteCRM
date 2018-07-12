@@ -81,11 +81,11 @@ class ParserModifyLayoutView extends ModuleBuilderParser
             $this->_sourceFile = $this->_workingFile;
             $this->usingWorkingFile = true;
         }
-        else if (is_file($this->_customFile))
+        elseif (is_file($this->_customFile))
         {
             $this->_sourceFile = $this->_customFile;
         }
-        else if (! is_file($this->_sourceFile))
+        elseif (! is_file($this->_sourceFile))
         {
             // if we don't have ANY defined metadata then improvise as best we can
             if (strtolower($this->_view) == 'quickcreate')
@@ -443,7 +443,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                         if (is_string($col))
                         {
                             $properties ['name'] = $col;
-                        } else if (! empty($col ['name']))
+                        } elseif (! empty($col ['name']))
                         {
                             $properties = $col;
                         }

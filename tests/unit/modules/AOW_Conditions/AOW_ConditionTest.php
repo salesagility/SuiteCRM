@@ -1,9 +1,11 @@
 <?php
 
-class AOW_ConditionTest extends PHPUnit_Framework_TestCase
+class AOW_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -29,16 +31,27 @@ class AOW_ConditionTest extends PHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $aowCondition = new AOW_Condition();
         $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowCondition->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $aowCondition->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        
     }
 
     public function testsave_lines()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aow_conditions');
+        $state->pushTable('aod_indexevent');
+        
         $aowCondition = new AOW_Condition();
 
         //populate required values
@@ -63,5 +76,10 @@ class AOW_ConditionTest extends PHPUnit_Framework_TestCase
         foreach ($aow_conditions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
+        $state->popTable('aow_conditions');
     }
 }

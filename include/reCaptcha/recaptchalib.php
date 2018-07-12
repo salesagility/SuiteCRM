@@ -136,7 +136,8 @@ function recaptcha_get_html ($pubkey, $error = null, $use_ssl = false)
 /**
  * A ReCaptchaResponse is returned from recaptcha_check_answer()
  */
-class ReCaptchaResponse {
+class ReCaptchaResponse
+{
         var $is_valid;
         var $error;
 }
@@ -252,7 +253,7 @@ function _recaptcha_mailhide_email_parts ($email) {
 
 	if (strlen ($arr[0]) <= 4) {
 		$arr[0] = substr ($arr[0], 0, 1);
-	} else if (strlen ($arr[0]) <= 6) {
+	} elseif (strlen ($arr[0]) <= 6) {
 		$arr[0] = substr ($arr[0], 0, 3);
 	} else {
 		$arr[0] = substr ($arr[0], 0, 4);

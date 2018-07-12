@@ -123,6 +123,7 @@ if(isset($_REQUEST['only_since']) && $_REQUEST['only_since'] == 1) {
 $stored_options = array();
 $stored_options['from_name'] = trim($_REQUEST['from_name']);
 $stored_options['from_addr'] = trim($_REQUEST['from_addr']);
+isValidEmailAddress($stored_options['from_addr']);
 $stored_options['reply_to_name'] = trim($_REQUEST['reply_to_name']);
 $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr']);
 $stored_options['only_since'] = $onlySince;
@@ -420,7 +421,7 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
         case 'status':
             if($focus->status == 'Inactive')
                 $f->clearSubscriptionsForFolder($focus->groupfolder_id);
-            else if($focus->mailbox_type != 'bounce' )
+            elseif($focus->mailbox_type != 'bounce' )
                 $f->addSubscriptionsToGroupFolder();
             break;
     }

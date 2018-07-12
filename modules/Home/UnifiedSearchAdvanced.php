@@ -48,7 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class UnifiedSearchAdvanced {
+class UnifiedSearchAdvanced
+{
 
     var $query_string = '';
     
@@ -128,7 +129,7 @@ class UnifiedSearchAdvanced {
 			if(!isset($modules_to_search[$module]) && $data['visible'] && ACLController::checkAccess($module, 'list', true))
 			{
 			   $modules_to_search[$module]['checked'] = false;
-			} else if (isset($modules_to_search[$module]) && !$data['visible']) {
+			} elseif (isset($modules_to_search[$module]) && !$data['visible']) {
 			   unset($modules_to_search[$module]);
 			}
 		}
@@ -155,7 +156,7 @@ class UnifiedSearchAdvanced {
 		}
 
 		$sugar_smarty->assign('SHOWGSDIV', $showDiv);
-		$sugar_smarty->debugging = true;
+		$sugar_smarty->debugging = false;
 		return $sugar_smarty->fetch($tpl);
 	}
 
@@ -312,7 +313,7 @@ class UnifiedSearchAdvanced {
                 foreach($innerJoins as $field=>$def) {
                     if (isset($def['db_field'])) {
                       foreach($def['db_field'] as $dbfield)
-                          $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
+                          $where_clauses[] = $dbfield . " LIKE '" . DBManagerFactory::getInstance()->quote($this->query_string) . "%'";
                           $params['custom_select'] .= ", $dbfield";
                           $params['distinct'] = true;
                           //$filterFields[$dbfield] = $dbfield;
@@ -377,7 +378,7 @@ class UnifiedSearchAdvanced {
 			foreach($module_counts as $name=>$value) {
 				echo $module_results[$name];
 			}
-		} else if(empty($_REQUEST['form_only'])) {
+		} elseif(empty($_REQUEST['form_only'])) {
 			echo $home_mod_strings['LBL_NO_RESULTS'];
 			echo $home_mod_strings['LBL_NO_RESULTS_TIPS'];
 		}
@@ -411,7 +412,7 @@ class UnifiedSearchAdvanced {
 			if(!empty($metafiles[$moduleName]['searchfields']))
 			{
 				require $metafiles[$moduleName]['searchfields'] ;
-			} else if(file_exists("modules/{$moduleName}/metadata/SearchFields.php")) {
+			} elseif(file_exists("modules/{$moduleName}/metadata/SearchFields.php")) {
 				require "modules/{$moduleName}/metadata/SearchFields.php" ;
 			}
 

@@ -25,7 +25,8 @@
 
 require_once __DIR__ . '/../../AOW_Actions/actions/actionBase.php';
 require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
-class actionSendEmail extends actionBase {
+class actionSendEmail extends actionBase
+{
 
     private $emailableModules = array();
     
@@ -218,7 +219,7 @@ class actionSendEmail extends actionBase {
                                 break;
                             Case 'all':
                             default:
-                                global $db;
+                                $db = DBManagerFactory::getInstance();
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
                                 $result = $db->query($sql);
                                 while ($row = $db->fetchByAssoc($result)) {
@@ -246,11 +247,11 @@ class actionSendEmail extends actionBase {
                             $id = $bean->$idName;
                             $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
                         }
-                        else if($field['type'] == 'link'){
+                        elseif($field['type'] == 'link'){
                             $relField = $field['name'];
                             if(isset($field['module']) && $field['module'] != '') {
                                 $rel_module = $field['module'];
-                            } else if($bean->load_relationship($relField)){
+                            } elseif($bean->load_relationship($relField)){
                                 $rel_module = $bean->$relField->getRelatedModuleName();
                             }
                             $linkedBeans = $bean->get_linked_beans($relField,$rel_module);
@@ -385,7 +386,7 @@ class actionSendEmail extends actionBase {
                     }
                 }
             }
-            else if($bean_arr['type'] == 'link'){
+            elseif($bean_arr['type'] == 'link'){
                 if(!isset($bean_arr['module']) || $bean_arr['module'] == '') $bean_arr['module'] = getRelatedModule($bean->module_dir,$bean_arr['name']);
                 if(isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress'){
                     $linkedBeans = $bean->get_linked_beans($bean_arr['name'],$bean_arr['module'], array(), 0, 1);
@@ -451,6 +452,7 @@ class actionSendEmail extends actionBase {
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
         $mail->From = $defaults['email'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $defaults['name'];
         $mail->ClearAllRecipients();
         $mail->ClearReplyTos();
@@ -486,6 +488,7 @@ class actionSendEmail extends actionBase {
             $emailObj->description = $mail->AltBody;
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr = $mail->From;
+            isValidEmailAddress($emailObj->from_addr);
             if ( $relatedBean instanceOf SugarBean && !empty($relatedBean->id) ) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;

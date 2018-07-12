@@ -47,7 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class ProspectListFormBase {
+class ProspectListFormBase
+{
 
 
 function getForm($prefix, $mod='', $form=''){

@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 // Task is used to store customer information.
-class Task extends SugarBean {
+class Task extends SugarBean
+{
         var $field_name_map;
 
 	// Stored fields
@@ -158,13 +159,6 @@ class Task extends SugarBean {
 
         }
 
-
-
-	function fill_in_additional_list_fields()
-	{
-
-	}
-
 	function fill_in_additional_detail_fields()
 	{
         parent::fill_in_additional_detail_fields();
@@ -212,7 +206,7 @@ class Task extends SugarBean {
 		if (is_subclass_of($parent, 'Person')) {
 			$query = "SELECT first_name, last_name, assigned_user_id parent_name_owner from $parent->table_name where id = '$this->parent_id'";
 		}
-		else if (is_subclass_of($parent, 'File')) {
+		elseif (is_subclass_of($parent, 'File')) {
 			$query = "SELECT document_name, assigned_user_id parent_name_owner from $parent->table_name where id = '$this->parent_id'";
 		}
 		else {
@@ -238,7 +232,7 @@ class Task extends SugarBean {
 		{
 			$this->parent_name = $locale->getLocaleFormattedName(stripslashes($row['first_name']), stripslashes($row['last_name']));
 		}
-		else if (is_subclass_of($parent, 'File') && $row != null) {
+		elseif (is_subclass_of($parent, 'File') && $row != null) {
 			$this->parent_name = $row['document_name'];
 		}
 		elseif($row != null)
@@ -275,7 +269,7 @@ class Task extends SugarBean {
 			{ 
 				$taskClass = 'overdueTask'; 
 			}
-		}else if( $dd	== $today ){
+		}elseif( $dd	== $today ){
             $taskClass = 'todaysTask';
 		}
         $task_fields['DATE_DUE']= "<font class='$taskClass'>$date_due</font>";
@@ -295,7 +289,15 @@ class Task extends SugarBean {
 
 		$today = $timedate->nowDb();
 		$task_fields = $this->get_list_view_array();
-		$dbtime = $timedate->to_db($task_fields['DATE_DUE']);
+                
+                if (!isset($task_fields['DATE_DUE'])) {
+                    LoggerManager::getLogger()->warn('Task get_list_view_data: Undefined index: DATE_DUE');
+                    $taskFieldsDateDue = null;
+                } else {
+                    $taskFieldsDateDue = $task_fields['DATE_DUE'];
+                }
+                
+		$dbtime = $timedate->to_db($taskFieldsDateDue);
 		if($override_date_for_subpanel){
 			$dbtime = $timedate->to_db($task_fields['DATE_START']);
 		}
@@ -385,7 +387,7 @@ class Task extends SugarBean {
 			}
 			/* BEGIN - SECURITY GROUPS */
 			//parent_name_owner not being set for whatever reason so we need to figure this out
-			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+			elseif(!empty($this->parent_type) && !empty($this->parent_id)) {
 				global $current_user;
                 $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
                 if($parent_bean !== false) {

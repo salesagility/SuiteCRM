@@ -1,6 +1,6 @@
 <?php
 
-class ViewImportvcardsaveTest extends PHPUnit_Framework_TestCase
+class ViewImportvcardsaveTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function test__construct()
     {
@@ -14,7 +14,11 @@ class ViewImportvcardsaveTest extends PHPUnit_Framework_TestCase
     //incomplete test. this method uses exit() so it cannot be tested.
     public function testdisplay()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $view = new ViewImportvcardsave();
 
@@ -29,5 +33,10 @@ class ViewImportvcardsaveTest extends PHPUnit_Framework_TestCase
         */
 
         $this->markTestIncomplete('Can Not be implemented');
+        
+        
+        // clean up
+        
+        
     }
 }

@@ -24,7 +24,8 @@
  */
 require_once 'modules/InboundEmail/InboundEmail.php';
 require_once 'include/clean.php';
-class AOPInboundEmail extends InboundEmail {
+class AOPInboundEmail extends InboundEmail
+{
 
     /**
      * Replaces embedded image links with links to the appropriate note in the CRM.
@@ -86,6 +87,7 @@ class AOPInboundEmail extends InboundEmail {
             } else {
                 $contactAddr = $email->from_addr;
             }
+            isValidEmailAddress($contactAddr);
 
             $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
             if($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
@@ -151,12 +153,14 @@ class AOPInboundEmail extends InboundEmail {
                 $fromAddress = "";
                 if (!empty($this->stored_options)) {
                     $fromAddress = $storedOptions['from_addr'];
+                    isValidEmailAddress($fromAddress);
                     $fromName = from_html($storedOptions['from_name']);
                     $replyToName = (!empty($storedOptions['reply_to_name']))? from_html($storedOptions['reply_to_name']) :$fromName ;
                     $replyToAddr = (!empty($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : $fromAddress;
                 } // if
                 $defaults = $current_user->getPreferredEmail();
                 $fromAddress = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
+                isValidEmailAddress($fromAddress);
                 $fromName = (!empty($fromName)) ? $fromName : $defaults['name'];
                 $to[0]['email'] = $contactAddr;
 
@@ -180,6 +184,7 @@ class AOPInboundEmail extends InboundEmail {
 
                 $email->email2init();
                 $email->from_addr = $email->from_addr_name;
+                isValidEmailAddress($email->from_addr);
                 $email->to_addrs = $email->to_addrs_names;
                 $email->cc_addrs = $email->cc_addrs_names;
                 $email->bcc_addrs = $email->bcc_addrs_names;
@@ -213,8 +218,10 @@ class AOPInboundEmail extends InboundEmail {
             echo "First if not matching\n";
             if(!empty($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
+                isValidEmailAddress($contactAddr);
             } else {
                 $contactAddr = $email->from_addr;
+                isValidEmailAddress($contactAddr);
             }
             $this->handleAutoresponse($email, $contactAddr);
         }

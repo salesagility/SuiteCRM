@@ -243,7 +243,7 @@ foreach($moduleFilters as $modFilter => $fieldArray){
 <?php
 ///////////////////// END STEP 1 - Select users/modules /////////////////////////
 }
-else if(!isset($_GET['execute'])){
+elseif(!isset($_GET['execute'])){
 ///////////////////// BEGIN STEP 2 - Confirm Selections /////////////////////////
 	if(empty($_POST['modules'])){
 		sugar_die($mod_strings_users['ERR_REASS_SELECT_MODULE']);
@@ -258,8 +258,8 @@ else if(!isset($_GET['execute'])){
 	$tousername = $_POST['touser'];
 
 	$query = "select user_name, id from users where id in ('{$_POST['fromuser']}', '{$_POST['touser']}')";
-	$res = $GLOBALS['db']->query($query, true);
-	while($row = $GLOBALS['db']->fetchByAssoc($res)){
+	$res = DBManagerFactory::getInstance()->query($query, true);
+	while($row = DBManagerFactory::getInstance()->fetchByAssoc($res)){
 		if($row['id'] == $_POST['fromuser'])
 			$fromusername = $row['user_name'];
 		if($row['id'] == $_POST['touser'])
@@ -357,8 +357,8 @@ else if(!isset($_GET['execute'])){
 		$_SESSION['reassignRecords']['modules'][$module]['query'] = $query;
 		$_SESSION['reassignRecords']['modules'][$module]['update'] = $updatequery;
 
-		$res = $GLOBALS['db']->query($countquery, true);
-		$row = $GLOBALS['db']->fetchByAssoc($res);
+		$res = DBManagerFactory::getInstance()->query($countquery, true);
+		$row = DBManagerFactory::getInstance()->fetchByAssoc($res);
 
 		echo "{$row['count']} {$mod_strings_users['LBL_REASS_RECORDS_FROM']} {$app_list_strings['moduleList'][$p_module]} {$mod_strings_users['LBL_REASS_WILL_BE_UPDATED']}\n<BR>\n";
 		echo "<input type=checkbox name={$module}_workflow> {$mod_strings_users['LBL_REASS_WORK_NOTIF_AUDIT']}<BR>\n";
@@ -376,7 +376,7 @@ else if(!isset($_GET['execute'])){
 ///////////////////// END STEP 2 - Confirm Selections /////////////////////////
 }
 /////////////////// BEGIN STEP 3 - Execute reassignment ///////////////////////
-else if(isset($_GET['execute']) && $_GET['execute'] == true){
+elseif(isset($_GET['execute']) && $_GET['execute'] == true){
 	$fromuser = $_SESSION['reassignRecords']['fromuser'];
 	$touser = $_SESSION['reassignRecords']['touser'];
 	$fromusername = $_SESSION['reassignRecords']['fromusername'];
@@ -394,14 +394,14 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 
 		echo "<h5>{$mod_strings_users['LBL_PROCESSING']} {$app_list_strings['moduleList'][$p_module]}</h5>";
 
-		$res = $GLOBALS['db']->query($query, true);
+		$res = DBManagerFactory::getInstance()->query($query, true);
 
 		//echo "<i>Workflow and Notifications <b>".($workflow ? "enabled" : "disabled")."</b> for this module record reassignment</i>\n<BR>\n";
 		echo "<table border='0' cellspacing='0' cellpadding='0'  class='detail view'>\n";
 		echo "<tr>\n";
 		echo "<td>\n";
 		if(! $workflow){
-			$affected_rows = $GLOBALS['db']->getAffectedRowCount($res);
+			$affected_rows = DBManagerFactory::getInstance()->getAffectedRowCount($res);
 			echo "{$mod_strings_users['LBL_UPDATE_FINISH']}: $affected_rows {$mod_strings_users['LBL_AFFECTED']}<BR>\n";
 		}
 		else{
@@ -409,7 +409,7 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 			$failarr = array();
 
 			require_once($beanFiles[$module]);
-			while($row = $GLOBALS['db']->fetchByAssoc($res)){
+			while($row = DBManagerFactory::getInstance()->fetchByAssoc($res)){
 				$bean = new $module();
 				if(empty($row['id'])){
 					continue;
@@ -427,10 +427,10 @@ else if(isset($_GET['execute']) && $_GET['execute'] == true){
 					if(!empty($bean->name)){
 						$linkname = $bean->name;
 					}
-					else if(!empty($bean->last_name)){
+					elseif(!empty($bean->last_name)){
 						$linkname = $locale->getLocaleFormattedName($bean->first_name, $bean->last_name);
 					}
-					else if(!empty($bean->document_name)){
+					elseif(!empty($bean->document_name)){
 						$linkname = $bean->document_name;
 					}
 					$successstr = "{$mod_strings_users['LBL_REASS_SUCCESS_ASSIGN']} {$bean->object_name} \"<i><a href=\"index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}\">$linkname</a></i>\" {$mod_strings_users['LBL_REASS_FROM']} $fromusername {$mod_strings_users['LBL_REASS_TO']} $tousername";

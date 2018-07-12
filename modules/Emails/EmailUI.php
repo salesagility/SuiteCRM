@@ -68,6 +68,13 @@ class EmailUI
                                    WHERE (type = '::TYPE::' OR status = '::STATUS::') AND assigned_user_id = '::USER_ID::' AND emails.deleted = '0'";
 
     /**
+     * Setting this to false will prevent the email tick to be appended to the compose email link
+     *
+     * @var bool
+     */
+    public $appendTick = true;
+
+    /**
      * Sole constructor
      */
     public function __construct()
@@ -426,19 +433,27 @@ eoq;
         global $focus;
         $myBean = $focus;
         $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
-
+        
+        $enableConfirmedOptIn = null;
+        if (isset($configurator->config['email_enable_confirm_opt_in'])) {
+            $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
+        }
+        
         if (!empty($bean)) {
             $myBean = $bean;
         } else {
             $GLOBALS['log']->warn('EmailUI::populateComposeViewFields - $bean is empty');
         }
 
-
-        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+        $emailLink = '<a class="email-link"'
             . ' onclick="$(document).openComposeViewModal(this);"'
-            . ' data-module="" data-record-id="" data-module-name="" data-email-address="">';
-        $emailLinkOverwritten = false;
+            . ' data-module="' . $myBean->module_name
+            . '" data-record-id="' . $myBean->id
+            . '" data-module-name="' . $myBean->name
+            . '" data-email-address="">'
+            . $innerText;
 
         // focus is set?
         if (!is_object($myBean)) {
@@ -465,7 +480,7 @@ eoq;
 
             foreach ($emailFields as $emailField) {
                 if (!empty($composeData)) {
-                    $emailLink = '<a href="javascript:void(0);"  onclick=" $(document).openComposeViewModal(this);" ' .
+                    $emailLink = '<a onclick=" $(document).openComposeViewModal(this);" ' .
                         'data-module="' . $composeData['parent_type'] . '" ' . 'data-record-id="' .
                         $composeData['parent_id'] . '" data-module-name="' . $composeData['parent_name'] .
                         '"  data-email-address="' . $composeData['to_addrs'] . '">';
@@ -475,7 +490,7 @@ eoq;
                     $invalid = false;
 
                     if ($enableConfirmedOptIn === SugarEmailAddress::COI_STAT_DISABLED) {
-                        $emailLink = '<a class="email-link" href="javascript:void(0);"'
+                        $emailLink = '<a class="email-link"'
                             . ' onclick="$(document).openComposeViewModal(this);"'
                             . ' data-module="'
                             . $myBean->module_name . '" ' . 'data-record-id="'
@@ -514,26 +529,31 @@ eoq;
                                         || $invalid === true
                                     ) {
                                         $emailLink =
-                                            '<a class="email-link" href="javascript:void(0);"'
+                                            '<a class="email-link"'
                                             . ' onclick="$(document).openComposeViewModal(this);"'
                                             . ' data-module="' . $myBean->module_name . '" ' . 'data-record-id="'
                                             . $myBean->id . '" data-module-name="'
                                             . $myBean->name . '" data-email-address="'
                                             . $myBean->{$emailField} . '">';
-                                        $emailLink .= $email_tick;
+                                        if ($this->appendTick) {
+                                            $emailLink .= $email_tick;
+                                        }
                                         $emailLink .= '<span class="email-line-through">';
                                         $emailLink .= $myBean->{$emailField};
                                         $emailLink .= '</span>';
                                     } else {
                                         $emailLink =
-                                            '<a class="email-link" href="javascript:void(0);"'
+                                            '<a class="email-link"'
                                             . ' onclick="$(document).openComposeViewModal(this);"'
                                             . ' data-module="'
                                             . $myBean->module_name . '" ' . 'data-record-id="'
                                             . $myBean->id . '" data-module-name="'
                                             . $myBean->name . '" data-email-address="'
                                             . $myBean->{$emailField} . '">';
-                                        $emailLink .= $email_tick . $myBean->{$emailField};
+                                        if ($this->appendTick) {
+                                            $emailLink .= $email_tick;
+                                        }
+                                        $emailLink .= $myBean->{$emailField};
 
                                     }
                                     $emailLink .= '</a>';
@@ -1442,7 +1462,7 @@ eoq;
      */
     public function getDraftAttachments($ret)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         // $ret['uid'] is the draft Email object's GUID
         $ret['attachments'] = array();
@@ -1566,6 +1586,8 @@ eoq;
             $address = trim(array_pop($name));
             $address = str_replace(array("<", ">", "&lt;", "&gt;"), "", $address);
 
+            isValidEmailAddress($address);
+            
             $emailAddress[] = array(
                 'email_address' => $address,
                 'primary_address' => 1,
@@ -1771,6 +1793,7 @@ eoq;
         $smarty->assign('DATE_START', $focus->date_start);
         $smarty->assign('TIME_START', $focus->time_start);
         $smarty->assign('FROM', $focus->from_addr);
+        isValidEmailAddress($focus->from_addr);
         $smarty->assign('TO', nl2br($focus->to_addrs));
         $smarty->assign('CC', nl2br($focus->cc_addrs));
         $smarty->assign('BCC', nl2br($focus->bcc_addrs));
@@ -2269,6 +2292,7 @@ eoq;
         $ret['name'] = $email->name;
         $ret['description'] = $description;
         $ret['from'] = (isset($_REQUEST['composeType']) && $_REQUEST['composeType'] == 'forward') ? "" : $email->from_addr;
+        isValidEmailAddress($ret['from']);
         $ret['to'] = from_html($toAddresses);
         $ret['uid'] = $email->id;
         $ret['parent_name'] = $email->parent_name;
@@ -2289,7 +2313,9 @@ eoq;
             foreach ($userEmailsMeta as $emailMeta) {
                 $userEmails[] = from_html(strtolower(trim($emailMeta['email_address'])));
             }
-            $userEmails[] = from_html(strtolower(trim($email->from_addr)));
+            $fromAddr = from_html(strtolower(trim($email->from_addr)));
+            isValidEmailAddress($fromAddr);
+            $userEmails[] = $fromAddr;
 
             $ret['cc'] = from_html($email->cc_addrs);
             $toAddresses = from_html($toAddresses);
@@ -2338,6 +2364,7 @@ eoq;
                     $email->cc_addrs = "";
                     if (!empty($email->reply_to_addr)) {
                         $email->from_addr = $email->reply_to_addr;
+                        isValidEmailAddress($email->from_addr);
                     } // if
                 } else {
                     if (!empty($email->reply_to_addr)) {
@@ -2390,7 +2417,7 @@ eoq;
     public function _getPeopleUnionQuery($whereArr, $person)
     {
         global $current_user, $app_strings;
-        global $db;
+        $db = DBManagerFactory::getInstance();
         if (!isset($person) || $person === 'LBL_DROPDOWN_LIST_ALL') {
             $peopleTables = array(
                 "users",
@@ -2714,7 +2741,7 @@ eoq;
                 "length") . ",0) > 0";
         $r = $user->db->query($q);
 
-        while ($row = $GLOBALS['db']->fetchByAssoc($r)) {
+        while ($row = DBManagerFactory::getInstance()->fetchByAssoc($r)) {
             if ($row['folder_type'] == 'inbound') {
                 $parent_id = $row['id'];
             }
@@ -2884,6 +2911,7 @@ eoq;
 
             $name = $v->get_stored_options('from_name');
             $addr = $v->get_stored_options('from_addr');
+            isValidEmailAddress($addr);
             if ($name != null && $addr != null) {
                 $name = from_html($name);
                 if (!$v->is_personal) {

@@ -1,6 +1,7 @@
 <?php
 
-class SugarMin {
+class SugarMin
+{
 
     /**
      * jsParser will take javascript source code and minify it.

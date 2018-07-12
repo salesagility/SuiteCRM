@@ -7,7 +7,8 @@ require_once('modules/jjwg_Markers/jjwg_Markers_sugar.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
 
-class jjwg_Markers extends jjwg_Markers_sugar {
+class jjwg_Markers extends jjwg_Markers_sugar
+{
 
     /**
      * @var settings array
@@ -79,7 +80,15 @@ class jjwg_Markers extends jjwg_Markers_sugar {
         if (!$this->is_valid_lng($loc['lng'])) {
             $loc['lng'] = $this->settings['map_default_center_longitude'];
         }
-        $loc['image'] = $marker->marker_image;
+        
+        if (!isset($marker->marker_image)) {
+            LoggerManager::getLogger()->warn('jjwg_Markers define_loc: Trying to get property of non-object ($marker->marker_image)');
+            $markerMarkerImage = null;
+        } else {
+            $markerMarkerImage = $marker->marker_image;
+        }
+        
+        $loc['image'] = $markerMarkerImage;
         return $loc;
     }
 

@@ -44,7 +44,8 @@
  */
 
 
-class TemplateSectionLine_sugar extends Basic {
+class TemplateSectionLine_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'TemplateSectionLine';
 	var $object_name = 'TemplateSectionLine';

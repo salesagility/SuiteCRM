@@ -23,7 +23,8 @@
  */
 
 
-class actionBase {
+class actionBase
+{
 
     var $id;
 

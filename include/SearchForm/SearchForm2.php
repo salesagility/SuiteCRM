@@ -292,6 +292,11 @@ class SearchForm
         $searchFormInPopup = !in_array($this->module, isset($sugar_config['enable_legacy_search']) ? $sugar_config['enable_legacy_search'] : array());
         $this->th->ss->assign('searchFormInPopup', $searchFormInPopup);
 
+        if(!isset($this->seed)) {
+            LoggerManager::getLogger()->warn('Undefined seed for display search form while trying to get module_dir');
+            $this->seed = new stdClass();
+            $this->seed->module_dir = null;
+        }
         $return_txt = $this->th->displayTemplate($this->seed->module_dir, 'SearchForm_' . $this->parsedView, $this->locateFile($this->tpl));
 
         if ($header) {
@@ -324,7 +329,7 @@ class SearchForm
         global $app_strings, $mod_strings;
         $data = array();
         $fields = array_merge($this->fieldDefs, (array)$this->customFieldDefs);
-        $fields = array_merge($fields, $this->searchFields);
+        $fields = array_merge($fields, (array)$this->searchFields);
         foreach ($fields as $name => $defs) {
             if (preg_match('/(.*)_basic$/', $name, $match)) {
                 if (isset($fields[$match[1]]['value']) && $fields[$match[1]]['value'] && (!isset($defs['value']) || !$defs['value'])) {
@@ -337,7 +342,7 @@ class SearchForm
                 }
             }
         }
-        $searchFieldsKeys = array_keys($this->searchFields);
+        $searchFieldsKeys = array_keys((array)$this->searchFields);
         foreach ($fields as $name => $defs) {
             $searchTypeKey = false;
             if (preg_match('/(.*)_basic$/', $name, $match)) {
@@ -497,7 +502,11 @@ class SearchForm
 
     function displaySavedSearchSelect()
     {
-        $savedSearch = new SavedSearch($this->listViewDefs[$this->module], $this->lv->data['pageData']['ordering']['orderBy'], $this->lv->data['pageData']['ordering']['sortOrder']);
+        $savedSearch = new SavedSearch(
+            $this->listViewDefs[$this->module], 
+            isset($this->lv->data['pageData']['ordering']['orderBy']) ? $this->lv->data['pageData']['ordering']['orderBy'] : null, 
+            isset($this->lv->data['pageData']['ordering']['sortOrder']) ? $this->lv->data['pageData']['ordering']['sortOrder'] : null
+        );
         $savedSearchSelect = $savedSearch->getSelect($this->module, $savedSearchData);
         $this->savedSearchData = $savedSearchData;
 
@@ -578,7 +587,7 @@ class SearchForm
                     $this->fieldDefs[$fvName] = array_merge($this->seed->field_defs[$name], $this->fieldDefs[$fvName]);
                 else {
                     $this->fieldDefs[$fvName] = $this->seed->field_defs[$name];
-                    $this->fieldDefs[$fvName]['name'] = $this->fieldDefs[$fvName]['name'] . '_' . $this->parsedView;
+                    $this->fieldDefs[$fvName]['name'] = (isset($this->fieldDefs[$fvName]['name']) ? $this->fieldDefs[$fvName]['name'] : null) . '_' . $this->parsedView;
                 }
 
                 if (isset($this->fieldDefs[$fvName]['type']) && $this->fieldDefs[$fvName]['type'] == 'relate') {
@@ -703,7 +712,7 @@ class SearchForm
                         if (empty($this->fieldDefs[$long_name]['value'])) {
                             $this->fieldDefs[$long_name]['value'] = $array[$long_name];
                         }
-                    } else if (!empty($array[$name]) && !$fromMergeRecords) // basic
+                    } elseif (!empty($array[$name]) && !$fromMergeRecords) // basic
                     {
                         $this->searchFields[$name]['value'] = $array[$name];
                         if (empty($this->fieldDefs[$long_name]['value'])) {
@@ -857,7 +866,7 @@ class SearchForm
                         //if both start and end ranges have not been defined, skip this filter.
                         continue;
                     }
-                } else if (preg_match('/^range_(.*?)$/', $field, $match) && isset($this->searchFields[$field]['value'])) {
+                } elseif (preg_match('/^range_(.*?)$/', $field, $match) && isset($this->searchFields[$field]['value'])) {
                     $real_field = $match[1];
 
                     //Special case for datetime and datetimecombo fields.  By setting the type here we allow an actual between search
@@ -963,7 +972,7 @@ class SearchForm
                             // In that case, $val is empty.
                             // When $val is empty, we need to use "IS NULL",
                             // as "in (null)" won't work
-                            else if ($operator == 'in') {
+                            elseif ($operator == 'in') {
                                 $operator = 'isnull';
                             }
                         }
@@ -1025,7 +1034,7 @@ class SearchForm
                                 }
 
 
-                            } else if ($type == 'parent') {
+                            } elseif ($type == 'parent') {
                                 if (!empty($this->searchFields['parent_type'])) {
                                     $parentType = $this->searchFields['parent_type'];
                                     $rel_module = $parentType['value'];
@@ -1037,13 +1046,13 @@ class SearchForm
                                     }
                                 }
                             } // Relate fields in custom modules and custom relate fields
-                            else if ($type == 'relate' && $customField && !empty($this->seed->field_name_map[$field]['module'])) {
+                            elseif ($type == 'relate' && $customField && !empty($this->seed->field_name_map[$field]['module'])) {
                                 $db_field = !empty($this->seed->field_name_map[$field]['name']) ? $this->seed->field_name_map[$field]['name'] : 'name';
-                            } else if (!$customField) {
+                            } elseif (!$customField) {
                                 if (!empty($this->seed->field_name_map[$field]['db_concat_fields']))
                                     $db_field = $db->concat($this->seed->table_name, $this->seed->field_name_map[$db_field]['db_concat_fields']);
                                 // Relationship fields get the name directly from the field_name_map
-                                else if (!(isset($this->seed->field_name_map[$db_field]) && isset($this->seed->field_name_map[$db_field]['source']) && $this->seed->field_name_map[$db_field]['source'] == 'non-db'))
+                                elseif (!(isset($this->seed->field_name_map[$db_field]) && isset($this->seed->field_name_map[$db_field]['source']) && $this->seed->field_name_map[$db_field]['source'] == 'non-db'))
                                     $db_field = $this->seed->table_name . "." . $db_field;
                             } else {
                                 if (!empty($this->seed->field_name_map[$field]['db_concat_fields']))
@@ -1084,20 +1093,20 @@ class SearchForm
                                     // FG - bug45287 - Note "start" and "end" are the correct interval at GMT timezone
                                     $field_value = array($dates["start"], $dates["end"]);
                                     $operator = 'between';
-                                } else if ($operator == 'not_equal') {
+                                } elseif ($operator == 'not_equal') {
                                     $dates = $timedate->getDayStartEndGMT($field_value);
                                     $field_value = array($dates["start"], $dates["end"]);
                                     $operator = 'date_not_equal';
-                                } else if ($operator == 'greater_than') {
+                                } elseif ($operator == 'greater_than') {
                                     $dates = $timedate->getDayStartEndGMT($field_value);
                                     $field_value = $dates["end"];
-                                } else if ($operator == 'less_than') {
+                                } elseif ($operator == 'less_than') {
                                     $dates = $timedate->getDayStartEndGMT($field_value);
                                     $field_value = $dates["start"];
-                                } else if ($operator == 'greater_than_equals') {
+                                } elseif ($operator == 'greater_than_equals') {
                                     $dates = $timedate->getDayStartEndGMT($field_value);
                                     $field_value = $dates["start"];
-                                } else if ($operator == 'less_than_equals') {
+                                } elseif ($operator == 'less_than_equals') {
                                     $dates = $timedate->getDayStartEndGMT($field_value);
                                     $field_value = $dates["end"];
                                 }

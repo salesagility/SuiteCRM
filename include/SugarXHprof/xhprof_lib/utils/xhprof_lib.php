@@ -195,7 +195,7 @@ function xhprof_valid_run($run_id, $raw_data) {
   // raw data should contain either wall time or samples information...
   if (isset($main_info["wt"])) {
     $metric = "wt";
-  } else if (isset($main_info["samples"])) {
+  } elseif (isset($main_info["samples"])) {
     $metric = "samples";
   } else {
     xhprof_error("XHProf: Wall Time information missing from Run ID: $run_id");
@@ -648,7 +648,7 @@ function xhprof_prune_run($raw_data, $prune_percent) {
   // raw data should contain either wall time or samples information...
   if (isset($main_info["wt"])) {
     $prune_metric = "wt";
-  } else if (isset($main_info["samples"])) {
+  } elseif (isset($main_info["samples"])) {
     $prune_metric = "samples";
   } else {
     xhprof_error("XHProf: for main() we must have either wt "
@@ -676,7 +676,7 @@ function xhprof_prune_run($raw_data, $prune_percent) {
     // is this child's overall total from all parents less than threshold?
     if ($flat_info[$child][$prune_metric] < $prune_threshold) {
       unset($raw_data[$parent_child]); // prune the edge
-    } else if ($parent &&
+    } elseif ($parent &&
                ($parent != "__pruned__()") &&
                ($flat_info[$parent][$prune_metric] < $prune_threshold)) {
 
@@ -744,7 +744,7 @@ function xhprof_get_param_helper($param) {
   $val = null;
   if (isset($_GET[$param]))
     $val = $_GET[$param];
-  else if (isset($_POST[$param])) {
+  elseif (isset($_POST[$param])) {
     $val = $_POST[$param];
   }
   return $val;

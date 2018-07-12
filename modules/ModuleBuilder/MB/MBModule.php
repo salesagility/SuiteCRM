@@ -190,8 +190,8 @@ class MBModule
         if (! empty ( $vardefs ))
         {
             if (empty ( $type ) && empty ( $name ))
-                return false ; else if (empty ( $type ))
-                return ! empty ( $vardefs [ 'fields' ] [ $name ] ) ; else if (empty ( $name ))
+                return false ; elseif (empty ( $type ))
+                return ! empty ( $vardefs [ 'fields' ] [ $name ] ) ; elseif (empty ( $name ))
             {
                 foreach ( $vardefs [ 'fields' ] as $def )
                 {
@@ -496,7 +496,7 @@ class MBModule
             $class [ 'requires' ] [] = MB_TEMPLATES . '/' . $template . '/' . ucfirst ( $template ) . '.php' ;
         }
         $class [ 'importable' ] = $this->config [ 'importable' ] ;
-        $class [ 'inline_edit' ] = $this->config [ 'inline_edit' ] ;
+        $class [ 'inline_edit' ] = isset($this->config [ 'inline_edit' ]) ? $this->config [ 'inline_edit' ] : null;
         $this->mbvardefs->updateVardefs () ;
         $class [ 'fields' ] = $this->mbvardefs->vardefs [ 'fields' ] ;
         $class [ 'fields_string' ] = var_export_helper ( $this->mbvardefs->vardef [ 'fields' ] ) ;

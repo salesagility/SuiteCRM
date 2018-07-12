@@ -48,7 +48,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * based on the users validation
  *
  */
-class SugarAuthenticate{
+class SugarAuthenticate
+{
 	var $userAuthenticateClass = 'SugarAuthenticateUser';
 	var $authenticationDir = 'SugarAuthenticate';
 
@@ -208,8 +209,7 @@ class SugarAuthenticate{
 
 			$authenticated = $this->postSessionAuthenticate();
 
-		} else
-		if (isset ($action) && isset ($module) && $action == "Authenticate" && $module == "Users") {
+		} elseif (isset ($action) && isset ($module) && $action == "Authenticate" && $module == "Users") {
 			$GLOBALS['log']->debug("We are authenticating user now");
 		} else {
 			$GLOBALS['log']->debug("The current user does not have a session.  Going to the login page");

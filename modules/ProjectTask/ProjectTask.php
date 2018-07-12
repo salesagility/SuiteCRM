@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class ProjectTask extends SugarBean {
+class ProjectTask extends SugarBean
+{
 	// database table columns
 	var $id;
 	var $date_entered;
@@ -266,7 +267,7 @@ class ProjectTask extends SugarBean {
 	function build_generic_where_clause ($the_query_string)
 	{
 		$where_clauses = array();
-		$the_query_string = $GLOBALS['db']->quote($the_query_string);
+		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 		array_push($where_clauses, "project_task.name like '$the_query_string%'");
 
 		$the_where = "";
@@ -332,7 +333,7 @@ class ProjectTask extends SugarBean {
 			}
 			/* BEGIN - SECURITY GROUPS */
 			//parent_name_owner not being set for whatever reason so we need to figure this out
-			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+			elseif(!empty($this->parent_type) && !empty($this->parent_id)) {
 				global $current_user;
                 $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
                 if($parent_bean !== false) {

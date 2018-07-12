@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class DocumentsParseRule extends BaseRule {
+class DocumentsParseRule extends BaseRule
+{
 
 function __construct() {
 
@@ -68,23 +69,23 @@ function preParse($panels, $view) {
 		   	  	 foreach($row as $key=>$column) {
 		   	  	     if($this->matches($column, '/^related_doc_id$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_name';
-		   	  	 	 } else if($this->matches($column, '/^related_doc_rev_id$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^related_doc_rev_id$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = ($view == 'EditView') ? 'related_doc_rev_number' : 'related_doc_name';
-		   	  	 	 } else if($this->matches($column, '/^user_date_format$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^user_date_format$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'active_date';
-		   	  	 	 } else if($this->matches($column, '/^is_template_checked$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^is_template_checked$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'is_template';
-		   	  	 	 } else if($this->matches($column, '/^last_rev_creator$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^last_rev_creator$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'last_rev_created_name';
-		   	  	 	 } else if($this->matches($column, '/^last_rev_date$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^last_rev_date$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'last_rev_create_date';
-		   	  	 	 } else if($this->matches($column, '/^save_file$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^save_file$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'filename';
-		   	  	 	 } else if($this->matches($column, '/^subcategory$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^subcategory$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'subcategory_id';
-		   	  	 	 } else if($this->matches($column, '/^category$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^category$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'category_id';
-		   	  	 	 } else if($this->matches($column, '/^related_document_version$/')) {
+		   	  	 	 } elseif($this->matches($column, '/^related_document_version$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_rev_number';
 		   	  	 	 }
 		   	  	 } //foreach

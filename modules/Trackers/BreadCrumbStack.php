@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class BreadCrumbStack {
+class BreadCrumbStack
+{
 
    /**
 	* Maintain an ordered list of items in the breadcrumbs
@@ -179,7 +180,7 @@ class BreadCrumbStack {
    	    } else {
    		  $query = "UPDATE tracker SET visible = 0 WHERE id = '{$id}'";
    	    }
-        $GLOBALS['db']->query($query, true);
+        DBManagerFactory::getInstance()->query($query, true);
    }
 
    /**

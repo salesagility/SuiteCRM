@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 
-class EmailsViewCompose extends ViewEdit {
+class EmailsViewCompose extends ViewEdit
+{
 
     /**
      * @var Email $bean
@@ -107,9 +108,9 @@ class EmailsViewCompose extends ViewEdit {
             } else {
                 if(isset($attachment->name) && $attachment->name) {
                     $attachmentName = $attachment->name;
-                } else if(isset($attachment->title) && $attachment->title) {
+                } elseif(isset($attachment->title) && $attachment->title) {
                     $attachmentName = $attachment->title;
-                } else if(isset($attachment->subject) && $attachment->subject) {
+                } elseif(isset($attachment->subject) && $attachment->subject) {
                     $attachmentName = $attachment->subject;
                 }
             }

@@ -22,7 +22,7 @@
  * smarty-discussion-subscribe@googlegroups.com 
  *
  * @link http://www.smarty.net/
- * @version 2.6.29
+ * @version 2.6.25-dev
  * @copyright Copyright: 2001-2005 New Digital Group, Inc.
  * @author Andrei Zmievski <andrei@php.net>
  * @access public
@@ -35,7 +35,8 @@
  * Config file reading class
  * @package Smarty
  */
-class Config_File {
+class Config_File
+{
     /**#@+
      * Options
      * @var boolean
@@ -197,7 +198,7 @@ class Config_File {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
             return;
-        } else if (!isset($this->_config_data[$file_name])) {
+        } elseif (!isset($this->_config_data[$file_name])) {
             $this->_trigger_error_msg("Unknown config file '$file_name'");
             return;
         }
@@ -218,7 +219,7 @@ class Config_File {
     {
         if ($file_name === NULL)
             $this->_config_data = array();
-        else if (isset($this->_config_data[$file_name]))
+        elseif (isset($this->_config_data[$file_name]))
             $this->_config_data[$file_name] = array();
     }
 
@@ -238,11 +239,13 @@ class Config_File {
             $config_file = $file_name;
 
         ini_set('track_errors', true);
+
         $contents = @sugar_file_get_contents($config_file);
         if ($contents === false) {
             $this->_trigger_error_msg("Could not open config file '$config_file'");
             return false;
         }
+
 
         $this->_config_data[$config_file] = $this->parse_contents($contents);
         return true;
@@ -363,7 +366,7 @@ class Config_File {
         if ($booleanize) {
             if (preg_match("/^(on|true|yes)$/i", $var_value))
                 $var_value = true;
-            else if (preg_match("/^(off|false|no)$/i", $var_value))
+            elseif (preg_match("/^(off|false|no)$/i", $var_value))
                 $var_value = false;
         }
 

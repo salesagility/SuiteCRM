@@ -99,37 +99,37 @@ if($queryString){
     <tr height='20'>
         <th scope='col' width='10%'data-hide="phone">
 				<span sugar="sugar1">
-                    <div style='white-space: nowrap;'width='100%' align='left'>
+                    <div style='white-space: nowrap; width:100%; text-align:left;'>
                         <?php echo translate("LBL_SEARCH_RESULT_MODULE","AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='30%' data-toggle="true">
 				<span sugar="sugar1">
-                    <div style='white-space: nowrap;'width='100%' align='left'>
+                    <div style='white-space: nowrap; width:100%; text-align:left;'>
                         <?php echo translate("LBL_SEARCH_RESULT_NAME","AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='30%' data-hide="phone">
 				<span sugar="sugar1">
-                    <div style='white-space: nowrap;'width='100%' align='left'>
+                    <div style='white-space: nowrap; width:100%; text-align:left;'>
                         <?php echo translate("LBL_SEARCH_RESULT_SUMMARY","AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='25%' data-hide="phone,phonelandscape">
-            <div style='white-space: nowrap;'width='100%' align='left'>
+            <div style='white-space: nowrap; width:100%; text-align:left;'>
                 <?php echo translate("LBL_SEARCH_RESULT_DATE_CREATED","AOD_Index"); ?>
             </div>
         </th>
         <th scope='col' width='25%' data-hide="phone,phonelandscape">
-            <div style='white-space: nowrap;'width='100%' align='left'>
+            <div style='white-space: nowrap; width:100%; text-align:left;'>
                 <?php echo translate("LBL_SEARCH_RESULT_DATE_MODIFIED","AOD_Index"); ?>
             </div>
         </th>
         <th scope='col' width='10%'>
-            <div style='white-space: nowrap;'width='100%' align='left'>
+            <div style='white-space: nowrap; width:100%; text-align:left;'>
                 <?php echo translate("LBL_SEARCH_RESULT_SCORE","AOD_Index"); ?>
             </div>
         </th>
@@ -159,7 +159,7 @@ function getRecordSummary(SugarBean $bean){
     if (!isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir]) ){
         if(file_exists('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php')){
             require('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php');
-        }else if(file_exists('modules/'.$bean->module_dir.'/metadata/listviewdefs.php')){
+        }elseif(file_exists('modules/'.$bean->module_dir.'/metadata/listviewdefs.php')){
             require('modules/'.$bean->module_dir.'/metadata/listviewdefs.php');
         }
     }

@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/SugarFeed/linkHandlers/Link.php');
 
-class FeedLinkHandlerImage extends FeedLinkHandlerLink {
+class FeedLinkHandlerImage extends FeedLinkHandlerLink
+{
     function getDisplay(&$data) {
         $imageData = unserialize(base64_decode($data['LINK_URL']));
         if ( $imageData['width'] != 0 ) {

@@ -41,7 +41,8 @@
 
 require_once('include/DetailView/DetailView2.php');
 
-class ViewMetadata extends SugarView{
+class ViewMetadata extends SugarView
+{
 	var $type ='detail';
 	var $dv;
 	
@@ -247,7 +248,8 @@ EOQ;
 
 }
 
-class VardefBrowser{
+class VardefBrowser
+{
 
 	function __construct(){
 		

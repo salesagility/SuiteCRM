@@ -23,7 +23,8 @@
  */
 
 
-class AOW_Processed extends Basic {
+class AOW_Processed extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOW_Processed';
 	var $object_name = 'AOW_Processed';

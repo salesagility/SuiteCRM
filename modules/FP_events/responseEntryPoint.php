@@ -1,7 +1,7 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	 
 	$even_id = $_GET['event'];
 	$delegate_id = $_GET['delegate'];
@@ -38,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     			echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
     		}	
     	}
-    	else if($response == 'decline'){
+    	elseif($response == 'decline'){
     		//check to see if they have already responded to the email
             $check_q = 'SELECT email_responded FROM fp_events_contacts_c WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
@@ -88,7 +88,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }   
     	}
-    	else if($response == 'decline'){
+    	elseif($response == 'decline'){
             //check to see if they have already responded to the email
             $check_q = 'SELECT email_responded FROM fp_events_prospects_1_c WHERE fp_events_prospects_1fp_events_ida="'.$event->id.'" AND fp_events_prospects_1prospects_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
@@ -136,7 +136,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 echo 'There was a problem with the link please contact the sender of the invite';
             }   
     	}
-    	else if($response == 'decline'){
+    	elseif($response == 'decline'){
     		//check to see if they have already responded to the email
             $check_q = 'SELECT email_responded FROM fp_events_leads_1_c WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);

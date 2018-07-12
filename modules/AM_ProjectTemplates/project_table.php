@@ -19,7 +19,8 @@
  * @author Andrew Mclaughlan <andrew@mclaughlan.info>
  */
 
-class AM_ProjectTemplatesTable {
+class AM_ProjectTemplatesTable
+{
 
     private $tasks;
     private $project_template_id;

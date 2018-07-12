@@ -139,12 +139,12 @@ class DocumentsViewEdit extends ViewEdit
 			if (!empty($_REQUEST['parent_type'])) {
 				switch (strtolower($_REQUEST['parent_type'])) {
 
-					case "contracts" :
+					case "contracts":
 						$this->ss->assign("LBL_PARENT_NAME",$mod_strings['LBL_CONTRACT_NAME']);
 						break;
 
 					//todo remove leads case.
-					case "leads" :
+					case "leads":
 						$this->ss->assign("LBL_PARENT_NAME",$mod_strings['LBL_CONTRACT_NAME']);
 						break;
 				} //switch

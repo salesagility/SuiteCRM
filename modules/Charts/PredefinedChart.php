@@ -48,7 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class PredefinedChart{
+class PredefinedChart
+{
 	var $params = array();
 
 	function __construct(){

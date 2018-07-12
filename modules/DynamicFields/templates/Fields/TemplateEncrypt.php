@@ -45,7 +45,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
-class TemplateEncrypt extends TemplateField{
+class TemplateEncrypt extends TemplateField
+{
 
 	var $type='encrypt';
 	function save($df){

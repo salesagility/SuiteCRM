@@ -120,7 +120,7 @@ class ViewAdminsettings extends SugarView
 
                 $admin->retrieveSettings(FALSE, TRUE);
                 SugarFeed::flushBackendCache();
-            } else if ($_REQUEST['process'] == 'deleteRecords') {
+            } elseif ($_REQUEST['process'] == 'deleteRecords') {
                 if (!isset($db)) {
                     $db = DBManagerFactory::getInstance();
                 }

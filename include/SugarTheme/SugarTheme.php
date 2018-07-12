@@ -894,7 +894,7 @@ EOHTML;
      * to looking in the base theme.
      * @param  string $imageName image file name
      * @param  bool   $addJSPath call getJSPath() with the results to add some unique image tracking support
-     * @return string path to image
+     * @return string|bool path to image or false if image not found
      */
     public function getImageURL(
         $imageName,
@@ -922,15 +922,17 @@ EOHTML;
 		elseif (($filename = $this->_getImageFileName('include/images/'.$imageName)) != '')
 			$imagePath = $filename;
         else {
-            $GLOBALS['log']->warn("Image $imageName not found");
-            return false;
+            $imagePath = false;
         }
 
-        $this->_imageCache[$imageName] = $imagePath;
+        
+        if ($imagePath) {
+            $this->_imageCache[$imageName] = $imagePath;
 
-        if ( $addJSPath )
-            return getJSPath($imagePath);
-
+            if ( $addJSPath )
+                return getJSPath($imagePath);
+        }
+        
         return $imagePath;
     }
 
@@ -1159,7 +1161,7 @@ EOHTML;
             $value = '';
             if(isset($sugar_config['theme_settings'][$this->dirName][$name])){
                 $value = $sugar_config['theme_settings'][$this->dirName][$name];
-            } else if(isset($def['default'])){
+            } elseif(isset($def['default'])){
                 $value = $def['default'];
             }
             $config[$name] = $value;

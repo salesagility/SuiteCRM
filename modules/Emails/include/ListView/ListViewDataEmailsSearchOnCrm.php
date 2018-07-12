@@ -44,7 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 include_once 'modules/Emails/include/ListView/ListViewDataEmailsSearchAbstract.php';
 
-class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
+class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract
+{
 
     /**
      * @param array $filterFields
@@ -288,7 +289,7 @@ class ListViewDataEmailsSearchOnCrm extends ListViewDataEmailsSearchAbstract {
         {
             $queryString = "-advanced_search";
         }
-        else if (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search")
+        elseif (isset($request["searchFormTab"]) && $request["searchFormTab"] == "basic_search")
         {
             // TODO: figure out what was the SearchFormReports???
             if($seed->module_dir == "Reports") $searchMetaData = SearchFormReports::retrieveReportsSearchDefs();

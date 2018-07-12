@@ -63,7 +63,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 * @access   public
 */
-class nusoap_server extends nusoap_base {
+class nusoap_server extends nusoap_base
+{
 	/**
 	 * HTTP headers of request
 	 * @var array
@@ -411,7 +412,7 @@ class nusoap_server extends nusoap_base {
 					$v = str_replace('"', '', $v);
 					$v = str_replace('\\', '', $v);
 					$this->SOAPAction = $v;
-				} else if ($k == 'content-type') {
+				} elseif ($k == 'content-type') {
 					// get the character encoding of the incoming request
 					if (strpos($v, '=')) {
 						$enc = substr(strstr($v, '='), 1);
@@ -445,7 +446,7 @@ class nusoap_server extends nusoap_base {
 					$v = str_replace('"', '', $v);
 					$v = str_replace('\\', '', $v);
 					$this->SOAPAction = $v;
-				} else if ($k == 'content-type') {
+				} elseif ($k == 'content-type') {
 					// get the character encoding of the incoming request
 					if (strpos($v, '=')) {
 						$enc = substr(strstr($v, '='), 1);
@@ -577,7 +578,7 @@ class nusoap_server extends nusoap_base {
 		// to allow methods to be called a the class or an instance
 		if (strpos($this->methodname, '..') > 0) {
 			$delim = '..';
-		} else if (strpos($this->methodname, '.') > 0) {
+		} elseif (strpos($this->methodname, '.') > 0) {
 			$delim = '.';
 		} else {
 			$delim = '';
@@ -1170,7 +1171,8 @@ class nusoap_server extends nusoap_base {
 /**
  * Backward compatibility
  */
-class soap_server extends nusoap_server {
+class soap_server extends nusoap_server
+{
 }
 
 

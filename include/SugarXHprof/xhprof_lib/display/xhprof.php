@@ -1416,7 +1416,7 @@ function displayXHProfReport($xhprof_runs_impl, $url_params, $source,
                                $sort,
                                $run);
 
-  } else if ($run1 && $run2) {                  // diff report for two runs
+  } elseif ($run1 && $run2) {                  // diff report for two runs
 
     $xhprof_data1 = $xhprof_runs_impl->get_run($run1, $source, $description1);
     $xhprof_data2 = $xhprof_runs_impl->get_run($run2, $source, $description2);

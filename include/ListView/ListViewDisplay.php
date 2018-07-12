@@ -45,7 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/ListView/ListViewData.php');
 require_once('include/MassUpdate.php');
 
-class ListViewDisplay {
+class ListViewDisplay
+{
     static $listViewCounter = 0;
 
 	var $show_mass_update_form = false;
@@ -169,7 +170,7 @@ class ListViewDisplay {
 	{
 		// create filter fields based off of display columns
         if(empty($filter_fields) || $this->mergeDisplayColumns) {
-            foreach($this->displayColumns as $columnName => $def) {
+            foreach((array)$this->displayColumns as $columnName => $def) {
 
                $filter_fields[strtolower($columnName)] = true;
 
@@ -699,7 +700,7 @@ EOF;
      */
     protected function fillDisplayColumnsWithVardefs()
     {
-        foreach ($this->displayColumns as $columnName => $def) {
+        foreach ((array)$this->displayColumns as $columnName => $def) {
             $seedName =  strtolower($columnName);
             if (!empty($this->lvd->seed->field_defs[$seedName])) {
                 $seedDef = $this->lvd->seed->field_defs[$seedName];

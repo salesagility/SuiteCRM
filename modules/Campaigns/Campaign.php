@@ -43,7 +43,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Description:
  ********************************************************************************/
 
-class Campaign extends SugarBean {
+class Campaign extends SugarBean
+{
 	var $field_name_map;
 
 	// Stored fields
@@ -333,7 +334,7 @@ class Campaign extends SugarBean {
 					on campaign_log.id = secondary.id	";
 			}
             unset($query_array['group_by']);
-        } else if(isset($query_array['group_by'])) {
+        } elseif(isset($query_array['group_by'])) {
            $query_array['where'] = $query_array['where'] . ' GROUP BY ' . $query_array['group_by'];
            unset($query_array['group_by']);
         }

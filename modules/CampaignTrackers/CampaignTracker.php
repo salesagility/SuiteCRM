@@ -50,7 +50,8 @@
 
 
 
-class CampaignTracker extends SugarBean {
+class CampaignTracker extends SugarBean
+{
     /* Foreach instance of the bean you will need to access the fields in the table.
     * So define a variable for each one of them, the variable name should be same as the field name
     * Use this module's vardef file as a reference to create these variables.

@@ -86,7 +86,7 @@ class Zend_Gdata_Calendar_Extension_Selected extends Zend_Gdata_Extension
             if ($attribute->nodeValue == "true") {
                 $this->_value = true;
             }
-            else if ($attribute->nodeValue == "false") {
+            elseif ($attribute->nodeValue == "false") {
                 $this->_value = false;
             }
             else {

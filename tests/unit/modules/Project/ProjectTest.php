@@ -1,9 +1,11 @@
 <?php
 
-class ProjectTest extends PHPUnit_Framework_TestCase
+class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -28,7 +30,10 @@ class ProjectTest extends PHPUnit_Framework_TestCase
 
 	public function testfill_in_additional_detail_fields()
 	{
-		error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+		
 
 		$project = new Project();
 
@@ -41,6 +46,10 @@ class ProjectTest extends PHPUnit_Framework_TestCase
 		$project->assigned_user_id = 1;
 		$project->fill_in_additional_detail_fields();
 		$this->assertEquals("Administrator", $project->assigned_user_name);
+        
+        // clean up
+        
+        
 
 	}
 
@@ -65,6 +74,13 @@ class ProjectTest extends PHPUnit_Framework_TestCase
     public function testsave_relationship_changes()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushGlobals();
+        
+        
+        
+        
     	$project = new Project();
 
     	$project->id =1;
@@ -77,16 +93,21 @@ class ProjectTest extends PHPUnit_Framework_TestCase
     		$this->assertTrue(true);
     	}
     	catch (Exception $e) {
-    		$this->fail();
+    		$this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
     	}
+        
+        // clean up
+        
+        $state->popGlobals();
+        
 
     }
 
 
 	public function test_get_total_estimated_effort()
 	{
-		//$project = new Project();
-		//$result = $project->_get_total_estimated_effort("1");
+		
+		
 		$this->markTestIncomplete('Can Not be implemented: Unknown column parent_id in where clause \n Argument 3 passed to MysqlManager::convert() must be of the type array, integer given');
 
 	}
@@ -124,7 +145,7 @@ class ProjectTest extends PHPUnit_Framework_TestCase
 
 
 		//test with valid string params
-		$expected = "project.name LIKE '%%'";
+		$expected = "project.name LIKE '%test%'";
 		$actual = $project->build_generic_where_clause('test');
 		$this->assertSame($expected,$actual);
 

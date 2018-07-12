@@ -27,7 +27,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
 
-class AOW_WorkFlowDashlet extends DashletGeneric {
+class AOW_WorkFlowDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOW_WorkFlow/metadata/dashletviewdefs.php');

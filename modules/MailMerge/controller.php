@@ -38,7 +38,8 @@
  ********************************************************************************/
 
 require_once('soap/SoapHelperFunctions.php');
-class MailMergeController extends SugarController{
+class MailMergeController extends SugarController
+{
 	function __construct(){
 		parent::__construct();
 	}
@@ -66,7 +67,7 @@ class MailMergeController extends SugarController{
         //lowercase module name
         $lmodule = strtolower($module);
         //get the search term
-        $term = !empty($_REQUEST['term']) ? $GLOBALS['db']->quote($_REQUEST['term']) : '';
+        $term = !empty($_REQUEST['term']) ? DBManagerFactory::getInstance()->quote($_REQUEST['term']) : '';
         //in the case of Campaigns we need to use the related module
         $relModule = !empty($_REQUEST['rel_module']) ? $_REQUEST['rel_module'] : null;
 

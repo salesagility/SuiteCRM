@@ -2,7 +2,8 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
-class VersionCheck {
+class VersionCheck
+{
 
 	function version_check($event, $arguments)
 	{

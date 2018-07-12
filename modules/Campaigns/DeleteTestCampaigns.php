@@ -45,7 +45,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * This is a class to encapsulate deleting test campaigns
  * @author Collin Lee
  */
-class DeleteTestCampaigns {
+class DeleteTestCampaigns
+{
 
 /**
  * deleteTestRecords

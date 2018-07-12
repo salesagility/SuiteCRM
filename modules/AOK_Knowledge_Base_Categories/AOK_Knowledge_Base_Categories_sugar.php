@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,7 +44,8 @@
  */
 
 
-class AOK_Knowledge_Base_Categories_sugar extends Basic {
+class AOK_Knowledge_Base_Categories_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOK_Knowledge_Base_Categories';
 	var $object_name = 'AOK_Knowledge_Base_Categories';

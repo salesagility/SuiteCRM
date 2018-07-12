@@ -43,7 +43,8 @@
  * This is a service class for version 2
  */
 require_once('service/core/NusoapSoap.php');
-class SugarSoapService2 extends NusoapSoap{
+class SugarSoapService2 extends NusoapSoap
+{
 		
 	/**
 	 * This method registers all the functions which you want to be available for SOAP.

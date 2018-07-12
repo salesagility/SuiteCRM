@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,7 +41,8 @@ require_once('modules/AOD_Index/AOD_Index_sugar.php');
 require_once('modules/AOD_Index/LuceneUtils.php');
 requireLucene();
 
-class AOD_Index extends AOD_Index_sugar {
+class AOD_Index extends AOD_Index_sugar
+{
 
 	function __construct(){
 		parent::__construct();

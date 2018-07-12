@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
-class TemplateBoolean extends TemplateField{
+class TemplateBoolean extends TemplateField
+{
     var $default_value = '0';
     var $default = '0';
 	var $type = 'bool';

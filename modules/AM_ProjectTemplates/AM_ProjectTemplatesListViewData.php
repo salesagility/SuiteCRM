@@ -45,7 +45,8 @@ require_once('include/EditView/SugarVCR.php');
  * Data set for ListView
  * @api
  */
-class AM_ProjectTemplatesListViewData extends ListViewData{
+class AM_ProjectTemplatesListViewData extends ListViewData
+{
 
 
 	/**

@@ -29,9 +29,9 @@ function smarty_function_sugar_button_slider($params, &$smarty)
 {
    if(empty($params['module'])) {
    	  $smarty->trigger_error("sugar_button_slider: missing required param (module)");
-   } else if(empty($params['buttons'])) {
+   } elseif(empty($params['buttons'])) {
    	  $smarty->trigger_error("sugar_button_slider: missing required param (buttons)");
-   } else if(empty($params['view'])) {
+   } elseif(empty($params['view'])) {
    	  $smarty->trigger_error("sugar_button_slider: missing required param (view)");
    }
 	$module = $params['module'];

@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/MetaParser.php');
 
-class EditViewMetaParser extends MetaParser {
+class EditViewMetaParser extends MetaParser
+{
 
 function __construct() {
    $this->mView = 'EditView';
@@ -198,7 +199,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 		                   // If it's a custom field we just set the name
 		                   $name = $customField;
 
-		                 } else if(empty($formElementNames) && preg_match_all('/[\{]([^\}]*?)[\}]/s', $spanValue, $matches, PREG_SET_ORDER)) {
+		                 } elseif(empty($formElementNames) && preg_match_all('/[\{]([^\}]*?)[\}]/s', $spanValue, $matches, PREG_SET_ORDER)) {
 				   	  	   // We are here if the $spanValue did not contain a form element for editing.
 				   	  	   // We will assume that it is read only (since there were no edit form elements)
 
@@ -229,7 +230,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 						   	  	   $name = strtolower($matches[0][1]);
 						   	   }
 
-				   	  	 } else if(is_array($formElementNames)) {
+				   	  	 } elseif(is_array($formElementNames)) {
 
 				   	  	      if(count($formElementNames) == 1) {
 

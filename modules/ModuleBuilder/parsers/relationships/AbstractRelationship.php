@@ -428,23 +428,23 @@ class AbstractRelationship
         {
             switch ( strtolower( $sourceModule ) )
             {
-                case 'prospects' :
+                case 'prospects':
                     $vardef [ 'rname' ] = 'account_name' ;
                     break ;
-                case 'documents' :
+                case 'documents':
                     $vardef [ 'rname' ] = 'document_name' ;
                     break ;
-                case 'kbdocuments' :
+                case 'kbdocuments':
                     $vardef [ 'rname' ] = 'kbdocument_name' ;
                     break ;
-                case 'leads' :
-                case 'contacts' : 
+                case 'leads':
+                case 'contacts': 
                     // special handling as these modules lack a name column in the database; instead 'name' refers to a non-db field that concatenates first_name and last_name
                     // luckily, the relate field mechanism can handle this with an equivalent additional db_concat_fields entry
                     $vardef [ 'rname' ] = 'name' ;
                     $vardef [ 'db_concat_fields' ] = array( 0 =>'first_name', 1 =>'last_name') ;
                     break ;
-                default :
+                default:
                     // now see if we have any module inheriting from the 'file' template - records in file-type modules are named by the document_name field, not the usual 'name' field
                     $object = $GLOBALS ['beanList'] [ $sourceModule ];
                     require_once ( $GLOBALS ['beanFiles'] [ $object ] );
@@ -567,7 +567,7 @@ class AbstractRelationship
                 $properties [ 'indices' ] [] = array ( 'name' => $indexBase . '_ida1' , 'type' => 'index' , 'fields' => array ( $rel_properties [ 'join_key_lhs' ] ) ) ;
                 $properties [ 'indices' ] [] = array ( 'name' => $indexBase . '_idb2' , 'type' => 'index' , 'fields' => array ( $rel_properties [ 'join_key_rhs' ] ) ) ;
                 break;
-            case MB_ONETOMANY :
+            case MB_ONETOMANY:
                 $alternateKeys = array ( $rel_properties [ 'join_key_rhs' ] ) ;
                 $properties [ 'indices' ] [] = array ( 'name' => $indexBase . '_ida1' , 'type' => 'index' , 'fields' => array ( $rel_properties [ 'join_key_lhs' ] ) ) ;
                 break;
@@ -679,7 +679,7 @@ class AbstractRelationship
     		if(isset($layout_defs[$this->rhs_module]['subpanel_setup'][strtolower($this->lhs_module)]['title_key'])){
     			return $layout_defs[$this->rhs_module]['subpanel_setup'][strtolower($this->lhs_module)]['title_key'];
     		}
-    	}else if(!$this->is_custom &&  file_exists("modules/{$this->lhs_module}/metadata/subpaneldefs.php")){
+    	}elseif(!$this->is_custom &&  file_exists("modules/{$this->lhs_module}/metadata/subpaneldefs.php")){
     		include("modules/{$this->lhs_module}/metadata/subpaneldefs.php");
     		if(isset($layout_defs[$this->lhs_module]['subpanel_setup'][strtolower($this->rhs_module)]['title_key'])){
     			return $layout_defs[$this->lhs_module]['subpanel_setup'][strtolower($this->rhs_module)]['title_key'];

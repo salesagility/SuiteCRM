@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class MBField{
+class MBField
+{
 	var $type = 'varchar';
 	var $name = false;
 	var $label = false;

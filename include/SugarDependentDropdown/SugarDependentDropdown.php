@@ -45,7 +45,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Reserved. Contributor(s): ______________________________________..
  *********************************************************************************/
 
-class SugarDependentDropdown {
+class SugarDependentDropdown
+{
 	/*
 	 * Holds processed metadata, ready for JSON
 	 */

@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 // Singleton to load sprites metadata from SugarTheme
 
-class SugarSprites {
+class SugarSprites
+{
 
 	private static $instance;
 	public $sprites = array();

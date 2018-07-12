@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class CalendarDisplay {
+class CalendarDisplay
+{
 
 	/**
 	 * colors of items on calendar
@@ -286,8 +287,7 @@ class CalendarDisplay {
 			if($d_start_hour == 0){
 				$d_start_hour = 12;
 				$start_m = 'am';
-			}else
-				if($d_start_hour == 12)
+			}elseif($d_start_hour == 12)
 			   		$start_m = 'pm';
 			if($d_start_hour > 12){
 				$d_start_hour = $d_start_hour - 12;
@@ -297,8 +297,7 @@ class CalendarDisplay {
 			if($d_end_hour == 0){
 				$d_end_hour = 12;
 				$end_m = 'am';
-			}else
-				if($d_end_hour == 12)
+			}elseif($d_end_hour == 12)
 			   		$end_m = 'pm';
 
 			if($d_end_hour > 12){
@@ -373,8 +372,7 @@ class CalendarDisplay {
 						break;
 				}
 			}
-		}else
-			if($view == 'agendaWeek' || $view == 'sharedWeek') {
+		}elseif($view == 'agendaWeek' || $view == 'sharedWeek') {
 				$first_day = $date_time;
 
 				$first_day = CalendarUtils::get_first_day_of_week($date_time);
@@ -407,7 +405,7 @@ class CalendarDisplay {
 							break;
 					}
 				}
-			}else if($view == 'agendaDay'){
+			}elseif($view == 'agendaDay'){
 					$str .= $date_time->get_day_of_week()." ";
 
 					for($i=0; $i<strlen($dateFormat['date']); $i++){
@@ -423,7 +421,7 @@ class CalendarDisplay {
 								break;
 						}
 					}
-			}else if($view == 'mobile'){
+			}elseif($view == 'mobile'){
 				$str .= $date_time->get_day_of_week()." ";
 
 				for($i=0; $i<strlen($dateFormat['date']); $i++){
@@ -439,7 +437,7 @@ class CalendarDisplay {
 							break;
 					}
 				}
-			}else if($view == 'year') {
+			}elseif($view == 'year') {
 				$str .= $date_time->year;
 			}else{
 				//could be a custom view.

@@ -299,7 +299,7 @@ class quicksearchQuery
 
                 if (isset($listData[$field])) {
                     $data['fields'][$i][$field] = $listData[$field];
-                } else if (isset($results[$i]->$field)) {
+                } elseif (isset($results[$i]->$field)) {
                     $data['fields'][$i][$field] = $results[$i]->$field;
                 } else {
                     $data['fields'][$i][$field] = '';
@@ -559,7 +559,7 @@ class quicksearchQuery
      */
     protected function getNonPrivateTeamsWhere(&$args)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         $where = array();
         $teams_filtered = false;

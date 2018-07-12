@@ -25,7 +25,8 @@
 
 
 require_once('modules/AOW_Actions/actions/actionCreateRecord.php');
-class actionModifyRecord extends actionCreateRecord {
+class actionModifyRecord extends actionCreateRecord
+{
 
     function __construct($id = ''){
         parent::__construct($id);

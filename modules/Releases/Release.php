@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class Release extends SugarBean {
+class Release extends SugarBean
+{
 	// Stored fields
 	var $id;
 	var $deleted;
@@ -144,7 +145,15 @@ class Release extends SugarBean {
 		global $app_list_strings;
 		$temp_array = $this->get_list_view_array();
         $temp_array["ENCODED_NAME"]=$this->name;
-        $temp_array['ENCODED_STATUS'] = $app_list_strings['release_status_dom'][$this->status];
+        
+        if (!isset($app_list_strings['release_status_dom'][$this->status])) {
+            LoggerManager::getLogger()->warn('Release get_list_view_data: Undefined index: "' . $this->status . '"');
+            $appListStringReleaseStatusDomThisStatus = null;
+        } else {
+            $appListStringReleaseStatusDomThisStatus = $app_list_strings['release_status_dom'][$this->status];
+        }
+        
+        $temp_array['ENCODED_STATUS'] = $appListStringReleaseStatusDomThisStatus;
 //	$temp_array["ENCODED_NAME"]=htmlspecialchars($this->name, ENT_QUOTES);
     	return $temp_array;
 
@@ -155,7 +164,7 @@ class Release extends SugarBean {
 	*/
 	function build_generic_where_clause ($the_query_string) {
 	$where_clauses = Array();
-	$the_query_string = $GLOBALS['db']->quote($the_query_string);
+	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 	array_push($where_clauses, "name like '$the_query_string%'");
 
 	$the_where = "";

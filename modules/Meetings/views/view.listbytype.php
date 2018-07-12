@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.list.php');
 require_once('modules/EAPM/EAPM.php');
-class MeetingsViewListbytype extends ViewList {
+class MeetingsViewListbytype extends ViewList
+{
     var $options = array('show_header' => false, 'show_title' => false, 'show_subpanels' => false, 'show_search' => true, 'show_footer' => false, 'show_javascript' => false, 'view_print' => false,);
 
     function __construct() {
@@ -129,14 +130,14 @@ class MeetingsViewListbytype extends ViewList {
    		$type = 'IBMSmartCloud';
           global $timedate;
 
-         $two_hours_ago = $GLOBALS['db']->convert($GLOBALS['db']->quoted($timedate->asDb($timedate->getNow()->get("-2 hours"))), 'datetime');
+         $two_hours_ago = DBManagerFactory::getInstance()->convert(DBManagerFactory::getInstance()->quoted($timedate->asDb($timedate->getNow()->get("-2 hours"))), 'datetime');
 
-   		$where =  " meetings.type = '$type' AND meetings.status != 'Held' AND meetings.status != 'Not Held' AND meetings.date_start > {$two_hours_ago} AND ( meetings.assigned_user_id = '".$GLOBALS['db']->quote($GLOBALS['current_user']->id)."' OR exists ( SELECT id FROM meetings_users WHERE meeting_id = meetings.id AND user_id = '".$GLOBALS['db']->quote($GLOBALS['current_user']->id)."' AND deleted = 0 ) ) ";
+   		$where =  " meetings.type = '$type' AND meetings.status != 'Held' AND meetings.status != 'Not Held' AND meetings.date_start > {$two_hours_ago} AND ( meetings.assigned_user_id = '".DBManagerFactory::getInstance()->quote($GLOBALS['current_user']->id)."' OR exists ( SELECT id FROM meetings_users WHERE meeting_id = meetings.id AND user_id = '".DBManagerFactory::getInstance()->quote($GLOBALS['current_user']->id)."' AND deleted = 0 ) ) ";
 
           if ( isset($_REQUEST['name_basic']) ) {
               $name_search = trim($_REQUEST['name_basic']);
               if ( ! empty($name_search) ) {
-                  $where .= " AND meetings.name LIKE '".$GLOBALS['db']->quote($name_search)."%' ";
+                  $where .= " AND meetings.name LIKE '".DBManagerFactory::getInstance()->quote($name_search)."%' ";
               }
           }
 

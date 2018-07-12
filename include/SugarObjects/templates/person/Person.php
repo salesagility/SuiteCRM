@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,8 +34,8 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 require_once 'include/SugarObjects/templates/basic/Basic.php';
@@ -52,6 +52,10 @@ class Person extends Basic
     public $phone_fax;
     public $phone_work;
     public $phone_other;
+    public $lawful_basis;
+    public $date_reviewed;
+    public $lawful_basis_source;
+
 
     /**
      * @var bool controls whether or not to invoke the getLocalFormattedName method with title and salutation
@@ -333,4 +337,44 @@ class Person extends Basic
         return $query;
     }
 
+    /**
+     * Set Lawful Basis
+     * @param string $basis
+     * @param string $source
+     * @return int
+     * @throws InvalidArgumentException
+     */
+    public function setLawfulBasis($basis, $source)
+    {
+        global $app_list_strings,$timedate;
+        /**
+         * This function will update the lawful basis, source and date of the change.
+         * Will take the parameters of email id and possible the module?
+         */
+
+        if (!is_string($basis)) {
+            throw new InvalidArgumentException('basis must be a string');
+        }
+
+        if (!array_key_exists($basis, $app_list_strings['lawful_basis_dom'])) {
+            throw new InvalidArgumentException('invalid lawful basis');
+        }
+
+        if (!is_string($source)) {
+            throw new InvalidArgumentException('source for lawful basis must be a string');
+        }
+
+        if (!array_key_exists($source, $app_list_strings['lawful_basis_source_dom'])) {
+            throw new InvalidArgumentException('invalid lawful basis source');
+        }
+
+        //Set lawful basis, lawful basis source and date reviewed
+        $this->lawful_basis = '^'.$basis.'^';
+        $this->lawful_basis_source = $source;
+        $date = TimeDate::getInstance()->nowDb();
+        $date_test = $timedate->to_display_date($date,false);
+        $this->date_reviewed = $date_test;
+
+        return (bool)$this->save();
+    }
 }

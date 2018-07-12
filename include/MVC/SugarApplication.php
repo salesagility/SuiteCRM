@@ -55,7 +55,8 @@ require_once('include/MVC/View/ViewFactory.php');
  * SugarCRM application
  * @api
  */
-class SugarApplication {
+class SugarApplication
+{
 
     var $controller = null;
     var $headerDisplayed = false;
@@ -368,12 +369,15 @@ class SugarApplication {
      */
     function checkDatabaseVersion($dieOnFailure = true) {
         $row_count = sugar_cache_retrieve('checkDatabaseVersion_row_count');
+        $sugarDbVersion = $GLOBALS['sugar_db_version'];
+        $db = DBManagerFactory::getInstance();
         if (empty($row_count)) {
             $version_query = "SELECT count(*) as the_count FROM config WHERE category='info' AND name='sugar_version' AND " .
-                    $GLOBALS['db']->convert('value', 'text2char') . " = " . $GLOBALS['db']->quoted($GLOBALS['sugar_db_version']);
+                    $db->convert('value', 'text2char') . " = " . 
+                    $db->quoted($sugarDbVersion);
 
-            $result = $GLOBALS['db']->query($version_query);
-            $row = $GLOBALS['db']->fetchByAssoc($result);
+            $result = $db->query($version_query);
+            $row = $db->fetchByAssoc($result);
             $row_count = $row['the_count'];
             sugar_cache_put('checkDatabaseVersion_row_count', $row_count);
         }
@@ -406,7 +410,7 @@ class SugarApplication {
             $theme = $GLOBALS['sugar_config']['default_theme'];
             if (!empty($_SESSION['authenticated_user_theme'])) {
                 $theme = $_SESSION['authenticated_user_theme'];
-            } else if (!empty($_COOKIE['sugar_user_theme'])) {
+            } elseif (!empty($_COOKIE['sugar_user_theme'])) {
                 $theme = $_COOKIE['sugar_user_theme'];
             }
 
@@ -551,8 +555,7 @@ class SugarApplication {
                 sugar_cleanup(true);
             }
             return false;
-        } else
-        if (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['SERVER_NAME'])) {
+        } elseif (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['SERVER_NAME'])) {
             $http_ref = parse_url($_SERVER['HTTP_REFERER']);
             if ($http_ref['host'] !== $_SERVER['SERVER_NAME'] && !in_array($this->controller->action, $this->whiteListActions) &&
                     (empty($whiteListReferers) || !in_array($http_ref['host'], $whiteListReferers))) {

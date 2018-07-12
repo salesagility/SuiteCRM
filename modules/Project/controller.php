@@ -21,14 +21,15 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-class ProjectController extends SugarController {
+class ProjectController extends SugarController
+{
     //Loads the gantt view
     function action_view_GanttChart() {
         $this->view = 'GanttChart';
     }
 
     function action_generate_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         include_once('modules/Project/gantt.php');
         include_once('modules/Project/project_table.php');
@@ -102,7 +103,7 @@ class ProjectController extends SugarController {
         if($_POST['milestone'] == 'Milestone'){
             $milestone_flag = '1';
         }
-        else if($_POST['milestone'] == 'Task'){
+        elseif($_POST['milestone'] == 'Task'){
             $milestone_flag = '0';
         }
 
@@ -344,7 +345,7 @@ class ProjectController extends SugarController {
 
     //Updates the resource chart based on specified dates and users
     function action_update_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
         include('modules/Project/chart.php');
 
         //Get  specified dates and users
@@ -380,7 +381,7 @@ class ProjectController extends SugarController {
 		
 		if( $chart_type == "monthly" )
 			$end = $first_day->add(new DateInterval('P365D'));
-		else if( $chart_type == "quarterly" )
+		elseif( $chart_type == "quarterly" )
 			$end = $first_day->add(new DateInterval('P1460D'));
 
 			

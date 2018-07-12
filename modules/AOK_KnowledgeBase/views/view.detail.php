@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class AOK_KnowledgeBaseViewDetail extends ViewDetail {
+class AOK_KnowledgeBaseViewDetail extends ViewDetail
+{
     function __construct(){
         parent::__construct();
     }

@@ -23,9 +23,10 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * delete_project_tasks.php
  * Used to delete a project's related tasks after a project is deleted
  */
-class delete_project_tasks {
+class delete_project_tasks
+{
     function delete_tasks(&$bean, $event, $arguments){
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$bean->id."'");
 

@@ -38,12 +38,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class UpgradeSavedSearch {
+class UpgradeSavedSearch
+{
 
 	function __construct() {
 
-		$result = $GLOBALS['db']->query("SELECT id FROM saved_search");
-		while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+		$result = DBManagerFactory::getInstance()->query("SELECT id FROM saved_search");
+		while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
 		      $focus = new SavedSearch();
 			  $focus->retrieve($row['id']);
 			  $contents = unserialize(base64_decode($focus->contents));
@@ -58,7 +59,7 @@ class UpgradeSavedSearch {
 			  	 if(file_exists("custom/modules/{$module}/metadata/searchdefs.php")) {
 			  	 	require("custom/modules/{$module}/metadata/searchdefs.php");
 			  	 	$field_map = $advanced ? $searchdefs[$module]['layout']['advanced_search'] : $searchdefs[$module]['layout']['basic_search'];
-			     }else if(file_exists("modules/{$module}/metadata/SearchFields.php")) {
+			     }elseif(file_exists("modules/{$module}/metadata/SearchFields.php")) {
 			  	 	require("modules/{$module}/metadata/SearchFields.php");
 			  	 	$field_map = $searchFields[$module];
 			  	 } else {
@@ -84,10 +85,10 @@ class UpgradeSavedSearch {
 			  	 	       	  $value = $temp_value;
 			  	 	       }
 
-			  	 	       $team_results = $GLOBALS['db']->query("SELECT id, name FROM teams where id in ('" . implode("','", $value) . "')");
+			  	 	       $team_results = DBManagerFactory::getInstance()->query("SELECT id, name FROM teams where id in ('" . implode("','", $value) . "')");
 			  	 	       if(!empty($team_results)) {
 			  	 	       	  $count = 0;
-			  	 	       	  while($team_row = $GLOBALS['db']->fetchByAssoc($team_results)) {
+			  	 	       	  while($team_row = DBManagerFactory::getInstance()->fetchByAssoc($team_results)) {
 			  	 	       	 	 	$team_key = $new_key . '_collection_' . $count;
 				  	 	       	 	$new_contents[$team_key] = $team_row['name'];
 				  	 	       	 	$new_contents['id_' . $team_key] = $team_row['id'];
@@ -110,19 +111,19 @@ class UpgradeSavedSearch {
 			  	 }
 			  	 $new_contents['searchFormTab'] = $advanced ? 'advanced_search' : 'basic_search';
 			  	 $content = base64_encode(serialize($new_contents));
-			  	 $GLOBALS['db']->query("UPDATE saved_search SET contents = '{$content}' WHERE id = '{$row['id']}'");
-			} else if($has_team_name_saved) {
+			  	 DBManagerFactory::getInstance()->query("UPDATE saved_search SET contents = '{$content}' WHERE id = '{$row['id']}'");
+			} elseif($has_team_name_saved) {
 			     //Otherwise, if the boolean has_team_name_saved is set to true, we also need to parse (coming from 5.x)
 			  	 if(isset($contents['team_name_advanced'])) {
-			  	 	$team_results = $GLOBALS['db']->query("SELECT name FROM teams where id = '{$contents['team_name_advanced']}'");
+			  	 	$team_results = DBManagerFactory::getInstance()->query("SELECT name FROM teams where id = '{$contents['team_name_advanced']}'");
 			  	 	if(!empty($team_results)) {
-			  	 		$team_row = $GLOBALS['db']->fetchByAssoc($team_results);
+			  	 		$team_row = DBManagerFactory::getInstance()->fetchByAssoc($team_results);
 				  	 	$contents['team_name_advanced_collection_0'] = $team_row['name'];
 				  	 	$contents['id_team_name_advanced_collection_0'] = $contents['team_name_advanced'];
 				  	 	$contents['team_name_advanced_type'] = 'any';
 				  	 	unset($contents['team_name_advanced']);
 					  	$content = base64_encode(serialize($contents));
-					  	$GLOBALS['db']->query("UPDATE saved_search SET contents = '{$content}' WHERE id = '{$row['id']}'");
+					  	DBManagerFactory::getInstance()->query("UPDATE saved_search SET contents = '{$content}' WHERE id = '{$row['id']}'");
 			  	 	}
 			  	 }
 			}

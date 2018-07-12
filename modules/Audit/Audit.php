@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('modules/Audit/field_assoc.php');
 
-class Audit extends SugarBean {
+class Audit extends SugarBean
+{
 	var $module_dir = "Audit";
 	var $object_name = "Audit";
 
@@ -122,7 +123,7 @@ class Audit extends SugarBean {
     		}
 		}
 
-        if($focus->is_AuditEnabled()){
+        if($focus && $focus->is_AuditEnabled()){
             $order= ' order by '.$focus->get_audit_table_name().'.date_created desc' ;//order by contacts_audit.date_created desc
             $query = "SELECT ".$focus->get_audit_table_name().".*, users.user_name FROM ".$focus->get_audit_table_name().", users WHERE ".$focus->get_audit_table_name().".created_by = users.id AND ".$focus->get_audit_table_name().".parent_id = '$focus->id'".$order;
 
@@ -203,7 +204,7 @@ class Audit extends SugarBean {
         $assocFieldsArray =  $moduleAssocFieldsArray[$focus->object_name];
 
         }
-        else if(array_key_exists($fieldName, $genericAssocFieldsArray)){
+        elseif(array_key_exists($fieldName, $genericAssocFieldsArray)){
             $assocFieldsArray =  $genericAssocFieldsArray;
         }
         else{

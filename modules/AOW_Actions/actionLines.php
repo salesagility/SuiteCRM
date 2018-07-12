@@ -51,7 +51,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view){
 
                 require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
 
-            } else if(file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')){
+            } elseif(file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')){
 
                 require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
 
@@ -96,7 +96,7 @@ function display_action_lines(SugarBean $focus, $field, $value, $view){
 
 
     }
-    else if($view == 'DetailView'){
+    elseif($view == 'DetailView'){
 
         $html .= "<table border='0' width='100%' cellpadding='0' cellspacing='0'>";
         $sql = "SELECT id FROM aow_actions WHERE aow_workflow_id = '".$focus->id."' AND deleted = 0 ORDER BY action_order ASC";

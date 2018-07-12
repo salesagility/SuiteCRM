@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class TemplateDecimal extends TemplateFloat{
+class TemplateDecimal extends TemplateFloat
+{
 	var $type = 'decimal';
 	var $default = null;
 	var $default_value = null;
@@ -69,6 +70,6 @@ class TemplateDecimal extends TemplateFloat{
 			return parent::get_db_type();
 		}
 		$precision = (!empty($this->precision)) ? $this->precision : 6;
-		return " ".sprintf($GLOBALS['db']->getColumnType("decimal_tpl"), $this->len, $precision);
+		return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $this->len, $precision);
 	}
 }

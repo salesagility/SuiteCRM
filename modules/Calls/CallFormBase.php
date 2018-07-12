@@ -48,7 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarObjects/forms/FormBase.php');
 
-class CallFormBase extends FormBase {
+class CallFormBase extends FormBase
+{
 
 function getFormBody($prefix, $mod='', $formname='',$cal_date='',$cal_time=''){
 if(!ACLController::checkAccess('Calls', 'edit', true)){
@@ -516,7 +517,7 @@ function handleSave($prefix,$redirect=true,$useRequired=false) {
 		$_REQUEST['return_action'] = 'index';
         handleRedirect('', 'Home');
 	}
-	else if($redirect) {
+	elseif($redirect) {
 		handleRedirect($return_id, 'Calls');
 	} else {
 		return $focus;

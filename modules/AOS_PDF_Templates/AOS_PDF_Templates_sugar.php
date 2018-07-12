@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
@@ -31,7 +31,8 @@
  */
 
 
-class AOS_PDF_Templates_sugar extends Basic {
+class AOS_PDF_Templates_sugar extends Basic
+{
 	var $new_schema = true;
 	var $module_dir = 'AOS_PDF_Templates';
 	var $object_name = 'AOS_PDF_Templates';

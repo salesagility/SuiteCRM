@@ -227,9 +227,9 @@ class TemplateRange extends TemplateText
 				if(file_exists('custom/modules/'.$module.'/metadata/SearchFields.php'))
 			    {
                     require('custom/modules/'.$module.'/metadata/SearchFields.php');
-                } else if (file_exists('modules/'.$module.'/metadata/SearchFields.php')) {
+                } elseif (file_exists('modules/'.$module.'/metadata/SearchFields.php')) {
                 	require('modules/'.$module.'/metadata/SearchFields.php');
-                } else if (file_exists('custom/modulebuilder/' . $package . '/modules/' . $module . '/metadata/SearchFields.php')) {
+                } elseif (file_exists('custom/modulebuilder/' . $package . '/modules/' . $module . '/metadata/SearchFields.php')) {
                 	require('custom/modulebuilder/' . $package . '/modules/' . $module . '/metadata/SearchFields.php');
                 }
 

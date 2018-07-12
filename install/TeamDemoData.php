@@ -41,7 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class TeamDemoData {
+class TeamDemoData
+{
 	var $_team;
 	var $_large_scale_test;
 

@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Sugarpdf/sugarpdf_config.php');
 require_once('include/MVC/View/SugarView.php');
 require_once('include/Sugarpdf/FontManager.php');
-class ConfiguratorViewFontManager extends SugarView {
+class ConfiguratorViewFontManager extends SugarView
+{
    
     /**
      * Constructor
@@ -147,7 +148,7 @@ BSOFR;
             $return .= '{';
             if(!empty($v['displayname'])){
                 $return .= 'name:"'.$v['displayname'].'"';
-            }else if(!empty($v['name'])){
+            }elseif(!empty($v['name'])){
                 $return .= 'name:"'.$v['name'].'"';
             }
             $return .= ', filename:"'.$v['filename'].'"';

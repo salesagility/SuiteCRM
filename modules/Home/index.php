@@ -311,16 +311,16 @@ $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
 if (file_exists("custom/themes/" . $theme ."/tpls/MySugar.tpl")) {
     echo $sugar_smarty->fetch('custom/themes/' . $theme . '/tpls/MySugar.tpl');
 }
-else if(file_exists('custom/include/MySugar/tpls/MySugar.tpl')) {
+elseif(file_exists('custom/include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
 }
 elseif (file_exists("themes/" . $theme ."/tpls/MySugar.tpl")) {
     echo $sugar_smarty->fetch("themes/" . $theme ."/tpls/MySugar.tpl");
 }
-else if(file_exists('include/MySugar/tpls/MySugar.tpl')) {
+elseif(file_exists('include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
 }
-else if(file_exists("custom/themes/" . $theme .'include/MySugar/tpls/MySugar.tpl')) {
+elseif(file_exists("custom/themes/" . $theme .'include/MySugar/tpls/MySugar.tpl')) {
     echo $sugar_smarty->fetch('custom/themes/' . $theme . 'include/MySugar/tpls/MySugar.tpl');
 }
 else {

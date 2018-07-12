@@ -129,27 +129,27 @@ class ModuleBuilderController extends SugarController
         {
             switch ( $view)
             {
-                case MB_EDITVIEW :
-                case MB_DETAILVIEW :
-                case MB_QUICKCREATE :
+                case MB_EDITVIEW:
+                case MB_DETAILVIEW:
+                case MB_QUICKCREATE:
                     $this->view = 'layoutView' ;
                     break ;
-                case MB_LISTVIEW :
+                case MB_LISTVIEW:
                     $this->view = 'listView' ;
                     break ;
-                case MB_BASICSEARCH :
-                case MB_ADVANCEDSEARCH :
+                case MB_BASICSEARCH:
+                case MB_ADVANCEDSEARCH:
                     $this->view = 'searchView' ;
                     break ;
-                case MB_DASHLET :
-                case MB_DASHLETSEARCH :
+                case MB_DASHLET:
+                case MB_DASHLETSEARCH:
                     $this->view = 'dashlet' ;
                     break ;
-                case MB_POPUPLIST :
-                case MB_POPUPSEARCH :
+                case MB_POPUPLIST:
+                case MB_POPUPSEARCH:
                     $this->view = 'popupview' ;
                     break ;
-                default :
+                default:
                     $GLOBALS [ 'log' ]->fatal ( 'Action = editLayout with unknown view=' . $_REQUEST [ 'view' ] ) ;
             } 
         }
@@ -162,11 +162,11 @@ class ModuleBuilderController extends SugarController
         require_once ('modules/ModuleBuilder/MB/AjaxCompose.php') ;
         switch ( $_REQUEST [ 'tree' ])
         {
-            case 'ModuleBuilder' :
+            case 'ModuleBuilder':
                 require_once ('modules/ModuleBuilder/MB/MBPackageTree.php') ;
                 $mbt = new MBPackageTree ( ) ;
                 break ;
-            case 'Studio' :
+            case 'Studio':
                 require_once ('modules/ModuleBuilder/Module/StudioTree.php') ;
                 $mbt = new StudioTree ( ) ;
         }
@@ -320,7 +320,7 @@ class ModuleBuilderController extends SugarController
             if (! empty ( $_REQUEST [ 'duplicate' ] ))
             {
                 $module->copy ( $_REQUEST [ 'name' ] ) ;
-            } else if (! empty ( $_REQUEST [ 'original_name' ] ) && $_REQUEST [ 'original_name' ] != $_REQUEST [ 'name' ])
+            } elseif (! empty ( $_REQUEST [ 'original_name' ] ) && $_REQUEST [ 'original_name' ] != $_REQUEST [ 'name' ])
             {
                 if (! $module->rename ( $_REQUEST [ 'name' ] ))
                 {

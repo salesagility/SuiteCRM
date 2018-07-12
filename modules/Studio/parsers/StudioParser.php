@@ -47,7 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * interface for studio parsers
  */
 
-class StudioParser {
+class StudioParser
+{
 	var $positions = array ();
 	var $rows = array ();
 	var $cols = array ();
@@ -336,16 +337,16 @@ EOQ;
 		if(strpos($file, 'SearchForm.html') > 0) {
 			$fileparts = preg_split("'<!--\s*(BEGIN|END)\s*:\s*main\s*-->'", $output);
 			if(!empty($fileparts) && count($fileparts) > 1) {
+			    $function = function ($matches) {
+                    $name = str_replace(array("[", "]"), "", $matches[1]);
+                    if((strpos($name, "LBL_") === 0) && (strpos($name, "_basic") === 0)) {
+                      return str_replace($name, $name . "_basic", $matches[0]);
+                    }
+                    return  $matches[0];
+                };
 				//preg_replace_callback doesn't seem to work w/o anonymous method
 				$output = preg_replace_callback("/name\s*=\s*[\"']([^\"']*)[\"']/Us",
-				create_function(
-	                                                     '$matches',
-	                                                     '$name = str_replace(array("[", "]"), "", $matches[1]);
-														  if((strpos($name, "LBL_") === 0) && (strpos($name, "_basic") === 0)) {
-	                                                          return str_replace($name, $name . "_basic", $matches[0]);
-	                                                      }
-	                                                      return  $matches[0];'
-	                                                      ),
+				$function,
 	                                                      $fileparts[1]);
 
 

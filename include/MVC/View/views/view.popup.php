@@ -37,7 +37,10 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class ViewPopup extends SugarView{
+include_once __DIR__ . '/../../../../include/utils/layout_utils.php';
+
+class ViewPopup extends SugarView
+{
     /**
      * @var string
      */
@@ -118,9 +121,9 @@ class ViewPopup extends SugarView{
 	    		//otherwise include the file
 	    		require_once($popupMeta['searchdefs']);
 	    	}
-	    }else if(empty($searchdefs) && file_exists('custom/modules/'.$this->module.'/metadata/searchdefs.php')){
+	    }elseif(empty($searchdefs) && file_exists('custom/modules/'.$this->module.'/metadata/searchdefs.php')){
 			require_once('custom/modules/'.$this->module.'/metadata/searchdefs.php');
-		}else if(empty($searchdefs) && file_exists('modules/'.$this->module.'/metadata/searchdefs.php')){
+		}elseif(empty($searchdefs) && file_exists('modules/'.$this->module.'/metadata/searchdefs.php')){
 	    	require_once('modules/'.$this->module.'/metadata/searchdefs.php');
 		}
 

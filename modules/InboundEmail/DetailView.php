@@ -137,6 +137,7 @@ if(!empty($focus->stored_options)) {
 
 	$from_name = (isset($storedOptions['from_name']) ? $storedOptions['from_name'] : "");
 	$from_addr = (isset($storedOptions['from_addr']) ? $storedOptions['from_addr'] : "");
+        isValidEmailAddress($from_addr);
 
 	$reply_to_name = (isset($storedOptions['reply_to_name'])) ? $storedOptions['reply_to_name'] : "";
 	$reply_to_addr = (isset($storedOptions['reply_to_addr'])) ? $storedOptions['reply_to_addr'] : "";
@@ -277,6 +278,7 @@ $xtpl->assign('IS_CREATE_CASE', $is_create_case);
 $xtpl->assign('EMAIL_TEMPLATE', $emailTemplate);
 $xtpl->assign('FROM_NAME', $from_name);
 $xtpl->assign('FROM_ADDR', $from_addr);
+isValidEmailAddress($from_addr);
 $xtpl->assign('DEFAULT_FROM_NAME', $default_from_name);
 $xtpl->assign('DEFAULT_FROM_ADDR', $default_from_addr);
 $xtpl->assign('REPLY_TO_NAME', $reply_to_name);
@@ -298,7 +300,7 @@ if ($focus->mailbox_type == 'bounce')
 {
     $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_BOUNCE_MODULE_NAME'],$focus->name), true));
 }
-else if( $focus->is_personal == '1')
+elseif( $focus->is_personal == '1')
      $xtpl->assign('MODULE_TITLE', getClassicModuleTitle('InboundEmail', array($mod_strings['LBL_PERSONAL_MODULE_NAME'],$focus->name), true));
 
 $xtpl->parse('main');

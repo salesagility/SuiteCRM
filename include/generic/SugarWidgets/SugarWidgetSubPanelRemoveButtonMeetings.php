@@ -50,7 +50,7 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
 		return '&nbsp;';
 	}
 
-	function displayList($layout_def)
+	function displayList(&$layout_def)
 	{
 		global $app_strings;
 		
@@ -72,7 +72,7 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
 		}
 		
         /* Handle case where we generate subpanels from MySettings/LoadTabSubpanels.php */
-        else if($return_module == 'MySettings') {
+        elseif($return_module == 'MySettings') {
         	global $beanList, $beanFiles;
             $return_module = $_REQUEST['loadModule'];
             

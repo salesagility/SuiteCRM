@@ -123,7 +123,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             // set root directory, defaults to webserver document root if not set
             if ($base) {
                 $this->base = realpath($base); // TODO throw if not a directory
-            } else if(!$this->base) {
+            } elseif(!$this->base) {
                 $this->base = $_SERVER['DOCUMENT_ROOT'];
             }
 
@@ -178,12 +178,12 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
             {
                 $this->user_focus->retrieve(clean_string($query_arr['user_id']));
                 $this->user_focus->loadPreferences();
-            } else if ( ! empty($query_arr['email'])) {
+            } elseif ( ! empty($query_arr['email'])) {
                 // clean the string!
                 $query_arr['email'] = clean_string($query_arr['email']);
                 //get user info
                 $this->user_focus->retrieve_by_email_address( $query_arr['email']);
-            } else if ( ! empty($query_arr['user_name'])) {
+            } elseif ( ! empty($query_arr['user_name'])) {
                 // clean the string!
                 $query_arr['user_name'] = clean_string($query_arr['user_name']);
 
@@ -212,7 +212,6 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                 !$current_user->isAdmin() &&
                 $current_user->user_name !== $this->user_focus->user_name
             ) {
-                $this->user_focus = BeanFactory::newBean('Users');
                 $this->user_focus->last_name = $query_arr['user_name'];
             }
 

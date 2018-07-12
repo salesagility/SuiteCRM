@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,7 +38,8 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php');
-class AM_ProjectTemplates extends AM_ProjectTemplates_sugar {
+class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
+{
 
 	public function __construct(){
 		parent::__construct();

@@ -60,7 +60,7 @@ class FilterParserMock extends FilterParser
      * tests FilterParser::parseFieldKey
      * @param string $fieldKey
      * @return array
-     * @throws \SuiteCRM\API\v8\Exception\BadRequest
+     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
     public function splitFieldKeysAdapter($fieldKey) {
         return $this->splitFieldKeys($fieldKey);

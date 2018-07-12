@@ -166,6 +166,8 @@ class Note extends File
 
     function deleteAttachment($isduplicate = "false")
     {
+        $removeFile = null;
+        
         if ($this->ACLAccess('edit')) {
             if ($isduplicate == "true") {
                 return true;
@@ -177,6 +179,7 @@ class Note extends File
             if (!unlink($removeFile)) {
                 $GLOBALS['log']->error("*** Could not unlink() file: [ {$removeFile} ]");
             } else {
+                $this->uploadfile = '';
                 $this->filename = '';
                 $this->file_mime_type = '';
                 $this->file = '';
@@ -185,6 +188,7 @@ class Note extends File
                 return true;
             }
         } else {
+            $this->uploadfile = '';
             $this->filename = '';
             $this->file_mime_type = '';
             $this->file = '';
@@ -374,7 +378,7 @@ class Note extends File
         switch ($interface) {
             case 'ACL':
                 return true;
-            case 'FILE' :
+            case 'FILE':
                 return true;
         }
 

@@ -44,7 +44,7 @@ require_once('modules/Administration/UpgradeWizardCommon.php');
 require_once('modules/Configurator/Configurator.php');
 function UWrebuild() {
 	global $log;
-	global $db;
+	$db = DBManagerFactory::getInstance();
 	$log->info('Deleting Relationship Cache. Relationships will automatically refresh.');
 
 	echo "
@@ -304,7 +304,7 @@ switch( $install_type ){
         if( $mode == "Install" || $mode=="Enable" ){
             $sugar_config['languages'] = $sugar_config['languages'] + array( $_REQUEST['new_lang_name'] => $_REQUEST['new_lang_desc'] );
         }
-        else if( $mode == "Uninstall" || $mode=="Disable" ){
+        elseif( $mode == "Uninstall" || $mode=="Disable" ){
             $new_langs = array();
             $old_langs = $sugar_config['languages'];
             foreach( $old_langs as $key => $value ){
@@ -545,7 +545,7 @@ if ($install_type != "module" && $install_type != "langpack"){
         print( "</ul>\n" );
         echo '</div>';
     }
-    else if( $mode != 'Disable' && $mode !='Enable' ){
+    elseif( $mode != 'Disable' && $mode !='Enable' ){
         print( "{$mod_strings['LBL_UW_NO_FILES_SELECTED']} $file_action.<br>\n" );
     }
 

@@ -136,7 +136,7 @@ if(isset($_REQUEST['record']) and !empty($_REQUEST['record'])){
     $mrkt_focus->retrieve($_REQUEST['record']);
     $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_focus->id;
 }
-else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) {
+elseif(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) {
     $mrkt_focus->retrieve($_REQUEST['marketing_id']);
     $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_focus->id;
 }else{
@@ -146,7 +146,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
     if(!isset($mrkt_lists) || !$mrkt_lists) {
         unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
     }
-    else if(count($mrkt_lists) == 1){
+    elseif(count($mrkt_lists) == 1){
         if(empty($_REQUEST['func']) && isset($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
             $mrkt_focus->retrieve($mrkt_lists[0]);
             $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_lists[0];
@@ -160,7 +160,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
         }
 
     }
-    else if(count($mrkt_lists) > 1) {
+    elseif(count($mrkt_lists) > 1) {
         if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']) && in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
 
             if (!isset($_REQUEST['func']) || (empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing')) {
@@ -619,7 +619,7 @@ $ss->assign('hide_width_set', $current_user->getEditorType() != 'mozaik');
 if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'])) {
     $ss->assign('EmailMarketingId', $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
 }
-else if(isset($mrkt_lists[0])) {
+elseif(isset($mrkt_lists[0])) {
     $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_lists[0];
     $ss->assign('EmailMarketingId', $mrkt_lists[0]);
 }

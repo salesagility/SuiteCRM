@@ -621,12 +621,12 @@ class HTTP_WebDAV_Server
                         // empty properties (cannot use empty() for check as "0" is a legal value here)
                         if($prop["ns"]=="DAV:") {
                             echo "     <D:$prop[name]/>\n";
-                        } else if(!empty($prop["ns"])) {
+                        } elseif(!empty($prop["ns"])) {
                             echo "     <".$ns_hash[$prop["ns"]].":$prop[name]/>\n";
                         } else {
                             echo "     <$prop[name] xmlns=\"\"/>";
                         }
-                    } else if ($prop["ns"] == "DAV:") {
+                    } elseif ($prop["ns"] == "DAV:") {
                         // some WebDAV properties need special treatment
                         switch ($prop["name"]) {
                         case "creationdate":
@@ -683,7 +683,7 @@ class HTTP_WebDAV_Server
                 foreach($file["noprops"] as $key => $prop) {
                     if ($prop["ns"] == "DAV:") {
                         echo "     <D:$prop[name]/>\n";
-                    } else if ($prop["ns"] == "") {
+                    } elseif ($prop["ns"] == "") {
                         echo "     <$prop[name] xmlns=\"\"/>\n";
                     } else {
                         echo "     <" . $ns_hash[$prop["ns"]] . ":$prop[name]/>\n";
@@ -990,7 +990,7 @@ class HTTP_WebDAV_Server
 
         if (method_exists($this, "HEAD")) {
             $status = $this->head($options);
-        } else if (method_exists($this, "GET")) {
+        } elseif (method_exists($this, "GET")) {
             ob_start();
             $status = $this->GET($options);
             ob_end_clean();
@@ -1453,7 +1453,7 @@ class HTTP_WebDAV_Server
             return $this->checkAuth(@$_SERVER["AUTH_TYPE"],
                                      @$_SERVER["PHP_AUTH_USER"],
                                      @$_SERVER["PHP_AUTH_PW"]);
-        } else if (method_exists($this, "check_auth")) {
+        } elseif (method_exists($this, "check_auth")) {
             // old (pre 1.0) method name
             return $this->check_auth(@$_SERVER["AUTH_TYPE"],
                                      @$_SERVER["PHP_AUTH_USER"],
@@ -1769,7 +1769,7 @@ class HTTP_WebDAV_Server
             // check for 'timeout' or 'expires'
             if (!empty($lock["expires"])) {
                 $timeout = "Second-".($lock["expires"] - time());
-            } else if (!empty($lock["timeout"])) {
+            } elseif (!empty($lock["timeout"])) {
                 $timeout = "Second-$lock[timeout]";
             } else {
                 $timeout = "Infinite";

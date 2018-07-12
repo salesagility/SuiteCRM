@@ -21,7 +21,8 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-class AM_ProjectTemplatesController extends SugarController {
+class AM_ProjectTemplatesController extends SugarController
+{
 
     //Loads the gantt view
     function action_view_GanttChart() {
@@ -258,7 +259,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
 
     function action_generate_chart(){
-        global $db;
+        $db = DBManagerFactory::getInstance();
 
         include_once('modules/AM_ProjectTemplates/gantt.php');
         include_once('modules/AM_ProjectTemplates/project_table.php');
@@ -334,7 +335,7 @@ class AM_ProjectTemplatesController extends SugarController {
         if($_POST['milestone'] == 'Milestone'){
             $milestone_flag = '1';
         }
-        else if($_POST['milestone'] == 'Task'){
+        elseif($_POST['milestone'] == 'Task'){
             $milestone_flag = '0';
         }
 
@@ -344,7 +345,7 @@ class AM_ProjectTemplatesController extends SugarController {
 
         $dateformat = $current_user->getPreference('datef');
 
-        $startdate = DateTime::createFromFormat($dateformat, "01/01/2016");
+        $startdate = DateTime::createFromFormat("d/m/Y", "01/01/2016");
         $start = $startdate->format('Y-m-d');
 
         //Take 1 off duration so that task displays in correct number of table cells in gantt chart.

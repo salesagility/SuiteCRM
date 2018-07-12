@@ -22,7 +22,8 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-class AOR_Chart extends Basic {
+class AOR_Chart extends Basic
+{
 
     var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
 	var $new_schema = true;

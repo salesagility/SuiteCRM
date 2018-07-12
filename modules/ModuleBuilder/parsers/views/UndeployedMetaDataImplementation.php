@@ -212,9 +212,9 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 
         switch ( $type)
         {
-            case MB_HISTORYMETADATALOCATION :
+            case MB_HISTORYMETADATALOCATION:
                 return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/' . $moduleName . '/metadata/' . $filenames [ $view ] . '.php' ;
-            default :
+            default:
                 // get the module again, all so we can call this method statically without relying on the module stored in the class variables
                 $mb = new ModuleBuilder ( ) ;
                 $module = & $mb->getPackageModule ( $packageName, $moduleName ) ;

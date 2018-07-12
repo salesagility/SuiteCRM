@@ -1,7 +1,7 @@
 <?php
 
 
- class ViewMultieditTest  extends PHPUnit_Framework_TestCase
+ class ViewMultieditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
  {
      public function testViewMultiedit()
      {

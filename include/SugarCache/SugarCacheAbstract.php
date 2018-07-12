@@ -179,7 +179,7 @@ abstract class SugarCacheAbstract
         {
             $this->_setExternal($this->_keyPrefix.$key,$value);
         }
-        else if( $ttl > 0 )
+        elseif( $ttl > 0 )
         {
             //For BC reasons the setExternal signature will remain the same.
             $previousExpireTimeout = $this->_expireTimeout;

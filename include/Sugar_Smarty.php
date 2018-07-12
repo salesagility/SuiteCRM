@@ -148,7 +148,18 @@ class Sugar_Smarty extends Smarty
         $this->assign('MOD', $mod_strings);
         $this->assign('APP_CONFIG', $sugar_config);
 
-        return parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
+        if (!(isset($sugar_config['developerMode']) && $sugar_config['developerMode'])) {
+            $level = isset($sugar_config['smarty_error_level']) ? $sugar_config['smarty_error_level'] : 0;
+            $errorLevelStored = error_reporting();
+            error_reporting($level);
+        }
+        $fetch = parent::fetch(get_custom_file_if_exists($resource_name), $cache_id, $compile_id, $display);
+        if (!(isset($sugar_config['developerMode']) && $sugar_config['developerMode'])) {
+            $level = isset($sugar_config['smarty_error_level']) ? $sugar_config['smarty_error_level'] : 0;
+            error_reporting($errorLevelStored);
+        }
+        
+        return $fetch;
     }
 
     /**
@@ -158,8 +169,8 @@ class Sugar_Smarty extends Smarty
      */
     public function trigger_error($error_msg, $error_type = E_USER_WARNING)
     {
-        parent::trigger_error($error_msg, $error_type);
-
+        $error_msg = htmlentities($error_msg);
+        
         switch ($error_type)
         {
             case E_USER_ERROR:

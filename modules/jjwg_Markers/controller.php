@@ -4,7 +4,8 @@
 
 include_once('include/utils.php');
 
-class jjwg_MarkersController extends SugarController {
+class jjwg_MarkersController extends SugarController
+{
 
     function action_marker_edit_map() {
 

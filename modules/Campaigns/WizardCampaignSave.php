@@ -38,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-global $db;
+$db = DBManagerFactory::getInstance();
 
 function getTemplateValidationMessages($templateId) {
     $msgs = array();
@@ -88,7 +88,7 @@ else {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
             $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
-        } else if($func != 'createEmailMarketing') {
+        } elseif($func != 'createEmailMarketing') {
             $marketing = new EmailMarketing();
             $marketing->save();
             $marketingId = $marketing->id;

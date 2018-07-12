@@ -1,7 +1,8 @@
 <?php
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
-class SugarFieldCronSchedule extends SugarFieldBase {
+class SugarFieldCronSchedule extends SugarFieldBase
+{
 
     private function getDays(){
         $days = array();
@@ -22,10 +23,6 @@ class SugarFieldCronSchedule extends SugarFieldBase {
             $date->add($period);
         }
         return $days;
-    }
-
-    function getHumanReadable($schedule){
-
     }
 
     function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass = true) {

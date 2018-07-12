@@ -169,7 +169,7 @@ class AOW_WorkFlow extends Basic
 	public function run_flows()
 		{$flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
-        foreach ($flows as $flow) {
+        foreach ((array)$flows as $flow) {
             $flow->run_flow();
         }
 
@@ -218,7 +218,7 @@ class AOW_WorkFlow extends Basic
     function get_flow_beans(){
         global $beanList;
 
-        if($beanList[$this->flow_module]){
+        if(isset($beanList[$this->flow_module]) && $beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
 
             $query = '';
@@ -285,7 +285,7 @@ class AOW_WorkFlow extends Basic
     function build_flow_query_where($query = array()){
         global $beanList;
 
-        if($beanList[$this->flow_module]){
+        if(isset($beanList[$this->flow_module]) && $beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
 
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
@@ -322,7 +322,10 @@ class AOW_WorkFlow extends Basic
             }
 
             if(!$this->multiple_runs){
-                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
+                if (!isset($query['where'])) {
+                   $query['where'] = []; 
+                }
+                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".(isset($this->id) ? $this->id : null)."' AND aow_processed.parent_id=".(isset($module->table_name) ? $module->table_name : null).".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
 
             $query['where'][] = $module->table_name.".deleted = 0 ";
@@ -367,7 +370,15 @@ class AOW_WorkFlow extends Basic
 
             switch($condition->value_type) {
                 case 'Field':
-                    $data = $module->field_defs[$condition->value];
+                    
+                    if (!isset($module->field_defs[$condition->value])) {
+                        LoggerManager::getLogger()->warn('Module field definition does not contains a condition value for AOW Work Flow / build query where.');
+                        $moduleFieldDefsConditionLevel = null;
+                    } else {
+                        $moduleFieldDefsConditionLevel = $module->field_defs[$condition->value];
+                    }
+                    
+                    $data = $moduleFieldDefsConditionLevel;
 
                     if($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->value = $data['id_name'];
@@ -384,13 +395,16 @@ class AOW_WorkFlow extends Basic
                     return array();
                 case 'Date':
                     $params =  unserialize(base64_decode($condition->value));
-                    if($params[0] == 'now'){
+                    if (false === $params) {
+                        LoggerManager::getLogger()->fatal('Unable to serialize a condition value for AOW WorkFlow / build quiery where. Condition value was: ' . $condition->value);
+                    }
+                    if(isset($params[0]) && $params[0] == 'now'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             $value  = 'GetUTCDate()';
                         } else {
                             $value = 'UTC_TIMESTAMP()';
                         }
-                    } else if($params[0] == 'today'){
+                    } elseif(isset($params[0]) && $params[0] == 'today'){
                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                             //$field =
                             $value  = 'CAST(GETDATE() AS DATE)';
@@ -410,7 +424,7 @@ class AOW_WorkFlow extends Basic
 
                     if($params[1] != 'now'){
                         switch($params[3]) {
-                            case 'business_hours';
+                            case 'business_hours':
                                 if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php') && $params[0] == 'now'){
                                     require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
 
@@ -599,15 +613,20 @@ class AOW_WorkFlow extends Basic
                         break;
 
                     case 'Any_Change':
-                        $value = $condition_bean->fetched_row[$condition->field];
+                        if ($data['type'] === 'relate' && isset($data['name'])
+                            && isset($condition_bean->rel_fields_before_value[$condition->field])) {
+                            $value = $condition_bean->rel_fields_before_value[$condition->field];
+                        } else {
+                            $value = $condition_bean->fetched_row[$condition->field];
+                        }
                         if(in_array($data['type'],$dateFields)) {
                             $value = strtotime($value);
                         }
                         switch($condition->operator) {
-                            case 'Not_Equal_To';
+                            case 'Not_Equal_To':
                                 $condition->operator = 'Equal_To';
                                 break;
-                            case 'Equal_To';
+                            case 'Equal_To':
                             default:
                                 $condition->operator = 'Not_Equal_To';
                                 break;
@@ -619,7 +638,7 @@ class AOW_WorkFlow extends Basic
                         $dateType = 'datetime';
                         if($params[0] == 'now'){
                             $value = date('Y-m-d H:i:s');
-                        } else if($params[0] == 'today'){
+                        } elseif($params[0] == 'today'){
                             $dateType = 'date';
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
@@ -630,7 +649,7 @@ class AOW_WorkFlow extends Basic
 
                         if($params[1] != 'now'){
                             switch($params[3]) {
-                                case 'business_hours';
+                                case 'business_hours':
                                     if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')){
                                         require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
 
@@ -662,10 +681,10 @@ class AOW_WorkFlow extends Basic
                         $value = unencodeMultienum($value);
                         if($data['type'] == 'multienum') $field = unencodeMultienum($field);
                         switch($condition->operator) {
-                            case 'Not_Equal_To';
+                            case 'Not_Equal_To':
                                 $condition->operator = 'Not_One_of';
                                 break;
-                            case 'Equal_To';
+                            case 'Equal_To':
                             default:
                                 $condition->operator = 'One_of';
                                 break;
@@ -685,7 +704,7 @@ class AOW_WorkFlow extends Basic
                     default:
                         if(in_array($data['type'],$dateFields) && trim($value) != '') {
                             $value = strtotime($value);
-                        } else if ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')){
+                        } elseif ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')){
                             $value = 0;
                         }
                         break;
@@ -732,9 +751,9 @@ class AOW_WorkFlow extends Basic
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains" : return strpos($var1,$var2);
-            case "Starts_With" : return strrpos($var1,$var2, -strlen($var1));
-            case "Ends_With" : return strpos($var1,$var2,strlen($var1) - strlen($var2));
+            case "Contains": return strpos($var1,$var2);
+            case "Starts_With": return strrpos($var1,$var2, -strlen($var1));
+            case "Ends_With": return strpos($var1,$var2,strlen($var1) - strlen($var2));
             case "is_null": return $var1 == '';
             case "One_of":
                 if(is_array($var1)){
@@ -801,7 +820,7 @@ class AOW_WorkFlow extends Basic
 
                 if(file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')){
                     require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
-                } else if(file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')){
+                } elseif(file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')){
                     require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
                 } else {
                     return false;

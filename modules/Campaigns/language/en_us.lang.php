@@ -461,6 +461,7 @@ $mod_strings = array(
     'LBL_CAMPAIGN_CHECKLIST' => 'Campaign Checklist',
 
     'LBL_EMAIL_MARKETING' => 'Email Marketing',
+    'LBL_EMAIL_SUCCESS' => 'Success',
     'LBL_QUEUE_ITEMS' => 'Queue Items',
     'LBL_PROSPECT_LISTS' => 'Prospect Lists',
 	'LBL_SURVEYRESPONSES_CAMPAIGNS_FROM_SURVEYRESPONSES_TITLE' => 'Survey Responses',

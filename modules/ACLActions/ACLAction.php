@@ -44,7 +44,8 @@ if(file_exists("modules/ACLActions/actiondefs.override.php")){
 require_once('modules/ACLActions/actiondefs.php');
 }
 /* END - SECURITY GROUPS */
-class ACLAction  extends SugarBean{
+class ACLAction extends SugarBean
+{
     var $module_dir = 'ACLActions';
     var $object_name = 'ACLAction';
     var $table_name = 'acl_actions';
@@ -253,8 +254,8 @@ class ACLAction  extends SugarBean{
                         if(empty($type)){
                             return $_SESSION['ACL'][$user_id][$category];
                         }
-                        return $_SESSION['ACL'][$user_id][$category][$type];
-                    }else if(!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])){
+                        return isset($_SESSION['ACL'][$user_id][$category][$type]) ? $_SESSION['ACL'][$user_id][$category][$type] : null;
+                    }elseif(!empty($type) && isset($_SESSION['ACL'][$user_id][$category][$type][$action])){
                         return $_SESSION['ACL'][$user_id][$category][$type][$action];
                     }
                 }
@@ -375,15 +376,17 @@ class ACLAction  extends SugarBean{
             }
             $_SESSION['ACL'][$user_id] = $selected_actions;
         }else{
-            if(empty($action) && !empty($category)){
-                if(!empty($type)){
-                    $_SESSION['ACL'][$user_id][$category][$type] = $selected_actions[$category][$type];}
-                $_SESSION['ACL'][$user_id][$category] = $selected_actions[$category];
-            }else{
-                if(!empty($action) && !empty($category) && !empty($type)){
-                $_SESSION['ACL'][$user_id][$category][$type][$action] = $selected_actions[$category][$action];
-
-            }
+            if (empty($action) && !empty($category)) {
+                if (!empty($type)) {
+                    $selectedActionCategoryType = isset($selected_actions[$category][$type]) ? $selected_actions[$category][$type] : null;
+                    $_SESSION['ACL'][$user_id][$category][$type] = $selectedActionCategoryType;
+                }
+                $selectedActionCategory = isset($selected_actions[$category]) ? $selected_actions[$category] : null;
+                $_SESSION['ACL'][$user_id][$category] = $selectedActionCategory;
+            } else {
+                if (!empty($action) && !empty($category) && !empty($type)) {
+                    $_SESSION['ACL'][$user_id][$category][$type][$action] = $selected_actions[$category][$action];
+                }
             }
         }
 
@@ -575,17 +578,19 @@ class ACLAction  extends SugarBean{
             foreach($category as $type_name=>$type){
                 foreach($type as $act_name=>$action){
                     $names[$act_name] = translate($ACLActions[$type_name]['actions'][$act_name]['label'], 'ACLActions');
-                    $categories[$cat_name][$type_name][$act_name]['accessColor'] = ACLAction::AccessColor($action['aclaccess']);
+                    $categories[$cat_name][$type_name][$act_name]['accessColor'] = ACLAction::AccessColor(isset($action['aclaccess']) ? $action['aclaccess'] : null);
                     if($type_name== 'module'){
 
-                        if($act_name != 'aclaccess' && $categories[$cat_name]['module']['access']['aclaccess'] == ACL_ALLOW_DISABLED){
+                        if($act_name != 'aclaccess' && 
+                                (isset($categories[$cat_name]['module']['access']['aclaccess']) ? $categories[$cat_name]['module']['access']['aclaccess'] : null) == ACL_ALLOW_DISABLED){
                             $categories[$cat_name][$type_name][$act_name]['accessColor'] = 'darkgray';
                             $disabled[] = $cat_name;
                         }
 
                     }
-                    $categories[$cat_name][$type_name][$act_name]['accessName'] = ACLAction::AccessName($action['aclaccess']);
-                    $categories[$cat_name][$type_name][$act_name]['accessLabel'] = ACLAction::AccessLabel($action['aclaccess']);
+                    $aclaccess = isset($action['aclaccess']) ? $action['aclaccess'] : null;
+                    $categories[$cat_name][$type_name][$act_name]['accessName'] = ACLAction::AccessName($aclaccess);
+                    $categories[$cat_name][$type_name][$act_name]['accessLabel'] = ACLAction::AccessLabel($aclaccess);
 
                     if($cat_name=='Users'&& $act_name=='admin'){
                         $categories[$cat_name][$type_name][$act_name]['accessOptions'][ACL_ALLOW_DEFAULT]=ACLAction::AccessName(ACL_ALLOW_DEFAULT);;
@@ -618,7 +623,7 @@ class ACLAction  extends SugarBean{
         $array_fields = array('id', 'aclaccess');
         $arr = array();
         foreach($array_fields as $field){
-            $arr[$field] = $this->$field;
+            $arr[$field] = isset($this->$field) ? $this->$field : null;
         }
         return $arr;
     }
@@ -641,7 +646,9 @@ class ACLAction  extends SugarBean{
     *
     */
     function clearSessionCache(){
-        unset($_SESSION['ACL']);
+        if(isset($_SESSION['ACL'])) {
+            unset($_SESSION['ACL']);
+        }
     }
 
 

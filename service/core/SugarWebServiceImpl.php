@@ -45,7 +45,8 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
 require_once('service/core/SoapHelperWebService.php');
 SugarWebServiceImpl::$helperObject = new SoapHelperWebServices();
 
-class SugarWebServiceImpl{
+class SugarWebServiceImpl
+{
 
 	public static $helperObject = null;
 
@@ -455,7 +456,7 @@ function set_entry($session,$module_name, $name_value_list){
 		if(is_array($value) &&  $value['name'] == 'id'){
 			$seed->retrieve($value['value']);
 			break;
-		}else if($name === 'id' ){
+		}elseif($name === 'id' ){
 
 			$seed->retrieve($value);
 		}
@@ -557,14 +558,14 @@ public function login($user_auth, $application, $name_value_list){
 			global $current_user;
 			$current_user = $user;
 		} // if
-	} else if($usr_id && isset($user->user_name) && ($user->getPreference('lockout') == '1')) {
+	} elseif($usr_id && isset($user->user_name) && ($user->getPreference('lockout') == '1')) {
 			$error->set_error('lockout_reached');
 			$GLOBALS['log']->fatal('Lockout reached for user ' . $user_auth['user_name']);
 			LogicHook::initialize();
 			$GLOBALS['logic_hook']->call_custom_logic('Users', 'login_failed');
 			self::$helperObject->setFaultObject($error);
 			return;
-	} else if(function_exists('openssl_decrypt')){
+	} elseif(function_exists('openssl_decrypt')){
 		$password = self::$helperObject->decrypt_string($user_auth['password']);
 		if($authController->login($user_auth['user_name'], $password) && isset($_SESSION['authenticated_user_id'])){
 			$success = true;
@@ -925,7 +926,7 @@ function search_by_module($session, $search_string, $modules, $offset, $max_resu
     $GLOBALS['log']->info('SugarWebServiceImpl->search_by_module - search string = ' . $search_string);
 
 	if(!empty($search_string) && isset($search_string)) {
-		$search_string = trim($GLOBALS['db']->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
+		$search_string = trim(DBManagerFactory::getInstance()->quote(securexss(from_html(clean_string($search_string, 'UNIFIED_SEARCH')))));
     	foreach($modules_to_search as $name => $beanName) {
     		$where_clauses_array = array();
 			$unifiedSearchFields = array () ;
@@ -1155,8 +1156,8 @@ function get_entries_count($session, $module_name, $query, $deleted) {
 		$sql .= ' WHERE ' . implode(' AND ', $where_clauses);
 	}
 
-	$res = $GLOBALS['db']->query($sql);
-	$row = $GLOBALS['db']->fetchByAssoc($res);
+	$res = DBManagerFactory::getInstance()->query($sql);
+	$row = DBManagerFactory::getInstance()->fetchByAssoc($res);
 
 	$GLOBALS['log']->info('End: SugarWebServiceImpl->get_entries_count');
 	return array(

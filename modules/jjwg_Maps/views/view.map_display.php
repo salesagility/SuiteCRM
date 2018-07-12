@@ -2,7 +2,8 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-class Jjwg_MapsViewMap_Display extends SugarView {
+class Jjwg_MapsViewMap_Display extends SugarView
+{
 
   function __construct() {
     parent::__construct();

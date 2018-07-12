@@ -224,4 +224,18 @@ $mod_strings = array(
     'LBL_REPEAT_UNTIL' => 'Repeat Until',
     'LBL_REPEAT_COUNT' => 'Number of recurrences',
     'LBL_REPEAT_LIMIT_ERROR' => 'Your request was going to create more than $limit meetings.',
+
+    //Events
+    'LNK_EVENT' => 'Event',
+    'LNK_EVENT_VIEW' => 'View Event',
+    'LBL_DATE' => 'Date: ',
+    'LBL_DURATION' => 'Duration: ',
+    'LBL_NAME' => 'Title: ',
+    'LBL_HOUR_ABBREV' => 'hour',
+    'LBL_HOURS_ABBREV' => 'hours',
+    'LBL_MINSS_ABBREV' => 'minutes',
+    'LBL_LOCATION' => 'Location: ',
+    'LBL_STATUS' => 'Status: ',
+    'LBL_DESCRIPTION' => 'Description: ',
+    //End Events
 );

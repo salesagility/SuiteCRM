@@ -39,7 +39,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class TabController{
+class TabController
+{
 
 var $required_modules = array('Home');
 
@@ -114,7 +115,7 @@ function get_tabs_system(){
 	if($should_hide_iframes) {
 	   if(isset($unsetTabs['iFrames'])) {
 	      unset($unsetTabs['iFrames']);
-	   } else if(isset($tabs['iFrames'])) {
+	   } elseif(isset($tabs['iFrames'])) {
 	   	  unset($tabs['iFrames']);
 	   }
 	} 

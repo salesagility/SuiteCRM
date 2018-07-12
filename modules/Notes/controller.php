@@ -58,6 +58,14 @@
 		{
 			$_REQUEST['relate_id'] = false;
 		}
+
+        // If Note is related to a Contact, we automatically fill the Contact field
+        if ($_REQUEST['parent_type'] === 'Contacts'
+            && !empty($_REQUEST['parent_id'])
+            && !empty($_REQUEST['parent_name'])) {
+            $this->bean->contact_id = $_REQUEST['parent_id'];
+            $this->bean->contact_name = $_REQUEST['parent_name'];
+        }
 		
 		$GLOBALS['log']->debug('PERFORMING NOTES SAVE');
 		$upload_file = new UploadFile('uploadfile');
@@ -74,7 +82,7 @@
 
        	 $do_final_move = 1;
 		}
-		else if ( isset( $_REQUEST['old_filename']))
+		elseif ( isset( $_REQUEST['old_filename']))
 		{
 	       	 $this->bean->filename = $_REQUEST['old_filename'];
 		}
@@ -91,7 +99,7 @@
 		{
        		 $upload_file->final_move($this->bean->id);
 		}
-		else if ( ! empty($_REQUEST['old_id']))
+		elseif ( ! empty($_REQUEST['old_id']))
 		{
        	 	$upload_file->duplicate_file($_REQUEST['old_id'], $this->bean->id, $this->bean->filename);
 		}

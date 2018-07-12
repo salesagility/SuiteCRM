@@ -42,7 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/Dashlet.php');
 
 
-class iFrameDashlet extends Dashlet {
+class iFrameDashlet extends Dashlet
+{
     var $displayTpl = 'modules/Home/Dashlets/iFrameDashlet/display.tpl';
     var $configureTpl = 'modules/Home/Dashlets/iFrameDashlet/configure.tpl';
     var $defaultURL = 'http://apps.sugarcrm.com/dashlet/sugarcrm-news-dashlet.html?lang=@@LANG@@&edition=@@EDITION@@&ver=@@VER@@';

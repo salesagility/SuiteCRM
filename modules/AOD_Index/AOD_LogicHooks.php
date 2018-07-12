@@ -22,7 +22,8 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-class AOD_LogicHooks{
+class AOD_LogicHooks
+{
 
     function saveModuleChanges(SugarBean $bean, $event, $arguments){
         if($bean->module_name == 'AOD_Index'){

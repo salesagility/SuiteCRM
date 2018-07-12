@@ -57,7 +57,8 @@ require_once('modules/ModuleBuilder/parsers/views/History.php');
  * SugarMerge wraps around all the merge functionality of Sugar given a module name and the path to an unzipped patch
  *
  */
-class SugarMerge {
+class SugarMerge
+{
 	private $mergeMapping = array();
 	private $new_path = '';
 	private $custom_path = 'custom';

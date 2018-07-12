@@ -47,7 +47,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-class Relationship extends SugarBean {
+class Relationship extends SugarBean
+{
 
 	var $object_name='Relationship';
 	var $module_dir = 'Relationships';

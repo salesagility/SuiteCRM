@@ -132,7 +132,8 @@ $GLOBALS['_transient']['static']['nusoap_base']['globalDebugLevel'] = 9;
 
 * @access   public
 */
-class nusoap_base {
+class nusoap_base
+{
 	/**
 	 * Identification for HTTP headers.
 	 *
@@ -524,7 +525,7 @@ class nusoap_base {
 	        	} elseif (! $val) {
 	        		$val = 0;
 	        	}
-			} else if (is_string($val)) {
+			} elseif (is_string($val)) {
 				$val = $this->expandEntities($val);
 			}
 			if ($use == 'literal') {
@@ -655,7 +656,7 @@ class nusoap_base {
 						$array_type = $i;
 						if ($use == 'literal') {
 							$type_str = '';
-						} else if (isset($type) && isset($type_prefix)) {
+						} elseif (isset($type) && isset($type_prefix)) {
 							$type_str = " xsi:type=\"$type_prefix:$type\"";
 						} else {
 							$type_str = " xsi:type=\"SOAP-ENC:Array\" SOAP-ENC:arrayType=\"".$array_typename."[$array_type]\"";
@@ -664,7 +665,7 @@ class nusoap_base {
 					} else {
 						if ($use == 'literal') {
 							$type_str = '';
-						} else if (isset($type) && isset($type_prefix)) {
+						} elseif (isset($type) && isset($type_prefix)) {
 							$type_str = " xsi:type=\"$type_prefix:$type\"";
 						} else {
 							$type_str = " xsi:type=\"SOAP-ENC:Array\" SOAP-ENC:arrayType=\"xsd:anyType[0]\"";

@@ -50,7 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
-class UndefinedVardefRule extends BaseRule {
+class UndefinedVardefRule extends BaseRule
+{
 
 function __construct() {
 
@@ -64,7 +65,7 @@ function parsePanels($panels, $view) {
    	  	 foreach($row as $key=>$column) {
    	  	 	if(is_array($column) && isset($column['name']) && empty($column['name'])) {
 	           $panels[$name][$rowCount][$key] = '';
-   	  	 	} else if(!is_array($column) && isset($column['name']) && empty($column['name'])) {
+   	  	 	} elseif(!is_array($column) && isset($column['name']) && empty($column['name'])) {
    	  	 	   $panels[$name][$rowCount][$key] = '';
    	  	 	}
    	  	 } //foreach

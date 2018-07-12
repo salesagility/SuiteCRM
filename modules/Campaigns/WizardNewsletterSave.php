@@ -54,7 +54,7 @@ global $mod_strings;
     if(isset($_REQUEST['record']) && $_REQUEST['record'] && !(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'])) {
         $campaign_focus->retrieve($_REQUEST['record']);
     }
-    else if(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
+    elseif(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
         $campaign_focus->retrieve($_REQUEST['campaign_id']);
     }
 
@@ -68,13 +68,13 @@ global $mod_strings;
     }
 
     switch($_REQUEST['currentstep']) {
-        case 1;
+        case 1:
             //save here so we can link relationships
             $campaign_focus->save();
             $GLOBALS['log']->debug("Saved record with id of ".$campaign_focus->id);
             echo json_encode(array('record'=>$campaign_focus->id));
             break;
-        case 2;
+        case 2:
             //process subscription lists if this is a newsletter
             if($campaign_focus->campaign_type =='NewsLetter'){
                 $pl_list = process_subscriptions_from_request($campaign_focus->name);

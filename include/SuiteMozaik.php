@@ -1,6 +1,7 @@
 <?php
 
-class SuiteMozaik {
+class SuiteMozaik
+{
 
     private $mozaikPath = 'include/javascript/mozaik';
     private $vendorPath;

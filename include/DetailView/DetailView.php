@@ -40,7 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * DetailView - display single record
  * @api
  */
-class DetailView extends ListView {
+class DetailView extends ListView
+{
 
 	var $list_row_count = null;
 	var $return_to_list_only=false;
@@ -282,7 +283,7 @@ class DetailView extends ListView {
 	    		if($current_offset < 0){
 	    			$current_offset = 1;
 	    		}
-	    		else if($current_offset > $row_count){
+	    		elseif($current_offset > $row_count){
 	    			$current_offset = $row_count;
 	    		}
 
@@ -312,7 +313,7 @@ class DetailView extends ListView {
 	    		if($current_offset < 0){
 	    			$current_offset = 1;
 	    		}
-	    		else if($current_offset > $row_count){
+	    		elseif($current_offset > $row_count){
 	    			$current_offset = $row_count;
 	    		}
 

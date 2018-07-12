@@ -84,7 +84,6 @@ class FileModuleCest
         \AcceptanceTester $I,
         \Step\Acceptance\NavigationBar $navigationBar,
         \Step\Acceptance\ListView $listView,
-        \Step\Acceptance\ListView $listView,
         \Helper\WebDriverHelper $webDriverHelper
     ) {
         $I->wantTo('View File Test Module');
@@ -138,6 +137,7 @@ class FileModuleCest
 
         // Create a record
         $this->fakeData->seed($this->fakeDataSeed);
+        $editView->waitForEditViewVisible();
         $fileDir = 'tests/_data/';
         $fileName = $this->fakeData->lastName.'.test.txt';
         $I->writeToFile($fileDir.$fileName, 'test file');

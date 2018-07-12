@@ -23,7 +23,8 @@
  */
 
 
-class AOR_ChartsController extends SugarController {
+class AOR_ChartsController extends SugarController
+{
 
     protected function action_getImageMap() {
         ob_start();

@@ -38,7 +38,8 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class updateDependencies {
+class updateDependencies
+{
 
     function update_dependency(&$bean, $event, $arguments){
         //Get all tasks that are dependant on the current task being saved.
@@ -69,7 +70,7 @@ class updateDependencies {
                         $task->date_finish = $enddate;
                         $task->save();
 
-                    } else if ($rel_type == 'SS') {//if its a start to start
+                    } elseif ($rel_type == 'SS') {//if its a start to start
                         //check if the tasks duration has not been changed so that it does not update when the parent tasks duration is changed
                         if ($bean->fetched_row['duration'] == $bean->duration) {
 

@@ -42,6 +42,7 @@
  * External API to news feed system
  * @api
  */
-interface WebFeed {
+interface WebFeed
+{
 	public function getLatestUpdates($maxTime, $maxEntries);
 }

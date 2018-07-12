@@ -260,15 +260,15 @@ class UpgradeHistory extends SugarBean
         if(count($left) == 0 && count($right) == 0){
             return $equals_is_greater;
         }
-        else if(count($left) == 0 || count($right) == 0){
+        elseif(count($left) == 0 || count($right) == 0){
             return true;
         }
-        else if($left[0] == $right[0]){
+        elseif($left[0] == $right[0]){
             array_shift($left);
             array_shift($right);
             return $this->is_right_version_greater($left, $right, $equals_is_greater);
         }
-        else if($left[0] < $right[0]){
+        elseif($left[0] < $right[0]){
            return true;
         }
         else

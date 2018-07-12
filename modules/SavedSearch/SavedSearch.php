@@ -101,7 +101,9 @@ class SavedSearch extends SugarBean
     // Saved Search Form
     function getForm($module, $inline = true, $orderBySelectOnly = false)
     {
-        global $db, $current_user, $currentModule, $current_language, $app_strings;
+        global $current_user, $currentModule, $current_language, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $json = getJSONobj();
 
         $saved_search_mod_strings = return_module_language($current_language, 'SavedSearch');
@@ -179,10 +181,18 @@ class SavedSearch extends SugarBean
             }
         } else {
             foreach ($this->columns as $name => $val) {
+                
+                if (!isset($val['label'])) {
+                    LoggerManager::getLogger()->warn("SavedSearch getTemplateGroupChooser: Illegal string offset 'label'");
+                    $valLabel = null;
+                } else {
+                    $valLabel = $val['label'];
+                }
+                
                 if (!empty($val['default']) && $val['default'])
-                    $chooser->args['values_array'][0][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][0][$name] = trim(translate($valLabel, $module), ':');
                 else
-                    $chooser->args['values_array'][1][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][1][$name] = trim(translate($valLabel, $module), ':');
             }
         }
 
@@ -205,7 +215,9 @@ class SavedSearch extends SugarBean
     {
 
 
-        global $db, $current_user, $currentModule, $current_lang, $app_strings;
+        global $current_user, $currentModule, $current_lang, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $saved_search_mod_strings = return_module_language($current_lang, 'SavedSearch');
 
         $query = 'SELECT id, name FROM saved_search
@@ -323,7 +335,7 @@ class SavedSearch extends SugarBean
                     if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value)) {
                         $db_format = $timedate->to_db_date($value, false);
                         $contents[$input] = $db_format;
-                    } else if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
+                    } elseif ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
 
                         if (preg_match('/[^\d]/', $value)) {
                             require_once('modules/Currencies/Currency.php');
@@ -413,7 +425,7 @@ class SavedSearch extends SugarBean
                         //Avoid macro values for the date types
                         if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $val) && !preg_match('/^\[.*?\]$/', $val)) {
                             $val = $timedate->to_display_date($val, false);
-                        } else if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->contents[$key . '_unformatted_number']) && preg_match('/^\d+$/', $val)) {
+                        } elseif (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->contents[$key . '_unformatted_number']) && preg_match('/^\d+$/', $val)) {
                             require_once('modules/Currencies/Currency.php');
                             $val = format_number($val);
                             if ($type == 'currency' && isset($this->contents[$key . '_currency_symbol'])) {

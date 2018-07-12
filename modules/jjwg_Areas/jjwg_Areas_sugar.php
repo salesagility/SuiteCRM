@@ -1,6 +1,7 @@
 <?php
 
-class jjwg_Areas_sugar extends Basic {
+class jjwg_Areas_sugar extends Basic
+{
 
     var $new_schema = true;
     var $module_dir = 'jjwg_Areas';

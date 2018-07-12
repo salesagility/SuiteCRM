@@ -46,7 +46,8 @@ if( !isset( $install_script ) || !$install_script ){
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
 
-class NonDBLocalization extends Localization {
+class NonDBLocalization extends Localization
+{
 
     public function __construct() {
         global $sugar_config;
@@ -1727,7 +1728,8 @@ EOQ;
 
 }
 
-class DisplayErrors {
+class DisplayErrors
+{
 
     private static $settingsStack = array();
 

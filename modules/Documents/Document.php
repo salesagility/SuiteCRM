@@ -100,6 +100,7 @@ class Document extends File
         'contract_id' => 'contracts',
     );
 
+    public $authenticated = null;
 
     function __construct()
     {
@@ -368,10 +369,32 @@ class Document extends File
         $document_fields['FILE_URL'] = $this->file_url;
         $document_fields['FILE_URL_NOIMAGE'] = $this->file_url_noimage;
         $document_fields['LAST_REV_CREATED_BY'] = $this->last_rev_created_name;
-        $document_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $app_list_strings['document_category_dom'][$this->category_id];
-        $document_fields['SUBCATEGORY_ID'] = empty ($this->subcategory_id) ? "" : $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
+        if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
+            if (!isset($this->category_id)) {
+                LoggerManager::getLogger()->warn('Undefined category id for document list view data.');
+            } else {
+                LoggerManager::getLogger()->warn('In language app strings[document_category_dom] does not found for category id for document list view data: ' . $this->category_id);
+            }
+        }
+        
+        if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
+            LoggerManager::getLogger()->warn('Category ID is not found in document_category_dom in app_list_string for getting list view date of Document.');
+            $appListStringDocumentCategoryDomForThisCategoryId = null;
+        } else {
+            $appListStringDocumentCategoryDomForThisCategoryId = $app_list_strings['document_category_dom'][$this->category_id];
+        }
+        
+        if (!isset($app_list_strings['document_category_dom'][$this->category_id])) {
+            LoggerManager::getLogger()->warn('Category ID is not found in document_category_dom in app_list_string for getting list view date of Document.');
+            $appListStringDocumentCategoryDomForThisSubCategoryId = null;
+        } else {
+            $appListStringDocumentCategoryDomForThisSubCategoryId = $app_list_strings['document_subcategory_dom'][$this->subcategory_id];
+        }
+        
+        $document_fields['CATEGORY_ID'] = empty ($this->category_id) ? "" : $appListStringDocumentCategoryDomForThisCategoryId;
+        $document_fields['SUBCATEGORY_ID'] = empty ($this->subcategory_id) ? "" : $appListStringDocumentCategoryDomForThisSubCategoryId;
         $document_fields['NAME'] = $this->document_name;
-        $document_fields['DOCUMENT_NAME_JAVASCRIPT'] = $GLOBALS['db']->quote($document_fields['DOCUMENT_NAME']);
+        $document_fields['DOCUMENT_NAME_JAVASCRIPT'] = DBManagerFactory::getInstance()->quote($document_fields['DOCUMENT_NAME']);
 
         return $document_fields;
     }
@@ -404,9 +427,9 @@ class Document extends File
     function bean_implements($interface)
     {
         switch ($interface) {
-            case 'ACL' :
+            case 'ACL':
                 return true;
-            case 'FILE' :
+            case 'FILE':
                 return true;
         }
 

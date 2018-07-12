@@ -49,7 +49,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Product_Categories/AOS_Product_Categories.php');
 
-class AOS_Product_CategoriesDashlet extends DashletGeneric {
+class AOS_Product_CategoriesDashlet extends DashletGeneric
+{
     function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOS_Product_Categories/metadata/dashletviewdefs.php');

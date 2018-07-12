@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,7 +43,8 @@
 require_once('modules/Calls_Reschedule/Calls_Reschedule_sugar.php');
 require_once('modules/Calls/Call.php');
 
-class Calls_Reschedule extends Calls_Reschedule_sugar {
+class Calls_Reschedule extends Calls_Reschedule_sugar
+{
 
 	function __construct(){
 		parent::__construct();
