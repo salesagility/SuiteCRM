@@ -73,7 +73,7 @@ class GoogleSync
             $GLOBALS['log']->setLevel($_SERVER['GSYNC_LOGLEVEL']);
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Log Level Set to: ' . $_SERVER['GSYNC_LOGLEVEL']);
         }
-        $this->timezone = date_default_timezone_get();
+        $this->timezone = date_default_timezone_get(); // This defaults to the server timezone. Overridden later.
         $this->authJson = $this->getAuthJson();
         $this->db = DBManagerFactory::getInstance();
         $GLOBALS['log']->debug(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . '__construct');
@@ -641,12 +641,12 @@ class GoogleSync
      *
      * @param Meeting $meeting : The SuiteCRM Meeting Bean
      *
-     * @return bool : Success/Failure
+     * @return bool : Success/Failure  of setLastSync, since that's what saves the record
      */
     public function delMeeting($meeting) {
         $meeting->deleted = '1';
         $meeting->gsync_id = '';
-        $this->setLastSync($meeting);
+        return $this->setLastSync($meeting);
     }
 
     /* Delete Google Event
@@ -783,71 +783,19 @@ class GoogleSync
             return false;
         }
 
-        // https://developers.google.com/resources/api-libraries/documentation/calendar/v3/php/latest/class-Google_Service_Calendar_Event.html
-
         $event_remote->setSummary($event_local->name);
         $event_remote->setDescription($event_local->description);
         $event_remote->setLocation($event_local->location);
 
         $startDateTime = new Google_Service_Calendar_EventDateTime;
         $startDateTime->setDateTime(date(DATE_ATOM, strtotime($event_local->date_start)));
-        $startDateTime->setTimezone($this->timezone);
+        $startDateTime->setTimeZone($this->timezone);
         $event_remote->setStart($startDateTime);
 
         $endDateTime = new Google_Service_Calendar_EventDateTime;
         $endDateTime->setDateTime(date(DATE_ATOM, strtotime($event_local->date_end)));
-        $endDateTime->setTimezone($this->timezone);
+        $endDateTime->setTimeZone($this->timezone);
         $event_remote->setEnd($endDateTime);
-
-        // Set Recurring Data
-//         if (!empty($event_local->repeat_type)) {
-//             $rrule = array();
-//             $rrule['FREQ'] = strtoupper($event_local->repeat_type);
-//             $rrule['INTERVAL'] = $event_local->repeat_interval;
-//
-//             if (!empty($event_local->repeat_count)) {
-//                 $rrule['COUNT'] = $event_local->repeat_count;
-//             } elseif (!empty($event_local->repeat_until)) {
-//                 $rrule['UNTIL'] = date('Ymd', strtotime($event_local->repeat_until));
-//             }
-//
-//             if (isset($event_local->repeat_dow)) {
-//                 $dow = $event_local->repeat_dow;
-//                 $dow_array = array();
-//
-//                 for ($i = 0; $i < strlen($dow); $i++) {
-//                     switch ($dow[$i]) {
-//                         case 0:
-//                             $dow_array[] = "SU";
-//                             break;
-//                         case 1:
-//                             $dow_array[] = "MO";
-//                             break;
-//                         case 2:
-//                             $dow_array[] = "TU";
-//                             break;
-//                         case 3:
-//                             $dow_array[] = "WE";
-//                             break;
-//                         case 4:
-//                             $dow_array[] = "TH";
-//                             break;
-//                         case 5:
-//                             $dow_array[] = "FR";
-//                             break;
-//                         case 6:
-//                             $dow_array[] = "SA";
-//                             break;
-//                     }
-//                 }
-//                 $rrule['BYDAY'] = implode(",", $dow_array);
-//             }
-//
-//             $recurrence[] = 'RRULE:' . urldecode(http_build_query($rrule, '' , ';'));
-//             $event_remote->setRecurrence($recurrence);
-//         } else {
-//             $event_remote->setRecurrence(array());
-//         }
 
         // We pull the existing extendedProperties, and change our values
         // That way we don't mess with anything else that's using other values.
@@ -964,6 +912,14 @@ class GoogleSync
 
         if (!$this->setClient($id)) {
             $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Unable to setup Google Client');
+            return false;
+        }
+
+        if ($this->workingUser->id == $id) {
+            $tz = $this->workingUser->getPreference('timezone', 'global');
+            $this->setTimezone($tz);
+        } else {
+            $GLOBALS['log']->fatal(__FILE__ . ':' . __LINE__ . ' ' . __METHOD__ . ' - ' . 'Failed to set the working user and timezone');
             return false;
         }
 
