@@ -1,24 +1,40 @@
 /**
- * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
  *
- * @author SalesAgility <info@salesagility.com>
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for technical reasons, the Appropriate Legal Notices must
+ * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
 
@@ -74,23 +90,15 @@ var LogicalOperatorHandler = {
     });
   },
 
-  onLogicSelectChange: function(elem, counter) {
-    // console.log('logic select changed... ', elem, counter);
-  }
-
 };
 
 var ConditionOrderHandler = {
-
-  //conditionOrderInputCounter: 0,
 
   getConditionOrderHiddenInput: function(value, _condln) {
 
     if(_condln===0)_condln = '0';
 
     if (typeof value === 'undefined' || !value) { value = '0'; }
-
-    //conditionOrderInputCounter++
 
     inputHTML = '<input type="hidden" class="aor_condition_order_input" name="aor_conditions_order[' + (_condln ? _condln : condln) + ']" value="' + value + '">';
 
@@ -124,8 +132,6 @@ var ConditionOrderHandler = {
 };
 
 var ParenthesisHandler = {
-
-  //parenthesisCounter: 0,
 
   getParenthesisStartHtml: function(condition_id, logic_op, condition_order, _condln) {
 
@@ -186,8 +192,6 @@ var ParenthesisHandler = {
 
     condln+=2;
     condln_count+=2;
-
-    //parenthesisCounter++;
   },
 
   deleteParenthesisPair: function(elem, counter) {
@@ -377,7 +381,6 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
         SUGAR.util.evalScript(result.responseText);
         enableQS(false);
         testModuleFieldsPandingFinihed();
-     //   $("#aor_conditions_value\\[" + ln +"\\]").blur( UpdatePreview("preview") );
       },
       failure: function(result) {
         document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
@@ -397,7 +400,6 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
   }
 
   else {
-   // document.getElementById('aor_conditions_logicInput'+ln).innerHTML = ''
     document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = ''
     document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = '';
     document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
@@ -446,7 +448,6 @@ function insertConditionHeader(){
   x.id='conditionLines_head';
 
   var a=x.insertCell(nxtCell++);
-  //a.style.color="rgb(68,68,68)";
 
   if(view === 'EditView') {
     var cellLogic = x.insertCell(nxtCell++);
@@ -479,12 +480,6 @@ function insertConditionHeader(){
         g.innerHTML=SUGAR.language.get('SharedSecurityRules', 'LBL_LOGIC_OP');
     }
 
-
-  // if(view === 'EditView') {
-  //   var h = x.insertCell(-1);
-  //   h.style.color = "rgb(0,0,0)";
-  //   h.innerHTML = SUGAR.language.get('AOR_MatrixReporting', 'LBL_PARAMETER');
-  // }
 }
 
 function insertConditionLine(condition){
@@ -547,6 +542,7 @@ function insertConditionLine(condition){
     } else {
       viewStyle = '';
     }
+
     b.innerHTML += "<span style='width:178px;' id='aor_conditions_module_path_display" + condln + "' ></span>";
 
 
@@ -563,6 +559,7 @@ function insertConditionLine(condition){
     } else {
       viewStyle = '';
     }
+   
     c.innerHTML += "<span style='width:178px;' id='aor_conditions_field_label" + condln + "' ></span>";
 
 
@@ -583,13 +580,6 @@ function insertConditionLine(condition){
           g.id = 'aor_conditions_logic_op' + condln;
           g.style.width = '10%';
       }
-
-
-    // if (view === 'EditView') {
-    //   var h = x.insertCell(-1);
-    //   h.innerHTML += "<input id='aor_conditions_parameter" + condln + "' name='aor_conditions_parameter[" + condln + "]' value='1' type='checkbox'>";
-    //   h.style.width = '10%';
-    // }
 
   }
 
