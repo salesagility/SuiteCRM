@@ -3693,6 +3693,11 @@ class SugarBean
         //relationshipfield-aliases are resolved in SugarBean::create_new_list_query
         // through their relationship_info field
         $addrelate = array();
+        
+        if (!isset($fields) || !is_array($fields)) {
+            $fields = (array)$fields;
+        }
+        
         foreach ($fields as $field => $value) {
             if (!isset($fields) || null === $fields) {
                 LoggerManager::getLogger()->warn('filter is not set for SugarBean::create_new_list_query');
