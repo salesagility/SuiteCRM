@@ -584,6 +584,7 @@ class Scheduler extends SugarBean
 				} else {
 				    return $value;
 				}
+				// no break
 			case 1: // hours
 				global $current_user;
 				if (preg_match('/\*\//', $value)) { // every [SOME INTERVAL] hours
@@ -595,6 +596,7 @@ class Scheduler extends SugarBean
 				    $datef = $current_user->getUserDateTimePreferences();
 				    return date($datef['time'], strtotime($value.':'.str_pad($mins, 2, '0', STR_PAD_LEFT)));
 				}
+				// no break
 			case 2: // day of month
 				if (preg_match('/\*/', $value)) {
 				    return $value;
@@ -602,6 +604,7 @@ class Scheduler extends SugarBean
 				    return date('jS', strtotime('December '.$value));
 				}
 
+				// no break
 			case 3: // months
 				return date('F', strtotime('2005-'.$value.'-01'));
 			case 4: // days of week

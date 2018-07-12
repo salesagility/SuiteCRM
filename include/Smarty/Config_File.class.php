@@ -399,5 +399,3 @@ class Config_File
     }
     /**#@-*/
 }
-
-?>

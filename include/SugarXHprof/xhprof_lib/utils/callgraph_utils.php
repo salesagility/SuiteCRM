@@ -78,6 +78,7 @@ function xhprof_generate_mime_header($type, $length)
       break;
     case 'ps':
       $mime = 'application/postscript';
+      // no break
     default:
       $mime = false;
   }

@@ -124,8 +124,10 @@ if ( $memory_limit == "" ) {          // memory_limit disabled at compile time, 
     switch (strtoupper($matches[2])) {
         case 'G':
             $num = $num * 1024;
+            // no break
         case 'M':
             $num = $num * 1024;
+            // no break
         case 'K':
             $num = $num * 1024;
     }

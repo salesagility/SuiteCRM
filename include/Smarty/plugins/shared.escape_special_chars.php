@@ -27,5 +27,3 @@ function smarty_function_escape_special_chars($string)
 }
 
 /* vim: set expandtab: */
-
-?>

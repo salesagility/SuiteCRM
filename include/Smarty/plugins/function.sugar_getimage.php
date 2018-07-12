@@ -85,4 +85,3 @@ function smarty_function_sugar_getimage($params, &$smarty)
 
     return SugarThemeRegistry::current()->getImage($params['name'], $params['attr'], $params['width'], $params['height'], $params['ext'], $params['alt']);
 }
-?>

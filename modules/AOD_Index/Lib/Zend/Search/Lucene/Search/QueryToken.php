@@ -217,6 +217,7 @@ class Zend_Search_Lucene_Search_QueryToken
             case self::TC_NUMBER:
                 $this->type = self::TT_NUMBER;
 
+                // no break
             default:
                 require_once 'Zend/Search/Lucene/Exception.php';
                 throw new Zend_Search_Lucene_Exception('Unrecognized lexeme type: \'' . $tokenCategory . '\'');

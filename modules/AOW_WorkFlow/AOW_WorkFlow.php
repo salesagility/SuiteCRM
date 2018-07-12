@@ -443,6 +443,7 @@ class AOW_WorkFlow extends Basic
                                 }
                                 //No business hours module found - fall through.
                                 $params[3] = 'hour';
+                                // no break
                             default:
                                 if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                                     $value = "DATEADD(".$params[3].",  ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2], $value)";
@@ -673,6 +674,7 @@ class AOW_WorkFlow extends Basic
                                     }
                                     //No business hours module found - fall through.
                                     $params[3] = 'hours';
+                                    // no break
                                 default:
                                     $value = strtotime($value.' '.$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3]);
                                     if ($dateType == 'date') {
@@ -711,6 +713,7 @@ class AOW_WorkFlow extends Basic
                             $field = true;
                             break;
                         }
+                        // no break
                     case 'Value':
                     default:
                         if (in_array($data['type'],$dateFields) && trim($value) != '') {
@@ -775,6 +778,7 @@ class AOW_WorkFlow extends Basic
                 } else {
                     return in_array($var1,$var2);
                 }
+                // no break
             case "Not_One_of":
                 if (is_array($var1)) {
                     foreach ($var1 as $var) {
@@ -786,6 +790,7 @@ class AOW_WorkFlow extends Basic
                 } else {
                     return !in_array($var1,$var2);
                 }
+                // no break
             case "Equal_To":
             default: return $var1 == $var2;
         }

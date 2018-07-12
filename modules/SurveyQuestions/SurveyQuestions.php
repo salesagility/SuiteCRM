@@ -79,5 +79,3 @@ class SurveyQuestions extends Basic
         return false;
     }
 }
-
-?>

@@ -260,4 +260,3 @@ class nusoap_wsdlcache
 class wsdlcache extends nusoap_wsdlcache
 {
 }
-?>

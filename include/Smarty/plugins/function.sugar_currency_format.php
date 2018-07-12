@@ -88,5 +88,3 @@ function smarty_function_sugar_currency_format($params, &$smarty)
         return $_contents;
     }
 }
-
-?>

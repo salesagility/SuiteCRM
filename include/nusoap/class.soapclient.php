@@ -1179,4 +1179,3 @@ if (!extension_loaded('soap')) {
 class nusoapclient extends nusoap_client
 {
 }
-?>

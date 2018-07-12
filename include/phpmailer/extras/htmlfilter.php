@@ -246,6 +246,7 @@ function tln_getnxtag($body, $offset)
             return $retary;
         }
             //intentional fall-through
+            // no break
     case '>':
         return array($tagname, false, $tagtype, $lt, $pos);
         break;
@@ -347,6 +348,7 @@ function tln_getnxtag($body, $offset)
                 return $retary;
             }
                 //intentional fall-through
+                // no break
         case '>':
             $attary{$attname} = '"yes"';
             return array($tagname, $attary, $tagtype, $lt, $pos);

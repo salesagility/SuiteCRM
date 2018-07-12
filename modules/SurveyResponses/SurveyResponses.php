@@ -223,5 +223,3 @@ class SurveyResponses extends Basic
         $emailObj->save();
     }
 }
-
-?>

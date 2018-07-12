@@ -82,5 +82,3 @@ function smarty_modifier_to_url($string)
         return 'http://' . $string;
     }
 }
-
-?>

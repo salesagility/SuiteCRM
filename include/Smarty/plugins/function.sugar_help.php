@@ -90,5 +90,3 @@ function smarty_function_sugar_help($params, &$smarty)
     />
 EOHTML;
 }
-
-?>

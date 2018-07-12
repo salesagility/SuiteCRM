@@ -517,6 +517,7 @@ EOREGEX
 					/* These tokens set particular options for the statement.  They never stand alone.*/
 					case 'DISTINCTROW':
 						$token='DISTINCT';
+						// no break
 					case 'DISTINCT':
 					case 'HIGH_PRIORITY':
 					case 'LOW_PRIORITY':
@@ -918,6 +919,7 @@ EOREGEX
 						$ref_type = $upper;
 						$ref_expr = "";
 
+						// no break
 					case 'CROSS':
 					case 'USE':
 					case 'FORCE':
@@ -949,6 +951,7 @@ EOREGEX
 					case ',':
 						$modifier = 'CROSS';
 
+						// no break
 					case 'JOIN':
 
 						if ($first_join) {

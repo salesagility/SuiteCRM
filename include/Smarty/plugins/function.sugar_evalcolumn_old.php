@@ -93,5 +93,3 @@ function searchReplace($value, &$rowData)
     }
     return $value;
 }
-
-?>

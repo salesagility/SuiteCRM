@@ -211,4 +211,3 @@ function implode_r($glue, $pieces, $extract_first_item = false)
     }
     return $result;
 }
-?>

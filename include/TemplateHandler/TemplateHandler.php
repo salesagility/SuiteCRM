@@ -680,5 +680,3 @@ class TemplateHandler
         return array();
     }
 }
-
-?>

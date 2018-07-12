@@ -90,5 +90,3 @@ function smarty_function_multienum_to_array($params, &$smarty)
 	
     return ($ret);
 }
-
-?>

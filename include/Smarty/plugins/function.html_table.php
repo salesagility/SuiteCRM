@@ -174,5 +174,3 @@ function smarty_function_html_table_cycle($name, $var, $no)
 
 
 /* vim: set expandtab: */
-
-?>

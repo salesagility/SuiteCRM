@@ -59,5 +59,3 @@ function smarty_core_assemble_plugin_filepath($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

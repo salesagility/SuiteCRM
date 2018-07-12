@@ -179,6 +179,3 @@ class _parse_propfind
         $this->depth--;
     }
 }
-
-
-?>

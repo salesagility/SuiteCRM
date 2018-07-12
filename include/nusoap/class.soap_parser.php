@@ -701,6 +701,3 @@ class nusoap_parser extends nusoap_base
 class soap_parser extends nusoap_parser
 {
 }
-
-
-?>

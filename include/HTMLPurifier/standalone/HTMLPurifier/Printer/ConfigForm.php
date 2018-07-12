@@ -320,6 +320,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
                         $value[] = $val;
                     }
                     //TODO does this need a break?
+                    // no break
                 case HTMLPurifier_VarParser::ALIST:
                     $value = implode(PHP_EOL, $value);
                     break;

@@ -48,4 +48,3 @@ function smarty_function_sugar_getjspath($params, &$smarty)
     }
     return getJSPath($params['file']);
 }
-?>

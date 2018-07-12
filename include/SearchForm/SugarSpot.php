@@ -532,6 +532,7 @@ class SugarSpot
                 if (!preg_match('/[0-9]{3,}/', $query)) {
                     return false;
                 }
+                // no break
             case 'decimal':
             case 'float':
                 if (!preg_match('/[0-9]/', $query)) {

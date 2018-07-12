@@ -549,5 +549,3 @@ class LogicHookTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
     }
 }
-
-?>

@@ -86,4 +86,3 @@ function smarty_function_sugarvar_connector($params, &$smarty)
     require_once('include/connectors/utils/ConnectorUtils.php');
     echo ConnectorUtils::getConnectorButtonScript($displayParams, $smarty);
 }
-?>

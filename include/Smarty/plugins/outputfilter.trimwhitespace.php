@@ -73,5 +73,3 @@ function smarty_outputfilter_trimwhitespace_replace($search_str, $replace, &$sub
         }
     }
 }
-
-?>

@@ -69,5 +69,3 @@ function smarty_core_rm_auto($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

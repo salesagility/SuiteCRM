@@ -626,4 +626,3 @@ class nusoapservermime extends soap_server
         return parent::parseRequest($headers, $data);
     }
 }
-?>

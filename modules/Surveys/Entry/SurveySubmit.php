@@ -129,6 +129,7 @@ function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
                     $response->happiness = 0;
                     $response->happiness_text .= $question->name . " - " . $userResponse . "<br>";
                 }
+                // no break
             case "Rating":
             case "Scale":
             case "Text":

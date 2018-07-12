@@ -88,4 +88,3 @@ function smarty_function_sugar_include($params, &$smarty)
         return $code;
     } //if
 }
-?>

@@ -531,6 +531,7 @@ class Smarty_Compiler extends Smarty
                     return "<?php endfor; endif; ?>";
                 }
 
+                // no break
             case 'foreach':
                 $this->_push_tag('foreach');
                 return $this->_compile_foreach_start($tag_args);
@@ -2401,5 +2402,3 @@ function _smarty_sort_length($a, $b)
 
 
 /* vim: set et: */
-
-?>

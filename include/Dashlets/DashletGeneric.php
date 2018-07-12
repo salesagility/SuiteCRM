@@ -363,14 +363,14 @@ class DashletGeneric extends Dashlet
                         if ( ! isset($widgetDef['column_key']) ) {
                             $widgetDef['column_key'] = $name;
                         }
-                        // No break here, we want to run through the default handler
+                        // no break here, we want to run through the default handler
                     case 'relate':
                         if (isset($widgetDef['link']) && $this->seedBean->load_relationship($widgetDef['link'])) {
                             $widgetLink = $widgetDef['link'];
                             $widgetDef['module'] = $this->seedBean->$widgetLink->focus->module_name;
                             $widgetDef['link'] = $this->seedBean->$widgetLink->getRelationshipObject()->name;
                         }
-                        // No break - run through the default handler
+                        // no break - run through the default handler
                     default:
                         $widgetDef['input_name0'] = $params;
                         if (is_array($params) && !empty($params)) { // handle array query

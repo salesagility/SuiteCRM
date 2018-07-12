@@ -1995,5 +1995,3 @@ class wsdl extends nusoap_base
         return true;
     }
 }
-
-?>

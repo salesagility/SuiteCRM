@@ -193,5 +193,3 @@ function smarty_function_html_select_time($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

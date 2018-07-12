@@ -39,5 +39,3 @@ function smarty_core_assign_smarty_interface($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

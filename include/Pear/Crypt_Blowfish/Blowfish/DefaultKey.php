@@ -336,5 +336,3 @@ class Crypt_Blowfish_DefaultKey
         self::__construct();
     }
 }
-
-?>

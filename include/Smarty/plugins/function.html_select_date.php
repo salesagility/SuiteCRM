@@ -327,5 +327,3 @@ function smarty_function_html_select_date($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

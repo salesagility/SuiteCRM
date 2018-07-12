@@ -138,6 +138,7 @@ class AOD_Index extends AOD_Index_sugar
                 break;
             case 'application/rtf':
                 $document = createRTFDocument($path);
+                // no break
             case 'text/csv':
             case 'text/plain':
                 $document = createTextDocument($path);

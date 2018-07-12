@@ -225,6 +225,7 @@ class actionSendEmail extends actionBase
                                     break;
                                 }
                             //No Security Group module found - fall through.
+                            // no break
                             Case 'role':
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();
