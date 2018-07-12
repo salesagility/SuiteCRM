@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,16 +51,16 @@ global $theme;
 
 global $current_user;
 
-if (!is_admin($current_user)) sugar_die("Unauthorized access to administration.");
-if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar_config']['hide_admin_diagnostics'])
-{
+if (!is_admin($current_user)) {
+    sugar_die("Unauthorized access to administration.");
+}
+if (isset($GLOBALS['sugar_config']['hide_admin_diagnostics']) && $GLOBALS['sugar_config']['hide_admin_diagnostics']) {
     sugar_die("Unauthorized access to diagnostic tool.");
 }
 
 $db = DBManagerFactory::getInstance();
-if(empty($db)) {
-	
-	$db = DBManagerFactory::getInstance();
+if (empty($db)) {
+    $db = DBManagerFactory::getInstance();
 }
 
 echo getClassicModuleTitle(

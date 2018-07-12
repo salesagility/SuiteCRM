@@ -364,7 +364,6 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
                 require_once 'Zend/Search/Lucene/Exception.php';
                 throw new Zend_Search_Lucene_Exception('Long integers lower than -2147483648 (0x80000000) are not supported on 32-bit platforms.');
             }
-
         }
 
         if ($wordLow < 0) {
@@ -575,7 +574,6 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
         $this->writeVInt($chars);
         if ($containNullChars) {
             $this->_data .= str_replace($str, "\x00", "\xC0\x80");
-
         } else {
             $this->_data .= $str;
         }

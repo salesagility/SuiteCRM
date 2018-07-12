@@ -74,13 +74,12 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-88
         case 'nonstd':
            // escape non-standard chars, such as ms document quotes
            $_res = '';
-           for($_i = 0, $_len = strlen($string); $_i < $_len; $_i++) {
+           for ($_i = 0, $_len = strlen($string); $_i < $_len; $_i++) {
                $_ord = ord(substr($string, $_i, 1));
                // non-standard char, escape it
-               if($_ord >= 126){
+               if ($_ord >= 126) {
                    $_res .= '&#' . $_ord . ';';
-               }
-               else {
+               } else {
                    $_res .= substr($string, $_i, 1);
                }
            }

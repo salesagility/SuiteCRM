@@ -47,27 +47,28 @@ r22725 - 2007-05-11 16:37:35 -0700 (Fri, 11 May 2007) - clee - Added file.
 function smarty_function_sugar_evalcolumn_old($params, &$smarty)
 {
     if (!isset($params['var']) || !isset($params['rowData'])) {
-        if(!isset($params['var']))  
+        if (!isset($params['var'])) {
             $smarty->trigger_error("evalcolumn: missing 'var' parameter");
-        if(!isset($params['rowData']))  
+        }
+        if (!isset($params['rowData'])) {
             $smarty->trigger_error("evalcolumn: missing 'rowData' parameter");
+        }
         return;
     }
 
-    if($params['var'] == '') {
+    if ($params['var'] == '') {
         return;
     }
 
-    if(is_array($params['var'])) {
-        foreach($params['var'] as $key => $value) {
+    if (is_array($params['var'])) {
+        foreach ($params['var'] as $key => $value) {
             $params['var'][$key] = searchReplace($value, $params['rowData']);
         }
-    }
-    else {
+    } else {
         $params['var'] = searchReplace($params['var'], $params['rowData']);
     }
 
-    if(isset($params['toJSON'])) {
+    if (isset($params['toJSON'])) {
         $json = getJSONobj();
         $params['var'] = $json->encode($params['var']);
     }
@@ -79,14 +80,16 @@ function smarty_function_sugar_evalcolumn_old($params, &$smarty)
     }
 }
 
-function searchReplace($value, &$rowData) {
+function searchReplace($value, &$rowData)
+{
     preg_match_all('/\{\$(.*)\}/U', $value, $matches);
 
-    for($wp = 0; $wp < count($matches[0]); $wp++) {
-        if(isset($rowData[$matches[1][$wp]])) 
+    for ($wp = 0; $wp < count($matches[0]); $wp++) {
+        if (isset($rowData[$matches[1][$wp]])) {
             $value = str_replace($matches[0][$wp], $rowData[$matches[1][$wp]], $value);
-        else 
+        } else {
             $value = str_replace($matches[0][$wp], '', $value);
+        }
     }
     return $value;
 }

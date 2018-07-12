@@ -401,7 +401,7 @@ abstract class Zend_Search_Lucene_Search_Similarity
      */
     static function encodeNorm($f)
     {
-      return self::_floatToByte($f);
+        return self::_floatToByte($f);
     }
 
     /**

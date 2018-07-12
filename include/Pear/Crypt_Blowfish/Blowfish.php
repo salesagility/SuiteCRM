@@ -92,7 +92,7 @@ class Crypt_Blowfish
      */
     public function __construct($key)
     {
-		/*
+        /*
         if (extension_loaded('mcrypt')) {
             $this->_td = mcrypt_module_open(MCRYPT_BLOWFISH, '', 'ecb', '');
             $this->_iv = mcrypt_create_iv(8, MCRYPT_RAND);
@@ -104,12 +104,12 @@ class Crypt_Blowfish
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Crypt_Blowfish($key){
+    public function Crypt_Blowfish($key)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($key);
@@ -211,7 +211,7 @@ class Crypt_Blowfish
             $GLOBALS['log']->fatal('Plain text must be a string');
         }
 
-		/*
+        /*
         if (extension_loaded('mcrypt')) {
             return mcrypt_generic($this->_td, $plainText);
         }
@@ -242,7 +242,7 @@ class Crypt_Blowfish
             $GLOBALS['log']->fatal('Chiper text must be a string');
         }
 
-		/*
+        /*
         if (extension_loaded('mcrypt')) {
             return mdecrypt_generic($this->_td, $cipherText);
         }
@@ -281,7 +281,7 @@ class Crypt_Blowfish
             $GLOBALS['log']->fatal('Key must be less than 56 characters and non-zero. Supplied key length: ' . $len);
         }
 
-		/*
+        /*
         if (extension_loaded('mcrypt')) {
             mcrypt_generic_init($this->_td, $key, $this->_iv);
             return true;
@@ -300,8 +300,8 @@ class Crypt_Blowfish
         for ($i = 0; $i < 18; $i++) {
             $data = 0;
             for ($j = 4; $j > 0; $j--) {
-                    $data = $data << 8 | ord($key{$k});
-                    $k = ($k+1) % $len;
+                $data = $data << 8 | ord($key{$k});
+                $k = ($k+1) % $len;
             }
             $this->_P[$i] ^= $data;
         }
@@ -334,7 +334,6 @@ class Crypt_Blowfish
 
         return true;
     }
-
 }
 
 ?>

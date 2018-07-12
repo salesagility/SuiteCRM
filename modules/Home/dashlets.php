@@ -56,4 +56,6 @@ $defaultDashlets = array(
 
 
 
-if (is_file('custom/modules/Home/dashlets.php')) include_once('custom/modules/Home/dashlets.php');
+if (is_file('custom/modules/Home/dashlets.php')) {
+    include_once('custom/modules/Home/dashlets.php');
+}

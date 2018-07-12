@@ -247,7 +247,6 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 
         $this->_fielddefs = $fieldDefinitions;
         $this->_history = new History ($this->getFileName($view, $moduleName, null, MB_HISTORYMETADATALOCATION));
-
     }
 
     /**
@@ -329,7 +328,6 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
      */
     public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION)
     {
-
         $pathMap = array(
             MB_BASEMETADATALOCATION => '',
             MB_CUSTOMMETADATALOCATION => 'custom/',
@@ -357,7 +355,6 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
             if (!empty($def['view'])) {
                 $filenames[$def['view']] = substr($file, 0, strlen($file) - 4);
             }
-
         }
 
         // BEGIN ASSERTIONS

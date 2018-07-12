@@ -63,7 +63,6 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('tracker');
         $state->popTable('aos_contracts');
         $state->popTable('aod_indexevent');
-        
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()

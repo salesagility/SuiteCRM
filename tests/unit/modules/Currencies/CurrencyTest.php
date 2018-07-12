@@ -42,8 +42,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(62.5, $currency->convertToDollar(100, 2));
         
         // clean up
-        
-        
     }
 
     public function testconvertFromDollar()
@@ -155,7 +153,6 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        
         $state = new SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
         $state->pushTable('currencies');
@@ -301,7 +298,7 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // get currencies name
         include_once 'modules/Currencies/ListCurrency.php';
-	$currency = new ListCurrency();
+        $currency = new ListCurrency();
         $currency->lookupCurrencies();
         $currencies = [];
         foreach ($currency->list as $curr) {
@@ -331,7 +328,7 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // get currencies name
         include_once 'modules/Currencies/ListCurrency.php';
-	$currency = new ListCurrency();
+        $currency = new ListCurrency();
         $currency->lookupCurrencies();
         $currencies = [];
         foreach ($currency->list as $curr) {
@@ -349,7 +346,5 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('currencies');
-        
-        
     }
 }

@@ -33,20 +33,21 @@ class AOPInboundEmail extends InboundEmail
      * @param $noteIds A whitelist of note ids to replace
      * @return mixed
      */
-    function processImageLinks($string, $noteIds){
+    function processImageLinks($string, $noteIds)
+    {
         global $sugar_config;
-        if(!$noteIds){
+        if (!$noteIds) {
             return $string;
         }
         $matches = array();
         preg_match('/cid:([[:alnum:]-]*)/',$string,$matches);
-        if(!$matches){
+        if (!$matches) {
             return $string;
         }
         array_shift($matches);
         $matches = array_unique($matches);
-        foreach($matches as $match){
-            if(in_array($match,$noteIds)){
+        foreach ($matches as $match) {
+            if (in_array($match,$noteIds)) {
                 $string = str_replace('cid:'.$match,$sugar_config['site_url']."/index.php?entryPoint=download&id={$match}&type=Notes&",$string);
             }
         }
@@ -54,7 +55,8 @@ class AOPInboundEmail extends InboundEmail
     }
 
 
-    function handleCreateCase($email, $userId) {
+    function handleCreateCase($email, $userId)
+    {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
         $GLOBALS['log']->debug('In handleCreateCase in AOPInboundEmail');
@@ -69,12 +71,12 @@ class AOPInboundEmail extends InboundEmail
 
             $notes = $email->get_linked_beans('notes','Notes');
             $noteIds = array();
-            foreach($notes as $note){
+            foreach ($notes as $note) {
                 $noteIds[] = $note->id;
             }
-            if($email->description_html) {
+            if ($email->description_html) {
                 $c->description = $this->processImageLinks(SugarCleaner::cleanHtml($email->description_html),$noteIds);
-            }else{
+            } else {
                 $c->description = $email->description;
             }
             $c->assigned_user_id = $userId;
@@ -82,7 +84,7 @@ class AOPInboundEmail extends InboundEmail
             $c->status = 'New';
             $c->priority = 'P1';
 
-            if(!empty($email->reply_to_email)) {
+            if (!empty($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
             } else {
                 $contactAddr = $email->from_addr;
@@ -90,7 +92,7 @@ class AOPInboundEmail extends InboundEmail
             isValidEmailAddress($contactAddr);
 
             $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
-            if($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
+            if ($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
                 if (sizeof($accountIds) == 1) {
                     $c->account_id = $accountIds[0];
 
@@ -100,28 +102,28 @@ class AOPInboundEmail extends InboundEmail
                 } // if
             } // if
             $contactIds = $this->getRelatedId($contactAddr, 'contacts');
-            if(!empty($contactIds)) {
+            if (!empty($contactIds)) {
                 $c->contact_created_by_id = $contactIds[0];
             }
 
             $c->save(true);
             $c->retrieve($c->id);
-            if($c->load_relationship('emails')) {
+            if ($c->load_relationship('emails')) {
                 $c->emails->add($email->id);
             } // if
-                if(!empty($contactIds) && $c->load_relationship('contacts')) {
-                    if (!$accountIds && count($contactIds) == 1) {
-                        $contact = BeanFactory::getBean('Contacts', $contactIds[0]);
-                        if ($contact->load_relationship('accounts')) {
-                            $acct = $contact->accounts->get();
-                            if ($c->load_relationship('accounts') && !empty($acct[0])) {
-                                $c->accounts->add($acct[0]);
-                            }
+            if (!empty($contactIds) && $c->load_relationship('contacts')) {
+                if (!$accountIds && count($contactIds) == 1) {
+                    $contact = BeanFactory::getBean('Contacts', $contactIds[0]);
+                    if ($contact->load_relationship('accounts')) {
+                        $acct = $contact->accounts->get();
+                        if ($c->load_relationship('accounts') && !empty($acct[0])) {
+                            $c->accounts->add($acct[0]);
                         }
                     }
-                    $c->contacts->add($contactIds);
-                } // if
-            foreach($notes as $note){
+                }
+                $c->contacts->add($contactIds);
+            } // if
+            foreach ($notes as $note) {
                 //Link notes to case also
                 $newNote = BeanFactory::newBean('Notes');
                 $newNote->name = $note->name;
@@ -133,7 +135,6 @@ class AOPInboundEmail extends InboundEmail
                 $srcFile = "upload://{$note->id}";
                 $destFile = "upload://{$newNote->id}";
                 copy($srcFile,$destFile);
-
             }
 
             $c->email_id = $email->id;
@@ -145,10 +146,10 @@ class AOPInboundEmail extends InboundEmail
             $email->save();
             $GLOBALS['log']->debug('InboundEmail created one case with number: '.$c->case_number);
             $createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
-            if(!empty($this->stored_options)) {
+            if (!empty($this->stored_options)) {
                 $storedOptions = unserialize(base64_decode($this->stored_options));
             }
-            if(!empty($createCaseTemplateId)) {
+            if (!empty($createCaseTemplateId)) {
                 $fromName = "";
                 $fromAddress = "";
                 if (!empty($this->stored_options)) {
@@ -165,17 +166,23 @@ class AOPInboundEmail extends InboundEmail
                 $to[0]['email'] = $contactAddr;
 
                 // handle to name: address, prefer reply-to
-                if(!empty($email->reply_to_name)) {
+                if (!empty($email->reply_to_name)) {
                     $to[0]['display'] = $email->reply_to_name;
-                } elseif(!empty($email->from_name)) {
+                } elseif (!empty($email->from_name)) {
                     $to[0]['display'] = $email->from_name;
                 }
 
                 $et = new EmailTemplate();
                 $et->retrieve($createCaseTemplateId);
-                if(empty($et->subject))		{ $et->subject = ''; }
-                if(empty($et->body))		{ $et->body = ''; }
-                if(empty($et->body_html))	{ $et->body_html = ''; }
+                if (empty($et->subject)) {
+                    $et->subject = '';
+                }
+                if (empty($et->body)) {
+                    $et->body = '';
+                }
+                if (empty($et->body_html)) {
+                    $et->body_html = '';
+                }
 
                 $et->subject = "Re:" . " " . str_replace('%1', $c->case_number, $c->getEmailSubjectMacro() . " ". $c->name);
 
@@ -213,10 +220,9 @@ class AOPInboundEmail extends InboundEmail
                 //$reply->save(); // don't save the actual email.
                 $reply->send();
             } // if
-
         } else {
             echo "First if not matching\n";
-            if(!empty($email->reply_to_email)) {
+            if (!empty($email->reply_to_email)) {
                 $contactAddr = $email->reply_to_email;
                 isValidEmailAddress($contactAddr);
             } else {
@@ -226,6 +232,5 @@ class AOPInboundEmail extends InboundEmail
             $this->handleAutoresponse($email, $contactAddr);
         }
         echo "End of handle create case\n";
-
     } // fn
 }

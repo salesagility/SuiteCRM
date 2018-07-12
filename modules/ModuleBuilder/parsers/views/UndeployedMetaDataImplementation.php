@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,22 +50,20 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation implements MetaDataImplementationInterface
 {
-
     protected $_packageName ;
 
-   /*
-     * Constructor
-     * @param string $view
-     * @param string $moduleName
-     * @throws Exception Thrown if the provided view doesn't exist for this module
-     */
+    /*
+      * Constructor
+      * @param string $view
+      * @param string $moduleName
+      * @throws Exception Thrown if the provided view doesn't exist for this module
+      */
 
-    function __construct ($view , $moduleName , $packageName)
+    function __construct($view , $moduleName , $packageName)
     {
 
     	// BEGIN ASSERTIONS
-        if (! isset ( $this->_fileVariables [ $view ] ))
-        {
+        if (! isset ( $this->_fileVariables [ $view ] )) {
             sugar_die ( get_class ( $this ) . ": View $view is not supported" ) ;
         }
         // END ASSERTIONS
@@ -83,45 +83,42 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 
         // Set the global mod_strings directly as Sugar does not automatically load the language files for undeployed modules (how could it?)
         $selected_lang = 'en_us';
-        if(isset($GLOBALS['current_language']) &&!empty($GLOBALS['current_language'])) {
+        if (isset($GLOBALS['current_language']) &&!empty($GLOBALS['current_language'])) {
             $selected_lang = $GLOBALS['current_language'];
         }
         $GLOBALS [ 'mod_strings' ] = array_merge ( $GLOBALS [ 'mod_strings' ], $module->getModStrings ($selected_lang) ) ;
 
         //Load relationshhip based fields and labels
         $moduleRels = $pak->getRelationshipsForModule($moduleName);
-        foreach($moduleRels as $rName => $rel ) {
+        foreach ($moduleRels as $rName => $rel ) {
             $varDefsSet = $rel->buildVardefs();
-        if (!empty($varDefsSet[$module->key_name])) {
-            	foreach ($varDefsSet[$module->key_name] as $def) {
+            if (!empty($varDefsSet[$module->key_name])) {
+                foreach ($varDefsSet[$module->key_name] as $def) {
                     $fielddefs[$def['name']] = $def;
-                 }
+                }
             }
             $labels = $rel->buildLabels();
             foreach ($labels as $def) {
                 if ($def['module'] == $module->key_name) {
-            	   $GLOBALS [ 'mod_strings' ][$def['system_label']] = $def['display_label'];
-
+                    $GLOBALS [ 'mod_strings' ][$def['system_label']] = $def['display_label'];
                 }
             }
         }
 
         $loaded = null ;
-        foreach ( array ( MB_BASEMETADATALOCATION , MB_HISTORYMETADATALOCATION ) as $type ){
-
-			$this->_sourceFilename = $this->getFileNameInPackage ( $view, $moduleName, $packageName , $type ) ;
-			if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
-				$layout = $this->_loadFromPopupFile ( $this->_sourceFilename , null, $view);
-			}else{
-				$layout = $this->_loadFromFile ( $this->_sourceFilename );
-			}
-			if ( null !== $layout  )
-			{
-				// merge in the fielddefs from this layout
-				$this->_mergeFielddefs ( $fielddefs , $layout ) ;
-				$loaded = $layout ;
-			}
-		}
+        foreach ( array ( MB_BASEMETADATALOCATION , MB_HISTORYMETADATALOCATION ) as $type ) {
+            $this->_sourceFilename = $this->getFileNameInPackage ( $view, $moduleName, $packageName , $type ) ;
+            if ($view == MB_POPUPSEARCH || $view == MB_POPUPLIST) {
+                $layout = $this->_loadFromPopupFile ( $this->_sourceFilename , null, $view);
+            } else {
+                $layout = $this->_loadFromFile ( $this->_sourceFilename );
+            }
+            if ( null !== $layout  ) {
+                // merge in the fielddefs from this layout
+                $this->_mergeFielddefs ( $fielddefs , $layout ) ;
+                $loaded = $layout ;
+            }
+        }
 
         if ($loaded === null) {
             throw new Exception (get_class($this) . ": view definitions for View $this->_view and Module $this->_moduleName are missing");
@@ -129,17 +126,17 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 
         $this->_viewdefs = $loaded ;
         $sourceFilename = $this->getFileNameInPackage ( $view, $moduleName, $packageName, MB_BASEMETADATALOCATION );
-        if($view == MB_POPUPSEARCH || $view == MB_POPUPLIST){
-			$layout = $this->_loadFromPopupFile ( $sourceFilename , null, $view);
-		}else{
-			$layout = $this->_loadFromFile ($sourceFilename) ;
-		}
-		$this->_originalViewdefs = $layout ;
-		$this->_fielddefs = $fielddefs ;
+        if ($view == MB_POPUPSEARCH || $view == MB_POPUPLIST) {
+            $layout = $this->_loadFromPopupFile ( $sourceFilename , null, $view);
+        } else {
+            $layout = $this->_loadFromFile ($sourceFilename) ;
+        }
+        $this->_originalViewdefs = $layout ;
+        $this->_fielddefs = $fielddefs ;
         $this->_history = new History($this->getFileNameInPackage($view, $moduleName, $packageName, MB_HISTORYMETADATALOCATION)) ;
     }
 
-    function getLanguage ()
+    function getLanguage()
     {
         return $this->_packageName . $this->_moduleName ;
     }
@@ -148,14 +145,14 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
      * Deploy a layout
      * @param array defs    Layout definition in the same format as received by the constructor
      */
-    function deploy ($defs)
+    function deploy($defs)
     {
         //If we are pulling from the History Location, that means we did a restore, and we need to save the history for the previous file.
         if ($this->_sourceFilename == $this->getFileName($this->_view, $this->_moduleName, MB_HISTORYMETADATALOCATION)
         && file_exists($this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION))) {
             $this->_history->append($this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION));
         } else {
-    		$this->_history->append ( $this->_sourceFilename ) ;
+            $this->_history->append ( $this->_sourceFilename ) ;
         }
         $filename = $this->getFileName($this->_view, $this->_moduleName, MB_BASEMETADATALOCATION);
         $GLOBALS ['log']->debug(get_class($this) . "->deploy(): writing to " . $filename);
@@ -187,12 +184,10 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
      */
     public function getFileNameInPackage($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
     {
-
         $type = strtolower ( $type ) ;
 
         // BEGIN ASSERTIONS
-        if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION)
-        {
+        if ($type != MB_BASEMETADATALOCATION && $type != MB_HISTORYMETADATALOCATION) {
             // just warn rather than die
             $GLOBALS [ 'log' ]->warning ( "UndeployedMetaDataImplementation->getFileName(): view type $type is not recognized" ) ;
         }
@@ -210,8 +205,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 					        	MB_POPUPLIST => 'popupdefs',
         						) ;
 
-        switch ( $type)
-        {
+        switch ( $type) {
             case MB_HISTORYMETADATALOCATION:
                 return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/' . $moduleName . '/metadata/' . $filenames [ $view ] . '.php' ;
             default:
@@ -220,10 +214,10 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
                 $module = & $mb->getPackageModule ( $packageName, $moduleName ) ;
                 return $module->getModuleDir () . '/metadata/' . $filenames [ $view ] . '.php' ;
         }
-
     }
     
-    public function getModuleDir(){
-		return $this->module->key_name;
-	}
+    public function getModuleDir()
+    {
+        return $this->module->key_name;
+    }
 }

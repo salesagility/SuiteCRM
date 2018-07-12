@@ -41,9 +41,8 @@
 
 require_once('include/SugarFields/Fields/Float/SugarFieldFloat.php');
 
-class SugarFieldCurrency extends SugarFieldFloat 
+class SugarFieldCurrency extends SugarFieldFloat
 {
-
     public function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col)
     {
         global $locale, $current_user;
@@ -92,8 +91,7 @@ class SugarFieldCurrency extends SugarFieldFloat
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        )
-    {
+        ) {
         $value = str_replace($settings->currency_symbol,"",$value);
         
         return $settings->float($value,$vardef,$focus);

@@ -2456,8 +2456,6 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-
-
     $stateSaver = new SuiteCRM\StateSaver();
     $stateSaver->pushErrorLevel();
 
@@ -2992,7 +2990,7 @@ function skype_formatted($number)
     } else {
         return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
     }
-//	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
+    //	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
 }
 
 function format_skype($number)
@@ -5540,7 +5538,8 @@ function isValidId($id)
     return $valid;
 }
 
-function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error') {
+function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
+{
     if ($orEmpty && !$email) {
         return true;
     }

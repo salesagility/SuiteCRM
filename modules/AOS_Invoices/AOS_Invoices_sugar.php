@@ -25,101 +25,102 @@
  */
 class AOS_Invoices_sugar extends Basic
 {
-	var $new_schema = true;
-	var $module_dir = 'AOS_Invoices';
-	var $object_name = 'AOS_Invoices';
-	var $table_name = 'aos_invoices';
-	var $importable = true;
+    var $new_schema = true;
+    var $module_dir = 'AOS_Invoices';
+    var $object_name = 'AOS_Invoices';
+    var $table_name = 'aos_invoices';
+    var $importable = true;
     var $lineItems = true;
 
-	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 
-		var $id;
-		var $name;
-		var $date_entered;
-		var $date_modified;
-		var $modified_user_id;
-		var $modified_by_name;
-		var $created_by;
-		var $created_by_name;
-		var $description;
-		var $deleted;
-		var $created_by_link;
-		var $modified_user_link;
-		var $assigned_user_id;
-		var $assigned_user_name;
-		var $assigned_user_link;
-		var $aos_invoices_type;
-		var $industry;
-		var $annual_revenue;
-		var $phone_fax;
-		var $billing_address_street;
-		var $billing_address_city;
-		var $billing_address_state;
-		var $billing_address_postalcode;
-		var $billing_address_country;
-		var $rating;
-		var $phone_office;
-		var $phone_alternate;
-		var $website;
-		var $ownership;
-		var $employees;
-		var $ticker_symbol;
-		var $shipping_address_street;
-		var $shipping_address_city;
-		var $shipping_address_state;
-		var $shipping_address_postalcode;
-		var $shipping_address_country;
-		var $email1;
-		var $email_addresses_primary;
-		var $billing_account_id;
-		var $billing_account;
-		var $billing_contact_id;
-		var $billing_contact;
-		var $number;
-		var $shipping_account_id;
-		var $shipping_account;
-		var $shipping_contact_id;
-		var $shipping_contact;
-		var $subtotal_amount;
-		var $tax_amount;
-		var $shipping_amount;
-		var $total_amount;
-		var $quote_number;
-		var $quote_date;
-		var $invoice_date;
-		var $due_date;
-		var $status;
-		var $template_ddown_c;
-
-
+    var $id;
+    var $name;
+    var $date_entered;
+    var $date_modified;
+    var $modified_user_id;
+    var $modified_by_name;
+    var $created_by;
+    var $created_by_name;
+    var $description;
+    var $deleted;
+    var $created_by_link;
+    var $modified_user_link;
+    var $assigned_user_id;
+    var $assigned_user_name;
+    var $assigned_user_link;
+    var $aos_invoices_type;
+    var $industry;
+    var $annual_revenue;
+    var $phone_fax;
+    var $billing_address_street;
+    var $billing_address_city;
+    var $billing_address_state;
+    var $billing_address_postalcode;
+    var $billing_address_country;
+    var $rating;
+    var $phone_office;
+    var $phone_alternate;
+    var $website;
+    var $ownership;
+    var $employees;
+    var $ticker_symbol;
+    var $shipping_address_street;
+    var $shipping_address_city;
+    var $shipping_address_state;
+    var $shipping_address_postalcode;
+    var $shipping_address_country;
+    var $email1;
+    var $email_addresses_primary;
+    var $billing_account_id;
+    var $billing_account;
+    var $billing_contact_id;
+    var $billing_contact;
+    var $number;
+    var $shipping_account_id;
+    var $shipping_account;
+    var $shipping_contact_id;
+    var $shipping_contact;
+    var $subtotal_amount;
+    var $tax_amount;
+    var $shipping_amount;
+    var $total_amount;
+    var $quote_number;
+    var $quote_date;
+    var $invoice_date;
+    var $due_date;
+    var $status;
+    var $template_ddown_c;
 
 
 
-	function __construct(){
-		parent::__construct();
-	}
+
+
+    function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Invoices_sugar(){
+    function AOS_Invoices_sugar()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	function bean_implements($interface){
-		switch($interface){
+    function bean_implements($interface)
+    {
+        switch ($interface) {
 			case 'ACL': return true;
 		}
-		return false;
-}
-
+        return false;
+    }
 }

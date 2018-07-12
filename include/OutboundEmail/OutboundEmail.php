@@ -178,7 +178,6 @@ class OutboundEmail
         }
 
         return $userCredentialsReq;
-
     }
 
     /**
@@ -564,7 +563,6 @@ class OutboundEmail
         $this->save();
 
         $this->updateUserSystemOverrideAccounts();
-
     }
 
     /**

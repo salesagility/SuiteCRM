@@ -64,7 +64,7 @@ class DocumentPopupPicker extends Popup_Picker
     public function _get_where_clause()
     {
         $where = '';
-        if(isset($_REQUEST['query'])) {
+        if (isset($_REQUEST['query'])) {
             $where_clauses = array();
             append_where_clause($where_clauses, "document_name", "documents.document_name");
             append_where_clause($where_clauses, "category_id", "documents.category_id");

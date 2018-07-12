@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -61,20 +63,21 @@ class ConfiguratorViewEdit extends ViewEdit
     /**
 	 * @see SugarView::preDisplay()
 	 */
-	public function preDisplay()
+    public function preDisplay()
     {
-        if(!is_admin($GLOBALS['current_user']))
-            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']); 
+        if (!is_admin($GLOBALS['current_user'])) {
+            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
+        }
     }
     
     /**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
 	    
-    	return array(
+        return array(
     	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
     	   $mod_strings['LBL_SYSTEM_SETTINGS']
     	   );
@@ -86,9 +89,8 @@ class ConfiguratorViewEdit extends ViewEdit
     }
 
     public function process()
-    {   
-        if (isset($this->errors['company_logo']))
-        {
+    {
+        if (isset($this->errors['company_logo'])) {
             $this->configurator->errors['company_logo'] = $this->errors['company_logo'];
             unset($this->errors['company_logo']);
         }
@@ -96,20 +98,20 @@ class ConfiguratorViewEdit extends ViewEdit
         return parent::process();
     }
     
-	/**
-	 * @see SugarView::display()
-	 */
-	public function display()
-	{
-	    global $current_user, $mod_strings, $app_strings, $app_list_strings, $sugar_config, $locale;
+    /**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+        global $current_user, $mod_strings, $app_strings, $app_list_strings, $sugar_config, $locale;
 	    
-	    $configurator = $this->configurator;
+        $configurator = $this->configurator;
         $sugarConfig = SugarConfig::getInstance();
         $focus = new Administration();
         $configurator->parseLoggerSettings();
         
         $focus->retrieveSettings();
-        if(!empty($_POST['restore'])){
+        if (!empty($_POST['restore'])) {
             $configurator->restoreConfig();
         }
 
@@ -132,14 +134,14 @@ class ConfiguratorViewEdit extends ViewEdit
         $this->ss->assign('company_logo', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $this->ss->assign("settings", $focus->settings);
         $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $mailSendType));
-        if(!empty($focus->settings['proxy_on'])){
+        if (!empty($focus->settings['proxy_on'])) {
             $this->ss->assign("PROXY_CONFIG_DISPLAY", 'inline');
-        }else{
+        } else {
             $this->ss->assign("PROXY_CONFIG_DISPLAY", 'none');
         }
-        if(!empty($focus->settings['proxy_auth'])){
+        if (!empty($focus->settings['proxy_auth'])) {
             $this->ss->assign("PROXY_AUTH_DISPLAY", 'inline');
-        }else{
+        } else {
             $this->ss->assign("PROXY_AUTH_DISPLAY", 'none');
         }
         if (!empty($configurator->config['logger']['level'])) {
@@ -159,8 +161,7 @@ class ConfiguratorViewEdit extends ViewEdit
         }
         if (isset($configurator->config['logger_visible'])) {
             $this->ss->assign('logger_visible', $configurator->config['logger_visible']);
-        }
-        else {
+        } else {
             $this->ss->assign('logger_visible', true);
         }
 
@@ -177,5 +178,5 @@ class ConfiguratorViewEdit extends ViewEdit
         $javascript->addFieldGeneric("proxy_password", "varchar", $mod_strings['LBL_PROXY_PASSWORD'], TRUE, "");
         $javascript->addFieldGeneric("proxy_username", "varchar", $mod_strings['LBL_PROXY_USERNAME'], TRUE, "");
         echo $javascript->getScript();
-	}
+    }
 }

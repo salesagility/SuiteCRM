@@ -45,9 +45,9 @@ r32836 - 2008-03-14 16:48:48 -0700 (Fri, 14 Mar 2008) - majed - adds smarty func
  */
 function smarty_function_sugar_getwebpath($params, &$smarty)
 {
-	if(!isset($params['file'])) {
-		   $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'file');
-	} 
- 	return getWebPath($params['file']);
+    if (!isset($params['file'])) {
+        $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'file');
+    } 
+    return getWebPath($params['file']);
 }
 ?>

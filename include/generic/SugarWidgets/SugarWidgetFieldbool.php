@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,19 +43,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetFieldBool extends SugarWidgetReportField
 {
-
- function queryFilterEquals(&$layout_def)
- {
-
-		$bool_val = $layout_def['input_name0'][0];
-		if ($bool_val == 'yes' || $bool_val == '1')
-		{
-			return "(".$this->_get_column_select($layout_def)." LIKE 'on' OR ".$this->_get_column_select($layout_def)."='1')\n";
-		} else {
-			//return "(".$this->_get_column_select($layout_def)." is null OR ".$this->_get_column_select($layout_def)."='0' OR ".$this->_get_column_select($layout_def)."='off')\n";
-            return "(".$this->_get_column_select($layout_def)." is null OR ". $this->_get_column_select($layout_def)."='0')\n";            
-		}
- }
+    function queryFilterEquals(&$layout_def)
+    {
+        $bool_val = $layout_def['input_name0'][0];
+        if ($bool_val == 'yes' || $bool_val == '1') {
+            return "(".$this->_get_column_select($layout_def)." LIKE 'on' OR ".$this->_get_column_select($layout_def)."='1')\n";
+        } else {
+            //return "(".$this->_get_column_select($layout_def)." is null OR ".$this->_get_column_select($layout_def)."='0' OR ".$this->_get_column_select($layout_def)."='off')\n";
+            return "(".$this->_get_column_select($layout_def)." is null OR ". $this->_get_column_select($layout_def)."='0')\n";
+        }
+    }
 
     function displayListPlain($layout_def)
     {
@@ -63,32 +62,29 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
         $key = $this->_get_column_alias($layout_def);
         $key = strtoupper($key);
         
-        if(empty($layout_def['fields'][$key]))
-        {
+        if (empty($layout_def['fields'][$key])) {
             $layout_def['name'] = $name;
             global $app_list_strings;
             if (empty($value)) {
                 $value = $app_list_strings['dom_switch_bool']['off'];
-            }   
-            else {
+            } else {
                 $value = $app_list_strings['dom_switch_bool']['on'];
             } 
             return $value;
         }
 
         $on_or_off = 'CHECKED';
-        if ( empty($value) ||  $value == 'off')
-        {
+        if ( empty($value) ||  $value == 'off') {
             $on_or_off = '';
         }
         $cell = "<input name='checkbox_display' class='checkbox' type='checkbox' disabled $on_or_off>";
         return  $cell;
     }
     
- function queryFilterStarts_With(&$layout_def)
- {
-    return $this->queryFilterEquals($layout_def);
- }    
+    function queryFilterStarts_With(&$layout_def)
+    {
+        return $this->queryFilterEquals($layout_def);
+    }    
  
     function displayInput($layout_def)
     {
@@ -97,11 +93,9 @@ class SugarWidgetFieldBool extends SugarWidgetReportField
         $yes = $no = $default = '';
         if (isset($layout_def['input_name0']) && $layout_def['input_name0'] == 1) {
             $yes = ' selected="selected"';
-        }
-        elseif (isset($layout_def['input_name0']) && $layout_def['input_name0'] == 'off') {
+        } elseif (isset($layout_def['input_name0']) && $layout_def['input_name0'] == 'off') {
             $no = ' selected="selected"';
-        }
-        else {
+        } else {
             $default = ' selected="selected"';
         }
         
@@ -115,6 +109,4 @@ EOHTML;
         
         return $str;
     }
-    
-
 }

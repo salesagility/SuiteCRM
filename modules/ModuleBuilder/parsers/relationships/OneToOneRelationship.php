@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -71,7 +73,7 @@ class OneToOneRelationship extends AbstractRelationship
      * Constructor
      * @param array $definition Parameters passed in as array with keys defined in parent::keys
      */
-    function __construct ($definition)
+    function __construct($definition)
     {
         parent::__construct ( $definition ) ;
     }
@@ -83,7 +85,7 @@ class OneToOneRelationship extends AbstractRelationship
     /*
      * @return array    An array of relationship metadata definitions
      */
-    function buildRelationshipMetaData ()
+    function buildRelationshipMetaData()
     {
         return array( $this->lhs_module => $this->getRelationshipMetaData ( MB_ONETOONE ) ) ;
     }
@@ -91,7 +93,7 @@ class OneToOneRelationship extends AbstractRelationship
     /* Build a set of Link Field definitions for this relationship
      * @return array    An array of field definitions, ready for the vardefs, keyed by module
      */
-    function buildVardefs ( )
+    function buildVardefs()
     {
         $vardefs = array ( ) ;
         $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition ( $this->lhs_module, $this->relationship_name , false, 
@@ -103,8 +105,7 @@ class OneToOneRelationship extends AbstractRelationship
             $this->relationship_only ? false : $this->getIDName( $this->rhs_module )
         ) ;
         
-        if (!$this->relationship_only)
-        {
+        if (!$this->relationship_only) {
             $vardefs [ $this->lhs_module ] [] = $this->getRelateFieldDefinition ( $this->rhs_module, $this->relationship_name, $this->getRightModuleSystemLabel() ) ;
             $vardefs [ $this->rhs_module ] [] = $this->getRelateFieldDefinition ( $this->lhs_module, $this->relationship_name, $this->getLeftModuleSystemLabel() ) ;
             $vardefs [ $this->lhs_module ] [] = $this->getLink2FieldDefinition ( $this->rhs_module, $this->relationship_name , false, 
@@ -120,18 +121,19 @@ class OneToOneRelationship extends AbstractRelationship
      * Define what fields to add to which modules layouts
      * @return array    An array of module => fieldname
      */
-    function buildFieldsToLayouts ()
+    function buildFieldsToLayouts()
     {
-        if ($this->relationship_only)
+        if ($this->relationship_only) {
             return array () ;
+        }
  
-        if ($this->lhs_module == $this->rhs_module) // don't add in two fields on recursive relationships
+        if ($this->lhs_module == $this->rhs_module) { // don't add in two fields on recursive relationships
             return array ( $this->lhs_module => $this->getValidDBName($this->relationship_name . "_name") );
-        else
+        } else {
             return array (
                 $this->lhs_module => $this->getValidDBName($this->relationship_name . "_name") ,
                 $this->rhs_module => $this->getValidDBName($this->relationship_name . "_name")
             ) ;
+        }
     }
-
 }

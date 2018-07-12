@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,21 +52,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 function smarty_function_sugar_actions_link($params, &$smarty)
 {
-   if(empty($params['module'])) {
-   	  $smarty->trigger_error("sugar_button: missing required param (module)");
-   } elseif(empty($params['id'])) {
-   	  $smarty->trigger_error("sugar_button: missing required param (id)");
-   } elseif(empty($params['view'])) {
-   	  $smarty->trigger_error("sugar_button: missing required param (view)");
-   }
+    if (empty($params['module'])) {
+        $smarty->trigger_error("sugar_button: missing required param (module)");
+    } elseif (empty($params['id'])) {
+        $smarty->trigger_error("sugar_button: missing required param (id)");
+    } elseif (empty($params['view'])) {
+        $smarty->trigger_error("sugar_button: missing required param (view)");
+    }
 
-   $type = $params['id'];
-   $location = (empty($params['location'])) ? "" : "_".$params['location'];
+    $type = $params['id'];
+    $location = (empty($params['location'])) ? "" : "_".$params['location'];
 
-   if(!is_array($type)) {
-   	  $module = $params['module'];
-   	  $view = $params['view'];
-   	  switch(strtoupper($type)) {
+    if (!is_array($type)) {
+        $module = $params['module'];
+        $view = $params['view'];
+        switch (strtoupper($type)) {
 			case "SEARCH":
 			return '<input tabindex="2" title="{$APP.LBL_SEARCH_BUTTON_TITLE}" accessKey="{$APP.LBL_SEARCH_BUTTON_KEY}" onclick="SUGAR.savedViews.setChooser(); SUGAR.ajaxUI.submitForm(this.form);" class="button" type="button" name="button" value="{$APP.LBL_SEARCH_BUTTON_LABEL}" id="search_form_submit"/>&nbsp;';
 			break;
@@ -109,7 +111,9 @@ function smarty_function_sugar_actions_link($params, &$smarty)
 			break;
 
 			case "SUBPANELSAVE":
-                if($view == 'QuickCreate' || (isset($_REQUEST['target_action']) && strtolower($_REQUEST['target_action'])) == 'quickcreate') $view =  "form_SubpanelQuickCreate_{$module}";
+                if ($view == 'QuickCreate' || (isset($_REQUEST['target_action']) && strtolower($_REQUEST['target_action'])) == 'quickcreate') {
+                    $view =  "form_SubpanelQuickCreate_{$module}";
+                }
                 return '{if $bean->aclAccess("save")}<input title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="disableOnUnloadEditView();this.form.action.value=\'Save\';if(check_form(\''.$view.'\'))return SUGAR.subpanelUtils.inlineSave(this.form.id, \'' . $params['module'] . '_subpanel_save_button\');return false;" type="submit" name="' . $params['module'] . '_subpanel_save_button" id="' . $params['module'] . '_subpanel_save_button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">{/if} ';
 			case "SUBPANELCANCEL":
 				return '<input title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="return SUGAR.subpanelUtils.cancelCreate($(this).attr(\'id\'));return false;" type="submit" name="' . $params['module'] . '_subpanel_cancel_button" id="' . $params['module'] . '_subpanel_cancel_button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"> ';
@@ -160,11 +164,9 @@ function smarty_function_sugar_actions_link($params, &$smarty)
 
 
    	  } //switch
-
-   } elseif(is_array($type) && isset($type['customCode'])) {
-   	  return $type['customCode'];
-   }
-
+    } elseif (is_array($type) && isset($type['customCode'])) {
+        return $type['customCode'];
+    }
 }
 
 ?>

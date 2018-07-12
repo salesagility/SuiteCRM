@@ -54,7 +54,7 @@ global $mod_strings, $sugar_config;
 
 $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST['uid']);
 
-if(!$bean){
+if (!$bean) {
     sugar_die("Invalid Record");
 }
 
@@ -68,7 +68,6 @@ $res = $bean->db->query($sql);
 while ($row = $bean->db->fetchByAssoc($res)) {
     $lineItemsGroups[$row['group_id']][$row['id']] = $row['product_id'];
     $lineItems[$row['id']] = $row['product_id'];
-
 }
 
 
@@ -169,7 +168,6 @@ if ($task == 'pdf' || $task == 'emailpdf') {
 
 function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 'table')
 {
-
     $firstValue = '';
     $firstNum = 0;
 
@@ -183,7 +181,6 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
     $groups = new AOS_Line_Item_Groups();
     foreach ($groups->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_line_item_groups_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -255,7 +252,6 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
 
 
     return $text;
-
 }
 
 function populate_product_lines($text, $lineItems, $element = 'tr')
@@ -273,19 +269,16 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
     $product_quote = new AOS_Products_Quotes();
     foreach ($product_quote->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_products_quotes_' . $name);
 
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
                     $firstValue = '$aos_products_quotes_' . $name;
                     $firstNum = $curNum;
-
                 }
                 if ($curNum > $lastNum) {
                     $lastValue = '$aos_products_quotes_' . $name;
                     $lastNum = $curNum;
-
                 }
             }
         }
@@ -294,7 +287,6 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
     $product = new AOS_Products();
     foreach ($product->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_products_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -351,8 +343,9 @@ function populate_product_lines($text, $lineItems, $element = 'tr')
             }
         }
 
-for ($i = 1; $i < count($parts); $i++) {        $text .= $parts[$i];
-	}
+        for ($i = 1; $i < count($parts); $i++) {
+            $text .= $parts[$i];
+        }
     }
     return $text;
 }
@@ -374,7 +367,6 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
     $product_quote = new AOS_Products_Quotes();
     foreach ($product_quote->field_defs as $name => $arr) {
         if (!((isset($arr['dbType']) && strtolower($arr['dbType']) == 'id') || $arr['type'] == 'id' || $arr['type'] == 'link')) {
-
             $curNum = strpos($text, '$aos_services_quotes_' . $name);
             if ($curNum) {
                 if ($curNum < $firstNum || $firstNum == 0) {
@@ -428,8 +420,9 @@ function populate_service_lines($text, $lineItems, $element = 'tr')
             }
         }
 
-for ($i = 1; $i < count($parts); $i++) {        $text .= $parts[$i];
-	}
+        for ($i = 1; $i < count($parts); $i++) {
+            $text .= $parts[$i];
+        }
     }
     return $text;
 }

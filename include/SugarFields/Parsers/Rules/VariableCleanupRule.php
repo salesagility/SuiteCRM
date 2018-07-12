@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -52,57 +54,53 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class VariableCleanupRule extends BaseRule
 {
+    function __construct()
+    {
+    }
 
-function __construct() {
+    function parsePanels($panels, $view)
+    {
+        if ($view == 'DetailView') {
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        //This converts variable ended with "_c_checked" to just "_c" (for checkboxes in DetailView)
+                        if (!is_array($column) && isset($column) && preg_match('/(.*?)_c_checked$/s', $column, $matches)) {
+                            if (count($matches) == 2) {
+                                $panels[$name][$rowCount][$key] = $matches[1] . "_c";
+                            }
+                        } elseif ($this->matches($column, '/^parent_id$/si')) {
+                            $panels[$name][$rowCount][$key] = '';
+                        } elseif ($this->matches($column, '/^assigned_user_id$/si')) {
+                            $panels[$name][$rowCount][$key] = '';
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
+        } elseif ($view == 'EditView') {
+            foreach ($panels as $name=>$panel) {
+                foreach ($panel as $rowCount=>$row) {
+                    foreach ($row as $key=>$column) {
+                        if ($this->matches($column, '/^(.*?)_c\[\]$/s')) {
+                            //This converts multienum variables named with [] suffix back to normal and removes custom code
+                            $val = $this->getMatch($column, '/^(.*?)_c\[\]$/s');
+                            $panels[$name][$rowCount][$key] = $val[1] . '_c';
+                        } elseif ($this->matches($column, '/^parent_id$/si')) {
+                            //Remove parent_id field (replaced with parent_name from master copy)
+                            $panels[$name][$rowCount][$key] = '';
+                        } elseif ($this->matches($column, '/^assigned_user_id$/si')) {
+                            //Remove assigned_user_id field (replaced with assigned_user_name from master copy)
+                            $panels[$name][$rowCount][$key] = '';
+                        } elseif ($this->matches($column, '/^RADIOOPTIONS_/si')) {
+                            //This converts radioenum variables
+                            $val = $this->getMatch($column, '/^RADIOOPTIONS_(.*)?$/si');
+                            $panels[$name][$rowCount][$key] = $val[1];
+                        }
+                    } //foreach
+                } //foreach
+            } //foreach
+        }
 
-}
-
-function parsePanels($panels, $view) {
-
-   if($view == 'DetailView') {
-		foreach($panels as $name=>$panel) {
-	   	  foreach($panel as $rowCount=>$row) {
-	   	  	 foreach($row as $key=>$column) {
-	   	  	 	//This converts variable ended with "_c_checked" to just "_c" (for checkboxes in DetailView)
-				if(!is_array($column) && isset($column) && preg_match('/(.*?)_c_checked$/s', $column, $matches)) {
-	   	  	 	   if(count($matches) == 2) {
-	   	  	 	      $panels[$name][$rowCount][$key] = $matches[1] . "_c";
-	   	  	 	   }
-	   	  	 	} elseif($this->matches($column, '/^parent_id$/si')) {
-	   	  	 		  $panels[$name][$rowCount][$key] = '';
-				} elseif($this->matches($column, '/^assigned_user_id$/si')) {
-	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	}
-	   	  	 } //foreach
-	   	  } //foreach
-	   } //foreach
-
-   } elseif ($view == 'EditView') {
-
-		foreach($panels as $name=>$panel) {
-	   	  foreach($panel as $rowCount=>$row) {
-	   	  	 foreach($row as $key=>$column) {
-	   	  	 	if($this->matches($column, '/^(.*?)_c\[\]$/s')) {
-	   	  	 	   //This converts multienum variables named with [] suffix back to normal and removes custom code
-	   	  	 	   $val = $this->getMatch($column, '/^(.*?)_c\[\]$/s');
-	   	  	 	   $panels[$name][$rowCount][$key] = $val[1] . '_c';
-	   	  	 	} elseif($this->matches($column, '/^parent_id$/si')) {
-	   	  	 	   //Remove parent_id field (replaced with parent_name from master copy)
-	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	} elseif($this->matches($column, '/^assigned_user_id$/si')) {
-	   	  	 	   //Remove assigned_user_id field (replaced with assigned_user_name from master copy)
-	   	  	 	   $panels[$name][$rowCount][$key] = '';
-	   	  	 	} elseif($this->matches($column, '/^RADIOOPTIONS_/si')) {
-	   	  	 	   //This converts radioenum variables
-	   	  	 	   $val = $this->getMatch($column, '/^RADIOOPTIONS_(.*)?$/si');
-	   	  	 	   $panels[$name][$rowCount][$key] = $val[1];
-	   	  	 	}
-	   	  	 } //foreach
-	   	  } //foreach
-	   } //foreach
-   }
-
-   return $panels;
-}
-
+        return $panels;
+    }
 }

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -57,12 +59,9 @@ parse_str($tabs_def,$DISPLAY_ARR);
 //record and swap out their record_id with the admin employee_id which would cause the email address
 //of the non-admin user to be associated with the admin user thereby allowing the non-admin to reset the password
 //of the admin user.
-if(isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS['current_user']->isAdminForModule('Employees') && ($_POST['record'] != $GLOBALS['current_user']->id))
-{
+if (isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS['current_user']->isAdminForModule('Employees') && ($_POST['record'] != $GLOBALS['current_user']->id)) {
     sugar_die("Unauthorized access to administration.");
-}
-elseif (!isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS['current_user']->isAdminForModule('Employees'))
-{
+} elseif (!isset($_POST['record']) && !is_admin($GLOBALS['current_user']) && !$GLOBALS['current_user']->isAdminForModule('Employees')) {
     sugar_die ("Unauthorized access to user administration.");
 }
 
@@ -79,11 +78,19 @@ $focus->save();
 $return_id = $focus->id;
 
 
-if(isset($_POST['return_module']) && $_POST['return_module'] != "") $return_module = $_POST['return_module'];
-else $return_module = "Employees";
-if(isset($_POST['return_action']) && $_POST['return_action'] != "") $return_action = $_POST['return_action'];
-else $return_action = "DetailView";
-if(isset($_POST['return_id']) && $_POST['return_id'] != "") $return_id = $_POST['return_id'];
+if (isset($_POST['return_module']) && $_POST['return_module'] != "") {
+    $return_module = $_POST['return_module'];
+} else {
+    $return_module = "Employees";
+}
+if (isset($_POST['return_action']) && $_POST['return_action'] != "") {
+    $return_action = $_POST['return_action'];
+} else {
+    $return_action = "DetailView";
+}
+if (isset($_POST['return_id']) && $_POST['return_id'] != "") {
+    $return_id = $_POST['return_id'];
+}
 
 $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 
@@ -91,7 +98,8 @@ $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
 
 
-function populateFromRow(&$focus,$row){
+function populateFromRow(&$focus,$row)
+{
     
     
     //only employee specific field values need to be copied.
@@ -105,22 +113,17 @@ function populateFromRow(&$focus,$row){
         if ( isset($field['source']) && $field['source'] == 'custom_fields' ) {
             $type = !empty($field['custom_type']) ? $field['custom_type'] : $field['type'];
             $sf = $sfh->getSugarField($type);
-            if ($sf != null)
-            {
+            if ($sf != null) {
                 $sf->save($focus, $_POST, $fieldName, $field, '');
-            }
-            else
-            {
+            } else {
                 $GLOBALS['log']->fatal("Field '$fieldName' does not have a SugarField handler");
             }
         }
     }
     $nullvalue='';
-    foreach($e_fields as $field)
-    {
+    foreach ($e_fields as $field) {
         $rfield = $field; // fetch returns it in lowercase only
-        if(isset($row[$rfield]))
-        {
+        if (isset($row[$rfield])) {
             $focus->$field = $row[$rfield];
         }
     }

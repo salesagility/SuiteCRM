@@ -77,7 +77,7 @@ class EmailsViewImport extends ViewEdit
         $this->ev = $this->getEditView();
         $this->ev->ss =& $this->ss;
 
-        if(!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
+        if (!isset($this->bean->mailbox_id) || empty($this->bean->mailbox_id)) {
             $inboundEmailID = $current_user->getPreference('defaultIEAccount', 'Emails');
             $this->ev->ss->assign('INBOUND_ID', $inboundEmailID);
         } else {

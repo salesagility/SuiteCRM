@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -69,8 +71,8 @@ $button .= "<input type='hidden' name='return_action' value='".$action."'>\n";
 $button .= "<input type='hidden' name='return_id' value='".$focus->id."'>\n";
 $button .= "<input type='hidden' name='action'>\n";
 if (!empty($focus->object_name) && $focus->object_name == 'Opportunity') {
- 	$button .= "<input type='hidden' name='account_id' value='$focus->account_id'>\n";
- 	$button .= "<input type='hidden' name='opportunity_name' value='$focus->name'>\n";
+    $button .= "<input type='hidden' name='account_id' value='$focus->account_id'>\n";
+    $button .= "<input type='hidden' name='opportunity_name' value='$focus->name'>\n";
 }
 $button .= "<input title='"
 	. $app_strings['LBL_NEW_BUTTON_TITLE']
@@ -89,11 +91,10 @@ $ListView->xTemplateAssign("RETURN_URL",
 $ListView->setHeaderTitle($current_module_strings['LBL_PROJECT_SUBPANEL_TITLE'] );
 
 $header_text = '';
-if(is_admin($current_user)
+if (is_admin($current_user)
 	&& $_REQUEST['module'] != 'DynamicLayout'
-	&& !empty($_SESSION['editinplace']))
-{
-	$header_text = " <a href='index.php?action=index&module=DynamicLayout&from_action="
+	&& !empty($_SESSION['editinplace'])) {
+    $header_text = " <a href='index.php?action=index&module=DynamicLayout&from_action="
 		.$_REQUEST['action']
 		."&from_module=".$_REQUEST['module'] ."&record="
 		.$_REQUEST['record']. "'>"

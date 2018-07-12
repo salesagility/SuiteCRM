@@ -284,7 +284,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
      */
     public static function getDefaultEncoding()
     {
-       return self::_getInstance()->_defaultEncoding;
+        return self::_getInstance()->_defaultEncoding;
     }
 
     /**

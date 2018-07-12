@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -60,22 +62,26 @@ $camp_steps[] = 'wiz_step2_';
     //name is used as key in post, it is also used in creation of summary page for wizard,
     //so let's clean up the posting so we can reuse the save functionality for inbound emails and
     //from existing save.php's  
-    foreach($camp_steps as $step){
+    foreach ($camp_steps as $step) {
         clean_up_post($step);
     }
 /**************************** Save general Email Setup  *****************************/
 
 //we do not need to track location if location type is not set
-if(isset($_POST['tracking_entities_location_type'])) {
+if (isset($_POST['tracking_entities_location_type'])) {
     if ($_POST['tracking_entities_location_type'] != '2') {
         unset($_POST['tracking_entities_location']);
         unset($_POST['tracking_entities_location_type']);
     }
 }
 //if the check box is empty, then set it to 0
-if(!isset($_POST['mail_smtpauth_req'])) { $_POST['mail_smtpauth_req'] = 0; }
+if (!isset($_POST['mail_smtpauth_req'])) {
+    $_POST['mail_smtpauth_req'] = 0;
+}
 //default ssl use to false
-if(!isset($_POST['mail_smtpssl'])) { $_POST['mail_smtpssl'] = 0; }
+if (!isset($_POST['mail_smtpssl'])) {
+    $_POST['mail_smtpssl'] = 0;
+}
 //reuse existing saveconfig functionality
 $focus->saveConfig();
 
@@ -83,7 +89,7 @@ $focus->saveConfig();
 
 /**************************** Add New Monitored Box  *****************************/
 //perform this if the option to create new mail box has been checked
-if(isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')){
+if (isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')) {
     
    //Populate the Request variables that inboundemail expects
     $_REQUEST['mark_read'] = 1;
@@ -93,15 +99,14 @@ if(isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')){
     $_REQUEST['group_id'] = 'new';
 //    $_REQUEST['from_addr'] = $_REQUEST['wiz_step1_notify_fromaddress'];
     //reuse save functionality for inbound email
-    require_once('modules/InboundEmail/Save.php');    
-
+    require_once('modules/InboundEmail/Save.php');
 }
-    if (!empty($_REQUEST['error'])){
-            //an error was found during inbound save.  This means the save was allowed but the inbound box had problems, return user to wizard
-            //and display error message
-            $header_URL = "Location: index.php?action=WizardEmailSetup&module=Campaigns&error=true";
+    if (!empty($_REQUEST['error'])) {
+        //an error was found during inbound save.  This means the save was allowed but the inbound box had problems, return user to wizard
+        //and display error message
+        $header_URL = "Location: index.php?action=WizardEmailSetup&module=Campaigns&error=true";
         SugarApplication::headerRedirect($header_URL);
-    }else{
+    } else {
         //set navigation details
         $header_URL = "Location: index.php?action=index&module=Campaigns";
         SugarApplication::headerRedirect($header_URL);
@@ -113,20 +118,19 @@ if(isset($_REQUEST['wiz_new_mbox']) && ($_REQUEST['wiz_new_mbox']=='1')){
  * which does not expect the prefix, and still use the generic create summary functionality in wizard, which
  * does expect the prefix.  
  */
-function clean_up_post($prefix){
-
+function clean_up_post($prefix)
+{
     foreach ($_REQUEST as $key => $val) {
-              if((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)){
-              $newkey  =substr($key, strlen($prefix)) ;
-              $_REQUEST[$newkey] = $val;
-         }               
+        if ((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)) {
+            $newkey  =substr($key, strlen($prefix)) ;
+            $_REQUEST[$newkey] = $val;
+        }
     }
 
     foreach ($_POST as $key => $val) {
-              if((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)){
-              $newkey  =substr($key, strlen($prefix)) ;
-              $_POST[$newkey] = $val;
-              
-         }               
+        if ((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)) {
+            $newkey  =substr($key, strlen($prefix)) ;
+            $_POST[$newkey] = $val;
+        }
     }
 }

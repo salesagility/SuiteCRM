@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,11 +45,11 @@ $db = DBManagerFactory::getInstance();
 $result = $db->query('SELECT * FROM fields_meta_data WHERE deleted = 0');
 $fields = array();
 $str = '';
-while($row = $db->fetchByAssoc($result)){
-	foreach($row as $name=>$value){
-		$str.= "$name:::$value\n";
-	}
-	$str .= "DONE\n";
+while ($row = $db->fetchByAssoc($result)) {
+    foreach ($row as $name=>$value) {
+        $str.= "$name:::$value\n";
+    }
+    $str .= "DONE\n";
 }
 ob_get_clean();
 

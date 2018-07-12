@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -88,11 +90,10 @@ $ListView->xTemplateAssign("RETURN_URL",
 	"&return_module=".$currentModule."&return_action=DetailView&return_id=".$focus->id);
 
 $header_text = '';
-if(is_admin($current_user)
+if (is_admin($current_user)
 	&& $_REQUEST['module'] != 'DynamicLayout'
-	&& !empty($_SESSION['editinplace']))
-{
-	$header_text = " <a href='index.php?action=index"
+	&& !empty($_SESSION['editinplace'])) {
+    $header_text = " <a href='index.php?action=index"
 		. "&module=DynamicLayout"
 		. "&from_action=SubPanelView"
 		. "&from_module=ProjectTask"

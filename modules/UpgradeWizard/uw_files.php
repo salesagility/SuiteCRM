@@ -41,7 +41,7 @@
 
 
 global $sugar_version;
-if(!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
@@ -50,8 +50,8 @@ if(!defined('sugarEntry') || !sugarEntry) {
 $uwFilesCurrent = findAllFiles('modules/UpgradeWizard/', array());
 
 // handle 4.x to 4.5.x+ (no UpgradeWizard module)
-if(count($uwFilesCurrent) < 5) {
-	$uwFiles = array(
+if (count($uwFilesCurrent) < 5) {
+    $uwFiles = array(
 		'modules/UpgradeWizard/language/en_us.lang.php',
 		'modules/UpgradeWizard/cancel.php',
 		'modules/UpgradeWizard/commit.php',
@@ -75,14 +75,14 @@ if(count($uwFilesCurrent) < 5) {
 		'modules/UpgradeWizard/uw_utils.php',
 	);
 } else {
-	$uwFilesCurrent = findAllFiles('ModuleInstall', $uwFilesCurrent);
-	$uwFilesCurrent = findAllFiles('include/javascript/yui', $uwFilesCurrent);
-	$uwFilesCurrent[] = 'HandleAjaxCall.php';
+    $uwFilesCurrent = findAllFiles('ModuleInstall', $uwFilesCurrent);
+    $uwFilesCurrent = findAllFiles('include/javascript/yui', $uwFilesCurrent);
+    $uwFilesCurrent[] = 'HandleAjaxCall.php';
 
-	$uwFiles = array();
-	foreach($uwFilesCurrent as $file) {
-		$uwFiles[] = str_replace("./", "", clean_path($file));
-	}
+    $uwFiles = array();
+    foreach ($uwFilesCurrent as $file) {
+        $uwFiles[] = str_replace("./", "", clean_path($file));
+    }
 }
 ////	END DYNAMICALLY GENERATE UPGRADEWIZARD MODULE FILE LIST
 ///////////////////////////////////////////////////////////////////////////////

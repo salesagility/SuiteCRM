@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,16 +46,17 @@ require_once('modules/SugarFeed/feedLogicBase.php');
 class LeadFeed extends FeedLogicBase
 {
     var $module = 'Leads';
-    function pushFeed($bean, $event, $arguments){
+    function pushFeed($bean, $event, $arguments)
+    {
         global $locale;
 
         $text = '';
-        if(empty($bean->fetched_row)){
+        if (empty($bean->fetched_row)) {
             $full_name = $locale->getLocaleFormattedName($bean->first_name, $bean->last_name, '');
 
             $text =  '{SugarFeed.CREATED_LEAD} [' . $bean->module_dir . ':' . $bean->id . ':' . $full_name . ']';
-        }else{
-            if(!empty($bean->fetched_row['status'] ) && $bean->fetched_row['status'] != $bean->status && $bean->status == 'Converted'){
+        } else {
+            if (!empty($bean->fetched_row['status'] ) && $bean->fetched_row['status'] != $bean->status && $bean->status == 'Converted') {
                 // Repeated here so we don't format the name on "uninteresting" events
                 $full_name = $locale->getLocaleFormattedName($bean->first_name, $bean->last_name, '');
 
@@ -61,10 +64,9 @@ class LeadFeed extends FeedLogicBase
             }
         }
 		
-        if(!empty($text)){ 
-        	SugarFeed::pushFeed2($text, $bean);
+        if (!empty($text)) {
+            SugarFeed::pushFeed2($text, $bean);
         }
-		
     }
 }
 

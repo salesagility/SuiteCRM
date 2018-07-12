@@ -43,8 +43,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test', $aCase->get_summary_text());
         
         // clean up
-        
-        
     }
 
     public function testlistviewACLHelper()
@@ -108,8 +106,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_list_fields()
@@ -131,8 +127,6 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()

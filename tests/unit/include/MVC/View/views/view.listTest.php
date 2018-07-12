@@ -22,13 +22,13 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+        // test
         
         
         $query = "SELECT * FROM aod_index";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
-        while($row = $resource->fetch_assoc()) {
+        while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         } 
         $tableAodIndex = $rows;
@@ -36,7 +36,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $query = "SELECT * FROM email_addresses";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
-        while($row = $resource->fetch_assoc()) {
+        while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         } 
         $tableEmailAddresses = $rows;
@@ -59,10 +59,10 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up 
         
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
-        foreach($tableEmailAddresses as $row) {
+        foreach ($tableEmailAddresses as $row) {
             $query = "INSERT email_addresses INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
-            foreach($row as $value) {
+            foreach ($row as $value) {
                 $quoteds[] = "'$value'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
@@ -70,10 +70,10 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         DBManagerFactory::getInstance()->query("DELETE FROM aod_index");
-        foreach($tableAodIndex as $row) {
+        foreach ($tableAodIndex as $row) {
             $query = "INSERT aod_index INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
-            foreach($row as $value) {
+            foreach ($row as $value) {
                 $quoteds[] = "'$value'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
@@ -99,7 +99,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+        // test
         
         //execute the contructor and check for the Object type and type attribute
         $view = new ViewList();
@@ -126,7 +126,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+        // test
         
         
         
@@ -190,7 +190,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+        // test
         
         
         //test without any REQUEST parameters set. it will set searchform attribute to a searchform object. 
@@ -228,7 +228,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+        // test
         
         //test without use_old_search. it should return html.
         $view = new ViewList();
@@ -270,7 +270,7 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+        // test
         
         //execute the method and test if it sets the lv attribute to ListViewSmarty object.
         $view = new ViewList();
@@ -297,13 +297,13 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('email_addresses');
         $state->pushTable('aod_index');
 
-	// test
+        // test
         
         
         $query = "SELECT * FROM email_addresses";
         $resource = DBManagerFactory::getInstance()->query($query);
         $rows = [];
-        while($row = $resource->fetch_assoc()) {
+        while ($row = $resource->fetch_assoc()) {
             $rows[] = $row;
         } 
         $tableEmailAddresses = $rows;
@@ -334,10 +334,10 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up 
         
         DBManagerFactory::getInstance()->query("DELETE FROM email_addresses");
-        foreach($tableEmailAddresses as $row) {
+        foreach ($tableEmailAddresses as $row) {
             $query = "INSERT email_addresses INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
-            foreach($row as $value) {
+            foreach ($row as $value) {
                 $quoteds[] = "'$value'";
             }
             $query .= (implode(', ', $quoteds)) . ')';
@@ -350,6 +350,5 @@ class ViewListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popTable('email_addresses');
         $state->popTable('tracker');
         $state->popGlobals();
-
     }
 }

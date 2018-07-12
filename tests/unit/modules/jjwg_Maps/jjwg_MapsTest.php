@@ -39,21 +39,19 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testsaveConfiguration()
     {
         self::markTestIncomplete('environment dependency');
         
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
         $state->pushTable('tracker');
 
-	// test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
 
@@ -69,7 +67,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('tracker');
         $state->popTable('config');
-
     }
 
     public function testupdateGeocodeInfo()
@@ -146,12 +143,12 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdateGeocodeInfoByAssocQuery()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts_cstm');
 
-	// test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
 
@@ -174,12 +171,12 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdateGeocodeInfoByBeanQuery()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts_cstm');
 
-	// test
+        // test
         
         $jjwgMaps = new jjwg_Maps();
         $bean = new Account();
@@ -351,8 +348,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetProspectLists()

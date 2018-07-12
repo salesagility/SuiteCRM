@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -107,10 +109,9 @@ class ImportMap extends SugarBean
     public function getMapping()
     {
         $mapping_arr = array();
-        if ( !empty($this->content) )
-        {
+        if ( !empty($this->content) ) {
             $pairs = explode("&",$this->content);
-            foreach ($pairs as $pair){
+            foreach ($pairs as $pair) {
                 list($name,$value) = explode("=",$pair);
                 $mapping_arr[trim($name)] = $value;
             }
@@ -126,8 +127,7 @@ class ImportMap extends SugarBean
      */
     public function setMapping(
         $mapping_arr
-        )
-    {
+        ) {
         $output = array ();
         foreach ($mapping_arr as $key => $item) {
             $output[] = "$key=$item";
@@ -143,10 +143,9 @@ class ImportMap extends SugarBean
     public function getDefaultValues()
     {
         $defa_arr = array();
-        if ( !empty($this->default_values) )
-        {
+        if ( !empty($this->default_values) ) {
             $pairs = explode("&",$this->default_values);
-            foreach ($pairs as $pair){
+            foreach ($pairs as $pair) {
                 list($name,$value) = explode("=",$pair);
                 $defa_arr[trim($name)] = $value;
             }
@@ -162,8 +161,7 @@ class ImportMap extends SugarBean
      */
     public function setDefaultValues(
         $defa_arr
-        )
-    {
+        ) {
         $output = array ();
         foreach ($defa_arr as $key => $item) {
             $output[] = "$key=$item";
@@ -175,19 +173,19 @@ class ImportMap extends SugarBean
      * @see SugarBean::retrieve()
      */
     public function retrieve($id = -1, $encode=true,$deleted=true)
-	{
-	    $returnVal = parent::retrieve($id,$encode,$deleted);
+    {
+        $returnVal = parent::retrieve($id,$encode,$deleted);
 
-	    if ( !($returnVal instanceOf $this) ) {
-	        return $returnVal;
-	    }
+        if ( !($returnVal instanceOf $this) ) {
+            return $returnVal;
+        }
 
-	    if ( $this->source == 'tab' && $this->delimiter == '' ) {
-	        $this->delimiter = "\t";
-	    }
+        if ( $this->source == 'tab' && $this->delimiter == '' ) {
+            $this->delimiter = "\t";
+        }
 
-	    return $this;
-	}
+        return $this;
+    }
 
     /**
      * Save
@@ -201,7 +199,8 @@ class ImportMap extends SugarBean
      * @param  string $enclosure
      * @return bool
      */
-    public function save($check_notify = FALSE) {
+    public function save($check_notify = FALSE)
+    {
         $args = func_get_args();
         return call_user_func_array(array($this, '_save'), $args);
     }
@@ -213,8 +212,7 @@ class ImportMap extends SugarBean
         $has_header,
         $delimiter,
         $enclosure
-        )
-    {
+        ) {
         $olddefault_values = $this->default_values;
         $oldcontent = $this->content;
 
@@ -227,7 +225,9 @@ class ImportMap extends SugarBean
 
         // Bug 23354 - Make sure enclosure gets saved as an empty string if
         // it is an empty string, instead of as a null
-        if ( strlen($enclosure) <= 0 ) $enclosure = ' ';
+        if ( strlen($enclosure) <= 0 ) {
+            $enclosure = ' ';
+        }
 
         $this->assigned_user_id = $owner_id;
         $this->name             = $name;
@@ -258,16 +258,16 @@ class ImportMap extends SugarBean
      */
     public function mark_deleted(
         $id
-        )
-    {
+        ) {
         global $current_user;
 
         if ( !is_admin($current_user) ) {
             $other_map = new ImportMap();
             $other_map->retrieve_by_string_fields(array('id'=> $id), false);
 
-            if ( $other_map->assigned_user_id != $current_user->id )
+            if ( $other_map->assigned_user_id != $current_user->id ) {
                 return false;
+            }
         }
 
         return parent::mark_deleted($id);
@@ -283,12 +283,12 @@ class ImportMap extends SugarBean
     public function mark_published(
         $user_id,
         $flag
-        )
-    {
+        ) {
         global $current_user;
 
-        if ( !is_admin($current_user) )
+        if ( !is_admin($current_user) ) {
             return false;
+        }
 
         // check for problems
         if ($flag) {
@@ -299,8 +299,7 @@ class ImportMap extends SugarBean
                 'name'         =>$this->name,
                 'is_published' =>'yes'
                 );
-        }
-        else {
+        } else {
             // if you are trying to unpublish a map
             // but you own an unpublished map by the same name
             $query_arr = array(
@@ -313,8 +312,9 @@ class ImportMap extends SugarBean
         $other_map->retrieve_by_string_fields($query_arr, false);
 
         // if we find this other map, quit
-        if ( isset($other_map->id) )
+        if ( isset($other_map->id) ) {
             return false;
+        }
 
         // otherwise update the is_published flag
         $query = "UPDATE $this->table_name
@@ -335,8 +335,7 @@ class ImportMap extends SugarBean
      */
     public function retrieve_all_by_string_fields(
         $fields_array
-        )
-    {
+        ) {
         $query = "SELECT *
                     FROM {$this->table_name}
                     " . $this->get_where($fields_array);
@@ -347,8 +346,8 @@ class ImportMap extends SugarBean
         while ($row = $this->db->fetchByAssoc($result,FALSE) ) {
             $focus = new ImportMap();
 
-            foreach($this->column_fields as $field) {
-                if(isset($row[$field])) {
+            foreach ($this->column_fields as $field) {
+                if (isset($row[$field])) {
                     $focus->$field = $row[$field];
                 }
             }
@@ -385,32 +384,31 @@ class ImportMap extends SugarBean
         $preference_values_str = $current_user->getPreference('field_values', 'import');
         $preference_values = json_decode($preference_values_str,true);
 
-        foreach ($import_step_fields as $val){
+        foreach ($import_step_fields as $val) {
             //overwrite preference array with new values from request if the value is different or new
-            if((isset($_REQUEST[$val]) && !isset($preference_values[$val])) || (isset($_REQUEST[$val]) && $preference_values[$val] != $_REQUEST[$val])){
+            if ((isset($_REQUEST[$val]) && !isset($preference_values[$val])) || (isset($_REQUEST[$val]) && $preference_values[$val] != $_REQUEST[$val])) {
                 $preference_values[$val] = $_REQUEST[$val];
                 $set = true;
             }
         }
 
         //force the values to passed in array if array is set
-        if(!empty($ForceValsArr) && is_array($ForceValsArr)){
-            foreach ($ForceValsArr as $forceKey=>$forceVal){
+        if (!empty($ForceValsArr) && is_array($ForceValsArr)) {
+            foreach ($ForceValsArr as $forceKey=>$forceVal) {
                 $preference_values[$forceKey] = $forceVal;
                 $set = true;
             }
         }
 
         //set preferences if any changes were made and return the new array
-        if($set){
+        if ($set) {
             $preference_values_str =  json_encode($preference_values);
             $current_user->setPreference('field_values', $preference_values_str, 0, 'import');
         }
-        if(empty($preference_values)){
+        if (empty($preference_values)) {
             return array();
         }
 
         return $preference_values;
     }
-
 }

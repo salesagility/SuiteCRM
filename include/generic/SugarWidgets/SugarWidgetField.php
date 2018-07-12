@@ -1,6 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry)
-	die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,180 +47,188 @@ if(!defined('sugarEntry') || !sugarEntry)
 
 class SugarWidgetField extends SugarWidget
 {
-
-	function __construct(&$layout_manager) {
+    function __construct(&$layout_manager)
+    {
         parent::__construct($layout_manager);
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetField(&$layout_manager){
+    function SugarWidgetField(&$layout_manager)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($layout_manager);
     }
 
 
-	function display($layout_def) {
-		//print $layout_def['start_link_wrapper']."===";
+    function display($layout_def)
+    {
+        //print $layout_def['start_link_wrapper']."===";
 		$context = $this->layout_manager->getAttribute('context'); //_ppd($context);
 		$func_name = 'display'.$context;
 
-		if (!empty ($context) && method_exists($this, $func_name)) {
-			return $this-> $func_name ($layout_def);
-		} else {
-			return 'display not found:'.$func_name;
-		}
-	}
+        if (!empty ($context) && method_exists($this, $func_name)) {
+            return $this-> $func_name ($layout_def);
+        } else {
+            return 'display not found:'.$func_name;
+        }
+    }
 
-	function _get_column_alias($layout_def) {
-		$alias_arr = array ();
+    function _get_column_alias($layout_def)
+    {
+        $alias_arr = array ();
 
-		if (!empty ($layout_def['name']) && $layout_def['name'] == 'count') {
-			return 'count';
-		}
+        if (!empty ($layout_def['name']) && $layout_def['name'] == 'count') {
+            return 'count';
+        }
 
-		if (!empty ($layout_def['table_alias'])) {
-			array_push($alias_arr, $layout_def['table_alias']);
-		}
+        if (!empty ($layout_def['table_alias'])) {
+            array_push($alias_arr, $layout_def['table_alias']);
+        }
 
-		if (!empty ($layout_def['name'])) {
-			array_push($alias_arr, $layout_def['name']);
-		}
+        if (!empty ($layout_def['name'])) {
+            array_push($alias_arr, $layout_def['name']);
+        }
 
-		return $this->getTruncatedColumnAlias(implode("_", $alias_arr));
-	}
+        return $this->getTruncatedColumnAlias(implode("_", $alias_arr));
+    }
 
-	function & displayDetailLabel(& $layout_def) {
+    function & displayDetailLabel(& $layout_def)
+    {
+        return '';
+    }
 
-		return '';
-	}
-
-	function & displayDetail($layout_def) {
-
+    function & displayDetail($layout_def)
+    {
         $layout_def = '';
-		return $layout_def;
-	}
+        return $layout_def;
+    }
 
-	function displayHeaderCellPlain($layout_def)
-	{
-		if (!empty ($layout_def['label'])) {
-			return $layout_def['label'];
-		}
-		if (!empty ($layout_def['vname'])) {
-			return translate($layout_def['vname'], $this->layout_manager->getAttribute('module_name'));
-		}
-		return '';
-	}
+    function displayHeaderCellPlain($layout_def)
+    {
+        if (!empty ($layout_def['label'])) {
+            return $layout_def['label'];
+        }
+        if (!empty ($layout_def['vname'])) {
+            return translate($layout_def['vname'], $this->layout_manager->getAttribute('module_name'));
+        }
+        return '';
+    }
 
-	function displayHeaderCell($layout_def) {
-		$module_name = $this->layout_manager->getAttribute('module_name');
+    function displayHeaderCell($layout_def)
+    {
+        $module_name = $this->layout_manager->getAttribute('module_name');
 
-		$this->local_current_module = $_REQUEST['module'];
-		$this->is_dynamic = true;
-		// don't show sort links if name isn't defined
-		if (empty ($layout_def['name']) || (isset ($layout_def['sortable']) && !$layout_def['sortable'])) {
-			return $this->displayHeaderCellPlain($layout_def);
-		}
+        $this->local_current_module = $_REQUEST['module'];
+        $this->is_dynamic = true;
+        // don't show sort links if name isn't defined
+        if (empty ($layout_def['name']) || (isset ($layout_def['sortable']) && !$layout_def['sortable'])) {
+            return $this->displayHeaderCellPlain($layout_def);
+        }
 
-		$header_cell_text = $this->displayHeaderCellPlain($layout_def);
+        $header_cell_text = $this->displayHeaderCellPlain($layout_def);
 
-		$subpanel_module = $layout_def['subpanel_module'];
-		$html_var = $subpanel_module . "_CELL";
-		if (empty ($this->base_URL)) {
-			$objListView = new ListView();
-			$this->base_URL = $objListView -> getBaseURL($html_var);
-			$split_url = explode('&to_pdf=true&action=SubPanelViewer&subpanel=', $this->base_URL);
-			$this->base_URL = $split_url[0];
-			$this->base_URL .= '&inline=true&to_pdf=true&action=SubPanelViewer&subpanel=';
-		}
-		$sort_by_name = $layout_def['name'];
-		if (isset ($layout_def['sort_by'])) {
-			$sort_by_name = $layout_def['sort_by'];
-		}
+        $subpanel_module = $layout_def['subpanel_module'];
+        $html_var = $subpanel_module . "_CELL";
+        if (empty ($this->base_URL)) {
+            $objListView = new ListView();
+            $this->base_URL = $objListView -> getBaseURL($html_var);
+            $split_url = explode('&to_pdf=true&action=SubPanelViewer&subpanel=', $this->base_URL);
+            $this->base_URL = $split_url[0];
+            $this->base_URL .= '&inline=true&to_pdf=true&action=SubPanelViewer&subpanel=';
+        }
+        $sort_by_name = $layout_def['name'];
+        if (isset ($layout_def['sort_by'])) {
+            $sort_by_name = $layout_def['sort_by'];
+        }
 
-		$objListView = new ListView();
-		$sort_by = $objListView->getSessionVariableName($html_var, "ORDER_BY").'='.$sort_by_name;
+        $objListView = new ListView();
+        $sort_by = $objListView->getSessionVariableName($html_var, "ORDER_BY").'='.$sort_by_name;
 
-		$start = (empty ($layout_def['start_link_wrapper'])) ? '' : $layout_def['start_link_wrapper'];
-		$end = (empty ($layout_def['end_link_wrapper'])) ? '' : $layout_def['end_link_wrapper'];
+        $start = (empty ($layout_def['start_link_wrapper'])) ? '' : $layout_def['start_link_wrapper'];
+        $end = (empty ($layout_def['end_link_wrapper'])) ? '' : $layout_def['end_link_wrapper'];
 
-		$header_cell = "<a class=\"listViewThLinkS1\" href=\"".$start.$this->base_URL.$subpanel_module.'&'.$sort_by.$end."\">";
-		$header_cell .= $header_cell_text;
+        $header_cell = "<a class=\"listViewThLinkS1\" href=\"".$start.$this->base_URL.$subpanel_module.'&'.$sort_by.$end."\">";
+        $header_cell .= $header_cell_text;
 
-		$imgArrow = '';
+        $imgArrow = '';
 
-		if (isset ($layout_def['sort'])) {
-			$imgArrow = $layout_def['sort'];
-		}
-		$arrow_start = $objListView->getArrowUpDownStart($imgArrow);
-		$arrow_end = $objListView->getArrowUpDownEnd($imgArrow);
-		$header_cell .= " ".$arrow_start.$arrow_end."</a>";
+        if (isset ($layout_def['sort'])) {
+            $imgArrow = $layout_def['sort'];
+        }
+        $arrow_start = $objListView->getArrowUpDownStart($imgArrow);
+        $arrow_end = $objListView->getArrowUpDownEnd($imgArrow);
+        $header_cell .= " ".$arrow_start.$arrow_end."</a>";
 
-		return $header_cell;
+        return $header_cell;
+    }
 
-	}
+    function displayList(&$layout_def)
+    {
+        return $this->displayListPlain($layout_def);
+    }
 
-	function displayList(&$layout_def) {
-		return $this->displayListPlain($layout_def);
-	}
+    function displayListPlain($layout_def)
+    {
+        $value= $this->_get_list_value($layout_def);
+        if (isset($layout_def['widget_type']) && $layout_def['widget_type'] =='checkbox') {
+            if ($value != '' &&  ($value == 'on' || intval($value) == 1 || $value == 'yes')) {
+                return "<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true' checked>";
+            }
+            return "<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true'>";
+        }
+        return $value;
+    }
 
-	function displayListPlain($layout_def) {
-		$value= $this->_get_list_value($layout_def);
-		if (isset($layout_def['widget_type']) && $layout_def['widget_type'] =='checkbox') {
-			if ($value != '' &&  ($value == 'on' || intval($value) == 1 || $value == 'yes'))
-			{
-				return "<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true' checked>";
-			}
-			return "<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true'>";
-		}
-		return $value;
-	}
+    function _get_list_value(& $layout_def)
+    {
+        $key = '';
+        if ( isset($layout_def['varname']) ) {
+            $key = strtoupper($layout_def['varname']);
+        } else {
+            $key = strtoupper($this->_get_column_alias($layout_def));
+        }
 
-	function _get_list_value(& $layout_def)
-	{
-		$key = '';
-		if ( isset($layout_def['varname']) ) {
-		    $key = strtoupper($layout_def['varname']);
-		}
-		else {
-			$key = strtoupper($this->_get_column_alias($layout_def));
-		}
+        if ( isset($layout_def['fields'][$key]) ) {
+            return $layout_def['fields'][$key];
+        }
 
-		if ( isset($layout_def['fields'][$key]) ) {
-			return $layout_def['fields'][$key];
-		}
+        return '';
+    }
 
-		return '';
-	}
+    function & displayEditLabel($layout_def)
+    {
+        return '';
+    }
 
-	function & displayEditLabel($layout_def) {
-		return '';
-	}
+    function & displayEdit($layout_def)
+    {
+        return '';
+    }
 
-	function & displayEdit($layout_def) {
-		return '';
-	}
+    function & displaySearchLabel($layout_def)
+    {
+        return '';
+    }
 
-	function & displaySearchLabel($layout_def) {
-		return '';
-	}
+    function & displaySearch($layout_def)
+    {
+        return '';
+    }
 
-	function & displaySearch($layout_def) {
-		return '';
-	}
+    function displayInput($layout_def)
+    {
+        return ' -- Not Implemented --';
+    }
 
-	function displayInput($layout_def) {
-		return ' -- Not Implemented --';
-	}
-
-    function getVardef($layout_def) {
+    function getVardef($layout_def)
+    {
         $myName = $layout_def['column_key'];
         $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];
 

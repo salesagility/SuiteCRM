@@ -3,8 +3,6 @@
 
 class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 {
-
-
     public function testgetSignatureButtons()
     {
         self::markTestIncomplete('environment dependency');
@@ -158,9 +156,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         try {
             $result = $user->getUserPrivGuid();
             $this->fail('This function sould throws an Exception.');
-        }
-        catch (Exception $e) {
-            
+        } catch (Exception $e) {
         }
 
         $this->assertTrue(isset($result));
@@ -189,7 +185,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
     }
 
     public function testSetAndGetAndResetPreference()
-    {        
+    {
         self::markTestIncomplete('environment dependency');
 
         $db = DBManagerFactory::getInstance();
@@ -240,8 +236,6 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
-        
-        
     }
 
 
@@ -416,8 +410,6 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         $user->mark_deleted($user->id);
         
         // clean up
-        
-        
     }
 
     public function retrieve($id)
@@ -475,11 +467,9 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         // here is a really unpredictable mysql connection issue why this test is unstable
         // but should works on a correct test environments:
-        
-        
     }
 
-// --- OK
+    // --- OK
  
     public function authenticate_user($id)
     {
@@ -579,7 +569,6 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         $this->assertTrue(isset($result));
         $this->assertGreaterThan(0, strlen($result));
-
     }
 
 
@@ -727,8 +716,6 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 
     public function testlist_view_parse_additional_sections()
@@ -907,7 +894,7 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
 
         //test with contacts module
         $contact = new Contact();
-         // Contact name auto populate from first name and last name, so we need set value for first name or last name to test insteard set value for name
+        // Contact name auto populate from first name and last name, so we need set value for first name or last name to test insteard set value for name
         $contact->first_name = "test";
 
         $expected =
@@ -1014,8 +1001,6 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 
     public function testgetAdminModules()
@@ -1040,8 +1025,6 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
     }
 
     public function testisAdminForModule()
@@ -1076,9 +1059,6 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         
         $state->popTable('email_addresses');
         $state->popGlobals();
-
-
-	
     }
 
     public function testshowLastNameFirst()
@@ -1165,8 +1145,6 @@ class UserTest extends SuiteCRM\StateCheckerUnitAbstract
         }
         
         // clean up
-        
-        
     }
 
 

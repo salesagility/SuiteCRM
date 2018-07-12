@@ -89,7 +89,7 @@ $dictionary['AOD_Index'] = array(
 	'optimistic_locking'=>true,
 		'unified_search'=>false,
 	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
 VardefManager::createVardef('AOD_Index','AOD_Index', array('basic','assignable'));

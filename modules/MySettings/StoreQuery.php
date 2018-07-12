@@ -37,7 +37,9 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class StoreQuery
 {
@@ -157,7 +159,6 @@ class StoreQuery
                 // cn: bug 6546 storequery stomps correct value for 'module' in Activities
                 $_REQUEST[$key] = $value;
                 $_GET[$key] = $value;
-
             }
         }
     }
@@ -204,7 +205,6 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
             } elseif ($saveType == 'all') {
                 // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
                 // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
@@ -238,7 +238,6 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
             } elseif ($saveType == 'all') {
                 $this->query = $_GET;
                 $this->saveQuery($name);

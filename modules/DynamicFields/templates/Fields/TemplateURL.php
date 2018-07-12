@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,43 +43,45 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class TemplateURL extends TemplateText
 {
-
     var $supports_unified_search = true;
 
-	function __construct()
-	{
-		$this->vardef_map['ext4'] = 'link_target';
-		$this->vardef_map['link_target'] = 'ext4';
-	}
+    function __construct()
+    {
+        $this->vardef_map['ext4'] = 'link_target';
+        $this->vardef_map['link_target'] = 'ext4';
+    }
 	
-	var $type='url';
-    function get_html_edit(){
+    var $type='url';
+    function get_html_edit()
+    {
         $this->prepare();
         return "<input type='text' name='". $this->name. "' id='".$this->name."' size='".$this->size."' title='{" . strtoupper($this->name) ."_HELP}' value='{". strtoupper($this->name). "}'>";
     }
     
-    function get_html_detail(){ 
+    function get_html_detail()
+    {
         $xtpl_var = strtoupper($this->name);
         return "<a href='{" . $xtpl_var . "}' target='_blank'>{" . $xtpl_var . "}</a>";
     }
     
-    function get_xtpl_detail(){
+    function get_xtpl_detail()
+    {
         $value = parent::get_xtpl_detail();
-        if(!empty($value) && substr_count($value, '://') == 0 && substr($value ,0,8) != 'index.php'){
+        if (!empty($value) && substr_count($value, '://') == 0 && substr($value ,0,8) != 'index.php') {
             $value = 'http://' . $value;
         }
         return $value;
     }
 
-	function get_field_def(){
-		$def = parent::get_field_def();
-		//$def['options'] = !empty($this->options) ? $this->options : $this->ext1;
-		$def['default'] = !empty($this->default) ? $this->default : $this->default_value;
-		$def['len'] = $this->len;
-		$def['dbType'] = 'varchar';
-		$def['gen'] = !empty($this->gen) ? $this->gen : $this->ext3;
+    function get_field_def()
+    {
+        $def = parent::get_field_def();
+        //$def['options'] = !empty($this->options) ? $this->options : $this->ext1;
+        $def['default'] = !empty($this->default) ? $this->default : $this->default_value;
+        $def['len'] = $this->len;
+        $def['dbType'] = 'varchar';
+        $def['gen'] = !empty($this->gen) ? $this->gen : $this->ext3;
         $def['link_target'] = !empty($this->link_target) ? $this->link_target : $this->ext4;
-		return $def;	
-	} 
-
+        return $def;
+    }
 }

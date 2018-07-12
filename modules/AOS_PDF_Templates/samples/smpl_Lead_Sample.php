@@ -4,13 +4,15 @@ require_once __DIR__ . '/../TemplateSampleService.php';
 
 class smpl_Lead_Sample
 {
-		function getType() {
-			return 'Leads';
-		}
+    function getType()
+    {
+        return 'Leads';
+    }
 		
-		function getBody() {
+    function getBody()
+    {
         global $locale;
-			return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
+        return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
 <tbody style="text-align: left;">
 <tr>
 <td valign="top">
@@ -44,13 +46,15 @@ class smpl_Lead_Sample
 </tr>
 </tbody>
 </table>';
-		}
+    }
 
-		function getHeader() {
-			return '';
-		}
+    function getHeader()
+    {
+        return '';
+    }
 
-		function getFooter() {
-			return '';
-		}
+    function getFooter()
+    {
+        return '';
+    }
 }

@@ -104,30 +104,32 @@ class CampaignTracker extends SugarBean
     var $required_fields =  array('tracker_name'=>1,'tracker_url'=>1);
 
     /*This bean's constructor*/
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function CampaignTracker(){
+    public function CampaignTracker()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function save($check_notify = false) {
+    function save($check_notify = false)
+    {
         //make sure that the url has a scheme, if not then add http:// scheme
-        if ($this->is_optout!=1 ){
+        if ($this->is_optout!=1 ) {
             $url = strtolower(trim($this->tracker_url));
-            if(!preg_match('/^(http|https|ftp):\/\//i', $url)){
+            if (!preg_match('/^(http|https|ftp):\/\//i', $url)) {
                 $this->tracker_url = 'http://'.$url;
             }
         }
@@ -148,7 +150,8 @@ class CampaignTracker extends SugarBean
     * join and team filter. If you are implementing this function do not forget to consider the additional conditions.
     */
 
-    function fill_in_additional_detail_fields() {
+    function fill_in_additional_detail_fields()
+    {
         global $sugar_config;
 
         //setup campaign name.
@@ -157,12 +160,11 @@ class CampaignTracker extends SugarBean
 
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
-        if($row != null) {
+        if ($row != null) {
             $this->campaign_name=$row['name'];
         }
 
         if (!class_exists('Administration')) {
-
         }
         $admin=new Administration();
         $admin->retrieveSettings('massemailer'); //retrieve all admin settings.

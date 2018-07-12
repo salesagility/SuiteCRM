@@ -281,23 +281,23 @@ r22618 - 2007-05-09 15:36:06 -0700 (Wed, 09 May 2007) - clee - Added file.
  */
 function smarty_function_sugar_button($params, &$smarty)
 {
-   if(empty($params['module'])) {
-   	  $smarty->trigger_error("sugar_button: missing required param (module)");
-   } elseif(empty($params['id'])) {
-   	  $smarty->trigger_error("sugar_button: missing required param (id)");
-   } elseif(empty($params['view'])) {
-   	  $smarty->trigger_error("sugar_button: missing required param (view)");
-   }
+    if (empty($params['module'])) {
+        $smarty->trigger_error("sugar_button: missing required param (module)");
+    } elseif (empty($params['id'])) {
+        $smarty->trigger_error("sugar_button: missing required param (id)");
+    } elseif (empty($params['view'])) {
+        $smarty->trigger_error("sugar_button: missing required param (view)");
+    }
 
-   $js_form = (empty($params['form_id'])) ? "var _form = (this.form) ? this.form : document.forms[0];" : "var _form = document.getElementById('{$params['form_id']}');";
+    $js_form = (empty($params['form_id'])) ? "var _form = (this.form) ? this.form : document.forms[0];" : "var _form = document.getElementById('{$params['form_id']}');";
 
-   $type = $params['id'];
-   $location = (empty($params['location'])) ? "" : "_".$params['location'];
+    $type = $params['id'];
+    $location = (empty($params['location'])) ? "" : "_".$params['location'];
 
-   if(!is_array($type)) {
-   	  $module = $params['module'];
-   	  $view = $params['view'];
-   	  switch(strtoupper($type)) {
+    if (!is_array($type)) {
+        $module = $params['module'];
+        $view = $params['view'];
+        switch (strtoupper($type)) {
 			case "SEARCH":
                 $output = '<input tabindex="2" title="{$APP.LBL_SEARCH_BUTTON_TITLE}" onclick="SUGAR.savedViews.setChooser();" class="button" type="submit" name="button" value="{$APP.LBL_SEARCH_BUTTON_LABEL}" id="search_form_submit"/>&nbsp;';
 			break;
@@ -360,7 +360,9 @@ function smarty_function_sugar_button($params, &$smarty)
 			break;
 
 			case "SUBPANELSAVE":
-                if($view == 'QuickCreate' || (isset($_REQUEST['target_action']) && strtolower($_REQUEST['target_action']) == 'quickcreate')) $view =  "form_SubpanelQuickCreate_{$module}";
+                if ($view == 'QuickCreate' || (isset($_REQUEST['target_action']) && strtolower($_REQUEST['target_action']) == 'quickcreate')) {
+                    $view =  "form_SubpanelQuickCreate_{$module}";
+                }
 
                 /* BEGIN - SECURITY GROUPS - redirect a subpanel save to the detail view if select popup and user in more than 1 group*/ 
                 /**
@@ -435,53 +437,52 @@ function smarty_function_sugar_button($params, &$smarty)
 
 
    	  } //switch
-      if(isset($params['appendTo'])) {
-          $smarty->append($params['appendTo'], $output);
-          return;
-      }
-      return $output;
-   } elseif(is_array($type) && isset($type['sugar_html'])) {
-       require_once('include/SugarHtml/SugarHtml.php');
+        if (isset($params['appendTo'])) {
+            $smarty->append($params['appendTo'], $output);
+            return;
+        }
+        return $output;
+    } elseif (is_array($type) && isset($type['sugar_html'])) {
+        require_once('include/SugarHtml/SugarHtml.php');
 
-       $dom_tree = SugarHtml::parseSugarHtml($type['sugar_html']);
-       replaceFormClick($dom_tree, $js_form);
-       $output = SugarHtml::createHtml($dom_tree);
+        $dom_tree = SugarHtml::parseSugarHtml($type['sugar_html']);
+        replaceFormClick($dom_tree, $js_form);
+        $output = SugarHtml::createHtml($dom_tree);
 
-       if(isset($params['appendTo'])) {
-           $smarty->append($params['appendTo'], $output);
-           return;
-       }
-       return $output;
-   } elseif(is_array($type) && isset($type['customCode'])) {
-       require_once('include/SugarHtml/SugarHtml.php');
+        if (isset($params['appendTo'])) {
+            $smarty->append($params['appendTo'], $output);
+            return;
+        }
+        return $output;
+    } elseif (is_array($type) && isset($type['customCode'])) {
+        require_once('include/SugarHtml/SugarHtml.php');
 
-       $dom_tree = SugarHtml::parseHtmlTag($type['customCode']);
-       $hidden_exists = false;
+        $dom_tree = SugarHtml::parseHtmlTag($type['customCode']);
+        $hidden_exists = false;
 
-       replaceFormClick($dom_tree, $js_form, $hidden_exists);
-       if($hidden_exists) {
-           //If the customCode contains hidden fields, the extracted hidden fields need to append in the original form
-           $form = $smarty->get_template_vars('form');
-           $hidden_fields = $dom_tree;
-           extractHiddenInputs($hidden_fields);
-           if(!isset($form)) {
-               $form = array();
-           }
-           if(!isset($form['hidden'])) {
-               $form['hidden'] = array();
-           }
-           $form['hidden'][] = SugarHtml::createHtml($hidden_fields);
-           $smarty->assign('form', $form);
-       }
-       $output = SugarHtml::createHtml($dom_tree);
+        replaceFormClick($dom_tree, $js_form, $hidden_exists);
+        if ($hidden_exists) {
+            //If the customCode contains hidden fields, the extracted hidden fields need to append in the original form
+            $form = $smarty->get_template_vars('form');
+            $hidden_fields = $dom_tree;
+            extractHiddenInputs($hidden_fields);
+            if (!isset($form)) {
+                $form = array();
+            }
+            if (!isset($form['hidden'])) {
+                $form['hidden'] = array();
+            }
+            $form['hidden'][] = SugarHtml::createHtml($hidden_fields);
+            $smarty->assign('form', $form);
+        }
+        $output = SugarHtml::createHtml($dom_tree);
 
-       if(isset($params['appendTo'])) {
-           $smarty->append($params['appendTo'], $output);
-           return;
-       }
-       return $output;
-   }
-
+        if (isset($params['appendTo'])) {
+            $smarty->append($params['appendTo'], $output);
+            return;
+        }
+        return $output;
+    }
 }
 /**
  * Bug#51862: Reproduce the JS onclick for upgraded instances
@@ -493,25 +494,28 @@ function smarty_function_sugar_button($params, &$smarty)
  *                 $set_submit - whether the replace operation is excuted or not
  *                 $is_hidden_field - where current attributes contains the key "hidden" or not
  */
-function replaceFormClick(&$dom_tree = array(), $js_form = '', &$hidden_field_exists = false) {
+function replaceFormClick(&$dom_tree = array(), $js_form = '', &$hidden_field_exists = false)
+{
     $set_submit = false;
     $is_hidden_field = false;
     //if the code is wrapped with the form element, it will escape the operation for JS replacement
-    if(isset($dom_tree['tag']) && $dom_tree['tag'] == 'form')
+    if (isset($dom_tree['tag']) && $dom_tree['tag'] == 'form') {
         return false;
+    }
 
-    if(isset($dom_tree['type']) && $dom_tree['type'] == 'hidden') {
+    if (isset($dom_tree['type']) && $dom_tree['type'] == 'hidden') {
         $is_hidden_field = true;
     }
 
     //Replace the JS syntax where the sugar_button contains the event handler for this.form
-    if(isset($dom_tree['onclick'])) {
-        if(strpos($dom_tree['onclick'], "this.form") !== false) {
+    if (isset($dom_tree['onclick'])) {
+        if (strpos($dom_tree['onclick'], "this.form") !== false) {
             $dom_tree['onclick'] = str_replace("this.form", "_form", $dom_tree['onclick']);
-            if(substr($dom_tree['onclick'], -1) != ';')
+            if (substr($dom_tree['onclick'], -1) != ';') {
                 $dom_tree['onclick'] .= ";";
+            }
             //Onclick handler contains returning a variable, for example it prompts a confirm message.
-            if(strpos($dom_tree['onclick'], "return ") !== false ) {
+            if (strpos($dom_tree['onclick'], "return ") !== false ) {
                 $dom_tree['onclick'] = $js_form.' var _onclick=(function(){ldelim}'.$dom_tree['onclick']."{rdelim}()); if(_onclick!==false) _form.submit();";
             } else {
                 $dom_tree['onclick'] = $js_form.$dom_tree['onclick']."_form.submit();";
@@ -520,19 +524,19 @@ function replaceFormClick(&$dom_tree = array(), $js_form = '', &$hidden_field_ex
             $set_submit = true;
         }
     }
-    foreach($dom_tree as $key => $sub_tree) {
-        if(is_array($sub_tree)) {
+    foreach ($dom_tree as $key => $sub_tree) {
+        if (is_array($sub_tree)) {
             list($_submit, $_hidden) = replaceFormClick($dom_tree[$key], $js_form, $hidden_field_exists);
             $set_submit = ($set_submit) ? $set_submit : $_submit;
             $is_hidden_field = ($is_hidden_field) ? $is_hidden_field : $_hidden;
         }
     }
 
-    if($set_submit && isset($dom_tree['type'])) {
+    if ($set_submit && isset($dom_tree['type'])) {
         $dom_tree['type'] = "button";
         $set_submit = false;
     }
-    if($is_hidden_field && isset($dom_tree['tag']) && $dom_tree['tag'] == 'input' ) {
+    if ($is_hidden_field && isset($dom_tree['tag']) && $dom_tree['tag'] == 'input' ) {
         $hidden_field_exists = true;
         $is_hidden_field = false;
     }
@@ -544,25 +548,26 @@ function replaceFormClick(&$dom_tree = array(), $js_form = '', &$hidden_field_ex
  * Bug#51862: Extract hidden field form the original dom structure
  * @param array $dom_tree - Cascade array form generated by SugarHtml::parseHtmlTag
  */
-function extractHiddenInputs(&$dom_tree = array()) {
+function extractHiddenInputs(&$dom_tree = array())
+{
     $allow_types = array(
         'hidden'
     );
     //all hidden fields in the form elements must NOT attach in the original form
-    if(isset($dom_tree['tag']) && $dom_tree['tag'] == 'form') {
+    if (isset($dom_tree['tag']) && $dom_tree['tag'] == 'form') {
         $dom_tree = array();
     }
-    foreach($dom_tree as $key => $sub_tree) {
-        if(is_numeric($key) && isset($sub_tree['tag']) && $sub_tree['tag'] == 'input') {
-            if( !isset($sub_tree['type']) || in_array($sub_tree['type'], $allow_types) === false ) {
+    foreach ($dom_tree as $key => $sub_tree) {
+        if (is_numeric($key) && isset($sub_tree['tag']) && $sub_tree['tag'] == 'input') {
+            if ( !isset($sub_tree['type']) || in_array($sub_tree['type'], $allow_types) === false ) {
                 unset($dom_tree[$key]);
             }
-        } elseif(is_array($sub_tree)) {
+        } elseif (is_array($sub_tree)) {
             extractHiddenInputs($dom_tree[$key]);
         }
     }
-    if(isset($dom_tree['tag']) && $dom_tree['tag'] == 'input') {
-        if( !isset($dom_tree['type']) || in_array($dom_tree['type'], $allow_types) === false ) {
+    if (isset($dom_tree['tag']) && $dom_tree['tag'] == 'input') {
+        if ( !isset($dom_tree['type']) || in_array($dom_tree['type'], $allow_types) === false ) {
             $dom_tree = array();
         }
     }

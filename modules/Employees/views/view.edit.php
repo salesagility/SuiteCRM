@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -43,27 +45,29 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class EmployeesViewEdit extends ViewEdit
 {
     var $useForSubpanel = true;
- 	function __construct(){
- 		parent::__construct();
- 	}
+    function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function EmployeesViewEdit(){
+    function EmployeesViewEdit()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
- 	function display() {
-       	if(is_admin($GLOBALS['current_user'])) {
+    function display()
+    {
+        if (is_admin($GLOBALS['current_user'])) {
             $json = getJSONobj();
             require_once('include/QuickSearchDefaults.php');
             $qsd = QuickSearchDefaults::getQuickSearchDefaults();
@@ -72,37 +76,38 @@ class EmployeesViewEdit extends ViewEdit
             $quicksearch_js = '<script type="text/javascript" language="javascript">sqs_objects = ' . $json->encode($sqs_objects) . '; enableQS();</script>';
 
             $this->ss->assign('REPORTS_TO_JS', $quicksearch_js);
-			$this->ss->assign('EDIT_REPORTS_TO', true);
+            $this->ss->assign('EDIT_REPORTS_TO', true);
         }
 
 
-       //retrieve employee bean if it is not already in focus
-         if(empty($this->bean->id)  && !empty($_REQUEST['record'])){
+        //retrieve employee bean if it is not already in focus
+        if (empty($this->bean->id)  && !empty($_REQUEST['record'])) {
             $this->bean->retrieve($_REQUEST['record']);
-         }
-         //populate values for non admin users
-        if(!empty($this->bean->id)) {
+        }
+        //populate values for non admin users
+        if (!empty($this->bean->id)) {
             global $app_list_strings;
-            if( !empty($this->bean->status) ) {
-                $this->ss->assign('STATUS_READONLY',$app_list_strings['user_status_dom'][$this->bean->status]); }
-            if( !empty($this->bean->employee_status) ) {
+            if ( !empty($this->bean->status) ) {
+                $this->ss->assign('STATUS_READONLY',$app_list_strings['user_status_dom'][$this->bean->status]);
+            }
+            if ( !empty($this->bean->employee_status) ) {
                 $this->ss->assign('EMPLOYEE_STATUS_READONLY', $app_list_strings['employee_status_dom'][$this->bean->employee_status]);
             }
-            if( !empty($this->bean->reports_to_id) ) {
+            if ( !empty($this->bean->reports_to_id) ) {
                 $reportsToUser = get_assigned_user_name($this->bean->reports_to_id);
                 $reportsToUserField = "<input type='text' name='reports_to_name' id='reports_to_name' value='{$reportsToUser}' disabled>\n";
                 $reportsToUserField .= "<input type='hidden' name='reports_to_id' id='reports_to_id' value='{$this->bean->reports_to_id}'>";
                 $this->ss->assign('REPORTS_TO_READONLY', $reportsToUserField);
             }
-            if( !empty($this->bean->title) ) {
+            if ( !empty($this->bean->title) ) {
                 $this->ss->assign('TITLE_READONLY', $this->bean->title);
             }
-            if( !empty($this->bean->department) ) {
+            if ( !empty($this->bean->department) ) {
                 $this->ss->assign('DEPT_READONLY', $this->bean->department);
             }
         }
 
- 		parent::display();
- 	}
+        parent::display();
+    }
 }
 

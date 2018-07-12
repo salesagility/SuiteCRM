@@ -59,8 +59,8 @@ class Zend_Search_Lucene_Index_DictionaryLoader
         $pos += 4;
         if ($tiVersion != (int)0xFFFFFFFE /* pre-2.1 format */ &&
             $tiVersion != (int)0xFFFFFFFD /* 2.1+ format    */) {
-                require_once 'Zend/Search/Lucene/Exception.php';
-                throw new Zend_Search_Lucene_Exception('Wrong TermInfoIndexFile file format');
+            require_once 'Zend/Search/Lucene/Exception.php';
+            throw new Zend_Search_Lucene_Exception('Wrong TermInfoIndexFile file format');
         }
 
         // $indexTermCount = $tiiFile->readLong();
@@ -79,9 +79,9 @@ class Zend_Search_Lucene_Index_DictionaryLoader
                 (ord($data[$pos+2])          != 0) ||
                 (ord($data[$pos+3])          != 0) ||
                 ((ord($data[$pos+4]) & 0x80) != 0)) {
-                    require_once 'Zend/Search/Lucene/Exception.php';
-                    throw new Zend_Search_Lucene_Exception('Largest supported segment size (for 32-bit mode) is 2Gb');
-                 }
+                require_once 'Zend/Search/Lucene/Exception.php';
+                throw new Zend_Search_Lucene_Exception('Largest supported segment size (for 32-bit mode) is 2Gb');
+            }
 
             $indexTermCount = ord($data[$pos+4]) << 24  |
                               ord($data[$pos+5]) << 16  |
@@ -161,7 +161,8 @@ class Zend_Search_Lucene_Index_DictionaryLoader
             }
 
             // $termValue        = Zend_Search_Lucene_Index_Term::getPrefix($prevTerm, $termPrefixLength) . $termSuffix;
-            $pb = 0; $pc = 0;
+            $pb = 0;
+            $pc = 0;
             while ($pb < strlen($prevTerm)  &&  $pc < $termPrefixLength) {
                 $charBytes = 1;
                 if ((ord($prevTerm[$pb]) & 0xC0) == 0xC0) {
@@ -218,7 +219,7 @@ class Zend_Search_Lucene_Index_DictionaryLoader
             }
             $proxPointer += $vint;
 
-            if( $docFreq >= $skipInterval ) {
+            if ( $docFreq >= $skipInterval ) {
                 // $skipDelta = $tiiFile->readVInt();
                 $nbyte = ord($data[$pos++]);
                 $vint = $nbyte & 0x7F;

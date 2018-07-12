@@ -42,8 +42,6 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, count($jjwgAreas->settings));
         
         // clean up
-        
-        
     }
 
     public function testretrieve()

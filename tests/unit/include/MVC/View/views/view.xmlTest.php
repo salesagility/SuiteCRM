@@ -39,7 +39,5 @@ class ViewXMLTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 }

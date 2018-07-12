@@ -77,12 +77,12 @@ class AOR_Condition extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Condition(){
+    function AOR_Condition()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -91,15 +91,13 @@ class AOR_Condition extends Basic
 
     function save_lines($post_data, $parent, $key = '')
     {
-
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         $j = 0;
-        if(!isset($post_data[$key . 'field']) || !is_array($post_data[$key . 'field'])){
+        if (!isset($post_data[$key . 'field']) || !is_array($post_data[$key . 'field'])) {
             return;
         }
         foreach ($post_data[$key . 'field'] as $i => $field) {
-
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -108,7 +106,6 @@ class AOR_Condition extends Basic
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
                         if (is_array($post_data[$key . $field_name][$i])) {
-
                             switch ($condition->value_type) {
                                 case 'Date':
                                     $post_data[$key . $field_name][$i] = base64_encode(serialize($post_data[$key . $field_name][$i]));
@@ -134,7 +131,6 @@ class AOR_Condition extends Basic
                     } elseif ($field_name == 'parameter') {
                         $condition->$field_name = 0;
                     }
-
                 }
                 // Period must be saved as a string instead of a base64 encoded datetime.
                 // Overwriting value
@@ -156,5 +152,4 @@ class AOR_Condition extends Basic
             }
         }
     }
-
 }

@@ -32,12 +32,12 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_recently_viewed()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $tracker = new Tracker();
 
@@ -49,7 +49,6 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-
     }
 
     public function testmakeInvisibleForAll()
@@ -71,8 +70,6 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testbean_implements()
@@ -108,6 +105,5 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-        
     }
 }

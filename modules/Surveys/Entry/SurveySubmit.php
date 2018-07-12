@@ -35,7 +35,6 @@ EOF;
     }
 
     return false;
-
 }
 
 function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
@@ -148,8 +147,7 @@ function processSurvey(Surveys $survey, $trackerId, $contactId, $request)
 
 function do404()
 {
-    header("HTTP/1.0 404 Not Found");
-    ?>
+    header("HTTP/1.0 404 Not Found"); ?>
     <html>
     <head></head>
     <body><h1>Page not found</h1></body>

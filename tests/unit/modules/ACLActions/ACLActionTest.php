@@ -3,7 +3,6 @@
 
 class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    
     public function setUp()
     {
         parent::setUp();
@@ -13,7 +12,8 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
     
-    public function tearDown() {
+    public function tearDown()
+    {
         parent::tearDown();
     }
 
@@ -25,7 +25,7 @@ class ACLActionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('acl_actions');
         $state->pushGlobals();
         
-$_POST['foo'] = 'bar123ase';
+        $_POST['foo'] = 'bar123ase';
         //execute the contructor and check for the Object type and type attribute
         $aclAction = new ACLAction();
         $this->assertInstanceOf('ACLAction', $aclAction);
@@ -86,8 +86,6 @@ $_POST['foo'] = 'bar123ase';
         $this->assertEquals('All', ACLAction::AccessName(90)); //test with a valid value
         
         // clean up
-        
-        
     }
 
     public function testgetDefaultActions()
@@ -114,9 +112,6 @@ $_POST['foo'] = 'bar123ase';
 
         self::markTestIncomplete('Need to implement: verify that all three results retunred are different.');
         //verify that all three results retunred are different
-        
-        
-        
     }
 
     public function testhasAccess()

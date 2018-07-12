@@ -44,8 +44,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, strlen($actual));
         
         // clean up
-        
-        
     }
 
     public function testget_summary_text()
@@ -69,7 +67,7 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         
         $emailTemplate = new EmailTemplate();
@@ -109,8 +107,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -151,8 +147,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testget_list_view_data()

@@ -1,6 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry)
-	die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,12 +49,12 @@ if (!defined('sugarEntry') || !sugarEntry)
 			$values= array_values($temp_bean_list);
 			$output= array_keys($temp_bean_list);  
 			$output_local = array();
-			if($current_language != 'en_us') {
-				foreach($output as $temp_out) {
-					$output_local[] = translate($temp_out);
-				}
+			if ($current_language != 'en_us') {
+			    foreach ($output as $temp_out) {
+			        $output_local[] = translate($temp_out);
+			    }
 			} else {
-				$output_local = $output;
+			    $output_local = $output;
 			}
 			//sort($output);
 			//sort($values);

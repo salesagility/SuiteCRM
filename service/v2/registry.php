@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if (!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,167 +47,170 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  */
 class registry
 {
+    protected $serviceClass = null;
 	
-	protected $serviceClass = null;
-	
-	/**
-	 * Constructor.
-	 *
-	 * @param Class - $serviceClass
-	 */
-	public function __construct($serviceClass) {
-		$this->serviceClass = $serviceClass;
-	} // fn
+    /**
+     * Constructor.
+     *
+     * @param Class - $serviceClass
+     */
+    public function __construct($serviceClass)
+    {
+        $this->serviceClass = $serviceClass;
+    } // fn
 			
-	/**
-	 * It registers all the functions and types by doign a call back method on service object
-	 *
-	 */
-	public function register() {
-		$this->registerFunction();
-		$this->registerTypes();
-	}
+    /**
+     * It registers all the functions and types by doign a call back method on service object
+     *
+     */
+    public function register()
+    {
+        $this->registerFunction();
+        $this->registerTypes();
+    }
 	
-	/**
-	 * This mehtod registers all the functions on the service class
-	 *
-	 */
-	protected function registerFunction() {
-		// START OF REGISTER FUNCTIONS
+    /**
+     * This mehtod registers all the functions on the service class
+     *
+     */
+    protected function registerFunction()
+    {
+        // START OF REGISTER FUNCTIONS
 		
-		$GLOBALS['log']->info('Begin: registry->registerFunction');
+        $GLOBALS['log']->info('Begin: registry->registerFunction');
 		
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		  	'login',
 		     array('user_auth'=>'tns:user_auth', 'application_name'=>'xsd:string', 'name_value_list'=>'tns:name_value_list'),
 		     array('return'=>'tns:entry_value')
 		     );
 		     
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 			'logout',
 			 array('session'=>'xsd:string'),
 			 array());
 			 
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_entry',
 		    array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'id'=>'xsd:string', 'select_fields'=>'tns:select_fields','link_name_to_fields_array'=>'tns:link_names_to_fields_array'),
 		    array('return'=>'tns:get_entry_result_version2'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_entries',
 		    array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'ids'=>'tns:select_fields', 'select_fields'=>'tns:select_fields', 'link_name_to_fields_array'=>'tns:link_names_to_fields_array'),
 		    array('return'=>'tns:get_entry_result_version2'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_entry_list',
 		    array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'query'=>'xsd:string', 'order_by'=>'xsd:string','offset'=>'xsd:int', 'select_fields'=>'tns:select_fields', 'link_name_to_fields_array'=>'tns:link_names_to_fields_array', 'max_results'=>'xsd:int', 'deleted'=>'xsd:int'),
 		    array('return'=>'tns:get_entry_list_result_version2'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'set_relationship',
 		    array('session'=>'xsd:string','module_name'=>'xsd:string','module_id'=>'xsd:string','link_field_name'=>'xsd:string', 'related_ids'=>'tns:select_fields', 'name_value_list'=>'tns:name_value_list', 'delete'=>'xsd:int'),
 		    array('return'=>'tns:new_set_relationship_list_result'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'set_relationships',
 		    array('session'=>'xsd:string','module_names'=>'tns:select_fields','module_ids'=>'tns:select_fields','link_field_names'=>'tns:select_fields','related_ids'=>'tns:new_set_relationhip_ids', 'name_value_lists'=>'tns:name_value_lists', 'delete_array' => 'tns:deleted_array'),
 		    array('return'=>'tns:new_set_relationship_list_result'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_relationships',
 		    array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'module_id'=>'xsd:string', 'link_field_name'=>'xsd:string', 'related_module_query'=>'xsd:string', 'related_fields'=>'tns:select_fields', 'related_module_link_name_to_fields_array'=>'tns:link_names_to_fields_array', 'deleted'=>'xsd:int'),
 		    array('return'=>'tns:get_entry_result_version2'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'set_entry',
 		    array('session'=>'xsd:string', 'module_name'=>'xsd:string',  'name_value_list'=>'tns:name_value_list'),
 		    array('return'=>'tns:new_set_entry_result'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'set_entries',
 		    array('session'=>'xsd:string', 'module_name'=>'xsd:string',  'name_value_lists'=>'tns:name_value_lists'),
 		    array('return'=>'tns:new_set_entries_result'));
 		    		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_server_info',
 		    array(),
 		    array('return'=>'tns:get_server_info_result'));
 
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_user_id',
 		    array('session'=>'xsd:string'),
 		    array('return'=>'xsd:string'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_module_fields',
 		    array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'fields'=>'tns:select_fields'),
 		    array('return'=>'tns:new_module_fields'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'seamless_login',
 		    array('session'=>'xsd:string'),
 		    array('return'=>'xsd:int'));
 		    
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'set_note_attachment',
 	        array('session'=>'xsd:string','note'=>'tns:new_note_attachment'),
 	        array('return'=>'tns:new_set_entry_result'));
 
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_note_attachment',
 		    array('session'=>'xsd:string', 'id'=>'xsd:string'),
 		    array('return'=>'tns:new_return_note_attachment'));
 	        
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'set_document_revision',
 	        array('session'=>'xsd:string','note'=>'tns:document_revision'),
 	        array('return'=>'tns:new_set_entry_result'));
 
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_document_revision',
 	        array('session'=>'xsd:string','i'=>'xsd:string'),
 	        array('return'=>'tns:new_return_document_revision'));
 
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'search_by_module',
 	        array('session'=>'xsd:string','search_string'=>'xsd:string', 'modules'=>'tns:select_fields', 'offset'=>'xsd:int', 'max_results'=>'xsd:int'),
 	        array('return'=>'tns:return_search_result'));
 
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_available_modules',
 	        array('session'=>'xsd:string'),
 	        array('return'=>'tns:module_list'));
 
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_user_team_id',
 	        array('session'=>'xsd:string'),
 	        array('return'=>'xsd:string'));
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'set_campaign_merge',
 	        array('session'=>'xsd:string', 'targets'=>'tns:select_fields', 'campaign_id'=>'xsd:string'),
 	        array());
-		$this->serviceClass->registerFunction(
+        $this->serviceClass->registerFunction(
 		    'get_entries_count',
 	        array('session'=>'xsd:string', 'module_name'=>'xsd:string', 'query'=>'xsd:string', 'deleted' => 'xsd:int'),
 	        array('return'=>'tns:get_entries_count_result'));
 
     		
-	    $GLOBALS['log']->info('END: registry->registerFunction');
+        $GLOBALS['log']->info('END: registry->registerFunction');
 	        
-		// END OF REGISTER FUNCTIONS
-	} // fn	
+        // END OF REGISTER FUNCTIONS
+    } // fn	
 
 	/**
 	 * This method registers all the complex types
 	 *
 	 */
-	protected function registerTypes() {
+    protected function registerTypes()
+    {
 		
 		// START OF REGISTER COMPLEX TYPES
 		
-		$GLOBALS['log']->info('Begin: registry->registerTypes');
+        $GLOBALS['log']->info('Begin: registry->registerTypes');
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'new_note_attachment',
 		    'complexType',
 		    'struct',
@@ -220,7 +225,7 @@ class registry
 		    )
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'new_return_note_attachment',
 		    'complexType',
 		    'struct',
@@ -231,7 +236,7 @@ class registry
 		    )
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'user_auth',
 		   	 'complexType',
 		   	 'struct',
@@ -243,7 +248,7 @@ class registry
 			)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'field',
 			'complexType',
 		   	 'struct',
@@ -259,7 +264,7 @@ class registry
 				)
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'field_list',
 			'complexType',
 		   	 'array',
@@ -272,7 +277,7 @@ class registry
 			'tns:field'
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_field',
 			'complexType',
 		   	 'struct',
@@ -287,7 +292,7 @@ class registry
 				)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_field_list',
 			'complexType',
 		   	 'array',
@@ -300,7 +305,7 @@ class registry
 			'tns:link_field'
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'name_value',
 			'complexType',
 		   	 'struct',
@@ -312,7 +317,7 @@ class registry
 				)
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'name_value_list',
 			'complexType',
 		   	 'array',
@@ -325,7 +330,7 @@ class registry
 			'tns:name_value'
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'name_value_lists',
 			'complexType',
 		   	 'array',
@@ -338,7 +343,7 @@ class registry
 			'tns:name_value_list'
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'select_fields',
 			'complexType',
 		   	 'array',
@@ -351,7 +356,7 @@ class registry
 			'xsd:string'
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'deleted_array',
 			'complexType',
 		   	 'array',
@@ -364,7 +369,7 @@ class registry
 			'xsd:string'
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'new_module_fields',
 			'complexType',
 		   	 'struct',
@@ -377,7 +382,7 @@ class registry
 				)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'entry_value',
 			'complexType',
 		   	 'struct',
@@ -390,7 +395,7 @@ class registry
 				)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'entry_list',
 			'complexType',
 		   	 'array',
@@ -403,7 +408,7 @@ class registry
 			'tns:entry_value'
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'set_entries_detail_result',
 		   	 'complexType',
 		   	 'struct',
@@ -413,7 +418,7 @@ class registry
 				'name_value_lists' => array('name'=>'name_value_lists', 'type'=>'tns:name_value_lists'),
 			)
 		);			
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_names_to_fields_array',
 			'complexType',
 		   	 'array',
@@ -426,7 +431,7 @@ class registry
 			'tns:link_name_to_fields_array'
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_name_to_fields_array',
 			'complexType',
 		   	 'struct',
@@ -438,7 +443,7 @@ class registry
 				)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_value',
 			'complexType',
 		   	 'array',
@@ -451,7 +456,7 @@ class registry
 			'tns:name_value'
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_array_list',
 			'complexType',
 		   	 'array',
@@ -464,7 +469,7 @@ class registry
 			'tns:link_value'
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_name_value',
 			'complexType',
 		   	 'struct',
@@ -476,7 +481,7 @@ class registry
 				)
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_list',
 			'complexType',
 		   	 'array',
@@ -489,7 +494,7 @@ class registry
 			'tns:link_name_value'
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'link_lists',
 			'complexType',
 		   	 'array',
@@ -502,7 +507,7 @@ class registry
 			'tns:link_list'
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'get_entry_result_version2',
 		   	 'complexType',
 		   	 'struct',
@@ -514,7 +519,7 @@ class registry
 			)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'return_search_result',
 		   	 'complexType',
 		   	 'struct',
@@ -525,7 +530,7 @@ class registry
 			)
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'get_entry_list_result_version2',
 		   	 'complexType',
 		   	 'struct',
@@ -539,7 +544,7 @@ class registry
 			)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'get_server_info_result',
 		   	 'complexType',
 		   	 'struct',
@@ -552,7 +557,7 @@ class registry
 			)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'new_set_entry_result',
 		   	 'complexType',
 		   	 'struct',
@@ -563,7 +568,7 @@ class registry
 			)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'new_set_entries_result',
 		   	 'complexType',
 		   	 'struct',
@@ -574,7 +579,7 @@ class registry
 			)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'new_set_relationhip_ids',
 			'complexType',
 		   	 'array',
@@ -587,7 +592,7 @@ class registry
 			'tns:select_fields'
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'new_set_relationship_list_result',
 		   	 'complexType',
 		   	 'struct',
@@ -600,7 +605,7 @@ class registry
 			)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'document_revision',
 		    'complexType',
 		    'struct',
@@ -615,7 +620,7 @@ class registry
 		    )
 		);
 
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'new_return_document_revision',
 		    'complexType',
 		    'struct',
@@ -627,7 +632,7 @@ class registry
 		);
 
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		    'module_list',
 			'complexType',
 		   	 'struct',
@@ -638,7 +643,7 @@ class registry
 				)
 		);
 		
-		$this->serviceClass->registerType(
+        $this->serviceClass->registerType(
 		   	 'get_entries_count_result',
 		   	 'complexType',
 		   	 'struct',
@@ -650,8 +655,8 @@ class registry
 		);
 				
 		
-		$GLOBALS['log']->info('End: registry->registerTypes');
+        $GLOBALS['log']->info('End: registry->registerTypes');
 
-		// END OF REGISTER COMPLEX TYPES
-	} // fn
+        // END OF REGISTER COMPLEX TYPES
+    } // fn
 } // clazz

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,36 +53,36 @@ $json = getJSONobj();
 
 //Clean modules from cache
 $cachedir = sugar_cached("modules");
-if(is_dir($cachedir)){
-	$allModFiles = array();
-	$allModFiles = findAllFiles($cachedir,$allModFiles);
-   foreach($allModFiles as $file){
-       	if(file_exists($file)){
-			unlink($file);
-       	}
-   }
+if (is_dir($cachedir)) {
+    $allModFiles = array();
+    $allModFiles = findAllFiles($cachedir,$allModFiles);
+    foreach ($allModFiles as $file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
 }
 //Clean jsLanguage from cache
 $cachedir = sugar_cached("jsLanguage");
-if(is_dir($cachedir)){
-	$allModFiles = array();
-	$allModFiles = findAllFiles($cachedir,$allModFiles);
-   foreach($allModFiles as $file){
-	   	if(file_exists($file)){
-			unlink($file);
-	   	}
-	}
+if (is_dir($cachedir)) {
+    $allModFiles = array();
+    $allModFiles = findAllFiles($cachedir,$allModFiles);
+    foreach ($allModFiles as $file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
 }
 //Clean smarty from cache
 $cachedir = sugar_cached("smarty");
-if(is_dir($cachedir)){
-	$allModFiles = array();
-	$allModFiles = findAllFiles($cachedir,$allModFiles);
-   foreach($allModFiles as $file){
-       	if(file_exists($file)){
-			unlink($file);
-       	}
-   }
+if (is_dir($cachedir)) {
+    $allModFiles = array();
+    $allModFiles = findAllFiles($cachedir,$allModFiles);
+    foreach ($allModFiles as $file) {
+        if (file_exists($file)) {
+            unlink($file);
+        }
+    }
 }
 
 $response = '';

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -85,7 +87,7 @@ $opp_query1  = "select camp.name, camp.actual_cost,camp.budget,camp.expected_rev
 			$query_click.= " WHERE campaign_id = '$campaign_id' AND activity_type='link' AND related_type='CampaignTrackers' AND archived=0 AND deleted=0";
 
             //if $marketing id is specified, then lets filter the chart by the value
-            if (!empty($marketing_id)){
+            if (!empty($marketing_id)) {
                 $query_click.= " AND marketing_id ='$marketing_id'";
             }
 
@@ -103,23 +105,20 @@ $opp_query1  = "select camp.name, camp.actual_cost,camp.budget,camp.expected_rev
 
 
 	$currency  = new Currency();
-if(isset($focus->currency_id) && !empty($focus->currency_id))
-{
-	$currency->retrieve($focus->currency_id);
-	if( $currency->deleted != 1){
-		$xtpl->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol );
-	}else $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
-}else{
-
-	$xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
-
+if (isset($focus->currency_id) && !empty($focus->currency_id)) {
+    $currency->retrieve($focus->currency_id);
+    if ( $currency->deleted != 1) {
+        $xtpl->assign("CURRENCY", $currency->iso4217 .' '.$currency->symbol );
+    } else {
+        $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
+    }
+} else {
+    $xtpl->assign("CURRENCY", $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol() );
 }
 
 global $current_user;
-if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])){
-
-	$xtpl->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
-
+if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
+    $xtpl->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
 }
 
 //$detailView->processListNavigation($xtpl, "CAMPAIGN", $offset, $focus->is_AuditEnabled());
@@ -182,12 +181,13 @@ $chart= new campaign_charts();
     //if marketing id has been selected, then set "latest_marketing_id" to the selected value
     //latest marketing id will be passed in to filter the charts and subpanels
 
-    if(!empty($selected_marketing_id)){$latest_marketing_id = $selected_marketing_id;}
-    if(empty($latest_marketing_id) ||  $latest_marketing_id === 'all'){
+    if (!empty($selected_marketing_id)) {
+        $latest_marketing_id = $selected_marketing_id;
+    }
+    if (empty($latest_marketing_id) ||  $latest_marketing_id === 'all') {
         $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") . $cache_file_name_roi,true));
-    }else{
-
-    $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") .$cache_file_name_roi,true));
+    } else {
+        $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") .$cache_file_name_roi,true));
     }
 
 //$output_html .= ob_get_contents();

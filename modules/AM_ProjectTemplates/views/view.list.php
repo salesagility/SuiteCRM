@@ -56,15 +56,14 @@ require_once('modules/AM_ProjectTemplates/AM_ProjectTemplatesListViewSmarty.php'
 
 class AM_ProjectTemplatesViewList extends ViewList
 {
-
- 	function __construct()
- 	{
- 		parent::__construct();
- 	}
+    function __construct()
+    {
+        parent::__construct();
+    }
  	
- 	/*
- 	 * Override listViewProcess with addition to where clause to exclude project templates
- 	 */
+    /*
+     * Override listViewProcess with addition to where clause to exclude project templates
+     */
     function listViewProcess()
     {
         $this->processSearchForm();
@@ -72,11 +71,11 @@ class AM_ProjectTemplatesViewList extends ViewList
         
         $this->lv->searchColumns = $this->searchForm->searchColumns;
         
-        if(!$this->headers)
+        if (!$this->headers) {
             return;
+        }
             
-        if(empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false)
-        {
+        if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
             $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
             $this->lv->setup($this->seed, 'modules/AM_ProjectTemplates/tpls/ListViewGeneric.tpl', $this->where, $this->params);
             $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
@@ -84,8 +83,8 @@ class AM_ProjectTemplatesViewList extends ViewList
         }
     }
 
-    function preDisplay(){
+    function preDisplay()
+    {
         $this->lv = new AM_ProjectTemplatesListViewSmarty();
     }
-
 }

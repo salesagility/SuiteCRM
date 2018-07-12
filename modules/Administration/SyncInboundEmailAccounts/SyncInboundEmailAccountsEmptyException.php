@@ -43,4 +43,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class SyncInboundEmailAccountsEmptyException extends Exception
-{}
+{
+}

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,22 +48,21 @@ require_once('modules/Studio/wizards/StudioWizard.php');
 
 $wizard = !empty($_REQUEST['wizard'])? $_REQUEST['wizard']: 'StudioWizard';
 
-if(file_exists('modules/Studio/wizards/'. $wizard . '.php')){
-	require_once('modules/Studio/wizards/'. $wizard . '.php');
-	$thewiz = new $wizard();
-}else{
-	unset($_SESSION['studio']['lastWizard']);
-	$thewiz = new StudioWizard();
+if (file_exists('modules/Studio/wizards/'. $wizard . '.php')) {
+    require_once('modules/Studio/wizards/'. $wizard . '.php');
+    $thewiz = new $wizard();
+} else {
+    unset($_SESSION['studio']['lastWizard']);
+    $thewiz = new StudioWizard();
 }
 
-if(!empty($_REQUEST['back'])){
+if (!empty($_REQUEST['back'])) {
     $thewiz->back();
 }
-if(!empty($_REQUEST['option'])){
-	$thewiz->process($_REQUEST['option']);
-}else{
-	$thewiz->display();
-	
+if (!empty($_REQUEST['option'])) {
+    $thewiz->process($_REQUEST['option']);
+} else {
+    $thewiz->display();
 }
 
 

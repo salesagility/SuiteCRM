@@ -77,12 +77,12 @@ class AOW_Condition extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOW_Condition(){
+    function AOW_Condition()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
@@ -96,7 +96,6 @@ class AOW_Condition extends Basic
 
     function save_lines($post_data, $parent, $key = '')
     {
-
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
         if (!isset($post_data[$key . 'field'])) {
@@ -109,7 +108,6 @@ class AOW_Condition extends Basic
         $line_count = count((array)$postDataAtKeyField);
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
-
             if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
@@ -134,7 +132,6 @@ class AOW_Condition extends Basic
                         }
                         $condition->$field_name = $post_data[$key . $field_name][$i];
                     }
-
                 }
                 if (trim($condition->field) != '') {
                     $condition->condition_order = ++$j;
@@ -144,6 +141,4 @@ class AOW_Condition extends Basic
             }
         }
     }
-
-
 }

@@ -31,7 +31,6 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-        
         self::markTestIncomplete('environment dependency');
         
         $state = new SuiteCRM\StateSaver();

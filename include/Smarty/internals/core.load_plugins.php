@@ -15,7 +15,6 @@
 
 function smarty_core_load_plugins($params, &$smarty)
 {
-
     foreach ($params['plugins'] as $_plugin_info) {
         list($_type, $_name, $_tpl_file, $_tpl_line, $_delayed_loading) = $_plugin_info;
         $_plugin = &$smarty->_plugins[$_type][$_name];
@@ -38,7 +37,9 @@ function smarty_core_load_plugins($params, &$smarty)
                     $_plugin[1] = $_tpl_file;
                     $_plugin[2] = $_tpl_line;
                     $_plugin[3] = true;
-                    if (!isset($_plugin[4])) $_plugin[4] = true; /* cacheable */
+                    if (!isset($_plugin[4])) {
+                        $_plugin[4] = true;
+                    } /* cacheable */
                 }
             }
             continue;

@@ -13,8 +13,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpreDisplay()
     {
-        
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
 
@@ -39,7 +38,7 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        if(isset($_request)) {
+        if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);
@@ -48,12 +47,11 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $_session = $_SESSION;
         }
         
-        if(isset($_REQUEST)) {
+        if (isset($_REQUEST)) {
             $_request = $_REQUEST;
         }
         
@@ -84,13 +82,13 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        if(isset($_session)) {
+        if (isset($_session)) {
             $_SESSION = $_session;
         } else {
             unset($_SESSION);
         }
         
-        if(isset($_request)) {
+        if (isset($_request)) {
             $_REQUEST = $_request;
         } else {
             unset($_REQUEST);

@@ -11,7 +11,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $current_user = new User();
     }
     
-        public function testcreate_export_query()
+    public function testcreate_export_query()
     {
         $projectTask = new ProjectTask();
 
@@ -68,13 +68,11 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(false, '_skipParentUpdate', $projectTask);
         
         // clean up
-        
-        
     }
 
     public function testsave()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
@@ -83,7 +81,7 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $projectTask = new ProjectTask();
 
@@ -146,8 +144,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetProjectTaskParent()
@@ -189,7 +185,6 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
-        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -310,12 +305,12 @@ class ProjectTaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlistviewACLHelper()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         $projectTask = new ProjectTask();
 

@@ -52,29 +52,31 @@ require_once("include/JSON.php");
 
 class ContactsViewRetrieveEmail extends SugarView
 {
+    function __construct()
+    {
+        parent::__construct();
+    }
 
- 	function __construct(){
- 		parent::__construct();
- 	}
+    function process()
+    {
+        $this->display();
+    }
 
- 	function process() {
-		$this->display();
- 	}
-
- 	function display(){
-	    $data = array();
-	    $data['target'] = $_REQUEST['target'];
-        if(!empty($_REQUEST['email'])) {
-	        $db = DBManagerFactory::getInstance();
-	        $email = DBManagerFactory::getInstance()->quote(strtoupper(trim($_REQUEST['email'])));
-	        $result = $db->query("SELECT * FROM email_addresses WHERE email_address_caps = '$email' AND deleted = 0");
-			if($row = $db->fetchByAssoc($result)) {
-		        $data['email'] = $row;
-			} else {
-				$data['email'] = '';
-			}
+    function display()
+    {
+        $data = array();
+        $data['target'] = $_REQUEST['target'];
+        if (!empty($_REQUEST['email'])) {
+            $db = DBManagerFactory::getInstance();
+            $email = DBManagerFactory::getInstance()->quote(strtoupper(trim($_REQUEST['email'])));
+            $result = $db->query("SELECT * FROM email_addresses WHERE email_address_caps = '$email' AND deleted = 0");
+            if ($row = $db->fetchByAssoc($result)) {
+                $data['email'] = $row;
+            } else {
+                $data['email'] = '';
+            }
         }
-		$json = new JSON();
-		echo $json->encode($data);
- 	}
+        $json = new JSON();
+        echo $json->encode($data);
+    }
 }

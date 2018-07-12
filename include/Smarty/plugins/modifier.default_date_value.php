@@ -150,7 +150,9 @@ include/Smarty/plugins/modifier.default_date_value.php
 */
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -206,9 +208,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @param defaultValue The date field's default value setting
  * @return String representing date value
  */
-function smarty_modifier_default_date_value($defaultValue) {
-	global $timedate;
-	require_once('modules/DynamicFields/templates/Fields/TemplateDate.php');
-	$td = new TemplateDate();
-	return $timedate->asUser(new SugarDateTime($td->dateStrings[$defaultValue]));
+function smarty_modifier_default_date_value($defaultValue)
+{
+    global $timedate;
+    require_once('modules/DynamicFields/templates/Fields/TemplateDate.php');
+    $td = new TemplateDate();
+    return $timedate->asUser(new SugarDateTime($td->dateStrings[$defaultValue]));
 }

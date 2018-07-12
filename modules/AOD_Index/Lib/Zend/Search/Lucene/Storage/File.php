@@ -252,7 +252,6 @@ abstract class Zend_Search_Lucene_Storage_File
                 require_once 'Zend/Search/Lucene/Exception.php';
                 throw new Zend_Search_Lucene_Exception('Long integers lower than -2147483648 (0x80000000) are not supported on 32-bit platforms.');
             }
-
         }
 
         if ($wordLow < 0) {

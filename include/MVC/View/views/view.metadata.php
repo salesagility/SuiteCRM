@@ -43,68 +43,72 @@ require_once('include/DetailView/DetailView2.php');
 
 class ViewMetadata extends SugarView
 {
-	var $type ='detail';
-	var $dv;
+    var $type ='detail';
+    var $dv;
 	
 	
  	
- 	function displayCheckBoxes($name,$values, $selected =array(), $attr=''){
- 		echo "<div $attr style='overflow:auto;float:left;width:200px;height:200px' >";
-		foreach($values as $value){
-		 	$checked = in_array($value, $selected)? " checked=checked ": " ";
-			echo "<div style='padding:2px'><input type='checkbox' name='$name' value='$value' $checked> $value</div>";
-		}
-		echo "</div>";
- 	}
+    function displayCheckBoxes($name,$values, $selected =array(), $attr='')
+    {
+        echo "<div $attr style='overflow:auto;float:left;width:200px;height:200px' >";
+        foreach ($values as $value) {
+            $checked = in_array($value, $selected)? " checked=checked ": " ";
+            echo "<div style='padding:2px'><input type='checkbox' name='$name' value='$value' $checked> $value</div>";
+        }
+        echo "</div>";
+    }
  	
- 	function displaySelect($name,$values, $selected ='', $attr=''){
- 		echo "<select name='$name' $attr>";
-		foreach($values as $value){
-		 	$checked = $value == $selected? " selected=selected ": " ";
-			echo "<option value='$value' $checked> $value</option>";
-		}
-		echo "</select>";
- 	}
- 	
- 	
- 	
- 	 function displayTextBoxes($values, $attr=''){
- 		echo "<div $attr style='overflow:auto;float:left;width:400px;height:200px' >";
-		foreach($values as $value){
-			$postvalue = !empty($_POST[$value])? $_POST[$value]: '';
-			echo "<div style='padding:2px;width:150px;float:left'>$value</div>  <input type='text' name='$value' value='$postvalue'> ";
-		}
-		echo "</div>";
- 	}
+    function displaySelect($name,$values, $selected ='', $attr='')
+    {
+        echo "<select name='$name' $attr>";
+        foreach ($values as $value) {
+            $checked = $value == $selected? " selected=selected ": " ";
+            echo "<option value='$value' $checked> $value</option>";
+        }
+        echo "</select>";
+    }
  	
  	
  	
- 	function printValue($value, $depth=0){
- 		echo "<pre>";
- 		print_r($value);
- 		echo "</pre>";
+    function displayTextBoxes($values, $attr='')
+    {
+        echo "<div $attr style='overflow:auto;float:left;width:400px;height:200px' >";
+        foreach ($values as $value) {
+            $postvalue = !empty($_POST[$value])? $_POST[$value]: '';
+            echo "<div style='padding:2px;width:150px;float:left'>$value</div>  <input type='text' name='$value' value='$postvalue'> ";
+        }
+        echo "</div>";
+    }
+ 	
+ 	
+ 	
+    function printValue($value, $depth=0)
+    {
+        echo "<pre>";
+        print_r($value);
+        echo "</pre>";
+    }
+ 	
+    function display()
+    {
+        $do = !empty($_REQUEST['do'])?$_REQUEST['do']:'';
+        echo "<form method='post'>";
+        echo "<div><h2>I want to learn about ";
  		
- 	}
- 	
- 	function display(){
- 		$do = !empty($_REQUEST['do'])?$_REQUEST['do']:'';
- 		echo "<form method='post'>";
- 		echo "<div><h2>I want to learn about ";
- 		
- 		$this->displaySelect('do', array('Nothing', 'Modules','Fields', 'Field Attributes', 'Relationships'), $do, 'onchange="toggleLearn(this.value)"');
- 		echo "<input type='submit' value='Learn' class='button'></h2></div>";
-		$modules = !empty($_REQUEST['modules'])?$_REQUEST['modules']:array();
-		if(empty($modules) && !empty($_REQUEST['module']) && $_REQUEST['module'] != 'Home'){
-			$modules = array(	$_REQUEST['module']);
-		}
- 		$this->displayCheckBoxes('modules[]', VardefBrowser::getModules(), $modules, ' id="_modules" ');
- 		$attributes = !empty($_REQUEST['attributes'])?$_REQUEST['attributes']:array();
- 		$allAttributes = array_keys(VardefBrowser::findFieldAttributes());
- 		sort($allAttributes);
- 		$this->displayCheckBoxes('attributes[]', $allAttributes, $attributes, ' id="_attributes" ');
- 		$this->displayTextBoxes($allAttributes, ' id="_fields" ');
- 		echo "</form>";
- 		 		echo <<<EOQ
+        $this->displaySelect('do', array('Nothing', 'Modules','Fields', 'Field Attributes', 'Relationships'), $do, 'onchange="toggleLearn(this.value)"');
+        echo "<input type='submit' value='Learn' class='button'></h2></div>";
+        $modules = !empty($_REQUEST['modules'])?$_REQUEST['modules']:array();
+        if (empty($modules) && !empty($_REQUEST['module']) && $_REQUEST['module'] != 'Home') {
+            $modules = array(	$_REQUEST['module']);
+        }
+        $this->displayCheckBoxes('modules[]', VardefBrowser::getModules(), $modules, ' id="_modules" ');
+        $attributes = !empty($_REQUEST['attributes'])?$_REQUEST['attributes']:array();
+        $allAttributes = array_keys(VardefBrowser::findFieldAttributes());
+        sort($allAttributes);
+        $this->displayCheckBoxes('attributes[]', $allAttributes, $attributes, ' id="_attributes" ');
+        $this->displayTextBoxes($allAttributes, ' id="_fields" ');
+        echo "</form>";
+        echo <<<EOQ
  		<script>
  			function toggleLearn(value){
  				document.getElementById('_modules').style.display = 'None';	
@@ -127,8 +131,8 @@ class ViewMetadata extends SugarView
  		</script>
  		
 EOQ;
- 		echo "<div width='100%'></div><div><div style='float:left'>";
- 		switch ($do){
+        echo "<div width='100%'></div><div><div style='float:left'>";
+        switch ($do) {
  			case 'Modules':
  				$this->printValue(VardefBrowser::findVardefs( $modules));	
  				break;
@@ -137,10 +141,10 @@ EOQ;
  				break;
  			case 'Fields':
  				$searchFor = array();
- 				foreach($allAttributes as $at){
- 					if(!empty($_POST[$at])){
- 						$searchFor[$at] = $_POST[$at];
- 					}	
+ 				foreach ($allAttributes as $at) {
+ 				    if (!empty($_POST[$at])) {
+ 				        $searchFor[$at] = $_POST[$at];
+ 				    }
  				}
  				
  				$this->printValue(VardefBrowser::findFieldsWithAttributes($searchFor, $modules));
@@ -235,143 +239,145 @@ EOQ;
  					
  			
  		}
- 		echo "</div><div style='float:right'>Help Text</div></div>";
+        echo "</div><div style='float:right'>Help Text</div></div>";
  		
  		
- 		//$this->printValue(VardefBrowser::findFieldsWithAttributes(array('type'=>'id'), $modules));
- 		
- 	
- 		
- 		
- 		
- 	}
-
+        //$this->printValue(VardefBrowser::findFieldsWithAttributes(array('type'=>'id'), $modules));
+    }
 }
 
 class VardefBrowser
 {
-
-	function __construct(){
-		
-	}
+    function __construct()
+    {
+    }
 	
-	static function getModules(){
-		$modules = array();
-		foreach($GLOBALS['beanList'] as $module=>$object){
-			$object = BeanFactory::getObjectName($module);
-			VardefManager::loadVardef($module, $object);
-			if(empty($GLOBALS['dictionary'][$object]['fields'] ))continue;
-			$modules[] = $module;
-		}
-		sort($modules);
-		return $modules;
+    static function getModules()
+    {
+        $modules = array();
+        foreach ($GLOBALS['beanList'] as $module=>$object) {
+            $object = BeanFactory::getObjectName($module);
+            VardefManager::loadVardef($module, $object);
+            if (empty($GLOBALS['dictionary'][$object]['fields'] )) {
+                continue;
+            }
+            $modules[] = $module;
+        }
+        sort($modules);
+        return $modules;
+    }
 	
-		
-	}
+    static function findFieldsWithAttributes($attributes, $modules=null)
+    {
+        $fields = array();
+        if (empty($modules)) {
+            $modules = VardefBrowser::getModules();
+        }
+        foreach ($modules as $module) {
+            if (!empty($GLOBALS['beanList'][$module])) {
+                $object = $GLOBALS['beanList'][$module];
+                if ($object == 'aCase') {
+                    $object = 'Case';
+                }
+                VardefManager::loadVardef($module, $object);
+                if (empty($GLOBALS['dictionary'][$object]['fields'] )) {
+                    continue;
+                }
+                foreach ($GLOBALS['dictionary'][$object]['fields'] as $name=>$def) {
+                    $match = true;
+                    foreach ($attributes as $k=>$v) {
+                        $alt = false;
+                        if ($k == 'type') {
+                            $alt = 'dbType';
+                        }
+                        if ($v == 'true' && !empty($def[$k])) {
+                            continue;
+                        }
+                        if ((empty($def[$k]) || $def[$k] != $v) && (empty($alt) || empty($def[$alt]) || $def[$alt] != $v )) {
+                            $match = false;
+                        }
+                    }
+                    if ($match) {
+                        $fields[$module][$object][$name] = $def;
+                    }
+                }
+            }
+        }
+        return $fields;
+    }
 	
-	static function findFieldsWithAttributes($attributes, $modules=null){
-		$fields = array();
-		if(empty($modules))$modules = VardefBrowser::getModules();
-		foreach($modules as $module){
-			if(!empty($GLOBALS['beanList'][$module])){
-				$object = $GLOBALS['beanList'][$module];
-				if($object == 'aCase')$object = 'Case';
-				VardefManager::loadVardef($module, $object);
-				if(empty($GLOBALS['dictionary'][$object]['fields'] ))continue;
-				foreach($GLOBALS['dictionary'][$object]['fields'] as $name=>$def){
-					$match = true;
-					foreach($attributes as $k=>$v){
-						$alt = false;
-						if($k == 'type'){
-							$alt = 'dbType';	
-						}
-						if($v == 'true' && !empty($def[$k])){
-							continue;
-						}
-						if((empty($def[$k]) || $def[$k] != $v) && (empty($alt) || empty($def[$alt]) || $def[$alt] != $v )){
-							$match = false;	
-						}
-					}
-					if($match){
-						$fields[$module][$object][$name] = $def;
-					}
-					
-				}
-				
-			}	
-		}
-		return $fields;			
-	}
-	
-		static function findVardefs($modules=null){
-			$defs = array();
-			if(empty($modules))$modules = VardefBrowser::getModules();
-			foreach($modules as $module){
-				if(!empty($GLOBALS['beanList'][$module])){
-					$object = $GLOBALS['beanList'][$module];
-					if($object == 'aCase')$object = 'Case';
-					VardefManager::loadVardef($module, $object);
-					if(empty($GLOBALS['dictionary'][$object]['fields'] ))continue;
-					$defs[$module][$object] = $GLOBALS['dictionary'][$object];
-				}
-			}
-			return $defs;
-		}
-	
-	
-		static function findFieldAttributes($attributes=array(), $modules=null, $byModule=false, $byType=false){
-		$fields = array();
-		if(empty($modules))$modules = VardefBrowser::getModules();
-		foreach($modules as $module){
-			if(!empty($GLOBALS['beanList'][$module])){
-				$object = $GLOBALS['beanList'][$module];
-				if($object == 'aCase')$object = 'Case';
-				VardefManager::loadVardef($module, $object);
-				if(empty($GLOBALS['dictionary'][$object]['fields'] ))continue;
-				foreach($GLOBALS['dictionary'][$object]['fields'] as $name=>$def){
-					$fieldAttributes = (!empty($attributes))? $attributes:array_keys($def);
-					foreach($fieldAttributes as $k){
-						if(isset($def[$k])){
-							$v  = var_export($def[$k], true);
-							$key = is_array($def[$k])?null:$def[$k];
-							if($k == 'type'){
-								if(isset($def['dbType'])){
-									$v = var_export($def['dbType'], true);	
-								}	
-							}
-							if($byModule){
-								$fields[$module][$object][$def['type']][$k][$key] = $v;
-							}else{
-								if($byType){
-									$fields[$def['type']][$k][$key] = $v;	
-								}else{
-									if(!is_array($def[$k])){
-										if(isset($fields[$k][$key])){
-											$fields[$k][$key]['refs']++;
-										}else{
-											$fields[$k][$key] = array('attribute'=>$v, 'refs'=>1);		
-										}
-									}else{
-										$fields[$k]['_array'][] = $def[$k];	
-
-									}
-								}
-							}
-							
-							
-						}
-						
-					}
-					
-					
-				
-				}
-				
-			}	
-		}
-		return $fields;			
-	}
+    static function findVardefs($modules=null)
+    {
+        $defs = array();
+        if (empty($modules)) {
+            $modules = VardefBrowser::getModules();
+        }
+        foreach ($modules as $module) {
+            if (!empty($GLOBALS['beanList'][$module])) {
+                $object = $GLOBALS['beanList'][$module];
+                if ($object == 'aCase') {
+                    $object = 'Case';
+                }
+                VardefManager::loadVardef($module, $object);
+                if (empty($GLOBALS['dictionary'][$object]['fields'] )) {
+                    continue;
+                }
+                $defs[$module][$object] = $GLOBALS['dictionary'][$object];
+            }
+        }
+        return $defs;
+    }
 	
 	
-
+    static function findFieldAttributes($attributes=array(), $modules=null, $byModule=false, $byType=false)
+    {
+        $fields = array();
+        if (empty($modules)) {
+            $modules = VardefBrowser::getModules();
+        }
+        foreach ($modules as $module) {
+            if (!empty($GLOBALS['beanList'][$module])) {
+                $object = $GLOBALS['beanList'][$module];
+                if ($object == 'aCase') {
+                    $object = 'Case';
+                }
+                VardefManager::loadVardef($module, $object);
+                if (empty($GLOBALS['dictionary'][$object]['fields'] )) {
+                    continue;
+                }
+                foreach ($GLOBALS['dictionary'][$object]['fields'] as $name=>$def) {
+                    $fieldAttributes = (!empty($attributes))? $attributes:array_keys($def);
+                    foreach ($fieldAttributes as $k) {
+                        if (isset($def[$k])) {
+                            $v  = var_export($def[$k], true);
+                            $key = is_array($def[$k])?null:$def[$k];
+                            if ($k == 'type') {
+                                if (isset($def['dbType'])) {
+                                    $v = var_export($def['dbType'], true);
+                                }
+                            }
+                            if ($byModule) {
+                                $fields[$module][$object][$def['type']][$k][$key] = $v;
+                            } else {
+                                if ($byType) {
+                                    $fields[$def['type']][$k][$key] = $v;
+                                } else {
+                                    if (!is_array($def[$k])) {
+                                        if (isset($fields[$k][$key])) {
+                                            $fields[$k][$key]['refs']++;
+                                        } else {
+                                            $fields[$k][$key] = array('attribute'=>$v, 'refs'=>1);
+                                        }
+                                    } else {
+                                        $fields[$k]['_array'][] = $def[$k];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $fields;
+    }
 }

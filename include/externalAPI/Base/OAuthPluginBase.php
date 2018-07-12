@@ -59,16 +59,18 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
      */
     public function setupOauthKeys()
     {
-        if($this->oauth_keys_initialized) return;
+        if ($this->oauth_keys_initialized) {
+            return;
+        }
 
         $connector = $this->getConnector();
-        if(!empty($connector)) {
+        if (!empty($connector)) {
             $cons_key = $connector->getProperty('oauth_consumer_key');
-            if(!empty($cons_key)) {
+            if (!empty($cons_key)) {
                 $this->oauthParams['consumerKey'] = $cons_key;
             }
             $cons_secret = $connector->getProperty('oauth_consumer_secret');
-            if(!empty($cons_secret)) {
+            if (!empty($cons_secret)) {
                 $this->oauthParams['consumerSecret'] = $cons_secret;
             }
         }
@@ -81,7 +83,9 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
      */
     public function loadEAPM($eapmBean)
     {
-        if ( !parent::loadEAPM($eapmBean) ) { return false; }
+        if ( !parent::loadEAPM($eapmBean) ) {
+            return false;
+        }
 
         $this->oauth_token = $eapmBean->oauth_token;
         $this->oauth_secret = $eapmBean->oauth_secret;
@@ -166,16 +170,16 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
         return $oauth;
     }
 
-   public function oauthLogin()
-   {
+    public function oauthLogin()
+    {
         global $sugar_config;
         $oauth = $this->getOauth();
-        if(isset($_SESSION['eapm_oauth_secret']) && isset($_SESSION['eapm_oauth_token']) && isset($_REQUEST['oauth_token']) && isset($_REQUEST['oauth_verifier'])) {
+        if (isset($_SESSION['eapm_oauth_secret']) && isset($_SESSION['eapm_oauth_token']) && isset($_REQUEST['oauth_token']) && isset($_REQUEST['oauth_verifier'])) {
             $stage = 1;
         } else {
             $stage = 0;
         }
-        if($stage == 0) {
+        if ($stage == 0) {
             $oauthReq = $this->getOauthRequestURL();
             $callback_url = $sugar_config['site_url'].'/index.php?module=EAPM&action=oauth&record='.$this->eapmBean->id;
             $callback_url = $this->formatCallbackURL($callback_url);
@@ -186,9 +190,9 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
 
             $GLOBALS['log']->debug("OAuth token: ".var_export($request_token_info, true));
 
-            if(empty($request_token_info['oauth_token_secret']) || empty($request_token_info['oauth_token'])){
+            if (empty($request_token_info['oauth_token_secret']) || empty($request_token_info['oauth_token'])) {
                 return false;
-            }else{
+            } else {
                 // FIXME: error checking here
                 $_SESSION['eapm_oauth_secret'] = $request_token_info['oauth_token_secret'];
                 $_SESSION['eapm_oauth_token'] = $request_token_info['oauth_token'];
@@ -214,5 +218,5 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
             return true;
         }
         return false;
-	}
+    }
 }

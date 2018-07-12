@@ -90,7 +90,6 @@ class StateSaver
     public function __destruct()
     {
         if (!empty($this->stack)) {
-            
             $info = "\nNeeds to restore:\n";
             
             $namespaces = array_keys($this->stack);
@@ -355,7 +354,7 @@ class StateSaver
         
         DBManagerFactory::getInstance()->query("TRUNCATE TABLE " . DBManagerFactory::getInstance()->quote($table));
         
-        if(!is_array($rows)) {
+        if (!is_array($rows)) {
             throw new StateSaverException('Table information is not an array. Are you sure you pushed this table "' . $table . '" previously?');
         }
         foreach ($rows as $row) {

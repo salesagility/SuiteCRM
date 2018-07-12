@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,48 +48,51 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyBugsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null) {
+    function __construct($id, $def = null)
+    {
         global $current_user, $app_strings;
-		require('modules/Bugs/Dashlets/MyBugsDashlet/MyBugsDashlet.data.php');
+        require('modules/Bugs/Dashlets/MyBugsDashlet/MyBugsDashlet.data.php');
 
         parent::__construct($id, $def);
 
         $this->searchFields = $dashletData['MyBugsDashlet']['searchFields'];
         $this->columns = $dashletData['MyBugsDashlet']['columns'];
 
-        if(empty($def['title'])) $this->title = translate('LBL_LIST_MY_BUGS', 'Bugs');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_LIST_MY_BUGS', 'Bugs');
+        }
         $this->seedBean = new Bug();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyBugsDashlet($id, $def = null){
+    function MyBugsDashlet($id, $def = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
 
 
-    function displayOptions() {
-
+    function displayOptions()
+    {
         $this->processDisplayOptions();
 
         $seedRelease = new Release();
 
-        if(!empty($this->searchFields['fixed_in_release'])) {
-	        $this->currentSearchFields['fixed_in_release']['input'] = '<select multiple="true" size="3" name="fixed_in_release[]">'
+        if (!empty($this->searchFields['fixed_in_release'])) {
+            $this->currentSearchFields['fixed_in_release']['input'] = '<select multiple="true" size="3" name="fixed_in_release[]">'
 	                                                                  . get_select_options_with_id($seedRelease->get_releases(false, "Active"), (empty($this->filters['fixed_in_release']) ? '' : $this->filters['fixed_in_release']))
 	                                                                  . '</select>';
         }
 
-        if(!empty($this->searchFields['found_in_release'])) {
-	        $this->currentSearchFields['found_in_release']['input'] = '<select multiple="true" size="3" name="found_in_release[]">'
+        if (!empty($this->searchFields['found_in_release'])) {
+            $this->currentSearchFields['found_in_release']['input'] = '<select multiple="true" size="3" name="found_in_release[]">'
 	                                                                  . get_select_options_with_id($seedRelease->get_releases(false, "Active"), (empty($this->filters['found_in_release']) ? '' : $this->filters['found_in_release']))
 	                                                                  . '</select>';
         }

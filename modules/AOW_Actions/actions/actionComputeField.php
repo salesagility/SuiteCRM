@@ -48,7 +48,6 @@ require_once('modules/AOW_Actions/actions/actionBase.php');
  */
 class actionComputeField extends actionBase
 {
-
     const RAW_VALUE = "raw";
     const FORMATTED_VALUE = "formatted";
 

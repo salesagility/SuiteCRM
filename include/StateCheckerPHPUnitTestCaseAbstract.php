@@ -63,7 +63,6 @@ abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_Tes
      */
     protected function setUp()
     {
-        
         if (self::$verbose) {
             $currentTestName = get_class($this) . '::' . $this->getName(false);
             echo "\t" . $currentTestName  . " ..";

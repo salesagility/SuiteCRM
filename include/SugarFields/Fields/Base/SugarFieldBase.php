@@ -100,7 +100,6 @@ class SugarFieldBase
             foreach ($this->buttons as $v) {
                 $additional .= ' <input type="button" class="button" ' . $v . '>';
             }
-
         }
         if (!empty($this->image)) {
             $additional .= ' <img ' . $this->image . '>';
@@ -344,7 +343,6 @@ class SugarFieldBase
 
     public function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0)
     {
-
         if (!is_array($vardef['function'])) {
             $funcName = $vardef['function'];
             $includeFile = '';
@@ -446,7 +444,6 @@ class SugarFieldBase
 
     public function getQueryLike()
     {
-
     }
 
     public function getQueryIn()
@@ -514,8 +511,6 @@ class SugarFieldBase
             $this->image = $displayParams['image'];
         }
         $this->ss->assign('displayParams', $displayParams);
-
-
     }
 
     protected function getAccessKey($vardef, $fieldType = null, $module = null)
@@ -690,6 +685,5 @@ class SugarFieldBase
 
         return $parentFieldArray;
     }
-
 }
 

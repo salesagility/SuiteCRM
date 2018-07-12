@@ -48,7 +48,6 @@ require_once('include/SugarObjects/templates/file/File.php');
 // User is used to store Forecast information.
 class Document extends File
 {
-
     var $id;
     var $document_name;
     var $description;
@@ -126,7 +125,6 @@ class Document extends File
 
     function save($check_notify = false)
     {
-
         if (empty($this->doc_type)) {
             $this->doc_type = 'Sugar';
         }
@@ -248,7 +246,6 @@ class Document extends File
         $mod_strings = return_module_language($current_language, 'Documents');
 
         if (!empty($this->document_revision_id)) {
-
             $query = "SELECT users.first_name AS first_name, users.last_name AS last_name, document_revisions.date_entered AS rev_date,
             	 document_revisions.filename AS filename, document_revisions.revision AS revision,
             	 document_revisions.file_ext AS file_ext, document_revisions.file_mime_type AS file_mime_type
@@ -420,7 +417,6 @@ class Document extends File
                 $version->mark_deleted($version->id);
             }
         }
-
     }
 
 

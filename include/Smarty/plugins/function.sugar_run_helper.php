@@ -44,15 +44,15 @@ function smarty_function_sugar_run_helper($params, &$smarty)
 {
     $error = false;
     
-    if(!isset($params['func'])) {
+    if (!isset($params['func'])) {
         $error = true;
         $smarty->trigger_error("sugar_field: missing 'func' parameter");
     }
-    if(!isset($params['displayType'])) {
+    if (!isset($params['displayType'])) {
         $error = true;
         $smarty->trigger_error("sugar_field: missing 'displayType' parameter");
     }
-    if(!isset($params['bean'])) {
+    if (!isset($params['bean'])) {
         $params['bean'] = $GLOBALS['focus'];
     }
 

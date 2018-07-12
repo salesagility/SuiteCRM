@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if (!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,30 +49,30 @@ require_once('service/core/REST/SugarRest.php');
  */
 class SugarRestRSS extends SugarRest
 {
-	/**
-	 * It will serialize the input object and echo's it
-	 *
-	 * @param array $input - assoc array of input values: key = param name, value = param type
-	 * @return String - echos serialize string of $input
-	 */
-	public function generateResponse($input)
-	{
-		if(!isset($input['entry_list'])) {
-		    $this->fault($app_strings['ERR_RSS_INVALID_RESPONSE']);
-		}
-		ob_clean();
-		$this->generateResponseHeader(count($input['entry_list']));
-		$this->generateItems($input);
-		$this->generateResponseFooter();
-	} // fn
+    /**
+     * It will serialize the input object and echo's it
+     *
+     * @param array $input - assoc array of input values: key = param name, value = param type
+     * @return String - echos serialize string of $input
+     */
+    public function generateResponse($input)
+    {
+        if (!isset($input['entry_list'])) {
+            $this->fault($app_strings['ERR_RSS_INVALID_RESPONSE']);
+        }
+        ob_clean();
+        $this->generateResponseHeader(count($input['entry_list']));
+        $this->generateItems($input);
+        $this->generateResponseFooter();
+    } // fn
 
-	protected function generateResponseHeader($count)
-	{
-	    global $app_strings, $sugar_version, $sugar_flavor;
+    protected function generateResponseHeader($count)
+    {
+        global $app_strings, $sugar_version, $sugar_flavor;
 
-		$date = TimeDate::httpTime();
+        $date = TimeDate::httpTime();
 
-		echo <<<EORSS
+        echo <<<EORSS
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
@@ -81,14 +83,14 @@ class SugarRestRSS extends SugarRest
     <generator>SugarCRM $sugar_version $sugar_flavor</generator>
 
 EORSS;
-	}
+    }
 
-	protected function generateItems($input)
-	{
+    protected function generateItems($input)
+    {
         global $app_strings;
 
-	    if(!empty($input['entry_list'])){
-            foreach($input['entry_list'] as $item){
+        if (!empty($input['entry_list'])) {
+            foreach ($input['entry_list'] as $item) {
                 $this->generateItem($item);
             }
         }
@@ -101,12 +103,16 @@ EORSS;
         $date = TimeDate::httpTime(TimeDate::getInstance()->fromDb($item['name_value_list']['date_modified']['value'])->getTimestamp());
         $description = '';
         $displayFieldNames = true;
-        if(count($item['name_value_list']) == 2 &&isset($item['name_value_list']['name']))$displayFieldNames = false;
-        foreach($item['name_value_list'] as $k=>$v){
+        if (count($item['name_value_list']) == 2 &&isset($item['name_value_list']['name'])) {
+            $displayFieldNames = false;
+        }
+        foreach ($item['name_value_list'] as $k=>$v) {
             if ( $k == 'name' || $k == 'date_modified') {
                 continue;
             }
-            if($displayFieldNames) $description .= '<b>' .htmlentities( $k) . ':<b>&nbsp;';
+            if ($displayFieldNames) {
+                $description .= '<b>' .htmlentities( $k) . ':<b>&nbsp;';
+            }
             $description .= htmlentities( $v['value']) . "<br>";
         }
 
@@ -124,41 +130,41 @@ EORSS;
 
     protected function generateResponseFooter()
     {
-		echo <<<EORSS
+        echo <<<EORSS
 </channel>
 </rss>
 EORSS;
-	}
+    }
 
-	/**
-	 * Returns a fault since we cannot accept RSS as an input type
-	 *
-	 * @see SugarRest::serve()
-	 */
-	public function serve()
-	{
-	    global $app_strings;
+    /**
+     * Returns a fault since we cannot accept RSS as an input type
+     *
+     * @see SugarRest::serve()
+     */
+    public function serve()
+    {
+        global $app_strings;
 
-	    $this->fault($app_strings['ERR_RSS_INVALID_INPUT']);
-	}
+        $this->fault($app_strings['ERR_RSS_INVALID_INPUT']);
+    }
 
-	/**
-	 * @see SugarRest::fault()
-	 */
-	public function fault($errorObject)
-	{
-		ob_clean();
-		$this->generateResponseHeader();
-		echo '<item><name>';
-		if(is_object($errorObject)){
-			$error = $errorObject->number . ': ' . $errorObject->name . '<br>' . $errorObject->description;
-			$GLOBALS['log']->error($error);
-		}else{
-			$GLOBALS['log']->error(var_export($errorObject, true));
-			$error = var_export($errorObject, true);
-		} // else
-		echo $error;
-		echo '</name></item>';
-		$this->generateResponseFooter();
-	}
+    /**
+     * @see SugarRest::fault()
+     */
+    public function fault($errorObject)
+    {
+        ob_clean();
+        $this->generateResponseHeader();
+        echo '<item><name>';
+        if (is_object($errorObject)) {
+            $error = $errorObject->number . ': ' . $errorObject->name . '<br>' . $errorObject->description;
+            $GLOBALS['log']->error($error);
+        } else {
+            $GLOBALS['log']->error(var_export($errorObject, true));
+            $error = var_export($errorObject, true);
+        } // else
+        echo $error;
+        echo '</name></item>';
+        $this->generateResponseFooter();
+    }
 }

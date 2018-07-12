@@ -48,33 +48,35 @@ require_once('modules/Contacts/Popup_picker.php');
 
 class ContactsViewContactAddressPopup extends SugarView
 {
-
- 	function __construct(){
- 		parent::__construct();
- 	}
+    function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ContactsViewContactAddressPopup(){
+    function ContactsViewContactAddressPopup()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
- 	function process() {
-		$this->display();
- 	}
+    function process()
+    {
+        $this->display();
+    }
 
- 	function display() {
- 		$this->renderJavascript();
- 		$popup = new Popup_Picker();
-		echo $popup->process_page_for_address();
- 	}
+    function display()
+    {
+        $this->renderJavascript();
+        $popup = new Popup_Picker();
+        echo $popup->process_page_for_address();
+    }
 }

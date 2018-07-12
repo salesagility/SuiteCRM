@@ -29,7 +29,6 @@ require_once("modules/AOR_Reports/aor_utils.php");
 
 class AOR_ReportsController extends SugarController
 {
-
     protected function action_getModuleFields()
     {
         if (!empty($_REQUEST['aor_module']) && $_REQUEST['aor_module'] != '') {
@@ -42,7 +41,6 @@ class AOR_ReportsController extends SugarController
             echo getModuleFields($module, $_REQUEST['view'], $val);
         }
         die;
-
     }
 
     public function action_getVarDefs()
@@ -141,7 +139,6 @@ class AOR_ReportsController extends SugarController
 
         $key = Relationship::retrieve_by_modules($this->bean->report_module, 'ProspectLists', $GLOBALS['db']);
         if (!empty($key)) {
-
             $sql = $this->bean->build_report_query();
             $result = $this->bean->db->query($sql);
             $beans = array();
@@ -172,7 +169,7 @@ class AOR_ReportsController extends SugarController
     protected function action_export()
     {
         set_time_limit(0);
-        if(!$this->bean->ACLAccess('Export')){
+        if (!$this->bean->ACLAccess('Export')) {
             SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
@@ -184,7 +181,7 @@ class AOR_ReportsController extends SugarController
 
     protected function action_downloadPDF()
     {
-        if(!$this->bean->ACLAccess('Export')){
+        if (!$this->bean->ACLAccess('Export')) {
             SugarApplication::appendErrorMessage(translate('LBL_NO_ACCESS', 'ACL'));
             SugarApplication::redirect("index.php?module=AOR_Reports&action=DetailView&record=".$this->bean->id);
             sugar_die('');
@@ -264,7 +261,6 @@ class AOR_ReportsController extends SugarController
             $pdf->WriteHTML($head, 2);
             $pdf->WriteHTML($printable, 3);
             $pdf->Output($this->bean->name . '.pdf', "D");
-
         } catch (mPDF_exception $e) {
             echo $e;
         }
@@ -294,7 +290,6 @@ class AOR_ReportsController extends SugarController
 
     protected function action_getModuleOperatorField()
     {
-
         global $app_list_strings, $beanFiles, $beanList;
 
         if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
@@ -387,12 +382,10 @@ class AOR_ReportsController extends SugarController
             echo $app_list_strings['aor_operator_list'][$value];
         }
         die;
-
     }
 
     protected function action_getFieldTypeOptions()
     {
-
         global $app_list_strings, $beanFiles, $beanList;
 
         if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
@@ -469,12 +462,10 @@ class AOR_ReportsController extends SugarController
             echo $app_list_strings['aor_condition_type_list'][$value];
         }
         die;
-
     }
 
     protected function action_getActionFieldTypeOptions()
     {
-
         global $app_list_strings, $beanFiles, $beanList;
 
         if (isset($_REQUEST['rel_field']) && $_REQUEST['rel_field'] != '') {
@@ -551,7 +542,6 @@ class AOR_ReportsController extends SugarController
             echo $app_list_strings['aor_action_type_list'][$value];
         }
         die;
-
     }
 
     protected function action_getModuleFieldType()
@@ -615,7 +605,6 @@ class AOR_ReportsController extends SugarController
                 break;
         }
         die;
-
     }
 
     protected function action_getModuleFieldTypeSet()
@@ -665,7 +654,6 @@ class AOR_ReportsController extends SugarController
                 break;
         }
         die;
-
     }
 
     protected function action_getModuleField()
@@ -723,12 +711,10 @@ class AOR_ReportsController extends SugarController
                 break;
         }
         die;
-
     }
 
     protected function action_getRelActionFieldTypeOptions()
     {
-
         global $app_list_strings, $beanFiles, $beanList;
 
         $module = $_REQUEST['aor_module'];
@@ -775,7 +761,5 @@ class AOR_ReportsController extends SugarController
             echo $app_list_strings['aor_rel_action_type_list'][$value];
         }
         die;
-
     }
-
 }

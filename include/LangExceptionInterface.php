@@ -60,5 +60,4 @@ interface LangExceptionInterface
      * @return string
      */
     public function getLangMessage();
-
 }

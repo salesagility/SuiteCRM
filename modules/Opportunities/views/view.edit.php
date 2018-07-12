@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -50,37 +52,38 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class OpportunitiesViewEdit extends ViewEdit
 {
-
- 	function __construct(){
- 		parent::__construct();
- 		$this->useForSubpanel = true;
- 	}
+    function __construct()
+    {
+        parent::__construct();
+        $this->useForSubpanel = true;
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function OpportunitiesViewEdit(){
+    function OpportunitiesViewEdit()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
- 	function display() {
-		global $app_list_strings;
-		$json = getJSONobj();
-		$prob_array = $json->encode($app_list_strings['sales_probability_dom']);
-		$prePopProb = '';
- 		if(empty($this->bean->id) && empty($_REQUEST['probability'])) {
-		   $prePopProb = 'document.getElementsByName(\'sales_stage\')[0].onchange();';
-		}
+    function display()
+    {
+        global $app_list_strings;
+        $json = getJSONobj();
+        $prob_array = $json->encode($app_list_strings['sales_probability_dom']);
+        $prePopProb = '';
+        if (empty($this->bean->id) && empty($_REQUEST['probability'])) {
+            $prePopProb = 'document.getElementsByName(\'sales_stage\')[0].onchange();';
+        }
 
-$probability_script=<<<EOQ
+        $probability_script=<<<EOQ
 	<script>
 	prob_array = $prob_array;
 	document.getElementsByName('sales_stage')[0].onchange = function() {
@@ -96,7 +99,7 @@ $probability_script=<<<EOQ
 	</script>
 EOQ;
 
-	    $this->ss->assign('PROBABILITY_SCRIPT', $probability_script);
- 		parent::display();
- 	}
+        $this->ss->assign('PROBABILITY_SCRIPT', $probability_script);
+        parent::display();
+    }
 }
