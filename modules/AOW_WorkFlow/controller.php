@@ -351,6 +351,7 @@ class AOW_WorkFlowController extends SugarController
             case 'SecurityGroup':
                 $module = 'Accounts';
                 $fieldname = 'SecurityGroups';
+                // no break
             case 'Value':
             default:
                 echo getModuleField($rel_module,$fieldname, $aow_field, $view, $value );

@@ -1603,6 +1603,7 @@ class AOR_Report extends Basic
                                     case 'business_hours':
                                         //business hours not implemented for query, default to hours
                                         $params[3] = 'hours';
+                                        // no break
                                     default:
                                         if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                                             $value = "DATEADD(" . $params[3] . ",  " . $app_list_strings['aor_date_operator'][$params[1]] . " $params[2], $value)";

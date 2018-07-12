@@ -84,6 +84,7 @@ function smarty_function_mailto($params, &$smarty)
             case 'text':
                 $$var = $value;
 
+                // no break
             default:
         }
     }

@@ -94,25 +94,31 @@ class StudioWizard
                 break; 
             case 'ConfigureTabs':
                 header('Location: index.php?module=Administration&action=ConfigureTabs');
-                sugar_cleanup(true); 
+                sugar_cleanup(true);
+                // no break 
             case 'ConfigureGroupTabs':
                 require_once('modules/Studio/TabGroups/EditViewTabs.php');
                 break;
             case 'Workflow':
                 header('Location: index.php?module=WorkFlow&action=ListView');
                 sugar_cleanup(true);
+                // no break
             case 'RepairCustomFields':
             	header('Location: index.php?module=Administration&action=UpgradeFields');
             	sugar_cleanup(true);
+            	// no break
             case 'MigrateCustomFields':
             	header('LOCATION: index.php?module=Administration&action=Development');
             	sugar_cleanup(true);
+            	// no break
             case 'SugarPortal':
             	header('LOCATION: index.php?module=Studio&action=Portal');
             	sugar_cleanup(true);
+            	// no break
             case 'Classic':
                 header('Location: index.php?module=DynamicLayout&action=index');
                 sugar_cleanup(true);
+                // no break
             default:
                 $this->display();
         }

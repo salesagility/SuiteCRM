@@ -202,7 +202,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
 			case "multiselect":
 				$multi = "multiple=\"true\"";
 				$name .= "[]";
-				// NO BREAK - Continue into select
+				// no break - Continue into select
 			case "select":
 				$tag = "select";
 				$sel = '';

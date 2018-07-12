@@ -144,6 +144,7 @@ class AOR_Scheduled_Reports extends basic
                                     break;
                                 }
                             //No Security Group module found - fall through.
+                            // no break
                             Case 'role':
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();

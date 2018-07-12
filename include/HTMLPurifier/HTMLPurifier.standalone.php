@@ -5605,6 +5605,7 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
                             break;
                         }
                         // otherwise fall through
+                        // no break
                     case 1:
                         $attribute = htmlspecialchars($bits[0]);
                         trigger_error(
@@ -10693,6 +10694,7 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
                     return false;
                 }
                 $sign = '-';
+                // no break
             case '+':
                 $number = substr($number, 1);
         }
@@ -11464,6 +11466,7 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
                     if ($r !== false) {
                         break;
                     }
+                    // no break
                 case 1: // attempting to catch font-size and perhaps line-height
                     $found_slash = false;
                     if (strpos($bits[$i], '/') !== false) {
@@ -14755,6 +14758,7 @@ class HTMLPurifier_ChildDef_Table extends HTMLPurifier_ChildDef
             case 'tbody':
                 $tbody_mode = true;
                 // fall through
+                // no break
             case 'tr':
                 $content[] = $node;
                 $ws_accum =& $content;

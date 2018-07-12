@@ -252,6 +252,7 @@ foreach ($temp_field_array as $field_array) {
                 if (!empty($field_array['link'])) {
                     $exclude[$field_array['link']] = $field_array['link'];
                 }
+                // no break
             case ('link'):
                 //get_related_name
                 $tempId = $field_array['id_name'];
