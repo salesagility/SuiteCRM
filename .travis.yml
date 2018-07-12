@@ -67,7 +67,7 @@ script:
   - ./build/push_output.sh
 
   # Run the unit tests
-  - ./vendor/bin/codecept run unit --steps
+  - ./vendor/bin/codecept run unit --steps -f
   # Install OAuth2 demo data
   - mysql -u root -D automated_tests -v -e "source tests/_data/api_data.sql"
   # Install demo user data
@@ -75,7 +75,7 @@ script:
   # set the log level to error
   - echo "\$sugar_config['logger']['level']='error';" >> config_override.php
   # Run API functional tests
-  - ./vendor/bin/codecept run api --steps
+  - ./vendor/bin/codecept run api --steps -f
   # RUN Basic Acceptance test
   - sudo chmod -R 777 .
   - ./vendor/bin/codecept run acceptance --env travis-ci-hub -f -vvv -d;
