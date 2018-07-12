@@ -64,10 +64,11 @@ abstract class AbstractIndexer
     protected $documentifier = null;
     /** @var string[] */
     protected $modulesToIndex = [
-        'Accounts', 'Contacts', 'Users', 'Opportunities',
-        'Leads', 'Emails', 'Calls', 'Meetings',
-        'Tasks', 'Spots', 'Surveys',
-        'Cases', 'Documents', 'Notes'
+        'Accounts', 'Contacts', 'Users',
+        'Opportunities', 'Leads', 'Emails',
+        'Calls', 'Meetings', 'Tasks',
+        'Surveys', 'Cases', 'Documents',
+        'Notes'
     ];
     /** @var Logger Monolog instance to log on a separate file */
     protected $logger;
@@ -129,7 +130,7 @@ abstract class AbstractIndexer
             case '@':
                 $type = "\033[32m$type\033[0m";
                 break;
-            case '-':
+            case '#':
                 $type = "\033[92m$type\033[0m";
                 $level = Logger::INFO;
                 break;

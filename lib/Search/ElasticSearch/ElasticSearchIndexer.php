@@ -245,17 +245,24 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $seed = BeanFactory::getBean($module);
         $table_name = $seed->table_name;
+        $differentialIndexing = $this->differentialIndexing();
 
-        if ($this->differentialIndexing()) {
-            $datetime = $this->lastRunTimestamp->toDateTimeString();
-            $where = "$table_name.date_modified > '$datetime' OR $table_name.date_entered > '$datetime'";
-            $showDeleted = -1;
-        } else {
-            $where = "";
-            $showDeleted = 0;
+        $where = "";
+        $showDeleted = 0;
+
+        if ($differentialIndexing) {
+            try {
+                $datetime = $this->getModuleLastIndexed($module);
+                $where = "$table_name.date_modified > '$datetime' OR $table_name.date_entered > '$datetime'";
+                $showDeleted = -1;
+            } catch (\Exception $e) {
+                $this->log('#', "Time metadata not found for $module, performing full index for this module");
+                $differentialIndexing = false;
+            }
         }
 
         try {
+            $beanTime = Carbon::now()->toDateTimeString();
             $beans = $seed->get_full_list("", $where, false, $showDeleted);
         } catch (RuntimeException $e) {
             $this->log('!', "Failed to index module $module because of $e");
@@ -263,14 +270,15 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
 
         if ($beans === null) {
-            if (!$this->differentialIndexing())
-                $this->log('-', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
+            if (!$differentialIndexing)
+                $this->log('#', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
             return;
-        } else {
-            $this->log('@', sprintf('Indexing module %s...', $module));
-            $this->indexBeans($module, $beans);
-            $this->indexedModulesCount++;
         }
+
+        $this->log('@', sprintf('Indexing module %s...', $module));
+        $this->indexBeans($module, $beans);
+        $this->putMeta($module, ['last_index' => $beanTime]);
+        $this->indexedModulesCount++;
     }
 
     /**
@@ -595,8 +603,23 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $params = ['index' => $this->index, 'filter_path' => "$this->index.mappings.$module._meta"];
         $results = $this->client->indices()->getMapping($params);
-        $meta = $results[$this->index]['mappings'][$module]['_meta'];
-        return $meta;
+        if (isset($results[$this->index])) {
+            $meta = $results[$this->index]['mappings'][$module]['_meta'];
+            return $meta;
+        } else {
+            return null;
+        }
+    }
+
+    private function getModuleLastIndexed($module)
+    {
+        $meta = $this->getMeta($module);
+
+        if (isset($meta['last_index'])) {
+            return $meta['last_index'];
+        } else {
+            throw new RuntimeException();
+        }
     }
 
 }
