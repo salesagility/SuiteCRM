@@ -3744,9 +3744,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $this->assertTrue(ACLController::requireSecurityGroup($tmpUser->module_dir, 'list'));
 
         $results = $tmpUser->create_new_list_query($order_by, $where);
-        $this->assertEquals(" SELECT  users.* , LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as full_name, LTRIM(RTRIM(CONCAT(IFNULL(users.first_name,''),' ',IFNULL(users.last_name,'')))) as name , jt0.last_name reports_to_name , jt0.created_by reports_to_name_owner  , 'Users' reports_to_name_mod, '                                                                                                                                                                                                                                                              ' c_accept_status_fields , '                                    '  call_id , '                                                                                                                                                                                                                                                              ' m_accept_status_fields , '                                    '  meeting_id , '                                                                                                                                                                                                                                                              ' securitygroup_noninher_fields , '                                    '  securitygroup_id  FROM users   LEFT JOIN  users jt0 ON users.reports_to_id=jt0.id AND jt0.deleted=0
-
- AND jt0.deleted=0 where ( (  (  ( users.created_by ='{$current_user->id}'  OR  EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.*  FROM users  where ( (  (  ( EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
