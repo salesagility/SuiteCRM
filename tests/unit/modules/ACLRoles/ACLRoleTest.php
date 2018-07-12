@@ -133,12 +133,12 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with empty value
         $result = $aclRole->getRoleActions('');
         $this->assertTrue(is_array($result));
-        $this->assertTrue(56 === count($result) || 0 === count($result));
+        $this->assertTrue(59 === count($result) || 0 === count($result));
 
         //test with non empty but non existing role id value, initially no roles exist.
         $result = $aclRole->getRoleActions('1');
         $this->assertTrue(is_array($result));
-        $this->assertTrue(56 === count($result) || 0 === count($result));
+        $this->assertTrue(59 === count($result) || 0 === count($result));
     }
 
     public function testtoArray()
