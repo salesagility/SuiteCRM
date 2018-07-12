@@ -3569,7 +3569,7 @@ class SugarBean
         
         $rules_where = ['addwhere' => null, 'resWhere' => null];
 
-        if (!$current_user->is_admin && ($_REQUEST['action'] != "Popup" && $parentbean->module_dir != "Users" && ($_REQUEST['action'] != "DetailView" && $this->module_dir != "Users"))) {
+        if (!$current_user->is_admin && ($requestAction != "Popup" && $parentbean->module_dir != "Users" && ($requestAction != "DetailView" && $this->module_dir != "Users"))) {
             $rules_where = SharedSecurityRules::buildRuleWhere($this);
         }
 
