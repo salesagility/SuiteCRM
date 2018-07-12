@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-function copy_recursive( $source, $dest ){
+function copy_recursive($source, $dest) {
 
 
     if( is_file( $source ) ){
@@ -122,7 +122,7 @@ function mkdir_recursive($path, $check_is_parent_dir = false)
 	return true;
 }
 
-function rmdir_recursive( $path ){
+function rmdir_recursive($path) {
     if( is_file( $path ) ){
         return( unlink( $path ) );
     }
@@ -151,7 +151,7 @@ function rmdir_recursive( $path ){
     return( $status );
 }
 
-function findTextFiles( $the_dir, $the_array ){
+function findTextFiles($the_dir, $the_array) {
     if(!is_dir($the_dir)) {
 		return $the_array;
 	}
@@ -197,7 +197,7 @@ function getBacktraceString() {
 }
 
 
-function findAllFiles( $the_dir, $the_array, $include_dirs=false, $ext='', $exclude_dir=''){
+function findAllFiles($the_dir, $the_array, $include_dirs=false, $ext='', $exclude_dir='') {
 	// jchi  #24296
 	if(!empty($exclude_dir)){
 		$exclude_dir = is_array($exclude_dir)?$exclude_dir:array($exclude_dir);
@@ -260,7 +260,7 @@ function findAllFiles( $the_dir, $the_array, $include_dirs=false, $ext='', $excl
     return $the_array;
 }
 
-function findAllFilesRelative( $the_dir, $the_array ){
+function findAllFilesRelative($the_dir, $the_array) {
     if(!is_dir($the_dir)) {
 		return $the_array;
 	}
@@ -287,7 +287,7 @@ function findAllFilesRelative( $the_dir, $the_array ){
  * return					an array containing all of the files that have been
  * 							modified since date_modified
  */
-function findAllTouchedFiles( $the_dir, $the_array, $date_modified, $filter=''){
+function findAllTouchedFiles($the_dir, $the_array, $date_modified, $filter='') {
     if(!is_dir($the_dir)) {
 		return $the_array;
 	}

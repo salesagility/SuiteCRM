@@ -86,7 +86,7 @@ class RelationshipHandler extends Relationship
 
 ///////////////////////////Setup and populate functions//////////////////////////////
 
-	function __construct(& $db, $base_module=""){
+	function __construct(& $db, $base_module="") {
 
 		$this->db = $db;
 		$this->base_module = $base_module;
@@ -97,7 +97,7 @@ class RelationshipHandler extends Relationship
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function RelationshipHandler(& $db, $base_module=""){
+    function RelationshipHandler(& $db, $base_module="") {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -109,7 +109,7 @@ class RelationshipHandler extends Relationship
     }
 
 
-	function set_rel_vardef_fields($base_vardef_field, $rel1_vardef_field=""){
+	function set_rel_vardef_fields($base_vardef_field, $rel1_vardef_field="") {
 
 		$this->base_vardef_field = $base_vardef_field;
 		$this->rel1_vardef_field = $rel1_vardef_field;
@@ -118,7 +118,7 @@ class RelationshipHandler extends Relationship
 	}
 
 
-	function set_rel_relationship_names($build_rel2=false){
+	function set_rel_relationship_names($build_rel2=false) {
 
 		$this->rel1_relationship_name = $this->base_bean->field_defs[$this->base_vardef_field]['relationship'];
 
@@ -140,7 +140,7 @@ class RelationshipHandler extends Relationship
 	This function will build all the relationship info it can based on values set in the setup functions
 	When you use the info arrays (rel1_array) or (rel2_array), make sure you always check for empty values
 	*/
-	function build_info($build_rel2=false){
+	function build_info($build_rel2=false) {
 		if($this->base_bean == null){
 			$this->base_bean = get_module_info($this->base_module);
 		}
@@ -161,14 +161,14 @@ class RelationshipHandler extends Relationship
 	//end function build_info
 	}
 
-	function build_rel1_info(){
+	function build_rel1_info() {
 
 			$this->rel1_bean = $this->trace_relationship_module($this->base_module, $this->base_vardef_field);
 
 	//end function build_rel1_info
 	}
 
-	function build_rel2_info(){
+	function build_rel2_info() {
 
 			$this->rel2_bean = $this->trace_relationship_module($this->base_module, $this->base_vardef_field, $this->rel1_vardef_field);
 
@@ -180,7 +180,7 @@ class RelationshipHandler extends Relationship
 	the info arrays.  Does it for base, rel1, and rel2 if specified
 	*/
 
-	function build_module_labels($build_rel2=false){
+	function build_module_labels($build_rel2=false) {
 		global $app_list_strings;
 
 		///Base Module Labels
@@ -232,7 +232,7 @@ class RelationshipHandler extends Relationship
 
 
 
-	public function build_related_list($type="base", &$template, $row_offset = 0, $limit = -1){
+	public function build_related_list($type="base", &$template, $row_offset = 0, $limit = -1) {
 		//type can be base, rel1
 
 		$target_list = "";
@@ -266,7 +266,7 @@ class RelationshipHandler extends Relationship
 
 ///////BEGIN Functions to find relationships/////////////////////////////////
 
-function get_relationship_information(& $target_bean, $get_upstream_rel_field_name = false){
+function get_relationship_information(& $target_bean, $get_upstream_rel_field_name = false) {
 
 	$target_module_name = $target_bean->module_dir;
 	$current_module_name = $this->base_module;
@@ -344,7 +344,7 @@ function get_relationship_information(& $target_bean, $get_upstream_rel_field_na
 //end function get_relationship_information
 }
 
-function traverse_rel_meta($base_module, & $target_bean, $target_rel_name){
+function traverse_rel_meta($base_module, & $target_bean, $target_rel_name) {
 	$id_name = null;
 
 	//returns name of variable to store id in
@@ -367,7 +367,7 @@ function traverse_rel_meta($base_module, & $target_bean, $target_rel_name){
 }
 
 
-function get_id_name(& $target_bean, $field_name){
+function get_id_name(& $target_bean, $field_name) {
 
 	foreach($target_bean->relationship_fields as $target_id => $rel_name){
 
@@ -386,7 +386,7 @@ function get_id_name(& $target_bean, $field_name){
 ///////////////////////////END functions to find relationships //////////////////////
 
 
-function process_by_rel_bean($rel1_module){
+function process_by_rel_bean($rel1_module) {
 
 	$this->rel1_relationship_name = $this::retrieve_by_modules($this->base_module, $rel1_module, $this->db);
 	$this->rel1_module = $rel1_module;
@@ -396,7 +396,7 @@ function process_by_rel_bean($rel1_module){
 }
 
 
-function get_rel1_vardef_field_base($field_defs){
+function get_rel1_vardef_field_base($field_defs) {
 	foreach($field_defs as $field_array){
 
 		if(!empty($field_array['relationship']) && $field_array['relationship']==$this->rel1_relationship_name){
@@ -415,7 +415,7 @@ function get_rel1_vardef_field_base($field_defs){
 }
 
 
-function get_farthest_reach(){
+function get_farthest_reach() {
 
 	if($this->rel1_vardef_field!=""){
 		//the farthest reach is rel2

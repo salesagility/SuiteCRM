@@ -41,7 +41,7 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  ********************************************************************************/
 
 
-function get_body (&$ss , $vardef)
+function get_body(&$ss , $vardef)
 {
     
     $modules = array ( ) ;

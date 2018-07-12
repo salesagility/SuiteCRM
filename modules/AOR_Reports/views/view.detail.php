@@ -28,7 +28,7 @@ require_once 'modules/AOR_Reports/aor_utils.php';
 class AOR_ReportsViewDetail extends ViewDetail
 {
 
-    private function getReportParameters(){
+    private function getReportParameters() {
         if(!$this->bean->id){
             return array();
         }

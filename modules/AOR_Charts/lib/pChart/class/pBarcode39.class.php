@@ -181,7 +181,7 @@
       }
     }
 
-   function checksum( $string )
+   function checksum($string)
     {
      $checksum = 0;
      $length   = strlen( $string );

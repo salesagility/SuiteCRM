@@ -117,7 +117,7 @@ class ViewFactory
 	/**
 	 * Load the view_<view>_config.php file which holds options used by the view.
 	 */
-	static function _loadConfig(&$view, $type){
+	static function _loadConfig(&$view, $type) {
 		$view_config_custom = array();
 		$view_config_module = array();
 		$view_config_root_cstm = array();
@@ -220,7 +220,7 @@ class ViewFactory
 	 *
 	 * @return a valid SugarView
 	 */
-	static function _buildFromFile($file, &$bean, $view_object_map, $type, $module){
+	static function _buildFromFile($file, &$bean, $view_object_map, $type, $module) {
 		require_once($file);
 		//try ModuleViewType first then try ViewType if that fails then use SugarView
 		$class = ucfirst($module).'View'.ucfirst($type);
@@ -264,7 +264,7 @@ class ViewFactory
 	 *
 	 * @return SugarView
 	 */
-	static function _buildClass($class, $bean, $view_object_map){
+	static function _buildClass($class, $bean, $view_object_map) {
 		$view = new $class();
 		$view->init($bean, $view_object_map);
 		if($view instanceof SugarView){

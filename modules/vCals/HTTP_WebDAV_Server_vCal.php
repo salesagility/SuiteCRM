@@ -78,7 +78,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function HTTP_WebDAV_Server_vCal(){
+    function HTTP_WebDAV_Server_vCal() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);

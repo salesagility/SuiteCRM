@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-function get_body(&$ss, $vardef){
+function get_body(&$ss, $vardef) {
     global $app_list_strings;
 	//$edit_mod_strings = return_module_language($current_language, 'EditCustomFields');
 	//$edit_mod_strings['COLUMN_TITLE_DEFAULT_VALUE'] = $edit_mod_strings['COLUMN_TITLE_URL'];

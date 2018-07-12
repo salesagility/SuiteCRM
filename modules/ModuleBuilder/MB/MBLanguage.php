@@ -41,7 +41,7 @@ class MBLanguage
 {
 		var $iTemplates = array();
 		var $templates = array();
-		function __construct( $name, $path, $label, $key_name){
+		function __construct($name, $path, $label, $key_name) {
 			$this->path = $path;
 			$this->name = $name;
 			$this->key_name = $key_name;
@@ -51,7 +51,7 @@ class MBLanguage
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MBLanguage($name, $path, $label, $key_name){
+    function MBLanguage($name, $path, $label, $key_name) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -63,7 +63,7 @@ class MBLanguage
     }
 
 
-		function load(){
+		function load() {
 			$this->generateModStrings();
 			$this->generateAppStrings();
 		}
@@ -91,7 +91,7 @@ class MBLanguage
 			}
 		}
 
-	    function loadAppListStrings($file){
+	    function loadAppListStrings($file) {
             if(!file_exists($file))return;
 			//we may not need this when loading in the app strings, but there is no harm
 			//in setting it.
@@ -113,7 +113,7 @@ class MBLanguage
 			}
 		}
 
-		function generateModStrings(){
+		function generateModStrings() {
 			$this->strings = array();
 			$this->loadTemplates();
 
@@ -128,7 +128,7 @@ class MBLanguage
 			$this->loadStrings($this->path . '/language');
 		}
 
-		function getModStrings($language='en_us'){
+		function getModStrings($language='en_us') {
 			$language .= '.lang.php';
 			if(!empty($this->strings[$language]) && $language != 'en_us.lang.php'){
 			    return sugarLangArrayMerge($this->strings['en_us.lang.php'], $this->strings[$language]);
@@ -137,7 +137,7 @@ class MBLanguage
 			$empty = array();
 			return $empty;
 		}
-		function getAppListStrings($language='en_us'){
+		function getAppListStrings($language='en_us') {
 			$language .= '.lang.php';
 			if(!empty($this->appListStrings[$language]) && $language != 'en_us.lang.php'){
 			    return sugarLangArrayMerge($this->appListStrings['en_us.lang.php'], $this->appListStrings[$language]);
@@ -147,7 +147,7 @@ class MBLanguage
 			return $empty;
 		}
 
-		function generateAppStrings($buildFromTemplate = true){
+		function generateAppStrings($buildFromTemplate = true) {
 			$this->appListStrings = array('en_us.lang.php'=>array());
 			//By default, generate app strings for the current language as well.
 			$this->appListStrings[$GLOBALS [ 'current_language' ] . ".lang.php"] = array();
@@ -165,7 +165,7 @@ class MBLanguage
 				}
 			}
 		}
-		function save($key_name, $duplicate=false, $rename=false){
+		function save($key_name, $duplicate=false, $rename=false) {
 			$header = file_get_contents('modules/ModuleBuilder/MB/header.php');
 			$save_path = $this->path . '/language';
 			mkdir_recursive($save_path);
@@ -245,7 +245,7 @@ class MBLanguage
 		*  we will include it from global app_list_string array into custom\modulebuilder\packages\$package\language\application\$lang.lang.php
 		*  when we create a dropdown filed  and the value is created in MB.(#20728 )
 		**/
-		function getGlobalAppListStringsForMB(&$values){
+		function getGlobalAppListStringsForMB(&$values) {
 			//Ensure it comes from MB
 			if(!empty($_REQUEST['view_package']) && !empty($_REQUEST['type']) && $_REQUEST['type'] == 'enum'  && !empty($_REQUEST['options'])){
 				if(!isset($values[$_REQUEST['options']])){
@@ -257,7 +257,7 @@ class MBLanguage
 			}
 		}
 
-		function build($path){
+		function build($path) {
 			if(file_exists($this->path.'/language/'))
 			copy_recursive($this->path.'/language/', $path . '/language/');
 		}
@@ -276,7 +276,7 @@ class MBLanguage
 		 * Reset the templates and load the language files again.  This is called from
 		 * MBModule->save() once the config file has been written.
 		 */
-		function reload(){
+		function reload() {
 			$this->templates = null;
 			$this->load();
 		}
@@ -289,7 +289,7 @@ class MBLanguage
      * @param string $language Language to use to translate the label
      * @return string
      */
-    public function translate($label, $language = "en_us"){
+    public function translate($label, $language = "en_us") {
             $language = $language . ".lang.php";
             if (isset($this->strings[$language][$label]))
                 return $this->strings[$language][$label];

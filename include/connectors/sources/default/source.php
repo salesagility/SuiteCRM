@@ -98,13 +98,13 @@ abstract class source
      */
     protected $_eapm = null;
 
-	public function __construct(){
+	public function __construct() {
 		$this->loadConfig();
 		$this->loadMapping();
 		$this->loadVardefs();
  	}
 
- 	public function init(){}
+ 	public function init() {}
 
  	//////// CALLED FROM component.php ///////
 	public function loadMapping() {
@@ -237,7 +237,7 @@ abstract class source
      * @param array $moduleList
      * @return array Allowed modules
      */
-    public function filterAllowedModules( $moduleList )
+    public function filterAllowedModules($moduleList)
     {
         // Most modules can connect to everything, no further filtering necessary
         return $moduleList;
@@ -505,7 +505,7 @@ abstract class source
      *
      * @param string $log_data
      */
-    protected function log($log_data){
+    protected function log($log_data) {
     	$name = get_class($this);
     	$property_name = $this->getProperty('name');
     	if(!empty($property_name)){
@@ -541,7 +541,7 @@ abstract class source
 	 * Default destructor
 	 *
 	 */
- 	public function __destruct(){
+ 	public function __destruct() {
          // Bug # 47233 - This desctructor was originally removed by bug # 44533.
          // We have to add this destructor back in
          // because there are customers who upgrade from 61x to 623

@@ -44,7 +44,7 @@ class TemplateCurrencyId extends TemplateId
     var $max_size = 25;
     var $type='currency_id';
     
-    function get_field_def(){
+    function get_field_def() {
 		$def = parent::get_field_def();
 		$def['type'] = $this->type;
         $def['dbType'] = 'id';
@@ -53,12 +53,12 @@ class TemplateCurrencyId extends TemplateId
 		return $def;	
 	}
 	
-	function save($df){
+	function save($df) {
 		if(!$df->fieldExists($this->name))
 			parent::save($df);
 	}
 	
-	function delete($df){
+	function delete($df) {
         if(!$df->fieldExists(null, 'currency'))
         {
             parent::delete($df);

@@ -77,7 +77,7 @@ class OneToManyRelationship extends AbstractRelationship
      * @param array $definition Parameters passed in as array defined in parent::$definitionKeys
      * The lhs_module value is for the One side; the rhs_module value is for the Many
      */
-    function __construct ($definition)
+    function __construct($definition)
     {
         parent::__construct ( $definition ) ;
     }
@@ -91,7 +91,7 @@ class OneToManyRelationship extends AbstractRelationship
      * The format is that of TO_MODULE => relationship, FROM_MODULE, FROM_MODULES_SUBPANEL, mimicking the format in the layoutdefs.php
      * @return array    An array of subpanel definitions, keyed by the module
      */
-    function buildSubpanelDefinitions ()
+    function buildSubpanelDefinitions()
     {        
         if ($this->relationship_only)
             return array () ;
@@ -113,7 +113,7 @@ class OneToManyRelationship extends AbstractRelationship
     /*
      * @return array    An array of field definitions, ready for the vardefs, keyed by module
      */
-	function buildVardefs ( )
+	function buildVardefs()
     {
         $vardefs = array ( ) ;
         
@@ -140,7 +140,7 @@ class OneToManyRelationship extends AbstractRelationship
      * Define what fields to add to which modules layouts
      * @return array    An array of module => fieldname
      */
-    function buildFieldsToLayouts ()
+    function buildFieldsToLayouts()
     {
         if ($this->relationship_only)
             return array () ;
@@ -151,7 +151,7 @@ class OneToManyRelationship extends AbstractRelationship
     /*
      * @return array    An array of relationship metadata definitions
      */
-    function buildRelationshipMetaData ()
+    function buildRelationshipMetaData()
     {
         return array( $this->lhs_module => $this->getRelationshipMetaData ( MB_ONETOMANY ) ) ;
     }

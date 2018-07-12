@@ -41,7 +41,7 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-function get_hook_array($module_name){
+function get_hook_array($module_name) {
 
 			$hook_array = null;
 			// This will load an array of the hooks to process
@@ -53,7 +53,7 @@ function get_hook_array($module_name){
 
 
 
-function check_existing_element($hook_array, $event, $action_array){
+function check_existing_element($hook_array, $event, $action_array) {
 
 	if(isset($hook_array[$event])){
 		foreach($hook_array[$event] as $action){
@@ -68,7 +68,7 @@ function check_existing_element($hook_array, $event, $action_array){
 //end function check_existing_element
 }
 
-function replace_or_add_logic_type($hook_array){
+function replace_or_add_logic_type($hook_array) {
 
 
 
@@ -81,7 +81,7 @@ function replace_or_add_logic_type($hook_array){
 
 
 
-function write_logic_file($module_name, $contents){
+function write_logic_file($module_name, $contents) {
 
 		$file = "modules/".$module_name . '/logic_hooks.php';
 		$file = create_custom_directory($file);
@@ -92,7 +92,7 @@ function write_logic_file($module_name, $contents){
 //end function write_logic_file
 }
 
-function build_logic_file($hook_array){
+function build_logic_file($hook_array) {
 
 	$hook_contents = "";
 

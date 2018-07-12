@@ -91,7 +91,7 @@ $GLOBALS['log']->debug("Saved record with id of ".$return_id);
 header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
 
 
-function populateFromRow(&$focus,$row){
+function populateFromRow(&$focus,$row) {
     
     
     //only employee specific field values need to be copied.

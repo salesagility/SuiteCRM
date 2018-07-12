@@ -110,7 +110,7 @@ class soap_transport_http extends nusoap_base
 	* @param boolean $use_curl Whether to try to force cURL use
 	* @access public
 	*/
-	function soap_transport_http($url, $curl_options = NULL, $use_curl = false){
+	function soap_transport_http($url, $curl_options = NULL, $use_curl = false) {
 		parent::nusoap_base();
 		$this->debug("ctor url=$url use_curl=$use_curl curl_options:");
 		$this->appendDebug($this->varDump($curl_options));
@@ -227,7 +227,7 @@ class soap_transport_http extends nusoap_base
 	* @return	boolean true if connected, false if not
 	* @access   private
 	*/
-	function connect($connection_timeout=0,$response_timeout=30){
+	function connect($connection_timeout=0,$response_timeout=30) {
 	  	// For PHP 4.3 with OpenSSL, change https scheme to ssl, then treat like
 	  	// "regular" socket.
 	  	// TODO: disabled for now because OpenSSL must be *compiled* in (not just
@@ -681,7 +681,7 @@ class soap_transport_http extends nusoap_base
 	* @access   public
 	* @deprecated
 	*/
-	function decodeChunked($buffer, $lb){
+	function decodeChunked($buffer, $lb) {
 		// length := 0
 		$length = 0;
 		$new = '';
@@ -844,7 +844,7 @@ class soap_transport_http extends nusoap_base
 	* @return	string the response (also sets member variables like incoming_payload)
 	* @access   private
 	*/
-	function getResponse(){
+	function getResponse() {
 		$this->incoming_payload = '';
 	    
 	  if ($this->io_method() == 'socket') {
@@ -1232,7 +1232,7 @@ class soap_transport_http extends nusoap_base
 	 * @return	boolean whether the request was honored by this method.
 	 * @access	public
 	 */
-	function usePersistentConnection(){
+	function usePersistentConnection() {
 		if (isset($this->outgoing_headers['Accept-Encoding'])) {
 			return false;
 		}

@@ -47,13 +47,13 @@ class ConfiguratorViewAddFontView extends SugarView
     /**
      * Constructor
      */
-    public function AddFontView(){
+    public function AddFontView() {
         parent::__construct();
     }
     /** 
      * display the form
      */
-    public function display(){
+    public function display() {
         global $mod_strings, $app_list_strings, $app_strings, $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);  

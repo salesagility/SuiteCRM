@@ -39,7 +39,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
  
-function get_body(&$ss, $vardef){
+function get_body(&$ss, $vardef) {
 	$vars = $ss->get_template_vars();
 	$fields = $vars['module']->mbvardefs->vardefs['fields'];
 	$fieldOptions = array();

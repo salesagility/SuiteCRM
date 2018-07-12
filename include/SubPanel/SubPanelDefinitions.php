@@ -83,8 +83,8 @@ class aSubPanel
     public $search_query;
     public $base_collection_list = array();
 
-    public function __construct ($name , $instance_properties , $parent_bean , $reload = false , $original_only = false,
-        $search_query = '', $collections = array() ){
+    public function __construct($name , $instance_properties , $parent_bean , $reload = false , $original_only = false,
+        $search_query = '', $collections = array()) {
 
         if (isset($instance_properties['collection_list'])) {
             $this->base_collection_list = $instance_properties['collection_list'];
@@ -210,7 +210,7 @@ class aSubPanel
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function aSubPanel($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
+    function aSubPanel($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array()) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -236,7 +236,7 @@ class aSubPanel
     }
 
 
-    function distinct_query ()
+    function distinct_query()
     {
         if (isset ( $this->_instance_properties [ 'get_distinct_data' ] ))
         {
@@ -246,7 +246,7 @@ class aSubPanel
     }
 
     //return the translated header value.
-    function get_title ()
+    function get_title()
     {
         if (empty ( $this->mod_strings [ $this->_instance_properties [ 'title_key' ] ] ))
         {
@@ -256,7 +256,7 @@ class aSubPanel
     }
 
     //return the definition of buttons. looks for buttons in 2 locations.
-    function get_buttons ()
+    function get_buttons()
     {
         $buttons = array ( ) ;
         if (isset ( $this->_instance_properties [ 'top_buttons' ] ))
@@ -305,7 +305,7 @@ class aSubPanel
      * @return bool         True by default if the subpanel was loaded.  Will return false if none in the collection are
      *                      allowed by the current user.
      */
-    function load_sub_subpanels ()
+    function load_sub_subpanels()
     {
 
         global $modListHeader ;
@@ -462,7 +462,7 @@ class aSubPanel
         return $display_fields;
     }
 
-    function isDatasourceFunction ()
+    function isDatasourceFunction()
     {
         if (strpos ( $this->get_inst_prop_value ( 'get_subpanel_data' ), 'function' ) === false)
         {
@@ -476,18 +476,18 @@ class aSubPanel
      *
      * @return bool
      */
-    function isCollection ()
+    function isCollection()
     {
         return ($this->get_inst_prop_value ( 'type' ) == 'collection');
     }
 
     //get value of a property defined at the panel instance level.
-    function get_inst_prop_value ( $name )
+    function get_inst_prop_value($name)
     {
         return isset($this->_instance_properties[$name]) ? $this->_instance_properties [ $name ] : null;
     }
     //get value of a property defined at the panel definition level.
-    function get_def_prop_value ( $name )
+    function get_def_prop_value($name)
     {
         if (isset ( $this->panel_definition [ $name ] ))
         {
@@ -500,7 +500,7 @@ class aSubPanel
 
     //if datasource is of the type function then return the function name
     //else return the value as is.
-    function get_function_parameters ()
+    function get_function_parameters()
     {
         $parameters = array ( ) ;
         if ($this->isDatasourceFunction ())
@@ -510,7 +510,7 @@ class aSubPanel
         return $parameters ;
     }
 
-    function get_data_source_name ( $check_set_subpanel_data = false )
+    function get_data_source_name($check_set_subpanel_data = false)
     {
         $prop_value = null ;
         if ($check_set_subpanel_data)
@@ -534,7 +534,7 @@ class aSubPanel
     }
 
     //returns the where clause for the query.
-    function get_where ()
+    function get_where()
     {
         if($this->get_def_prop_value ( 'where' ) != '' && $this->search_query != ''){
             return $this->get_def_prop_value ( 'where' ).' AND '.$this->search_query;
@@ -544,14 +544,14 @@ class aSubPanel
         return $this->get_def_prop_value ( 'where' ) ;
     }
 
-    function is_fill_in_additional_fields ()
+    function is_fill_in_additional_fields()
     {
         // do both. inst_prop returns values from metadata/subpaneldefs.php and def_prop returns from subpanel/default.php
         $temp = $this->get_inst_prop_value ( 'fill_in_additional_fields' ) || $this->get_def_prop_value ( 'fill_in_additional_fields' ) ;
         return $temp ;
     }
 
-    function get_list_fields ()
+    function get_list_fields()
     {
         if (isset ( $this->panel_definition [ 'list_fields' ] ))
         {
@@ -562,18 +562,18 @@ class aSubPanel
         }
     }
 
-    function get_module_name ()
+    function get_module_name()
     {
         return $this->get_inst_prop_value ( 'module' ) ;
     }
 
-    function get_name ()
+    function get_name()
     {
         return $this->name ;
     }
 
     //load subpanel module's table name and column fields.
-    function load_module_info ()
+    function load_module_info()
     {
         global $beanList ;
         global $beanFiles ;
@@ -595,7 +595,7 @@ class aSubPanel
     }
     //this function is to be used only with sub-panels that are based
     //on collections.
-    function get_header_panel_def ()
+    function get_header_panel_def()
     {
         if (! empty ( $this->sub_subpanels ))
         {
@@ -626,7 +626,7 @@ class aSubPanel
      * Returns an array of current properties of the class.
      * It will simply give the class name for instances of classes.
      */
-    function _to_array ()
+    function _to_array()
     {
         return array ( '_instance_properties' => $this->_instance_properties , 'db_fields' => $this->db_fields , 'mod_strings' => $this->mod_strings , 'name' => $this->name , 'panel_definition' => $this->panel_definition , 'parent_bean' => get_class ( $this->parent_bean ) , 'sub_subpanels' => $this->sub_subpanels , 'table_name' => $this->table_name , 'template_instance' => get_class ( $this->template_instance ) ) ;
     }
@@ -660,7 +660,7 @@ class SubPanelDefinitions
      * @param array $layout_def_override - if you wish to override the default loaded layout defs you pass them in here.
      * @return SubPanelDefinitions
      */
-    function __construct ( $focus , $layout_def_key = '' , $layout_def_override = '' )
+    function __construct($focus , $layout_def_key = '' , $layout_def_override = '')
     {
         $this->_focus = $focus ;
         if (! empty ( $layout_def_override ))
@@ -684,7 +684,7 @@ class SubPanelDefinitions
      * @param boolean 	Optional - include the subpanel title label in the return array (false)
      * @return array	All tabs that pass an ACL check
      */
-    function get_available_tabs ($FromGetModuleSubpanels = false)
+    function get_available_tabs($FromGetModuleSubpanels = false)
     {
         global $modListHeader ;
         global $modules_exempt_from_availability_check ;
@@ -759,7 +759,7 @@ class SubPanelDefinitions
      * @return boolean|aSubPanel        Returns aSubPanel object or boolean false if one is not found or it can't be
      *      displayed due to ACL reasons.
      */
-    function load_subpanel ( $name , $reload = false , $original_only = false, $search_query = '', $collections = array() )
+    function load_subpanel($name , $reload = false , $original_only = false, $search_query = '', $collections = array())
     {
         if (!is_dir('modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower ( $name ) ] [ 'module' ]))
             return false;
@@ -778,7 +778,7 @@ class SubPanelDefinitions
     /**
      * Load the layout def file and associate the definition with a variable in the file.
      */
-    function open_layout_defs ( $reload = false , $layout_def_key = '' , $original_only = false )
+    function open_layout_defs($reload = false , $layout_def_key = '' , $original_only = false)
     {
         $layout_defs [ $this->_focus->module_dir ] = array ( ) ;
         $layout_defs [ $layout_def_key ] = array ( ) ;
@@ -805,7 +805,7 @@ class SubPanelDefinitions
      * Returns true if successful, false otherwise.
      * Hint: Used by Campaign's DetailView.
      */
-    function exclude_tab ( $tab_name )
+    function exclude_tab($tab_name)
     {
         $result = false ;
         //unset layout definition
@@ -830,7 +830,7 @@ class SubPanelDefinitions
      * return all available subpanels that belong to the list of tab modules.  You can optionally return all
      * available subpanels, and also optionally group by module (prepends the key with the bean class name).
      */
-    function get_all_subpanels( $return_tab_modules_only = true, $group_by_module = false )
+    function get_all_subpanels($return_tab_modules_only = true, $group_by_module = false)
     {
         global $moduleList, $beanFiles, $beanList, $module;
 
@@ -887,7 +887,7 @@ class SubPanelDefinitions
     /*
      * save array of hidden panels to mysettings category in config table
      */
-    function set_hidden_subpanels($panels){
+    function set_hidden_subpanels($panels) {
         $administration = new Administration();
         $serialized = base64_encode(serialize($panels));
         $administration->saveSetting('MySettings', 'hide_subpanels', $serialized);
@@ -896,7 +896,7 @@ class SubPanelDefinitions
     /*
      * retrieve hidden subpanels
      */
-    function get_hidden_subpanels(){
+    function get_hidden_subpanels() {
         global $moduleList;
 
         //create variable as static to minimize queries

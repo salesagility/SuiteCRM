@@ -54,7 +54,7 @@ class ModuleBuilderParser
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ModuleBuilderParser(){
+    function ModuleBuilderParser() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -68,7 +68,7 @@ class ModuleBuilderParser
 	/*
 	 * Initialize this parser
 	 */
-	function init ()
+	function init()
 	{
 	}
 
@@ -121,7 +121,7 @@ class ModuleBuilderParser
         return (array('viewdefs' => $defs, 'variables' => $variables));
 	}
 
-	function handleSave ($file,$view,$moduleName,$defs)
+	function handleSave($file,$view,$moduleName,$defs)
 	{
 	}
 
@@ -129,7 +129,7 @@ class ModuleBuilderParser
 	/*
 	 * Save the new layout
 	 */
-	function _writeToFile ($file,$view,$moduleName,$defs,$variables)
+	function _writeToFile($file,$view,$moduleName,$defs,$variables)
 	{
 	        if(file_exists($file))
 	            unlink($file);
@@ -182,7 +182,7 @@ class ModuleBuilderParser
 	}
 
 
-    function _fatalError ($msg)
+    function _fatalError($msg)
     {
         $GLOBALS ['log']->fatal($msg);
         echo $msg;

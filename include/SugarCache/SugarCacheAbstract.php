@@ -148,7 +148,7 @@ abstract class SugarCacheAbstract
      * @param  string $key
      * @return mixed
      */
-    public function __set( $key, $value)
+    public function __set($key, $value)
     {
         $this->set($key, $value);
 

@@ -430,7 +430,7 @@ class InboundEmail extends SugarBean
             );
 
             $uids = array_map(
-                function($x) {
+                function ($x) {
                     return $x->uid;
                 },
                 $emailSortedHeaders

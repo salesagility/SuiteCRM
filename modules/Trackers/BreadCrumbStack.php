@@ -102,7 +102,7 @@ class BreadCrumbStack
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	public function BreadCrumbStack($user_id, $modules=''){
+	public function BreadCrumbStack($user_id, $modules='') {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -161,7 +161,7 @@ class BreadCrumbStack
     * Pop an item off the stack
     *
     */
-   public function pop(){
+   public function pop() {
    		$item = array_shift($this->stack);
    		if(!empty($item['item_id']) && isset($this->stackMap[$item['item_id']])){
    			unset($this->stackMap[$item['item_id']]);
@@ -174,7 +174,7 @@ class BreadCrumbStack
     *
     * @param int $id
     */
-   private function makeItemInvisible($id){
+   private function makeItemInvisible($id) {
    	    if($this->deleteInvisible) {
    	      $query = "DELETE FROM tracker where id = '{$id}'";
    	    } else {
@@ -188,7 +188,7 @@ class BreadCrumbStack
     *
     * @param string $item_id - the item id to remove from the stack
     */
-   public function popItem($item_id){
+   public function popItem($item_id) {
    		if(isset($this->stackMap[$item_id])){
    			$idx = $this->stackMap[$item_id];
 	   		unset($this->stack[$idx]);
@@ -202,7 +202,7 @@ class BreadCrumbStack
     *
     * @param array $row - the row from the db query
     */
-   private function addItem($row){
+   private function addItem($row) {
    		$this->stack[] = $row;
    		$this->stackMap[$row['item_id']] = ($this->length() - 1);
    }
@@ -213,7 +213,7 @@ class BreadCrumbStack
     * be called when an item_id is already in the stack and needs to be removed
     *
     */
-   private function heal(){
+   private function heal() {
    		$vals = array_values($this->stack);
    		$this->stack = array();
    		$this->stackMap = array();
@@ -227,7 +227,7 @@ class BreadCrumbStack
     *
     * @return int - the number of elements in the stack
     */
-   public function length(){
+   public function length() {
    		return count($this->stack);
    }
 

@@ -98,7 +98,7 @@ class nusoap_xmlschema extends nusoap_base
 	* @param	string $namespaces namespaces defined in enclosing XML
 	* @access   public
 	*/
-	function nusoap_xmlschema($schema='',$xml='',$namespaces=array()){
+	function nusoap_xmlschema($schema='',$xml='',$namespaces=array()) {
 		parent::nusoap_base();
 		$this->debug('nusoap_xmlschema class instantiated, inside constructor');
 		// files
@@ -131,7 +131,7 @@ class nusoap_xmlschema extends nusoap_base
 	* @return boolean
     * @access public
     */
-	function parseFile($xml,$type){
+	function parseFile($xml,$type) {
 		// parse xml file
 		if($xml != ""){
 			$xmlStr = @join("",@file($xml));
@@ -157,7 +157,7 @@ class nusoap_xmlschema extends nusoap_base
     * @param	string $type (schema|xml)
 	* @access   private
 	*/
-	function parseString($xml,$type){
+	function parseString($xml,$type) {
 		// parse xml string
 		if($xml != ""){
 
@@ -586,7 +586,7 @@ class nusoap_xmlschema extends nusoap_base
 	* @param    string $data element content
 	* @access   private
 	*/
-	function schemaCharacterData($parser, $data){
+	function schemaCharacterData($parser, $data) {
 		$pos = $this->depth_array[$this->depth - 1];
 		$this->message[$pos]['cdata'] .= $data;
 	}
@@ -596,7 +596,7 @@ class nusoap_xmlschema extends nusoap_base
 	*
 	* @access   public
 	*/
-	function serializeSchema(){
+	function serializeSchema() {
 
 		$schemaPrefix = $this->getPrefixFromNamespace($this->XMLSchemaVersion);
 		$xml = '';
@@ -714,7 +714,7 @@ class nusoap_xmlschema extends nusoap_base
 	* @param    string $string debug data
 	* @access   private
 	*/
-	function xdebug($string){
+	function xdebug($string) {
 		$this->debug('<' . $this->schemaTargetNamespace . '> '.$string);
 	}
 
@@ -730,7 +730,7 @@ class nusoap_xmlschema extends nusoap_base
     * @access public
     * @deprecated
     */
-	function getPHPType($type,$ns){
+	function getPHPType($type,$ns) {
 		if(isset($this->typemap[$ns][$type])){
 			//print "found type '$type' and ns $ns in typemap<br>";
 			return $this->typemap[$ns][$type];
@@ -763,7 +763,7 @@ class nusoap_xmlschema extends nusoap_base
     * @see addSimpleType
     * @see addElement
     */
-	function getTypeDef($type){
+	function getTypeDef($type) {
 		//$this->debug("in getTypeDef for type $type");
 		if (substr($type, -1) == '^') {
 			$is_element = 1;
@@ -842,7 +842,7 @@ class nusoap_xmlschema extends nusoap_base
     * @access public
     * @deprecated
     */
-    function serializeTypeDef($type){
+    function serializeTypeDef($type) {
     	//print "in sTD() for type $type<br>";
 	if($typeDef = $this->getTypeDef($type)){
 		$str .= '<'.$type;
@@ -878,7 +878,7 @@ class nusoap_xmlschema extends nusoap_base
     * @access public
     * @deprecated
 	*/
-	function typeToForm($name,$type){
+	function typeToForm($name,$type) {
 		// get typedef
 		if($typeDef = $this->getTypeDef($type)){
 			// if struct
@@ -950,7 +950,7 @@ class nusoap_xmlschema extends nusoap_base
 	* @access public
 	* @see getTypeDef
 	*/
-	function addComplexType($name,$typeClass='complexType',$phpType='array',$compositor='',$restrictionBase='',$elements=array(),$attrs=array(),$arrayType=''){
+	function addComplexType($name,$typeClass='complexType',$phpType='array',$compositor='',$restrictionBase='',$elements=array(),$attrs=array(),$arrayType='') {
 		$this->complexTypes[$name] = array(
 	    'name'		=> $name,
 	    'typeClass'	=> $typeClass,

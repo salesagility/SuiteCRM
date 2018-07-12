@@ -41,12 +41,12 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-function unzip( $zip_archive, $zip_dir)
+function unzip($zip_archive, $zip_dir)
 {
    return unzip_file($zip_archive, null, $zip_dir);
 }
 
-function unzip_file( $zip_archive, $archive_file, $zip_dir)
+function unzip_file($zip_archive, $archive_file, $zip_dir)
 {
     if( !is_dir( $zip_dir ) ) {
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL'))
@@ -91,7 +91,7 @@ function unzip_file( $zip_archive, $archive_file, $zip_dir)
     return true;
 }
 
-function zip_dir( $zip_dir, $zip_archive )
+function zip_dir($zip_dir, $zip_archive)
 {
     if( !is_dir( $zip_dir ) ){
         if (!defined('SUITE_PHPUNIT_RUNNER'))

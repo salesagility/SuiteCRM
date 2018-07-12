@@ -236,7 +236,7 @@ class FP_eventsController extends SugarController
         }
     }
 
-    public function action_add_to_list(){
+    public function action_add_to_list() {
 
         $ids = $_POST['subpanel_id'];
         $event_id = $_POST['return_id'];
@@ -352,7 +352,7 @@ class FP_eventsController extends SugarController
         die();
     }
 
-    public function action_sendinvitemails(){
+    public function action_sendinvitemails() {
         $db = DBManagerFactory::getInstance();
         global $sugar_config;
         global $mod_strings;
@@ -598,7 +598,7 @@ class FP_eventsController extends SugarController
     }
 
     //handles sending the emails
-    public function sendEmail($emailTo, $emailSubject, $emailToname, $emailBody, $altemailBody, SugarBean $relatedBean = null, $attachments = array()){
+    public function sendEmail($emailTo, $emailSubject, $emailToname, $emailBody, $altemailBody, SugarBean $relatedBean = null, $attachments = array()) {
 
         $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();

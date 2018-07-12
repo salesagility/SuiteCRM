@@ -78,7 +78,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  	 * @param $module - the module name
  	 * @param - 0 = decide for me, 1 = ListView.html, 2 = ListViewSmarty
  	 */
- 	function __construct($focus, $module, $type = 0){
+ 	function __construct($focus, $module, $type = 0) {
  		$this->focus = $focus;
  		$this->module = $module;
  		$this->type = $type;
@@ -88,7 +88,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ListViewFacade($focus, $module, $type = 0){
+    function ListViewFacade($focus, $module, $type = 0) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -100,7 +100,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     }
 
 
- 	function build(){
+ 	function build() {
  		//we will assume that if the ListView.html file exists we will want to use that one
  		if(file_exists('modules/'.$this->module.'/ListView.html')){
  			$this->type = 1;
@@ -156,7 +156,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  		}
  	}
 
- 	function setup($template = '', $where = '', $params = array(), $mod_strings = array(), $offset = 0, $limit = -1, $orderBy = '', $prefix = '', $filter_fields = array(), $id_field = 'id'){
+ 	function setup($template = '', $where = '', $params = array(), $mod_strings = array(), $offset = 0, $limit = -1, $orderBy = '', $prefix = '', $filter_fields = array(), $id_field = 'id') {
  		if(!empty($template))
  			$this->template = $template;
 
@@ -182,7 +182,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  		}
  	}
 
- 	function display($title = '', $section = 'main', $return = FALSE){
+ 	function display($title = '', $section = 'main', $return = FALSE) {
  		if($this->type == 1){
             ob_start();
  			$this->lv->setHeaderTitle($title);
@@ -198,7 +198,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
             echo $output;
  	}
 
-	function setTitle($title = ''){
+	function setTitle($title = '') {
 		$this->title = $title;
 	}
  }

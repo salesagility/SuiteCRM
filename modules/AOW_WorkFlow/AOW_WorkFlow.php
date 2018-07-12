@@ -144,7 +144,7 @@ class AOW_WorkFlow extends Basic
         $action->save_lines($_POST, $this, 'aow_actions_');
     }
 
-    function load_flow_beans(){
+    function load_flow_beans() {
         global $beanList, $app_list_strings;
 
         $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
@@ -179,7 +179,7 @@ class AOW_WorkFlow extends Basic
     /**
      * Retrieve the beans to actioned and run the actions
      */
-    function run_flow(){
+    function run_flow() {
         $beans = $this->get_flow_beans();
         if(!empty($beans)){
 
@@ -215,7 +215,7 @@ class AOW_WorkFlow extends Basic
     /**
      * Use the condition statements and processed table to build query to retrieve beans to be actioned
      */
-    function get_flow_beans(){
+    function get_flow_beans() {
         global $beanList;
 
         if(isset($beanList[$this->flow_module]) && $beanList[$this->flow_module]){
@@ -254,7 +254,7 @@ class AOW_WorkFlow extends Basic
         return null;
     }
 
-    function build_flow_query_join($name, SugarBean $module, $type, $query = array()){
+    function build_flow_query_join($name, SugarBean $module, $type, $query = array()) {
 
         if(!isset($query['join'][$name])){
 
@@ -282,7 +282,7 @@ class AOW_WorkFlow extends Basic
         return $query;
     }
 
-    function build_flow_query_where($query = array()){
+    function build_flow_query_where($query = array()) {
         global $beanList;
 
         if(isset($beanList[$this->flow_module]) && $beanList[$this->flow_module]){
@@ -334,7 +334,7 @@ class AOW_WorkFlow extends Basic
         return $query;
     }
 
-    function build_query_where(AOW_Condition $condition, $module, $query = array()){
+    function build_query_where(AOW_Condition $condition, $module, $query = array()) {
         global $beanList, $app_list_strings, $sugar_config, $timedate;
         $path = unserialize(base64_decode($condition->module_path));
 
@@ -519,7 +519,7 @@ class AOW_WorkFlow extends Basic
      * @param SugarBean $bean
      * @return bool
      */
-    public function check_valid_bean(SugarBean $bean){
+    public function check_valid_bean(SugarBean $bean) {
         global $app_list_strings, $timedate;
 
         if (!$this->multiple_runs) {
@@ -744,7 +744,7 @@ class AOW_WorkFlow extends Basic
         return true;
     }
 
-    function compare_condition($var1, $var2, $operator = 'Equal_To'){
+    function compare_condition($var1, $var2, $operator = 'Equal_To') {
         switch ($operator) {
             case "Not_Equal_To": return $var1 != $var2;
             case "Greater_Than":  return $var1 >  $var2;
@@ -776,7 +776,7 @@ class AOW_WorkFlow extends Basic
         }
     }
 
-    function check_in_group($bean_id, $module, $group){
+    function check_in_group($bean_id, $module, $group) {
         $sql = "SELECT id FROM securitygroups_records WHERE record_id = '".$bean_id."' AND module = '".$module."' AND securitygroup_id = '".$group."' AND deleted=0";
         if($module == 'Users')  $sql = "SELECT id FROM securitygroups_users WHERE user_id = '".$bean_id."' AND securitygroup_id = '".$group."' AND deleted=0";
         $id = $this->db->getOne($sql);
@@ -787,7 +787,7 @@ class AOW_WorkFlow extends Basic
     /**
      * Run the actions against the passed $bean
      */
-    function run_actions(SugarBean &$bean, $in_save = false){
+    function run_actions(SugarBean &$bean, $in_save = false) {
 
         require_once('modules/AOW_Processed/AOW_Processed.php');
         $processed = new AOW_Processed();

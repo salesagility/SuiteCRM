@@ -79,7 +79,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 		return $mod_strings['LBL_EMAIL_NOT_SENT'];
 }
 
-function  hasPasswordExpired($username){
+function hasPasswordExpired($username) {
     $current_user= new user();
     $usr_id=$current_user->retrieve_user_id($username);
 	$current_user->retrieve($usr_id);

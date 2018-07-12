@@ -198,11 +198,11 @@ class Campaign extends SugarBean
 	}
 
 
-	function update_currency_id($fromid, $toid){
+	function update_currency_id($fromid, $toid) {
 	}
 
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 
 		$temp_array = $this->get_list_view_array();
 		if ($this->campaign_type != 'Email') {
@@ -221,7 +221,7 @@ class Campaign extends SugarBean
 		builds a generic search based on the query string using or
 		do not include any $this-> because this is called on without having the class instantiated
 	*/
-	function build_generic_where_clause ($the_query_string)
+	function build_generic_where_clause($the_query_string)
 	{
 		$where_clauses = Array();
 		$the_query_string = $this->db->quote($the_query_string);
@@ -260,7 +260,7 @@ class Campaign extends SugarBean
 	}
 
 
-	function mark_deleted($id){
+	function mark_deleted($id) {
         $query = "update contacts set campaign_id = null where campaign_id = '{$id}' ";
         $this->db->query($query);
         $query = "update accounts set campaign_id = null where campaign_id = '{$id}' ";
@@ -400,7 +400,7 @@ class Campaign extends SugarBean
 //		return $query;
 //	}
 
-	 function bean_implements($interface){
+	 function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}

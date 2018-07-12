@@ -42,7 +42,7 @@ class OperatorsTest extends SuiteCRM\StateCheckerUnitAbstract
             new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'
             ),
-            function() {
+            function () {
                 self::$operator->isValid(array());
             }
         );
@@ -72,7 +72,7 @@ class OperatorsTest extends SuiteCRM\StateCheckerUnitAbstract
             new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Operators][Operator][isValid][expected type to be string] $operator'
             ),
-            function() {
+            function () {
                 self::$operator->isValid(array());
             }
         );

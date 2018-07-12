@@ -62,7 +62,7 @@ class TemplatePhone extends TemplateText
 	 * This method checks to see if the validate_usa_format key/value entry should be
 	 * added to the vardef entry representing the module
 	 */	
-    function get_field_def(){
+    function get_field_def() {
 		$def = parent::get_field_def();
 		$def['dbType'] = 'varchar';
 		

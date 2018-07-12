@@ -45,7 +45,7 @@ class TemplateInt extends TemplateRange
 	var $type = 'int';
     var $supports_unified_search = true;
 
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 		$this->vardef_map['autoinc_next'] = 'autoinc_next';
 		$this->vardef_map['autoinc_start'] = 'autoinc_start';
@@ -56,12 +56,12 @@ class TemplateInt extends TemplateRange
         $this->vardef_map['disable_num_format'] = 'ext3';
     }
 
-	function get_html_edit(){
+	function get_html_edit() {
 		$this->prepare();
 		return "<input type='text' name='". $this->name. "' id='".$this->name."' title='{" . strtoupper($this->name) ."_HELP}' size='".$this->size."' maxlength='".$this->len."' value='{". strtoupper($this->name). "}'>";
 	}
 
-	function populateFromPost(){
+	function populateFromPost() {
 		parent::populateFromPost();
 		if (isset($this->auto_increment))
 		{
@@ -69,7 +69,7 @@ class TemplateInt extends TemplateRange
 		}
 	}
 
-    function get_field_def(){
+    function get_field_def() {
 		$vardef = parent::get_field_def();
 		$vardef['disable_num_format'] = isset($this->disable_num_format) ? $this->disable_num_format : $this->ext3;//40005
 
@@ -100,7 +100,7 @@ class TemplateInt extends TemplateRange
 		return $vardef;
     }
 
-    function save($df){
+    function save($df) {
         $next = false;
 		if (!empty($this->auto_increment) && (!empty($this->autoinc_next) || !empty($this->autoinc_start)) && isset($this->module))
         {

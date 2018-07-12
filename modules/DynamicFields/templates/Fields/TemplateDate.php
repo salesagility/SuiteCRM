@@ -68,12 +68,12 @@ function __construct() {
 }
 
 
-function get_db_default($modify=false){
+function get_db_default($modify=false) {
 		return '';
 }
 
 //BEGIN BACKWARDS COMPATABILITY
-function get_xtpl_edit(){
+function get_xtpl_edit() {
 		global $timedate;
 		$name = $this->name;
 		$returnXTPL = array();
@@ -92,7 +92,7 @@ function get_xtpl_edit(){
 		return $returnXTPL;
 	}
 
-function get_field_def(){
+function get_field_def() {
 		$def = parent::get_field_def();
 		if(!empty($def['default'])){
 			$def['display_default'] = $def['default'];

@@ -51,7 +51,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_validate_record_js () {
+function get_validate_record_js() {
 	
 global $mod_strings;
 global $app_strings;
@@ -85,7 +85,7 @@ return $the_script;
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_new_record_form () {
+function get_new_record_form() {
 
 	require_once('modules/ProspectLists/ProspectListFormBase.php');
 	$accountForm = new ProspectListFormBase();

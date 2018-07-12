@@ -48,7 +48,7 @@ class ParserSearchFields extends ModuleBuilderParser
 	var $searchFields;
 	var $packageKey;
 
-    function __construct ($moduleName, $packageName='')
+    function __construct($moduleName, $packageName='')
     {
         $this->moduleName = $moduleName;
         if (!empty($packageName))
@@ -64,7 +64,7 @@ class ParserSearchFields extends ModuleBuilderParser
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ParserSearchFields($moduleName, $packageName=''){
+    function ParserSearchFields($moduleName, $packageName='') {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -112,7 +112,7 @@ class ParserSearchFields extends ModuleBuilderParser
         return $searchFields;
     }
 
-    function saveSearchFields ($searchFields)
+    function saveSearchFields($searchFields)
     {
         if (!empty($this->packageName)) //we are in Module builder
         {

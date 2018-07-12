@@ -47,14 +47,14 @@
          * Constructor: this class is called from the the ajax call and handles invoking the correct
          * functionality on the server.
          */
-        function __construct(){
+        function __construct() {
            $this->_pm = new PackageManager();
         }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function PackageController(){
+    function PackageController() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -66,7 +66,7 @@
     }
 
 
-        function performBasicSearch(){
+        function performBasicSearch() {
             $json = getJSONobj();
             $search_term = '';
             $node_id = '';
@@ -88,7 +88,7 @@
          * @return packages     xml string consisting of the packages and releases which belong to
          *                      the category
          */
-        function getPackages(){
+        function getPackages() {
             $json = getJSONobj();
             $category_id = '';
 
@@ -103,7 +103,7 @@
          * Obtain a list of releases from the server.  This function is currently used for generating the patches/langpacks for upgrade wizard
          * as well as during installation
          */
-        function getReleases(){
+        function getReleases() {
             $json = getJSONobj();
             $category_id = '';
        		$package_id = '';
@@ -147,7 +147,7 @@
         /**
          * Obtain a promotion from the depot
          */
-        function getPromotion(){
+        function getPromotion() {
             $json = getJSONobj();
 
             $header = PackageManager::getPromotion();
@@ -163,7 +163,7 @@
          * @param release_id   this is passed via POST and is the release id of the release we wish to download
          * @return bool         true is successful in downloading, false otherwise
          */
-        function download(){
+        function download() {
             global $sugar_config;
             $json = getJSONobj();
             $package_id = '';
@@ -199,7 +199,7 @@
          * @param id - the id of the parent_category, -1 if this is the root
          * @return array - a list of categories/nodes which are underneath this node
          */
-        function getCategories(){
+        function getCategories() {
             $json = getJSONobj();
             $node_id = '';
              if(isset($_REQUEST['category_id'])) {
@@ -210,7 +210,7 @@
             echo 'result = ' . $json->encode(array('nodes' => $nodes));
         }
 
-         function getNodes(){
+         function getNodes() {
             $json = getJSONobj();
             $category_id = '';
              if(isset($_REQUEST['category_id'])) {
@@ -227,7 +227,7 @@
          * @param type      the type to check for
          * @return array    return an array of releases for each given installed object if an update is found
          */
-        function checkForUpdates(){
+        function checkForUpdates() {
             $json = getJSONobj();
             $type = '';
              if(isset($_REQUEST['type'])) {
@@ -258,7 +258,7 @@
             echo 'result = ' . $json->encode(array('updates' => $nodes));
         }
 
-        function getLicenseText(){
+        function getLicenseText() {
             $json = getJSONobj();
             $file = '';
             if(isset($_REQUEST['file'])) {
@@ -271,7 +271,7 @@
         /**
          *  build the list of modules that are currently in the staging area waiting to be installed
          */
-        function getPackagesInStaging(){
+        function getPackagesInStaging() {
             $packages = $this->_pm->getPackagesInStaging('module');
             $json = getJSONobj();
 
@@ -281,7 +281,7 @@
         /**
          *  build the list of modules that are currently in the staging area waiting to be installed
          */
-        function performInstall(){
+        function performInstall() {
             $file = '';
              if(isset($_REQUEST['file'])) {
                 $file = hashToFile($_REQUEST['file']);
@@ -294,7 +294,7 @@
             echo 'result = ' . $json->encode(array('result' => 'success'));
         }
 
-        function authenticate(){
+        function authenticate() {
             $json = getJSONobj();
             $username = '';
             $password = '';
@@ -329,7 +329,7 @@
             echo 'result = ' . $json->encode(array('status' => $status));
         }
 
-        function getDocumentation(){
+        function getDocumentation() {
         	$json = getJSONobj();
             $package_id = '';
             $release_id = '';
@@ -346,7 +346,7 @@
             echo 'result = ' . $json->encode(array('documents' => $documents));
         }
 
-        function downloadedDocumentation(){
+        function downloadedDocumentation() {
         	$json = getJSONobj();
             $document_id = '';
 
@@ -372,7 +372,7 @@
             }
         }
 
- 		function remove(){
+ 		function remove() {
         	$json = getJSONobj();
             $file = '';
 

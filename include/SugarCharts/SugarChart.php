@@ -90,7 +90,7 @@ class SugarChart
         $this->image_export_type = (extension_loaded('gd') && function_exists('gd_info')) ? "png" : "jpg";
 	}
 
-	function getData($query){
+	function getData($query) {
 		$result = $this->db->query($query);
 
 		$row = $this->db->fetchByAssoc($result);
@@ -101,7 +101,7 @@ class SugarChart
 		}
 	}
 
-	function constructBaseURL(){
+	function constructBaseURL() {
 		$numParams = 0;
 		$url = 'index.php?';
 
@@ -118,7 +118,7 @@ class SugarChart
 		return $url;
 	}
 
-	function constructURL(){
+	function constructURL() {
 		$url = $this->constructBaseURL();
 		foreach ($this->url_params as $param => $value){
 			if ($param == 'assigned_user_id') $param = 'assigned_user_id[]';
@@ -134,7 +134,7 @@ class SugarChart
 		return $url;
 	}
 
-	function setData($dataSet){
+	function setData($dataSet) {
 		$this->data_set = $dataSet;
 	}
 
@@ -148,11 +148,11 @@ class SugarChart
         $this->chart_properties['thousands'] = $thousands;
     }
 
-	function setDisplayProperty($property, $value){
+	function setDisplayProperty($property, $value) {
 		$this->chart_properties[$property] = $value;
 	}
 
-	function setColors($colors = array()){
+	function setColors($colors = array()) {
 		$this->colors_list = $colors;
 	}
 
@@ -162,7 +162,7 @@ class SugarChart
      * @param 	nothing
      * @return	string $header XML header
      */
-	function xmlHeader(){
+	function xmlHeader() {
 		$header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		$header .= "<sugarcharts version=\"1.0\">\n";
 
@@ -175,7 +175,7 @@ class SugarChart
      * @param 	nothing
      * @return	string $footer XML footer
      */
-	function xmlFooter(){
+	function xmlFooter() {
 		$footer = "</sugarcharts>";
 
 		return $footer;
@@ -187,7 +187,7 @@ class SugarChart
      * @param 	nothing
      * @return	string $properties XML properties tag
      */
-	function xmlProperties(){
+	function xmlProperties() {
 		// open the properties tag
 		$properties = $this->tab("<properties>",1);
 
@@ -220,7 +220,7 @@ class SugarChart
      * @param 	nothing
      * @return	string $yAxis XML yAxis tag
      */
-	function xmlYAxis(){
+	function xmlYAxis() {
 		$this->chart_yAxis['yStep'] = '100';
 		$this->chart_yAxis['yLog'] = '1';
 		$this->chart_yAxis['yMax'] = $this->is_currency ? $this->convertCurrency($this->chart_yAxis['yMax']) : $this->chart_yAxis['yMax'];
@@ -269,7 +269,7 @@ class SugarChart
      * @param 	group by field
      * @return	int $total total value
      */
-	function calculateTotal($group_by){
+	function calculateTotal($group_by) {
 		$total = 0;
 
 		for($i =0; $i < count($this->data_set); $i++){
@@ -287,7 +287,7 @@ class SugarChart
 	 *			int $depth number of times to tab
      * @return	string with tabs appended before it
      */
-	function tab($str, $depth){
+	function tab($str, $depth) {
 		return str_repeat("\t", $depth) . $str . "\n";
 	}
 	/**
@@ -311,7 +311,7 @@ class SugarChart
      * @param 	none
      * @return	string with xml data format
      */
-	function processData(){
+	function processData() {
 		$data = array();
 
 		$group_by = $this->group_by[0];
@@ -340,7 +340,7 @@ class SugarChart
 		return $data;
 	}
 
-	function processDataGroup($tablevel, $title, $value, $label, $link){
+	function processDataGroup($tablevel, $title, $value, $label, $link) {
 		$link = $this->forceHideDataGroupLink ? '' : $link;
 		$data = $this->tab('<group>',$tablevel);
 		$data .= $this->tabValue('title',$title,$tablevel+1);
@@ -351,7 +351,7 @@ class SugarChart
 		return $data;
 	}
 
-	function calculateGroupByTotal($dataset){
+	function calculateGroupByTotal($dataset) {
 		$total = 0;
 
 		foreach ($dataset as $key => $value){
@@ -361,7 +361,7 @@ class SugarChart
 		return $total;
 	}
 
-	function calculateSingleBarMax($dataset){
+	function calculateSingleBarMax($dataset) {
 		$max = 0;
 		foreach ($dataset as $value){
 			if ($value > $max){
@@ -378,7 +378,7 @@ class SugarChart
      * @param 	value to check
      * @return	yAxis min and max
      */
-	function checkYAxis($value){
+	function checkYAxis($value) {
 		if ($value < $this->chart_yAxis['yMin']){
 			$this->chart_yAxis['yMin'] = $value;
 		}
@@ -413,7 +413,7 @@ class SugarChart
         return $amount;
     }
 
-	function formatNumber($number, $decimals= null, $decimal_point= null, $thousands_sep= null){
+	function formatNumber($number, $decimals= null, $decimal_point= null, $thousands_sep= null) {
 		global $locale;
 		if(is_null($decimals)) {
 			$decimals = $locale->getPrecision();
@@ -424,7 +424,7 @@ class SugarChart
 		return number_format($number, $decimals, $decimal_point, $thousands_sep);
 	}
 
-	function getTotal(){
+	function getTotal() {
 		$new_data = $this->processData();
 		$total = 0;
 		foreach ($new_data as $groupByKey => $value){
@@ -434,7 +434,7 @@ class SugarChart
 		return $total;
 	}
 
-	function xmlDataForGroupByChart(){
+	function xmlDataForGroupByChart() {
 		$data = '';
 		$idcounter = 0;
 		foreach ($this->data_set as $key => $value){
@@ -475,7 +475,7 @@ class SugarChart
 		return $data;
 	}
 
-	function xmlDataForGaugeChart(){
+	function xmlDataForGaugeChart() {
 		$data = '';
 		$gaugePosition = $this->data_set[0]['num'];
 		$this->chart_yAxis['yMax'] = $this->chart_properties['gaugeTarget'];
@@ -490,7 +490,7 @@ class SugarChart
 		return $data;
 	}
 
-	function xmlDataBarChart(){
+	function xmlDataBarChart() {
 		$data = '';
 		$max = $this->calculateSingleBarMax($this->data_set);
 		$this->checkYAxis($max);
@@ -536,7 +536,7 @@ class SugarChart
 		return $data;
 	}
 
-	function xmlDataGenericChart(){
+	function xmlDataGenericChart() {
 		$data = '';
 		$group_by = $this->group_by[0];
 		if (isset($this->group_by[1])){
@@ -665,7 +665,7 @@ class SugarChart
         return sugar_cached("xml/"). $GLOBALS['current_user']->getUserPrivGuid() . "_" . $file_id . ".xml";
     }
 
-    public function processXmlData(){
+    public function processXmlData() {
     	$data = '';
 
 		if ($this->chart_properties['type'] == 'group by chart'){
@@ -681,7 +681,7 @@ class SugarChart
 		return $data;
     }
 
-	function xmlData(){
+	function xmlData() {
 		$data = $this->tab('<data>',1);
 		$data .= $this->processXmlData();
 		$data .= $this->tab('</data>',1);
@@ -695,7 +695,7 @@ class SugarChart
      * @param 	none
      * @return	string $xmlContents with xml information
      */
-	function generateXML($xmlDataName = false){
+	function generateXML($xmlDataName = false) {
 		$xmlContents = $this->xmlHeader();
 		$xmlContents .= $this->xmlProperties();
 		$xmlContents .= $this->xmlData();
@@ -749,7 +749,7 @@ class SugarChart
      * @param 	string $xmlFile	location of the XML file to write to
      * @return	none
      */
-	function generateChartStrings($xmlFile){
+	function generateChartStrings($xmlFile) {
 		global $current_language, $app_list_strings;
 
 		$chartStringsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -780,7 +780,7 @@ class SugarChart
 	 *			string $style	optional additional styles for the div
      * @return	string returns the html code through smarty
      */
-	function display($name, $xmlFile, $width='320', $height='480', $resize=false){
+	function display($name, $xmlFile, $width='320', $height='480', $resize=false) {
 
 
 		// generate strings for chart if it does not exist

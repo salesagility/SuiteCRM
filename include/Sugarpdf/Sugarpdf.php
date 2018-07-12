@@ -94,7 +94,7 @@ class Sugarpdf extends TCPDF
      */
 
 
-    function __construct($bean = null, $sugarpdf_object_map = array(),$orientation=PDF_PAGE_ORIENTATION, $unit=PDF_UNIT, $format=PDF_PAGE_FORMAT, $unicode=true, $encoding='UTF-8', $diskcache=false){
+    function __construct($bean = null, $sugarpdf_object_map = array(),$orientation=PDF_PAGE_ORIENTATION, $unit=PDF_UNIT, $format=PDF_PAGE_FORMAT, $unicode=true, $encoding='UTF-8', $diskcache=false) {
         global $locale;
       //  $encoding = $locale->getExportCharset();
         if(empty($encoding)){
@@ -112,7 +112,7 @@ class Sugarpdf extends TCPDF
     /**
      * This method will be called from the controller and is not meant to be overridden.
      */
-    function process(){
+    function process() {
         $this->preDisplay();
         $this->display();
 
@@ -121,7 +121,7 @@ class Sugarpdf extends TCPDF
     /**
      * This method will display the errors on the page.
      */
-    function displayErrors(){
+    function displayErrors() {
         foreach($this->errors as $error) {
             echo '<span class="error">' . $error . '</span><br>';
         }
@@ -136,7 +136,7 @@ class Sugarpdf extends TCPDF
      * and then the subview can just override display(). If it so desires, can also override
      * preDisplay().
      */
-    function preDisplay(){
+    function preDisplay() {
         // set document information
         $this->SetCreator(PDF_CREATOR);
         $this->SetAuthor(PDF_AUTHOR);
@@ -188,7 +188,7 @@ class Sugarpdf extends TCPDF
     /**
      * [OVERRIDE] - This method is meant to overidden in a subclass.
      */
-    function display(){
+    function display() {
         $this->AddPage();
         $this->SetFont(PDF_FONT_NAME_MAIN,'B',16);
         $this->MultiCell(0,0,'Tcpdf class for this module and action has not been implemented.',0,'C');
@@ -277,7 +277,7 @@ class Sugarpdf extends TCPDF
         parent::SetFont($family, $style, $size, $fontfile);
     }
 
-    function Info(){
+    function Info() {
 
         $this->SetFont(PDF_FONT_NAME_MAIN,'',12);
         $this->MultiCell(0,0,'---',0,'L');
@@ -427,7 +427,7 @@ class Sugarpdf extends TCPDF
      * @param $options Array which can contain : table (array of "HTML proprty"=>"value"),td (array of "HTML proprty"=>"value"), tr (array of "HTML proprty"=>"value"), isheader(bool), header (array of "HTML proprty"=>"value"), width (array 'column name'=>'width value + unit OR nothing')
      * @return the HTML code if $returnHtml set to true
      */
-    public function writeHTMLTable($item, $returnHtml=false, $options=NULL){
+    public function writeHTMLTable($item, $returnHtml=false, $options=NULL) {
         //TODO ISSUE - width in % for the td have to be multiply by the number of column.
         //     ex: for a width of 20% in a table of 6 columns the width will have to be 120% (20*6).
         $html="";
@@ -493,7 +493,7 @@ class Sugarpdf extends TCPDF
      * @param $options
      * @return the HTML wrapped code
      */
-    private function wrap($tag, $value, $options){
+    private function wrap($tag, $value, $options) {
         if(empty($options[$tag])){
             $options[$tag] = array();
         }
@@ -517,7 +517,7 @@ class Sugarpdf extends TCPDF
      * @param $width Array containing the width of all the cells of the line
      * @return The heigth of the line
      */
-    private function getLineHeightFromArray($line, $width){
+    private function getLineHeightFromArray($line, $width) {
         $h=0;
         foreach($line as $kk=>$cell){
             $cellValue = $cell;
@@ -538,7 +538,7 @@ class Sugarpdf extends TCPDF
      * @param $item array
      * @return $options array
      */
-    private function initOptionsForWriteCellTable($options, $item){
+    private function initOptionsForWriteCellTable($options, $item) {
        if(!empty($options)){
             foreach($options as $k=>$v){
                 $tmp[strtolower($k)]=$v;

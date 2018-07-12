@@ -49,7 +49,7 @@ require_once('modules/Contacts/Popup_picker.php');
 class ContactsViewMailMergePopup extends SugarView
 {
 	
- 	function ContactAddressPopup(){
+ 	function ContactAddressPopup() {
  		parent::__construct();
  	}
  	

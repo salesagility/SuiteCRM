@@ -37,7 +37,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function display_email_lines($focus, $field, $value, $view){
+function display_email_lines($focus, $field, $value, $view) {
     global $app_list_strings;
     $params = unserialize(base64_decode($value));
 

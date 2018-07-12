@@ -65,7 +65,7 @@ class LayoutManager
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function LayoutManager(){
+    function LayoutManager() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -340,7 +340,7 @@ class LayoutManager
 	}
 
 	// 27426
-	function getFieldDef($widget_def){
+	function getFieldDef($widget_def) {
         static $beanCache;
 		if(!empty($widget_def['module']) &&!empty($GLOBALS['beanList'][$widget_def['module']]) && !empty($GLOBALS['beanFiles'][$GLOBALS['beanList'][$widget_def['module']]])){
             if (!isset($beanCache[$widget_def['module']])){

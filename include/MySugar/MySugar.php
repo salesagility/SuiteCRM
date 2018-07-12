@@ -48,14 +48,14 @@ class MySugar
 {
 	var $type;
 
-	public function __construct($type){
+	public function __construct($type) {
 		$this->type = $type;
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function MySugar($type){
+    public function MySugar($type) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -67,7 +67,7 @@ class MySugar
     }
 
 
-    function checkDashletDisplay () {
+    function checkDashletDisplay() {
 
 		if((!in_array($this->type, $GLOBALS['moduleList'])
 				&& !in_array($this->type, $GLOBALS['modInvisList']))
@@ -88,7 +88,7 @@ class MySugar
 		return $displayDashlet;
     }
 
-	function addDashlet(){
+	function addDashlet() {
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
             return;
         }
@@ -148,7 +148,7 @@ class MySugar
 		}
 	}
 
-	function displayDashlet(){
+	function displayDashlet() {
 		global $current_user, $mod_strings, $app_strings;
 
 		if(!empty($_REQUEST['id'])) {
@@ -198,7 +198,7 @@ class MySugar
 		}
 	}
 
-	function getPredefinedChartScript(){
+	function getPredefinedChartScript() {
 		global $current_user, $mod_strings;
 
 		if(!empty($_REQUEST['id'])) {
@@ -217,7 +217,7 @@ class MySugar
 
 
 
-	function deleteDashlet(){
+	function deleteDashlet() {
 
 
 		global $current_user;
@@ -252,7 +252,7 @@ class MySugar
 		}
 	}
 
-	function dashletsDialog(){
+	function dashletsDialog() {
 		require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
 
 		global $current_language, $app_strings;
@@ -296,7 +296,7 @@ EOJS;
 	}
 
 
-	function searchModuleToolsDashlets($searchStr, $category){
+	function searchModuleToolsDashlets($searchStr, $category) {
 		require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
 
 		global $app_strings;
@@ -340,7 +340,7 @@ EOJS;
 		return $sugar_smarty->fetch('include/MySugar/tpls/dashletsSearchResults.tpl');
 	}
 
-	function searchChartsDashlets($searchStr){
+	function searchChartsDashlets($searchStr) {
 		require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
 
 		global $current_language, $app_strings;
@@ -370,7 +370,7 @@ EOJS;
 		return $sugar_smarty->fetch('include/MySugar/tpls/chartDashletsSearchResults.tpl');
 	}
 
-	function searchDashlets(){
+	function searchDashlets() {
 		$searchStr = $_REQUEST['search'];
 		$category = $_REQUEST['category'];
 
@@ -385,7 +385,7 @@ EOJS;
 		echo 'response = ' . $json->encode(array('html' => $html, 'script' => ''));
 	}
 
-	function configureDashlet(){
+	function configureDashlet() {
 		global $current_user, $app_strings, $mod_strings;
 
 		if(!empty($_REQUEST['id'])) {
@@ -411,7 +411,7 @@ EOJS;
 		}
 	}
 
-	function saveLayout(){
+	function saveLayout() {
 		global $current_user;
 
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {

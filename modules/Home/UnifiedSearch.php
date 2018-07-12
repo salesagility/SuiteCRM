@@ -154,7 +154,7 @@ foreach($hits as $hit){
 </table>
 
 <?php
-function getRecordSummary(SugarBean $bean){
+function getRecordSummary(SugarBean $bean) {
     global $listViewDefs;
     if (!isset($listViewDefs) || !isset($listViewDefs[$bean->module_dir]) ){
         if(file_exists('custom/modules/'.$bean->module_dir.'/metadata/listviewdefs.php')){
@@ -181,23 +181,23 @@ function getRecordSummary(SugarBean $bean){
     $summary = array_filter($summary);
     return implode(' || ',$summary);
 }
-function getScoreDisplay($hit){
+function getScoreDisplay($hit) {
     return number_format(100*$hit->score,2);
 }
-function unCamelCase($input, $sep = " "){
+function unCamelCase($input, $sep = " ") {
     $output = preg_replace(array('/(?<=[^A-Z])([A-Z])/', '/(?<=[^0-9])([0-9])/'), $sep.'$0', $input);
     return ucwords($output);
 }
-function getModuleLabel($module){
+function getModuleLabel($module) {
     return translate('LBL_MODULE_NAME', $module);
 }
-function cacheQuery($queryString,$resArray){
+function cacheQuery($queryString,$resArray) {
     $file = create_cache_directory('modules/AOD_Index/QueryCache/' . md5($queryString));
     $out = serialize($resArray);
     sugar_file_put_contents_atomic($file, $out);
 }
 
-function getCorrectMTime($filePath){
+function getCorrectMTime($filePath) {
     $time = filemtime($filePath);
     $isDST = (date('I', $time) == 1);
     $systemDST = (date('I') == 1);
@@ -212,7 +212,7 @@ function getCorrectMTime($filePath){
     return ($time + $adjustment);
 }
 
-function doSearch($index, $queryString, $start = 0, $amount = 20){
+function doSearch($index, $queryString, $start = 0, $amount = 20) {
     global $current_user;
     $cachePath = 'cache/modules/AOD_Index/QueryCache/' . md5($queryString);
     if(is_file($cachePath)){
@@ -260,7 +260,7 @@ function doSearch($index, $queryString, $start = 0, $amount = 20){
     return $res;
 }
 
-function getPaginateHTML($queryString, $start, $amount, $total){
+function getPaginateHTML($queryString, $start, $amount, $total) {
     $first = !$start;
     $last = ($start + $amount) > $total;
     if($first){

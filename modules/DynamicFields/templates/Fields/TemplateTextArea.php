@@ -50,7 +50,7 @@ class TemplateTextArea extends TemplateText
 		$this->vardef_map['cols'] = 'ext3';
 	}
 
-	function set($values){
+	function set($values) {
 	   parent::set($values);
 	    if(!empty($this->ext2)){
 	       $this->rows = $this->ext2;
@@ -65,7 +65,7 @@ class TemplateTextArea extends TemplateText
 	}
 
 
-	function get_xtpl_detail(){
+	function get_xtpl_detail() {
 		$name = $this->name;
 		return nl2br($this->bean->$name);
 	}

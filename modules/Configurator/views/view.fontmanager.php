@@ -48,13 +48,13 @@ class ConfiguratorViewFontManager extends SugarView
     /**
      * Constructor
      */
-    public function FontManager(){
+    public function FontManager() {
         parent::__construct();
     }
     /** 
      * display the form
      */
-    public function display(){
+    public function display() {
         global $mod_strings, $app_list_strings, $app_strings, $current_user;
         $error="";
         if(!is_admin($current_user)){
@@ -109,7 +109,7 @@ EOJAVASCRIPT;
      * Return the columnDefs for the YUI datatable
      * @return String
      */
-    private function getYuiColumnDefs($fontList){
+    private function getYuiColumnDefs($fontList) {
         global $mod_strings;
         // Do not show the column with the delete buttons if there is only core fonts
         $removeColumn = '{key:"button", label:"", formatter:removeFormatter}';
@@ -136,7 +136,7 @@ BSOFR;
      * @param $fontList
      * @return String
      */
-    private function getYuiDataSource($fontList){
+    private function getYuiDataSource($fontList) {
         $return = "[";
         $first=true;
         foreach($fontList as $k=>$v){
@@ -173,7 +173,7 @@ BSOFR;
      * Return the Response Schema for the YUI data table
      * @return String
      */
-    private function getYuiResponseSchema(){
+    private function getYuiResponseSchema() {
         return <<<BSOFR
         { 
             fields: [{key:"name", parser:"string"},
@@ -193,7 +193,7 @@ BSOFR;
      * @param $style
      * @return String
      */
-    private function formatStyle($style){
+    private function formatStyle($style) {
         global $mod_strings;
         $return = "";
         if(count($style) == 2){
@@ -213,7 +213,7 @@ BSOFR;
         return $return;
     }
     
-    private function formatType($type){
+    private function formatType($type) {
         global $mod_strings;
         switch($type){
             case "cidfont0":
@@ -237,7 +237,7 @@ BSOFR;
      * @param $fontList
      * @return boolean return true if all the fonts are core type
      */
-    private function isAllOOBFont($fontList){
+    private function isAllOOBFont($fontList) {
         foreach($fontList as $v){
             if($v['type'] != "core" && $v['fontpath'] != K_PATH_FONTS)
                 return false;

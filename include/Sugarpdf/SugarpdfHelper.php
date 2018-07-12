@@ -39,26 +39,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-    function wrapTD($html, $options){
+    function wrapTD($html, $options) {
         return wrapTag("td",$html, $options);
     }
 
-    function wrapTR($html, $options){
+    function wrapTR($html, $options) {
         return wrapTag("tr",$html, $options);
     }
 
-    function wrapTable($html, $options){
+    function wrapTable($html, $options) {
         return wrapTag("table",$html, $options);
     }
 
-    function wrapB($html){
+    function wrapB($html) {
         return "<b>".$html."</b>";
     }
 
-    function wrapI($html){
+    function wrapI($html) {
         return "<i>".$html."</i>";
     }
-    function wrapTag($tag, $html, $options){
+    function wrapTag($tag, $html, $options) {
         // Wrap the tags defined in the options array (like b, i, font... tags)
         if(!empty($options)){
             foreach($options as $k=>$v){
@@ -84,7 +84,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
      * @param $string
      * @return string
      */
-    function prepare_string($string){
+    function prepare_string($string) {
         global $locale;
         $string = html_entity_decode($string, ENT_QUOTES);
         // return $locale->translateCharset($string, 'UTF-8', $locale->getExportCharset());

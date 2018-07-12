@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-function smarty_modifier_multienum_to_ac($value='', $field_options=array()){
+function smarty_modifier_multienum_to_ac($value='', $field_options=array()) {
 	$value = trim($value);
 	if(empty($value) || empty($field_options)){
 		return '';

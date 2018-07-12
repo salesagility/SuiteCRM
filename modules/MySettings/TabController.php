@@ -49,7 +49,7 @@ var $required_modules = array('Home');
      */
     static protected $isCacheValid = false;
 
-function is_system_tabs_in_db(){
+function is_system_tabs_in_db() {
         
         $administration = new Administration();
         $administration->retrieveSettings('MySettings');
@@ -63,7 +63,7 @@ function is_system_tabs_in_db(){
         }
 }
 
-function get_system_tabs(){
+function get_system_tabs() {
 	global $moduleList;
 	
 	static $system_tabs_result = null;
@@ -103,7 +103,7 @@ function get_system_tabs(){
 	return $system_tabs_result;
 }
 
-function get_tabs_system(){
+function get_tabs_system() {
 	global $moduleList;
 	$tabs = $this->get_system_tabs();
 	$unsetTabs = $this->get_key_array($moduleList);
@@ -126,7 +126,7 @@ function get_tabs_system(){
 
 
 
-function set_system_tabs($tabs){
+function set_system_tabs($tabs) {
     
 	$administration = new Administration();
 	$serialized = base64_encode(serialize($tabs));
@@ -134,7 +134,7 @@ function set_system_tabs($tabs){
     self::$isCacheValid = false;
 }
 
-function get_users_can_edit(){
+function get_users_can_edit() {
 	
 	$administration = new Administration();
 	$administration->retrieveSettings('MySettings');
@@ -146,7 +146,7 @@ function get_users_can_edit(){
 return true;
 }
 
-function set_users_can_edit($boolean){
+function set_users_can_edit($boolean) {
 	global $current_user;
 	if(is_admin($current_user)){
 		
@@ -160,7 +160,7 @@ function set_users_can_edit($boolean){
 }
 
 
-function get_key_array($arr){
+function get_key_array($arr) {
 	$new = array();
 	if(!empty($arr)){
 	foreach($arr as $val){
@@ -170,7 +170,7 @@ function get_key_array($arr){
 	return $new;
 }
 
-function set_user_tabs($tabs, &$user, $type='display'){
+function set_user_tabs($tabs, &$user, $type='display') {
     if(empty($user)){
 		global $current_user;
 		$current_user->setPreference($type .'_tabs', $tabs);
@@ -180,7 +180,7 @@ function set_user_tabs($tabs, &$user, $type='display'){
 	
 }
 
-function get_user_tabs(&$user, $type='display'){
+function get_user_tabs(&$user, $type='display') {
 	$system_tabs = $this->get_system_tabs();
 	$tabs = $user->getPreference($type .'_tabs');
 	if(!empty($tabs)){
@@ -200,7 +200,7 @@ function get_user_tabs(&$user, $type='display'){
 
 }
 
-function get_unset_tabs($user){
+function get_unset_tabs($user) {
 	global $moduleList;
 	$tabs = $this->get_user_tabs($user);
 	$unsetTabs = $this->get_key_array($moduleList);
@@ -212,7 +212,7 @@ function get_unset_tabs($user){
 
 }
 
-function get_old_user_tabs($user){
+function get_old_user_tabs($user) {
 	$system_tabs = $this->get_system_tabs();
 	
 	$tabs = $user->getPreference('tabs');
@@ -295,13 +295,13 @@ function get_tabs($user)
 	return array($display_tabs, $hide_tabs, $remove_tabs);
 }
 
-function restore_tabs($user){
+function restore_tabs($user) {
 	global $moduleList;
 	$this->set_user_tabs($moduleList, $user);
 
 }
 
-function restore_system_tabs(){
+function restore_system_tabs() {
 	global $moduleList;
 	$this->set_system_tabs($moduleList);
 

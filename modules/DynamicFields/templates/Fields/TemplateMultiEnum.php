@@ -44,14 +44,14 @@ class TemplateMultiEnum extends TemplateEnum
 {
 	var $type = 'text';
 
-	function get_html_edit(){
+	function get_html_edit() {
 		$this->prepare();
 		$xtpl_var = strtoupper( $this->name);
 		// MFH BUG#13645
 		return "<input type='hidden' name='". $this->name. "' value='0'><select name='". $this->name . "[]' size='5' title='{" . $xtpl_var ."_HELP}' MULTIPLE=true>{OPTIONS_".$xtpl_var. "}</select>";
 	}
 
-	function get_xtpl_edit(){
+	function get_xtpl_edit() {
 		$name = $this->name;
 		$value = '';
 		if(isset($this->bean->$name)){
@@ -78,14 +78,14 @@ class TemplateMultiEnum extends TemplateEnum
 
 
 	}
-	function prepSave(){
+	function prepSave() {
 
 	}
-	function get_xtpl_list(){
+	function get_xtpl_list() {
 		return $this->get_xtpl_detail();
 
 	}
-	function get_xtpl_detail(){
+	function get_xtpl_detail() {
 
 		$name = $this->name;
 		$value = '';
@@ -116,7 +116,7 @@ class TemplateMultiEnum extends TemplateEnum
 
 }
 
-	function get_field_def(){
+	function get_field_def() {
 		$def = parent::get_field_def();
 		if ( !empty ( $this->ext4 ) )
 		{
@@ -147,7 +147,7 @@ class TemplateMultiEnum extends TemplateEnum
 		return $def;
 	}
 
-	function get_db_default($modify = false){
+	function get_db_default($modify = false) {
     	return '';
 	}
 

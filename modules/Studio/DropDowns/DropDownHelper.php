@@ -45,7 +45,7 @@ require_once('modules/Administration/QuickRepairAndRebuild.php');
 class DropDownHelper
 {
     var $modules = array();
-    function getDropDownModules(){
+    function getDropDownModules() {
         $dir = dir('modules');
         while($entry = $dir->read()){
             if(file_exists('modules/'. $entry . '/EditView.php')){
@@ -55,7 +55,7 @@ class DropDownHelper
 
     }
 
-    function scanForDropDowns($filepath, $module){
+    function scanForDropDowns($filepath, $module) {
         $contents = file_get_contents($filepath);
         $matches = array();
         preg_match_all('/app_list_strings\s*\[\s*[\'\"]([^\]]*)[\'\"]\s*]/', $contents, $matches);
@@ -107,7 +107,7 @@ class DropDownHelper
      *
      * @param REQUEST params  $params
      */
-    function saveDropDown($params){
+    function saveDropDown($params) {
        $count = 0;
        $dropdown = array();
        $dropdown_name = $params['dropdown_name'];

@@ -44,7 +44,7 @@
 class SugarSecure
 {
 	var $results = array();
-	function display(){
+	function display() {
 		echo '<table>';
 		foreach($this->results as $result){
 			echo '<tr><td>' . nl2br($result) . '</td></tr>';
@@ -52,7 +52,7 @@ class SugarSecure
 		echo '</table>';
 	}
 	
-	function save($file=''){
+	function save($file='') {
 		$fp = fopen($file, 'a');
 		foreach($this->results as $result){
 			fwrite($fp , $result);
@@ -60,7 +60,7 @@ class SugarSecure
 		fclose($fp);
 	}
 	
-	function scan($path= '.', $ext = '.php'){
+	function scan($path= '.', $ext = '.php') {
 		$dir = dir($path);
 		while($entry = $dir->read()){
 			if(is_dir($path . '/' . $entry) && $entry != '.' && $entry != '..'){
@@ -73,7 +73,7 @@ class SugarSecure
 		}
 	}
 	
-	function scanContents($contents){
+	function scanContents($contents) {
 		return;	
 	}
 	
@@ -82,7 +82,7 @@ class SugarSecure
 
 class ScanFileIncludes extends SugarSecure
 {
-	function scanContents($contents, $file){
+	function scanContents($contents, $file) {
 		$results = array();
 		$found = '';
 		/*preg_match_all("'(require_once\([^\)]*\\$[^\)]*\))'si", $contents, $results, PREG_SET_ORDER);
@@ -135,11 +135,11 @@ class ScanFileIncludes extends SugarSecure
 class SugarSecureManager
 {
 	var $scanners = array();
-	function registerScan($class){
+	function registerScan($class) {
 		$this->scanners[] = new $class();
 	}
 	
-	function scan(){
+	function scan() {
 		
 		while($scanner = current($this->scanners)){
 			$scanner->scan();
@@ -148,7 +148,7 @@ class SugarSecureManager
 		reset($this->scanners);	
 	}
 	
-	function display(){
+	function display() {
 		
 		while($scanner = current($this->scanners)){
 			echo 'Scan Results: ';
@@ -158,7 +158,7 @@ class SugarSecureManager
 		reset($this->scanners);	
 	}
 	
-	function save(){
+	function save() {
 		//reset($this->scanners);	
 		$name = 'SugarSecure'. time() . '.txt';
 		while($this->scanners  = next($this->scanners)){

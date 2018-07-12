@@ -41,14 +41,14 @@ class AOS_Line_Item_Groups_sugar extends Basic
 	var $importable = true;
 	var $disable_row_level_security = true ;
 
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Line_Item_Groups_sugar(){
+    function AOS_Line_Item_Groups_sugar() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -60,7 +60,7 @@ class AOS_Line_Item_Groups_sugar extends Basic
     }
 
 
-	function bean_implements($interface){
+	function bean_implements($interface) {
 		switch($interface){
 			case 'ACL': return false;
 		}

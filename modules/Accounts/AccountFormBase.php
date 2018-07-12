@@ -50,7 +50,7 @@ class AccountFormBase
 {
 
 
-function checkForDuplicates($prefix){
+function checkForDuplicates($prefix) {
 	require_once('include/formbase.php');
 	
 	$focus = new Account();
@@ -103,7 +103,7 @@ function checkForDuplicates($prefix){
 }
 
 
-function buildTableForm($rows, $mod='Accounts'){
+function buildTableForm($rows, $mod='Accounts') {
 	if(!ACLController::checkAccess('Accounts', 'edit', true)){
 		return '';
 	}
@@ -216,7 +216,7 @@ function buildTableForm($rows, $mod='Accounts'){
 
 }
 
-function getForm($prefix, $mod='', $form=''){
+function getForm($prefix, $mod='', $form='') {
 	if(!ACLController::checkAccess('Accounts', 'edit', true)){
 		return '';
 	}
@@ -249,7 +249,7 @@ return $the_form;
 }
 
 
-function getFormBody($prefix,$mod='', $formname=''){
+function getFormBody($prefix,$mod='', $formname='') {
 	if(!ACLController::checkAccess('Accounts', 'edit', true)){
 		return '';
 	}
@@ -296,7 +296,7 @@ return $form;
 
 
 
-function getWideFormBody($prefix, $mod='',$formname='',  $contact=''){
+function getWideFormBody($prefix, $mod='',$formname='',  $contact='') {
 	if(!ACLController::checkAccess('Accounts', 'edit', true)){
 		return '';
 	}
@@ -393,7 +393,7 @@ $mod_strings = $temp_strings;
 }
 
 
-function handleSave($prefix,$redirect=true, $useRequired=false){
+function handleSave($prefix,$redirect=true, $useRequired=false) {
 	
     
 	require_once('include/formbase.php');

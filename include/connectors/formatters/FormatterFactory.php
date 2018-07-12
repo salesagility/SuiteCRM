@@ -58,7 +58,7 @@ class FormatterFactory
 	 * @param $wrapper_name Optional wrapper name to use
 	 * @return $instance The formatter instance
 	 */
-	public static function getInstance($source_name, $formatter_name=''){
+	public static function getInstance($source_name, $formatter_name='') {
 		require_once('include/connectors/formatters/default/formatter.php');
 		$key = $source_name . $formatter_name;
 		if(empty(self::$formatter_map[$key])) {

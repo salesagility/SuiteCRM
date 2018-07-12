@@ -443,7 +443,7 @@ class SugarTheme
             return $this->$key;
     }
 
-    public function __isset($key){
+    public function __isset($key) {
     	return isset($this->$key);
 
     }
@@ -899,7 +899,7 @@ EOHTML;
     public function getImageURL(
         $imageName,
         $addJSPath = true
-        ){
+        ) {
         if ( isset($this->_imageCache[$imageName]) ) {
             if ( $addJSPath )
                 return getJSPath($this->_imageCache[$imageName]);

@@ -43,7 +43,7 @@ require('include/nusoap/nusoap.php');
 abstract class PHP5Soap extends SugarSoapService
 {
 	private $nusoap_server = null;
-	public function __construct($url){
+	public function __construct($url) {
 		$this->soapURL = $url;
 		ini_set("soap.wsdl_cache_enabled", "0"); // disabling WSDL cache
 		global $HTTP_RAW_POST_DATA;
@@ -61,7 +61,7 @@ abstract class PHP5Soap extends SugarSoapService
 	 * Serves the Soap Request
 	 * @return
 	 */
-	public function serve(){
+	public function serve() {
 		ob_clean();
 		global $HTTP_RAW_POST_DATA;
 		$GLOBALS['log']->debug("I am here1 ". $HTTP_RAW_POST_DATA);
@@ -135,15 +135,15 @@ abstract class PHP5Soap extends SugarSoapService
 	 * @return
 	 * @param $version String[optional]
 	 */
-	public function setSoapVersion($version='1.1'){
+	public function setSoapVersion($version='1.1') {
 		//PHP SOAP supports 1.1 and 1.2 only currently
 		$this->soap_version = ($version == '1.2')?'1.2':'1.1';
 	}
 
-	public function error($errorObject){
+	public function error($errorObject) {
 		$this->server->fault($errorObject->getFaultCode(), $errorObject->getName(), '', $errorObject->getDescription()); 	}
 
-	public function registerImplClass($implementationClass){
+	public function registerImplClass($implementationClass) {
 		if (empty($implementationClass)) {
 			$implementationClass = $this->implementationClass;
 		} // if
@@ -152,15 +152,15 @@ abstract class PHP5Soap extends SugarSoapService
 		parent::setObservers();
 	}
 
-	function registerClass($registryClass){
+	function registerClass($registryClass) {
 		$this->registryClass = $registryClass;
 	}
 
-	public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType=''){
+	public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType='') {
 		$this->nusoap_server->wsdl->addComplexType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs, $arrayType);
   	}
 
-	function registerFunction($function, $input, $output){
+	function registerFunction($function, $input, $output) {
 		if(in_array($function, $this->excludeFunctions))return;
 		if ($this->nusoap_server == null) {
 			$this->generateNuSoap();

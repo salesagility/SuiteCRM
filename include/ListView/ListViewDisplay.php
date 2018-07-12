@@ -86,7 +86,7 @@ class ListViewDisplay
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ListViewDisplay(){
+    public function ListViewDisplay() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -98,7 +98,7 @@ class ListViewDisplay
     }
 
 
-	function shouldProcess($moduleDir){
+	function shouldProcess($moduleDir) {
 		$searching = false;
 		$sessionSearchQuery = "{$moduleDir}2_QUERY_QUERY";
 		if (!empty($_SESSION[$sessionSearchQuery])) {

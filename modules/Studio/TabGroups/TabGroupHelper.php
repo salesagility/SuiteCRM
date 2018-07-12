@@ -45,7 +45,7 @@ require_once('modules/Administration/Common.php');
 class TabGroupHelper
 {
     var $modules = array();
-    function getAvailableModules($lang = ''){
+    function getAvailableModules($lang = '') {
        static $availableModules = array();
        if(!empty($availableModules))return $availableModules;
        $specifyLanguageAppListStrings = $GLOBALS['app_list_strings'];
@@ -68,7 +68,7 @@ class TabGroupHelper
      *
      * @param REQUEST params  $params
      */
-    function saveTabGroups($params){
+    function saveTabGroups($params) {
     	//#30205
     	global $sugar_config;
 

@@ -105,7 +105,7 @@ class Currency extends SugarBean
      * @param $precision The rounding precision scale
      * @return currency value from US Dollar conversion
      */
-	function convertFromDollar($amount, $precision = 6){
+	function convertFromDollar($amount, $precision = 6) {
 		return round(($amount * $this->conversion_rate), $precision);
 	}
 
@@ -115,7 +115,7 @@ class Currency extends SugarBean
      * Returns the default currency name as defined in application
      * @return String value of default currency name
      */
-	function getDefaultCurrencyName(){
+	function getDefaultCurrencyName() {
 		global $sugar_config;
 		return $sugar_config['default_currency_name'];
 	}
@@ -126,7 +126,7 @@ class Currency extends SugarBean
      * Returns the default currency symobol in application
      * @return String value of default currency symbol(e.g. $)
      */
-	function getDefaultCurrencySymbol(){
+	function getDefaultCurrencySymbol() {
 		global $sugar_config;
 		return $sugar_config['default_currency_symbol'];
 	}
@@ -137,7 +137,7 @@ class Currency extends SugarBean
      * Returns the default ISO 4217 standard currency code value
      * @return String value for the ISO 4217 standard code(e.g. EUR)
      */
-	function getDefaultISO4217(){
+	function getDefaultISO4217() {
 		global $sugar_config;
 		return $sugar_config['default_currency_iso4217'];
 	}
@@ -187,7 +187,7 @@ class Currency extends SugarBean
         return '';
     }
 
-    function retrieve($id = -99, $encode = true, $deleted = true){
+    function retrieve($id = -99, $encode = true, $deleted = true) {
      	if($id == '-99'){
      		$this->name = 	$this->getDefaultCurrencyName();
      		$this->symbol = $this->getDefaultCurrencySymbol();
@@ -537,7 +537,7 @@ function toString($echo = true) {
     return $s;
 }
 
-function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='DetailView'){
+function getCurrencyDropDown($focus, $field='currency_id', $value='', $view='DetailView') {
     $view = ucfirst($view);
 	if($view == 'EditView' || $view == 'MassUpdate' || $view == 'QuickCreate' || $view == 'ConvertLead'){
         if ( isset($_REQUEST[$field]) && !empty($_REQUEST[$field]) ) {

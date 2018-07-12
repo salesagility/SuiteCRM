@@ -110,7 +110,7 @@ class nusoap_wsdlcache
 	* @param    string $string debug data
 	* @access   private
 	*/
-	function debug($string){
+	function debug($string) {
 		$this->debug_str .= get_class($this).": $string\n";
 	}
 

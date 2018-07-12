@@ -70,7 +70,7 @@ $server->register(
  * @param xsd:int $php_serialize
  * @return 
  */
-function sync_get_modified_relationships($session, $module_name, $related_module,$from_date,$to_date,$offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1){
+function sync_get_modified_relationships($session, $module_name, $related_module,$from_date,$to_date,$offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1) {
 	global  $beanList, $beanFiles;
 	$error = new SoapError();
 	$output_list = array();
@@ -162,7 +162,7 @@ $server->register(
     array('return'=>'tns:get_sync_result_encoded'),
     $NAMESPACE);
 
-function get_modified_entries($session, $module_name, $ids, $select_fields ){
+function get_modified_entries($session, $module_name, $ids, $select_fields) {
 	global  $beanList, $beanFiles;
 	$error = new SoapError();
 	$field_list = array();
@@ -261,7 +261,7 @@ $server->register(
     array('return'=>'tns:get_sync_result_encoded'),
     $NAMESPACE);
 
-function get_attendee_list($session, $module_name, $id){
+function get_attendee_list($session, $module_name, $id) {
 	global  $beanList, $beanFiles;
 	$error = new SoapError();
 	$field_list = array();

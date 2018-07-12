@@ -46,7 +46,7 @@ define("RECAPTCHA_VERIFY_SERVER", "api-verify.recaptcha.net");
  * @param $data - array of string elements to be encoded
  * @return string - encoded request
  */
-function _recaptcha_qsencode ($data) {
+function _recaptcha_qsencode($data) {
         $req = "";
         foreach ( $data as $key => $value )
                 $req .= $key . '=' . urlencode( stripslashes($value) ) . '&';
@@ -105,7 +105,7 @@ function _recaptcha_http_post($host, $path, $data, $port = 80) {
 
  * @return string - The HTML to be embedded in the user's form.
  */
-function recaptcha_get_html ($pubkey, $error = null, $use_ssl = false)
+function recaptcha_get_html($pubkey, $error = null, $use_ssl = false)
 {
 	if ($pubkey == null || $pubkey == '') {
 		die ("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
@@ -152,7 +152,7 @@ class ReCaptchaResponse
   * @param array $extra_params an array of extra variables to post to the server
   * @return ReCaptchaResponse
   */
-function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $extra_params = array())
+function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $extra_params = array())
 {
 	if ($privkey == null || $privkey == '') {
 		die ("To use reCAPTCHA you must get an API key from <a href='http://recaptcha.net/api/getkey'>http://recaptcha.net/api/getkey</a>");
@@ -202,7 +202,7 @@ function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $ex
  * @param string $domain The domain where the page is hosted
  * @param string $appname The name of your application
  */
-function recaptcha_get_signup_url ($domain = null, $appname = null) {
+function recaptcha_get_signup_url($domain = null, $appname = null) {
 	return "http://recaptcha.net/api/getkey?" .  _recaptcha_qsencode (array ('domain' => $domain, 'app' => $appname));
 }
 
@@ -225,7 +225,7 @@ function _recaptcha_aes_encrypt($val,$ky) {
 }
 
 
-function _recaptcha_mailhide_urlbase64 ($x) {
+function _recaptcha_mailhide_urlbase64($x) {
 	return strtr(base64_encode ($x), '+/', '-_');
 }
 
@@ -248,7 +248,7 @@ function recaptcha_mailhide_url($pubkey, $privkey, $email) {
  * eg, given johndoe@example,com return ["john", "example.com"].
  * the email is then displayed as john...@example.com
  */
-function _recaptcha_mailhide_email_parts ($email) {
+function _recaptcha_mailhide_email_parts($email) {
 	$arr = preg_split("/@/", $email );
 
 	if (strlen ($arr[0]) <= 4) {

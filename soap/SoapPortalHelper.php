@@ -245,7 +245,7 @@ function get_contacts_from_account($account_id, $orderBy = '')
         set_module_in($sugar->build_related_in($query), 'Contacts');
     }
 
-function get_related_list($in, $template, $where, $order_by, $row_offset = 0, $limit = ""){
+function get_related_list($in, $template, $where, $order_by, $row_offset = 0, $limit = "") {
 
         $q = '';
         //if $in is empty then pass in a query to get the list of related list
@@ -271,7 +271,7 @@ function get_related_list($in, $template, $where, $order_by, $row_offset = 0, $l
 
     }
 
-function build_relationship_tree($contact){
+function build_relationship_tree($contact) {
     global $sugar_config;
     $contact->retrieve($contact->id);
 
@@ -287,15 +287,15 @@ function build_relationship_tree($contact){
     }
 }
 
-function get_contacts_in(){
+function get_contacts_in() {
     return $_SESSION['viewable']['contacts_in'];
 }
 
-function get_accounts_in(){
+function get_accounts_in() {
     return $_SESSION['viewable']['accounts_in'];
 }
 
-function get_module_in($module_name){
+function get_module_in($module_name) {
     if(!isset($_SESSION['viewable'][$module_name])){
         return '()';
     }
@@ -312,7 +312,7 @@ function get_module_in($module_name){
     return $mod_in;
 }
 
-function set_module_in($arrayList, $module_name){
+function set_module_in($arrayList, $module_name) {
 
         if(!isset($_SESSION['viewable'][$module_name])){
             $_SESSION['viewable'][$module_name] = array();
@@ -348,7 +348,7 @@ function set_module_in($arrayList, $module_name){
  * Given the user auth, attempt to log the user in.
  * used by SoapPortalUsers.php
  */
-function login_user($portal_auth){
+function login_user($portal_auth) {
      $error = new SoapError();
      $user = User::findUserPassword($portal_auth['user_name'], $portal_auth['password'], "portal_only='1' AND status = 'Active'");
 
@@ -365,7 +365,7 @@ function login_user($portal_auth){
 }
 
 
-function portal_get_entry_list_limited($session, $module_name,$where, $order_by, $select_fields, $row_offset, $limit){
+function portal_get_entry_list_limited($session, $module_name,$where, $order_by, $select_fields, $row_offset, $limit) {
     global  $beanList, $beanFiles, $portal_modules;
     $error = new SoapError();
     if(! portal_validate_authenticated($session)){

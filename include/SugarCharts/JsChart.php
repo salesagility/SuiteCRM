@@ -78,7 +78,7 @@ class JsChart extends SugarChart
 
 	}
 
-	function tab($str, $depth){
+	function tab($str, $depth) {
        // $str = preg_replace('/(<\w+>)(.*)(<\/\w+>)/e', "'\\1'.htmlentities(from_html('\\2')).'\\3'", $str);
         return str_repeat("\t", $depth) . $str . "\n";
 	}
@@ -550,7 +550,7 @@ class JsChart extends SugarChart
 
 	}
 
-	function buildJson($xmlstr){
+	function buildJson($xmlstr) {
 		if($this->checkData($xmlstr)) {
 			$content = "{\n";
 			if ($this->chartType == "pie chart" || $this->chartType == "funnel chart 3D") {
@@ -686,7 +686,7 @@ class JsChart extends SugarChart
 		return true;
 	}
 
-	function get_image_cache_file_name ($xmlFile,$ext = ".png") {
+	function get_image_cache_file_name($xmlFile,$ext = ".png") {
 		$filename = str_replace("/xml/","/images/",str_replace(".xml",$ext,$xmlFile));
 
 		return $filename;
@@ -727,7 +727,7 @@ class JsChart extends SugarChart
 		* Replacement regex $pattern applied
 		*/
 
-		$return = preg_replace_callback('/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+\s\-\_]+)\<\/link\>/', function($m) { return '<link>'.urlencode($m[1]).'</link>'; }, $content);
+		$return = preg_replace_callback('/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+\s\-\_]+)\<\/link\>/', function ($m) { return '<link>'.urlencode($m[1]).'</link>'; }, $content);
 		return $return;
 	}
 

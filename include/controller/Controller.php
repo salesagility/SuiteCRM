@@ -67,7 +67,7 @@ class Controller extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Controller(){
+    public function Controller() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -79,7 +79,7 @@ class Controller extends SugarBean
     }
 
 
-	function init(& $seed_object, $type){
+	function init(& $seed_object, $type) {
 
 		$this->focus = & $seed_object;
 		$this->type = $type;
@@ -87,7 +87,7 @@ class Controller extends SugarBean
 	//end function Controller
 	}
 
-	function change_component_order($magnitude, $direction, $parent_id=""){
+	function change_component_order($magnitude, $direction, $parent_id="") {
 
 		if(!empty($this->type) && $this->type=="Save"){
 
@@ -227,7 +227,7 @@ class Controller extends SugarBean
 	//end function change_component_order
 	}
 
-	function update_affected_order($affected_id, $affected_new_x="", $affected_new_y=""){
+	function update_affected_order($affected_id, $affected_new_x="", $affected_new_y="") {
 
 		$query = 	"UPDATE ".$this->focus->table_name." SET";
 
@@ -248,7 +248,7 @@ class Controller extends SugarBean
 	//end function update_affected_order
 	}
 
-	function get_affected_id($parent_id, $list_order_x="", $list_order_y=""){
+	function get_affected_id($parent_id, $list_order_x="", $list_order_y="") {
 
 		$query = "	SELECT id from ".$this->focus->table_name."
 					WHERE ".$this->focus->controller_def['parent_var']."='$parent_id'
@@ -276,7 +276,7 @@ class Controller extends SugarBean
 /////////////Wall Functions////////////////////
 
 
-function check_wall($magnitude, $direction, $parent_id){
+function check_wall($magnitude, $direction, $parent_id) {
 
 //TODO: jgreen - this is only single axis check_wall mechanism, will need to upgrade this to double axis
 //This function determines if you can't move the direction you want, because you are at the edge
@@ -332,7 +332,7 @@ function check_wall($magnitude, $direction, $parent_id){
 //Delete adjust functions////////////////////
 
 
-function delete_adjust_order($parent_id){
+function delete_adjust_order($parent_id) {
 
 
 	//Currently handles single axis motion only!!!!!!!!!

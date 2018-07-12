@@ -56,7 +56,7 @@ function __construct()
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Chart_lead_source_by_outcome(){
+    function Chart_lead_source_by_outcome() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -373,7 +373,7 @@ global  $timedate;
 	}
 
 
-	function constructQuery(){
+	function constructQuery() {
 		global $current_user;
 		global $app_list_strings;
 
@@ -462,7 +462,7 @@ global  $timedate;
 		return $query;
 	}
 
-	function constructGroupBy(){
+	function constructGroupBy() {
 		return array( 'lead_source', 'sales_stage' );
 	}
 }

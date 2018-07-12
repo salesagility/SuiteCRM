@@ -59,7 +59,7 @@ class ViewSugarpdf extends SugarView
     var $sugarpdfBean=NULL;
 
 
-    public function __construct(){
+    public function __construct() {
          parent::__construct();
          if (isset($_REQUEST["sugarpdf"]))
          	$this->sugarpdf = $_REQUEST["sugarpdf"];
@@ -73,7 +73,7 @@ class ViewSugarpdf extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ViewSugarpdf(){
+    public function ViewSugarpdf() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -85,7 +85,7 @@ class ViewSugarpdf extends SugarView
     }
 
 
-     function preDisplay(){
+     function preDisplay() {
          $this->sugarpdfBean = SugarpdfFactory::loadSugarpdf($this->sugarpdf, $this->module, $this->bean, $this->view_object_map);
 
          // ACL control
@@ -99,7 +99,7 @@ class ViewSugarpdf extends SugarView
         }
      }
 
-    function display(){
+    function display() {
         $this->sugarpdfBean->process();
         $this->sugarpdfBean->Output($this->sugarpdfBean->fileName,'I');
      }

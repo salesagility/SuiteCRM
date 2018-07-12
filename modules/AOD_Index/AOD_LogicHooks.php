@@ -25,7 +25,7 @@
 class AOD_LogicHooks
 {
 
-    function saveModuleChanges(SugarBean $bean, $event, $arguments){
+    function saveModuleChanges(SugarBean $bean, $event, $arguments) {
         if($bean->module_name == 'AOD_Index'){
             return;
         }
@@ -40,7 +40,7 @@ class AOD_LogicHooks
         }
     }
 
-    function saveModuleDelete(SugarBean $bean, $event, $arguments){
+    function saveModuleDelete(SugarBean $bean, $event, $arguments) {
         if($bean->module_name == 'AOD_Index'){
             return;
         }
@@ -55,7 +55,7 @@ class AOD_LogicHooks
         }
     }
 
-    function saveModuleRestore(SugarBean $bean, $event, $arguments){
+    function saveModuleRestore(SugarBean $bean, $event, $arguments) {
         if($bean->module_name == 'AOD_Index'){
             return;
         }

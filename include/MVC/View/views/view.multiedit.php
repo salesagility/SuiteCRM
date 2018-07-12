@@ -48,14 +48,14 @@ require_once('include/EditView/EditView2.php');
 {
  	var $type ='edit';
 
- 	public function __construct(){
+ 	public function __construct() {
  		parent::__construct();
  	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ViewMultiedit(){
+    public function ViewMultiedit() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -67,7 +67,7 @@ require_once('include/EditView/EditView2.php');
     }
 
 
- 	function display(){
+ 	function display() {
 		global $beanList, $beanFiles;
 		if($this->action == 'AjaxFormSave'){
 			echo "<a href='index.php?action=DetailView&module=".$this->module."&record=".$this->bean->id."'>".$this->bean->id."</a>";

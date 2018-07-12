@@ -62,7 +62,7 @@ class ViewSugarFieldCollection
     var $action_type;
     var $form_name;
 
-    function __construct($fill_data = true){
+    function __construct($fill_data = true) {
     	$this->json = getJSONobj();
     	if($fill_data){
 	        $this->displayParams = $this->json->decode(html_entity_decode($_REQUEST['displayParams']));
@@ -83,7 +83,7 @@ class ViewSugarFieldCollection
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewSugarFieldCollection($fill_data = true){
+    function ViewSugarFieldCollection($fill_data = true) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -98,7 +98,7 @@ class ViewSugarFieldCollection
      * Retrieve the related module and load the bean and the relationship
      * call retrieve values()
      */
-    function setup(){
+    function setup() {
         if(!class_exists('Relationship')){
 
         }
@@ -144,7 +144,7 @@ class ViewSugarFieldCollection
      * Retrieve the values from the DB using the get method of the link class
      * Organize and save the value into the bean
      */
-    function retrieve_values(){
+    function retrieve_values() {
         if(empty($this->bean->{$this->value_name}) && isset($this->bean->{$this->name})){
             $values = array();
             $values = $this->bean->{$this->name}->get(true);
@@ -203,20 +203,20 @@ class ViewSugarFieldCollection
     /*
      * redirect to the good process method.
      */
-    function process(){
+    function process() {
         if($this->action_type == 'editview'){
             $this->process_editview();
         }elseif($this->action_type == 'detailview'){
             $this->process_detailview();
         }
     }
-    function process_detailview(){
+    function process_detailview() {
 
     }
     /*
      * Build the DisplayParams array
      */
-    function process_editview(){
+    function process_editview() {
         if(isset($this->bean->{$this->value_name}['secondaries'])){
             $this->numFields=count($this->bean->{$this->value_name}['secondaries'])+1;
         }
@@ -326,7 +326,7 @@ FRA;
     /*
      * Init the template with the variables
      */
-    function init_tpl(){
+    function init_tpl() {
         foreach($this->extra_var as $k=>$v){
             $this->ss->assign($k,$v);
         }
@@ -349,7 +349,7 @@ FRA;
     /*
      * Display the collection field after retrieving the cached row.
      */
-    function display(){
+    function display() {
         $cacheRowFile = sugar_cached('modules/') . $this->module_dir .  '/collections/'. $this->name . '.tpl';
         if(!$this->checkTemplate($cacheRowFile)){
             $dir = dirname($cacheRowFile);
@@ -367,7 +367,7 @@ FRA;
      * Check if the template is cached
      * return a bool
      */
-    function checkTemplate($cacheRowFile){
+    function checkTemplate($cacheRowFile) {
         if(inDeveloperMode() || !empty($_SESSION['developerMode'])){
             return false;
         }
@@ -379,7 +379,7 @@ FRA;
      * Create the quickSearch code for the collection field.
      * return the javascript code which define sqs_objects.
      */
-    function createQuickSearchCode($returnAsJavascript = true){
+    function createQuickSearchCode($returnAsJavascript = true) {
         $sqs_objects = array();
         require_once('include/QuickSearchDefaults.php');
         $qsd = QuickSearchDefaults::getQuickSearchDefaults();
@@ -488,7 +488,7 @@ FRA;
     /*
      * Always call createQuickSearchCode() before createPopupCode() to define field_to_name_array
      */
-    function createPopupCode(){
+    function createPopupCode() {
         // TODO the 'select' button is not fully working. We should use the sqs_objects in open_popup instead of the parameter.
         if(isset($this->field_to_name_array) && !empty($this->field_to_name_array)){
             $call_back_function = 'set_return';
@@ -518,7 +518,7 @@ FRA;
 
 
 
-    function findTemplate($view){
+    function findTemplate($view) {
         static $tplCache = array();
 
         if ( isset($tplCache[$this->type][$view]) ) {

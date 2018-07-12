@@ -63,7 +63,7 @@ function getPrintLink()
 }
 
 
-function ajaxBannedModules(){
+function ajaxBannedModules() {
     $bannedModules = array(
         'Calendar',
         'Emails',

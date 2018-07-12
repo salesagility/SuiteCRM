@@ -125,7 +125,7 @@ class FieldsMetaData extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function FieldsMetaData(){
+    public function FieldsMetaData() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -145,7 +145,7 @@ class FieldsMetaData extends SugarBean
 
 	}
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 	    $data = parent::get_list_view_data();
 	    $data['VNAME'] = translate($this->vname, $this->custom_module);
 	    $data['NAMELINK'] = '<input class="checkbox" type="checkbox" name="remove[]" value="' . $this->id . '">&nbsp;&nbsp;<a href="index.php?module=Studio&action=wizard&wizard=EditCustomFieldsWizard&option=EditCustomField&record=' . $this->id . '" >';

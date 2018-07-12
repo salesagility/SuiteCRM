@@ -341,7 +341,7 @@ class FilterInterpreter
     {
 
         //
-        $isInOperatorsArray = function($operatorNeedle, $operatorsHaystack) {
+        $isInOperatorsArray = function ($operatorNeedle, $operatorsHaystack) {
             foreach ($operatorsHaystack as $operator) {
                 /** @var OperatorInterface $operator */
                 if($operator->isOperator($operatorNeedle)) {

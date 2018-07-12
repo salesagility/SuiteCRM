@@ -244,7 +244,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
 	 * @param $name
 	 * @return String
 	 */
-	function getUserNameFilter($name){
+	function getUserNameFilter($name) {
 			$name_filter = "(" . $GLOBALS['ldap_config']->settings['ldap_login_attr']. "=" . $name . ")";
 			//add the additional user filter if it is specified
 			if(!empty($GLOBALS['ldap_config']->settings['ldap_login_filter'])){
@@ -264,7 +264,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
 	 * @param STRING $name
 	 * @return STRING $id
 	 */
-	function createUser($name){
+	function createUser($name) {
 
 			$user = new User();
 			$user->user_name = $name;
@@ -325,7 +325,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
 	 * @param INT $error
 	 * @return boolean
 	 */
-	function loginError($error){
+	function loginError($error) {
 		if(empty($error)) return false;
 		$errorstr = ldap_err2str($error);
 		// BEGIN SUGAR INT

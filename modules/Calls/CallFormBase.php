@@ -51,7 +51,7 @@ require_once('include/SugarObjects/forms/FormBase.php');
 class CallFormBase extends FormBase
 {
 
-function getFormBody($prefix, $mod='', $formname='',$cal_date='',$cal_time=''){
+function getFormBody($prefix, $mod='', $formname='',$cal_date='',$cal_time='') {
 if(!ACLController::checkAccess('Calls', 'edit', true)){
 		return '';
 	}
@@ -144,7 +144,7 @@ $mod_strings = $temp_strings;
 return $form;
 
 }
-function getFormHeader($prefix, $mod='', $title=''){
+function getFormHeader($prefix, $mod='', $title='') {
 	if(!ACLController::checkAccess('Calls', 'edit', true)){
 		return '';
 	}
@@ -171,7 +171,7 @@ $the_form .= <<<EOQ
 EOQ;
 return $the_form;
 }
-function getFormFooter($prefic, $mod=''){
+function getFormFooter($prefic, $mod='') {
 	if(!ACLController::checkAccess('Calls', 'edit', true)){
 		return '';
 	}
@@ -185,7 +185,7 @@ $the_form .= get_validate_record_js();
 return $the_form;
 }
 
-function getForm($prefix, $mod=''){
+function getForm($prefix, $mod='') {
 	if(!ACLController::checkAccess('Calls', 'edit', true)){
 		return '';
 	}
@@ -525,7 +525,7 @@ function handleSave($prefix,$redirect=true,$useRequired=false) {
 
 } // end handleSave();
 
-function getWideFormBody ($prefix, $mod='', $formname='', $wide =true){
+function getWideFormBody($prefix, $mod='', $formname='', $wide =true) {
 	if(!ACLController::checkAccess('Calls', 'edit', true)){
 		return '';
 	}

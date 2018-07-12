@@ -49,7 +49,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class ProspectFormBase
 {
 
-function checkForDuplicates($prefix){
+function checkForDuplicates($prefix) {
 	global $local_log;
 	require_once('include/formbase.php');
 	
@@ -94,7 +94,7 @@ function checkForDuplicates($prefix){
 }
 
 
-function buildTableForm($rows, $mod=''){
+function buildTableForm($rows, $mod='') {
 	global $action;
 	if(!empty($mod)){
 	global $current_language;
@@ -173,7 +173,7 @@ function buildTableForm($rows, $mod=''){
 
 
 }
-function getWideFormBody($prefix, $mod='',$formname='',  $prospect = ''){
+function getWideFormBody($prefix, $mod='',$formname='',  $prospect = '') {
 	if(!ACLController::checkAccess('Prospects', 'edit', true)){
 		return '';
 	}
@@ -304,7 +304,7 @@ $mod_strings = $temp_strings;
 return $form;
 }
 
-function getFormBody($prefix, $mod='', $formname=''){
+function getFormBody($prefix, $mod='', $formname='') {
 	if(!ACLController::checkAccess('Prospects', 'edit', true)){
 		return '';
 	}
@@ -368,7 +368,7 @@ $mod_strings = $temp_strings;
 return $form;
 
 }
-function getForm($prefix, $mod=''){
+function getForm($prefix, $mod='') {
 if(!ACLController::checkAccess('Prospects', 'edit', true)){
 		return '';
 	}
@@ -405,7 +405,7 @@ return $the_form;
 }
 
 
-function handleSave($prefix,$redirect=true, $useRequired=false){
+function handleSave($prefix,$redirect=true, $useRequired=false) {
 	global $theme;
 	
 	

@@ -406,7 +406,7 @@ class ModuleScanner
 );
     private $methodsBlackList = array('setlevel', 'put' => array('sugarautoloader'), 'unlink' => array('sugarautoloader'));
 
-	public function printToWiki(){
+	public function printToWiki() {
 		echo "'''Default Extensions'''<br>";
 		foreach($this->validExt as $b){
 			echo '#' . $b . '<br>';
@@ -463,14 +463,14 @@ class ModuleScanner
 	/**
 	 *returns a list of issues
 	 */
-	public function getIssues(){
+	public function getIssues() {
 		return $this->issues;
 	}
 
 	/**
 	 *returns true or false if any issues were found
 	 */
-	public function hasIssues(){
+	public function hasIssues() {
 		return !empty($this->issues);
 	}
 
@@ -505,7 +505,7 @@ class ModuleScanner
 	/**
 	 *Scans a directory and calls on scan file for each file
 	 **/
-	public function scanDir($path){
+	public function scanDir($path) {
 		static $startPath = '';
 		if(empty($startPath))$startPath = $path;
 		if(!is_dir($path))return false;
@@ -550,7 +550,7 @@ class ModuleScanner
 	 * It will also ensure that all files are of valid extension types
 	 *
 	 */
-	public function scanFile($file){
+	public function scanFile($file) {
 		$issues = array();
 		if(!$this->isValidExtension($file)){
 			$issues[] = translate('ML_INVALID_EXT');
@@ -804,7 +804,7 @@ class ModuleScanner
 	 *for restricted function calls
 	 *
 	 */
-	public function scanPackage($path){
+	public function scanPackage($path) {
 		$this->pathToModule = $path;
 		$this->scanManifest($path . '/manifest.php');
 		if(empty($this->config['disableFileScan'])){
@@ -815,7 +815,7 @@ class ModuleScanner
 	/**
 	 *This function will take all issues of the current instance and print them to the screen
 	 **/
-	public function displayIssues($package='Package'){
+	public function displayIssues($package='Package') {
 		echo '<h2>'.str_replace('{PACKAGE}' , $package ,translate('ML_PACKAGE_SCANNING')). '</h2><BR><h2 class="error">' . translate('ML_INSTALLATION_FAILED') . '</h2><br><p>' .str_replace('{PACKAGE}' , $package ,translate('ML_PACKAGE_NOT_CONFIRM')). '</p><ul><li>'. translate('ML_OBTAIN_NEW_PACKAGE') . '<li>' . translate('ML_RELAX_LOCAL').
 '</ul></p><br>' . translate('ML_SUGAR_LOADING_POLICY') .  ' <a href=" http://kb.sugarcrm.com/custom/module-loader-restrictions-for-sugar-open-cloud/">' . translate('ML_SUGAR_KB') . '</a>.'.
 '<br>' . translate('ML_AVAIL_RESTRICTION'). ' <a href=" http://developers.sugarcrm.com/wordpress/2009/08/14/module-loader-restrictions/">' . translate('ML_SUGAR_DZ') .  '</a>.<br><br>';

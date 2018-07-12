@@ -50,7 +50,7 @@ class TemplateEnum extends TemplateText
     var $dependency ; // any dependency information
     var $supports_unified_search = true;
 
-    function __construct ()
+    function __construct()
     {
     	// ensure that the field dependency information is read in from any _REQUEST
     	$this->localVardefMap = array (
@@ -61,7 +61,7 @@ class TemplateEnum extends TemplateText
     	$this->vardef_map = array_merge ( $this->vardef_map , $this->localVardefMap ) ;
     }
 
-    function populateFromPost ()
+    function populateFromPost()
     {
     	parent::populateFromPost();
         if (!empty($this->visibility_grid) && is_string($this->visibility_grid))
@@ -102,7 +102,7 @@ class TemplateEnum extends TemplateText
     		unset ( $this->action ) ;
     	}
     }
-	function get_xtpl_edit(){
+	function get_xtpl_edit() {
 		$name = $this->name;
 		$value = '';
 		if(isset($this->bean->$name)){
@@ -129,7 +129,7 @@ class TemplateEnum extends TemplateText
 
 	}
 
-	function get_xtpl_search(){
+	function get_xtpl_search() {
 		$searchFor = '';
 		if(!empty($_REQUEST[$this->name])){
 			$searchFor = $_REQUEST[$this->name];
@@ -145,7 +145,7 @@ class TemplateEnum extends TemplateText
 
 	}
 
-	function get_field_def(){
+	function get_field_def() {
 		$def = parent::get_field_def();
 		$def['options'] = !empty($this->options) ? $this->options : $this->ext1;
 		$def['default'] = !empty($this->default) ? $this->default : $this->default_value;
@@ -160,7 +160,7 @@ class TemplateEnum extends TemplateText
 		return $def;
 	}
 
-	function get_xtpl_detail(){
+	function get_xtpl_detail() {
 		$name = $this->name;
 
 		// awu: custom fields are not being displayed on the detail view because $this->ext1 is always empty, adding this to get the options
@@ -188,7 +188,7 @@ class TemplateEnum extends TemplateText
 		return '';
 	}
 
-	function save($df){
+	function save($df) {
 		if (!empty($this->default_value) && is_array($this->default_value)) {
 			$this->default_value = $this->default_value[0];
 		}
@@ -205,7 +205,7 @@ class TemplateEnum extends TemplateText
     /**
      * @param DynamicField $df
      */
-    function delete($df){
+    function delete($df) {
         parent::delete($df);
     }
 }

@@ -118,7 +118,7 @@ class ViewRelationships extends SugarView
     /*
      * Encode the relationships for this module for display in the Ext grid layout
      */
-    function getAjaxRelationships ( $relationships )
+    function getAjaxRelationships($relationships)
     {
         $ajaxrels = array ( ) ;
         foreach ( $relationships->getRelationshipList () as $relationshipName )

@@ -51,7 +51,7 @@ class TemplateDragDropChooser extends Template
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function TemplateDragDropChooser(){
+    function TemplateDragDropChooser() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -69,7 +69,7 @@ class TemplateDragDropChooser extends Template
  * followed by the displayDefinitionScript();
  * and lastly call the display function
  */
-    function display(){
+    function display() {
 
   /*   valid entries for expected arguments array are as follow:
    *   args['left_header'] = value of left table header

@@ -68,7 +68,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      *                                         - user_default_team_id, user_is_admin, user_default_dateformat, user_default_timeformat
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function login($user_auth, $application = null, $name_value_list = array()){
+    public function login($user_auth, $application = null, $name_value_list = array()) {
         $GLOBALS['log']->info("Begin: SugarWebServiceImpl->login({$user_auth['user_name']}, $application, ". print_r($name_value_list, true) .")");
         global $sugar_config, $system_config;
         $error = new SoapError();
@@ -256,7 +256,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      *	     		 'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
     * @exception 'SoapFault' -- The SOAP error, if any
     */
-    function get_entry_list($session, $module_name, $query, $order_by,$offset, $select_fields, $link_name_to_fields_array, $max_results, $deleted, $favorites = false ){
+    function get_entry_list($session, $module_name, $query, $order_by,$offset, $select_fields, $link_name_to_fields_array, $max_results, $deleted, $favorites = false) {
 
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entry_list');
         global  $beanList, $beanFiles;
@@ -356,7 +356,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * @return array $view The view(s) requested.  Current supported types are edit, detail, list, and subpanel.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_module_layout($session, $a_module_names, $a_type, $a_view,$acl_check = TRUE, $md5 = FALSE){
+    function get_module_layout($session, $a_module_names, $a_type, $a_view,$acl_check = TRUE, $md5 = FALSE) {
     	$GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_layout');
 
     	global  $beanList, $beanFiles;
@@ -416,7 +416,7 @@ class SugarWebServiceImplv4 extends SugarWebServiceImplv3_1
      * @return Array return_search_result 	- Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function search_by_module($session, $search_string, $modules, $offset, $max_results,$assigned_user_id = '', $select_fields = array(), $unified_search_only = TRUE, $favorites = FALSE){
+    function search_by_module($session, $search_string, $modules, $offset, $max_results,$assigned_user_id = '', $select_fields = array(), $unified_search_only = TRUE, $favorites = FALSE) {
     	$GLOBALS['log']->info('Begin: SugarWebServiceImpl->search_by_module');
     	global  $beanList, $beanFiles;
     	global $sugar_config,$current_language;

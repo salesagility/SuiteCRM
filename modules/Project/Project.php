@@ -102,7 +102,7 @@ class Project extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Project(){
+    public function Project() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -230,7 +230,7 @@ class Project extends SugarBean
 	/**
 	 *
 	 */
-	function build_generic_where_clause ($the_query_string)
+	function build_generic_where_clause($the_query_string)
 	{
 		$where_clauses = array();
 		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
@@ -253,7 +253,7 @@ class Project extends SugarBean
 		$field_list['ASSIGNED_USER_NAME'] = $this->assigned_user_name;
 		return $field_list;
 	}
-	  function bean_implements($interface){
+	  function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}
@@ -295,7 +295,7 @@ class Project extends SugarBean
         }
         return $query;
     }
-	function getAllProjectTasks(){
+	function getAllProjectTasks() {
 		$projectTasks = array();
 
 		$query = "SELECT * FROM project_task WHERE project_id = '" . $this->id. "' AND deleted = 0 ORDER BY project_task_id";

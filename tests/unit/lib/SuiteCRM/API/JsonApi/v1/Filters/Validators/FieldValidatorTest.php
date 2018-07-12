@@ -40,7 +40,7 @@ class FieldValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
             new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][FieldValidator][isValid][expected type to be string] $fieldKey'
             ),
-            function() {
+            function () {
                 self::$fieldValidator->isValid(array());
             }
         );

@@ -130,7 +130,7 @@ class SugarpdfFactory
      * 
      * @return a valid Sugarpdf
      */
-    function _buildFromFile($file, &$bean, $sugarpdf_object_map, $type, $module){
+    function _buildFromFile($file, &$bean, $sugarpdf_object_map, $type, $module) {
         require_once($file);
         //try ModuleSugarpdfType first then try SugarpdfType if that fails then use Sugarpdf
         $class = ucfirst($module).'Sugarpdf'.ucfirst($type);
@@ -154,7 +154,7 @@ class SugarpdfFactory
      * 
      * @return Sugarpdf
      */
-    function _buildClass($class, &$bean, $sugarpdf_object_map){
+    function _buildClass($class, &$bean, $sugarpdf_object_map) {
         
 
         $sugarpdf = new $class($bean, $sugarpdf_object_map);

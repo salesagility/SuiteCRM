@@ -64,7 +64,7 @@ class ListViewMerge extends EditViewMerge
 	 * @param STRING $new_file - path to the new file that is shipping with the patch 
 	 * @param STRING $custom_file - path to the custom file
 	 */
-	protected function loadData($module, $original_file, $new_file, $custom_file){
+	protected function loadData($module, $original_file, $new_file, $custom_file) {
 		parent::loadData($module, $original_file, $new_file, $custom_file);
 		$this->originalData = array($module=>array( $this->viewDefs=>array($this->panelName=>array('DEFAULT'=>$this->originalData[$module]))));
 		$this->customData = array($module=>array( $this->viewDefs=>array($this->panelName=>array('DEFAULT'=>$this->customData[$module]))));
@@ -78,7 +78,7 @@ class ListViewMerge extends EditViewMerge
 	 * @param ARRAY $panels - this is the 'panel' section of the meta-data for list views all the meta data is one panel since it is just a list of fields
 	 * @return ARRAY $fields - an associate array of fields and their meta-data as well as their location
 	 */
-	protected function getFields(&$panels, $multiple = true){
+	protected function getFields(&$panels, $multiple = true) {
 		$fields = array();
 		$blanks = 0;
 		if(!$multiple)$panels = array($panels);
@@ -126,7 +126,7 @@ class ListViewMerge extends EditViewMerge
 	 * Since all the meta-data is just a list of fields the panel section should be all the meta data
 	 *
 	 */
-	protected function setPanels(){
+	protected function setPanels() {
 		$this->newData = $this->buildPanels();
 	}
 	
@@ -136,7 +136,7 @@ class ListViewMerge extends EditViewMerge
 	 * @param STRING $to - path of the file to save it to 
 	 * @return BOOLEAN - success or failure of the save
 	 */
-	public function save($to){
+	public function save($to) {
 		return write_array_to_file("$this->varName['$this->module']", $this->newData, $to);
 	}
 	
@@ -219,7 +219,7 @@ class ListViewMerge extends EditViewMerge
 	 * @param ARRAY $custom - the custom meta-data for this field
 	 * @return ARRAY $merged - the merged meta-data
 	 */
-	protected function mergeField($orig, $new, $custom){
+	protected function mergeField($orig, $new, $custom) {
 		$orig_custom = $this->areMatchingValues($orig, $custom);
 		$new_custom = $this->areMatchingValues($new, $custom);
 		// if both are true then there is nothing to merge since all three fields match

@@ -392,7 +392,7 @@ function xhprof_generate_dot_script($raw_data, $threshold, $source, $page,
   return $result;
 }
 
-function  xhprof_render_diff_image($xhprof_runs_impl, $run1, $run2,
+function xhprof_render_diff_image($xhprof_runs_impl, $run1, $run2,
                                    $type, $threshold, $source) {
   $total1;
   $total2;

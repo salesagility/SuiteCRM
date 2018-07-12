@@ -32,7 +32,7 @@ require_once('modules/AOS_Contracts/AOS_Contracts_sugar.php');
 class AOS_Contracts extends AOS_Contracts_sugar
 {
 
-	function __construct(){
+	function __construct() {
 
 		parent::__construct();
 
@@ -63,7 +63,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Contracts(){
+    function AOS_Contracts() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -111,7 +111,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
 
 	}
 
-	function createReminder(){
+	function createReminder() {
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
 
@@ -139,7 +139,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         }
 	}
 
-	function createLink(){
+	function createLink() {
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
 
@@ -159,7 +159,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
 		}
 	}
 
-	function deleteCall(){
+	function deleteCall() {
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
             

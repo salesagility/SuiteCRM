@@ -474,7 +474,7 @@ class RenameModules
      * @param  SugarBean $bean
      * @return array The subpanel definitions.
      */
-    private function getSubpanelDefs($bean )
+    private function getSubpanelDefs($bean)
 	{
         if(empty($bean->module_dir)) {
             return array();

@@ -10,7 +10,7 @@ function install_gmaps()
 }
 
 
-function installJJWHooks(){
+function installJJWHooks() {
 
     $hooks= array(
         // Prospects

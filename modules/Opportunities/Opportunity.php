@@ -121,7 +121,7 @@ class Opportunity extends SugarBean
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	function Opportunity(){
+	function Opportunity() {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -313,7 +313,7 @@ $query .= 			"LEFT JOIN users
         }
     }
 
-    function get_list_view_data(){
+    function get_list_view_data() {
 		global $locale, $current_language, $current_user, $mod_strings, $app_list_strings, $sugar_config;
 		$app_strings = return_application_language($current_language);
         $params = array();
@@ -324,7 +324,7 @@ $query .= 			"LEFT JOIN users
 		return $temp_array;
 	}
 
-    function get_currency_symbol(){
+    function get_currency_symbol() {
            if(isset($this->currency_id)){
                $cur_qry = "select * from currencies where id ='".$this->currency_id."'";
                $cur_res = $this->db->query($cur_qry);
@@ -343,7 +343,7 @@ $query .= 			"LEFT JOIN users
 		builds a generic search based on the query string using or
 		do not include any $this-> because this is called on without having the class instantiated
 	*/
-	function build_generic_where_clause ($the_query_string) {
+	function build_generic_where_clause($the_query_string) {
 	$where_clauses = Array();
 	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 	array_push($where_clauses, "opportunities.name like '$the_query_string%'");
@@ -424,13 +424,13 @@ $query .= 			"LEFT JOIN users
 		return $xtpl;
 	}
 
-	function bean_implements($interface){
+	function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}
 		return false;
 	}
-	function listviewACLHelper(){
+	function listviewACLHelper() {
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
 		$in_group = false; //SECURITY GROUPS
@@ -488,6 +488,6 @@ $query .= 			"LEFT JOIN users
 		return $ret_array;
 	}
 }
-function getCurrencyType(){
+function getCurrencyType() {
 
 }

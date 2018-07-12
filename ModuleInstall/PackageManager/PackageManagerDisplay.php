@@ -57,7 +57,7 @@ class PackageManagerDisplay
      * @param String active_form - the form to display first
      * @return String - a string of html which will be used to display the forms
      */
-    static function buildPackageDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1', $install = false){
+    static function buildPackageDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1', $install = false) {
 		global $current_language;
 
         $mod_strings = return_module_language($current_language, "Administration");
@@ -149,7 +149,7 @@ class PackageManagerDisplay
      * @param String active_form - the form to display first
      * @return String - a string of html which will be used to display the forms
      */
-    function buildPatchDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1'){
+    function buildPatchDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1') {
     	global $current_language;
         $mod_strings = return_module_language($current_language, "Administration");
         $ss = new Sugar_Smarty();
@@ -227,7 +227,7 @@ class PackageManagerDisplay
         return $str;
     }
 
-    static function buildInstalledGrid($mod_strings, $types = array('modules')){
+    static function buildInstalledGrid($mod_strings, $types = array('modules')) {
     	  $descItemsInstalled = $mod_strings['LBL_UW_DESC_MODULES_INSTALLED'];
     	  $output = '<table width="100%" border="0" cellspacing="0" cellpadding="0" ><tr><td align="left">'.$descItemsInstalled.'</td>';
           $output .= '</td></tr></table>';
@@ -235,7 +235,7 @@ class PackageManagerDisplay
           return $output;
     }
 
-    function buildLoginPanel($mod_strings, $display_cancel){
+    function buildLoginPanel($mod_strings, $display_cancel) {
         $credentials = PackageManager::getCredentials();
     	$output = "<div id='login_panel'><div class='hd'><b>".$mod_strings['HDR_LOGIN_PANEL']."</b></div>";
         $output .= "<div class='bd'><form><table><tr><td>".$mod_strings['LBL_USERNAME']."</td><td><input type='text' name='login_panel_username' id='login_panel_username' value='".$credentials['username']."'></td><td><a target='blank'>".$mod_strings['LNK_NEW_ACCOUNT']."</a></td>";
@@ -267,7 +267,7 @@ class PackageManagerDisplay
      *  @param Array mod_strings - the local mod strings to display
      *  @return String - a string of html
      */
-	static function buildGridOutput($tree, $mod_strings, $display = true, $show_login = true){
+	static function buildGridOutput($tree, $mod_strings, $display = true, $show_login = true) {
 		 $output = "<div id='catview'>";
 		$loginViewStyle = ($display ? 'none' : 'block');
 		$selectViewStyle = ($display ? 'block' : 'none');
@@ -304,7 +304,7 @@ class PackageManagerDisplay
      * @param String div_id - this div in which to display the tree
      * @return Tree - the tree that is built
      */
-    static function buildTreeView($div_id, $isAlive = true){
+    static function buildTreeView($div_id, $isAlive = true) {
         $tree = new Tree($div_id);
         $nodes = array();
         if($isAlive)
@@ -334,7 +334,7 @@ class PackageManagerDisplay
      * @param String modify_field - the field to update when the radio button is changed
      * @return String - a form used to display the license
      */
-    function getLicenseDisplay($license_file, $form_action, $next_step, $zipFile, $type, $manifest, $modify_field){
+    function getLicenseDisplay($license_file, $form_action, $next_step, $zipFile, $type, $manifest, $modify_field) {
     	global $current_language;
         $mod_strings = return_module_language($current_language, "Administration");
         $contents = sugar_file_get_contents($license_file);
@@ -377,7 +377,7 @@ class PackageManagerDisplay
      *
      * @return String - the javascript required for the page
      */
-    static function getDisplayScript($install = false, $type = 'module', $releases = null, $types = array(), $isAlive = true){
+    static function getDisplayScript($install = false, $type = 'module', $releases = null, $types = array(), $isAlive = true) {
         global $sugar_version, $sugar_config;
         global $current_language;
 
@@ -457,7 +457,7 @@ class PackageManagerDisplay
         return $str;
     }
 
-    function createJavascriptPackageArray($releases){
+    function createJavascriptPackageArray($releases) {
         $output = "var mti_data = [";
         $count = count($releases);
         $index = 1;
@@ -476,7 +476,7 @@ class PackageManagerDisplay
         return $output;
     }
 
-    static function createJavascriptModuleArray($modules, $variable_name = 'mti_data'){
+    static function createJavascriptModuleArray($modules, $variable_name = 'mti_data') {
         $output = "var ".$variable_name." = [";
         $count = count($modules);
         $index = 1;
@@ -503,7 +503,7 @@ class PackageManagerDisplay
     *  This method is meant to be used to display the license agreement inline on the page
     *  if the system would like to perform the installation on the same page via an Ajax call
     */
-    function buildLicenseOutput($file){
+    function buildLicenseOutput($file) {
     	global $current_language;
 
         $mod_strings = return_module_language($current_language, "Administration");
@@ -519,7 +519,7 @@ class PackageManagerDisplay
         return $str;
     }
 
-    static function getHeader(){
+    static function getHeader() {
     	global $current_language;
 
         $mod_strings = return_module_language($current_language, "Administration");
@@ -547,7 +547,7 @@ class PackageManagerDisplay
         return array('text' => $header_text, 'isAlive' => $isAlive, 'show_login' => $show_login);
     }
 
-    function buildInstallGrid($view){
+    function buildInstallGrid($view) {
     	$uh = new UpgradeHistory();
     	$installeds = $uh->getAll();
 		$upgrades_installed = 0;

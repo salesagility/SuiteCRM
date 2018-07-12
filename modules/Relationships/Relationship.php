@@ -80,7 +80,7 @@ class Relationship extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Relationship(){
+    public function Relationship() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -135,7 +135,7 @@ class Relationship extends SugarBean
     }
 
 
-	function get_other_module($relationship_name, $base_module, &$db){
+	function get_other_module($relationship_name, $base_module, &$db) {
 	//give it the relationship_name and base module
 	//it will return the module name on the other side of the relationship
 
@@ -158,7 +158,7 @@ class Relationship extends SugarBean
 	//end function get_other_module
 	}
 
-	function retrieve_by_sides($lhs_module, $rhs_module, &$db){
+	function retrieve_by_sides($lhs_module, $rhs_module, &$db) {
 	//give it the relationship_name and base module
 	//it will return the module name on the other side of the relationship
 
@@ -177,7 +177,7 @@ class Relationship extends SugarBean
 	//end function retrieve_by_sides
 	}
 
-	static function retrieve_by_modules($lhs_module, $rhs_module, &$db, $type =''){
+	static function retrieve_by_modules($lhs_module, $rhs_module, &$db, $type ='') {
 	//give it the relationship_name and base module
 	//it will return the module name on the other side of the relationship
 
@@ -270,7 +270,7 @@ class Relationship extends SugarBean
 	}
 
 
-	function trace_relationship_module($base_module, $rel_module1_name, $rel_module2_name=""){
+	function trace_relationship_module($base_module, $rel_module1_name, $rel_module2_name="") {
 		global $beanList;
 		global $dictionary;
 

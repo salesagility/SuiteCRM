@@ -80,7 +80,7 @@ class UpgradeMetaHelper
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	function UpgradeMetaHelper($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false){
+	function UpgradeMetaHelper($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false) {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -138,7 +138,7 @@ class UpgradeMetaHelper
 		return $return_array;
 	}
 
-function saveMatchingFilesQueries($currStep,$value){
+function saveMatchingFilesQueries($currStep,$value) {
 	$upgrade_progress_dir = sugar_cached('upgrades/temp');
 	if(!is_dir($upgrade_progress_dir)){
 		mkdir($upgrade_progress_dir);

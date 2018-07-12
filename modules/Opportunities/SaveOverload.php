@@ -39,7 +39,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-function perform_save(&$focus){
+function perform_save(&$focus) {
 	//US DOLLAR
 	if(isset($focus->amount) && !number_empty($focus->amount)){
 		$currency = new Currency();

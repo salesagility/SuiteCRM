@@ -45,14 +45,14 @@ class ListViewPackages extends ListViewSmarty
     /**
      * Constructor  Call ListViewSmarty
      */
-    function __construct(){
+    function __construct() {
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ListViewPackages(){
+    function ListViewPackages() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -78,7 +78,7 @@ class ListViewPackages extends ListViewSmarty
     /**
      * Override the display method
      */
-    function display($end = true){
+    function display($end = true) {
         global $odd_bg, $even_bg, $app_strings;
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
         $this->ss->assign('bgColor', array($odd_bg, $even_bg));

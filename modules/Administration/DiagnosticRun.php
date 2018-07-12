@@ -124,7 +124,7 @@ $getDumpsFrom = Array();
 global $cacheDir;
 $cacheDir = "";
 
-function sodUpdateProgressBar($itemweight){
+function sodUpdateProgressBar($itemweight) {
     global $progress_bar_percent;
     global $totalweight;
     global $totalitems;
@@ -178,7 +178,7 @@ function array_as_table($header, $values)
 // expects a string containing the name of the table you would like to get the dump of
 // expects there to already be a connection to the db and the 'use database_name' to be done
 // returns a string containing (in html) the dump of all rows
-function getFullTableDump($tableName){
+function getFullTableDump($tableName) {
 
 	$db = DBManagerFactory::getInstance();
 
@@ -728,7 +728,7 @@ function executevardefs()
     //END UPDATING PROGRESS BAR
 }
 
-function finishDiag(){
+function finishDiag() {
 	//BEGIN ZIP ALL FILES AND EXTRACT IN CACHE ROOT
 	global $cacheDir;
 	global $curdatetime;

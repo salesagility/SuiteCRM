@@ -43,7 +43,7 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
- function get_body(&$ss, $vardef){
+ function get_body(&$ss, $vardef) {
  	$multi = false;
     $radio = false;
  	if (isset ($vardef['type']) && $vardef['type'] == 'multienum')

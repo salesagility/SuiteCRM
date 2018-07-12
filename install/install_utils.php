@@ -55,7 +55,7 @@ require_once('include/upload_file.php');
  * @param string function name to call in custom install hooks
  * @return mixed function call result, or 'undefined'
  */
-function installerHook($function_name, $options = array()){
+function installerHook($function_name, $options = array()) {
     if(!isset($GLOBALS['customInstallHooksExist'])){
         if(file_exists('custom/install/install_hooks.php')){
             installLog("installerHook: Found custom/install/install_hooks.php");
@@ -240,7 +240,7 @@ function commitLanguagePack($uninstall=false) {
     return $sugar_config;
 }
 
-function commitPatch($unlink = false, $type = 'patch'){
+function commitPatch($unlink = false, $type = 'patch') {
     require_once('ModuleInstall/ModuleInstaller.php');
     require_once('include/entryPoint.php');
 
@@ -309,7 +309,7 @@ function commitPatch($unlink = false, $type = 'patch'){
     $mod_strings = $old_mod_strings;
 }
 
-function commitModules($unlink = false, $type = 'module'){
+function commitModules($unlink = false, $type = 'module') {
     require_once('ModuleInstall/ModuleInstaller.php');
     require_once('include/entryPoint.php');
 
@@ -950,7 +950,7 @@ function getFtsSettings()
 /**
  * (re)write the .htaccess file to prevent browser access to the log file
  */
-function handleHtaccess(){
+function handleHtaccess() {
     global $mod_strings;
     global $sugar_config;
     $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0)?'(?i)':'';
@@ -1124,7 +1124,7 @@ function handleWebConfig()
 /**
  * Drop old tables if table exists and told to drop it
  */
-function drop_table_install( &$focus ){
+function drop_table_install(&$focus) {
     $db = DBManagerFactory::getInstance();
     global $dictionary;
 
@@ -1142,7 +1142,7 @@ function drop_table_install( &$focus ){
 }
 
 // Creating new tables if they don't exist.
-function create_table_if_not_exist( &$focus ){
+function create_table_if_not_exist(&$focus) {
     global  $db;
     $table_created = false;
 
@@ -1160,7 +1160,7 @@ function create_table_if_not_exist( &$focus ){
 
 
 
-function create_default_users(){
+function create_default_users() {
     $db = DBManagerFactory::getInstance();
     global $setup_site_admin_password;
     global $setup_site_admin_user_name;
@@ -1199,7 +1199,7 @@ function create_default_users(){
     }
 }
 
-function set_admin_password( $password ) {
+function set_admin_password($password) {
     $db = DBManagerFactory::getInstance();
 
     $user_hash = User::getPasswordHash($password);
@@ -1209,7 +1209,7 @@ function set_admin_password( $password ) {
     $db->query($query);
 }
 
-function insert_default_settings(){
+function insert_default_settings() {
     $db = DBManagerFactory::getInstance();
     global $setup_sugar_version;
     global $sugar_db_version;
@@ -1388,7 +1388,7 @@ function recursive_is_writable($start_file)
 }
 
 // one place for form validation/conversion to boolean
-function get_boolean_from_request( $field ){
+function get_boolean_from_request($field) {
     if( !isset($_REQUEST[$field]) ){
         return( false );
     }
@@ -1401,7 +1401,7 @@ function get_boolean_from_request( $field ){
     }
 }
 
-function stripslashes_checkstrings($value){
+function stripslashes_checkstrings($value) {
     if(is_string($value)){
         return stripslashes($value);
     }
@@ -1409,7 +1409,7 @@ function stripslashes_checkstrings($value){
 }
 
 
-function print_debug_array( $name, $debug_array ){
+function print_debug_array($name, $debug_array) {
     ksort( $debug_array );
 
     print( "$name vars:\n" );
@@ -1425,7 +1425,7 @@ function print_debug_array( $name, $debug_array ){
     print( ")\n" );
 }
 
-function print_debug_comment(){
+function print_debug_comment() {
     if( !empty($_REQUEST['debug']) ){
         $_SESSION['debug'] = $_REQUEST['debug'];
     }
@@ -1462,7 +1462,7 @@ function validate_dbConfig() {
     return checkDBSettings(true);
 }
 
-function validate_siteConfig($type){
+function validate_siteConfig($type) {
     global $mod_strings;
     $errors = array();
 
@@ -1581,7 +1581,7 @@ function pullSilentInstallVarsIntoSession() {
  * @param needles list of needles to search for
  * @param output_array the array to add the keys to
  */
-function copyFromArray($input_array, $needles, $output_array){
+function copyFromArray($input_array, $needles, $output_array) {
     foreach($needles as $needle){
         if(isset($input_array[$needle])){
             $output_array[$needle]  = $input_array[$needle];
@@ -1790,7 +1790,7 @@ function getLangPacks($display_commit = true, $types = array('langpack'), $notic
 }
 
 if ( !function_exists('extractFile') ) {
-    function extractFile( $zip_file, $file_in_zip, $base_tmp_upgrade_dir){
+    function extractFile($zip_file, $file_in_zip, $base_tmp_upgrade_dir) {
         $my_zip_dir = mk_temp_dir( $base_tmp_upgrade_dir );
         unzip_file( $zip_file, $file_in_zip, $my_zip_dir );
         return( "$my_zip_dir/$file_in_zip" );
@@ -1798,7 +1798,7 @@ if ( !function_exists('extractFile') ) {
 }
 
 if ( !function_exists('extractManifest') ) {
-    function extractManifest( $zip_file,$base_tmp_upgrade_dir ) {
+    function extractManifest($zip_file,$base_tmp_upgrade_dir) {
         return( extractFile( $zip_file, "manifest.php",$base_tmp_upgrade_dir ) );
     }
 }
@@ -1875,7 +1875,7 @@ function langPackUnpack($unpack_type, $full_file)
 }
 
 if ( !function_exists('validate_manifest') ) {
-    function validate_manifest( $manifest ){
+    function validate_manifest($manifest) {
         // takes a manifest.php manifest array and validates contents
         global $subdirs;
         global $sugar_version;
@@ -1895,7 +1895,7 @@ if ( !function_exists('validate_manifest') ) {
 }
 
 if ( !function_exists('getInstallType') ) {
-    function getInstallType( $type_string ){
+    function getInstallType($type_string) {
         // detect file type
         $subdirs = array('full', 'langpack', 'module', 'patch', 'theme', 'temp');
         foreach( $subdirs as $subdir ){
@@ -1911,7 +1911,7 @@ if ( !function_exists('getInstallType') ) {
 
 
 //mysqli connector has a separate parameter for port.. We need to separate it out from the host name
-function getHostPortFromString($hostname=''){
+function getHostPortFromString($hostname='') {
 
     $pos=strpos($hostname,':');
     if($pos === false){
@@ -2053,7 +2053,7 @@ function create_past_date()
  *   This method will look for a file modules_post_install.php in the root directory and based on the
  *   contents of this file, it will silently install any modules as specified in this array.
  */
-function post_install_modules(){
+function post_install_modules() {
     if(is_file('modules_post_install.php')){
         global $current_user, $mod_strings;
         $current_user = new User();
@@ -2075,13 +2075,13 @@ function post_install_modules(){
     }
 }
 
-function get_help_button_url(){
+function get_help_button_url() {
     $help_url = 'https://docs.suitecrm.com/user/';
 
     return $help_url;
 }
 
-function create_db_user_creds($numChars=10){
+function create_db_user_creds($numChars=10) {
     $numChars = 7; // number of chars in the password
 //chars to select from
     $charBKT = "abcdefghijklmnpqrstuvwxyz123456789ABCDEFGHIJKLMNPQRSTUVWXYZ";

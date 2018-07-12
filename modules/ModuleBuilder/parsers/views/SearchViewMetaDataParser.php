@@ -73,7 +73,7 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
      * @param string $packageName    If not empty, the name of the package to which this listview belongs
      * @throws Exception
      */
-    function __construct ($searchLayout, $moduleName , $packageName = '')
+    function __construct($searchLayout, $moduleName , $packageName = '')
     {
         $GLOBALS [ 'log' ]->debug ( get_class ( $this ) . ": __construct( $searchLayout , $moduleName , $packageName )" ) ;
 
@@ -174,7 +174,7 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
      * Have to preserve the original layout format, which is array('metadata'=>array,'layouts'=>array('basic'=>array,'advanced'=>array))
      * @param bool $populate
      */
-    public function handleSave ($populate = true)
+    public function handleSave($populate = true)
     {
         if ($populate)
             $this->_populateFromRequest() ;
@@ -184,7 +184,7 @@ class SearchViewMetaDataParser extends ListLayoutMetaDataParser
         $this->implementation->deploy ( $this->_saved ) ;
     }
 
-    private function convertSearchViewToListView ($viewdefs)
+    private function convertSearchViewToListView($viewdefs)
     {
         $temp = array ( ) ;
         foreach ( $viewdefs as $key => $value )

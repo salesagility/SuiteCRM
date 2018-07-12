@@ -81,7 +81,7 @@ class UpgradeHistory extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function UpgradeHistory(){
+    public function UpgradeHistory() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -93,7 +93,7 @@ class UpgradeHistory extends SugarBean
     }
 
 
-    function getAllOrderBy($orderBy){
+    function getAllOrderBy($orderBy) {
         $query = "SELECT id FROM " . $this->table_name . " ORDER BY ".$orderBy;
         return $this->getList($query);
     }
@@ -103,7 +103,7 @@ class UpgradeHistory extends SugarBean
      * @param id      the id of the item you are comparing to
      * @return upgrade_history object if found, null otherwise
      */
-    function checkForExisting($patch_to_check){
+    function checkForExisting($patch_to_check) {
         $uh = new UpgradeHistory();
         if($patch_to_check != null){
 
@@ -139,7 +139,7 @@ class UpgradeHistory extends SugarBean
     /**
      * Check if this is an upgrade, if it is then return the latest version before this installation
      */
-    function determineIfUpgrade($id_name, $version){
+    function determineIfUpgrade($id_name, $version) {
         $query = "SELECT id, version FROM " . $this->table_name . " WHERE id_name = '$id_name' ORDER BY date_entered DESC";
         $result = $this->db->query($query);
          if(empty($result)){
@@ -167,11 +167,11 @@ class UpgradeHistory extends SugarBean
         return $this->getList($query);
     }
 
-    function getList($query){
+    function getList($query) {
         return( parent::build_related_list( $query, $this ) );
     }
 
-    function findByMd5( $var_md5 )
+    function findByMd5($var_md5)
     {
         $query = "SELECT id FROM " . $this->table_name . " where md5sum = '$var_md5'";
         return( parent::build_related_list( $query, $this ) );
@@ -256,7 +256,7 @@ class UpgradeHistory extends SugarBean
      * return               true if the right version is greater or they are equal
      *                      false if the left version is greater
      */
-    function is_right_version_greater($left, $right, $equals_is_greater = true){
+    function is_right_version_greater($left, $right, $equals_is_greater = true) {
         if(count($left) == 0 && count($right) == 0){
             return $equals_is_greater;
         }
@@ -283,7 +283,7 @@ class UpgradeHistory extends SugarBean
      *
      * @return not_found	an array of id_names that were not found to be installed on the system
      */
-    function checkDependencies($dependencies = array()){
+    function checkDependencies($dependencies = array()) {
         $not_found = array();
         foreach($dependencies as $dependent){
             $found = false;

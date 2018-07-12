@@ -51,17 +51,17 @@ class TemplateURL extends TemplateText
 	}
 	
 	var $type='url';
-    function get_html_edit(){
+    function get_html_edit() {
         $this->prepare();
         return "<input type='text' name='". $this->name. "' id='".$this->name."' size='".$this->size."' title='{" . strtoupper($this->name) ."_HELP}' value='{". strtoupper($this->name). "}'>";
     }
     
-    function get_html_detail(){ 
+    function get_html_detail() { 
         $xtpl_var = strtoupper($this->name);
         return "<a href='{" . $xtpl_var . "}' target='_blank'>{" . $xtpl_var . "}</a>";
     }
     
-    function get_xtpl_detail(){
+    function get_xtpl_detail() {
         $value = parent::get_xtpl_detail();
         if(!empty($value) && substr_count($value, '://') == 0 && substr($value ,0,8) != 'index.php'){
             $value = 'http://' . $value;
@@ -69,7 +69,7 @@ class TemplateURL extends TemplateText
         return $value;
     }
 
-	function get_field_def(){
+	function get_field_def() {
 		$def = parent::get_field_def();
 		//$def['options'] = !empty($this->options) ? $this->options : $this->ext1;
 		$def['default'] = !empty($this->default) ? $this->default : $this->default_value;

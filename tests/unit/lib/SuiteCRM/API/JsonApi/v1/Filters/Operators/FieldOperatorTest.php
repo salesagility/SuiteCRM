@@ -34,7 +34,7 @@ class FieldOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][FieldOperator][isValid][expected type to be string] $operator'),
-            function() {
+            function () {
                 self::$fieldOperator->isValid(array());
             }
         );
@@ -62,7 +62,7 @@ class FieldOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][FieldOperator][isValid][expected type to be string] $operator'),
-            function() {
+            function () {
                 self::$fieldOperator->isValid(array());
             }
         );

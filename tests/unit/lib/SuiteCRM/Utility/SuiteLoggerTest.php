@@ -110,7 +110,7 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \Psr\Log\InvalidArgumentException(),
-            function() {
+            function () {
                 self::$logger->log('invalid-level', 'hello');
             }
         );

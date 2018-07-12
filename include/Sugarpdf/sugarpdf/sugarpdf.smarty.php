@@ -73,14 +73,14 @@ class SugarpdfSmarty extends Sugarpdf
     protected $smartyCell = false;
     protected $smartyAlign = "";
     
-    function preDisplay(){
+    function preDisplay() {
         parent::preDisplay();
         $this->print_header = false;
         $this->print_footer = false;
         $this->_initSmartyInstance();
     }
     
-    function display(){
+    function display() {
         //turn off all error reporting so that PHP warnings don't munge the PDF code
         $state = new \SuiteCRM\StateSaver();
         $state->pushPHPConfigOptions();
@@ -110,7 +110,7 @@ class SugarpdfSmarty extends Sugarpdf
     /**
      * Init the Sugar_Smarty object.
      */
-    private function _initSmartyInstance(){
+    private function _initSmartyInstance() {
         if ( !($this->ss instanceof Sugar_Smarty) ) {
             require_once('include/Sugar_Smarty.php');
             $this->ss = new Sugar_Smarty();

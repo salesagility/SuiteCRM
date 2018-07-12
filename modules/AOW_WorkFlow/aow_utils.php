@@ -126,7 +126,7 @@ function getModuleFields(
     }
 }
 
-function getRelModuleFields($module, $rel_field, $view='EditView',$value = ''){
+function getRelModuleFields($module, $rel_field, $view='EditView',$value = '') {
     global $beanList;
 
     if($module == $rel_field){
@@ -170,7 +170,7 @@ function getRelatedModule($module, $linkFields)
     return $relatedModule;
 }
 
-function getModuleTreeData($module){
+function getModuleTreeData($module) {
     global $beanList, $app_list_strings;
 
     $sort_fields = array();
@@ -208,7 +208,7 @@ function getModuleTreeData($module){
                     }
                 }
             } //End loop.
-            uasort($sort_fields,function($a,$b){
+            uasort($sort_fields,function ($a,$b) {
                 return strcmp($a['label'],$b['label']);
             });
 
@@ -263,7 +263,7 @@ function getModuleRelationships($module, $view='EditView',$value = '')
     }
 }
 
-function getValidFieldsTypes($module, $field){
+function getValidFieldsTypes($module, $field) {
     global $beanFiles, $beanList;
 
     require_once($beanFiles[$beanList[$module]]);
@@ -314,7 +314,7 @@ function getModuleField(
     $alt_type = '',
     $currency_id = '',
     $params= array()
-){
+) {
     global $current_language;
     global $app_strings;
     global $app_list_strings;
@@ -729,7 +729,7 @@ function getDateFields($module, $view='EditView',$value = '', $field_option = tr
     }
 }
 
-function getAssignField($aow_field, $view, $value){
+function getAssignField($aow_field, $view, $value) {
     global $app_list_strings;
 
     $value = json_decode(html_entity_decode_utf8($value), true);
@@ -838,7 +838,7 @@ eoq;
     return true;
 }
 
-function getEmailableModules(){
+function getEmailableModules() {
     global $beanFiles, $beanList, $app_list_strings;
     $emailableModules = array();
     foreach($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
@@ -854,7 +854,7 @@ function getEmailableModules(){
     return $emailableModules;
 }
 
-function getRelatedEmailableFields($module){
+function getRelatedEmailableFields($module) {
     global $beanList, $app_list_strings;
     $relEmailFields = array();
     $checked_link = array();

@@ -125,7 +125,7 @@ class DocumentRevision extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function DocumentRevision(){
+    public function DocumentRevision() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -137,7 +137,7 @@ class DocumentRevision extends SugarBean
     }
 
 
-	function save($check_notify = false){
+	function save($check_notify = false) {
 		$saveRet = parent::save($check_notify);
 
 		//update documents table. (not through save, because it causes a loop)
@@ -158,7 +158,7 @@ class DocumentRevision extends SugarBean
 		return "$this->filename";
 	}
 
-	function retrieve($id = -1, $encode=false, $deleted=true){
+	function retrieve($id = -1, $encode=false, $deleted=true) {
 		$ret = parent::retrieve($id, $encode,$deleted);
 
 		return $ret;
@@ -276,11 +276,11 @@ class DocumentRevision extends SugarBean
 		}
 	}
 
-	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/){
+	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/) {
 		return $list_form;
 	}
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 		$revision_fields = $this->get_list_view_array();
 
 		$forecast_fields['FILE_URL'] = $this->file_url;
@@ -288,7 +288,7 @@ class DocumentRevision extends SugarBean
 	}
 
 	//static function..
-	function get_document_revision_name($doc_revision_id){
+	function get_document_revision_name($doc_revision_id) {
 		if (empty($doc_revision_id)) return null;
 
 		$db = DBManagerFactory::getInstance();
@@ -304,7 +304,7 @@ class DocumentRevision extends SugarBean
 	}
 
 	//static function.
-	function get_document_revisions($doc_id){
+	function get_document_revisions($doc_id) {
 		$return_array= Array();
 		if (empty($doc_id)) return $return_array;
 

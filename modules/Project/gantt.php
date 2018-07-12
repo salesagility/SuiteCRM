@@ -270,7 +270,7 @@ class Gantt
     }
 
     //Returns the total number of days between two dates
-    public function count_days($start_date, $end_date){
+    public function count_days($start_date, $end_date) {
 
         $d1 = new DateTime($start_date);
         $d2 = new DateTime($end_date);
@@ -286,7 +286,7 @@ class Gantt
 
     }
     //Returns the time span between two dates in years  months and days
-    public function time_range($start_date, $end_date){
+    public function time_range($start_date, $end_date) {
 
         $datetime1 = new DateTime($start_date);
         $datetime2 = new DateTime($end_date);
@@ -301,7 +301,7 @@ class Gantt
     }
 
     // Function for basic field validation (present and neither empty nor only white space
-    public function IsNullOrEmptyString($question){
+    public function IsNullOrEmptyString($question) {
         return (!isset($question) || trim($question)==='');
     }
 }

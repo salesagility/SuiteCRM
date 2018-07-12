@@ -207,7 +207,7 @@ class EditViewMerge
 	 * Clears out the values of the arrays so that the same object can be utilized
 	 *
 	 */
-	protected function clear(){
+	protected function clear() {
 		unset($this->newData);
 		$this->newData = array();
 		unset($this->customData);
@@ -232,7 +232,7 @@ class EditViewMerge
 	 *
 	 * @param BOOLEAN $on
 	 */
-	public function setBestMatch($on=true){
+	public function setBestMatch($on=true) {
 		$this->bestMatch = $on;
 	}
 	
@@ -242,7 +242,7 @@ class EditViewMerge
 	 *
 	 * @param STRING $name - name of the default panel
 	 */
-	public function setDefaultPanel($name = 'default'){
+	public function setDefaultPanel($name = 'default') {
 		$this->defaultPanel = $name;
 	}
 	
@@ -251,7 +251,7 @@ class EditViewMerge
 	 *
 	 * @param FILEPOINTER $fp
 	 */
-	public function setLogFilePointer($fp){
+	public function setLogFilePointer($fp) {
 		$this->fp = $fp;
 	}
 	
@@ -260,7 +260,7 @@ class EditViewMerge
 	 *
 	 * @param STRING $file - path to file we wish to log to
 	 */
-	public function setLogFile($file){
+	public function setLogFile($file) {
 		$this->fp = fopen($file, 'a');
 	}
 	
@@ -274,7 +274,7 @@ class EditViewMerge
 	 * @param MULTI $val2 - a value to compare to val1
 	 * @return BOOLEAN - if $val1 and $val2 match
 	 */
-	protected function areMatchingValues($val1, $val2){
+	protected function areMatchingValues($val1, $val2) {
 		if(!is_array($val1)){
 			//if val2 is an array and val1 isn't then it isn't a match
 			if(is_array($val2)){
@@ -335,7 +335,7 @@ class EditViewMerge
 	 * @param ARRAY $custom - the custom meta-data for this field
 	 * @return ARRAY $merged - the merged meta-data
 	 */
-	protected function mergeField($orig, $new, $custom){
+	protected function mergeField($orig, $new, $custom) {
 		$orig_custom = $this->areMatchingValues($orig, $custom);
 		$new_custom = $this->areMatchingValues($new, $custom);
 		// if both are true then there is nothing to merge since all three fields match
@@ -471,7 +471,7 @@ class EditViewMerge
 	 *
 	 * @return ARRAY $panels - the new panels section for the merged file
 	 */
-	protected function buildPanels(){
+	protected function buildPanels() {
 		$panels  = array();
 		
 		$panel_keys = array_keys($this->customPanelIds);
@@ -543,7 +543,7 @@ class EditViewMerge
 	 * Sets the panel section for the meta-data after it has been merged
 	 *
 	 */
-	protected function setPanels(){
+	protected function setPanels() {
 		$this->newData[$this->module][$this->viewDefs][$this->panelName] = $this->buildPanels();
 		/*
 		if(!$this->isMultiPanel) {
@@ -556,7 +556,7 @@ class EditViewMerge
 	 * Parses out the fields for each files meta data and then calls on mergeFields and setPanels
 	 *
 	 */
-	protected function mergeMetaData(){
+	protected function mergeMetaData() {
 		$this->originalFields = $this->getFields($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
 		$this->originalPanelIds = $this->getPanelIds($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
 		$this->customFields = $this->getFields($this->customData[$this->module][$this->viewDefs][$this->panelName]);
@@ -574,7 +574,7 @@ class EditViewMerge
 	 * @param ARRAY $panels - this is the 'panel' section of the meta-data
 	 * @return ARRAY $fields - an associate array of fields and their meta-data as well as their location
 	 */
-	protected function getFields(&$panels){
+	protected function getFields(&$panels) {
 
 		$fields = array();
 		$blanks = 0;
@@ -661,7 +661,7 @@ class EditViewMerge
 	 * getPanelIds
 	 * 
 	 */
-	protected function getPanelIds($panels){
+	protected function getPanelIds($panels) {
 
 		$panel_ids = array();
         $setDefaultPanel = false;
@@ -700,7 +700,7 @@ class EditViewMerge
 	 * @param STRING $new_file - path to the new file that is shipping with the patch 
 	 * @param STRING $custom_file - path to the custom file
 	 */
-	protected function loadData($module, $original_file, $new_file, $custom_file){
+	protected function loadData($module, $original_file, $new_file, $custom_file) {
 		$this->module = $module;
 		$varnmame = $this->varName;
 		require($original_file);
@@ -721,7 +721,7 @@ class EditViewMerge
 	 * @param STRING $to - path of the file to save it to 
 	 * @return BOOLEAN - success or failure of the save
 	 */
-	public function save($to){
+	public function save($to) {
 		return write_array_to_file("viewdefs['$this->module']['$this->viewDefs']", $this->newData[$this->module][$this->viewDefs], $to);
 	}
 	
@@ -730,7 +730,7 @@ class EditViewMerge
 	 *
 	 * @return ARRAY - the meta data of the merged file
 	 */
-	public function getData(){
+	public function getData() {
 		return $this->newData;
 	}
 	
@@ -744,7 +744,7 @@ class EditViewMerge
 	 * @param BOOLEAN $save - boolean on if it should save the results to the custom file or not
 	 * @return BOOLEAN - if the merged file was saved if false is passed in for the save parameter it always returns true
 	 */
-	public function merge($module, $original_file, $new_file, $custom_file=false, $save=true){
+	public function merge($module, $original_file, $new_file, $custom_file=false, $save=true) {
 		$this->clear();
 		$this->log("\n\n". 'Starting a merge in ' . get_class($this));
 		$this->log('merging the following files');
@@ -770,7 +770,7 @@ class EditViewMerge
 	 *
 	 * @param MULTI $message
 	 */
-	protected  function log($message){
+	protected  function log($message) {
 		if(!is_string($message)){
 			$message = var_export($message, true);
 		}

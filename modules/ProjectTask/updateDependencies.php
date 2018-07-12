@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class updateDependencies
 {
 
-    function update_dependency(&$bean, $event, $arguments){
+    function update_dependency(&$bean, $event, $arguments) {
         //Get all tasks that are dependant on the current task being saved.
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("", "project_task.project_id = '".$bean->project_id."' AND project_task.predecessors = '".$bean->project_task_id."'");
@@ -98,7 +98,7 @@ class updateDependencies
     }
 
     //Gets the difference in days between two dates
-    function count_days($start_date, $end_date){
+    function count_days($start_date, $end_date) {
 
         $d1 = new DateTime($start_date);
         $d2 = new DateTime($end_date);

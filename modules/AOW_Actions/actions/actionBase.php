@@ -28,14 +28,14 @@ class actionBase
 
     var $id;
 
-    function __construct($id = ''){
+    function __construct($id = '') {
         $this->id = $id;
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function actionBase($id = ''){
+    function actionBase($id = '') {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -47,18 +47,18 @@ class actionBase
     }
 
 
-    function loadJS(){
+    function loadJS() {
 
         return array();
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array()){
+    function edit_display($line,SugarBean $bean = null, $params = array()) {
 
         return '';
 
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+    function run_action(SugarBean $bean, $params = array(), $in_save=false) {
 
         return true;
 

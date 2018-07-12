@@ -60,13 +60,13 @@ function var_export_helper($tempArray) {
  * @returns: String. Example - override_value_to_string($name, 'b', 1) = '$name['b'] = 1;'
  */
 
-function override_value_to_string($array_name, $value_name, $value){
+function override_value_to_string($array_name, $value_name, $value) {
 	$string = "\${$array_name}[". var_export($value_name, true). "] = ";
 	$string .= var_export_helper($value,true);
 	return $string . ";";
 }
 
-function add_blank_option($options){
+function add_blank_option($options) {
  	if(is_array($options)) {
  		if(!isset($options['']) && !isset($options['0'])) {
 		$options = array_merge(array(''=>''), $options);
@@ -96,7 +96,7 @@ function override_value_to_string_recursive($key_names, $array_name, $value, $ev
 	return "\${$array_name}". override_recursive_helper($key_names, $array_name, $value);
 }
 
-function override_recursive_helper($key_names, $array_name, $value){
+function override_recursive_helper($key_names, $array_name, $value) {
 	if( empty( $key_names ) )
 		return "=".var_export_helper($value,true).";";
 	else{

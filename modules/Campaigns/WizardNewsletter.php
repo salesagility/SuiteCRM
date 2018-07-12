@@ -675,7 +675,7 @@ if(!$focus->id && isset($campaign_id) && $campaign_id) {
 }
 
 
-function create_newsletter_steps(){
+function create_newsletter_steps() {
     global $mod_strings;
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';
     //$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
@@ -684,7 +684,7 @@ function create_newsletter_steps(){
     return  $steps;
 }
 
-function create_campaign_steps(){
+function create_campaign_steps() {
     global $mod_strings;
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
@@ -692,7 +692,7 @@ function create_campaign_steps(){
     return  $steps;
 }
 
-function create_email_steps(){
+function create_email_steps() {
     global $mod_strings;
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';
     //$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
@@ -702,7 +702,7 @@ function create_email_steps(){
 }
 
 
-function create_wiz_step_divs($steps,$ss){
+function create_wiz_step_divs($steps,$ss) {
     $step_html = '';
     if(isset($steps)  && !empty($steps)){
         $i=1;
@@ -716,7 +716,7 @@ function create_wiz_step_divs($steps,$ss){
     return $step_html;
 }
 
-function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null, $campaign_id = null, $marketing_id = null, $template_id = null){
+function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null, $campaign_id = null, $marketing_id = null, $template_id = null) {
 
     global $mod_strings;
 

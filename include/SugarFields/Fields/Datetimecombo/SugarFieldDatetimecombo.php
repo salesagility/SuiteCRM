@@ -125,7 +125,7 @@ class SugarFieldDatetimecombo extends SugarFieldBase
     }
 
 
-	public function getEmailTemplateValue($inputField, $vardef, $context = null, $tabindex = 0){
+	public function getEmailTemplateValue($inputField, $vardef, $context = null, $tabindex = 0) {
         // This does not return a smarty section, instead it returns a direct value
         if(isset($context['notify_user'])) {
             $user = $context['notify_user'];

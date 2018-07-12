@@ -42,7 +42,7 @@ class actionSendEmail extends actionBase
      */
     protected $lastEmailsSuccess;
 
-    function __construct($id = ''){
+    function __construct($id = '') {
         parent::__construct($id);
         $this->clearLastEmailsStatus();
     }
@@ -50,7 +50,7 @@ class actionSendEmail extends actionBase
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function actionSendEmail($id = ''){
+    function actionSendEmail($id = '') {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -62,11 +62,11 @@ class actionSendEmail extends actionBase
     }
 
 
-    function loadJS(){
+    function loadJS() {
         return array('modules/AOW_Actions/actions/actionSendEmail.js');
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array()){
+    function edit_display($line,SugarBean $bean = null, $params = array()) {
         global $app_list_strings;
         $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 
@@ -146,7 +146,7 @@ class actionSendEmail extends actionBase
 
     }
 
-    private function getEmailsFromParams(SugarBean $bean, $params){
+    private function getEmailsFromParams(SugarBean $bean, $params) {
 
         $emails = array();
         //backward compatible
@@ -370,7 +370,7 @@ class actionSendEmail extends actionBase
         return $this->lastEmailsSuccess;
     }
 
-    function parse_template(SugarBean $bean, &$template, $object_override = array()){
+    function parse_template(SugarBean $bean, &$template, $object_override = array()) {
         global $sugar_config;
 
         require_once __DIR__ . '/templateParser.php';
@@ -426,7 +426,7 @@ class actionSendEmail extends actionBase
         $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }
 
-    function getAttachments(EmailTemplate $template){
+    function getAttachments(EmailTemplate $template) {
 
         $attachments = array();
         if($template->id != ''){

@@ -48,7 +48,7 @@ class DetailView extends ListView
 	var $offset_key_mismatch=false;
 	var $no_record_found=false;
 
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 
 		global $theme, $app_strings, $currentModule;
@@ -59,7 +59,7 @@ class DetailView extends ListView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function DetailView(){
+    function DetailView() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -233,7 +233,7 @@ class DetailView extends ListView
 		return $object;
 	}
 
-	function populateQueryWhere($isfirstview, $html_varName){
+	function populateQueryWhere($isfirstview, $html_varName) {
 		if($isfirstview){
             $this->query_where = $this->getVariableFromSession($_REQUEST['module'], 'QUERY_WHERE');
 
@@ -249,7 +249,7 @@ class DetailView extends ListView
 		}
 	}
 
-	function processListNavigation( $xtpl, $html_varName, $current_offset, $display_audit_link = false , $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = NULL, $subpanel_def = NULL, $col_count = 20){
+	function processListNavigation($xtpl, $html_varName, $current_offset, $display_audit_link = false , $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = NULL, $subpanel_def = NULL, $col_count = 20) {
 		global $export_module, $sugar_config, $current_user;
         //intialize audit_link
         $audit_link = '';
@@ -452,7 +452,7 @@ class DetailView extends ListView
      * @param unknown_type $name - the name of the variable to set in the session
      * @param unknown_type $value - the value of the variable to set
      */
-    function getVariableFromSession($name, $value){
+    function getVariableFromSession($name, $value) {
           if(isset($_SESSION[$name."2_".$value])){
             return $_SESSION[$name."2_".$value];
         }

@@ -71,7 +71,7 @@ class PopupSmarty extends ListViewSmarty
     var $module;
     var $massUpdateData = '';
 
-	public function __construct($seed, $module){
+	public function __construct($seed, $module) {
 		parent::__construct();
 		$this->th = new TemplateHandler();
 		$this->th->loadSmarty();
@@ -88,7 +88,7 @@ class PopupSmarty extends ListViewSmarty
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function PopupSmarty($seed, $module){
+    public function PopupSmarty($seed, $module) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -489,7 +489,7 @@ class PopupSmarty extends ListViewSmarty
 	/*
 	 * Generate the data for the search form on the header of the Popup.
 	 */
-		function _build_field_defs(){
+		function _build_field_defs() {
 		$this->formData = array();
 		$this->customFieldDefs = array();
 		foreach($this->searchdefs[$this->module]['layout']['advanced_search'] as $data){
@@ -525,7 +525,7 @@ class PopupSmarty extends ListViewSmarty
 		}
 	}
 
-	function _getAddForm(){
+	function _getAddForm() {
 		$addform = '';
         if(!$this->seed->ACLAccess('save')){
             return;
@@ -552,7 +552,7 @@ class PopupSmarty extends ListViewSmarty
 		}
 	}
 
-	function _getAddFormHeader(){
+	function _getAddFormHeader() {
 		$lbl_save_button_title = $GLOBALS['app_strings']['LBL_SAVE_BUTTON_TITLE'];
 		$lbl_save_button_key = $GLOBALS['app_strings']['LBL_SAVE_BUTTON_KEY'];
 		$lbl_save_button_label = $GLOBALS['app_strings']['LBL_SAVE_BUTTON_LABEL'];
@@ -575,7 +575,7 @@ EOQ;
 		return $addformheader;
 	}
 
-	function getQuickCreate(){
+	function getQuickCreate() {
 		require_once("include/EditView/PopupQuickCreate.php");
 		$qc = new PopupQuickCreate($this->module);
 		return $qc->process($this->module);

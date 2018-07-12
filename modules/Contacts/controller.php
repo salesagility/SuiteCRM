@@ -40,7 +40,7 @@
 
 class ContactsController extends SugarController
 {
-	function action_Popup(){
+	function action_Popup() {
 		if(!empty($_REQUEST['html']) && $_REQUEST['html'] == 'mail_merge'){
 			$this->view = 'mailmergepopup';
 		}else{

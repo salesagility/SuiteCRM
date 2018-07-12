@@ -112,7 +112,7 @@ class Employee extends Person
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Employee(){
+    function Employee() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -174,7 +174,7 @@ class Employee extends Person
 		return TRUE;
 	}
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 
         $user_fields = parent::get_list_view_data();
 
@@ -188,7 +188,7 @@ class Employee extends Person
         return $user_fields;
 	}
 
-	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/){
+	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/) {
 		return $list_form;
 	}
 
@@ -232,7 +232,7 @@ class Employee extends Person
 	}
 	*/
 
-	function preprocess_fields_on_save(){
+	function preprocess_fields_on_save() {
 		parent::preprocess_fields_on_save();
 
 	}

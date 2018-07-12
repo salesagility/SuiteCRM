@@ -127,7 +127,7 @@ var $selectedCategories = array();
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarFeedDashlet($id, $def = null){
+    function SugarFeedDashlet($id, $def = null) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -377,7 +377,7 @@ var $selectedCategories = array();
 
     }
 
-	 function pushUserFeedReply( ) {
+	 function pushUserFeedReply() {
          if(!empty($_REQUEST['text'])&&!empty($_REQUEST['parentFeed'])) {
 			$text = htmlspecialchars($_REQUEST['text']);
 			//allow for bold and italic user tags
@@ -484,12 +484,12 @@ enableQS(false);
 	 *
 	 * @return the fully rendered dashlet
 	 */
-	function display(){
+	function display() {
 
 		$listview = parent::display();
 
 		$class = $this;
-		$function = function($matches) use ($class) {
+		$function = function ($matches) use ($class) {
             if ($matches[1] == "this") {
                 $var = $matches[2];
                 return $class->$var;
@@ -545,7 +545,7 @@ enableQS(false);
 	 *
 	 * @return a warning message if the sugar feed system is not enabled currently
 	 */
-	function getDisabledWarning(){
+	function getDisabledWarning() {
         /* Check to see if the sugar feed system is enabled */
         if ( ! $this->shouldDisplay() ) {
             // The Sugar Feeds are disabled, populate the warning message
@@ -559,7 +559,7 @@ enableQS(false);
 	 *
 	 * @return the form for users posting custom messages to the feed stream
 	 */
-	function getPostForm(){
+	function getPostForm() {
         global $current_user;
 
         if ( (!empty($this->selectedCategories) && !in_array('UserFeed',$this->selectedCategories))
@@ -613,7 +613,7 @@ enableQS(false);
         }
     }
 
-    function check_enabled($type){
+    function check_enabled($type) {
         $db = DBManagerFactory::getInstance();
         $query = "SELECT * FROM config where name = 'module_" .$type . "' and value =  1;";
         $results = $db->query($query);

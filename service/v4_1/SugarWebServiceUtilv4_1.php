@@ -81,7 +81,7 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
    	}
 
 
-    function check_modules_access($user, $module_name, $action='write'){
+    function check_modules_access($user, $module_name, $action='write') {
         if(!isset($_SESSION['avail_modules'])){
             $_SESSION['avail_modules'] = get_user_module_list($user);
         }

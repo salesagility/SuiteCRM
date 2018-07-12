@@ -62,7 +62,7 @@ class SubPanel
 	var $search_query='';
 	var $collections = array();
 
-	function __construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array() )
+	function __construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array())
 	{
 		global $beanList, $beanFiles, $focus, $app_strings;
 
@@ -108,19 +108,19 @@ class SubPanel
 		$this->template_file = $template_file;
 	}
 
-	function setBeanList(&$value){
+	function setBeanList(&$value) {
 		$this->bean_list =$value;
 	}
 
-	function setHideNewButton($value){
+	function setHideNewButton($value) {
 		$this->hideNewButton = $value;
 	}
 
 
-	function getHeaderText( $currentModule){
+	function getHeaderText($currentModule) {
 	}
 
-	function get_buttons( $panel_query=null)
+	function get_buttons($panel_query=null)
 	{
 
 		$thisPanel =& $this->subpanel_defs;
@@ -248,7 +248,7 @@ class SubPanel
 		return $modules;
 	}
 
-  static function getModuleSubpanels($module){
+  static function getModuleSubpanels($module) {
   	require_once('include/SubPanel/SubPanelDefinitions.php');
   		global $beanList, $beanFiles;
   		if(!isset($beanList[$module])){
@@ -276,7 +276,7 @@ class SubPanel
   }
 
   //saves overrides for defs
-  function saveSubPanelDefOverride( $panel, $subsection, $override){
+  function saveSubPanelDefOverride($panel, $subsection, $override) {
   		global $layout_defs, $beanList;
 
   		//save the new subpanel

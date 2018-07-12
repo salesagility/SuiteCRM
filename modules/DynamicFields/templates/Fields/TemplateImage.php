@@ -43,7 +43,7 @@ class TemplateImage extends TemplateText
 {
 	var $type = 'image';	
 		
-	function get_field_def(){
+	function get_field_def() {
 		$def = parent::get_field_def();
 		$def['studio'] = 'visible';		
 		$def['type'] = 'image';
@@ -67,7 +67,7 @@ class TemplateImage extends TemplateText
 		$this->vardef_map['height'] = 'ext3';		
 	}
 	
-	function set($values){
+	function set($values) {
 	   parent::set($values);
 	   if(!empty($this->ext1)){
 	       $this->border = $this->ext1;

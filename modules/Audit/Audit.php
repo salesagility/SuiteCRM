@@ -65,7 +65,7 @@ class Audit extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Audit(){
+    public function Audit() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -197,7 +197,7 @@ class Audit extends SugarBean
         return $audit_list;
     }
 
-    function getAssociatedFieldName($fieldName, $fieldValue){
+    function getAssociatedFieldName($fieldName, $fieldValue) {
     global $focus,  $genericAssocFieldsArray, $moduleAssocFieldsArray;
 
         if(!empty($moduleAssocFieldsArray[$focus->object_name]) && array_key_exists($fieldName, $moduleAssocFieldsArray[$focus->object_name])){

@@ -72,7 +72,7 @@ class VarDefHandler
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	function VarDefHandler($module, $meta_array_name=null){
+	function VarDefHandler($module, $meta_array_name=null) {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -83,7 +83,7 @@ class VarDefHandler
 		self::__construct($module, $meta_array_name);
 	}
 
-	function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false){
+	function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false) {
 		global $dictionary;
 		global $current_language;
 		global $app_strings;
@@ -177,7 +177,7 @@ class VarDefHandler
 	}
 
 
-	function compare_type($value_array){
+	function compare_type($value_array) {
 
 		//Filter nothing?
 		if(!is_array($this->target_meta_array)){

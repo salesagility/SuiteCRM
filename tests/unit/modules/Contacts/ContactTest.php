@@ -169,7 +169,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	}
 
 
-	public function testload_contacts_users_relationship(){
+	public function testload_contacts_users_relationship() {
 
         $state = new SuiteCRM\StateSaver();
         
@@ -241,7 +241,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	}
 
 
-	public function testbuild_generic_where_clause ()
+	public function testbuild_generic_where_clause()
 	{
 
 		$contact = new Contact();

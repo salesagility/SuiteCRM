@@ -54,7 +54,7 @@ class NoteSoap
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function NoteSoap(){
+    function NoteSoap() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -111,7 +111,7 @@ class NoteSoap
         return $return_id;
     }
 
-    function newSaveFile($note, $portal = false){
+    function newSaveFile($note, $portal = false) {
         global $sugar_config;
 
         $focus = new Note();

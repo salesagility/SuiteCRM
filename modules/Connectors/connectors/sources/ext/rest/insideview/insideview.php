@@ -66,7 +66,7 @@ class ext_rest_insideview extends ext_rest
         parent::__construct();
     }
 
-    public function filterAllowedModules( $moduleList ) {
+    public function filterAllowedModules($moduleList) {
         // InsideView currently has no ability to talk to modules other than these four
         $outModuleList = array();
         foreach ( $moduleList as $module ) {
@@ -103,11 +103,11 @@ class ext_rest_insideview extends ext_rest
 
     
 
-	public function getItem($args=array(), $module=null){}
+	public function getItem($args=array(), $module=null) {}
 	public function getList($args=array(), $module=null) {}
 
 
-    public function ext_allowInsideView( $request ) {
+    public function ext_allowInsideView($request) {
         $GLOBALS['current_user']->setPreference('allowInsideView',1,0,'Connectors');
         return true;
     }

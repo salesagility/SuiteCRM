@@ -84,7 +84,7 @@ class SugarFieldEnum extends SugarFieldBase
     }
     
 
-    function displayFromFunc( $displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0 ) {
+    function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0) {
         if ( isset($vardef['function']['returns']) && $vardef['function']['returns'] == 'html' ) {
             return parent::displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex);
         }
@@ -132,7 +132,7 @@ class SugarFieldEnum extends SugarFieldBase
         return $value;
     }
     
-	public function formatField($rawField, $vardef){
+	public function formatField($rawField, $vardef) {
 		global $app_list_strings;
 		
 		if(!empty($vardef['options'])){

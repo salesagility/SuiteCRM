@@ -560,7 +560,7 @@ function convertDateUserToDB($value)
     return $value;
 }
 
-function checkAccess($bean){
+function checkAccess($bean) {
 
     if($bean->ACLAccess('EditView')) {
         return true;

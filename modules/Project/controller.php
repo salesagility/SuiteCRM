@@ -28,7 +28,7 @@ class ProjectController extends SugarController
         $this->view = 'GanttChart';
     }
 
-    function action_generate_chart(){
+    function action_generate_chart() {
         $db = DBManagerFactory::getInstance();
 
         include_once('modules/Project/gantt.php');
@@ -85,7 +85,7 @@ class ProjectController extends SugarController
     }
 
     //Create new project task
-    function action_update_GanttChart(){
+    function action_update_GanttChart() {
 
         global $current_user, $db;
 
@@ -224,7 +224,7 @@ class ProjectController extends SugarController
     }
 
     //mark project task as deleted
-    function action_delete_task(){
+    function action_delete_task() {
         $id = $_POST['task_id'];
         $task = new ProjectTask();
         $task->retrieve($id);
@@ -233,7 +233,7 @@ class ProjectController extends SugarController
     }
 
     //Returns new task start date including any lag via ajax call
-    function action_get_end_date(){
+    function action_get_end_date() {
         global $db,  $timeDate;
 
         $timeDate = new TimeDate();
@@ -255,7 +255,7 @@ class ProjectController extends SugarController
 
 
     //updates the order of the tasks
-    function action_update_order(){
+    function action_update_order() {
 
        //convert quotes in json string back to normal
         $jArray = htmlspecialchars_decode($_POST['orderArray']);
@@ -273,7 +273,7 @@ class ProjectController extends SugarController
         }
     }
    //returns tasks for predecessor in the add task pop-up form
-    function action_get_predecessors(){
+    function action_get_predecessors() {
         global $mod_strings;
         $project = new Project();
         $project->retrieve($_REQUEST["project_id"]);
@@ -288,7 +288,7 @@ class ProjectController extends SugarController
     }
 
 
-    function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration,$order_number){
+    function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration,$order_number) {
 
         $task = new ProjectTask();
         $task->name = $name;
@@ -311,7 +311,7 @@ class ProjectController extends SugarController
 
 	}
 
-    function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration){
+    function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration) {
 
         $task = new ProjectTask();
         $task->retrieve($id);
@@ -338,13 +338,13 @@ class ProjectController extends SugarController
     /*********************************** Resource chart functions **************************************/
 
     //Loads the resource chart view
-    function action_ResourceList(){
+    function action_ResourceList() {
 
         $this->view = 'ResourceList';
     }
 
     //Updates the resource chart based on specified dates and users
-    function action_update_chart(){
+    function action_update_chart() {
         $db = DBManagerFactory::getInstance();
         include('modules/Project/chart.php');
 
@@ -486,7 +486,7 @@ class ProjectController extends SugarController
 
 
     //Get tasks for resource chart tooltips
-    function action_Tooltips(){
+    function action_Tooltips() {
 
         global $mod_strings;
 
@@ -520,7 +520,7 @@ class ProjectController extends SugarController
 
 
     //Returns the total number of days between two dates
-    function count_days($start_date, $end_date){
+    function count_days($start_date, $end_date) {
         $d1 = new DateTime($start_date);
         $d2 = new DateTime($end_date);
         //If the task's end date is before chart's start date return -1 to make sure task starts on first day of the chart
@@ -532,7 +532,7 @@ class ProjectController extends SugarController
     }
 
     // Function for basic field validation (present and neither empty nor only white space
-    public function IsNullOrEmptyString($question){
+    public function IsNullOrEmptyString($question) {
         return (!isset($question) || trim($question)==='');
     }
 

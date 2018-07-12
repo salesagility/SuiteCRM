@@ -52,15 +52,15 @@ class SugarSession
 	 * When constructing the session object, be sure to check if the session_id() already exists as is the case of session.auto_start = 1
 	 *
 	 */
-	public function __construct(){
+	public function __construct() {
 
 	}
 
-	public function setSessionId($sessionId){
+	public function setSessionId($sessionId) {
 		self::$sessionId = session_id($sessionId);
 	}
 
-	public function start(){
+	public function start() {
 		$session_id = session_id();
 		if(empty($session_id)){
 			session_start();
@@ -70,7 +70,7 @@ class SugarSession
 		}
 	}
 
-	public static function getInstance(){
+	public static function getInstance() {
 		if(!isset(self::$_instance)){
 			$className = __CLASS__;
 			self::$_instance = new $className();
@@ -79,26 +79,26 @@ class SugarSession
 		return self::$_instance;
 	}
 
-	public function destroy(){
+	public function destroy() {
 		foreach ($_SESSION as $var => $val) {
         	$_SESSION[$var] = null;
         }
 		session_destroy();
 	}
 
-	public function __clone(){
+	public function __clone() {
 
 	}
 
-	public function __get($var){
+	public function __get($var) {
 		return (!empty($_SESSION[$var]) ? $_SESSION[$var] : '');
 	}
 
-	public function __set($var, $val){
+	public function __set($var, $val) {
 		return ($_SESSION[$var] = $val);
 	}
 
-	public function __destruct(){
+	public function __destruct() {
 		session_write_close();
 	}
 }

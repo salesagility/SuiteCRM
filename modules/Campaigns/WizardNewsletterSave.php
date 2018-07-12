@@ -409,7 +409,7 @@ global $mod_strings;
  * This function will populate the passed in bean with the post variables
  * that contain the specified prefix
  */
-function populate_wizard_bean_from_request($bean,$prefix){
+function populate_wizard_bean_from_request($bean,$prefix) {
     foreach($_REQUEST as $key=> $val){
      $key = trim($key);
      if((strstr($key, $prefix )) && (strpos($key, $prefix )== 0)){
@@ -431,7 +431,7 @@ function populate_wizard_bean_from_request($bean,$prefix){
  * If no prospect lists have been specified, then it will create one for you.  A total of 3 prospect lists
  * will be created for you (Subscription, Unsubscription, and test)
  */
-function process_subscriptions_from_request($campaign_name){
+function process_subscriptions_from_request($campaign_name) {
     global $mod_strings;
     $pl_list = array();
 

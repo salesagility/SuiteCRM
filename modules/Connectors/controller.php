@@ -65,7 +65,7 @@ class ConnectorsController extends SugarController
 	 * the data that was saved in the session.
 	 *
 	 */
-	function action_SetSearch(){
+	function action_SetSearch() {
 		if(empty($_REQUEST)) {
 		   return;
 		}
@@ -155,7 +155,7 @@ class ConnectorsController extends SugarController
 	}
 
 
-	function action_GetSearchForm(){
+	function action_GetSearchForm() {
         $this->view = 'ajax';
 		if(!empty($_REQUEST['source_id'])){
 			//get the search fields and return the search form
@@ -202,8 +202,8 @@ class ConnectorsController extends SugarController
 	}
 
 
-	function pre_save(){}
-	function post_save(){}
+	function pre_save() {}
+	function post_save() {}
 
 
     function action_CallConnectorFunc() {
@@ -784,7 +784,7 @@ class ConnectorsController extends SugarController
 
 	}
 
-	private function create_panel_on_view($view, $field, $module, $panel_name){
+	private function create_panel_on_view($view, $field, $module, $panel_name) {
 		//require and create object.
 		require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
 		$parser = ParserFactory::getParser($view, $module);

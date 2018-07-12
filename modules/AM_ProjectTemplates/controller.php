@@ -30,7 +30,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
 
-    function action_create_project(){
+    function action_create_project() {
 
         global $current_user, $db, $mod_strings;
 
@@ -258,7 +258,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
 
-    function action_generate_chart(){
+    function action_generate_chart() {
         $db = DBManagerFactory::getInstance();
 
         include_once('modules/AM_ProjectTemplates/gantt.php');
@@ -317,7 +317,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
     //Create new project task
-    function action_update_GanttChart(){
+    function action_update_GanttChart() {
 
         global $current_user, $db;
 
@@ -392,7 +392,7 @@ class AM_ProjectTemplatesController extends SugarController
 
 
     //mark project task as deleted
-    function action_delete_task(){
+    function action_delete_task() {
         $id = $_POST['task_id'];
         $task = new AM_TaskTemplates();
         $task->retrieve($id);
@@ -401,7 +401,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
     //Returns new task start date including any lag via ajax call
-    function action_get_end_date(){
+    function action_get_end_date() {
         global $db,  $timeDate;
 
         $timeDate = new TimeDate();
@@ -423,7 +423,7 @@ class AM_ProjectTemplatesController extends SugarController
 
 
     //updates the order of the tasks
-    function action_update_order(){
+    function action_update_order() {
 
        //convert quotes in json string back to normal
         $jArray = htmlspecialchars_decode($_POST['orderArray']);
@@ -441,7 +441,7 @@ class AM_ProjectTemplatesController extends SugarController
         }
     }
    //returns tasks for predecessor in the add task pop-up form
-    function action_get_predecessors(){
+    function action_get_predecessors() {
         global $mod_strings;
         $project_template = new AM_ProjectTemplates();
         $project_template->retrieve($_REQUEST["project_id"]);
@@ -457,7 +457,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
 
-    function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration,$order_number){
+    function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration,$order_number) {
 
         $task = new AM_TaskTemplates();
         $task->name = $name;
@@ -486,7 +486,7 @@ class AM_ProjectTemplatesController extends SugarController
 
     }
 
-    function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration){
+    function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration) {
 
         $task = new AM_TaskTemplates();
 		
@@ -513,7 +513,7 @@ class AM_ProjectTemplatesController extends SugarController
 
 
     // Function for basic field validation (present and neither empty nor only white space
-    public function IsNullOrEmptyString($question){
+    public function IsNullOrEmptyString($question) {
         return (!isset($question) || trim($question)==='');
     }
 

@@ -106,7 +106,7 @@ class SugarFieldDatetime extends SugarFieldBase
     	return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'EditView');
     }
 
-    public function getEmailTemplateValue($inputField, $vardef, $context = null){
+    public function getEmailTemplateValue($inputField, $vardef, $context = null) {
         global $timedate;
         // This does not return a smarty section, instead it returns a direct value
         if(isset($context['notify_user'])) {

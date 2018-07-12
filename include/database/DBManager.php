@@ -2631,7 +2631,7 @@ abstract class DBManager
 	 * @param  string $tablename      Optional, table name
 	 * @return string SQL column definitions
 	 */
-	protected function columnSQLRep($fieldDefs, $ignoreRequired , $tablename= null){
+	protected function columnSQLRep($fieldDefs, $ignoreRequired , $tablename= null) {
         // set $ignoreRequired = false by default
         if (!is_bool($ignoreRequired)) {
             $ignoreRequired = false;

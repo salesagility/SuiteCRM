@@ -47,7 +47,7 @@ class MBVardefs
 	var $name = '';
 	var $errors = array();
 
-	function __construct($name, $path, $key_name){
+	function __construct($name, $path, $key_name) {
 		$this->path = $path;
 		$this->name = $name;
 		$this->key_name = $key_name;
@@ -57,7 +57,7 @@ class MBVardefs
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MBVardefs($name, $path, $key_name){
+    function MBVardefs($name, $path, $key_name) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -69,7 +69,7 @@ class MBVardefs
     }
 
 
-	function loadTemplate($by_group, $template, $file){
+	function loadTemplate($by_group, $template, $file) {
 		$module = $this->name;
 		$table_name = $this->name;
 		$object_name = $this->key_name;
@@ -101,7 +101,7 @@ class MBVardefs
 
 	}
 
-	function mergeVardefs($by_group=false){
+	function mergeVardefs($by_group=false) {
 		$this->vardefs = array(
 					'fields'=>array(),
 					'relationships'=>array(),
@@ -127,16 +127,16 @@ class MBVardefs
 		}
 	}
 
-	function updateVardefs($by_group=false){
+	function updateVardefs($by_group=false) {
 		$this->mergeVardefs($by_group);
 	}
 
 
-	function getVardefs(){
+	function getVardefs() {
 		return $this->vardefs;
 	}
 
-	function getVardef(){
+	function getVardef() {
 		return $this->vardef;
 	}
 
@@ -150,20 +150,20 @@ class MBVardefs
         $this->vardef['fields'][$vardef['name']] = $vardef;
     }
 
-	function deleteField($field){
+	function deleteField($field) {
 		unset($this->vardef['fields'][$field->name]);
 	}
 
-	function save(){
+	function save() {
 		$header = file_get_contents('modules/ModuleBuilder/MB/header.php');
 		write_array_to_file('vardefs', $this->vardef, $this->path . '/vardefs.php','w', $header);
 	}
 
-	function build($path){
+	function build($path) {
 		$header = file_get_contents('modules/ModuleBuilder/MB/header.php');
 		write_array_to_file('dictionary["' . $this->name . '"]', $this->getVardefs(), $path . '/vardefs.php', 'w', $header);
 	}
-	function load(){
+	function load() {
 		$this->vardef = array('fields'=>array(), 'relationships'=>array());
 		if(file_exists($this->path . '/vardefs.php')){
 			include($this->path. '/vardefs.php');

@@ -24,7 +24,7 @@ class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
     public function testFromSugarBeanLinkToOne()
     {
         $obj = new \stdClass();
-        $obj->getType = function() {
+        $obj->getType = function () {
           return "one";
         };
 
@@ -37,7 +37,7 @@ class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
     public function testFromSugarBeanLinkToMany()
     {
         $obj = new \stdClass();
-        $obj->getType = function() {
+        $obj->getType = function () {
             return "one";
         };
 

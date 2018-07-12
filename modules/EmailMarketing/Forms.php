@@ -38,7 +38,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function get_validate_record_js () {
+function get_validate_record_js() {
 global $mod_strings;
 global $app_strings;
 

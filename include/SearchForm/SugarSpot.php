@@ -166,7 +166,7 @@ class SugarSpot
 	 * @param  $moduleName String name of module to retrieve SearchFields entries for
 	 * @return array of SearchFields
 	 */
-	protected static function getSearchFields( $moduleName )
+	protected static function getSearchFields($moduleName)
 	{
 		$searchFields = array();
 

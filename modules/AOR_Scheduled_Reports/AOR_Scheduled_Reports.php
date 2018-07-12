@@ -65,14 +65,14 @@ class AOR_Scheduled_Reports extends basic
     var $last_run;
     var $aor_report_id;
 
-	function __construct(){
+	function __construct() {
         parent::__construct();
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Scheduled_Reports(){
+    function AOR_Scheduled_Reports() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -84,14 +84,14 @@ class AOR_Scheduled_Reports extends basic
     }
 
 
-    function bean_implements($interface){
+    function bean_implements($interface) {
         switch($interface){
             case 'ACL': return true;
         }
         return false;
     }
 
-    function save($check_notify = FALSE){
+    function save($check_notify = FALSE) {
 
         if(isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])){
             $this->email_recipients = base64_encode(serialize($_POST['email_recipients']));
@@ -100,7 +100,7 @@ class AOR_Scheduled_Reports extends basic
         parent::save($check_notify);
     }
 
-    function get_email_recipients(){
+    function get_email_recipients() {
 
         $params = unserialize(base64_decode($this->email_recipients));
 
@@ -172,7 +172,7 @@ class AOR_Scheduled_Reports extends basic
 
     }
 
-    function shouldRun(DateTime $date){
+    function shouldRun(DateTime $date) {
         global $timedate;
         if(empty($date)){
             $date = new DateTime();

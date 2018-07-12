@@ -183,7 +183,7 @@ class ImportDuplicateCheck
      * @param  array $indexlist
      * @return bool true if this bean is a duplicate or false if it isn't
      */
-    public function isADuplicateRecord( $indexlist )
+    public function isADuplicateRecord($indexlist)
     {
         // Bug #51264 : Importing updates to rows prevented by duplicates check
         if ( !empty($this->_focus) && ($this->_focus instanceof SugarBean) && !empty($this->_focus->id) )

@@ -51,7 +51,7 @@ class SugarSoapService2 extends NusoapSoap
 	 *
 	 * @param array $excludeFunctions - All the functions you don't want to register
 	 */
-	public function register($excludeFunctions = array()){
+	public function register($excludeFunctions = array()) {
 		$GLOBALS['log']->info('Begin: SugarSoapService2->register');
 		$this->excludeFunctions = $excludeFunctions;
 		$registryObject = new $this->registryClass($this);

@@ -337,7 +337,7 @@ class ImportViewConfirm extends ImportView
     }
 
 
-    private function setCurrencyOptions($field_map = array() )
+    private function setCurrencyOptions($field_map = array())
     {
         global $locale, $current_user;
         $cur_id = isset($field_map['importlocale_currency'])? $field_map['importlocale_currency'] : $locale->getPrecedentPreference('currency', $current_user);
@@ -370,7 +370,7 @@ eoq;
     }
 
 
-    private function setDateTimeProperties( $field_map = array() )
+    private function setDateTimeProperties($field_map = array())
     {
         global $current_user, $sugar_config;
 

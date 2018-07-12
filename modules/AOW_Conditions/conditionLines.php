@@ -23,7 +23,7 @@
  */
 
 
-function display_condition_lines($focus, $field, $value, $view){
+function display_condition_lines($focus, $field, $value, $view) {
 
     global $locale, $app_list_strings, $mod_strings;
 

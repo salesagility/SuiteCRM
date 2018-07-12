@@ -71,7 +71,7 @@ class ChartsDashlet extends Dashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ChartsDashlet($id, $report_id, $def){
+    function ChartsDashlet($id, $report_id, $def) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -175,7 +175,7 @@ class ChartsDashlet extends Dashlet
     function saveOptions($req) {
     }
 
-    function setConfigureIcon(){
+    function setConfigureIcon() {
 
 
         if($this->isConfigurable)
@@ -189,7 +189,7 @@ class ChartsDashlet extends Dashlet
     	return $additionalTitle;
     }
 
-   function setRefreshIcon(){
+   function setRefreshIcon() {
 
 
     	$additionalTitle = '';

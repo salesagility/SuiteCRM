@@ -324,7 +324,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	}
 
 
-	public function testget_list_view_data(){
+	public function testget_list_view_data() {
 
 		$prospectList = new ProspectList();
 
@@ -353,7 +353,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	}
 
 
-	public function testbean_implements(){
+	public function testbean_implements() {
 
 		$prospectList = new ProspectList();
 

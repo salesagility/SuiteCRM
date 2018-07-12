@@ -195,7 +195,7 @@ $xtpl->parse("main");
 $xtpl->out("main");
 
 
-function generateSelect($seed, $relModule){
+function generateSelect($seed, $relModule) {
 	$lowerRelModule = strtolower($relModule);
 	if($seed->load_relationship($lowerRelModule)){
 		$params = array();

@@ -168,7 +168,7 @@ class CalendarController extends SugarController
 
     }
 
-    protected function action_getUser(){
+    protected function action_getUser() {
         $bean = BeanFactory::getBean("Users", $_REQUEST['record']);
         echo json_encode( array("user_name" => $bean->user_name, "full_name" =>  $bean->full_name) );
         die();

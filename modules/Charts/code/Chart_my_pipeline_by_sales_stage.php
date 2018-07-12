@@ -413,7 +413,7 @@ function gen_xml_pipeline_by_sales_stage(
 		return $return;
 	}
 
-	function constructQuery(){
+	function constructQuery() {
 		global $current_user;
 		global $timedate;
 
@@ -505,6 +505,6 @@ function gen_xml_pipeline_by_sales_stage(
 
 	}
 
-	function constructGroupBy(){
+	function constructGroupBy() {
 		return array('sales_stage');
 	}

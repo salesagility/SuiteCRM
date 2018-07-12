@@ -26,7 +26,7 @@ class ValueValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
             new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][ValueValidator][isValid][expected type to be string] $value'
             ),
-            function() {
+            function () {
                 self::$valueValidator->isValid(array());
             }
         );

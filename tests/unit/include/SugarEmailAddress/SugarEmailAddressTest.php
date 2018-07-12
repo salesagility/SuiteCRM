@@ -2221,7 +2221,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
 
-    public function testGetOptInStatus ()
+    public function testGetOptInStatus()
     {
         self::markTestIncomplete('COI_STAT_CONFIRMED_OPT_IN');
         // store state

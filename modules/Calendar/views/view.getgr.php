@@ -42,15 +42,15 @@ require_once('include/MVC/View/SugarView.php');
 class CalendarViewGetGR extends SugarView
 {
 
-	function CalendarViewGetGR(){
+	function CalendarViewGetGR() {
  		parent::SugarView();
 	}
 	
-	function process(){
+	function process() {
 		$this->display();
 	}
 	
-	function display(){
+	function display() {
 		$state = new \SuiteCRM\StateSaver();
                 $state->pushErrorLevel();
                 error_reporting(0);

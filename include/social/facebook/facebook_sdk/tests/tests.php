@@ -389,7 +389,7 @@ class PHPSDKTestCase extends PHPUnit_Framework_TestCase
   }
 
 
-    public function testSignedRequestRewrite(){
+    public function testSignedRequestRewrite() {
     $facebook = new FBRewrite(array(
       'appId'  => self::APP_ID,
       'secret' => self::SECRET,
@@ -2102,7 +2102,7 @@ class FBPublicCookie extends TransientFacebook
 class FBRewrite extends Facebook
 {
 
-  public function uncacheSignedRequest(){
+  public function uncacheSignedRequest() {
     $this->signedRequest = null;
   }
 

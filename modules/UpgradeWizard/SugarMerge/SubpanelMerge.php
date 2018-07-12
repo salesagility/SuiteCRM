@@ -64,7 +64,7 @@ class SubpanelMerge extends ListViewMerge
 	 * @param STRING $new_file - path to the new file that is shipping with the patch 
 	 * @param STRING $custom_file - path to the custom file
 	 */
-	protected function loadData($module, $original_file, $new_file, $custom_file){
+	protected function loadData($module, $original_file, $new_file, $custom_file) {
 		parent::loadData($module, $original_file, $new_file, $custom_file);
 		$this->originalData = array($module=>array( $this->viewDefs=>array($this->panelName=>array('DEFAULT'=>$this->originalData[$module]['list_fields']))));
 		$this->customData = array($module=>array( $this->viewDefs=>array($this->panelName=>array('DEFAULT'=>$this->customData[$module]['list_fields']))));
@@ -77,7 +77,7 @@ class SubpanelMerge extends ListViewMerge
 	 * We take mergeData which is a copy of the new meta data prior to merging and set it's list_fields variable to the merged panels
 	 *
 	 */
-	protected function setPanels(){
+	protected function setPanels() {
 		$this->mergeData['list_fields'] = $this->buildPanels();
 	}
 	
@@ -87,7 +87,7 @@ class SubpanelMerge extends ListViewMerge
 	 * @param STRING $to - path of the file to save it to 
 	 * @return BOOLEAN - success or failure of the save
 	 */
-	public function save($to){
+	public function save($to) {
 		return write_array_to_file("$this->varName", $this->newData, $to);
 	}
 }

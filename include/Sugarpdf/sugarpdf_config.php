@@ -296,7 +296,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
  * @param $value    settings to search
  * @param $default  default value
  */
-function defineFromConfig($value, $default){
+function defineFromConfig($value, $default) {
     $lowerValue = strtolower($value);
    require_once("modules/Administration/Administration.php");
     $focus = new Administration();
@@ -319,7 +319,7 @@ function defineFromConfig($value, $default){
  * @param $value    settings to search
  * @param $default  default value
  */
-function defineFromUserPreference($value, $default){
+function defineFromUserPreference($value, $default) {
     global $focus_user, $current_user;
     $lowerValue = strtolower($value);
     if(defined('SUGARPDF_USE_FOCUS')){

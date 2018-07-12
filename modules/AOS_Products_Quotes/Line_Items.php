@@ -22,7 +22,7 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-function display_lines($focus, $field, $value, $view){
+function display_lines($focus, $field, $value, $view) {
 
     global $sugar_config, $locale, $app_list_strings, $mod_strings;
 
@@ -235,7 +235,7 @@ function stripDecimalPointsAndTrailingZeroes($inputString,$decimalSeparator)
     return preg_replace('/'.preg_quote($decimalSeparator).'[0]+$/','',$inputString);
 }
 
-function get_discount_string($type, $amount, $params, $locale, $sep){
+function get_discount_string($type, $amount, $params, $locale, $sep) {
     if($amount != '' && $amount != '0.00')
     {
         if($type == 'Amount')
@@ -255,7 +255,7 @@ function get_discount_string($type, $amount, $params, $locale, $sep){
     }
 }
 
-function display_shipping_vat($focus, $field, $value, $view){
+function display_shipping_vat($focus, $field, $value, $view) {
 
     if($view == 'EditView'){
         global $app_list_strings;

@@ -56,7 +56,7 @@ class PackageManager
     /**
      * Constructor: In this method we will initialize the nusoap client to point to the hearbeat server
      */
-    function __construct(){
+    function __construct() {
         $this->db = DBManagerFactory::getInstance();
         $this->upload_dir = empty($GLOBALS['sugar_config']['upload_dir']) ? 'upload' : rtrim($GLOBALS['sugar_config']['upload_dir'], '/\\');
     }
@@ -64,7 +64,7 @@ class PackageManager
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function PackageManager(){
+    function PackageManager() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -76,7 +76,7 @@ class PackageManager
     }
 
 
-    function initializeComm(){
+    function initializeComm() {
 
     }
 
@@ -84,7 +84,7 @@ class PackageManager
      * Obtain a promotion from SugarDepot
      * @return string   the string from the promotion
      */
-    function getPromotion(){
+    function getPromotion() {
         $name_value_list = PackageManagerComm::getPromotion();
         if(!empty($name_value_list)){
             $name_value_list = PackageManager::fromNameValueList($name_value_list);
@@ -97,7 +97,7 @@ class PackageManager
     /**
      * Obtain a list of category/packages/releases for use within the module loader
      */
-    function getModuleLoaderCategoryPackages($category_id = ''){
+    function getModuleLoaderCategoryPackages($category_id = '') {
     	$filter = array();
     	$filter = array('type' => "'module', 'theme', 'langpack'");
     	$filter = PackageManager::toNameValueList($filter);
@@ -108,7 +108,7 @@ class PackageManager
      * Obtain the list of category_packages from SugarDepot
      * @return category_packages
      */
-    function getCategoryPackages($category_id = '', $filter = array()){
+    function getCategoryPackages($category_id = '', $filter = array()) {
          $results = PackageManagerComm::getCategoryPackages($category_id, $filter);
          PackageManagerComm::errorCheck();
          $nodes = array();
@@ -153,7 +153,7 @@ class PackageManager
      * @param filter        an array of filters to pass to limit the query
      * @return array        an array of categories for display on the client
      */
-    function getCategories($category_id, $filter = array()){
+    function getCategories($category_id, $filter = array()) {
         $nodes = array();
         $results = PackageManagerComm::getCategories($category_id, $filter);
         PackageManagerComm::errorCheck();
@@ -166,7 +166,7 @@ class PackageManager
         return $nodes;
     }
 
-    function getPackages($category_id, $filter = array()){
+    function getPackages($category_id, $filter = array()) {
         $nodes = array();
         $results = PackageManagerComm::getPackages($category_id, $filter);
         PackageManagerComm::errorCheck();
@@ -189,7 +189,7 @@ class PackageManager
         return $packages;
     }
 
-    function getReleases($category_id, $package_id, $filter = array()){
+    function getReleases($category_id, $package_id, $filter = array()) {
         $releases = PackageManagerComm::getReleases($category_id, $package_id, $filter);
         PackageManagerComm::errorCheck();
         return $releases;
@@ -228,7 +228,7 @@ class PackageManager
      * @param systemname   the user's download key
      * @return              true if successful, false otherwise
      */
-    function authenticate($username, $password, $systemname='', $terms_checked = true){
+    function authenticate($username, $password, $systemname='', $terms_checked = true) {
         PackageManager::setCredentials($username, $password, $systemname);
         PackageManagerComm::clearSession();
         $result = PackageManagerComm::login($terms_checked);
@@ -238,7 +238,7 @@ class PackageManager
         	return true;
     }
 
-    function setCredentials($username, $password, $systemname){
+    function setCredentials($username, $password, $systemname) {
 
         $admin = new Administration();
         $admin->retrieveSettings();
@@ -249,7 +249,7 @@ class PackageManager
          }
     }
 
-    static function getCredentials(){
+    static function getCredentials() {
 
         $admin = new Administration();
         $admin->retrieveSettings(CREDENTIAL_CATEGORY, true);
@@ -269,7 +269,7 @@ class PackageManager
         return $credentials;
     }
 
-    function getTermsAndConditions(){
+    function getTermsAndConditions() {
     	return PackageManagerComm::getTermsAndConditions();
 
     }
@@ -282,7 +282,7 @@ class PackageManager
      *
      * @return documents
      */
-    function getDocumentation($package_id, $release_id){
+    function getDocumentation($package_id, $release_id) {
     	 if(!empty($release_id) || !empty($package_id)){
             $documents = PackageManagerComm::getDocumentation($package_id, $release_id);
             return $documents;
@@ -295,7 +295,7 @@ class PackageManager
      * Grab the list of installed modules and send that list to the depot.
      * The depot will then send back a list of modules that need to be updated
      */
-    function checkForUpdates(){
+    function checkForUpdates() {
     	$lists = $this->buildInstalledReleases(array('module'), true);
 		$updates = array();
 		if(!empty($lists)){
@@ -306,7 +306,7 @@ class PackageManager
 
      ////////////////////////////////////////////////////////
      /////////// HELPER FUNCTIONS
-    function toNameValueList($array){
+    function toNameValueList($array) {
 		$list = array();
 		foreach($array as $name=>$value){
 			$list[] = array('name'=>$name, 'value'=>$value);
@@ -314,7 +314,7 @@ class PackageManager
 		return $list;
 	}
 
-	function toNameValueLists($arrays){
+	function toNameValueLists($arrays) {
 		$lists = array();
 		foreach($arrays as $array){
 			$lists[] = PackageManager::toNameValueList($array);
@@ -322,7 +322,7 @@ class PackageManager
 		return $lists;
 	}
 
-     function fromNameValueList($nvl){
+     function fromNameValueList($nvl) {
         $array = array();
         foreach($nvl as $list){
             $array[$list['name']] = $list['value'];
@@ -330,7 +330,7 @@ class PackageManager
         return $array;
     }
 
-    function buildInstalledReleases($types = array('module')){
+    function buildInstalledReleases($types = array('module')) {
     	//1) get list of installed modules
 		$installeds = $this->getInstalled($types);
 		$releases = array();
@@ -346,7 +346,7 @@ class PackageManager
 		return $lists;
     }
 
-    function buildPackageXML($package, $releases = array()){
+    function buildPackageXML($package, $releases = array()) {
         $xml = '<package>';
         $xml .= '<package_id>'.$package['id'].'</package_id>';
         $xml .= '<name>'.$package['name'].'</name>';
@@ -389,21 +389,21 @@ class PackageManager
 
     //////////////////////////////////////////////////////////////////////
     /////////// INSTALL SECTION
-    function extractFile( $zip_file, $file_in_zip, $base_tmp_upgrade_dir){
+    function extractFile($zip_file, $file_in_zip, $base_tmp_upgrade_dir) {
         $my_zip_dir = mk_temp_dir( $base_tmp_upgrade_dir );
         $this->addToCleanup($my_zip_dir);
         unzip_file( $zip_file, $file_in_zip, $my_zip_dir );
         return( "$my_zip_dir/$file_in_zip" );
     }
 
-    function extractManifest( $zip_file,$base_tmp_upgrade_dir ) {
+    function extractManifest($zip_file,$base_tmp_upgrade_dir) {
         global $sugar_config;
         $base_upgrade_dir       = $this->upload_dir."/upgrades";
         $base_tmp_upgrade_dir   = "$base_upgrade_dir/temp";
         return $this->extractFile( $zip_file, "manifest.php",$base_tmp_upgrade_dir );
     }
 
-    function validate_manifest( $manifest ){
+    function validate_manifest($manifest) {
     // takes a manifest.php manifest array and validates contents
     global $subdirs;
     global $sugar_version;
@@ -446,7 +446,7 @@ class PackageManager
         }
     }
 
-    function getInstallType( $type_string ){
+    function getInstallType($type_string) {
         // detect file type
         global $subdirs;
         $subdirs = array('full', 'langpack', 'module', 'patch', 'theme', 'temp');
@@ -461,7 +461,7 @@ class PackageManager
         return( "" );
     }
 
-    function performSetup($tempFile, $view = 'module', $display_messages = true){
+    function performSetup($tempFile, $view = 'module', $display_messages = true) {
         global $sugar_config,$mod_strings;
         $base_filename = urldecode($tempFile);
         $GLOBALS['log']->debug("BaseFileName: ".$base_filename);
@@ -528,7 +528,7 @@ class PackageManager
         @unlink("upload://".$_FILES['upgrade_zip']['name']);
     }
 
-    function performInstall($file, $silent=true){
+    function performInstall($file, $silent=true) {
         global $sugar_config;
         global $mod_strings;
         global $current_language;
@@ -589,7 +589,7 @@ class PackageManager
         }//fi
     }
 
-    function performUninstall($name){
+    function performUninstall($name) {
     	$uh = new UpgradeHistory();
     	$uh->name = $name;
     	$uh->id_name = $name;
@@ -617,7 +617,7 @@ class PackageManager
     	}
     }
 
-    function getUITextForType( $type ){
+    function getUITextForType($type) {
         if( $type == "full" ){
             return( "Full Upgrade" );
         }
@@ -635,7 +635,7 @@ class PackageManager
         }
     }
 
-    function getImageForType( $type ){
+    function getImageForType($type) {
 
         $icon = "";
         switch( $type ){
@@ -665,7 +665,7 @@ class PackageManager
         return( $icon );
     }
 
-    function getPackagesInStaging($view = 'module'){
+    function getPackagesInStaging($view = 'module') {
         global $sugar_config;
         global $current_language;
         $uh = new UpgradeHistory();
@@ -748,7 +748,7 @@ class PackageManager
         return $packages;
     }
 
-    function getLicenseFromFile($file){
+    function getLicenseFromFile($file) {
         global $sugar_config;
         $base_upgrade_dir       = $this->upload_dir.'/upgrades';
         $base_tmp_upgrade_dir   = "$base_upgrade_dir/temp";
@@ -769,7 +769,7 @@ class PackageManager
      *
      * @return an array of installed upgrade_history objects
      */
-    function getInstalled($types = array('module')){
+    function getInstalled($types = array('module')) {
     	$uh = new UpgradeHistory();
     	$in = "";
     	for($i = 0; $i < count($types); $i++){
@@ -782,7 +782,7 @@ class PackageManager
     	return $uh->getList($query);
     }
 
-    function getinstalledPackages($types = array('module', 'langpack')){
+    function getinstalledPackages($types = array('module', 'langpack')) {
     	global $sugar_config;
     	$installeds = $this->getInstalled($types);
     	$packages = array();

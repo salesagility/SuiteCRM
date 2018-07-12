@@ -468,7 +468,7 @@ eoq;
             $this->exceptions = true;
 
             // pass callabck function for PHPMailer to call to provide log :
-            $this->Debugoutput = function($str, $level) {
+            $this->Debugoutput = function ($str, $level) {
                 // obfuscate part of response if previous line was a server 334 request, for authentication data:
                 static $previousIs334 = false;
                 if ($previousIs334) {

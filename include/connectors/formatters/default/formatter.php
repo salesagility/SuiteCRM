@@ -92,7 +92,7 @@ class default_formatter
    	  return '';
    }
 
-   protected function fetchSmarty(){
+   protected function fetchSmarty() {
    	  $source = $this->_component->getSource();
    	  $class = get_class($source);
    	  $dir = str_replace('_', '/', $class);
@@ -111,7 +111,7 @@ class default_formatter
 	  }
    }
 
-   public function getSourceMapping(){
+   public function getSourceMapping() {
    	  $source = $this->_component->getSource();
       $mapping = $source->getMapping();
       return $mapping;
@@ -133,11 +133,11 @@ class default_formatter
    	   return $this->_component;
    }
 
-   public function getTplFileName(){
+   public function getTplFileName() {
    		return $this->tplFileName;
    }
 
-   public function setTplFileName($tplFileName){
+   public function setTplFileName($tplFileName) {
    		$this->tplFileName = $tplFileName;
    }
 

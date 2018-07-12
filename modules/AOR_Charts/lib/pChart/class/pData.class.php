@@ -781,8 +781,8 @@
    function __toString()
     { return("pData object."); }
 
-   function left($value,$NbChar)	{ return substr($value,0,$NbChar); }  
-   function right($value,$NbChar)	{ return substr($value,strlen($value)-$NbChar,$NbChar); }  
-   function mid($value,$Depart,$NbChar)	{ return substr($value,$Depart-1,$NbChar); }  
+   function left($value,$NbChar) { return substr($value,0,$NbChar); }  
+   function right($value,$NbChar) { return substr($value,strlen($value)-$NbChar,$NbChar); }  
+   function mid($value,$Depart,$NbChar) { return substr($value,$Depart-1,$NbChar); }  
   }
 ?>

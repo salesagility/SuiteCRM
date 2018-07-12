@@ -51,7 +51,7 @@ require_once('include/SugarObjects/forms/FormBase.php');
 class MeetingFormBase extends FormBase
 {
 
-	function getFormBody($prefix, $mod='', $formname=''){
+	function getFormBody($prefix, $mod='', $formname='') {
 		if(!ACLController::checkAccess('Meetings', 'edit', true)){
 		return '';
 	}
@@ -121,7 +121,7 @@ return $form;
 
 
 
-function getForm($prefix, $mod='Meetings'){
+function getForm($prefix, $mod='Meetings') {
 	if(!ACLController::checkAccess('Meetings', 'edit', true)){
 		return '';
 	}

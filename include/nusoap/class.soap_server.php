@@ -221,7 +221,7 @@ class nusoap_server extends nusoap_base
     * @param mixed $wsdl file path or URL (string), or wsdl instance (object)
 	* @access   public
 	*/
-	function nusoap_server($wsdl=false){
+	function nusoap_server($wsdl=false) {
 		parent::nusoap_base();
 		// turn on debugging?
 		global $debug;
@@ -284,7 +284,7 @@ class nusoap_server extends nusoap_base
 	* @param    string $data usually is the value of $HTTP_RAW_POST_DATA
 	* @access   public
 	*/
-	function service($data){
+	function service($data) {
 		global $HTTP_SERVER_VARS;
 
 		if (isset($_SERVER['REQUEST_METHOD'])) {
@@ -877,7 +877,7 @@ class nusoap_server extends nusoap_base
 	* @return	boolean	Whether the operation was found
 	* @access   private
 	*/
-	function verify_method($operation,$request){
+	function verify_method($operation,$request) {
 		if(isset($this->wsdl) && is_object($this->wsdl)){
 			if($this->wsdl->getOperationData($operation)){
 				return true;
@@ -990,7 +990,7 @@ class nusoap_server extends nusoap_base
 	* @access   public
 	* @deprecated
 	*/
-	function add_to_map($methodname,$in,$out){
+	function add_to_map($methodname,$in,$out) {
 			$this->operations[$methodname] = array('name' => $methodname,'in' => $in,'out' => $out);
 	}
 
@@ -1008,7 +1008,7 @@ class nusoap_server extends nusoap_base
 	* @param	string $encodingStyle optional (usually 'http://schemas.xmlsoap.org/soap/encoding/' for encoded)
 	* @access   public
 	*/
-	function register($name,$in=array(),$out=array(),$namespace=false,$soapaction=false,$style=false,$use=false,$documentation='',$encodingStyle=''){
+	function register($name,$in=array(),$out=array(),$namespace=false,$soapaction=false,$style=false,$use=false,$documentation='',$encodingStyle='') {
 		global $HTTP_SERVER_VARS;
 
 		if($this->externalWSDLURL){
@@ -1077,7 +1077,7 @@ class nusoap_server extends nusoap_base
 	* @param	string $faultdetail
 	* @access   public
 	*/
-	function fault($faultcode,$faultstring,$faultactor='',$faultdetail=''){
+	function fault($faultcode,$faultstring,$faultactor='',$faultdetail='') {
 		if ($faultdetail == '' && $this->debug_flag) {
 			$faultdetail = $this->getDebug();
 		}

@@ -119,11 +119,11 @@ class TemplateDatetimecombo extends TemplateRange
     	'pm' => 'pm',
     );
 
-	function get_db_default($modify=false){
+	function get_db_default($modify=false) {
 			return '';
 	}
 
-	function get_field_def(){
+	function get_field_def() {
 		$def = parent::get_field_def();
 	    $def['dbType'] = 'datetime';
 	    if(!empty($def['default'])){
@@ -133,7 +133,7 @@ class TemplateDatetimecombo extends TemplateRange
 		return $def;
 	}
 	
-    function populateFromPost(){
+    function populateFromPost() {
     	parent::populateFromPost();
     	if(!empty($_REQUEST['defaultDate']) && !empty($_REQUEST['defaultTime'])){
     		$_REQUEST['default'] = $_REQUEST['defaultDate'].'&'.$_REQUEST['defaultTime'];

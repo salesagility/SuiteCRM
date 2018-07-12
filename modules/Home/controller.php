@@ -48,7 +48,7 @@ class HomeController extends SugarController
 {
 
 
-    public function action_getEditFieldHTML(){
+    public function action_getEditFieldHTML() {
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']){
 
@@ -58,7 +58,7 @@ class HomeController extends SugarController
 
     }
 
-    public function action_saveHTMLField(){
+    public function action_saveHTMLField() {
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']){
 
@@ -68,7 +68,7 @@ class HomeController extends SugarController
 
     }
 
-    public function action_getDisplayValue(){
+    public function action_getDisplayValue() {
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ){
 
@@ -84,7 +84,7 @@ class HomeController extends SugarController
 
     }
 
-    public function action_getValidationRules(){
+    public function action_getValidationRules() {
         global $app_strings, $mod_strings;
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ){
@@ -123,7 +123,7 @@ class HomeController extends SugarController
 
     }
     
-    public function action_getRelateFieldJS(){
+    public function action_getRelateFieldJS() {
         
         global $beanFiles, $beanList;
         

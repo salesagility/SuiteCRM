@@ -48,7 +48,7 @@ class RelationshipFactory
      * Construct a new relationship of type as provided by the $definition
      * @param array $definition Complete definition of the relationship, as specified by AbstractRelationship::keys
      */
-    static function newRelationship ($definition = array())
+    static function newRelationship($definition = array())
     {
         // handle the case where a relationship_type is not provided - set it to Many-To-Many as this was the usual type in ModuleBuilder
         if (! isset ( $definition [ 'relationship_type' ] ))

@@ -96,7 +96,7 @@ class VardefManager
         }
     }
 
-    static function addTemplate($module, $object, $template, $object_name=false){
+    static function addTemplate($module, $object, $template, $object_name=false) {
         if($template == 'default')$template = 'basic';
         $templates = array();
         $fields = array();
@@ -159,7 +159,7 @@ class VardefManager
      * @param string $module the name of the module
      * @param string $object the name of the object
      */
-    static function saveCache($module,$object, $additonal_objects= array()){
+    static function saveCache($module,$object, $additonal_objects= array()) {
 
         if (empty($GLOBALS['dictionary'][$object]))
             $object = BeanFactory::getObjectName($module);
@@ -187,7 +187,7 @@ class VardefManager
      *                      clear vardef cache for all modules.
      * @param string object_name the name of the object we are clearing this is for sugar_cache
      */
-    static function clearVardef($module_dir = '', $object_name = ''){
+    static function clearVardef($module_dir = '', $object_name = '') {
         //if we have a module name specified then just remove that vardef file
         //otherwise go through each module and remove the vardefs.php
         if(!empty($module_dir) && !empty($object_name)){
@@ -205,7 +205,7 @@ class VardefManager
      * @param string module_dir the module_dir to clear
      * @param string object_name the name of the object we are clearing this is for sugar_cache
      */
-    static function _clearCache($module_dir = '', $object_name = ''){
+    static function _clearCache($module_dir = '', $object_name = '') {
         if(!empty($module_dir) && !empty($object_name)){
 
             //Some modules like cases have a bean name that doesn't match the object name
@@ -232,7 +232,7 @@ class VardefManager
      * @param string $object the given object we wish to load the vardefs for
      * @param array $additional_search_paths an array which allows a consumer to pass in additional vardef locations to search
      */
-    static function refreshVardefs($module, $object, $additional_search_paths = null, $cacheCustom = true, $params = array()){
+    static function refreshVardefs($module, $object, $additional_search_paths = null, $cacheCustom = true, $params = array()) {
         // Some of the vardefs do not correctly define dictionary as global.  Declare it first.
         global $dictionary, $beanList;
         $vardef_paths = array(
@@ -401,7 +401,7 @@ class VardefManager
      * @param string $object the given object we wish to load the vardefs for
      * @param bool   $refresh whether or not we wish to refresh the cache file.
      */
-    static function loadVardef($module, $object, $refresh=false, $params = array()){
+    static function loadVardef($module, $object, $refresh=false, $params = array()) {
         //here check if the cache file exists, if it does then load it, if it doesn't
         //then call refreshVardef
         //if either our session or the system is set to developerMode then refresh is set to true

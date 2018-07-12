@@ -46,7 +46,7 @@ require_once('service/core/SugarWebServiceImpl.php');
 class SugarRestServiceImpl extends SugarWebServiceImpl
 {
 	
-	function md5($string){
+	function md5($string) {
 		return md5($string);
 	}
 }

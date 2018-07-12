@@ -89,7 +89,7 @@ class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\Exception('[JsonApi][v1][Filters][Interpreters][getFilterByPreMadeName][cannot find filter]'),
-            function() {
+            function () {
                 $filter = array('InvalidFilterThatIsNotFound');
                 self::$interpreter->getFilterByPreMadeName($filter);
             }

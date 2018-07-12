@@ -49,7 +49,7 @@ class SubpanelQuickEdit
 {
 	var $defaultProcess = true;
 
-	function __construct($module, $view='QuickEdit', $proccessOverride = false){
+	function __construct($module, $view='QuickEdit', $proccessOverride = false) {
         //treat quickedit and quickcreate views as the same
         if($view == 'QuickEdit') {$view = 'QuickCreate';}
 
@@ -149,7 +149,7 @@ class SubpanelQuickEdit
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	function SubpanelQuickEdit($module, $view='QuickEdit', $proccessOverride = false){
+	function SubpanelQuickEdit($module, $view='QuickEdit', $proccessOverride = false) {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -160,7 +160,7 @@ class SubpanelQuickEdit
 		self::__construct($module, $view, $proccessOverride);
 	}
 
-	function process($module){
+	function process($module) {
         $form_name = 'form_Subpanel'.$this->ev->view .'_'.$module;
         $this->ev->formName = $form_name;
         $this->ev->process(true, $form_name);

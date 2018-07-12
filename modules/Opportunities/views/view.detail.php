@@ -54,14 +54,14 @@ require_once('include/MVC/View/views/view.detail.php');
 class OpportunitiesViewDetail extends ViewDetail
 {
 
- 	function __construct(){
+ 	function __construct() {
  		parent::__construct();
  	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function OpportunitiesViewDetail(){
+    function OpportunitiesViewDetail() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);

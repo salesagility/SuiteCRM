@@ -54,7 +54,7 @@ abstract class NusoapSoap extends SugarSoapService
 	 * @param String $url - This is the soap URL
 	 * @access public
 	 */
-	public function __construct($url){
+	public function __construct($url) {
 		$GLOBALS['log']->info('Begin: NusoapSoap->__construct');
 		$this->server = new soap_server();
 		$this->soapURL = $url;
@@ -82,7 +82,7 @@ abstract class NusoapSoap extends SugarSoapService
 	 * It passes request data to NUSOAP server and sends response back to client
 	 * @access public
 	 */
-	public function serve(){
+	public function serve() {
 		$GLOBALS['log']->info('Begin: NusoapSoap->serve');
 		ob_clean();
 		$this->in_service = true;
@@ -108,7 +108,7 @@ abstract class NusoapSoap extends SugarSoapService
 	 * @param String $arrayType - arrayType: namespace:name (xsd:string)
 	 * @access public
 	 */
-	public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType=''){
+	public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType='') {
 		$this->server->wsdl->addComplexType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs, $arrayType);
   	} // fn
 
@@ -120,7 +120,7 @@ abstract class NusoapSoap extends SugarSoapService
   	 * @param Array $output - assoc array of output values: key = param name, value = param type
 	 * @access public
   	 */
-	function registerFunction($function, $input, $output){
+	function registerFunction($function, $input, $output) {
 		if(in_array($function, $this->excludeFunctions))return;
 		$use = false;
 		$style = false;
@@ -140,7 +140,7 @@ abstract class NusoapSoap extends SugarSoapService
 	 * @param String $implementationClass
 	 * @access public
 	 */
-	function registerImplClass($implementationClass){
+	function registerImplClass($implementationClass) {
 		$GLOBALS['log']->info('Begin: NusoapSoap->registerImplClass');
 		if (empty($implementationClass)) {
 			$implementationClass = $this->implementationClass;
@@ -155,7 +155,7 @@ abstract class NusoapSoap extends SugarSoapService
 	 * @param String $registryClass
 	 * @access public
 	 */
-	function registerClass($registryClass){
+	function registerClass($registryClass) {
 		$GLOBALS['log']->info('Begin: NusoapSoap->registerClass');
 		$this->registryClass = $registryClass;
 		$GLOBALS['log']->info('End: NusoapSoap->registerClass');
@@ -167,7 +167,7 @@ abstract class NusoapSoap extends SugarSoapService
 	 * @param SoapError $errorObject - This is an object of type SoapError
 	 * @access public
 	 */
-	public function error($errorObject){
+	public function error($errorObject) {
 		$GLOBALS['log']->info('Begin: NusoapSoap->error');
 		$this->server->fault($errorObject->getFaultCode(), $errorObject->getName(), '', $errorObject->getDescription());
 		$GLOBALS['log']->info('Begin: NusoapSoap->error');

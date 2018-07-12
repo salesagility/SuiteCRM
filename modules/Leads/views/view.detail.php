@@ -41,7 +41,7 @@ require_once('include/MVC/View/views/view.detail.php');
 class LeadsViewDetail extends ViewDetail
 {
 
- 	function display(){
+ 	function display() {
 
 		global $sugar_config;
 

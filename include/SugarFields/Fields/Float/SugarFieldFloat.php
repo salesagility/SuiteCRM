@@ -43,7 +43,7 @@ require_once('include/SugarFields/Fields/Int/SugarFieldInt.php');
 
 class SugarFieldFloat extends SugarFieldInt 
 {
-    public function formatField($rawField, $vardef){
+    public function formatField($rawField, $vardef) {
         // A null precision uses the user prefs / system prefs by default
         $precision = null;
         if ( isset($vardef['precision']) ) {
@@ -57,7 +57,7 @@ class SugarFieldFloat extends SugarFieldInt
         return format_number($rawField,$precision,$precision);
     }
     
-    public function unformatField($formattedField, $vardef){
+    public function unformatField($formattedField, $vardef) {
         if ( $formattedField === '' || $formattedField === NULL ) {
             return '';
         }

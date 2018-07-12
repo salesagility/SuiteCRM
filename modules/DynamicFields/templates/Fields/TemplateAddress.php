@@ -46,7 +46,7 @@ class TemplateAddress extends TemplateField
     var $type = 'varchar';
     var $supports_unified_search = true;
 
-    function save ($df)
+    function save($df)
     {
         $this->type = 'varchar' ;
 

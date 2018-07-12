@@ -65,7 +65,7 @@ function get_node_data($params,$get_array=false) {
  *  
  *
  */
- function get_category_nodes($href_string){
+ function get_category_nodes($href_string) {
     $nodes=array();
     global $mod_strings;
     global $app_list_strings;

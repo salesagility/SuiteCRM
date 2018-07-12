@@ -52,13 +52,13 @@ class PredefinedChart
 {
 	var $params = array();
 
-	function __construct(){
+	function __construct() {
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function PredefinedChart(){
+    function PredefinedChart() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -70,7 +70,7 @@ class PredefinedChart
     }
 
 
-	function predefinedChartQuery($chart, $params=array()){
+	function predefinedChartQuery($chart, $params=array()) {
 		switch($chart){
 			case 'pipeline_by_sales_stage':
 			case 'pipeline_by_sales_stage_funnel':
@@ -89,7 +89,7 @@ class PredefinedChart
 		return;
 	}
 
-	function pipelineBySalesStageQuery(){
+	function pipelineBySalesStageQuery() {
 
 
 		global $current_user;
@@ -249,7 +249,7 @@ class PredefinedChart
 		return $query;
 	}
 
-	function leadSourceByOutcomeQuery($filters){
+	function leadSourceByOutcomeQuery($filters) {
 
 
 		global $current_user;
@@ -340,7 +340,7 @@ class PredefinedChart
 		return $query;
 	}
 
-	function outcomeByMonthQuery(){
+	function outcomeByMonthQuery() {
 
 
 		global $current_user;
@@ -430,7 +430,7 @@ class PredefinedChart
 		return $query;
 	}
 
-	function pipelineByLeadSourceQuery($filters){
+	function pipelineByLeadSourceQuery($filters) {
 
 
 		global $current_user;
@@ -531,7 +531,7 @@ class PredefinedChart
 
 
 	// This function will grab a query from the custom directory to be used for charting
-	function customChartQuery($chart){
+	function customChartQuery($chart) {
 		if (file_exists('custom/Charts/' . $chart . '.php')){
 			require_once('custom/Charts/' . $chart . '.php');
 			return customChartQuery();

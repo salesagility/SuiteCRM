@@ -55,7 +55,7 @@ class LanguageManager
 	 * @param module - the name of the module we are working with
 	 * @param templates - an array of templates this module uses
 	 */
-	static function createLanguageFile($module , $templates=array('default'), $refresh = false){
+	static function createLanguageFile($module , $templates=array('default'), $refresh = false) {
 		global $mod_strings, $current_language;
 		if(inDeveloperMode() || !empty($_SESSION['developerMode'])){
         	$refresh = true;
@@ -80,7 +80,7 @@ class LanguageManager
 	 * @param lang - current language this module use
 	 * @param loaded_mod_strings - the string that we will add the module template language  into
 	 */
-	static function loadTemplateLanguage($module , $templates , $lang, $loaded_mod_strings){
+	static function loadTemplateLanguage($module , $templates , $lang, $loaded_mod_strings) {
 		$templates = array_reverse($templates);
 		foreach($templates as $template){
 			$temp = LanguageManager::addTemplate($module,$lang, $template);
@@ -89,7 +89,7 @@ class LanguageManager
 		return $loaded_mod_strings;
 	}
 
-	static function addTemplate($module, $lang, $template){
+	static function addTemplate($module, $lang, $template) {
 		if($template == 'default')$template = 'basic';
 		$templates = array();
 		$fields = array();
@@ -111,7 +111,7 @@ class LanguageManager
 		}
 	}
 
-	static function saveCache($module,$lang, $loaded_mod_strings, $additonal_objects= array()){
+	static function saveCache($module,$lang, $loaded_mod_strings, $additonal_objects= array()) {
 		if(empty($lang))
 			$lang = $GLOBALS['sugar_config']['default_language'];
 
@@ -130,7 +130,7 @@ class LanguageManager
 	 *                      clear language cache for all modules.
 	 * @param string lang the name of the object we are clearing this is for sugar_cache
 	 */
-	static function clearLanguageCache($module_dir = '', $lang = ''){
+	static function clearLanguageCache($module_dir = '', $lang = '') {
 		if(empty($lang)) {
 			$languages = array_keys($GLOBALS['sugar_config']['languages']);
 		} else {
@@ -181,7 +181,7 @@ class LanguageManager
 	 * @param string $lang the given language we wish to load
 	 * @param array $additional_search_paths an array which allows a consumer to pass in additional vardef locations to search
 	 */
-	static function refreshLanguage($module, $lang, $loaded_mod_strings = array(), $additional_search_paths = null){
+	static function refreshLanguage($module, $lang, $loaded_mod_strings = array(), $additional_search_paths = null) {
 		// Some of the vardefs do not correctly define dictionary as global.  Declare it first.
 		$lang_paths = array(
 					'modules/'.$module.'/language/'.$lang.'.lang.php',
@@ -233,7 +233,7 @@ class LanguageManager
 			LanguageManager::saveCache($module, $lang, $loaded_mod_strings);
 	}
 
-	static function loadModuleLanguage($module, $lang, $refresh=false){
+	static function loadModuleLanguage($module, $lang, $refresh=false) {
 		//here check if the cache file exists, if it does then load it, if it doesn't
 		//then call refreshVardef
 		//if either our session or the system is set to developerMode then refresh is set to true

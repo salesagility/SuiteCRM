@@ -65,7 +65,7 @@ class SearchMerge extends ListViewMerge
 	 * @param STRING $new_file - path to the new file that is shipping with the patch 
 	 * @param STRING $custom_file - path to the custom file
 	 */
-	protected function loadData($module, $original_file, $new_file, $custom_file){
+	protected function loadData($module, $original_file, $new_file, $custom_file) {
 		EditViewMerge::loadData($module, $original_file, $new_file, $custom_file);
 		$this->originalData = array($module=>array( $this->viewDefs=>$this->originalData[$module]));
 		$this->customData = array($module=>array( $this->viewDefs=>$this->customData[$module]));
@@ -79,7 +79,7 @@ class SearchMerge extends ListViewMerge
 	 * @return ARRAY $fields - an associate array of fields and their meta-data as well as their location
 	 */
 	
-	protected function getFields(&$panels, $multiple = true){
+	protected function getFields(&$panels, $multiple = true) {
 		$fields = array();
 		if(!$multiple)$panels = array($panels);
 		
@@ -105,7 +105,7 @@ class SearchMerge extends ListViewMerge
 	 *
 	 * @return ARRAY
 	 */
-	protected function buildPanels(){
+	protected function buildPanels() {
 		$panels  = array();
 		
 		//first only deal with ones that have their location coming from the custom source
@@ -123,12 +123,12 @@ class SearchMerge extends ListViewMerge
 	 * Sets the panel section for the meta-data after it has been merged
 	 *
 	 */
-	protected function setPanels(){
+	protected function setPanels() {
 		$this->newData[$this->module][$this->viewDefs][$this->panelName] = $this->buildPanels();
 		$this->newData[$this->module] = $this->newData[$this->module][$this->viewDefs];
 		
 	}
-	public function save($to){
+	public function save($to) {
 		return write_array_to_file("$this->varName['$this->module']", $this->newData[$this->module], $to);
 	}
 	
@@ -142,7 +142,7 @@ class SearchMerge extends ListViewMerge
 	 * @param BOOLEAN $save - boolean on if it should save the results to the custom file or not
 	 * @return BOOLEAN - if the merged file was saved if false is passed in for the save parameter it always returns true
 	 */
-	public function merge($module, $original_file, $new_file, $custom_file=false, $save=true){
+	public function merge($module, $original_file, $new_file, $custom_file=false, $save=true) {
 		//Bug 37207
 		if($module == 'Connectors') {
 		   return false;

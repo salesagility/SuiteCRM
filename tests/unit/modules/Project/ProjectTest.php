@@ -133,7 +133,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	}
 
 
-	public function testbuild_generic_where_clause ()
+	public function testbuild_generic_where_clause()
 	{
 
 		$project = new Project();
@@ -175,7 +175,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertTrue(true, "NEEDS FIXING!");
 	}
 
-	public function testbean_implements(){
+	public function testbean_implements() {
 
 		$project = new Project();
 
@@ -190,7 +190,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     	$this->markTestIncomplete('Refactor exporter: productes SQL that has different field ordering in SELECT');
     }
 
-	public function testgetAllProjectTasks(){
+	public function testgetAllProjectTasks() {
 
 		$project = new Project();
 

@@ -48,13 +48,13 @@ require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipFactory.ph
 class DeployedRelationships extends AbstractRelationships implements RelationshipsInterface
 {
 
-    function __construct ($moduleName)
+    function __construct($moduleName)
     {
         $this->moduleName = $moduleName ;
         $this->load () ;
     }
 
-    static function findRelatableModules ($includeActivitiesSubmodules = true)
+    static function findRelatableModules($includeActivitiesSubmodules = true)
     {
         return parent::findRelatableModules ( true ) ;
     }
@@ -71,7 +71,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * Instead we must obtain the true cardinality from a property we added to the relationship metadata when we created the relationship
      * This relationship metadata is accessed through the Table Dictionary
      */ 
-    function load ()
+    function load()
     {
         
         $relationships = $this->getDeployedRelationships () ;
@@ -134,7 +134,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     /*
      * Save this modules relationship definitions out to a working file
      */
-    function save ()
+    function save()
     {
         parent::_save ( $this->relationships, "custom/working/modules/{$this->moduleName}" ) ;
     }
@@ -145,7 +145,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @param array definition  The 5.0 relationship definition
      * @return array            The definition updated to 5.1 format
      */
-    protected function _updateRelationshipDefinition ($definition)
+    protected function _updateRelationshipDefinition($definition)
     {
         return $definition ;
     }
@@ -153,7 +153,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     /*
      * Use the module Loader to delete the relationship from the instance.
      */
-    function delete ($rel_name)
+    function delete($rel_name)
     {
     	//Remove any fields from layouts
         $rel = $this->get($rel_name);
@@ -192,7 +192,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * The set is made up of the relationships held in this class, plus all those already deployed in the application
      * @return array Set of all relevant relationships
      */
-    protected function getAllRelationships ()
+    protected function getAllRelationships()
     {
         return array_merge ( $this->relationships, parent::getDeployedRelationships () ) ;
     }
@@ -204,7 +204,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @param string $sourceModuleName  Name of the primary module
      * @return string Name of the subpanel if found; null otherwise
      */
-    static private function identifySubpanel ($thisModuleName , $sourceModuleName)
+    static private function identifySubpanel($thisModuleName , $sourceModuleName)
     {
         $module = get_module_info ( $thisModuleName ) ;
         require_once ('include/SubPanel/SubPanelDefinitions.php') ;
@@ -237,7 +237,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @return string Name of the relate field, if found; null otherwise    
      */
     
-    static private function identifyRelateField ($thisModuleName , $sourceModuleName)
+    static private function identifyRelateField($thisModuleName , $sourceModuleName)
     {
         $module = get_module_info ( $thisModuleName ) ;
         
@@ -256,7 +256,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * We can assume that both sides of the relationship are deployed modules as this is only called within the context of DeployedRelationships
      * @param AbstractRelationship $relationship The relationship to be enforced
      */
-    public function enforceRelationshipOnly ($relationship)
+    public function enforceRelationshipOnly($relationship)
     {
         $lhs = $relationship->lhs_module ;
         $rhs = $relationship->rhs_module ;
@@ -279,7 +279,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * We use the Extension mechanism to do this for DeployedRelationships
      * All metadata is placed in the modules Ext directory, and then Rebuild is called to activate them
      */
-    function build ($basepath = null, $installDefPrefix = null, $relationships = null)
+    function build($basepath = null, $installDefPrefix = null, $relationships = null)
     {
         $basepath = "custom/Extension/modules" ;
         
@@ -379,7 +379,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @param array $layoutAdditions  An array of module => fieldname
      * return null
      */
-    protected function saveFieldsToLayouts ($basepath , $dummy , $relationshipName , $layoutAdditions)
+    protected function saveFieldsToLayouts($basepath , $dummy , $relationshipName , $layoutAdditions)
     {
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
         
@@ -407,7 +407,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @param $relationship    The relationship that is getting deleted
      * return null
      */
-	private function removeFieldsFromDeployedLayout ($relationship)
+	private function removeFieldsFromDeployedLayout($relationship)
     {
         
         // many-to-many relationships don't have fields so if we have a many-to-many we can just skip this...

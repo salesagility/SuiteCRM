@@ -48,7 +48,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
      * if a prefix is passed in, then it is prepended to the key value in the array
      * @prefix string to be prepended to key value in array
      */
-    function get_exclude_files($prefix = ''){
+    function get_exclude_files($prefix = '') {
         //add slash to prefix if it is not empty
         if(!empty($prefix)){
             $prefix = $prefix . '/';
@@ -82,7 +82,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
      * and places the concatenated file in root directory
      * @from_path root directory where processing should take place
      */
-    function ConcatenateFiles($from_path){
+    function ConcatenateFiles($from_path) {
 
         // Minifying the group files takes a long time sometimes.
         @ini_set('max_execution_time', 300);
@@ -206,7 +206,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
     }
 
-    function create_backup_folder($bu_path){
+    function create_backup_folder($bu_path) {
         $bu_path = str_replace('\\', '/', $bu_path);
         //get path after root
         $jpos = strpos($bu_path,'jssource');
@@ -245,7 +245,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
      * @from_path file name and path to be processed
      * @to_path file name and path to be  used to place newly compressed contents
      */
-    function CompressFiles($from_path,$to_path){
+    function CompressFiles($from_path,$to_path) {
     if(!defined('JSMIN_AS_LIB')){
         define('JSMIN_AS_LIB', true);
     }
@@ -353,7 +353,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
         }
     }
 
-    function reverseScripts($from_path,$to_path=''){
+    function reverseScripts($from_path,$to_path='') {
             $from_path = str_replace('\\', '/', $from_path);
             if(empty($to_path)){
                 $to_path = $from_path;
@@ -421,7 +421,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
      * @from_path root directory where processing should take place
      * @to_path root directory where processing should take place, this gets filled in dynamically
      */
-    function BackUpAndCompressScriptFiles($from_path,$to_path = '', $backup = true){
+    function BackUpAndCompressScriptFiles($from_path,$to_path = '', $backup = true) {
             //check to see if provided paths are legit
             if (!file_exists($from_path))
             {

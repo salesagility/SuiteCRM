@@ -49,7 +49,7 @@ class TemplateRelatedTextField extends TemplateText
     //ext1 is the name field
     //ext2 is the related module
     
-    function get_html_edit(){
+    function get_html_edit() {
         $this->prepare();
         $name = $this->name .'_name';
         $value_name = strtoupper('{'.$name.'}');
@@ -58,7 +58,7 @@ class TemplateRelatedTextField extends TemplateText
         return "<input type='text' name='$name' id='$name' size='".$this->size."' readonly value='$value_name'><input type='button' onclick='open_popup(\"{". strtoupper($this->name). "_MODULE}\", 600, 400,\" \", true, false, {ENCODED_". strtoupper($this->name). "_POPUP_REQUEST_DATA})' type='button'  class='button' value='{APP.LBL_SELECT_BUTTON_LABEL}' ><input type='hidden' name='$id' value='$value_id'>";
     }
 
-    function get_html_detail(){
+    function get_html_detail() {
         $name = $this->name .'_name';
         $value_name = strtoupper('{'.$name.'}');
         $id = $this->name ;
@@ -67,7 +67,7 @@ class TemplateRelatedTextField extends TemplateText
         return "<a href='index.php?module=$this->ext2&action=DetailView&record={$value_id}'>{$value_name}</a>" ;    
     }
     
-    function get_html_list(){
+    function get_html_list() {
         if(isset($this->bean)){
             $name = $this->bean->object_name . '.'. $this->ext1;
         }else{
@@ -76,7 +76,7 @@ class TemplateRelatedTextField extends TemplateText
         return '{'. strtoupper($name) . '}';    
     }
 
-    function get_html_search(){
+    function get_html_search() {
         $searchable=array();
         $def = $this->bean->field_name_map[$this->name];
         if(!empty($def['id_name']) && in_array($def['id_name'], $searchable)){
@@ -87,7 +87,7 @@ class TemplateRelatedTextField extends TemplateText
         return $this->get_html_edit();
     }   
 
-    function get_xtpl_search(){
+    function get_xtpl_search() {
         $searchable=array();
         $def = $this->bean->field_name_map[$this->name];
         $returnXTPL = array();
@@ -132,7 +132,7 @@ class TemplateRelatedTextField extends TemplateText
     }
 
 
-    function get_xtpl_edit(){
+    function get_xtpl_edit() {
     global $beanList;
         
         $name = $this->name .'_name';
@@ -184,15 +184,15 @@ class TemplateRelatedTextField extends TemplateText
         return $returnXTPL; 
     }
     
-    function get_xtpl_detail(){
+    function get_xtpl_detail() {
         return $this->get_xtpl_edit();
     }
     
-    function get_related_info(){
+    function get_related_info() {
             
     }
     
-     function get_field_def(){
+     function get_field_def() {
         $def = parent::get_field_def();
         $def['id_name'] = $this->ext3;
         $def['ext2'] = $this->ext2;
@@ -255,7 +255,7 @@ class TemplateRelatedTextField extends TemplateText
         }
     }
 
-    function save($df){
+    function save($df) {
         // create the new ID field associated with this relate field - this will hold the id of the related record
         // this field must have a unique name as the name is used when constructing quicksearches and when saving the field
         //Check if we have not saved this field so we don't create two ID fields.
@@ -325,7 +325,7 @@ class TemplateRelatedTextField extends TemplateText
 
     }
     
-    function get_db_add_alter_table($table){
+    function get_db_add_alter_table($table) {
     	return "";
     }
     
@@ -333,7 +333,7 @@ class TemplateRelatedTextField extends TemplateText
     	return "";
     }
     
-    function get_db_modify_alter_table($table){
+    function get_db_modify_alter_table($table) {
     	return "";
     }
     

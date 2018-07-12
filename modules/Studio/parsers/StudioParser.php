@@ -60,7 +60,7 @@ class StudioParser
 	var $fieldEditor = true;
 	var $oldMatches = array();
 
-	function getFileType($type, $setType=true){
+	function getFileType($type, $setType=true) {
 		switch($type){
 			case 'EditView':$type = 'edit'; break;
 			case 'SearchForm': $type= 'search';break;
@@ -74,25 +74,25 @@ class StudioParser
 		return $type;
 	}
 
-	function getParsers($file){
+	function getParsers($file) {
 		if(substr_count($file, 'DetailView.html') > 0 || substr_count($file, 'EditView.html' ) > 0) return array('default'=>'StudioParser', array('StudioParser', 'StudioRowParser'));
 		if(substr_count($file, 'ListView.html' ) > 0) return array('default'=>'XTPLListViewParser', array('XTPLListViewParser'));
 		return array('default'=>'StudioParser', array('StudioParser'));
 	}
 
 
-	function parseRows($str){
+	function parseRows($str) {
 		preg_match_all("'(<tr[^>]*)>(.*?)(</tr[^>]*>)'si", $str, $this->rows,PREG_SET_ORDER);
 
 	}
 
-	function parseNames($str){
+	function parseNames($str) {
 		$results = array();
 		preg_match_all("'name[ ]*=[ ]*[\'\"]+([a-zA-Z0-9\_]+)[\'\"]+'si", $str, $results,PREG_SET_ORDER);
 		return $results;
 	}
 
-	function parseLabels($str){
+	function parseLabels($str) {
 		$mod = array();
 		$app = array();
 		preg_match_all("'\{MOD\.([a-zA-Z0-9\_]+)\}'si", $str, $mod,PREG_SET_ORDER);
@@ -100,7 +100,7 @@ class StudioParser
 		return array_merge($app, $mod);
 	}
 
-	function getMaxPosition(){
+	function getMaxPosition() {
 		$max = 0;
 		for($i = 0; $i < count($this->positions) ; $i++){
 			if($this->positions[$i][2] >= $max){
@@ -117,11 +117,11 @@ class StudioParser
 		}
 		$this->positions = $results;
 	}
-	function parseCols($str){
+	function parseCols($str) {
 		preg_match_all("'(<td[^>]*?)>(.*?)(</td[^>]*?>)'si", $str, $this->cols,PREG_SET_ORDER);
 
 	}
-	function parse($str){
+	function parse($str) {
 		$this->parsePositions($str);
 	}
 	function positionCount($str) {
@@ -145,7 +145,7 @@ class StudioParser
 EOQ;
 
 	}
-	function buildImageButtons($buttons,$horizontal=true){
+	function buildImageButtons($buttons,$horizontal=true) {
 		$text = '<table cellspacing=2><tr>';
 		foreach($buttons as $button){
 			if(!$horizontal){
@@ -172,7 +172,7 @@ EOQ;
 		return $text;
 	}
 
-	function generateButtons(){
+	function generateButtons() {
 
         global $mod_strings;
 		$imageSave = SugarThemeRegistry::current()->getImage( 'studio_save', '',null,null,'.gif',$mod_strings['LBL_SAVE']);
@@ -196,11 +196,11 @@ EOQ;
 		$buttons[] = array('image'=>$imageHistory,'text'=>$GLOBALS['mod_strings']['LBL_BTN_HISTORY'],'actionScript'=>"onclick='if(!confirmNoSave())return false;document.location.href=\"index.php?module=Studio&action=wizard&wizard=ManageBackups&setFile={$_SESSION['studio']['selectedFileId']}\"'");
 		return $buttons;
 	}
-	function getFormButtons(){
+	function getFormButtons() {
 		$buttons = $this->generateButtons();
 		return $this->buildImageButtons($buttons);
 	}
-	function getForm(){
+	function getForm() {
 		return $this->form  . <<<EOQ
 		</form>
 
@@ -211,7 +211,7 @@ EOQ;
 
 
 
-	function getFiles($module, $fileId=false){
+	function getFiles($module, $fileId=false) {
 		if(empty($GLOBALS['studioDefs'][$module])){
 			require_once('modules/'. $module . '/metadata/studio.php');
 		}
@@ -222,7 +222,7 @@ EOQ;
 	}
 
 
-	function getWorkingFile($file, $refresh = false){
+	function getWorkingFile($file, $refresh = false) {
 		$workingFile = 'working/' . $file;
 		$customFile = create_custom_directory($workingFile);
 		if($refresh || !file_exists($customFile)){
@@ -231,7 +231,7 @@ EOQ;
 		return $customFile;
 	}
 
-	function getSwapWith($value){
+	function getSwapWith($value) {
 		return $value * 2 - 1;
 	}
 	/**
@@ -359,7 +359,7 @@ EOQ;
 		fclose($fp);
 	}
 
-	function handleSaveLabels($module_name, $language){
+	function handleSaveLabels($module_name, $language) {
 		require_once('modules/Studio/LabelEditor/LabelEditor.php');
 		LabelEditor::saveLabels($_REQUEST, $module_name, $language);
 	}
@@ -562,7 +562,7 @@ EOQ;
 	 * swap: 0 - 1999
 	 *
 	 */
-	function addSlotToForm($slot_count, $display_count){
+	function addSlotToForm($slot_count, $display_count) {
 		$this->form .= "\n<input type='hidden' name='slot_$slot_count'  id='slot_$display_count' value='$slot_count'>";
 	}
 	function prepSlots() {
@@ -600,7 +600,7 @@ EOQ;
 		return $newView;
 	}
 
-	function parseOldestFile($file){
+	function parseOldestFile($file) {
 	 ob_clean();
 		require_once('modules/Studio/SugarBackup.php');
 		$file = str_replace('custom/working/', '' ,$file);
@@ -640,7 +640,7 @@ EOQ;
 	}
 
 
-	function clearWorkingDirectory(){
+	function clearWorkingDirectory() {
 
 		$file = 'custom/working/';
 		if(file_exists($file)){

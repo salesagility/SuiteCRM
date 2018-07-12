@@ -73,7 +73,7 @@ class ListViewData
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ListViewData(){
+    public function ListViewData() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -130,7 +130,7 @@ class ListViewData
 	 * @param STRING (ASC or DESC) $current_order
 	 * @return  STRING (ASC or DESC)
 	 */
-	function getReverseSortOrder($current_order){
+	function getReverseSortOrder($current_order) {
 		return (strcmp(strtolower($current_order), 'asc') == 0)?'DESC':'ASC';
 	}
 	/**
@@ -180,7 +180,7 @@ class ListViewData
 	 *
 	 * @param unknown_type $baseName
 	 */
-	function setVariableName($baseName, $where, $listviewName = null, $id = null){
+	function setVariableName($baseName, $where, $listviewName = null, $id = null) {
         global $timedate;
         $module = (!empty($listviewName)) ? $listviewName: isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
         $this->var_name = $module .'2_'. strtoupper($baseName) . ($id?'_'.$id:'');
@@ -196,7 +196,7 @@ class ListViewData
         $_SESSION[strtoupper($baseName) . "_DETAIL_NAV_HISTORY"] = false;
 	}
 
-	function getTotalCount($main_query){
+	function getTotalCount($main_query) {
 		if(!empty($this->count_query)){
 		    $count_query = $this->count_query;
 		}else{

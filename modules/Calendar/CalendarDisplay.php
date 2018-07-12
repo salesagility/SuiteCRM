@@ -85,7 +85,7 @@ class CalendarDisplay
 	 * @param string $dashlet_id for dashlet mode
 	 * @param array $views
 	 */
-	function __construct(Calendar $cal,$dashlet_id = "", $views = array()){
+	function __construct(Calendar $cal,$dashlet_id = "", $views = array()) {
 		global $sugar_config;
 		if(isset($sugar_config['CalendarColors']) && is_array($sugar_config['CalendarColors'])){
 			$this->activity_colors = array_merge($this->activity_colors, $sugar_config['CalendarColors']);
@@ -98,7 +98,7 @@ class CalendarDisplay
 	/**
 	 * main displaying function of Calendar
 	 */
-	public function display(){
+	public function display() {
 
 		global $timedate, $current_user;
 
@@ -218,7 +218,7 @@ class CalendarDisplay
 		echo $ss->fetch($main);
 	}
 
-	function checkActivity($activity = ""){
+	function checkActivity($activity = "") {
 		global $current_user;
 		if(empty($activity)){
 			$activity = $this->activity_colors;
@@ -252,7 +252,7 @@ class CalendarDisplay
 	/**
 	 * load settings popup template
 	 */
-	protected function load_settings_template(&$ss){
+	protected function load_settings_template(&$ss) {
 
 		list($d_start_hour,$d_start_min) =  explode(":",$this->cal->day_start_time);
 		list($d_end_hour,$d_end_min) =  explode(":",$this->cal->day_end_time);
@@ -355,7 +355,7 @@ class CalendarDisplay
 	 * Get date info string (legacy from old calendar)
 	 * @return string
 	 */
-	public function get_date_info($view, $date_time){
+	public function get_date_info($view, $date_time) {
 		$str = "";
 
 		global $current_user;
@@ -481,7 +481,7 @@ class CalendarDisplay
 	 * Get link to next date range
 	 * @return string
 	 */
-	protected function get_next_calendar(){
+	protected function get_next_calendar() {
 		global $cal_strings,$image_path;
 		$str = "";
 		if($_REQUEST['module'] == "Calendar"){
@@ -499,7 +499,7 @@ class CalendarDisplay
 	 * Get link to previous date range
 	 * @return string
 	 */
-	protected function get_previous_calendar(){
+	protected function get_previous_calendar() {
 		global $cal_strings,$image_path;
 		$str = "";
 		if($_REQUEST['module'] == "Calendar"){
@@ -516,7 +516,7 @@ class CalendarDisplay
 	 * display header
 	 * @param boolean $controls display ui contol itmes
 	 */
-	public function display_calendar_header($controls = true){
+	public function display_calendar_header($controls = true) {
 		global $cal_strings;
 
 		$ss = new Sugar_Smarty();
@@ -560,7 +560,7 @@ class CalendarDisplay
 	/**
 	 * display footer
 	 */
-	public function display_calendar_footer(){
+	public function display_calendar_footer() {
 		global $cal_strings;
 
 		$ss = new Sugar_Smarty();
@@ -621,7 +621,7 @@ class CalendarDisplay
 	/**
 	 * display title
 	 */
-	public function display_title(){
+	public function display_title() {
 		global $mod_strings;
 		//Hack to make this 6.5 compatible until this module is converted to MVC
 
@@ -652,7 +652,7 @@ class CalendarDisplay
 	/**
 	 * display html used in shared view
 	 */
-	public function display_shared_html($view){
+	public function display_shared_html($view) {
 			global $app_strings,$cal_strings,$action;
 
 			$ss = new Sugar_Smarty();

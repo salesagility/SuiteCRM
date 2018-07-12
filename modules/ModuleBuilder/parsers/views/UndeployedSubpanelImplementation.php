@@ -66,7 +66,7 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
      * @param string $moduleName     The name of the module to which this subpanel belongs
      * @param string $packageName    If not empty, the name of the package to which this subpanel belongs
      */
-    public function __construct ($subpanelName , $moduleName , $packageName)
+    public function __construct($subpanelName , $moduleName , $packageName)
     {
         $this->_subpanelName = $subpanelName ;
         $this->_moduleName = $moduleName ;
@@ -108,7 +108,7 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
     /**
      * @return string
      */
-    public function getLanguage ()
+    public function getLanguage()
     {
         return ""; // '' is the signal to translate() to use the global mod_strings
     }
@@ -117,7 +117,7 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
      * Save a subpanel
      * @param array $layoutDefinitions    Layout definition in the same format as received by the constructor
      */
-    public function deploy ($layoutDefinitions)
+    public function deploy($layoutDefinitions)
     {
         $outputDefs = $this->module->getAvailibleSubpanelDef ( $this->_subpanelName ) ;
         // first sort out the historical record...

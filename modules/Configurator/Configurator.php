@@ -168,7 +168,7 @@ class Configurator
     }
 
 	//bug #27947 , if previous $sugar_config['stack_trace_errors'] is true and now we disable it , we should clear all the cache.
-	public function clearCache(){
+	public function clearCache() {
 		global $sugar_config, $sugar_version;
 		$currentConfigArray = $this->readOverride();
 		foreach($currentConfigArray as $key => $val) {

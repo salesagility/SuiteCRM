@@ -169,7 +169,7 @@ class EAPMController extends SugarController
         return parent::post_save();
     }
 
-    protected function pre_QuickSave(){
+    protected function pre_QuickSave() {
         if(!empty($_REQUEST['application'])){
             $eapmBean = EAPM::getLoginInfo($_REQUEST['application'],true);
             if (!$eapmBean) {
@@ -185,7 +185,7 @@ class EAPMController extends SugarController
         }
     }
     
-	public function action_QuickSave(){
+	public function action_QuickSave() {
         $this->api = ExternalAPIFactory::loadAPI($this->bean->application,true);
         $this->action_save();
 
@@ -194,15 +194,15 @@ class EAPMController extends SugarController
         }
 	}
 
-    protected function post_QuickSave(){
+    protected function post_QuickSave() {
         $this->post_save();
     }
 
-    protected function pre_Reauthenticate(){
+    protected function pre_Reauthenticate() {
         $this->pre_save();
     }
 
-    protected function action_Reauthenticate(){
+    protected function action_Reauthenticate() {
         if ( $this->api->authMethod == 'oauth' ) {
             // OAuth beans have to be handled specially.
             
@@ -218,7 +218,7 @@ class EAPMController extends SugarController
         }
     }
 
-    protected function post_Reauthenticate(){
+    protected function post_Reauthenticate() {
         $this->post_save();
     }
 

@@ -168,7 +168,7 @@ class component
  	 *
  	 * @param SugarBean $bean
  	 */
- 	public function save($bean){}
+ 	public function save($bean) {}
 
 
  	/**
@@ -177,7 +177,7 @@ class component
  	 *
  	 * @return $config Array of the configuration mappings as defined in config.php
  	 */
-	public function getConfig(){
+	public function getConfig() {
  		return $this->_source->getConfig;
  	}
 
@@ -196,7 +196,7 @@ class component
  	 * Note that the confing specified at the connector level takes precendence over the config specified at the wrapper level.
  	 * This logic is performed in ConnectorFactory.php
  	 */
-	public function setConfig($config){
+	public function setConfig($config) {
  		$this->_source->setConfig($config);
  	}
 
@@ -236,7 +236,7 @@ class component
     }
 
 
- 	public function mapOutput($bean, $result){
+ 	public function mapOutput($bean, $result) {
  		if(is_object($bean)) {
  			$map = $this->getMapping();
  			$mapping = $map['beans'][$bean->module_dir];
@@ -280,7 +280,7 @@ class component
  		return $bean;
  	}
 
- 	private function getFieldValue($bean, $result, $source_field){
+ 	private function getFieldValue($bean, $result, $source_field) {
  		$def = $this->getModuleFieldDef($bean->module_dir, $source_field);
  		$out_field = $source_field;
 		if(!empty($def['output'])){
@@ -325,7 +325,7 @@ class component
 		return !empty($map['beans'][$module]) ? $map['beans'][$module] : array();
  	}
 
- 	public function getModuleFieldDef($module, $field){
+ 	public function getModuleFieldDef($module, $field) {
  		$map = $this->getMapping();
  		$field_defs = $this->getFieldDefs();
  		if(!empty($map['beans'][$module][$field])){
@@ -344,11 +344,11 @@ class component
  		}
  	}
 
- 	public function getSource(){
+ 	public function getSource() {
  		return $this->_source;
  	}
 
- 	public function setSource($source){
+ 	public function setSource($source) {
  		$this->_source = $source;
  	}
 }

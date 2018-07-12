@@ -47,7 +47,7 @@ class CalendarUtils
 	 * @param SugarDateTime $date
 	 * @return SugarDateTime $date
 	 */
-	static function get_first_day_of_week(SugarDateTime $date){
+	static function get_first_day_of_week(SugarDateTime $date) {
 		$fdow = $GLOBALS['current_user']->get_first_day_of_week();
 		if($date->day_of_week < $fdow)
 				$date = $date->get('-7 days');
@@ -59,7 +59,7 @@ class CalendarUtils
 	 * Get list of needed fields for modules
 	 * @return array
 	 */
-	static function get_fields(){
+	static function get_fields() {
 		return array(
 			'Meetings' => array(
 				'name',
@@ -101,7 +101,7 @@ class CalendarUtils
 	 * @param SugarBean $bean
 	 * @return array
 	 */
-	static function get_time_data(SugarBean $bean, $start_field = "date_start", $end_field = "date_end"){
+	static function get_time_data(SugarBean $bean, $start_field = "date_start", $end_field = "date_end") {
 					$arr = array();
 
 					if($bean->object_name == 'Task')
@@ -148,7 +148,7 @@ class CalendarUtils
 	 * @param SugarBean $bean
 	 * @return array
 	 */
-	static function get_sendback_array(SugarBean $bean){
+	static function get_sendback_array(SugarBean $bean) {
 
 			if(isset($bean->parent_name) && isset($_REQUEST['parent_name']))
 				$bean->parent_name = $_REQUEST['parent_name'];
@@ -204,7 +204,7 @@ class CalendarUtils
 	 * @param SugarBean $bean
 	 * @return array
 	 */
-	 static function get_sendback_repeat_data(SugarBean $bean){
+	 static function get_sendback_repeat_data(SugarBean $bean) {
 	 	if ($bean->module_dir == "Meetings" || $bean->module_dir == "Calls") {
 	 		if(!empty($bean->repeat_parent_id) || (!empty($bean->repeat_type) && empty($_REQUEST['edit_all_recurrences']))){
 				if(!empty($bean->repeat_parent_id))
@@ -248,7 +248,7 @@ class CalendarUtils
 	 * @param array $params
 	 * @return array
 	 */
-	static function build_repeat_sequence($date_start,$params){
+	static function build_repeat_sequence($date_start,$params) {
 
 		$arr = array();
 
@@ -353,7 +353,7 @@ class CalendarUtils
 	 * @param array $time_arr array of datetimes
 	 * @return array
 	 */
-	static function save_repeat_activities(SugarBean $bean,$time_arr){
+	static function save_repeat_activities(SugarBean $bean,$time_arr) {
 
 		// Here we will create single big inserting query for each invitee relationship
 		// rather than using relationships framework due to performance issues.

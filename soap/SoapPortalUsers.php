@@ -63,7 +63,7 @@ $server->register(
         array('return'=>'tns:set_entry_result'),
         $NAMESPACE);
 
-function portal_login($portal_auth, $user_name, $application_name){
+function portal_login($portal_auth, $user_name, $application_name) {
     $error = new SoapError();
     $contact = new Contact();
     $result = login_user($portal_auth);
@@ -119,7 +119,7 @@ function portal_login($portal_auth, $user_name, $application_name){
 /*
 this validates the session and starts the session;
 */
-function portal_validate_authenticated($session_id){
+function portal_validate_authenticated($session_id) {
     $old_error_reporting = error_reporting();
     error_reporting(0);
     session_id($session_id);
@@ -149,7 +149,7 @@ $server->register(
         array('session'=>'xsd:string'),
         array('return'=>'tns:error_value'),
         $NAMESPACE);
-function portal_logout($session){
+function portal_logout($session) {
     $error = new SoapError();
     if(portal_validate_authenticated($session)){
         session_destroy();
@@ -164,7 +164,7 @@ $server->register(
         array('session'=>'xsd:string'),
         array('return'=>'tns:set_entry_result'),
         $NAMESPACE);
-function portal_get_sugar_id($session){
+function portal_get_sugar_id($session) {
     $error = new SoapError();
     if(portal_validate_authenticated($session)){
         return array('id'=>$_SESSION['portal_id'], 'error'=>$error->get_soap_array());
@@ -179,7 +179,7 @@ $server->register(
         array('session'=>'xsd:string'),
         array('return'=>'tns:set_entry_result'),
         $NAMESPACE);
-function portal_get_sugar_contact_id($session){
+function portal_get_sugar_contact_id($session) {
     $error = new SoapError();
     if(portal_validate_authenticated($session)){
         return array('id'=>$_SESSION['user_id'], 'error'=>$error->get_soap_array());
@@ -196,7 +196,7 @@ $server->register(
     array('return'=>'tns:get_entry_list_result'),
     $NAMESPACE);
 
-function portal_get_entry_list($session, $module_name,$where, $order_by, $select_fields){
+function portal_get_entry_list($session, $module_name,$where, $order_by, $select_fields) {
     return portal_get_entry_list_limited($session, $module_name, $where, $order_by, $select_fields, 0, "");
 }
 
@@ -211,7 +211,7 @@ $server->register(
     $NAMESPACE);
 
 
-function portal_get_entry_list_filter($session, $module_name, $order_by, $select_fields, $row_offset, $limit, $filter){
+function portal_get_entry_list_filter($session, $module_name, $order_by, $select_fields, $row_offset, $limit, $filter) {
     global  $beanList, $beanFiles, $portal_modules;
     $error = new SoapError();
     if(! portal_validate_authenticated($session)){
@@ -294,7 +294,7 @@ $server->register(
     array('return'=>'tns:get_entry_result'),
     $NAMESPACE);
 
-function portal_get_entry($session, $module_name, $id,$select_fields ){
+function portal_get_entry($session, $module_name, $id,$select_fields) {
     global  $beanList, $beanFiles;
     $error = new SoapError();
 
@@ -351,7 +351,7 @@ $server->register(
     array('return'=>'tns:set_entry_result'),
     $NAMESPACE);
 
-function portal_set_entry($session,$module_name, $name_value_list){
+function portal_set_entry($session,$module_name, $name_value_list) {
     global  $beanList, $beanFiles, $valid_modules_for_contact;
 
     $error = new SoapError();
@@ -537,7 +537,7 @@ $server->register(
     array('return'=>'tns:error_value'),
     $NAMESPACE);
 
-function portal_relate_note_to_module($session,$note_id, $module_name, $module_id){
+function portal_relate_note_to_module($session,$note_id, $module_name, $module_id) {
     global  $beanList, $beanFiles, $current_user;
     $error = new SoapError();
     if(! portal_validate_authenticated($session)){
@@ -574,7 +574,7 @@ $server->register(
     array('return'=>'tns:get_entry_result'),
     $NAMESPACE);
 
-function portal_get_related_notes($session,$module_name, $module_id, $select_fields, $order_by){
+function portal_get_related_notes($session,$module_name, $module_id, $select_fields, $order_by) {
     global  $beanList, $beanFiles;
     $error = new SoapError();
     if(! portal_validate_authenticated($session)){
@@ -629,7 +629,7 @@ $server->register(
     array('return'=>'tns:get_entry_result'),
     $NAMESPACE);
 
-function portal_get_related_list($session, $module_name, $rel_module, $module_id, $select_fields, $order_by, $offset, $limit){
+function portal_get_related_list($session, $module_name, $rel_module, $module_id, $select_fields, $order_by, $offset, $limit) {
     global  $beanList, $beanFiles;
     $error = new SoapError();
     if(! portal_validate_authenticated($session)){
@@ -674,7 +674,7 @@ $server->register(
     array('return'=>'tns:module_fields'),
     $NAMESPACE);
 
-function portal_get_module_fields($session, $module_name){
+function portal_get_module_fields($session, $module_name) {
     global  $beanList, $beanFiles, $portal_modules, $valid_modules_for_contact;
     $error = new SoapError();
     $module_fields = array();
@@ -716,7 +716,7 @@ $server->register(
     array('return'=>'tns:get_subscription_lists_result'),
     $NAMESPACE);
 
-function portal_get_subscription_lists($session){
+function portal_get_subscription_lists($session) {
     global  $beanList, $beanFiles;
 
     $error = new SoapError();
@@ -757,7 +757,7 @@ $server->register(
     array('return'=>'tns:error_value'),
     $NAMESPACE);
 
-function portal_set_newsletters($session, $subscribe_ids, $unsubscribe_ids){
+function portal_set_newsletters($session, $subscribe_ids, $unsubscribe_ids) {
     global  $beanList, $beanFiles;
 
     $error = new SoapError();

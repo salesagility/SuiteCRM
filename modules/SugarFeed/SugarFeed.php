@@ -66,14 +66,14 @@ class SugarFeed extends Basic
     var $assigned_user_name;
     var $assigned_user_link;
 
-    function __construct(){
+    function __construct() {
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarFeed(){
+    function SugarFeed() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -85,7 +85,7 @@ class SugarFeed extends Basic
     }
 
 
-    static function activateModuleFeed( $module, $updateDB = true ) {
+    static function activateModuleFeed($module, $updateDB = true) {
         if ( $module != 'UserFeed' ) {
             // UserFeed is a fake module, used for the user postings to the feed
             // Don't try to load up any classes for it
@@ -106,7 +106,7 @@ class SugarFeed extends Basic
         }
     }
 
-    static function disableModuleFeed( $module, $updateDB = true ) {
+    static function disableModuleFeed($module, $updateDB = true) {
         if ( $module != 'UserFeed' ) {
             // UserFeed is a fake module, used for the user postings to the feed
             // Don't try to load up any classes for it
@@ -128,7 +128,7 @@ class SugarFeed extends Basic
         }
     }
 
-    static function flushBackendCache( ) {
+    static function flushBackendCache() {
         // This function will flush the cache files used for the module list and the link type lists
         sugar_cache_clear('SugarFeedModules');
         if ( file_exists($cachefile = sugar_cached('modules/SugarFeed/moduleCache.php'))) {
@@ -142,7 +142,7 @@ class SugarFeed extends Basic
     }
 
 
-    static function getModuleFeedFiles( $module ) {
+    static function getModuleFeedFiles($module) {
         $baseDirList = array('modules/'.$module.'/SugarFeeds/', 'custom/modules/'.$module.'/SugarFeeds/');
 
         // We store the files in a list sorted by the filename so you can override a default feed by
@@ -166,7 +166,7 @@ class SugarFeed extends Basic
         return($fileList);
     }
 
-    static function getActiveFeedModules( ) {
+    static function getActiveFeedModules() {
         // Stored in a cache somewhere
         $feedModules = sugar_cache_retrieve('SugarFeedModules');
         if ( $feedModules != null ) {
@@ -211,7 +211,7 @@ class SugarFeed extends Basic
         return $feedModules;
     }
 
-    static function getAllFeedModules( ) {
+    static function getAllFeedModules() {
         // Uncached, only used from the admin panel and during installation currently
         $feedModules = array('UserFeed'=>'UserFeed');
 
@@ -340,7 +340,7 @@ class SugarFeed extends Basic
         return $linkTypeList;
     }
 
-    static function getLinkClass( $linkName ) {
+    static function getLinkClass($linkName) {
         $linkTypeList = SugarFeed::getLinkTypes();
 
         // Have to make sure the linkName is on the list, so they can't pass in linkName's like ../../config.php ... not that they could get anywhere if they did
@@ -362,7 +362,7 @@ class SugarFeed extends Basic
         return($linkClass);
     }
 
-    function get_list_view_data(){
+    function get_list_view_data() {
         $data = parent::get_list_view_data();
         $delete = '';
         /* BEGIN - SECURITY GROUPS */
@@ -558,7 +558,7 @@ class SugarFeed extends Basic
      * @param  $input
      * @return string
      */
-    public static function parseMessage($input){
+    public static function parseMessage($input) {
         $urls = getUrls($input);
         foreach($urls as $url){
             $output = "<a href='$url' target='_blank'>".$url."</a>";

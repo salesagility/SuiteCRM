@@ -163,7 +163,7 @@ class SubpanelQuickCreate
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	public function SubpanelQuickCreate($module, $view='QuickCreate', $proccessOverride = false){
+	public function SubpanelQuickCreate($module, $view='QuickCreate', $proccessOverride = false) {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -174,7 +174,7 @@ class SubpanelQuickCreate
 		self::__construct($module, $view, $proccessOverride);
 	}
 
-	function process($module){
+	function process($module) {
         if($_REQUEST['target_action'] == 'QuickCreate'){
             $this->ev->view = 'QuickCreate';
         }

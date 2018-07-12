@@ -138,7 +138,7 @@ class soapval extends nusoap_base
 	* @return	mixed
 	* @access   public
 	*/
-	function decode(){
+	function decode() {
 		return $this->value;
 	}
 }

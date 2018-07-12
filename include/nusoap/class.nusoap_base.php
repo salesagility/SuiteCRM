@@ -323,7 +323,7 @@ class nusoap_base
 	* @param    string $string debug data
 	* @access   private
 	*/
-	function debug($string){
+	function debug($string) {
 		if ($this->debugLevel > 0) {
 			$this->appendDebug($this->getmicrotime().' '.get_class($this).": $string\n");
 		}
@@ -335,7 +335,7 @@ class nusoap_base
 	* @param    string $string debug data
 	* @access   public
 	*/
-	function appendDebug($string){
+	function appendDebug($string) {
 		if ($this->debugLevel > 0) {
 			// it would be nice to use a memory stream here to use
 			// memory more efficiently
@@ -406,7 +406,7 @@ class nusoap_base
 	* @return   mixed error string or false
 	* @access   public
 	*/
-	function getError(){
+	function getError() {
 		if($this->error_str != ''){
 			return $this->error_str;
 		}
@@ -419,7 +419,7 @@ class nusoap_base
 	* @return   boolean $string error string
 	* @access   private
 	*/
-	function setError($str){
+	function setError($str) {
 		$this->error_str = $str;
 	}
 
@@ -721,7 +721,7 @@ class nusoap_base
     * @return string the message
     * @access public
     */
-    function serializeEnvelope($body,$headers=false,$namespaces=array(),$style='rpc',$use='encoded',$encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'){
+    function serializeEnvelope($body,$headers=false,$namespaces=array(),$style='rpc',$use='encoded',$encodingStyle='http://schemas.xmlsoap.org/soap/encoding/') {
     // TODO: add an option to automatically run utf8_encode on $body and $headers
     // if $this->soap_defencoding is UTF-8.  Not doing this automatically allows
     // one to send arbitrary UTF-8 characters, not just characters that map to ISO-8859-1
@@ -776,7 +776,7 @@ class nusoap_base
 	 * @access public
 	 * @deprecated
 	 */
-    function formatDump($str){
+    function formatDump($str) {
 		$str = htmlspecialchars($str);
 		return nl2br($str);
     }
@@ -788,7 +788,7 @@ class nusoap_base
 	* @return	string contracted qname
 	* @access   private
 	*/
-	function contractQname($qname){
+	function contractQname($qname) {
 		// get element namespace
 		//$this->xdebug("Contract $qname");
 		if (strrpos($qname, ':')) {
@@ -813,7 +813,7 @@ class nusoap_base
 	* @return	string expanded qname
 	* @access   private
 	*/
-	function expandQname($qname){
+	function expandQname($qname) {
 		// get element prefix
 		if(strpos($qname,':') && !preg_match('/^http:\/\//',$qname)){
 			// get unqualified name
@@ -838,7 +838,7 @@ class nusoap_base
     * @return string The local part
     * @access public
     */
-	function getLocalPart($str){
+	function getLocalPart($str) {
 		if($sstr = strrchr($str,':')){
 			// get unqualified name
 			return substr( $sstr, 1 );
@@ -855,7 +855,7 @@ class nusoap_base
     * @return mixed The prefix or false if there is no prefix
     * @access public
     */
-	function getPrefix($str){
+	function getPrefix($str) {
 		if($pos = strrpos($str,':')){
 			// get prefix
 			return substr($str,0,$pos);
@@ -870,7 +870,7 @@ class nusoap_base
     * @return mixed The namespace, false if no namespace has the specified prefix
     * @access public
     */
-	function getNamespaceFromPrefix($prefix){
+	function getNamespaceFromPrefix($prefix) {
 		if (isset($this->namespaces[$prefix])) {
 			return $this->namespaces[$prefix];
 		}
@@ -952,7 +952,7 @@ class nusoap_base
 * @return	mixed ISO 8601 date string or false
 * @access   public
 */
-function timestamp_to_iso8601($timestamp,$utc=true){
+function timestamp_to_iso8601($timestamp,$utc=true) {
 	$datestr = date('Y-m-d\TH:i:sO',$timestamp);
 	$pos = strrpos($datestr, "+");
 	if ($pos === FALSE) {
@@ -991,7 +991,7 @@ function timestamp_to_iso8601($timestamp,$utc=true){
 * @return	mixed Unix timestamp (int) or false
 * @access   public
 */
-function iso8601_to_timestamp($datestr){
+function iso8601_to_timestamp($datestr) {
 	$pattern = '/'.
 	'([0-9]{4})-'.	// centuries & years CCYY-
 	'([0-9]{2})-'.	// months MM-

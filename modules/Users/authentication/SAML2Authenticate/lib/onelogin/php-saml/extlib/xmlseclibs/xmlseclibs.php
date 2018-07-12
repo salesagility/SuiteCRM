@@ -690,7 +690,7 @@ class XMLSecurityDSig
         return null;
     }
 
-    public function calculateDigest ($digestAlgorithm, $data, $encode = true) {
+    public function calculateDigest($digestAlgorithm, $data, $encode = true) {
         switch ($digestAlgorithm) {
             case XMLSecurityDSig::SHA1:
                 $alg = 'sha1';
@@ -1357,7 +1357,7 @@ class XMLSecEnc
         $this->_resetTemplate();
     }
 
-    private function _resetTemplate(){
+    private function _resetTemplate() {
         $this->encdoc = new DOMDocument();
         $this->encdoc->loadXML(XMLSecEnc::template);
     }

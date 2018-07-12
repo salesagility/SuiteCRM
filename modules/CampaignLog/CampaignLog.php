@@ -72,7 +72,7 @@ class CampaignLog extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function CampaignLog(){
+    public function CampaignLog() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -84,7 +84,7 @@ class CampaignLog extends SugarBean
     }
 
 
-    function get_list_view_data(){
+    function get_list_view_data() {
         global $locale;
         $temp_array = $this->get_list_view_array();
         //make sure that both items in array are set to some value, else return null
@@ -128,7 +128,7 @@ class CampaignLog extends SugarBean
         return $temp_array;
     }
 
-    function retrieve_email_address($trgt_id = ''){
+    function retrieve_email_address($trgt_id = '') {
         $return_str = '';
         if(!empty($trgt_id)){
             $qry  = " select eabr.primary_address, ea.email_address";

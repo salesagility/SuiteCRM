@@ -130,7 +130,7 @@ $common = 'install/installCommon.js';
 
 ///////////////////////////////////////////////////////////////////////////////
 ////	INSTALLER LANGUAGE
-function getSupportedInstallLanguages(){
+function getSupportedInstallLanguages() {
     $supportedLanguages = array(
         'en_us'	=> 'English (US)',
     );

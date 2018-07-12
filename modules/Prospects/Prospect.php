@@ -116,7 +116,7 @@ class Prospect extends Person implements EmailInterface
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Prospect(){
+    function Prospect() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -145,7 +145,7 @@ class Prospect extends Person implements EmailInterface
 		builds a generic search based on the query string using or
 		do not include any $this-> because this is called on without having the class instantiated
 	*/
-	function build_generic_where_clause ($the_query_string)
+	function build_generic_where_clause($the_query_string)
 	{
 		$where_clauses = Array();
 		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
@@ -175,12 +175,12 @@ class Prospect extends Person implements EmailInterface
 		return $the_where;
 	}
 
-    function converted_prospect($prospectid, $contactid, $accountid, $opportunityid){
+    function converted_prospect($prospectid, $contactid, $accountid, $opportunityid) {
     	$query = "UPDATE prospects set  contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$prospectid and deleted=0";
 		$this->db->query($query,true,"Error converting prospect: ");
 		//todo--status='Converted', converted='1',
     }
-     function bean_implements($interface){
+     function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}
@@ -191,7 +191,7 @@ class Prospect extends Person implements EmailInterface
      *  This method will be used by Mail Merge in order to retieve the targets as specified in the query
      *  @param query String - this is the query which contains the where clause for the query
      */
-    function retrieveTargetList($query, $fields, $offset = 0, $limit= -99, $max = -99, $deleted = 0, $module = ''){
+    function retrieveTargetList($query, $fields, $offset = 0, $limit= -99, $max = -99, $deleted = 0, $module = '') {
         global  $beanList, $beanFiles;
         $module_name = $this->module_dir;
 
@@ -250,7 +250,7 @@ class Prospect extends Person implements EmailInterface
      *  Given an id, looks up in the prospect_lists_prospects table
      *  and retrieve the correct type for this id
      */
-    function retrieveTarget($id){
+    function retrieveTarget($id) {
         $query = "SELECT related_id, related_type FROM prospect_lists_prospects WHERE id = '".$this->db->quote($id)."'";
         $result = $this->db->query($query);
         if(($row = $this->db->fetchByAssoc($result))){

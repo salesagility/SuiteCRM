@@ -111,13 +111,13 @@ class TemplateField
     // fields to decode from post request
     var $decode_from_request_fields_map = array('formula', 'dependency');
 
-    function __construct(){
+    function __construct() {
     }
 
 	/*
 		HTML FUNCTIONS
 		*/
-	function get_html(){
+	function get_html() {
 		$view = $this->view;
 		if(!empty($GLOBALS['studioReadOnlyFields'][$this->name]))$view = 'detail';
 		switch($view){
@@ -128,29 +128,29 @@ class TemplateField
 
 		}
 	}
-	function set($values){
+	function set($values) {
 		foreach($values as $name=>$value){
 			$this->$name = $value;
 		}
 
 	}
 
-	function get_html_edit(){
+	function get_html_edit() {
 		return 'not implemented';
 	}
 
-	function get_html_list(){
+	function get_html_list() {
 		return $this->get_html_detail();
 	}
 
-	function get_html_detail(){
+	function get_html_detail() {
 		return 'not implemented';
 	}
 
-	function get_html_search(){
+	function get_html_search() {
 		return $this->get_html_edit();
 	}
-	function get_html_label(){
+	function get_html_label() {
 
 		$label =  "{MOD." .$this->vname . "}";
 		if(!empty($GLOBALS['app_strings'][$this->vname])){
@@ -182,7 +182,7 @@ class TemplateField
 		XTPL FUNCTIONS
 		*/
 
-	function get_xtpl($bean = false){
+	function get_xtpl($bean = false) {
 		if($bean)
 		$this->bean = $bean;
 		$view = $this->view;
@@ -196,23 +196,23 @@ class TemplateField
 		}
 	}
 
-	function get_xtpl_edit(){
+	function get_xtpl_edit() {
 		return '/*not implemented*/';
 	}
 
-	function get_xtpl_list(){
+	function get_xtpl_list() {
 		return get_xtpl_detail();
 	}
 
-	function get_xtpl_detail(){
+	function get_xtpl_detail() {
 		return '/*not implemented*/';
 	}
 
-	function get_xtpl_search(){
+	function get_xtpl_search() {
 		//return get_xtpl_edit();
 	}
 
-	function is_required(){
+	function is_required() {
 		if($this->required){
 			return true;
 		}
@@ -227,7 +227,7 @@ class TemplateField
 		DB FUNCTIONS
 		*/
 
-	function get_db_type(){
+	function get_db_type() {
 	    if(!empty($this->type)) {
 	        $type = DBManagerFactory::getInstance()->getColumnType($this->type);
 	    }
@@ -236,7 +236,7 @@ class TemplateField
         return " $type({$this->len})";
 	}
 
-	function get_db_default($modify=false){
+	function get_db_default($modify=false) {
 		$GLOBALS['log']->debug('get_db_default(): default_value='.$this->default_value);
 		if (!$modify or empty($this->new_field_definition['default_value']) or $this->new_field_definition['default_value'] != $this->default_value ) {
 			if(!is_null($this->default_value)){ // add a default value if it is not null - we want to set a default even if default_value is '0', which is not null, but which is empty()
@@ -260,7 +260,7 @@ class TemplateField
 	 * So if not called by Studio we want to return NULL if required=true (because we are changing FROM this setting)
 	 */
 
-	function get_db_required($modify=false){
+	function get_db_required($modify=false) {
 		//		$GLOBALS['log']->debug('get_db_required required='.$this->required." and ".(($modify)?"true":"false")." and ".print_r($this->new_field_definition,true));
 		$req = "";
 
@@ -325,7 +325,7 @@ class TemplateField
 	/**
 	 * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
 	 */
-	function get_db_modify_alter_table($table){
+	function get_db_modify_alter_table($table) {
 		return DBManagerFactory::getInstance()->alterColumnSQL($table, $this->get_field_def());
 	}
 
@@ -334,7 +334,7 @@ class TemplateField
 	 * BEAN FUNCTIONS
 	 *
 	 */
-	function get_field_def(){
+	function get_field_def() {
 		$array =  array(
 			'required'=>$this->convertBooleanValue($this->required),
 			'source'=>'custom_fields',
@@ -417,7 +417,7 @@ class TemplateField
      * than a string as well.
      * @return int
      */
-    function getDupMergeDomValue(){
+    function getDupMergeDomValue() {
         if (isset($this->duplicate_merge_dom_value)) {
             return $this->duplicate_merge_dom_value;
         }
@@ -453,7 +453,7 @@ class TemplateField
 		*/
 
 
-	function prepare(){
+	function prepare() {
 		if(empty($this->id)){
 			$this->id = $this->name;
 		}
@@ -484,7 +484,7 @@ class TemplateField
 		}
 	}
 
-	function populateFromPost(){
+	function populateFromPost() {
 		foreach($this->vardef_map as $vardef=>$field){
 
 			if(isset($_REQUEST[$vardef])){
@@ -523,11 +523,11 @@ class TemplateField
 	{
 	}
 
-	function get_additional_defs(){
+	function get_additional_defs() {
 		return array();
 	}
 
-	function delete($df){
+	function delete($df) {
 		$df->deleteField($this);
 	}
 
@@ -562,7 +562,7 @@ class TemplateField
      *
      * @param DynamicField $df
      */
-	function save($df){
+	function save($df) {
 		//	    $GLOBALS['log']->debug('saving field: '.print_r($this,true));
 		$df->addFieldObject($this);
 

@@ -108,7 +108,7 @@ class Monitor implements Trackable
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	public function Monitor($name='', $monitorId='', $metadata='', $store=''){
+	public function Monitor($name='', $monitorId='', $metadata='', $store='') {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -136,7 +136,7 @@ class Monitor implements Trackable
         }
     }
 
-    public function getValue($name){
+    public function getValue($name) {
     	return $this->$name;
     }
 
@@ -163,7 +163,7 @@ class Monitor implements Trackable
 	 * Returns if the monitor has data that needs to be saved
 	 * @return $dirty boolean
 	 */
-	function isDirty(){
+	function isDirty() {
 		return $this->dirty;
 	}
 
@@ -229,7 +229,7 @@ class Monitor implements Trackable
 		return $s;
 	}
 
- 	public function getSessionId(){
+ 	public function getSessionId() {
  		$sessionid = session_id();
 	    if(!empty($sessionid) && strlen($sessionid) > MAX_SESSION_LENGTH) {
 	       $sessionid = md5($sessionid);

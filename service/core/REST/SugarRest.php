@@ -50,7 +50,7 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  	 *
  	 * @param String $implementation - name of the implementation class
  	 */
-	function __construct($implementation){
+	function __construct($implementation) {
 		$this->implementation = $implementation;
 	} // fn
 
@@ -60,7 +60,7 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
 	 * @param array $input - assoc array of input values: key = param name, value = param type
 	 * @return String - print's $input object
 	 */
-	function generateResponse($input){
+	function generateResponse($input) {
 		print_r($input);
 	} // fn
 
@@ -69,7 +69,7 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
 	 *
 	 * @return unknown
 	 */
-	function serve(){
+	function serve() {
 		if(empty($_REQUEST['method']) || !method_exists($this->implementation, $_REQUEST['method'])){
 			if (empty($_REQUEST['method'])) {
 				echo '<pre>';
@@ -94,12 +94,12 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
 	 * @param SoapError $errorObject - This is an object of type SoapError
 	 * @access public
 	 */
-	function fault($errorObject){
+	function fault($errorObject) {
 		$this->faultServer->generateFaultResponse($errorObject);
 
 	} // fn
 
-	function generateFaultResponse($errorObject){
+	function generateFaultResponse($errorObject) {
 		//ob_clean();
 		$GLOBALS['log']->info('In SugarRest->fault. Setting fault object on response');
 		header('HTTP/1.1 500 Internal Server Error');

@@ -246,13 +246,13 @@ function commitCopyNewFiles($unzip_dir, $zip_from_dir, $path='') {
 
 
 //On cancel put back the copied files from 500 to 451 state
-function copyFilesOnCancel($step){
+function copyFilesOnCancel($step) {
 //place holder for cancel action
 
 }
 
 
-function removeFileFromPath($file,$path, $deleteNot=array()){
+function removeFileFromPath($file,$path, $deleteNot=array()) {
 	$removed = 0;
 	$cur = $path . '/' . $file;
 	if(file_exists($cur)){
@@ -287,7 +287,7 @@ function removeFileFromPath($file,$path, $deleteNot=array()){
  * @return boolean True/False whether the directory was deleted.
  */
 
-function copyRecursiveBetweenDirectories($from,$to){
+function copyRecursiveBetweenDirectories($from,$to) {
 	if(file_exists($from)){
 		$modifiedFiles = array();
 		$modifiedFiles = findAllFiles(clean_path($from), $modifiedFiles);
@@ -352,7 +352,7 @@ function deleteDirectory($dirname,$only_empty=false) {
  * modules. Show the list in the preflight check UI.
  */
 
-function deleteAndOverWriteSelectedFiles($unzip_dir, $zip_from_dir,$delete_dirs){
+function deleteAndOverWriteSelectedFiles($unzip_dir, $zip_from_dir,$delete_dirs) {
 	if($delete_dirs != null){
 		foreach($delete_dirs as $del_dir){
 			deleteDirectory($del_dir);
@@ -539,7 +539,7 @@ function getAllModules() {
 
 //Remove files with the smae md5
 
-function removeMd5MatchingFiles($deleteNot=array()){
+function removeMd5MatchingFiles($deleteNot=array()) {
 
 	$md5_string = array();
 	if(file_exists(clean_path(getcwd().'/files.md5'))){
@@ -635,7 +635,7 @@ function commitHandleReminders($skippedFiles, $path='') {
 	}
 }
 
-function deleteCache(){
+function deleteCache() {
 	//Clean modules from cache
 	$cachedir = sugar_cached('modules');
 	if(is_dir($cachedir)){
@@ -681,7 +681,7 @@ function deleteCache(){
 	$dc->buildCache();
 }
 
-function deleteChance(){
+function deleteChance() {
 	//Clean folder from cache
 	if(is_dir('include/SugarObjects/templates/chance')){
 		rmdir_recursive('include/SugarObjects/templates/chance');
@@ -1326,7 +1326,7 @@ function logThis($entry, $path='') {
  *  was automatically picked up by the quick create. [Addresses Bug 21469]
  *  This function will check if customizations were made, and will create quickcreatedefs.php in the /cutom/working/$module_name directory.
  **/
-function updateQuickCreateDefs(){
+function updateQuickCreateDefs() {
 	$d = dir('modules');
 	$studio_modules = array();
 
@@ -1885,7 +1885,7 @@ eoq;
 	return $errors;
 }
 
-function fileCopy($file_path){
+function fileCopy($file_path) {
 	if(file_exists(clean_path($_SESSION['unzip_dir'].'/'.$_SESSION['zip_from_dir'].'/'.$file_path))) {
 		$file = clean_path($_SESSION['unzip_dir'].'/'.$_SESSION['zip_from_dir'].'/'.$file_path);
 		$destFile = str_replace(clean_path($_SESSION['unzip_dir'].'/'.$_SESSION['zip_from_dir']),  clean_path(getcwd()), $file);
@@ -2630,7 +2630,7 @@ function checkFiles($files, $echo=false) {
 	return $filesOut;
 }
 
-function deletePackageOnCancel(){
+function deletePackageOnCancel() {
 	global $mod_strings;
 	global $sugar_config;
 	list($base_upgrade_dir, $base_tmp_upgrade_dir) = getUWDirs();
@@ -2765,7 +2765,7 @@ function parseAndExecuteSqlFile($sqlScript,$forStepQuery='',$resumeFromQuery='')
 }
 
 
-function getAlterTable($query){
+function getAlterTable($query) {
 	$query = strtolower($query);
 	if (preg_match('/^\s*alter\s+table\s+/', $query)) {
 		$sqlArray = explode(" ", $query);
@@ -2776,7 +2776,7 @@ function getAlterTable($query){
 	}
 }
 
-function set_upgrade_vars(){
+function set_upgrade_vars() {
 	logThis('setting session variables...');
 	$upgrade_progress_dir = sugar_cached('upgrades/temp');
 	if(!is_dir($upgrade_progress_dir)){
@@ -2833,7 +2833,7 @@ function set_upgrade_vars(){
 	}
 }
 
-function initialize_session_vars(){
+function initialize_session_vars() {
 	$upgrade_progress_dir = sugar_cached('upgrades/temp');
 	$upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
 	if(file_exists($upgrade_progress_file)){
@@ -2856,7 +2856,7 @@ function initialize_session_vars(){
 }
 //track the upgrade progress on each step
 //track the upgrade progress on each step
-function set_upgrade_progress($currStep,$currState,$currStepSub='',$currStepSubState=''){
+function set_upgrade_progress($currStep,$currState,$currStepSub='',$currStepSubState='') {
 
 	$upgrade_progress_dir = sugar_cached('upgrades/temp');
 	if(!is_dir($upgrade_progress_dir)){
@@ -2932,7 +2932,7 @@ function set_upgrade_progress($currStep,$currState,$currStepSub='',$currStepSubS
 	}
 }
 
-function get_upgrade_progress(){
+function get_upgrade_progress() {
 	$upgrade_progress_dir = sugar_cached('upgrades/temp');
 	$upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
 	$currState = '';
@@ -2953,7 +2953,7 @@ function get_upgrade_progress(){
 	}
 	return $currState;
 }
-function currSubStep($currStep){
+function currSubStep($currStep) {
 	$currSubStep = '';
 	if(is_array($currStep)){
 		foreach($currStep as $key=>$val){
@@ -2964,7 +2964,7 @@ function currSubStep($currStep){
 	}
 	return $currState;
 }
-function currUpgradeState($currState){
+function currUpgradeState($currState) {
 	$currState = '';
 	if(is_array($currState)){
 		foreach($currState as $key=>$val){
@@ -2983,7 +2983,7 @@ function currUpgradeState($currState){
 	return $currState;
 }
 
-function didThisStepRunBefore($step,$SubStep=''){
+function didThisStepRunBefore($step,$SubStep='') {
 	if($step == null) return;
 	$upgrade_progress_dir = sugar_cached('upgrades/temp');
 	$upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
@@ -3036,7 +3036,7 @@ function didThisStepRunBefore($step,$SubStep=''){
 
 
 //get and set post install status
-function post_install_progress($progArray='',$action=''){
+function post_install_progress($progArray='',$action='') {
 	$upgrade_progress_dir = sugar_cached('upgrades/temp');
 	$upgrade_progress_file = $upgrade_progress_dir.'/upgrade_progress.php';
 	if($action=='' || $action=='get'){
@@ -3078,7 +3078,7 @@ function post_install_progress($progArray='',$action=''){
 	}
 }
 
-function repairDBForUpgrade($execute=false,$path=''){
+function repairDBForUpgrade($execute=false,$path='') {
 
 	global $current_user, $beanFiles;
 	global $dictionary;
@@ -3230,7 +3230,7 @@ function upgradeLocaleNameFormat($name_format) {
 
 
 
-function add_custom_modules_favorites_search(){
+function add_custom_modules_favorites_search() {
 	$module_directories = scandir('modules');
 
 	foreach($module_directories as $module_dir){
@@ -3507,7 +3507,7 @@ function upgradeModulesForTeam() {
 }
 
 
-function addNewSystemTabsFromUpgrade($from_dir){
+function addNewSystemTabsFromUpgrade($from_dir) {
 	global $path;
 	if(isset($_SESSION['upgrade_from_flavor'])){
 
@@ -3775,7 +3775,7 @@ function fix_dropdown_list() {
 }
 
 
-function update_iframe_dashlets(){
+function update_iframe_dashlets() {
 	require_once(sugar_cached('dashlets/dashlets.php'));
 
 	$db = DBManagerFactory::getInstance();
@@ -3808,7 +3808,7 @@ function update_iframe_dashlets(){
  * This method attempts to convert date type image to text on Microsoft SQL Server.
  * This method could NOT be used in any other type of datebases.
  */
-function convertImageToText($table_name,$column_name){
+function convertImageToText($table_name,$column_name) {
 	$set_lang = "SET LANGUAGE us_english";
 	DBManagerFactory::getInstance()->query($set_lang);
 	if(DBManagerFactory::getInstance()->lastError()){
@@ -3884,7 +3884,7 @@ function convertImageToText($table_name,$column_name){
  * This method attempts to delete all English inline help files.
  * This method was introduced by 5.5.0RC2.
  */
-function clearHelpFiles(){
+function clearHelpFiles() {
 	$modulePath = clean_path(getcwd() . '/modules');
 	$allHelpFiles = array();
 	getFiles($allHelpFiles, $modulePath, "/en_us.help.*/");
@@ -3924,7 +3924,7 @@ function upgradeDateTimeFields($path)
  * upgradeDocumentTypeFields
  *
  */
-function upgradeDocumentTypeFields($path){
+function upgradeDocumentTypeFields($path) {
 	//bug: 39757
 	$db = DBManagerFactory::getInstance();
 
@@ -4241,7 +4241,7 @@ function repair_long_relationship_names($path='')
 	logThis("End repair_long_relationship_names", $path);
 }
 
-function removeSilentUpgradeVarsCache(){
+function removeSilentUpgradeVarsCache() {
 	global $silent_upgrade_vars_loaded;
 
 	$cacheFileDir = "{$GLOBALS['sugar_config']['cache_dir']}/silentUpgrader";
@@ -4256,7 +4256,7 @@ function removeSilentUpgradeVarsCache(){
 	return true;
 }
 
-function loadSilentUpgradeVars(){
+function loadSilentUpgradeVars() {
 	global $silent_upgrade_vars_loaded;
 
 	if(empty($silent_upgrade_vars_loaded)){
@@ -4275,7 +4275,7 @@ function loadSilentUpgradeVars(){
 	return true;
 }
 
-function writeSilentUpgradeVars(){
+function writeSilentUpgradeVars() {
 	global $silent_upgrade_vars_loaded;
 
 	if(empty($silent_upgrade_vars_loaded)){
@@ -4299,7 +4299,7 @@ function writeSilentUpgradeVars(){
 	return true;
 }
 
-function setSilentUpgradeVar($var, $value){
+function setSilentUpgradeVar($var, $value) {
 	if(!loadSilentUpgradeVars()){
 		return false;
 	}
@@ -4311,7 +4311,7 @@ function setSilentUpgradeVar($var, $value){
 	return true;
 }
 
-function getSilentUpgradeVar($var){
+function getSilentUpgradeVar($var) {
 	if(!loadSilentUpgradeVars()){
 		return false;
 	}
@@ -4496,7 +4496,7 @@ if (!function_exists("getValidDBName"))
      * @param string $ensureUnique
      * @return string Valid column name trimmed to right length and with invalid characters removed
      */
-	function getValidDBName ($name, $ensureUnique = false, $maxLen = 30)
+	function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
 	{
 		// first strip any invalid characters - all but alphanumerics and -
 		$name = preg_replace ( '/[^\w-]+/i', '', $name ) ;

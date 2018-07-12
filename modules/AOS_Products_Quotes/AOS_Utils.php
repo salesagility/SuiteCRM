@@ -25,7 +25,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @author Salesagility Ltd <info@salesagility.com>
  */
 
-function perform_aos_save($focus){
+function perform_aos_save($focus) {
 
     foreach($focus->field_defs as $field){
 

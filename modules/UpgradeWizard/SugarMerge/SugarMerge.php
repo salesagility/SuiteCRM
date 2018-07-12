@@ -84,7 +84,7 @@ class SugarMerge
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarMerge($new_path='', $original_path='', $custom_path='custom'){
+    function SugarMerge($new_path='', $original_path='', $custom_path='custom') {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -96,7 +96,7 @@ class SugarMerge
     }
 
 
-	function setLogFilePointer($fp){
+	function setLogFilePointer($fp) {
 		$this->fp = $fp;
 	}
 
@@ -112,7 +112,7 @@ class SugarMerge
 	 * @param BOOLEAN $logHistory - do we wish to create history entries for any of the merges
 	 * @return ARRAY - an associative array of module names to files that were either merged or have the potential to be merged depeneding if $merge and $save  are set to true
 	 */
-	function mergeAll($merge=true, $save=true, $logHistory=true){
+	function mergeAll($merge=true, $save=true, $logHistory=true) {
 		$this->merged = array();
 		$searchDirectory = $this->custom_path;
 		if(!preg_match('/[\/]modules$/si', $searchDirectory)) {
@@ -170,7 +170,7 @@ class SugarMerge
 	 * @param BOOLEAN $logHistory - do we wish to create history entries for any of the merges
 	 * @return ARRAY - an associative array of files that were either merged or have the potential to be merged depeneding if $merge and $save  are set to true
 	 */
-	function mergeModule($module, $merge = true, $save=true,$logHistory=true){
+	function mergeModule($module, $merge = true, $save=true,$logHistory=true) {
 		$merged = array();
 		$path = $this->original_path . 'modules/' . $module . '/metadata/';
 		$custom_path = $this->custom_path . 'modules/' . $module . '/metadata/';
@@ -197,7 +197,7 @@ class SugarMerge
 	 * @param STRING $save - should the merged file be saved to the custom directory
 	 * @return BOOLEAN - success or failure of the merge
 	 */
-	function mergeFile($module, $file, $save=true,$logHistory=true){
+	function mergeFile($module, $file, $save=true,$logHistory=true) {
 		$path = $this->original_path . 'modules/' . $module . '/metadata/';
 		$custom_path = $this->custom_path . 'modules/' . $module . '/metadata/';
 		$new_path = $this->new_path . 'modules/' . $module . '/metadata/';

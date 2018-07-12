@@ -68,7 +68,7 @@ class DetailViewMerge extends EditViewMerge
 	 * Parses out the fields for each files meta data and then calls on mergeFields and setPanels
 	 *
 	 */
-	protected function mergeMetaData(){
+	protected function mergeMetaData() {
 		$this->originalFields = $this->getFields($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
 		$this->originalPanelIds = $this->getPanelIds($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
 		$this->customFields = $this->getFields($this->customData[$this->module][$this->viewDefs][$this->panelName]);

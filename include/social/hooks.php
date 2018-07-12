@@ -41,7 +41,7 @@
 class hooks
 {
 
-    function load_js($event, $arguments){
+    function load_js($event, $arguments) {
         $mapping = '';
 
         if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'DetailView'){

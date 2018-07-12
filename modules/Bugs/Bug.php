@@ -134,7 +134,7 @@ class Bug extends SugarBean
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	public function Bug(){
+	public function Bug() {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -321,7 +321,7 @@ class Bug extends SugarBean
 	}
 
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 		global $current_language;
 		$the_array = parent::get_list_view_data();
 		$app_list_strings = return_app_list_strings_language($current_language);
@@ -347,7 +347,7 @@ class Bug extends SugarBean
 		builds a generic search based on the query string using or
 		do not include any $this-> because this is called on without having the class instantiated
 	*/
-	function build_generic_where_clause ($the_query_string) {
+	function build_generic_where_clause($the_query_string) {
 	$where_clauses = Array();
 	$the_query_string = $this->db->quote($the_query_string);
 	array_push($where_clauses, "bugs.name like '$the_query_string%'");
@@ -381,19 +381,19 @@ class Bug extends SugarBean
 		return $xtpl;
 	}
 
-	function bean_implements($interface){
+	function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}
 		return false;
 	}
 
-	function save($check_notify = FALSE){
+	function save($check_notify = FALSE) {
 		return parent::save($check_notify);
 	}
 }
 
-function getReleaseDropDown(){
+function getReleaseDropDown() {
 	static $releases = null;
 	if(!$releases){
 		$seedRelease = new Release();

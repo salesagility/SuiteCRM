@@ -51,7 +51,7 @@ class JitReports extends Jit
 		parent::__construct();
 	}
 	
-		function calculateReportGroupTotal($dataset){
+		function calculateReportGroupTotal($dataset) {
 		$total = 0;				
 		foreach ($dataset as $value){
 			$total += $value['numerical_value'];
@@ -80,7 +80,7 @@ class JitReports extends Jit
         return $isCurrency;
     }
 
-	function processReportData($dataset, $level=1, $first=false){
+	function processReportData($dataset, $level=1, $first=false) {
 		$data = '';
 		
 		// rearrange $dataset to get the correct order for the first row
@@ -110,7 +110,7 @@ class JitReports extends Jit
 		return $data;
 	}
 	
-	function processReportGroup($dataset){
+	function processReportGroup($dataset) {
 		$super_set = array();
 
         foreach($dataset as $groupBy => $groups){
@@ -136,7 +136,7 @@ class JitReports extends Jit
 		return $super_set;
 	}
 	
-	function xmlDataReportSingleValue(){
+	function xmlDataReportSingleValue() {
 		$data = '';		
 		foreach ($this->data_set as $key => $dataset){
 			$total = $this->calculateReportGroupTotal($dataset);
@@ -219,7 +219,7 @@ class JitReports extends Jit
 		return $data;		
 	}
 	
-	public function processXmlData(){
+	public function processXmlData() {
 		$data = '';
 		
 		$this->super_set = $this->processReportGroup($this->data_set);
@@ -251,7 +251,7 @@ class JitReports extends Jit
 	 *			string $style	optional additional styles for the div
      * @return	string returns the html code through smarty
      */
-	function display($name, $xmlFile, $width='320', $height='480', $reportChartDivStyle = null, $resize=false){
+	function display($name, $xmlFile, $width='320', $height='480', $reportChartDivStyle = null, $resize=false) {
 		if(empty($name)) {
 			$name = "unsavedReport";	
 		}

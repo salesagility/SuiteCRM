@@ -6,14 +6,14 @@ require_once('include/MVC/View/views/view.detail.php');
 class AOS_ContractsViewDetail extends ViewDetail
 {
 
-	function __construct(){
+	function __construct() {
  		parent::__construct();
  	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_ContractsViewDetail(){
+    function AOS_ContractsViewDetail() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -25,13 +25,13 @@ class AOS_ContractsViewDetail extends ViewDetail
     }
 
 
-	function display(){
+	function display() {
 		$this->populateContractTemplates();
 		$this->displayPopupHtml();
 		parent::display();
 	}
 
-	function populateContractTemplates(){
+	function populateContractTemplates() {
 		global $app_list_strings;
 
 		$sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted = 0 AND type='AOS_Contracts' AND active = 1";
@@ -43,7 +43,7 @@ class AOS_ContractsViewDetail extends ViewDetail
 		}
 	}
 
-	function displayPopupHtml(){
+	function displayPopupHtml() {
 		global $app_list_strings,$app_strings, $mod_strings;
         $templates = array_keys($app_list_strings['template_ddown_c_list']);
         if($templates){

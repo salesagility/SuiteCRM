@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 	var $focus = null;
 	var $list = null;
 	var $javascript = '<script>';
-	function lookupCurrencies(){
+	function lookupCurrencies() {
 		
 		
 		$this->focus = new Currency();
@@ -57,7 +57,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 	  	} 
 		
 	}
-	function handleAdd(){
+	function handleAdd() {
 			global $current_user;
 			if($current_user->is_admin){
 			if(isset($_POST['edit']) && $_POST['edit'] == 'true' && isset($_POST['name']) && !empty($_POST['name']) && isset($_POST['conversion_rate']) && !empty($_POST['conversion_rate']) && isset($_POST['symbol']) && !empty($_POST['symbol'])){
@@ -79,7 +79,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 		
 	}
 		
-	function handleUpdate(){
+	function handleUpdate() {
 		global $current_user;
 			if($current_user->is_admin){
 				if(isset($_POST['id']) && !empty($_POST['id'])&&isset($_POST['name']) && !empty($_POST['name']) && isset($_POST['rate']) && !empty($_POST['rate']) && isset($_POST['symbol']) && !empty($_POST['symbol'])){
@@ -105,7 +105,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 	}}
 	}
 	
-	function getJavascript(){ 
+	function getJavascript() { 
 		// wp: DO NOT add formatting and unformatting numbers in here, add them prior to calling these to avoid double calling 
 		// of unformat number
 		return $this->javascript . <<<EOQ
@@ -162,7 +162,7 @@ EOQ;
 	}
 	
 	
-	function getSelectOptions($id = ''){
+	function getSelectOptions($id = '') {
 		global $current_user;
 		$this->javascript .="var ConversionRates = new Array(); \n";		
 		$this->javascript .="var CurrencySymbols = new Array(); \n";
@@ -191,7 +191,7 @@ EOQ;
 	}
 	return $options;
 	}
-	function getTable(){
+	function getTable() {
 		$this->lookupCurrencies();
 		$usdollar = translate('LBL_US_DOLLAR');
 		$currency = translate('LBL_CURRENCY');
@@ -230,7 +230,7 @@ EOQ;
 		
 	}
 	
-	function setCurrencyFields($fields){
+	function setCurrencyFields($fields) {
 		$json = getJSONobj();
 		$this->javascript .= 'var currencyFields = ' . $json->encode($fields) . ";\n";
 	}

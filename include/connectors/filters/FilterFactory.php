@@ -48,7 +48,7 @@ class FilterFactory
 
 	static $filter_map = array();
 
-	public static function getInstance($source_name, $filter_name=''){
+	public static function getInstance($source_name, $filter_name='') {
 		require_once('include/connectors/filters/default/filter.php');
 		$key = $source_name . $filter_name;
 		if(empty(self::$filter_map[$key])) {

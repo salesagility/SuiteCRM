@@ -87,7 +87,7 @@ class SugarRestService extends SugarWebService
 	 *
 	 * @param String $url - REST url
 	 */
-	function __construct($url){
+	function __construct($url) {
 		$GLOBALS['log']->info('Begin: SugarRestService->__construct');
 		$this->restURL = $url;
 
@@ -103,7 +103,7 @@ class SugarRestService extends SugarWebService
 	 *
 	 * @access public
 	 */
-	public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs, $arrayType){
+	public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs, $arrayType) {
   	} // fn
 
   	/**
@@ -114,7 +114,7 @@ class SugarRestService extends SugarWebService
   	 * @param Array $output - assoc array of output values: key = param name, value = param type
 	 * @access public
   	 */
-	function registerFunction($function, $input, $output){
+	function registerFunction($function, $input, $output) {
 		if(in_array($function, $this->excludeFunctions))return;
 		$this->registeredFunc[$function] = array('input'=> $input, 'output'=>$output);
 	} // fn
@@ -123,7 +123,7 @@ class SugarRestService extends SugarWebService
 	 * It passes request data to REST server and sends response back to client
 	 * @access public
 	 */
-	function serve(){
+	function serve() {
 		$GLOBALS['log']->info('Begin: SugarRestService->serve');
 		require_once('service/core/REST/'. $this->responseClass . '.php');
 		$response  = $this->responseClass;
@@ -140,7 +140,7 @@ class SugarRestService extends SugarWebService
 	 *
 	 * @param Array $excludeFunctions - All the functions you don't want to register
 	 */
-	function register($excludeFunctions = array()){
+	function register($excludeFunctions = array()) {
 
 	} // fn
 
@@ -170,7 +170,7 @@ class SugarRestService extends SugarWebService
 	 * @param String $registryClass
 	 * @access public
 	 */
-	function registerClass($registryClass){
+	function registerClass($registryClass) {
 		$this->registryClass = $registryClass;
 	}
 
@@ -181,7 +181,7 @@ class SugarRestService extends SugarWebService
 	 * @param String $implementationClass
 	 * @access public
 	 */
-	function registerImplClass($className){
+	function registerImplClass($className) {
 		$GLOBALS['log']->info('Begin: SugarRestService->registerImplClass');
 		$this->implementationClass = $className;
 		$this->implementation = new $this->implementationClass();
@@ -196,7 +196,7 @@ class SugarRestService extends SugarWebService
 	 * @param SoapError $errorObject - This is an object of type SoapError
 	 * @access public
 	 */
-	function error($errorObject){
+	function error($errorObject) {
 		$GLOBALS['log']->info('Begin: SugarRestService->error');
 		$this->server->fault($errorObject);
 		$GLOBALS['log']->info('End: SugarRestService->error');
@@ -208,7 +208,7 @@ class SugarRestService extends SugarWebService
 	 * @return String - server
 	 * @access public
 	 */
-	function getServer(){
+	function getServer() {
 		return $this->server;
 	} // fn
 

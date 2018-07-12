@@ -60,7 +60,7 @@ class CalendarGrid
 	 * constructor
 	 * @param Calendar $cal
 	 */
-	function __construct(Calendar $cal){
+	function __construct(Calendar $cal) {
 		global $current_user;
 		$this->cal = $cal;
 		$today = $GLOBALS['timedate']->getNow(true)->get_day_begin();
@@ -99,7 +99,7 @@ class CalendarGrid
 	/** Get html of calendar grid
 	 * @return string
 	 */
-	public function display(){
+	public function display() {
 		$action = "display_".strtolower($this->cal->view);
 		return $this->$action();
 	}
@@ -108,7 +108,7 @@ class CalendarGrid
 	 * @param integer $start timestamp
 	 * @return string
 	 */
-	protected function get_time_column($start){
+	protected function get_time_column($start) {
 		$str = "";
 		$head_content = "&nbsp;";
 		if($this->cal->view == 'month'){
@@ -154,7 +154,7 @@ class CalendarGrid
 	 * @param string $suffix suffix for id of time slot used in shared view
 	 * @return string
 	 */
-	protected function get_day_column($start,$day = 0,$suffix = ""){
+	protected function get_day_column($start,$day = 0,$suffix = "") {
 		$curr_time = $start;
 		$str = "";
 		$str .= "<div class='col'>";
@@ -182,7 +182,7 @@ class CalendarGrid
 		return $str;
 	}
 
-	public function display_mobile(){
+	public function display_mobile() {
 
         global $mod_strings;
 
@@ -233,7 +233,7 @@ class CalendarGrid
 
 	}
 
-	function mobile_display_items($day_item){
+	function mobile_display_items($day_item) {
 
 		$end_time = $this->mobile_get_end_time($day_item);
 		$status_color = $this->mobile_get_status_colour($day_item['status']);
@@ -281,14 +281,14 @@ class CalendarGrid
 		return $display;
 	}
 
-	function mobile_get_end_time($day_item){
+	function mobile_get_end_time($day_item) {
 		$start_time = DateTime::createFromFormat("h:ia",$day_item['time_start']);
 		$start_time->modify('+' . $day_item['duration_minutes'] .'minutes');
 		return $start_time->format("h:ia");
 	}
 
 
-	function mobile_get_type_colour($type){
+	function mobile_get_type_colour($type) {
 		switch ($type) {
 			case "meeting":
 				$colour = "#D2E5FC";
@@ -306,7 +306,7 @@ class CalendarGrid
 		return $colour;
 	}
 
-	function mobile_get_status_colour($type){
+	function mobile_get_status_colour($type) {
 		switch ($type) {
 			case "Held":
 			case "Completed":
@@ -328,7 +328,7 @@ class CalendarGrid
 		return $colour;
 	}
 
-	function mobile_sort_items($agenda_array){
+	function mobile_sort_items($agenda_array) {
 		$times = "";
 
 		foreach ($agenda_array as $key => $row) {
@@ -347,7 +347,7 @@ class CalendarGrid
 	 * @param string $prefix prefix for id of slot used in shared view
 	 * @return string
 	 */
-	protected function get_basic_cell($start,$height = 80,$suffix = ""){
+	protected function get_basic_cell($start,$height = 80,$suffix = "") {
 		$str = "";
 		$dt = $GLOBALS['timedate']->fromTimestamp($start)->get("+8 hours");
 		$str .= "<div class='col'>";
@@ -362,7 +362,7 @@ class CalendarGrid
 	 * @param string $prefix prefix for id of slot used in shared view
 	 * @return string
 	 */
-	protected function get_basic_row($start,$cols = 7,$suffix = ""){
+	protected function get_basic_row($start,$cols = 7,$suffix = "") {
 
 		$height = 20;
 		$str = "";
@@ -426,7 +426,7 @@ class CalendarGrid
 	 * @param bulean $force force display header
 	 * @return string
 	 */
-	protected function get_day_head($start,$day = 0,$force = false){
+	protected function get_day_head($start,$day = 0,$force = false) {
 		$str = "";
 		if($force){
 			$headstyle = "";
@@ -441,7 +441,7 @@ class CalendarGrid
 	 * Get html of week calendar grid
 	 * @return string
 	 */
-	protected function display_week(){
+	protected function display_week() {
 
 		$basic = $this->style == "basic";
 		$week_start_ts = $this->cal->grid_start_ts;
@@ -470,7 +470,7 @@ class CalendarGrid
 	 * Get html of day calendar grid
 	 * @return string
 	 */
-	protected function display_day(){
+	protected function display_day() {
 
 		$basic = $this->style == "basic";
 		$day_start_ts = $this->cal->grid_start_ts;
@@ -498,7 +498,7 @@ class CalendarGrid
 	 * Get html of month calendar grid
 	 * @return string
 	 */
-	protected function display_month(){
+	protected function display_month() {
 
 		$basic = $this->style == "basic";
 		$week_start_ts = $this->cal->grid_start_ts;
@@ -537,7 +537,7 @@ class CalendarGrid
 	 * Get html of week shared grid
 	 * @return string
 	 */
-	protected function display_shared(){
+	protected function display_shared() {
 
 		$basic = $this->style == "basic";
 		$week_start_ts = $this->cal->grid_start_ts;
@@ -578,7 +578,7 @@ class CalendarGrid
 	 * Get html of year calendar
 	 * @return string
 	 */
-	protected function display_year(){
+	protected function display_year() {
 
 		$weekEnd1 = 0 - $this->startday;
 		$weekEnd2 = -1 - $this->startday;

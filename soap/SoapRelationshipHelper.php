@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('soap/SoapError.php');
 
-function check_for_relationship($relationships, $module){
+function check_for_relationship($relationships, $module) {
 	foreach($relationships as $table=>$rel){
 		if( $rel['rhs_key'] == $module){
 			return $table;
@@ -57,7 +57,7 @@ function check_for_relationship($relationships, $module){
  *
  */
 
-function retrieve_relationships_properties($module_1, $module_2, $relationship_name = ""){
+function retrieve_relationships_properties($module_1, $module_2, $relationship_name = "") {
 
 	$rs = new Relationship();
 	$query =  "SELECT * FROM $rs->table_name WHERE ((lhs_module = '".$rs->db->quote($module_1)."' AND rhs_module='".$rs->db->quote($module_2)."') OR (lhs_module = '".$rs->db->quote($module_2)."' AND rhs_module='".$rs->db->quote($module_1)."'))";
@@ -81,7 +81,7 @@ function retrieve_relationships_properties($module_1, $module_2, $relationship_n
  * show_deleted is if deleted items should be shown or not
  *
  */
-function retrieve_relationships($module_name,  $related_module, $relationship_query, $show_deleted, $offset, $max_results){
+function retrieve_relationships($module_name,  $related_module, $relationship_query, $show_deleted, $offset, $max_results) {
 	global  $beanList, $beanFiles, $dictionary, $current_user;
 
 	$error = new SoapError();
@@ -146,7 +146,7 @@ function retrieve_relationships($module_name,  $related_module, $relationship_qu
  *         error Mixed Array containing the SOAP errors if found, empty otherwise
  *
  */
-function retrieve_modified_relationships($module_name, $related_module, $relationship_query, $show_deleted, $offset, $max_results, $select_fields = array(), $relationship_name = ''){
+function retrieve_modified_relationships($module_name, $related_module, $relationship_query, $show_deleted, $offset, $max_results, $select_fields = array(), $relationship_name = '') {
 
     global  $beanList, $beanFiles, $dictionary, $current_user;
 	$error = new SoapError();
@@ -280,7 +280,7 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
 	return array('table_name'=>$table, 'result'=>$result_list, 'total_count'=>$total_count, 'error'=>$error->get_soap_array());
 }
 
-function server_save_relationships($list, $from_date, $to_date){
+function server_save_relationships($list, $from_date, $to_date) {
 	require_once('include/utils/db_utils.php');
 	global  $beanList, $beanFiles;
 	$from_date = db_convert("'".DBManagerFactory::getInstance()->quote($from_date)."'", 'datetime');
@@ -391,7 +391,7 @@ function server_save_relationships($list, $from_date, $to_date){
  * gets the from statement from a query without the order by and without the select
  *
  */
-function get_from_statement($query){
+function get_from_statement($query) {
 	$query = explode('FROM', $query);
 	if(sizeof($query) == 1){
 		$query = explode('from', $query[0]);
@@ -402,7 +402,7 @@ function get_from_statement($query){
 
 }
 
-function retrieve_relationship_query($module_name,  $related_module, $relationship_query, $show_deleted, $offset, $max_results){
+function retrieve_relationship_query($module_name,  $related_module, $relationship_query, $show_deleted, $offset, $max_results) {
 	global  $beanList, $beanFiles, $dictionary, $current_user;
 	$error = new SoapError();
 	$result_list = array();

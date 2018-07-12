@@ -71,7 +71,7 @@ class ViewLayoutView extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewLayoutView(){
+    function ViewLayoutView() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -96,11 +96,11 @@ class ViewLayoutView extends SugarView
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
-    function preDisplay ()
+    function preDisplay()
     {
     }
 
-    function display ($preview = false)
+    function display($preview = false)
     {
 
         global $mod_strings ;

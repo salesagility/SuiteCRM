@@ -41,7 +41,7 @@ class AjaxCompose
 {
 	var $sections = array();
 	var $crumbs = array('Home'=>'ModuleBuilder.main("Home")',/* 'Assistant'=>'Assistant.mbAssistant.xy=Array("650, 40"); Assistant.mbAssistant.show();'*/);
-	function addSection($name, $title, $content, $action='activate'){
+	function addSection($name, $title, $content, $action='activate') {
 		$crumb = '';
 		if($name == 'center'){
 			$crumb = $this->getBreadCrumb();
@@ -49,7 +49,7 @@ class AjaxCompose
 		$this->sections[$name] = array('title'=>$title,'crumb'=>$crumb, 'content'=>$content, 'action'=>$action);
 	}
 	
-	function getJavascript(){
+	function getJavascript() {
 		if(!empty($this->sections['center'])){
 			 if(empty($this->sections['east']))$this->addSection('east', '', '', 'deactivate');
 			 if(empty($this->sections['east2']))$this->addSection('east2', '', '', 'deactivate');
@@ -59,11 +59,11 @@ class AjaxCompose
 		return $json->encode($this->sections);
 	}
 	
-	function addCrumb($name, $action){
+	function addCrumb($name, $action) {
 		$this->crumbs[$name] = $action;
 	}
 	
-	function getBreadCrumb(){
+	function getBreadCrumb() {
 		$crumbs = '';
 		$actions = array();
 		$count = 0;
@@ -97,7 +97,7 @@ class AjaxCompose
 		
 	}
 	
-	function echoErrorStatus($labelName=''){
+	function echoErrorStatus($labelName='') {
 		$sections = array('failure'=>true,'failMsg'=>$labelName);
 		$json = getJSONobj();
 		echo $json->encode($sections);

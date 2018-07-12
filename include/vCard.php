@@ -84,30 +84,30 @@ class vCard
 		$this->setTitle($contact->title);
 	}
 
-	function setTitle($title){
+	function setTitle($title) {
 		$this->setProperty("TITLE",$title );
 	}
-	function setORG($org, $dep){
+	function setORG($org, $dep) {
 		$this->setProperty("ORG","$org;$dep" );
 	}
-	function setAddress($address, $city, $state,$postal, $country, $type, $encoding=''){
+	function setAddress($address, $city, $state,$postal, $country, $type, $encoding='') {
 		if(!empty($encoding)) {
 			$encoding = ";ENCODING={$encoding}";
 		}
 		$this->setProperty("ADR;$type$encoding",";;$address;$city;$state;$postal;$country" );
 	}
 
-	function setName($first_name, $last_name, $prefix){
+	function setName($first_name, $last_name, $prefix) {
 		$this->name = strtr($first_name.'_'.$last_name, ' ' , '_');
 		$this->setProperty('N',$last_name.';'.$first_name.';;'.$prefix );
 		$this->setProperty('FN',"$prefix $first_name $last_name");
 	}
 
-	function setEmail($address){
+	function setEmail($address) {
 		$this->setProperty('EMAIL;INTERNET', $address);
 	}
 
-	function setPhoneNumber( $number, $type)
+	function setPhoneNumber($number, $type)
 	{
 		if($type != 'FAX') {
 		    $this->setProperty("TEL;$type", $number);
@@ -116,20 +116,20 @@ class vCard
 		    $this->setProperty("TEL;WORK;$type", $number);
 		}
 	}
-	function setBirthDate($date){
+	function setBirthDate($date) {
 			$this->setProperty('BDAY',$date);
 	}
-	function getProperty($name){
+	function getProperty($name) {
 		if(isset($this->properties[$name]))
 			return $this->properties[$name];
 		return null;
 	}
 
-	function setProperty($name, $value){
+	function setProperty($name, $value) {
 		$this->properties[$name] = $value;
 	}
 
-	function toString(){
+	function toString() {
 	    global $locale;
 		$temp = "BEGIN:VCARD\n";
 		foreach($this->properties as $key=>$value){
@@ -145,7 +145,7 @@ class vCard
 		return $temp;
 	}
 
-	function saveVCard(){
+	function saveVCard() {
 		global $locale;
 		$content = $this->toString();
 		if ( !defined('SUITE_PHPUNIT_RUNNER') ) {

@@ -64,7 +64,7 @@ function __construct() {
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MetaParser(){
+    function MetaParser() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -465,7 +465,7 @@ function findAssignedVariableName($name, $filePath) {
  * @param $directory The directory to scan
  * @return $results The files in the directory that were found
  */
-function dirList ($directory) {
+function dirList($directory) {
 
     // create an array to hold directory list
     $results = array();

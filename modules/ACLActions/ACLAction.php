@@ -52,14 +52,14 @@ class ACLAction extends SugarBean
     var $new_schema = true;
     var $disable_custom_fields = true;
 
-    public function __construct(){
+    public function __construct() {
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ACLAction(){
+    public function ACLAction() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -78,7 +78,7 @@ class ACLAction extends SugarBean
     * @param STRING $category - the category (e.g module name - Accounts, Contacts)
     * @param STRING $type - the type (e.g. 'module', 'field')
     */
-    static function addActions($category, $type='module'){
+    static function addActions($category, $type='module') {
         global $ACLActions;
         $db = DBManagerFactory::getInstance();
         if(isset($ACLActions[$type])){
@@ -114,7 +114,7 @@ class ACLAction extends SugarBean
     * @param STRING $category - the category (e.g module name - Accounts, Contacts)
     * @param STRING $type - the type (e.g. 'module', 'field')
     */
-    public static function removeActions($category, $type='module'){
+    public static function removeActions($category, $type='module') {
         global $ACLActions;
         $db = DBManagerFactory::getInstance();
         if(isset($ACLActions[$type])){
@@ -142,7 +142,7 @@ class ACLAction extends SugarBean
     * @param INT $access - the access level you want the color for
     * @return the color either name or hex representation or false if the level does not exist
     */
-    protected static function AccessColor($access){
+    protected static function AccessColor($access) {
         global $ACLActionAccessLevels;
         if(isset($ACLActionAccessLevels[$access])){
 
@@ -160,7 +160,7 @@ class ACLAction extends SugarBean
     * @param INT $access - the access level you want the color for
     * @return the translated access level name or false if the level does not exist
     */
-    static function AccessName($access){
+    static function AccessName($access) {
         global $ACLActionAccessLevels;
         if(isset($ACLActionAccessLevels[$access])){
             return translate($ACLActionAccessLevels[$access]['label'], 'ACLActions');
@@ -177,7 +177,7 @@ class ACLAction extends SugarBean
      * @param INT $access - the access level you want the color for
      * @return the access level label or false if the level does not exist
      */
-    protected static function AccessLabel($access){
+    protected static function AccessLabel($access) {
         global $ACLActionAccessLevels;
         if(isset($ACLActionAccessLevels[$access])){
             $label=preg_replace('/(LBL_ACCESS_)(.*)/', '$2', $ACLActionAccessLevels[$access]['label']);
@@ -193,7 +193,7 @@ class ACLAction extends SugarBean
     * this is used for building select boxes
     * @return array containg access levels (ints) as keys and access names as values
     */
-    protected static function getAccessOptions( $action, $type='module'){
+    protected static function getAccessOptions($action, $type='module') {
         global $ACLActions;
         $options = array();
 
@@ -211,7 +211,7 @@ class ACLAction extends SugarBean
     *
     *
     */
-    public static function getDefaultActions($type='module', $action=''){
+    public static function getDefaultActions($type='module', $action='') {
         $query = "SELECT * FROM acl_actions WHERE deleted=0 ";
         if(!empty($type)){
             $query .= " AND acltype='$type'";
@@ -243,7 +243,7 @@ class ACLAction extends SugarBean
     * @return ARRAY of ACLActionsArray
     */
 
-    static function getUserActions($user_id,$refresh=false, $category='',$type='', $action=''){
+    static function getUserActions($user_id,$refresh=false, $category='',$type='', $action='') {
         //check in the session if we already have it loaded
         if(!$refresh && !empty($_SESSION['ACL'][$user_id])){
             if(empty($category) && empty($action)){
@@ -419,7 +419,7 @@ class ACLAction extends SugarBean
 	/**
     static function hasAccess($is_owner=false, $access = 0){
 	*/
-	static function hasAccess($is_owner=false, $in_group=false, $access = 0, ACLAction $action = null){
+	static function hasAccess($is_owner=false, $in_group=false, $access = 0, ACLAction $action = null) {
 		/**
         if($access != 0 && $access == ACL_ALLOW_ALL || ($is_owner && $access == ACL_ALLOW_OWNER))return true;
        //if this exists, then this function is not static, so check the aclaccess parameter
@@ -457,7 +457,7 @@ class ACLAction extends SugarBean
 	 * @param STRING $type
 	 * @return boolean
 	 */
-	static function userNeedsSecurityGroup($user_id, $category, $action,$type='module'){
+	static function userNeedsSecurityGroup($user_id, $category, $action,$type='module') {
 		//check if we don't have it set in the cache if not lets reload the cache
 
 		if(empty($_SESSION['ACL'][$user_id][$category][$type][$action])){
@@ -491,7 +491,7 @@ class ACLAction extends SugarBean
 	/**
     public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false){
 	*/
-	public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false, $in_group = false){
+	public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false, $in_group = false) {
        global $current_user;
        if($current_user->isAdminForModule($category)&& !isset($_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'])){
         return true;
@@ -523,7 +523,7 @@ class ACLAction extends SugarBean
     * @param STRING $type
     * @return INT (ACCESS LEVEL)
     */
-    public static function getUserAccessLevel($user_id, $category, $action,$type='module'){
+    public static function getUserAccessLevel($user_id, $category, $action,$type='module') {
         if(empty($_SESSION['ACL'][$user_id][$category][$type][$action])){
             ACLAction::getUserActions($user_id, false);
 
@@ -548,7 +548,7 @@ class ACLAction extends SugarBean
     * @param STRING $type
     * @return boolean
     */
-    public static function userNeedsOwnership($user_id, $category, $action,$type='module'){
+    public static function userNeedsOwnership($user_id, $category, $action,$type='module') {
         //check if we don't have it set in the cache if not lets reload the cache
 
         if(empty($_SESSION['ACL'][$user_id][$category][$type][$action])){
@@ -570,7 +570,7 @@ class ACLAction extends SugarBean
     *
     * @param unknown_type $categories
     */
-    public static function setupCategoriesMatrix(&$categories){
+    public static function setupCategoriesMatrix(&$categories) {
         global $ACLActions, $current_user;
         $names = array();
         $disabled = array();
@@ -619,7 +619,7 @@ class ACLAction extends SugarBean
     *
     * @return array of fields with id, name, access and category
     */
-    function toArray($dbOnly = false, $stringOnly = false, $upperKeys = false){
+    function toArray($dbOnly = false, $stringOnly = false, $upperKeys = false) {
         $array_fields = array('id', 'aclaccess');
         $arr = array();
         foreach($array_fields as $field){
@@ -634,7 +634,7 @@ class ACLAction extends SugarBean
     *
     * @param Array $arr
     */
-    function fromArray($arr){
+    function fromArray($arr) {
         foreach($arr as $name=>$value){
             $this->$name = $value;
         }
@@ -645,7 +645,7 @@ class ACLAction extends SugarBean
     * clears the session variable storing the cache information for acls
     *
     */
-    function clearSessionCache(){
+    function clearSessionCache() {
         if(isset($_SESSION['ACL'])) {
             unset($_SESSION['ACL']);
         }

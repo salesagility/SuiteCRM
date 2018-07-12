@@ -97,7 +97,7 @@ class SugarFieldFile extends SugarFieldBase
     	return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'SearchView');
     }
     
-    public function save(&$bean, $params, $field, $vardef, $prefix = ''){
+    public function save(&$bean, $params, $field, $vardef, $prefix = '') {
         $fakeDisplayParams = array();
         $this->fillInOptions($vardef,$fakeDisplayParams);
 

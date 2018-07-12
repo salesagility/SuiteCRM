@@ -143,7 +143,7 @@ class Call extends SugarBean
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	public function Call(){
+	public function Call() {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -159,7 +159,7 @@ class Call extends SugarBean
 	 * @param $view string
 	 * @param $is_owner bool
 	 */
-	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
+	function ACLAccess($view,$is_owner='not_set',$in_group='not_set') {
 		// don't check if call is being synced from Outlook
 		if($this->syncing == false){
 			$view = strtolower($view);
@@ -490,7 +490,7 @@ class Call extends SugarBean
 	}
 
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 		$call_fields = $this->get_list_view_array();
 		global $app_list_strings, $focus, $action, $currentModule;
 		if (isset($focus->id)) $id = $focus->id;
@@ -735,14 +735,14 @@ class Call extends SugarBean
 		return $list;
 	}
 
-    function bean_implements($interface){
+    function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}
 		return false;
 	}
 
-	function listviewACLHelper(){
+	function listviewACLHelper() {
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
 		$in_group = false; //SECURITY GROUPS

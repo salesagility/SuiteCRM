@@ -282,7 +282,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
 
 	}
 
-    function get_module_view_defs($module_name, $type, $view){
+    function get_module_view_defs($module_name, $type, $view) {
         require_once('include/MVC/View/SugarView.php');
         $metadataFile = null;
         $results = array();
@@ -420,7 +420,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
      * @param array $b
      * @return int Indicates equality for date due flag
      */
-    static function cmp_datedue( $a, $b )
+    static function cmp_datedue($a, $b)
     {
         $a_date = strtotime( $a['date_due'] ) ;
         $b_date = strtotime( $b['date_due'] ) ;

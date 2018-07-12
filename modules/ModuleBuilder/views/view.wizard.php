@@ -186,7 +186,7 @@ class ModuleBuilderViewWizard extends SugarView
 		}
 	}
 
-	function processMB ( 
+	function processMB( 
 	    $ajax 
 	    )
 	{

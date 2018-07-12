@@ -86,7 +86,7 @@ $GLOBALS['toHTML_keys_set'] = implode("", $GLOBALS['toHTML_keys']);
  * Bug 49489 - removed caching of to_html strings as it was consuming memory and
  * never releasing it
  */
-function to_html($string, $encode=true){
+function to_html($string, $encode=true) {
 	if (empty($string)) {
 		return $string;
 	}
@@ -143,7 +143,7 @@ function from_html($string, $encode=true) {
  * @param int $maxlen Deprecated and ignored
  * @return string Valid column name trimmed to right length and with invalid characters removed
  */
-function getValidDBName ($name, $ensureUnique = false, $maxLen = 30)
+function getValidDBName($name, $ensureUnique = false, $maxLen = 30)
 {
     return DBManagerFactory::getInstance()->getValidDBName($name, $ensureUnique);
 }

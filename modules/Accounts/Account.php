@@ -166,7 +166,7 @@ class Account extends Company implements EmailInterface
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	public function Account(){
+	public function Account() {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -251,7 +251,7 @@ class Account extends Company implements EmailInterface
 		}
 	}
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 
 		$temp_array = parent::get_list_view_data();
 
@@ -274,7 +274,7 @@ class Account extends Company implements EmailInterface
 		builds a generic search based on the query string using or
 		do not include any $this-> because this is called on without having the class instantiated
 	*/
-	function build_generic_where_clause ($the_query_string) {
+	function build_generic_where_clause($the_query_string) {
 	$where_clauses = Array();
 	$the_query_string = $this->db->quote($the_query_string);
 	array_push($where_clauses, "accounts.name like '$the_query_string%'");
@@ -366,7 +366,7 @@ class Account extends Company implements EmailInterface
 		return $xtpl;
 	}
 
-	function bean_implements($interface){
+	function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}

@@ -107,7 +107,7 @@ class EmailAuthenticateUser extends SugarAuthenticateUser
      * @param unknown_type $user_id
      * @param unknown_type $password
      */
-    function sendEmailPassword($user_id, $password){
+    function sendEmailPassword($user_id, $password) {
 
 	    $result = DBManagerFactory::getInstance()->query("SELECT email1, email2, first_name, last_name FROM users WHERE id='$user_id'");
 	    $row = DBManagerFactory::getInstance()->fetchByAssoc($result);

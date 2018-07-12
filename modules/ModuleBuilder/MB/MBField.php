@@ -53,7 +53,7 @@ class MBField
 	
 	
 	
-	function getFieldVardef(){
+	function getFieldVardef() {
 		if(empty($this->name)){
 			$this->error = 'A name is required to create a field';
 			return false;
@@ -93,11 +93,11 @@ class MBField
 		}
 	}
 	
-	function addDropDown(){
+	function addDropDown() {
 		return $this->options;
 	}
 	
-	function addLabel(){
+	function addLabel() {
 		return $this->vname;
 	}
 	

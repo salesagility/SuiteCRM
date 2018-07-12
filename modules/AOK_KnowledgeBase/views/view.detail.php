@@ -42,14 +42,14 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class AOK_KnowledgeBaseViewDetail extends ViewDetail
 {
-    function __construct(){
+    function __construct() {
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOK_KnowledgeBaseViewDetail(){
+    function AOK_KnowledgeBaseViewDetail() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -61,12 +61,12 @@ class AOK_KnowledgeBaseViewDetail extends ViewDetail
     }
 
 
-    function display(){
+    function display() {
         $this->setDecodeHTML();
         parent::display();
     }
 
-    function setDecodeHTML(){
+    function setDecodeHTML() {
         $this->bean->description = html_entity_decode(str_replace('&nbsp;',' ',$this->bean->description));
     }
 }

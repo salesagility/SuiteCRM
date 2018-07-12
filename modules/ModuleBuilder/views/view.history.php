@@ -59,7 +59,7 @@ class ViewHistory extends SugarView
     	   );
     }
 
-	function display ()
+	function display()
     {
         $this->layout = strtolower ( $_REQUEST [ 'view' ] ) ;
         
@@ -80,7 +80,7 @@ class ViewHistory extends SugarView
         $this->$action () ;
     }
 
-    function browse ()
+    function browse()
     {
         $smarty = new Sugar_Smarty ( ) ;
         global $mod_strings ;
@@ -120,7 +120,7 @@ class ViewHistory extends SugarView
         echo $html ;
     }
 
-    function preview ()
+    function preview()
     {
         global $mod_strings ;
         if (! isset ( $_REQUEST [ 'sid' ] ))
@@ -165,7 +165,7 @@ class ViewHistory extends SugarView
         $this->history->undoRestore () ;
     }
 
-    function restore ()
+    function restore()
     {
         if (! isset ( $_REQUEST [ 'sid' ] ))
         {

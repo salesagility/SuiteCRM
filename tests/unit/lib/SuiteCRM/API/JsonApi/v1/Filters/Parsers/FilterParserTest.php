@@ -59,7 +59,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
                 '[JsonApi][v1][Filters][Parsers][FilterParser]'.
                 '[splitFieldKeys][expected type to be string] $fieldKey'
             ),
-            function() {
+            function () {
                 $emptyArray = array();
                 self::$filterParser->splitFieldKeysAdapter($emptyArray);
             }
@@ -72,7 +72,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
             new Exception(
                 '[JsonApi][v1][Filters][Parsers][FilterParser][splitFieldKeys][InvalidValue] expected period ""'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitFieldKeysAdapter('');
             }
         );
@@ -85,7 +85,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
             new Exception(
                 '[JsonApi][v1][Filters][Parsers][FilterParser][splitFieldKeys][InvalidValue] expected period "Accounts"'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitFieldKeysAdapter('Accounts');
             }
         );
@@ -98,7 +98,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
             new Exception(
                 '[JsonApi][v1][Filters][FilterParser][splitFieldKeys][InvalidValue] "'.$badKey.'"'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitFieldKeysAdapter('Accounts.bad+key');
             }
         );
@@ -130,7 +130,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
             new Exception(
                 '[JsonApi][v1][FilterParser][parseFieldKey][expected type to be string] $fieldKey'
             ),
-            function() {
+            function () {
                 self::$filterParser->parseFieldKeyAdapter(array());
             }
         );
@@ -177,7 +177,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                 '[splitValues][expected type to be string] $fieldKey'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitValuesAdapter(array());
             }
         );
@@ -190,7 +190,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
                 '[JsonApi][v1][Filters][Parsers][FilterParser]' .
                 '[splitValues][InvalidValue] expected delimiter "bad value"'
             ),
-            function() {
+            function () {
                 self::$filterParser->splitValuesAdapter('bad value');
             }
         );
@@ -286,7 +286,7 @@ class FilterParserTest extends \SuiteCRM\StateCheckerUnitAbstract
                 '[parserFieldFilters][operator not found] please ensure that an operator has been added to '.
                 'containers '
             ),
-            function() {
+            function () {
                 self::$filterParser->parseFieldFilterAdapter('[[missingTestOperator]]');
             }
         );

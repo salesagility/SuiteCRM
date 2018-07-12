@@ -100,7 +100,7 @@ class ProspectList extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ProspectList(){
+    public function ProspectList() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -366,7 +366,7 @@ FROM prospect_lists_prospects plp
 	}
 
 
-	function update_currency_id($fromid, $toid){
+	function update_currency_id($fromid, $toid) {
 	}
 
 
@@ -384,7 +384,7 @@ FROM prospect_lists_prospects plp
 	}
 
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 		$temp_array = $this->get_list_view_array();
 		$temp_array["ENTRY_COUNT"] = $this->get_entry_count();
 		return $temp_array;
@@ -393,7 +393,7 @@ FROM prospect_lists_prospects plp
 		builds a generic search based on the query string using or
 		do not include any $this-> because this is called on without having the class instantiated
 	*/
-	function build_generic_where_clause ($the_query_string)
+	function build_generic_where_clause($the_query_string)
 	{
 		$where_clauses = Array();
 		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
@@ -416,13 +416,13 @@ FROM prospect_lists_prospects plp
 
 	}
 
-    function mark_deleted($id){
+    function mark_deleted($id) {
         $query = "UPDATE prospect_lists_prospects SET deleted = 1 WHERE prospect_list_id = '{$id}' ";
         $this->db->query($query);
         return parent::mark_deleted($id);
     }
 
-	 function bean_implements($interface){
+	 function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}

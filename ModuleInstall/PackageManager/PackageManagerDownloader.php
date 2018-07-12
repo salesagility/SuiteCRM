@@ -52,7 +52,7 @@ class PackageManagerDownloader
 	 *
 	 * @return the full path of the saved file
 	 */
-	function download($session_id, $file_name, $save_dir = '', $download_server = ''){
+	function download($session_id, $file_name, $save_dir = '', $download_server = '') {
 		if(empty($save_dir)){
 			$save_dir = "upload://";
 		}

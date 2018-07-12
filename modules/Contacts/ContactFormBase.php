@@ -85,7 +85,7 @@ public function getDuplicateQuery($focus, $prefix='')
 }
 
 
-function getWideFormBody($prefix, $mod='',$formname='',  $contact = '', $portal = true){
+function getWideFormBody($prefix, $mod='',$formname='',  $contact = '', $portal = true) {
 
 	if(!ACLController::checkAccess('Contacts', 'edit', true)){
 		return '';
@@ -318,7 +318,7 @@ EOQ;
 	return $form;
 }
 
-function getFormBody($prefix, $mod='', $formname=''){
+function getFormBody($prefix, $mod='', $formname='') {
 	if(!ACLController::checkAccess('Contacts', 'edit', true)){
 		return '';
 	}
@@ -382,7 +382,7 @@ $mod_strings = $temp_strings;
 return $form;
 
 }
-function getForm($prefix, $mod=''){
+function getForm($prefix, $mod='') {
 	if(!ACLController::checkAccess('Contacts', 'edit', true)){
 		return '';
 	}
@@ -419,7 +419,7 @@ return $the_form;
 }
 
 
-function handleSave($prefix, $redirect=true, $useRequired=false){
+function handleSave($prefix, $redirect=true, $useRequired=false) {
 	global $theme, $current_user;
 
 
@@ -645,7 +645,7 @@ function handleSave($prefix, $redirect=true, $useRequired=false){
 	}
 }
 
-function handleRedirect($return_id){
+function handleRedirect($return_id) {
 	if(isset($_POST['return_module']) && $_POST['return_module'] != "") {
 		$return_module = urlencode($_POST['return_module']);
 	}

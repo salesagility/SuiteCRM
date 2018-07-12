@@ -41,7 +41,7 @@
 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-function progress_bar_flush($flush=true )
+function progress_bar_flush($flush=true)
 {
     if($flush) {
         if(ob_get_level()) {

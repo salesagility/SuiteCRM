@@ -25,12 +25,12 @@
 
 
 
-function requireLucene(){
+function requireLucene() {
     set_include_path(get_include_path() . PATH_SEPARATOR . "modules/AOD_Index/Lib");
     require_once('Zend/Search/Lucene.php');
 }
 
-function getDocumentRevisionPath($revisionId){
+function getDocumentRevisionPath($revisionId) {
     return "upload/$revisionId";
 }
 
@@ -39,7 +39,7 @@ function getDocumentRevisionPath($revisionId){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createPPTXDocument($path){
+function createPPTXDocument($path) {
     $doc = Zend_Search_Lucene_Document_Pptx::loadPptxFile($path);
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
@@ -50,7 +50,7 @@ function createPPTXDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createXLSXDocument($path){
+function createXLSXDocument($path) {
     $doc = Zend_Search_Lucene_Document_Xlsx::loadXlsxFile($path);
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
@@ -60,7 +60,7 @@ function createXLSXDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createHTMLDocument($path){
+function createHTMLDocument($path) {
     $doc = Zend_Search_Lucene_Document_Html::loadHTMLFile($path);
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
@@ -70,7 +70,7 @@ function createHTMLDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createDocXDocument($path){
+function createDocXDocument($path) {
     $doc = Zend_Search_Lucene_Document_Docx::loadDocxFile($path);
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     return $doc;
@@ -81,7 +81,7 @@ function createDocXDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createDocDocument($path){
+function createDocDocument($path) {
     $fileHandle = fopen($path, "r");
     $line = @fread($fileHandle, filesize($path));
     $lines = explode(chr(0x0D),$line);
@@ -109,7 +109,7 @@ function createDocDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createPDFDocument($path){
+function createPDFDocument($path) {
     require_once('PdfParser.php');
     $text = PdfParser::parseFile($path);
     $doc = new Zend_Search_Lucene_Document();
@@ -123,7 +123,7 @@ function createPDFDocument($path){
  * @param $path
  * @return bool|Zend_Search_Lucene_Document
  */
-function createOdtDocument($path){
+function createOdtDocument($path) {
     if(!is_file($path)){
         return false;
     }
@@ -150,7 +150,7 @@ function createOdtDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createTextDocument($path){
+function createTextDocument($path) {
     $doc = new Zend_Search_Lucene_Document();
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     $doc->addField(Zend_Search_Lucene_Field::UnStored('contents', file_get_contents($path)));
@@ -163,7 +163,7 @@ function createTextDocument($path){
  * @param $path
  * @return Zend_Search_Lucene_Document
  */
-function createRTFDocument($path){
+function createRTFDocument($path) {
     $doc = new Zend_Search_Lucene_Document();
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));
     $contents = rtf2text($path);

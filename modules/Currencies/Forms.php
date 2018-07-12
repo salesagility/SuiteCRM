@@ -51,7 +51,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_validate_record_js () {
+function get_validate_record_js() {
 
 }
 
@@ -62,6 +62,6 @@ function get_validate_record_js () {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  */
-function get_new_record_form () {
+function get_new_record_form() {
 
 }

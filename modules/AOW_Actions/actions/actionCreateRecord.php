@@ -173,7 +173,7 @@ class actionCreateRecord extends actionBase
      * @param array $params
      * @param bool $in_save
      */
-    public function set_record(SugarBean $record, SugarBean $bean, $params = array(), $in_save = false){
+    public function set_record(SugarBean $record, SugarBean $bean, $params = array(), $in_save = false) {
         global $app_list_strings, $timedate;
 
         $record_vardefs = $record->getFieldDefinitions();

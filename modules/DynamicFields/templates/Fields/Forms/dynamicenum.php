@@ -39,7 +39,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-function get_body(&$ss, $vardef){
+function get_body(&$ss, $vardef) {
     $multi = false;
     $radio = false;
     if (isset ($vardef['type']) && $vardef['type'] == 'multienum')

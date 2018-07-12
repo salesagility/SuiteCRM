@@ -43,7 +43,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class ACLJSController
 {
 
-	public function __construct($module,$form='', $is_owner=false){
+	public function __construct($module,$form='', $is_owner=false) {
 
 		$this->module = $module;
 		$this->is_owner = $is_owner;
@@ -53,7 +53,7 @@ class ACLJSController
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ACLJSController($module,$form='', $is_owner=false){
+    public function ACLJSController($module,$form='', $is_owner=false) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -65,7 +65,7 @@ class ACLJSController
     }
 
 
-	function getJavascript(){
+	function getJavascript() {
 		global $action;
 		if(!ACLController::moduleSupportsACL($this->module)){
 			return '';
@@ -126,7 +126,7 @@ EOQ;
 
 	}
 
-	function getHTMLValues($def){
+	function getHTMLValues($def) {
 		$return_array = array();
 		switch($def['display_option']){
 			case 'clear_link':
@@ -142,7 +142,7 @@ EOQ;
 
 	}
 
-	function getFieldByIdScript($name, $def){
+	function getFieldByIdScript($name, $def) {
 		$script = '';
 		if(!ACLController::checkAccess($def['module'], $def['action_option'], true)){
 		foreach($this->getHTMLValues($def) as $key=>$value){
@@ -153,7 +153,7 @@ EOQ;
 
 	}
 
-	function getFieldByNameScript($name, $def){
+	function getFieldByNameScript($name, $def) {
 		$script = '';
 		if(!ACLController::checkAccess($def['module'], $def['action_option'], true)){
 
@@ -170,7 +170,7 @@ EOQ;
 
 	}
 
-	function getFieldByFormScript($form, $name, $def){
+	function getFieldByFormScript($form, $name, $def) {
 		$script = '';
 
 

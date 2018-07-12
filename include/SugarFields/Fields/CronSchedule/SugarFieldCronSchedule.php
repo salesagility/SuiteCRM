@@ -4,7 +4,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 class SugarFieldCronSchedule extends SugarFieldBase
 {
 
-    private function getDays(){
+    private function getDays() {
         $days = array();
         $date = new DateTime("1986-05-01");
         $period = new DateInterval('P1D');
@@ -14,7 +14,7 @@ class SugarFieldCronSchedule extends SugarFieldBase
         }
         return $days;
     }
-    private function getWeekDays(){
+    private function getWeekDays() {
         $days = array();
         $date = new DateTime("1986-05-04");
         $period = new DateInterval('P1D');
@@ -41,7 +41,7 @@ class SugarFieldCronSchedule extends SugarFieldBase
         $this->ss->assign('hours',get_select_options($hours,''));
     }
 
-    private function padNumbers($x){
+    private function padNumbers($x) {
         return str_pad($x,2,'0',STR_PAD_LEFT);
     }
 }

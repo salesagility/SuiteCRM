@@ -82,7 +82,7 @@ class SugarAuthenticate
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	public function SugarAuthenticate(){
+	public function SugarAuthenticate() {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -102,7 +102,7 @@ class SugarAuthenticate
 	 * @param string $password
 	 * @return boolean
 	 */
-	function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ()){
+	function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ()) {
 		global $mod_strings;
 		unset($_SESSION['login_error']);
 		$usr= new user();
@@ -159,7 +159,7 @@ class SugarAuthenticate
 	 * Once a user is authenticated on login this function will be called. Populate the session with what is needed and log anything that needs to be logged
 	 *
 	 */
-	function postLoginAuthenticate(){
+	function postLoginAuthenticate() {
 
 		global $reset_language_on_default_user, $sugar_config;
 		
@@ -198,7 +198,7 @@ class SugarAuthenticate
 	 * On every page hit this will be called to ensure a user is authenticated
 	 * @return boolean
 	 */
-	function sessionAuthenticate(){
+	function sessionAuthenticate() {
 
 		global $module, $action, $allowed_actions;
 		$authenticated = false;
@@ -423,7 +423,7 @@ class SugarAuthenticate
 	 * Called when a user requests to logout
 	 *
 	 */
-	function logout(){
+	function logout() {
 			session_start();
 			session_destroy();
 			ob_clean();
@@ -438,7 +438,7 @@ class SugarAuthenticate
 	 * @param STRING $password
 	 * @return STRING $encoded_password
 	 */
-	static function encodePassword($password){
+	static function encodePassword($password) {
 		return strtolower(md5($password));
 	}
 
@@ -446,14 +446,14 @@ class SugarAuthenticate
 	 * If a user may change there password through the Sugar UI
 	 *
 	 */
-	function canChangePassword(){
+	function canChangePassword() {
 		return true;
 	}
 	/**
 	 * If a user may change there user name through the Sugar UI
 	 *
 	 */
-	function canChangeUserName(){
+	function canChangeUserName() {
 		return true;
 	}
 

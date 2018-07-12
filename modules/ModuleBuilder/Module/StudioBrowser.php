@@ -48,7 +48,7 @@ class StudioBrowser
 {
 	var $modules = array();
 	
-	function loadModules(){
+	function loadModules() {
 	    global $current_user;
 		$access = $current_user->getDeveloperModules();
 	    $d = dir('modules');
@@ -61,7 +61,7 @@ class StudioBrowser
 		}
 	}
 	
-    function loadRelatableModules(){
+    function loadRelatableModules() {
         $d = dir('modules');
         while($e = $d->read()){
         	if(substr($e, 0, 1) == '.' || !is_dir('modules/' . $e))continue;
@@ -72,7 +72,7 @@ class StudioBrowser
         }
     }
 		
-	function getNodes(){
+	function getNodes() {
         $this->loadModules();
 	    $nodes = array();
 		foreach($this->modules as $module){

@@ -86,7 +86,7 @@ abstract class SugarSoapService extends SugarWebService
 	 * Constructor
 	 *
 	 */
-	protected function __construct(){
+	protected function __construct() {
 		$this->setObservers();
 	}
 	
@@ -111,11 +111,11 @@ abstract class SugarSoapService extends SugarWebService
 	 * @return String - soapURL
 	 * @access public
 	 */
-	public function getSoapURL(){
+	public function getSoapURL() {
 		return $this->soapURL;
 	}
 		
-	public function getSoapVersion(){
+	public function getSoapVersion() {
 		return $this->soap_version;
 	}
 	
@@ -125,7 +125,7 @@ abstract class SugarSoapService extends SugarWebService
 	 * @return String - namespace
 	 * @access public
 	 */
-	public function getNameSpace(){
+	public function getNameSpace() {
 		return $this->namespace;
 	}
 	

@@ -245,7 +245,7 @@ class nusoap_client extends nusoap_base
 	* @param	string $portName optional portName in WSDL document
 	* @access   public
 	*/
-	function nusoap_client($endpoint,$wsdl = false,$proxyhost = false,$proxyport = false,$proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30, $portName = ''){
+	function nusoap_client($endpoint,$wsdl = false,$proxyhost = false,$proxyport = false,$proxyusername = false, $proxypassword = false, $timeout = 0, $response_timeout = 30, $portName = '') {
 		parent::nusoap_base();
 		$this->endpoint = $endpoint;
 		$this->proxyhost = $proxyhost;
@@ -304,7 +304,7 @@ class nusoap_client extends nusoap_base
 	* @return	mixed	response from SOAP call, normally an associative array mirroring the structure of the XML response, false for certain fatal errors
 	* @access   public
 	*/
-	function call($operation,$params=array(),$namespace='http://tempuri.org',$soapAction='',$headers=false,$rpcParams=null,$style='rpc',$use='encoded'){
+	function call($operation,$params=array(),$namespace='http://tempuri.org',$soapAction='',$headers=false,$rpcParams=null,$style='rpc',$use='encoded') {
 		$this->operation = $operation;
 		$this->fault = false;
 		$this->setError('');
@@ -535,7 +535,7 @@ class nusoap_client extends nusoap_base
 	* @return	array array of data pertaining to the operation
 	* @access   public
 	*/
-	function getOperationData($operation){
+	function getOperationData($operation) {
 		if ($this->endpointType == 'wsdl' && is_null($this->wsdl)) {
 			$this->loadWSDL();
 			if ($this->getError())
@@ -719,7 +719,7 @@ class nusoap_client extends nusoap_base
 	* @param	mixed $headers String of XML with SOAP header content, or array of soapval objects for SOAP headers
 	* @access   public
 	*/
-	function setHeaders($headers){
+	function setHeaders($headers) {
 		$this->debug("setHeaders headers=");
 		$this->appendDebug($this->varDump($headers));
 		$this->requestHeaders = $headers;
@@ -731,7 +731,7 @@ class nusoap_client extends nusoap_base
 	* @return	string
 	* @access   public
 	*/
-	function getHeaders(){
+	function getHeaders() {
 		return $this->responseHeaders;
 	}
 
@@ -741,7 +741,7 @@ class nusoap_client extends nusoap_base
 	* @return	mixed
 	* @access   public
 	*/
-	function getHeader(){
+	function getHeader() {
 		return $this->responseHeader;
 	}
 
@@ -785,7 +785,7 @@ class nusoap_client extends nusoap_base
 	* @param    string $enc HTTP encoding
 	* @access   public
 	*/
-	function setHTTPEncoding($enc='gzip, deflate'){
+	function setHTTPEncoding($enc='gzip, deflate') {
 		$this->debug("setHTTPEncoding(\"$enc\")");
 		$this->http_encoding = $enc;
 	}
@@ -806,7 +806,7 @@ class nusoap_client extends nusoap_base
 	*
 	* @access   public
 	*/
-	function useHTTPPersistentConnection(){
+	function useHTTPPersistentConnection() {
 		$this->debug("useHTTPPersistentConnection");
 		$this->persistentConnection = true;
 	}
@@ -1002,7 +1002,7 @@ class nusoap_client extends nusoap_base
     * @return   always returns true
     * @access   public
     */
-    function decodeUTF8($bool){
+    function decodeUTF8($bool) {
 		$this->decode_utf8 = $bool;
 		return true;
     }

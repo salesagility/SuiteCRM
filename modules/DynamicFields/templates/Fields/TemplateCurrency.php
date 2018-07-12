@@ -49,7 +49,7 @@ class TemplateCurrency extends TemplateRange
     var $precision = 6;
     var $type='currency';
 
-    function delete($df){
+    function delete($df) {
     	parent::delete($df);
     	//currency id
     	$currency_id = new TemplateCurrencyId();
@@ -57,7 +57,7 @@ class TemplateCurrency extends TemplateRange
     	$currency_id->delete($df);
     }
 
-    function save($df){
+    function save($df) {
     	//the currency field
 		$this->default = unformat_number($this->default);
 		$this->default_value = $this->default;
@@ -72,7 +72,7 @@ class TemplateCurrency extends TemplateRange
     	//$df->addLabel($currency_id->vname);
     }
 
-    function get_field_def(){
+    function get_field_def() {
     	$def = parent::get_field_def();
 		$def['precision'] = (!empty($this->precision)) ? $this->precision : 6;
     	return $def;

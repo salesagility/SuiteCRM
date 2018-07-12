@@ -52,7 +52,7 @@ class DocumentsViewExtdoc extends SugarView
         $this->seed = $bean;
     }
 
- 	public function display(){
+ 	public function display() {
 
         global $mod_strings;
 

@@ -45,12 +45,12 @@ class TemplateHTML extends TemplateField
     var $type = 'html';
     var $inline_edit = 0;
     
-    function save($df){
+    function save($df) {
 		$this->ext3 = 'text';
 		parent::save($df);
 	}
 	
-	function set($values){
+	function set($values) {
        parent::set($values);
        if(!empty($this->ext4)){
            $this->default_value = $this->ext4;
@@ -59,44 +59,44 @@ class TemplateHTML extends TemplateField
         
     }
     
-    function get_html_detail(){
+    function get_html_detail() {
       
         return '<div title="' . strtoupper($this->name . '_HELP'). '" >{'.strtoupper($this->name) . '}</div>';
     }
     
-    function get_html_edit(){
+    function get_html_edit() {
         return $this->get_html_detail();
     }
     
-    function get_html_list(){
+    function get_html_list() {
         return $this->get_html_detail();
     }
     
-    function get_html_search(){
+    function get_html_search() {
         return $this->get_html_detail();
     }
     
-    function get_xtpl_detail(){
+    function get_xtpl_detail() {
         
         return from_html(nl2br($this->ext4));   
     }
     
-    function get_xtpl_edit(){
+    function get_xtpl_edit() {
        return  $this->get_xtpl_detail();
     }
     
-    function get_xtpl_list(){
+    function get_xtpl_list() {
         return  $this->get_xtpl_detail();
     }
-    function get_xtpl_search(){
+    function get_xtpl_search() {
         return  $this->get_xtpl_detail();
     }
     
-    function get_db_add_alter_table($table){
+    function get_db_add_alter_table($table) {
         return '';
     }
 
-    function get_db_modify_alter_table($table){
+    function get_db_modify_alter_table($table) {
         return '';
     }
     

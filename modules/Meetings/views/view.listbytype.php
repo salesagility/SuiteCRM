@@ -53,7 +53,7 @@ class MeetingsViewListbytype extends ViewList
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MeetingsViewListbytype(){
+    function MeetingsViewListbytype() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -65,7 +65,7 @@ class MeetingsViewListbytype extends ViewList
     }
 
 
- 	function listViewProcess(){
+ 	function listViewProcess() {
         if (!$eapmBean = EAPM::getLoginInfo('IBMSmartCloud', true) ) {
             $smarty = new Sugar_Smarty();
             echo $smarty->fetch('include/externalAPI/IBMSmartCloud/IBMSmartCloudSignup.'.$GLOBALS['current_language'].'.tpl');
@@ -125,7 +125,7 @@ class MeetingsViewListbytype extends ViewList
         $_REQUEST = $oldRequest;
     }
 
-    function processSearchForm(){
+    function processSearchForm() {
    		// $type = 'LotusLiveDirect';
    		$type = 'IBMSmartCloud';
           global $timedate;

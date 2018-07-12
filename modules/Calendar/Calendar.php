@@ -94,7 +94,7 @@ class Calendar
 	 * @param array $time_arr
 	 * @param array $views
 	 */	
-	function __construct($view = "agendaWeek", $time_arr = array()){
+	function __construct($view = "agendaWeek", $time_arr = array()) {
 		global $current_user, $timedate, $current_language;
 		
 		$this->view = $view;		
@@ -220,7 +220,7 @@ class Calendar
 	/**
 	 * Load activities data to array
 	 */		
-	public function load_activities(){
+	public function load_activities() {
 
 
 		$field_list = CalendarUtils::get_fields();
@@ -324,7 +324,7 @@ class Calendar
 	/**
 	 * initialize ids of shared users
 	 */	
-	public function init_shared(){
+	public function init_shared() {
 		global $current_user;
 		
 		
@@ -342,7 +342,7 @@ class Calendar
 	/**
 	 * Calculate timestamp the calendar grid should be started from 
 	 */
-	protected function calculate_grid_start_ts(){
+	protected function calculate_grid_start_ts() {
 	
 		if($this->view == "agendaWeek" || $this->view == "shared"){
 			$week_start = CalendarUtils::get_first_day_of_week($this->date_time);
@@ -359,7 +359,7 @@ class Calendar
 	/**
 	 * calculate count of timeslots per visible day, calculates day start and day end in minutes 
 	 */	
-	function calculate_day_range(){	
+	function calculate_day_range() {	
 		
 		list($hour_start,$minute_start) =  explode(":",$this->day_start_time);		
 		list($hour_end,$minute_end) =  explode(":",$this->day_end_time);
@@ -372,7 +372,7 @@ class Calendar
 	 * @param User $user user object
 	 * @param string $type
 	 */	
-	public function add_activities($user,$type='sugar'){
+	public function add_activities($user,$type='sugar') {
 		global $timedate;
 		$start_date_time = $this->date_time;
 		if($this->view == 'agendaWeek'|| $this->view == 'basicWeek'  || $this->view == 'sharedWeek'){
@@ -409,7 +409,7 @@ class Calendar
 	 * @param string $direction next or previous
 	 * @return string
 	 */
-	public function get_neighbor_date_str($direction){
+	public function get_neighbor_date_str($direction) {
 		if($direction == "previous")
 			$sign = "-";
 		else 

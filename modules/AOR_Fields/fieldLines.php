@@ -23,7 +23,7 @@
  */
 
 
-function display_field_lines($focus, $field, $value, $view){
+function display_field_lines($focus, $field, $value, $view) {
 
     global $mod_strings, $app_list_strings;
 

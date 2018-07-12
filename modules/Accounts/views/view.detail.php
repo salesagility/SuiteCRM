@@ -42,14 +42,14 @@ class AccountsViewDetail extends ViewDetail
 {
 
 
- 	function __construct(){
+ 	function __construct() {
  		parent::__construct();
  	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AccountsViewDetail(){
+    function AccountsViewDetail() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -69,7 +69,7 @@ class AccountsViewDetail extends ViewDetail
  	 * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
  	 * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
  	 */
- 	function display(){
+ 	function display() {
 
 		if(empty($this->bean->id)){
 			global $app_strings;

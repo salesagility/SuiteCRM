@@ -65,7 +65,7 @@ private function __construct() {
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    private function TrackerManager(){
+    private function TrackerManager() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -119,7 +119,7 @@ public function getMonitorId() {
  * Singleton method to return static instance of TrackerManager
  * @returns static TrackerManager instance
  */
-static function getInstance(){
+static function getInstance() {
     if (!isset(self::$instance)) {
         self::$instance = new TrackerManager();
 		//Set global variable for tracker monitor instances that are disabled
@@ -168,7 +168,7 @@ public function getMonitor($name) {
     }
 }
 
-private function _getMonitor($name='', $monitorId='', $metadata='', $store=''){
+private function _getMonitor($name='', $monitorId='', $metadata='', $store='') {
 	$class = strtolower($name.'_monitor');
 	$monitor = null;
 	if(file_exists('custom/modules/Trackers/monitor/'.$class.'.php')){
@@ -249,7 +249,7 @@ public function unsetMonitor($monitor) {
  *
  * Usage: TrackerManager::getInstance()->pauseTracking();
  */
-public function pause(){
+public function pause() {
 	self::$paused = true;
 }
 
@@ -260,7 +260,7 @@ public function pause(){
  *
  *  * Usage: TrackerManager::getInstance()->unPauseTracking();
  */
-public function unPause(){
+public function unPause() {
 	self::$paused = false;
 }
 

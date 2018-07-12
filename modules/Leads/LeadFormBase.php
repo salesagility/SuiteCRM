@@ -75,7 +75,7 @@ public function getDuplicateQuery($focus, $prefix='')
 }
 
 
-function getWideFormBody($prefix, $mod='', $formname=''){
+function getWideFormBody($prefix, $mod='', $formname='') {
 if(!ACLController::checkAccess('Leads', 'edit', true)){
 		return '';
 	}
@@ -126,7 +126,7 @@ $mod_strings = $temp_strings;
 return $form;
 }
 
-function getFormBody($prefix, $mod='', $formname=''){
+function getFormBody($prefix, $mod='', $formname='') {
 	if(!ACLController::checkAccess('Leads', 'edit', true)){
 		return '';
 	}
@@ -172,7 +172,7 @@ $mod_strings = $temp_strings;
 return $form;
 
 }
-function getForm($prefix, $mod='Leads'){
+function getForm($prefix, $mod='Leads') {
 	if(!ACLController::checkAccess('Leads', 'edit', true)){
 		return '';
 	}
@@ -209,7 +209,7 @@ return $the_form;
 }
 
 
-function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $exist_lead=null){
+function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $exist_lead=null) {
 
     require_once('modules/Campaigns/utils.php');
 	require_once('include/formbase.php');

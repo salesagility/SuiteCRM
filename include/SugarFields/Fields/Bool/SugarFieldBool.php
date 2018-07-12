@@ -86,7 +86,7 @@ class SugarFieldBool extends SugarFieldBase
         return $value;
     }
 
-    public function getEmailTemplateValue($inputField, $vardef, $context = null){
+    public function getEmailTemplateValue($inputField, $vardef, $context = null) {
         global $app_list_strings;
         // This does not return a smarty section, instead it returns a direct value
         if ( $inputField == 'bool_true' || $inputField === true ) { // Note: true must be absolute true
@@ -98,7 +98,7 @@ class SugarFieldBool extends SugarFieldBase
         }
     }
 
-    public function unformatField($formattedField, $vardef){
+    public function unformatField($formattedField, $vardef) {
         if ( empty($formattedField) ) {
             $unformattedField = false;
             return $unformattedField;

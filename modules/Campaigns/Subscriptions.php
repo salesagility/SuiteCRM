@@ -128,7 +128,7 @@ $this->ss->display('modules/Campaigns/Subscriptions.tpl');
 /*
  *This function constructs Drag and Drop multiselect box of subscriptions for display in manage subscription form
 */
-function constructDDSubscriptionList($focus,$classname=''){
+function constructDDSubscriptionList($focus,$classname='') {
     require_once("include/templates/TemplateDragDropChooser.php");
     global $mod_strings;
     $unsubs_arr = '';
@@ -192,7 +192,7 @@ function constructDDSubscriptionList($focus,$classname=''){
  * right methods to subscribe or unsubscribe the user
  * */
 
-function manageSubscriptions($focus){
+function manageSubscriptions($focus) {
 
 
     //Process Subscription Lists first

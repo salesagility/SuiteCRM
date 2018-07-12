@@ -10025,7 +10025,7 @@ if (!class_exists('TCPDF', false)) {
 		* @since 3.1.000 (2008-06-09)
 		* @access protected
 		*/
-		protected function _outarc($x1, $y1, $x2, $y2, $x3, $y3 ) {
+		protected function _outarc($x1, $y1, $x2, $y2, $x3, $y3) {
 			$h = $this->h;
 			$this->_out(sprintf('%.2F %.2F %.2F %.2F %.2F %.2F c', $x1*$this->k, ($h-$y1)*$this->k, $x2*$this->k, ($h-$y2)*$this->k, $x3*$this->k, ($h-$y3)*$this->k));
 		}
@@ -13653,7 +13653,7 @@ if (!class_exists('TCPDF', false)) {
 			global $jfrompage, $jtopage;
 			$jfrompage = $frompage;
 			$jtopage = $topage;
-			$function = function($matches) {
+			$function = function ($matches) {
                 global $jfrompage, $jtopage;
                 $pagenum = intval($matches[3]) + 1;
                 if (($pagenum >= $jtopage) AND ($pagenum < $jfrompage)) {

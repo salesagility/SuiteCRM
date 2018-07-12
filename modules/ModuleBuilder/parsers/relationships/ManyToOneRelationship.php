@@ -57,7 +57,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * @param array $definition Parameters passed in as array defined in parent::$definitionKeys
      * The lhs_module value is for the One side; the rhs_module value is for the Many
      */
-    function __construct ($definition) 
+    function __construct($definition) 
     {
         
     	parent::__construct ( $definition ) ;
@@ -93,7 +93,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * The format is that of TO_MODULE => relationship, FROM_MODULE, FROM_MODULES_SUBPANEL, mimicking the format in the layoutdefs.php
      * @return array    An array of subpanel definitions, keyed by the module
      */
-    function buildSubpanelDefinitions ()
+    function buildSubpanelDefinitions()
     {        
         return $this->one_to_many->buildSubpanelDefinitions();
     }
@@ -102,7 +102,7 @@ class ManyToOneRelationship extends AbstractRelationship
     /*
      * @return array    An array of field definitions, ready for the vardefs, keyed by module
      */
-    function buildVardefs ( )
+    function buildVardefs()
     {
        return $this->one_to_many->buildVardefs();
     }
@@ -111,7 +111,7 @@ class ManyToOneRelationship extends AbstractRelationship
      * Define what fields to add to which modules layouts
      * @return array    An array of module => fieldname
      */
-    function buildFieldsToLayouts ()
+    function buildFieldsToLayouts()
     {
         if ($this->relationship_only)
             return array () ;
@@ -122,30 +122,30 @@ class ManyToOneRelationship extends AbstractRelationship
     /*
      * @return array    An array of relationship metadata definitions
      */
-    function buildRelationshipMetaData ()
+    function buildRelationshipMetaData()
     {
         return $this->one_to_many->buildRelationshipMetaData();
     }
     
-    public function setName ($relationshipName)
+    public function setName($relationshipName)
     {
         parent::setName($relationshipName);
     	$this->one_to_many->setname($relationshipName);
     }
     
-    public function setReadonly ($set = true)
+    public function setReadonly($set = true)
     {
         parent::setReadonly($set);
     	$this->one_to_many->setReadonly();
     }
     
-    public function delete ()
+    public function delete()
     {
         parent::delete();
     	$this->one_to_many->delete();
     }
     
-    public function setRelationship_only ()
+    public function setRelationship_only()
     {
         parent::setRelationship_only();
         $this->one_to_many->setRelationship_only();

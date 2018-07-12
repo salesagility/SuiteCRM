@@ -46,7 +46,7 @@ class ConfiguratorViewAddFontResult extends SugarView
     /**
      * display the form
      */
-    public function display(){
+    public function display() {
         global $mod_strings, $app_list_strings, $app_strings, $current_user;
         if(!is_admin($current_user)){
            sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -75,7 +75,7 @@ class ConfiguratorViewAddFontResult extends SugarView
      * This method prepares the received data and call the addFont method of the fontManager
      * @return boolean true on success
      */
-    private function addFont(){
+    private function addFont() {
         $this->log="";
         $error=false;
         $files = array("pdf_metric_file","pdf_font_file");

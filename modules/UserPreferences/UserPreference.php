@@ -394,7 +394,7 @@ class UserPreference extends SugarBean
         $new_value,
         $sub_key = '',
         $is_value_array = false,
-        $unset_value = false )
+        $unset_value = false)
     {
         global $current_user, $db;
 

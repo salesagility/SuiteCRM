@@ -215,7 +215,7 @@ function checkDBSettings($silent=false) {
         installLog("End DB Check Process *************");
 }
 
-function printErrors($errors ){
+function printErrors($errors) {
 
 global $mod_strings;
     if(count($errors) == 0){
@@ -251,7 +251,7 @@ global $mod_strings;
 }
 
 
-function copyInputsIntoSession(){
+function copyInputsIntoSession() {
             if(isset($_REQUEST['setup_db_type'])){$_SESSION['setup_db_type']                        = $_REQUEST['setup_db_type'];}
             if(isset($_REQUEST['setup_db_admin_user_name'])){$_SESSION['setup_db_admin_user_name']  = $_REQUEST['setup_db_admin_user_name'];}
             if(isset($_REQUEST['setup_db_admin_password'])){$_SESSION['setup_db_admin_password']    = $_REQUEST['setup_db_admin_password'];}

@@ -39,14 +39,14 @@
 
 class LeadsController extends SugarController
 {
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function LeadsController(){
+    function LeadsController() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -57,7 +57,7 @@ class LeadsController extends SugarController
         self::__construct();
     }
 
-	function pre_editview(){
+	function pre_editview() {
 		//IF we have a prospect id leads convert it to a lead
 		if (empty($this->bean->id) && !empty($_REQUEST['return_module']) &&$_REQUEST['return_module'] == 'Prospects' ) {
 
@@ -74,12 +74,12 @@ class LeadsController extends SugarController
 		}
 		return true;
 	}
-	function action_editview(){
+	function action_editview() {
 		$this->view = 'edit';
 		return true;
 	}
 
-	protected function callLegacyCode(){
+	protected function callLegacyCode() {
     	if(strtolower($this->do_action) == 'convertlead'){
         	if(file_exists('modules/Leads/ConvertLead.php') && !file_exists('custom/modules/Leads/metadata/convertdefs.php')){
 	        	if(!empty($_REQUEST['emailAddressWidget'])) {

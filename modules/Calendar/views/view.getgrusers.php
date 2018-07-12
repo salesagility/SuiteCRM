@@ -42,15 +42,15 @@ require_once('include/MVC/View/SugarView.php');
 class CalendarViewGetGRUsers extends SugarView
 {
 
-	function CalendarViewGetGRUsers(){
+	function CalendarViewGetGRUsers() {
  		parent::SugarView();
 	}
 	
-	function process(){
+	function process() {
 		$this->display();
 	}
 	
-	function display(){
+	function display() {
 		$users_arr = array();
 		require_once("modules/Users/User.php");	
 	

@@ -50,7 +50,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      *
      * @param REQUEST params  $params
      */
-    function saveDropDown($params){
+    function saveDropDown($params) {
         require_once('modules/Administration/Common.php');
 		$emptyMarker = translate('LBL_BLANK');
 		$selected_lang = (!empty($params['dropdown_lang'])?$params['dropdown_lang']:$_SESSION['authenticated_user_language']);

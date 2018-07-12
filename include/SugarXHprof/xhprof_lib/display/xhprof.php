@@ -439,7 +439,7 @@ function stat_description($stat) {
  *
  * @author: Kannan
  */
-function profiler_report ($url_params,
+function profiler_report($url_params,
                           $rep_symbol,
                           $sort,
                           $run1,
@@ -1300,7 +1300,7 @@ function symbol_report($url_params,
  *
  * @author Kannan
  */
-function profiler_single_run_report ($url_params,
+function profiler_single_run_report($url_params,
                                      $xhprof_data,
                                      $run_desc,
                                      $rep_symbol,

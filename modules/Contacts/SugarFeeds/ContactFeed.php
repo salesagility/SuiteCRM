@@ -45,7 +45,7 @@ require_once('modules/SugarFeed/feedLogicBase.php');
 class ContactFeed extends FeedLogicBase
 {
     var $module = 'Contacts';
-    function pushFeed($bean, $event, $arguments){
+    function pushFeed($bean, $event, $arguments) {
     	global $locale;
         $text = '';
         if(empty($bean->fetched_row)){

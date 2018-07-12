@@ -42,15 +42,15 @@ require_once('include/MVC/View/SugarView.php');
 class CalendarViewSaveSettings extends SugarView
 {
 
-	function CalendarViewSettings(){
+	function CalendarViewSettings() {
  		parent::SugarView();
 	}
 	
-	function process(){
+	function process() {
 		$this->display();
 	}
 	
-	function display(){
+	function display() {
 		global $current_user;
 		
 		$db_start = $this->to_db_time($_REQUEST['day_start_hours'],$_REQUEST['day_start_minutes'],$_REQUEST['day_start_meridiem']);
@@ -73,7 +73,7 @@ class CalendarViewSaveSettings extends SugarView
 			header("Location: index.php?module=Calendar&action=index");
 	}
 	
-	private function to_db_time($hours,$minutes,$mer){
+	private function to_db_time($hours,$minutes,$mer) {
 		$hours = intval($hours);
 		$minutes = intval($minutes);
 		$mer = strtolower($mer);

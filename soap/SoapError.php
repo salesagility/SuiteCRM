@@ -45,14 +45,14 @@ class SoapError
 	var $number;
 	var $description;
 
-	function __construct(){
+	function __construct() {
 		$this->set_error('no_error');
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SoapError(){
+    function SoapError() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -64,7 +64,7 @@ class SoapError
     }
 
 
-	function set_error($error_name){
+	function set_error($error_name) {
 		global $error_defs;
 		if(!isset($error_defs[$error_name])){
 			$this->name = 'An Undefined Error - ' . $error_name . ' occurred';
@@ -77,7 +77,7 @@ class SoapError
 		}
 	}
 
-	function get_soap_array(){
+	function get_soap_array() {
 		return Array('number'=>$this->number,
 					 'name'=>$this->name,
 					 'description'=>$this->description);

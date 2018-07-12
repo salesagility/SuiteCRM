@@ -87,7 +87,7 @@ class FontManager
      */
     var $font_type = "";
 
-    private function setFontPath(){
+    private function setFontPath() {
         if(file_exists(K_PATH_CUSTOM_FONTS.$this->filename)){
             $this->fontPath = K_PATH_CUSTOM_FONTS;
         }elseif(file_exists(K_PATH_FONTS.$this->filename)){
@@ -102,7 +102,7 @@ class FontManager
      * in filename is embedded or not.
      * @return boolean true if embedded.
      */
-    private function getEmbedded(){
+    private function getEmbedded() {
         if(empty($this->fontList[$this->getFilenameShort()]['type'])){
             if(!$this->loadFontFile()){
                 array_push($this->errors,  translate('ERR_LOADFONTFILE', 'Configurator'));
@@ -120,7 +120,7 @@ class FontManager
      * @return array of styles on success
      * @return empty array on failure
      */
-    private function getStyle(){
+    private function getStyle() {
         if(empty($this->filename)){
             array_push($this->errors,  translate("ERR_FONT_EMPTYFILE","Configurator"));
             return array();
@@ -142,7 +142,7 @@ class FontManager
      * .php file + .z file + .ctg.z file
      * @return Integer font Size in KB
      */
-    private function getFontSize(){
+    private function getFontSize() {
         $fileSize=filesize($this->fontPath.$this->filename);
         $name = substr($this->filename, 0, strrpos($this->filename, '.'));
         if(file_exists($this->fontPath.$name.".z")){
@@ -156,7 +156,7 @@ class FontManager
     /**
      * Fill the fontList attribute with the data contains in the font file.
      */
-    public function getDetail(){
+    public function getDetail() {
         if($this->loadFontFile()){
             $this->fontList[$this->getFilenameShort()]['filename'] = $this->filename;
             $this->fontList[$this->getFilenameShort()]['fontpath'] = $this->fontPath;
@@ -189,7 +189,7 @@ class FontManager
      * This method load the font file and check if it is good formatted.
      * @return boolean true on success
      */
-    private function loadFontFile(){
+    private function loadFontFile() {
         if(empty($this->filename))
             return false;
         $this->setFontPath();
@@ -226,7 +226,7 @@ class FontManager
      * and fill the fontList
      * @return boolean true if font files have been found
      */
-    private function parseFolder(){
+    private function parseFolder() {
         if(!file_exists(K_PATH_FONTS) || !is_dir(K_PATH_FONTS)){
             array_push($this->errors, translate("ERR_NO_FONT_PATH","Configurator"));
             return false;
@@ -253,7 +253,7 @@ class FontManager
     /**
      * This method fill the fontList with all the fonts available
      */
-    public function listFontFiles(){
+    public function listFontFiles() {
         $this->fontList=array();
         if(file_exists($cachedfile = sugar_cached("Sugarpdf/cachedFontList.php"))) {
             require $cachedfile;
@@ -272,7 +272,7 @@ class FontManager
      * This method generate an array of font which can be use with get_select_options_with_id
      * @return Array
      */
-    public function getSelectFontList(){
+    public function getSelectFontList() {
         $returnArray = array();
         if($this->listFontFiles()){
             foreach($this->fontList as $k=>$v){
@@ -289,14 +289,14 @@ class FontManager
      * This method return the filename without the ".php"
      * @return String The short filename
      */
-    private function getFilenameShort(){
+    private function getFilenameShort() {
         return preg_replace("/.php$/i", "",$this->filename);
     }
     /**
      * This method delete all the files related to the font define in the filename attribute.
      * @return boolean true on success
      */
-    public function deleteFont(){
+    public function deleteFont() {
         global $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -337,7 +337,7 @@ class FontManager
      * @return boolean true on success
      * @see MakeFont() in K_PATH_FONTS/utils
      */
-    public function addFont($font_file, $metric_file, $embedded=true, $encoding_table='cp1252', $patch=array(), $cid_info="", $style="regular"){
+    public function addFont($font_file, $metric_file, $embedded=true, $encoding_table='cp1252', $patch=array(), $cid_info="", $style="regular") {
         global $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -411,7 +411,7 @@ class FontManager
      * This method  delete the cached file cachedFontList.php
      * @return boolean
      */
-    public function clearCachedFile(){
+    public function clearCachedFile() {
         global $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -425,7 +425,7 @@ class FontManager
      * Check if the given font filename exist in the font directories
      * @return boolean
      */
-    public function fontFileExist($filename){
+    public function fontFileExist($filename) {
         $this->filename = $filename;
         return $this->loadFontFile();
     }

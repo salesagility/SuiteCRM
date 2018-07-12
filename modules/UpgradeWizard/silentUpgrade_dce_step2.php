@@ -62,7 +62,7 @@ function clearCacheSU($thedir, $extension) {
  }
  //Bug 24890, 24892. default_permissions not written to config.php. Following function checks and if
  //no found then adds default_permissions to the config file.
- function checkConfigForPermissions(){
+ function checkConfigForPermissions() {
      if(file_exists(getcwd().'/config.php')){
          require(getcwd().'/config.php');
      }
@@ -80,7 +80,7 @@ function clearCacheSU($thedir, $extension) {
  		}
      }
 }
-function checkLoggerSettings(){
+function checkLoggerSettings() {
 	if(file_exists(getcwd().'/config.php')){
          require(getcwd().'/config.php');
      }
@@ -105,7 +105,7 @@ function checkLoggerSettings(){
 	 }
 }
 
-function checkResourceSettings(){
+function checkResourceSettings() {
 	if(file_exists(getcwd().'/config.php')){
          require(getcwd().'/config.php');
      }
@@ -131,7 +131,7 @@ function checkResourceSettings(){
 	}
 }
 
-function createMissingRels(){
+function createMissingRels() {
 	$relForObjects = array('leads'=>'Leads','campaigns'=>'Campaigns','prospects'=>'Prospects');
 	foreach($relForObjects as $relObjName=>$relModName){
 		//assigned_user
@@ -231,7 +231,7 @@ function addDefaultModuleRoles($defaultRoles = array()) {
 	}
 }
 
-function verifyArguments($argv,$usage_dce,$usage_regular){
+function verifyArguments($argv,$usage_dce,$usage_regular) {
     $upgradeType = '';
     $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
     if(isset($argv[3])) {
@@ -300,7 +300,7 @@ function verifyArguments($argv,$usage_dce,$usage_regular){
     return $upgradeType;
 }
 
-function upgradeDCEFiles($argv,$instanceUpgradePath){
+function upgradeDCEFiles($argv,$instanceUpgradePath) {
 	//copy and update following files from upgrade package
 	$upgradeTheseFiles = array('cron.php','download.php','index.php','install.php','soap.php','sugar_version.php','vcal_server.php');
 	foreach($upgradeTheseFiles as $file){
@@ -326,7 +326,7 @@ function upgradeDCEFiles($argv,$instanceUpgradePath){
 
 
 
-function threeWayMerge(){
+function threeWayMerge() {
 	//using threeway merge apis
 }
 ////	END UTILITIES THAT MUST BE LOCAL :(

@@ -31,14 +31,14 @@ require_once('modules/AOS_Products/AOS_Products_sugar.php');
 class AOS_Products extends AOS_Products_sugar
 {
 
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Products(){
+    function AOS_Products() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -49,7 +49,7 @@ class AOS_Products extends AOS_Products_sugar
         self::__construct();
     }
 
-    function getGUID(){
+    function getGUID() {
         if (function_exists('com_create_guid')){
             return com_create_guid();
         }
@@ -66,7 +66,7 @@ class AOS_Products extends AOS_Products_sugar
         }
     }
 
-	function save($check_notify=false){
+	function save($check_notify=false) {
 		global $sugar_config,$mod_strings;
 
 		if (isset($_POST['deleteAttachment']) && $_POST['deleteAttachment']=='1') {

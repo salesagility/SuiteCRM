@@ -43,7 +43,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 ********************************************************************************/
 require_once('include/utils/encryption_utils.php');
 
-function getSystemInfo($send_usage_info=true){
+function getSystemInfo($send_usage_info=true) {
 	global $sugar_config;
 	global $db, $administration, $timedate;
 	$info=array();
@@ -118,7 +118,7 @@ function getSystemInfo($send_usage_info=true){
 
 }
 
-function getBaseSystemInfo($send_usage_info=true){
+function getBaseSystemInfo($send_usage_info=true) {
     include('sugar_version.php');
     $info=array();
 
@@ -136,7 +136,7 @@ function getBaseSystemInfo($send_usage_info=true){
 
 }
 
-function check_now($send_usage_info=true, $get_request_data=false, $response_data = false, $from_install=false ) {
+function check_now($send_usage_info=true, $get_request_data=false, $response_data = false, $from_install=false) {
 	global $sugar_config, $timedate;
 	global $db, $license;
     include('sugar_version.php');
@@ -349,7 +349,7 @@ function get_sugarbeat() {
 
 
 
-function shouldCheckSugar(){
+function shouldCheckSugar() {
 	global $license, $timedate;
 	if(
 
@@ -362,14 +362,14 @@ function shouldCheckSugar(){
 
 
 
-function loadLicense($firstLogin=false){
+function loadLicense($firstLogin=false) {
 
 	$GLOBALS['license']=new Administration();
 	$GLOBALS['license']=$GLOBALS['license']->retrieveSettings('license', $firstLogin);
 
 }
 
-function loginLicense(){
+function loginLicense() {
 	global $current_user, $license;
 	loadLicense(true);
 

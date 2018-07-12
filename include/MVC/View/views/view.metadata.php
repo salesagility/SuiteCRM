@@ -48,7 +48,7 @@ class ViewMetadata extends SugarView
 	
 	
  	
- 	function displayCheckBoxes($name,$values, $selected =array(), $attr=''){
+ 	function displayCheckBoxes($name,$values, $selected =array(), $attr='') {
  		echo "<div $attr style='overflow:auto;float:left;width:200px;height:200px' >";
 		foreach($values as $value){
 		 	$checked = in_array($value, $selected)? " checked=checked ": " ";
@@ -57,7 +57,7 @@ class ViewMetadata extends SugarView
 		echo "</div>";
  	}
  	
- 	function displaySelect($name,$values, $selected ='', $attr=''){
+ 	function displaySelect($name,$values, $selected ='', $attr='') {
  		echo "<select name='$name' $attr>";
 		foreach($values as $value){
 		 	$checked = $value == $selected? " selected=selected ": " ";
@@ -68,7 +68,7 @@ class ViewMetadata extends SugarView
  	
  	
  	
- 	 function displayTextBoxes($values, $attr=''){
+ 	 function displayTextBoxes($values, $attr='') {
  		echo "<div $attr style='overflow:auto;float:left;width:400px;height:200px' >";
 		foreach($values as $value){
 			$postvalue = !empty($_POST[$value])? $_POST[$value]: '';
@@ -79,14 +79,14 @@ class ViewMetadata extends SugarView
  	
  	
  	
- 	function printValue($value, $depth=0){
+ 	function printValue($value, $depth=0) {
  		echo "<pre>";
  		print_r($value);
  		echo "</pre>";
  		
  	}
  	
- 	function display(){
+ 	function display() {
  		$do = !empty($_REQUEST['do'])?$_REQUEST['do']:'';
  		echo "<form method='post'>";
  		echo "<div><h2>I want to learn about ";
@@ -251,11 +251,11 @@ EOQ;
 class VardefBrowser
 {
 
-	function __construct(){
+	function __construct() {
 		
 	}
 	
-	static function getModules(){
+	static function getModules() {
 		$modules = array();
 		foreach($GLOBALS['beanList'] as $module=>$object){
 			$object = BeanFactory::getObjectName($module);
@@ -269,7 +269,7 @@ class VardefBrowser
 		
 	}
 	
-	static function findFieldsWithAttributes($attributes, $modules=null){
+	static function findFieldsWithAttributes($attributes, $modules=null) {
 		$fields = array();
 		if(empty($modules))$modules = VardefBrowser::getModules();
 		foreach($modules as $module){
@@ -303,7 +303,7 @@ class VardefBrowser
 		return $fields;			
 	}
 	
-		static function findVardefs($modules=null){
+		static function findVardefs($modules=null) {
 			$defs = array();
 			if(empty($modules))$modules = VardefBrowser::getModules();
 			foreach($modules as $module){
@@ -319,7 +319,7 @@ class VardefBrowser
 		}
 	
 	
-		static function findFieldAttributes($attributes=array(), $modules=null, $byModule=false, $byType=false){
+		static function findFieldAttributes($attributes=array(), $modules=null, $byModule=false, $byType=false) {
 		$fields = array();
 		if(empty($modules))$modules = VardefBrowser::getModules();
 		foreach($modules as $module){

@@ -58,7 +58,7 @@ class EmailAuthenticate extends SugarAuthenticate
 	 *
 	 * @return EmailAuthenticate
 	 */
-	function __construct(){
+	function __construct() {
 
 		parent::__construct();
 	}
@@ -66,7 +66,7 @@ class EmailAuthenticate extends SugarAuthenticate
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function EmailAuthenticate(){
+    function EmailAuthenticate() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);

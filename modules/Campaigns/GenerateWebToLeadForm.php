@@ -155,7 +155,7 @@ $xtpl->parse("main.variable_button");
 $xtpl->parse("main");
 $xtpl->out("main");
 
-function ifRadioButton($customFieldName){
+function ifRadioButton($customFieldName) {
     $custRow = null;
     $query="select id,type from fields_meta_data where deleted = 0 and name = '$customFieldName'";
     $result=DBManagerFactory::getInstance()->query($query);

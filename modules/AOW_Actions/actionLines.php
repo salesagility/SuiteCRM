@@ -23,7 +23,7 @@
  */
 
 
-function display_action_lines(SugarBean $focus, $field, $value, $view){
+function display_action_lines(SugarBean $focus, $field, $value, $view) {
 
     global $locale, $app_list_strings, $mod_strings;
 

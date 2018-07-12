@@ -161,7 +161,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     	}
     }
     // Function for basic field validation (present and neither empty nor only white space nor just 'http://')
-    function IsNullOrEmptyString($question){
+    function IsNullOrEmptyString($question) {
         return (!isset($question) || trim($question)==='' || $question =='http://');
     }
 

@@ -57,27 +57,27 @@ var $notes_list = null;
 var $hideNewButton = false;
 var $focus;
 
-function setFocus(&$value){
+function setFocus(&$value) {
 	$this->focus =(object) $value;
 }
 
 
-function setNotesList(&$value){
+function setNotesList(&$value) {
 	$this->notes_list =$value;
 }
 
-function setHideNewButton($value){
+function setHideNewButton($value) {
 	$this->hideNewButton = $value;
 }
 
-function __construct(){
+function __construct() {
 	global $theme;
 }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SubPanelViewNotes(){
+    function SubPanelViewNotes() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -89,7 +89,7 @@ function __construct(){
     }
 
 
-function getHeaderText($action, $currentModule){
+function getHeaderText($action, $currentModule) {
 	global $app_strings;
 	$button  = "<table cellspacing='0' cellpadding='0' border='0'><form border='0' action='index.php' method='post' name='form' id='form'>\n";
 	$button .= "<input type='hidden' name='module' value='Notes'>\n";
@@ -100,7 +100,7 @@ function getHeaderText($action, $currentModule){
 	return $button;
 }
 
-function ProcessSubPanelListView($xTemplatePath, &$mod_strings,$action, $curModule=''){
+function ProcessSubPanelListView($xTemplatePath, &$mod_strings,$action, $curModule='') {
 	global $currentModule,$app_strings;
 	if(empty($curModule))
 		$curModule = $currentModule;

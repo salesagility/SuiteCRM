@@ -33,7 +33,7 @@ class AOPInboundEmail extends InboundEmail
      * @param $noteIds A whitelist of note ids to replace
      * @return mixed
      */
-    function processImageLinks($string, $noteIds){
+    function processImageLinks($string, $noteIds) {
         global $sugar_config;
         if(!$noteIds){
             return $string;

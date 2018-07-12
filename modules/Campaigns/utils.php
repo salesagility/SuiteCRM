@@ -341,12 +341,12 @@ function log_campaign_activity($identifier, $activity, $update = true, $clicked_
      * @deprecated 62_Joneses - June 24, 2011
      * @see campaign_log_lead_or_contact_entry()
      */
-function campaign_log_lead_entry($campaign_id, $parent_bean,$child_bean,$activity_type){
+function campaign_log_lead_entry($campaign_id, $parent_bean,$child_bean,$activity_type) {
     campaign_log_lead_or_contact_entry($campaign_id, $parent_bean,$child_bean,$activity_type);
 }
 
 
-function campaign_log_lead_or_contact_entry($campaign_id, $parent_bean,$child_bean,$activity_type){
+function campaign_log_lead_or_contact_entry($campaign_id, $parent_bean,$child_bean,$activity_type) {
     global $timedate;
 
     //create campaign tracker id and retrieve related bio bean
@@ -964,7 +964,7 @@ function write_mail_merge_log_entry($campaign_id,$pl_row) {
     }
 }
 
-    function track_campaign_prospects($focus){
+    function track_campaign_prospects($focus) {
         $campaign_id = DBManagerFactory::getInstance()->quote($focus->id);
         $delete_query="delete from campaign_log where campaign_id='".$campaign_id."' and activity_type='targeted'";
         $focus->db->query($delete_query);
@@ -989,7 +989,7 @@ function write_mail_merge_log_entry($campaign_id,$pl_row) {
         return $mod_strings['LBL_DEFAULT_LIST_ENTRIES_WERE_PROCESSED'];
     }
 
-    function create_campaign_log_entry($campaign_id, $focus, $rel_name, $rel_bean, $target_id = ''){
+    function create_campaign_log_entry($campaign_id, $focus, $rel_name, $rel_bean, $target_id = '') {
         global $timedate;
 
         $target_ids = array();
@@ -1037,7 +1037,7 @@ function write_mail_merge_log_entry($campaign_id,$pl_row) {
     /*
      * This function will return an array that has been formatted to work as a Quick Search Object for prospect lists
      */
-    function getProspectListQSObjects($source = '', $return_field_name='name', $return_field_id='id' ) {
+    function getProspectListQSObjects($source = '', $return_field_name='name', $return_field_id='id') {
         global $app_strings;
         //if source has not been specified, then search across all prospect lists
         if(empty($source)){

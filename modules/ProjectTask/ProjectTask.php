@@ -127,7 +127,7 @@ class ProjectTask extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ProjectTask($init=true){
+    public function ProjectTask($init=true) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -264,7 +264,7 @@ class ProjectTask extends SugarBean
 	/*
 	 *
 	 */
-	function build_generic_where_clause ($the_query_string)
+	function build_generic_where_clause($the_query_string)
 	{
 		$where_clauses = array();
 		$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
@@ -280,7 +280,7 @@ class ProjectTask extends SugarBean
 		return $the_where;
 	}
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 		global $action, $currentModule, $focus, $current_module_strings, $app_list_strings, $timedate, $locale;
 		$today = $timedate->handle_offset(date($GLOBALS['timedate']->get_db_date_time_format(), time()), $timedate->dbDayFormat, true);
 		$task_fields =$this->get_list_view_array();
@@ -315,13 +315,13 @@ class ProjectTask extends SugarBean
 		return $task_fields;
 	}
 
-	function bean_implements($interface){
+	function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}
 		return false;
 	}
-	function listviewACLHelper(){
+	function listviewACLHelper() {
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
 		$in_group = false; //SECURITY GROUPS

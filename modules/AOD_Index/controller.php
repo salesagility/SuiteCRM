@@ -32,7 +32,7 @@ class AOD_IndexController extends SugarController
     function action_indexdata() {
         $this->view = 'indexdata';
     }
-    function action_optimise(){
+    function action_optimise() {
         set_time_limit(6000);
         $index = BeanFactory::getBean("AOD_Index")->getIndex();
         $index->optimise();

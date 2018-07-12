@@ -127,7 +127,7 @@ function query_client_ip()
 }
 
 // sets value to key value
-function get_val_array($arr){
+function get_val_array($arr) {
 	$new = array();
 	if(!empty($arr)){
 	foreach($arr as $key=>$val){

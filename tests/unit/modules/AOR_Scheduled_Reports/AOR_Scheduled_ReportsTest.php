@@ -11,7 +11,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $current_user = new User();
     }
 
-	public function testSaveAndGet_email_recipients(){
+	public function testSaveAndGet_email_recipients() {
             
             $state = new SuiteCRM\StateSaver();
             $state->pushTable('aor_scheduled_reports');
@@ -52,7 +52,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
             $state->popTable('aor_scheduled_reports');
     }
     
-	public function testAOR_Scheduled_Reports(){
+	public function testAOR_Scheduled_Reports() {
 
 		//execute the contructor and check for the Object type and  attributes
 		$aorScheduledReports = new AOR_Scheduled_Reports();
@@ -69,7 +69,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
 	}
 
-	public function testbean_implements(){
+	public function testbean_implements() {
             
         $state = new SuiteCRM\StateSaver();
         
@@ -91,7 +91,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
 
 
-	public function testshouldRun(){
+	public function testshouldRun() {
 
 
 		$aorScheduledReports = new AOR_Scheduled_Reports();

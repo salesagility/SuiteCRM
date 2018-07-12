@@ -83,7 +83,7 @@ $script_files = array(
 
 
 
-function extractFile( $zip_file, $file_in_zip ){
+function extractFile($zip_file, $file_in_zip) {
     global $base_tmp_upgrade_dir;
 	if(empty($base_tmp_upgrade_dir)){
     	$base_tmp_upgrade_dir   = sugar_cached("upgrades/temp");
@@ -94,11 +94,11 @@ function extractFile( $zip_file, $file_in_zip ){
     return( "$my_zip_dir/$file_in_zip" );
 }
 
-function extractManifest( $zip_file ){
+function extractManifest($zip_file) {
     return( extractFile( $zip_file, "manifest.php" ) );
 }
 
-function getInstallType( $type_string ){
+function getInstallType($type_string) {
     // detect file type
     global $subdirs;
 
@@ -111,7 +111,7 @@ function getInstallType( $type_string ){
     return( "" );
 }
 
-function getImageForType( $type ){
+function getImageForType($type) {
 
     $icon = "";
     switch( $type ){
@@ -136,7 +136,7 @@ function getImageForType( $type ){
     return( $icon );
 }
 
-function getLanguagePackName( $the_file ){
+function getLanguagePackName($the_file) {
     global $app_list_strings;
     require_once( "$the_file" );
     if( isset( $app_list_strings["language_pack_name"] ) ){
@@ -145,19 +145,19 @@ function getLanguagePackName( $the_file ){
     return( "" );
 }
 
-function getUITextForType( $type ){
+function getUITextForType($type) {
 	$type = 'LBL_UW_TYPE_'.strtoupper($type);
 	global $mod_strings;
 	return $mod_strings[$type];
 }
 
-function getUITextForMode( $mode ){
+function getUITextForMode($mode) {
     $mode = 'LBL_UW_MODE_'.strtoupper($mode);
     global $mod_strings;
     return $mod_strings[$mode];
 }
 
-function validate_manifest( $manifest ){
+function validate_manifest($manifest) {
     // takes a manifest.php manifest array and validates contents
     global $subdirs;
     global $sugar_version;
@@ -198,7 +198,7 @@ function validate_manifest( $manifest ){
     }
 }
 
-function getDiffFiles($unzip_dir, $install_file, $is_install = true, $previous_version = ''){
+function getDiffFiles($unzip_dir, $install_file, $is_install = true, $previous_version = '') {
 	//require_once($unzip_dir . '/manifest.php');
 	global $installdefs;
 	if(!empty($previous_version)){

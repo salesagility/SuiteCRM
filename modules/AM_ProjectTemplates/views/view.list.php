@@ -84,7 +84,7 @@ class AM_ProjectTemplatesViewList extends ViewList
         }
     }
 
-    function preDisplay(){
+    function preDisplay() {
         $this->lv = new AM_ProjectTemplatesListViewSmarty();
     }
 

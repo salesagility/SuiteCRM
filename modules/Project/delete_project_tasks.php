@@ -25,7 +25,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class delete_project_tasks
 {
-    function delete_tasks(&$bean, $event, $arguments){
+    function delete_tasks(&$bean, $event, $arguments) {
         $db = DBManagerFactory::getInstance();
         $Task = BeanFactory::getBean('ProjectTask');
         $tasks = $Task->get_full_list("order_number", "project_task.project_id = '".$bean->id."'");

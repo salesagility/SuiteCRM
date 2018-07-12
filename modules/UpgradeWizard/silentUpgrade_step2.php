@@ -47,7 +47,7 @@ ini_set('memory_limit',-1);
 ////	UTILITIES THAT MUST BE LOCAL :(
  //Bug 24890, 24892. default_permissions not written to config.php. Following function checks and if
  //no found then adds default_permissions to the config file.
- function checkConfigForPermissions(){
+ function checkConfigForPermissions() {
      if(file_exists(getcwd().'/config.php')){
          require(getcwd().'/config.php');
      }
@@ -66,7 +66,7 @@ ini_set('memory_limit',-1);
      }
 }
 
-function checkLoggerSettings(){
+function checkLoggerSettings() {
 	if(file_exists(getcwd().'/config.php')){
          require(getcwd().'/config.php');
      }
@@ -91,7 +91,7 @@ function checkLoggerSettings(){
 	 }
 }
 
-function checkResourceSettings(){
+function checkResourceSettings() {
 	if(file_exists(getcwd().'/config.php')){
          require(getcwd().'/config.php');
      }
@@ -118,7 +118,7 @@ function checkResourceSettings(){
 }
 
 
-function verifyArguments($argv,$usage_regular){
+function verifyArguments($argv,$usage_regular) {
     $upgradeType = '';
     $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
     if(isset($argv[3])) {

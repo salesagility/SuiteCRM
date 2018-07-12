@@ -6,14 +6,14 @@ require_once('modules/Cases/CasesListViewSmarty.php');
 class CasesViewList extends ViewList
 {
 
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function CasesViewList(){
+    function CasesViewList() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -25,7 +25,7 @@ class CasesViewList extends ViewList
     }
 
 
-	function preDisplay(){
+	function preDisplay() {
 		$this->lv = new CasesListViewSmarty();
 	}
 }

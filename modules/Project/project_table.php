@@ -31,7 +31,7 @@ class ProjectTable
         $this->draw($this->tasks);
     }
 
-    public function draw($tasks){
+    public function draw($tasks) {
 
         global $mod_strings, $app_list_strings;
 
@@ -163,7 +163,7 @@ class ProjectTable
     }
 
     // Function for basic field validation (present and neither empty nor only white space
-    public function IsNullOrEmptyString($question){
+    public function IsNullOrEmptyString($question) {
         return (!isset($question) || trim($question)==='');
     }
 

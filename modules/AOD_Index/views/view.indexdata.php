@@ -33,7 +33,7 @@ class AOD_IndexViewIndexData extends SugarView
     /**
      * display the form
      */
-    public function display(){
+    public function display() {
         global $db, $timedate, $current_language;
         parent::display();
 

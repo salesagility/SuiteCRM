@@ -77,7 +77,7 @@ class AOW_WorkFlowController extends SugarController
     }
 
 
-    protected function action_getModuleOperatorField(){
+    protected function action_getModuleOperatorField() {
 
         global $app_list_strings, $beanFiles, $beanList;
 
@@ -150,7 +150,7 @@ class AOW_WorkFlowController extends SugarController
 
     }
 
-    protected function action_getFieldTypeOptions(){
+    protected function action_getFieldTypeOptions() {
 
         global $app_list_strings, $beanFiles, $beanList;
 
@@ -225,7 +225,7 @@ class AOW_WorkFlowController extends SugarController
 
     }
 
-    protected function action_getActionFieldTypeOptions(){
+    protected function action_getActionFieldTypeOptions() {
 
         global $app_list_strings, $beanFiles, $beanList;
 
@@ -421,7 +421,7 @@ class AOW_WorkFlowController extends SugarController
 
     }
 
-    protected function action_getRelActionFieldTypeOptions(){
+    protected function action_getRelActionFieldTypeOptions() {
 
         global $app_list_strings, $beanFiles, $beanList;
 
@@ -465,7 +465,7 @@ class AOW_WorkFlowController extends SugarController
 
     }
 
-    protected function action_getAction(){
+    protected function action_getAction() {
         global $beanList, $beanFiles;
 
         $action_name = 'action'.$_REQUEST['aow_action'];
@@ -555,7 +555,7 @@ class AOW_WorkFlowController extends SugarController
     }
 
 
-    protected function action_testFlow(){
+    protected function action_testFlow() {
 
         echo 'Started<br />';
         require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');

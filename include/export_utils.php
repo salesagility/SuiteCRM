@@ -577,7 +577,7 @@ function generateSearchWhere($module, $query) {//this function is similar with f
 
      }
  //this function will take in the bean and field mapping and return a proper value
- function returnFakeDataRow($focus,$field_array,$rowsToReturn = 5){
+ function returnFakeDataRow($focus,$field_array,$rowsToReturn = 5) {
 
     if(empty($focus) || empty($field_array))
      return ;
@@ -806,7 +806,7 @@ function generateSearchWhere($module, $query) {//this function is similar with f
 
 
  //expects the field name to translate and a bean of the type being translated (to access field map and mod_strings)
- function translateForExport($field_db_name,$focus){
+ function translateForExport($field_db_name,$focus) {
      global $mod_strings,$app_strings;
 
      if (empty($field_db_name) || empty($focus)){
@@ -864,7 +864,7 @@ function generateSearchWhere($module, $query) {//this function is similar with f
 //call this function to return the desired order to display columns for export in.
 //if you pass in an array, it will reorder the array and send back to you.  It expects the array
 //to have the db names as key values, or as labels
-function get_field_order_mapping($name='',$reorderArr = '', $exclude = true){
+function get_field_order_mapping($name='',$reorderArr = '', $exclude = true) {
 
     //define the ordering of fields, note that the key value is what is important, and should be the db field name
     $field_order_array = array();

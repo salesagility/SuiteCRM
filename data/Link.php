@@ -83,7 +83,7 @@ class Link
 	 * 		$_table_name: optional, fetch from the bean's table name property.
 	 * 		$_key_name: optional, name of the primary key column for _table_name
 	 */
-	function __construct($_rel_name, &$_bean, $fieldDef, $_table_name='', $_key_name=''){
+	function __construct($_rel_name, &$_bean, $fieldDef, $_table_name='', $_key_name='') {
 		global $dictionary;
         require_once("modules/TableDictionary.php");
         $GLOBALS['log']->debug("Link Constructor, relationship name: ".$_rel_name);
@@ -216,11 +216,11 @@ class Link
 	}
 
 
-	function getRelatedFields(){
+	function getRelatedFields() {
 		return $this->relationship_fields;
 	}
 
-	function getRelatedField($name){
+	function getRelatedField($name) {
 		return (!empty($this->relationship_fields[$name]))? $this->relationship_fields[$name]: null;
 	}
 
@@ -401,7 +401,7 @@ class Link
 
 
 
-	function getQuery($return_as_array=false, $sort_array = array(),$deleted=0, $optional_where="", $return_join = false, $bean_filter="", $role="", $for_subpanels = false){
+	function getQuery($return_as_array=false, $sort_array = array(),$deleted=0, $optional_where="", $return_join = false, $bean_filter="", $role="", $for_subpanels = false) {
 
 		$select='';
 		$from='';

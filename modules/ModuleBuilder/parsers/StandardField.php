@@ -48,7 +48,7 @@ class StandardField extends DynamicField
 	var $base_def = array();
 	var $baseField;
     
-    protected function loadCustomDef($field){
+    protected function loadCustomDef($field) {
     	global $beanList;
     	if (!empty($beanList[$this->module]) && is_file("custom/Extension/modules/{$this->module}/Ext/Vardefs/sugarfield_$field.php"))
     	{
@@ -60,7 +60,7 @@ class StandardField extends DynamicField
     	}
     }
 
-    protected function loadBaseDef($field){
+    protected function loadBaseDef($field) {
         global $beanList;
         if (!empty($beanList[$this->module]) && is_file("modules/{$this->module}/vardefs.php"))
         {
@@ -77,7 +77,7 @@ class StandardField extends DynamicField
      * @param Field Object $field
      * @return boolean
      */
-    function addFieldObject(&$field){
+    function addFieldObject(&$field) {
         global $dictionary, $beanList;
         
         

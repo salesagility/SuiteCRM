@@ -44,11 +44,11 @@ class TemplateText extends TemplateField
 	var $type='varchar';
     var $supports_unified_search = true;
 
-    function __construct(){
+    function __construct() {
         parent::__construct();
     }
 
-	function get_xtpl_edit(){
+	function get_xtpl_edit() {
 		$name = $this->name;
 		$returnXTPL = array();
 
@@ -65,7 +65,7 @@ class TemplateText extends TemplateField
 		}
 		return $returnXTPL;
 	}
-	function get_xtpl_search(){
+	function get_xtpl_search() {
 		if(!empty($_REQUEST[$this->name])){
 			return $_REQUEST[$this->name];
 		}
@@ -73,7 +73,7 @@ class TemplateText extends TemplateField
 
 
 
-	function get_xtpl_detail(){
+	function get_xtpl_detail() {
 		$name = $this->name;
 		if(isset($this->bean->$name)){
 			return $this->bean->$name;

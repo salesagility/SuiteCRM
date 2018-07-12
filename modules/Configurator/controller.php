@@ -45,7 +45,7 @@ class ConfiguratorController extends SugarController
     /**
      * Go to the font manager view
      */
-    function action_FontManager(){
+    function action_FontManager() {
         global $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -56,7 +56,7 @@ class ConfiguratorController extends SugarController
     /**
      * Delete a font and go back to the font manager
      */
-    function action_deleteFont(){
+    function action_deleteFont() {
         global $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -73,7 +73,7 @@ class ConfiguratorController extends SugarController
         header("Location: $urlSTR");
     }
 
-    function action_listview(){
+    function action_listview() {
         global $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -83,7 +83,7 @@ class ConfiguratorController extends SugarController
     /**
      * Show the addFont view
      */
-    function action_addFontView(){
+    function action_addFontView() {
         global $current_user;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
@@ -93,7 +93,7 @@ class ConfiguratorController extends SugarController
     /**
      * Add a new font and show the addFontResult view
      */
-    function action_addFont(){
+    function action_addFont() {
         global $current_user, $mod_strings;
         if(!is_admin($current_user)){
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);

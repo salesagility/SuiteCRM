@@ -46,7 +46,7 @@ class TemplateBoolean extends TemplateField
 	var $type = 'bool';
 
 	//BEGIN BACKWARDS COMPATABILITY
-function get_xtpl_edit(){
+function get_xtpl_edit() {
         $name = $this->name;
         $returnXTPL = array();
         if(!empty($this->help)){
@@ -83,7 +83,7 @@ function get_xtpl_edit(){
 
 
 
-    function get_xtpl_search(){
+    function get_xtpl_search() {
 
         if(!empty($_REQUEST[$this->name])){
             $returnXTPL = array();
@@ -98,7 +98,7 @@ function get_xtpl_edit(){
         return '';
     }
 
-   function get_xtpl_detail(){
+   function get_xtpl_detail() {
         $name = $this->name;
         $returnXTPL = array();
         if(!empty($this->help)){
@@ -115,7 +115,7 @@ function get_xtpl_edit(){
         }
         return $returnXTPL;
     }
-    function get_xtpl_list(){
+    function get_xtpl_list() {
         return $this->get_xtpl_edit();
     }
 

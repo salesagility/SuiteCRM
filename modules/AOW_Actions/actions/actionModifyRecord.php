@@ -28,14 +28,14 @@ require_once('modules/AOW_Actions/actions/actionCreateRecord.php');
 class actionModifyRecord extends actionCreateRecord
 {
 
-    function __construct($id = ''){
+    function __construct($id = '') {
         parent::__construct($id);
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function actionModifyRecord($id = ''){
+    function actionModifyRecord($id = '') {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -47,11 +47,11 @@ class actionModifyRecord extends actionCreateRecord
     }
 
 
-    function loadJS(){
+    function loadJS() {
         return parent::loadJS();
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array()){
+    function edit_display($line,SugarBean $bean = null, $params = array()) {
         require_once("modules/AOW_WorkFlow/aow_utils.php");
 
         $modules = getModuleRelationships($bean->module_dir,'EditView', $params['rel_type']);
@@ -113,7 +113,7 @@ EOS;
         return $html;
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+    function run_action(SugarBean $bean, $params = array(), $in_save=false) {
 
         if(isset($params['rel_type']) && $params['rel_type'] != '' && $bean->module_dir != $params['rel_type']){
             $relatedFields = $bean->get_linked_fields();

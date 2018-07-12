@@ -68,13 +68,13 @@ class LogicHook
 
 	var $bean = null;
 
-	public function __construct(){
+	public function __construct() {
 	}
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function LogicHook(){
+    public function LogicHook() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -91,13 +91,13 @@ class LogicHook
 	 *
 	 * @return unknown
 	 */
-	static function initialize(){
+	static function initialize() {
 		if(empty($GLOBALS['logic_hook']))
 			$GLOBALS['logic_hook'] = new LogicHook();
 		return $GLOBALS['logic_hook'];
 	}
 
-	function setBean($bean){
+	function setBean($bean) {
 		$this->bean = $bean;
 		return $this;
 	}
@@ -187,7 +187,7 @@ class LogicHook
 	 * @param array $arguments
 	 * @param SugarBean $bean
 	 */
-	function call_custom_logic($module_dir, $event, $arguments = null){
+	function call_custom_logic($module_dir, $event, $arguments = null) {
 		// declare the hook array variable, it will be defined in the included file.
 		$hook_array = null;
         if(isset($GLOBALS['log'])){
@@ -216,7 +216,7 @@ class LogicHook
 	 * @param array $arguments
 	 * @param SugarBean $bean
 	 */
-	function process_hooks($hook_array, $event, $arguments){
+	function process_hooks($hook_array, $event, $arguments) {
 		// Now iterate through the array for the appropriate hook
 		if(!empty($hook_array[$event])){
 

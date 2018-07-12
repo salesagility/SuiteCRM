@@ -77,7 +77,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetFieldCurrency(&$layout_manager){
+    function SugarWidgetFieldCurrency(&$layout_manager) {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -170,7 +170,7 @@ class SugarWidgetFieldCurrency extends SugarWidgetFieldInt
      return $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0']))."\n";
  }
 
- function queryFilterBetween(&$layout_def){
+ function queryFilterBetween(&$layout_def) {
      return $this->_get_column_select($layout_def)." > ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name0'])). " AND ". $this->_get_column_select($layout_def)." < ".DBManagerFactory::getInstance()->quote(unformat_number($layout_def['input_name1']))."\n";
  }
 

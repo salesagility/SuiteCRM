@@ -128,7 +128,7 @@ class SugarFieldImage extends SugarFieldFile
 
     }
 
-    public function verify_image($upload_file){
+    public function verify_image($upload_file) {
         global $sugar_config;
 
         $valid_ext = isset($sugar_config['image_ext']) ? $sugar_config['image_ext'] : array("image/jpeg","image/png");

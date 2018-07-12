@@ -50,7 +50,7 @@ abstract class ext_rest extends source
 
 	protected $_url;
 
- 	protected function fetchUrl($url){
+ 	protected function fetchUrl($url) {
  		$data = '';
  		$data = @file_get_contents($url);
  		if(empty($data)) {
@@ -59,11 +59,11 @@ abstract class ext_rest extends source
  		return $data;
  	}
 
- 	public function getUrl(){
+ 	public function getUrl() {
  		return $this->_url;
  	}
 
- 	public function setUrl($url){
+ 	public function setUrl($url) {
  		$this->_url = $url;
  	}
 }

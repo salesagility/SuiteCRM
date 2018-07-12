@@ -110,7 +110,7 @@ class ImportFile extends ImportDataSource
      * @param string $enclosure
      * @param bool   $deleteFile
      */
-    public function __construct( $filename, $delimiter  = ',', $enclosure  = '',$deleteFile = true, $checkUploadPath = TRUE )
+    public function __construct($filename, $delimiter  = ',', $enclosure  = '',$deleteFile = true, $checkUploadPath = TRUE)
     {
         if ( !is_file($filename) || !is_readable($filename) ) {
             return false;

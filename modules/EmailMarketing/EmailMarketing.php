@@ -80,7 +80,7 @@ class EmailMarketing extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function EmailMarketing(){
+    public function EmailMarketing() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -139,7 +139,7 @@ class EmailMarketing extends SugarBean
 		return $this->create_new_list_query($order_by, $where);
 	}
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 
 		$temp_array = $this->get_list_view_array();
 
@@ -219,7 +219,7 @@ class EmailMarketing extends SugarBean
 		return $tempArray;
 	}
 
-	function bean_implements($interface){
+	function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}

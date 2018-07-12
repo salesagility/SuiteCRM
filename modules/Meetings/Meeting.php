@@ -129,7 +129,7 @@ class Meeting extends SugarBean
 	/**
 	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
 	 */
-	public function Meeting(){
+	public function Meeting() {
 		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
 		if(isset($GLOBALS['log'])) {
 			$GLOBALS['log']->deprecated($deprecatedMessage);
@@ -145,7 +145,7 @@ class Meeting extends SugarBean
 	 * @param $view string
 	 * @param $is_owner bool
 	 */
-	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
+	function ACLAccess($view,$is_owner='not_set',$in_group='not_set') {
 		// don't check if meeting is being synced from Outlook
 		if($this->syncing == false){
 			$view = strtolower($view);
@@ -699,7 +699,7 @@ class Meeting extends SugarBean
 	/**
 	 * Redefine method to attach ics file to notification email
 	 */
-	public function create_notification_email($notify_user){
+	public function create_notification_email($notify_user) {
         // reset acceptance status for non organizer if date is changed
         if (($notify_user->id != $GLOBALS['current_user']->id) && $this->date_changed) {
             $this->set_accept_status($notify_user, 'none');
@@ -727,7 +727,7 @@ class Meeting extends SugarBean
 	 * Redefine method to remove ics after email is sent
          * @return boolean success/failed
 	 */
-	public function send_assignment_notifications($notify_user, $admin){
+	public function send_assignment_notifications($notify_user, $admin) {
 		parent::send_assignment_notifications($notify_user, $admin);
 
 		$path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;

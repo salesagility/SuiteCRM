@@ -51,7 +51,7 @@ class ProspectListFormBase
 {
 
 
-function getForm($prefix, $mod='', $form=''){
+function getForm($prefix, $mod='', $form='') {
 	
 	if(!ACLController::checkAccess('ProspectLists', 'edit', true)){
 		return '';
@@ -136,7 +136,7 @@ EOQ;
 	return $form;
 }
 
-	function handleSave($prefix,$redirect=true, $useRequired=false){
+	function handleSave($prefix,$redirect=true, $useRequired=false) {
 		
 		
 		require_once('include/formbase.php');

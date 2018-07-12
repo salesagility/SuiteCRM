@@ -156,7 +156,7 @@ class Lead extends Person implements EmailInterface
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Lead(){
+    public function Lead() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -253,7 +253,7 @@ class Lead extends Person implements EmailInterface
 		return $query;
 	}
 
-	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false){
+	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false) {
 
 		$ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect, $ifListForExport);
 		if(strpos($ret_array['select'],"leads.account_name") == false && strpos($ret_array['select'],"leads.*") == false)
@@ -263,7 +263,7 @@ class Lead extends Person implements EmailInterface
         return $ret_array;
 	}
 
-    function converted_lead($leadid, $contactid, $accountid, $opportunityid){
+    function converted_lead($leadid, $contactid, $accountid, $opportunityid) {
     	$query = "UPDATE leads set converted='1', contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$leadid and deleted=0";
 		$this->db->query($query,true,"Error converting lead: ");
 
@@ -304,7 +304,7 @@ class Lead extends Person implements EmailInterface
 		}
 	}
 
-	function get_list_view_data(){
+	function get_list_view_data() {
 
 		$temp_array = parent::get_list_view_data();
                 
@@ -352,7 +352,7 @@ class Lead extends Person implements EmailInterface
 		builds a generic search based on the query string using or
 		do not include any $this-> because this is called on without having the class instantiated
 	*/
-	function build_generic_where_clause ($the_query_string) {
+	function build_generic_where_clause($the_query_string) {
 	$where_clauses = Array();
 	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
@@ -394,13 +394,13 @@ class Lead extends Person implements EmailInterface
 		return $xtpl;
 	}
 
-	function bean_implements($interface){
+	function bean_implements($interface) {
 		switch($interface){
 			case 'ACL':return true;
 		}
 		return false;
 	}
-	function listviewACLHelper(){
+	function listviewACLHelper() {
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
 		$in_group = false; //SECURITY GROUPS

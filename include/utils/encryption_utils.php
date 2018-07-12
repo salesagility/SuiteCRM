@@ -40,12 +40,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Pear/Crypt_Blowfish/Blowfish.php');
 
-function sugarEncode($key, $data){
+function sugarEncode($key, $data) {
 	return base64_encode($data);
 }
 
 
-function sugarDecode($key, $encoded){
+function sugarDecode($key, $encoded) {
 	$data = base64_decode($encoded);
 	return $data;
 }
@@ -86,7 +86,7 @@ function blowfishGetKey($type) {
  * @param STRING data - string to be encrypted and encoded
  * @return string
  */
-function blowfishEncode($key, $data){
+function blowfishEncode($key, $data) {
 	$bf = new Crypt_Blowfish($key);
 	$encrypted = $bf->encrypt($data);
 	return base64_encode($encrypted);
@@ -98,7 +98,7 @@ function blowfishEncode($key, $data){
  * @param STRING encoded base64 encoded blowfish encrypted data
  * @return string
  */
-function blowfishDecode($key, $encoded){
+function blowfishDecode($key, $encoded) {
 	$data = base64_decode($encoded);
 	$bf = new Crypt_Blowfish($key);
 	return trim($bf->decrypt($data));

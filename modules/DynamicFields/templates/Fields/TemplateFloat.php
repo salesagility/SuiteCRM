@@ -48,7 +48,7 @@ class TemplateFloat extends TemplateRange
 	var $len = '18';
 	var $precision = '8';
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct();
 		$this->vardef_map['precision']='ext1';
 		//$this->vardef_map['precision']='precision';
@@ -57,7 +57,7 @@ class TemplateFloat extends TemplateRange
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function TemplateFloat(){
+    public function TemplateFloat() {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if(isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
@@ -69,13 +69,13 @@ class TemplateFloat extends TemplateRange
     }
 
 
-    function get_field_def(){
+    function get_field_def() {
     	$def = parent::get_field_def();
 		$def['precision'] = isset($this->ext1) && $this->ext1 != '' ? $this->ext1 : $this->precision;
     	return $def;
     }
 
-    function get_db_type(){
+    function get_db_type() {
 		$precision = (!empty($this->precision))? $this->precision: 6;
     	if(empty($this->len)) {
 			return parent::get_db_type();

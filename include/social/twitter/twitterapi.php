@@ -49,7 +49,7 @@ $formatted_display = format_tweets($db,$tweets);
 echo $formatted_display;
 
 
-function format_tweets($db,$tweets){
+function format_tweets($db,$tweets) {
 
 
     $i = 0;

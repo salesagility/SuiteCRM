@@ -93,7 +93,7 @@ EOQ;
         return '';
     }
 
-    function addActivities(){
+    function addActivities() {
 		global $app_list_strings, $timedate, $current_user, $app_strings;
 		global $sugar_config;
 
