@@ -4402,7 +4402,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $tmpUser->field_defs['modified_user_id']['source'] = 'custom_field';
 
         $results = $tmpUser->create_new_list_query($order_by, $where, $filter, $params);
-        $this->assertEquals(" SELECT  users.id , 1 id  FROM users  where ( (  (  ( EXISTS (SELECT  1
+        $this->assertEquals(" SELECT  users.id  FROM users  where ( (  (  ( EXISTS (SELECT  1
                   FROM    securitygroups secg
                           INNER JOIN securitygroups_users secu
                             ON secg.id = secu.securitygroup_id
