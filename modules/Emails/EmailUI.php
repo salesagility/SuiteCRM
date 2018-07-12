@@ -433,8 +433,14 @@ eoq;
         global $focus;
         $myBean = $focus;
         $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
-
+        
+        $enableConfirmedOptIn = null;
+        if (isset($configurator->config['email_enable_confirm_opt_in'])) {
+            $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
+        }
+        
         if (!empty($bean)) {
             $myBean = $bean;
         } else {
@@ -453,7 +459,6 @@ eoq;
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
         } else {
-
             if (is_array($emailField)) {
                 $emailFields = $emailField;
             } else {
@@ -505,7 +510,6 @@ eoq;
                             $addresses = $myBean->emailAddress->addresses;
                             foreach ($addresses as $address) {
                                 if ($address['email_address'] === $myBean->{$emailField}) {
-
                                     if (!empty($myBean->id)) {
                                         $myBean->retrieve();
                                     }
@@ -548,7 +552,6 @@ eoq;
                                             $emailLink .= $email_tick;
                                         }
                                         $emailLink .= $myBean->{$emailField};
-
                                     }
                                     $emailLink .= '</a>';
 
@@ -1580,6 +1583,8 @@ eoq;
             $address = trim(array_pop($name));
             $address = str_replace(array("<", ">", "&lt;", "&gt;"), "", $address);
 
+            isValidEmailAddress($address);
+            
             $emailAddress[] = array(
                 'email_address' => $address,
                 'primary_address' => 1,
@@ -1785,6 +1790,7 @@ eoq;
         $smarty->assign('DATE_START', $focus->date_start);
         $smarty->assign('TIME_START', $focus->time_start);
         $smarty->assign('FROM', $focus->from_addr);
+        isValidEmailAddress($focus->from_addr);
         $smarty->assign('TO', nl2br($focus->to_addrs));
         $smarty->assign('CC', nl2br($focus->cc_addrs));
         $smarty->assign('BCC', nl2br($focus->bcc_addrs));
@@ -2283,6 +2289,7 @@ eoq;
         $ret['name'] = $email->name;
         $ret['description'] = $description;
         $ret['from'] = (isset($_REQUEST['composeType']) && $_REQUEST['composeType'] == 'forward') ? "" : $email->from_addr;
+        isValidEmailAddress($ret['from']);
         $ret['to'] = from_html($toAddresses);
         $ret['uid'] = $email->id;
         $ret['parent_name'] = $email->parent_name;
@@ -2303,7 +2310,9 @@ eoq;
             foreach ($userEmailsMeta as $emailMeta) {
                 $userEmails[] = from_html(strtolower(trim($emailMeta['email_address'])));
             }
-            $userEmails[] = from_html(strtolower(trim($email->from_addr)));
+            $fromAddr = from_html(strtolower(trim($email->from_addr)));
+            isValidEmailAddress($fromAddr);
+            $userEmails[] = $fromAddr;
 
             $ret['cc'] = from_html($email->cc_addrs);
             $toAddresses = from_html($toAddresses);
@@ -2352,6 +2361,7 @@ eoq;
                     $email->cc_addrs = "";
                     if (!empty($email->reply_to_addr)) {
                         $email->from_addr = $email->reply_to_addr;
+                        isValidEmailAddress($email->from_addr);
                     } // if
                 } else {
                     if (!empty($email->reply_to_addr)) {
@@ -2898,6 +2908,7 @@ eoq;
 
             $name = $v->get_stored_options('from_name');
             $addr = $v->get_stored_options('from_addr');
+            isValidEmailAddress($addr);
             if ($name != null && $addr != null) {
                 $name = from_html($name);
                 if (!$v->is_personal) {

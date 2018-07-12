@@ -1,6 +1,8 @@
 <?php
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,8 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-if(!ACLController::checkAccess('Calendar', 'list', true)){
-	ACLController::displayNoAccess(true);
+if (!ACLController::checkAccess('Calendar', 'list', true)) {
+    ACLController::displayNoAccess(true);
 }
 
 require_once('modules/Calendar/Calendar.php');
@@ -52,13 +54,10 @@ $views = array("agendaDay" => array(),"basicDay" => array(), "basicWeek" => arra
 global $cal_strings, $current_language;
 $cal_strings = return_module_language($current_language, 'Calendar');
 
-if(empty($_REQUEST['view'])){
-    if (isset($_SESSION['CALENDAR_VIEW']) && in_array($_SESSION['CALENDAR_VIEW'], $views))
-    {
+if (empty($_REQUEST['view'])) {
+    if (isset($_SESSION['CALENDAR_VIEW']) && in_array($_SESSION['CALENDAR_VIEW'], $views)) {
         $_REQUEST['view'] = $_SESSION['CALENDAR_VIEW'];
-    }
-    else
-    {
+    } else {
         $_REQUEST['view'] = SugarConfig::getInstance()->get('calendar.default_view','agendaWeek');
     }
 }
@@ -68,22 +67,22 @@ if(empty($_REQUEST['view'])){
 $cal = new Calendar($_REQUEST['view'], array(), $views);
 
 
-if($cal->view == "sharedMonth" || $cal->view == "sharedWeek"){
-	$cal->init_shared();	
-	global $shared_user;				
-	$shared_user = new User();	
-	foreach($cal->shared_ids as $member){
-		$shared_user->retrieve($member);
-		$cal->add_activities($shared_user);
-	}
-}else{
-	if(array_key_exists($cal->view,$views)) {
-		$cal->add_activities($GLOBALS['current_user']);
-	}
+if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {
+    $cal->init_shared();	
+    global $shared_user;				
+    $shared_user = new User();	
+    foreach ($cal->shared_ids as $member) {
+        $shared_user->retrieve($member);
+        $cal->add_activities($shared_user);
+    }
+} else {
+    if (array_key_exists($cal->view,$views)) {
+        $cal->add_activities($GLOBALS['current_user']);
+    }
 }
 
-if(array_key_exists($cal->view, $views)){
-	$cal->load_activities();
+if (array_key_exists($cal->view, $views)) {
+    $cal->load_activities();
 }
 
 if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
@@ -93,8 +92,9 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
 $display = new CalendarDisplay($cal,"", $views);
 
 	$display->display_title();
-	if($cal->view == "sharedMonth" || $cal->view == "sharedWeek")
-		$display->display_shared_html($cal->view);
+	if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {
+	    $display->display_shared_html($cal->view);
+	}
 	$display->display_calendar_header();
 	$display->display();
 	$display->display_calendar_footer();

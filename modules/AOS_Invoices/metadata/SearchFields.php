@@ -6,7 +6,9 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
  
- if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+ if (!defined('sugarEntry') || !sugarEntry) {
+     die('Not A Valid Entry Point');
+ }
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM

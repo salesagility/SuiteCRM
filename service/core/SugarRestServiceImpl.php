@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if (!defined('sugarEntry')) {
+    define('sugarEntry', true);
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,11 +45,12 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  * This class is an implemenatation class for all the rest services
  */
 require_once('service/core/SugarWebServiceImpl.php');
-class SugarRestServiceImpl extends SugarWebServiceImpl {
-	
-	function md5($string){
-		return md5($string);
-	}
+class SugarRestServiceImpl extends SugarWebServiceImpl
+{
+    function md5($string)
+    {
+        return md5($string);
+    }
 }
 require_once('service/core/SugarRestUtils.php');
 SugarRestServiceImpl::$helperObject = new SugarRestUtils();

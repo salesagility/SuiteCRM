@@ -39,58 +39,63 @@
 
 require_once('include/ytree/Tree.php');
 require_once('include/ytree/Node.php');
-class MBPackageTree{
-
-	function __construct(){
-		$this->tree = new Tree('package_tree');
-		$this->tree->id = 'package_tree';
-		$this->mb = new ModuleBuilder();
-		$this->populateTree($this->mb->getNodes(), $this->tree);
-	}
+class MBPackageTree
+{
+    function __construct()
+    {
+        $this->tree = new Tree('package_tree');
+        $this->tree->id = 'package_tree';
+        $this->mb = new ModuleBuilder();
+        $this->populateTree($this->mb->getNodes(), $this->tree);
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MBPackageTree(){
+    function MBPackageTree()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	function getName(){
-		return 'Packages';
-	}
+    function getName()
+    {
+        return 'Packages';
+    }
 
-	function populateTree($nodes, &$parent){
-		foreach($nodes as $node){
-			if(empty($node['label']))$node['label'] = $node['name'];
-			$yn = new Node($parent->id . '/' . $node['name'],$node['label']);
-			if(!empty($node['action']))
-			$yn->set_property('action', $node['action']);
-			$yn->set_property('href', 'javascript:void(0);');
-			$yn->id = $parent->id . '/' . $node['name'];
-			if(!empty($node['children']))$this->populateTree($node['children'], $yn);
-			$parent->add_node($yn);
-		}
-	}
+    function populateTree($nodes, &$parent)
+    {
+        foreach ($nodes as $node) {
+            if (empty($node['label'])) {
+                $node['label'] = $node['name'];
+            }
+            $yn = new Node($parent->id . '/' . $node['name'],$node['label']);
+            if (!empty($node['action'])) {
+                $yn->set_property('action', $node['action']);
+            }
+            $yn->set_property('href', 'javascript:void(0);');
+            $yn->id = $parent->id . '/' . $node['name'];
+            if (!empty($node['children'])) {
+                $this->populateTree($node['children'], $yn);
+            }
+            $parent->add_node($yn);
+        }
+    }
 
-	function fetch(){
-		//return $this->tree->generate_header() . $this->tree->generate_nodes_array();
-		return $this->tree->generate_nodes_array();
-	}
+    function fetch()
+    {
+        //return $this->tree->generate_header() . $this->tree->generate_nodes_array();
+        return $this->tree->generate_nodes_array();
+    }
 
-	function fetchNodes(){
-		return $this->tree->generateNodesRaw();
-	}
-
-
-
-
-
+    function fetchNodes()
+    {
+        return $this->tree->generateNodesRaw();
+    }
 }

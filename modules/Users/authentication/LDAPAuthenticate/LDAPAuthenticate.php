@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -48,32 +50,32 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  */
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
-class LDAPAuthenticate extends SugarAuthenticate {
-	var $userAuthenticateClass = 'LDAPAuthenticateUser';
-	var $authenticationDir = 'LDAPAuthenticate';
-	/**
-	 * Constructs LDAPAuthenticate
-	 * This will load the user authentication class
-	 *
-	 * @return LDAPAuthenticate
-	 */
-	function __construct(){
-		parent::__construct();
-	}
+class LDAPAuthenticate extends SugarAuthenticate
+{
+    var $userAuthenticateClass = 'LDAPAuthenticateUser';
+    var $authenticationDir = 'LDAPAuthenticate';
+    /**
+     * Constructs LDAPAuthenticate
+     * This will load the user authentication class
+     *
+     * @return LDAPAuthenticate
+     */
+    function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function LDAPAuthenticate(){
+    function LDAPAuthenticate()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
-
-
 }

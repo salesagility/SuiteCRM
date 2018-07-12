@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,45 +44,47 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateFloat extends TemplateRange
 {
-	var $type = 'float';
-	var $default = null;
-	var $default_value = null;
-	var $len = '18';
-	var $precision = '8';
+    var $type = 'float';
+    var $default = null;
+    var $default_value = null;
+    var $len = '18';
+    var $precision = '8';
 
-	public function __construct(){
-		parent::__construct();
-		$this->vardef_map['precision']='ext1';
-		//$this->vardef_map['precision']='precision';
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->vardef_map['precision']='ext1';
+        //$this->vardef_map['precision']='precision';
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function TemplateFloat(){
+    public function TemplateFloat()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function get_field_def(){
-    	$def = parent::get_field_def();
-		$def['precision'] = isset($this->ext1) && $this->ext1 != '' ? $this->ext1 : $this->precision;
-    	return $def;
+    function get_field_def()
+    {
+        $def = parent::get_field_def();
+        $def['precision'] = isset($this->ext1) && $this->ext1 != '' ? $this->ext1 : $this->precision;
+        return $def;
     }
 
-    function get_db_type(){
-		$precision = (!empty($this->precision))? $this->precision: 6;
-    	if(empty($this->len)) {
-			return parent::get_db_type();
-		}
-		return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $this->len, $precision);
-	}
-
+    function get_db_type()
+    {
+        $precision = (!empty($this->precision))? $this->precision: 6;
+        if (empty($this->len)) {
+            return parent::get_db_type();
+        }
+        return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $this->len, $precision);
+    }
 }

@@ -37,7 +37,9 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class StoreQuery
 {
@@ -73,7 +75,7 @@ class StoreQuery
                             if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && !preg_match('/^\[.*?\]$/', $value)) {
                                 $db_format = $timedate->to_db_date($value, false);
                                 $this->query[$key] = $db_format;
-                            } else if ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
+                            } elseif ($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') {
                                 if (preg_match('/[^\d]/', $value)) {
                                     require_once('modules/Currencies/Currency.php');
                                     $this->query[$key] = unformat_number($value);
@@ -144,7 +146,7 @@ class StoreQuery
 
                         if (($type == 'date' || $type == 'datetime' || $type == 'datetimecombo') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) && !preg_match('/^\[.*?\]$/', $value)) {
                             $value = $timedate->to_display_date($value, false);
-                        } else if (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
+                        } elseif (($type == 'int' || $type == 'currency' || $type == 'decimal' || $type == 'float') && isset($this->query[$key . '_unformatted_number']) && preg_match('/^\d+$/', $value)) {
                             require_once('modules/Currencies/Currency.php');
                             $value = format_number($value);
                             if ($type == 'currency' && isset($this->query[$key . '_currency_symbol'])) {
@@ -157,7 +159,6 @@ class StoreQuery
                 // cn: bug 6546 storequery stomps correct value for 'module' in Activities
                 $_REQUEST[$key] = $value;
                 $_GET[$key] = $value;
-
             }
         }
     }
@@ -204,8 +205,7 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
-            } else if ($saveType == 'all') {
+            } elseif ($saveType == 'all') {
                 // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
                 // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
                 $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount', 'current_query_by_page', 'EmailTreeLayout', 'EmailGridWidths');
@@ -238,8 +238,7 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
-            } else if ($saveType == 'all') {
+            } elseif ($saveType == 'all') {
                 $this->query = $_GET;
                 $this->saveQuery($name);
             }

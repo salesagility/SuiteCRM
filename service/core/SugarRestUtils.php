@@ -38,6 +38,6 @@
  ********************************************************************************/
 
 require_once('service/core/SoapHelperWebService.php');
-class SugarRestUtils extends SoapHelperWebServices {
-	
+class SugarRestUtils extends SoapHelperWebServices
+{
 }

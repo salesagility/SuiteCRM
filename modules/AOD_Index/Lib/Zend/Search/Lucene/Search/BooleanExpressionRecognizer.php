@@ -100,7 +100,7 @@ class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_
      */
     public function __construct()
     {
-        parent::__construct( array(self::ST_START,
+        parent::__construct(array(self::ST_START,
                                    self::ST_LITERAL,
                                    self::ST_NOT_OPERATOR,
                                    self::ST_AND_OPERATOR,

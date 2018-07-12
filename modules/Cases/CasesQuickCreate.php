@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,11 +45,12 @@ require_once('include/EditView/QuickCreate.php');
 
 
 
-class CasesQuickCreate extends QuickCreate {
-    
+class CasesQuickCreate extends QuickCreate
+{
     var $javascript;
     
-    function process() {
+    function process()
+    {
         global $current_user, $timedate, $app_list_strings, $current_language, $mod_strings;
         $mod_strings = return_module_language($current_language, 'Cases');
         
@@ -55,7 +58,7 @@ class CasesQuickCreate extends QuickCreate {
   
         $this->ss->assign("PRIORITY_OPTIONS", get_select_options_with_id($app_list_strings['case_priority_dom'], $app_list_strings['case_priority_default_key']));
 
-        if($this->viaAJAX) { // override for ajax call
+        if ($this->viaAJAX) { // override for ajax call
             $this->ss->assign('saveOnclick', "onclick='if(check_form(\"casesQuickCreate\")) return SUGAR.subpanelUtils.inlineSave(this.form.id, \"cases\"); else return false;'");
             $this->ss->assign('cancelOnclick', "onclick='return SUGAR.subpanelUtils.cancelCreate(\"subpanel_cases\")';");
         }
@@ -69,12 +72,12 @@ class CasesQuickCreate extends QuickCreate {
         $this->javascript->setSugarBean($focus);
         $this->javascript->addAllFields('');
 
-		$this->ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['case_status_dom'], $focus->status));
+        $this->ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['case_status_dom'], $focus->status));
         $this->ss->assign('additionalScripts', $this->javascript->getScript(false));
         
         $json = getJSONobj();
         
-		$popup_request_data = array(
+        $popup_request_data = array(
 			'call_back_function' => 'set_return',
 			'form_name' => 'casesQuickCreate',
 			'field_to_name_array' => array(
@@ -83,9 +86,7 @@ class CasesQuickCreate extends QuickCreate {
 			),
 		);
 	
-		$encoded_popup_request_data = $json->encode($popup_request_data);
-		$this->ss->assign('encoded_popup_request_data', $encoded_popup_request_data);        
-
-        
-    }   
+        $encoded_popup_request_data = $json->encode($popup_request_data);
+        $this->ss->assign('encoded_popup_request_data', $encoded_popup_request_data);
+    }
 }

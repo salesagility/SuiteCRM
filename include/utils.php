@@ -2459,8 +2459,6 @@ function clear_register_value($category, $name)
 // this function cleans id's when being imported
 function convert_id($string)
 {
-
-
     $stateSaver = new SuiteCRM\StateSaver();
     $stateSaver->pushErrorLevel();
 
@@ -2995,7 +2993,7 @@ function skype_formatted($number)
     } else {
         return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 3) == '011';
     }
-//	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
+    //	return substr($number, 0, 1) == '+' || substr($number, 0, 2) == '00' || substr($number, 0, 2) == '011';
 }
 
 function format_skype($number)
@@ -3507,6 +3505,7 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 //            return; //depricated we have lots of these ignore them
         case E_USER_NOTICE:
             $type = 'User notice';
+            // no break
         case E_NOTICE:
             $type = 'Notice';
             $halt_script = false;
@@ -3515,10 +3514,13 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 
         case E_USER_WARNING:
             $type = 'User warning';
+            // no break
         case E_COMPILE_WARNING:
             $type = 'Compile warning';
+            // no break
         case E_CORE_WARNING:
             $type = 'Core warning';
+            // no break
         case E_WARNING:
             $type = 'Warning';
             $halt_script = false;
@@ -3526,10 +3528,13 @@ function StackTraceErrorHandler($errno, $errstr, $errfile, $errline, $errcontext
 
         case E_USER_ERROR:
             $type = 'User error';
+            // no break
         case E_COMPILE_ERROR:
             $type = 'Compile error';
+            // no break
         case E_CORE_ERROR:
             $type = 'Core error';
+            // no break
         case E_ERROR:
             $type = 'Error';
             $halt_script = true;
@@ -3608,8 +3613,10 @@ function return_bytes($val)
     switch ($last) {
         case 'g':
             $val *= 1024;
+            // no break
         case 'm':
             $val *= 1024;
+            // no break
         case 'k':
             $val *= 1024;
     }
@@ -5541,6 +5548,22 @@ function isValidId($id)
     $valid = is_numeric($id) || (is_string($id) && preg_match('/^\{?[A-Z0-9]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}\}?$/i', $id));
 
     return $valid;
+}
+
+function isValidEmailAddress($email, $message = 'Invalid email address given', $orEmpty = true, $logInvalid = 'error')
+{
+    if ($orEmpty && !$email) {
+        return true;
+    }
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return true;
+    }
+    if ($logInvalid) {
+        $trace = debug_backtrace();
+        $where = "Called at {$trace[1]['file']}:{$trace[1]['line']} from function {$trace[1]['function']}.";
+        \SuiteCRM\ErrorMessage::log("$message: [$email] $where", $logInvalid);
+    }
+    return false;
 }
 
 function displayAdminError($errorString)

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,81 +49,88 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 // User is used to store customer information.
-class UserSignature extends SugarBean {
-	var $id;
-	var $date_entered;
-	var $date_modified;
-	var $deleted;
-	var $user_id;
-	var $name;
-	var $signature;
-	var $table_name = 'users_signatures';
-	var $module_dir = 'Users';
-	var $object_name ='UserSignature';
-	var $disable_custom_fields = true;
+class UserSignature extends SugarBean
+{
+    var $id;
+    var $date_entered;
+    var $date_modified;
+    var $deleted;
+    var $user_id;
+    var $name;
+    var $signature;
+    var $table_name = 'users_signatures';
+    var $module_dir = 'Users';
+    var $object_name ='UserSignature';
+    var $disable_custom_fields = true;
 
-    public function __construct() {
-		//Ensure the vardefs get loaded.
-		global $dictionary;
-		if(file_exists('custom/metadata/users_signaturesMetaData.php')) {
-			require_once('custom/metadata/users_signaturesMetaData.php');
-		} else {
-			require_once('metadata/users_signaturesMetaData.php');
-		}
+    public function __construct()
+    {
+        //Ensure the vardefs get loaded.
+        global $dictionary;
+        if (file_exists('custom/metadata/users_signaturesMetaData.php')) {
+            require_once('custom/metadata/users_signaturesMetaData.php');
+        } else {
+            require_once('metadata/users_signaturesMetaData.php');
+        }
 
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
-	 */
-	function UserSignature(){
-		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-		if(isset($GLOBALS['log'])) {
-			$GLOBALS['log']->deprecated($deprecatedMessage);
-		}
-		else {
-			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
-		}
-		self::__construct();
-	}
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function UserSignature()
+    {
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if (isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        } else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
 
-	/**
-	 * returns the bean name - overrides SugarBean's
-	 */
-	function get_summary_text() {
-		return $this->name;
-	}
+    /**
+     * returns the bean name - overrides SugarBean's
+     */
+    function get_summary_text()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Override's SugarBean's
-	 */
-	function create_export_query($order_by, $where, $show_deleted = 0) {
-		return $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted);
-	}
+    /**
+     * Override's SugarBean's
+     */
+    function create_export_query($order_by, $where, $show_deleted = 0)
+    {
+        return $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted);
+    }
 
-	/**
-	 * Override's SugarBean's
-	 */
-	function get_list_view_data(){
-		global $mod_strings;
-		global $app_list_strings;
-		$temp_array = $this->get_list_view_array();
-		$temp_array['MAILBOX_TYPE_NAME']= $app_list_strings['dom_mailbox_type'][$this->mailbox_type];
-		return $temp_array;
-	}
+    /**
+     * Override's SugarBean's
+     */
+    function get_list_view_data()
+    {
+        global $mod_strings;
+        global $app_list_strings;
+        $temp_array = $this->get_list_view_array();
+        $temp_array['MAILBOX_TYPE_NAME']= $app_list_strings['dom_mailbox_type'][$this->mailbox_type];
+        return $temp_array;
+    }
 
-	/**
-	 * Override's SugarBean's
-	 */
-	function fill_in_additional_list_fields() {
-		$this->fill_in_additional_detail_fields();
-	}
+    /**
+     * Override's SugarBean's
+     */
+    function fill_in_additional_list_fields()
+    {
+        $this->fill_in_additional_detail_fields();
+    }
 
-	/**
-	 * Override's SugarBean's
-	 */
-	function fill_in_additional_detail_fields() {
-	}
+    /**
+     * Override's SugarBean's
+     */
+    function fill_in_additional_detail_fields()
+    {
+    }
 } // end class definition

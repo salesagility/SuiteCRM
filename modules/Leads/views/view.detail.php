@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,18 +40,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class LeadsViewDetail extends ViewDetail {
-
- 	function display(){
-
-		global $sugar_config;
+class LeadsViewDetail extends ViewDetail
+{
+    function display()
+    {
+        global $sugar_config;
 
         require_once('modules/AOS_PDF_Templates/formLetter.php');
-		formLetter::DVPopupHtml('Leads');
+        formLetter::DVPopupHtml('Leads');
 
-		//If the convert lead action has been disabled for already converted leads, disable the action link.
-		$disableConvert = ($this->bean->status == 'Converted' && !empty($sugar_config['disable_convert_lead'])) ? TRUE : FALSE;
-		$this->ss->assign("DISABLE_CONVERT_ACTION", $disableConvert);
-		parent::display();
- 	}	
+        //If the convert lead action has been disabled for already converted leads, disable the action link.
+        $disableConvert = ($this->bean->status == 'Converted' && !empty($sugar_config['disable_convert_lead'])) ? TRUE : FALSE;
+        $this->ss->assign("DISABLE_CONVERT_ACTION", $disableConvert);
+        parent::display();
+    }
 }

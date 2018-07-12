@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,22 +45,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class SugarWidgetSubPanelTopSelectAccountButton extends SugarWidgetSubPanelTopSelectButton {
-	function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
-	{
-		/*
-		* i.dymovsky
-		* Because when user role can't edit Accounts, it also can't edit Membership Organizations. Select button leads to change MO list
-		* See bug 25633
-		* Bug25633 code change start
-		*/
-		if (!ACLController::checkAccess($widget_data["module"], "edit", true)) {
-			return ;
-		}
-		/*
-		* Bug25633 code change end
-		*/
+class SugarWidgetSubPanelTopSelectAccountButton extends SugarWidgetSubPanelTopSelectButton
+{
+    function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
+    {
+        /*
+        * i.dymovsky
+        * Because when user role can't edit Accounts, it also can't edit Membership Organizations. Select button leads to change MO list
+        * See bug 25633
+        * Bug25633 code change start
+        */
+        if (!ACLController::checkAccess($widget_data["module"], "edit", true)) {
+            return ;
+        }
+        /*
+        * Bug25633 code change end
+        */
 		
-		return parent::display($widget_data);
-	}
+        return parent::display($widget_data);
+    }
 }

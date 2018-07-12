@@ -38,8 +38,8 @@
  ********************************************************************************/
 
 require_once 'modules/AOR_Scheduled_Reports/lib/Cron/includeCron.php';
-class AOR_Scheduled_Reports extends basic {
-
+class AOR_Scheduled_Reports extends basic
+{
     var $new_schema = true;
     var $module_dir = 'AOR_Scheduled_Reports';
     var $object_name = 'AOR_Scheduled_Reports';
@@ -64,49 +64,51 @@ class AOR_Scheduled_Reports extends basic {
     var $last_run;
     var $aor_report_id;
 
-	function __construct(){
+    function __construct()
+    {
         parent::__construct();
-	}
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Scheduled_Reports(){
+    function AOR_Scheduled_Reports()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function bean_implements($interface){
-        switch($interface){
+    function bean_implements($interface)
+    {
+        switch ($interface) {
             case 'ACL': return true;
         }
         return false;
     }
 
-    function save($check_notify = FALSE){
-
-        if(isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])){
+    function save($check_notify = FALSE)
+    {
+        if (isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])) {
             $this->email_recipients = base64_encode(serialize($_POST['email_recipients']));
         }
 
         parent::save($check_notify);
     }
 
-    function get_email_recipients(){
-
+    function get_email_recipients()
+    {
         $params = unserialize(base64_decode($this->email_recipients));
 
         $emails = array();
-        if(isset($params['email_target_type'])){
-            foreach($params['email_target_type'] as $key => $field){
-                switch($field){
+        if (isset($params['email_target_type'])) {
+            foreach ($params['email_target_type'] as $key => $field) {
+                switch ($field) {
                     case 'Email Address':
                         $emails[] = $params['email'][$key];
                         break;
@@ -117,36 +119,37 @@ class AOR_Scheduled_Reports extends basic {
                         break;
                     case 'Users':
                         $users = array();
-                        switch($params['email'][$key][0]) {
+                        switch ($params['email'][$key][0]) {
                             Case 'security_group':
-                                if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
+                                if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
                                     $security_group = new SecurityGroup();
                                     $security_group->retrieve($params['email'][$key][1]);
-                                    $users = $security_group->get_linked_beans( 'users','User');
+                                    $users = $security_group->get_linked_beans('users','User');
                                     $r_users = array();
-                                    if($params['email'][$key][2] != ''){
+                                    if ($params['email'][$key][2] != '') {
                                         require_once('modules/ACLRoles/ACLRole.php');
                                         $role = new ACLRole();
                                         $role->retrieve($params['email'][$key][2]);
-                                        $role_users = $role->get_linked_beans( 'users','User');
-                                        foreach($role_users as $role_user){
+                                        $role_users = $role->get_linked_beans('users','User');
+                                        foreach ($role_users as $role_user) {
                                             $r_users[$role_user->id] = $role_user->name;
                                         }
                                     }
-                                    foreach($users as $user_id => $user){
-                                        if($params['email'][$key][2] != '' && !isset($r_users[$user->id])){
+                                    foreach ($users as $user_id => $user) {
+                                        if ($params['email'][$key][2] != '' && !isset($r_users[$user->id])) {
                                             unset($users[$user_id]);
                                         }
                                     }
                                     break;
                                 }
                             //No Security Group module found - fall through.
+                            // no break
                             Case 'role':
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();
                                 $role->retrieve($params['email'][$key][2]);
-                                $users = $role->get_linked_beans( 'users','User');
+                                $users = $role->get_linked_beans('users','User');
                                 break;
                             Case 'all':
                             default:
@@ -160,7 +163,7 @@ class AOR_Scheduled_Reports extends basic {
                                 }
                                 break;
                         }
-                        foreach($users as $user){
+                        foreach ($users as $user) {
                             $emails[] = $user->emailAddress->getPrimaryAddress($user);
                         }
                         break;
@@ -168,21 +171,21 @@ class AOR_Scheduled_Reports extends basic {
             }
         }
         return $emails;
-
     }
 
-    function shouldRun(DateTime $date){
+    function shouldRun(DateTime $date)
+    {
         global $timedate;
-        if(empty($date)){
+        if (empty($date)) {
             $date = new DateTime();
         }
         $cron = Cron\CronExpression::factory($this->schedule);
-        if(empty($this->last_run) && $cron->isDue($date)){
+        if (empty($this->last_run) && $cron->isDue($date)) {
             return true;
         }
         $lastRun = $timedate->fromDb($this->last_run);
         $next = $cron->getNextRunDate($lastRun);
-        if($next < $date){
+        if ($next < $date) {
             return true;
         }
         return false;

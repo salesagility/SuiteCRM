@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -70,26 +72,26 @@ class ImportController extends SugarController
         $this->importModule = $_REQUEST['import_module'];
 
         $this->bean = loadBean($this->importModule);
-        if ( $this->bean ) {
-            if ( !$this->bean->importable )
+        if ($this->bean) {
+            if (!$this->bean->importable) {
                 $this->bean = false;
-            elseif ( $_REQUEST['import_module'] == 'Users' && !is_admin($GLOBALS['current_user']) )
+            } elseif ($_REQUEST['import_module'] == 'Users' && !is_admin($GLOBALS['current_user'])) {
                 $this->bean = false;
-            elseif ( $this->bean->bean_implements('ACL')){
-                if(!ACLController::checkAccess($this->bean->module_dir, 'import', true)){
+            } elseif ($this->bean->bean_implements('ACL')) {
+                if (!ACLController::checkAccess($this->bean->module_dir, 'import', true)) {
                     ACLController::displayNoAccess();
                     sugar_die('');
                 }
             }
         }
 
-        if ( !$this->bean && $this->importModule != "Administration") {
+        if (!$this->bean && $this->importModule != "Administration") {
             $_REQUEST['message'] = $mod_strings['LBL_ERROR_IMPORTS_NOT_SET_UP'];
             $this->view = 'error';
             $this->_processed = true;
-        }
-        else
+        } else {
             $GLOBALS['FOCUS'] = $this->bean;
+        }
     }
     
     function action_index()
@@ -102,30 +104,27 @@ class ImportController extends SugarController
         global $mod_strings, $current_user;
         $results = array('message' => '');
         // handle publishing and deleting import maps
-        if(isset($_REQUEST['delete_map_id']))
-        {
+        if (isset($_REQUEST['delete_map_id'])) {
             $import_map = new ImportMap();
             $import_map->mark_deleted($_REQUEST['delete_map_id']);
         }
 
-        if(isset($_REQUEST['publish']) )
-        {
+        if (isset($_REQUEST['publish'])) {
             $import_map = new ImportMap();
 
             $import_map = $import_map->retrieve($_REQUEST['import_map_id'], false);
 
-            if($_REQUEST['publish'] == 'yes')
-            {
+            if ($_REQUEST['publish'] == 'yes') {
                 $result = $import_map->mark_published($current_user->id,true);
-                if (!$result)
+                if (!$result) {
                     $results['message'] = $mod_strings['LBL_ERROR_UNABLE_TO_PUBLISH'];
-            }
-            elseif( $_REQUEST['publish'] == 'no')
-            {
+                }
+            } elseif ($_REQUEST['publish'] == 'no') {
                 // if you don't own this importmap, you do now, unless you have a map by the same name
                 $result = $import_map->mark_published($current_user->id,false);
-                if (!$result)
+                if (!$result) {
                     $results['message'] = $mod_strings['LBL_ERROR_UNABLE_TO_UNPUBLISH'];
+                }
             }
         }
         
@@ -147,7 +146,7 @@ class ImportController extends SugarController
         $enclosure = html_entity_decode($enclosure, ENT_QUOTES);
         $hasHeader = isset($_REQUEST['header']) && !empty($_REQUEST['header']) ? TRUE : FALSE;
 
-        $importFile = new ImportFile( $fileName, $delim, $enclosure, FALSE);
+        $importFile = new ImportFile($fileName, $delim, $enclosure, FALSE);
         $importFile->setHeaderRow($hasHeader);
         $rows = $v->getSampleSet($importFile);
 
@@ -158,7 +157,6 @@ class ImportController extends SugarController
         $ss->assign("MOD",$mod_strings);
         $ss->display('modules/Import/tpls/confirm_table.tpl');
         sugar_cleanup(TRUE);
-
     }
 
     function action_RefreshTable()
@@ -166,10 +164,11 @@ class ImportController extends SugarController
         $offset = isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         $tableID = isset($_REQUEST['tableID']) ? $_REQUEST['tableID'] : 'errors';
         $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
-        if($tableID == 'dup')
+        if ($tableID == 'dup') {
             $tableFilename = ImportCacheFiles::getDuplicateFileName();
-        else
+        } else {
             $tableFilename = ImportCacheFiles::getErrorRecordsFileName();
+        }
 
         $if = new ImportFile($tableFilename, ",", '"', FALSE, FALSE);
         $if->setHeaderRow($has_header);
@@ -179,56 +178,55 @@ class ImportController extends SugarController
         sugar_cleanup(TRUE);
     }
     
-	function action_Step1()
+    function action_Step1()
     {
         $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : FALSE;
-        if( $this->importModule == 'Administration' || $fromAdminView
-        )
-        {
-    		$this->view = 'step1';
-        }
-        else
+        if ($this->importModule == 'Administration' || $fromAdminView
+        ) {
+            $this->view = 'step1';
+        } else {
             $this->view = 'step2';
+        }
     }
     
     function action_Step2()
     {
-		$this->view = 'step2';
+        $this->view = 'step2';
     }
 
     function action_Confirm()
     {
-		$this->view = 'confirm';
+        $this->view = 'confirm';
     }
 
     function action_Step3()
     {
-		$this->view = 'step3';
+        $this->view = 'step3';
     }
 
     function action_DupCheck()
     {
-		$this->view = 'dupcheck';
+        $this->view = 'dupcheck';
     }
 
     function action_Step4()
     {
-		$this->view = 'step4';
+        $this->view = 'step4';
     }
     
     function action_Last()
     {
-		$this->view = 'last';
+        $this->view = 'last';
     }
     
     function action_Undo()
     {
-		$this->view = 'undo';
+        $this->view = 'undo';
     }
     
     function action_Error()
     {
-		$this->view = 'error';
+        $this->view = 'error';
     }
 
     function action_ExtStep1()

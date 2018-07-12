@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,7 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class OpportunitiesByLeadSourceDashlet extends DashletGenericChart 
+class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 {
     public $pbls_lead_sources = array();
     public $pbls_ids          = array();
@@ -62,17 +64,20 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         global $app_list_strings;
 
         $selected_datax = array();
-        if (!empty($this->pbls_lead_sources) && sizeof($this->pbls_lead_sources) > 0)
-            foreach ($this->pbls_lead_sources as $key)
+        if (!empty($this->pbls_lead_sources) && sizeof($this->pbls_lead_sources) > 0) {
+            foreach ($this->pbls_lead_sources as $key) {
                 $selected_datax[] = $key;
-        else
+            }
+        } else {
             $selected_datax = array_keys($app_list_strings['lead_source_dom']);
+        }
 
         $this->_searchFields['pbls_lead_sources']['options'] = array_filter($app_list_strings['lead_source_dom']);
         $this->_searchFields['pbls_lead_sources']['input_name0'] = $selected_datax;
 
-        if (!isset($this->pbls_ids) || count($this->pbls_ids) == 0)
+        if (!isset($this->pbls_ids) || count($this->pbls_ids) == 0) {
             $this->_searchFields['pbls_ids']['input_name0'] = array_keys(get_user_array(false));
+        }
 
         return parent::displayOptions();
     }
@@ -85,8 +90,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         global $current_user, $sugar_config;
 
         $currency_symbol = $sugar_config['default_currency_symbol'];
-        if ($current_user->getPreference('currency')){
-
+        if ($current_user->getPreference('currency')) {
             $currency = new Currency();
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
@@ -112,8 +116,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#8080ff','#c03f80']";
 
-        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
-        {
+        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
             return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
@@ -198,8 +201,6 @@ EOD;
 		return $this->getTitle('<div align="center"></div>') .
             '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
         */
-
-
     }
 
     function getChartData($query)
@@ -248,12 +249,14 @@ EOD;
         $query = "SELECT lead_source,sum(amount_usdollar/1000) as total,count(*) as opp_count ".
             "FROM opportunities ";
         $query .= "WHERE opportunities.deleted=0 ";
-        if ( count($this->pbls_ids) > 0 )
+        if (count($this->pbls_ids) > 0) {
             $query .= "AND opportunities.assigned_user_id IN ('".implode("','",$this->pbls_ids)."') ";
-        if ( count($this->pbls_lead_sources) > 0 )
+        }
+        if (count($this->pbls_lead_sources) > 0) {
             $query .= "AND opportunities.lead_source IN ('".implode("','",$this->pbls_lead_sources)."') ";
-        else
+        } else {
             $query .= "AND opportunities.lead_source IN ('".implode("','",array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
+        }
         $query .= "GROUP BY lead_source ORDER BY total DESC";
 
         return $query;

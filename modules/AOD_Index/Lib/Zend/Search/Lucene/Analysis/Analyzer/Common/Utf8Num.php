@@ -72,10 +72,10 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num extends Zend_Search_Lu
         $this->_bytePosition = 0;
 
         // convert input into UTF-8
-        if (strcasecmp($this->_encoding, 'utf8' ) != 0  &&
-            strcasecmp($this->_encoding, 'utf-8') != 0 ) {
-                $this->_input = iconv($this->_encoding, 'UTF-8', $this->_input);
-                $this->_encoding = 'UTF-8';
+        if (strcasecmp($this->_encoding, 'utf8') != 0  &&
+            strcasecmp($this->_encoding, 'utf-8') != 0) {
+            $this->_input = iconv($this->_encoding, 'UTF-8', $this->_input);
+            $this->_encoding = 'UTF-8';
         }
     }
 

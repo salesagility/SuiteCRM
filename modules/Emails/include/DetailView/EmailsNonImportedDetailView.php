@@ -61,8 +61,7 @@ class EmailsNonImportedDetailView extends EmailsDetailView
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,
         $metadataFileName = 'nonimporteddetailviewdefs'
-    )
-    {
+    ) {
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 

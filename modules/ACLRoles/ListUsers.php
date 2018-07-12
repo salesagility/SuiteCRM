@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,11 +40,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-if(!$GLOBALS['current_user']->isAdminForModule('Users')){
-	sugar_die('No Access');
+if (!$GLOBALS['current_user']->isAdminForModule('Users')) {
+    sugar_die('No Access');
 }
 $record = '';
-if(isset($_REQUEST['record'])) $record = $_REQUEST['record'];
+if (isset($_REQUEST['record'])) {
+    $record = $_REQUEST['record'];
+}
 ?>
 <form action="index.php" method="post" name="DetailView" id="form">
 
@@ -65,9 +69,9 @@ echo "<form action='index.php' name='Users'>
 <select name='record' onchange='document.Users.submit();'>";
 echo get_select_options_with_id($users, $record);
 echo "</select></form>";
-if(!empty($record)){
+if (!empty($record)) {
     $hideTeams = true; // to not show the teams subpanel in the following file
-	require_once('modules/ACLRoles/DetailUserRole.php');
+    require_once('modules/ACLRoles/DetailUserRole.php');
 }
 
 

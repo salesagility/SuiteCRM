@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
@@ -16,7 +16,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         //execute the contructor and check for the Object type and  attributes
         $sugarFeed = new SugarFeed();
@@ -33,21 +33,18 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(false, 'importable', $sugarFeed);
         
         // clean up
-        
-        
     }
 
     public function testactivateAndDisableModuleFeed()
     {
-        
         self::markTestIncomplete('environment dependency');
 
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
 
-	// test
+        // test
         
         $admin = new Administration();
 
@@ -68,11 +65,10 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testflushBackendCache()
     {
-
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it works and does not throws an exception.
@@ -84,8 +80,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testgetModuleFeedFiles()
@@ -140,7 +134,7 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushTable('sugarfeed');
 
-	// test
+        // test
         
         $lead = new Lead();
         $lead->id = 1;
@@ -163,18 +157,16 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $state->popTable('sugarfeed');
         $state->popTable('aod_index');
-
-
     }
 
     public function testpushFeed()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('sugarfeed');
 
-	// test
+        // test
         
         SugarFeed::pushFeed('some text', 'SugarFeed', 1, 1, 'Link', 'some url');
 
@@ -195,8 +187,6 @@ class SugarFeedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('sugarfeed');
-
-
     }
 
     public function fetchReplies()

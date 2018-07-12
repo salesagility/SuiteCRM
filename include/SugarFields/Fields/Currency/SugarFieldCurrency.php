@@ -41,9 +41,8 @@
 
 require_once('include/SugarFields/Fields/Float/SugarFieldFloat.php');
 
-class SugarFieldCurrency extends SugarFieldFloat 
+class SugarFieldCurrency extends SugarFieldFloat
 {
-
     public function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col)
     {
         global $locale, $current_user;
@@ -92,8 +91,7 @@ class SugarFieldCurrency extends SugarFieldFloat
         $vardef,
         $focus,
         ImportFieldSanitize $settings
-        )
-    {
+        ) {
         $value = str_replace($settings->currency_symbol,"",$value);
         
         return $settings->float($value,$vardef,$focus);
@@ -111,7 +109,7 @@ class SugarFieldCurrency extends SugarFieldFloat
         // for currency fields, use the user or system precision, not the precision in the vardef
         //this is achived by passing in $precision as null
         $precision = null;
-        if ( $rawField === '' || $rawField === NULL ) {
+        if ($rawField === '' || $rawField === NULL) {
             return '';
         }
         return format_number($rawField, $precision, $precision);

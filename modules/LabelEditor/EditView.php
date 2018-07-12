@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,21 +41,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 $style='embeded';
-if(isset($_REQUEST['style'])){
-	$style = $_REQUEST['style'];	
+if (isset($_REQUEST['style'])) {
+    $style = $_REQUEST['style'];
 }
-if(isset($_REQUEST['module_name'])){
-	$the_strings = return_module_language($current_language, $_REQUEST['module_name']);
+if (isset($_REQUEST['module_name'])) {
+    $the_strings = return_module_language($current_language, $_REQUEST['module_name']);
 	
 	
 
-	global $app_strings;
-	global $app_list_strings;
-	global $mod_strings;
-	global $current_user;
+    global $app_strings;
+    global $app_list_strings;
+    global $mod_strings;
+    global $current_user;
 	
     echo SugarThemeRegistry::current()->getCSS();
-	echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$_REQUEST['module_name']), true);
+    echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME'],$_REQUEST['module_name']), true);
 	
 		
 
@@ -61,31 +63,31 @@ if(isset($_REQUEST['module_name'])){
 
 
 
-	$xtpl=new XTemplate ('modules/LabelEditor/EditView.html');
-	$xtpl->assign("MOD", $mod_strings);
-	$xtpl->assign("APP", $app_strings);
-	$xtpl->assign("MODULE_NAME", $_REQUEST['module_name']);
-	$xtpl->assign("STYLE",$style);
-	if(isset($_REQUEST['sugar_body_only'])){
-		$xtpl->assign("SUGAR_BODY_ONLY",$_REQUEST['sugar_body_only']);
-	}
+    $xtpl=new XTemplate ('modules/LabelEditor/EditView.html');
+    $xtpl->assign("MOD", $mod_strings);
+    $xtpl->assign("APP", $app_strings);
+    $xtpl->assign("MODULE_NAME", $_REQUEST['module_name']);
+    $xtpl->assign("STYLE",$style);
+    if (isset($_REQUEST['sugar_body_only'])) {
+        $xtpl->assign("SUGAR_BODY_ONLY",$_REQUEST['sugar_body_only']);
+    }
 	
-	if(isset($_REQUEST['record']) ){
-		$xtpl->assign("NO_EDIT", "readonly");
-		$xtpl->assign("KEY", $_REQUEST['record']);
-		if(isset($the_strings[$_REQUEST['record']])){
-			$xtpl->assign("VALUE",$the_strings[$_REQUEST['record']]);
-		}else{
-			if(isset($_REQUEST['value']) )$xtpl->assign("VALUE", $_REQUEST['value']);	
-		}
-	}
-	if($style == 'popup'){
-		$xtpl->parse("main.popup");
-	}
-	$xtpl->parse("main");
-	$xtpl->out("main");
-
-}
-else {
+    if (isset($_REQUEST['record'])) {
+        $xtpl->assign("NO_EDIT", "readonly");
+        $xtpl->assign("KEY", $_REQUEST['record']);
+        if (isset($the_strings[$_REQUEST['record']])) {
+            $xtpl->assign("VALUE",$the_strings[$_REQUEST['record']]);
+        } else {
+            if (isset($_REQUEST['value'])) {
+                $xtpl->assign("VALUE", $_REQUEST['value']);
+            }
+        }
+    }
+    if ($style == 'popup') {
+        $xtpl->parse("main.popup");
+    }
+    $xtpl->parse("main");
+    $xtpl->out("main");
+} else {
     echo 'No Module Selected';
 }

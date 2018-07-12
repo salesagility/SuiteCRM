@@ -1029,6 +1029,7 @@ class PHPMailer
         if ($auto) {
             if (empty($this->Sender)) {
                 $this->Sender = $address;
+                isValidEmailAddress($this->Sender);
             }
         }
         return true;
@@ -2185,7 +2186,8 @@ class PHPMailer
      * Create unique ID
      * @return string
      */
-    protected function generateId() {
+    protected function generateId()
+    {
         return md5(uniqid(time()));
     }
 
@@ -2532,7 +2534,6 @@ class PHPMailer
                 6 => $disposition,
                 7 => 0
             );
-
         } catch (phpmailerException $exc) {
             $this->setError($exc->getMessage());
             $this->edebug($exc->getMessage());
@@ -2783,6 +2784,7 @@ class PHPMailer
             case 'comment':
                 $matchcount = preg_match_all('/[()"]/', $str, $matches);
                 // Intentional fall-through
+                // no break
             case 'text':
             default:
                 $matchcount += preg_match_all('/[\000-\010\013\014\016-\037\177-\377]/', $str, $matches);
@@ -2955,6 +2957,7 @@ class PHPMailer
                 $pattern = '\(\)"';
                 // intentional fall-through
                 // for this reason we build the $pattern without including delimiters and []
+                // no break
             case 'text':
             default:
                 // RFC 2047 section 5.1

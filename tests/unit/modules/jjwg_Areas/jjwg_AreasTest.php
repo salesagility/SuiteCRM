@@ -32,7 +32,7 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $jjwgAreas = new jjwg_Areas();
         $jjwgAreas->configuration();
@@ -42,8 +42,6 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertGreaterThan(0, count($jjwgAreas->settings));
         
         // clean up
-        
-        
     }
 
     public function testretrieve()

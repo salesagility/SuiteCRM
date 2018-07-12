@@ -25,12 +25,11 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
-        
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             $session = $_SESSION;
         }
 
-        //error_reporting(E_ERROR | E_PARSE |E_ALL);
+        
 
         //execute the method with required child objects preset. it should return some html. 
         $view = new ViewPopup();
@@ -45,7 +44,7 @@ class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // clean up
 
-        if(isset($session)) {
+        if (isset($session)) {
             $_SESSION = $session;
         } else {
             unset($_SESSION);

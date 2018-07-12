@@ -68,8 +68,7 @@ class ViewConfigureAjaxUI extends SugarView
     {
         global $current_user;
 
-        if (!is_admin($current_user))
-        {
+        if (!is_admin($current_user)) {
             sugar_die("Unauthorized access to administration.");
         }
     }
@@ -85,17 +84,13 @@ class ViewConfigureAjaxUI extends SugarView
         $disabled = array();
         $banned = ajaxBannedModules();
 
-        foreach($moduleList as $module)
-        {
-            if (!in_array($module, $banned))
-            {
+        foreach ($moduleList as $module) {
+            if (!in_array($module, $banned)) {
                 $enabled[] = array("module" => $module, 'label' => translate($module));
             }
         }
-        if (!empty($sugar_config['addAjaxBannedModules']))
-        {
-            foreach( $sugar_config['addAjaxBannedModules'] as $module)
-            {
+        if (!empty($sugar_config['addAjaxBannedModules'])) {
+            foreach ($sugar_config['addAjaxBannedModules'] as $module) {
                 $disabled[] = array("module" => $module, 'label' => translate($module));
             }
         }

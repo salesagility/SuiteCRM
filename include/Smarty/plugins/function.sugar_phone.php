@@ -43,7 +43,9 @@ r28841 - 2007-10-24 20:11:24 -0700 (Wed, 24 Oct 2007) - ajay - 16807: added supp
 */
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -102,18 +104,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 function smarty_function_sugar_phone($params, &$smarty)
 {
-	if (!isset($params['value'])){
-		$smarty->trigger_error("sugar_phone: missing 'value' parameter");
-		return '';
-	}
+    if (!isset($params['value'])) {
+        $smarty->trigger_error("sugar_phone: missing 'value' parameter");
+        return '';
+    }
 	
-	global $system_config;
-    if(isset($system_config->settings['system_skypeout_on']) && $system_config->settings['system_skypeout_on'] == 1
-    	&& isset($params['value']) && skype_formatted($params['value'])  ) {
-    		$GLOBALS['log']->debug($params['value']);
-			return '<a href="tel:'.format_skype($params['value']).'">'.$params['value'].'</a>';
+    global $system_config;
+    if (isset($system_config->settings['system_skypeout_on']) && $system_config->settings['system_skypeout_on'] == 1
+    	&& isset($params['value']) && skype_formatted($params['value'])) {
+        $GLOBALS['log']->debug($params['value']);
+        return '<a href="tel:'.format_skype($params['value']).'">'.$params['value'].'</a>';
     } else {
-    	return $params['value'];
+        return $params['value'];
     }
 }
-?>

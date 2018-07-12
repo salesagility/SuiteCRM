@@ -40,15 +40,19 @@
  
 require_once('include/MVC/View/views/view.list.php');
 
-class ContactsViewCloseContactAddressPopup extends ViewList {
-	
- 	function CloseContactAddressPopup(){
- 		parent::__construct();
- 	}
+class ContactsViewCloseContactAddressPopup extends ViewList
+{
+    function CloseContactAddressPopup()
+    {
+        parent::__construct();
+    }
 
- 	function display() {
-        if(isset($_REQUEST['close_window'])) echo "<script>window.close();</script>";
+    function display()
+    {
+        if (isset($_REQUEST['close_window'])) {
+            echo "<script>window.close();</script>";
+        }
         parent::display();
- 	}	
+    }
 }
 

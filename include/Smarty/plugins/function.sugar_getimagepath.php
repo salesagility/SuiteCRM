@@ -54,27 +54,26 @@ r32836 - 2008-03-14 16:48:48 -0700 (Fri, 14 Mar 2008) - majed - adds smarty func
  */
 function smarty_function_sugar_getimagepath($params, &$smarty)
 {
-	/**
-	 * Get icon by specifying the file_name and file extension separately
-	 * You can also specify the subdirectory to look in
-	 */
-	if(isset($params['file_name']) && isset($params['file_extension'])) {
-		$params['file'] = $params['file_name'].'.'.$params['file_extension'];
-		if(isset($params['directory'])) {
-			$params['file'] = $params['directory'].DIRECTORY_SEPARATOR.$params['file'];
-		}
-		$imageUrl = SugarThemeRegistry::current()->getImageURL($params['file'], false);
-		return $imageUrl;
-	}
+    /**
+     * Get icon by specifying the file_name and file extension separately
+     * You can also specify the subdirectory to look in
+     */
+    if (isset($params['file_name']) && isset($params['file_extension'])) {
+        $params['file'] = $params['file_name'].'.'.$params['file_extension'];
+        if (isset($params['directory'])) {
+            $params['file'] = $params['directory'].DIRECTORY_SEPARATOR.$params['file'];
+        }
+        $imageUrl = SugarThemeRegistry::current()->getImageURL($params['file'], false);
+        return $imageUrl;
+    }
 
-	/**
-	 * Get icon by specifying the file_name and file extension combined.
-	 */
+    /**
+     * Get icon by specifying the file_name and file extension combined.
+     */
 
-	if(!isset($params['file'])) {
-		   $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'file');
-	}
+    if (!isset($params['file'])) {
+        $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'file');
+    }
 
- 	return SugarThemeRegistry::current()->getImageURL($params['file']);
+    return SugarThemeRegistry::current()->getImageURL($params['file']);
 }
-?>

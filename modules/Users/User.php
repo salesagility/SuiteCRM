@@ -588,7 +588,7 @@ class User extends Person implements EmailInterface
             if ($smtp_error) {
                 $msg .= 'SMTP server settings required first.';
                 $GLOBALS['log']->warn($msg);
-                if(isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
+                if (isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
                 }
             } else {
@@ -598,7 +598,7 @@ class User extends Person implements EmailInterface
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
                 }
             }
-            if($tmpUser) {
+            if ($tmpUser) {
                 $this->factor_auth = $tmpUser->factor_auth;
                 $this->factor_auth_interface = $tmpUser->factor_auth_interface;
             }
@@ -644,7 +644,7 @@ class User extends Person implements EmailInterface
         parent::save($check_notify);
 
         // User Profile specific save for Email addresses
-        if(!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
+        if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
             $GLOBALS['log']->error('Email address save error');
             return false;
         }
@@ -1192,7 +1192,7 @@ EOQ;
         $user_fields = parent::get_list_view_data();
 
         if ($this->is_admin) {
-            if(!isset($mod_strings['LBL_CHECKMARK'])) {
+            if (!isset($mod_strings['LBL_CHECKMARK'])) {
                 LoggerManager::getLogger()->warn('A language label not found: LBL_CHECKMARK');
             }
             $checkmark = isset($mod_strings['LBL_CHECKMARK']) ? $mod_strings['LBL_CHECKMARK'] : null;
@@ -1414,7 +1414,7 @@ EOQ;
         return array('email' => $prefAddr, 'name' => $this->name);
     }
 
-// fn
+    // fn
 
     public function getSystemDefaultNameAndEmail()
     {
@@ -1426,7 +1426,7 @@ EOQ;
         return array('email' => $prefAddr, 'name' => $fullName);
     }
 
-// fn
+    // fn
 
     /**
      * sets User email default in config.php if not already set by install - i.
@@ -1970,6 +1970,7 @@ EOQ;
         $mail->setMailerForSystem();
         //$mail->IsHTML(true);
         $mail->From = $defaults['email'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $defaults['name'];
         $mail->ClearAllRecipients();
         $mail->ClearReplyTos();
@@ -2018,6 +2019,7 @@ EOQ;
             $emailObj->description = $mail->Body;
             $emailObj->description_html = null;
             $emailObj->from_addr = $mail->From;
+            isValidEmailAddress($emailObj->from_addr);
             $emailObj->parent_type = 'User';
             $emailObj->date_sent = TimeDate::getInstance()->nowDb();
             $emailObj->modified_user_id = '1';
@@ -2077,19 +2079,20 @@ EOQ;
         return $editorType;
     }
 
-    public function getSubThemes() {
+    public function getSubThemes()
+    {
         $sugarTheme = new SugarTheme(array());
         $subThemes = $sugarTheme->getSubThemes();
         return $subThemes;
     }
 
-    public function getSubTheme() {
+    public function getSubTheme()
+    {
         $subTheme = $this->getPreference('subtheme');
-        if(!$subTheme) {
+        if (!$subTheme) {
             $sugarTheme = new SugarTheme(array());
             $subTheme = $sugarTheme->getSubThemeDefault();
         }
         return $subTheme;
     }
-
 }

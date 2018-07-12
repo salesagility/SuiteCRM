@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,48 +45,48 @@ require_once('include/SugarFolders/SugarFolders.php');
 global $current_user, $mod_strings;
 
 $focus = new InboundEmail();
-if(!empty($_REQUEST['record'])) {
+if (!empty($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
-} elseif(!empty($_REQUEST['origin_id'])) {
+} elseif (!empty($_REQUEST['origin_id'])) {
     $focus->retrieve($_REQUEST['origin_id']);
     unset($focus->id);
     unset($focus->groupfolder_id);
 }
-foreach($focus->column_fields as $field) {
-    if($field == 'email_password' && empty($_REQUEST['email_password']) && !empty($_REQUEST['email_user'])) {
+foreach ($focus->column_fields as $field) {
+    if ($field == 'email_password' && empty($_REQUEST['email_password']) && !empty($_REQUEST['email_user'])) {
         continue;
     }
-	if(isset($_REQUEST[$field])) {
-		if ($field != "group_id") {
-			$focus->$field = trim($_REQUEST[$field]);
-		}
-	}
+    if (isset($_REQUEST[$field])) {
+        if ($field != "group_id") {
+            $focus->$field = trim($_REQUEST[$field]);
+        }
+    }
 }
-foreach($focus->additional_column_fields as $field) {
-	if(isset($_REQUEST[$field])) {
-		$value = trim($_REQUEST[$field]);
-		$focus->$field = $value;
-	}
+foreach ($focus->additional_column_fields as $field) {
+    if (isset($_REQUEST[$field])) {
+        $value = trim($_REQUEST[$field]);
+        $focus->$field = $value;
+    }
 }
-foreach($focus->required_fields as $field) {
-	if(isset($_REQUEST[$field])) {
-		$value = trim($_REQUEST[$field]);
-		$focus->$field = $value;
-	}
+foreach ($focus->required_fields as $field) {
+    if (isset($_REQUEST[$field])) {
+        $value = trim($_REQUEST[$field]);
+        $focus->$field = $value;
+    }
 }
 
-if(!empty($_REQUEST['email_password'])) {
+if (!empty($_REQUEST['email_password'])) {
     $focus->email_password = $_REQUEST['email_password'];
 }
 
 $focus->protocol = $_REQUEST['protocol'];
 
-if( isset($_REQUEST['is_create_case']) && $_REQUEST['is_create_case'] == 'on' )
+if (isset($_REQUEST['is_create_case']) && $_REQUEST['is_create_case'] == 'on') {
     $focus->mailbox_type = 'createcase';
-else
-{
-    if( empty($focus->mailbox_type) || $focus->mailbox_type == 'createcase' )
+} else {
+    if (empty($focus->mailbox_type) || $focus->mailbox_type == 'createcase') {
         $focus->mailbox_type = 'pick';
+    }
 }
 
 /////////////////////////////////////////////////////////
@@ -92,15 +94,15 @@ else
 $useSsl = (isset($_REQUEST['ssl']) && $_REQUEST['ssl'] == 1) ? true : false;
 $optimum = $focus->getSessionConnectionString($focus->server_url, $focus->email_user, $focus->port, $focus->protocol);
 if (empty($optimum)) {
-	$optimum = $focus->findOptimumSettings($useSsl, $focus->email_user, $focus->email_password, $focus->server_url, $focus->port, $focus->protocol, $focus->mailbox);
+    $optimum = $focus->findOptimumSettings($useSsl, $focus->email_user, $focus->email_password, $focus->server_url, $focus->port, $focus->protocol, $focus->mailbox);
 } // if
 $delimiter = $focus->getSessionInboundDelimiterString($focus->server_url, $focus->email_user, $focus->port, $focus->protocol);
 
 //added check to ensure the $optimum['serial']) is not empty.
-if(is_array($optimum) && (count($optimum) > 0) && !empty( $optimum['serial'])) {
-	$focus->service = $optimum['serial'];
+if (is_array($optimum) && (count($optimum) > 0) && !empty($optimum['serial'])) {
+    $focus->service = $optimum['serial'];
 } else {
-	// no save
+    // no save
 	// allowing bad save to allow Email Campaigns configuration to continue even without IMAP
 	$focus->service = "::::::".$focus->protocol."::::"; // save bogus info.
 	$error = "&error=true";
@@ -108,21 +110,22 @@ if(is_array($optimum) && (count($optimum) > 0) && !empty( $optimum['serial'])) {
 ////	END SERVICE STRING CONCAT
 /////////////////////////////////////////////////////////
 
-if(isset($_REQUEST['mark_read']) && $_REQUEST['mark_read'] == 1) {
-	$focus->delete_seen = 0;
+if (isset($_REQUEST['mark_read']) && $_REQUEST['mark_read'] == 1) {
+    $focus->delete_seen = 0;
 } else {
-	$focus->delete_seen = 0;
+    $focus->delete_seen = 0;
 }
 
 // handle stored_options serialization
-if(isset($_REQUEST['only_since']) && $_REQUEST['only_since'] == 1) {
-	$onlySince = true;
+if (isset($_REQUEST['only_since']) && $_REQUEST['only_since'] == 1) {
+    $onlySince = true;
 } else {
-	$onlySince = false;
+    $onlySince = false;
 }
 $stored_options = array();
 $stored_options['from_name'] = trim($_REQUEST['from_name']);
 $stored_options['from_addr'] = trim($_REQUEST['from_addr']);
+isValidEmailAddress($stored_options['from_addr']);
 $stored_options['reply_to_name'] = trim($_REQUEST['reply_to_name']);
 $stored_options['reply_to_addr'] = trim($_REQUEST['reply_to_addr']);
 $stored_options['only_since'] = $onlySince;
@@ -131,14 +134,13 @@ $stored_options['email_num_autoreplies_24_hours'] = $_REQUEST['email_num_autorep
 $stored_options['allow_outbound_group_usage'] = isset($_REQUEST['allow_outbound_group_usage']) ? true : false;
 
 if (!$focus->isPop3Protocol()) {
-	$stored_options['trashFolder'] = (isset($_REQUEST['trashFolder']) ? trim($_REQUEST['trashFolder']) : "");
-	$stored_options['sentFolder'] = (isset($_REQUEST['sentFolder']) ? trim($_REQUEST['sentFolder']) : "");
+    $stored_options['trashFolder'] = (isset($_REQUEST['trashFolder']) ? trim($_REQUEST['trashFolder']) : "");
+    $stored_options['sentFolder'] = (isset($_REQUEST['sentFolder']) ? trim($_REQUEST['sentFolder']) : "");
 } // if
-if ( $focus->isMailBoxTypeCreateCase() || ($focus->mailbox_type == 'createcase' && empty($_REQUEST['id']) ) )
-{
-	$stored_options['distrib_method'] = (isset($_REQUEST['distrib_method'])) ? $_REQUEST['distrib_method'] : "";
-	$stored_options['create_case_email_template'] = (isset($_REQUEST['create_case_template_id'])) ? $_REQUEST['create_case_template_id'] : "";
-    switch($stored_options['distrib_method']){
+if ($focus->isMailBoxTypeCreateCase() || ($focus->mailbox_type == 'createcase' && empty($_REQUEST['id']))) {
+    $stored_options['distrib_method'] = (isset($_REQUEST['distrib_method'])) ? $_REQUEST['distrib_method'] : "";
+    $stored_options['create_case_email_template'] = (isset($_REQUEST['create_case_template_id'])) ? $_REQUEST['create_case_template_id'] : "";
+    switch ($stored_options['distrib_method']) {
         case 'singleUser':
             $stored_options['distribution_user_name'] = !empty($_REQUEST['distribution_user_name']) ? $_REQUEST['distribution_user_name'] : '';
             $stored_options['distribution_user_id'] = !empty($_REQUEST['distribution_user_id']) ? $_REQUEST['distribution_user_id'] : '';
@@ -158,31 +160,26 @@ $storedOptions['folderDelimiter'] = $delimiter;
 ////    CREATE MAILBOX QUEUE
 ////////////////////////////////////////////////////////////////////////////////
 if (!isset($focus->id)) {
-	$groupId = "";
-	if (isset($_REQUEST['group_id']) && empty($_REQUEST['group_id'])) {
-		$groupId = $_REQUEST['group_id'];
-	} else {
-		$groupId = create_guid();
-	}
-	$focus->group_id = $groupId;
+    $groupId = "";
+    if (isset($_REQUEST['group_id']) && empty($_REQUEST['group_id'])) {
+        $groupId = $_REQUEST['group_id'];
+    } else {
+        $groupId = create_guid();
+    }
+    $focus->group_id = $groupId;
 }
 
 
-if( isset($_REQUEST['is_auto_import']) && $_REQUEST['is_auto_import'] == 'on' )
-{
-    if( empty($focus->groupfolder_id) )
-    {
+if (isset($_REQUEST['is_auto_import']) && $_REQUEST['is_auto_import'] == 'on') {
+    if (empty($focus->groupfolder_id)) {
         $groupFolderId = $focus->createAutoImportSugarFolder();
         $focus->groupfolder_id = $groupFolderId;
     }
     $stored_options['isAutoImport'] = true;
-}
-else
-{
+} else {
     $focus->groupfolder_id = "";
     //If the user is turning the auto-import feature off then remove all previous subscriptions.
-    if( !empty($focus->fetched_row['groupfolder_id'] ) )
-    {
+    if (!empty($focus->fetched_row['groupfolder_id'])) {
         $GLOBALS['log']->debug("Clearining all subscriptions to folder id: {$focus->fetched_row['groupfolder_id']}");
         $f = new SugarFolder();
         $f->clearSubscriptionsForFolder($focus->fetched_row['groupfolder_id']);
@@ -193,12 +190,12 @@ else
     $stored_options['isAutoImport'] = false;
 }
 
-if (!empty($focus->groupfolder_id))
-{
-	if ($_REQUEST['leaveMessagesOnMailServer'] == "1")
-		$stored_options['leaveMessagesOnMailServer'] = 1;
-	else
-		$stored_options['leaveMessagesOnMailServer'] = 0;
+if (!empty($focus->groupfolder_id)) {
+    if ($_REQUEST['leaveMessagesOnMailServer'] == "1") {
+        $stored_options['leaveMessagesOnMailServer'] = 1;
+    } else {
+        $stored_options['leaveMessagesOnMailServer'] = 0;
+    }
 }
 
 $focus->stored_options = base64_encode(serialize($stored_options));
@@ -223,7 +220,7 @@ $focus->save();
 $foldersFound = $focus->db->query('SELECT id FROM folders WHERE folders.id LIKE "'.$focus->id.'"');
 $foldersFoundRow = $focus->db->fetchRow($foldersFound);
 $sf = new SugarFolder();
-if(empty($foldersFoundRow)) {
+if (empty($foldersFoundRow)) {
     // Create Folders
     $focusUser = $current_user;
     $params = array(
@@ -277,7 +274,6 @@ if(empty($foldersFoundRow)) {
 
     foreach ($params as $type => $type_params) {
         if ($type == "inbound") {
-
             $folder = new SugarFolder();
             foreach ($params[$type] as $key => $val) {
                 $folder->$key = $val;
@@ -304,10 +300,9 @@ if(empty($foldersFoundRow)) {
     require_once("include/SugarFolders/SugarFolders.php");
     $foldersFound = $focus->db->query('SELECT * FROM folders WHERE folders.id LIKE "'.$focus->id.'" OR '.
         'folders.parent_folder LIKE "'.$focus->id.'"');
-    while($row = $focus->db->fetchRow($foldersFound)) {
+    while ($row = $focus->db->fetchRow($foldersFound)) {
         $name = '';
-        switch ($row['folder_type'])
-        {
+        switch ($row['folder_type']) {
             case 'inbound':
                 $name = $focus->mailbox . ' ('.$focus->name.')';
                 break;
@@ -345,42 +340,41 @@ $monitor_fields = array('name', 'status',
 
 //Only sync IE accounts with a group folder.  Need to sync new records as team set assignment is processed
 //after save.
-if( !empty($focus->groupfolder_id) )
-{
-    foreach ($monitor_fields as $singleField)
-    {
+if (!empty($focus->groupfolder_id)) {
+    foreach ($monitor_fields as $singleField) {
         //Check if the value is being changed during save.
-        if($focus->fetched_row[$singleField] != $focus->$singleField)
+        if ($focus->fetched_row[$singleField] != $focus->$singleField) {
             syncSugarFoldersWithBeanChanges($singleField, $focus);
+        }
     }
 }
 
 //check if we are in campaigns module
-if($_REQUEST['module'] == 'Campaigns'){
+if ($_REQUEST['module'] == 'Campaigns') {
     //this is coming from campaign wizard, Just set the error message if it exists and skip the redirect
-    if(!empty($error)){
+    if (!empty($error)) {
         $_REQUEST['error'] = true;
     }
-}else{
+} else {
 
     //this is a normal Inbound Email save, so set up the url and reirect
     $_REQUEST['return_id'] = $focus->id;
 
     $edit='';
-    if(isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") {
+    if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] != "") {
         $return_module = $_REQUEST['return_module'];
     } else {
         $return_module = "InboundEmail";
     }
-    if(isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") {
+    if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") {
         $return_action = $_REQUEST['return_action'];
     } else {
         $return_action = "DetailView";
     }
-    if(isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") {
+    if (isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") {
         $return_id = $_REQUEST['return_id'];
     }
-    if(!empty($_REQUEST['edit'])) {
+    if (!empty($_REQUEST['edit'])) {
         $return_id='';
         $edit='&edit=true';
     }
@@ -389,7 +383,7 @@ if($_REQUEST['module'] == 'Campaigns'){
 
     $redirectUrl = "Location: index.php?module=$return_module&action=$return_action&record=$return_id$edit";
 
-    if(isset($error) && $error) {
+    if (isset($error) && $error) {
         $redirectUrl .= $error;
     }
 
@@ -408,8 +402,7 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
     $f = new SugarFolder();
     $f->retrieve($focus->groupfolder_id);
 
-    switch ($fieldName)
-    {
+    switch ($fieldName) {
         case 'name':
         case 'team_id':
         case 'team_set_id':
@@ -418,10 +411,11 @@ function syncSugarFoldersWithBeanChanges($fieldName, $focus)
             break;
 
         case 'status':
-            if($focus->status == 'Inactive')
+            if ($focus->status == 'Inactive') {
                 $f->clearSubscriptionsForFolder($focus->groupfolder_id);
-            else if($focus->mailbox_type != 'bounce' )
+            } elseif ($focus->mailbox_type != 'bounce') {
                 $f->addSubscriptionsToGroupFolder();
+            }
             break;
     }
 }

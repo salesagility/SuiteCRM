@@ -31,7 +31,7 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $campaignLog = new CampaignLog();
 
@@ -41,8 +41,6 @@ class CampaignLogTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame(array(), $actual);
         
         // clean up
-        
-        
     }
 
     public function testretrieve_email_address()

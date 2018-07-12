@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004 - 2007 SugarCRM Inc.
@@ -45,21 +47,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('modules/Administration/Administration.php');
 require_once('modules/SecurityGroups/SecurityGroup.php');
 
-if(!empty($_REQUEST['remove_default_id'])) {
-		$focus = new SecurityGroup();
-		$focus->removeDefaultGroup($_REQUEST['remove_default_id']);
+if (!empty($_REQUEST['remove_default_id'])) {
+    $focus = new SecurityGroup();
+    $focus->removeDefaultGroup($_REQUEST['remove_default_id']);
 } else {
-	if(!empty($_REQUEST['default_group'])) {
-		$focus = new SecurityGroup();
-		$focus->saveDefaultGroup($_REQUEST['default_group'], $_REQUEST['default_module']);
-	}
+    if (!empty($_REQUEST['default_group'])) {
+        $focus = new SecurityGroup();
+        $focus->saveDefaultGroup($_REQUEST['default_group'], $_REQUEST['default_module']);
+    }
 
 
 
     require('modules/Configurator/Configurator.php');
     $cfg = new Configurator();
     
-	// save securitysuite_additive setting
+    // save securitysuite_additive setting
     $cfg->config['securitysuite_additive'] = ($_REQUEST['securitysuite_additive'] == 1) ? true : false;
     // save securitysuite_strict_rights setting
     $cfg->config['securitysuite_strict_rights'] = ($_REQUEST['securitysuite_strict_rights'] == 1) ? true : false; 
@@ -80,14 +82,14 @@ if(!empty($_REQUEST['remove_default_id'])) {
     // save securitysuite_inbound_email setting
     $cfg->config['securitysuite_inbound_email'] = ($_REQUEST['securitysuite_inbound_email'] == 1) ? true : false; 
 
-    if(!isset($cfg->config['addAjaxBannedModules'])) {
+    if (!isset($cfg->config['addAjaxBannedModules'])) {
         $cfg->config['addAjaxBannedModules'] = array();
     }
-    if(!in_array('SecurityGroups',$cfg->config['addAjaxBannedModules'])) {
+    if (!in_array('SecurityGroups',$cfg->config['addAjaxBannedModules'])) {
         $cfg->config['addAjaxBannedModules'][] = 'SecurityGroups';
     }
 
-    $cfg->handleOverride();  
+    $cfg->handleOverride();
 }
 
 header("Location: index.php?action={$_POST['return_action']}&module={$_POST['return_module']}");

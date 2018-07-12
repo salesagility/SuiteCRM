@@ -196,7 +196,7 @@ class Zend_Search_Lucene_Index_SegmentMerger
                                                               'UTF-8',
                                                               true,
                                                               $fieldInfo->isIndexed,
-                                                              $bits & 1 );
+                                                              $bits & 1);
                     } else {            // Binary data
                         $storedFields[] =
                                  new Zend_Search_Lucene_Field($fieldInfo->name,

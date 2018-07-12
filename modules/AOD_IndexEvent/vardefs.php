@@ -117,7 +117,7 @@ $dictionary['AOD_IndexEvent'] = array(
 	'optimistic_locking'=>true,
 		'unified_search'=>false,
 	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
 VardefManager::createVardef('AOD_IndexEvent','AOD_IndexEvent', array('basic','assignable'));

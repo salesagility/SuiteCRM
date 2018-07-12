@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,11 +51,11 @@ require_once('modules/Import/maps/ImportMapOther.php');
 
 class ImportMapSalesforce extends ImportMapOther
 {
-	/**
+    /**
      * String identifier for this import
      */
     public $name = 'salesforce';
-	/**
+    /**
      * Field delimiter
      */
     public $delimiter = ',';
@@ -61,21 +63,20 @@ class ImportMapSalesforce extends ImportMapOther
      * Field enclosure
      */
     public $enclosure = '"';
-	/**
+    /**
      * Do we have a header?
      */
     public $has_header = true;
 
-	/**
+    /**
      * Gets the default mapping for a module
      *
      * @param  string $module
      * @return array field mappings
      */
-	public function getMapping(
+    public function getMapping(
         $module
-        )
-    {
+        ) {
         $return_array = parent::getMapping($module);
         switch ($module) {
         case 'Contacts':
@@ -151,14 +152,13 @@ class ImportMapSalesforce extends ImportMapOther
         }
     }
 	
-	/**
-	* @see ImportMapOther::getIgnoredFields()
+    /**
+    * @see ImportMapOther::getIgnoredFields()
      */
-	public function getIgnoredFields(
+    public function getIgnoredFields(
 		$module
-		)
-	{
-		return array_merge(parent::getIgnoredFields($module),array('id'));
-	}
+		) {
+        return array_merge(parent::getIgnoredFields($module),array('id'));
+    }
 }
 

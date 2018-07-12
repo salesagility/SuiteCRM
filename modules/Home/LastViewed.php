@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+} 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -61,8 +63,7 @@ $current_row=1;
 $tracker = new Tracker();
 $history = $tracker->get_recently_viewed($current_user->id);
 
-foreach($history as $row)
-{
+foreach ($history as $row) {
     $moduleImage = SugarThemeRegistry::current()->getImageURL("{$row['module_name']}.gif");
     echo <<<EOQ
         <tr>

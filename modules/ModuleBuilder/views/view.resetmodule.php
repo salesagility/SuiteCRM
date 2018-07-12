@@ -50,29 +50,29 @@ class ViewResetmodule extends SugarView
     /**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
-	protected function _getModuleTitleParams($browserTitle = false)
-	{
-	    global $mod_strings;
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        global $mod_strings;
 	    
-    	return array(
+        return array(
     	   translate('LBL_MODULE_NAME','Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
 
-	function display()
+    function display()
     {
         $moduleName = $this->module = $_REQUEST['view_module'];
         if (isset($_REQUEST['handle']) && $_REQUEST['handle'] == "execute") {
             return $this->handleSave();
         }
         
-        $ajax = new AjaxCompose ( ) ;
-        $ajax->addCrumb ( translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")' ) ;
-        $ajax->addCrumb ( translate($moduleName), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $moduleName . '")' ) ;
-        $ajax->addCrumb ( translate('LBL_RESET') . " " . translate($moduleName) , '') ;
+        $ajax = new AjaxCompose () ;
+        $ajax->addCrumb (translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")') ;
+        $ajax->addCrumb (translate($moduleName), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $moduleName . '")') ;
+        $ajax->addCrumb (translate('LBL_RESET') . " " . translate($moduleName) , '') ;
         
-        $smarty = new Sugar_Smarty ( ) ;
+        $smarty = new Sugar_Smarty () ;
         $smarty->assign("module", $moduleName);
         $smarty->assign("actions", array(
             array("name" => "relationships", "label" => translate("LBL_CLEAR_RELATIONSHIPS")),
@@ -91,33 +91,38 @@ class ViewResetmodule extends SugarView
         echo $ajax->getJavascript () ;
     }
     
-    function handleSave() 
+    function handleSave()
     {
         $out = "<script>ajaxStatus.flashStatus(SUGAR.language.get('app_strings', 'LBL_REQUEST_PROCESSED'), 2000);</script>";
         
-        if (!empty($_REQUEST['relationships']))
+        if (!empty($_REQUEST['relationships'])) {
             $out .= $this->removeCustomRelationships();
+        }
             
-        if (!empty($_REQUEST['fields']))
+        if (!empty($_REQUEST['fields'])) {
             $out .= $this->removeCustomFields();
+        }
             
-        if (!empty($_REQUEST['layouts']))
+        if (!empty($_REQUEST['layouts'])) {
             $out .= $this->removeCustomLayouts();
+        }
 			
-		if (!empty($_REQUEST['labels']))
+        if (!empty($_REQUEST['labels'])) {
             $out .= $this->removeCustomLabels();
+        }
 			
-		if (!empty($_REQUEST['extensions']))
-            $out .= $this->removeCustomExtensions();	
+        if (!empty($_REQUEST['extensions'])) {
+            $out .= $this->removeCustomExtensions();
+        }	
 			
         
         $out .= "Complete!";
         
-        $ajax = new AjaxCompose ( ) ;
+        $ajax = new AjaxCompose () ;
         
-        $ajax->addCrumb ( translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")' ) ;
-        $ajax->addCrumb ( translate($this->module), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $this->module . '")' ) ;
-        $ajax->addCrumb ( "Reset ". translate($this->module) , '') ;
+        $ajax->addCrumb (translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")') ;
+        $ajax->addCrumb (translate($this->module), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $this->module . '")') ;
+        $ajax->addCrumb ("Reset ". translate($this->module) , '') ;
         
         
         $ajax->addSection ( 
@@ -134,25 +139,25 @@ class ViewResetmodule extends SugarView
      * 
      * @return html output record of the field deleted
      */
-    function removeCustomFields() 
-    {    
+    function removeCustomFields()
+    {
         $moduleName = $this->module;
         $class_name = $GLOBALS [ 'beanList' ] [ $moduleName ] ;
         require_once ($GLOBALS [ 'beanFiles' ] [ $class_name ]) ;
-        $seed = new $class_name ( ) ;
-        $df = new DynamicField ( $moduleName ) ;
-        $df->setup ( $seed ) ;
+        $seed = new $class_name () ;
+        $df = new DynamicField ($moduleName) ;
+        $df->setup ($seed) ;
         
         
-        $module = StudioModuleFactory::getStudioModule( $moduleName ) ;
+        $module = StudioModuleFactory::getStudioModule($moduleName) ;
         $customFields = array();
-        foreach($seed->field_defs as $def) {
-            if(isset($def['source']) && $def['source'] == 'custom_fields') {
-               $field = $df->getFieldWidget($moduleName, $def['name']);
-               $field->delete ( $df ) ;
+        foreach ($seed->field_defs as $def) {
+            if (isset($def['source']) && $def['source'] == 'custom_fields') {
+                $field = $df->getFieldWidget($moduleName, $def['name']);
+                $field->delete ($df) ;
                
-               $module->removeFieldFromLayouts( $def['name'] );
-               $customFields[] = $def['name'];
+                $module->removeFieldFromLayouts($def['name']);
+                $customFields[] = $def['name'];
             }
         }
         $out = "";
@@ -167,14 +172,13 @@ class ViewResetmodule extends SugarView
      * 
      * @return html output record of the files deleted
      */
-    function removeCustomLayouts() 
+    function removeCustomLayouts()
     {
-        $module = StudioModuleFactory::getStudioModule( $this->module ) ;
+        $module = StudioModuleFactory::getStudioModule($this->module) ;
         $sources = $module->getViewMetadataSources();
 
         $out = "";
-        foreach($sources as $view)
-        {
+        foreach ($sources as $view) {
             $deployedMetaDataImplementation = new DeployedMetaDataImplementation($view, $this->module);
             $file = $deployedMetaDataImplementation->getFileName($view['type'], $this->module, null);
             if (file_exists($file)) {
@@ -185,7 +189,7 @@ class ViewResetmodule extends SugarView
         
         // now clear the cache
         include_once ('include/TemplateHandler/TemplateHandler.php') ;
-        TemplateHandler::clearCache ( $this->module ) ;
+        TemplateHandler::clearCache ($this->module) ;
         
         return $out;
     }
@@ -195,57 +199,59 @@ class ViewResetmodule extends SugarView
      * 
      * @return html output record of the files deleted
      */
-    function removeCustomRelationships() 
+    function removeCustomRelationships()
     {
-    	require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php' ;
+        require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php' ;
         $out = "";
         $madeChanges = false;
-        $relationships = new DeployedRelationships ( $this->module ) ;
+        $relationships = new DeployedRelationships ($this->module) ;
         
-        foreach ( $relationships->getRelationshipList () as $relationshipName )
-        {
-            $rel = $relationships->get ( $relationshipName )->getDefinition () ;
+        foreach ($relationships->getRelationshipList () as $relationshipName) {
+            $rel = $relationships->get ($relationshipName)->getDefinition () ;
             if ($rel [ 'is_custom' ] || (isset($rel [ 'from_studio' ]) && $rel [ 'from_studio' ])) {
                 $relationships->delete ($relationshipName);
                 $out .= "Removed relationship $relationshipName<br/>";
             }
         }
-        if ($madeChanges)
-           $relationships->save () ;
+        if ($madeChanges) {
+            $relationships->save () ;
+        }
         
         return $out;
     }
     
-    function removeCustomLabels() 
+    function removeCustomLabels()
     {
         $out = "";
-		$languageDir = "custom/modules/{$this->module}/language";
+        $languageDir = "custom/modules/{$this->module}/language";
         if (is_dir($languageDir)) {
             $files = scandir($languageDir);
             foreach ($files as $langFile) {
-                if (substr($langFile, 0 ,1) == '.') continue;
-				$language = substr($langFile, 0, strlen($langFile) - 9);
-				unlink($languageDir . "/" . $langFile);
+                if (substr($langFile, 0 ,1) == '.') {
+                    continue;
+                }
+                $language = substr($langFile, 0, strlen($langFile) - 9);
+                unlink($languageDir . "/" . $langFile);
 				
-				LanguageManager::clearLanguageCache ( $this->module, $language ) ;
-				$out .= "Removed language file $langFile<br/>";
+                LanguageManager::clearLanguageCache ($this->module, $language) ;
+                $out .= "Removed language file $langFile<br/>";
             }
         }
 		
-		return $out;
+        return $out;
     }
 	
-	function removeCustomExtensions() 
-	{
+    function removeCustomExtensions()
+    {
         $out = "";
         $extDir = "custom/Extension/modules/{$this->module}";
         if (is_dir($extDir)) {
-        	rmdir_recursive($extDir);
-        	require_once ('modules/Administration/QuickRepairAndRebuild.php') ;
-            $rac = new RepairAndClear ( ) ;
-            $rac->repairAndClearAll ( array ( 'clearAll' ), array ( $this->module ), true, false ) ;
-			$rac->rebuildExtensions();
-        	$out .= "Cleared extensions for {$this->module}<br/>";
+            rmdir_recursive($extDir);
+            require_once ('modules/Administration/QuickRepairAndRebuild.php') ;
+            $rac = new RepairAndClear () ;
+            $rac->repairAndClearAll (array ( 'clearAll' ), array ( $this->module ), true, false) ;
+            $rac->rebuildExtensions();
+            $out .= "Cleared extensions for {$this->module}<br/>";
         }
 		
         return $out;

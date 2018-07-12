@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -60,45 +62,44 @@ function getControl(
     $fieldname,
     $vardef = null,
     $value = ''
-    )
-{
+    ) {
     global $current_language, $app_strings, $dictionary, $app_list_strings, $current_user;
     
     // use the mod_strings for this module
     $mod_strings = return_module_language($current_language,$module);
     
- 	// set the filename for this control
+    // set the filename for this control
     $file = create_cache_directory('modules/Import/') . $module . $fieldname . '.tpl';
 
-    if ( !is_file($file)
+    if (!is_file($file)
             || inDeveloperMode()
-            || !empty($_SESSION['developerMode']) ) {
-        
-        if ( !isset($vardef) ) {
+            || !empty($_SESSION['developerMode'])) {
+        if (!isset($vardef)) {
             $focus = loadBean($module);
             $vardef = $focus->getFieldDefinition($fieldname);
         }
         
         // if this is the id relation field, then don't have a pop-up selector.
-        if( $vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) { 
-            $vardef['type'] = 'varchar'; 
+        if ($vardef['type'] == 'relate' && $vardef['id_name'] == $vardef['name']) {
+            $vardef['type'] = 'varchar';
         }
         
         // create the dropdowns for the parent type fields
-        if ( $vardef['type'] == 'parent_type' ) {
+        if ($vardef['type'] == 'parent_type') {
             $vardef['type'] = 'enum';
         }
         
         // remove the special text entry field function 'getEmailAddressWidget'
-        if ( isset($vardef['function']) 
-                && ( $vardef['function'] == 'getEmailAddressWidget' 
-                    || $vardef['function']['name'] == 'getEmailAddressWidget' ) )
+        if (isset($vardef['function']) 
+                && ($vardef['function'] == 'getEmailAddressWidget' 
+                    || $vardef['function']['name'] == 'getEmailAddressWidget')) {
             unset($vardef['function']);
+        }
         
         // load SugarFieldHandler to render the field tpl file
         static $sfh;
         
-        if(!isset($sfh)) {
+        if (!isset($sfh)) {
             require_once('include/SugarFields/SugarFieldHandler.php');
             $sfh = new SugarFieldHandler();
         }
@@ -112,13 +113,14 @@ function getControl(
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
         
         // hack to disable one of the js calls in this control
-        if ( isset($vardef['function']) 
-                && ( $vardef['function'] == 'getCurrencyDropDown' 
-                    || $vardef['function']['name'] == 'getCurrencyDropDown' ) )
-        $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
+        if (isset($vardef['function']) 
+                && ($vardef['function'] == 'getCurrencyDropDown' 
+                    || $vardef['function']['name'] == 'getCurrencyDropDown')) {
+            $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
+        }
 
         // Save it to the cache file
-        if($fh = @sugar_fopen($file, 'w')) {
+        if ($fh = @sugar_fopen($file, 'w')) {
             fputs($fh, $contents);
             fclose($fh);
         }
@@ -132,17 +134,16 @@ function getControl(
     $time_format = $timedate->get_user_time_format();
     $date_format = $timedate->get_cal_date_format();
     $ss->assign('USER_DATEFORMAT', $timedate->get_user_date_format());
- 	$ss->assign('TIME_FORMAT', $time_format);
+    $ss->assign('TIME_FORMAT', $time_format);
     $time_separator = ":";
     $match = array();
-    if(preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
+    if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
         $time_separator = $match[1];
     }
     $t23 = strpos($time_format, '23') !== false ? '%H' : '%I';
-    if(!isset($match[2]) || $match[2] == '') {
+    if (!isset($match[2]) || $match[2] == '') {
         $ss->assign('CALENDAR_FORMAT', $date_format . ' ' . $t23 . $time_separator . "%M");
-    } 
-    else {
+    } else {
         $pm = $match[2] == "pm" ? "%P" : "%p";
         $ss->assign('CALENDAR_FORMAT', $date_format . ' ' . $t23 . $time_separator . "%M" . $pm);
     }
@@ -151,47 +152,46 @@ function getControl(
  
     // populate the fieldlist from the vardefs
     $fieldlist = array();
-    if ( !isset($focus) || !($focus instanceof SugarBean) )
+    if (!isset($focus) || !($focus instanceof SugarBean)) {
         $focus = loadBean($module);
+    }
     // create the dropdowns for the parent type fields
-    if ( $vardef['type'] == 'parent_type' ) {
+    if ($vardef['type'] == 'parent_type') {
         $focus->field_defs[$vardef['name']]['options'] = $focus->field_defs[$vardef['group']]['options'];
     }
     $vardefFields = $focus->getFieldDefinitions();
-    foreach ( $vardefFields as $name => $properties ) {
+    foreach ($vardefFields as $name => $properties) {
         $fieldlist[$name] = $properties;
         // fill in enums
-        if(isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']]))
+        if (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($app_list_strings[$fieldlist[$name]['options']])) {
             $fieldlist[$name]['options'] = $app_list_strings[$fieldlist[$name]['options']];
+        }
         // Bug 32626: fall back on checking the mod_strings if not in the app_list_strings
-        elseif(isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']]))
+        elseif (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']])) {
             $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
+        }
         // Bug 22730: make sure all enums have the ability to select blank as the default value.
-        if(!isset($fieldlist[$name]['options']['']))
+        if (!isset($fieldlist[$name]['options'][''])) {
             $fieldlist[$name]['options'][''] = '';
+        }
     }
     // fill in function return values
-    if ( !in_array($fieldname,array('email1','email2')) )
-    {
-        if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html')
-        {
-
+    if (!in_array($fieldname,array('email1','email2'))) {
+        if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html') {
             $function = $fieldlist[$fieldname]['function']['name'];
             // include various functions required in the various vardefs
-            if ( isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include']))
+            if (isset($fieldlist[$fieldname]['function']['include']) && is_file($fieldlist[$fieldname]['function']['include'])) {
                 require_once($fieldlist[$fieldname]['function']['include']);
+            }
             $value = $function($focus, $fieldname, $value, 'EditView');
             // Bug 22730 - add a hack for the currency type dropdown, since it's built by a function.
-            if ( preg_match('/getCurrency.*DropDown/s',$function)  )
+            if (preg_match('/getCurrency.*DropDown/s',$function)) {
                 $value = str_ireplace('</select>','<option value="">'.$app_strings['LBL_NONE'].'</option></select>',$value);
-        }
-        elseif($fieldname == 'assigned_user_name' && empty($value))
-        {
+            }
+        } elseif ($fieldname == 'assigned_user_name' && empty($value)) {
             $fieldlist['assigned_user_id']['value'] = $GLOBALS['current_user']->id;
             $value = get_assigned_user_name($GLOBALS['current_user']->id);
-        }
-        elseif($fieldname == 'team_name' && empty($value))
-        {
+        } elseif ($fieldname == 'team_name' && empty($value)) {
             $value = json_encode(array());
         }
     }

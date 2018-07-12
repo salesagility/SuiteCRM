@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,7 +52,7 @@ $ie = new InboundEmail();
 $json = getJSONobj();
 $rules = new SugarRouting($ie, $current_user);
 
-switch($_REQUEST['routingAction']) {
+switch ($_REQUEST['routingAction']) {
 	case "setRuleStatus":
 		$rules->setRuleStatus($_REQUEST['rule_id'], $_REQUEST['status']);
 	break;
@@ -76,28 +78,29 @@ switch($_REQUEST['routingAction']) {
 	/* returns metadata to construct a rule */
 	case "getRule":
 		$ret = '';
-		if(isset($_REQUEST['rule_id']) && !empty($_REQUEST['rule_id']) && isset($_REQUEST['bean']) && !empty($_REQUEST['bean'])) {
-			if(!isset($beanList))
-				include("include/modules.php");
+		if (isset($_REQUEST['rule_id']) && !empty($_REQUEST['rule_id']) && isset($_REQUEST['bean']) && !empty($_REQUEST['bean'])) {
+		    if (!isset($beanList)) {
+		        include("include/modules.php");
+		    }
 			
-			$class = $beanList[$_REQUEST['bean']];
-			//$beanList['Groups'] = 'Group';
-			if(isset($beanList[$_REQUEST['bean']])) {
-				require_once("modules/{$_REQUEST['bean']}/{$class}.php");
-				$bean = new $class();
+		    $class = $beanList[$_REQUEST['bean']];
+		    //$beanList['Groups'] = 'Group';
+		    if (isset($beanList[$_REQUEST['bean']])) {
+		        require_once("modules/{$_REQUEST['bean']}/{$class}.php");
+		        $bean = new $class();
 				
-				$rule = $rules->getRule($_REQUEST['rule_id'], $bean);
+		        $rule = $rules->getRule($_REQUEST['rule_id'], $bean);
 				
-				$ret = array(
+		        $ret = array(
 					'bean' => $_REQUEST['bean'],
 					'rule' => $rule
 				);
-			}
+		    }
 		} else {
-			$bean = new SugarBean();
-			$rule = $rules->getRule('', $bean);
+		    $bean = new SugarBean();
+		    $rule = $rules->getRule('', $bean);
 			
-			$ret = array(
+		    $ret = array(
 				'bean' => $_REQUEST['bean'],
 				'rule' => $rule
 			);

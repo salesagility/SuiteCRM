@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,9 +47,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  // var_export gets rid of the empty values that we use to display None
  // thishelper function fixes that
  // *This is no longer the case in php 5. var_export will now preserve empty keys.
-function var_export_helper($tempArray) {
-		return var_export($tempArray, true);
-	}
+function var_export_helper($tempArray)
+{
+    return var_export($tempArray, true);
+}
 
 
 
@@ -60,21 +63,23 @@ function var_export_helper($tempArray) {
  * @returns: String. Example - override_value_to_string($name, 'b', 1) = '$name['b'] = 1;'
  */
 
-function override_value_to_string($array_name, $value_name, $value){
-	$string = "\${$array_name}[". var_export($value_name, true). "] = ";
-	$string .= var_export_helper($value,true);
-	return $string . ";";
+function override_value_to_string($array_name, $value_name, $value)
+{
+    $string = "\${$array_name}[". var_export($value_name, true). "] = ";
+    $string .= var_export_helper($value,true);
+    return $string . ";";
 }
 
-function add_blank_option($options){
- 	if(is_array($options)) {
- 		if(!isset($options['']) && !isset($options['0'])) {
-		$options = array_merge(array(''=>''), $options);
- 		}
- 	} else {
- 		$options = array(''=>'');
- 	}
-	return $options;
+function add_blank_option($options)
+{
+    if (is_array($options)) {
+        if (!isset($options['']) && !isset($options['0'])) {
+            $options = array_merge(array(''=>''), $options);
+        }
+    } else {
+        $options = array(''=>'');
+    }
+    return $options;
 }
 
 /**
@@ -89,38 +94,40 @@ function add_blank_option($options){
 function override_value_to_string_recursive($key_names, $array_name, $value, $eval = false)
 {
     global $log;
-	if ($eval) {
-	    $log->deprecated('$eval parameter is deprecated');
-	}
+    if ($eval) {
+        $log->deprecated('$eval parameter is deprecated');
+    }
 
-	return "\${$array_name}". override_recursive_helper($key_names, $array_name, $value);
+    return "\${$array_name}". override_recursive_helper($key_names, $array_name, $value);
 }
 
-function override_recursive_helper($key_names, $array_name, $value){
-	if( empty( $key_names ) )
-		return "=".var_export_helper($value,true).";";
-	else{
-		$key = array_shift($key_names);
-		return "[".var_export($key,true)."]". override_recursive_helper($key_names, $array_name,$value);
-	}
+function override_recursive_helper($key_names, $array_name, $value)
+{
+    if (empty($key_names)) {
+        return "=".var_export_helper($value,true).";";
+    } else {
+        $key = array_shift($key_names);
+        return "[".var_export($key,true)."]". override_recursive_helper($key_names, $array_name,$value);
+    }
 }
 
-function override_value_to_string_recursive2($array_name, $value_name, $value, $save_empty = true) {
+function override_value_to_string_recursive2($array_name, $value_name, $value, $save_empty = true)
+{
     $quoted_vname = var_export($value_name, true);
-	if (is_array($value)) {
-		$str = '';
+    if (is_array($value)) {
+        $str = '';
         $newArrayName = $array_name . "[$quoted_vname]";
-		foreach($value as $key=>$val) {
-			$str.= override_value_to_string_recursive2($newArrayName, $key, $val, $save_empty);
-		}
-		return $str;
-	} else {
-		if(!$save_empty && empty($value)){
-			return;
-		}else{
+        foreach ($value as $key=>$val) {
+            $str.= override_value_to_string_recursive2($newArrayName, $key, $val, $save_empty);
+        }
+        return $str;
+    } else {
+        if (!$save_empty && empty($value)) {
+            return;
+        } else {
             return "\$$array_name" . "[$quoted_vname] = " . var_export($value, true) . ";\n";
-		}
-	}
+        }
+    }
 }
 
 /**
@@ -132,18 +139,17 @@ function override_value_to_string_recursive2($array_name, $value_name, $value, $
  */
 function object_to_array_recursive($obj)
 {
-	if (!is_object($obj))
-	   return $obj;
+    if (!is_object($obj)) {
+        return $obj;
+    }
 
-	$ret = get_object_vars($obj);
-	foreach($ret as $key => $val)
-	{
-		if (is_object($val)) {
-			$ret[$key] = object_to_array_recursive($val);
-		}
-		
-	}
-	return $ret;
+    $ret = get_object_vars($obj);
+    foreach ($ret as $key => $val) {
+        if (is_object($val)) {
+            $ret[$key] = object_to_array_recursive($val);
+        }
+    }
+    return $ret;
 }
 /**
 	 * This function returns an array of all the key=>value pairs in $array1 
@@ -158,22 +164,24 @@ function object_to_array_recursive($obj)
 	 * otherwise empty values in $array1 are ignored.
 	 * @return array containing the differences between the two arrays
 	 */
-	function deepArrayDiff($array1, $array2, $allowEmpty = false) {
-		$diff = array();
-		foreach($array1 as $key=>$value) {
-			if (is_array($value)) {
-				if ((!isset($array2[$key]) || !is_array($array2[$key])) && (isset($value) || $allowEmpty)) {
-					$diff[$key] = $value;
-				} else {
-					$value = deepArrayDiff($array1[$key], $array2[$key], $allowEmpty);
-					if (!empty($value) || $allowEmpty)
-						$diff[$key] = $value;
-				}
-			} else if ((!isset($array2[$key]) || $value != $array2[$key]) && (isset($value) || $allowEmpty)){
-				$diff[$key] = $value;
-			}
-		}
-		return $diff;
+	function deepArrayDiff($array1, $array2, $allowEmpty = false)
+	{
+	    $diff = array();
+	    foreach ($array1 as $key=>$value) {
+	        if (is_array($value)) {
+	            if ((!isset($array2[$key]) || !is_array($array2[$key])) && (isset($value) || $allowEmpty)) {
+	                $diff[$key] = $value;
+	            } else {
+	                $value = deepArrayDiff($array1[$key], $array2[$key], $allowEmpty);
+	                if (!empty($value) || $allowEmpty) {
+	                    $diff[$key] = $value;
+	                }
+	            }
+	        } elseif ((!isset($array2[$key]) || $value != $array2[$key]) && (isset($value) || $allowEmpty)) {
+	            $diff[$key] = $value;
+	        }
+	    }
+	    return $diff;
 	}
 	
 	/**
@@ -182,34 +190,35 @@ function object_to_array_recursive($obj)
 	 * @param unknown_type $array
 	 * @param unknown_type $key
 	 */
-	function setDeepArrayValue(&$array, $key, $value) {
-		//if _ is at position zero, that is invalid.
-		if (strrpos($key, "_")) {
-		list ($key, $remkey) = explode('_', $key, 2);
-			if (!isset($array[$key]) || !is_array($array[$key])) {
-				$array[$key] = array();
-			}
-			setDeepArrayValue($array[$key], $remkey, $value);
-		}
-		else {
-			$array[$key] = $value;
-		}
+	function setDeepArrayValue(&$array, $key, $value)
+	{
+	    //if _ is at position zero, that is invalid.
+	    if (strrpos($key, "_")) {
+	        list ($key, $remkey) = explode('_', $key, 2);
+	        if (!isset($array[$key]) || !is_array($array[$key])) {
+	            $array[$key] = array();
+	        }
+	        setDeepArrayValue($array[$key], $remkey, $value);
+	    } else {
+	        $array[$key] = $value;
+	    }
 	}
 
 
 // This function iterates through the given arrays and combines the values of each key, to form one array
 // Returns FALSE if number of elements in the arrays do not match; otherwise, returns merged array
 // Example: array("a", "b", "c") and array("x", "y", "z") are passed in; array("ax", "by", "cz") is returned
-function array_merge_values($arr1, $arr2) {
-	if (count($arr1) != count($arr2)) {
-		return FALSE;
-	}
+function array_merge_values($arr1, $arr2)
+{
+    if (count($arr1) != count($arr2)) {
+        return FALSE;
+    }
 
-	for ($i = 0; $i < count($arr1); $i++) {
-		$arr1[$i] .= $arr2[$i];
-	}
+    for ($i = 0; $i < count($arr1); $i++) {
+        $arr1[$i] .= $arr2[$i];
+    }
 
-	return $arr1;
+    return $arr1;
 }
 
 /**
@@ -220,14 +229,13 @@ function array_merge_values($arr1, $arr2) {
  */
 function array_search_insensitive($key, $haystack)
 {
-    if(!is_array($haystack))
+    if (!is_array($haystack)) {
         return FALSE;
+    }
 
     $found = FALSE;
-    foreach($haystack as $k => $v)
-    {
-        if(strtolower($v) == strtolower($key))
-        {
+    foreach ($haystack as $k => $v) {
+        if (strtolower($v) == strtolower($key)) {
             $found = TRUE;
             break;
         }
@@ -251,7 +259,8 @@ class SugarArray extends ArrayObject
      * @param mixed $default value to return if $key does not exist
      * @return mixed
      */
-    public function get($key, $default = null) {
+    public function get($key, $default = null)
+    {
         return $this->_getFromSource($key, $default);
     }
 
@@ -268,7 +277,8 @@ class SugarArray extends ArrayObject
      * @param mixed $default default value to return
      * @return mixed
      */
-    static public function staticGet($haystack, $needle, $default = null) {
+    static public function staticGet($haystack, $needle, $default = null)
+    {
         if (empty($haystack)) {
             return $default;
         }
@@ -276,7 +286,8 @@ class SugarArray extends ArrayObject
         return $array->get($needle, $default);
     }
 
-    private function _getFromSource($key, $default) {
+    private function _getFromSource($key, $default)
+    {
         if (strpos($key, '.') === false) {
             return isset($this[$key]) ? $this[$key] : $default;
         }
@@ -286,7 +297,8 @@ class SugarArray extends ArrayObject
         return $this->_getRecursive($this->_getFromSource($current_key, $default), $exploded, $default);
     }
 
-    private function _getRecursive($raw_config, $children, $default) {
+    private function _getRecursive($raw_config, $children, $default)
+    {
         if ($raw_config === $default) {
             return $default;
         } elseif (count($children) == 0) {

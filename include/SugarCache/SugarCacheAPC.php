@@ -52,12 +52,14 @@ class SugarCacheAPC extends SugarCacheAbstract
      */
     public function useBackend()
     {
-        if ( !parent::useBackend() )
+        if (!parent::useBackend()) {
             return false;
+        }
 
-        if ( function_exists("apc_store")
-                && empty($GLOBALS['sugar_config']['external_cache_disabled_apc']))
+        if (function_exists("apc_store")
+                && empty($GLOBALS['sugar_config']['external_cache_disabled_apc'])) {
             return true;
+        }
 
         return false;
     }
@@ -76,7 +78,7 @@ class SugarCacheAPC extends SugarCacheAbstract
     protected function _getExternal($key)
     {
         $res = apc_fetch($key);
-        if($res === false) {
+        if ($res === false) {
             return null;
         }
 
