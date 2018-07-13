@@ -918,7 +918,7 @@ $mod_strings = array(
     'LBL_MASTER_SEARCH' => 'Master Search',
     'LBL_MASTER_SEARCH_DESC' => 'Configure master search preferences.',
     'LBL_ELASTIC_SEARCH' => 'Elasticsearch',
-    'LBL_ELASTIC_SEARCH_SETTINGS' => 'Elasticsearch Indexer',
+    'LBL_ELASTIC_SEARCH_SETTINGS' => 'Elasticsearch',
     'LBL_ELASTIC_SEARCH_SETTINGS_DESC' => 'Configure Elasticsearch preferences.'
 );
 
