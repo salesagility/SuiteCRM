@@ -680,12 +680,17 @@ class InboundEmail extends SugarBean
         }
         $this->connectMailserver();
 
-        $uids = imap_search($this->conn, "ALL", SE_UID);
+        if (!$this->conn) {
+            LoggerManager::getLogger()->warn('InboundEmail::emptyTrash() needs a valid resource to connection. Boolean given.');
+        } else {
+        
+            $uids = imap_search($this->conn, "ALL", SE_UID);
 
-        foreach ($uids as $uid) {
-            if (!imap_delete($this->conn, $uid, FT_UID)) {
-                $lastError = imap_last_error();
-                $GLOBALS['log']->warn("INBOUNDEMAIL: emptyTrash() Could not delete message [ {$uid} ] from [ {$this->mailbox} ].  IMAP_ERROR [ {$lastError} ]");
+            foreach ($uids as $uid) {
+                if (!imap_delete($this->conn, $uid, FT_UID)) {
+                    $lastError = imap_last_error();
+                    $GLOBALS['log']->warn("INBOUNDEMAIL: emptyTrash() Could not delete message [ {$uid} ] from [ {$this->mailbox} ].  IMAP_ERROR [ {$lastError} ]");
+                }
             }
         }
 
@@ -6936,6 +6941,11 @@ class InboundEmail extends SugarBean
         $query = "SELECT msgno FROM email_cache WHERE ie_id = '{$this->id}' AND message_id = '{$messageid}'";
         $r = $this->db->query($query);
         $a = $this->db->fetchByAssoc($r);
+        
+        if (!isset($a['message_id'])) {
+            LoggerManager::getLogger()->warn('Message ID is not set to resolve Message Number');
+            return null;
+        }
 
         return $a['message_id'];
     }
