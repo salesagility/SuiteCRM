@@ -168,6 +168,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
 
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         self::assertInstanceOf(DBManager::class, $bean->db);
         self::assertEquals('Users', $bean->module_name);
@@ -709,9 +710,50 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         SugarBean::removeRelationshipMeta('key', null, null, array('key' => 'value'), 'Tests');
+        self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
      
     }
 
+    /**
+     * @see SugarBean::createRelationshipMeta()
+     */
+    public function testCreateRelationshipMeta()
+    {
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta(null, null, null, array(), null);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta(null, null, null, array(), 'Contacts');
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta(null, null, null, array(), 'Contacts', true);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
+        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta('User', $this->db, null, array(), 'Contacts');
+        self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta('Nonexists1', $this->db, null, array(), 'Nonexists2');
+        self::assertCount(1, $GLOBALS['log']->calls['debug']);
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::createRelationshipMeta('User', null, null, array(), 'Contacts');
+        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
+    }
 
     /**
      * @see SugarBean::get_union_related_list()
@@ -723,17 +765,22 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertFalse(isset($_SESSION));
 
         // test
+        $GLOBALS['log']->reset();
         $results = SugarBean::get_union_related_list(null);
+        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(null, $results);
 
 
         // test
+        $GLOBALS['log']->reset();
         $_SESSION['show_deleted'] = 1;
         $results = SugarBean::get_union_related_list(null);
+        self::assertCount(3, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(null, $results);
 
 
         // test
+        $GLOBALS['log']->reset();
         $_SESSION['show_deleted'] = 1;
         $parentBean = new SugarBeanMock();
         $subPanelDef = new aSubPanel(null, null, $parentBean);
@@ -750,8 +797,10 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
+        $GLOBALS['log']->reset();
         $subPanelDef->_instance_properties['type'] = 'collection';
         $results = SugarBean::get_union_related_list($parentBean, '', '', '', 0, -1, -1, 0, $subPanelDef);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
         self::assertEquals(array(
             'list' => array(),
             'parent_data' => array(),
@@ -764,6 +813,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
+        $GLOBALS['log']->reset();
         $_SESSION['show_deleted'] = 1;
         $parentBean = new SugarBeanMock();
         $subPanelDef = new aSubPanel(null, null, $parentBean);
@@ -806,8 +856,10 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $subpanel_def = null;
         $parentBean = new SugarBeanMock();
         $order_by = null;
+        $GLOBALS['log']->reset();
         $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentBean, $order_by);
         self::assertEquals(array(), $results);
+        self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
 
 
         // test
@@ -817,6 +869,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $subpanel_def = null;
         $parentBean = null;
         $order_by = null;
+        $GLOBALS['log']->reset();
         $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentBean, $order_by);
         self::assertEquals(array(
             array(
@@ -830,6 +883,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 ),
             ),
             ), $results);
+        self::assertCount(6, $GLOBALS['log']->calls['fatal']);
 
 
         // test
@@ -839,9 +893,10 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $subpanel_def = null;
         $parentBean = null;
         $order_by = null;
-        
+        $GLOBALS['log']->reset();
         $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentBean, $order_by);
         self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
 
         // test
@@ -849,9 +904,10 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $subpanel_def = null;
         $parentBean = null;
         $order_by = null;
-        
+        $GLOBALS['log']->reset();
         $results = SugarBeanMock::publicBuildSubQueriesForUnion($subpanel_list, $subpanel_def, $parentBean, $order_by);
         self::assertEquals(array(), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
@@ -879,18 +935,18 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $tableAodIndex = $rows;
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang sql */
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $tmp = $sugar_config['list_max_entries_per_subpanel'];
         $sugar_config['list_max_entries_per_subpanel'] = 0;
         $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, 0, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
         self::assertEquals(array(), $results['list']);
         self::assertEquals(array(), $results['parent_data']);
@@ -903,22 +959,22 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $sugar_config['list_max_entries_per_subpanel'] = $tmp;
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang sql */
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
@@ -930,21 +986,21 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -955,21 +1011,21 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $subpanelDefinition->_instance_properties['type'] = 'collection';
         $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -980,20 +1036,20 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1004,21 +1060,21 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $subpanelDefinition->template_instance = $bean;
         $results = $bean->process_union_list_query($bean, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1029,20 +1085,20 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1053,17 +1109,17 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact1';
         $bean->save();
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT * FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
         self::assertEquals(-10, $results['previous_offset']);
@@ -1073,12 +1129,12 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact1';
         $bean->save();
         $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT * FROM contacts', null);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
         self::assertEquals(-10, $results['previous_offset']);
@@ -1088,7 +1144,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
         try {
             $results = $bean->process_union_list_query(null, 'DISTINCT', null);
@@ -1097,7 +1153,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             self::assertTrue(true);
             self::assertEquals(1, $e->getCode());
         }
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
         self::assertEquals(-10, $results['previous_offset']);
@@ -1107,10 +1163,10 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
         $results = $bean->process_union_list_query(null, null, null);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(10, $results['next_offset']);
         self::assertEquals(-10, $results['previous_offset']);
@@ -1120,11 +1176,11 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->retrieve('test_contact1');
         $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT * FROM contacts', 'end');
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertEquals(9.0, $results['next_offset']);
         self::assertEquals(-11.0, $results['previous_offset']);
@@ -1135,16 +1191,16 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         // test
         $sugar_config['disable_count_query'] = 1;
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_0';
         $bean->save();
         $query = /** @lang text */
             "INSERT INTO contacts (id) VALUES ('test_contact_1'), ('test_contact_2'), ('test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
         $subpanelDefinition = new aSubPanel('TestPanel', array(), $bean);
         $results = $bean->process_union_list_query(null, /** @lang sql */ 'SELECT DISTINCT count(*) AS c FROM contacts', null, -1, -1, '', $subpanelDefinition);
-        
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
         self::assertEquals(array(), $results['parent_data']);
         self::assertNotEquals(0, $results['row_count']);
         self::assertEquals(10, $results['next_offset']);
@@ -1155,13 +1211,13 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang text */
             "DELETE FROM contacts WHERE id IN ('test_contact_0', 'test_contact_1', 'test_contact_2', 'test_contact_3')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         // cleanup
-        DBManagerFactory::getInstance()->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
-        DBManagerFactory::getInstance()->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'test_contact%'");
+        $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'test_contact%'");
+        $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'test_contact%'");
 
-        DBManagerFactory::getInstance()->query("DELETE FROM aod_index");
+        $this->db->query("DELETE FROM aod_index");
         foreach ($tableAodIndex as $row) {
             $query = "INSERT aod_index INTO (";
             $query .= (implode(',', array_keys($row)) . ') VALUES (');
@@ -1191,7 +1247,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testRetrieveParentFields()
     {
-        
+        $GLOBALS['log']->reset();
 
         // test
         $bean = new SugarBeanMock();
@@ -1285,7 +1341,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         $bean = new SugarBeanMock();
 
-        DBManagerFactory::getInstance()->query(/** @lang sql */
+        $this->db->query(/** @lang sql */
             "INSERT INTO contacts (id, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, salutation, first_name, last_name, title, photo, department, do_not_call, phone_home, phone_mobile, phone_work, phone_other, phone_fax, primary_address_street, primary_address_city, primary_address_state, primary_address_postalcode, primary_address_country, alt_address_street, alt_address_city, alt_address_state, alt_address_postalcode, alt_address_country, assistant, assistant_phone, lead_source, reports_to_id, birthdate, campaign_id, joomla_account_id, portal_account_disabled, portal_user_type) VALUES ('test_parent_contact_1', '2017-08-04 00:00:11', '2017-08-11 00:00:22', 'aaa', 'bbb', 'ccc', '0', 'eee', 'fff', 'ggg', 'hhh', 'jjj', 'kkk', 'lll', '1', 'mmm', 'nnn', 'ooo', 'ppp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Single');");
         $results = $bean->retrieve_parent_fields(array(
             array(
@@ -1304,7 +1360,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'parent_name_mod' => 'Contacts',
             ),
             ), $results);
-        DBManagerFactory::getInstance()->query(/** @lang sql */
+        $this->db->query(/** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_parent_contact_1'");
     }
 
@@ -1313,7 +1369,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testGetAuditEnabledFieldDefinitions()
     {
-        
+        $GLOBALS['log']->reset();
 
         // test
         $bean = new SugarBeanMock();
@@ -1412,70 +1468,70 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
         $result = $bean->isOwner(null);
         self::assertTrue($result);
         self::assertEquals('', $bean->id);
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $result = $bean->isOwner(null);
         self::assertFalse($result);
         self::assertEquals('test_contact_1', $bean->id);
-        
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->fetched_row['assigned_user_id'] = 1;
         $result = $bean->isOwner(null);
         self::assertFalse($result);
         self::assertEquals('test_contact_1', $bean->id);
-        
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->fetched_row['assigned_user_id'] = 1;
         $result = $bean->isOwner(1);
         self::assertTrue($result);
         self::assertEquals('test_contact_1', $bean->id);
-        
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->assigned_user_id = 1;
         $result = $bean->isOwner(1);
         self::assertTrue($result);
         self::assertEquals('test_contact_1', $bean->id);
-        
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->assigned_user_id = 1;
         $result = $bean->isOwner(2);
         self::assertFalse($result);
         self::assertEquals('test_contact_1', $bean->id);
-        
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_1';
         $bean->created_by = 1;
         $result = $bean->isOwner(1);
         self::assertTrue($result);
         self::assertEquals('test_contact_1', $bean->id);
-        
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
     }
 
     /**
@@ -1485,11 +1541,11 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $result = $bean->get_custom_table_name();
         self::assertEquals('contacts_cstm', $result);
-        
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
     }
 
     /**
@@ -1498,23 +1554,24 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testGetTableName()
     {
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
         $result = $bean->getTableName();
         self::assertEquals('', $result);
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = new SugarBeanMock();
         unset($bean->table_name);
         $result = $bean->getTableName();
         self::assertEquals('', $result);
 
         // test
-        
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $result = $bean->getTableName();
         self::assertEquals('contacts', $result);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
     }
 
     /**
@@ -1524,28 +1581,36 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $result = $bean->getObjectName();
         self::assertEquals('Contact', $result);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         unset($bean->table_name);
         $result = $bean->getObjectName();
         self::assertEquals('Contact', $result);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         unset($bean->object_name);
         $result = $bean->getObjectName();
         self::assertEquals(null, $result);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->object_name = false;
         $result = $bean->getObjectName();
         self::assertEquals('contacts', $result);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
     }
 
     /**
@@ -1555,12 +1620,15 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $bean->object_name = false;
         $results = $bean->getIndices();
         self::assertEquals(array(), $results);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getIndices();
         self::assertEquals(array(
@@ -1621,6 +1689,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 ),
             ),
             ), $results);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
     }
 
     /**
@@ -1630,6 +1699,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getPrimaryFieldDefinition();
         self::assertEquals(array(
@@ -1641,8 +1711,10 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'comment' => 'Unique identifier',
             'inline_edit' => false,
             ), $results);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Contacts');
         unset($bean->field_defs['id']);
         $results = $bean->getPrimaryFieldDefinition();
@@ -1666,6 +1738,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             ),
             'importable' => 'false',
             ), $results);
+        self::assertFalse(isset($GLOBALS['log']->calls['fatal']));
     }
 
     /**
@@ -1675,17 +1748,25 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldDefinition(null);
         self::assertFalse($results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldDefinition('undefined');
         self::assertFalse($results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldDefinition('name');
         self::assertEquals(array(
@@ -1708,6 +1789,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             ),
             'importable' => 'false',
             ), $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
@@ -1717,24 +1799,36 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldValue(null);
         self::assertFalse($results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldValue('importable');
         self::assertEquals(1, $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldValue('in_workflow');
         self::assertEquals(0, $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldValue('portal_user_type');
         self::assertEquals('Single', $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
@@ -1744,6 +1838,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
@@ -1754,19 +1850,26 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(null, $bean->jjwg_maps_lat_c);
         /** @noinspection PhpUndefinedFieldInspection */
         self::assertEquals(null, $bean->jjwg_maps_lng_c);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = false;
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         /** @noinspection PhpVoidFunctionResultUsedInspection */
         $results = $bean->unPopulateDefaultValues();
         self::assertEquals(null, $results);
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
@@ -1776,11 +1879,16 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $clone = clone $bean;
         self::assertEquals($bean, $clone);
+        self::assertTrue(isset($GLOBALS['log']->calls['fatal']));
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = new SugarBeanMock();
         $bean->foo = 'bar';
         $bean->setLoadedRelationships(array('foo'));
@@ -1807,24 +1915,32 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array(1);
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array(array(1));
         $results = $bean->get_linked_fields();
         self::assertEquals(array(), $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array(array('type' => 'link'));
         $results = $bean->get_linked_fields();
@@ -1842,6 +1958,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->getFieldDefinitions();
         self::assertEquals($bean->field_defs, $results);
@@ -1854,22 +1972,30 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->load_relationship(null);
         self::assertEquals(false, $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->load_relationship('test');
         self::assertEquals(false, $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = 'testValue';
         $results = $bean->load_relationship('testKey');
         self::assertEquals(false, $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = 'testValue';
         /** @noinspection PhpUndefinedFieldInspection */
@@ -1878,6 +2004,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(true, $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array('type' => 'link');
         /** @noinspection PhpUndefinedFieldInspection */
@@ -1888,6 +2016,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertNotTrue(isset($bean->testKey));
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
@@ -1902,6 +2032,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertNotTrue(isset($bean->testKey));
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
@@ -1916,6 +2048,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals('testValue', $bean->testKey);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
@@ -1931,6 +2065,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs['testKey'] = array(
             'type' => 'link',
@@ -1953,16 +2089,22 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->get_linked_beans(null);
         self::assertEquals(array(), $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $results = $bean->get_linked_beans(null, 'Case');
         self::assertEquals(array(), $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = new ProspectLink('test', $bean);
@@ -1970,6 +2112,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(array(), $results);
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         /** @noinspection PhpUndefinedFieldInspection */
         $bean->testKey = new ProspectLink('test', $bean);
@@ -1984,6 +2128,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
 
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_import_required_fields();
@@ -1996,6 +2142,8 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testGetImportableFields()
     {
         // test
+        $GLOBALS['log']->reset();
+        $GLOBALS['log']->fatal('test');
         $bean = BeanFactory::getBean('Contacts');
         $bean->field_defs = array();
         $results = $bean->get_importable_fields();
@@ -2065,7 +2213,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         $query = /** @lang sql */
             'DROP TABLE contacts_audit;';
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         // test
         $bean = BeanFactory::getBean('Contacts');
@@ -2098,6 +2246,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         global $current_user;
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $results = null;
         try {
@@ -2121,6 +2270,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->new_with_id = true;
         $results = null;
@@ -2145,6 +2295,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals($bean->modified_by_name, $bean->old_modified_by_name);
 
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->new_with_id = true;
         $bean->modified_by_name = 'testing';
@@ -2169,6 +2320,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(true, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
@@ -2195,6 +2347,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
@@ -2232,6 +2385,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
@@ -2270,6 +2424,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
         // test
+        $GLOBALS['log']->reset();
         $bean = BeanFactory::getBean('Users');
         $bean->id = 'testBean_1';
         $bean->modified_by_name = 'testing';
@@ -2308,6 +2463,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         self::assertEquals(false, $bean->new_with_id);
         //self::assertEquals(null, $bean->old_modified_by_name);
         // test
+        $GLOBALS['log']->reset();
         $this->fieldDefsStore('temp1');
         $this->fieldDefsRestore();
         $bean = BeanFactory::getBean('Contacts');
@@ -2350,10 +2506,10 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->fieldDefsRestore('temp1', true);
 
         // cleanup
-        DBManagerFactory::getInstance()->query("DELETE FROM sugarfeed WHERE related_id LIKE 'testBean_1'");
-        DBManagerFactory::getInstance()->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1'");
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
-        DBManagerFactory::getInstance()->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
+        $this->db->query("DELETE FROM sugarfeed WHERE related_id LIKE 'testBean_1'");
+        $this->db->query("DELETE FROM contacts_cstm WHERE id_c LIKE 'testBean_1'");
+        $this->db->query("DELETE FROM email_addr_bean_rel WHERE bean_id LIKE 'testBean_1'");
+        $this->db->query("DELETE FROM email_addresses WHERE email_address LIKE 'testbean1@email.com'");
 
         // clean up
 
@@ -2766,7 +2922,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // test
         $query = /** @lang sql */
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_11';
@@ -2776,12 +2932,12 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_contact_11'";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         // test
         $query = /** @lang sql */
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_11';
@@ -2791,12 +2947,12 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_contact_11'";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         // test
         $query = /** @lang sql */
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_11';
@@ -2806,12 +2962,12 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_contact_11'";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         // test
         $query = /** @lang sql */
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_11';
@@ -2821,12 +2977,12 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_contact_11'";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         // test
         $query = /** @lang sql */
             "INSERT INTO contacts (id, modified_user_id, date_modified) VALUES ('test_contact_11', 'test_user_11', '2000-01-01')";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
 
         $bean = BeanFactory::getBean('Contacts');
         $bean->id = 'test_contact_11';
@@ -2836,7 +2992,7 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $query = /** @lang sql */
             "DELETE FROM contacts WHERE id = 'test_contact_11'";
-        DBManagerFactory::getInstance()->query($query);
+        $this->db->query($query);
     }
 
     /**
