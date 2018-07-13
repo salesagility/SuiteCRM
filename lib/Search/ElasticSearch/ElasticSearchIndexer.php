@@ -101,10 +101,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $this->log('@', 'Starting indexing procedures');
 
-        $this->indexedModulesCount = 0;
-        $this->indexedRecordsCount = 0;
-        $this->indexedFieldsCount = 0;
-        $this->removedRecordsCount = 0;
+        $this->resetCounts();
 
         $this->log('@', 'Indexing is performed using ' . $this->getDocumentifierName());
 
@@ -634,4 +631,11 @@ class ElasticSearchIndexer extends AbstractIndexer
         return true;
     }
 
+    private function resetCounts()
+    {
+        $this->indexedModulesCount = 0;
+        $this->indexedRecordsCount = 0;
+        $this->indexedFieldsCount = 0;
+        $this->removedRecordsCount = 0;
+    }
 }
