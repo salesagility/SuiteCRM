@@ -1660,7 +1660,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $inboundEmail->deleteFolder('INBOX');
 
-        $this->assertFalse(is_array($result));
+        $this->assertSame(['status', 'errorMessage'], array_keys($result));
+        $this->assertFalse($result['status']);
         
         // clean up
         
@@ -3148,7 +3149,44 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         $inboundEmail = new InboundEmail();
 
-        $expected = "			<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\">\n						<input type=\"hidden\" name=\"module\" value=\"InboundEmail\">\n						<input type=\"hidden\" name=\"action\" value=\"ListView\">\n						<input type=\"hidden\" name=\"save\" value=\"true\">\n\n			<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">\n				<tr>\n					<td>\n						<input 	title=\"Save\"\n								accessKey=\"a\"\n								class=\"button\"\n								onclick=\"this.form.return_module.value='InboundEmail'; this.form.return_action.value='ListView';\"\n								type=\"submit\" name=\"Edit\" value=\"  Save  \">\n					</td>\n				</tr>\n			</table>\n\n			<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"detail view\">\n				<tr>\n					<td valign=\"top\" width='10%' NOWRAP scope=\"row\">\n						<slot>\n							<b>:</b>\n						</slot>\n					</td>\n					<td valign=\"top\" width='20%'>\n						<slot>\n							<input name=\"inbound_email_case_macro\" type=\"text\" value=\"[CASE:%1]\">\n						</slot>\n					</td>\n					<td valign=\"top\" width='70%'>\n						<slot>\n							\n							<br />\n							<i></i>\n						</slot>\n					</td>\n				</tr>\n			</table>\n			</form>";
+        $expected = "<form action=\"index.php\" method=\"post\" name=\"Macro\" id=\"form\">
+    <input type=\"hidden\" name=\"module\" value=\"InboundEmail\">
+    <input type=\"hidden\" name=\"action\" value=\"ListView\">
+    <input type=\"hidden\" name=\"save\" value=\"true\">
+
+    <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">
+        <tr>
+            <td>
+                <input title=\"Save\"
+                          accessKey=\"a\"
+                          class=\"button\"
+                          onclick=\"this.form.return_module.value='InboundEmail'; this.form.return_action.value='ListView';\"
+                          type=\"submit\" name=\"Edit\" value=\"Save\">
+            </td>
+        </tr>
+    </table>
+
+    <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"detail view\">
+        <tr>
+            <td valign=\"top\" width='10%' NOWRAP scope=\"row\">
+                <span>
+                    <b>:</b>
+                </span>
+            </td>
+            <td valign=\"top\" width='20%'>
+                <span>
+                    <input name=\"inbound_email_case_macro\" type=\"text\" value=\"[CASE:%1]\">
+                </span>
+            </td>
+            <td valign=\"top\" width='70%'>
+                <span>
+                    <br />
+                    <i></i>
+                </span>
+            </td>
+        </tr>
+    </table>
+</form>";
         $result = $inboundEmail->getSystemSettingsForm();
 
         $this->assertSame($expected, $result);

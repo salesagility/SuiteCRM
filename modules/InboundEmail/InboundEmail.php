@@ -2009,6 +2009,10 @@ class InboundEmail extends SugarBean
         } else {
             $this->connectMailserver();
             $mailboxes = $this->getMailboxes(true);
+            if (null === $mailboxes) {
+                $mailboxes = [];
+                LoggerManager::getLogger()->warn('Mainboxes not found for checkEmail()');
+            }
             sort($mailboxes);
 
             $GLOBALS['log']->info("INBOUNDEMAIL: checking account [ {$this->name} ]");
@@ -4917,8 +4921,14 @@ class InboundEmail extends SugarBean
         // UNCOMMENT THIS IF YOU HAVE THIS PROBLEM!  See notes on Bug # 45477
         // $this->markEmails($uid, "read");
 
-        $header = imap_headerinfo($this->conn, $msgNo);
-        $fullHeader = imap_fetchheader($this->conn, $msgNo); // raw headers
+        $header = null;
+        $fullHeader = null;
+        if (!$this->conn) {
+            LoggerManager::getLogger()->warn('imap_headerinfo() and imap_fetchheader() needs a valid resource to importOneEmail()');
+        } else {
+            $header = imap_headerinfo($this->conn, $msgNo);
+            $fullHeader = imap_fetchheader($this->conn, $msgNo); // raw headers
+        }
 
         // reset inline images cache
         $this->inlineImages = array();
@@ -6638,18 +6648,22 @@ class InboundEmail extends SugarBean
             }
             // imap_mail_move accepts comma-delimited lists of UIDs
             if ($copy) {
-                if (imap_mail_copy($this->conn, $uids, $toFolder, CP_UID)) {
-                    $this->mailbox = $toFolder;
-                    $this->connectMailserver();
-                    $newOverviews = imap_fetch_overview($this->conn, $uids, FT_UID);
-                    $this->updateOverviewCacheFile($newOverviews, 'append');
-                    if (isset($oldMailbox)) {
-                        $this->mailbox = $oldMailbox;
-                    }
-
-                    return true;
+                if (!$this->conn) {
+                    LoggerManager::getLogger()->warn('Connection needs to be a valid resource for InboundEmail::moveEmails()');
                 } else {
-                    $GLOBALS['log']->debug("INBOUNDEMAIL: could not imap_mail_copy() [ {$uids} ] to folder [ {$toFolder} ] from folder [ {$fromFolder} ]");
+                    if (imap_mail_copy($this->conn, $uids, $toFolder, CP_UID)) {
+                        $this->mailbox = $toFolder;
+                        $this->connectMailserver();
+                        $newOverviews = imap_fetch_overview($this->conn, $uids, FT_UID);
+                        $this->updateOverviewCacheFile($newOverviews, 'append');
+                        if (isset($oldMailbox)) {
+                            $this->mailbox = $oldMailbox;
+                        }
+
+                        return true;
+                    } else {
+                        $GLOBALS['log']->debug("INBOUNDEMAIL: could not imap_mail_copy() [ {$uids} ] to folder [ {$toFolder} ] from folder [ {$fromFolder} ]");
+                    }
                 }
             } else {
                 if (imap_mail_move($this->conn, $uids, $toFolder, CP_UID)) {
