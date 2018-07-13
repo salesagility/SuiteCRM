@@ -3731,6 +3731,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetEmailForDisplay()
     {
+        $this->markTestIncomplete('Deprecated pop3 test');
+        
         // save state
         
         $state = $this->storeStateAll();
