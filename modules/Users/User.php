@@ -44,6 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('include/SugarObjects/templates/person/Person.php');
 require_once __DIR__ . '/../../include/EmailInterface.php';
+require_once __DIR__ . '/../Emails/EmailUI.php';
 
 // User is used to store customer information.
 class User extends Person implements EmailInterface
@@ -1736,23 +1737,16 @@ EOQ;
         $class = ''
     ) {
         $emailLink = '';
-        $client = $this->getEmailClient();
 
-        if ($client == 'sugar') {
-            require_once('modules/Emails/EmailUI.php');
-            $emailUI = new EmailUI();
-            for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
-                $emailField = 'email' . (string) ($i + 1);
-                $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
-                if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
-                    $focus->$emailField = $emailAddress;
-                    $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
-                    break;
-                }
+        $emailUI = new EmailUI();
+        for ($i = 0; $i < count($focus->emailAddress->addresses); $i++) {
+            $emailField = 'email' . (string) ($i + 1);
+            $optOut = (bool)$focus->emailAddress->addresses[$i]['opt_out'];
+            if (!$optOut && $focus->emailAddress->addresses[$i]['email_address'] === $emailAddress) {
+                $focus->$emailField = $emailAddress;
+                $emailLink = $emailUI->populateComposeViewFields($focus, $emailField);
+                break;
             }
-        } else {
-            // straight mailto:
-            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $emailAddress);
         }
 
         return $emailLink;
@@ -1804,17 +1798,8 @@ EOQ;
         $ret_id = '',
         $class = ''
     ) {
-        require_once('modules/Emails/EmailUI.php');
-        $emailLink = '';
-        $client = $this->getEmailClient();
-
-        if ($client == 'sugar') {
-            $emailUI = new EmailUI();
-            $emailLink = $emailUI->populateComposeViewFields($focus);
-        } else {
-            // straight mailto:
-            $emailLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $focus->$attribute);
-        }
+        $emailUI = new EmailUI();
+        $emailLink = $emailUI->populateComposeViewFields($focus);
 
         return $emailLink;
     }

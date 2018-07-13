@@ -431,12 +431,20 @@ eoq;
      * @return string
      */
     private function createEmailLink($module_name, $record_id, $name, $addr, $text) {
+        global $current_user;
+
+        if ($current_user->getEmailClient() == 'sugar') {
+            return '<a class="email-link"'
+                . ' onclick="$(document).openComposeViewModal(this);"'
+                . ' data-module="' . $module_name
+                . '" data-record-id="' . $record_id
+                . '" data-module-name="' . $name
+                . '" data-email-address="' . $addr  . '">'
+                . $text . '</a>';
+        }
+
         return '<a class="email-link"'
-            . ' onclick="$(document).openComposeViewModal(this);"'
-            . ' data-module="' . $module_name
-            . '" data-record-id="' . $record_id
-            . '" data-module-name="' . $name
-            . '" data-email-address="' . $addr  . '">'
+            . ' href="mailto:' .  $addr . '">'
             . $text . '</a>';
     }
 
