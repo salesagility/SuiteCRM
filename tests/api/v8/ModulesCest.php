@@ -1549,6 +1549,30 @@ class ModulesCest
             self::$MEETINGS_RECORD_ID . '/relationships/users';
         $I->sendGET($url);
         $responseMeetingUsers = json_decode($I->grabResponse(), true);
+        
+        $I->assertTrue(isset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['id']));
+        $I->assertTrue(isset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['meeting_id']));
+        $I->assertTrue(isset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['required']));
+        $I->assertTrue(isset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['date_modified']));
+        $I->assertTrue(isset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['deleted']));
+        
+        unset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['id']);
+        unset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['meeting_id']);
+        unset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['required']);
+        unset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['date_modified']);
+        unset($responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['deleted']);
+        
+        unset($responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']['id']);
+        unset($responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']['meeting_id']);
+        unset($responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']['required']);
+        unset($responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']['date_modified']);
+        unset($responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']['deleted']);
+        
+        unset($responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']['id']);
+        unset($responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']['meeting_id']);
+        unset($responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']['required']);
+        unset($responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']['date_modified']);
+        unset($responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']['deleted']);
                 
         $I->assertSame($meetingsPayload['data']['relationships']['users']['data'], $responseMeetingUsers['data']);
         
