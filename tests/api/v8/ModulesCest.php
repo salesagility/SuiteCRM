@@ -1629,25 +1629,10 @@ class ModulesCest
         $responseChrisAccept = json_decode($I->grabResponse(), true);
         $I->seeResponseCodeIs(200);
 
-        print_r($responseChrisAccept);
-        file_put_contents('suitecrm.log', print_r($responseChrisAccept, true), FILE_APPEND);
-        die();
+        $exp = $payloadUpdateChrisAccept;
         
         $I->comment('Verify that user accept_status has been update');
-        $I->assertArrayHasKey('0', $responseChrisAccept['data']);
-        $I->assertNotEmpty($responseChrisAccept['data'][0]);
-        $I->assertArrayHasKey('id', $responseChrisAccept['data'][0]);
-        $I->assertEquals('seed_chris_id', $responseChrisAccept['data'][0]['id']);
-        $I->assertArrayHasKey('type', $responseChrisAccept['data'][0]);
-        $I->assertEquals('Users', $responseChrisAccept['data'][0]['type']);
-        $I->assertArrayHasKey('meta', $responseChrisAccept['data'][0]);
-        $I->assertArrayHasKey('middle_table', $responseChrisAccept['data'][0]['meta']);
-        $I->assertArrayHasKey('data', $responseChrisAccept['data'][0]['meta']['middle_table']);
-        $I->assertArrayHasKey('attributes', $responseChrisAccept['data'][0]['meta']['middle_table']['data']);
-        $I->assertArrayHasKey('accept_status', $responseChrisAccept['data'][0]['meta']['middle_table']['data']['attributes']);
-        $I->assertEquals('accept', $responseChrisAccept['data'][0]['meta']['middle_table']['data']['attributes']['accept_status']);
-        $I->assertArrayHasKey('user_id', $responseChrisAccept['data'][0]['meta']['middle_table']['data']['attributes']);
-        $I->assertEquals('seed_chris_id', $responseChrisAccept['data'][0]['meta']['middle_table']['data']['attributes']['user_id']);
+        $I->assertSame($exp, $responseChrisAccept);
 
 
         $I->comment('Update a chris accept_status and remove other relationships using PATCH');
