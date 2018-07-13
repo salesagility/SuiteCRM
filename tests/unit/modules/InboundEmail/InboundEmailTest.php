@@ -544,7 +544,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test for default/imap
         $result = $inboundEmail->getFormattedHeaders(1);
-        $this->assertSame("<table cellspacing='0' cellpadding='2' border='0' width='100%'></table>", $result);
+        $this->assertSame(null, $result);
 
         //test for pop3
         $inboundEmail->protocol = 'pop3';
