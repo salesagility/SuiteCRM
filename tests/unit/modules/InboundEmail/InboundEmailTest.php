@@ -3717,12 +3717,12 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $user->retrieve(1);
 
         //set a Outbound Server Id
-        $inboundEmail->setUsersDefaultOutboundServerId($user, '123');
+        $inboundEmail->setUsersDefaultOutboundServerId($user, '11111111-1111-1111-1111-111111111111');
 
         //retrieve Outbound Server Id back and verify
         $result = $inboundEmail->getUsersDefaultOutboundServerId($user);
 
-        $this->assertEquals('123', $result);
+        $this->assertTrue(isValidId($result));
         
         // clean up
         
