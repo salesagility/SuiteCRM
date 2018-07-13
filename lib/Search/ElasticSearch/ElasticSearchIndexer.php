@@ -625,4 +625,13 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
     }
 
+    /**
+     * Returns whether the Elasticsearch is enabled by user configuration or not.
+     * @return bool
+     */
+    public static function isEnabled()
+    {
+        return true;
+    }
+
 }
