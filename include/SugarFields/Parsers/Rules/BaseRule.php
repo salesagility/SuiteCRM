@@ -52,26 +52,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class BaseRule
 {
-    function __construct()
+    public function __construct()
     {
     }
 
-    function preParse($panels, $view)
+    public function preParse($panels, $view)
     {
         return $panels;
     }
 
-    function postParse($panels, $view)
+    public function postParse($panels, $view)
     {
         return $this->parsePanels($panels, $view);
     }
 
-    function parsePanels($panels, $view)
+    public function parsePanels($panels, $view)
     {
         return $panels;
     }
 
-    function isCustomField($mixed)
+    public function isCustomField($mixed)
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match('/.*?_c$/s', $mixed['name'])) {
             return true;
@@ -81,7 +81,7 @@ class BaseRule
         return false;
     }
 
-    function matches($mixed, $regExp)
+    public function matches($mixed, $regExp)
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'])) {
             return true;
@@ -91,7 +91,7 @@ class BaseRule
         return false;
     }
 
-    function getMatch($mixed, $regExp)
+    public function getMatch($mixed, $regExp)
     {
         if (is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'], $matches)) {
             return $matches;

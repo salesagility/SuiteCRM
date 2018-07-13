@@ -44,14 +44,14 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class CampaignsParseRule extends BaseRule
 {
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function CampaignsParseRule()
+    public function CampaignsParseRule()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -63,7 +63,7 @@ class CampaignsParseRule extends BaseRule
     }
 
 
-    function preParse($panels, $view)
+    public function preParse($panels, $view)
     {
         if ($view == 'EditView') {
             $frequencyAdded = false;

@@ -26,7 +26,7 @@
  */
 class templateParser
 {
-    static function parse_template($string, $bean_arr)
+    public static function parse_template($string, $bean_arr)
     {
         foreach ($bean_arr as $bean_name => $bean_id) {
             $focus = BeanFactory::getBean($bean_name, $bean_id);
@@ -46,7 +46,7 @@ class templateParser
         return $string;
     }
 
-    function parse_template_bean($string, $key, &$focus)
+    public function parse_template_bean($string, $key, &$focus)
     {
         global $app_strings, $sugar_config;
         $repl_arr = array();

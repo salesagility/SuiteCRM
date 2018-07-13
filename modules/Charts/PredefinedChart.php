@@ -52,16 +52,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class PredefinedChart
 {
-    var $params = array();
+    public $params = array();
 
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function PredefinedChart()
+    public function PredefinedChart()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -73,7 +73,7 @@ class PredefinedChart
     }
 
 
-    function predefinedChartQuery($chart, $params=array())
+    public function predefinedChartQuery($chart, $params=array())
     {
         switch ($chart) {
 			case 'pipeline_by_sales_stage':
@@ -93,7 +93,7 @@ class PredefinedChart
         return;
     }
 
-    function pipelineBySalesStageQuery()
+    public function pipelineBySalesStageQuery()
     {
         global $current_user;
         global $timedate;
@@ -241,7 +241,7 @@ class PredefinedChart
         return $query;
     }
 
-    function leadSourceByOutcomeQuery($filters)
+    public function leadSourceByOutcomeQuery($filters)
     {
         global $current_user;
         global $app_list_strings;
@@ -325,7 +325,7 @@ class PredefinedChart
         return $query;
     }
 
-    function outcomeByMonthQuery()
+    public function outcomeByMonthQuery()
     {
         global $current_user;
         global $timedate;
@@ -407,7 +407,7 @@ class PredefinedChart
         return $query;
     }
 
-    function pipelineByLeadSourceQuery($filters)
+    public function pipelineByLeadSourceQuery($filters)
     {
         global $current_user;
         global $app_list_strings;
@@ -490,7 +490,7 @@ class PredefinedChart
         return $query;
     }
 
-    function myModuleUsageLast30Days()
+    public function myModuleUsageLast30Days()
     {
         global $current_user;
         $dateValue = db_convert("'".$timedate->getNow()->modify("-30 days")->asDb()."'" ,"datetime");
@@ -505,7 +505,7 @@ class PredefinedChart
 
 
     // This function will grab a query from the custom directory to be used for charting
-    function customChartQuery($chart)
+    public function customChartQuery($chart)
     {
         if (file_exists('custom/Charts/' . $chart . '.php')) {
             require_once('custom/Charts/' . $chart . '.php');

@@ -40,8 +40,8 @@
 
 class contextMenu
 {
-    var $menuItems;
-    var $objectName;
+    public $menuItems;
+    public $objectName;
 
     public function __construct()
     {
@@ -63,7 +63,7 @@ class contextMenu
     }
 
 
-    function getScript()
+    public function getScript()
     {
         $json = getJSONobj();
         return "SUGAR.contextMenu.registerObjectType('{$this->objectName}', " . $json->encode($this->menuItems) . ");\n";
@@ -87,7 +87,7 @@ class contextMenu
      *      submenu - Appends / removes a menu (and it's associated DOM elements) to / from the MenuItem.
      *      checked - If set to true the MenuItem will be rendered with a checkmark.
      */
-    function addMenuItem($text, $action, $module = null, $aclAction = null, $params = null)
+    public function addMenuItem($text, $action, $module = null, $aclAction = null, $params = null)
     {
         // check ACLs if module and aclAction set otherwise no ACL check
         if (((!empty($module) && !empty($aclAction)) && ACLController::checkAccess($module, $aclAction)) || (empty($module) || empty($aclAction))) {
@@ -106,7 +106,7 @@ class contextMenu
      * Loads up menu items from files located in include/contextMenus/menuDefs
      * @param string $name name of the object
      */
-    function loadFromFile($name)
+    public function loadFromFile($name)
     {
         global $menuDef;
         clean_string($name, 'FILE');
@@ -119,7 +119,7 @@ class contextMenu
      * @param string $name name of the object type
      * @param array $defs menu item definitions
      */
-    function loadFromDef($name, $defs)
+    public function loadFromDef($name, $defs)
     {
         $this->objectName = $name;
         foreach ($defs as $def) {

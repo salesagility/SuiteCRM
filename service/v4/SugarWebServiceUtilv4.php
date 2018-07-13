@@ -41,7 +41,7 @@ require_once('service/v3_1/SugarWebServiceUtilv3_1.php');
 
 class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 {
-    function get_module_view_defs($moduleName, $type, $view)
+    public function get_module_view_defs($moduleName, $type, $view)
     {
         require_once('include/MVC/View/SugarView.php');
         $metadataFile = null;
@@ -83,7 +83,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
      * if the list should filter for favorites.  Should eventually update the SugarBean function as well.
      *
      */
-    function get_data_list(
+    public function get_data_list(
         $seed,
         $order_by = "",
         $where = "",
@@ -138,7 +138,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
      * @param string The module name
      * @return bool true indicating bean is favorites enabled
      */
-    function is_favorites_enabled($module_name)
+    public function is_favorites_enabled($module_name)
     {
         global $beanList, $beanFiles;
 
@@ -167,7 +167,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         return $filterFields;
     }
 
-    function get_field_list($value,$fields,  $translate=true)
+    public function get_field_list($value,$fields,  $translate=true)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_field_list(too large a struct, '.print_r($fields, true).", $translate");
         $module_fields = array();
@@ -305,7 +305,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
     }
 
 
-    function new_handle_set_entries($module_name, $name_value_lists, $select_fields = FALSE)
+    public function new_handle_set_entries($module_name, $name_value_lists, $select_fields = FALSE)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->new_handle_set_entries');
         global $beanList, $beanFiles, $current_user, $app_list_strings;
@@ -459,7 +459,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
     }
 
 
-    function checkSessionAndModuleAccess($session, $login_error_key, $module_name, $access_level, $module_access_level_error_key, $errorObject)
+    public function checkSessionAndModuleAccess($session, $login_error_key, $module_name, $access_level, $module_access_level_error_key, $errorObject)
     {
         if (isset($_REQUEST['oauth_token'])) {
             $session = $this->checkOAuthAccess($errorObject);
@@ -516,7 +516,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
      * @param String $type The type of subpanel definition ('wireless' or 'default')
      * @return array Array of the subpanel definition; empty array if no matching definition found
      */
-    function get_subpanel_defs($module, $type)
+    public function get_subpanel_defs($module, $type)
     {
         global $beanList, $beanFiles;
         $results = array();

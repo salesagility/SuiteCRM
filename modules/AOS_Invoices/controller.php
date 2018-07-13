@@ -28,7 +28,7 @@ require_once('include/MVC/Controller/SugarController.php');
 
 class AOS_InvoicesController extends SugarController
 {
-    function action_editview()
+    public function action_editview()
     {
         global $mod_string;
 

@@ -30,7 +30,7 @@
 require_once('modules/AOS_Products/AOS_Products_sugar.php');
 class AOS_Products extends AOS_Products_sugar
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -38,7 +38,7 @@ class AOS_Products extends AOS_Products_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Products()
+    public function AOS_Products()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -49,7 +49,7 @@ class AOS_Products extends AOS_Products_sugar
         self::__construct();
     }
 
-    function getGUID()
+    public function getGUID()
     {
         if (function_exists('com_create_guid')) {
             return com_create_guid();
@@ -66,7 +66,7 @@ class AOS_Products extends AOS_Products_sugar
         }
     }
 
-    function save($check_notify=false)
+    public function save($check_notify=false)
     {
         global $sugar_config,$mod_strings;
 

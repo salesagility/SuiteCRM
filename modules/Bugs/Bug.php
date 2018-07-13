@@ -65,58 +65,58 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // Bug is used to store customer information.
 class Bug extends SugarBean
 {
-    var $field_name_map = array();
+    public $field_name_map = array();
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $assigned_user_id;
-    var $bug_number;
-    var $description;
-    var $name;
-    var $status;
-    var $priority;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $bug_number;
+    public $description;
+    public $name;
+    public $status;
+    public $priority;
 
     // These are related
-    var $resolution;
-    var $found_in_release;
-    var $release_name;
-    var $fixed_in_release_name;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $account_id;
-    var $contact_id;
-    var $case_id;
-    var $task_id;
-    var $note_id;
-    var $meeting_id;
-    var $call_id;
-    var $email_id;
-    var $assigned_user_name;
-    var $type;
+    public $resolution;
+    public $found_in_release;
+    public $release_name;
+    public $fixed_in_release_name;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $account_id;
+    public $contact_id;
+    public $case_id;
+    public $task_id;
+    public $note_id;
+    public $meeting_id;
+    public $call_id;
+    public $email_id;
+    public $assigned_user_name;
+    public $type;
 
     //BEGIN Additional fields being added to Bugs
 
-    var $fixed_in_release;
-    var $work_log;
-    var $source;
-    var $product_category;
+    public $fixed_in_release;
+    public $work_log;
+    public $source;
+    public $product_category;
     //END Additional fields being added to Bugs
 
-    var $module_dir = 'Bugs';
-    var $table_name = "bugs";
-    var $rel_account_table = "accounts_bugs";
-    var $rel_contact_table = "contacts_bugs";
-    var $rel_case_table = "cases_bugs";
-    var $importable = true;
-    var $object_name = "Bug";
+    public $module_dir = 'Bugs';
+    public $table_name = "bugs";
+    public $rel_account_table = "accounts_bugs";
+    public $rel_contact_table = "contacts_bugs";
+    public $rel_case_table = "cases_bugs";
+    public $importable = true;
+    public $object_name = "Bug";
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
+    public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'case_id', 'account_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
 
-    var $relationship_fields = Array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
+    public $relationship_fields = Array('case_id'=>'cases', 'account_id' => 'accounts', 'contact_id'=>'contacts',
 									'task_id'=>'tasks', 'note_id'=>'notes', 'meeting_id'=>'meetings',
 									'call_id'=>'calls', 'email_id'=>'emails');
 
@@ -146,18 +146,18 @@ class Bug extends SugarBean
         self::__construct();
     }
 
-    var $new_schema = true;
+    public $new_schema = true;
 
 
 
 
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->name";
     }
 
-    function create_list_query($order_by, $where, $show_deleted = 0)
+    public function create_list_query($order_by, $where, $show_deleted = 0)
     {
         // Fill in the assigned_user_name
         //		$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
@@ -202,7 +202,7 @@ class Bug extends SugarBean
         return $query;
     }
 
-    function create_export_query($order_by, $where, $relate_link_join='')
+    public function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -236,7 +236,7 @@ class Bug extends SugarBean
 
         return $query;
     }
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         parent::fill_in_additional_list_fields();
         // Fill in the assigned_user_name
@@ -245,7 +245,7 @@ class Bug extends SugarBean
 //	   $this->set_fixed_in_release();
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
 
 	    /*
@@ -318,7 +318,7 @@ class Bug extends SugarBean
     }
 
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         global $current_language;
         $the_array = parent::get_list_view_data();
@@ -345,7 +345,7 @@ class Bug extends SugarBean
     	builds a generic search based on the query string using or
     	do not include any $this-> because this is called on without having the class instantiated
     */
-    function build_generic_where_clause($the_query_string)
+    public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = Array();
         $the_query_string = $this->db->quote($the_query_string);
@@ -365,7 +365,7 @@ class Bug extends SugarBean
         return $the_where;
     }
 
-    function set_notification_body($xtpl, $bug)
+    public function set_notification_body($xtpl, $bug)
     {
         global $mod_strings, $app_list_strings;
 
@@ -383,7 +383,7 @@ class Bug extends SugarBean
         return $xtpl;
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return true;
@@ -391,7 +391,7 @@ class Bug extends SugarBean
         return false;
     }
 
-    function save($check_notify = FALSE)
+    public function save($check_notify = FALSE)
     {
         return parent::save($check_notify);
     }

@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldparent_type extends SugarWidgetFieldEnum
 {
-    function __construct(&$layout_manager)
+    public function __construct(&$layout_manager)
     {
         parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute('reporter');
@@ -53,7 +53,7 @@ class SugarWidgetFieldparent_type extends SugarWidgetFieldEnum
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetFieldparent_type(&$layout_manager)
+    public function SugarWidgetFieldparent_type(&$layout_manager)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -65,7 +65,7 @@ class SugarWidgetFieldparent_type extends SugarWidgetFieldEnum
     }
 
 
-    function & displayListPlain($layout_def)
+    public function & displayListPlain($layout_def)
     {
         $value= $this->_get_list_value($layout_def);
         if (isset($layout_def['widget_type']) && $layout_def['widget_type'] =='checkbox') {

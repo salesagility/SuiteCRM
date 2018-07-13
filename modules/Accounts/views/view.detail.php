@@ -42,7 +42,7 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class AccountsViewDetail extends ViewDetail
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -50,7 +50,7 @@ class AccountsViewDetail extends ViewDetail
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AccountsViewDetail()
+    public function AccountsViewDetail()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -70,7 +70,7 @@ class AccountsViewDetail extends ViewDetail
      * include/SugarFields/Fields/Address/DetailView.tpl (default).  If it's a English U.S.
      * locale then it'll use file include/SugarFields/Fields/Address/en_us.DetailView.tpl.
      */
-    function display()
+    public function display()
     {
         if (empty($this->bean->id)) {
             global $app_strings;
@@ -100,7 +100,7 @@ class AccountsViewDetail extends ViewDetail
         echo $this->dv->display();
     }
 
-    function generatePushCode($param)
+    public function generatePushCode($param)
     {
         global $mod_strings;
         $address_fields = array('street', 'city', 'state', 'postalcode','country');

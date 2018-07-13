@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class UserDemoData
 {
-    var $_user;
-    var $_large_scale_test;
-    var $guids = array(
+    public $_user;
+    public $_large_scale_test;
+    public $guids = array(
 		'jim'	=> 'seed_jim_id',
 		'sarah'	=> 'seed_sarah_id',
 		'sally'	=> 'seed_sally_id',
@@ -67,7 +67,7 @@ class UserDemoData
     /**
      * Constructor for creating user demo data
      */
-    function __construct($seed_user, $large_scale_test = false)
+    public function __construct($seed_user, $large_scale_test = false)
     {
         // use a seed user so it does not have to be known which file to
         // include the User class from
@@ -78,7 +78,7 @@ class UserDemoData
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function UserDemoData($seed_user, $large_scale_test = false)
+    public function UserDemoData($seed_user, $large_scale_test = false)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -93,7 +93,7 @@ class UserDemoData
     /**
      *
      */
-    function create_demo_data()
+    public function create_demo_data()
     {
         global $current_language;
         global $sugar_demodata;
@@ -112,7 +112,7 @@ class UserDemoData
     /**
      *  Create a user in the seed data.
      */
-    function _create_seed_user($id, $last_name, $first_name, $user_name,
+    public function _create_seed_user($id, $last_name, $first_name, $user_name,
 		$title, $is_admin, $reports_to, $reports_to_name, $email)
     {
         $u = new User();
@@ -143,7 +143,7 @@ class UserDemoData
     /**
      *
      */
-    function _seed_data_get_user_list()
+    public function _seed_data_get_user_list()
     {
         $users = Array();
         //bug 28138 todo
@@ -173,7 +173,7 @@ class UserDemoData
     /**
      *
      */
-    function _quick_create_user($name)
+    public function _quick_create_user($name)
     {
         global $sugar_demodata;
         if (!$this->_user->retrieve($name.'_id')) {

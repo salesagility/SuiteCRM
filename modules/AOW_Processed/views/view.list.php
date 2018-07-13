@@ -27,7 +27,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class AOW_ProcessedViewList extends ViewList
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -35,7 +35,7 @@ class AOW_ProcessedViewList extends ViewList
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOW_ProcessedViewList()
+    public function AOW_ProcessedViewList()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -46,7 +46,7 @@ class AOW_ProcessedViewList extends ViewList
         self::__construct();
     }
 
-    function Display()
+    public function Display()
     {
         $this->lv->quickViewLinks = false;
         parent::Display();

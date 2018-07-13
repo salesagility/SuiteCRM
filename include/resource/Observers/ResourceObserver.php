@@ -45,8 +45,8 @@
  */
 class ResourceObserver
 {
-    var $module;
-    var $limit;
+    public $module;
+    public $limit;
 
     public function __construct($module)
     {
@@ -56,7 +56,7 @@ class ResourceObserver
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ResourceObserver($module)
+    public function ResourceObserver($module)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -67,12 +67,12 @@ class ResourceObserver
         self::__construct($module);
     }
 
-    function setLimit($limit)
+    public function setLimit($limit)
     {
         $this->limit = $limit;
     }
 
-    function notify($msg = '')
+    public function notify($msg = '')
     {
         if ($this->dieOnError) {
             die($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);

@@ -53,7 +53,7 @@ class ViewHome extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         global $current_user;
         global $mod_strings;
@@ -77,7 +77,7 @@ class ViewHome extends SugarView
     }
 
 
-    function generateHomeButtons()
+    public function generateHomeButtons()
     {
         global $current_user;
         if (displayStudioForCurrentUser() == true) {

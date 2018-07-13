@@ -50,22 +50,22 @@ class Dashlet
      * Id of the Dashlet
      * @var guid
      */
-    var $id;
+    public $id;
     /**
      * Title of the Dashlet
      * @var string
      */
-    var $title = 'Generic Dashlet';
+    public $title = 'Generic Dashlet';
     /**
      * true if the Dashlet has configuration options.
      * @var bool
      */
-    var $isConfigurable = false;
+    public $isConfigurable = false;
     /**
      * true if the Dashlet is refreshable (ie charts that provide their own refresh)
      * @var bool
      */
-    var $isRefreshable = true;
+    public $isRefreshable = true;
     /**
      * true if the Dashlet configuration options panel has the clear button
      * @var bool
@@ -75,12 +75,12 @@ class Dashlet
      * true if the Dashlet contains javascript
      * @var bool
      */
-    var $hasScript = false;
+    public $hasScript = false;
     /**
      * Language strings, must be loaded at the Dashlet level w/ loadLanguage
      * @var array
      */
-    var $dashletStrings;
+    public $dashletStrings;
     /**
      * Time period in minutes to refresh the dashlet (0 for never)
      * Do not refresh if $isRefreshable is set to false
@@ -88,7 +88,7 @@ class Dashlet
      * To support auto refresh all refreshable dashlets that override process() must call processAutoRefresh()
      * @var int
      */
-    var $autoRefresh = "0";
+    public $autoRefresh = "0";
 
     /**
      * Constructor

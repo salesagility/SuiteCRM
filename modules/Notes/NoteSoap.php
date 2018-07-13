@@ -46,9 +46,9 @@ require_once('include/upload_file.php');
 
 class NoteSoap
 {
-    var $upload_file;
+    public $upload_file;
 
-    function __construct()
+    public function __construct()
     {
         $this->upload_file = new UploadFile('uploadfile');
     }
@@ -56,7 +56,7 @@ class NoteSoap
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function NoteSoap()
+    public function NoteSoap()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -73,7 +73,7 @@ class NoteSoap
      * @param bool $portal
      * @return string
      */
-    function saveFile($note, $portal = false)
+    public function saveFile($note, $portal = false)
     {
         global $sugar_config;
 
@@ -113,7 +113,7 @@ class NoteSoap
         return $return_id;
     }
 
-    function newSaveFile($note, $portal = false)
+    public function newSaveFile($note, $portal = false)
     {
         global $sugar_config;
 
@@ -166,7 +166,7 @@ class NoteSoap
         return $return_id;
     }
 
-    function retrieveFile($id, $filename)
+    public function retrieveFile($id, $filename)
     {
         if (empty($filename)) {
             return '';

@@ -51,12 +51,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarWidget
 {
-    var $layout_manager = null;
-    var $widget_id;
+    public $layout_manager = null;
+    public $widget_id;
     protected $form_value;
     protected $parent_bean;
 
-    function __construct(&$layout_manager)
+    public function __construct(&$layout_manager)
     {
         $this->layout_manager = $layout_manager;
     }
@@ -64,7 +64,7 @@ class SugarWidget
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidget(&$layout_manager)
+    public function SugarWidget(&$layout_manager)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -75,7 +75,7 @@ class SugarWidget
         self::__construct($layout_manager);
     }
 
-    function display($layout_def)
+    public function display($layout_def)
     {
         return 'display class undefined';
     }
@@ -104,12 +104,12 @@ class SugarWidget
     {
         return $this->form_value;
     }
-    function getParentBean()
+    public function getParentBean()
     {
         return $this->parent_bean;
     }
 
-    function setParentBean($parent_bean)
+    public function setParentBean($parent_bean)
     {
         $this->parent_bean = $parent_bean;
     }

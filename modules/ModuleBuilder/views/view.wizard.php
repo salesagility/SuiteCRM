@@ -53,7 +53,7 @@ class ModuleBuilderViewWizard extends SugarView
 
     private $editModule ;
 
-    function __construct()
+    public function __construct()
     {
         if (isset ($_REQUEST [ 'view' ])) {
             $this->view = $_REQUEST [ 'view' ] ;
@@ -76,7 +76,7 @@ class ModuleBuilderViewWizard extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $this->ajax = new AjaxCompose () ;
         $smarty = new Sugar_Smarty () ;
@@ -98,7 +98,7 @@ class ModuleBuilderViewWizard extends SugarView
         echo $this->ajax->getJavascript () ;
     }
 
-    function processStudio( 
+    public function processStudio( 
 	    $ajax
 	    ) {
         $this->ajax->addCrumb (translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")') ;
@@ -180,7 +180,7 @@ class ModuleBuilderViewWizard extends SugarView
         }
     }
 
-    function processMB( 
+    public function processMB( 
 	    $ajax 
 	    ) {
         if (! isset ($_REQUEST [ 'view_package' ])) {
@@ -241,7 +241,7 @@ class ModuleBuilderViewWizard extends SugarView
     }
 
 
-    function generateStudioModuleButtons()
+    public function generateStudioModuleButtons()
     {
         require_once ('modules/ModuleBuilder/Module/StudioBrowser.php') ;
         $sb = new StudioBrowser () ;
@@ -260,7 +260,7 @@ class ModuleBuilderViewWizard extends SugarView
 
 
 
-    function generateMBViewButtons()
+    public function generateMBViewButtons()
     {
         $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_EDITVIEW' ] ] = 
 		  array ( 
@@ -306,31 +306,31 @@ class ModuleBuilderViewWizard extends SugarView
 		);
     }
 
-    function generateMBDashletButtons()
+    public function generateMBDashletButtons()
     {
         $this->buttons [ $GLOBALS [ 'mod_strings' ][ 'LBL_DASHLETLISTVIEW' ] ] = array('action'=> "module=ModuleBuilder&MB=true&action=editLayout&view=dashlet&view_module={$this->editModule}&view_package={$this->package}", 'imageTitle'=> $GLOBALS ['mod_strings']['LBL_DASHLETLISTVIEW'], 'imageName'=>'ListView', 'help'=>'DashletListViewBtn');
         $this->buttons [ $GLOBALS [ 'mod_strings' ][ 'LBL_DASHLETSEARCHVIEW' ] ] = array('action'=> "module=ModuleBuilder&MB=true&action=editLayout&view=dashletsearch&view_module={$this->editModule}&view_package={$this->package}", 'imageTitle'=> $GLOBALS ['mod_strings']['LBL_DASHLETSEARCHVIEW'], 'imageName'=>'BasicSearch','help'=> 'DashletSearchViewBtn');
     }
 	
-    function generateMBPopupButtons()
+    public function generateMBPopupButtons()
     {
         $this->buttons [ $GLOBALS [ 'mod_strings' ][ 'LBL_POPUPLISTVIEW' ] ] = array('action'=> "module=ModuleBuilder&action=editLayout&view=popuplist&view_module={$this->editModule}&view_package={$this->package}", 'imageTitle'=> $GLOBALS ['mod_strings']['LBL_POPUPLISTVIEW'], 'imageName'=>'ListView', 'help'=>'PopupListViewBtn');
         $this->buttons [ $GLOBALS [ 'mod_strings' ][ 'LBL_POPUPSEARCH' ] ] = array('action'=> "module=ModuleBuilder&action=editLayout&view=popupsearch&view_module={$this->editModule}&view_package={$this->package}", 'imageTitle'=> $GLOBALS ['mod_strings']['LBL_POPUPSEARCH'], 'imageName'=>'BasicSearch','help'=> 'PopupSearchViewBtn');
     }
 	
-    function generateStudioDashletButtons()
+    public function generateStudioDashletButtons()
     {
         $this->buttons [ $GLOBALS [ 'mod_strings' ][ 'LBL_DASHLETLISTVIEW' ] ] = array('action'=> "module=ModuleBuilder&action=editLayout&view=dashlet&view_module={$this->editModule}", 'imageTitle'=> $GLOBALS ['mod_strings']['LBL_DASHLETLISTVIEW'], 'imageName'=>'ListView', 'help'=>'DashletListViewBtn');
         $this->buttons [ $GLOBALS [ 'mod_strings' ][ 'LBL_DASHLETSEARCHVIEW' ] ] = array('action'=> "module=ModuleBuilder&action=editLayout&view=dashletsearch&view_module={$this->editModule}", 'imageTitle'=> $GLOBALS ['mod_strings']['LBL_DASHLETSEARCHVIEW'], 'imageName'=>'BasicSearch','help'=> 'DashletSearchViewBtn');
     }
 	
-    function generateStudioPopupButtons()
+    public function generateStudioPopupButtons()
     {
         $this->buttons [ $GLOBALS [ 'mod_strings' ][ 'LBL_POPUPLISTVIEW' ] ] = array('action'=> "module=ModuleBuilder&action=editLayout&view=popuplist&view_module={$this->editModule}", 'imageTitle'=> $GLOBALS ['mod_strings']['LBL_POPUPLISTVIEW'], 'imageName'=>'ListView', 'help'=>'PopupListViewBtn');
         $this->buttons [ $GLOBALS [ 'mod_strings' ][ 'LBL_POPUPSEARCH' ] ] = array('action'=> "module=ModuleBuilder&action=editLayout&view=popupsearch&view_module={$this->editModule}", 'imageTitle'=> $GLOBALS ['mod_strings']['LBL_POPUPSEARCH'], 'imageName'=>'BasicSearch','help'=> 'PopupSearchViewBtn');
     }
 	
-    function generateMBSearchButtons()
+    public function generateMBSearchButtons()
     {
         $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_BASIC' ] ] = array ( 'action' => "module=ModuleBuilder&MB=true&action=editLayout&view_module={$this->editModule}&view_package={$this->package}&view=SearchView&searchlayout=basic_search" , 'imageTitle' => $GLOBALS [ 'mod_strings' ] [ 'LBL_BASIC_SEARCH' ] , 'imageName' => 'BasicSearch','help' => "BasicSearchBtn" ) ;
         $this->buttons [ $GLOBALS [ 'mod_strings' ] [ 'LBL_ADVANCED' ] ] = array ( 'action' => "module=ModuleBuilder&MB=true&action=editLayout&view_module={$this->editModule}&view_package={$this->package}&view=SearchView&searchlayout=advanced_search" , 'imageTitle' => $GLOBALS [ 'mod_strings' ] [ 'LBL_ADVANCED_SEARCH' ] , 'imageName' => 'AdvancedSearch','help' => "AdvancedSearchBtn" ) ;

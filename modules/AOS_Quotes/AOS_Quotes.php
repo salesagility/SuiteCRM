@@ -25,7 +25,7 @@
 require_once('modules/AOS_Quotes/AOS_Quotes_sugar.php');
 class AOS_Quotes extends AOS_Quotes_sugar
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -33,7 +33,7 @@ class AOS_Quotes extends AOS_Quotes_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Quotes()
+    public function AOS_Quotes()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -45,7 +45,7 @@ class AOS_Quotes extends AOS_Quotes_sugar
     }
 
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         global $sugar_config;
 
@@ -83,7 +83,7 @@ class AOS_Quotes extends AOS_Quotes_sugar
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
     }
 
-    function mark_deleted($id)
+    public function mark_deleted($id)
     {
         $productQuote = new AOS_Products_Quotes();
         $productQuote->mark_lines_deleted($this);

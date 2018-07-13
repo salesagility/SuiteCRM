@@ -54,7 +54,7 @@ class Viewpackage extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         global $mod_strings;
         $smarty = new Sugar_Smarty();
@@ -122,7 +122,7 @@ class Viewpackage extends SugarView
         }
     }
 
-    function loadModuleTypes()
+    public function loadModuleTypes()
     {
         $this->package->moduleTypes = array();
         $this->package->loadModules();
@@ -132,14 +132,14 @@ class Viewpackage extends SugarView
             }
         }
     }
-    function loadPackageHelp(
+    public function loadPackageHelp(
  	    $name
  	    ) {
         $this->package->help['default'] = (empty($name))?'create':'modify';
         $this->package->help['group'] = 'package';
     }
 
-    function generatePackageButtons(
+    public function generatePackageButtons(
  	    $packages
  	    ) {
         global $mod_strings;

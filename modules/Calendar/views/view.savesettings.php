@@ -41,17 +41,17 @@ require_once('include/MVC/View/SugarView.php');
 
 class CalendarViewSaveSettings extends SugarView
 {
-    function CalendarViewSettings()
+    public function CalendarViewSettings()
     {
         parent::SugarView();
     }
 	
-    function process()
+    public function process()
     {
         $this->display();
     }
 	
-    function display()
+    public function display()
     {
         global $current_user;
 		

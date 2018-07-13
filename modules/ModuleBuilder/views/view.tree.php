@@ -60,7 +60,7 @@ class ViewHistory extends SugarView
 
     //STUDIO LABELS ONLY//
     //TODO Bundle Studio and ModuleBuilder label handling to increase maintainability.
-    function display()
+    public function display()
     {
         $root = new ExtNode('root', 'root', true);
         $sb = new StudioBrowser();
@@ -77,7 +77,7 @@ class ViewHistory extends SugarView
      * @return ExtNode built from the passed StudioModule
      * @param $module StudioModule
      */
-    function buildStudioNode($module)
+    public function buildStudioNode($module)
     {
     }
 }

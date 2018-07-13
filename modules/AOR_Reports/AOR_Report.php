@@ -44,31 +44,31 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class AOR_Report extends Basic
 {
-    var $new_schema = true;
-    var $module_dir = 'AOR_Reports';
-    var $object_name = 'AOR_Report';
-    var $table_name = 'aor_reports';
-    var $importable = true;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'AOR_Reports';
+    public $object_name = 'AOR_Report';
+    public $table_name = 'aor_reports';
+    public $importable = true;
+    public $disable_row_level_security = true;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $assigned_user_link;
-    var $report_module;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $report_module;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->load_report_beans();
@@ -79,7 +79,7 @@ class AOR_Report extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Report()
+    public function AOR_Report()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -91,7 +91,7 @@ class AOR_Report extends Basic
     }
 
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL':
@@ -101,7 +101,7 @@ class AOR_Report extends Basic
         return false;
     }
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
 
         // TODO: process of saveing the fields and conditions is too long so we will have to make some optimization on save_lines functions
@@ -144,7 +144,7 @@ class AOR_Report extends Basic
     }
 
 
-    function load_report_beans()
+    public function load_report_beans()
     {
         global $beanList, $app_list_strings;
 
@@ -163,7 +163,7 @@ class AOR_Report extends Basic
     }
 
 
-    function getReportFields()
+    public function getReportFields()
     {
         $fields = array();
         foreach ($this->get_linked_beans('aor_fields', 'AOR_Fields') as $field) {
@@ -181,7 +181,7 @@ class AOR_Report extends Basic
     const CHART_TYPE_RGRAPH = 'rgraph';
 
 
-    function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
+    public function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART)
     {
         global $beanList;
         $linkedCharts = $this->get_linked_beans('aor_charts', 'AOR_Charts');
@@ -406,7 +406,7 @@ class AOR_Report extends Basic
     }
 
 
-    function build_group_report($offset = -1, $links = true, $extra = array(), $subgroup = '')
+    public function build_group_report($offset = -1, $links = true, $extra = array(), $subgroup = '')
     {
         global $beanList, $timedate, $app_strings;
 
@@ -593,7 +593,7 @@ class AOR_Report extends Basic
     }
 
 
-    function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = array())
+    public function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = array())
     {
         global $beanList, $sugar_config;
 
@@ -895,7 +895,7 @@ class AOR_Report extends Basic
         return $moduleFieldByGroupValue;
     }
 
-    function getTotalHTML($fields, $totals)
+    public function getTotalHTML($fields, $totals)
     {
         global $app_list_strings;
 
@@ -993,7 +993,7 @@ class AOR_Report extends Basic
         return $html;
     }
 
-    function calculateTotal($type, $totals)
+    public function calculateTotal($type, $totals)
     {
         switch ($type) {
             case 'SUM':
@@ -1012,7 +1012,7 @@ class AOR_Report extends Basic
         return '"' . $field . '"';
     }
 
-    function build_report_csv()
+    public function build_report_csv()
     {
         global $beanList;
         ini_set('zlib.output_compression', 'Off');
@@ -1108,7 +1108,7 @@ class AOR_Report extends Basic
     }
 
 
-    function build_report_query($group_value = '', $extra = array())
+    public function build_report_query($group_value = '', $extra = array())
     {
         global $beanList;
 
@@ -1208,7 +1208,7 @@ class AOR_Report extends Basic
         return $query_where;
     }
 
-    function build_report_query_select($query = array(), $group_value = '')
+    public function build_report_query_select($query = array(), $group_value = '')
     {
         global $beanList, $timedate;
 
@@ -1339,7 +1339,7 @@ class AOR_Report extends Basic
         return $query;
     }
 
-    function build_report_query_join(
+    public function build_report_query_join(
         $name,
         $alias,
         $parentAlias,
@@ -1400,7 +1400,7 @@ class AOR_Report extends Basic
         return $query;
     }
 
-    function build_report_access_query(SugarBean $module, $alias)
+    public function build_report_access_query(SugarBean $module, $alias)
     {
         $where = '';
         if ($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list')) {
@@ -1432,7 +1432,7 @@ class AOR_Report extends Basic
      * @param array $query
      * @return array
      */
-    function build_report_query_where($query = array())
+    public function build_report_query_where($query = array())
     {
         global $beanList, $app_list_strings, $sugar_config, $current_user;
 

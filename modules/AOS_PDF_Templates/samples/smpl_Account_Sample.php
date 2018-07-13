@@ -4,12 +4,12 @@ require_once __DIR__ . '/../TemplateSampleService.php';
 
 class smpl_Account_Sample
 {
-    function getType()
+    public function getType()
     {
         return 'Accounts';
     }
 
-    function getBody()
+    public function getBody()
     {
         global $locale;
         return '<table style="width: 100%;" border="0" cellspacing="2" cellpadding="2">
@@ -39,12 +39,12 @@ class smpl_Account_Sample
 <p>Someone</p>';
     }
 
-    function getHeader()
+    public function getHeader()
     {
         return '';
     }
 
-    function getFooter()
+    public function getFooter()
     {
         return '';
     }

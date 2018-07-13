@@ -49,7 +49,7 @@ class CalendarUtils
 	 * @param SugarDateTime $date
 	 * @return SugarDateTime $date
 	 */
-    static function get_first_day_of_week(SugarDateTime $date)
+    public static function get_first_day_of_week(SugarDateTime $date)
     {
         $fdow = $GLOBALS['current_user']->get_first_day_of_week();
         if ($date->day_of_week < $fdow) {
@@ -63,7 +63,7 @@ class CalendarUtils
      * Get list of needed fields for modules
      * @return array
      */
-    static function get_fields()
+    public static function get_fields()
     {
         return array(
 			'Meetings' => array(
@@ -106,7 +106,7 @@ class CalendarUtils
      * @param SugarBean $bean
      * @return array
      */
-    static function get_time_data(SugarBean $bean, $start_field = "date_start", $end_field = "date_end")
+    public static function get_time_data(SugarBean $bean, $start_field = "date_start", $end_field = "date_end")
     {
         $arr = array();
 
@@ -158,7 +158,7 @@ class CalendarUtils
      * @param SugarBean $bean
      * @return array
      */
-    static function get_sendback_array(SugarBean $bean)
+    public static function get_sendback_array(SugarBean $bean)
     {
         if (isset($bean->parent_name) && isset($_REQUEST['parent_name'])) {
             $bean->parent_name = $_REQUEST['parent_name'];
@@ -216,7 +216,7 @@ class CalendarUtils
      * @param SugarBean $bean
      * @return array
      */
-    static function get_sendback_repeat_data(SugarBean $bean)
+    public static function get_sendback_repeat_data(SugarBean $bean)
     {
         if ($bean->module_dir == "Meetings" || $bean->module_dir == "Calls") {
             if (!empty($bean->repeat_parent_id) || (!empty($bean->repeat_type) && empty($_REQUEST['edit_all_recurrences']))) {
@@ -263,7 +263,7 @@ class CalendarUtils
      * @param array $params
      * @return array
      */
-    static function build_repeat_sequence($date_start,$params)
+    public static function build_repeat_sequence($date_start,$params)
     {
         $arr = array();
 
@@ -375,7 +375,7 @@ class CalendarUtils
      * @param array $time_arr array of datetimes
      * @return array
      */
-    static function save_repeat_activities(SugarBean $bean,$time_arr)
+    public static function save_repeat_activities(SugarBean $bean,$time_arr)
     {
 
 		// Here we will create single big inserting query for each invitee relationship
@@ -491,7 +491,7 @@ class CalendarUtils
      * Delete recurring activities and their invitee relationships
      * @param SugarBean $bean
      */
-    static function markRepeatDeleted(SugarBean $bean)
+    public static function markRepeatDeleted(SugarBean $bean)
     {
         // we don't use mark_deleted method here because it runs very slowly
         $db = DBManagerFactory::getInstance();
@@ -521,7 +521,7 @@ class CalendarUtils
      * @param SugarBean $bean
      * @param string $beanId
      */
-    static function correctRecurrences(SugarBean $bean, $beanId)
+    public static function correctRecurrences(SugarBean $bean, $beanId)
     {
         $db = DBManagerFactory::getInstance();
 		

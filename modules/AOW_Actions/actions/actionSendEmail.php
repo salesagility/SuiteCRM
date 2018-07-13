@@ -41,7 +41,7 @@ class actionSendEmail extends actionBase
      */
     protected $lastEmailsSuccess;
 
-    function __construct($id = '')
+    public function __construct($id = '')
     {
         parent::__construct($id);
         $this->clearLastEmailsStatus();
@@ -50,7 +50,7 @@ class actionSendEmail extends actionBase
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function actionSendEmail($id = '')
+    public function actionSendEmail($id = '')
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -62,12 +62,12 @@ class actionSendEmail extends actionBase
     }
 
 
-    function loadJS()
+    public function loadJS()
     {
         return array('modules/AOW_Actions/actions/actionSendEmail.js');
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array())
+    public function edit_display($line,SugarBean $bean = null, $params = array())
     {
         global $app_list_strings;
         $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
@@ -389,7 +389,7 @@ class actionSendEmail extends actionBase
         return $this->lastEmailsSuccess;
     }
 
-    function parse_template(SugarBean $bean, &$template, $object_override = array())
+    public function parse_template(SugarBean $bean, &$template, $object_override = array())
     {
         global $sugar_config;
 
@@ -451,7 +451,7 @@ class actionSendEmail extends actionBase
         $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }
 
-    function getAttachments(EmailTemplate $template)
+    public function getAttachments(EmailTemplate $template)
     {
         $attachments = array();
         if ($template->id != '') {
@@ -467,7 +467,7 @@ class actionSendEmail extends actionBase
         return $attachments;
     }
 
-    function sendEmail($emailTo, $emailSubject, $emailBody, $altemailBody, SugarBean $relatedBean = null, $emailCc = array(), $emailBcc = array(), $attachments = array())
+    public function sendEmail($emailTo, $emailSubject, $emailBody, $altemailBody, SugarBean $relatedBean = null, $emailCc = array(), $emailBcc = array(), $attachments = array())
     {
         require_once('modules/Emails/Email.php');
         require_once('include/SugarPHPMailer.php');

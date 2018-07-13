@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarFeedFlush
 {
-    function flushStaleEntries($bean, $event, $arguments)
+    public function flushStaleEntries($bean, $event, $arguments)
     {
         $admin = new Administration();
         $admin->retrieveSettings();

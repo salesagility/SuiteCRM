@@ -41,7 +41,7 @@ require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 
 class ViewModule extends SugarView
 {
-    var $mbModule;
+    public $mbModule;
 	
     /**
 	 * @see SugarView::_getModuleTitleParams()
@@ -56,7 +56,7 @@ class ViewModule extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         global $mod_strings;
         $smarty = new Sugar_Smarty();
@@ -99,7 +99,7 @@ class ViewModule extends SugarView
         echo $ajax->getJavascript();
     }
  	
-    function loadPackageHelp(
+    public function loadPackageHelp(
  	    $name
  	    ) {
         $this->mbModule->help['default'] = (empty($name))?'create':'modify';

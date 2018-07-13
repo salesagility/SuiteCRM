@@ -44,47 +44,47 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldInt extends SugarWidgetReportField
 {
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         return $this->displayListPlain($layout_def);
     }
 
-    function queryFilterEquals(&$layout_def)
+    public function queryFilterEquals(&$layout_def)
     {
         return $this->_get_column_select($layout_def)."= '".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
     }
 
-    function queryFilterNot_Equals(&$layout_def)
+    public function queryFilterNot_Equals(&$layout_def)
     {
         return $this->_get_column_select($layout_def)."!='".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
     }
 
-    function queryFilterGreater(&$layout_def)
+    public function queryFilterGreater(&$layout_def)
     {
         return $this->_get_column_select($layout_def)." > '".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
     }
 
-    function queryFilterLess(&$layout_def)
+    public function queryFilterLess(&$layout_def)
     {
         return $this->_get_column_select($layout_def)." < '".DBManagerFactory::getInstance()->quote($layout_def['input_name0'])."'\n";
     }
 
-    function queryFilterBetween(&$layout_def)
+    public function queryFilterBetween(&$layout_def)
     {
         return $this->_get_column_select($layout_def)." BETWEEN '".DBManagerFactory::getInstance()->quote($layout_def['input_name0']). "' AND '" . DBManagerFactory::getInstance()->quote($layout_def['input_name1']) . "'\n";
     }
 
-    function queryFilterStarts_With(&$layout_def)
+    public function queryFilterStarts_With(&$layout_def)
     {
         return $this->queryFilterEquals($layout_def);
     }
 
-    function displayInput($layout_def)
+    public function displayInput($layout_def)
     {
         return '<input type="text" size="20" value="' . $layout_def['input_name0'] . '" name="' . $layout_def['name'] . '">';
     }
  
-    function display($layout_def)
+    public function display($layout_def)
     {
         //Bug40995
         if (isset($obj->layout_manager->defs['reporter']->focus->field_name_map[$layout_def['name']]['precision'])) {

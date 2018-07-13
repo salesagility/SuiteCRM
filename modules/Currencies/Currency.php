@@ -56,25 +56,25 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Currency extends SugarBean
 {
     // Stored fields
-    var $id;
-    var $iso4217;
-    var $name;
-    var $status;
-    var $conversion_rate;
-    var $deleted;
-    var $date_entered;
-    var $date_modified;
-    var $symbol;
-    var $hide = '';
-    var $unhide = '';
-    var $field_name_map;
+    public $id;
+    public $iso4217;
+    public $name;
+    public $status;
+    public $conversion_rate;
+    public $deleted;
+    public $date_entered;
+    public $date_modified;
+    public $symbol;
+    public $hide = '';
+    public $unhide = '';
+    public $field_name_map;
 
-    var $table_name = "currencies";
-    var $object_name = "Currency";
-    var $module_dir = "Currencies";
-    var $new_schema = true;
+    public $table_name = "currencies";
+    public $object_name = "Currency";
+    public $module_dir = "Currencies";
+    public $new_schema = true;
 
-    var $disable_num_format = true;
+    public $disable_num_format = true;
 
 
     public function __construct()
@@ -94,7 +94,7 @@ class Currency extends SugarBean
      * @param $precision The rounding precision scale
      * @return currency value in US Dollars from conversion
      */
-    function convertToDollar($amount, $precision = 6)
+    public function convertToDollar($amount, $precision = 6)
     {
         return $this->conversion_rate ? round(($amount / $this->conversion_rate), $precision) : 0;
     }
@@ -108,7 +108,7 @@ class Currency extends SugarBean
      * @param $precision The rounding precision scale
      * @return currency value from US Dollar conversion
      */
-    function convertFromDollar($amount, $precision = 6)
+    public function convertFromDollar($amount, $precision = 6)
     {
         return round(($amount * $this->conversion_rate), $precision);
     }
@@ -119,7 +119,7 @@ class Currency extends SugarBean
      * Returns the default currency name as defined in application
      * @return String value of default currency name
      */
-    function getDefaultCurrencyName()
+    public function getDefaultCurrencyName()
     {
         global $sugar_config;
         return $sugar_config['default_currency_name'];
@@ -131,7 +131,7 @@ class Currency extends SugarBean
      * Returns the default currency symobol in application
      * @return String value of default currency symbol(e.g. $)
      */
-    function getDefaultCurrencySymbol()
+    public function getDefaultCurrencySymbol()
     {
         global $sugar_config;
         return $sugar_config['default_currency_symbol'];
@@ -143,7 +143,7 @@ class Currency extends SugarBean
      * Returns the default ISO 4217 standard currency code value
      * @return String value for the ISO 4217 standard code(e.g. EUR)
      */
-    function getDefaultISO4217()
+    public function getDefaultISO4217()
     {
         global $sugar_config;
         return $sugar_config['default_currency_iso4217'];
@@ -159,7 +159,7 @@ class Currency extends SugarBean
      * @return String id value for symbol defined in Currencies table, blank String value
      *         if none found
      */
-    function retrieveIDBySymbol($symbol)
+    public function retrieveIDBySymbol($symbol)
     {
         $query = "SELECT id FROM currencies WHERE symbol='$symbol' AND deleted=0;";
         $result = $this->db->query($query);
@@ -173,7 +173,7 @@ class Currency extends SugarBean
         return '';
     }
 
-    function list_view_parse_additional_sections(&$list_form)
+    public function list_view_parse_additional_sections(&$list_form)
     {
         global $isMerge;
 
@@ -183,7 +183,7 @@ class Currency extends SugarBean
         return $list_form;
     }
 
-    function retrieve_id_by_name($name)
+    public function retrieve_id_by_name($name)
     {
         $nameQuoted = $this->db->quote($name);
         $query = "select id from currencies where name='$nameQuoted' and deleted=0;";
@@ -197,7 +197,7 @@ class Currency extends SugarBean
         return '';
     }
 
-    function retrieve($id = -99, $encode = true, $deleted = true)
+    public function retrieve($id = -99, $encode = true, $deleted = true)
     {
         if ($id == '-99') {
             $this->name = 	$this->getDefaultCurrencyName();
@@ -234,20 +234,20 @@ class Currency extends SugarBean
      * Returns:
      * 	$symbol otherwise chr(2) for euro symbol
      */
-    function getPdfCurrencySymbol()
+    public function getPdfCurrencySymbol()
     {
         if ($this->symbol == '&#8364;' || $this->symbol == '€') {
             return chr(2);
         }
         return $this->symbol;
     }
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $this->conversion_rate = format_number($this->conversion_rate, 10, 10);
         $data = parent::get_list_view_data();
         return $data;
     }
-    function save($check_notify = FALSE)
+    public function save($check_notify = FALSE)
     {
         sugar_cache_clear('currency_list');
         return parent::save($check_notify);

@@ -45,11 +45,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
  class ConnectorRecord extends MergeRecord
  {
-     var $object_name = 'ConnectorRecord';
-     var $module_dir = 'Connector';
+     public $object_name = 'ConnectorRecord';
+     public $module_dir = 'Connector';
 
 
-     function __construct($merge_module = '', $merge_id = '')
+     public function __construct($merge_module = '', $merge_id = '')
      {
          parent::__construct($merge_module, $merge_id);
      }
@@ -57,7 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
      /**
       * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
       */
-     function ConnectorRecord($merge_module = '', $merge_id = '')
+     public function ConnectorRecord($merge_module = '', $merge_id = '')
      {
          $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
          if (isset($GLOBALS['log'])) {

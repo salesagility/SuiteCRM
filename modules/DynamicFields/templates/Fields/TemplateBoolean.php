@@ -43,12 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
 class TemplateBoolean extends TemplateField
 {
-    var $default_value = '0';
-    var $default = '0';
-    var $type = 'bool';
+    public $default_value = '0';
+    public $default = '0';
+    public $type = 'bool';
 
     //BEGIN BACKWARDS COMPATABILITY
-    function get_xtpl_edit()
+    public function get_xtpl_edit()
     {
         $name = $this->name;
         $returnXTPL = array();
@@ -80,7 +80,7 @@ class TemplateBoolean extends TemplateField
 
 
 
-    function get_xtpl_search()
+    public function get_xtpl_search()
     {
         if (!empty($_REQUEST[$this->name])) {
             $returnXTPL = array();
@@ -94,7 +94,7 @@ class TemplateBoolean extends TemplateField
         return '';
     }
 
-    function get_xtpl_detail()
+    public function get_xtpl_detail()
     {
         $name = $this->name;
         $returnXTPL = array();
@@ -112,7 +112,7 @@ class TemplateBoolean extends TemplateField
         }
         return $returnXTPL;
     }
-    function get_xtpl_list()
+    public function get_xtpl_list()
     {
         return $this->get_xtpl_edit();
     }

@@ -41,7 +41,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
 class SugarFieldDatetimecombo extends SugarFieldBase
 {
-    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         // Create Smarty variables for the Calendar picker widget
         if (!isset($displayParams['showMinutesDropdown'])) {
@@ -68,13 +68,13 @@ class SugarFieldDatetimecombo extends SugarFieldBase
         return $this->fetch($this->findTemplate('EditView'));
     }
 
-    function getImportViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getImportViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $displayParams['showFormats'] = true;
         return $this->getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
 	
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if ($this->isRangeSearchView($vardef)) {
             $displayParams['showMinutesDropdown'] = false;

@@ -50,7 +50,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class AccountFormBase
 {
-    function checkForDuplicates($prefix)
+    public function checkForDuplicates($prefix)
     {
         require_once('include/formbase.php');
 	
@@ -104,7 +104,7 @@ class AccountFormBase
     }
 
 
-    function buildTableForm($rows, $mod='Accounts')
+    public function buildTableForm($rows, $mod='Accounts')
     {
         if (!ACLController::checkAccess('Accounts', 'edit', true)) {
             return '';
@@ -213,7 +213,7 @@ class AccountFormBase
         return $form;
     }
 
-    function getForm($prefix, $mod='', $form='')
+    public function getForm($prefix, $mod='', $form='')
     {
         if (!ACLController::checkAccess('Accounts', 'edit', true)) {
             return '';
@@ -249,7 +249,7 @@ EOQ;
     }
 
 
-    function getFormBody($prefix,$mod='', $formname='')
+    public function getFormBody($prefix,$mod='', $formname='')
     {
         if (!ACLController::checkAccess('Accounts', 'edit', true)) {
             return '';
@@ -297,7 +297,7 @@ EOQ;
 
 
 
-    function getWideFormBody($prefix, $mod='',$formname='',  $contact='')
+    public function getWideFormBody($prefix, $mod='',$formname='',  $contact='')
     {
         if (!ACLController::checkAccess('Accounts', 'edit', true)) {
             return '';
@@ -397,7 +397,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix,$redirect=true, $useRequired=false)
+    public function handleSave($prefix,$redirect=true, $useRequired=false)
     {
         require_once('include/formbase.php');
 

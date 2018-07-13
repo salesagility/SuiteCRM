@@ -50,7 +50,7 @@ class PackageManagerComm
      *
      * @param login    designates whether we want to try to login after we initialize or not
      */
-    function initialize($login = true)
+    public function initialize($login = true)
     {
         if (empty($GLOBALS['SugarDepot'])) {
             $GLOBALS['log']->debug('USING HTTPS TO CONNECT TO HEARTBEAT');
@@ -67,7 +67,7 @@ class PackageManagerComm
     /**
      * Check for errors in the response or error_str
      */
-    function errorCheck()
+    public function errorCheck()
     {
         if (!empty($GLOBALS['SugarDepot']->error_str)) {
             $GLOBALS['log']->fatal($GLOBALS['SugarDepot']->error_str);
@@ -82,7 +82,7 @@ class PackageManagerComm
      * @param password     Mambo password
      * @param download_key User's download key
      */
-    function setCredentials($username, $password, $download_key)
+    public function setCredentials($username, $password, $download_key)
     {
         $_SESSION['SugarDepotUsername'] = $username;
         $_SESSION['SugarDepotPassword'] = $password;
@@ -92,7 +92,7 @@ class PackageManagerComm
     /**
      * Clears out the session so we can reauthenticate.
      */
-    function clearSession()
+    public function clearSession()
     {
         $_SESSION['SugarDepotSessionID'] = null;
         unset($_SESSION['SugarDepotSessionID']);
@@ -104,7 +104,7 @@ class PackageManagerComm
      *
      * @return true if successful, false otherwise
      */
-    function login($terms_checked = true)
+    public function login($terms_checked = true)
     {
         if (empty($_SESSION['SugarDepotSessionID'])) {
             global $license;
@@ -141,7 +141,7 @@ class PackageManagerComm
     /**
      * Logout from the depot
      */
-    function logout()
+    public function logout()
     {
         PackageManagerComm::initialize();
         $result = $GLOBALS['SugarDepot']->call('depotLogout', array('session_id' => $_SESSION['SugarDepotSessionID']));
@@ -150,7 +150,7 @@ class PackageManagerComm
     /**
      * Get all promotions from the depot
      */
-    function getPromotion()
+    public function getPromotion()
     {
         PackageManagerComm::initialize();
         //check for fault first and then return
@@ -167,7 +167,7 @@ class PackageManagerComm
      * @return categories_and_packages
      * @see categories_and_packages
     */
-    function getCategoryPackages($category_id, $filter = array())
+    public function getCategoryPackages($category_id, $filter = array())
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -182,7 +182,7 @@ class PackageManagerComm
      * @return categories_and_packages
      * @see categories_and_packages
      */
-    function getCategories($category_id, $filter = array())
+    public function getCategories($category_id, $filter = array())
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -197,7 +197,7 @@ class PackageManagerComm
      * @return packages
      * @see packages
     */
-    function getPackages($category_id, $filter = array())
+    public function getPackages($category_id, $filter = array())
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -212,7 +212,7 @@ class PackageManagerComm
      * @return packages
      * @see packages
     */
-    function getReleases($category_id, $package_id, $filter = array())
+    public function getReleases($category_id, $package_id, $filter = array())
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -228,7 +228,7 @@ class PackageManagerComm
      * @return download
      * @see download
     */
-    function download($category_id, $package_id, $release_id)
+    public function download($category_id, $package_id, $release_id)
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -243,7 +243,7 @@ class PackageManagerComm
      * @param release_id  the release we want to download
      * @return the filename to download
      */
-    function addDownload($category_id, $package_id, $release_id)
+    public function addDownload($category_id, $package_id, $release_id)
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -256,7 +256,7 @@ class PackageManagerComm
      * @param filename	the file to download
      * @return path to downloaded file
      */
-    static public function performDownload($filename)
+    public static function performDownload($filename)
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -272,14 +272,14 @@ class PackageManagerComm
      *
      * @return documents
      */
-    function getDocumentation($package_id, $release_id)
+    public function getDocumentation($package_id, $release_id)
     {
         PackageManagerComm::initialize();
         //check for fault
         return $GLOBALS['SugarDepot']->call('depotGetDocumentation', array('session_id' => $_SESSION['SugarDepotSessionID'], 'package_id' => $package_id, 'release_id' => $release_id));
     }
 
-    function getTermsAndConditions()
+    public function getTermsAndConditions()
     {
         PackageManagerComm::initialize(false);
         return $GLOBALS['SugarDepot']->call('depotTermsAndConditions',array());
@@ -290,7 +290,7 @@ class PackageManagerComm
      *
      * @param document_id	the document the user has clicked on
      */
-    function downloadedDocumentation($document_id)
+    public function downloadedDocumentation($document_id)
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -307,7 +307,7 @@ class PackageManagerComm
      *
      * @return array of name_value_lists of corresponding updates
      */
-    function checkForUpdates($objects_to_check)
+    public function checkForUpdates($objects_to_check)
     {
         PackageManagerComm::initialize();
         //check for fault
@@ -318,7 +318,7 @@ class PackageManagerComm
     *
     * @return true if we can communicate with the server and false otherwise
     */
-    function isAlive()
+    public function isAlive()
     {
         PackageManagerComm::initialize(false);
 

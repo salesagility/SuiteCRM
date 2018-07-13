@@ -63,93 +63,93 @@ require_once __DIR__ . '/../../include/EmailInterface.php';
 // Lead is used to store profile information for people who may become customers.
 class Lead extends Person implements EmailInterface
 {
-    var $field_name_map;
+    public $field_name_map;
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $assigned_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $description;
-    var $salutation;
-    var $first_name;
-    var $last_name;
-    var $title;
-    var $department;
-    var $reports_to_id;
-    var $do_not_call;
-    var $phone_home;
-    var $phone_mobile;
-    var $phone_work;
-    var $phone_other;
-    var $phone_fax;
-    var $refered_by;
-    var $email1;
-    var $email2;
-    var $primary_address_street;
-    var $primary_address_city;
-    var $primary_address_state;
-    var $primary_address_postalcode;
-    var $primary_address_country;
-    var $alt_address_street;
-    var $alt_address_city;
-    var $alt_address_state;
-    var $alt_address_postalcode;
-    var $alt_address_country;
-    var $name;
-    var $full_name;
-    var $portal_name;
-    var $portal_app;
-    var $contact_id;
-    var $contact_name;
-    var $account_id;
-    var $opportunity_id;
-    var $opportunity_name;
-    var $opportunity_amount;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $description;
+    public $salutation;
+    public $first_name;
+    public $last_name;
+    public $title;
+    public $department;
+    public $reports_to_id;
+    public $do_not_call;
+    public $phone_home;
+    public $phone_mobile;
+    public $phone_work;
+    public $phone_other;
+    public $phone_fax;
+    public $refered_by;
+    public $email1;
+    public $email2;
+    public $primary_address_street;
+    public $primary_address_city;
+    public $primary_address_state;
+    public $primary_address_postalcode;
+    public $primary_address_country;
+    public $alt_address_street;
+    public $alt_address_city;
+    public $alt_address_state;
+    public $alt_address_postalcode;
+    public $alt_address_country;
+    public $name;
+    public $full_name;
+    public $portal_name;
+    public $portal_app;
+    public $contact_id;
+    public $contact_name;
+    public $account_id;
+    public $opportunity_id;
+    public $opportunity_name;
+    public $opportunity_amount;
     //used for vcard export only
-    var $birthdate;
-    var $status;
-    var $status_description;
+    public $birthdate;
+    public $status;
+    public $status_description;
 
-    var $lead_source;
-    var $lead_source_description;
+    public $lead_source;
+    public $lead_source_description;
     // These are for related fields
-    var $account_name;
-    var $acc_name_from_accounts;
-    var $account_site;
-    var $account_description;
-    var $case_role;
-    var $case_rel_id;
-    var $case_id;
-    var $task_id;
-    var $note_id;
-    var $meeting_id;
-    var $call_id;
-    var $email_id;
-    var $assigned_user_name;
-    var $campaign_id;
-    var $campaign_name;
-    var $alt_address_street_2;
-    var $alt_address_street_3;
-    var $primary_address_street_2;
-    var $primary_address_street_3;
+    public $account_name;
+    public $acc_name_from_accounts;
+    public $account_site;
+    public $account_description;
+    public $case_role;
+    public $case_rel_id;
+    public $case_id;
+    public $task_id;
+    public $note_id;
+    public $meeting_id;
+    public $call_id;
+    public $email_id;
+    public $assigned_user_name;
+    public $campaign_id;
+    public $campaign_name;
+    public $alt_address_street_2;
+    public $alt_address_street_3;
+    public $primary_address_street_2;
+    public $primary_address_street_3;
 
 
-    var $table_name = "leads";
-    var $object_name = "Lead";
-    var $object_names = "Leads";
-    var $module_dir = "Leads";
-    var $new_schema = true;
-    var $emailAddress;
+    public $table_name = "leads";
+    public $object_name = "Lead";
+    public $object_names = "Leads";
+    public $module_dir = "Leads";
+    public $new_schema = true;
+    public $emailAddress;
 
-    var $importable = true;
+    public $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('assigned_user_name', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
-    var $relationship_fields = Array('email_id'=>'emails','call_id'=>'calls','meeting_id'=>'meetings','task_id'=>'tasks',);
+    public $additional_column_fields = Array('assigned_user_name', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
+    public $relationship_fields = Array('email_id'=>'emails','call_id'=>'calls','meeting_id'=>'meetings','task_id'=>'tasks',);
 
     public function __construct()
     {
@@ -171,7 +171,7 @@ class Lead extends Person implements EmailInterface
     }
 
 
-    function get_account()
+    public function get_account()
     {
         if (isset($this->account_id) && !empty($this->account_id)) {
             $query = "SELECT name , assigned_user_id account_name_owner FROM accounts WHERE id='{$this->account_id}'";
@@ -188,7 +188,7 @@ class Lead extends Person implements EmailInterface
             }
         }
     }
-    function get_opportunity()
+    public function get_opportunity()
     {
         if (isset($this->opportunity_id) && !empty($this->opportunity_id)) {
             $query = "SELECT name, assigned_user_id opportunity_name_owner FROM opportunities WHERE id='{$this->opportunity_id}'";
@@ -205,7 +205,7 @@ class Lead extends Person implements EmailInterface
             }
         }
     }
-    function get_contact()
+    public function get_contact()
     {
         global $locale;
         if (isset($this->contact_id) && !empty($this->contact_id)) {
@@ -223,7 +223,7 @@ class Lead extends Person implements EmailInterface
         }
     }
 
-    function create_list_query($order_by, $where, $show_deleted=0)
+    public function create_list_query($order_by, $where, $show_deleted=0)
     {
         $custom_join = $this->getCustomJoin();
         $query = "SELECT ";
@@ -258,7 +258,7 @@ class Lead extends Person implements EmailInterface
         return $query;
     }
 
-    function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false)
+    public function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false)
     {
         $ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect, $ifListForExport);
         if (strpos($ret_array['select'],"leads.account_name") == false && strpos($ret_array['select'],"leads.*") == false) {
@@ -270,7 +270,7 @@ class Lead extends Person implements EmailInterface
         return $ret_array;
     }
 
-    function converted_lead($leadid, $contactid, $accountid, $opportunityid)
+    public function converted_lead($leadid, $contactid, $accountid, $opportunityid)
     {
         $query = "UPDATE leads set converted='1', contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$leadid and deleted=0";
         $this->db->query($query,true,"Error converting lead: ");
@@ -283,14 +283,14 @@ class Lead extends Person implements EmailInterface
         $lead->save();
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         parent::fill_in_additional_list_fields();
         $this->_create_proper_name_field();
         $this->get_account();
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         //Fill in the assigned_user_name
         //if(!empty($this->status))
@@ -311,7 +311,7 @@ class Lead extends Person implements EmailInterface
         }
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $temp_array = parent::get_list_view_data();
                 
@@ -335,7 +335,7 @@ class Lead extends Person implements EmailInterface
      * Internal function, do not override.
      */
     //fix for bug 27339 Shine
-    function get_linked_fields()
+    public function get_linked_fields()
     {
         $linked_fields=array();
         $fieldDefs = $this->getFieldDefinitions();
@@ -357,7 +357,7 @@ class Lead extends Person implements EmailInterface
     	builds a generic search based on the query string using or
     	do not include any $this-> because this is called on without having the class instantiated
     */
-    function build_generic_where_clause($the_query_string)
+    public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = Array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
@@ -387,7 +387,7 @@ class Lead extends Person implements EmailInterface
         return $the_where;
     }
 
-    function set_notification_body($xtpl, $lead)
+    public function set_notification_body($xtpl, $lead)
     {
         global $app_list_strings;
         global $locale;
@@ -400,14 +400,14 @@ class Lead extends Person implements EmailInterface
         return $xtpl;
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return true;
 		}
         return false;
     }
-    function listviewACLHelper()
+    public function listviewACLHelper()
     {
         $array_assign = parent::listviewACLHelper();
         $is_owner = false;
@@ -505,7 +505,7 @@ class Lead extends Person implements EmailInterface
     }
 
     //carrys forward custom lead fields to contacts, accounts, opportunities during Lead Conversion
-    function convertCustomFieldsForm(&$form, &$tempBean, &$prefix)
+    public function convertCustomFieldsForm(&$form, &$tempBean, &$prefix)
     {
         global $mod_strings, $app_list_strings, $app_strings, $lbl_required_symbol;
 
@@ -577,7 +577,7 @@ class Lead extends Person implements EmailInterface
         return true;
     }
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         if (empty($this->status)) {
             $this->status = 'New';
@@ -586,7 +586,7 @@ class Lead extends Person implements EmailInterface
         $value = parent::save($check_notify);
         return $value;
     }
-    function get_unlinked_email_query($type=array())
+    public function get_unlinked_email_query($type=array())
     {
         return get_unlinked_email_query($type, $this);
     }

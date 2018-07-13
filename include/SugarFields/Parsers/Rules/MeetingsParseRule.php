@@ -45,14 +45,14 @@ require_once('include/SugarFields/Parsers/Rules/ActivitiesParseRule.php');
 
 class MeetingsParseRule extends ActivitiesParseRule
 {
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MeetingsParseRule()
+    public function MeetingsParseRule()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -64,7 +64,7 @@ class MeetingsParseRule extends ActivitiesParseRule
     }
 
 
-    function preParse($panels, $view)
+    public function preParse($panels, $view)
     {
         $panels = parent::preParse($panels, $view);
         if ($view == 'DetailView') {

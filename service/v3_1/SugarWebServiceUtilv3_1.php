@@ -40,7 +40,7 @@
 require_once('service/v3/SugarWebServiceUtilv3.php');
 class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 {
-    function get_return_module_fields($value, $module,$fields, $translate=true)
+    public function get_return_module_fields($value, $module,$fields, $translate=true)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_return_module_fields');
         global $module_name;
@@ -63,7 +63,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 	 * @param SugarBean $seed
 	 * @param string $current_view
 	 */
-    function trackView($seed, $current_view)
+    public function trackView($seed, $current_view)
     {
         $trackerManager = TrackerManager::getInstance();
         if ($monitor = $trackerManager->getMonitor('tracker')) {
@@ -106,7 +106,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * @param array $availModules An array of all the modules the user already has access to.
      * @return array Modules enabled within the application.
      */
-    function get_visible_modules($availModules)
+    public function get_visible_modules($availModules)
     {
         require_once("modules/MySettings/TabController.php");
         $controller = new TabController();
@@ -120,7 +120,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * @param string $moduleName
      * @return array An array of fields to be searched against.
      */
-    function generateUnifiedSearchFields($moduleName)
+    public function generateUnifiedSearchFields($moduleName)
     {
         global $beanList, $beanFiles, $dictionary;
 
@@ -191,7 +191,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * @param string $module
      * @return array results containing access and boolean indicating access
      */
-    function checkModuleRoleAccess($module)
+    public function checkModuleRoleAccess($module)
     {
         $results = array();
         $actions = array('edit','delete','list','view','import','export');
@@ -203,7 +203,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         return $results;
     }
 
-    function get_field_list($value,$fields,  $translate=true)
+    public function get_field_list($value,$fields,  $translate=true)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_field_list');
         $module_fields = array();
@@ -346,7 +346,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @return string - Contents base64'd.
      */
-    function get_file_contents_base64($filename, $remove = FALSE)
+    public function get_file_contents_base64($filename, $remove = FALSE)
     {
         $contents = "";
         if (file_exists($filename)) {
@@ -359,7 +359,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         return $contents;
     }
 
-    function get_module_view_defs($module_name, $type, $view)
+    public function get_module_view_defs($module_name, $type, $view)
     {
         require_once('include/MVC/View/SugarView.php');
         $metadataFile = null;
@@ -393,7 +393,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * if the list should filter for favorites.  Should eventually update the SugarBean function as well.
      *
      */
-    function get_data_list($seed, $order_by = "", $where = "", $row_offset = 0, $limit=-1, $max=-1, $show_deleted = 0, $favorites = false, $singleSelect=false)
+    public function get_data_list($seed, $order_by = "", $where = "", $row_offset = 0, $limit=-1, $max=-1, $show_deleted = 0, $favorites = false, $singleSelect=false)
     {
         $GLOBALS['log']->debug("get_list:  order_by = '$order_by' and where = '$where' and limit = '$limit'");
         if (isset($_SESSION['show_deleted'])) {
@@ -430,7 +430,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * @param array $metadata The metadata for the view type and view.
      * @return unknown
      */
-    function addFieldLevelACLs($module_name,$view_type, $view, $metadata)
+    public function addFieldLevelACLs($module_name,$view_type, $view, $metadata)
     {
         $functionName = "metdataAclParser" . ucfirst($view_type) . ucfirst($view);
         if (method_exists($this, $functionName)) {
@@ -450,7 +450,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * @param String $field Name of the field
      * @return int
      */
-    function getFieldLevelACLValue($module, $field, $current_user = null)
+    public function getFieldLevelACLValue($module, $field, $current_user = null)
     {
         if ($current_user == null) {
             $current_user = $GLOBALS['current_user'];

@@ -45,7 +45,7 @@ require_once("include/utils/db_utils.php");
 
 class jsAlerts
 {
-    var $script;
+    public $script;
 
     public function __construct()
     {
@@ -64,7 +64,7 @@ EOQ;
         }
     }
 
-    function addAlert($type, $name, $subtitle, $description, $countdown, $redirect = '', $reminder_id = '')
+    public function addAlert($type, $name, $subtitle, $description, $countdown, $redirect = '', $reminder_id = '')
     {
         if ($countdown < 0) {
             $countdown = 0;
@@ -75,7 +75,7 @@ EOQ;
         $this->script .= $script;
     }
 
-    function getScript()
+    public function getScript()
     {
         return "<script>secondsSinceLoad = 0; alertList = [];" . $this->script . "</script>";
     }
@@ -85,7 +85,7 @@ EOQ;
      * @param $parentType string parent type
      * @param $parentId string parent id
      */
-    function getRelatedName($parentType, $parentId)
+    public function getRelatedName($parentType, $parentId)
     {
         if (!empty($parentType) && !empty($parentId)) {
             $parentBean = BeanFactory::getBean($parentType, $parentId);
@@ -96,7 +96,7 @@ EOQ;
         return '';
     }
 
-    function addActivities()
+    public function addActivities()
     {
         global $app_list_strings, $timedate, $current_user, $app_strings;
         global $sugar_config;

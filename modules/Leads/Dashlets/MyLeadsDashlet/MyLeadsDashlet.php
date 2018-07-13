@@ -49,7 +49,7 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyLeadsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/Leads/Dashlets/MyLeadsDashlet/MyLeadsDashlet.data.php');
@@ -68,7 +68,7 @@ class MyLeadsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyLeadsDashlet($id, $def = null)
+    public function MyLeadsDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

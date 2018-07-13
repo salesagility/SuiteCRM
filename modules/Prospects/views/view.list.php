@@ -43,12 +43,12 @@ require_once('modules/Prospects/ProspectsListViewSmarty.php');
 
 class ProspectsViewList extends ViewList
 {
-    function LeadsViewList()
+    public function LeadsViewList()
     {
         parent::__construct();
     }
 	
-    function preDisplay()
+    public function preDisplay()
     {
         $this->lv = new ProspectsListViewSmarty();
         $this->lv->targetList = true;

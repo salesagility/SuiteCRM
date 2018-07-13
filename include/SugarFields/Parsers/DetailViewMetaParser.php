@@ -60,7 +60,7 @@ require_once('include/SugarFields/Parsers/MetaParser.php');
  */
 class DetailViewMetaParser extends MetaParser
 {
-    function __construct()
+    public function __construct()
     {
         $this->mView = 'DetailView';
     }
@@ -76,7 +76,7 @@ class DetailViewMetaParser extends MetaParser
      * @param $masterCopy The file path of the mater copy of the metadata file to merge against
      * @return String format of metadata contents
      **/
-    function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $masterCopy=null)
+    public function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $masterCopy=null)
     {
 
 // Grab file contents

@@ -51,18 +51,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class StudioParser
 {
-    var $positions = array ();
-    var $rows = array ();
-    var $cols = array ();
-    var $curFile = '';
-    var $curText = '';
-    var $form;
-    var $labelEditor = true;
-    var $curType = 'detail';
-    var $fieldEditor = true;
-    var $oldMatches = array();
+    public $positions = array ();
+    public $rows = array ();
+    public $cols = array ();
+    public $curFile = '';
+    public $curText = '';
+    public $form;
+    public $labelEditor = true;
+    public $curType = 'detail';
+    public $fieldEditor = true;
+    public $oldMatches = array();
 
-    function getFileType($type, $setType=true)
+    public function getFileType($type, $setType=true)
     {
         switch ($type) {
 			case 'EditView':$type = 'edit'; break;
@@ -77,7 +77,7 @@ class StudioParser
         return $type;
     }
 
-    function getParsers($file)
+    public function getParsers($file)
     {
         if (substr_count($file, 'DetailView.html') > 0 || substr_count($file, 'EditView.html') > 0) {
             return array('default'=>'StudioParser', array('StudioParser', 'StudioRowParser'));
@@ -89,19 +89,19 @@ class StudioParser
     }
 
 
-    function parseRows($str)
+    public function parseRows($str)
     {
         preg_match_all("'(<tr[^>]*)>(.*?)(</tr[^>]*>)'si", $str, $this->rows,PREG_SET_ORDER);
     }
 
-    function parseNames($str)
+    public function parseNames($str)
     {
         $results = array();
         preg_match_all("'name[ ]*=[ ]*[\'\"]+([a-zA-Z0-9\_]+)[\'\"]+'si", $str, $results,PREG_SET_ORDER);
         return $results;
     }
 
-    function parseLabels($str)
+    public function parseLabels($str)
     {
         $mod = array();
         $app = array();
@@ -110,7 +110,7 @@ class StudioParser
         return array_merge($app, $mod);
     }
 
-    function getMaxPosition()
+    public function getMaxPosition()
     {
         $max = 0;
         for ($i = 0; $i < count($this->positions) ; $i++) {
@@ -120,7 +120,7 @@ class StudioParser
         }
         return $max;
     }
-    function parsePositions($str, $output= false)
+    public function parsePositions($str, $output= false)
     {
         $results = array();
         preg_match_all("'<span[^>]*sugar=[\'\"]+([a-zA-Z\_]*)([0-9]+)([b]*)[\'\"]+[^>]*>(.*?)</span[ ]*sugar=[\'\"]+[a-zA-Z0-9\_]*[\'\"]+>'si", $str, $results, PREG_SET_ORDER);
@@ -129,26 +129,26 @@ class StudioParser
         }
         $this->positions = $results;
     }
-    function parseCols($str)
+    public function parseCols($str)
     {
         preg_match_all("'(<td[^>]*?)>(.*?)(</td[^>]*?>)'si", $str, $this->cols,PREG_SET_ORDER);
     }
-    function parse($str)
+    public function parse($str)
     {
         $this->parsePositions($str);
     }
-    function positionCount($str)
+    public function positionCount($str)
     {
         $result = array ();
         return preg_match_all("'<span[^>]*sugar=[\'\"]+([a-zA-Z\_]*)([0-9]+)([b]*)[\'\"]+[^>]*>(.*?)</span[ ]*sugar=[\'\"]+[a-zA-Z0-9\_]*[\'\"]+>'si", $str, $result, PREG_SET_ORDER)/2;
     }
-    function rowCount($str)
+    public function rowCount($str)
     {
         $result = array ();
         return preg_match_all("'(<tr[^>]*>)(.*?)(</tr[^>]*>)'si", $str, $result);
     }
 
-    function loadFile($file)
+    public function loadFile($file)
     {
         $this->curFile = $file;
         $this->curText = file_get_contents($file);
@@ -160,7 +160,7 @@ class StudioParser
 
 EOQ;
     }
-    function buildImageButtons($buttons,$horizontal=true)
+    public function buildImageButtons($buttons,$horizontal=true)
     {
         $text = '<table cellspacing=2><tr>';
         foreach ($buttons as $button) {
@@ -186,7 +186,7 @@ EOQ;
         return $text;
     }
 
-    function generateButtons()
+    public function generateButtons()
     {
         global $mod_strings;
         $imageSave = SugarThemeRegistry::current()->getImage('studio_save', '',null,null,'.gif',$mod_strings['LBL_SAVE']);
@@ -210,12 +210,12 @@ EOQ;
         $buttons[] = array('image'=>$imageHistory,'text'=>$GLOBALS['mod_strings']['LBL_BTN_HISTORY'],'actionScript'=>"onclick='if(!confirmNoSave())return false;document.location.href=\"index.php?module=Studio&action=wizard&wizard=ManageBackups&setFile={$_SESSION['studio']['selectedFileId']}\"'");
         return $buttons;
     }
-    function getFormButtons()
+    public function getFormButtons()
     {
         $buttons = $this->generateButtons();
         return $this->buildImageButtons($buttons);
     }
-    function getForm()
+    public function getForm()
     {
         return $this->form  . <<<EOQ
 		</form>
@@ -226,7 +226,7 @@ EOQ;
 
 
 
-    function getFiles($module, $fileId=false)
+    public function getFiles($module, $fileId=false)
     {
         if (empty($GLOBALS['studioDefs'][$module])) {
             require_once('modules/'. $module . '/metadata/studio.php');
@@ -238,7 +238,7 @@ EOQ;
     }
 
 
-    function getWorkingFile($file, $refresh = false)
+    public function getWorkingFile($file, $refresh = false)
     {
         $workingFile = 'working/' . $file;
         $customFile = create_custom_directory($workingFile);
@@ -248,7 +248,7 @@ EOQ;
         return $customFile;
     }
 
-    function getSwapWith($value)
+    public function getSwapWith($value)
     {
         return $value * 2 - 1;
     }
@@ -256,7 +256,7 @@ EOQ;
      * takes the submited form and parses the file moving the fields around accordingly
      * it also checks if the original file has a matching field and uses that field instead of attempting to generate a new one
      */
-    function handleSave()
+    public function handleSave()
     {
         $this->parseOldestFile($this->curFile);
         $fileDef = $this->getFiles($_SESSION['studio']['module'], $_SESSION['studio']['selectedFileId']);
@@ -342,7 +342,7 @@ EOQ;
         return $return_view;
     }
 
-    function saveFile($file = '', $contents = false)
+    public function saveFile($file = '', $contents = false)
     {
         if (empty ($file)) {
             $file = $this->curFile;
@@ -375,7 +375,7 @@ EOQ;
         fclose($fp);
     }
 
-    function handleSaveLabels($module_name, $language)
+    public function handleSaveLabels($module_name, $language)
     {
         require_once('modules/Studio/LabelEditor/LabelEditor.php');
         LabelEditor::saveLabels($_REQUEST, $module_name, $language);
@@ -388,7 +388,7 @@ EOQ;
      * STATIC FUNCTION DISABLE INPUTS IN AN HTML STRING
      *
      */
-    function disableInputs($str)
+    public function disableInputs($str)
     {
         $match = array ("'(<input)([^>]*>)'si" => "\$1 disabled readonly $2",
     "'(<input)([^>]*?type[ ]*=[ ]*[\'\"]submit[\'\"])([^>]*>)'si" => "\$1 disabled readonly style=\"display:none\" $2",
@@ -398,7 +398,7 @@ EOQ;
         return preg_replace(array_keys($match), array_values($match), $str);
     }
 
-    function enableLabelEditor($str)
+    public function enableLabelEditor($str)
     {
         global $mod_strings;
         $image = SugarThemeRegistry::current()->getImage('edit_inline', "onclick='studiojs.handleLabelClick(\"$2\", 1);' onmouseover='this.style.cursor=\"default\"'",null,null,'.gif',$mod_strings['LBL_EDIT']);
@@ -415,7 +415,7 @@ EOQ;
 
 
 
-    function writeToCache($file, $view, $preview_file=false)
+    public function writeToCache($file, $view, $preview_file=false)
     {
         if (!is_writable($file)) {
             echo "<br><span style='color:red'>Warning: $file is not writeable. Please make sure it is writeable before continuing</span><br><br>";
@@ -436,7 +436,7 @@ EOQ;
         return $this->cacheXTPL($file, $file_cache, $preview_file);
     }
 
-    function populateRequestFromBuffer($file)
+    public function populateRequestFromBuffer($file)
     {
         $results = array ();
         $temp = sugar_file_get_contents($file);
@@ -454,7 +454,7 @@ EOQ;
         $_REQUEST['query'] = true;
         $_REQUEST['advanced'] = true;
     }
-    function cacheXTPL($file, $cache_file, $preview_file = false)
+    public function cacheXTPL($file, $cache_file, $preview_file = false)
     {
         global $beanList;
         //now if we have a backup_file lets use that instead of the original
@@ -520,7 +520,7 @@ EOQ;
      * Yahoo Drag & Drop Support
      */
     ////<script type="text/javascript" src="modules/Studio/studio.js" ></script>
-    function yahooJS()
+    public function yahooJS()
     {
         $custom_module = $_SESSION['studio']['module'];
         $custom_type = $this->curType;
@@ -582,11 +582,11 @@ EOQ;
      * swap: 0 - 1999
      *
      */
-    function addSlotToForm($slot_count, $display_count)
+    public function addSlotToForm($slot_count, $display_count)
     {
         $this->form .= "\n<input type='hidden' name='slot_$slot_count'  id='slot_$display_count' value='$slot_count'>";
     }
-    function prepSlots()
+    public function prepSlots()
     {
         $view = $this->curText;
         $counter = 0;
@@ -621,7 +621,7 @@ EOQ;
         return $newView;
     }
 
-    function parseOldestFile($file)
+    public function parseOldestFile($file)
     {
         ob_clean();
         require_once('modules/Studio/SugarBackup.php');
@@ -658,7 +658,7 @@ EOQ;
     }
 
 
-    function clearWorkingDirectory()
+    public function clearWorkingDirectory()
     {
         $file = 'custom/working/';
         if (file_exists($file)) {
@@ -671,7 +671,7 @@ EOQ;
     /**
      * UPGRADE TO SMARTY
      */
-    function upgradeToSmarty()
+    public function upgradeToSmarty()
     {
         return str_replace('{', '{$', $this->curText);
     }

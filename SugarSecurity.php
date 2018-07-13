@@ -43,8 +43,8 @@
 
 class SugarSecure
 {
-    var $results = array();
-    function display()
+    public $results = array();
+    public function display()
     {
         echo '<table>';
         foreach ($this->results as $result) {
@@ -53,7 +53,7 @@ class SugarSecure
         echo '</table>';
     }
 	
-    function save($file='')
+    public function save($file='')
     {
         $fp = fopen($file, 'a');
         foreach ($this->results as $result) {
@@ -62,7 +62,7 @@ class SugarSecure
         fclose($fp);
     }
 	
-    function scan($path= '.', $ext = '.php')
+    public function scan($path= '.', $ext = '.php')
     {
         $dir = dir($path);
         while ($entry = $dir->read()) {
@@ -76,7 +76,7 @@ class SugarSecure
         }
     }
 	
-    function scanContents($contents)
+    public function scanContents($contents)
     {
         return;
     }
@@ -84,7 +84,7 @@ class SugarSecure
 
 class ScanFileIncludes extends SugarSecure
 {
-    function scanContents($contents, $file)
+    public function scanContents($contents, $file)
     {
         $results = array();
         $found = '';
@@ -134,13 +134,13 @@ class ScanFileIncludes extends SugarSecure
 
 class SugarSecureManager
 {
-    var $scanners = array();
-    function registerScan($class)
+    public $scanners = array();
+    public function registerScan($class)
     {
         $this->scanners[] = new $class();
     }
 	
-    function scan()
+    public function scan()
     {
         while ($scanner = current($this->scanners)) {
             $scanner->scan();
@@ -149,7 +149,7 @@ class SugarSecureManager
         reset($this->scanners);
     }
 	
-    function display()
+    public function display()
     {
         while ($scanner = current($this->scanners)) {
             echo 'Scan Results: ';
@@ -159,7 +159,7 @@ class SugarSecureManager
         reset($this->scanners);
     }
 	
-    function save()
+    public function save()
     {
         //reset($this->scanners);	
         $name = 'SugarSecure'. time() . '.txt';

@@ -43,16 +43,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
 class TemplateTextArea extends TemplateText
 {
-    var $type = 'text';
-    var $len = '';
+    public $type = 'text';
+    public $len = '';
 
-    function __construct()
+    public function __construct()
     {
         $this->vardef_map['rows'] = 'ext2';
         $this->vardef_map['cols'] = 'ext3';
     }
 
-    function set($values)
+    public function set($values)
     {
         parent::set($values);
         if (!empty($this->ext2)) {
@@ -67,13 +67,13 @@ class TemplateTextArea extends TemplateText
     }
 
 
-    function get_xtpl_detail()
+    public function get_xtpl_detail()
     {
         $name = $this->name;
         return nl2br($this->bean->$name);
     }
 
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['studio'] = 'visible';
@@ -89,7 +89,7 @@ class TemplateTextArea extends TemplateText
         return $def;
     }
 
-    function get_db_default($modify = false)
+    public function get_db_default($modify = false)
     {
         // TEXT columns in MySQL cannot have a DEFAULT value - let the Bean handle it on save
         return null; // Bug 16612 - null so that the get_db_default() routine in TemplateField doesn't try to set DEFAULT

@@ -154,7 +154,7 @@ class XHProfRuns_Default implements iXHProfRuns
         return $run_id;
     }
 
-    function list_runs()
+    public function list_runs()
     {
         if (is_dir($this->dir)) {
             echo "<hr/>Existing runs:\n<ul>\n";

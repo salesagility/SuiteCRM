@@ -46,15 +46,15 @@ require_once("include/templates/Template.php");
 
 class TemplateDragDropChooser extends Template
 {
-    var $args;
-    function __construct()
+    public $args;
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function TemplateDragDropChooser()
+    public function TemplateDragDropChooser()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -72,7 +72,7 @@ class TemplateDragDropChooser extends Template
      * followed by the displayDefinitionScript();
      * and lastly call the display function
      */
-    function display()
+    public function display()
     {
 
   /*   valid entries for expected arguments array are as follow:
@@ -195,7 +195,7 @@ class TemplateDragDropChooser extends Template
      * dynamically so that multiple template dragdrop objects can be defined on the same page if needed
      * without having the variables mix up as you drag rows around.
      */
-    function displayDefinitionScript()
+    public function displayDefinitionScript()
     {
         //create some defaults in case arguments are missing
 
@@ -312,7 +312,7 @@ class TemplateDragDropChooser extends Template
      * for the template chooser to work
      */
 
-    function displayScriptTags()
+    public function displayScriptTags()
     {
         global $sugar_version, $sugar_config;
         $j_str =   "

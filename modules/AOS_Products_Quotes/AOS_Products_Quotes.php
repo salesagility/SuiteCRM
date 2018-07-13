@@ -42,7 +42,7 @@ require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes_sugar.php');
 
 class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -50,7 +50,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Products_Quotes()
+    public function AOS_Products_Quotes()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -62,7 +62,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
     }
 
 
-    function save_lines($post_data, $parent, $groups = array(), $key = '')
+    public function save_lines($post_data, $parent, $groups = array(), $key = '')
     {
         $line_count = isset($post_data[$key . 'name']) ? count($post_data[$key . 'name']) : 0;
         $j = 0;
@@ -122,7 +122,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
         }
     }
 
-    function save($check_notify = FALSE)
+    public function save($check_notify = FALSE)
     {
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
         perform_aos_save($this);
@@ -132,7 +132,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
     /**
      * @param $parent SugarBean
      */
-    function mark_lines_deleted($parent)
+    public function mark_lines_deleted($parent)
     {
         require_once('modules/Relationships/Relationship.php');
         $product_quotes = $parent->get_linked_beans('aos_products_quotes', $this->object_name);

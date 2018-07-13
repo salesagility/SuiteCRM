@@ -10224,7 +10224,7 @@ if (!class_exists('TCPDF', false)) {
         * @since 3.1.000 (2008-06-09)
         * @access protected
         */
-        function _putshaders()
+        public function _putshaders()
         {
             foreach ($this->gradients as $id => $grad) {
                 if (($grad['type'] == 2) OR ($grad['type'] == 3)) {

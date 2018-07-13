@@ -52,8 +52,8 @@ require_once('include/SugarObjects/forms/PersonFormBase.php');
 
 class ContactFormBase extends PersonFormBase
 {
-    var $moduleName = 'Contacts';
-    var $objectName = 'Contact';
+    public $moduleName = 'Contacts';
+    public $objectName = 'Contact';
 
     /**
      * getDuplicateQuery
@@ -86,7 +86,7 @@ class ContactFormBase extends PersonFormBase
     }
 
 
-    function getWideFormBody($prefix, $mod='',$formname='',  $contact = '', $portal = true)
+    public function getWideFormBody($prefix, $mod='',$formname='',  $contact = '', $portal = true)
     {
         if (!ACLController::checkAccess('Contacts', 'edit', true)) {
             return '';
@@ -321,7 +321,7 @@ EOQ;
         return $form;
     }
 
-    function getFormBody($prefix, $mod='', $formname='')
+    public function getFormBody($prefix, $mod='', $formname='')
     {
         if (!ACLController::checkAccess('Contacts', 'edit', true)) {
             return '';
@@ -382,7 +382,7 @@ EOQ;
         $mod_strings = $temp_strings;
         return $form;
     }
-    function getForm($prefix, $mod='')
+    public function getForm($prefix, $mod='')
     {
         if (!ACLController::checkAccess('Contacts', 'edit', true)) {
             return '';
@@ -420,7 +420,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix, $redirect=true, $useRequired=false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $theme, $current_user;
 
@@ -638,7 +638,7 @@ EOQ;
         }
     }
 
-    function handleRedirect($return_id)
+    public function handleRedirect($return_id)
     {
         if (isset($_POST['return_module']) && $_POST['return_module'] != "") {
             $return_module = urlencode($_POST['return_module']);

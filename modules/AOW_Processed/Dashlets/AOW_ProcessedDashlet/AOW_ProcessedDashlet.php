@@ -31,7 +31,7 @@ require_once('modules/AOW_Processed/AOW_Processed.php');
 
 class AOW_ProcessedDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/AOW_Processed/metadata/dashletviewdefs.php');
@@ -51,7 +51,7 @@ class AOW_ProcessedDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOW_ProcessedDashlet($id, $def = null)
+    public function AOW_ProcessedDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

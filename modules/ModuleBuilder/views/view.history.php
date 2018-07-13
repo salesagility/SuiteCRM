@@ -44,7 +44,7 @@ require_once ('modules/ModuleBuilder/parsers/ParserFactory.php') ;
 
 class ViewHistory extends SugarView
 {
-    var $pageSize = 10 ;
+    public $pageSize = 10 ;
 
     /**
 	 * @see SugarView::_getModuleTitleParams()
@@ -59,7 +59,7 @@ class ViewHistory extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $this->layout = strtolower ($_REQUEST [ 'view' ]) ;
         
@@ -78,7 +78,7 @@ class ViewHistory extends SugarView
         $this->$action () ;
     }
 
-    function browse()
+    public function browse()
     {
         $smarty = new Sugar_Smarty () ;
         global $mod_strings ;
@@ -116,7 +116,7 @@ class ViewHistory extends SugarView
         echo $html ;
     }
 
-    function preview()
+    public function preview()
     {
         global $mod_strings ;
         if (! isset ($_REQUEST [ 'sid' ])) {
@@ -154,7 +154,7 @@ class ViewHistory extends SugarView
         $this->history->undoRestore () ;
     }
 
-    function restore()
+    public function restore()
     {
         if (! isset ($_REQUEST [ 'sid' ])) {
             die ('SID Required') ;
@@ -167,7 +167,7 @@ class ViewHistory extends SugarView
  	 * Restores a layout to its current customized state. 
  	 * Called when leaving a restored layout without saving.
  	 */
-    function unrestore()
+    public function unrestore()
     {
         $this->history->undoRestore () ;
     }

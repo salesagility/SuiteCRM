@@ -57,10 +57,10 @@ require_once('include/MVC/View/ViewFactory.php');
  */
 class SugarApplication
 {
-    var $controller = null;
-    var $headerDisplayed = false;
-    var $default_module = 'Home';
-    var $default_action = 'index';
+    public $controller = null;
+    public $headerDisplayed = false;
+    public $default_module = 'Home';
+    public $default_action = 'index';
 
     public function __construct()
     {
@@ -83,7 +83,7 @@ class SugarApplication
     /**
      * Perform execution of the application. This method is called from index2.php
      */
-    function execute()
+    public function execute()
     {
         global $sugar_config;
         if (!empty($sugar_config['default_module'])) {
@@ -117,7 +117,7 @@ class SugarApplication
     /**
      * Load the authenticated user. If there is not an authenticated user then redirect to login screen.
      */
-    function loadUser()
+    public function loadUser()
     {
         global $authController, $sugar_config;
         // Double check the server's unique key is in the session.  Make sure this is not an attempt to hijack a session
@@ -199,7 +199,7 @@ class SugarApplication
         //check if user can access
     }
 
-    function ACLFilter()
+    public function ACLFilter()
     {
         ACLController :: filterModuleList($GLOBALS['moduleList']);
     }
@@ -210,14 +210,14 @@ class SugarApplication
      * on the ResourceManager instance.
      *
      */
-    function setupResourceManagement($module)
+    public function setupResourceManagement($module)
     {
         require_once('include/resource/ResourceManager.php');
         $resourceManager = ResourceManager::getInstance();
         $resourceManager->setup($module);
     }
 
-    function setupPrint()
+    public function setupPrint()
     {
         $GLOBALS['request_string'] = '';
 
@@ -242,7 +242,7 @@ class SugarApplication
         $GLOBALS['request_string'] .= 'print=true';
     }
 
-    function preProcess()
+    public function preProcess()
     {
         $config = new Administration;
         $config->retrieveSettings();
@@ -271,7 +271,7 @@ class SugarApplication
         $this->handleAccessControl();
     }
 
-    function handleOfflineClient()
+    public function handleOfflineClient()
     {
         if (isset($GLOBALS['sugar_config']['disc_client']) && $GLOBALS['sugar_config']['disc_client']) {
             if (isset($_REQUEST['action']) && $_REQUEST['action'] != 'SaveTimezone') {
@@ -303,7 +303,7 @@ class SugarApplication
     /**
      * Handles everything related to authorization.
      */
-    function handleAccessControl()
+    public function handleAccessControl()
     {
         if ($GLOBALS['current_user']->isDeveloperForAnyModule()) {
             return;
@@ -343,7 +343,7 @@ class SugarApplication
     /**
      * Load only bare minimum of language that can be done before user init and MVC stuff
      */
-    static function preLoadLanguages()
+    public static function preLoadLanguages()
     {
         if (!empty($_SESSION['authenticated_user_language'])) {
             $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
@@ -359,7 +359,7 @@ class SugarApplication
      * Load application wide languages as well as module based languages so they are accessible
      * from the module.
      */
-    function loadLanguages()
+    public function loadLanguages()
     {
         if (!empty($_SESSION['authenticated_user_language'])) {
             $GLOBALS['current_language'] = $_SESSION['authenticated_user_language'];
@@ -384,7 +384,7 @@ class SugarApplication
      * Check the db version sugar_version.php and compare to what the version is stored in the config table.
      * Ensure that both are the same.
      */
-    function checkDatabaseVersion($dieOnFailure = true)
+    public function checkDatabaseVersion($dieOnFailure = true)
     {
         $row_count = sugar_cache_retrieve('checkDatabaseVersion_row_count');
         $sugarDbVersion = $GLOBALS['sugar_db_version'];
@@ -418,7 +418,7 @@ class SugarApplication
     /**
      * Load the themes/images.
      */
-    function loadDisplaySettings()
+    public function loadDisplaySettings()
     {
         global $theme;
 
@@ -460,7 +460,7 @@ class SugarApplication
         }
     }
 
-    function loadLicense()
+    public function loadLicense()
     {
         loadLicense();
         global $user_unique_key, $server_unique_key;
@@ -468,7 +468,7 @@ class SugarApplication
         $server_unique_key = (isset($sugar_config['unique_key'])) ? $sugar_config['unique_key'] : '';
     }
 
-    function loadGlobals()
+    public function loadGlobals()
     {
         global $currentModule;
         $currentModule = $this->controller->module;
@@ -604,7 +604,7 @@ class SugarApplication
         return true;
     }
 
-    function startSession()
+    public function startSession()
     {
         $sessionIdCookie = isset($_COOKIE['PHPSESSID']) ? $_COOKIE['PHPSESSID'] : null;
         if (isset($_REQUEST['MSID'])) {
@@ -639,7 +639,7 @@ class SugarApplication
         LogicHook::initialize()->call_custom_logic('', 'after_session_start');
     }
 
-    function endSession()
+    public function endSession()
     {
         session_destroy();
     }
@@ -650,7 +650,7 @@ class SugarApplication
      * @access	public
      * @param	string	$url	The URL to redirect to
      */
-    static function redirect(
+    public static function redirect(
     $url
     ) {
         /*

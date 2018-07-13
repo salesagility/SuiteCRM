@@ -52,7 +52,7 @@ class SugarWidgetSubPanelTopCreateLeadNameButton extends SugarWidgetSubPanelTopB
         return parent::getWidgetId();
     }
 
-    function display($defines, $additionalFormFields = NULL, $nonbutton = false)
+    public function display($defines, $additionalFormFields = NULL, $nonbutton = false)
     {
         global $app_strings;
         global $currentModule;

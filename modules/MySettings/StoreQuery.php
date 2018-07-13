@@ -43,9 +43,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class StoreQuery
 {
-    var $query = array();
+    public $query = array();
 
-    function addToQuery($name, $val)
+    public function addToQuery($name, $val)
     {
         $this->query[$name] = $val;
     }
@@ -59,7 +59,7 @@ class StoreQuery
      * @see SavedSearch
      * @param $name String name  to identify this query
      */
-    function SaveQuery($name)
+    public function SaveQuery($name)
     {
         global $current_user, $timedate;
         if (isset($this->query['module'])) {
@@ -105,13 +105,13 @@ class StoreQuery
         $current_user->setPreference($name . 'Q', $this->query);
     }
 
-    function clearQuery($name)
+    public function clearQuery($name)
     {
         $this->query = array();
         $this->saveQuery($name);
     }
 
-    function loadQuery($name)
+    public function loadQuery($name)
     {
         $saveType = $this->getSaveType($name);
         if ($saveType == 'all' || $saveType == 'myitems') {
@@ -126,7 +126,7 @@ class StoreQuery
         }
     }
 
-    function populateRequest()
+    public function populateRequest()
     {
         global $timedate;
 
@@ -163,7 +163,7 @@ class StoreQuery
         }
     }
 
-    function getSaveType($name)
+    public function getSaveType($name)
     {
         global $sugar_config;
         $save_query = empty($sugar_config['save_query']) ?
@@ -189,7 +189,7 @@ class StoreQuery
     }
 
 
-    function saveFromRequest($name)
+    public function saveFromRequest($name)
     {
         if (isset($_REQUEST['query'])) {
             if (!empty($_REQUEST['clear_query']) && $_REQUEST['clear_query'] == 'true') {
@@ -222,7 +222,7 @@ class StoreQuery
         }
     }
 
-    function saveFromGet($name)
+    public function saveFromGet($name)
     {
         if (isset($_GET['query'])) {
             if (!empty($_GET['clear_query']) && $_GET['clear_query'] == 'true') {

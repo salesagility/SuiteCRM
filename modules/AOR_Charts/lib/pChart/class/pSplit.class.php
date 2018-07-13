@@ -19,15 +19,15 @@
  /* pSplit class definition */
  class pSplit
  {
-     var $pChartObject;
+     public $pChartObject;
 
      /* Class creator */
-     function pSplit()
+     public function pSplit()
      {
      }
 
      /* Create the encoded string */
-     function drawSplitPath($Object,$Values,$Format="")
+     public function drawSplitPath($Object,$Values,$Format="")
      {
          $this->pChartObject = $Object;
 

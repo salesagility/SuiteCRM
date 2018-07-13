@@ -19,18 +19,18 @@
  /* pBubble class definition */
  class pBubble
  {
-     var $pChartObject;
-     var $pDataObject;
+     public $pChartObject;
+     public $pDataObject;
 
      /* Class creator */
-     function pBubble($pChartObject,$pDataObject)
+     public function pBubble($pChartObject,$pDataObject)
      {
          $this->pChartObject = $pChartObject;
          $this->pDataObject  = $pDataObject;
      }
 
      /* Prepare the scale */
-     function bubbleScale($DataSeries,$WeightSeries)
+     public function bubbleScale($DataSeries,$WeightSeries)
      {
          if (!is_array($DataSeries)) {
              $DataSeries = array($DataSeries);
@@ -102,7 +102,7 @@
          }
      }
 
-     function resetSeriesColors()
+     public function resetSeriesColors()
      {
          $Data    = $this->pDataObject->getData();
          $Palette = $this->pDataObject->getPalette();
@@ -120,7 +120,7 @@
      }
 
      /* Prepare the scale */
-     function drawBubbleChart($DataSeries,$WeightSeries,$Format="")
+     public function drawBubbleChart($DataSeries,$WeightSeries,$Format="")
      {
          $ForceAlpha	= isset($Format["ForceAlpha"]) ? $Format["ForceAlpha"] : VOID;
          $DrawBorder	= isset($Format["DrawBorder"]) ? $Format["DrawBorder"] : TRUE;
@@ -289,7 +289,7 @@
          }
      }
 
-     function writeBubbleLabel($SerieName,$SerieWeightName,$Points,$Format="")
+     public function writeBubbleLabel($SerieName,$SerieWeightName,$Points,$Format="")
      {
          $OverrideTitle	= isset($Format["OverrideTitle"]) ? $Format["OverrideTitle"] : NULL;
          $DrawPoint		= isset($Format["DrawPoint"]) ? $Format["DrawPoint"] : LABEL_POINT_BOX;

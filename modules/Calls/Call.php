@@ -51,71 +51,71 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Call extends SugarBean
 {
-    var $field_name_map;
+    public $field_name_map;
     // Stored fields
-    var $id;
-    var $json_id;
-    var $date_entered;
-    var $date_modified;
-    var $assigned_user_id;
-    var $modified_user_id;
-    var $description;
-    var $name;
-    var $status;
-    var $date_start;
-    var $time_start;
-    var $duration_hours;
-    var $duration_minutes;
-    var $date_end;
-    var $parent_type;
-    var $parent_type_options;
-    var $parent_id;
-    var $contact_id;
-    var $user_id;
-    var $lead_id;
-    var $direction;
-    var $reminder_time;
-    var $reminder_time_options;
-    var $reminder_checked;
-    var $email_reminder_time;
-    var $email_reminder_checked;
-    var $email_reminder_sent;
-    var $required;
-    var $accept_status;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $parent_name;
-    var $contact_name;
-    var $contact_phone;
-    var $contact_email;
-    var $account_id;
-    var $opportunity_id;
-    var $case_id;
-    var $assigned_user_name;
-    var $note_id;
-    var $outlook_id;
-    var $update_vcal = true;
-    var $contacts_arr;
-    var $users_arr;
-    var $leads_arr;
-    var $default_call_name_values = array('Assemble catalogs', 'Make travel arrangements', 'Send a letter', 'Send contract', 'Send fax', 'Send a follow-up letter', 'Send literature', 'Send proposal', 'Send quote');
-    var $minutes_value_default = 15;
-    var $minutes_values = array('0'=>'00','15'=>'15','30'=>'30','45'=>'45');
-    var $table_name = "calls";
-    var $rel_users_table = "calls_users";
-    var $rel_contacts_table = "calls_contacts";
-    var $rel_leads_table = "calls_leads";
-    var $module_dir = 'Calls';
-    var $object_name = "Call";
-    var $new_schema = true;
-    var $importable = true;
-    var $syncing = false;
-    var $recurring_source;
+    public $id;
+    public $json_id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $modified_user_id;
+    public $description;
+    public $name;
+    public $status;
+    public $date_start;
+    public $time_start;
+    public $duration_hours;
+    public $duration_minutes;
+    public $date_end;
+    public $parent_type;
+    public $parent_type_options;
+    public $parent_id;
+    public $contact_id;
+    public $user_id;
+    public $lead_id;
+    public $direction;
+    public $reminder_time;
+    public $reminder_time_options;
+    public $reminder_checked;
+    public $email_reminder_time;
+    public $email_reminder_checked;
+    public $email_reminder_sent;
+    public $required;
+    public $accept_status;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $parent_name;
+    public $contact_name;
+    public $contact_phone;
+    public $contact_email;
+    public $account_id;
+    public $opportunity_id;
+    public $case_id;
+    public $assigned_user_name;
+    public $note_id;
+    public $outlook_id;
+    public $update_vcal = true;
+    public $contacts_arr;
+    public $users_arr;
+    public $leads_arr;
+    public $default_call_name_values = array('Assemble catalogs', 'Make travel arrangements', 'Send a letter', 'Send contract', 'Send fax', 'Send a follow-up letter', 'Send literature', 'Send proposal', 'Send quote');
+    public $minutes_value_default = 15;
+    public $minutes_values = array('0'=>'00','15'=>'15','30'=>'30','45'=>'45');
+    public $table_name = "calls";
+    public $rel_users_table = "calls_users";
+    public $rel_contacts_table = "calls_contacts";
+    public $rel_leads_table = "calls_leads";
+    public $module_dir = 'Calls';
+    public $object_name = "Call";
+    public $new_schema = true;
+    public $importable = true;
+    public $syncing = false;
+    public $recurring_source;
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name');
-    var $relationship_fields = array(	'account_id'		=> 'accounts',
+    public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name');
+    public $relationship_fields = array(	'account_id'		=> 'accounts',
 										'opportunity_id'	=> 'opportunities',
 										'contact_id'		=> 'contacts',
 										'case_id'			=> 'cases',
@@ -163,7 +163,7 @@ class Call extends SugarBean
      * @param $view string
      * @param $is_owner bool
      */
-    function ACLAccess($view,$is_owner='not_set',$in_group='not_set')
+    public function ACLAccess($view,$is_owner='not_set',$in_group='not_set')
     {
         // don't check if call is being synced from Outlook
         if ($this->syncing == false) {
@@ -183,7 +183,7 @@ class Call extends SugarBean
 	
     // save date_end by calculating user input
     // this is for calendar
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         global $timedate;
 
@@ -299,7 +299,7 @@ class Call extends SugarBean
      * All Rights Reserved..
      * Contributor(s): ______________________________________..
     */
-    function get_contacts()
+    public function get_contacts()
     {
         // First, get the list of IDs.
         $query = "SELECT contact_id as id from calls_contacts where call_id='$this->id' AND deleted=0";
@@ -309,12 +309,12 @@ class Call extends SugarBean
     }
 
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->name";
     }
 
-    function create_list_query($order_by, $where, $show_deleted=0)
+    public function create_list_query($order_by, $where, $show_deleted=0)
     {
         $custom_join = $this->getCustomJoin();
         $query = "SELECT ";
@@ -375,7 +375,7 @@ class Call extends SugarBean
         return $query;
     }
 
-    function create_export_query($order_by, $where, $relate_link_join='')
+    public function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -416,7 +416,7 @@ class Call extends SugarBean
 
 
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         global $locale;
         parent::fill_in_additional_detail_fields();
@@ -495,7 +495,7 @@ class Call extends SugarBean
     }
 
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $call_fields = $this->get_list_view_array();
         global $app_list_strings, $focus, $action, $currentModule;
@@ -566,7 +566,7 @@ class Call extends SugarBean
         return $call_fields;
     }
 
-    function set_notification_body($xtpl, $call)
+    public function set_notification_body($xtpl, $call)
     {
         global $sugar_config;
         global $app_list_strings;
@@ -605,7 +605,7 @@ class Call extends SugarBean
     }
 
 
-    function get_call_users()
+    public function get_call_users()
     {
         $template = new User();
         // First, get the list of IDs.
@@ -629,7 +629,7 @@ class Call extends SugarBean
     }
 
 
-    function get_invite_calls(&$user)
+    public function get_invite_calls(&$user)
     {
         $template = $this;
         // First, get the list of IDs.
@@ -658,7 +658,7 @@ class Call extends SugarBean
     }
 
 
-    function set_accept_status(&$user,$status)
+    public function set_accept_status(&$user,$status)
     {
         if ($user->object_name == 'User') {
             $relate_values = array('user_id'=>$user->id,'call_id'=>$this->id);
@@ -682,7 +682,7 @@ class Call extends SugarBean
 
 
 
-    function get_notification_recipients()
+    public function get_notification_recipients()
     {
         if ($this->special_notification) {
             return parent::get_notification_recipients();
@@ -736,7 +736,7 @@ class Call extends SugarBean
         return $list;
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return true;
@@ -744,7 +744,7 @@ class Call extends SugarBean
         return false;
     }
 
-    function listviewACLHelper()
+    public function listviewACLHelper()
     {
         $array_assign = parent::listviewACLHelper();
         $is_owner = false;
@@ -812,7 +812,7 @@ class Call extends SugarBean
         return $array_assign;
     }
 
-    function save_relationship_changes($is_update, $exclude = array())
+    public function save_relationship_changes($is_update, $exclude = array())
     {
         if (empty($this->in_workflow)) {
             if (empty($this->in_import)) {

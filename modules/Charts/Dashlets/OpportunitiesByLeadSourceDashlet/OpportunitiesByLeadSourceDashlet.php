@@ -203,7 +203,7 @@ EOD;
         */
     }
 
-    function getChartData($query)
+    public function getChartData($query)
     {
         global $app_list_strings, $db;
         $dataSet = [];

@@ -47,12 +47,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelIcon extends SugarWidgetField
 {
-    function displayHeaderCell($layout_def)
+    public function displayHeaderCell($layout_def)
     {
         return '&nbsp;';
     }
 
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         global $app_strings;
         global $app_list_strings;

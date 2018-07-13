@@ -56,28 +56,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ContactOpportunityRelationship extends SugarBean
 {
     // Stored fields
-    var $id;
-    var $contact_id;
-    var $contact_role;
-    var $opportunity_id;
+    public $id;
+    public $contact_id;
+    public $contact_role;
+    public $opportunity_id;
 
     // Related fields
-    var $contact_name;
-    var $opportunity_name;
+    public $contact_name;
+    public $opportunity_name;
 
-    var $table_name = "opportunities_contacts";
-    var $object_name = "ContactOpportunityRelationship";
-    var $column_fields = Array("id"
+    public $table_name = "opportunities_contacts";
+    public $object_name = "ContactOpportunityRelationship";
+    public $column_fields = Array("id"
 		,"contact_id"
 		,"opportunity_id"
 		,"contact_role"
 		,'date_modified'
 		);
 
-    var $new_schema = true;
+    public $new_schema = true;
 
-    var $additional_column_fields = Array();
-    var $field_defs = array (
+    public $additional_column_fields = Array();
+    public $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'contact_id'=>array('name' =>'contact_id', 'type' =>'char', 'len'=>'36', )
       , 'opportunity_id'=>array('name' =>'opportunity_id', 'type' =>'char', 'len'=>'36',)
@@ -85,7 +85,7 @@ class ContactOpportunityRelationship extends SugarBean
       , 'date_modified'=>array ('name' => 'date_modified','type' => 'datetime')
       , 'deleted'=>array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>true)
       );
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->db = DBManagerFactory::getInstance();
@@ -97,7 +97,7 @@ class ContactOpportunityRelationship extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ContactOpportunityRelationship()
+    public function ContactOpportunityRelationship()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -109,7 +109,7 @@ class ContactOpportunityRelationship extends SugarBean
     }
 
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         global $locale;
         if (isset($this->contact_id) && $this->contact_id != "") {

@@ -320,7 +320,7 @@ class EditViewMerge
      * @param ARRAY $dom - if keys match this arrays values will override the others
      * @return ARRAY $merged - the merges array
      */
-    function arrayMerge($gimp, $dom)
+    public function arrayMerge($gimp, $dom)
     {
         if (is_array($gimp) && is_array($dom)) {
             foreach ($dom as $domKey => $domVal) {
@@ -786,7 +786,7 @@ class EditViewMerge
      *
      * @param MULTI $message
      */
-    protected  function log($message)
+    protected function log($message)
     {
         if (!is_string($message)) {
             $message = var_export($message, true);

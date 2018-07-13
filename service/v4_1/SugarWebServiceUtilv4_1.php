@@ -48,7 +48,7 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
    	 * @return true -- If the session is valid and loaded.
    	 * @return false -- if the session is not valid.
    	 */
-    function validate_authenticated($session_id)
+    public function validate_authenticated($session_id)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->validate_authenticated');
         if (!empty($session_id)) {
@@ -80,7 +80,7 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
     }
 
 
-    function check_modules_access($user, $module_name, $action='write')
+    public function check_modules_access($user, $module_name, $action='write')
     {
         if (!isset($_SESSION['avail_modules'])) {
             $_SESSION['avail_modules'] = get_user_module_list($user);
@@ -113,7 +113,7 @@ class SugarWebServiceUtilv4_1 extends SugarWebServiceUtilv4
      * @param Number $limit -- number of results to return (defaults to all)
      * @return array|bool Returns an Array of relationship results; false if relationship could not be retrieved
      */
-    function getRelationshipResults($bean, $link_field_name, $link_module_fields, $optional_where = '', $order_by = '', $offset = 0, $limit = '')
+    public function getRelationshipResults($bean, $link_field_name, $link_module_fields, $optional_where = '', $order_by = '', $offset = 0, $limit = '')
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->getRelationshipResults');
         require_once('include/TimeDate.php');

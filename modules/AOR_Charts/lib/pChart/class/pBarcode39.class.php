@@ -16,15 +16,15 @@
  /* pData class definition */
  class pBarcode39
  {
-     var $Codes;
-     var $Reverse;
-     var $Result;
-     var $pChartObject;
-     var $CRC;
-     var $MOD43;
+     public $Codes;
+     public $Reverse;
+     public $Result;
+     public $pChartObject;
+     public $CRC;
+     public $MOD43;
 
      /* Class creator */
-     function pBarcode39($BasePath="",$EnableMOD43=FALSE)
+     public function pBarcode39($BasePath="",$EnableMOD43=FALSE)
      {
          $this->MOD43  = $EnableMOD43;
          $this->Codes   = "";
@@ -48,7 +48,7 @@
      }
 
      /* Return the projected size of a barcode */
-     function getSize($TextString,$Format="")
+     public function getSize($TextString,$Format="")
      {
          $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
          $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : FALSE;
@@ -85,7 +85,7 @@
      }
 
      /* Create the encoded string */
-     function encode39($Value)
+     public function encode39($Value)
      {
          $this->Result = "100101101101"."0";
          $TextString   = "";
@@ -113,7 +113,7 @@
      }
 
      /* Create the encoded string */
-     function draw($Object,$Value,$X,$Y,$Format="")
+     public function draw($Object,$Value,$X,$Y,$Format="")
      {
          $this->pChartObject = $Object;
 
@@ -182,7 +182,7 @@
          }
      }
 
-     function checksum($string)
+     public function checksum($string)
      {
          $checksum = 0;
          $length   = strlen($string);
@@ -195,15 +195,15 @@
          return substr($charset, ($checksum % 43), 1);
      }
 
-     function left($value,$NbChar)
+     public function left($value,$NbChar)
      {
          return substr($value,0,$NbChar);
      }  
-     function right($value,$NbChar)
+     public function right($value,$NbChar)
      {
          return substr($value,strlen($value)-$NbChar,$NbChar);
      }  
-     function mid($value,$Depart,$NbChar)
+     public function mid($value,$Depart,$NbChar)
      {
          return substr($value,$Depart-1,$NbChar);
      }

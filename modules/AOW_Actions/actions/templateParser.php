@@ -28,7 +28,7 @@ require_once 'modules/AOS_PDF_Templates/templateParser.php';
  
 class aowTemplateParser extends templateParser
 {
-    static function parse_template($string, $bean_arr)
+    public static function parse_template($string, $bean_arr)
     {
         global $beanList;
 

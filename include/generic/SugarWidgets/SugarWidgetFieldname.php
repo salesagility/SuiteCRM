@@ -49,7 +49,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 {
     protected static $moduleSavePermissions = array();
 
-    function __construct(&$layout_manager)
+    public function __construct(&$layout_manager)
     {
         parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute('reporter');
@@ -58,7 +58,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetFieldName(&$layout_manager)
+    public function SugarWidgetFieldName(&$layout_manager)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -70,7 +70,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
     }
 
 
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         if (empty($layout_def['column_key'])) {
             return $this->displayListPlain($layout_def);
@@ -115,7 +115,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         return $str;
     }
 
-    function _get_normal_column_select($layout_def)
+    public function _get_normal_column_select($layout_def)
     {
         if (isset($this->reporter->all_fields)) {
             $field_def = $this->reporter->all_fields[$layout_def['column_key']];
@@ -139,7 +139,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         return $alias;
     }
 
-    function _get_column_select($layout_def)
+    public function _get_column_select($layout_def)
     {
         global $locale, $current_user;
 
@@ -184,7 +184,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         return $alias;
     }
 
-    function queryFilterIs($layout_def)
+    public function queryFilterIs($layout_def)
     {
         $layout_def['name'] = 'id';
         $layout_def['type'] = 'id';
@@ -202,7 +202,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 			.$this->reporter->db->quoted($input_name0)."\n";
     }
 
-    function queryFilteris_not($layout_def)
+    public function queryFilteris_not($layout_def)
     {
         $layout_def['name'] = 'id';
         $layout_def['type'] = 'id';
@@ -221,7 +221,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
     }
 
     // $rename_columns, if true then you're coming from reports
-    function queryFilterone_of(&$layout_def, $rename_columns = true)
+    public function queryFilterone_of(&$layout_def, $rename_columns = true)
     {
         if ($rename_columns) { // this was a hack to get reports working, sugarwidgets should not be renaming $name!
             $layout_def['name'] = 'id';
@@ -243,7 +243,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         return SugarWidgetFieldid::_get_column_select($layout_def)." IN (".$str.")\n";
     }
     // $rename_columns, if true then you're coming from reports
-    function queryFilternot_one_of($layout_def, $rename_columns = true)
+    public function queryFilternot_one_of($layout_def, $rename_columns = true)
     {
         if ($rename_columns) { // this was a hack to get reports working, sugarwidgets should not be renaming $name!
             $layout_def['name'] = 'id';
@@ -265,7 +265,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         return SugarWidgetFieldid::_get_column_select($layout_def)." NOT IN (".$str.")\n";
     }
 
-    function &queryGroupBy($layout_def)
+    public function &queryGroupBy($layout_def)
     {
         if ($layout_def['name'] == 'full_name') {
             $layout_def['name'] = 'id';

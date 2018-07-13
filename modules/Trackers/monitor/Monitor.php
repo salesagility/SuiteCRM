@@ -48,22 +48,22 @@ define('MAX_SESSION_LENGTH', 36);
 
 class Monitor implements Trackable
 {
-    var $metricsFile;
-    var $name;
+    public $metricsFile;
+    public $name;
     protected $metrics;
     protected $cachedStores;
-    var $stores;
-    var $monitor_id;
-    var $table_name;
+    public $stores;
+    public $monitor_id;
+    public $table_name;
     protected $enabled = true;
     protected $dirty = false;
 
-    var $date_start;
-    var $date_end;
-    var $active;
-    var $round_trips;
-    var $seconds;
-    var $session_id;
+    public $date_start;
+    public $date_end;
+    public $active;
+    public $round_trips;
+    public $seconds;
+    public $session_id;
 
     /**
      * Monitor constructor
@@ -148,7 +148,7 @@ class Monitor implements Trackable
      * Returns Array of store names defined for monitor instance
      * @return Array of store names defined for monitor instance
      */
-    function getStores()
+    public function getStores()
     {
         return $this->stores;
     }
@@ -158,7 +158,7 @@ class Monitor implements Trackable
      * Returns Array of metric instances defined for monitor instance
      * @return Array of metric instances defined for monitor instance
      */
-    function getMetrics()
+    public function getMetrics()
     {
         return $this->metrics;
     }
@@ -168,7 +168,7 @@ class Monitor implements Trackable
      * Returns if the monitor has data that needs to be saved
      * @return $dirty boolean
      */
-    function isDirty()
+    public function isDirty()
     {
         return $this->dirty;
     }

@@ -43,7 +43,7 @@ require_once('modules/ModuleBuilder/Module/DropDownBrowser.php');
 
 class DropDownTree extends MBPackageTree
 {
-    function __construct()
+    public function __construct()
     {
         $this->tree = new Tree('package_tree');
         $this->tree->id = 'package_tree';
@@ -54,7 +54,7 @@ class DropDownTree extends MBPackageTree
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function DropDownTree()
+    public function DropDownTree()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -66,7 +66,7 @@ class DropDownTree extends MBPackageTree
     }
 
 
-    function getName()
+    public function getName()
     {
         return translate('LBL_SECTION_PACKAGES');
     }

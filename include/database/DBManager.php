@@ -3782,7 +3782,7 @@ abstract class DBManager
      * @param  bool $execute Execute or return SQL?
      * @return resource query result
      */
-    abstract function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
+    abstract public function limitQuery($sql, $start, $count, $dieOnError = false, $msg = '', $execute = true);
 
 
     /**
@@ -3797,7 +3797,7 @@ abstract class DBManager
      * @param string $column
      * @param string $newname
      */
-    abstract function renameColumnSQL($tablename, $column, $newname);
+    abstract public function renameColumnSQL($tablename, $column, $newname);
 
     /**
      * Returns definitions of all indies for passed table.

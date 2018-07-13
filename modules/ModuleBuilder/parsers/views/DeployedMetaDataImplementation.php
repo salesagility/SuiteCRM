@@ -77,7 +77,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
      * @param string $moduleName
      * @throws Exception Thrown if the provided view doesn't exist for this module
      */
-    function __construct($view, $moduleName)
+    public function __construct($view, $moduleName)
     {
         // BEGIN ASSERTIONS
         if (!isset ($GLOBALS ['beanList'] [$moduleName])) {
@@ -252,7 +252,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
     /**
      * @return string module name
      */
-    function getLanguage()
+    public function getLanguage()
     {
         return $this->_moduleName;
     }

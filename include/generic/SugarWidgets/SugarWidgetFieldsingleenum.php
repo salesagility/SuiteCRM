@@ -45,7 +45,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  
 class SugarWidgetFieldSingleEnum extends SugarWidgetFieldEnum
 {
-    function displayInput($layout_def)
+    public function displayInput($layout_def)
     {
         global $app_list_strings;
 

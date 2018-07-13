@@ -50,7 +50,7 @@ class TemplateRange extends TemplateText
 	 * Constructor for class.  This constructor ensures that TemplateRanage instances have the
 	 * enable_range_search vardef value.
 	 */
-    function __construct()
+    public function __construct()
     {
         $this->vardef_map['enable_range_search'] = 'enable_range_search';
         $this->vardef_map['options'] = 'options';
@@ -64,7 +64,7 @@ class TemplateRange extends TemplateText
      * This method checks to see if enable_range_search is set.  If so, ensure that the
      * searchdefs for the module include the additional range fields.
      */
-    function populateFromPost()
+    public function populateFromPost()
     {
         parent::populateFromPost();
         //If we are enabling range search, make sure we add the start and end range fields
@@ -178,7 +178,7 @@ class TemplateRange extends TemplateText
      * This method checks to see if the enable_range_search key/value entry should be
      * added to the vardef entry representing the module
      */
-    function get_field_def()
+    public function get_field_def()
     {
         $vardef = parent::get_field_def();
         if (!empty($this->enable_range_search)) {

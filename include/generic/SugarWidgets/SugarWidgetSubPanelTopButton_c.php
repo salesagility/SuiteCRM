@@ -47,18 +47,18 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopButton_c extends SugarWidget
 {
-    var $module;
-    var $title;
-    var $access_key;
-    var $form_value;
-    var $additional_form_fields;
-    var $acl;
+    public $module;
+    public $title;
+    public $access_key;
+    public $form_value;
+    public $additional_form_fields;
+    public $acl;
 
     //TODO rename defines to layout defs and make it a member variable instead of passing it multiple layers with extra copying.
 
     /** Take the keys for the strings and look them up.  Module is literal, the rest are label keys
     */
-    function __construct($module='', $title='', $access_key='', $form_value='')
+    public function __construct($module='', $title='', $access_key='', $form_value='')
     {
         global $app_strings;
 
@@ -110,7 +110,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
         return $widgetID;
     }
 
-    function &_get_form($defines, $additionalFormFields = null, $asUrl = false)
+    public function &_get_form($defines, $additionalFormFields = null, $asUrl = false)
     {
         global $app_strings;
         global $currentModule;
@@ -259,7 +259,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
     }
 
     /** This default function is used to create the HTML for a simple button */
-    function display($defines, $additionalFormFields = null, $nonbutton = false)
+    public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         $temp='';
         $inputID = $this->getWidgetId();
@@ -290,7 +290,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
      * Returns a string that is the JSON encoded version of the popup request.
      * Perhaps this function should be moved to a more globally accessible location?
      */
-    function _create_json_encoded_popup_request($popup_request_data)
+    public function _create_json_encoded_popup_request($popup_request_data)
     {
         return json_encode($popup_request_data);
     }
@@ -300,7 +300,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
      * Get the relationship name based on the subapnel definition
      * @param mixed $defines The subpanel definition
      */
-    function get_subpanel_relationship_name($defines)
+    public function get_subpanel_relationship_name($defines)
     {
         $relationship_name = '';
         if (!empty($defines)) {

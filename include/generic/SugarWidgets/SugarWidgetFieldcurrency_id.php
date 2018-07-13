@@ -49,7 +49,7 @@ class SugarWidgetFieldcurrency_id extends SugarWidgetFieldEnum
      * @param bool $refresh cache
      * @return array list of beans
      */
-    static public function getCurrenciesList($refresh = false)
+    public static function getCurrenciesList($refresh = false)
     {
         static $list = false;
         if ($list === false || $refresh == true) {

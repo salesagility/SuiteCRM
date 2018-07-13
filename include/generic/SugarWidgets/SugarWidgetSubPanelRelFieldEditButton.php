@@ -47,12 +47,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 //TODO Rename this to edit link
 class SugarWidgetSubPanelRelFieldEditButton extends SugarWidgetField
 {
-    function displayHeaderCell($layout_def)
+    public function displayHeaderCell($layout_def)
     {
         return '&nbsp;';
     }
 
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         die("<pre>" . print_r($layout_def, true) . "</pre>");
 

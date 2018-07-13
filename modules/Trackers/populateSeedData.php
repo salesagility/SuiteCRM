@@ -53,17 +53,17 @@ require_once('install/UserDemoData.php');
 
 class populateSeedData
 {
-    var $monitorIds = 500;
-    var $user = 1;
-    var $userDemoData;
-    var $modules = array('Accounts', 'Calls', 'Contacts', 'Leads', 'Meetings', 'Notes', 'Opportunities', 'Users');
-    var $actions = array('authenticate', 'detailview', 'editview', 'index', 'save', 'settimezone');
-    var $db;
-    var $beanIdMap = array();
-    var $userSessions = array();
-    var $trackerManager;
+    public $monitorIds = 500;
+    public $user = 1;
+    public $userDemoData;
+    public $modules = array('Accounts', 'Calls', 'Contacts', 'Leads', 'Meetings', 'Notes', 'Opportunities', 'Users');
+    public $actions = array('authenticate', 'detailview', 'editview', 'index', 'save', 'settimezone');
+    public $db;
+    public $beanIdMap = array();
+    public $userSessions = array();
+    public $trackerManager;
 
-    function start()
+    public function start()
     {
         $this->db = DBManagerFactory::getInstance();
         $this->userDemoData = new UserDemoData($this->user, false);
@@ -91,7 +91,7 @@ class populateSeedData
         }
     }
 
-    function populate_tracker()
+    public function populate_tracker()
     {
         if ($monitor = $this->trackerManager->getMonitor('tracker')) {
             $monitor->setValue('user_id', $this->user);
@@ -108,14 +108,14 @@ class populateSeedData
     }
 
 
-    function randomTimestamp()
+    public function randomTimestamp()
     {
         global $timedate;
         // 1201852800 is 1 Feb 2008
         return $timedate->fromTimestamp(rand(1201852800, $timedate->getNow()->ts))->asDb();
     }
 
-    function getSessionId()
+    public function getSessionId()
     {
         if (isset($this->userSessions[$this->user])) {
             return $this->userSessions[$this->user];

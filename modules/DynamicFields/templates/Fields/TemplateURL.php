@@ -43,28 +43,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class TemplateURL extends TemplateText
 {
-    var $supports_unified_search = true;
+    public $supports_unified_search = true;
 
-    function __construct()
+    public function __construct()
     {
         $this->vardef_map['ext4'] = 'link_target';
         $this->vardef_map['link_target'] = 'ext4';
     }
 	
-    var $type='url';
-    function get_html_edit()
+    public $type='url';
+    public function get_html_edit()
     {
         $this->prepare();
         return "<input type='text' name='". $this->name. "' id='".$this->name."' size='".$this->size."' title='{" . strtoupper($this->name) ."_HELP}' value='{". strtoupper($this->name). "}'>";
     }
     
-    function get_html_detail()
+    public function get_html_detail()
     {
         $xtpl_var = strtoupper($this->name);
         return "<a href='{" . $xtpl_var . "}' target='_blank'>{" . $xtpl_var . "}</a>";
     }
     
-    function get_xtpl_detail()
+    public function get_xtpl_detail()
     {
         $value = parent::get_xtpl_detail();
         if (!empty($value) && substr_count($value, '://') == 0 && substr($value ,0,8) != 'index.php') {
@@ -73,7 +73,7 @@ class TemplateURL extends TemplateText
         return $value;
     }
 
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         //$def['options'] = !empty($this->options) ? $this->options : $this->ext1;

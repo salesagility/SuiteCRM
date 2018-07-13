@@ -48,17 +48,17 @@ require_once('modules/Contacts/Popup_picker.php');
 
 class ContactsViewMailMergePopup extends SugarView
 {
-    function ContactAddressPopup()
+    public function ContactAddressPopup()
     {
         parent::__construct();
     }
  	
-    function process()
+    public function process()
     {
         $this->display();
     }
 
-    function display()
+    public function display()
     {
         $popup = new Popup_Picker();
         echo $popup->process_page_for_merge();

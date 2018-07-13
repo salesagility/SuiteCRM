@@ -73,7 +73,7 @@ class SugarFieldInt extends SugarFieldBase
      * @param $value Mixed value being searched on
      * @return Int the value for the where clause used in search
      */
-    function getSearchWhereValue($value)
+    public function getSearchWhereValue($value)
     {
         $newVal = parent::getSearchWhereValue($value);
         if (!is_numeric($newVal)) {
@@ -103,7 +103,7 @@ class SugarFieldInt extends SugarFieldBase
         $field['value'] = $this->unformatField($field['value'],$field);
     }
 
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         // Use the basic field type for searches, no need to format/unformat everything... for now
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);

@@ -61,7 +61,7 @@ class MBRelationship
      * @param string $path      The base path of the module directory within the ModuleBuilder package directory
      * @param string $key_name  The Fully Qualified Name for this module - that is, $packageName_$name
      */
-    function __construct($name , $path , $key_name)
+    public function __construct($name , $path , $key_name)
     {
         $this->implementation = new UndeployedRelationships ($path) ;
         $this->moduleName = $key_name ;
@@ -69,7 +69,7 @@ class MBRelationship
         $this->updateRelationshipVariable();
     }
 
-    function findRelatableModules()
+    public function findRelatableModules()
     {
         // do not call findRelatableModules in the constructor as it leads to an infinite loop if the implementation calls getPackage() which loads the packages which loads the module which findsRelatableModules which...
         $this->relatableModules = $this->implementation->findRelatableModules () ;
@@ -80,7 +80,7 @@ class MBRelationship
      * At 5.1 this has been changed to the "new" format of lhs_module, rhs_module, lhs_subpanel, rhs_subpanel, label
      * @return AbstractRelationship
      */
-    function addFromPost()
+    public function addFromPost()
     {
         return $this->implementation->addFromPost () ;
     }
@@ -88,12 +88,12 @@ class MBRelationship
     /*
      * New function to replace the old MBModule subpanel property - now we obtain the 'subpanels' (actually related modules) from the relationships object
      */
-    function getRelationshipList()
+    public function getRelationshipList()
     {
         return $this->implementation->getRelationshipList () ;
     }
 
-    function get($relationshipName)
+    public function get($relationshipName)
     {
         return $this->implementation->get ($relationshipName) ;
     }
@@ -115,7 +115,7 @@ class MBRelationship
      * Original MBRelationships could only support one relationship between this module and any other
      * @param array $rel    Relationship definition in the old format (defined by self::oldFormatKeys)
      */
-    function add($rel)
+    public function add($rel)
     {
         // convert old format definition to new format
         if (! isset ($rel [ 'lhs_module' ])) {
@@ -133,23 +133,23 @@ class MBRelationship
         return $relationship;
     }
 
-    function delete($name)
+    public function delete($name)
     {
         $this->implementation->delete ($name) ;
         $this->updateRelationshipVariable () ;
     }
 
-    function save()
+    public function save()
     {
         $this->implementation->save () ;
     }
 
-    function build($path)
+    public function build($path)
     {
         $this->implementation->build () ;
     }
 
-    function addInstallDefs(&$installDef)
+    public function addInstallDefs(&$installDef)
     {
         $this->implementation->addInstallDefs ($installDef) ;
     }

@@ -16,12 +16,12 @@
  /* pData class definition */
  class pCache
  {
-     var $CacheFolder;
-     var $CacheIndex;
-     var $CacheDB;
+     public $CacheFolder;
+     public $CacheIndex;
+     public $CacheDB;
 
      /* Class creator */
-     function pCache($Settings="")
+     public function pCache($Settings="")
      {
          $CacheFolder	= isset($Settings["CacheFolder"]) ? $Settings["CacheFolder"] : "cache";
          $CacheIndex	= isset($Settings["CacheIndex"]) ? $Settings["CacheIndex"] : "index.db";
@@ -40,7 +40,7 @@
      }
 
      /* Flush the cache contents */
-     function flush()
+     public function flush()
      {
          if (file_exists($this->CacheFolder."/".$this->CacheIndex)) {
              unlink($this->CacheFolder."/".$this->CacheIndex);
@@ -53,13 +53,13 @@
      }
 
      /* Return the MD5 of the data array to clearly identify the chart */
-     function getHash($Data,$Marker="")
+     public function getHash($Data,$Marker="")
      {
          return(md5($Marker.serialize($Data->Data)));
      }
 
      /* Write the generated picture to the cache */
-     function writeToCache($ID,$pChartObject)
+     public function writeToCache($ID,$pChartObject)
      {
          /* Compute the paths */
          $TemporaryFile = $this->CacheFolder."/tmp_".rand(0,1000).".png";
@@ -93,19 +93,19 @@
      }
 
      /* Remove object older than the specified TS */
-     function removeOlderThan($Expiry)
+     public function removeOlderThan($Expiry)
      {
          $this->dbRemoval(array("Expiry"=>$Expiry));
      }
 
      /* Remove an object from the cache */
-     function remove($ID)
+     public function remove($ID)
      {
          $this->dbRemoval(array("Name"=>$ID));
      }
 
      /* Remove with specified criterias */
-     function dbRemoval($Settings)
+     public function dbRemoval($Settings)
      {
          $ID     = isset($Settings["Name"]) ? $Settings["Name"] : NULL;
          $Expiry = isset($Settings["Expiry"]) ? $Settings["Expiry"] : -(24*60*60);
@@ -182,7 +182,7 @@
          rename($IndexTemp,$Index);
      }
 
-     function isInCache($ID,$Verbose=FALSE,$UpdateHitsCount=FALSE)
+     public function isInCache($ID,$Verbose=FALSE,$UpdateHitsCount=FALSE)
      {
          /* Compute the paths */
          $Index = $this->CacheFolder."/".$this->CacheIndex;
@@ -230,7 +230,7 @@
      }
 
      /* Automatic output method based on the calling interface */
-     function autoOutput($ID,$Destination="output.png")
+     public function autoOutput($ID,$Destination="output.png")
      {
          if (php_sapi_name() == "cli") {
              $this->saveFromCache($ID,$Destination);
@@ -239,7 +239,7 @@
          }
      }
 
-     function strokeFromCache($ID)
+     public function strokeFromCache($ID)
      {
          /* Get the raw picture from the cache */
          $Picture = $this->getFromCache($ID);
@@ -255,7 +255,7 @@
          return(TRUE);
      }
 
-     function saveFromCache($ID,$Destination)
+     public function saveFromCache($ID,$Destination)
      {
          /* Get the raw picture from the cache */
          $Picture = $this->getFromCache($ID);
@@ -274,7 +274,7 @@
          return(TRUE);
      }
 
-     function getFromCache($ID)
+     public function getFromCache($ID)
      {
          /* Compute the path */
          $Database = $this->CacheFolder."/".$this->CacheDB;

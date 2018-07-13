@@ -41,13 +41,13 @@
  require_once('ModuleInstall/PackageManager/PackageManager.php');
  class PackageController
  {
-     var $_pm;
+     public $_pm;
 
      /**
       * Constructor: this class is called from the the ajax call and handles invoking the correct
       * functionality on the server.
       */
-     function __construct()
+     public function __construct()
      {
          $this->_pm = new PackageManager();
      }
@@ -55,7 +55,7 @@
      /**
       * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
       */
-     function PackageController()
+     public function PackageController()
      {
          $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
          if (isset($GLOBALS['log'])) {
@@ -67,7 +67,7 @@
      }
 
 
-     function performBasicSearch()
+     public function performBasicSearch()
      {
          $json = getJSONobj();
          $search_term = '';
@@ -90,7 +90,7 @@
       * @return packages     xml string consisting of the packages and releases which belong to
       *                      the category
       */
-     function getPackages()
+     public function getPackages()
      {
          $json = getJSONobj();
          $category_id = '';
@@ -106,7 +106,7 @@
       * Obtain a list of releases from the server.  This function is currently used for generating the patches/langpacks for upgrade wizard
       * as well as during installation
       */
-     function getReleases()
+     public function getReleases()
      {
          $json = getJSONobj();
          $category_id = '';
@@ -152,7 +152,7 @@
      /**
       * Obtain a promotion from the depot
       */
-     function getPromotion()
+     public function getPromotion()
      {
          $json = getJSONobj();
 
@@ -169,7 +169,7 @@
       * @param release_id   this is passed via POST and is the release id of the release we wish to download
       * @return bool         true is successful in downloading, false otherwise
       */
-     function download()
+     public function download()
      {
          global $sugar_config;
          $json = getJSONobj();
@@ -206,7 +206,7 @@
      * @param id - the id of the parent_category, -1 if this is the root
      * @return array - a list of categories/nodes which are underneath this node
      */
-     function getCategories()
+     public function getCategories()
      {
          $json = getJSONobj();
          $node_id = '';
@@ -218,7 +218,7 @@
          echo 'result = ' . $json->encode(array('nodes' => $nodes));
      }
 
-     function getNodes()
+     public function getNodes()
      {
          $json = getJSONobj();
          $category_id = '';
@@ -236,7 +236,7 @@
       * @param type      the type to check for
       * @return array    return an array of releases for each given installed object if an update is found
       */
-     function checkForUpdates()
+     public function checkForUpdates()
      {
          $json = getJSONobj();
          $type = '';
@@ -268,7 +268,7 @@
          echo 'result = ' . $json->encode(array('updates' => $nodes));
      }
 
-     function getLicenseText()
+     public function getLicenseText()
      {
          $json = getJSONobj();
          $file = '';
@@ -282,7 +282,7 @@
      /**
       *  build the list of modules that are currently in the staging area waiting to be installed
       */
-     function getPackagesInStaging()
+     public function getPackagesInStaging()
      {
          $packages = $this->_pm->getPackagesInStaging('module');
          $json = getJSONobj();
@@ -293,7 +293,7 @@
      /**
       *  build the list of modules that are currently in the staging area waiting to be installed
       */
-     function performInstall()
+     public function performInstall()
      {
          $file = '';
          if (isset($_REQUEST['file'])) {
@@ -307,7 +307,7 @@
          echo 'result = ' . $json->encode(array('result' => 'success'));
      }
 
-     function authenticate()
+     public function authenticate()
      {
          $json = getJSONobj();
          $username = '';
@@ -345,7 +345,7 @@
          echo 'result = ' . $json->encode(array('status' => $status));
      }
 
-     function getDocumentation()
+     public function getDocumentation()
      {
          $json = getJSONobj();
          $package_id = '';
@@ -363,7 +363,7 @@
          echo 'result = ' . $json->encode(array('documents' => $documents));
      }
 
-     function downloadedDocumentation()
+     public function downloadedDocumentation()
      {
          $json = getJSONobj();
          $document_id = '';
@@ -390,7 +390,7 @@
          }
      }
 
-     function remove()
+     public function remove()
      {
          $json = getJSONobj();
          $file = '';

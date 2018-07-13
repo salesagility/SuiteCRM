@@ -49,7 +49,7 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyProjectTaskDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/ProjectTask/Dashlets/MyProjectTaskDashlet/MyProjectTaskDashlet.data.php');
@@ -69,7 +69,7 @@ class MyProjectTaskDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyProjectTaskDashlet($id, $def = null)
+    public function MyProjectTaskDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -81,7 +81,7 @@ class MyProjectTaskDashlet extends DashletGeneric
     }
 
 
-    function buildWhere()
+    public function buildWhere()
     {
         $resultArray = parent::buildWhere();
 

@@ -46,8 +46,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Administration/Common.php');
 class TabGroupHelper
 {
-    var $modules = array();
-    function getAvailableModules($lang = '')
+    public $modules = array();
+    public function getAvailableModules($lang = '')
     {
         static $availableModules = array();
         if (!empty($availableModules)) {
@@ -73,7 +73,7 @@ class TabGroupHelper
      *
      * @param REQUEST params  $params
      */
-    function saveTabGroups($params)
+    public function saveTabGroups($params)
     {
         //#30205
         global $sugar_config;

@@ -24,15 +24,15 @@
  /* pRadar class definition */
  class pRadar
  {
-     var $pChartObject;
+     public $pChartObject;
 
      /* Class creator */
-     function pRadar()
+     public function pRadar()
      {
      }
 
      /* Draw a radar chart */
-     function drawRadar($Object,$Values,$Format="")
+     public function drawRadar($Object,$Values,$Format="")
      {
          $this->pChartObject = $Object;
 
@@ -397,7 +397,7 @@
 
 
      /* Draw a radar chart */
-     function drawPolar($Object,$Values,$Format="")
+     public function drawPolar($Object,$Values,$Format="")
      {
          $this->pChartObject = $Object;
 

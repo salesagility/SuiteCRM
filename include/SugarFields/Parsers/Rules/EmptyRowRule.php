@@ -55,12 +55,12 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class EmptyRowRule extends BaseRule
 {
-    function __construct()
+    public function __construct()
     {
     }
 
 
-    function parsePanels($panels, $view)
+    public function parsePanels($panels, $view)
     {
         foreach ($panels as $name=>$panel) {
             foreach ($panel as $rowCount=>$row) {

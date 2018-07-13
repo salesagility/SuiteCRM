@@ -55,7 +55,7 @@ class GroupedTabStructure
      * 
      * @return  array   the complete tab-group structure
      */
-    function get_tab_structure($modList = '', $patch = '', $ignoreSugarConfig=false, $labelAsKey=false)
+    public function get_tab_structure($modList = '', $patch = '', $ignoreSugarConfig=false, $labelAsKey=false)
     {
         global $modListHeader, $app_strings, $app_list_strings, $modInvisListActivities;
         

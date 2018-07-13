@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelDetailViewLink extends SugarWidgetField
 {
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         global $focus;
 

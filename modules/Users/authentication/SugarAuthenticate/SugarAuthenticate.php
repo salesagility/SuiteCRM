@@ -50,8 +50,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarAuthenticate
 {
-    var $userAuthenticateClass = 'SugarAuthenticateUser';
-    var $authenticationDir = 'SugarAuthenticate';
+    public $userAuthenticateClass = 'SugarAuthenticateUser';
+    public $authenticationDir = 'SugarAuthenticate';
 
 
     /**
@@ -101,7 +101,7 @@ class SugarAuthenticate
      * @param string $password
      * @return boolean
      */
-    function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ())
+    public function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ())
     {
         global $mod_strings;
         unset($_SESSION['login_error']);
@@ -156,7 +156,7 @@ class SugarAuthenticate
      * Once a user is authenticated on login this function will be called. Populate the session with what is needed and log anything that needs to be logged
      *
      */
-    function postLoginAuthenticate()
+    public function postLoginAuthenticate()
     {
         global $reset_language_on_default_user, $sugar_config;
 		
@@ -197,7 +197,7 @@ class SugarAuthenticate
      * On every page hit this will be called to ensure a user is authenticated
      * @return boolean
      */
-    function sessionAuthenticate()
+    public function sessionAuthenticate()
     {
         global $module, $action, $allowed_actions;
         $authenticated = false;
@@ -237,7 +237,7 @@ class SugarAuthenticate
      * and it will load the  current user
      * @return boolean
      */
-    function postSessionAuthenticate()
+    public function postSessionAuthenticate()
     {
         global $action, $allowed_actions, $sugar_config, $app_strings;
         $_SESSION['userTime']['last'] = time();
@@ -371,7 +371,7 @@ class SugarAuthenticate
      * Make sure a user isn't stealing sessions so check the ip to ensure that the ip address hasn't dramatically changed
      *
      */
-    function validateIP()
+    public function validateIP()
     {
         global $sugar_config;
         // grab client ip address
@@ -417,7 +417,7 @@ class SugarAuthenticate
      * Called when a user requests to logout
      *
      */
-    function logout()
+    public function logout()
     {
         session_start();
         session_destroy();
@@ -433,7 +433,7 @@ class SugarAuthenticate
      * @param STRING $password
      * @return STRING $encoded_password
      */
-    static function encodePassword($password)
+    public static function encodePassword($password)
     {
         return strtolower(md5($password));
     }
@@ -442,7 +442,7 @@ class SugarAuthenticate
      * If a user may change there password through the Sugar UI
      *
      */
-    function canChangePassword()
+    public function canChangePassword()
     {
         return true;
     }
@@ -450,7 +450,7 @@ class SugarAuthenticate
      * If a user may change there user name through the Sugar UI
      *
      */
-    function canChangeUserName()
+    public function canChangeUserName()
     {
         return true;
     }
@@ -461,7 +461,7 @@ class SugarAuthenticate
      *
      * This function allows the SugarAuthenticate subclasses to perform some pre login initialization as needed
      */
-    function pre_login()
+    public function pre_login()
     {
         if (isset($_SESSION['authenticated_user_id'])) {
             ob_clean();

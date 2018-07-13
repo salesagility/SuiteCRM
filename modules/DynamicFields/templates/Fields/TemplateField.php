@@ -50,36 +50,36 @@ class TemplateField
     	-detail
     	-search
     	*/
-    var $view = 'edit';
-    var $name = '';
-    var $vname = '';
+    public $view = 'edit';
+    public $name = '';
+    public $vname = '';
     public $label = '';
-    var $id = '';
-    var $size = '20';
-    var $len = '255';
-    var $required = false;
-    var $default = null;
-    var $default_value = null;
-    var $type = 'varchar';
-    var $comment = '';
-    var $bean;
-    var $ext1 = '';
-    var $ext2 = '';
-    var $ext3 = '';
-    var $ext4 = '';
-    var $audited= 0;
-    var $inline_edit = 1;
-    var $massupdate = 0;
-    var $importable = 'true' ;
-    var $duplicate_merge=0;
-    var $new_field_definition;
-    var $reportable = true;
-    var $label_value = '';
-    var $help = '';
-    var $formula = '';
-    var $unified_search = 0;
-    var $supports_unified_search = false;
-    var $vardef_map = array(
+    public $id = '';
+    public $size = '20';
+    public $len = '255';
+    public $required = false;
+    public $default = null;
+    public $default_value = null;
+    public $type = 'varchar';
+    public $comment = '';
+    public $bean;
+    public $ext1 = '';
+    public $ext2 = '';
+    public $ext3 = '';
+    public $ext4 = '';
+    public $audited= 0;
+    public $inline_edit = 1;
+    public $massupdate = 0;
+    public $importable = 'true' ;
+    public $duplicate_merge=0;
+    public $new_field_definition;
+    public $reportable = true;
+    public $label_value = '';
+    public $help = '';
+    public $formula = '';
+    public $unified_search = 0;
+    public $supports_unified_search = false;
+    public $vardef_map = array(
 		'name'=>'name',
 		'label'=>'vname',
 	// bug 15801 - need to ALWAYS keep default and default_value consistent as some methods/classes use one, some use another...
@@ -111,16 +111,16 @@ class TemplateField
 	);
     // Bug #48826
     // fields to decode from post request
-    var $decode_from_request_fields_map = array('formula', 'dependency');
+    public $decode_from_request_fields_map = array('formula', 'dependency');
 
-    function __construct()
+    public function __construct()
     {
     }
 
     /*
     	HTML FUNCTIONS
     	*/
-    function get_html()
+    public function get_html()
     {
         $view = $this->view;
         if (!empty($GLOBALS['studioReadOnlyFields'][$this->name])) {
@@ -134,33 +134,33 @@ class TemplateField
 
 		}
     }
-    function set($values)
+    public function set($values)
     {
         foreach ($values as $name=>$value) {
             $this->$name = $value;
         }
     }
 
-    function get_html_edit()
+    public function get_html_edit()
     {
         return 'not implemented';
     }
 
-    function get_html_list()
+    public function get_html_list()
     {
         return $this->get_html_detail();
     }
 
-    function get_html_detail()
+    public function get_html_detail()
     {
         return 'not implemented';
     }
 
-    function get_html_search()
+    public function get_html_search()
     {
         return $this->get_html_edit();
     }
-    function get_html_label()
+    public function get_html_label()
     {
         $label =  "{MOD." .$this->vname . "}";
         if (!empty($GLOBALS['app_strings'][$this->vname])) {
@@ -191,7 +191,7 @@ class TemplateField
     	XTPL FUNCTIONS
     	*/
 
-    function get_xtpl($bean = false)
+    public function get_xtpl($bean = false)
     {
         if ($bean) {
             $this->bean = $bean;
@@ -209,27 +209,27 @@ class TemplateField
 		}
     }
 
-    function get_xtpl_edit()
+    public function get_xtpl_edit()
     {
         return '/*not implemented*/';
     }
 
-    function get_xtpl_list()
+    public function get_xtpl_list()
     {
         return get_xtpl_detail();
     }
 
-    function get_xtpl_detail()
+    public function get_xtpl_detail()
     {
         return '/*not implemented*/';
     }
 
-    function get_xtpl_search()
+    public function get_xtpl_search()
     {
         //return get_xtpl_edit();
     }
 
-    function is_required()
+    public function is_required()
     {
         if ($this->required) {
             return true;
@@ -244,7 +244,7 @@ class TemplateField
     	DB FUNCTIONS
     	*/
 
-    function get_db_type()
+    public function get_db_type()
     {
         if (!empty($this->type)) {
             $type = DBManagerFactory::getInstance()->getColumnType($this->type);
@@ -256,7 +256,7 @@ class TemplateField
         return " $type({$this->len})";
     }
 
-    function get_db_default($modify=false)
+    public function get_db_default($modify=false)
     {
         $GLOBALS['log']->debug('get_db_default(): default_value='.$this->default_value);
         if (!$modify or empty($this->new_field_definition['default_value']) or $this->new_field_definition['default_value'] != $this->default_value) {
@@ -280,7 +280,7 @@ class TemplateField
      * So if not called by Studio we want to return NULL if required=true (because we are changing FROM this setting)
      */
 
-    function get_db_required($modify=false)
+    public function get_db_required($modify=false)
     {
         //		$GLOBALS['log']->debug('get_db_required required='.$this->required." and ".(($modify)?"true":"false")." and ".print_r($this->new_field_definition,true));
         $req = "";
@@ -326,12 +326,12 @@ class TemplateField
      * Oracle Support: do not set required constraint if no default value is supplied.
      * In this case the default value will be handled by the application/sugarbean.
      */
-    function get_db_add_alter_table($table)
+    public function get_db_add_alter_table($table)
     {
         return DBManagerFactory::getInstance()->getHelper()->addColumnSQL($table, $this->get_field_def(), true);
     }
 
-    function get_db_delete_alter_table($table)
+    public function get_db_delete_alter_table($table)
     {
         return DBManagerFactory::getInstance()->getHelper()->dropColumnSQL(
 		$table,
@@ -342,7 +342,7 @@ class TemplateField
     /**
      * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
      */
-    function get_db_modify_alter_table($table)
+    public function get_db_modify_alter_table($table)
     {
         return DBManagerFactory::getInstance()->alterColumnSQL($table, $this->get_field_def());
     }
@@ -352,7 +352,7 @@ class TemplateField
      * BEAN FUNCTIONS
      *
      */
-    function get_field_def()
+    public function get_field_def()
     {
         $array =  array(
 			'required'=>$this->convertBooleanValue($this->required),
@@ -403,7 +403,7 @@ class TemplateField
 
     /* if the field is duplicate merge enabled this function will return the vardef entry for the same.
      */
-    function get_dup_merge_def(&$def)
+    public function get_dup_merge_def(&$def)
     {
         switch ($def['duplicate_merge_dom_value']) {
 			case 0:
@@ -437,7 +437,7 @@ class TemplateField
      * than a string as well.
      * @return int
      */
-    function getDupMergeDomValue()
+    public function getDupMergeDomValue()
     {
         if (isset($this->duplicate_merge_dom_value)) {
             return $this->duplicate_merge_dom_value;
@@ -474,7 +474,7 @@ class TemplateField
     	*/
 
 
-    function prepare()
+    public function prepare()
     {
         if (empty($this->id)) {
             $this->id = $this->name;
@@ -486,7 +486,7 @@ class TemplateField
      * This function supports setting the values of all TemplateField instances.
      * @param $row The Array key/value pairs from fields_meta_data table
      */
-    function populateFromRow($row=array())
+    public function populateFromRow($row=array())
     {
         $fmd_to_dyn_map = array('comments' => 'comment', 'require_option' => 'required', 'label' => 'vname',
 							    'mass_update' => 'massupdate', 'max_size' => 'len', 'default_value' => 'default', 'id_name' => 'ext3');
@@ -507,7 +507,7 @@ class TemplateField
         }
     }
 
-    function populateFromPost()
+    public function populateFromPost()
     {
         foreach ($this->vardef_map as $vardef=>$field) {
             if (isset($_REQUEST[$vardef])) {
@@ -543,12 +543,12 @@ class TemplateField
     {
     }
 
-    function get_additional_defs()
+    public function get_additional_defs()
     {
         return array();
     }
 
-    function delete($df)
+    public function delete($df)
     {
         $df->deleteField($this);
     }
@@ -583,7 +583,7 @@ class TemplateField
      *
      * @param DynamicField $df
      */
-    function save($df)
+    public function save($df)
     {
         //	    $GLOBALS['log']->debug('saving field: '.print_r($this,true));
         $df->addFieldObject($this);

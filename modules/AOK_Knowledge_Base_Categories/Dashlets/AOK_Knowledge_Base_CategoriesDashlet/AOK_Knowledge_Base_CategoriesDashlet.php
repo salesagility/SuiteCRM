@@ -53,7 +53,7 @@ require_once('modules/AOK_Knowledge_Base_Categories/AOK_Knowledge_Base_Categorie
 
 class AOK_Knowledge_Base_CategoriesDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/AOK_Knowledge_Base_Categories/metadata/dashletviewdefs.php');
@@ -73,7 +73,7 @@ class AOK_Knowledge_Base_CategoriesDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOK_Knowledge_Base_CategoriesDashlet($id, $def = null)
+    public function AOK_Knowledge_Base_CategoriesDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

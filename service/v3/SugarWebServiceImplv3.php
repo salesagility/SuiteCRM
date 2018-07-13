@@ -166,7 +166,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return String The md5 hash of the vardef definition.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_module_fields_md5($session, $module_name)
+    public function get_module_fields_md5($session, $module_name)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_fields_md5(v3) for module: '. print_r($module_name, true));
 
@@ -189,7 +189,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * 				 - gmt_time - String - Return the current time on the server in the format 'Y-m-d H:i:s'. This time is in GMT.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_server_info()
+    public function get_server_info()
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_server_info');
         global $sugar_flavor, $sugar_version;
@@ -210,7 +210,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return array $view The view(s) requested.  Current supported types are edit, detail, list, and subpanel.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_module_layout($session, $a_module_names, $a_type, $a_view,$md5 = FALSE)
+    public function get_module_layout($session, $a_module_names, $a_type, $a_view,$md5 = FALSE)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_layout');
 
@@ -256,7 +256,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return array $view(s) The view requested.  Current supported types are edit, detail, and list.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_module_layout_md5($session, $module_name, $type, $view)
+    public function get_module_layout_md5($session, $module_name, $type, $view)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_layout_md5');
         $results = self::get_module_layout($session, $module_name, $type, $view, TRUE);
@@ -274,7 +274,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return Array    'modules' -- Array - An array of module names
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_available_modules($session,$filter='all')
+    public function get_available_modules($session,$filter='all')
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_available_modules');
 
@@ -308,7 +308,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return Array The recently viewed records
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_last_viewed($session, $module_names)
+    public function get_last_viewed($session, $module_names)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_last_viewed');
         $error = new SoapError();
@@ -346,7 +346,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return Array List of upcoming activities
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_upcoming_activities($session)
+    public function get_upcoming_activities($session)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_upcoming_activities');
         $error = new SoapError();
@@ -377,7 +377,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return Array return_search_result 	- Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function search_by_module($session, $search_string, $modules, $offset, $max_results,$assigned_user_id = '', $select_fields = array())
+    public function search_by_module($session, $search_string, $modules, $offset, $max_results,$assigned_user_id = '', $select_fields = array())
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->search_by_module');
         global  $beanList, $beanFiles;
@@ -583,7 +583,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      *	     		 'relationship_list' -- Array - The records link field data. The example is if asked about accounts contacts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
     * @exception 'SoapFault' -- The SOAP error, if any
     */
-    function get_relationships($session, $module_name, $module_id, $link_field_name, $related_module_query, $related_fields, $related_module_link_name_to_fields_array, $deleted, $order_by = '')
+    public function get_relationships($session, $module_name, $module_id, $link_field_name, $related_module_query, $related_fields, $related_module_link_name_to_fields_array, $deleted, $order_by = '')
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_relationships');
         global  $beanList, $beanFiles;

@@ -30,7 +30,7 @@ require_once('include/MVC/View/views/view.edit.php');
 
 class AOS_QuotesViewEdit extends ViewEdit
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -38,7 +38,7 @@ class AOS_QuotesViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_QuotesViewEdit()
+    public function AOS_QuotesViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -50,13 +50,13 @@ class AOS_QuotesViewEdit extends ViewEdit
     }
 
 
-    function display()
+    public function display()
     {
         $this->populateQuoteTemplates();
         parent::display();
     }
 
-    function populateQuoteTemplates()
+    public function populateQuoteTemplates()
     {
         global $app_list_strings;
 

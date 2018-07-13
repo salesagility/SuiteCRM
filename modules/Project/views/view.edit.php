@@ -42,7 +42,7 @@ require_once('include/json_config.php');
 
 class ProjectViewEdit extends ViewEdit
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -50,7 +50,7 @@ class ProjectViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ProjectViewEdit()
+    public function ProjectViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -62,7 +62,7 @@ class ProjectViewEdit extends ViewEdit
     }
 
 
-    function display()
+    public function display()
     {
         global $json;
 		

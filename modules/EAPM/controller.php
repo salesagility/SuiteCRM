@@ -46,9 +46,9 @@ class EAPMController extends SugarController
      */
     protected $api;
 
-    var $action_remap = array('detailview'=>'editview', 'DetailView'=>'EditView');
+    public $action_remap = array('detailview'=>'editview', 'DetailView'=>'EditView');
 
-    var $admin_actions = array('listview', 'index');
+    public $admin_actions = array('listview', 'index');
 
     public function process()
     {

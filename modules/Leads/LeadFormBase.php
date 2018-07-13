@@ -44,8 +44,8 @@ require_once('include/SugarObjects/forms/PersonFormBase.php');
 
 class LeadFormBase extends PersonFormBase
 {
-    var $moduleName = 'Leads';
-    var $objectName = 'Lead';
+    public $moduleName = 'Leads';
+    public $objectName = 'Lead';
 
     /**
      * getDuplicateQuery
@@ -76,7 +76,7 @@ class LeadFormBase extends PersonFormBase
     }
 
 
-    function getWideFormBody($prefix, $mod='', $formname='')
+    public function getWideFormBody($prefix, $mod='', $formname='')
     {
         if (!ACLController::checkAccess('Leads', 'edit', true)) {
             return '';
@@ -128,7 +128,7 @@ EOQ;
         return $form;
     }
 
-    function getFormBody($prefix, $mod='', $formname='')
+    public function getFormBody($prefix, $mod='', $formname='')
     {
         if (!ACLController::checkAccess('Leads', 'edit', true)) {
             return '';
@@ -174,7 +174,7 @@ EOQ;
         $mod_strings = $temp_strings;
         return $form;
     }
-    function getForm($prefix, $mod='Leads')
+    public function getForm($prefix, $mod='Leads')
     {
         if (!ACLController::checkAccess('Leads', 'edit', true)) {
             return '';
@@ -212,7 +212,7 @@ EOQ;
     }
 
 
-    function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $exist_lead=null)
+    public function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $exist_lead=null)
     {
         require_once('modules/Campaigns/utils.php');
         require_once('include/formbase.php');

@@ -43,17 +43,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ACLRole extends SugarBean
 {
-    var $module_dir = 'ACLRoles';
-    var $object_name = 'ACLRole';
-    var $table_name = 'acl_roles';
-    var $new_schema = true;
-    var $disable_row_level_security = true;
-    var $disable_custom_fields = true;
-    var $relationship_fields = array(
+    public $module_dir = 'ACLRoles';
+    public $object_name = 'ACLRole';
+    public $table_name = 'acl_roles';
+    public $new_schema = true;
+    public $disable_row_level_security = true;
+    public $disable_custom_fields = true;
+    public $relationship_fields = array(
                                     'user_id'=>'users'
                                 );
 
-    var $created_by;
+    public $created_by;
 
     public function __construct()
     {
@@ -76,7 +76,7 @@ class ACLRole extends SugarBean
 
 
     // bug 16790 - missing get_summary_text method led Tracker to display SugarBean's "base implementation"
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->name";
     }
@@ -91,7 +91,7 @@ class ACLRole extends SugarBean
      * @param GUID $action_id - the ACL Action id
      * @param int $access - the access level ACL_ALLOW_ALL ACL_ALLOW_NONE ACL_ALLOW_OWNER...
      */
-    function setAction($role_id, $action_id, $access)
+    public function setAction($role_id, $action_id, $access)
     {
         $relationship_data = array('role_id'=>$role_id, 'action_id'=>$action_id,);
         $additional_data = array('access_override'=>$access);
@@ -106,7 +106,7 @@ class ACLRole extends SugarBean
      * @param GUID $user_id
      * @return a list of ACLRole objects
      */
-    function getUserRoles($user_id, $getAsNameArray = true)
+    public function getUserRoles($user_id, $getAsNameArray = true)
     {
 
         //if we don't have it loaded then lets check against the db
@@ -140,7 +140,7 @@ class ACLRole extends SugarBean
      * @param GUID $user_id
      * @return a list of ACLRole Names
      */
-    function getUserRoleNames($user_id)
+    public function getUserRoleNames($user_id)
     {
         $user_roles = sugar_cache_retrieve("RoleMembershipNames_".$user_id);
 
@@ -173,7 +173,7 @@ class ACLRole extends SugarBean
      * @param boolean $returnAsArray - should it return the results as an array of arrays or as an array of ACLRoles
      * @return either an array of array representations of acl roles or an array of ACLRoles
      */
-    function getAllRoles($returnAsArray = false)
+    public function getAllRoles($returnAsArray = false)
     {
         $db = DBManagerFactory::getInstance();
         $query = "SELECT acl_roles.* FROM acl_roles
@@ -202,7 +202,7 @@ class ACLRole extends SugarBean
      * @param GUID $role_id
      * @return array of actions
      */
-    function getRoleActions($role_id, $type='module')
+    public function getRoleActions($role_id, $type='module')
     {
         global $beanList;
         //if we don't have it loaded then lets check against the db
@@ -266,7 +266,7 @@ class ACLRole extends SugarBean
      *
      * @param ACLRole GUID $id
      */
-    function mark_relationships_deleted($id)
+    public function mark_relationships_deleted($id)
     {
         //we need to delete the actions relationship by hand (special case)
         $date_modified = db_convert("'".TimeDate::getInstance()->nowDb()."'", 'datetime');
@@ -281,7 +281,7 @@ class ACLRole extends SugarBean
         *
         * @return array of fields with id, name, description
         */
-    function toArray($dbOnly = false, $stringOnly = false, $upperKeys=false)
+    public function toArray($dbOnly = false, $stringOnly = false, $upperKeys=false)
     {
         $array_fields = array('id', 'name', 'description');
         $arr = array();
@@ -301,7 +301,7 @@ class ACLRole extends SugarBean
     *
     * @param Array $arr
     */
-    function fromArray($arr)
+    public function fromArray($arr)
     {
         foreach ($arr as $name=>$value) {
             $this->$name = $value;

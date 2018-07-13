@@ -43,75 +43,75 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Meeting extends SugarBean
 {
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $assigned_user_id;
-    var $modified_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $description;
-    var $name;
-    var $location;
-    var $status;
-    var $type;
-    var $date_start;
-    var $time_start;
-    var $date_end;
-    var $duration_hours;
-    var $duration_minutes;
-    var $time_meridiem;
-    var $parent_type;
-    var $parent_type_options;
-    var $parent_id;
-    var $field_name_map;
-    var $contact_id;
-    var $user_id;
-    var $meeting_id;
-    var $reminder_time;
-    var $reminder_checked;
-    var $email_reminder_time;
-    var $email_reminder_checked;
-    var $email_reminder_sent;
-    var $required;
-    var $accept_status;
-    var $parent_name;
-    var $contact_name;
-    var $contact_phone;
-    var $contact_email;
-    var $account_id;
-    var $opportunity_id;
-    var $case_id;
-    var $assigned_user_name;
-    var $outlook_id;
-    var $sequence;
-    var $syncing = false;
-    var $recurring_source;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $modified_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $description;
+    public $name;
+    public $location;
+    public $status;
+    public $type;
+    public $date_start;
+    public $time_start;
+    public $date_end;
+    public $duration_hours;
+    public $duration_minutes;
+    public $time_meridiem;
+    public $parent_type;
+    public $parent_type_options;
+    public $parent_id;
+    public $field_name_map;
+    public $contact_id;
+    public $user_id;
+    public $meeting_id;
+    public $reminder_time;
+    public $reminder_checked;
+    public $email_reminder_time;
+    public $email_reminder_checked;
+    public $email_reminder_sent;
+    public $required;
+    public $accept_status;
+    public $parent_name;
+    public $contact_name;
+    public $contact_phone;
+    public $contact_email;
+    public $account_id;
+    public $opportunity_id;
+    public $case_id;
+    public $assigned_user_name;
+    public $outlook_id;
+    public $sequence;
+    public $syncing = false;
+    public $recurring_source;
 
-    var $update_vcal = true;
-    var $contacts_arr;
-    var $users_arr;
-    var $meetings_arr;
+    public $update_vcal = true;
+    public $contacts_arr;
+    public $users_arr;
+    public $meetings_arr;
     // when assoc w/ a user/contact:
-    var $minutes_value_default = 15;
-    var $minutes_values = array('0'=>'00','15'=>'15','30'=>'30','45'=>'45');
-    var $table_name = "meetings";
-    var $rel_users_table = "meetings_users";
-    var $rel_contacts_table = "meetings_contacts";
-    var $rel_leads_table = "meetings_leads";
-    var $module_dir = "Meetings";
-    var $object_name = "Meeting";
+    public $minutes_value_default = 15;
+    public $minutes_values = array('0'=>'00','15'=>'15','30'=>'30','45'=>'45');
+    public $table_name = "meetings";
+    public $rel_users_table = "meetings_users";
+    public $rel_contacts_table = "meetings_contacts";
+    public $rel_leads_table = "meetings_leads";
+    public $module_dir = "Meetings";
+    public $object_name = "Meeting";
 
-    var $importable = true;
+    public $importable = true;
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name', 'accept_status');
-    var $relationship_fields = array('account_id'=>'accounts','opportunity_id'=>'opportunity','case_id'=>'case',
+    public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name', 'accept_status');
+    public $relationship_fields = array('account_id'=>'accounts','opportunity_id'=>'opportunity','case_id'=>'case',
 									 'assigned_user_id'=>'users','contact_id'=>'contacts', 'user_id'=>'users', 'meeting_id'=>'meetings');
     // so you can run get_users() twice and run query only once
-    var $cached_get_users = null;
-    var $new_schema = true;
-    var $date_changed = false;
+    public $cached_get_users = null;
+    public $new_schema = true;
+    public $date_changed = false;
 
     /**
      * sole constructor
@@ -148,7 +148,7 @@ class Meeting extends SugarBean
      * @param $view string
      * @param $is_owner bool
      */
-    function ACLAccess($view,$is_owner='not_set',$in_group='not_set')
+    public function ACLAccess($view,$is_owner='not_set',$in_group='not_set')
     {
         // don't check if meeting is being synced from Outlook
         if ($this->syncing == false) {
@@ -170,14 +170,14 @@ class Meeting extends SugarBean
      * Stub for integration
      * @return bool
      */
-    function hasIntegratedMeeting()
+    public function hasIntegratedMeeting()
     {
         return false;
     }
 
     // save date_end by calculating user input
     // this is for calendar
-    function save($check_notify = FALSE)
+    public function save($check_notify = FALSE)
     {
         global $timedate;
         global $current_user;
@@ -334,7 +334,7 @@ class Meeting extends SugarBean
     }
 
     // this is for calendar
-    function mark_deleted($id)
+    public function mark_deleted($id)
     {
         require_once("modules/Calendar/CalendarUtils.php");
         CalendarUtils::correctRecurrences($this, $id);
@@ -348,12 +348,12 @@ class Meeting extends SugarBean
         }
     }
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->name";
     }
 
-    function create_export_query($order_by, $where, $relate_link_join='')
+    public function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -390,7 +390,7 @@ class Meeting extends SugarBean
 
 
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         global $locale;
         // Fill in the assigned_user_name
@@ -539,7 +539,7 @@ class Meeting extends SugarBean
         }
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $meeting_fields = $this->get_list_view_array();
 
@@ -605,7 +605,7 @@ class Meeting extends SugarBean
         return $meeting_fields;
     }
 
-    function set_notification_body($xtpl, &$meeting)
+    public function set_notification_body($xtpl, &$meeting)
     {
         global $sugar_config;
         global $app_list_strings;
@@ -742,7 +742,7 @@ class Meeting extends SugarBean
         return unlink($path);
     }
 
-    function get_meeting_users()
+    public function get_meeting_users()
     {
         $template = new User();
         // First, get the list of IDs.
@@ -765,7 +765,7 @@ class Meeting extends SugarBean
         return $list;
     }
 
-    function get_invite_meetings(&$user)
+    public function get_invite_meetings(&$user)
     {
         $template = $this;
         // First, get the list of IDs.
@@ -789,7 +789,7 @@ class Meeting extends SugarBean
     }
 
 
-    function set_accept_status(&$user,$status)
+    public function set_accept_status(&$user,$status)
     {
         if ($user->object_name == 'User') {
             $relate_values = array('user_id'=>$user->id,'meeting_id'=>$this->id);
@@ -812,7 +812,7 @@ class Meeting extends SugarBean
     }
 
 
-    function get_notification_recipients()
+    public function get_notification_recipients()
     {
         if ($this->special_notification) {
             return parent::get_notification_recipients();
@@ -866,7 +866,7 @@ class Meeting extends SugarBean
     }
 
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return true;
@@ -874,7 +874,7 @@ class Meeting extends SugarBean
         return false;
     }
 
-    function listviewACLHelper()
+    public function listviewACLHelper()
     {
         $array_assign = parent::listviewACLHelper();
         $is_owner = false;
@@ -945,7 +945,7 @@ class Meeting extends SugarBean
     }
 
 
-    function save_relationship_changes($is_update, $exclude = array())
+    public function save_relationship_changes($is_update, $exclude = array())
     {
         if (empty($this->in_workflow)) {
             if (empty($this->in_import)) {//if a meeting is being imported then contact_id  should not be excluded

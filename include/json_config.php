@@ -55,9 +55,9 @@ $json = getJSONobj();
 
 class json_config
 {
-    var $global_registry_var_name = 'GLOBAL_REGISTRY';
+    public $global_registry_var_name = 'GLOBAL_REGISTRY';
 
-    function get_static_json_server($configOnly = true, $getStrings = false, $module = null, $record = null, $scheduler = false)
+    public function get_static_json_server($configOnly = true, $getStrings = false, $module = null, $record = null, $scheduler = false)
     {
         global $current_user;
         $str = '';
@@ -73,7 +73,7 @@ class json_config
         return $str;
     }
 
-    function getAppMetaJSON($scheduler = false)
+    public function getAppMetaJSON($scheduler = false)
     {
         global $json, $sugar_config;
 
@@ -102,7 +102,7 @@ class json_config
         return $str;
     }
 
-    function getUserConfigJSON()
+    public function getUserConfigJSON()
     {
         global $timedate;
         global $current_user, $sugar_config;
@@ -128,7 +128,7 @@ class json_config
         return $str;
     }
 
-    function getFocusData($module, $record)
+    public function getFocusData($module, $record)
     {
         global $json;
         if (empty($module)) {
@@ -142,7 +142,7 @@ class json_config
     }
 
     /*	multiple project module related changes added by haris raheem*/
-    function meeting_retrieve($module, $record)
+    public function meeting_retrieve($module, $record)
     {
         global $json, $response;
         global $beanFiles, $beanList;
@@ -209,7 +209,7 @@ class json_config
         return $module_arr;
     }
 
-    function getStringsJSON($module)
+    public function getStringsJSON($module)
     {
         global $current_language;
         $currentModule = 'Calendar';

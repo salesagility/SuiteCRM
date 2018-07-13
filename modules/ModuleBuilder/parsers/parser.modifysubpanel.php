@@ -55,13 +55,13 @@ require_once ('modules/ModuleBuilder/parsers/parser.modifylistview.php') ;
 
 class ParserModifySubPanel extends ParserModifyListView
 {
-    var $listViewDefs = false ;
-    var $defaults = array ( ) ;
-    var $additional = array ( ) ;
-    var $available = array ( ) ;
-    var $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
+    public $listViewDefs = false ;
+    public $defaults = array ( ) ;
+    public $additional = array ( ) ;
+    public $available = array ( ) ;
+    public $columns = array ( 'LBL_DEFAULT' => 'getDefaultFields' , 'LBL_HIDDEN' => 'getAvailableFields' ) ;
     
-    function init($module_name , $subPanelName)
+    public function init($module_name , $subPanelName)
     {
         $GLOBALS [ 'log' ]->debug ("in ParserModifySubPanel: module_name={$module_name} child_module={$subPanelName}") ;
         $this->moduleName = $module_name ;
@@ -106,7 +106,7 @@ class ParserModifySubPanel extends ParserModifyListView
     /**
      * Return a list of the fields that will be displayed in the subpanel
      */
-    function getDefaultFields()
+    public function getDefaultFields()
     {
         $this->defaults = array ( ) ;
         foreach ($this->listViewDefs as $key => $def) {
@@ -124,7 +124,7 @@ class ParserModifySubPanel extends ParserModifyListView
     /**
      * Return a list of fields that are not currently included in the subpanel but that are available for use
      */
-    function getAvailableFields()
+    public function getAvailableFields()
     {
         $this->availableFields = array ( ) ;
         if ($this->subPanelParentModule != null) {
@@ -150,7 +150,7 @@ class ParserModifySubPanel extends ParserModifyListView
         return $this->availableFields ;
     }
     
-    function getField($fieldName)
+    public function getField($fieldName)
     {
         foreach ($this->listViewDefs as $key => $def) {
             $key = strtolower ($key) ;
@@ -178,7 +178,7 @@ class ParserModifySubPanel extends ParserModifyListView
      * Obtains the field definitions from a _REQUEST array, and merges them with the other fields from the original definitions
      * Uses the subpanel override mechanism from SubPanel to save them 
      */
-    function handleSave()
+    public function handleSave()
     {
         $GLOBALS [ 'log' ]->debug ("in ParserModifySubPanel->handleSave()") ;
         require_once ('include/SubPanel/SubPanel.php') ;

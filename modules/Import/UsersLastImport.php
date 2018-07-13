@@ -68,7 +68,7 @@ class UsersLastImport extends SugarBean
     public $module_dir = 'Import';
     public $table_name = "users_last_import";
     public $object_name = "UsersLastImport";
-    var $disable_custom_fields = true;
+    public $disable_custom_fields = true;
     public $column_fields = array(
         "id",
         "assigned_user_id",

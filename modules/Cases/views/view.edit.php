@@ -41,7 +41,7 @@ require_once('include/SugarTinyMCE.php');
 
 class CasesViewEdit extends ViewEdit
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -49,7 +49,7 @@ class CasesViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function CasesViewEdit()
+    public function CasesViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -60,7 +60,7 @@ class CasesViewEdit extends ViewEdit
         self::__construct();
     }
 
-    function display()
+    public function display()
     {
         parent::display();
 

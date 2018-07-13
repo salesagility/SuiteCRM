@@ -46,10 +46,10 @@ require_once('modules/DynamicFields/templates/Fields/TemplateId.php');
 require_once('modules/DynamicFields/templates/Fields/TemplateParentType.php');
 class TemplateParent extends TemplateEnum
 {
-    var $max_size = 25;
-    var $type='parent';
+    public $max_size = 25;
+    public $type='parent';
     
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['type_name'] = 'parent_type';
@@ -60,7 +60,7 @@ class TemplateParent extends TemplateEnum
         return $def;
     }
     
-    function delete($df)
+    public function delete($df)
     {
         parent::delete($df);
         //currency id
@@ -73,7 +73,7 @@ class TemplateParent extends TemplateEnum
         $parent_id->delete($df);
     }
     
-    function save($df)
+    public function save($df)
     {
         $this->ext1 = 'parent_type_display';
         $this->name = 'parent_name';
@@ -99,14 +99,14 @@ class TemplateParent extends TemplateEnum
         $parent_id->save($df);
     }
     
-    function get_db_add_alter_table($table)
+    public function get_db_add_alter_table($table)
     {
         return '';
     }
     /**
      * mysql requires the datatype caluse in the alter statment.it will be no-op anyway.
      */ 
-    function get_db_modify_alter_table($table)
+    public function get_db_modify_alter_table($table)
     {
         return '';
     }

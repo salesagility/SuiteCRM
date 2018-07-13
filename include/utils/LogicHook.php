@@ -67,7 +67,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class LogicHook
 {
-    var $bean = null;
+    public $bean = null;
 
     public function __construct()
     {
@@ -93,7 +93,7 @@ class LogicHook
      *
      * @return unknown
      */
-    static function initialize()
+    public static function initialize()
     {
         if (empty($GLOBALS['logic_hook'])) {
             $GLOBALS['logic_hook'] = new LogicHook();
@@ -101,7 +101,7 @@ class LogicHook
         return $GLOBALS['logic_hook'];
     }
 
-    function setBean($bean)
+    public function setBean($bean)
     {
         $this->bean = $bean;
         return $this;
@@ -144,7 +144,7 @@ class LogicHook
 
     protected static $hooks = array();
 
-    static public function refreshHooks()
+    public static function refreshHooks()
     {
         self::$hooks = array();
     }
@@ -193,7 +193,7 @@ class LogicHook
      * @param array $arguments
      * @param SugarBean $bean
      */
-    function call_custom_logic($module_dir, $event, $arguments = null)
+    public function call_custom_logic($module_dir, $event, $arguments = null)
     {
         // declare the hook array variable, it will be defined in the included file.
         $hook_array = null;
@@ -223,7 +223,7 @@ class LogicHook
      * @param array $arguments
      * @param SugarBean $bean
      */
-    function process_hooks($hook_array, $event, $arguments)
+    public function process_hooks($hook_array, $event, $arguments)
     {
         // Now iterate through the array for the appropriate hook
         if (!empty($hook_array[$event])) {

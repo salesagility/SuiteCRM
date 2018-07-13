@@ -44,7 +44,7 @@ class SoapResourceObserver extends ResourceObserver
 {
     private $soapServer;
 
-    function __construct($module)
+    public function __construct($module)
     {
         parent::__construct($module);
     }
@@ -52,7 +52,7 @@ class SoapResourceObserver extends ResourceObserver
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SoapResourceObserver($module)
+    public function SoapResourceObserver($module)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -71,7 +71,7 @@ class SoapResourceObserver extends ResourceObserver
      * response can be returned when the notify method is triggered.
      * @param $server The instance of the nusoap soap server
      */
-    function set_soap_server(& $server)
+    public function set_soap_server(& $server)
     {
         $this->soapServer = $server;
     }

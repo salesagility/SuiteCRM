@@ -48,7 +48,7 @@ require_once('include/generic/SugarWidgets/SugarWidgetSubPanelTopButton.php');
 class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
 {
     //button_properties is a collection of properties associated with the widget_class definition. layoutmanager
-    function __construct($button_properties=array())
+    public function __construct($button_properties=array())
     {
         $this->button_properties=$button_properties;
     }
@@ -56,7 +56,7 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetSubPanelTopSelectButton($button_properties=array())
+    public function SugarWidgetSubPanelTopSelectButton($button_properties=array())
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -78,7 +78,7 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
         return $GLOBALS['app_strings']['LBL_SELECT_BUTTON_LABEL'];
     }
     //widget_data is the collection of attributes associated with the button in the layout_defs file.
-    function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
+    public function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
     {
         global $app_strings;
         $initial_filter = '';

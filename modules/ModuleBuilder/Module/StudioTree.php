@@ -41,7 +41,7 @@ require_once('modules/ModuleBuilder/MB/MBPackageTree.php');
 require_once('modules/ModuleBuilder/Module/StudioBrowser.php');
 class StudioTree extends MBPackageTree
 {
-    function __construct()
+    public function __construct()
     {
         $this->tree = new Tree('package_tree');
         $this->tree->id = 'package_tree';
@@ -52,7 +52,7 @@ class StudioTree extends MBPackageTree
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function StudioTree()
+    public function StudioTree()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -64,7 +64,7 @@ class StudioTree extends MBPackageTree
     }
 
 
-    function getName()
+    public function getName()
     {
         return translate('LBL_SECTION_MODULES');
     }

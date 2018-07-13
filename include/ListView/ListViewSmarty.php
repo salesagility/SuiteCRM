@@ -107,7 +107,7 @@ class ListViewSmarty extends ListViewDisplay
      * @param string $htmlVar the corresponding html public in xtpl per row
      *
      */
-    function process($file, $data, $htmlpublic)
+    public function process($file, $data, $htmlpublic)
     {
         global $mod_strings;
         if (!$this->should_process) {
@@ -252,7 +252,7 @@ class ListViewSmarty extends ListViewDisplay
      * @param ordering array data that contains the ordering info
      *
      */
-    function processArrows($ordering)
+    public function processArrows($ordering)
     {
         $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif',false));
 
@@ -272,7 +272,7 @@ class ListViewSmarty extends ListViewDisplay
      * @param end bool display the ending of the listview data (ie MassUpdate)
      *
      */
-    function display($end = true)
+    public function display($end = true)
     {
         if (!$this->should_process) {
             return $this->getSearchIcon().$GLOBALS['app_strings']['LBL_SEARCH_POPULATE_ONLY'];
@@ -330,7 +330,7 @@ class ListViewSmarty extends ListViewDisplay
     }
 
 
-    function displayEnd()
+    public function displayEnd()
     {
         $str = '';
         if ($this->show_mass_update_form) {

@@ -33,7 +33,7 @@ class AOPInboundEmail extends InboundEmail
      * @param $noteIds A whitelist of note ids to replace
      * @return mixed
      */
-    function processImageLinks($string, $noteIds)
+    public function processImageLinks($string, $noteIds)
     {
         global $sugar_config;
         if (!$noteIds) {
@@ -55,7 +55,7 @@ class AOPInboundEmail extends InboundEmail
     }
 
 
-    function handleCreateCase($email, $userId)
+    public function handleCreateCase($email, $userId)
     {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");

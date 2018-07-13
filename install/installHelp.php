@@ -44,9 +44,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class HelpItem
 {
-    var $associated_field = '';
-    var $title = '';
-    var $text = '';
+    public $associated_field = '';
+    public $title = '';
+    public $text = '';
 }
 
 function &help_menu_html()

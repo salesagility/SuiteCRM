@@ -18,18 +18,18 @@
  /* pStock class definition */
  class pStock
  {
-     var $pChartObject;
-     var $pDataObject;
+     public $pChartObject;
+     public $pDataObject;
 
      /* Class creator */
-     function pStock($pChartObject,$pDataObject)
+     public function pStock($pChartObject,$pDataObject)
      {
          $this->pChartObject = $pChartObject;
          $this->pDataObject  = $pDataObject;
      }
 
      /* Draw a stock chart */
-     function drawStockChart($Format="")
+     public function drawStockChart($Format="")
      {
          $SerieOpen		= isset($Format["SerieOpen"]) ? $Format["SerieOpen"] : "Open";
          $SerieClose	= isset($Format["SerieClose"]) ? $Format["SerieClose"] : "Close";

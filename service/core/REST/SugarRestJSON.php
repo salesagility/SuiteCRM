@@ -56,7 +56,7 @@ class SugarRestJSON extends SugarRest
 	 * @param array $input - assoc array of input values: key = param name, value = param type
 	 * @return String - echos json encoded string of $input
 	 */
-    function generateResponse($input)
+    public function generateResponse($input)
     {
         $json = getJSONObj();
         ob_clean();
@@ -80,7 +80,7 @@ class SugarRestJSON extends SugarRest
      *
      * @return unknown
      */
-    function serve()
+    public function serve()
     {
         $GLOBALS['log']->info('Begin: SugarRestJSON->serve');
         $json_data = !empty($_REQUEST['rest_data'])? $GLOBALS['RAW_REQUEST']['rest_data']: '';
@@ -107,12 +107,12 @@ class SugarRestJSON extends SugarRest
 	 * @param SoapError $errorObject - This is an object of type SoapError
 	 * @access public
 	 */
-    function fault($errorObject)
+    public function fault($errorObject)
     {
         $this->faultServer->faultObject = $errorObject;
     } // fn
 
-    function generateFaultResponse($errorObject)
+    public function generateFaultResponse($errorObject)
     {
         $error = $errorObject->number . ': ' . $errorObject->name . '<br>' . $errorObject->description;
         $GLOBALS['log']->error($error);

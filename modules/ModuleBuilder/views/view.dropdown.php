@@ -54,7 +54,7 @@ class ViewDropdown extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $ajax = new AjaxCompose();
         $smarty = $this->generateSmarty();
@@ -76,7 +76,7 @@ class ViewDropdown extends SugarView
         echo $ajax->getJavascript();
     }
  	
-    function generateSmarty()
+    public function generateSmarty()
     {
         //get the selected language
         $selected_lang = (!empty($_REQUEST['dropdown_lang'])?$_REQUEST['dropdown_lang']:$_SESSION['authenticated_user_language']);

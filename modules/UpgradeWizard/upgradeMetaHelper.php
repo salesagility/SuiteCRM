@@ -41,15 +41,15 @@
 
 class UpgradeMetaHelper
 {
-    var $upgrade_dir;
-    var $debug_mode;
-    var $upgrade_modules;
-    var $customized_modules;
-    var $source_dir;
-    var $dest_dir ;
-    var $evparser;
-    var $dvparser;
-    var $path_to_master_copy;
+    public $upgrade_dir;
+    public $debug_mode;
+    public $upgrade_modules;
+    public $customized_modules;
+    public $source_dir;
+    public $dest_dir ;
+    public $evparser;
+    public $dvparser;
+    public $path_to_master_copy;
     /**
      * UpgradeMetaHelper
      * This is the constructor for the UpgradeMetaHelper class
@@ -58,7 +58,7 @@ class UpgradeMetaHelper
      * @param $debugMode Debug mode, default is false
      *
      */
-    function __construct($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false)
+    public function __construct($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false)
     {
         $this->upgrade_dir = $dir;
         $this->debug_mode = $debugMode;
@@ -80,7 +80,7 @@ class UpgradeMetaHelper
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function UpgradeMetaHelper($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false)
+    public function UpgradeMetaHelper($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -98,7 +98,7 @@ class UpgradeMetaHelper
      * Array of files that do not match the md5 checksum for the module
      * @return $return_array Two-dimensional Array of [module][modified file(s) Array]
      */
-    function getModifiedModules()
+    public function getModifiedModules()
     {
         $md5_string = array();
         if (file_exists(clean_path(getcwd().'/files.md5'))) {
@@ -136,7 +136,7 @@ class UpgradeMetaHelper
         return $return_array;
     }
 
-    function saveMatchingFilesQueries($currStep,$value)
+    public function saveMatchingFilesQueries($currStep,$value)
     {
         $upgrade_progress_dir = sugar_cached('upgrades/temp');
         if (!is_dir($upgrade_progress_dir)) {
@@ -162,7 +162,7 @@ class UpgradeMetaHelper
         }
     }
 
-    function getAllCustomizedModulesBeyondStudio()
+    public function getAllCustomizedModulesBeyondStudio()
     {
         require_once('modules/UpgradeWizard/uw_utils.php');
         $md5_string = array();
@@ -230,7 +230,7 @@ class UpgradeMetaHelper
      * If a file has been modified then put the module in the list of customized
      * modules. Show the list in the preflight check UI.
      */
-    function getAllCustomizedModules()
+    public function getAllCustomizedModules()
     {
         require_once('files.md5');
 
@@ -271,7 +271,7 @@ class UpgradeMetaHelper
      * present in the metadata directory of the module
      * @return $modules Array of modules that are studio enabled
      */
-    function loadStudioModules()
+    public function loadStudioModules()
     {
         $modules = array();
         $d = dir('modules');
@@ -293,7 +293,7 @@ class UpgradeMetaHelper
      * and runs the parsing for the modules to upgrade
      *
      */
-    function runParser()
+    public function runParser()
     {
         require_once('include/SugarFields/Parsers/EditViewMetaParser.php');
         require_once('include/SugarFields/Parsers/DetailViewMetaParser.php');
@@ -317,7 +317,7 @@ class UpgradeMetaHelper
      * @param $files Array of files found to parse
      *
      */
-    function parseFile($module_name, $files)
+    public function parseFile($module_name, $files)
     {
         global $beanList, $dictionary;
         foreach ($files as $file) {
@@ -355,7 +355,7 @@ class UpgradeMetaHelper
      * Also creates subdirectories for all studio enabled modules.
      *
      */
-    function create_upgrade_directory()
+    public function create_upgrade_directory()
     {
         $dir = $this->upgrade_dir.'/modules';
         if (!file_exists($this->upgrade_dir)) {
@@ -392,7 +392,7 @@ class UpgradeMetaHelper
      * @param $view The view (EditView or DetailView)
      * @return boolean true if verification check is okay; false otherwise
      */
-    function verifyMetaData($metadataFile, $module, $view)
+    public function verifyMetaData($metadataFile, $module, $view)
     {
         if (!file_exists($metadataFile) || !is_file($metadataFile)) {
             return false;

@@ -45,10 +45,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime
 {
-    var $reporter;
-    var $assigned_user=null;
+    public $reporter;
+    public $assigned_user=null;
 
-    function __construct(&$layout_manager)
+    public function __construct(&$layout_manager)
     {
         parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute('reporter');
@@ -57,7 +57,7 @@ class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetFieldDateTimecombo(&$layout_manager)
+    public function SugarWidgetFieldDateTimecombo(&$layout_manager)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -70,7 +70,7 @@ class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime
 
     //TODO:now for date time field , we just search from date start to date end. The time is from 00:00:00 to 23:59:59
     //If there is requirement, we can modify report.js::addFilterInputDatetimesBetween and this function
-    function queryFilterBetween_Datetimes(& $layout_def)
+    public function queryFilterBetween_Datetimes(& $layout_def)
     {
         global $timedate;
         if ($this->getAssignedUser()) {

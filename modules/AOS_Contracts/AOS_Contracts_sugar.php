@@ -33,39 +33,39 @@
 
 class AOS_Contracts_sugar extends Basic
 {
-    var $new_schema = true;
-    var $module_dir = 'AOS_Contracts';
-    var $object_name = 'AOS_Contracts';
-    var $table_name = 'aos_contracts';
-    var $importable = true;
-    var $lineItems = true;
-    var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $assigned_user_link;
-    var $reference_code;
-    var $start_date;
-    var $end_date;
-    var $total_contract_value;
-    var $status;
-    var $customer_signed_date;
-    var $company_signed_date;
-    var $renewal_reminder_date;
-    var $contract_type;
+    public $new_schema = true;
+    public $module_dir = 'AOS_Contracts';
+    public $object_name = 'AOS_Contracts';
+    public $table_name = 'aos_contracts';
+    public $importable = true;
+    public $lineItems = true;
+    public $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
+    public $reference_code;
+    public $start_date;
+    public $end_date;
+    public $total_contract_value;
+    public $status;
+    public $customer_signed_date;
+    public $company_signed_date;
+    public $renewal_reminder_date;
+    public $contract_type;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -73,7 +73,7 @@ class AOS_Contracts_sugar extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Contracts_sugar()
+    public function AOS_Contracts_sugar()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -85,7 +85,7 @@ class AOS_Contracts_sugar extends Basic
     }
 
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL': return true;

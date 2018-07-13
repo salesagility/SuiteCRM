@@ -47,56 +47,56 @@ require_once('include/EditView/SugarVCR.php');
  */
 class ListView
 {
-    var $local_theme= null;
-    var $local_app_strings= null;
-    var $local_image_path = null;
-    var $local_current_module = null;
-    var $local_mod_strings = null;
-    var $records_per_page = 20;
-    var $xTemplate = null;
-    var $xTemplatePath = null;
-    var $seed_data = null;
-    var $query_where = null;
-    var $query_limit = -1;
-    var $query_orderby = null;
-    var $header_title = '';
-    var $header_text = '';
-    var $initialized = false;
-    var $show_export_button = true;
-    var $show_delete_button = true;
-    var $show_select_menu = true;
-    var $show_paging = true;
-    var $show_mass_update = true;
-    var $show_mass_update_form = true;
-    var $query_where_has_changed = false;
-    var $display_header_and_footer = true;
-    var $baseURL = '';
-    var $is_dynamic = false;
-    var $inline = false;
-    var $start_link_wrapper = '';
-    var $end_link_wrapper = '';
-    var $list_field_defs = array();
+    public $local_theme= null;
+    public $local_app_strings= null;
+    public $local_image_path = null;
+    public $local_current_module = null;
+    public $local_mod_strings = null;
+    public $records_per_page = 20;
+    public $xTemplate = null;
+    public $xTemplatePath = null;
+    public $seed_data = null;
+    public $query_where = null;
+    public $query_limit = -1;
+    public $query_orderby = null;
+    public $header_title = '';
+    public $header_text = '';
+    public $initialized = false;
+    public $show_export_button = true;
+    public $show_delete_button = true;
+    public $show_select_menu = true;
+    public $show_paging = true;
+    public $show_mass_update = true;
+    public $show_mass_update_form = true;
+    public $query_where_has_changed = false;
+    public $display_header_and_footer = true;
+    public $baseURL = '';
+    public $is_dynamic = false;
+    public $inline = false;
+    public $start_link_wrapper = '';
+    public $end_link_wrapper = '';
+    public $list_field_defs = array();
 
-    var $shouldProcess = false;
-    var $data_array;
-    var $related_field_name = '';
-    var $child_focus = '';
-    var $layout_manager = null;
-    var $process_for_popups = false;
-    var $multi_select_popup=false;
-    var $_additionalDetails = false;
-    var $additionalDetailsFunction = null;
-    var $sort_order = '';
-    var $force_mass_update=false;
-    var $keep_mass_update_form_open=false;
-    var $ignorePopulateOnly = false;
+    public $shouldProcess = false;
+    public $data_array;
+    public $related_field_name = '';
+    public $child_focus = '';
+    public $layout_manager = null;
+    public $process_for_popups = false;
+    public $multi_select_popup=false;
+    public $_additionalDetails = false;
+    public $additionalDetailsFunction = null;
+    public $sort_order = '';
+    public $force_mass_update=false;
+    public $keep_mass_update_form_open=false;
+    public $ignorePopulateOnly = false;
 
-    function setDataArray($value)
+    public function setDataArray($value)
     {
         $this->data_array = $value;
     }
 
-    function processListViewMulti($seed, $xTemplateSection, $html_varName)
+    public function processListViewMulti($seed, $xTemplateSection, $html_varName)
     {
         $this->shouldProcess = true;
 
@@ -108,7 +108,7 @@ class ListView
     }
 
 
-    function processListView($seed, $xTemplateSection, $html_varName)
+    public function processListView($seed, $xTemplateSection, $html_varName)
     {
         global $sugar_config;
 
@@ -190,7 +190,7 @@ class ListView
     }
 
 
-    function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
+    public function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
     {
         $this->source_module = $source_module;
         $this->subpanel_module = $subpanel_def->name;
@@ -240,7 +240,7 @@ class ListView
      * @param unknown $html_varName
      * @desc INTERNAL FUNCTION handles the rows
      */
-    function process_dynamic_listview_rows($data,$parent_data, $xtemplateSection, $html_varName, $subpanel_def)
+    public function process_dynamic_listview_rows($data,$parent_data, $xtemplateSection, $html_varName, $subpanel_def)
     {
         global $subpanel_item_count;
         global $odd_bg;
@@ -564,7 +564,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setDisplayHeaderAndFooter($bool)
+    public function setDisplayHeaderAndFooter($bool)
     {
         $this->display_header_and_footer = $bool;
     }
@@ -574,7 +574,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function __construct()
+    public function __construct()
     {
         if (!$this->initialized) {
             global $sugar_config;
@@ -593,12 +593,12 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setRecordsPerPage($count)
+    public function setRecordsPerPage($count)
     {
         $this->records_per_page = $count;
     }
     /**sets the header title */
-    function setHeaderTitle($value)
+    public function setHeaderTitle($value)
     {
         $this->header_title = $value;
     }
@@ -607,7 +607,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setHeaderText($value)
+    public function setHeaderText($value)
     {
         $this->header_text = $value;
     }
@@ -616,7 +616,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setXTemplatePath($value)
+    public function setXTemplatePath($value)
     {
         $this->xTemplatePath= $value;
     }
@@ -626,7 +626,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function initNewXTemplate($XTemplatePath, $modString, $imagePath = null)
+    public function initNewXTemplate($XTemplatePath, $modString, $imagePath = null)
     {
         $this->setXTemplatePath($XTemplatePath);
         if (isset($modString)) {
@@ -638,7 +638,7 @@ class ListView
     }
 
 
-    function getOrderBy($varName, $defaultOrderBy='', $force_sortorder='')
+    public function getOrderBy($varName, $defaultOrderBy='', $force_sortorder='')
     {
         $sortBy = $this->getSessionVariable($varName, "ORDER_BY") ;
 
@@ -716,7 +716,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setQuery($where, $limit, $orderBy, $varName, $allowOrderByOveride=true)
+    public function setQuery($where, $limit, $orderBy, $varName, $allowOrderByOveride=true)
     {
         $this->query_where = $where;
         if ($this->getSessionVariable("query", "where") != $where) {
@@ -737,7 +737,7 @@ class ListView
         $this->setLocalSessionVariable($varName, "ORDER_BY_DETAIL", $this->query_orderby);
     }
 
-    function displayArrow()
+    public function displayArrow()
     {
     }
 
@@ -746,7 +746,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setTheme($theme)
+    public function setTheme($theme)
     {
         $this->local_theme = $theme;
         if (isset($this->xTemplate)) {
@@ -759,7 +759,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setAppStrings($app_strings)
+    public function setAppStrings($app_strings)
     {
         unset($this->local_app_strings);
         $this->local_app_strings = $app_strings;
@@ -773,7 +773,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setModStrings($mod_strings)
+    public function setModStrings($mod_strings)
     {
         unset($this->local_module_strings);
         $this->local_mod_strings = $mod_strings;
@@ -787,7 +787,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setImagePath($image_path)
+    public function setImagePath($image_path)
     {
         $this->local_image_path = $image_path;
         if (empty($this->local_image_path)) {
@@ -803,7 +803,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setCurrentModule($currentModule)
+    public function setCurrentModule($currentModule)
     {
         unset($this->local_current_module);
         $this->local_current_module = $currentModule;
@@ -817,7 +817,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function createXTemplate()
+    public function createXTemplate()
     {
         if (!isset($this->xTemplate)) {
             if (isset($this->xTemplatePath)) {
@@ -840,7 +840,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setXTemplate($newXTemplate)
+    public function setXTemplate($newXTemplate)
     {
         $this->xTemplate = $newXTemplate;
     }
@@ -850,7 +850,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function getXTemplate()
+    public function getXTemplate()
     {
         return $this->xTemplate;
     }
@@ -860,7 +860,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function xTemplateAssign($name, $value)
+    public function xTemplateAssign($name, $value)
     {
         if (!isset($this->xTemplate)) {
             $this->createXTemplate();
@@ -873,7 +873,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function getOffset($localVarName)
+    public function getOffset($localVarName)
     {
         if ($this->query_where_has_changed || isset($GLOBALS['record_has_changed'])) {
             $this->setSessionVariable($localVarName,"offset", 0);
@@ -890,7 +890,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setOffset($localVarName, $value)
+    public function setOffset($localVarName, $value)
     {
         $this->setSessionVariable($localVarName, "offset", $value);
     }
@@ -900,12 +900,12 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function setSessionVariable($localVarName,$varName, $value)
+    public function setSessionVariable($localVarName,$varName, $value)
     {
         $_SESSION[$this->local_current_module."_".$localVarName."_".$varName] = $value;
     }
 
-    function setUserVariable($localVarName,$varName, $value)
+    public function setUserVariable($localVarName,$varName, $value)
     {
         if ($this->is_dynamic ||  $localVarName == 'CELL') {
             return;
@@ -919,7 +919,7 @@ class ListView
      * All Rights Reserved.
      * Contributor(s): ______________________________________.
     */
-    function getSessionVariable($localVarName,$varName)
+    public function getSessionVariable($localVarName,$varName)
     {
         //Set any variables pass in through request first
         if (isset($_REQUEST[$this->getSessionVariableName($localVarName, $varName)])) {
@@ -932,7 +932,7 @@ class ListView
         return "";
     }
 
-    function getUserVariable($localVarName, $varName)
+    public function getUserVariable($localVarName, $varName)
     {
         global $current_user;
         if ($this->is_dynamic ||  $localVarName == 'CELL') {
@@ -954,7 +954,7 @@ class ListView
      * @param array $sortOrderList - contains options
      * @return string 'asc' | 'desc'
      */
-    function calculateSortOrder($sortOrderList)
+    public function calculateSortOrder($sortOrderList)
     {
         $priority_map = array(
           'request',
@@ -985,7 +985,7 @@ class ListView
     * All Rights Reserved.
     * Contributor(s): ______________________________________..
     */
-    function getSessionVariableName($localVarName,$varName)
+    public function getSessionVariableName($localVarName,$varName)
     {
         return $this->local_current_module."_".$localVarName."_".$varName;
     }
@@ -1004,7 +1004,7 @@ class ListView
         * All Rights Reserved..
         * Contributor(s): ______________________________________..
     */
-    function processSugarBean($xtemplateSection, $html_varName, $seed)
+    public function processSugarBean($xtemplateSection, $html_varName, $seed)
     {
         global $list_view_row_count;
 
@@ -1061,7 +1061,7 @@ class ListView
 
 
 
-    function processUnionBeans($sugarbean, $subpanel_def, $html_var = 'CELL')
+    public function processUnionBeans($sugarbean, $subpanel_def, $html_var = 'CELL')
     {
         $last_detailview_record = $this->getSessionVariable("detailview", "record");
         if (!empty($last_detailview_record) && $last_detailview_record != $sugarbean->id) {
@@ -1139,7 +1139,7 @@ class ListView
         return array('list'=>$list, 'parent_data'=>$response['parent_data'], 'query'=>$response['query']);
     }
 
-    function getBaseURL($html_varName)
+    public function getBaseURL($html_varName)
     {
         static $cache = array();
 
@@ -1212,7 +1212,7 @@ class ListView
     * All Rights Reserved.
     * Contributor(s): ______________________________________..
     */
-    function processListNavigation($xtemplateSection, $html_varName, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean=null, $subpanel_def=null, $col_count = 20)
+    public function processListNavigation($xtemplateSection, $html_varName, $current_offset, $next_offset, $previous_offset, $row_count, $sugarbean=null, $subpanel_def=null, $col_count = 20)
     {
         global $export_module;
         global $sugar_config;
@@ -1511,7 +1511,7 @@ class ListView
         }
     } // end processListNavigation
 
-    function processOrderBy($html_varName)
+    public function processOrderBy($html_varName)
     {
         if (!isset($this->base_URL)) {
             $this->base_URL = $_SERVER['PHP_SELF'];
@@ -1572,7 +1572,7 @@ class ListView
     }
 
 
-    function getAdditionalHeader()
+    public function getAdditionalHeader()
     {
     }
 
@@ -1587,7 +1587,7 @@ class ListView
     * All Rights Reserved.
     * Contributor(s): ______________________________________..
     */
-    function processListRows($data, $xtemplateSection, $html_varName)
+    public function processListRows($data, $xtemplateSection, $html_varName)
     {
         global $odd_bg;
         global $even_bg;
@@ -1746,7 +1746,7 @@ class ListView
     }
 
 
-    function getLayoutManager()
+    public function getLayoutManager()
     {
         require_once('include/generic/LayoutManager.php');
         if ($this->layout_manager == null) {
@@ -1756,7 +1756,7 @@ class ListView
     }
 
 
-    function process_dynamic_listview_header($source_module, $subpanel_def, $html_var = 'CELL')
+    public function process_dynamic_listview_header($source_module, $subpanel_def, $html_var = 'CELL')
     {
         $layout_manager = $this->getLayoutManager();
         $layout_manager->setAttribute('order_by_link',$this->processOrderBy($html_var));
@@ -1846,7 +1846,7 @@ class ListView
         * Contributor(s): ______________________________________..
     */
 
-    function processListViewTwo($seed, $xTemplateSection, $html_varName)
+    public function processListViewTwo($seed, $xTemplateSection, $html_varName)
     {
         global $current_user;
         if (!isset($this->xTemplate)) {
@@ -1909,7 +1909,7 @@ class ListView
      * @deprecated
      * @return string
      */
-    function getArrowStart()
+    public function getArrowStart()
     {
         global $log;
         $log->deprecated('ListView::getArrowStart is now deprecate and will be removed in a future release');
@@ -1920,7 +1920,7 @@ class ListView
      * @param $upDown
      * @return string
      */
-    function getArrowUpDownStart($upDown)
+    public function getArrowUpDownStart($upDown)
     {
         if ($upDown === '_down') {
             return '<span class="suitepicon suitepicon-action-sorting-ascending"></span>';
@@ -1935,7 +1935,7 @@ class ListView
      * @deprecated
      * @return string
      */
-    function getArrowEnd()
+    public function getArrowEnd()
     {
         global $log;
         $log->deprecated('ListView::getArrowEnd is now deprecate and will be removed in a future release');
@@ -1947,14 +1947,14 @@ class ListView
      * @param $upDown
      * @return string
      */
-    function getArrowUpDownEnd($upDown)
+    public function getArrowUpDownEnd($upDown)
     {
         global $log;
         $log->deprecated('ListView::getArrowUpDownEnd is now deprecate and will be removed in a future release');
         return '';
     }
 
-    function getArrowImageSize()
+    public function getArrowImageSize()
     {
         // jbasicChartDashletsExpColust get the non-sort image's size.. the up and down have be the same.
         $image = SugarThemeRegistry::current()->getImageURL("arrow.gif",false);
@@ -1973,7 +1973,7 @@ class ListView
         return $result;
     }
 
-    function getArrowUpDownImageSize($upDown)
+    public function getArrowUpDownImageSize($upDown)
     {
         // just get the non-sort image's size.. the up and down have be the same.
         $image = SugarThemeRegistry::current()->getImageURL("arrow{$upDown}.gif",false);
@@ -1992,7 +1992,7 @@ class ListView
         return $result;
     }
 
-    function getOrderByInfo($html_varName)
+    public function getOrderByInfo($html_varName)
     {
         $orderBy = $this->getSessionVariable($html_varName, "OBL");
         $desc = $this->getSessionVariable($html_varName, $orderBy.'S');
@@ -2000,7 +2000,7 @@ class ListView
         return array($orderBy,$desc);
     }
 
-    function processSortArrows($html_varName)
+    public function processSortArrows($html_varName)
     {
         $this->xTemplateAssign("arrow_start", $this->getArrowStart());
 
@@ -2025,7 +2025,7 @@ class ListView
     }
 
     // this is where translation happens for dynamic list views
-    function loadListFieldDefs(&$subpanel_fields,&$child_focus)
+    public function loadListFieldDefs(&$subpanel_fields,&$child_focus)
     {
         $this->list_field_defs = $subpanel_fields;
 
@@ -2048,7 +2048,7 @@ class ListView
         }
     }
 
-    function unique_id()
+    public function unique_id()
     {
         return sugar_microtime();
     }
@@ -2059,7 +2059,7 @@ class ListView
     * All Rights Reserved.
     * Contributor(s): ______________________________________.
     */
-    function setLocalSessionVariable($localVarName,$varName, $value)
+    public function setLocalSessionVariable($localVarName,$varName, $value)
     {
         $_SESSION[$localVarName."_".$varName] = $value;
     }
@@ -2070,7 +2070,7 @@ class ListView
     * All Rights Reserved.
     * Contributor(s): ______________________________________.
     */
-    function getLocalSessionVariable($localVarName,$varName)
+    public function getLocalSessionVariable($localVarName,$varName)
     {
         if (isset($_SESSION[$localVarName."_".$varName])) {
             return $_SESSION[$localVarName."_".$varName];
@@ -2081,7 +2081,7 @@ class ListView
 
     /* Set to true if you want Additional Details to appear in the listview
      */
-    function setAdditionalDetails($value = true, $function = '')
+    public function setAdditionalDetails($value = true, $function = '')
     {
         if (!empty($function)) {
             $this->additionalDetailsFunction = $function;

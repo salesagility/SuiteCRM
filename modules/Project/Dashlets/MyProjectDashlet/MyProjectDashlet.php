@@ -45,7 +45,7 @@ require_once('modules/Project/Project.php');
 
 class MyProjectDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/Project/Dashlets/MyProjectDashlet/MyProjectDashlet.data.php');
@@ -64,7 +64,7 @@ class MyProjectDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyProjectDashlet($id, $def = null)
+    public function MyProjectDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

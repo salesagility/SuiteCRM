@@ -49,7 +49,7 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyMeetingsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/Meetings/Dashlets/MyMeetingsDashlet/MyMeetingsDashlet.data.php');
@@ -83,7 +83,7 @@ class MyMeetingsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyMeetingsDashlet($id, $def = null)
+    public function MyMeetingsDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -94,7 +94,7 @@ class MyMeetingsDashlet extends DashletGeneric
         self::__construct($id, $def);
     }
 
-    function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = array(), $id = null)
     {
         global $current_language, $app_list_strings, $current_user;
         $mod_strings = return_module_language($current_language, 'Meetings');
@@ -172,11 +172,11 @@ class MyMeetingsDashlet extends DashletGeneric
      *
      * @return string javascript to use with this dashlet
      */
-    function displayScript()
+    public function displayScript()
     {
     }
 
-    function displayOptions()
+    public function displayOptions()
     {
         $this->processDisplayOptions();
         $this->configureSS->assign('strings', array('general' => $GLOBALS['mod_strings']['LBL_DASHLET_CONFIGURE_GENERAL'],
@@ -204,7 +204,7 @@ class MyMeetingsDashlet extends DashletGeneric
         return $this->configureSS->fetch($this->configureTpl);
     }
 
-    function saveStatus()
+    public function saveStatus()
     {
     }
 }

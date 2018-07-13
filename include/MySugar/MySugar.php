@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class MySugar
 {
-    var $type;
+    public $type;
 
     public function __construct($type)
     {
@@ -70,7 +70,7 @@ class MySugar
     }
 
 
-    function checkDashletDisplay()
+    public function checkDashletDisplay()
     {
         if ((!in_array($this->type, $GLOBALS['moduleList'])
 				&& !in_array($this->type, $GLOBALS['modInvisList']))
@@ -89,7 +89,7 @@ class MySugar
         return $displayDashlet;
     }
 
-    function addDashlet()
+    public function addDashlet()
     {
         if ($_SERVER['REQUEST_METHOD'] != 'POST') {
             return;
@@ -147,7 +147,7 @@ class MySugar
         }
     }
 
-    function displayDashlet()
+    public function displayDashlet()
     {
         global $current_user, $mod_strings, $app_strings;
 
@@ -195,7 +195,7 @@ class MySugar
         }
     }
 
-    function getPredefinedChartScript()
+    public function getPredefinedChartScript()
     {
         global $current_user, $mod_strings;
 
@@ -214,7 +214,7 @@ class MySugar
 
 
 
-    function deleteDashlet()
+    public function deleteDashlet()
     {
         global $current_user;
 
@@ -247,7 +247,7 @@ class MySugar
         }
     }
 
-    function dashletsDialog()
+    public function dashletsDialog()
     {
         require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
 
@@ -292,7 +292,7 @@ EOJS;
     }
 
 
-    function searchModuleToolsDashlets($searchStr, $category)
+    public function searchModuleToolsDashlets($searchStr, $category)
     {
         require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
 
@@ -338,7 +338,7 @@ EOJS;
         return $sugar_smarty->fetch('include/MySugar/tpls/dashletsSearchResults.tpl');
     }
 
-    function searchChartsDashlets($searchStr)
+    public function searchChartsDashlets($searchStr)
     {
         require_once('include/MySugar/DashletsDialog/DashletsDialog.php');
 
@@ -369,7 +369,7 @@ EOJS;
         return $sugar_smarty->fetch('include/MySugar/tpls/chartDashletsSearchResults.tpl');
     }
 
-    function searchDashlets()
+    public function searchDashlets()
     {
         $searchStr = $_REQUEST['search'];
         $category = $_REQUEST['category'];
@@ -384,7 +384,7 @@ EOJS;
         echo 'response = ' . $json->encode(array('html' => $html, 'script' => ''));
     }
 
-    function configureDashlet()
+    public function configureDashlet()
     {
         global $current_user, $app_strings, $mod_strings;
 
@@ -409,7 +409,7 @@ EOJS;
         }
     }
 
-    function saveLayout()
+    public function saveLayout()
     {
         global $current_user;
 

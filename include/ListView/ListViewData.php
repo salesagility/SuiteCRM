@@ -92,7 +92,7 @@ class ListViewData
      *
      * @return array containing the keys orderBy => field being ordered off of and sortOrder => the sort order of that field
      */
-    function getOrderBy($orderBy = '', $direction = '')
+    public function getOrderBy($orderBy = '', $direction = '')
     {
         if (!empty($orderBy) || !empty($_REQUEST[$this->var_order_by])) {
             if (!empty($_REQUEST[$this->var_order_by])) {
@@ -132,7 +132,7 @@ class ListViewData
      * @param STRING (ASC or DESC) $current_order
      * @return  STRING (ASC or DESC)
      */
-    function getReverseSortOrder($current_order)
+    public function getReverseSortOrder($current_order)
     {
         return (strcmp(strtolower($current_order), 'asc') == 0)?'DESC':'ASC';
     }
@@ -141,7 +141,7 @@ class ListViewData
      *
      * @return INT (the limit)
      */
-    function getLimit()
+    public function getLimit()
     {
         return $GLOBALS['sugar_config'][$this->limitName];
     }
@@ -151,7 +151,7 @@ class ListViewData
      *
      * @return INT (current offset)
      */
-    function getOffset()
+    public function getOffset()
     {
         return (!empty($_REQUEST[$this->var_offset])) ? $_REQUEST[$this->var_offset] : 0;
     }
@@ -184,7 +184,7 @@ class ListViewData
      *
      * @param unknown_type $baseName
      */
-    function setVariableName($baseName, $where, $listviewName = null, $id = null)
+    public function setVariableName($baseName, $where, $listviewName = null, $id = null)
     {
         global $timedate;
         $module = (!empty($listviewName)) ? $listviewName: isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
@@ -201,7 +201,7 @@ class ListViewData
         $_SESSION[strtoupper($baseName) . "_DETAIL_NAV_HISTORY"] = false;
     }
 
-    function getTotalCount($main_query)
+    public function getTotalCount($main_query)
     {
         if (!empty($this->count_query)) {
             $count_query = $this->count_query;
@@ -251,7 +251,7 @@ class ListViewData
      * @param string:'id' $id_field
      * @return array('data'=> row data, 'pageData' => page data information, 'query' => original query string)
      */
-    function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(),$params=array(),$id_field = 'id',$singleSelect=true, $id = null)
+    public function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(),$params=array(),$id_field = 'id',$singleSelect=true, $id = null)
     {
         global $current_user;
         require_once 'include/SearchForm/SearchForm2.php';
@@ -610,7 +610,7 @@ class ListViewData
      * @param GUID id id of the record
      * @return array string to attach to field
      */
-    function getAdditionalDetailsAjax($id)
+    public function getAdditionalDetailsAjax($id)
     {
         global $app_strings;
 
@@ -631,7 +631,7 @@ class ListViewData
      * @param array $editAccess
      * @return array string to attach to field
      */
-    function getAdditionalDetails($fields, $adFunction, $editAccess)
+    public function getAdditionalDetails($fields, $adFunction, $editAccess)
     {
         global $app_strings;
         global $mod_strings;

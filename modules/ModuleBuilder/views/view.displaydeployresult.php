@@ -41,7 +41,7 @@ require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 
 class ViewDisplaydeployresult extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         $this->show_header = false;
         $this->show_title = false;
@@ -55,7 +55,7 @@ class ViewDisplaydeployresult extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewDisplaydeployresult()
+    public function ViewDisplaydeployresult()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -80,7 +80,7 @@ class ViewDisplaydeployresult extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $message = $this->view_object_map['message'];
         echo $message.getVersionedScript('cache/include/javascript/sugar_grp1_yui.js?')."<script type='text/javascript' language='Javascript'>YAHOO.util.Connect.asyncRequest('GET', 'index.php?module=Administration&action=RebuildRelationship&silent=true');</script>";

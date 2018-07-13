@@ -47,12 +47,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
 {
-    function displayHeaderCell($layout_def)
+    public function displayHeaderCell($layout_def)
     {
         return '&nbsp;';
     }
 
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         //if the contract has been executed or selected_revision is same as latest revision
         //then hide the latest button. 		

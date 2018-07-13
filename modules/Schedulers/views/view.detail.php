@@ -59,7 +59,7 @@ class SchedulersViewDetail extends ViewDetail
     /**
  	 * display
  	 */
-    function display()
+    public function display()
     {
         $this->bean->parseInterval();
         $this->bean->setIntervalHumanReadable();

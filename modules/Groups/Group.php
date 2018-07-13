@@ -46,13 +46,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Group extends User
 {
     // User attribute overrides
-    var $status			= 'Group';
-    var $password		= ''; // to disallow logins
-    var $default_team;
-    var $importable = false;
+    public $status			= 'Group';
+    public $password		= ''; // to disallow logins
+    public $default_team;
+    public $importable = false;
 
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -60,7 +60,7 @@ class Group extends User
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Group()
+    public function Group()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -75,12 +75,12 @@ class Group extends User
     /**
      * overrides SugarBean method
      */
-    function mark_deleted($id)
+    public function mark_deleted($id)
     {
         SugarBean::mark_deleted($id);
     }
 
-    function create_export_query($order_by, $where, $relate_link_join = '')
+    public function create_export_query($order_by, $where, $relate_link_join = '')
     {
         $query = "SELECT users.*";
         $query .= " FROM users ";

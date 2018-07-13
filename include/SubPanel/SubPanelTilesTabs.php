@@ -49,7 +49,7 @@ require_once('include/SubPanel/SubPanelTiles.php');
  */
 class SubPanelTilesTabs extends SubPanelTiles
 {
-    function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
+    public function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
     {
         $this->focus = $focus;
         $this->id = $focus->id;
@@ -58,7 +58,7 @@ class SubPanelTilesTabs extends SubPanelTiles
         $this->subpanel_definitions = new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
     }
 
-    function getSubpanelGroupLayout($selectedGroup)
+    public function getSubpanelGroupLayout($selectedGroup)
     {
         global $current_user;
 
@@ -72,7 +72,7 @@ class SubPanelTilesTabs extends SubPanelTiles
         return $current_user->getPreference('subpanelLayout', $layoutParams);
     }
 
-    function applyUserCustomLayoutToTabs($tabs, $key='All')
+    public function applyUserCustomLayoutToTabs($tabs, $key='All')
     {
         //WDong Bug: 12258 "All" tab in the middle of a record's detail view is not localized.
         if ($key=='All') {
@@ -100,12 +100,12 @@ class SubPanelTilesTabs extends SubPanelTiles
      * @param boolean $showTabs	Call the view code to display the generated tabs
      * @param string $selectedGroup	(Optional) Name of any selected tab (defaults to 'All')
      */
-    function getTabs($showTabs = true, $selectedGroup='')
+    public function getTabs($showTabs = true, $selectedGroup='')
     {
         $args = func_get_args();
         return call_user_func_array(array($this, '_getTabs'), $args);
     }
-    function _getTabs($tabs, $showTabs = true, $selectedGroup='All')
+    public function _getTabs($tabs, $showTabs = true, $selectedGroup='All')
     {
         //WDong Bug: 12258 "All" tab in the middle of a record's detail view is not localized.
         if ($selectedGroup=='All') {

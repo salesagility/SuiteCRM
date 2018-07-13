@@ -44,15 +44,15 @@ require_once("include/SugarCharts/JsChart.php");
 
 class Jit extends JsChart
 {
-    var $supports_image_export = true;
-    var $print_html_legend_pdf = true;
+    public $supports_image_export = true;
+    public $print_html_legend_pdf = true;
 	
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 	
-    function getChartResources()
+    public function getChartResources()
     {
         return '
 		<!--[if lt IE 9]>
@@ -63,7 +63,7 @@ class Jit extends JsChart
 		';
     }
 	
-    function getMySugarChartResources()
+    public function getMySugarChartResources()
     {
         return '
 		<script language="javascript" type="text/javascript" src="'.getJSPath('include/SugarCharts/Jit/js/mySugarCharts.js').'"></script>
@@ -71,7 +71,7 @@ class Jit extends JsChart
     }
 	
 
-    function display($name, $xmlFile, $width='320', $height='480', $resize=false)
+    public function display($name, $xmlFile, $width='320', $height='480', $resize=false)
     {
         parent::display($name, $xmlFile, $width, $height, $resize);
 
@@ -79,7 +79,7 @@ class Jit extends JsChart
     }
 	
 
-    function getDashletScript($id,$xmlFile="")
+    public function getDashletScript($id,$xmlFile="")
     {
         parent::getDashletScript($id,$xmlFile);
         return $this->ss->fetch('include/SugarCharts/Jit/tpls/DashletGenericChartScript.tpl');

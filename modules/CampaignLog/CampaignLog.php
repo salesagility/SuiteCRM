@@ -43,26 +43,26 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class CampaignLog extends SugarBean
 {
-    var $table_name = 'campaign_log';
-    var $object_name = 'CampaignLog';
-    var $module_dir = 'CampaignLog';
+    public $table_name = 'campaign_log';
+    public $object_name = 'CampaignLog';
+    public $module_dir = 'CampaignLog';
 
-    var $new_schema = true;
+    public $new_schema = true;
 
-    var $campaign_id;
-    var $target_tracker_key;
-    var $target_id;
-    var $target_type;
-    var $date_modified;
-    var $activity_type;
-    var $activity_date;
-    var $related_id;
-    var $related_type;
-    var $deleted;
-    var $list_id;
-    var $hits;
-    var $more_information;
-    var $marketing_id;
+    public $campaign_id;
+    public $target_tracker_key;
+    public $target_id;
+    public $target_type;
+    public $date_modified;
+    public $activity_type;
+    public $activity_date;
+    public $related_id;
+    public $related_type;
+    public $deleted;
+    public $list_id;
+    public $hits;
+    public $more_information;
+    public $marketing_id;
 
     public function __construct()
     {
@@ -85,7 +85,7 @@ class CampaignLog extends SugarBean
     }
 
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         global $locale;
         $temp_array = $this->get_list_view_array();
@@ -128,7 +128,7 @@ class CampaignLog extends SugarBean
         return $temp_array;
     }
 
-    function retrieve_email_address($trgt_id = '')
+    public function retrieve_email_address($trgt_id = '')
     {
         $return_str = '';
         if (!empty($trgt_id)) {
@@ -154,7 +154,7 @@ class CampaignLog extends SugarBean
 
 
     //this function is called statically by the campaign_log subpanel.
-    static function get_related_name($related_id, $related_type)
+    public static function get_related_name($related_id, $related_type)
     {
         global $locale;
         $db= DBManagerFactory::getInstance();

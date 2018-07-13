@@ -44,9 +44,9 @@ require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 require_once('include/utils/array_utils.php');
 class TemplateMultiEnum extends TemplateEnum
 {
-    var $type = 'text';
+    public $type = 'text';
 
-    function get_html_edit()
+    public function get_html_edit()
     {
         $this->prepare();
         $xtpl_var = strtoupper($this->name);
@@ -54,7 +54,7 @@ class TemplateMultiEnum extends TemplateEnum
         return "<input type='hidden' name='". $this->name. "' value='0'><select name='". $this->name . "[]' size='5' title='{" . $xtpl_var ."_HELP}' MULTIPLE=true>{OPTIONS_".$xtpl_var. "}</select>";
     }
 
-    function get_xtpl_edit()
+    public function get_xtpl_edit()
     {
         $name = $this->name;
         $value = '';
@@ -80,14 +80,14 @@ class TemplateMultiEnum extends TemplateEnum
 
         return $returnXTPL;
     }
-    function prepSave()
+    public function prepSave()
     {
     }
-    function get_xtpl_list()
+    public function get_xtpl_list()
     {
         return $this->get_xtpl_detail();
     }
-    function get_xtpl_detail()
+    public function get_xtpl_detail()
     {
         $name = $this->name;
         $value = '';
@@ -118,7 +118,7 @@ class TemplateMultiEnum extends TemplateEnum
         return $returnXTPL;
     }
 
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         if (!empty ($this->ext4)) {
@@ -149,12 +149,12 @@ class TemplateMultiEnum extends TemplateEnum
         return $def;
     }
 
-    function get_db_default($modify = false)
+    public function get_db_default($modify = false)
     {
         return '';
     }
 
-    function save($df)
+    public function save($df)
     {
         if (isset ($this->default)) {
             if (is_array ($this->default)) {

@@ -168,7 +168,7 @@ class SugarWidgetFieldRelate extends SugarWidgetReportField
     }
 
     //for to_pdf/to_csv
-    function displayListPlain($layout_def)
+    public function displayListPlain($layout_def)
     {
         $reporter = $this->layout_manager->getAttribute("reporter");
         $field_def = $reporter->all_fields[$layout_def['column_key']];
@@ -185,7 +185,7 @@ class SugarWidgetFieldRelate extends SugarWidgetReportField
         return $cell;
     }
 
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         $reporter = $this->layout_manager->getAttribute("reporter");
         $field_def = $reporter->all_fields[$layout_def['column_key']];

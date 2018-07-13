@@ -65,13 +65,13 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * @access private
          * @var    string
          */
-        var $base = "";
-        var $vcal_focus;
-        var $vcal_type = "";
-        var $source = "";
-        var $publish_key = "";
+        public $base = "";
+        public $vcal_focus;
+        public $vcal_type = "";
+        public $source = "";
+        public $publish_key = "";
 
-        function __construct()
+        public function __construct()
         {
             $this->vcal_focus = new vCal();
             $this->user_focus = new User();
@@ -80,7 +80,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         /**
          * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
          */
-        function HTTP_WebDAV_Server_vCal()
+        public function HTTP_WebDAV_Server_vCal()
         {
             $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
             if (isset($GLOBALS['log'])) {
@@ -99,7 +99,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * @access public
          * @param  string
          */
-        function ServeRequest($base = false)
+        public function ServeRequest($base = false)
         {
             global $sugar_config;
             global $current_language;
@@ -221,7 +221,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * @param  string $password Password
          * @return bool    true on successful authentication
          */
-        function check_auth($type, $user, $password)
+        public function check_auth($type, $user, $password)
         {
             if (isset($_SESSION['authenticated_user_id'])) {
                 // allow logged in users access to freebusy info
@@ -241,7 +241,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         }
 
 
-        function GET()
+        public function GET()
         {
             return true;
         }
@@ -254,7 +254,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         * @param void
         * @returns void
         */
-        function http_GET()
+        public function http_GET()
         {
             global $log;
 
@@ -278,7 +278,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         * @param  void
         * @return void
         */
-        function http_PUT()
+        public function http_PUT()
         {
             $options = Array();
             $options["path"] = $this->path;
@@ -402,7 +402,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * @param  array  parameter passing array
          * @return bool   true on success
          */
-        function PUT(&$options)
+        public function PUT(&$options)
         {
         }
 
@@ -412,7 +412,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * @param  array  general parameter passing array
          * @return bool   true on success
          */
-        function lock(&$options)
+        public function lock(&$options)
         {
             $options["timeout"] = time()+300; // 5min. hardcoded
             return true;
@@ -424,7 +424,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * @param  array  general parameter passing array
          * @return bool   true on success
          */
-        function unlock(&$options)
+        public function unlock(&$options)
         {
             return "200 OK";
         }
@@ -436,7 +436,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
          * @param  string resource path to check for locks
          * @return bool   true on success
          */
-        function checkLock($path)
+        public function checkLock($path)
         {
             return false;
         }

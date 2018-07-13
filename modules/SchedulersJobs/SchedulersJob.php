@@ -79,17 +79,17 @@ class SchedulersJob extends Basic
     public $percent_complete; // how much of the job is done
 
     // standard SugarBean child attrs
-    var $table_name		= "job_queue";
-    var $object_name		= "SchedulersJob";
-    var $module_dir		= "SchedulersJobs";
-    var $new_schema		= true;
-    var $process_save_dates = true;
+    public $table_name		= "job_queue";
+    public $object_name		= "SchedulersJob";
+    public $module_dir		= "SchedulersJobs";
+    public $new_schema		= true;
+    public $process_save_dates = true;
     // related fields
-	var $job_name;	// the Scheduler's 'name' field
-	var $job;		// the Scheduler's 'job' field
+	public $job_name;	// the Scheduler's 'name' field
+	public $job;		// the Scheduler's 'job' field
 	// object specific attributes
 	public $user; // User object
-	var $scheduler; // Scheduler parent
+	public $scheduler; // Scheduler parent
 	public $min_interval = 30; // minimal interval for job reruns
 	protected $job_done = true;
     protected $old_user;
@@ -97,7 +97,7 @@ class SchedulersJob extends Basic
     /**
      * Job constructor.
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         if (!empty($GLOBALS['sugar_config']['jobs']['min_retry_interval'])) {
@@ -108,7 +108,7 @@ class SchedulersJob extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SchedulersJob()
+    public function SchedulersJob()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -137,7 +137,7 @@ class SchedulersJob extends Basic
      *
      * @return string Formatted datetime value
      */
-    function handleDateFormat($date='now', $user=null, $user_format=false)
+    public function handleDateFormat($date='now', $user=null, $user_format=false)
     {
         global $timedate;
 
@@ -229,7 +229,7 @@ class SchedulersJob extends Basic
     /**
      * This function gets DB data and preps it for ListViews
      */
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         global $mod_strings;
 
@@ -243,7 +243,7 @@ class SchedulersJob extends Basic
     /** method stub for future customization
      *
      */
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         $this->fill_in_additional_detail_fields();
     }

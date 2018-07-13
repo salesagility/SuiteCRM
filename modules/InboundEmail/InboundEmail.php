@@ -2615,7 +2615,7 @@ class InboundEmail extends SugarBean
      * @param string $userId
      * @return string
      */
-    function generateDynamicFolderQuery($type, $userId)
+    public function generateDynamicFolderQuery($type, $userId)
     {
         $q = $this->coreDynamicFolderQuery;
 

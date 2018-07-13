@@ -547,7 +547,7 @@ abstract class source
      * @param $module String optional value of the module that the connector framework is attempting to map to
      * @return Array of key/value pair(s) of connector record; empty Array if no results are found
      */
-    public abstract function getItem($args=array(), $module=null);
+    abstract public function getItem($args=array(), $module=null);
 
 
     /**
@@ -559,7 +559,7 @@ abstract class source
      * @param $module String optional value of the module that the connector framework is attempting to map to
      * @return Array of key/value pair(s) of connector record; empty Array if no results are found
      */
-    public abstract function getList($args=array(), $module=null);
+    abstract public function getList($args=array(), $module=null);
 
     /**
 	 * Default destructor

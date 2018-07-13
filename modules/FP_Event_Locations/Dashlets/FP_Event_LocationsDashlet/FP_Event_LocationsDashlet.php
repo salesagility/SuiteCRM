@@ -53,7 +53,7 @@ require_once('modules/FP_Event_Locations/FP_Event_Locations.php');
 
 class FP_Event_LocationsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/FP_Event_Locations/metadata/dashletviewdefs.php');
@@ -73,7 +73,7 @@ class FP_Event_LocationsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function FP_Event_LocationsDashlet($id, $def = null)
+    public function FP_Event_LocationsDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

@@ -27,7 +27,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class delete_project_tasks
 {
-    function delete_tasks(&$bean, $event, $arguments)
+    public function delete_tasks(&$bean, $event, $arguments)
     {
         $db = DBManagerFactory::getInstance();
         $Task = BeanFactory::getBean('ProjectTask');

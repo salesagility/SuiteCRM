@@ -56,7 +56,7 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class CampaignsViewDetail extends ViewDetail
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         //turn off normal display of subpanels
@@ -66,7 +66,7 @@ class CampaignsViewDetail extends ViewDetail
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function CampaignsViewDetail()
+    public function CampaignsViewDetail()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -79,7 +79,7 @@ class CampaignsViewDetail extends ViewDetail
 
 
 
-    function preDisplay()
+    public function preDisplay()
     {
         global $mod_strings;
         if (isset($this->bean->campaign_type) && strtolower($this->bean->campaign_type) == 'newsletter') {
@@ -89,7 +89,7 @@ class CampaignsViewDetail extends ViewDetail
         $this->options['show_subpanels'] = false;
     }
 
-    function display()
+    public function display()
     {
         global $app_list_strings;
         $this->ss->assign('APP_LIST', $app_list_strings);

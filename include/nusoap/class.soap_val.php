@@ -65,42 +65,42 @@ class soapval extends nusoap_base
      * @var string
      * @access private
      */
-    var $name;
+    public $name;
     /**
      * The XML type name (string or false)
      *
      * @var mixed
      * @access private
      */
-    var $type;
+    public $type;
     /**
      * The PHP value
      *
      * @var mixed
      * @access private
      */
-    var $value;
+    public $value;
     /**
      * The XML element namespace (string or false)
      *
      * @var mixed
      * @access private
      */
-    var $element_ns;
+    public $element_ns;
     /**
      * The XML type namespace (string or false)
      *
      * @var mixed
      * @access private
      */
-    var $type_ns;
+    public $type_ns;
     /**
      * The XML element attributes (array or false)
      *
      * @var mixed
      * @access private
      */
-    var $attributes;
+    public $attributes;
 
     /**
     * constructor
@@ -113,7 +113,7 @@ class soapval extends nusoap_base
     * @param	mixed $attributes associative array of attributes to add to element serialization
     * @access   public
     */
-    function soapval($name='soapval',$type=false,$value=-1,$element_ns=false,$type_ns=false,$attributes=false)
+    public function soapval($name='soapval',$type=false,$value=-1,$element_ns=false,$type_ns=false,$attributes=false)
     {
         parent::nusoap_base();
         $this->name = $name;
@@ -131,7 +131,7 @@ class soapval extends nusoap_base
     * @return	string XML data
     * @access   public
     */
-    function serialize($use='encoded')
+    public function serialize($use='encoded')
     {
         return $this->serialize_val($this->value, $this->name, $this->type, $this->element_ns, $this->type_ns, $this->attributes, $use, true);
     }
@@ -142,7 +142,7 @@ class soapval extends nusoap_base
     * @return	mixed
     * @access   public
     */
-    function decode()
+    public function decode()
     {
         return $this->value;
     }

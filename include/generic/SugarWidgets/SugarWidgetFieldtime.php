@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetFieldTime extends SugarWidgetFieldDateTime
 {
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         global $timedate;
         // i guess qualifier and column_function are the same..

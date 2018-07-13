@@ -48,13 +48,13 @@ require_once 'modules/ModuleBuilder/parsers/relationships/RelationshipFactory.ph
 
 class DeployedRelationships extends AbstractRelationships implements RelationshipsInterface
 {
-    function __construct($moduleName)
+    public function __construct($moduleName)
     {
         $this->moduleName = $moduleName ;
         $this->load () ;
     }
 
-    static function findRelatableModules($includeActivitiesSubmodules = true)
+    public static function findRelatableModules($includeActivitiesSubmodules = true)
     {
         return parent::findRelatableModules (true) ;
     }
@@ -71,7 +71,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * Instead we must obtain the true cardinality from a property we added to the relationship metadata when we created the relationship
      * This relationship metadata is accessed through the Table Dictionary
      */ 
-    function load()
+    public function load()
     {
         $relationships = $this->getDeployedRelationships () ;
         
@@ -126,7 +126,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     /*
      * Save this modules relationship definitions out to a working file
      */
-    function save()
+    public function save()
     {
         parent::_save ($this->relationships, "custom/working/modules/{$this->moduleName}") ;
     }
@@ -145,7 +145,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
     /*
      * Use the module Loader to delete the relationship from the instance.
      */
-    function delete($rel_name)
+    public function delete($rel_name)
     {
         //Remove any fields from layouts
         $rel = $this->get($rel_name);
@@ -194,7 +194,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @param string $sourceModuleName  Name of the primary module
      * @return string Name of the subpanel if found; null otherwise
      */
-    static private function identifySubpanel($thisModuleName , $sourceModuleName)
+    private static function identifySubpanel($thisModuleName , $sourceModuleName)
     {
         $module = get_module_info ($thisModuleName) ;
         require_once ('include/SubPanel/SubPanelDefinitions.php') ;
@@ -223,7 +223,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @return string Name of the relate field, if found; null otherwise    
      */
     
-    static private function identifyRelateField($thisModuleName , $sourceModuleName)
+    private static function identifyRelateField($thisModuleName , $sourceModuleName)
     {
         $module = get_module_info ($thisModuleName) ;
         
@@ -265,7 +265,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * We use the Extension mechanism to do this for DeployedRelationships
      * All metadata is placed in the modules Ext directory, and then Rebuild is called to activate them
      */
-    function build($basepath = null, $installDefPrefix = null, $relationships = null)
+    public function build($basepath = null, $installDefPrefix = null, $relationships = null)
     {
         $basepath = "custom/Extension/modules" ;
         

@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarTab
 {
-    function __construct($type='singletabmenu')
+    public function __construct($type='singletabmenu')
     {
         $this->type = $type;
         $this->ss = new Sugar_Smarty();
@@ -55,7 +55,7 @@ class SugarTab
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarTab($type='singletabmenu')
+    public function SugarTab($type='singletabmenu')
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -67,7 +67,7 @@ class SugarTab
     }
 
 
-    function setup($mainTabs, $otherTabs=array(), $subTabs=array(), $selected_group='All')
+    public function setup($mainTabs, $otherTabs=array(), $subTabs=array(), $selected_group='All')
     {
         global $sugar_version, $sugar_config, $current_user;
 
@@ -110,12 +110,12 @@ class SugarTab
         }
     }
 
-    function fetch()
+    public function fetch()
     {
         return $this->ss->fetch('include/SubPanel/tpls/' . $this->type . '.tpl');
     }
 
-    function display()
+    public function display()
     {
         $this->ss->display('include/SubPanel/tpls/' . $this->type . '.tpl');
     }

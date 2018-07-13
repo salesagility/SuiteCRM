@@ -47,30 +47,30 @@ require_once('include/SearchForm/SearchForm2.php');
 define("NUM_COLS", 2);
 class PopupSmarty extends ListViewSmarty
 {
-    var $contextMenus = false;
-    var $export = false;
-    var $mailmerge = false;
-    var $mergeduplicates = false;
-    var $quickViewLinks = false;
-    var $multiSelect = false;
-    var $headerTpl;
-    var $footerTpl;
-    var $th;
-    var $tpl;
-    var $view;
-    var $field_defs;
-    var $formData;
-    var $_popupMeta;
-    var $_create = false;
-    var $searchdefs = array();
-    var $listviewdefs = array();
-    var $searchFields = array();
-    var $customFieldDefs;
-    var $filter_fields = array();
+    public $contextMenus = false;
+    public $export = false;
+    public $mailmerge = false;
+    public $mergeduplicates = false;
+    public $quickViewLinks = false;
+    public $multiSelect = false;
+    public $headerTpl;
+    public $footerTpl;
+    public $th;
+    public $tpl;
+    public $view;
+    public $field_defs;
+    public $formData;
+    public $_popupMeta;
+    public $_create = false;
+    public $searchdefs = array();
+    public $listviewdefs = array();
+    public $searchFields = array();
+    public $customFieldDefs;
+    public $filter_fields = array();
     //rrs
-    var $searchForm;
-    var $module;
-    var $massUpdateData = '';
+    public $searchForm;
+    public $module;
+    public $massUpdateData = '';
 
     public function __construct($seed, $module)
     {
@@ -106,7 +106,7 @@ class PopupSmarty extends ListViewSmarty
      *
      * @return void
      */
-    function processArrowVars()
+    public function processArrowVars()
     {
         $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif',false));
 
@@ -127,7 +127,7 @@ class PopupSmarty extends ListViewSmarty
      * @param html_var string the corresponding html var in xtpl per row
      *
      */
-    function process($file, $data, $htmlVar)
+    public function process($file, $data, $htmlVar)
     {
         global $odd_bg, $even_bg, $hilite_bg, $click_bg, $app_strings;
         parent::process($file, $data, $htmlVar);
@@ -220,7 +220,7 @@ class PopupSmarty extends ListViewSmarty
     /*
      * Display the Smarty template.  Here we are using the TemplateHandler for caching per the module.
      */
-    function display($end = true)
+    public function display($end = true)
     {
         global $app_strings;
 
@@ -294,7 +294,7 @@ class PopupSmarty extends ListViewSmarty
     /*
      * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
      */
-    function setup(
+    public function setup(
         $seed,
         $file = null,
         $where = null,
@@ -308,7 +308,7 @@ class PopupSmarty extends ListViewSmarty
         $args = func_get_args();
         return call_user_func_array(array($this, '_setup'), $args);
     }
-    function _setup($file)
+    public function _setup($file)
     {
         if (isset($this->_popupMeta)) {
             if (isset($this->_popupMeta['create']['formBase'])) {
@@ -468,7 +468,7 @@ class PopupSmarty extends ListViewSmarty
     /*
      * Return the where clause as per the REQUEST.
      */
-    function _get_where_clause()
+    public function _get_where_clause()
     {
         $where = '';
         $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
@@ -493,7 +493,7 @@ class PopupSmarty extends ListViewSmarty
     /*
      * Generate the data for the search form on the header of the Popup.
      */
-    function _build_field_defs()
+    public function _build_field_defs()
     {
         $this->formData = array();
         $this->customFieldDefs = array();
@@ -533,7 +533,7 @@ class PopupSmarty extends ListViewSmarty
         }
     }
 
-    function _getAddForm()
+    public function _getAddForm()
     {
         $addform = '';
         if (!$this->seed->ACLAccess('save')) {
@@ -561,7 +561,7 @@ class PopupSmarty extends ListViewSmarty
         }
     }
 
-    function _getAddFormHeader()
+    public function _getAddFormHeader()
     {
         $lbl_save_button_title = $GLOBALS['app_strings']['LBL_SAVE_BUTTON_TITLE'];
         $lbl_save_button_key = $GLOBALS['app_strings']['LBL_SAVE_BUTTON_KEY'];
@@ -586,7 +586,7 @@ EOQ;
         return $addformheader;
     }
 
-    function getQuickCreate()
+    public function getQuickCreate()
     {
         require_once("include/EditView/PopupQuickCreate.php");
         $qc = new PopupQuickCreate($this->module);

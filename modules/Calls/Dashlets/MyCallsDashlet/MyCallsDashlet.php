@@ -48,7 +48,7 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyCallsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/Calls/Dashlets/MyCallsDashlet/MyCallsDashlet.data.php');
@@ -78,7 +78,7 @@ class MyCallsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyCallsDashlet($id, $def = null)
+    public function MyCallsDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -89,7 +89,7 @@ class MyCallsDashlet extends DashletGeneric
         self::__construct($id, $def);
     }
 
-    function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = array(), $id = null)
     {
         global $current_language, $app_list_strings, $current_user;
         $mod_strings = return_module_language($current_language, 'Calls');
@@ -161,7 +161,7 @@ class MyCallsDashlet extends DashletGeneric
         $this->displayColumns[]= "set_accept_links";
     }
 
-    function displayOptions()
+    public function displayOptions()
     {
         $this->processDisplayOptions();
         $this->configureSS->assign('strings', array('general' => $GLOBALS['mod_strings']['LBL_DASHLET_CONFIGURE_GENERAL'],

@@ -46,16 +46,16 @@ require_once('include/charts/Charts.php');
 
 class Chart_outcome_by_month
 {
-    var $modules = array('Opportunities');
-    var $order = 0;
-    function __construct()
+    public $modules = array('Opportunities');
+    public $order = 0;
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Chart_outcome_by_month()
+    public function Chart_outcome_by_month()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -67,7 +67,7 @@ class Chart_outcome_by_month
     }
 
 
-    function draw($extra_tools)
+    public function draw($extra_tools)
     {
         global $app_list_strings, $current_language, $sugar_config, $currentModule, $action, $theme;
         $current_module_strings = return_module_language($current_language, 'Charts');
@@ -375,7 +375,7 @@ echo get_validate_chart_js();
         return $return;
     }
 
-    function constructQuery()
+    public function constructQuery()
     {
         global $current_user;
         global $timedate;
@@ -457,7 +457,7 @@ echo get_validate_chart_js();
         return $query;
     }
 
-    function constructGroupBy()
+    public function constructGroupBy()
     {
         return array( 'm', 'sales_stage', );
     }

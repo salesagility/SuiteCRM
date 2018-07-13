@@ -56,7 +56,7 @@ class DeleteTestCampaigns
  * This method deletes the test records for a given Campaign instance
  * @param Campaign $focus The Campaign instance
  */
-    function deleteTestRecords($focus)
+    public function deleteTestRecords($focus)
     {
         if (empty($focus) || empty($focus->id)) {
             return;

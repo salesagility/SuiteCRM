@@ -59,7 +59,7 @@ class ViewRelationship extends SugarView
     	   );
     }
 
-    function overrideDefinitionFromPOST(
+    public function overrideDefinitionFromPOST(
         $definition
         ) {
         require_once 'modules/ModuleBuilder/parsers/relationships/AbstractRelationship.php' ;
@@ -74,7 +74,7 @@ class ViewRelationship extends SugarView
         return $definition ;
     }
 
-    function display()
+    public function display()
     {
         $selected_lang = (!empty($_REQUEST['relationship_lang'])?$_REQUEST['relationship_lang']:$_SESSION['authenticated_user_language']);
         $this->smarty = new Sugar_Smarty () ;

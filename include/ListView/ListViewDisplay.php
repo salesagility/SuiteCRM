@@ -47,32 +47,32 @@ require_once('include/MassUpdate.php');
 
 class ListViewDisplay
 {
-    static $listViewCounter = 0;
+    public static $listViewCounter = 0;
 
-    var $show_mass_update_form = false;
-    var $show_action_dropdown = true;
+    public $show_mass_update_form = false;
+    public $show_action_dropdown = true;
 
     /**
      * @var bool Show Bulk Action button as Delete link
      */
-    var $show_action_dropdown_as_delete = false;
+    public $show_action_dropdown_as_delete = false;
 
-    var $rowCount;
-    var $mass = null;
-    var $seed;
-    var $multi_select_popup;
-    var $lvd;
-    var $moduleString;
-    var $export = true;
-    var $multiSelect = true;
-    var $mailMerge = true;
-    var $should_process = true;
-    var $show_plus = false;
+    public $rowCount;
+    public $mass = null;
+    public $seed;
+    public $multi_select_popup;
+    public $lvd;
+    public $moduleString;
+    public $export = true;
+    public $multiSelect = true;
+    public $mailMerge = true;
+    public $should_process = true;
+    public $show_plus = false;
     /*
      * Used in view.popup.php. Sometimes there are fields on the search form that are not referenced in the listviewdefs. If this
      * is the case, then the filterFields will be set and the related fields will not be referenced when calling create_new_list_query.
      */
-    var $mergeDisplayColumns = false;
+    public $mergeDisplayColumns = false;
     public $actionsMenuExtraItems = array();
 
     /**
@@ -99,7 +99,7 @@ class ListViewDisplay
     }
 
 
-    function shouldProcess($moduleDir)
+    public function shouldProcess($moduleDir)
     {
         $searching = false;
         $sessionSearchQuery = "{$moduleDir}2_QUERY_QUERY";
@@ -137,7 +137,7 @@ class ListViewDisplay
         $params['handleMassupdate'] = true by default, have massupdate.php handle massupdates?
      * @param string:'id' $id_field
      */
-    function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1,  $filter_fields = array(), $id_field = 'id', $id = null)
+    public function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1,  $filter_fields = array(), $id_field = 'id', $id = null)
     {
         $this->should_process = true;
         if (isset($seed->module_dir) && !$this->shouldProcess($seed->module_dir)) {
@@ -169,7 +169,7 @@ class ListViewDisplay
         return true;
     }
 
-    function setupFilterFields($filter_fields = array())
+    public function setupFilterFields($filter_fields = array())
     {
         // create filter fields based off of display columns
         if (empty($filter_fields) || $this->mergeDisplayColumns) {
@@ -216,7 +216,7 @@ class ListViewDisplay
      * @param string $htmlVar html string to be passed back and forth
      * @return bool
      */
-    function process($file, $data, $htmlVar)
+    public function process($file, $data, $htmlVar)
     {
         $this->rowCount = count($data['data']);
         if (!isset($data['pageData']['bean'])) {
@@ -249,7 +249,7 @@ class ListViewDisplay
      * @return string select link html
      * @param echo Bool set true if you want it echo'd, set false to have contents returned
      */
-    function buildSelectLink($id = 'select_link', $total=0, $pageTotal=0, $location="top")
+    public function buildSelectLink($id = 'select_link', $total=0, $pageTotal=0, $location="top")
     {
         global $app_strings;
         if ($pageTotal < 0) {
@@ -503,7 +503,7 @@ class ListViewDisplay
      *
      * @return string select object span
      */
-    function buildSelectedObjectsSpan($echo = true, $total=0)
+    public function buildSelectedObjectsSpan($echo = true, $total=0)
     {
         global $app_strings;
 
