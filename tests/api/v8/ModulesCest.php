@@ -1629,7 +1629,9 @@ class ModulesCest
         $responseChrisAccept = json_decode($I->grabResponse(), true);
         $I->seeResponseCodeIs(200);
 
-        file_put_contents('suitecrm.log', print_r(responseChrisAccept, true), FILE_APPEND);
+        print_r($responseChrisAccept);
+        file_put_contents('suitecrm.log', print_r($responseChrisAccept, true), FILE_APPEND);
+        die();
         
         $I->comment('Verify that user accept_status has been update');
         $I->assertArrayHasKey('0', $responseChrisAccept['data']);
