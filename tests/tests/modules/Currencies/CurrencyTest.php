@@ -95,6 +95,9 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve()
     {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('acl_actions');
+        
         $currency = new Currency();
 
         //execute the method and verify that it returns expected results
@@ -109,6 +112,8 @@ class CurrencyTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('Active', $currency->status);
         $this->assertEquals('<!--', $currency->hide);
         $this->assertEquals('-->', $currency->unhide);
+        
+        $state->popTable('acl_actions');
     }
 
     public function testgetPdfCurrencySymbol()

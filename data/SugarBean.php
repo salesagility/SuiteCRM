@@ -1506,6 +1506,10 @@ class SugarBean
         //find all definitions of type link.
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
+                if (!is_array($properties)) {
+                    LoggerManager::getLogger()->warn('properties should be an array for SugarBean::get_linked_fields');
+                    $properties = (array)$properties;
+                }
                 if (array_search('link', $properties) === 'type') {
                     $linked_fields[$name] = $properties;
                 }
@@ -2959,6 +2963,26 @@ class SugarBean
         }
         /* BEGIN - SECURITY GROUPS */
         global $current_user, $sugar_config;
+
+        $requestAction = null;
+        if (isset($_REQUEST['action'])) {
+            $requestAction = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested action is not set but needed for create_new_list_query in SugarBean.');
+        }
+        
+        $parentBeanModuleDir = null;
+        if (!isset($parentbean->module_dir)) {
+            LoggerManager::getLogger()->warn('Parent Bean module dir is not exists but Shared Security Groups needs it.');
+        } else {
+            $parentBeanModuleDir = $parentbean->module_dir;
+        }
+        
+        $rules_where = ['addwhere' => null, 'resWhere' => null];
+        if (!$current_user->is_admin && ($requestAction != "Popup" && $parentBeanModuleDir != "Users" && ($requestAction != "DetailView" && $this->module_dir != "Users"))) {
+            $rules_where = SharedSecurityRules::buildRuleWhere($this);
+        }
+
         if ($this->module_dir == 'Users' && !is_admin($current_user)
             && isset($sugar_config['securitysuite_filter_user_list'])
             && $sugar_config['securitysuite_filter_user_list']
@@ -2966,24 +2990,46 @@ class SugarBean
             require_once('modules/SecurityGroups/SecurityGroup.php');
             global $current_user;
             $group_where = SecurityGroup::getGroupUsersWhere($current_user->id);
-            if (empty($where)) {
-                $where = " (" . $group_where . ") ";
-            } else {
-                $where .= " AND (" . $group_where . ") ";
-            }
         } elseif ($this->bean_implements('ACL') && ACLController::requireSecurityGroup($this->module_dir, 'list')) {
             require_once('modules/SecurityGroups/SecurityGroup.php');
             global $current_user;
             $owner_where = $this->getOwnerWhere($current_user->id);
             $group_where = SecurityGroup::getGroupWhere($this->table_name, $this->module_dir, $current_user->id);
-            if (!empty($owner_where)) {
-                if (empty($where)) {
-                    $where = " (" . $owner_where . " or " . $group_where . ") ";
-                } else {
-                    $where .= " AND (" . $owner_where . " or " . $group_where . ") ";
-                }
+        }
+
+        $sgWhere = "";
+        if(!empty($group_where)) {
+            if(!empty($owner_where)) {
+                $sgWhere = " (" . $owner_where . " OR " . $group_where . ") ";
             } else {
-                $where .= ' AND ' . $group_where;
+                $sgWhere  = " (" . $group_where . ") ";
+            }
+        } elseif (!empty($owner_where)) {
+            $sgWhere  = " (" . $owner_where . ") ";
+        }
+        $permWhere = "";
+        if(!empty($sgWhere) && !empty($rules_where['addWhere'])) {
+            $permWhere = " ( " . $sgWhere . " OR (" . $rules_where['addWhere'] . ") ) ";
+        } elseif (!empty($sgWhere) || !empty($rules_where['addWhere'])) {
+            $rulesWhereAddWhere = null;
+            if (!isset($rules_where['addWhere'])) {
+                LoggerManager::getLogger()->warn('rules_where[addWhere] is undefined but necessary for SugarBean::create_new_list_query()');
+            } else {
+                $rulesWhereAddWhere = $rules_where['addWhere'];
+            }
+            $permWhere = " ( " . $sgWhere . "" . $rulesWhereAddWhere . " ) ";
+        }
+        if(!empty($rules_where['resWhere']) && !empty($permWhere)) {
+            $permWhere = " ( " . $rules_where['resWhere'] . " AND " . $permWhere . " ) ";
+        } elseif (!empty($rules_where['resWhere']) || !empty($permWhere)) {
+            $permWhere = " ( " . $rules_where['resWhere'] . "" . $permWhere . " ) ";
+        }
+
+        if(!empty($permWhere)) {
+            if(empty($where)) {
+                $where = $permWhere;
+            } else {
+                $where .= " AND " . $permWhere;
             }
         }
         /* END - SECURITY GROUPS */
@@ -3055,7 +3101,11 @@ class SugarBean
 
         //walk through the fields and for every relationship field add their relationship_info field
         //relationshipfield-aliases are resolved in SugarBean::create_new_list_query through their relationship_info field
-        $addrelate = array();
+        $addrelate = array();  
+        if (!isset($fields) || null === $fields) {
+            LoggerManager::getLogger()->warn('filter is not set for SugarBean::create_new_list_query');
+            $fields = array();
+        }
         foreach ($fields as $field => $value) {
             if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) &&
                 $this->field_defs[$field]['source'] == 'non-db'
@@ -3122,13 +3172,20 @@ class SugarBean
 
                 $selectedFields["$this->table_name.$field"] = true;
             }
+            
+            $dataType = null;
+            if (!isset($data['type'])) {
+                LoggerManager::getLogger()->warn('SugarBean needs a type of data to create new list query');
+            } else {
+                $dataType = $data['type'];
+            }
 
-            if ($data['type'] != 'relate' && isset($data['db_concat_fields'])) {
+            if ($dataType != 'relate' && isset($data['db_concat_fields'])) {
                 $ret_array['select'] .= ", " . $this->db->concat($this->table_name, $data['db_concat_fields']) . " as $field";
                 $selectedFields[$this->db->concat($this->table_name, $data['db_concat_fields'])] = true;
             }
             //Custom relate field or relate fields built in module builder which have no link field associated.
-            if ($data['type'] == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
+            if ($dataType == 'relate' && (isset($data['custom_module']) || isset($data['ext2']))) {
                 $joinTableAlias = 'jt' . $jtcount;
                 $relateJoinInfo = $this->custom_fields->getRelateJoin($data, $joinTableAlias, false);
                 $ret_array['select'] .= $relateJoinInfo['select'];
@@ -3139,7 +3196,7 @@ class SugarBean
                 $jtcount++;
             }
             //Parent Field
-            if ($data['type'] == 'parent') {
+            if ($dataType == 'parent') {
                 //See if we need to join anything by inspecting the where clause
                 $match = preg_match('/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/', $where, $matches);
                 if ($match) {
@@ -4362,6 +4419,10 @@ class SugarBean
         //find all definitions of type link.
         if (!empty($fieldDefs)) {
             foreach ($fieldDefs as $name => $properties) {
+                if (!is_array($properties)) {
+                    LoggerManager::getLogger()->warn('properties of field defs should be an array, ' . gettype($properties) . ' given.');
+                    $properties = (array)$properties;
+                }
                 if (array_search('relate', $properties, true) === 'type') {
                     $related_fields[$name] = $properties;
                 }
@@ -5339,6 +5400,7 @@ class SugarBean
         if ($current_user->isAdmin() || !$this->bean_implements('ACL')) {
             return true;
         }
+
         $view = strtolower($view);
         switch ($view) {
             case 'list':
@@ -5387,7 +5449,39 @@ class SugarBean
             require_once("modules/SecurityGroups/SecurityGroup.php");
             $in_group = SecurityGroup::groupHasAccess($this->module_dir, $this->id, $view);
         }
-        return ACLController::checkAccess($this->module_dir, $view, $is_owner, $this->acltype, $in_group);
+
+
+
+        $access = ACLController::checkAccess($this->module_dir, $view, $is_owner, $this->acltype, $in_group);
+
+        if($view != "list") {
+            $bean = BeanFactory::getBean("SharedSecurityRules");
+            if($bean != false) {
+                $GLOBALS['log']->fatal('SharedSecurityRules: Entering checkRules.');
+                $ruleAccess = $bean->checkRules($this, $view);
+                if ($ruleAccess === false) {
+                    $access = false;
+                }elseif($ruleAccess === true){
+                    $access = true;
+                }
+            }
+        }
+
+        $requestAction = null;
+        if (isset($_REQUEST['action'])) {
+            $requestAction = $_REQUEST['action'];
+        } else {
+            LoggerManager::getLogger()->warn('Requested Action is not set but needed for ACLAccess in SugarBean.');
+        }
+        
+        if($requestAction == "Popup") {
+            $access = true;
+        }
+
+        return $access;
+
+
+
     }
 
     /**

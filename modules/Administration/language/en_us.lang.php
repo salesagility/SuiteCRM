@@ -1281,5 +1281,8 @@ $mod_strings = array(
 	'LBL_LIST_SYMBOL' => "List Symbol",
 	'LBL_LIST_RATE' => "List Rate",
 
+    'LBL_SHAREDRULES_SETTINGS' => "Shared Security Rules",
+    'LBL_SHAREDRULES_SETTINGS_DESC' => "Manage Shared Security Rules",
+
 );
 

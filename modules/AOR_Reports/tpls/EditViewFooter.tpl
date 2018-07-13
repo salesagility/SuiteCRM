@@ -402,7 +402,7 @@
         ConditionOrderHandler.setConditionOrders();
         ParenthesisHandler.addParenthesisLineIdent();
       }
-    });//.disableSelection();
+    });
     LogicalOperatorHandler.hideUnnecessaryLogicSelects();
     ConditionOrderHandler.setConditionOrders();
     ParenthesisHandler.addParenthesisLineIdent();
