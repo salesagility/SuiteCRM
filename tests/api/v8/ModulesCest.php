@@ -1549,33 +1549,8 @@ class ModulesCest
             self::$MEETINGS_RECORD_ID . '/relationships/users';
         $I->sendGET($url);
         $responseMeetingUsers = json_decode($I->grabResponse(), true);
-        
-        print_r($responseMeetingUsers);
-        
-        $exp = [
-            'id',
-            'meeting_id',
-            'user_id',
-            'required',
-            'accept_status',
-            'date_modified',
-            'deleted',
-        ];        
-        
-        
-        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][0]['meta']['middle_table']['data']['attributes']));
-        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][1]['meta']['middle_table']['data']['attributes']));
-        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][2]['meta']['middle_table']['data']['attributes']));
-        
-        unset($meetingsPayload['data']['relationships']['users']['data'][0]['id']);
-        unset($meetingsPayload['data']['relationships']['users']['data'][0]['meeting_id']);
-        unset($meetingsPayload['data']['relationships']['users']['data'][0]['required']);
-        unset($meetingsPayload['data']['relationships']['users']['data'][0]['date_modified']);
-        unset($meetingsPayload['data']['relationships']['users']['data'][0]['deleted']);
-        
-        $exp = $meetingsPayload['data']['relationships']['users']['data'][0];
-        
-        $I->assertSame($exp, $responseMeetingUsers['data'][0]);
+                
+        $I->assertSame($meetingsPayload['data']['relationships']['users']['data'], $responseMeetingUsers['data']);
         
         $I->comment('Update a chris accept_status using POST');
         $url = $I->getInstanceURL() . self::$MEETINGS_RESOURCE . '/' .
