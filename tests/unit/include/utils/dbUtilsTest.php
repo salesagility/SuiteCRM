@@ -86,7 +86,7 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         $string = "'test'&trial<\">";
-        $expected = '&#039;test&#039;&amp;trial&lt;&quot;&gt;';
+        $expected = '&#039;test&#039;&trial&lt;&quot;&gt;';
         $actual = to_html($string, true);
         $this->assertSame($expected, $actual);
     }
