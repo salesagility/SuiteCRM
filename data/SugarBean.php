@@ -6195,7 +6195,7 @@ class SugarBean
         if($view != "list") {
             $bean = BeanFactory::getBean("SharedSecurityRules");
             if($bean != false) {
-                $GLOBALS['log']->fatal('SharedSecurityRules: Entering checkRules.');
+                LoggerManager::getLogger()->debug('SharedSecurityRules: Entering checkRules.');
                 $ruleAccess = $bean->checkRules($this, $view);
                 if ($ruleAccess === false) {
                     $access = false;
