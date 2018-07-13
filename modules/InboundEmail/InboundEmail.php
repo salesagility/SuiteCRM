@@ -1650,7 +1650,12 @@ class InboundEmail extends SugarBean
         }
         $this->setCacheTimestamp($mailbox);
         $GLOBALS['log']->info("[EMAIL] Performing IMAP search using criteria [{$criteria}] on mailbox [{$mailbox}] for user [{$current_user->user_name}]");
-        $searchResults = imap_search($this->conn, $criteria, SE_UID);
+        if (!$this->conn) {
+            LoggerManager::getLogger()->warn('Connection needs to be a valid resource for checkEmailOneMailbox().');
+            $searchResults = [];
+        } else {
+            $searchResults = imap_search($this->conn, $criteria, SE_UID);
+        }
         $GLOBALS['log']->info("[EMAIL] Done IMAP search on mailbox [{$mailbox}] for user [{$current_user->user_name}]. Result count = " . count($searchResults));
 
         if (!empty($searchResults)) {
@@ -1951,7 +1956,12 @@ class InboundEmail extends SugarBean
         }
 
         $GLOBALS['log']->info("INBOUNDEMAIL: using [ {$criteria} ]");
-        $searchResults = imap_search($this->conn, $criteria, SE_UID);
+        if (!$this->conn) {
+            LoggerManager::getLogger()->warn('Connection should be a valid resource');
+            $searchResults = [];
+        } else {
+            $searchResults = imap_search($this->conn, $criteria, SE_UID);
+        }
 
         if (!empty($searchResults)) {
             $concatResults = implode(",", $searchResults);
