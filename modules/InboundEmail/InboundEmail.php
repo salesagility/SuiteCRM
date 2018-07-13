@@ -1810,7 +1810,12 @@ class InboundEmail extends SugarBean
             }
 
             if ($this->mailbox != $trashFolder) {
-                $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                if (!$this->conn) {
+                    LoggerManager::getLogger()->warn('InboundEmail::checkEmailOneMailboxPartial() needs a valid resource of connection. Boolean given.');
+                    $searchResults = [];
+                } else {
+                    $searchResults = imap_search($this->conn, $criteria, SE_UID);
+                }
                 if (!empty($searchResults)) {
                     $uids = implode($app_strings['LBL_EMAIL_DELIMITER'], $searchResults);
                     $GLOBALS['log']->info("INBOUNDEMAIL: removing UIDs found deleted [ {$uids} ]");
@@ -6238,6 +6243,9 @@ class InboundEmail extends SugarBean
             $errors = '';
             $alerts = '';
             $successful = false;
+            if (!isset($msg)) {
+                $msg = '';
+            }
             if (($errors = imap_last_error()) || ($alerts = imap_alerts())) {
                 if ($errors == 'Mailbox is empty') { // false positive
                     $successful = true;
@@ -6623,7 +6631,7 @@ class InboundEmail extends SugarBean
             $this->connectMailserver();
             if (is_array($uids)) {
                 LoggerManager::getLogger()->warn('UIDS should be a string. Array given.');
-                $uids = implode(',', $uids);
+                $exUids = implode(',', $uids);
             } else {
                 $exUids = explode('::;::', $uids);
             }
