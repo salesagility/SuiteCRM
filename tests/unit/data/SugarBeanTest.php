@@ -46,7 +46,7 @@ use SuiteCRM\StateCheckerConfig;
 use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
 {
 
     /**
@@ -707,11 +707,29 @@ class SugarBeanTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testRemoveRelationshipMeta()
     {
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::removeRelationshipMeta(null, null, null, null, null);
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
 
         // test
+        $GLOBALS['log']->reset();
+        SugarBean::removeRelationshipMeta(null, null, null, null, 'Contacts');
+        self::assertCount(1, $GLOBALS['log']->calls['fatal']);
+
+        // test
+        $GLOBALS['log']->reset();
         SugarBean::removeRelationshipMeta('key', null, null, array('key' => 'value'), 'Tests');
         self::assertNotTrue(isset($GLOBALS['log']->calls['fatal']));
-     
+
+        // test
+        $GLOBALS['log']->reset();
+        SugarBean::removeRelationshipMeta('key', null, null, array(
+            'key' => array(
+                'relationships' => true,
+            ),
+            ), 'Tests');
+        self::assertCount(2, $GLOBALS['log']->calls['fatal']);
     }
 
     /**
