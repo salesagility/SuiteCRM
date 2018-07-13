@@ -251,6 +251,22 @@ class SubPanelTiles
             $rel->load_relationship_meta();
         }
 
+        if (!$tabs) {
+            // using default values if there is not any tabs
+            LoggerManager::getLogger()->warn('Tabs is not set for SubPanelTiles');
+            $tabs_properties[$t]['expanded_subpanels'] = null;
+            $tabs_properties[$t]['show_icon_html'] = null;
+            $tabs_properties[$t]['hide_icon_html'] = null;
+            $tabs_properties[$t]['title'] = null;
+            $tabs_properties[$t]['module_name'] = null;
+            $tabs_properties[$t]['get_form_header'] = null;            
+            $tabs_properties[$t]['cookie_name'] = null;
+            $tabs_properties[$t]['div_display'] = null;
+            $tabs_properties[$t]['opp_display'] = null;
+            $tabs_properties[$t]['subpanel_body'] = null;
+            $tabs_properties[$t]['buttons'] = null;
+        }
+
         foreach ($tabs as $t => $tab)
         {
             // load meta definition of the sub-panel.
