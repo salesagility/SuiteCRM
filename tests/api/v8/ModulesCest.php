@@ -1559,9 +1559,9 @@ class ModulesCest
             'date_modified',
             'deleted',
         ];
-        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][0]));
-        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][1]));
-        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][2]));
+        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][0]['meta']['middle_table']['attributes']));
+        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][1]['meta']['middle_table']['attributes']));
+        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][2]['meta']['middle_table']['attributes']));
         
         unset($meetingsPayload['data']['relationships']['users']['data'][0]['id']);
         unset($meetingsPayload['data']['relationships']['users']['data'][0]['meeting_id']);
