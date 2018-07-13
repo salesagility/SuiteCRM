@@ -1456,7 +1456,6 @@ class ModulesCest
         $I->assertEquals(self::$PRODUCT_RECORD_TYPE, $responseProducts['data'][0]['type']);
     }
 
-
     public function TestScenarioCreateMeetingsWithUsersAndMiddleTableFields(apiTester $I)
     {
         $I->loginAsAdmin();
@@ -1551,8 +1550,28 @@ class ModulesCest
         $I->sendGET($url);
         $responseMeetingUsers = json_decode($I->grabResponse(), true);
         
-        $exp = $meetingsPayload['data']['relationships']['users'];
-        $I->assertSame($exp, $responseMeetingUsers['data']);
+        $exp = [
+            'id',
+            'meeting_id',
+            'user_id',
+            'required',
+            'accept_status',
+            'date_modified',
+            'deleted',
+        ];
+        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][0]));
+        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][1]));
+        $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][2]));
+        
+        unset($meetingsPayload['data']['relationships']['users']['data'][0]['id']);
+        unset($meetingsPayload['data']['relationships']['users']['data'][0]['meeting_id']);
+        unset($meetingsPayload['data']['relationships']['users']['data'][0]['required']);
+        unset($meetingsPayload['data']['relationships']['users']['data'][0]['date_modified']);
+        unset($meetingsPayload['data']['relationships']['users']['data'][0]['deleted']);
+        
+        $exp = $meetingsPayload['data']['relationships']['users']['data'][0];
+        
+        $I->assertSame($exp, $responseMeetingUsers['data'][0]);
         
         $I->comment('Update a chris accept_status using POST');
         $url = $I->getInstanceURL() . self::$MEETINGS_RESOURCE . '/' .
