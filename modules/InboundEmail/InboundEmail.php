@@ -1696,7 +1696,12 @@ class InboundEmail extends SugarBean
         }
 
         if ($this->mailbox != $trashFolder) {
-            $searchResults = imap_search($this->conn, $criteria, SE_UID);
+            if (!$this->conn) {
+                LoggerManager::getLogger()->warn('Connection is not a valid resource for imap_search in checkEmailOneMailbox()');
+                $searchResults = [];
+            } else {
+                $searchResults = imap_search($this->conn, $criteria, SE_UID);
+            }
             if (!empty($searchResults)) {
                 $uids = implode($app_strings['LBL_EMAIL_DELIMITER'], $searchResults);
                 $GLOBALS['log']->info("INBOUNDEMAIL: removing UIDs found deleted [ {$uids} ]");
@@ -1784,7 +1789,13 @@ class InboundEmail extends SugarBean
         if ($ret['status'] == 'done') {
             //Remove the cached search if we are done with this mailbox
             $cacheFilePath = clean_path("{$this->EmailCachePath}/{$this->id}/folders/SearchData.php");
-            unlink($cacheFilePath);
+            if (file_exists($cacheFilePath)) {
+                if (!unlink($cacheFilePath)) {
+                    LoggerManager::getLogger()->warn('Unable to delete file: ' . $cacheFilePath);
+                }
+            } else {
+                LoggerManager::getLogger()->warn('Trying to delete file but it is not exists: ' . $cacheFilePath);
+            }
             /**
              * To handle the use case where an external client is also connected, deleting emails, we need to clear our
              * local cache of all emails with the "DELETED" flag
@@ -1924,8 +1935,13 @@ class InboundEmail extends SugarBean
         $ret = array();
         $ret['mailboxes'] = $mailboxes_meta;
 
-        foreach ($mailboxes_meta as $count) {
-            $ret['processCount'] += $count;
+        if (!isset($ret['processCount'])) {
+            LoggerManager::getLogger()->warn('processCount not set in return');
+            $ret['processCount'] = 0;
+        } else {
+            foreach ($mailboxes_meta as $count) {
+                $ret['processCount'] += $count;
+            }
         }
 
         return $ret;
@@ -3054,7 +3070,15 @@ class InboundEmail extends SugarBean
         }
 
         $exServ = explode('::', $this->service);
-        $service = '/' . $exServ[1];
+
+        $exSrv1 = null;
+        if (!isset($exSrv[1])) {
+            LoggerManager::getLogger()->warn('InboundEmail has given an incorrect service format.');            
+        } else {
+            $exSrv1 = $exServ[1];
+        }
+        
+        $service = '/' . $exSrv1;
 
         $nonSsl = array(
             'both-secure' => '/notls/novalidate-cert/secure',
@@ -6597,7 +6621,12 @@ class InboundEmail extends SugarBean
             $this->retrieve($fromIe);
             $this->mailbox = $fromFolder;
             $this->connectMailserver();
-            $exUids = explode('::;::', $uids);
+            if (is_array($uids)) {
+                LoggerManager::getLogger()->warn('UIDS should be a string. Array given.');
+                $uids = implode(',', $uids);
+            } else {
+                $exUids = explode('::;::', $uids);
+            }
             $uids = implode(",", $exUids);
             // imap_mail_move accepts comma-delimited lists of UIDs
             if ($copy) {
@@ -6855,15 +6884,26 @@ class InboundEmail extends SugarBean
                 $msgnos[] = $this->getCorrectMessageNoForPop3($uid);
             }
             $msgnos = implode(',', $msgnos);
-            imap_delete($this->conn, $msgnos);
-            $return = true;
+            if (!$this->conn) {
+                LoggerManager::getLogger()->warn('Connection should be a valid resource for deleteMessageOnMailServer()');
+                $return = false;
+            } else {
+                imap_delete($this->conn, $msgnos);
+                $return = true;
+            }
         }
-
-        if (!imap_expunge($this->conn)) {
-            $GLOBALS['log']->debug("NOOP: could not expunge deleted email.");
+        
+        if (!$this->conn) {
+            LoggerManager::getLogger()->warn('Connection should be a valid resource for deleteMessageOnMailServer() - in imap_expunge()');
             $return = false;
         } else {
-            $GLOBALS['log']->info("INBOUNDEMAIL: hard-deleted mail with MSgno's' [ {$msgnos} ]");
+            if (!imap_expunge($this->conn)) {
+                $GLOBALS['log']->debug("NOOP: could not expunge deleted email.");
+                $return = false;
+            } else {
+                $GLOBALS['log']->info("INBOUNDEMAIL: hard-deleted mail with MSgno's' [ {$msgnos} ]");
+                $return = false;
+            }
         }
 
         return $return;
