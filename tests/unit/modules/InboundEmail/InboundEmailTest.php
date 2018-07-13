@@ -613,7 +613,7 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $inboundEmail->setCacheValue('INBOX.Trash', $inserts);
 
         //retrieve back to verify the records created
-        $result = $inboundEmail->getCacheValue('INBOX');
+        $result = (array)$inboundEmail->getCacheValue('INBOX');
 
         $this->assertGreaterThan(0, count($result['retArr'][0]));
         $this->assertEquals(1, $result['retArr'][0]->message_id);
