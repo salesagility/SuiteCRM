@@ -3140,6 +3140,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgetSystemSettingsForm()
     {
+        $this->markTestIncomplete("It should be an acceptance test");
+                
         // save state
         
         $state = $this->storeStateAll();

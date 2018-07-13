@@ -6277,7 +6277,11 @@ class InboundEmail extends SugarBean
             }
 
             imap_errors(); // collapse error stack
-            imap_close($this->conn);
+            if (!$this->conn) {
+                LoggerManager::getLogger()->warn('imap_close() needs a valid resource');
+            } else {
+                imap_close($this->conn);
+            }
 
             return $msg;
         } elseif (!is_resource($this->conn)) {
@@ -6666,23 +6670,27 @@ class InboundEmail extends SugarBean
                     }
                 }
             } else {
-                if (imap_mail_move($this->conn, $uids, $toFolder, CP_UID)) {
-                    $GLOBALS['log']->info("INBOUNDEMAIL: imap_mail_move() [ {$uids} ] to folder [ {$toFolder} ] from folder [ {$fromFolder} ]");
-                    imap_expunge($this->conn); // hard deletes moved messages
-
-                    // update cache on fromFolder
-                    $newOverviews = $this->getOverviewsFromCacheFile($uids, $fromFolder, true);
-                    $this->deleteCachedMessages($uids, $fromFolder);
-
-                    // update cache on toFolder
-                    $this->checkEmailOneMailbox($toFolder, true, true);
-                    if (isset($oldMailbox)) {
-                        $this->mailbox = $oldMailbox;
-                    }
-
-                    return true;
+                if (!$this->conn) {
+                    LoggerManager::getLogger()->warn('imap_mail_move() needs a valid resource. Connection needs to be a valid resource for InboundEmail::moveEmails()');
                 } else {
-                    $GLOBALS['log']->debug("INBOUNDEMAIL: could not imap_mail_move() [ {$uids} ] to folder [ {$toFolder} ] from folder [ {$fromFolder} ]");
+                    if (imap_mail_move($this->conn, $uids, $toFolder, CP_UID)) {
+                        $GLOBALS['log']->info("INBOUNDEMAIL: imap_mail_move() [ {$uids} ] to folder [ {$toFolder} ] from folder [ {$fromFolder} ]");
+                        imap_expunge($this->conn); // hard deletes moved messages
+
+                        // update cache on fromFolder
+                        $newOverviews = $this->getOverviewsFromCacheFile($uids, $fromFolder, true);
+                        $this->deleteCachedMessages($uids, $fromFolder);
+
+                        // update cache on toFolder
+                        $this->checkEmailOneMailbox($toFolder, true, true);
+                        if (isset($oldMailbox)) {
+                            $this->mailbox = $oldMailbox;
+                        }
+
+                        return true;
+                    } else {
+                        $GLOBALS['log']->debug("INBOUNDEMAIL: could not imap_mail_move() [ {$uids} ] to folder [ {$toFolder} ] from folder [ {$fromFolder} ]");
+                    }
                 }
             }
         } elseif ($toIe == 'folder' && $fromFolder == 'sugar::Emails') {
