@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -260,7 +260,7 @@ $mod_strings = array (
 	'LBL_ADD_TARGET' => 'Add',
 	'LBL_CREATE_TARGET'=> 'Create',
 	'LBL_SELECT_TARGET'=> 'Use existing Target List',
-	'LBL_REMOVE' => ' rem',
+	'LBL_REMOVE' => 'Remove',
 	'LBL_CONFIRM' => 'Start',
 	'LBL_START' => 'Start',
 	'LBL_TOTAL_ENTRIES' => 'Entries',
@@ -341,7 +341,7 @@ $mod_strings = array (
 	'LBL_MAILBOX_CHECK1_GOOD'   => ' Mail account(s)) with bounce handling detected:',
 	'LBL_MAILBOX_CHECK1_BAD'    => 'No mail account(s) with bounce handling detected.',
 	'LBL_MAILBOX_CHECK2_GOOD'   => ' E-mail Settings have been configured:',
-	'LBL_MAILBOX_CHECK2_BAD'    => 'Please configure your system email address. E-mail Settings have not been configured or are invalid.',
+	'LBL_MAILBOX_CHECK2_BAD'    => 'Please configure your system email address. E-mail Settings have not been configured or are invalid. The \"From\" Address must not contain example.com.',
 	'LBL_SCHEDULER_CHECK_GOOD' => 'Schedulers detected',
 	'LBL_SCHEDULER_CHECK_BAD' =>   'No Schedulers detected',
 	'LBL_SCHEDULER_CHECK1_BAD'  => 'Scheduler has not been set up to process Bounced Campaign Emails.',

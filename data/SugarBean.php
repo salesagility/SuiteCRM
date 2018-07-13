@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,10 +37,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 
 /*********************************************************************************
  * Description:  Defines the base class for all data entities used throughout the
@@ -320,8 +316,16 @@ class SugarBean
             }
 
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
-                $this->field_name_map = $dictionary[$this->object_name]['fields'];
-                $this->field_defs = $dictionary[$this->object_name]['fields'];
+                
+                $dictionaryObjectFields = null;
+                if (isset($dictionary[$this->object_name]['fields'])) {
+                    $dictionaryObjectFields = $dictionary[$this->object_name]['fields'];
+                } else {
+                    LoggerManager::getLogger()->warn("Missing dictionary fields for object: {$this->object_name}");
+                }
+                
+                $this->field_name_map = $dictionaryObjectFields;
+                $this->field_defs = $dictionaryObjectFields;
 
                 if (!empty($dictionary[$this->object_name]['optimistic_locking'])) {
                     $this->optimistic_lock = true;
@@ -684,7 +688,7 @@ class SugarBean
             $subqueries = SugarBean::build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by);
             $all_fields = array();
             foreach ($subqueries as $i => $subquery) {
-                $query_fields = $GLOBALS['db']->getSelectFieldsFromQuery($subquery['select']);
+                $query_fields = DBManagerFactory::getInstance()->getSelectFieldsFromQuery($subquery['select']);
                 foreach ($query_fields as $field => $select) {
                     if (!in_array($field, $all_fields)) {
                         $all_fields[] = $field;
@@ -1571,7 +1575,7 @@ class SugarBean
                 return true;
             }
         }
-        $GLOBALS['log']->debug("SugarBean.load_relationships, Error Loading relationship (" . $rel_name . ")");
+        $GLOBALS['log']->debug("SugarBean.load_relationships, failed Loading relationship (" . $rel_name . ")");
         return false;
     }
 
@@ -1919,16 +1923,21 @@ class SugarBean
             foreach ($this->email_addresses_non_primary as $mail) {
                 $this->emailAddress->addAddress($mail);
             }
-            $this->emailAddress->save($this->id, $this->module_dir);
+            $this->emailAddress->saveEmail(
+                $this->id,
+                $this->module_dir,
+                '',
+                '',
+                '',
+                '',
+                '',
+                $this->in_workflow);
         }
 
         if (isset($this->custom_fields)) {
             $this->custom_fields->bean = $this;
             $this->custom_fields->save($isUpdate);
         }
-
-        // use the db independent query generator
-        $this->preprocess_fields_on_save();
 
         $this->_sendNotifications($check_notify);
 
@@ -2758,7 +2767,7 @@ class SugarBean
         if (in_array('set_notification_body', get_class_methods($this))) {
             $xtpl = $this->set_notification_body($xtpl, $this);
         } else {
-            $xtpl->assign("OBJECT", translate('LBL_MODULE_NAME'));
+            $xtpl->assign("OBJECT", translate('LBL_MODULE_NAME',$this->module_name));
             $template_name = "Default";
         }
         if (!empty($_SESSION["special_notification"]) && $_SESSION["special_notification"]) {
@@ -4238,8 +4247,8 @@ class SugarBean
             $query .= " , " . $table . ".created_by owner";
         }
         $query .= ' FROM ' . $table . ' WHERE deleted=0 AND id=';
-        $result = $GLOBALS['db']->query($query . "'$id'");
-        $row = $GLOBALS['db']->fetchByAssoc($result);
+        $result = DBManagerFactory::getInstance()->query($query . "'$id'");
+        $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
         if ($return_array) {
             return $row;
         }
@@ -4598,7 +4607,7 @@ class SugarBean
         /**
          * @var DBManager $db
          */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->query('DELETE FROM cron_remove_documents WHERE bean_id=' . $db->quoted($this->id));
 
         return true;
@@ -4757,7 +4766,7 @@ class SugarBean
         /**
          * @var DBManager $db
          */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $record = array(
             'bean_id' => $db->quoted($this->id),
             'module' => $db->quoted($this->module_name),

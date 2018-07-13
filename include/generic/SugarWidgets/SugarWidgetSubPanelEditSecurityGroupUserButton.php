@@ -53,7 +53,7 @@ class SugarWidgetSubPanelEditSecurityGroupUserButton extends SugarWidgetField
 		return displayList($layout_def);
 	}
 
-	function displayList(&$layout_def)
+	function displayList($layout_def)
 	{
 		global $app_strings;
 		global $image_path;

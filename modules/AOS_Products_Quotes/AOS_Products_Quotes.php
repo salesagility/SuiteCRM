@@ -70,10 +70,17 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 
-            if ($post_data[$key . 'deleted'][$i] == 1) {
+            if (!isset($post_data[$key . 'deleted'][$i])) {
+                LoggerManager::getLogger()->warn('AOS Product Quotes trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
+            }
+
+            if (isset($post_data[$key . 'deleted'][$i]) && $post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
             } else {
-                $product_quote = new AOS_Products_Quotes();
+                $product_quote = BeanFactory::getBean('AOS_Products_Quotes', isset($post_data[$key . 'id'][$i]) ? $post_data[$key . 'id'][$i] : null);
+                if (!$product_quote) {
+                    $product_quote = BeanFactory::newBean('AOS_Products_Quotes');
+                }
                 foreach ($this->field_defs as $field_def) {
                     $field_name = $field_def['name'];
                     if (isset($post_data[$key . $field_name][$i])) {
@@ -81,13 +88,27 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
                     }
                 }
                 if (isset($post_data[$key . 'group_number'][$i])) {
-                    $product_quote->group_id = $groups[$post_data[$key . 'group_number'][$i]];
+                    
+                    $grpId = null;
+                    if (!isset($groups[$post_data[$key . 'group_number'][$i]])) {
+                        LoggerManager::getLogger()->warn('AOS Products Quotes trying to save lines but POST data does not contains the key "' . $key . 'deleted' . '" at index: ' . $i);
+                    } else {
+                        $grpId = $groups[$post_data[$key . 'group_number'][$i]];
+                    }
+                    
+                    $product_quote->group_id = $grpId;
                 }
                 if (trim($product_quote->product_id) != '' && trim($product_quote->name) != '' && trim($product_quote->product_unit_price) != '') {
                     $product_quote->number = ++$j;
                     $product_quote->assigned_user_id = $parent->assigned_user_id;
                     $product_quote->parent_id = $parent->id;
-                    $product_quote->currency_id = $parent->currency_id;
+                    
+                    if (!isset($parent->currency_id)) {
+                        $product_quote->currency_id = null;
+                        LoggerManager::getLogger()->warn('Save line error: parent has not set currency');
+                    } else {
+                        $product_quote->currency_id = $parent->currency_id;
+                    }
                     $product_quote->parent_type = $parent->object_name;
                     $product_quote->save();
                     $_POST[$key . 'id'][$i] = $product_quote->id;

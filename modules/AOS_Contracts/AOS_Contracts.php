@@ -73,8 +73,9 @@ class AOS_Contracts extends AOS_Contracts_sugar {
         self::__construct();
     }
 
-	function save($check_notify = FALSE){
-        if (empty($this->id)){
+    function save($check_notify = false)
+    {
+        if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['group_id']);
             unset($_POST['product_id']);
             unset($_POST['service_id']);
@@ -114,8 +115,12 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 	    $call = new call();
 
         if($this->renewal_reminder_date != 0){
+            
+            if (!isset($this->call_id)) {
+                LoggerManager::getLogger()->warn('AOS Contracts::createReminder(): Call ID is not set');
+            }
 
-            $call->id = $this->call_id;
+            $call->id = isset($this->call_id) ? $this->call_id : null;
             $call->parent_id = $this->id;
             $call->parent_type = 'AOS_Contracts';
             $call->date_start = $this->renewal_reminder_date;
@@ -148,8 +153,12 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 	function deleteCall(){
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
+            
+            if (!isset($this->call_id)) {
+                LoggerManager::getLogger()->warn('AOS Contracts: Call ID is not set for delete Call');
+            }
 
-		if($this->call_id != null){
+		if(isset($this->call_id) && $this->call_id != null){
             $call->id = $this->call_id;
             $call->mark_deleted($call->id);
 		}

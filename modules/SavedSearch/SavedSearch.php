@@ -101,7 +101,9 @@ class SavedSearch extends SugarBean
     // Saved Search Form
     function getForm($module, $inline = true, $orderBySelectOnly = false)
     {
-        global $db, $current_user, $currentModule, $current_language, $app_strings;
+        global $current_user, $currentModule, $current_language, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $json = getJSONobj();
 
         $saved_search_mod_strings = return_module_language($current_language, 'SavedSearch');
@@ -179,10 +181,18 @@ class SavedSearch extends SugarBean
             }
         } else {
             foreach ($this->columns as $name => $val) {
+                
+                $valLabel = null;
+                if (isset($val['label'])) {
+                    $valLabel = $val['label'];
+                } else {
+                    LoggerManager::getLogger()->warn('Column label is not defined.');
+                }
+                
                 if (!empty($val['default']) && $val['default'])
-                    $chooser->args['values_array'][0][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][0][$name] = trim(translate($valLabel, $module), ':');
                 else
-                    $chooser->args['values_array'][1][$name] = trim(translate($val['label'], $module), ':');
+                    $chooser->args['values_array'][1][$name] = trim(translate($valLabel, $module), ':');
             }
         }
 
@@ -205,7 +215,9 @@ class SavedSearch extends SugarBean
     {
 
 
-        global $db, $current_user, $currentModule, $current_lang, $app_strings;
+        global $current_user, $currentModule, $current_lang, $app_strings;
+        $db = DBManagerFactory::getInstance();
+        
         $saved_search_mod_strings = return_module_language($current_lang, 'SavedSearch');
 
         $query = 'SELECT id, name FROM saved_search
@@ -236,13 +248,15 @@ class SavedSearch extends SugarBean
         $sugarSmarty->assign('SAVED_SEARCHES_OPTIONS', get_select_options_with_id($savedSearchArray, $selectedSearch));
 
         $savedSearchData['module'] = $module;
-
+        
         return $sugarSmarty->fetch('modules/SavedSearch/SavedSearchSelects.tpl');
     }
 
     function returnSavedSearch($id, $searchFormTab = 'advanced_search', $showDiv = 'no')
     {
-        global $db, $current_user, $currentModule;
+        global $current_user, $currentModule;
+        $db = DBManagerFactory::getInstance();
+        
         $this->retrieveSavedSearch($id);
 
         $header = 'Location: index.php?action=index&module=';
@@ -253,16 +267,51 @@ class SavedSearch extends SugarBean
         $_SESSION['LastSavedView'][$this->contents['search_module']] = $id;
         $saved_search_id = $id;
         $saved_search_name = $this->name;
-        $search_form_tab = $this->contents['searchFormTab'];
-        $query = $this->contents['query'];
+        
+        $thisContentsSearchFormTab = null;
+        if (isset($this->contents['searchFormTab'])) {
+            $thisContentsSearchFormTab = $this->contents['searchFormTab'];
+        } else {
+            LoggerManager::getLogger()->warn('SavedSearch contents search form tab is not set');
+        }
+        
+        $search_form_tab = $thisContentsSearchFormTab;
+        
+        $thisContentsQuery = null;
+        if (isset($this->contents['query'])) {
+            $thisContentsQuery = $this->contents['query'];
+        } else {
+            LoggerManager::getLogger()->warn('SavedSearch contents query is not set');
+        }
+        
+        $query = $thisContentsQuery;
         $orderBy = empty($this->contents['orderBy']) ? 'name' : $this->contents['orderBy'];
+        
         //Reduce the params to avoid the problems caused by URL max length in IE.
-        SugarApplication::headerRedirect($header . '&saved_search_select=' . $saved_search_id . '&saved_search_select_name=' . $saved_search_name . '&orderBy=' . $orderBy . '&sortOrder=' . $this->contents['sortOrder'] . '&query=' . $query . '&searchFormTab=' . $search_form_tab . '&showSSDIV=' . $showDiv);
+        
+        $thisContentsSortOrder = null;
+        if (isset($this->contents['sortOrder'])) {
+            $thisContentsSortOrder = $this->contents['sortOrder'];
+        } else {
+            LoggerManager::getLogger()->warn('SavedSearch contents short order is not set');
+        }
+        
+        SugarApplication::headerRedirect(
+                $header . 
+                '&saved_search_select=' . $saved_search_id . 
+                '&saved_search_select_name=' . $saved_search_name . 
+                '&orderBy=' . $orderBy . 
+                '&sortOrder=' . $thisContentsSortOrder . 
+                '&query=' . $query . 
+                '&searchFormTab=' . $search_form_tab . 
+                '&showSSDIV=' . $showDiv);
     }
 
     function returnSavedSearchContents($id)
     {
-        global $db, $current_user, $currentModule;
+        global $current_user, $currentModule;
+        $db = DBManagerFactory::getInstance();
+        
         $query = 'SELECT id, name, contents, search_module FROM saved_search
 				  WHERE
 				  	id = \'' . $id . '\'';
@@ -286,7 +335,15 @@ class SavedSearch extends SugarBean
     function handleDelete($id)
     {
         $this->mark_deleted($id);
-        SugarApplication::headerRedirect("Location: index.php?action=index&module={$_REQUEST['search_module']}&advanced={$_REQUEST['advanced']}&query=true&clear_query=true");
+        
+        $requestSearchModule = null;
+        if (isset($_REQUEST['search_module'])) {
+            $requestSearchModule = $_REQUEST['search_module'];
+        } else {
+            LoggerManager::getLogger()->warn('SavedSearch::handleDelete() - Requested search module is not set');
+        }
+        
+        SugarApplication::headerRedirect("Location: index.php?action=index&module={$requestSearchModule}&advanced={$_REQUEST['advanced']}&query=true&clear_query=true");
     }
 
     public function handleSave($prefix, $redirect = true, $useRequired = false, $id = null, $searchModuleBean = null)
@@ -304,7 +361,12 @@ class SavedSearch extends SugarBean
         $ignored_inputs = array('PHPSESSID', 'module', 'action', 'saved_search_name', 'saved_search_select', 'advanced', 'Calls_divs', 'ACLRoles_divs');
 
         $contents = $_REQUEST;
-        if ($contents['saved_search_name']) $focus->name = $contents['saved_search_name'];
+        
+        if (!isset($contents['saved_search_name'])) {
+            LoggerManager::getLogger()->warn('SavedSearch::handleSave() - saved_search_name is not set');
+        }
+        
+        if (isset($contents['saved_search_name']) && $contents['saved_search_name']) $focus->name = $contents['saved_search_name'];
         $focus->search_module = $contents['search_module'];
 
         foreach ($contents as $input => $value) {
@@ -361,7 +423,42 @@ class SavedSearch extends SugarBean
 
         $GLOBALS['log']->debug("Saved record with id of " . $focus->id);
         $orderBy = empty($contents['orderBy']) ? 'name' : $contents['orderBy'];
-        $search_query = "&orderBy=" . $orderBy . "&sortOrder=" . $contents['sortOrder'] . "&query=" . $_REQUEST['query'] . "&searchFormTab=" . $_REQUEST['searchFormTab'] . '&showSSDIV=' . $contents['showSSDIV'];
+        
+        $contentsSortOrder = null;
+        if (isset($contents['sortOrder'])) {
+            $contentsSortOrder = $contents['sortOrder'];
+        } else {
+            LoggerManager::getLogger()->warn('SavedSearch::handleSave() - contents sort order is not set');
+        }
+        
+        $requestQuery = null;
+        if (isset($_REQUEST['query'])) {
+            $requestQuery = $_REQUEST['query'];
+        } else {
+            LoggerManager::getLogger()->warn('SavedSearch::handleSave() - request query is not set');
+        }
+        
+        $requestSearchFormTab = null;
+        if (isset($_REQUEST['searchFormTab'])) {
+            $requestSearchFormTab = $_REQUEST['searchFormTab'];
+        } else {
+            LoggerManager::getLogger()->warn('SavedSearch::handleSave() - request search form tab is not set');
+        }
+        
+        $contentsShowSSDIV = null;
+        if (isset($contents['showSSDIV'])) {
+            $contentsShowSSDIV = $contents['showSSDIV'];
+        } else {
+            LoggerManager::getLogger()->warn('SavedSearch::handleSave() - contents showSSDIV is not set');
+        }
+        
+        
+        $search_query = 
+                "&orderBy=" . $orderBy . 
+                "&sortOrder=" . $contentsSortOrder . 
+                "&query=" . $requestQuery . 
+                "&searchFormTab=" . $requestSearchFormTab . 
+                '&showSSDIV=' . $contentsShowSSDIV;
 
         if ($redirect) {
             $this->handleRedirect($focus->search_module, $search_query, $saved_search_id, 'true');

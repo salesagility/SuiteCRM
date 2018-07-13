@@ -83,7 +83,7 @@ class MyCallsDashlet extends DashletGeneric {
         self::__construct($id, $def);
     }
 
-    function process($lvsParams = array()) {
+    function process($lvsParams = array(), $id = null) {
         global $current_language, $app_list_strings, $current_user;
         $mod_strings = return_module_language($current_language, 'Calls');
 
@@ -112,9 +112,9 @@ class MyCallsDashlet extends DashletGeneric {
 
        if(!empty($keys)){
             $query = "SELECT call_id, accept_status FROM calls_users WHERE deleted = 0 and user_id = '" . $current_user->id . "' AND call_id IN ('" . implode("','", $keys ). "')";
-            $result = $GLOBALS['db']->query($query);
+            $result = DBManagerFactory::getInstance()->query($query);
 
-            while($row = $GLOBALS['db']->fetchByAssoc($result)) {
+            while($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
                  $rowNums = $this->lvs->data['pageData']['idIndex'][$row['call_id']]; // figure out which rows have this guid
                  foreach($rowNums as $rowNum) {
                     $this->lvs->data['data'][$rowNum]['ACCEPT_STATUS'] = $row['accept_status'];

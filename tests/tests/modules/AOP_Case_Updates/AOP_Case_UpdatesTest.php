@@ -1,6 +1,6 @@
 <?PHP
 
-class AOP_Case_UpdatesTest extends PHPUnit_Framework_TestCase
+class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOP_Case_Updates()
     {
@@ -22,8 +22,16 @@ class AOP_Case_UpdatesTest extends PHPUnit_Framework_TestCase
 
     public function testsave()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aop_case_updates');
+        $state->pushGlobals();
+        
+        // test
+        
         $aopCaseUpdates = new AOP_Case_Updates();
         $aopCaseUpdates->name = 'test name';
         $aopCaseUpdates->description = 'test description';
@@ -37,6 +45,12 @@ class AOP_Case_UpdatesTest extends PHPUnit_Framework_TestCase
 
         //mark the record as deleted for cleanup 
         $aopCaseUpdates->mark_deleted($aopCaseUpdates->id);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('aop_case_updates');
+        $state->popTable('aod_indexevent');
     }
 
     public function testgetCase()

@@ -60,6 +60,8 @@ class OutboundEmail {
 		'mail_smtppass',
 		'mail_smtpauth_req',
 		'mail_smtpssl',
+        'smtp_from_name',
+        'smtp_from_addr',
 	);
 
 	/**
@@ -512,7 +514,13 @@ class OutboundEmail {
 		$this->name = 'system';
 		$this->type = 'system';
 		$this->user_id = '1';
-		$this->save();
+
+		if(isset($_REQUEST['notify_fromname']) && $_REQUEST['notify_fromaddress']) {
+            $this->smtp_from_name = $_REQUEST['notify_fromname'];
+            $this->smtp_from_addr = $_REQUEST['notify_fromaddress'];
+        }
+
+        $this->save();
 
 		$this->updateUserSystemOverrideAccounts();
 

@@ -1,12 +1,18 @@
 <?php
 
 
-class CampaignTrackerTest extends PHPUnit_Framework_TestCase
+class CampaignTrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testCampaignTracker()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('campaign_trkrs');
+        
+        // test 
+        
         //execute the contructor and check for the Object type and  attributes
         $campaignTracker = new CampaignTracker();
         $this->assertInstanceOf('CampaignTracker', $campaignTracker);
@@ -16,10 +22,22 @@ class CampaignTrackerTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('CampaignTracker', 'object_name', $campaignTracker);
         $this->assertAttributeEquals('campaign_trkrs', 'table_name', $campaignTracker);
         $this->assertAttributeEquals(true, 'new_schema', $campaignTracker);
+        
+        // cleanup
+        
+        $state->popTable('campaign_trkrs');
     }
 
     public function testsave()
     {
+
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('campaign_trkrs');
+        
+        // test 
+        
         $campaignTracker = new CampaignTracker();
 
         $campaignTracker->tracker_name = 'test';
@@ -35,10 +53,22 @@ class CampaignTrackerTest extends PHPUnit_Framework_TestCase
         $campaignTracker->mark_deleted($campaignTracker->id);
         $result = $campaignTracker->retrieve($campaignTracker->id);
         $this->assertEquals(null, $result);
+        
+        // cleanup
+        
+        $state->popTable('campaign_trkrs');
     }
 
     public function testget_summary_text()
     {
+
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('campaign_trkrs');
+        
+        // test 
+        
         $campaignTracker = new CampaignTracker();
 
         //test without setting name
@@ -47,10 +77,22 @@ class CampaignTrackerTest extends PHPUnit_Framework_TestCase
         //test with name set
         $campaignTracker->tracker_name = 'test';
         $this->assertEquals('test', $campaignTracker->get_summary_text());
+        
+        // cleanup
+        
+        $state->popTable('campaign_trkrs');
     }
 
     public function testfill_in_additional_detail_fields()
     {
+
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('campaign_trkrs');
+        
+        // test 
+        
         $campaignTracker = new CampaignTracker();
 
         //test without is_optout set
@@ -61,5 +103,9 @@ class CampaignTrackerTest extends PHPUnit_Framework_TestCase
         $campaignTracker->is_optout = 1;
         $campaignTracker->fill_in_additional_detail_fields();
         $this->assertStringEndsWith('/index.php?entryPoint=removeme&identifier={MESSAGE_ID}', $campaignTracker->message_url);
+        
+        // cleanup
+        
+        $state->popTable('campaign_trkrs');
     }
 }

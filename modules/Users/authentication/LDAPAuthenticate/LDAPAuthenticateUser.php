@@ -216,19 +216,17 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
                     return '';
                 }
             }
+          
+			ldap_close($ldapconn);
+			$dbresult = DBManagerFactory::getInstance()->query("SELECT id, status FROM users WHERE user_name='" . $name . "' AND deleted = 0");
 
-
-            ldap_close($ldapconn);
-            $dbresult = $GLOBALS['db']->query("SELECT id, status FROM users WHERE user_name='" . $name . "' AND deleted = 0");
-
-            //user already exists use this one
-            if ($row = $GLOBALS['db']->fetchByAssoc($dbresult)) {
-                if ($row['status'] != 'Inactive') {
-                    return $row['id'];
-                } else {
-                    return '';
-                }
-            }
+			//user already exists use this one
+			if($row = DBManagerFactory::getInstance()->fetchByAssoc($dbresult)){
+				if($row['status'] != 'Inactive')
+					return $row['id'];
+				else
+					return '';
+			}
 
             //create a new user and return the user
             if ($GLOBALS['ldap_config']->settings['ldap_auto_create_users']) {

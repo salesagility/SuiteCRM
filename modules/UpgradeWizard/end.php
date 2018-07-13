@@ -83,7 +83,7 @@ foreach ($beanFiles as $bean => $file) {
         $focus = new $bean ();
         if (($focus instanceof SugarBean)) {
             if (!isset($repairedTables[$focus->table_name])) {
-                $sql = $GLOBALS['db']->repairTable($focus, true);
+                $sql = DBManagerFactory::getInstance()->repairTable($focus, true);
                 if (trim($sql) != '') {
                     logThis('Running sql:'.$sql, $path);
                 }
@@ -116,7 +116,7 @@ foreach ($dictionary as $meta) {
     }
     $fielddefs = $meta['fields'];
     $indices = $meta['indices'];
-    $sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
+    $sql = DBManagerFactory::getInstance()->repairTableParams($tablename, $fielddefs, $indices, true);
     if (trim($sql) != '') {
         logThis('Running sql:'.$sql, $path);
     }
@@ -319,3 +319,9 @@ $stepRecheck = 0;
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
 unset($_SESSION['current_db_version']);
 unset($_SESSION['target_db_version']);
+
+
+ob_start();
+include __DIR__ . '/../Administration/UpgradeAccess.php';
+echo $cnt = ob_get_contents();
+ob_get_clean();

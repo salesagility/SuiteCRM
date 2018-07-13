@@ -223,7 +223,7 @@ class Email extends SugarBean {
         	copy("upload://$guid", sugar_cached("$email_uploads/$guid"));
 			return array(
 					'guid' => $guid,
-					'name' => $GLOBALS['db']->quote($fileName),
+					'name' => DBManagerFactory::getInstance()->quote($fileName),
 					'nameForDisplay' => $fileName
 				);
         } else {
@@ -969,7 +969,10 @@ class Email extends SugarBean {
 			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
 				$sentFolder = $ie->get_stored_options("sentFolder");
 				if (!empty($sentFolder)) {
-					$data = $mail->CreateHeader() . "\r\n" . $mail->CreateBody() . "\r\n";
+					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+					$emailbody = $mail->CreateBody();
+					$emailheader = $mail->CreateHeader();
+					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
 					$ie->mailbox = $sentFolder;
 					if ($ie->connectMailserver() == 'true') {
 						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
@@ -1149,7 +1152,12 @@ class Email extends SugarBean {
 	    $tmpNote->filename = $filename;
 	    $tmpNote->file_mime_type = $mimeType;
 	    $noteFile = "upload://{$tmpNote->id}";
-	    if(!copy($fileLocation, $noteFile)) {
+            
+            if (!file_exists($fileLocation)) {
+                LoggerManager::getLogger()->warn('File not found for copy: ' . $fileLocation);
+            }
+            
+	    if(!file_exists($fileLocation) || !copy($fileLocation, $noteFile)) {
     	    $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
 	    }
 	    $tmpNote->save();
@@ -2171,7 +2179,15 @@ class Email extends SugarBean {
 
 		///////////////////////////////////////////////////////////////////////
 		////	ATTACHMENTS
-		foreach($this->saved_attachments as $note) {
+                
+                $savedAttachments = null;
+                if (isset($this->saved_attachments)) {
+                    $savedAttachments = $this->saved_attachments;
+                } else {
+                    LoggerManager::getLogger()->warn('Email::send: saved attachments is not set');
+                }
+                
+		foreach((array)$savedAttachments as $note) {
 			$mime_type = 'text/plain';
 			if($note->object_name == 'Note') {
 				if(!empty($note->file->temp_file_location) && is_file($note->file->temp_file_location)) { // brandy-new file upload/attachment
@@ -2527,7 +2543,18 @@ class Email extends SugarBean {
 
 		if($this->status != 'replied') {
 			$email_fields['QUICK_REPLY'] = '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record='.$this->id.'&inbound_email_id='.$this->id.'">'.$mod_strings['LNK_QUICK_REPLY'].'</a>';
-			$email_fields['STATUS'] = ($email_fields['REPLY_TO_STATUS'] == 1 ? $mod_strings['LBL_REPLIED'] : $email_fields['STATUS']);
+                        
+                        $replyToStatus = null;
+                        if (isset($email_fields['REPLY_TO_STATUS'])) {
+                            $replyToStatus = $email_fields['REPLY_TO_STATUS'];
+                        } else {
+                            LoggerManager::getLogger()->warn('Reply to status is not defined for email list view data');
+                        }
+                        
+                        if ($replyToStatus == 1) {
+                            $email_fields['STATUS'] = $mod_strings['LBL_REPLIED'];
+                        }
+                        
 		} else {
 			$email_fields['QUICK_REPLY'] = $mod_strings['LBL_REPLIED'];
 		}

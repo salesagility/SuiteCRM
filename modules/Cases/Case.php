@@ -253,6 +253,12 @@ class aCase extends Basic
         $query_array=$this->contacts->getQuery();
 
         //update the select clause in the returned query.
+        
+        if(!is_array($query_array)) {
+            LoggerManager::getLogger()->fatal('Building database selection for contacts but the query information format is not an array.');
+            return false;
+        }
+        
         $query_array['select'] =
             'SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.title, contacts.email1, contacts.phone_work, contacts_cases.contact_role as case_role, contacts_cases.id as case_rel_id ';
 
@@ -345,7 +351,8 @@ class aCase extends Basic
     public function set_notification_body($xtpl, $case)
     {
         global $app_list_strings;
-
+        
+        $xtpl->assign('CASE_NUMBER', $case->case_number);
         $xtpl->assign('CASE_SUBJECT', $case->name);
         $xtpl->assign(
             'CASE_PRIORITY',

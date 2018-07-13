@@ -519,16 +519,18 @@ function get_number_seperators($reset_sep = false)
  * Utility function to print out some information about Currency instance.
  */
 function toString($echo = true) {
-	$s = "\$m_currency_round=$m_currency_round \n" .
-         "\$m_currency_decimal=$m_currency_decimal \n" .
-         "\$m_currency_symbol=$m_currency_symbol \n" .
-         "\$m_currency_iso=$m_currency_iso \n" .
-         "\$m_currency_name=$m_currency_name \n";
-
+    
+    LoggerManager::getLogger()->fatal('Wrong or incomplete implementation for currency to string convertation.');
+    
+    
+    $s = "\$m_currency_round=" . (isset($m_currency_round) ? $m_currency_round : null) . " \n" .
+     "\$m_currency_decimal=" . (isset($m_currency_decimal) ? $m_currency_decimal : null) . " \n" .
+     "\$m_currency_symbol=" . (isset($m_currency_symbol) ? $m_currency_symbol : null) . " \n" .
+     "\$m_currency_iso=" . (isset($m_currency_iso) ? $m_currency_iso : null) . " \n" .
+     "\$m_currency_name=" . (isset($m_currency_name) ? $m_currency_name : null) . " \n";
     if($echo) {
        echo $s;
     }
-
     return $s;
 }
 

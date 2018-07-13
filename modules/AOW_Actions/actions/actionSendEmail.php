@@ -204,7 +204,7 @@ class actionSendEmail extends actionBase {
                                 break;
                             Case 'all':
                             default:
-                                global $db;
+                                $db = DBManagerFactory::getInstance();
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
                                 $result = $db->query($sql);
                                 while ($row = $db->fetchByAssoc($result)) {
@@ -245,10 +245,12 @@ class actionSendEmail extends actionBase {
                         }
                         if($linkedBeans){
                             foreach($linkedBeans as $linkedBean) {
-                                $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
-                                if (trim($rel_email) != '') {
-                                    $emails[$params['email_to_type'][$key]][] = $rel_email;
-                                    $emails['template_override'][$rel_email] = array($linkedBean->module_dir => $linkedBean->id);
+                                if(!empty($linkedBean)){
+                                    $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
+                                    if (trim($rel_email) != '') {
+                                        $emails[$params['email_to_type'][$key]][] = $rel_email;
+                                        $emails['template_override'][$rel_email] = array($linkedBean->module_dir => $linkedBean->id);
+                                    }
                                 }
                             }
                         }

@@ -1,6 +1,6 @@
 <?php
 
-class AOW_ConditionTest extends PHPUnit_Framework_TestCase
+class AOW_ConditionTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOW_Condition()
     {
@@ -22,7 +22,6 @@ class AOW_ConditionTest extends PHPUnit_Framework_TestCase
 
     public function testbean_implements()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         $aowCondition = new AOW_Condition();
         $this->assertEquals(false, $aowCondition->bean_implements('')); //test with blank value
@@ -32,6 +31,14 @@ class AOW_ConditionTest extends PHPUnit_Framework_TestCase
 
     public function testsave_lines()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aow_conditions');
+//        $state->pushGlobals();
+        
+        // test
+        
         $aowCondition = new AOW_Condition();
 
         //populate required values
@@ -56,5 +63,10 @@ class AOW_ConditionTest extends PHPUnit_Framework_TestCase
         foreach ($aow_conditions as $lineItem) {
             $lineItem->mark_deleted($lineItem->id);
         }
+        
+        // clean up
+        
+//        $state->popGlobals();
+        $state->popTable('aow_conditions');
     }
 }

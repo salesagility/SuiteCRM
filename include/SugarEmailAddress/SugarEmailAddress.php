@@ -103,7 +103,7 @@ class SugarEmailAddress extends SugarBean {
             || !isset($_REQUEST[$bean->module_dir . '_email_widget_id'])
             || !isset($_REQUEST['massupdate'])
         ) {
-            if (empty($this->addresses)) {
+            if (empty($this->addresses) || (!empty($bean->email1))) {
                 $this->addresses = array();
                 $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == '1');
                 $invalid = (isset($bean->invalid_email) && $bean->invalid_email == '1');
@@ -938,7 +938,12 @@ class SugarEmailAddress extends SugarBean {
             } else {
                 $form = 'form_DC'.$this->view .'_'.$module;
             }
-            if(isset($_REQUEST['action']) && $_REQUEST['action']=='SubpanelCreates' ||  $_REQUEST['action']=='SubpanelEdits'){
+            
+            if (!isset($_REQUEST['action'])) {
+                LoggerManager::getLogger()->warn('Undefined index: action');
+            }
+            
+            if(isset($_REQUEST['action']) && ($_REQUEST['action']=='SubpanelCreates' ||  $_REQUEST['action']=='SubpanelEdits')){
                 $form = 'form_Subpanel'.$this->view .'_'.$module;
             }
         }

@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -77,6 +77,7 @@ current_subpanel_url=url;var loadingImg='<img src="themes/'+SUGAR.themes.theme_n
 request_id++;}});}else{var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='';set_div_cookie(subpanel.cookie_name,'');if(current_child_field!=''&&child_field!=current_child_field){hideSubPanel(current_child_field);}
 current_child_field=child_field;}
 if(typeof(url)!='undefined'&&url!=null&&url.indexOf('refresh_page=1')>0){document.location.reload();}}
+function toggleSubpanelCookie(tab){set_div_cookie(get_module_name()+'_'+tab+'_v',!$('#subpanel_'+tab).is(":visible"));}
 function markSubPanelLoaded(child_field){child_field_loaded[child_field]=2;}
 function hideSubPanel(child_field){var subpanel=document.getElementById('subpanel_'+child_field);subpanel.style.display='none';set_div_cookie(subpanel.cookie_name,'none');}
 var sub_cookie_name=get_module_name()+'_divs';var temp=Get_Cookie(sub_cookie_name);var div_cookies=new Array();if(temp&&typeof(temp)!='undefined'){div_cookies=get_sub_cookies(temp);}

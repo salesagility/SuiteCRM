@@ -113,8 +113,20 @@ class MassUpdate
 		unset($_REQUEST['PHPSESSID']);
 		$query = json_encode($_REQUEST);
 
-        $bean = loadBean($_REQUEST['module']);
-       $order_by_name = $bean->module_dir.'2_'.strtoupper($bean->object_name).'_ORDER_BY' ;
+                if (!isset($_REQUEST['module'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: module');
+                }
+                
+        $bean = loadBean(isset($_REQUEST['module']) ? $_REQUEST['module'] : null);
+        
+        if (!isset($bean->module_dir)) {
+            LoggerManager::getLogger()->warn('module_dir is not set for bean');
+        }
+        if (!isset($bean->object_name)) {
+            LoggerManager::getLogger()->warn('object_name is not set for bean');
+        }
+        
+       $order_by_name = (isset($bean->module_dir) ? $bean->module_dir : null).'2_'.strtoupper(isset($bean->object_name) ? $bean->object_name : null).'_ORDER_BY' ;
        $lvso = isset($_REQUEST['lvso'])?$_REQUEST['lvso']:"";
        $request_order_by_name = isset($_REQUEST[$order_by_name])?$_REQUEST[$order_by_name]:"";
        $action = isset($_REQUEST['action'])?$_REQUEST['action']:"";
@@ -135,7 +147,12 @@ class MassUpdate
         . "<input type='hidden' name='{$order_by_name}' value='{$request_order_by_name}' />\n";
 
 		// cn: bug 9103 - MU navigation in emails is broken
-		if($_REQUEST['module'] == 'Emails') {
+        
+                if (!isset($_REQUEST['module'])) {
+                    LoggerManager::getLogger()->warn('Undefined index: module');
+                }
+        
+		if(isset($_REQUEST['module']) && $_REQUEST['module'] == 'Emails') {
 			$type = "";
 			// determine "type" - inbound, archive, etc.
 			if (isset($_REQUEST['type'])) {
@@ -159,7 +176,7 @@ eoq;
 	function handleMassUpdate(){
 
 		require_once('include/formbase.php');
-		global $current_user, $db, $disable_date_format, $timedate;
+		global $current_user, $db, $disable_date_format, $timedate, $app_list_strings;
 
 		foreach($_POST as $post=>$value){
 			if(is_array($value)){
@@ -341,8 +358,16 @@ eoq;
 									list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
 
 									if($parentenum_value != $dynamic_field_value) {
+
 										// Change to the default value of the correct value set.
-										$newbean->$dynamic_field_name = $parentenum_value . '_' . $parentenum_value;
+                      $defaultValue = '';
+                      foreach ($app_list_strings[$field_name['options']] as $key => $value) {
+                          if (strpos($key, $parentenum_value) === 0) {
+                              $defaultValue = $key;
+                              break;
+                          }
+                      }
+                      $newbean->$dynamic_field_name = $defaultValue;
 									}
 								}
 							}
@@ -351,7 +376,7 @@ eoq;
 						$newbean->save($check_notify);
 						if (!empty($email_address_id)) {
 	    					$query = "UPDATE email_addresses SET opt_out = {$optout_flag_value} where id = '{$emailAddressRow['email_address_id']}'";
-	    					$GLOBALS['db']->query($query);
+	    					DBManagerFactory::getInstance()->query($query);
 
 						} // if
 
