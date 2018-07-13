@@ -1083,7 +1083,12 @@ class InboundEmail extends SugarBean
                             if (isset($overview->uid) && !empty($overview->uid)) {
                                 $this->imap_uid = $overview->uid;
                             }
-                            $values .= "'{$this->imap_uid}'";
+                            if (!isset($this->imap_uid)) {
+                                LoggerManager::getLogger()->warn('IMAP UID is not set for setCacheValue in InboundEmail');
+                                $values .= "''";
+                            } else {
+                                $values .= "'{$this->imap_uid}'";
+                            }
                             break;
 
                         case "ie_id":
