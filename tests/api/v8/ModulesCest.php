@@ -1550,6 +1550,8 @@ class ModulesCest
         $I->sendGET($url);
         $responseMeetingUsers = json_decode($I->grabResponse(), true);
         
+        print_r($responseMeetingUsers);
+        
         $exp = [
             'id',
             'meeting_id',
@@ -1559,6 +1561,7 @@ class ModulesCest
             'date_modified',
             'deleted',
         ];        
+        
         
         $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][0]['meta']['middle_table']['data']['attributes']));
         $I->assertSame($exp, array_keys($meetingsPayload['data']['relationships']['users']['data'][1]['meta']['middle_table']['data']['attributes']));
