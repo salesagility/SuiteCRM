@@ -75,6 +75,9 @@ class MasterSearchController
     private function parseRequest()
     {
         $searchQuery = filter_input(INPUT_GET, 'search-query-string', FILTER_SANITIZE_STRING);
+        if (empty($searchQuery)) {
+            $searchQuery = filter_input(INPUT_GET, 'query_string', FILTER_SANITIZE_STRING);
+        }
         $searchQuerySize = intval(filter_input(INPUT_GET, 'search-query-size', FILTER_SANITIZE_NUMBER_INT));
 
         if (empty($searchQuery)) {
