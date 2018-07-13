@@ -1632,7 +1632,7 @@ class ModulesCest
         $exp = $payloadUpdateChrisAccept['data'];
         
         $I->comment('Verify that user accept_status has been update');
-        $I->assertSame($exp, $responseChrisAccept['data']);
+        $I->assertSame($exp, $responseChrisAccept['data'][0]);
 
     }
 }
