@@ -3637,6 +3637,8 @@ class InboundEmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdeleteMessageOnMailServer()
     {
+        $this->markTestIncomplete('Deprecated way to check imap');
+        
         // save state
         
         $state = $this->storeStateAll();
