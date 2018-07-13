@@ -14,7 +14,7 @@ function runElasticSearchIndexerScheduler()
         $i->setDifferentialIndexingEnabled(true);
         $i->run();
     } catch (Exception $e) {
-        $i->log('!', 'An error has occurred while running a scheduled index');
+        $i->log('!', 'An error has occurred while running a scheduled indexing');
         return false;
     }
 
