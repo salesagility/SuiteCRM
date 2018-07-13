@@ -1,7 +1,11 @@
 <?php
+namespace SuiteCRM\Test;
+
+use User;
+use DBManagerFactory;
 
 /** @noinspection PhpUndefinedClassInspection */
-class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+abstract class SuitePHPUnit_Framework_TestCase extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
 
     /**
@@ -10,12 +14,12 @@ class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCa
     protected $env = array();
 
     /**
-     * @var LoggerManager
+     * @var \LoggerManager
      */
     protected $log;
 
     /**
-     * @var DBManager
+     * @var \DBManager
      */
     protected $db;
 
@@ -29,13 +33,9 @@ class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCa
      */
     protected $sugarConfig;
 
-    /**
-     * @var array
-     */
-    protected $fieldDefsStore;
-
     public static function setUpBeforeClass()
     {
+        parent::setUpBeforeClass();
         $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
@@ -51,14 +51,17 @@ class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCa
         parent::setUp();
 
         global $current_user, $sugar_config;
-        $current_user = new User();
+        try {
+            $current_user = @\BeanFactory::getBean('Users'); //new User();
+        } catch (Exception $e) {
+            
+        }
         get_sugar_config_defaults();
 
         $this->log = $GLOBALS['log'];
         $GLOBALS['log'] = new TestLogger();
 
         $this->dbManagerFactoryInstances = DBManagerFactory::$instances;
-        DBManagerFactory::$instances = array();
         $this->db = DBManagerFactory::getInstance();
 
 
@@ -70,37 +73,6 @@ class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCa
         }
 
         $this->sugarConfig = $sugar_config;
-
-        $this->fieldDefsStore();
-    }
-
-    /**
-     * Store static field_defs per modules
-     * @param string $key
-     */
-    protected function fieldDefsStore($key = 'base')
-    {
-        global $beanList;
-
-        foreach ($beanList as $module => $class) {
-            $object = new $class();
-            $this->fieldDefsStore[$key][$class] = $object->field_defs;
-        }
-    }
-
-    /**
-     * Restore static field_defs per modules
-     * @param string $key
-     */
-    protected function fieldDefsRestore($key = 'base')
-    {
-        global $beanList;
-
-        foreach ($beanList as $module => $class) {
-            $object = new $class();
-            $this->fieldDefsStore[$key][$class] = $object->field_defs;
-            $object->field_defs = $this->fieldDefsStore[$key][$class];
-        }
     }
 
     /**
@@ -110,8 +82,6 @@ class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCa
     public function tearDown()
     {
         global $sugar_config;
-
-        $this->fieldDefsRestore();
 
         $sugar_config = $this->sugarConfig;
 
