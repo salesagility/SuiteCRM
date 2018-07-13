@@ -38,7 +38,7 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
+class PersonTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester
@@ -59,22 +59,6 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         $person = new Contact();
         $person->last_name = 'Smith';
 
-        // Test when  basis is not a string
-        $this->tester->expectException(
-             new InvalidArgumentException('basis must be a string'),
-             function() use ($person) {
-                 $person->setLawfulBasis(1, '');
-             }
-        );
-
-        // test when basis does not exist
-        $this->tester->expectException(
-            new InvalidArgumentException('invalid lawful basis'),
-            function() use ($person) {
-                $person->setLawfulBasis('Test Invalid Basis', '');
-            }
-        );
-
         // test valid basis
         $this->assertEquals(1, $person->setLawfulBasis('', ''));
         $this->assertEquals(1, $person->setLawfulBasis('consent', ''));
@@ -88,22 +72,6 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         // test lawful basis has been set
         $person->setLawfulBasis('consent', '');
         $this->assertEquals($person->lawful_basis, '^consent^');
-
-        // Test when source is not a string
-        $this->tester->expectException(
-            new InvalidArgumentException('source for lawful basis must be a string'),
-            function() use ($person) {
-                $person->setLawfulBasis('', 1);
-            }
-        );
-
-        // test when source does not exist
-        $this->tester->expectException(
-            new InvalidArgumentException('invalid lawful basis source'),
-            function() use ($person) {
-                $person->setLawfulBasis('','Test Invalid Sources');
-            }
-        );
 
         // test lawful sources
         $this->assertEquals(true, $person->setLawfulBasis('', ''));
