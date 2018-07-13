@@ -514,13 +514,17 @@ class SugarFeed extends Basic
     {
         global $timedate;
 
-        $timedate->getInstance()->userTimezone();
-        $currentTime = $timedate->now();
+        $nowTs = $timedate->getNow()->ts;
 
-        $first = strtotime($currentTime);
-        $second = strtotime($startDate);
+        if (null !== ($userStartDate = $timedate->fromUser($startDate))) {
+            $userStartDateTs = $userStartDate->ts;
+        } else {
+            LoggerManager::getLogger()->warn('Invalid $startDate');
 
-        $seconds = $first - $second;
+            return '';
+        }
+
+        $seconds = $nowTs - $userStartDateTs;
         $minutes = $seconds / 60;
         $seconds = $seconds % 60;
         $hours = floor($minutes / 60);
