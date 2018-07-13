@@ -55,7 +55,7 @@ class Viewdeletemodule extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $ajax = new AjaxCompose();
         $ajax->addSection('center', 'Module Deleted', $_REQUEST['module'] . ' was deleted from ' . $_REQUEST['package']);

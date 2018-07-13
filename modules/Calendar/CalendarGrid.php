@@ -61,7 +61,7 @@ class CalendarGrid
 	 * constructor
 	 * @param Calendar $cal
 	 */
-    function __construct(Calendar $cal)
+    public function __construct(Calendar $cal)
     {
         global $current_user;
         $this->cal = $cal;
@@ -234,7 +234,7 @@ class CalendarGrid
         return $str;
     }
 
-    function mobile_display_items($day_item)
+    public function mobile_display_items($day_item)
     {
         $end_time = $this->mobile_get_end_time($day_item);
         $status_color = $this->mobile_get_status_colour($day_item['status']);
@@ -282,7 +282,7 @@ class CalendarGrid
         return $display;
     }
 
-    function mobile_get_end_time($day_item)
+    public function mobile_get_end_time($day_item)
     {
         $start_time = DateTime::createFromFormat("h:ia",$day_item['time_start']);
         $start_time->modify('+' . $day_item['duration_minutes'] .'minutes');
@@ -290,7 +290,7 @@ class CalendarGrid
     }
 
 
-    function mobile_get_type_colour($type)
+    public function mobile_get_type_colour($type)
     {
         switch ($type) {
 			case "meeting":
@@ -309,7 +309,7 @@ class CalendarGrid
         return $colour;
     }
 
-    function mobile_get_status_colour($type)
+    public function mobile_get_status_colour($type)
     {
         switch ($type) {
 			case "Held":
@@ -332,7 +332,7 @@ class CalendarGrid
         return $colour;
     }
 
-    function mobile_sort_items($agenda_array)
+    public function mobile_sort_items($agenda_array)
     {
         $times = "";
 

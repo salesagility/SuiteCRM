@@ -41,7 +41,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
 class SugarFieldDatetime extends SugarFieldBase
 {
-    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
 
         // Create Smarty variables for the Calendar picker widget
@@ -75,7 +75,7 @@ class SugarFieldDatetime extends SugarFieldBase
         // ~ jpereira@dri - #Bug49552 - Datetime field unable to follow parent class methods
     }
 
-    function getImportViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getImportViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $displayParams['showMinutesDropdown'] = false;
         $displayParams['showHoursDropdown'] = false;
@@ -88,7 +88,7 @@ class SugarFieldDatetime extends SugarFieldBase
     }
 
 
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if ($this->isRangeSearchView($vardef)) {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
@@ -195,7 +195,7 @@ class SugarFieldDatetime extends SugarFieldBase
     }
 
 
-    function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         global $timedate,$current_user;
 

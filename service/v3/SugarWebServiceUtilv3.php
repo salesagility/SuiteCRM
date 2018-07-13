@@ -40,7 +40,7 @@
 require_once('service/core/SoapHelperWebService.php');
 class SugarWebServiceUtilv3 extends SoapHelperWebServices
 {
-    function get_name_value($field,$value)
+    public function get_name_value($field,$value)
     {
         if ($value instanceof Link2 && !method_exists($value, '__toString')) {
             $value = '';
@@ -48,7 +48,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         return array('name'=>$field, 'value'=>$value);
     }
 
-    function filter_fields($value, $fields)
+    public function filter_fields($value, $fields)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->filter_fields');
         global $invalid_contact_fields;
@@ -83,7 +83,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         return $filterFields;
     }
 
-    function getRelationshipResults($bean, $link_field_name, $link_module_fields, $optional_where = '', $order_by = '')
+    public function getRelationshipResults($bean, $link_field_name, $link_module_fields, $optional_where = '', $order_by = '')
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->getRelationshipResults');
         require_once('include/TimeDate.php');
@@ -134,7 +134,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         } // else
     } // fn
 
-    function get_field_list($value, $fields, $translate=true)
+    public function get_field_list($value, $fields, $translate=true)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_field_list');
         $module_fields = array();
@@ -244,7 +244,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         return array('module_fields' => $module_fields, 'link_fields' => $link_fields);
     }
 
-    function get_subpanel_defs($module, $type)
+    public function get_subpanel_defs($module, $type)
     {
         global $beanList, $beanFiles;
         $results = array();
@@ -275,7 +275,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         return $results;
     }
 
-    function get_module_view_defs($module_name, $type, $view)
+    public function get_module_view_defs($module_name, $type, $view)
     {
         require_once('include/MVC/View/SugarView.php');
         $metadataFile = null;
@@ -310,7 +310,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
      * @param array $availModules An array of all the modules the user already has access to.
      * @return array Modules enabled within the application.
      */
-    function get_visible_modules($availModules)
+    public function get_visible_modules($availModules)
     {
         require_once("modules/MySettings/TabController.php");
         $controller = new TabController();
@@ -331,7 +331,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
      *
      * @return array
      */
-    function get_upcoming_activities()
+    public function get_upcoming_activities()
     {
         global $beanList;
         $maxCount = 10;
@@ -372,7 +372,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         return $results;
     }
 
-    function generateUpcomingActivitiesWhereClause($seed,$meta)
+    public function generateUpcomingActivitiesWhereClause($seed,$meta)
     {
         $query = array();
         $query_date = TimeDate::getInstance()->nowDb();
@@ -395,7 +395,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
      * @param string $date_field Name of the field storing the date field we are examining
      * @return array The results.
      */
-    function format_upcoming_activities_entries($list,$date_field)
+    public function format_upcoming_activities_entries($list,$date_field)
     {
         $results = array();
         foreach ($list as $bean) {
@@ -413,7 +413,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
      * @param array $b
      * @return int Indicates equality for date due flag
      */
-    static function cmp_datedue($a, $b)
+    public static function cmp_datedue($a, $b)
     {
         $a_date = strtotime($a['date_due']) ;
         $b_date = strtotime($b['date_due']) ;

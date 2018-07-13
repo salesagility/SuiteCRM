@@ -49,7 +49,7 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyEmailsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings, $dashletData;
         require('modules/Emails/Dashlets/MyEmailsDashlet/MyEmailsDashlet.data.php');
@@ -71,7 +71,7 @@ class MyEmailsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyEmailsDashlet($id, $def = null)
+    public function MyEmailsDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -83,7 +83,7 @@ class MyEmailsDashlet extends DashletGeneric
     }
 
 
-    function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = array(), $id = null)
     {
         global $current_language, $app_list_strings, $image_path, $current_user;
         //$where = 'emails.deleted = 0 AND emails.assigned_user_id = \''.$current_user->id.'\' AND emails.type = \'inbound\' AND emails.status = \'unread\'';
@@ -101,7 +101,7 @@ class MyEmailsDashlet extends DashletGeneric
         parent::process($lvsParams);
     }
 
-    function displayScript()
+    public function displayScript()
     {
         global $current_language;
 

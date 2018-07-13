@@ -45,41 +45,41 @@ require_once("include/SugarTheme/cssmin.php");
 
 class SugarSpriteBuilder
 {
-    var $isAvailable = false;
-    var $silentRun = false;
-    var $fromSilentUpgrade = false;
-    var $writeToUpgradeLog = false;
+    public $isAvailable = false;
+    public $silentRun = false;
+    public $fromSilentUpgrade = false;
+    public $writeToUpgradeLog = false;
 
-    var $debug = false;
-    var $fileName = 'sprites';
-    var $cssMinify = true;
+    public $debug = false;
+    public $fileName = 'sprites';
+    public $cssMinify = true;
 
     // class supported image types
-    var $supportedTypeMap = array(
+    public $supportedTypeMap = array(
 		IMG_GIF => IMAGETYPE_GIF,
 		IMG_JPG => IMAGETYPE_JPEG,
 		IMG_PNG => IMAGETYPE_PNG,
 	);
 
     // sprite settings
-    var $pngCompression = 9;
-    var $pngFilter = PNG_NO_FILTER;
-    var $maxWidth = 75;
-    var $maxHeight = 75;
-    var $rowCnt = 30;
+    public $pngCompression = 9;
+    public $pngFilter = PNG_NO_FILTER;
+    public $maxWidth = 75;
+    public $maxHeight = 75;
+    public $rowCnt = 30;
 
     // processed image types
-    var $imageTypes = array();
+    public $imageTypes = array();
 
     // source files
-    var $spriteSrc = array();
-    var $spriteRepeat = array();
+    public $spriteSrc = array();
+    public $spriteRepeat = array();
 
     // sprite resource images
-    var $spriteImg;
+    public $spriteImg;
 
     // sprite_config collection
-    var $sprites_config = array();
+    public $sprites_config = array();
 
 
     public function __construct()
@@ -498,13 +498,13 @@ class SpritePlacement
 {
 
 	// occupied space
-    var $spriteMatrix = array();
+    public $spriteMatrix = array();
 
     // minimum surface
-    var $minSurface = 0;
+    public $minSurface = 0;
 
     // sprite src (flattened array)
-    var $spriteSrc = array();
+    public $spriteSrc = array();
 
     // placement config array
     /*
@@ -518,9 +518,9 @@ class SpritePlacement
     			-> rowcnt
 
     */
-    var $config = array();
+    public $config = array();
 
-    function __construct($spriteSrc, $config)
+    public function __construct($spriteSrc, $config)
     {
 
 		// convert spriteSrc to flat array
@@ -535,7 +535,7 @@ class SpritePlacement
         $this->config = $config;
     }
 
-    function processSprites()
+    public function processSprites()
     {
         foreach ($this->spriteSrc as $id => $info) {
 
@@ -554,7 +554,7 @@ class SpritePlacement
     }
 
     // returns x/y coordinates to fit the sprite
-    function addSprite($w, $h)
+    public function addSprite($w, $h)
     {
         $result = false;
 
@@ -593,19 +593,19 @@ class SpritePlacement
     }
 
     // calculate total width
-    function width()
+    public function width()
     {
         return $this->getMaxAxis('x');
     }
 
     // calculate total height
-    function height()
+    public function height()
     {
         return $this->getMaxAxis('y');
     }
 
     // helper function to get highest axis value
-    function getMaxAxis($axis)
+    public function getMaxAxis($axis)
     {
         $val = 0;
         foreach ($this->spriteMatrix as $id => $coor) {

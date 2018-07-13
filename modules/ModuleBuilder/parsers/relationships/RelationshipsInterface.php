@@ -43,7 +43,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 interface RelationshipsInterface
 {
-    static public function findRelatableModules() ;
+    public static function findRelatableModules() ;
     
     public function load() ;
 

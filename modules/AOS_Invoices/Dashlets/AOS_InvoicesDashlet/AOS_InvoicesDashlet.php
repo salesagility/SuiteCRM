@@ -40,7 +40,7 @@ require_once('modules/AOS_Invoices/AOS_Invoices.php');
 
 class AOS_InvoicesDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/AOS_Invoices/metadata/dashletviewdefs.php');
@@ -60,7 +60,7 @@ class AOS_InvoicesDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_InvoicesDashlet($id, $def = null)
+    public function AOS_InvoicesDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

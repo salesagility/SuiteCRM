@@ -76,7 +76,7 @@ class ImportMap extends SugarBean
     public $object_name = "ImportMap";
     public $module_dir  = 'Import';
     public $new_schema  = true;
-    var $disable_custom_fields = true;
+    public $disable_custom_fields = true;
     public $column_fields = array(
         "id",
         "name",

@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 //TODO Rename this to close button field
 class SugarWidgetSubPanelCloseButton extends SugarWidgetField
 {
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         global $app_strings;
         global $subpanel_item_count;

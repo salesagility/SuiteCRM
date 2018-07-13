@@ -44,7 +44,7 @@ require_once('include/generic/SugarWidgets/SugarWidgetSubPanelTopButton.php');
 
 class SugarWidgetSubPanelSendInvitesButton extends SugarWidgetSubPanelTopButton
 {
-    function display($defines, $additionalFormFields = null, $nonbutton = false)
+    public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         global $mod_strings;
        

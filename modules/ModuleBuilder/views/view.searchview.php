@@ -49,7 +49,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 class ViewSearchView extends ViewListView
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         if (!empty($_REQUEST['searchlayout'])) {
@@ -71,11 +71,11 @@ class ViewSearchView extends ViewListView
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
-    function preDisplay()
+    public function preDisplay()
     {
     }
 
-    function display(
+    public function display(
  	    $preview = false
  	    ) {
         $packageName = (isset ($_REQUEST [ 'view_package' ])) ? $_REQUEST [ 'view_package' ] : '' ;
@@ -97,7 +97,7 @@ class ViewSearchView extends ViewListView
         }
     }
 
-    function constructAjax()
+    public function constructAjax()
     {
         require_once ('modules/ModuleBuilder/MB/AjaxCompose.php') ;
         $ajax = new AjaxCompose () ;

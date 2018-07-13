@@ -87,7 +87,7 @@ class CalendarDisplay
      * @param string $dashlet_id for dashlet mode
      * @param array $views
      */
-    function __construct(Calendar $cal,$dashlet_id = "", $views = array())
+    public function __construct(Calendar $cal,$dashlet_id = "", $views = array())
     {
         global $sugar_config;
         if (isset($sugar_config['CalendarColors']) && is_array($sugar_config['CalendarColors'])) {
@@ -221,7 +221,7 @@ class CalendarDisplay
         echo $ss->fetch($main);
     }
 
-    function checkActivity($activity = "")
+    public function checkActivity($activity = "")
     {
         global $current_user;
         if (empty($activity)) {

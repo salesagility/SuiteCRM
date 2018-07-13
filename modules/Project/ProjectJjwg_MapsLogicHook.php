@@ -8,8 +8,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ProjectJjwg_MapsLogicHook
 {
-    var $jjwg_Maps;
-    function __construct()
+    public $jjwg_Maps;
+    public function __construct()
     {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }
@@ -17,7 +17,7 @@ class ProjectJjwg_MapsLogicHook
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ProjectJjwg_MapsLogicHook()
+    public function ProjectJjwg_MapsLogicHook()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -29,7 +29,7 @@ class ProjectJjwg_MapsLogicHook
     }
 
 
-    function updateGeocodeInfo(&$bean, $event, $arguments)
+    public function updateGeocodeInfo(&$bean, $event, $arguments)
     {
         // before_save
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
@@ -37,7 +37,7 @@ class ProjectJjwg_MapsLogicHook
         }
     }
 
-    function updateRelatedMeetingsGeocodeInfo(&$bean, $event, $arguments)
+    public function updateRelatedMeetingsGeocodeInfo(&$bean, $event, $arguments)
     {
         // after_save
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
@@ -45,7 +45,7 @@ class ProjectJjwg_MapsLogicHook
         }
     }
 
-    function addRelationship(&$bean, $event, $arguments)
+    public function addRelationship(&$bean, $event, $arguments)
     {
         // after_relationship_add
         // $arguments['module'], $arguments['related_module'], $arguments['id'] and $arguments['related_id']
@@ -62,7 +62,7 @@ class ProjectJjwg_MapsLogicHook
         }
     }
 
-    function deleteRelationship(&$bean, $event, $arguments)
+    public function deleteRelationship(&$bean, $event, $arguments)
     {
         // after_relationship_delete
         // $arguments['module'], $arguments['related_module'], $arguments['id'] and $arguments['related_id']

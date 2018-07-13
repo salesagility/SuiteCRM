@@ -161,7 +161,7 @@ abstract class PHP5Soap extends SugarSoapService
         parent::setObservers();
     }
 
-    function registerClass($registryClass)
+    public function registerClass($registryClass)
     {
         $this->registryClass = $registryClass;
     }
@@ -171,7 +171,7 @@ abstract class PHP5Soap extends SugarSoapService
         $this->nusoap_server->wsdl->addComplexType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs, $arrayType);
     }
 
-    function registerFunction($function, $input, $output)
+    public function registerFunction($function, $input, $output)
     {
         if (in_array($function, $this->excludeFunctions)) {
             return;

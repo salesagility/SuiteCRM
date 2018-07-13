@@ -35,7 +35,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $success;
+    public $success;
 
     /**
      *
@@ -43,7 +43,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $props;
+    public $props;
 
     /**
      *
@@ -51,7 +51,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $depth;
+    public $depth;
 
     /**
      *
@@ -59,7 +59,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $mode;
+    public $mode;
 
     /**
      *
@@ -67,7 +67,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $current;
+    public $current;
 
     /**
      * constructor
@@ -75,7 +75,7 @@ class _parse_proppatch
      * @param  string  path of input stream
      * @access public
      */
-    function __construct($path)
+    public function __construct($path)
     {
         $this->success = true;
 
@@ -127,7 +127,7 @@ class _parse_proppatch
      * @return void
      * @access private
      */
-    function _startElement($parser, $name, $attrs)
+    public function _startElement($parser, $name, $attrs)
     {
         if (strstr($name, " ")) {
             list($ns, $tag) = explode(" ", $name);
@@ -172,7 +172,7 @@ class _parse_proppatch
      * @return void
      * @access private
      */
-    function _endElement($parser, $name)
+    public function _endElement($parser, $name)
     {
         if (strstr($name, " ")) {
             list($ns, $tag) = explode(" ", $name);
@@ -206,7 +206,7 @@ class _parse_proppatch
      * @return void
      * @access private
      */
-    function _data($parser, $data)
+    public function _data($parser, $data)
     {
         if (isset($this->current)) {
             $this->current["val"] .= $data;

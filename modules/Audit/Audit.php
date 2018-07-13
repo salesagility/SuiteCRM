@@ -53,12 +53,12 @@ require_once('modules/Audit/field_assoc.php');
 
 class Audit extends SugarBean
 {
-    var $module_dir = "Audit";
-    var $object_name = "Audit";
+    public $module_dir = "Audit";
+    public $object_name = "Audit";
 
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array();
+    public $additional_column_fields = Array();
 
     public function __construct()
     {
@@ -80,38 +80,38 @@ class Audit extends SugarBean
     }
 
 
-    var $new_schema = true;
+    public $new_schema = true;
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return $this->name;
     }
 
-    function create_export_query($order_by, $where)
+    public function create_export_query($order_by, $where)
     {
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
     }
 
-    function fill_in_additional_parent_fields()
+    public function fill_in_additional_parent_fields()
     {
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
     }
 
-    function get_audit_link()
+    public function get_audit_link()
     {
     }
 
-    function get_audit_list()
+    public function get_audit_list()
     {
         global $focus, $genericAssocFieldsArray, $moduleAssocFieldsArray, $current_user, $timedate, $app_strings;
         $audit_list = array();
@@ -193,7 +193,7 @@ class Audit extends SugarBean
         return $audit_list;
     }
 
-    function getAssociatedFieldName($fieldName, $fieldValue)
+    public function getAssociatedFieldName($fieldName, $fieldValue)
     {
         global $focus,  $genericAssocFieldsArray, $moduleAssocFieldsArray;
 

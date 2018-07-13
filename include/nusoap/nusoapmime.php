@@ -197,18 +197,18 @@ class nusoapclientmime extends nusoapclient
      * data, filename, contenttype, cid
      * @access private
      */
-    var $requestAttachments = array();
+    public $requestAttachments = array();
     /**
      * @var array Each array element in the return is an associative array with keys
      * data, filename, contenttype, cid
      * @access private
      */
-    var $responseAttachments;
+    public $responseAttachments;
     /**
      * @var string
      * @access private
      */
-    var $mimeContentType;
+    public $mimeContentType;
 
     /**
     * adds a MIME attachment to the current request.
@@ -225,7 +225,7 @@ class nusoapclientmime extends nusoapclient
     * @return string The content-id (cid) of the attachment
     * @access public
     */
-    function addAttachment($data, $filename = '', $contenttype = 'application/octet-stream', $cid = false)
+    public function addAttachment($data, $filename = '', $contenttype = 'application/octet-stream', $cid = false)
     {
         if (! $cid) {
             $cid = md5(uniqid(time()));
@@ -246,7 +246,7 @@ class nusoapclientmime extends nusoapclient
     *
     * @access public
     */
-    function clearAttachments()
+    public function clearAttachments()
     {
         $this->requestAttachments = array();
     }
@@ -261,7 +261,7 @@ class nusoapclientmime extends nusoapclient
     * @return array The attachments.
     * @access public
     */
-    function getAttachments()
+    public function getAttachments()
     {
         return $this->responseAttachments;
     }
@@ -273,7 +273,7 @@ class nusoapclientmime extends nusoapclient
     * @return string The HTTP body, which includes the SOAP payload
     * @access private
     */
-    function getHTTPBody($soapmsg)
+    public function getHTTPBody($soapmsg)
     {
         if (count($this->requestAttachments) > 0) {
             $params['content_type'] = 'multipart/related; type=text/xml';
@@ -328,7 +328,7 @@ class nusoapclientmime extends nusoapclient
     * @return string the HTTP content type for the current request.
     * @access private
     */
-    function getHTTPContentType()
+    public function getHTTPContentType()
     {
         if (count($this->requestAttachments) > 0) {
             return $this->mimeContentType;
@@ -345,7 +345,7 @@ class nusoapclientmime extends nusoapclient
     * @return string the HTTP content type charset for the current request.
     * @access private
     */
-    function getHTTPContentTypeCharset()
+    public function getHTTPContentTypeCharset()
     {
         if (count($this->requestAttachments) > 0) {
             return false;
@@ -361,7 +361,7 @@ class nusoapclientmime extends nusoapclient
     * @return	mixed	value of the message, decoded into a PHP type
     * @access   private
     */
-    function parseResponse($headers, $data)
+    public function parseResponse($headers, $data)
     {
         $this->debug('Entering parseResponse() for payload of length ' . strlen($data) . ' and type of ' . $headers['content-type']);
         $this->responseAttachments = array();
@@ -420,18 +420,18 @@ class nusoapservermime extends soap_server
      * data, filename, contenttype, cid
      * @access private
      */
-    var $requestAttachments = array();
+    public $requestAttachments = array();
     /**
      * @var array Each array element in the return is an associative array with keys
      * data, filename, contenttype, cid
      * @access private
      */
-    var $responseAttachments;
+    public $responseAttachments;
     /**
      * @var string
      * @access private
      */
-    var $mimeContentType;
+    public $mimeContentType;
 
     /**
     * adds a MIME attachment to the current response.
@@ -448,7 +448,7 @@ class nusoapservermime extends soap_server
     * @return string The content-id (cid) of the attachment
     * @access public
     */
-    function addAttachment($data, $filename = '', $contenttype = 'application/octet-stream', $cid = false)
+    public function addAttachment($data, $filename = '', $contenttype = 'application/octet-stream', $cid = false)
     {
         if (! $cid) {
             $cid = md5(uniqid(time()));
@@ -469,7 +469,7 @@ class nusoapservermime extends soap_server
     *
     * @access public
     */
-    function clearAttachments()
+    public function clearAttachments()
     {
         $this->responseAttachments = array();
     }
@@ -484,7 +484,7 @@ class nusoapservermime extends soap_server
     * @return array The attachments.
     * @access public
     */
-    function getAttachments()
+    public function getAttachments()
     {
         return $this->requestAttachments;
     }
@@ -496,7 +496,7 @@ class nusoapservermime extends soap_server
     * @return string The HTTP body, which includes the SOAP payload
     * @access private
     */
-    function getHTTPBody($soapmsg)
+    public function getHTTPBody($soapmsg)
     {
         if (count($this->responseAttachments) > 0) {
             $params['content_type'] = 'multipart/related; type=text/xml';
@@ -551,7 +551,7 @@ class nusoapservermime extends soap_server
     * @return string the HTTP content type for the current response.
     * @access private
     */
-    function getHTTPContentType()
+    public function getHTTPContentType()
     {
         if (count($this->responseAttachments) > 0) {
             return $this->mimeContentType;
@@ -568,7 +568,7 @@ class nusoapservermime extends soap_server
     * @return string the HTTP content type charset for the current response.
     * @access private
     */
-    function getHTTPContentTypeCharset()
+    public function getHTTPContentTypeCharset()
     {
         if (count($this->responseAttachments) > 0) {
             return false;
@@ -584,7 +584,7 @@ class nusoapservermime extends soap_server
     * @return	mixed	value of the message, decoded into a PHP type
     * @access   private
     */
-    function parseRequest($headers, $data)
+    public function parseRequest($headers, $data)
     {
         $this->debug('Entering parseRequest() for payload of length ' . strlen($data) . ' and type of ' . $headers['content-type']);
         $this->requestAttachments = array();

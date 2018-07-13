@@ -49,7 +49,7 @@ require_once('include/MVC/View/views/view.classic.php');
 
 class EmailTemplatesViewClassic extends ViewClassic
 {
-    function __construct()
+    public function __construct()
     {
 
 		/* BEGIN - SECURITY GROUPS - The whole file is custom but the purpose is the following code */
@@ -62,7 +62,7 @@ class EmailTemplatesViewClassic extends ViewClassic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function EmailTemplatesViewClassic()
+    public function EmailTemplatesViewClassic()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

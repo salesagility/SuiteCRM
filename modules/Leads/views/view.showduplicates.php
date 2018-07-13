@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class ViewShowDuplicates extends SugarView
 {
-    function display()
+    public function display()
     {
         global $app_strings;
         global $app_list_strings;

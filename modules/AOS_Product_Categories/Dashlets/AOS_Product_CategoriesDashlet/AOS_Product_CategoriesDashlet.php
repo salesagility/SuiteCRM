@@ -53,7 +53,7 @@ require_once('modules/AOS_Product_Categories/AOS_Product_Categories.php');
 
 class AOS_Product_CategoriesDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/AOS_Product_Categories/metadata/dashletviewdefs.php');
@@ -73,7 +73,7 @@ class AOS_Product_CategoriesDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Product_CategoriesDashlet($id, $def = null)
+    public function AOS_Product_CategoriesDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

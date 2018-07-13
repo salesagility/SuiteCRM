@@ -51,7 +51,7 @@ class BlankMonitor extends Monitor implements Trackable
     /**
      * BlankMonitor constructor
      */
-    function __construct()
+    public function __construct()
     {
     }
 
@@ -77,7 +77,7 @@ class BlankMonitor extends Monitor implements Trackable
      * @param $value Mixed value
      * @throws Exception Thrown if metric name is not configured for monitor instance
      */
-    function setValue($name, $value)
+    public function setValue($name, $value)
     {
     }
 
@@ -86,7 +86,7 @@ class BlankMonitor extends Monitor implements Trackable
      * Returns Array of store names defined for monitor instance
      * @return Array of store names defined for monitor instance
      */
-    function getStores()
+    public function getStores()
     {
         return null;
     }
@@ -96,7 +96,7 @@ class BlankMonitor extends Monitor implements Trackable
      * Returns Array of metric instances defined for monitor instance
      * @return Array of metric instances defined for monitor instance
      */
-    function getMetrics()
+    public function getMetrics()
     {
         return null;
     }

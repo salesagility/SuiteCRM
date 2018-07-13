@@ -48,7 +48,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 class ViewLayoutView extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         $GLOBALS [ 'log' ]->debug ('in ViewLayoutView') ;
         $this->editModule = $_REQUEST [ 'view_module' ] ;
@@ -70,7 +70,7 @@ class ViewLayoutView extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewLayoutView()
+    public function ViewLayoutView()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -95,11 +95,11 @@ class ViewLayoutView extends SugarView
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
-    function preDisplay()
+    public function preDisplay()
     {
     }
 
-    function display($preview = false)
+    public function display($preview = false)
     {
         global $mod_strings ;
         $parser = ParserFactory::getParser($this->editLayout,$this->editModule,$this->package);

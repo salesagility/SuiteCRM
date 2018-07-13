@@ -75,7 +75,7 @@ class EmailManViewList extends ViewList
     }
     
     
-    function listViewPrepare()
+    public function listViewPrepare()
     {
         $this->options['show_title'] = false;
         parent::listViewPrepare();
@@ -84,7 +84,7 @@ class EmailManViewList extends ViewList
     /**
      * @see ViewList::listViewProcess()
      */
-    function listViewProcess()
+    public function listViewProcess()
     {
         parent::listViewProcess();
 		

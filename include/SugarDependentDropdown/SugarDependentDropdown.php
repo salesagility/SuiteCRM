@@ -52,18 +52,18 @@ class SugarDependentDropdown
     /*
      * Holds processed metadata, ready for JSON
      */
-    var $metadata;
+    public $metadata;
 
     /*
      * Flag to suppress errors and/or log more heavily
      */
-    var $debugMode = false;
+    public $debugMode = false;
 
     /*
      * Default metadata array that will be merged with any passed fields to
      * ensure uniformity
      */
-    var $defaults = array(
+    public $defaults = array(
 		'name'		=> '',
 		'id'		=> '',
 		'type'		=> 'none',	// form element, valid "select", "input", "checkbox", "none"
@@ -75,7 +75,7 @@ class SugarDependentDropdown
      * Fields that must exist in an element (single dropdown/field) metadata
      * array.
      */
-    var $elementRequired = array(
+    public $elementRequired = array(
 		'name',
 		'id',
 		//'values',
@@ -86,14 +86,14 @@ class SugarDependentDropdown
     /**
      * Fields that will be merged down into individual elements and handlers
      */
-    var $alwaysMerge = array(
+    public $alwaysMerge = array(
 		'force_render',
 	);
 
     /*
      * Valid 'types' for a dependent dropdown
      */
-    var $validTypes = array(
+    public $validTypes = array(
 		"select", 	// select dropdown
 		"input", 	// text input field
 		"checkbox",	// checkbox (radio buttons will not be supported)
@@ -105,7 +105,7 @@ class SugarDependentDropdown
      * Sole constructor
      * @param string $metadata Path to metadata file to consume
      */
-    function __construct($metadata='')
+    public function __construct($metadata='')
     {
         if (!empty($metadata)) {
             $this->init($metadata);
@@ -115,7 +115,7 @@ class SugarDependentDropdown
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarDependentDropdown($metadata='')
+    public function SugarDependentDropdown($metadata='')
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -130,7 +130,7 @@ class SugarDependentDropdown
      * Prepares an instance of SDD for use with a given set
      * @param string $metadata Path to metadata file to consume
      */
-    function init($metadata)
+    public function init($metadata)
     {
         if (is_string($metadata)) {
             if ($this->debugMode) {
@@ -186,7 +186,7 @@ class SugarDependentDropdown
     /**
      * Verifies that an element is valid and has all the required info.
      */
-    function isValidElement($element)
+    public function isValidElement($element)
     {
         if (is_array($element)) {
             foreach ($this->elementRequired as $k => $req) {
@@ -213,7 +213,7 @@ class SugarDependentDropdown
      * @param array $element Element metadata
      * @return array
      */
-    function initElement($element, $alwaysMerge)
+    public function initElement($element, $alwaysMerge)
     {
         if ($this->isValidElement($element)) {
             $mergedElement = sugarArrayMerge($this->defaults, $element);
@@ -269,7 +269,7 @@ class SugarDependentDropdown
      * @param array $metadata
      * @return bool
      */
-    function verifyMetadata($metadata)
+    public function verifyMetadata($metadata)
     {
         if (isset($metadata['elements']) && !empty($metadata['elements']) && is_array($metadata['elements'])) {
             $elements = $metadata['elements'];
@@ -356,7 +356,7 @@ class SugarDependentDropdown
      * Prints debug messages to the screen
      * @param mixed
      */
-    function debugOutput($v)
+    public function debugOutput($v)
     {
         echo "\n<pre>\n";
         print_r($v);

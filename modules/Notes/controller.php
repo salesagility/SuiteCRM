@@ -48,7 +48,7 @@
   
  class NotesController extends SugarController
  {
-     function action_save()
+     public function action_save()
      {
          require_once('include/upload_file.php');
 		
@@ -98,7 +98,7 @@
          }
      }
 	
-     function action_editview()
+     public function action_editview()
      {
          $this->view = 'edit';
          $GLOBALS['view'] = $this->view;

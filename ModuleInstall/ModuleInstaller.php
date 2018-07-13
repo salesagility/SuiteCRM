@@ -62,13 +62,13 @@ define('DISABLED_PATH', 'Disabled');
 
 class ModuleInstaller
 {
-    var $modules = array();
-    var $silent = false;
-    var $base_dir  = '';
-    var $modulesInPackage = array();
+    public $modules = array();
+    public $silent = false;
+    public $base_dir  = '';
+    public $modulesInPackage = array();
     public $disabled_path = DISABLED_PATH;
     public $id_name;
-    function __construct()
+    public function __construct()
     {
         $this->ms = new ModuleScanner();
         $this->modules = get_module_dir_list();
@@ -80,7 +80,7 @@ class ModuleInstaller
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ModuleInstaller()
+    public function ModuleInstaller()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -101,7 +101,7 @@ class ModuleInstaller
      *
      * Finally it runs over a list of defined tasks; then install_beans, then install_custom_fields, then clear the Vardefs, run a RepairAndClear, then finally call rebuild_relationships.
      */
-    function install($base_dir, $is_upgrade = false, $previous_version = '')
+    public function install($base_dir, $is_upgrade = false, $previous_version = '')
     {
         if (defined('TEMPLATE_URL')) {
             SugarTemplateUtilities::disableCache();
@@ -237,20 +237,20 @@ class ModuleInstaller
         }
     }
 
-    function install_user_prefs($module, $hide_from_user=false)
+    public function install_user_prefs($module, $hide_from_user=false)
     {
         UserPreference::updateAllUserPrefs('display_tabs', $module, '', true, !$hide_from_user);
         UserPreference::updateAllUserPrefs('hide_tabs', $module, '', true, $hide_from_user);
         UserPreference::updateAllUserPrefs('remove_tabs', $module, '', true, $hide_from_user);
     }
-    function uninstall_user_prefs($module)
+    public function uninstall_user_prefs($module)
     {
         UserPreference::updateAllUserPrefs('display_tabs', $module, '', true, true);
         UserPreference::updateAllUserPrefs('hide_tabs', $module, '', true, true);
         UserPreference::updateAllUserPrefs('remove_tabs', $module, '', true, true);
     }
 
-    function pre_execute()
+    public function pre_execute()
     {
         require_once($this->base_dir . '/manifest.php');
         if (isset($this->installdefs['pre_execute']) && is_array($this->installdefs['pre_execute'])) {
@@ -260,7 +260,7 @@ class ModuleInstaller
         }
     }
 
-    function post_execute()
+    public function post_execute()
     {
         require_once($this->base_dir . '/manifest.php');
         if (isset($this->installdefs['post_execute']) && is_array($this->installdefs['post_execute'])) {
@@ -270,7 +270,7 @@ class ModuleInstaller
         }
     }
 
-    function pre_uninstall()
+    public function pre_uninstall()
     {
         require_once($this->base_dir . '/manifest.php');
         if (isset($this->installdefs['pre_uninstall']) && is_array($this->installdefs['pre_uninstall'])) {
@@ -280,7 +280,7 @@ class ModuleInstaller
         }
     }
 
-    function post_uninstall()
+    public function post_uninstall()
     {
         require_once($this->base_dir . '/manifest.php');
         if (isset($this->installdefs['post_uninstall']) && is_array($this->installdefs['post_uninstall'])) {
@@ -294,7 +294,7 @@ class ModuleInstaller
      * ModuleInstaller->install_copy gets the copy section of installdefs in the manifest and calls copy_path to copy each path (file or directory) to its final location
      * (specified as from and to in the manifest), replacing <basepath> by the base_dir value passed in to install.
      */
-    function install_copy()
+    public function install_copy()
     {
         if (isset($this->installdefs['copy'])) {
             /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:11 PM */
@@ -311,7 +311,7 @@ class ModuleInstaller
             $this->modules = get_module_dir_list();
         }
     }
-    function uninstall_copy()
+    public function uninstall_copy()
     {
         if (!empty($this->installdefs['copy'])) {
             foreach ($this->installdefs['copy'] as $cp) {
@@ -339,7 +339,7 @@ class ModuleInstaller
      * it will be handled by copy_path with the uninstall parameter.
      *
      */
-    function uninstall_new_files($cp, $backup_path)
+    public function uninstall_new_files($cp, $backup_path)
     {
         $zip_files = $this->dir_get_files($cp['from'],$cp['from']);
         $backup_files = $this->dir_get_files($backup_path, $backup_path);
@@ -776,7 +776,7 @@ class ModuleInstaller
         $this->rebuild_extensions();
     }
 
-    function install_dashlets()
+    public function install_dashlets()
     {
         if (isset($this->installdefs['dashlets'])) {
             foreach ($this->installdefs['dashlets'] as $cp) {
@@ -793,7 +793,7 @@ class ModuleInstaller
         }
     }
 
-    function uninstall_dashlets()
+    public function uninstall_dashlets()
     {
         if (isset($this->installdefs['dashlets'])) {
             foreach ($this->installdefs['dashlets'] as $cp) {
@@ -809,7 +809,7 @@ class ModuleInstaller
     }
 
 
-    function install_images()
+    public function install_images()
     {
         if (isset($this->installdefs['image_dir'])) {
             $this->log(translate('LBL_MI_IN_IMAGES'));
@@ -817,7 +817,7 @@ class ModuleInstaller
         }
     }
 
-    function install_dcactions()
+    public function install_dcactions()
     {
         if (isset($this->installdefs['dcaction'])) {
             $this->log(translate('LBL_MI_IN_MENUS'));
@@ -834,7 +834,7 @@ class ModuleInstaller
         }
     }
 
-    function uninstall_dcactions()
+    public function uninstall_dcactions()
     {
         if (isset($this->installdefs['dcaction'])) {
             $this->log(translate('LBL_MI_UN_MENUS'));
@@ -852,7 +852,7 @@ class ModuleInstaller
         }
     }
 
-    function install_connectors()
+    public function install_connectors()
     {
         if (isset($this->installdefs['connectors'])) {
             foreach ($this->installdefs['connectors'] as $cp) {
@@ -880,7 +880,7 @@ class ModuleInstaller
             ConnectorUtils::installSource($cp['name']);
         }
     }
-    function uninstall_connectors()
+    public function uninstall_connectors()
     {
         if (isset($this->installdefs['connectors'])) {
             foreach ($this->installdefs['connectors'] as $cp) {
@@ -898,7 +898,7 @@ class ModuleInstaller
         }
     }
 
-    function install_vardef($from, $to_module)
+    public function install_vardef($from, $to_module)
     {
         $GLOBALS['log']->debug("Installing Vardefs ..." . $from .  " for " .$to_module);
         $path = 'custom/Extension/modules/' . $to_module. '/Ext/Vardefs';
@@ -911,7 +911,7 @@ class ModuleInstaller
         copy_recursive($from , $path.'/'. basename($from));
     }
 
-    function install_layoutdef($from, $to_module)
+    public function install_layoutdef($from, $to_module)
     {
         $GLOBALS['log']->debug("Installing Layout Defs ..." . $from .  " for " .$to_module);
         $path = 'custom/Extension/modules/' . $to_module. '/Ext/Layoutdefs';
@@ -925,7 +925,7 @@ class ModuleInstaller
     }
 
     // Non-standard - needs special rebuild call
-    function install_languages()
+    public function install_languages()
     {
         $languages = array();
         if (isset($this->installdefs['language'])) {
@@ -962,7 +962,7 @@ class ModuleInstaller
     }
 
     // Non-standard, needs special rebuild
-    function uninstall_languages()
+    public function uninstall_languages()
     {
         $languages = array();
         if (isset($this->installdefs['language'])) {
@@ -1079,7 +1079,7 @@ class ModuleInstaller
      ... blah blah ...
      );
      */
-    function enable_manifest_logichooks()
+    public function enable_manifest_logichooks()
     {
         if (empty($this->installdefs['logic_hooks']) || !is_array($this->installdefs['logic_hooks'])) {
             return;
@@ -1092,7 +1092,7 @@ class ModuleInstaller
         }
     }
 
-    function disable_manifest_logichooks()
+    public function disable_manifest_logichooks()
     {
         if (empty($this->installdefs['logic_hooks']) || !is_array($this->installdefs['logic_hooks'])) {
             return;
@@ -1213,7 +1213,7 @@ class ModuleInstaller
     }
 
     /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
-    function copy_path($from, $to, $backup_path='', $uninstall=false)
+    public function copy_path($from, $to, $backup_path='', $uninstall=false)
     {
         //function copy_path($from, $to){
         /* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
@@ -1250,7 +1250,7 @@ class ModuleInstaller
         /* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
     }
 
-    function install_custom_fields($fields)
+    public function install_custom_fields($fields)
     {
         global $beanList, $beanFiles;
         include('include/modules.php');
@@ -1298,7 +1298,7 @@ class ModuleInstaller
         }
     }
 
-    function uninstall_custom_fields($fields)
+    public function uninstall_custom_fields($fields)
     {
         global $beanList, $beanFiles;
         require_once('modules/DynamicFields/DynamicField.php');
@@ -1322,7 +1322,7 @@ class ModuleInstaller
      * Next it calls install_vardef and install_layoutdef. Finally, it rebuilds the vardefs and layoutdefs (by calling merge_files as usual), and then calls merge_files to merge
      * everything in 'Ext/TableDictionary/' into 'tabledictionary.ext.php'
      */
-    function install_relationships()
+    public function install_relationships()
     {
         if (isset ($this->installdefs [ 'relationships' ])) {
             $this->log (translate ('LBL_MI_IN_RELATIONSHIPS')) ;
@@ -1374,7 +1374,7 @@ class ModuleInstaller
      * For each definition it calls db->createTableParams to build the relationships table if it does not exist,
      * and SugarBean::createRelationshipMeta to add the relationship into the 'relationships' table.
      */
-    function install_relationship($file)
+    public function install_relationship($file)
     {
         $_REQUEST['moduleInstaller'] = true;
         if (!file_exists($file)) {
@@ -1405,7 +1405,7 @@ class ModuleInstaller
         }
     }
 
-    function install_layoutfields()
+    public function install_layoutfields()
     {
         if (!empty ($this->installdefs [ 'layoutfields' ])) {
             foreach ($this->installdefs [ 'layoutfields' ] as $fieldSet) {
@@ -1416,7 +1416,7 @@ class ModuleInstaller
         }
     }
 
-    function uninstall_layoutfields()
+    public function uninstall_layoutfields()
     {
         if (!empty ($this->installdefs [ 'layoutfields' ])) {
             foreach ($this->installdefs [ 'layoutfields' ] as $fieldSet) {
@@ -1427,7 +1427,7 @@ class ModuleInstaller
         }
     }
 
-    function uninstall_relationship($file, $rel_dictionary = null)
+    public function uninstall_relationship($file, $rel_dictionary = null)
     {
         if ($rel_dictionary == null) {
             if (!file_exists($file)) {
@@ -1521,7 +1521,7 @@ class ModuleInstaller
         }
     }
 
-    function uninstall_relationships($include_studio_relationships = false)
+    public function uninstall_relationships($include_studio_relationships = false)
     {
         $relationships = array();
 
@@ -1612,7 +1612,7 @@ class ModuleInstaller
 
 
 
-    function uninstall($base_dir)
+    public function uninstall($base_dir)
     {
         if (defined('TEMPLATE_URL')) {
             SugarTemplateUtilities::disableCache();
@@ -1713,7 +1713,7 @@ class ModuleInstaller
         }
     }
 
-    function rebuild_languages($languages = array(), $modules="")
+    public function rebuild_languages($languages = array(), $modules="")
     {
         foreach ($languages as $language=>$value) {
             $this->log(translate('LBL_MI_REBUILDING') . " Language...$language");
@@ -1727,24 +1727,24 @@ class ModuleInstaller
         sugar_cache_reset();
     }
 
-    function rebuild_vardefs()
+    public function rebuild_vardefs()
     {
         $this->rebuildExt("Vardefs", 'vardefs.ext.php');
         sugar_cache_reset();
     }
 
-    function rebuild_dashletcontainers()
+    public function rebuild_dashletcontainers()
     {
         $this->log(translate('LBL_MI_REBUILDING') . " DC Actions...");
         $this->merge_files('Ext/DashletContainer/Containers/', 'dcactions.ext.php');
     }
 
-    function rebuild_tabledictionary()
+    public function rebuild_tabledictionary()
     {
         $this->rebuildExt("TableDictionary", 'tabledictionary.ext.php');
     }
 
-    function rebuild_relationships()
+    public function rebuild_relationships()
     {
         if (!$this->silent) {
             echo translate('LBL_MI_REBUILDING') . ' Relationships';
@@ -1755,7 +1755,7 @@ class ModuleInstaller
         include("modules/Administration/RebuildRelationship.php");
     }
 
-    function remove_acl_actions()
+    public function remove_acl_actions()
     {
         global $beanFiles, $beanList, $current_user;
         include('include/modules.php');
@@ -1765,7 +1765,7 @@ class ModuleInstaller
     /**
      * Wrapper call to modules/Administration/RepairIndex.php
      */
-    function repair_indices()
+    public function repair_indices()
     {
         global $current_user,$beanFiles,$dictionary;
         $this->log(translate('LBL_MI_REPAIR_INDICES'));
@@ -1778,7 +1778,7 @@ class ModuleInstaller
      * Rebuilds the extension files found in custom/Extension
      * @param boolean $silent
      */
-    function rebuild_all($silent=false)
+    public function rebuild_all($silent=false)
     {
         if (defined('TEMPLATE_URL')) {
             SugarTemplateUtilities::disableCache();
@@ -1803,7 +1803,7 @@ class ModuleInstaller
      * custom/Extension/modules/$module/<path> (_override files last) and concatenates them to custom/modules/$module/<path>/<file>.
      * Then it does the same thing in custom/Extension/application/<path>, concatenating those files and copying the result to custom/application/<path>/<file>
      */
-    function merge_files($path, $name, $filter = '', $application = false)
+    public function merge_files($path, $name, $filter = '', $application = false)
     {
         if (!$application) {
             $GLOBALS['log']->debug(get_class($this)."->merge_files() : merging module files in custom/Extension/modules/<module>/$path to custom/modules/<module>/$path$name");
@@ -1884,7 +1884,7 @@ class ModuleInstaller
         }
     }
 
-    function install_modules()
+    public function install_modules()
     {
         $this->installed_modules = array();
         $this->tab_modules = array();
@@ -1925,7 +1925,7 @@ class ModuleInstaller
      * ModuleInstaller->install_beans runs through the list of beans given, instantiates each bean, calls bean->create_tables, and then calls SugarBean::createRelationshipMeta for the
      * bean/module.
      */
-    function install_beans($beans)
+    public function install_beans($beans)
     {
         include('include/modules.php');
         foreach ($beans as $bean) {
@@ -1948,7 +1948,7 @@ class ModuleInstaller
         }
     }
 
-    function uninstall_beans($beans)
+    public function uninstall_beans($beans)
     {
         include('include/modules.php');
         foreach ($beans as $bean) {
@@ -1976,7 +1976,7 @@ class ModuleInstaller
     /**
      * Remove any customizations made within Studio while the module was installed.
      */
-    function uninstall_customizations($beans)
+    public function uninstall_customizations($beans)
     {
         foreach ($beans as $bean) {
             $dirs = array(
@@ -1992,7 +1992,7 @@ class ModuleInstaller
         }
     }
 
-    function log($str)
+    public function log($str)
     {
         $GLOBALS['log']->debug('ModuleInstaller:'. $str);
         if (!$this->silent) {
@@ -2001,7 +2001,7 @@ class ModuleInstaller
     }
 
     /* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:15:18 PM 	*/
-    function copy_recursive_with_backup($source, $dest, $backup_path, $uninstall=false)
+    public function copy_recursive_with_backup($source, $dest, $backup_path, $uninstall=false)
     {
         if (is_file($source)) {
             if ($uninstall) {
@@ -2122,7 +2122,7 @@ class ModuleInstaller
      * @param errors	an array of error messages which will be displayed on the
      * 					main module loader page once it is loaded.
      */
-    function abort($errors = array())
+    public function abort($errors = array())
     {
         //set the errors onto the session so we can display them one the moduler loader page loads
         $_SESSION['MODULEINSTALLER_ERRORS'] = $errors;
@@ -2136,7 +2136,7 @@ class ModuleInstaller
      *
      * @return an array of errors
      */
-    static function getErrors()
+    public static function getErrors()
     {
         if (!empty($_SESSION['MODULEINSTALLER_ERRORS'])) {
             $errors = $_SESSION['MODULEINSTALLER_ERRORS'];
@@ -2153,7 +2153,7 @@ class ModuleInstaller
      * @param array $layoutAdditions  An array of module => fieldname
      * return null
      */
-    function addFieldsToLayout($layoutAdditions)
+    public function addFieldsToLayout($layoutAdditions)
     {
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
 
@@ -2174,7 +2174,7 @@ class ModuleInstaller
         }
     }
 
-    function removeFieldsFromLayout($layoutAdditions)
+    public function removeFieldsFromLayout($layoutAdditions)
     {
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
 
@@ -2198,7 +2198,7 @@ class ModuleInstaller
     ///////////////////
     //********** DISABLE/ENABLE FUNCTIONS
     ///////////////////
-    function enable($base_dir, $is_upgrade = false, $previous_version = '')
+    public function enable($base_dir, $is_upgrade = false, $previous_version = '')
     {
         global $app_strings;
         $this->base_dir = $base_dir;
@@ -2267,7 +2267,7 @@ class ModuleInstaller
             die("No \$installdefs Defined In $this->base_dir/manifest.php");
         }
     }
-    function disable($base_dir)
+    public function disable($base_dir)
     {
         global $app_strings;
         $total_steps = 3; //min steps with no tasks
@@ -2321,17 +2321,17 @@ class ModuleInstaller
         }
     }
 
-    function enable_vardef($to_module)
+    public function enable_vardef($to_module)
     {
         $this->enableExt("vardefs", "Vardefs", $to_module);
     }
 
-    function enable_layoutdef($to_module)
+    public function enable_layoutdef($to_module)
     {
         $this->enableExt("layoutdefs", "Layoutdefs", $to_module);
     }
 
-    function enable_relationships()
+    public function enable_relationships()
     {
         if (isset($this->installdefs['relationships'])) {
             $str = "<?php \n //WARNING: The contents of this file are auto-generated\n";
@@ -2366,7 +2366,7 @@ class ModuleInstaller
         }
     }
 
-    function disable_relationships($action = 'disable')
+    public function disable_relationships($action = 'disable')
     {
         if (isset($this->installdefs['relationships'])) {
             foreach ($this->installdefs['relationships'] as $relationship) {
@@ -2410,7 +2410,7 @@ class ModuleInstaller
         }
     }
 
-    function enable_dashlets()
+    public function enable_dashlets()
     {
         if (isset($this->installdefs['dashlets'])) {
             foreach ($this->installdefs['dashlets'] as $cp) {
@@ -2426,7 +2426,7 @@ class ModuleInstaller
         }
     }
 
-    function disable_dashlets()
+    public function disable_dashlets()
     {
         if (isset($this->installdefs['dashlets'])) {
             foreach ($this->installdefs['dashlets'] as $cp) {
@@ -2442,7 +2442,7 @@ class ModuleInstaller
         }
     }
 
-    function enable_copy()
+    public function enable_copy()
     {
         //copy files back onto file system. first perform md5 check to determine if anything has been modified
         //here we should just go through the files in the -restore directory and copy those back
@@ -2469,7 +2469,7 @@ class ModuleInstaller
         }//fi
     }
 
-    function disable_copy()
+    public function disable_copy()
     {
         //when we disable we want to copy the -restore files back into the file system
         //but we should check the version in the module install against the version on the file system

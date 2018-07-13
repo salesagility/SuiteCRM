@@ -53,10 +53,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class SugarTinyMCE
 {
-    var $jsroot = "include/javascript/tiny_mce/";
-    var $customConfigFile = 'custom/include/tinyButtonConfig.php';
-    var $customDefaultConfigFile = 'custom/include/tinyMCEDefaultConfig.php';
-    var $buttonConfigs = array(
+    public $jsroot = "include/javascript/tiny_mce/";
+    public $customConfigFile = 'custom/include/tinyButtonConfig.php';
+    public $customDefaultConfigFile = 'custom/include/tinyMCEDefaultConfig.php';
+    public $buttonConfigs = array(
 			'default' => array(
 						'buttonConfig' => "code,help,separator,bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,
 	                     					justifyfull,separator,forecolor,backcolor,separator,styleselect,formatselect,fontselect,fontsizeselect,",
@@ -76,12 +76,12 @@ class SugarTinyMCE
 	                    'buttonConfig3' => ""),
 	);
 
-    var $pluginsConfig = array(
+    public $pluginsConfig = array(
 	    'email_compose_light' => 'insertdatetime,paste,directionality,safari',
         'email_compose' => 'advhr,insertdatetime,table,preview,paste,searchreplace,directionality,fullpage',
 	);
 
-    var $defaultConfig = array(
+    public $defaultConfig = array(
 	    'convert_urls' => false,
         'valid_children' => '+body[style]',
 	    'height' => 300,
@@ -106,7 +106,7 @@ class SugarTinyMCE
     /**
      * Sole constructor
      */
-    function __construct()
+    public function __construct()
     {
         $this->overloadButtonConfigs();
         $this->overloadDefaultConfigs();
@@ -117,7 +117,7 @@ class SugarTinyMCE
      * @param string target Comma delimited list of DOM ID's, <textarea id='someTarget'>
      * @return string
      */
-    function getInstance($targets = "", $type = 'default')
+    public function getInstance($targets = "", $type = 'default')
     {
         global $json;
 
@@ -178,7 +178,7 @@ eoq;
         return $ret;
     }
 
-    function getConfig($type = 'default')
+    public function getConfig($type = 'default')
     {
         global $json;
 
@@ -211,7 +211,7 @@ eoq;
      * @param $html
      * @return $html with all the tinyMCE specific html removed
      */
-    function cleanEncodedMCEHtml($html)
+    public function cleanEncodedMCEHtml($html)
     {
         $html = str_replace("mce:script", "script", $html);
         $html = str_replace("mce_src=", "src=", $html);

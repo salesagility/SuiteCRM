@@ -56,40 +56,40 @@ class CampaignTracker extends SugarBean
     * So define a variable for each one of them, the variable name should be same as the field name
     * Use this module's vardef file as a reference to create these variables.
     */
-    var $id;
-    var $date_entered;
-    var $created_by;
-    var $date_modified;
-    var $modified_by;
-    var $deleted;
-    var $tracker_key;
-    var $tracker_url;
-    var $tracker_name;
-    var $campaign_id;
-    var $campaign_name;
-    var $message_url;
-    var $is_optout;
+    public $id;
+    public $date_entered;
+    public $created_by;
+    public $date_modified;
+    public $modified_by;
+    public $deleted;
+    public $tracker_key;
+    public $tracker_url;
+    public $tracker_name;
+    public $campaign_id;
+    public $campaign_name;
+    public $message_url;
+    public $is_optout;
 
     /* End field definitions*/
 
     /* variable $table_name is used by SugarBean and methods in this file to constructs queries
     * set this variables value to the table associated with this bean.
     */
-    var $table_name = 'campaign_trkrs';
+    public $table_name = 'campaign_trkrs';
 
     /*This  variable overrides the object_name variable in SugarBean, wher it has a value of null.*/
-    var $object_name = 'CampaignTracker';
+    public $object_name = 'CampaignTracker';
 
     /**/
-    var $module_dir = 'CampaignTrackers';
+    public $module_dir = 'CampaignTrackers';
 
     /* This is a legacy variable, set its value to true for new modules*/
-    var $new_schema = true;
+    public $new_schema = true;
 
     /* $column_fields holds a list of columns that exist in this bean's table. This list is referenced
     * when fetching or saving data for the bean. As you modify a table you need to keep this up to date.
     */
-    var $column_fields = Array(
+    public $column_fields = Array(
             'id'
             ,'tracker_key'
             ,'tracker_url'
@@ -98,10 +98,10 @@ class CampaignTracker extends SugarBean
     );
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('campaign_id');
-    var $relationship_fields = Array('campaing_id'=>'campaign');
+    public $additional_column_fields = Array('campaign_id');
+    public $relationship_fields = Array('campaing_id'=>'campaign');
 
-    var $required_fields =  array('tracker_name'=>1,'tracker_url'=>1);
+    public $required_fields =  array('tracker_name'=>1,'tracker_url'=>1);
 
     /*This bean's constructor*/
     public function __construct()
@@ -124,7 +124,7 @@ class CampaignTracker extends SugarBean
     }
 
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         //make sure that the url has a scheme, if not then add http:// scheme
         if ($this->is_optout!=1) {
@@ -139,7 +139,7 @@ class CampaignTracker extends SugarBean
 
     /* This method should return the summary text which is used to build the bread crumb navigation*/
     /* Generally from this method you would return value of a field that is required and is of type string*/
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->tracker_name";
     }
@@ -150,7 +150,7 @@ class CampaignTracker extends SugarBean
     * join and team filter. If you are implementing this function do not forget to consider the additional conditions.
     */
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         global $sugar_config;
 

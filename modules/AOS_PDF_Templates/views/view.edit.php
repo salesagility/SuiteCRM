@@ -7,7 +7,7 @@ require_once('include/MVC/View/views/view.edit.php');
 
 class AOS_PDF_TemplatesViewEdit extends ViewEdit
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -15,7 +15,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_PDF_TemplatesViewEdit()
+    public function AOS_PDF_TemplatesViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -27,14 +27,14 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit
     }
 
 
-    function display()
+    public function display()
     {
         $this->setFields();
         parent::display();
         $this->displayTMCE();
     }
 
-    function setFields()
+    public function setFields()
     {
         global $app_list_strings, $mod_strings, $beanList;
 
@@ -245,7 +245,7 @@ HTML;
         $this->ss->assign('INSERT_FIELDS',$insert_fields);
     }
 
-    function displayTMCE()
+    public function displayTMCE()
     {
         require_once("include/SugarTinyMCE.php");
         global $locale;

@@ -57,7 +57,7 @@ class OAuthKey extends Basic
     public $name;
     public $disable_row_level_security = true;
 
-    static public $keys_cache = array();
+    public static $keys_cache = array();
 
     /**
      * Get record by consumer key

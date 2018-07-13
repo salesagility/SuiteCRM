@@ -43,12 +43,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class FeedLinkHandlerLink
 {
-    function getDisplay(&$data)
+    public function getDisplay(&$data)
     {
         return '<div style="padding-left:10px"><a href="' . $data['LINK_URL'] . '" target="_blank">' .$data['LINK_URL'] .'</a></div>';
     }
 
-    function handleInput($feed, $link_type, $link_url)
+    public function handleInput($feed, $link_type, $link_url)
     {
         $feed->link_type = $link_type;
 

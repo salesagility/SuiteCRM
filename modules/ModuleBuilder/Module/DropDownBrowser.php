@@ -51,7 +51,7 @@ class DropDownBrowser
         // 'moduleListSingular', // Same with this
     );
 
-    function getNodes()
+    public function getNodes()
     {
         global $mod_strings, $app_list_strings;
         $nodes = array();

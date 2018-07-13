@@ -48,7 +48,7 @@ require_once('include/MVC/View/views/view.list.php');
 
 class ViewNewsLetterList extends ViewList
 {
-    function processSearchForm()
+    public function processSearchForm()
     {
         // we have a query
         if (!empty($_SERVER['HTTP_REFERER']) && preg_match('/action=EditView/', $_SERVER['HTTP_REFERER'])) { // from EditView cancel

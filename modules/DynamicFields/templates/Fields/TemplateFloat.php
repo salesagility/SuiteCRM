@@ -44,11 +44,11 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateFloat extends TemplateRange
 {
-    var $type = 'float';
-    var $default = null;
-    var $default_value = null;
-    var $len = '18';
-    var $precision = '8';
+    public $type = 'float';
+    public $default = null;
+    public $default_value = null;
+    public $len = '18';
+    public $precision = '8';
 
     public function __construct()
     {
@@ -72,14 +72,14 @@ class TemplateFloat extends TemplateRange
     }
 
 
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['precision'] = isset($this->ext1) && $this->ext1 != '' ? $this->ext1 : $this->precision;
         return $def;
     }
 
-    function get_db_type()
+    public function get_db_type()
     {
         $precision = (!empty($this->precision))? $this->precision: 6;
         if (empty($this->len)) {

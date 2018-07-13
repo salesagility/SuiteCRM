@@ -45,8 +45,8 @@ require_once('modules/SugarFeed/feedLogicBase.php');
 
 class CaseFeed extends FeedLogicBase
 {
-    var $module = 'Cases';
-    function pushFeed($bean, $event, $arguments)
+    public $module = 'Cases';
+    public function pushFeed($bean, $event, $arguments)
     {
         $text = '';
         if (empty($bean->fetched_row) && $bean->in_save) {

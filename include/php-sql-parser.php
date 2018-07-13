@@ -6,9 +6,9 @@
  */
 class PHPSQLParser
 {
-    var $reserved = array();
-    var $functions = array();
-    function __construct($sql = false)
+    public $reserved = array();
+    public $functions = array();
+    public function __construct($sql = false)
     {
         #LOAD THE LIST OF RESERVED WORDS
         $this->load_reserved_words();
@@ -17,7 +17,7 @@ class PHPSQLParser
         }
     }
 
-    function parse($sql)
+    public function parse($sql)
     {
         $sql = trim($sql);
 

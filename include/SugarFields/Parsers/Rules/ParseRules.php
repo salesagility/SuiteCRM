@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class ParseRules
 {
-    function __construct()
+    public function __construct()
     {
     }
 
@@ -60,7 +60,7 @@ class ParseRules
      * Return Array of rules to run
      *
      */
-    function getRules()
+    public function getRules()
     {
         $rules = array();
         $rules[] = array("class"=>"UndefinedVardefRule", "file"=>"include/SugarFields/Parsers/Rules/UndefinedVardefRule.php");

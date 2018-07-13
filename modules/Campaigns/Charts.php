@@ -201,7 +201,7 @@ class campaign_charts
      * @param bool $is_dashlet
      * @param string $dashlet_id
      * @return string
-     */function campaign_response_roi($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id=''
+     */public function campaign_response_roi($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id=''
 		) {
         global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 
@@ -350,7 +350,7 @@ class campaign_charts
     //THis is a copy of the campaign_response_roi for rgraph so that the data is separate from the chart / presentation
     //this will need refactored later rather than a cut n paste job like this
     //perhaps add another boolean to the parameter list to return just the data or the chart
-    function campaign_response_roi_data($datay= array(),$targets=array(),$campaign_id = null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='')
+    public function campaign_response_roi_data($datay= array(),$targets=array(),$campaign_id = null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='')
     {
         global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 

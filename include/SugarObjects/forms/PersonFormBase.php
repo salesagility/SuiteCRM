@@ -57,8 +57,8 @@ require_once('include/SugarObjects/forms/FormBase.php');
 
 abstract class PersonFormBase extends FormBase
 {
-    var $moduleName;
-    var $objectName;
+    public $moduleName;
+    public $objectName;
     
     /**
      * buildTableForm
@@ -68,7 +68,7 @@ abstract class PersonFormBase extends FormBase
      * @param $rows Array of duplicate row data
      * @return $form The HTML form data
      */
-    function buildTableForm($rows)
+    public function buildTableForm($rows)
     {
         global $action;
         global $mod_strings;
@@ -187,7 +187,7 @@ abstract class PersonFormBase extends FormBase
      * @param $prefix String value of any prefix to the form input names
      * @return $rows Array of matching Leads entries found; null if none found
      */
-    function checkForDuplicates($prefix='')
+    public function checkForDuplicates($prefix='')
     {
         require_once('include/formbase.php');
         require_once('include/MVC/SugarModule.php');

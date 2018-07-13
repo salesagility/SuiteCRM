@@ -4,12 +4,12 @@ require_once __DIR__ . '/../TemplateSampleService.php';
 
 class smpl_Invoice_Sample
 {
-    function getType()
+    public function getType()
     {
         return 'AOS_Invoices';
     }
 		
-    function getBody()
+    public function getBody()
     {
         global $locale;
         return '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
@@ -129,12 +129,12 @@ class smpl_Invoice_Sample
 <p>&nbsp;</p>';
     }
 
-    function getHeader()
+    public function getHeader()
     {
         return '';
     }
 
-    function getFooter()
+    public function getFooter()
     {
         global $locale;
         return '<table style="width: 100%; border: 0pt none; border-spacing: 0pt;">

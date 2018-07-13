@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopButtonQuickCreate
 {
-    function &_get_form($defines, $additionalFormFields = null, $asUrl = false)
+    public function &_get_form($defines, $additionalFormFields = null, $asUrl = false)
     {
         global $app_strings;
         global $currentModule;
@@ -135,7 +135,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
         return $button;
     }
 
-    function display($defines, $additionalFormFields = null, $nonbutton = false)
+    public function display($defines, $additionalFormFields = null, $nonbutton = false)
     {
         $focus = new Call;
         if (!$focus->ACLAccess('EditView')) {

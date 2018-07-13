@@ -44,9 +44,9 @@ require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 require_once('include/utils/array_utils.php');
 class TemplateAddressCountry extends TemplateEnum
 {
-    var $group = '';
+    public $group = '';
     
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['group'] = $this->group;

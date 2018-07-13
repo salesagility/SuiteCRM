@@ -26,7 +26,7 @@ class Jjwg_AreasViewArea_Detail_Map extends SugarView
     }
 
 
-    function display()
+    public function display()
     {
         ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

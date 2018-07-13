@@ -52,15 +52,15 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Users/authentication/SugarAuthenticate/SugarAuthenticate.php');
 class LDAPAuthenticate extends SugarAuthenticate
 {
-    var $userAuthenticateClass = 'LDAPAuthenticateUser';
-    var $authenticationDir = 'LDAPAuthenticate';
+    public $userAuthenticateClass = 'LDAPAuthenticateUser';
+    public $authenticationDir = 'LDAPAuthenticate';
     /**
      * Constructs LDAPAuthenticate
      * This will load the user authentication class
      *
      * @return LDAPAuthenticate
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -68,7 +68,7 @@ class LDAPAuthenticate extends SugarAuthenticate
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function LDAPAuthenticate()
+    public function LDAPAuthenticate()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

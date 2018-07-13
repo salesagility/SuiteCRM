@@ -53,7 +53,7 @@ require_once __DIR__ . '/../../../../include/utils/layout_utils.php';
 
 class ViewImportvcard extends SugarView
 {
-    var $type = 'edit';
+    public $type = 'edit';
 
     public function __construct()
     {

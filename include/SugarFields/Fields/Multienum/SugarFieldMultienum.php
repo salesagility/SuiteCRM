@@ -41,7 +41,7 @@ require_once('include/SugarFields/Fields/Enum/SugarFieldEnum.php');
 
 class SugarFieldMultienum extends SugarFieldEnum
 {
-    function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass=true)
+    public function setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass=true)
     {
         if (!isset($vardef['options_list']) && isset($vardef['options']) && !is_array($vardef['options'])) {
             $vardef['options_list'] = $GLOBALS['app_list_strings'][$vardef['options']];
@@ -49,7 +49,7 @@ class SugarFieldMultienum extends SugarFieldEnum
         return parent::setup($parentFieldArray, $vardef, $displayParams, $tabindex, $twopass);
     }
 
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         if (!empty($vardef['function']['returns']) && $vardef['function']['returns']== 'html') {
             $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
@@ -68,7 +68,7 @@ class SugarFieldMultienum extends SugarFieldEnum
      * @param int $tabindex
      * @return string
      */
-    function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0)
+    public function displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex = 0)
     {
         if (isset($vardef['function']['returns']) && $vardef['function']['returns'] == 'html') {
             return parent::displayFromFunc($displayType, $parentFieldArray, $vardef, $displayParams, $tabindex);

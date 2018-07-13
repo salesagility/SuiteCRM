@@ -6,7 +6,7 @@ require_once 'include/DetailView/DetailView2.php';
 
 class SurveysViewReports extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }

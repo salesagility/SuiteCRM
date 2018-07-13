@@ -4,9 +4,9 @@ require_once("include/social/facebook/facebook_sdk/src/facebook.php");
 
 class facebook_helper
 {
-    var $facebook;
+    public $facebook;
 
-    function __construct()
+    public function __construct()
     {
         require_once("custom/modules/Connectors/connectors/sources/ext/rest/facebook/config.php");
 
@@ -16,7 +16,7 @@ class facebook_helper
         );
         $this->facebook = new Facebook($fb_config);
     }
-    function get_my_user()
+    public function get_my_user()
     {
         try {
             // Proceed knowing you have a logged in user who's authenticated.
@@ -26,15 +26,15 @@ class facebook_helper
             $user = null;
         }
     }
-    function get_my_newsfeed()
+    public function get_my_newsfeed()
     {
         return $this->facebook->api('me/home'); //get my news feed
     }
-    function get_other_newsfeed($user, $limit = "100")
+    public function get_other_newsfeed($user, $limit = "100")
     {
         return $this->facebook->api('/' . $user . '/feed?limit=' . $limit);
     }
-    function get_login_url($url)
+    public function get_login_url($url)
     {
         $params = array(
             'scope' => 'read_stream, publish_stream'
@@ -44,16 +44,16 @@ class facebook_helper
 
         return $this->facebook->getLoginUrl($params);
     }
-    function get_logout_url()
+    public function get_logout_url()
     {
         return $this->facebook->getLogoutUrl();
     }
-    function get_facebook_user($username)
+    public function get_facebook_user($username)
     {
         return $this->facebook->api('/' . $username);
     }
 
-    function process_feed($story)
+    public function process_feed($story)
     {
         switch ($story['type']) {
             case "status":
@@ -71,7 +71,7 @@ class facebook_helper
         }
     }
 
-    function photo_status($story)
+    public function photo_status($story)
     {
         $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' .$story['from']['name'] . '</div>';
@@ -83,7 +83,7 @@ class facebook_helper
         return $string;
     }
 
-    function status($story)
+    public function status($story)
     {
         $to_name = $this->get_to($story);
 
@@ -107,7 +107,7 @@ class facebook_helper
 
         return $string;
     }
-    function link_type($story)
+    public function link_type($story)
     {
         $string .= "<div style='margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
         $string .= '<div style="padding: 3px; width: 100%;">' . $story['message'] . '</div>';
@@ -119,7 +119,7 @@ class facebook_helper
         return $string;
     }
 
-    function video_type($story)
+    public function video_type($story)
     {
         $string = '';
         $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
@@ -132,7 +132,7 @@ class facebook_helper
         return $string;
     }
 
-    function get_to($story)
+    public function get_to($story)
     {
         $value = '';
 

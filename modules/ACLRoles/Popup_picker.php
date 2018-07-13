@@ -55,14 +55,14 @@ class Popup_Picker
 	/*
 	 *
 	 */
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Popup_Picker()
+    public function Popup_Picker()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -77,7 +77,7 @@ class Popup_Picker
     /*
      *
      */
-    function _get_where_clause()
+    public function _get_where_clause()
     {
         $where = '';
         if (isset($_REQUEST['query'])) {
@@ -92,7 +92,7 @@ class Popup_Picker
     /**
      *
      */
-    function process_page()
+    public function process_page()
     {
         global $mod_strings;
         global $app_strings;

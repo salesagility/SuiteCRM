@@ -62,7 +62,7 @@ class ViewListView extends SugarView
     /*
      * Pseudo-constructor to enable subclasses to call a parent's constructor without knowing the parent in PHP4
      */
-    function __construct()
+    public function __construct()
     {
         $this->editModule = $_REQUEST [ 'view_module' ] ;
         $this->editLayout = $_REQUEST [ 'view' ] ;
@@ -77,11 +77,11 @@ class ViewListView extends SugarView
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
-    function preDisplay()
+    public function preDisplay()
     {
     }
 
-    function display($preview = false)
+    public function display($preview = false)
     {
         $packageName = (! empty ($_REQUEST [ 'view_package' ])) ? $_REQUEST [ 'view_package' ] : null ;
         $subpanelName = (! empty ($_REQUEST [ 'subpanel' ])) ? $_REQUEST [ 'subpanel' ] : null ;
@@ -99,7 +99,7 @@ class ViewListView extends SugarView
         }
     }
 
-    function constructAjax()
+    public function constructAjax()
     {
         require_once ('modules/ModuleBuilder/MB/AjaxCompose.php') ;
         $ajax = new AjaxCompose () ;
@@ -167,7 +167,7 @@ class ViewListView extends SugarView
         return $ajax ;
     }
 
-    function constructSmarty($parser)
+    public function constructSmarty($parser)
     {
         global $mod_strings;
         $smarty = new Sugar_Smarty () ;
@@ -274,7 +274,7 @@ class ViewListView extends SugarView
         return $smarty ;
     }
 
-    function _constructTitle()
+    public function _constructTitle()
     {
         global $app_list_strings ;
 
@@ -289,7 +289,7 @@ class ViewListView extends SugarView
         return $GLOBALS [ 'mod_strings' ] [ 'LBL_LISTVIEW_EDIT' ] . ':&nbsp;' . $title ;
     }
 
-    function _buildImageButtons($buttons , $horizontal = true)
+    public function _buildImageButtons($buttons , $horizontal = true)
     {
         $text = '<table cellspacing=2><tr>' ;
         foreach ($buttons as $button) {

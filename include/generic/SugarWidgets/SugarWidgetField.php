@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetField extends SugarWidget
 {
-    function __construct(&$layout_manager)
+    public function __construct(&$layout_manager)
     {
         parent::__construct($layout_manager);
     }
@@ -55,7 +55,7 @@ class SugarWidgetField extends SugarWidget
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetField(&$layout_manager)
+    public function SugarWidgetField(&$layout_manager)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -67,7 +67,7 @@ class SugarWidgetField extends SugarWidget
     }
 
 
-    function display($layout_def)
+    public function display($layout_def)
     {
         //print $layout_def['start_link_wrapper']."===";
 		$context = $this->layout_manager->getAttribute('context'); //_ppd($context);
@@ -80,7 +80,7 @@ class SugarWidgetField extends SugarWidget
         }
     }
 
-    function _get_column_alias($layout_def)
+    public function _get_column_alias($layout_def)
     {
         $alias_arr = array ();
 
@@ -99,18 +99,18 @@ class SugarWidgetField extends SugarWidget
         return $this->getTruncatedColumnAlias(implode("_", $alias_arr));
     }
 
-    function & displayDetailLabel(& $layout_def)
+    public function & displayDetailLabel(& $layout_def)
     {
         return '';
     }
 
-    function & displayDetail($layout_def)
+    public function & displayDetail($layout_def)
     {
         $layout_def = '';
         return $layout_def;
     }
 
-    function displayHeaderCellPlain($layout_def)
+    public function displayHeaderCellPlain($layout_def)
     {
         if (!empty ($layout_def['label'])) {
             return $layout_def['label'];
@@ -121,7 +121,7 @@ class SugarWidgetField extends SugarWidget
         return '';
     }
 
-    function displayHeaderCell($layout_def)
+    public function displayHeaderCell($layout_def)
     {
         $module_name = $this->layout_manager->getAttribute('module_name');
 
@@ -169,12 +169,12 @@ class SugarWidgetField extends SugarWidget
         return $header_cell;
     }
 
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         return $this->displayListPlain($layout_def);
     }
 
-    function displayListPlain($layout_def)
+    public function displayListPlain($layout_def)
     {
         $value= $this->_get_list_value($layout_def);
         if (isset($layout_def['widget_type']) && $layout_def['widget_type'] =='checkbox') {
@@ -186,7 +186,7 @@ class SugarWidgetField extends SugarWidget
         return $value;
     }
 
-    function _get_list_value(& $layout_def)
+    public function _get_list_value(& $layout_def)
     {
         $key = '';
         if (isset($layout_def['varname'])) {
@@ -202,32 +202,32 @@ class SugarWidgetField extends SugarWidget
         return '';
     }
 
-    function & displayEditLabel($layout_def)
+    public function & displayEditLabel($layout_def)
     {
         return '';
     }
 
-    function & displayEdit($layout_def)
+    public function & displayEdit($layout_def)
     {
         return '';
     }
 
-    function & displaySearchLabel($layout_def)
+    public function & displaySearchLabel($layout_def)
     {
         return '';
     }
 
-    function & displaySearch($layout_def)
+    public function & displaySearch($layout_def)
     {
         return '';
     }
 
-    function displayInput($layout_def)
+    public function displayInput($layout_def)
     {
         return ' -- Not Implemented --';
     }
 
-    function getVardef($layout_def)
+    public function getVardef($layout_def)
     {
         $myName = $layout_def['column_key'];
         $vardef = $this->layout_manager->defs['reporter']->all_fields[$myName];

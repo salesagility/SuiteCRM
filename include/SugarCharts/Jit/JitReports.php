@@ -46,12 +46,12 @@ class JitReports extends Jit
 {
     private $processed_report_keys = array();
 	
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 	
-    function calculateReportGroupTotal($dataset)
+    public function calculateReportGroupTotal($dataset)
     {
         $total = 0;				
         foreach ($dataset as $value) {
@@ -79,7 +79,7 @@ class JitReports extends Jit
         return $isCurrency;
     }
 
-    function processReportData($dataset, $level=1, $first=false)
+    public function processReportData($dataset, $level=1, $first=false)
     {
         $data = '';
 		
@@ -108,7 +108,7 @@ class JitReports extends Jit
         return $data;
     }
 	
-    function processReportGroup($dataset)
+    public function processReportGroup($dataset)
     {
         $super_set = array();
 
@@ -134,7 +134,7 @@ class JitReports extends Jit
         return $super_set;
     }
 	
-    function xmlDataReportSingleValue()
+    public function xmlDataReportSingleValue()
     {
         $data = '';		
         foreach ($this->data_set as $key => $dataset) {
@@ -156,7 +156,7 @@ class JitReports extends Jit
         return $data;
     }
 	
-    function xmlDataReportChart()
+    public function xmlDataReportChart()
     {
         global $app_strings;
         $data = '';
@@ -246,7 +246,7 @@ class JitReports extends Jit
      *			string $style	optional additional styles for the div
      * @return	string returns the html code through smarty
      */
-    function display($name, $xmlFile, $width='320', $height='480', $reportChartDivStyle = null, $resize=false)
+    public function display($name, $xmlFile, $width='320', $height='480', $reportChartDivStyle = null, $resize=false)
     {
         if (empty($name)) {
             $name = "unsavedReport";

@@ -46,9 +46,9 @@ require_once('include/MVC/View/views/view.list.php');
 require_once('modules/EAPM/EAPM.php');
 class MeetingsViewListbytype extends ViewList
 {
-    var $options = array('show_header' => false, 'show_title' => false, 'show_subpanels' => false, 'show_search' => true, 'show_footer' => false, 'show_javascript' => false, 'view_print' => false,);
+    public $options = array('show_header' => false, 'show_title' => false, 'show_subpanels' => false, 'show_search' => true, 'show_footer' => false, 'show_javascript' => false, 'view_print' => false,);
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -56,7 +56,7 @@ class MeetingsViewListbytype extends ViewList
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MeetingsViewListbytype()
+    public function MeetingsViewListbytype()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -68,7 +68,7 @@ class MeetingsViewListbytype extends ViewList
     }
 
 
-    function listViewProcess()
+    public function listViewProcess()
     {
         if (!$eapmBean = EAPM::getLoginInfo('IBMSmartCloud', true)) {
             $smarty = new Sugar_Smarty();
@@ -123,14 +123,14 @@ class MeetingsViewListbytype extends ViewList
         }
     }
 
-    function listViewPrepare()
+    public function listViewPrepare()
     {
         $oldRequest = $_REQUEST;
         parent::listViewPrepare();
         $_REQUEST = $oldRequest;
     }
 
-    function processSearchForm()
+    public function processSearchForm()
     {
         // $type = 'LotusLiveDirect';
         $type = 'IBMSmartCloud';

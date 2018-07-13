@@ -47,7 +47,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 class ViewPopupview extends ViewListView
 {
-    function __construct()
+    public function __construct()
     {
         $this->editModule = $_REQUEST [ 'view_module' ] ;
         $this->editLayout = $_REQUEST [ 'view' ] ;
@@ -82,11 +82,11 @@ class ViewPopupview extends ViewListView
 //
 //    }
 
-    function preDisplay()
+    public function preDisplay()
     {
     }
 
-    function display(
+    public function display(
         $preview = false
         ) {
         require_once 'modules/ModuleBuilder/parsers/ParserFactory.php' ;
@@ -107,7 +107,7 @@ class ViewPopupview extends ViewListView
         }
     }
 
-    function constructAjax()
+    public function constructAjax()
     {
         require_once ('modules/ModuleBuilder/MB/AjaxCompose.php') ;
         $ajax = new AjaxCompose () ;
@@ -131,7 +131,7 @@ class ViewPopupview extends ViewListView
         return $ajax ;
     }
 
-    function constructSmarty(
+    public function constructSmarty(
         $parser
         ) {
         $smarty = new Sugar_Smarty () ;
@@ -205,7 +205,7 @@ class ViewPopupview extends ViewListView
         return $smarty ;
     }
 
-    function _constructTitle()
+    public function _constructTitle()
     {
         global $app_list_strings ;
 

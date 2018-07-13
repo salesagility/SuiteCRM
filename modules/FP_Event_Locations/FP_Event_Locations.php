@@ -43,7 +43,7 @@
 require_once('modules/FP_Event_Locations/FP_Event_Locations_sugar.php');
 class FP_Event_Locations extends FP_Event_Locations_sugar
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -51,7 +51,7 @@ class FP_Event_Locations extends FP_Event_Locations_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function FP_Event_Locations()
+    public function FP_Event_Locations()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

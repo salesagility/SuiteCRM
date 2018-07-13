@@ -61,7 +61,7 @@ class charts
      * @param array targets: translated list of all activity types, targeted, bounced etc..
      * @param string campaign_id: chart for this campaign.
      */
-    function campaign_response_chart($targets,$campaign_id)
+    public function campaign_response_chart($targets,$campaign_id)
     {
         $focus = new Campaign();
         $leadSourceArr = array();

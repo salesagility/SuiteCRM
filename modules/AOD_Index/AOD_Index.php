@@ -43,7 +43,7 @@ requireLucene();
 
 class AOD_Index extends AOD_Index_sugar
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('utf-8');
@@ -53,7 +53,7 @@ class AOD_Index extends AOD_Index_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOD_Index()
+    public function AOD_Index()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -65,20 +65,20 @@ class AOD_Index extends AOD_Index_sugar
     }
 
 
-    function isEnabled()
+    public function isEnabled()
     {
         global $sugar_config;
         return !empty($sugar_config['aod']['enable_aod']);
     }
 
-    function find($queryString)
+    public function find($queryString)
     {
         $queryString = strtolower($queryString);
         $hits = $this->getLuceneIndex()->find($queryString);
         return $hits;
     }
 
-    function optimise()
+    public function optimise()
     {
         if (!$this->isEnabled()) {
             return;

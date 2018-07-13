@@ -46,16 +46,16 @@ require_once('include/externalAPI/ExternalAPIFactory.php');
 
 class SugarFeedDashlet extends DashletGeneric
 {
-    var $displayRows = 15;
+    public $displayRows = 15;
 
-    var $categories;
+    public $categories;
 
-    var $userfeed_created;
+    public $userfeed_created;
 
-    var $selectedCategories = array();
+    public $selectedCategories = array();
 
 
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings, $app_list_strings;
 
@@ -142,7 +142,7 @@ class SugarFeedDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarFeedDashlet($id, $def = null)
+    public function SugarFeedDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -153,7 +153,7 @@ class SugarFeedDashlet extends DashletGeneric
         self::__construct($id, $def);
     }
 
-    function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = array(), $id = null)
     {
         global $current_user;
 
@@ -366,7 +366,7 @@ class SugarFeedDashlet extends DashletGeneric
         $this->lvs->data['data'] = $resortQueue;
     }
 
-    function deleteUserFeed()
+    public function deleteUserFeed()
     {
         if (!empty($_REQUEST['record'])) {
             $feed = new SugarFeed();
@@ -376,7 +376,7 @@ class SugarFeedDashlet extends DashletGeneric
             }
         }
     }
-    function pushUserFeed()
+    public function pushUserFeed()
     {
         if (!empty($_REQUEST['text']) || (!empty($_REQUEST['link_url']) && !empty($_REQUEST['link_type']))) {
             $text = htmlspecialchars($_REQUEST['text']);
@@ -389,7 +389,7 @@ class SugarFeedDashlet extends DashletGeneric
         }
     }
 
-    function pushUserFeedReply()
+    public function pushUserFeedReply()
     {
         if (!empty($_REQUEST['text'])&&!empty($_REQUEST['parentFeed'])) {
             $text = htmlspecialchars($_REQUEST['text']);
@@ -402,7 +402,7 @@ class SugarFeedDashlet extends DashletGeneric
         }
     }
 
-    function displayOptions()
+    public function displayOptions()
     {
         global $app_strings;
         global $app_list_strings;
@@ -445,7 +445,7 @@ class SugarFeedDashlet extends DashletGeneric
      * @return
      * @param $req Object
      */
-    function saveOptions($req)
+    public function saveOptions($req)
     {
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
@@ -473,7 +473,7 @@ class SugarFeedDashlet extends DashletGeneric
     }
 
 
-    function sugarFeedDisplayScript()
+    public function sugarFeedDisplayScript()
     {
         // Forces the quicksearch to reload anytime the dashlet gets refreshed
         return '<script type="text/javascript">
@@ -484,7 +484,7 @@ enableQS(false);
      *
      * @return javascript including QuickSearch for SugarFeeds
      */
-    function displayScript()
+    public function displayScript()
     {
         require_once('include/QuickSearchDefaults.php');
         $ss = new Sugar_Smarty();
@@ -501,7 +501,7 @@ enableQS(false);
      *
      * @return the fully rendered dashlet
      */
-    function display()
+    public function display()
     {
         $listview = parent::display();
 
@@ -553,7 +553,7 @@ enableQS(false);
      * @return the title and the user post form
      * @param $text Object
      */
-    function getHeader($text='')
+    public function getHeader($text='')
     {
         return parent::getHeader($text) . $this->getPostForm().$this->getDisabledWarning().$this->sugarFeedDisplayScript().'<div class="sugarFeedDashlet"><div id="contentScroller'.$this->idjs.'">';
     }
@@ -563,7 +563,7 @@ enableQS(false);
      *
      * @return a warning message if the sugar feed system is not enabled currently
      */
-    function getDisabledWarning()
+    public function getDisabledWarning()
     {
         /* Check to see if the sugar feed system is enabled */
         if (! $this->shouldDisplay()) {
@@ -578,7 +578,7 @@ enableQS(false);
      *
      * @return the form for users posting custom messages to the feed stream
      */
-    function getPostForm()
+    public function getPostForm()
     {
         global $current_user;
 
@@ -620,7 +620,7 @@ enableQS(false);
     }
 
     // This is called from the include/MySugar/DashletsDialog/DashletsDialog.php and determines if we should display the SugarFeed dashlet as an option or not
-    static function shouldDisplay()
+    public static function shouldDisplay()
     {
         $admin = new Administration();
         $admin->retrieveSettings();
@@ -632,7 +632,7 @@ enableQS(false);
         }
     }
 
-    function check_enabled($type)
+    public function check_enabled($type)
     {
         $db = DBManagerFactory::getInstance();
         $query = "SELECT * FROM config where name = 'module_" .$type . "' and value =  1;";

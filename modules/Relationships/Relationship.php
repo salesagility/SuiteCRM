@@ -51,28 +51,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Relationship extends SugarBean
 {
-    var $object_name='Relationship';
-    var $module_dir = 'Relationships';
-    var $new_schema = true;
-    var $table_name = 'relationships';
+    public $object_name='Relationship';
+    public $module_dir = 'Relationships';
+    public $new_schema = true;
+    public $table_name = 'relationships';
 
-    var $id;
-    var $relationship_name;
-    var $lhs_module;
-    var $lhs_table;
-    var $lhs_key;
-    var $rhs_module;
-    var $rhs_table;
-    var $rhs_key;
-    var $join_table;
-    var $join_key_lhs;
-    var $join_key_rhs;
-    var $relationship_type;
-    var $relationship_role_column;
-    var $relationship_role_column_value;
-    var $reverse;
+    public $id;
+    public $relationship_name;
+    public $lhs_module;
+    public $lhs_table;
+    public $lhs_key;
+    public $rhs_module;
+    public $rhs_table;
+    public $rhs_key;
+    public $join_table;
+    public $join_key_lhs;
+    public $join_key_rhs;
+    public $relationship_type;
+    public $relationship_role_column;
+    public $relationship_role_column_value;
+    public $reverse;
 
-    var $_self_referencing;
+    public $_self_referencing;
 
     public function __construct()
     {
@@ -97,7 +97,7 @@ class Relationship extends SugarBean
     /*returns true if the relationship is self referencing. equality check is performed for both table and
      * key names.
      */
-    function is_self_referencing()
+    public function is_self_referencing()
     {
         if (empty($this->_self_referencing)) {
             $this->_self_referencing=false;
@@ -138,7 +138,7 @@ class Relationship extends SugarBean
     }
 
 
-    function get_other_module($relationship_name, $base_module, &$db)
+    public function get_other_module($relationship_name, $base_module, &$db)
     {
         //give it the relationship_name and base module
         //it will return the module name on the other side of the relationship
@@ -161,7 +161,7 @@ class Relationship extends SugarBean
         //end function get_other_module
     }
 
-    function retrieve_by_sides($lhs_module, $rhs_module, &$db)
+    public function retrieve_by_sides($lhs_module, $rhs_module, &$db)
     {
         //give it the relationship_name and base module
         //it will return the module name on the other side of the relationship
@@ -179,7 +179,7 @@ class Relationship extends SugarBean
         //end function retrieve_by_sides
     }
 
-    static function retrieve_by_modules($lhs_module, $rhs_module, &$db, $type ='')
+    public static function retrieve_by_modules($lhs_module, $rhs_module, &$db, $type ='')
     {
         //give it the relationship_name and base module
         //it will return the module name on the other side of the relationship
@@ -208,7 +208,7 @@ class Relationship extends SugarBean
     }
 
 
-    function retrieve_by_name($relationship_name)
+    public function retrieve_by_name($relationship_name)
     {
         if (empty($GLOBALS['relationships'])) {
             $this->load_relationship_meta();
@@ -226,7 +226,7 @@ class Relationship extends SugarBean
         }
     }
 
-    function load_relationship_meta()
+    public function load_relationship_meta()
     {
         if (!file_exists(Relationship::cache_file_dir().'/'.Relationship::cache_file_name_only())) {
             $this->build_relationship_cache();
@@ -235,7 +235,7 @@ class Relationship extends SugarBean
         $GLOBALS['relationships']=$relationships;
     }
 
-    function build_relationship_cache()
+    public function build_relationship_cache()
     {
         $query="SELECT * from relationships where deleted=0";
         $result=$this->db->query($query);
@@ -273,7 +273,7 @@ class Relationship extends SugarBean
     }
 
 
-    function trace_relationship_module($base_module, $rel_module1_name, $rel_module2_name="")
+    public function trace_relationship_module($base_module, $rel_module1_name, $rel_module2_name="")
     {
         global $beanList;
         global $dictionary;

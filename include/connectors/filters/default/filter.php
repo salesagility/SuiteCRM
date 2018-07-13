@@ -43,7 +43,7 @@
  */
 class default_filter
 {
-    var $_component;
+    public $_component;
 
     public function __construct()
     {

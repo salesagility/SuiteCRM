@@ -54,70 +54,70 @@ class DashletGeneric extends Dashlet
       * Fields that are searchable
       * @var array
       */
-    var $searchFields;
+    public $searchFields;
     /**
      * Displayable columns (ones available to display)
      * @var array
      */
-    var $columns;
+    public $columns;
     /**
      * Bean file used in this Dashlet
      * @var bean
      */
-    var $seedBean;
+    public $seedBean;
     /**
      * collection of filters to apply
      * @var array
      */
-    var $filters = null;
+    public $filters = null;
     /**
      * Number of Rows to display
      * @var int
      */
-    var $displayRows = '5';
+    public $displayRows = '5';
     /**
      * Actual columns to display, will be a subset of $columns
      * @var array
      */
-    var $displayColumns = null;
+    public $displayColumns = null;
     /**
      * Flag to display only the current users's items.
      * @var bool
      */
-    var $myItemsOnly = true;
+    public $myItemsOnly = true;
     /**
      * Flag to display "myItemsOnly" checkbox in the DashletGenericConfigure.
      * @var bool
      */
-    var $showMyItemsOnly = true;
+    public $showMyItemsOnly = true;
     /**
      * location of Smarty template file for display
      * @var string
      */
-    var $displayTpl = 'include/Dashlets/DashletGenericDisplay.tpl';
+    public $displayTpl = 'include/Dashlets/DashletGenericDisplay.tpl';
     /**
      * location of smarty template file for configuring
      * @var string
      */
-    var $configureTpl = 'include/Dashlets/DashletGenericConfigure.tpl';
+    public $configureTpl = 'include/Dashlets/DashletGenericConfigure.tpl';
     /**
      * smarty object for the generic configuration template
      * @var string
      */
-    var $configureSS;
+    public $configureSS;
     /** search inputs to be populated in configure template.
      *  modify this after processDisplayOptions, but before displayOptions to modify search inputs
      *  @var array
      */
-    var $currentSearchFields;
+    public $currentSearchFields;
     /**
      * ListView Smarty Class
      * @var Smarty
      */
-    var $lvs;
-    var $layoutManager;
+    public $lvs;
+    public $layoutManager;
 
-    function __construct($id, $options = null)
+    public function __construct($id, $options = null)
     {
         parent::__construct($id);
         $this->isConfigurable = true;
@@ -154,7 +154,7 @@ class DashletGeneric extends Dashlet
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function DashletGeneric($id, $options = null)
+    public function DashletGeneric($id, $options = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -170,7 +170,7 @@ class DashletGeneric extends Dashlet
      *
      * @return string HTML that shows options
      */
-    function processDisplayOptions()
+    public function processDisplayOptions()
     {
         require_once('include/templates/TemplateGroupChooser.php');
 
@@ -309,13 +309,13 @@ class DashletGeneric extends Dashlet
      *
      * @return string HTML that shows options
      */
-    function displayOptions()
+    public function displayOptions()
     {
         $this->processDisplayOptions();
         return parent::displayOptions() . $this->configureSS->fetch($this->configureTpl);
     }
 
-    function buildWhere()
+    public function buildWhere()
     {
         global $current_user;
 
@@ -412,7 +412,7 @@ class DashletGeneric extends Dashlet
     /**
      * Does all dashlet processing, here's your chance to modify the rows being displayed!
      */
-    function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = array(), $id = null)
     {
         $currentSearchFields = array();
         $configureView = true; // configure view or regular view
@@ -506,7 +506,7 @@ class DashletGeneric extends Dashlet
       *
       * @return string HTML that displays Dashlet
       */
-    function display()
+    public function display()
     {
         return parent::display() . $this->lvs->display(false) . $this->processAutoRefresh();
     }
@@ -517,7 +517,7 @@ class DashletGeneric extends Dashlet
      *
      * @return array options array
      */
-    function saveOptions($req)
+    public function saveOptions($req)
     {
         $options = array();
 
@@ -575,7 +575,7 @@ class DashletGeneric extends Dashlet
      * Internal function to add custom fields
      *
      */
-    function addCustomFields()
+    public function addCustomFields()
     {
         foreach ($this->seedBean->field_defs as $fieldName => $def) {
             if (!empty($def['type']) && $def['type'] == 'html') {

@@ -49,7 +49,7 @@ class ControllerFactory
      *
      * @return an instance of SugarController
      */
-    static function getController($module)
+    public static function getController($module)
     {
         $class = ucfirst($module).'Controller';
         $customClass = 'Custom' . $class;

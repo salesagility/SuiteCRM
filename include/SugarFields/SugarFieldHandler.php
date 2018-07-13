@@ -43,14 +43,14 @@
  */
 class SugarFieldHandler
 {
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarFieldHandler()
+    public function SugarFieldHandler()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -62,7 +62,7 @@ class SugarFieldHandler
     }
 
 
-    static function fixupFieldType($field)
+    public static function fixupFieldType($field)
     {
         switch ($field) {
                case 'double':
@@ -148,7 +148,7 @@ class SugarFieldHandler
      *      * labelSpan - column span for the label
      *      * fieldSpan - column span for the field
      */
-    static function displaySmarty($parentFieldArray, $vardef, $displayType, $displayParams = array(), $tabindex = 1)
+    public static function displaySmarty($parentFieldArray, $vardef, $displayType, $displayParams = array(), $tabindex = 1)
     {
         $string = '';
         $displayTypeFunc = 'get' . $displayType . 'Smarty'; // getDetailViewSmarty, getEditViewSmarty, etc...

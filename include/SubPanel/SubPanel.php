@@ -48,23 +48,23 @@ require_once('include/SubPanel/registered_layout_defs.php');
  */
 class SubPanel
 {
-    var $hideNewButton = false;
-    var $subpanel_id;
-    var $parent_record_id;
-    var $parent_module;  // the name of the parent module
-	var $parent_bean;  // the instantiated bean of the parent
-	var $template_file;
-    var $linked_fields;
-    var $action = 'DetailView';
-    var $show_select_button = true;
-    var $subpanel_define = null;  // contains the layout_def.php
-    var $subpanel_defs;
-    var $subpanel_query=null;
-    var $layout_def_key='';
-    var $search_query='';
-    var $collections = array();
+    public $hideNewButton = false;
+    public $subpanel_id;
+    public $parent_record_id;
+    public $parent_module;  // the name of the parent module
+	public $parent_bean;  // the instantiated bean of the parent
+	public $template_file;
+    public $linked_fields;
+    public $action = 'DetailView';
+    public $show_select_button = true;
+    public $subpanel_define = null;  // contains the layout_def.php
+    public $subpanel_defs;
+    public $subpanel_query=null;
+    public $layout_def_key='';
+    public $search_query='';
+    public $collections = array();
 
-    function __construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array())
+    public function __construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array())
     {
         global $beanList, $beanFiles, $focus, $app_strings;
 
@@ -103,27 +103,27 @@ class SubPanel
         $this->buildSearchQuery();
     }
 
-    function setTemplateFile($template_file)
+    public function setTemplateFile($template_file)
     {
         $this->template_file = $template_file;
     }
 
-    function setBeanList(&$value)
+    public function setBeanList(&$value)
     {
         $this->bean_list =$value;
     }
 
-    function setHideNewButton($value)
+    public function setHideNewButton($value)
     {
         $this->hideNewButton = $value;
     }
 
 
-    function getHeaderText($currentModule)
+    public function getHeaderText($currentModule)
     {
     }
 
-    function get_buttons($panel_query=null)
+    public function get_buttons($panel_query=null)
     {
         $thisPanel =& $this->subpanel_defs;
         $subpanel_def = $thisPanel->get_buttons();
@@ -154,7 +154,7 @@ class SubPanel
     }
 
 
-    function ProcessSubPanelListView($xTemplatePath, &$mod_strings)
+    public function ProcessSubPanelListView($xTemplatePath, &$mod_strings)
     {
         global $app_strings;
         global $current_user;
@@ -223,7 +223,7 @@ class SubPanel
         return $ob_contents;
     }
 
-    function display()
+    public function display()
     {
         $result_array = array();
 
@@ -232,7 +232,7 @@ class SubPanel
         print $return_string;
     }
 
-    function getModulesWithSubpanels()
+    public function getModulesWithSubpanels()
     {
         global $beanList;
         $dir = dir('modules');
@@ -245,7 +245,7 @@ class SubPanel
         return $modules;
     }
 
-    static function getModuleSubpanels($module)
+    public static function getModuleSubpanels($module)
     {
         require_once('include/SubPanel/SubPanelDefinitions.php');
         global $beanList, $beanFiles;
@@ -272,7 +272,7 @@ class SubPanel
     }
 
     //saves overrides for defs
-    function saveSubPanelDefOverride($panel, $subsection, $override)
+    public function saveSubPanelDefOverride($panel, $subsection, $override)
     {
         global $layout_defs, $beanList;
 
@@ -321,7 +321,7 @@ class SubPanel
         }
     }
 
-    function get_subpanel_setup($module)
+    public function get_subpanel_setup($module)
     {
         $subpanel_setup = '';
         $layout_defs = get_layout_defs();
@@ -336,7 +336,7 @@ class SubPanel
     /**
      * Retrieve the subpanel definition from the registered layout_defs arrays.
      */
-    function getSubPanelDefine($module, $subpanel_id)
+    public function getSubPanelDefine($module, $subpanel_id)
     {
         $default_subpanel_define = SubPanel::_get_default_subpanel_define($module, $subpanel_id);
         $custom_subpanel_define = SubPanel::_get_custom_subpanel_define($module, $subpanel_id);
@@ -350,7 +350,7 @@ class SubPanel
         return $subpanel_define;
     }
 
-    function _get_custom_subpanel_define($module, $subpanel_id)
+    public function _get_custom_subpanel_define($module, $subpanel_id)
     {
         $ret_val = array();
 
@@ -365,7 +365,7 @@ class SubPanel
         return $ret_val;
     }
 
-    function _get_default_subpanel_define($module, $subpanel_id)
+    public function _get_default_subpanel_define($module, $subpanel_id)
     {
         $ret_val = array();
 
@@ -380,7 +380,7 @@ class SubPanel
         return $ret_val;
     }
 
-    function buildSearchQuery()
+    public function buildSearchQuery()
     {
         $thisPanel =& $this->subpanel_defs;
         $subpanel_defs = $thisPanel->_instance_properties;
@@ -416,7 +416,7 @@ class SubPanel
         $GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");
     }
 
-    function get_searchdefs($module)
+    public function get_searchdefs($module)
     {
         $thisPanel =& $this->subpanel_defs;
         $subpanel_defs = $thisPanel->_instance_properties;
@@ -430,7 +430,7 @@ class SubPanel
         return false;
     }
 
-    function getSearchForm()
+    public function getSearchForm()
     {
         $thisPanel =& $this->subpanel_defs;
         $subpanel_defs = $thisPanel->_instance_properties;

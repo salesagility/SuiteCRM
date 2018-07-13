@@ -612,7 +612,7 @@ class Email extends Basic
      * @param string $addresses
      * @return array
      */
-    function email2ParseAddressesForAddressesOnly($addresses)
+    public function email2ParseAddressesForAddressesOnly($addresses)
     {
         $addresses = from_html($addresses);
         $pattern = '/@.*,/U';
@@ -1393,7 +1393,7 @@ class Email extends Basic
      * @param Array $arr - list of strings
      * @return string the list of strings delimited by email_address_separator
      */
-    function _arrayToDelimitedString($arr)
+    public function _arrayToDelimitedString($arr)
     {
         // bug 51804: outlook does not respect the correct email address separator (',') , so let
         // clients override the default.
@@ -1584,7 +1584,7 @@ class Email extends Basic
         }
     }
 
-    function linkEmailToAddress($id, $type)
+    public function linkEmailToAddress($id, $type)
     {
         // TODO: make this update?
         $q1 = "SELECT * FROM emails_email_addr_rel WHERE email_id = '{$this->id}' AND email_address_id = '{$id}' AND address_type = '{$type}' AND deleted = 0";
@@ -1614,7 +1614,7 @@ class Email extends Basic
         "bcc_addrs" => "bcc_addrs_names",
     );
 
-    function cleanEmails($emails)
+    public function cleanEmails($emails)
     {
         if (empty($emails)) {
             return '';
@@ -2558,7 +2558,7 @@ class Email extends Basic
      * @param array Array of signatures
      * @return bool
      */
-    function hasSignatureInBody($sig)
+    public function hasSignatureInBody($sig)
     {
         // strpos can't handle line breaks - normalize
         $html = $this->removeAllNewlines($this->description_html);
@@ -3472,7 +3472,7 @@ class Email extends Basic
      * @param string $id
      * @return boolean
      */
-    function doesImportedEmailHaveAttachment($id)
+    public function doesImportedEmailHaveAttachment($id)
     {
         $hasAttachment = false;
         $query = "SELECT id FROM notes where parent_id='$id' AND parent_type='Emails' AND file_mime_type is not null AND deleted=0";
@@ -3491,7 +3491,7 @@ class Email extends Basic
      *
      * @return String Query to be executed.
      */
-    function _genereateSearchImportedEmailsQuery()
+    public function _genereateSearchImportedEmailsQuery()
     {
         global $timedate;
 

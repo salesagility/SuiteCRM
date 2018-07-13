@@ -46,25 +46,25 @@
     {
 
         // Stored fields
-        var $id;
-        var $date_modified;
-        var $user_id;
-        var $content;
-        var $deleted;
-        var $type;
-        var $source;
-        var $module_dir = "vCals";
-        var $table_name = "vcals";
+        public $id;
+        public $date_modified;
+        public $user_id;
+        public $content;
+        public $deleted;
+        public $type;
+        public $source;
+        public $module_dir = "vCals";
+        public $table_name = "vcals";
 
-        var $object_name = "vCal";
-        var $tracker_visibility = false;
+        public $object_name = "vCal";
+        public $tracker_visibility = false;
 
-        var $new_schema = true;
+        public $new_schema = true;
 
-        var $field_defs = array();
+        public $field_defs = array();
 
         // This is used to retrieve related fields from form posts.
-        var $additional_column_fields = Array();
+        public $additional_column_fields = Array();
 
         const UTC_FORMAT = 'Ymd\THi00\Z';
         const EOL = "\r\n";
@@ -93,26 +93,26 @@
         }
 
 
-        function get_summary_text()
+        public function get_summary_text()
         {
             return "";
         }
 
 
-        function fill_in_additional_list_fields()
+        public function fill_in_additional_list_fields()
         {
         }
 
-        function fill_in_additional_detail_fields()
+        public function fill_in_additional_detail_fields()
         {
         }
 
-        function get_list_view_data()
+        public function get_list_view_data()
         {
         }
 
         // combines all freebusy vcals and returns just the FREEBUSY lines as a string
-        function get_freebusy_lines_cache(&$user_bean)
+        public function get_freebusy_lines_cache(&$user_bean)
         {
             $ical_array = array();
             // First, get the list of IDs.
@@ -133,7 +133,7 @@
 
         // query and create the FREEBUSY lines for SugarCRM Meetings and Calls and
         // return the string
-        function create_sugar_freebusy($user_bean, $start_date_time, $end_date_time)
+        public function create_sugar_freebusy($user_bean, $start_date_time, $end_date_time)
         {
             $ical_array = array();
             global $DO_USER_TIME_OFFSET, $timedate, $current_user;
@@ -172,7 +172,7 @@
         }
 
         // return a freebusy vcal string
-        function get_vcal_freebusy($user_focus, $cached = true)
+        public function get_vcal_freebusy($user_focus, $cached = true)
         {
             global $locale, $timedate;
             $ical_array = array();
@@ -239,14 +239,14 @@
 
         // static function:
         // cache vcals
-        static function cache_sugar_vcal(&$user_focus)
+        public static function cache_sugar_vcal(&$user_focus)
         {
             self::cache_sugar_vcal_freebusy($user_focus);
         }
 
         // static function:
         // caches vcal for Activities in Sugar database
-        static function cache_sugar_vcal_freebusy(&$user_focus)
+        public static function cache_sugar_vcal_freebusy(&$user_focus)
         {
             $focus = new vCal();
             // set freebusy members and save

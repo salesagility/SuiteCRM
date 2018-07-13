@@ -65,17 +65,17 @@ class Metric
     }
 
 
-    function type()
+    public function type()
     {
         return $this->_type;
     }
 
-    function name()
+    public function name()
     {
         return $this->_name;
     }
 
-    function isMutable()
+    public function isMutable()
     {
         return $this->_mutable;
     }

@@ -42,7 +42,7 @@ require_once('modules/ModuleBuilder/views/view.modulefield.php');
  
 class ViewModulefields extends SugarView
 {
-    var $mbModule;
+    public $mbModule;
     
     /**
 	 * @see SugarView::_getModuleTitleParams()
@@ -57,7 +57,7 @@ class ViewModulefields extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $smarty = new Sugar_Smarty();
         global $mod_strings;
@@ -211,7 +211,7 @@ class ViewModulefields extends SugarView
         }
     }
 
-    function loadPackageHelp(
+    public function loadPackageHelp(
         $name
         ) {
         $this->mbModule->help['default'] = (empty($name))?'create':'modify';
@@ -219,7 +219,7 @@ class ViewModulefields extends SugarView
         $this->mbModule->help['group'] = 'module';
     }
 
-    function cullFields(
+    public function cullFields(
         $def
         ) {
         if (!empty($def['parent_id'])) {
@@ -234,7 +234,7 @@ class ViewModulefields extends SugarView
         return $def;
     }
 	
-    function isValidStudioField(
+    public function isValidStudioField(
         $def
         ) {
         if (isset($def['studio'])) {

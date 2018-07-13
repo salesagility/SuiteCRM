@@ -48,7 +48,7 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyBugsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/Bugs/Dashlets/MyBugsDashlet/MyBugsDashlet.data.php');
@@ -67,7 +67,7 @@ class MyBugsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyBugsDashlet($id, $def = null)
+    public function MyBugsDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -79,7 +79,7 @@ class MyBugsDashlet extends DashletGeneric
     }
 
 
-    function displayOptions()
+    public function displayOptions()
     {
         $this->processDisplayOptions();
 

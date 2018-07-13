@@ -45,7 +45,7 @@ require_once('include/generic/SugarWidgets/SugarWidgetFieldvarchar.php');
 
 class SugarWidgetFieldText extends SugarWidgetFieldVarchar
 {
-    function __construct(&$layout_manager)
+    public function __construct(&$layout_manager)
     {
         parent::__construct($layout_manager);
     }
@@ -53,7 +53,7 @@ class SugarWidgetFieldText extends SugarWidgetFieldVarchar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetFieldText(&$layout_manager)
+    public function SugarWidgetFieldText(&$layout_manager)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -65,32 +65,32 @@ class SugarWidgetFieldText extends SugarWidgetFieldVarchar
     }
 
 
-    function queryFilterEquals($layout_def)
+    public function queryFilterEquals($layout_def)
     {
         return $this->reporter->db->convert($this->_get_column_select($layout_def), "text2char").
         	" = ".$this->reporter->db->quoted($layout_def['input_name0']);
     }
 
-    function queryFilterNot_Equals_Str($layout_def)
+    public function queryFilterNot_Equals_Str($layout_def)
     {
         $column = $this->_get_column_select($layout_def);
         return "($column IS NULL OR ". $this->reporter->db->convert($column, "text2char")." != ".
             $this->reporter->db->quoted($layout_def['input_name0']).")";
     }
 
-    function queryFilterNot_Empty($layout_def)
+    public function queryFilterNot_Empty($layout_def)
     {
         $column = $this->_get_column_select($layout_def);
         return "($column IS NOT NULL AND ".$this->reporter->db->convert($column, "length")." > 0)";
     }
 
-    function queryFilterEmpty($layout_def)
+    public function queryFilterEmpty($layout_def)
     {
         $column = $this->_get_column_select($layout_def);
         return "($column IS NULL OR ".$this->reporter->db->convert($column, "length")." = 0)";
     }
 
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         return nl2br(parent::displayListPlain($layout_def));
     }

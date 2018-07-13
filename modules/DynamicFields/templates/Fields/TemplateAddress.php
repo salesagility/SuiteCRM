@@ -45,10 +45,10 @@ require_once ('modules/DynamicFields/templates/Fields/TemplateAddressCountry.php
 
 class TemplateAddress extends TemplateField
 {
-    var $type = 'varchar';
-    var $supports_unified_search = true;
+    public $type = 'varchar';
+    public $supports_unified_search = true;
 
-    function save($df)
+    public function save($df)
     {
         $this->type = 'varchar' ;
 

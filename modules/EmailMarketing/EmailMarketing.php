@@ -43,33 +43,33 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmailMarketing extends SugarBean
 {
-    var $field_name_map;
+    public $field_name_map;
 
-    var $id;
-    var $deleted;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $created_by;
-    var $name;
-    var $from_addr;
-    var $from_name;
-    var $reply_to_name;
-    var $reply_to_addr;
-    var $date_start;
-    var $time_start;
-    var $template_id;
-    var $campaign_id;
-    var $all_prospect_lists;
-    var $status;
-    var $inbound_email_id;
-    var $outbound_email_id;
+    public $id;
+    public $deleted;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $name;
+    public $from_addr;
+    public $from_name;
+    public $reply_to_name;
+    public $reply_to_addr;
+    public $date_start;
+    public $time_start;
+    public $template_id;
+    public $campaign_id;
+    public $all_prospect_lists;
+    public $status;
+    public $inbound_email_id;
+    public $outbound_email_id;
 
-    var $table_name = 'email_marketing';
-    var $object_name = 'EmailMarketing';
-    var $module_dir = 'EmailMarketing';
+    public $table_name = 'email_marketing';
+    public $object_name = 'EmailMarketing';
+    public $module_dir = 'EmailMarketing';
 
-    var $new_schema = true;
+    public $new_schema = true;
 
     public function __construct()
     {
@@ -115,7 +115,7 @@ class EmailMarketing extends SugarBean
         return parent::save($check_notify);
     }
 
-    function retrieve($id = -1, $encode=true, $deleted=true)
+    public function retrieve($id = -1, $encode=true, $deleted=true)
     {
         parent::retrieve($id,$encode,$deleted);
 
@@ -129,17 +129,17 @@ class EmailMarketing extends SugarBean
         return $this;
     }
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return $this->name;
     }
 
-    function create_export_query($order_by, $where)
+    public function create_export_query($order_by, $where)
     {
         return $this->create_new_list_query($order_by, $where);
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $temp_array = $this->get_list_view_array();
 
@@ -221,7 +221,7 @@ class EmailMarketing extends SugarBean
         return $tempArray;
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return true;
@@ -229,7 +229,7 @@ class EmailMarketing extends SugarBean
         return false;
     }
 
-    function get_all_prospect_lists()
+    public function get_all_prospect_lists()
     {
         $query="select prospect_lists.* from prospect_lists ";
         $query.=" left join prospect_list_campaigns on prospect_list_campaigns.prospect_list_id=prospect_lists.id";

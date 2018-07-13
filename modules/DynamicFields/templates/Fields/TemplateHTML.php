@@ -43,17 +43,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class TemplateHTML extends TemplateField
 {
-    var $data_type = 'html';
-    var $type = 'html';
-    var $inline_edit = 0;
+    public $data_type = 'html';
+    public $type = 'html';
+    public $inline_edit = 0;
     
-    function save($df)
+    public function save($df)
     {
         $this->ext3 = 'text';
         parent::save($df);
     }
 	
-    function set($values)
+    public function set($values)
     {
         parent::set($values);
         if (!empty($this->ext4)) {
@@ -62,62 +62,62 @@ class TemplateHTML extends TemplateField
         }
     }
     
-    function get_html_detail()
+    public function get_html_detail()
     {
         return '<div title="' . strtoupper($this->name . '_HELP'). '" >{'.strtoupper($this->name) . '}</div>';
     }
     
-    function get_html_edit()
+    public function get_html_edit()
     {
         return $this->get_html_detail();
     }
     
-    function get_html_list()
+    public function get_html_list()
     {
         return $this->get_html_detail();
     }
     
-    function get_html_search()
+    public function get_html_search()
     {
         return $this->get_html_detail();
     }
     
-    function get_xtpl_detail()
+    public function get_xtpl_detail()
     {
         return from_html(nl2br($this->ext4));
     }
     
-    function get_xtpl_edit()
+    public function get_xtpl_edit()
     {
         return  $this->get_xtpl_detail();
     }
     
-    function get_xtpl_list()
+    public function get_xtpl_list()
     {
         return  $this->get_xtpl_detail();
     }
-    function get_xtpl_search()
+    public function get_xtpl_search()
     {
         return  $this->get_xtpl_detail();
     }
     
-    function get_db_add_alter_table($table)
+    public function get_db_add_alter_table($table)
     {
         return '';
     }
 
-    function get_db_modify_alter_table($table)
+    public function get_db_modify_alter_table($table)
     {
         return '';
     }
     
 
-    function get_db_delete_alter_table($table)
+    public function get_db_delete_alter_table($table)
     {
         return '' ;
     }
     
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         if (!empty($this->ext4)) {

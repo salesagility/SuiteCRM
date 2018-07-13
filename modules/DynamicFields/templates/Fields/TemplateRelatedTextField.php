@@ -47,11 +47,11 @@ require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php';
 
 class TemplateRelatedTextField extends TemplateText
 {
-    var $type = 'relate';
+    public $type = 'relate';
     //ext1 is the name field
     //ext2 is the related module
     
-    function get_html_edit()
+    public function get_html_edit()
     {
         $this->prepare();
         $name = $this->name .'_name';
@@ -61,7 +61,7 @@ class TemplateRelatedTextField extends TemplateText
         return "<input type='text' name='$name' id='$name' size='".$this->size."' readonly value='$value_name'><input type='button' onclick='open_popup(\"{". strtoupper($this->name). "_MODULE}\", 600, 400,\" \", true, false, {ENCODED_". strtoupper($this->name). "_POPUP_REQUEST_DATA})' type='button'  class='button' value='{APP.LBL_SELECT_BUTTON_LABEL}' ><input type='hidden' name='$id' value='$value_id'>";
     }
 
-    function get_html_detail()
+    public function get_html_detail()
     {
         $name = $this->name .'_name';
         $value_name = strtoupper('{'.$name.'}');
@@ -71,7 +71,7 @@ class TemplateRelatedTextField extends TemplateText
         return "<a href='index.php?module=$this->ext2&action=DetailView&record={$value_id}'>{$value_name}</a>" ;
     }
     
-    function get_html_list()
+    public function get_html_list()
     {
         if (isset($this->bean)) {
             $name = $this->bean->object_name . '.'. $this->ext1;
@@ -81,7 +81,7 @@ class TemplateRelatedTextField extends TemplateText
         return '{'. strtoupper($name) . '}';
     }
 
-    function get_html_search()
+    public function get_html_search()
     {
         $searchable=array();
         $def = $this->bean->field_name_map[$this->name];
@@ -93,7 +93,7 @@ class TemplateRelatedTextField extends TemplateText
         return $this->get_html_edit();
     }   
 
-    function get_xtpl_search()
+    public function get_xtpl_search()
     {
         $searchable=array();
         $def = $this->bean->field_name_map[$this->name];
@@ -139,7 +139,7 @@ class TemplateRelatedTextField extends TemplateText
     }
 
 
-    function get_xtpl_edit()
+    public function get_xtpl_edit()
     {
         global $beanList;
         
@@ -192,16 +192,16 @@ class TemplateRelatedTextField extends TemplateText
         return $returnXTPL;
     }
     
-    function get_xtpl_detail()
+    public function get_xtpl_detail()
     {
         return $this->get_xtpl_edit();
     }
     
-    function get_related_info()
+    public function get_related_info()
     {
     }
     
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         $def['id_name'] = $this->ext3;
@@ -264,7 +264,7 @@ class TemplateRelatedTextField extends TemplateText
         }
     }
 
-    function save($df)
+    public function save($df)
     {
         // create the new ID field associated with this relate field - this will hold the id of the related record
         // this field must have a unique name as the name is used when constructing quicksearches and when saving the field
@@ -333,17 +333,17 @@ class TemplateRelatedTextField extends TemplateText
         }
     }
     
-    function get_db_add_alter_table($table)
+    public function get_db_add_alter_table($table)
     {
         return "";
     }
     
-    function get_db_delete_alter_table($table)
+    public function get_db_delete_alter_table($table)
     {
         return "";
     }
     
-    function get_db_modify_alter_table($table)
+    public function get_db_modify_alter_table($table)
     {
         return "";
     }

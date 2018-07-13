@@ -43,19 +43,19 @@
  */
 class Reminder_Invitee extends Basic
 {
-    var $name;
+    public $name;
 
-    var $new_schema = true;
-    var $module_dir = 'Reminders_Invitees';
-    var $object_name = 'Reminder_Invitee';
-    var $table_name = 'reminders_invitees';
-    var $tracker_visibility = false;
-    var $importable = false;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'Reminders_Invitees';
+    public $object_name = 'Reminder_Invitee';
+    public $table_name = 'reminders_invitees';
+    public $tracker_visibility = false;
+    public $importable = false;
+    public $disable_row_level_security = true;
 
-    var $reminder_id;
-    var $related_invitee_module;
-    var $related_invitee_module_id;
+    public $reminder_id;
+    public $related_invitee_module;
+    public $related_invitee_module_id;
 
     /**
      * Save multiple reminders invitees data.

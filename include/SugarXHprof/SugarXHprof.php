@@ -172,7 +172,7 @@ class SugarXHprof
      *
      * @return string action
      */
-    static public function detectAction()
+    public static function detectAction()
     {
         $action = '';
 

@@ -5,28 +5,28 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SecurityGroupMessage extends Basic
 {
-    var $new_schema = true;
-    var $module_dir = 'SecurityGroups';
-    var $object_name = 'SecurityGroupMessage';
-    var $table_name = 'securitygroups_message';
-    var $importable = false;
+    public $new_schema = true;
+    public $module_dir = 'SecurityGroups';
+    public $object_name = 'SecurityGroupMessage';
+    public $table_name = 'securitygroups_message';
+    public $importable = false;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
 
 
-    var $additional_column_fields = Array();
-    var $field_defs = array (
+    public $additional_column_fields = Array();
+    public $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'name'=>array('name' =>'name', 'type' =>'varchar', 'len'=>'255', )
       , 'date_entered'=>array ('name' => 'date_entered','type' => 'datetime')
@@ -39,7 +39,7 @@ class SecurityGroupMessage extends Basic
     );
 
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -47,7 +47,7 @@ class SecurityGroupMessage extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SecurityGroupMessage()
+    public function SecurityGroupMessage()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -60,7 +60,7 @@ class SecurityGroupMessage extends Basic
 
 
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $data = parent::get_list_view_data();
         $delete = '';
@@ -102,7 +102,7 @@ class SecurityGroupMessage extends Basic
     }
 
 
-    static function saveMessage($text, $securitygroup_id)
+    public static function saveMessage($text, $securitygroup_id)
     {
         //if no security group id then must be admin. Otherwise, make sure the user is a member of the group
         global $current_user;
@@ -123,7 +123,7 @@ class SecurityGroupMessage extends Basic
         $message->save();
     }
 
-    function getTimeLapse($startDate)
+    public function getTimeLapse($startDate)
     {
         $startDate = $GLOBALS['timedate']->to_db($startDate);
         $start = array();
@@ -179,7 +179,7 @@ class SecurityGroupMessage extends Basic
         return $result . ' ' . translate('LBL_TIME_AGO','SugarFeed');
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return false;

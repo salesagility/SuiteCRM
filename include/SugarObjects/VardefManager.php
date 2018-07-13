@@ -44,14 +44,14 @@
  */
 class VardefManager
 {
-    static $custom_disabled_modules = array();
-    static $linkFields;
+    public static $custom_disabled_modules = array();
+    public static $linkFields;
 
     /**
      * this method is called within a vardefs.php file which extends from a SugarObject.
      * It is meant to load the vardefs from the SugarObject.
      */
-    static function createVardef($module, $object, $templates = array('default'), $object_name = false)
+    public static function createVardef($module, $object, $templates = array('default'), $object_name = false)
     {
         global $dictionary;
 
@@ -94,7 +94,7 @@ class VardefManager
         }
     }
 
-    static function addTemplate($module, $object, $template, $object_name=false)
+    public static function addTemplate($module, $object, $template, $object_name=false)
     {
         if ($template == 'default') {
             $template = 'basic';
@@ -154,7 +154,7 @@ class VardefManager
      * @param array $fieldDefs
      * @return  array
      */
-    static function cleanVardefs($fieldDefs)
+    public static function cleanVardefs($fieldDefs)
     {
         if (isset($fieldDefs['fields'])) {
             foreach ($fieldDefs['fields'] as $field => $defs) {
@@ -172,7 +172,7 @@ class VardefManager
      * @param string $module the name of the module
      * @param string $object the name of the object
      */
-    static function saveCache($module,$object, $additonal_objects= array())
+    public static function saveCache($module,$object, $additonal_objects= array())
     {
         if (empty($GLOBALS['dictionary'][$object])) {
             $object = BeanFactory::getObjectName($module);
@@ -201,7 +201,7 @@ class VardefManager
      *                      clear vardef cache for all modules.
      * @param string object_name the name of the object we are clearing this is for sugar_cache
      */
-    static function clearVardef($module_dir = '', $object_name = '')
+    public static function clearVardef($module_dir = '', $object_name = '')
     {
         //if we have a module name specified then just remove that vardef file
         //otherwise go through each module and remove the vardefs.php
@@ -220,7 +220,7 @@ class VardefManager
      * @param string module_dir the module_dir to clear
      * @param string object_name the name of the object we are clearing this is for sugar_cache
      */
-    static function _clearCache($module_dir = '', $object_name = '')
+    public static function _clearCache($module_dir = '', $object_name = '')
     {
         if (!empty($module_dir) && !empty($object_name)) {
 
@@ -248,7 +248,7 @@ class VardefManager
      * @param string $object the given object we wish to load the vardefs for
      * @param array $additional_search_paths an array which allows a consumer to pass in additional vardef locations to search
      */
-    static function refreshVardefs($module, $object, $additional_search_paths = null, $cacheCustom = true, $params = array())
+    public static function refreshVardefs($module, $object, $additional_search_paths = null, $cacheCustom = true, $params = array())
     {
         // Some of the vardefs do not correctly define dictionary as global.  Declare it first.
         global $dictionary, $beanList;
@@ -390,7 +390,7 @@ class VardefManager
      * @param Array $vardef The vardefs of the module to apply the account_name field requirement to
      * @return Array $vardef The vardefs of the module with the updated required setting based on the system configuration
      */
-    static function applyGlobalAccountRequirements($vardef)
+    public static function applyGlobalAccountRequirements($vardef)
     {
         if (isset($GLOBALS['sugar_config']['require_accounts'])) {
             if (isset($vardef['fields'])
@@ -411,7 +411,7 @@ class VardefManager
      * @param string $object the given object we wish to load the vardefs for
      * @param bool   $refresh whether or not we wish to refresh the cache file.
      */
-    static function loadVardef($module, $object, $refresh=false, $params = array())
+    public static function loadVardef($module, $object, $refresh=false, $params = array())
     {
         //here check if the cache file exists, if it does then load it, if it doesn't
         //then call refreshVardef

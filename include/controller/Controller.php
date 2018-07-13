@@ -54,8 +54,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Controller extends SugarBean
 {
-    var $focus;
-    var $type;  //defines id this is a new list order or existing, or delete
+    public $focus;
+    public $type;  //defines id this is a new list order or existing, or delete
     // New, Save, Delete
 
     public function __construct()
@@ -80,7 +80,7 @@ class Controller extends SugarBean
     }
 
 
-    function init(& $seed_object, $type)
+    public function init(& $seed_object, $type)
     {
         $this->focus = & $seed_object;
         $this->type = $type;
@@ -88,7 +88,7 @@ class Controller extends SugarBean
         //end function Controller
     }
 
-    function change_component_order($magnitude, $direction, $parent_id="")
+    public function change_component_order($magnitude, $direction, $parent_id="")
     {
         if (!empty($this->type) && $this->type=="Save") {
 
@@ -228,7 +228,7 @@ class Controller extends SugarBean
         //end function change_component_order
     }
 
-    function update_affected_order($affected_id, $affected_new_x="", $affected_new_y="")
+    public function update_affected_order($affected_id, $affected_new_x="", $affected_new_y="")
     {
         $query = 	"UPDATE ".$this->focus->table_name." SET";
 
@@ -248,7 +248,7 @@ class Controller extends SugarBean
         //end function update_affected_order
     }
 
-    function get_affected_id($parent_id, $list_order_x="", $list_order_y="")
+    public function get_affected_id($parent_id, $list_order_x="", $list_order_y="")
     {
         $query = "	SELECT id from ".$this->focus->table_name."
 					WHERE ".$this->focus->controller_def['parent_var']."='$parent_id'
@@ -276,7 +276,7 @@ class Controller extends SugarBean
     /////////////Wall Functions////////////////////
 
 
-    function check_wall($magnitude, $direction, $parent_id)
+    public function check_wall($magnitude, $direction, $parent_id)
     {
 
 //TODO: jgreen - this is only single axis check_wall mechanism, will need to upgrade this to double axis
@@ -332,7 +332,7 @@ class Controller extends SugarBean
     //Delete adjust functions////////////////////
 
 
-    function delete_adjust_order($parent_id)
+    public function delete_adjust_order($parent_id)
     {
 
 

@@ -47,47 +47,47 @@ class FontManager
      * Contain all the errors generated during the process of FontManager
      * @var String[]
      */
-    var $errors = array();
+    public $errors = array();
     /**
      * store the log string when addFont is call
      * @var String
      */
-    var $log = "";
+    public $log = "";
     /**
      * Current font filename
      * @var String
      */
-    var $filename = "";
+    public $filename = "";
     /**
     * Current font file path
     * @var String
     */
-    var $fontPath = "";
+    public $fontPath = "";
     /**
      * Multidimentional array which contain all the detail of all the available fonts
      * @var Array
      */
-    var $fontList = array();
+    public $fontList = array();
     /**
      * Name of the font of the current font file
      * @var String
      */
-    var $font_name = "";
+    public $font_name = "";
     /**
      * Encoding of the current font
      * @var String
      */
-    var $font_enc = "";
+    public $font_enc = "";
     /**
      * Display name of the current font
      * @var String
      */
-    var $font_displayname = "";
+    public $font_displayname = "";
     /**
      * Type of the current font
      * @var String
      */
-    var $font_type = "";
+    public $font_type = "";
 
     private function setFontPath()
     {

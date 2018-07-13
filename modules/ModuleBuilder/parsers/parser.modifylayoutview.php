@@ -45,24 +45,24 @@ require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 
 class ParserModifyLayoutView extends ModuleBuilderParser
 {
-    var $maxColumns; // number of columns in this layout
-    var $usingWorkingFile = false; // if a working file exists (used by view.edit.php among others to determine the title for the layout edit panel)
-    var $language_module; // set to module name for studio, passed to the smarty template and used by sugar_translate
-    var $_sourceFile; // private - the source of the layout defn
-    var $_customFile; // private
-    var $_workingFile; // private
-    var $_originalFile; //private
-    var $_moduleVariable; // private - if set, contains the name of the variable containing the module name in the $viewdef file
-    var $_module; // private
-    var $_view; // private
-    var $_viewdefs; // private
-    var $_fieldDefs; // private
+    public $maxColumns; // number of columns in this layout
+    public $usingWorkingFile = false; // if a working file exists (used by view.edit.php among others to determine the title for the layout edit panel)
+    public $language_module; // set to module name for studio, passed to the smarty template and used by sugar_translate
+    public $_sourceFile; // private - the source of the layout defn
+    public $_customFile; // private
+    public $_workingFile; // private
+    public $_originalFile; //private
+    public $_moduleVariable; // private - if set, contains the name of the variable containing the module name in the $viewdef file
+    public $_module; // private
+    public $_view; // private
+    public $_viewdefs; // private
+    public $_fieldDefs; // private
 
 
     /**
      * Constructor
      */
-    function init($module, $view, $submittedLayout = false)
+    public function init($module, $view, $submittedLayout = false)
     {
         $this->_view = ucfirst($view);
         $this->_module = $module;
@@ -114,7 +114,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 //      $GLOBALS['log']->debug($this->_viewdefs['panels']);
     }
 
-    function getAvailableFields()
+    public function getAvailableFields()
     {
         // Available fields are those that are in the Model and the original layout definition, but not already shown in the View
         // So, because the formats of the two are different we brute force loop through View and unset the fields we find in a copy of Model
@@ -135,17 +135,17 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         return $availableFields;
     }
 
-    function getLayout()
+    public function getLayout()
     {
         return $this->_viewdefs ['panels'];
     }
 
-    function writeWorkingFile()
+    public function writeWorkingFile()
     {
         $this->_writeToFile($this->_workingFile,$this->_view,$this->_module,$this->_viewdefs,$this->_variables);
     }
 
-    function handleSave()
+    public function handleSave()
     {
         $this->_writeToFile($this->_customFile,$this->_view,$this->_module,$this->_viewdefs,$this->_variables);
         // now clear the cache so that the results are immediately visible
@@ -158,7 +158,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         }
     }
 
-    function loadModule($module, $view)
+    public function loadModule($module, $view)
     {
         $this->_viewdefs = array();
         $viewdefs = null;
@@ -172,7 +172,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
      * Load the canonical panel layout from the submitted form
      *
      */
-    function _loadLayoutFromRequest()
+    public function _loadLayoutFromRequest()
     {
         $i = 1;
         // set up the map of panel# (as provided in the _REQUEST) to panel ID (as used in $this->_viewdefs['panels'])
@@ -247,7 +247,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         //          _pp($this->_viewdefs);
     }
 
-    function _padFields()
+    public function _padFields()
     {
         if (! empty($this->_viewdefs)) {
             foreach ($this->_viewdefs ['panels'] as $panelID => $panel) {
@@ -276,7 +276,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 
     // add a new field to the end of a panel
     // don't write out (caller should call handleSave() when ready)
-    function _addField($properties, $panelID = FALSE)
+    public function _addField($properties, $panelID = FALSE)
     {
 
         // if a panelID was not passed, use the first available panel in the list
@@ -317,7 +317,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
     }
 
     /* getModelFields returns an array of all fields stored in the database for this module plus those fields in the original layout definition (so we get fields such as Team ID)*/
-    function _getModelFields()
+    public function _getModelFields()
     {
         $modelFields = array();
         $origViewDefs = $this->_getOrigFieldViewDefs();
@@ -352,7 +352,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         return $modelFields;
     }
 
-    function _parseData($panels)
+    public function _parseData($panels)
     {
         $fields = array();
         if (empty($panels)) {
@@ -404,7 +404,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         return $displayData;
     }
 
-    function _getOrigFieldViewDefs()
+    public function _getOrigFieldViewDefs()
     {
         $origFieldDefs = array();
         $GLOBALS['log']->debug("Original File = ".$this->_originalFile);

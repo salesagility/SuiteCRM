@@ -50,7 +50,7 @@ require_once('modules/AM_TaskTemplates/AM_TaskTemplates.php');
 
 class AM_TaskTemplatesDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/AM_TaskTemplates/metadata/dashletviewdefs.php');
@@ -70,7 +70,7 @@ class AM_TaskTemplatesDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AM_TaskTemplatesDashlet($id, $def = null)
+    public function AM_TaskTemplatesDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

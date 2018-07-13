@@ -55,23 +55,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
   */
  class ListViewFacade
  {
-     var $focus = null;
-     var $module = '';
-     var $type = 0;
+     public $focus = null;
+     public $module = '';
+     public $type = 0;
 
-     var $lv;
+     public $lv;
 
      //ListView fields
-     var $template;
-     var $title;
-     var $where = '';
-     var $params = array();
-     var $offset = 0;
-     var $limit = -1;
-     var $filter_fields = array();
-     var $id_field = 'id';
-     var $prefix = '';
-     var $mod_strings = array();
+     public $template;
+     public $title;
+     public $where = '';
+     public $params = array();
+     public $offset = 0;
+     public $limit = -1;
+     public $filter_fields = array();
+     public $id_field = 'id';
+     public $prefix = '';
+     public $mod_strings = array();
 
      /**
       * Constructor
@@ -79,7 +79,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
       * @param $module - the module name
       * @param - 0 = decide for me, 1 = ListView.html, 2 = ListViewSmarty
       */
-     function __construct($focus, $module, $type = 0)
+     public function __construct($focus, $module, $type = 0)
      {
          $this->focus = $focus;
          $this->module = $module;
@@ -90,7 +90,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
      /**
       * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
       */
-     function ListViewFacade($focus, $module, $type = 0)
+     public function ListViewFacade($focus, $module, $type = 0)
      {
          $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
          if (isset($GLOBALS['log'])) {
@@ -102,7 +102,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
      }
 
 
-     function build()
+     public function build()
      {
          //we will assume that if the ListView.html file exists we will want to use that one
          if (file_exists('modules/'.$this->module.'/ListView.html')) {
@@ -160,7 +160,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
      }
 
-     function setup($template = '', $where = '', $params = array(), $mod_strings = array(), $offset = 0, $limit = -1, $orderBy = '', $prefix = '', $filter_fields = array(), $id_field = 'id')
+     public function setup($template = '', $where = '', $params = array(), $mod_strings = array(), $offset = 0, $limit = -1, $orderBy = '', $prefix = '', $filter_fields = array(), $id_field = 'id')
      {
          if (!empty($template)) {
              $this->template = $template;
@@ -187,7 +187,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
      }
 
-     function display($title = '', $section = 'main', $return = FALSE)
+     public function display($title = '', $section = 'main', $return = FALSE)
      {
          if ($this->type == 1) {
              ob_start();
@@ -205,7 +205,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
      }
 
-     function setTitle($title = '')
+     public function setTitle($title = '')
      {
          $this->title = $title;
      }

@@ -205,19 +205,19 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
    class PclZip
    {
        // ----- Filename of the zip file
-       var $zipname = '';
+       public $zipname = '';
 
        // ----- File descriptor of the zip file
-       var $zip_fd = 0;
+       public $zip_fd = 0;
 
        // ----- Internal error handling
-       var $error_code = 1;
-       var $error_string = '';
+       public $error_code = 1;
+       public $error_string = '';
 
        // ----- Current status of the magic_quotes_runtime
        // This value store the php configuration for magic_quotes
        // The class can then disable the magic_quotes and reset it after
-       var $magic_quotes_status;
+       public $magic_quotes_status;
 
        // --------------------------------------------------------------------------------
        // Function : PclZip()
@@ -227,7 +227,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   Note that no real action is taken, if the archive does not exist it is not
        //   created. Use create() for that.
        // --------------------------------------------------------------------------------
-       function __construct($p_zipname)
+       public function __construct($p_zipname)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::PclZip', "zipname=$p_zipname");
 
@@ -286,7 +286,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   (see PclZip::listContent() for list entry format)
        // --------------------------------------------------------------------------------
        //  function create($p_filelist, $p_add_dir="", $p_remove_dir="")
-       function create($p_filelist /*, options */)
+       public function create($p_filelist /*, options */)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::create', "filelist='$p_filelist', ...");
            $v_result=1;
@@ -444,7 +444,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   (see PclZip::listContent() for list entry format)
        // --------------------------------------------------------------------------------
        //  function add($p_filelist, $p_add_dir="", $p_remove_dir="")
-       function add($p_filelist /* options */)
+       public function add($p_filelist /* options */)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::add', "filelist='$p_filelist', ...");
            $v_result=1;
@@ -608,7 +608,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   0 on an unrecoverable failure,
        //   The list of the files in the archive.
        // --------------------------------------------------------------------------------
-       function listContent()
+       public function listContent()
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::listContent', "");
            $v_result=1;
@@ -669,7 +669,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   (see PclZip::listContent() for list entry format)
        // --------------------------------------------------------------------------------
        //function extract($p_path="./", $p_remove_path="")
-       function extract(/* options */)
+       public function extract(/* options */)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::extract", "");
            $v_result=1;
@@ -827,7 +827,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   The list of the extracted files, with a status of the action.
        //   (see PclZip::listContent() for list entry format)
        // --------------------------------------------------------------------------------
-       function extractByIndex($p_index /* $options */)
+       public function extractByIndex($p_index /* $options */)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::extractByIndex", "index='$p_index', ...");
            $v_result=1;
@@ -980,7 +980,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   The list of the files which are still present in the archive.
        //   (see PclZip::listContent() for list entry format)
        // --------------------------------------------------------------------------------
-       function delete(/* options */)
+       public function delete(/* options */)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::delete", "");
            $v_result=1;
@@ -1045,7 +1045,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   ***** Deprecated *****
        //   delete(PCLZIP_OPT_BY_INDEX, $p_index) should be prefered.
        // --------------------------------------------------------------------------------
-       function deleteByIndex($p_index)
+       public function deleteByIndex($p_index)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::deleteByIndex", "index='$p_index'");
 
@@ -1071,7 +1071,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   0 on failure,
        //   An array with the archive properties.
        // --------------------------------------------------------------------------------
-       function properties()
+       public function properties()
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::properties", "");
 
@@ -1147,7 +1147,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   1 on success.
        //   0 or a negative value on error (error code).
        // --------------------------------------------------------------------------------
-       function duplicate($p_archive)
+       public function duplicate($p_archive)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::duplicate", "");
            $v_result = 1;
@@ -1206,7 +1206,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   1 on success,
        //   0 or negative values on error (see below).
        // --------------------------------------------------------------------------------
-       function merge($p_archive_to_add)
+       public function merge($p_archive_to_add)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::merge", "");
            $v_result = 1;
@@ -1259,7 +1259,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Description :
        // Parameters :
        // --------------------------------------------------------------------------------
-       function errorCode()
+       public function errorCode()
        {
            if (PCLZIP_ERROR_EXTERNAL == 1) {
                return(PclErrorCode());
@@ -1274,7 +1274,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Description :
        // Parameters :
        // --------------------------------------------------------------------------------
-       function errorName($p_with_code=false)
+       public function errorName($p_with_code=false)
        {
            $v_name = array ( PCLZIP_ERR_NO_ERROR => 'PCLZIP_ERR_NO_ERROR',
                       PCLZIP_ERR_WRITE_OPEN_FAIL => 'PCLZIP_ERR_WRITE_OPEN_FAIL',
@@ -1315,7 +1315,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Description :
        // Parameters :
        // --------------------------------------------------------------------------------
-       function errorInfo($p_full=false)
+       public function errorInfo($p_full=false)
        {
            if (PCLZIP_ERROR_EXTERNAL == 1) {
                return(PclErrorString());
@@ -1352,7 +1352,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   true on success,
        //   false on error, the error code is set.
        // --------------------------------------------------------------------------------
-       function privCheckFormat($p_level=0)
+       public function privCheckFormat($p_level=0)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privCheckFormat", "");
            $v_result = true;
@@ -1409,7 +1409,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   1 on success.
        //   0 on failure.
        // --------------------------------------------------------------------------------
-       function privParseOptions(&$p_options_list, $p_size, &$v_result_list, $v_requested_options=false)
+       public function privParseOptions(&$p_options_list, $p_size, &$v_result_list, $v_requested_options=false)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privParseOptions", "");
            $v_result=1;
@@ -1756,7 +1756,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privCreate($p_list, &$p_result_list, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
+       public function privCreate($p_list, &$p_result_list, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privCreate", "list, result_list, add_dir='$p_add_dir', remove_dir='$p_remove_dir'");
            $v_result=1;
@@ -1793,7 +1793,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privAdd($p_list, &$p_result_list, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
+       public function privAdd($p_list, &$p_result_list, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privAdd", "list, result_list, add_dir='$p_add_dir', remove_dir='$p_remove_dir'");
            $v_result=1;
@@ -1980,7 +1980,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Description :
        // Parameters :
        // --------------------------------------------------------------------------------
-       function privOpenFd($p_mode)
+       public function privOpenFd($p_mode)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privOpenFd", 'mode='.$p_mode);
            $v_result=1;
@@ -2017,7 +2017,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Description :
        // Parameters :
        // --------------------------------------------------------------------------------
-       function privCloseFd()
+       public function privCloseFd()
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privCloseFd", "");
            $v_result=1;
@@ -2046,7 +2046,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   $p_remove_dir : Path to remove in the filename path archived
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privAddList($p_list, &$p_result_list, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
+       public function privAddList($p_list, &$p_result_list, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privAddList", "list, add_dir='$p_add_dir', remove_dir='$p_remove_dir'");
            $v_result=1;
@@ -2116,7 +2116,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   $p_remove_dir : Path to remove in the filename path archived
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privAddFileList($p_list, &$p_result_list, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
+       public function privAddFileList($p_list, &$p_result_list, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privAddFileList", "list, add_dir='$p_add_dir', remove_dir='$p_remove_dir'");
            $v_result=1;
@@ -2243,7 +2243,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privAddFile($p_filename, &$p_header, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
+       public function privAddFile($p_filename, &$p_header, $p_add_dir, $p_remove_dir, $p_remove_all_dir, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privAddFile", "filename='$p_filename', add_dir='$p_add_dir', remove_dir='$p_remove_dir'");
            $v_result=1;
@@ -2506,7 +2506,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privWriteFileHeader(&$p_header)
+       public function privWriteFileHeader(&$p_header)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privWriteFileHeader", 'file="'.$p_header['filename'].'", stored as "'.$p_header['stored_filename'].'"');
            $v_result=1;
@@ -2558,7 +2558,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privWriteCentralFileHeader(&$p_header)
+       public function privWriteCentralFileHeader(&$p_header)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privWriteCentralFileHeader", 'file="'.$p_header['filename'].'", stored as "'.$p_header['stored_filename'].'"');
            $v_result=1;
@@ -2611,7 +2611,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privWriteCentralHeader($p_nb_entries, $p_size, $p_offset, $p_comment)
+       public function privWriteCentralHeader($p_nb_entries, $p_size, $p_offset, $p_comment)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privWriteCentralHeader", 'nb_entries='.$p_nb_entries.', size='.$p_size.', offset='.$p_offset.', comment="'.$p_comment.'"');
            $v_result=1;
@@ -2641,7 +2641,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privList(&$p_list)
+       public function privList(&$p_list)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privList", "list");
            $v_result=1;
@@ -2733,7 +2733,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privConvertHeader2FileInfo($p_header, &$p_info)
+       public function privConvertHeader2FileInfo($p_header, &$p_info)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privConvertHeader2FileInfo", "Filename='".$p_header['filename']."'");
            $v_result=1;
@@ -2771,7 +2771,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Return Values :
        //   1 on success,0 or less on error (see error code list)
        // --------------------------------------------------------------------------------
-       function privExtractByRule(&$p_file_list, $p_path, $p_remove_path, $p_remove_all_path, &$p_options)
+       public function privExtractByRule(&$p_file_list, $p_path, $p_remove_path, $p_remove_all_path, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privExtractByRule", "path='$p_path', remove_path='$p_remove_path', remove_all_path='".($p_remove_all_path?'true':'false')."'");
            $v_result=1;
@@ -3142,7 +3142,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // 1 : ... ?
        // PCLZIP_ERR_USER_ABORTED(2) : User ask for extraction stop in callback
        // --------------------------------------------------------------------------------
-       function privExtractFile(&$p_entry, $p_path, $p_remove_path, $p_remove_all_path, &$p_options)
+       public function privExtractFile(&$p_entry, $p_path, $p_remove_path, $p_remove_all_path, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::privExtractFile', "path='$p_path', remove_path='$p_remove_path', remove_all_path='".($p_remove_all_path?'true':'false')."'");
            $v_result=1;
@@ -3502,7 +3502,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privExtractFileInOutput(&$p_entry, &$p_options)
+       public function privExtractFileInOutput(&$p_entry, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::privExtractFileInOutput', "");
            $v_result=1;
@@ -3626,7 +3626,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privExtractFileAsString(&$p_entry, &$p_string)
+       public function privExtractFileAsString(&$p_entry, &$p_string)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::privExtractFileAsString', "p_entry['filename']='".$p_entry['filename']."'");
            $v_result=1;
@@ -3688,7 +3688,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privReadFileHeader(&$p_header)
+       public function privReadFileHeader(&$p_header)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privReadFileHeader", "");
            $v_result=1;
@@ -3809,7 +3809,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privReadCentralFileHeader(&$p_header)
+       public function privReadCentralFileHeader(&$p_header)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privReadCentralFileHeader", "");
            $v_result=1;
@@ -3942,7 +3942,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //   1 on success,
        //   0 on error;
        // --------------------------------------------------------------------------------
-       function privCheckFileHeaders(&$p_local_header, &$p_central_header)
+       public function privCheckFileHeaders(&$p_local_header, &$p_central_header)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privCheckFileHeaders", "");
            $v_result=1;
@@ -3992,7 +3992,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privReadEndCentralDir(&$p_central_dir)
+       public function privReadEndCentralDir(&$p_central_dir)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privReadEndCentralDir", "");
            $v_result=1;
@@ -4172,7 +4172,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privDeleteByRule(&$p_result_list, &$p_options)
+       public function privDeleteByRule(&$p_result_list, &$p_options)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privDeleteByRule", "");
            $v_result=1;
@@ -4521,7 +4521,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        //    1 : OK
        //   -1 : Unable to create directory
        // --------------------------------------------------------------------------------
-       function privDirCheck($p_dir, $p_is_dir=false)
+       public function privDirCheck($p_dir, $p_is_dir=false)
        {
            $v_result = 1;
 
@@ -4578,7 +4578,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privMerge(&$p_archive_to_add)
+       public function privMerge(&$p_archive_to_add)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privMerge", "archive='".$p_archive_to_add->zipname."'");
            $v_result=1;
@@ -4775,7 +4775,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privDuplicate($p_archive_filename)
+       public function privDuplicate($p_archive_filename)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, "PclZip::privDuplicate", "archive_filename='$p_archive_filename'");
            $v_result=1;
@@ -4840,7 +4840,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Description :
        // Parameters :
        // --------------------------------------------------------------------------------
-       function privErrorLog($p_error_code=0, $p_error_string='')
+       public function privErrorLog($p_error_code=0, $p_error_string='')
        {
            if (PCLZIP_ERROR_EXTERNAL == 1) {
                PclError($p_error_code, $p_error_string);
@@ -4856,7 +4856,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Description :
        // Parameters :
        // --------------------------------------------------------------------------------
-       function privErrorReset()
+       public function privErrorReset()
        {
            if (PCLZIP_ERROR_EXTERNAL == 1) {
                PclErrorReset();
@@ -4873,7 +4873,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privDecrypt($p_encryption_header, &$p_buffer, $p_size, $p_crc)
+       public function privDecrypt($p_encryption_header, &$p_buffer, $p_size, $p_crc)
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::privDecrypt', "size=".$p_size."");
            $v_result=1;
@@ -4896,7 +4896,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privDisableMagicQuotes()
+       public function privDisableMagicQuotes()
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::privDisableMagicQuotes', "");
            $v_result=1;
@@ -4938,7 +4938,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
        // Parameters :
        // Return Values :
        // --------------------------------------------------------------------------------
-       function privSwapBackMagicQuotes()
+       public function privSwapBackMagicQuotes()
        {
            //--(MAGIC-PclTrace)--//PclTraceFctStart(__FILE__, __LINE__, 'PclZip::privSwapBackMagicQuotes', "");
            $v_result=1;

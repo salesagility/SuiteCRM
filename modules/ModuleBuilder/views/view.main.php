@@ -40,7 +40,7 @@
 
 class ViewMain extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         $this->options['show_footer'] = true;
         parent::__construct();
@@ -49,7 +49,7 @@ class ViewMain extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewMain()
+    public function ViewMain()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -74,7 +74,7 @@ class ViewMain extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         global $app_strings, $current_user, $mod_strings, $theme;
 

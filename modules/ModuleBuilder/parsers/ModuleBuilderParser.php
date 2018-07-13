@@ -44,10 +44,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ModuleBuilderParser
 {
-    var $_defMap; // private - mapping from view to variable name inside the viewdef file
-	var $_variables = array(); // private - set of additional variables (other than the viewdefs) found in the viewdef file that need to be added to the file again when it is saved - used by ModuleBuilder
+    public $_defMap; // private - mapping from view to variable name inside the viewdef file
+	public $_variables = array(); // private - set of additional variables (other than the viewdefs) found in the viewdef file that need to be added to the file again when it is saved - used by ModuleBuilder
 
-	function __construct()
+	public function __construct()
 	{
 	    $this->_defMap = array('listview'=>'listViewDefs','searchview'=>'searchdefs','editview'=>'viewdefs','detailview'=>'viewdefs','quickcreate'=>'viewdefs');
 	}
@@ -55,7 +55,7 @@ class ModuleBuilderParser
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ModuleBuilderParser()
+    public function ModuleBuilderParser()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -69,18 +69,18 @@ class ModuleBuilderParser
     /*
      * Initialize this parser
      */
-    function init()
+    public function init()
     {
     }
 
     /*
      * Dummy function used to ease the transition to the new parser structure
      */
-    function populateFromPost()
+    public function populateFromPost()
     {
     }
 
-    function _loadFromFile($view,$file,$moduleName)
+    public function _loadFromFile($view,$file,$moduleName)
     {
         $variables = array();
         if (! file_exists($file)) {
@@ -117,7 +117,7 @@ class ModuleBuilderParser
         return (array('viewdefs' => $defs, 'variables' => $variables));
     }
 
-    function handleSave($file,$view,$moduleName,$defs)
+    public function handleSave($file,$view,$moduleName,$defs)
     {
     }
 
@@ -125,7 +125,7 @@ class ModuleBuilderParser
     /*
      * Save the new layout
      */
-    function _writeToFile($file,$view,$moduleName,$defs,$variables)
+    public function _writeToFile($file,$view,$moduleName,$defs,$variables)
     {
         if (file_exists($file)) {
             unlink($file);
@@ -172,7 +172,7 @@ class ModuleBuilderParser
     }
 
 
-    function _fatalError($msg)
+    public function _fatalError($msg)
     {
         $GLOBALS ['log']->fatal($msg);
         echo $msg;

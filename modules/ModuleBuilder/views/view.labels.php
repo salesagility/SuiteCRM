@@ -62,7 +62,7 @@ class ViewLabels extends ViewModulefields
 
     //STUDIO LABELS ONLY//
     //TODO Bundle Studio and ModuleBuilder label handling to increase maintainability.
-    function display()
+    public function display()
     {
         $editModule = $_REQUEST['view_module'];
         $allLabels = (!empty($_REQUEST['labels']) && $_REQUEST['labels']== 'all');
@@ -171,7 +171,7 @@ class ViewLabels extends ViewModulefields
     }
     
     // fixing bug #39749: Quick Create in Studio
-    function getVariableMap($module)
+    public function getVariableMap($module)
     {
         $variableMap = array(MB_EDITVIEW => 'EditView', 
                              MB_DETAILVIEW => 'DetailView', 

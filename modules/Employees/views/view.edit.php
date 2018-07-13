@@ -44,8 +44,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class EmployeesViewEdit extends ViewEdit
 {
-    var $useForSubpanel = true;
-    function __construct()
+    public $useForSubpanel = true;
+    public function __construct()
     {
         parent::__construct();
     }
@@ -53,7 +53,7 @@ class EmployeesViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function EmployeesViewEdit()
+    public function EmployeesViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -65,7 +65,7 @@ class EmployeesViewEdit extends ViewEdit
     }
 
 
-    function display()
+    public function display()
     {
         if (is_admin($GLOBALS['current_user'])) {
             $json = getJSONobj();

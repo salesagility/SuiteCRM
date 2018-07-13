@@ -54,24 +54,24 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Role extends SugarBean
 {
-    var $field_name_map;
+    public $field_name_map;
 
-    var $id;
-    var $deleted;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $created_by;
-    var $name;
-    var $description;
-    var $modules;
-    var $disable_row_level_security = true;
+    public $id;
+    public $deleted;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $created_by;
+    public $name;
+    public $description;
+    public $modules;
+    public $disable_row_level_security = true;
 
-    var $table_name = 'roles';
-    var $rel_module_table = 'roles_modules';
-    var $object_name = 'Role';
-    var $module_dir = 'Roles';
-    var $new_schema = true;
+    public $table_name = 'roles';
+    public $rel_module_table = 'roles_modules';
+    public $object_name = 'Role';
+    public $module_dir = 'Roles';
+    public $new_schema = true;
 
     public function __construct()
     {
@@ -93,17 +93,17 @@ class Role extends SugarBean
     }
 
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return $this->name;
     }
 
-    function create_export_query($order_by, $where)
+    public function create_export_query($order_by, $where)
     {
         return $this->create_new_list_query($order_by, $where);
     }
 
-    function query_modules($allow = 1)
+    public function query_modules($allow = 1)
     {
         $query = "SELECT module_id FROM roles_modules WHERE ";
         $query .= "role_id = '$this->id' AND allow = '$allow' AND deleted=0";
@@ -117,7 +117,7 @@ class Role extends SugarBean
 
         return $return_array;
     }
-    function set_module_relationship($role_id, &$mod_ids, $allow)
+    public function set_module_relationship($role_id, &$mod_ids, $allow)
     {
         foreach ($mod_ids as $mod_id) {
             if ($mod_id != '') {
@@ -126,13 +126,13 @@ class Role extends SugarBean
         }
     }
 
-    function clear_module_relationship($role_id)
+    public function clear_module_relationship($role_id)
     {
         $query = "DELETE FROM roles_modules WHERE role_id='$role_id'";
         $this->db->query($query);
     }
 
-    function set_user_relationship($role_id, &$user_ids)
+    public function set_user_relationship($role_id, &$user_ids)
     {
         foreach ($user_ids as $user_id) {
             if ($user_id != '') {
@@ -141,13 +141,13 @@ class Role extends SugarBean
         }
     }
 
-    function clear_user_relationship($role_id, $user_id)
+    public function clear_user_relationship($role_id, $user_id)
     {
         $query = "DELETE FROM roles_users WHERE role_id='$role_id' AND user_id='$user_id'";
         $this->db->query($query);
     }
 
-    function query_user_allowed_modules($user_id)
+    public function query_user_allowed_modules($user_id)
     {
         $userArray = array();
         global $app_list_strings;
@@ -174,7 +174,7 @@ class Role extends SugarBean
         return $userArray;
     }
 
-    function query_user_disallowed_modules($user_id, &$allowed)
+    public function query_user_disallowed_modules($user_id, &$allowed)
     {
         global $moduleList;
 
@@ -190,7 +190,7 @@ class Role extends SugarBean
         return $returnArray;
     }
 
-    function get_users()
+    public function get_users()
     {
         // First, get the list of IDs.
 
@@ -202,7 +202,7 @@ class Role extends SugarBean
         return $this->build_related_list($query,$user);
     }
 
-    function check_user_role_count($user_id)
+    public function check_user_role_count($user_id)
     {
         $query =  "SELECT count(*) AS num FROM roles_users WHERE ";
         $query .= "user_id='$user_id' AND deleted=0";

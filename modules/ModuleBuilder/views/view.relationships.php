@@ -58,7 +58,7 @@ class ViewRelationships extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $moduleName = ! empty ($_REQUEST [ 'view_module' ]) ? $_REQUEST [ 'view_module' ] : $_REQUEST [ 'edit_module' ] ;
         $smarty = new Sugar_Smarty () ;
@@ -115,7 +115,7 @@ class ViewRelationships extends SugarView
     /*
      * Encode the relationships for this module for display in the Ext grid layout
      */
-    function getAjaxRelationships($relationships)
+    public function getAjaxRelationships($relationships)
     {
         $ajaxrels = array ( ) ;
         foreach ($relationships->getRelationshipList () as $relationshipName) {

@@ -54,11 +54,11 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class VariableCleanupRule extends BaseRule
 {
-    function __construct()
+    public function __construct()
     {
     }
 
-    function parsePanels($panels, $view)
+    public function parsePanels($panels, $view)
     {
         if ($view == 'DetailView') {
             foreach ($panels as $name=>$panel) {

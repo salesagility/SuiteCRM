@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
 {
-    function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
+    public function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
     {
         global $app_strings;
         global $currentModule;

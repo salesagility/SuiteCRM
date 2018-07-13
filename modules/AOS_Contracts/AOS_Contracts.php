@@ -31,7 +31,7 @@ require_once('modules/AOS_Contracts/AOS_Contracts_sugar.php');
 
 class AOS_Contracts extends AOS_Contracts_sugar
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -61,7 +61,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Contracts()
+    public function AOS_Contracts()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -72,7 +72,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         self::__construct();
     }
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         if (empty($this->id) || (isset($_POST['duplicateSave']) && $_POST['duplicateSave'] == 'true')) {
             unset($_POST['group_id']);
@@ -99,7 +99,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         }
     }
 
-    function mark_deleted($id)
+    public function mark_deleted($id)
     {
         $productQuote = new AOS_Products_Quotes();
         $productQuote->mark_lines_deleted($this);
@@ -107,7 +107,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         parent::mark_deleted($id);
     }
 
-    function createReminder()
+    public function createReminder()
     {
         require_once('modules/Calls/Call.php');
         $call = new call();
@@ -135,7 +135,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         }
     }
 
-    function createLink()
+    public function createLink()
     {
         require_once('modules/Calls/Call.php');
         $call = new call();
@@ -156,7 +156,7 @@ class AOS_Contracts extends AOS_Contracts_sugar
         }
     }
 
-    function deleteCall()
+    public function deleteCall()
     {
         require_once('modules/Calls/Call.php');
         $call = new call();

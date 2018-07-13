@@ -73,7 +73,7 @@ class OneToOneRelationship extends AbstractRelationship
      * Constructor
      * @param array $definition Parameters passed in as array with keys defined in parent::keys
      */
-    function __construct($definition)
+    public function __construct($definition)
     {
         parent::__construct ($definition) ;
     }
@@ -85,7 +85,7 @@ class OneToOneRelationship extends AbstractRelationship
     /*
      * @return array    An array of relationship metadata definitions
      */
-    function buildRelationshipMetaData()
+    public function buildRelationshipMetaData()
     {
         return array( $this->lhs_module => $this->getRelationshipMetaData (MB_ONETOONE) ) ;
     }
@@ -93,7 +93,7 @@ class OneToOneRelationship extends AbstractRelationship
     /* Build a set of Link Field definitions for this relationship
      * @return array    An array of field definitions, ready for the vardefs, keyed by module
      */
-    function buildVardefs()
+    public function buildVardefs()
     {
         $vardefs = array ( ) ;
         $vardefs [ $this->rhs_module ] [] = $this->getLinkFieldDefinition ($this->lhs_module, $this->relationship_name , false, 
@@ -121,7 +121,7 @@ class OneToOneRelationship extends AbstractRelationship
      * Define what fields to add to which modules layouts
      * @return array    An array of module => fieldname
      */
-    function buildFieldsToLayouts()
+    public function buildFieldsToLayouts()
     {
         if ($this->relationship_only) {
             return array () ;

@@ -55,13 +55,13 @@ class ViewModulefield extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $ac = $this->fetch();
         echo $ac->getJavascript();
     }
 
-    function fetch(
+    public function fetch(
         $ac = false
         ) {
         $fv = new FieldViewer();

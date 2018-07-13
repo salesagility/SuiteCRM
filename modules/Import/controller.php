@@ -94,12 +94,12 @@ class ImportController extends SugarController
         }
     }
     
-    function action_index()
+    public function action_index()
     {
         $this->action_Step1();
     }
 
-    function action_mapping()
+    public function action_mapping()
     {
         global $mod_strings, $current_user;
         $results = array('message' => '');
@@ -131,7 +131,7 @@ class ImportController extends SugarController
         echo json_encode($results);
         sugar_cleanup(TRUE);
     }
-    function action_RefreshMapping()
+    public function action_RefreshMapping()
     {
         global $mod_strings;
         require_once('modules/Import/sources/ImportFile.php');
@@ -159,7 +159,7 @@ class ImportController extends SugarController
         sugar_cleanup(TRUE);
     }
 
-    function action_RefreshTable()
+    public function action_RefreshTable()
     {
         $offset = isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         $tableID = isset($_REQUEST['tableID']) ? $_REQUEST['tableID'] : 'errors';
@@ -178,7 +178,7 @@ class ImportController extends SugarController
         sugar_cleanup(TRUE);
     }
     
-    function action_Step1()
+    public function action_Step1()
     {
         $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : FALSE;
         if ($this->importModule == 'Administration' || $fromAdminView
@@ -189,62 +189,62 @@ class ImportController extends SugarController
         }
     }
     
-    function action_Step2()
+    public function action_Step2()
     {
         $this->view = 'step2';
     }
 
-    function action_Confirm()
+    public function action_Confirm()
     {
         $this->view = 'confirm';
     }
 
-    function action_Step3()
+    public function action_Step3()
     {
         $this->view = 'step3';
     }
 
-    function action_DupCheck()
+    public function action_DupCheck()
     {
         $this->view = 'dupcheck';
     }
 
-    function action_Step4()
+    public function action_Step4()
     {
         $this->view = 'step4';
     }
     
-    function action_Last()
+    public function action_Last()
     {
         $this->view = 'last';
     }
     
-    function action_Undo()
+    public function action_Undo()
     {
         $this->view = 'undo';
     }
     
-    function action_Error()
+    public function action_Error()
     {
         $this->view = 'error';
     }
 
-    function action_ExtStep1()
+    public function action_ExtStep1()
     {
         $this->view = 'extStep1';
     }
 
-    function action_Extdupcheck()
+    public function action_Extdupcheck()
     {
         $this->view = 'extdupcheck';
     }
 
-    function action_Extimport()
+    public function action_Extimport()
     {
         $this->view = 'extimport';
     }
     
-    function action_GetControl()
+    public function action_GetControl()
     {
         echo getControl($_REQUEST['import_module'],$_REQUEST['field_name']);
         exit;

@@ -49,7 +49,7 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyOpportunitiesDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings, $dashletData;
         require('modules/Opportunities/Dashlets/MyOpportunitiesDashlet/MyOpportunitiesDashlet.data.php');
@@ -69,7 +69,7 @@ class MyOpportunitiesDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyOpportunitiesDashlet($id, $def = null)
+    public function MyOpportunitiesDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -84,7 +84,7 @@ class MyOpportunitiesDashlet extends DashletGeneric
     //4.5.0g fix for upgrade issue where user_preferences table still refer to column as 'amount'
 
     //Bug fix for dashlet issue with amount_us and amount fields.
-    function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = array(), $id = null)
     {
 //     	if(!empty($this->displayColumns)) {
 //     	if(array_search('amount', $this->displayColumns)) {

@@ -46,12 +46,12 @@ require_once('include/json_config.php');
 
 class AM_ProjectTemplatesViewEdit extends ViewEdit
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
 
-    function display()
+    public function display()
     {
         global $json;
 

@@ -65,7 +65,7 @@ abstract class SugarSoapService extends SugarWebService
      * @param Array $output - assoc array of output values: key = param name, value = param type
 	 * @access public
      */
-    abstract function registerFunction($function, $input, $output);
+    abstract public function registerFunction($function, $input, $output);
 	
     /**
      * This is an abstract method. This implementation method should register all the complex type	 
@@ -80,7 +80,7 @@ abstract class SugarSoapService extends SugarWebService
      * @param String $arrayType - arrayType: namespace:name (xsd:string)
      * @access public
      */	
-    abstract function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType='');
+    abstract public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType='');
 	
     /**
      * Constructor

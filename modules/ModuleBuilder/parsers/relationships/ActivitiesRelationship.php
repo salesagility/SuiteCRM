@@ -81,7 +81,7 @@ class ActivitiesRelationship extends OneToManyRelationship
      * @param array $definition Parameters passed in as array defined in parent::$definitionKeys
      * The lhs_module value is for the One side; the rhs_module value is for the Many
      */
-    function __construct($definition)
+    public function __construct($definition)
     {
         parent::__construct ($definition) ;
     }
@@ -94,7 +94,7 @@ class ActivitiesRelationship extends OneToManyRelationship
      * Define the labels to be added to the module for the new relationships
      * @return array    An array of system value => display value
      */
-    function buildLabels()
+    public function buildLabels()
     {
         $labelDefinitions = array ( ) ;
         if (!$this->relationship_only) {
@@ -142,7 +142,7 @@ class ActivitiesRelationship extends OneToManyRelationship
     /*
      * @return array    An array of field definitions, ready for the vardefs, keyed by module
      */
-    function buildVardefs()
+    public function buildVardefs()
     {
         $vardefs = array ( ) ;
 
@@ -170,7 +170,7 @@ class ActivitiesRelationship extends OneToManyRelationship
      * Define what fields to add to which modules layouts
      * @return array    An array of module => fieldname
      */
-    function buildFieldsToLayouts()
+    public function buildFieldsToLayouts()
     {
         if ($this->relationship_only) {
             return array () ;
@@ -179,7 +179,7 @@ class ActivitiesRelationship extends OneToManyRelationship
         return array( $this->rhs_module => $this->relationship_name . "_name" ) ; // this must match the name of the relate field from buildVardefs
     }
 
-    function buildSubpanelDefinitions()
+    public function buildSubpanelDefinitions()
     {
         if ($this->relationship_only || isset(ActivitiesRelationship::$subpanelsAdded[$this->lhs_module])) {
             return array () ;
@@ -196,7 +196,7 @@ class ActivitiesRelationship extends OneToManyRelationship
     /*
      * @return array    An array of relationship metadata definitions
      */
-    function buildRelationshipMetaData()
+    public function buildRelationshipMetaData()
     {
         $relationshipName = $this->definition [ 'relationship_name' ];
         $relMetadata = array ( ) ;

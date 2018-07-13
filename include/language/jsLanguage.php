@@ -47,14 +47,14 @@ class jsLanguage
     /**
      * Creates javascript versions of language files
      */
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function jsLanguage()
+    public function jsLanguage()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -66,7 +66,7 @@ class jsLanguage
     }
 
 
-    static function createAppStringsCache($lang = 'en_us')
+    public static function createAppStringsCache($lang = 'en_us')
     {
         // cn: bug 8242 - non-US langpack chokes
         $app_strings = return_application_language($lang);
@@ -88,7 +88,7 @@ EOQ;
         }
     }
 
-    static function createModuleStringsCache($moduleDir, $lang = 'en_us', $return = false)
+    public static function createModuleStringsCache($moduleDir, $lang = 'en_us', $return = false)
     {
         $json = getJSONobj();
 

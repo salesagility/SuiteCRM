@@ -107,19 +107,19 @@ class Minifier
      *
      * @var array
      */
-    static protected $defaultOptions = array('flaggedComments' => true);
+    protected static $defaultOptions = array('flaggedComments' => true);
 
     /**
      * Contains a copy of the JShrink object used to run minification. This is only used internally, and is only stored
      * for performance reasons. There is no internal data shared between minification requests.
      */
-    static protected $jshrink;
+    protected static $jshrink;
 
     /**
      * Minifier::minify takes a string containing javascript and removes unneeded characters in order to shrink the code
      * without altering it's functionality.
      */
-    static public function minify($js, $options = array())
+    public static function minify($js, $options = array())
     {
         global $sugar_config;
 
@@ -445,7 +445,7 @@ class Minifier
      *
      * @return bool
      */
-    static protected function isAlphaNumeric($char)
+    protected static function isAlphaNumeric($char)
     {
         return preg_match('/^[\w\$]$/', $char) === 1 || $char == '/';
     }

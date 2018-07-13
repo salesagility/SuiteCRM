@@ -40,31 +40,31 @@
 require_once 'modules/AOR_Scheduled_Reports/lib/Cron/includeCron.php';
 class AOR_Scheduled_Reports extends basic
 {
-    var $new_schema = true;
-    var $module_dir = 'AOR_Scheduled_Reports';
-    var $object_name = 'AOR_Scheduled_Reports';
-    var $table_name = 'aor_scheduled_reports';
-    var $importable = false;
-    var $disable_row_level_security = true;
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $schedule;
-    var $email_recipients;
-    var $status;
-    var $last_run;
-    var $aor_report_id;
+    public $new_schema = true;
+    public $module_dir = 'AOR_Scheduled_Reports';
+    public $object_name = 'AOR_Scheduled_Reports';
+    public $table_name = 'aor_scheduled_reports';
+    public $importable = false;
+    public $disable_row_level_security = true;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $schedule;
+    public $email_recipients;
+    public $status;
+    public $last_run;
+    public $aor_report_id;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -72,7 +72,7 @@ class AOR_Scheduled_Reports extends basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOR_Scheduled_Reports()
+    public function AOR_Scheduled_Reports()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -84,7 +84,7 @@ class AOR_Scheduled_Reports extends basic
     }
 
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
             case 'ACL': return true;
@@ -92,7 +92,7 @@ class AOR_Scheduled_Reports extends basic
         return false;
     }
 
-    function save($check_notify = FALSE)
+    public function save($check_notify = FALSE)
     {
         if (isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])) {
             $this->email_recipients = base64_encode(serialize($_POST['email_recipients']));
@@ -101,7 +101,7 @@ class AOR_Scheduled_Reports extends basic
         parent::save($check_notify);
     }
 
-    function get_email_recipients()
+    public function get_email_recipients()
     {
         $params = unserialize(base64_decode($this->email_recipients));
 
@@ -173,7 +173,7 @@ class AOR_Scheduled_Reports extends basic
         return $emails;
     }
 
-    function shouldRun(DateTime $date)
+    public function shouldRun(DateTime $date)
     {
         global $timedate;
         if (empty($date)) {

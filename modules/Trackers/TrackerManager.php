@@ -123,7 +123,7 @@ class TrackerManager
      * Singleton method to return static instance of TrackerManager
      * @returns static TrackerManager instance
      */
-    static function getInstance()
+    public static function getInstance()
     {
         if (!isset(self::$instance)) {
             self::$instance = new TrackerManager();

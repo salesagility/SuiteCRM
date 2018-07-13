@@ -52,9 +52,9 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
  */
 class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
 {
-    var $cal_encoding = "";
-    var $cal_charset = "";
-    var $http_spec = "";
+    public $cal_encoding = "";
+    public $cal_charset = "";
+    public $http_spec = "";
 
     /**
      * Constructor for the WebDAV srver
@@ -192,7 +192,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
     }
 
 
-    function GET()
+    public function GET()
     {
         return true;
     }

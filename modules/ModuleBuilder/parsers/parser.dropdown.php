@@ -52,7 +52,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
      *
      * @param REQUEST params  $params
      */
-     function saveDropDown($params)
+     public function saveDropDown($params)
      {
          require_once('modules/Administration/Common.php');
          $emptyMarker = translate('LBL_BLANK');
@@ -143,7 +143,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 	 * @param $selected_lang String the language currently selected in Studio/MB
 	 * @param $saveLov String the path to the directory to save the new lang file in.
 	 */
-     function synchDropDown($dropdown_name, $dropdown, $selected_lang, $saveLoc)
+     public function synchDropDown($dropdown_name, $dropdown, $selected_lang, $saveLoc)
      {
          $allLanguages =  get_languages();
          foreach ($allLanguages as $lang => $langName) {
@@ -171,7 +171,7 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
 	 * @param $selected_lang String the language currently selected in Studio/MB
 	 * @param $module MBModule the module to update the languages in
 	 */
-     function synchMBDropDown($dropdown_name, $dropdown, $selected_lang, $module)
+     public function synchMBDropDown($dropdown_name, $dropdown, $selected_lang, $module)
      {
          $selected_lang	= $selected_lang . '.lang.php';
          foreach ($module->mblanguage->appListStrings as $lang => $listStrings) {
@@ -205,13 +205,13 @@ require_once('modules/ModuleBuilder/parsers/ModuleBuilderParser.php');
          return $sub;
      }
 
-     function getPatternMatch($dropdown_name)
+     public function getPatternMatch($dropdown_name)
      {
          return '/\s*\$GLOBALS\s*\[\s*\'app_list_strings\s*\'\s*\]\[\s*\''
     		 . $dropdown_name.'\'\s*\]\s*=\s*array\s*\([^\)]*\)\s*;\s*/ism';
      }
 
-     function getNewCustomContents($dropdown_name, $dropdown, $lang)
+     public function getNewCustomContents($dropdown_name, $dropdown, $lang)
      {
          $contents = return_custom_app_list_strings_file_contents($lang);
          $contents = str_replace("?>", '', $contents);

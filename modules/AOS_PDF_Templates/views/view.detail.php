@@ -7,7 +7,7 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class AOS_PDF_TemplatesViewDetail extends ViewDetail
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -15,7 +15,7 @@ class AOS_PDF_TemplatesViewDetail extends ViewDetail
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_PDF_TemplatesViewDetail()
+    public function AOS_PDF_TemplatesViewDetail()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -27,13 +27,13 @@ class AOS_PDF_TemplatesViewDetail extends ViewDetail
     }
 
 
-    function display()
+    public function display()
     {
         $this->setDecodeHTML();
         parent::display();
     }
 
-    function setDecodeHTML()
+    public function setDecodeHTML()
     {
         $this->bean->pdfheader = html_entity_decode(str_replace('&nbsp;',' ',$this->bean->pdfheader));
         $this->bean->description = html_entity_decode(str_replace('&nbsp;',' ',$this->bean->description));

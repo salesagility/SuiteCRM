@@ -50,14 +50,14 @@ if (! defined ('sugarEntry') || ! sugarEntry) {
  */
 class AbstractRelationships
 {
-    static $methods = array (
+    public static $methods = array (
         'Labels' => 'language' ,
         'RelationshipMetaData' => 'relationships' ,
         'SubpanelDefinitions' => 'layoutdefs' ,
         'Vardefs' => 'vardefs' ,
         'FieldsToLayouts' => 'layoutfields',
     ) ;
-    static $activities = array ( 'calls' => 'Calls' , 'meetings' => 'Meetings' , 'notes' => 'Notes' , 'tasks' => 'Tasks' , 'emails' => 'Emails' ) ;
+    public static $activities = array ( 'calls' => 'Calls' , 'meetings' => 'Meetings' , 'notes' => 'Notes' , 'tasks' => 'Tasks' , 'emails' => 'Emails' ) ;
     
     protected $relationships = array ( ) ; // array containing all the AbstractRelationship objects that are in this set of relationships
     protected $moduleName ;
@@ -81,7 +81,7 @@ class AbstractRelationships
      * @param boolean $includeActivitiesSubmodules True if the list should include Calls, Meetings etc; false if they should be replaced by the parent, Activities
      * @return array    Array of [$module][$subpanel]
      */
-    static function findRelatableModules($includeActivitiesSubmodules = true)
+    public static function findRelatableModules($includeActivitiesSubmodules = true)
     {
         $relatableModules = array ( ) ;
         
@@ -108,7 +108,7 @@ class AbstractRelationships
         return $relatableModules ;
     }
 
-    static function validSubpanel($filename)
+    public static function validSubpanel($filename)
     {
         if (! file_exists ($filename)) {
             return false ;
@@ -122,7 +122,7 @@ class AbstractRelationships
      * Get a list of all relationships (which have not been deleted)
      * @return array    Array of relationship names, ready for use in get()
      */
-    function getRelationshipList()
+    public function getRelationshipList()
     {
         $list = array ( ) ;
         foreach ($this->relationships as $name => $relationship) {
@@ -138,7 +138,7 @@ class AbstractRelationships
      * @param string $relationshipName  The unique name for this relationship, as returned by $relationship->getName()
      * @return AbstractRelationship or false if $relationshipName is not in this set of relationships
      */
-    function get($relationshipName)
+    public function get($relationshipName)
     {
         if (isset ($this->relationships [ $relationshipName ])) {
             return $this->relationships [ $relationshipName ] ;
@@ -152,7 +152,7 @@ class AbstractRelationships
      * Otherwise, create and add a new relationship with the information in the $_REQUEST
      * @return AbstractRelationship
      */
-    function addFromPost()
+    public function addFromPost()
     {
         $definition = array ( ) ;
         
@@ -183,7 +183,7 @@ class AbstractRelationships
      * Add a relationship to the set
      * @param AbstractRelationship $relationship    The relationship to add
      */
-    function add($relationship)
+    public function add($relationship)
     {
         $name = $this->getUniqueName ($relationship) ;
         $relationship->setName ($name) ;
@@ -539,7 +539,7 @@ class AbstractRelationships
      * @param $deployedName Name of the module in the deployed form - that is, keyname_modulename or modulename
      * @return array ('moduleName'=>name, 'packageName'=>package) if undeployed, ('moduleName'=>name) if deployed
      */
-    static function parseDeployedModuleName($deployedName)
+    public static function parseDeployedModuleName($deployedName)
     {
         require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
         $mb = new ModuleBuilder () ;

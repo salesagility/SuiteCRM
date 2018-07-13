@@ -374,7 +374,7 @@ abstract class DashletGenericChart extends Dashlet
     }
 
     //Added as the rgraph charts do not use SugarCharts and this is where this method was previously
-    function getChartData($query)
+    public function getChartData($query)
     {
         global $app_list_strings, $db;
         $dataSet = array();
@@ -402,7 +402,7 @@ abstract class DashletGenericChart extends Dashlet
     bool $ifsort2                 Whether to sort by the second column or just translate the second column.
      * @return        The sorted and translated data.
      */
-    function sortData($data_set, $keycolname1=null, $translate1=false, $keycolname2=null, $translate2=false, $ifsort2=false)
+    public function sortData($data_set, $keycolname1=null, $translate1=false, $keycolname2=null, $translate2=false, $ifsort2=false)
     {
         //You can set whether the columns need to be translated or sorted. It the column needn't to be translated, the sorting must be done in SQL, this function will not do the sorting.
         global $app_list_strings;

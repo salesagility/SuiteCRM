@@ -30,7 +30,7 @@
 require_once('modules/AOS_Invoices/AOS_Invoices_sugar.php');
 class AOS_Invoices extends AOS_Invoices_sugar
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -38,7 +38,7 @@ class AOS_Invoices extends AOS_Invoices_sugar
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AOS_Invoices()
+    public function AOS_Invoices()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -50,7 +50,7 @@ class AOS_Invoices extends AOS_Invoices_sugar
     }
 
 
-    function save($check_notify = false)
+    public function save($check_notify = false)
     {
         global $sugar_config;
 
@@ -88,7 +88,7 @@ class AOS_Invoices extends AOS_Invoices_sugar
         $productQuoteGroup->save_groups($_POST, $this, 'group_');
     }
 
-    function mark_deleted($id)
+    public function mark_deleted($id)
     {
         $productQuote = new AOS_Products_Quotes();
         $productQuote->mark_lines_deleted($this);

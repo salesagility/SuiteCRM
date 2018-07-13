@@ -53,7 +53,7 @@ require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts.php');
 
 class OutboundEmailAccountsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/OutboundEmailAccounts/metadata/dashletviewdefs.php');

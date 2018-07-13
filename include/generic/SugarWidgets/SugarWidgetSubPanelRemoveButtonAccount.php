@@ -52,7 +52,7 @@ class SugarWidgetSubPanelRemoveButtonAccount extends SugarWidgetSubPanelRemoveBu
      * @param $layout_def
      * @return bool|string
      */
-    function displayList(&$layout_def)
+    public function displayList(&$layout_def)
     {
         if (!$layout_def['EditView']) {
             return false;

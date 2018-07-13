@@ -17,62 +17,62 @@ class jjwg_MapsController extends SugarController
     /**
      * @var settings array
      */
-    var $settings = array();
+    public $settings = array();
 
     /**
      * $map_marker_data_points is used to store temporary data and prevent duplicate points
      * @var array
      */
-    var $map_marker_data_points = array();
+    public $map_marker_data_points = array();
 
     /**
      * @var google_maps_response_codes
      *
      */
-    var $google_maps_response_codes = array('OK', 'ZERO_RESULTS', 'INVALID_REQUEST', 'OVER_QUERY_LIMIT', 'REQUEST_DENIED');
+    public $google_maps_response_codes = array('OK', 'ZERO_RESULTS', 'INVALID_REQUEST', 'OVER_QUERY_LIMIT', 'REQUEST_DENIED');
 
     /**
      * Last Geocoding Status Message
      * @var string
      */
-    var $last_status = '';
+    public $last_status = '';
 
     /**
      * display_object - display module's object (dom field)
      * @var object
      */
-    var $display_object;
+    public $display_object;
 
     /**
      * relate_object - relate module's object
      * @var object
      */
-    var $relate_object;
+    public $relate_object;
 
     /**
      * jjwg_Maps - Maps module's object
      * @var object
      */
-    var $bean;
-    var $jjwg_Maps; // Deprecated reference
+    public $bean;
+    public $jjwg_Maps; // Deprecated reference
 
     /**
      * jjwg_Address_Cache - Address cache module's object
      * @var object
      */
-    var $jjwg_Address_Cache;
+    public $jjwg_Address_Cache;
 
     /**
      * smarty object for the generic configuration template
      * @var object
      */
-    var $sugarSmarty;
+    public $sugarSmarty;
 
 
     /**
      * Constructor
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         // Admin Config Setting
@@ -82,7 +82,7 @@ class jjwg_MapsController extends SugarController
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function jjwg_MapsController()
+    public function jjwg_MapsController()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -101,7 +101,7 @@ class jjwg_MapsController extends SugarController
      * $GLOBALS['jjwg_config_defaults']
      * $GLOBALS['jjwg_config']
      */
-    function configuration()
+    public function configuration()
     {
         $this->bean = new jjwg_Maps();
         $this->jjwg_Maps = &$this->bean; // Set deprecated reference
@@ -112,7 +112,7 @@ class jjwg_MapsController extends SugarController
      * action geocoded_counts
      * Google Maps - Geocode the Addresses
      */
-    function action_geocoded_counts()
+    public function action_geocoded_counts()
     {
         $this->view = 'geocoded_counts';
         $GLOBALS['log']->debug(__METHOD__.' START');
@@ -179,7 +179,7 @@ class jjwg_MapsController extends SugarController
      * action geocode_addresses
      * Google Maps - Geocode the Addresses
      */
-    function action_geocode_addresses()
+    public function action_geocode_addresses()
     {
         $GLOBALS['log']->debug(__METHOD__.' START');
 
@@ -328,7 +328,7 @@ class jjwg_MapsController extends SugarController
      *  Add a number of display_module objects to a target list
      *  Return JSON encoded result count
      */
-    function action_add_to_target_list()
+    public function action_add_to_target_list()
     {
         $result = array('post' => $_POST);
 
@@ -405,7 +405,7 @@ class jjwg_MapsController extends SugarController
     /**
      * export addresses in need of geocoding
      */
-    function action_export_geocoding_addresses()
+    public function action_export_geocoding_addresses()
     {
         $address_data = array();
         $addresses = array();
@@ -456,7 +456,7 @@ class jjwg_MapsController extends SugarController
      * @param $object_name  signular object name
      * @param $display      fetched row array
      */
-    function defineMapsAddressCustom($aInfo, $object_name, $display)
+    public function defineMapsAddressCustom($aInfo, $object_name, $display)
     {
 
         // Use custom contoller.php with custom logic
@@ -509,7 +509,7 @@ class jjwg_MapsController extends SugarController
      * action geocoding_test
      * Google Maps - Geocoding Test
      */
-    function action_geocoding_test()
+    public function action_geocoding_test()
     {
         $this->view = 'geocoding_test';
 
@@ -523,7 +523,7 @@ class jjwg_MapsController extends SugarController
      * action config
      * Google Maps - Config
      */
-    function action_config()
+    public function action_config()
     {
 
         // Admin Only
@@ -545,7 +545,7 @@ class jjwg_MapsController extends SugarController
      * action reset module geocode info
      * Google Maps - geocoded_counts
      */
-    function action_reset_geocoding()
+    public function action_reset_geocoding()
     {
         $display_module = $_REQUEST['display_module'];
 
@@ -569,7 +569,7 @@ class jjwg_MapsController extends SugarController
      * delete all address cache
      * Google Maps - geocoded_counts
      */
-    function action_delete_all_address_cache()
+    public function action_delete_all_address_cache()
     {
 
         // Define Address Cache Object
@@ -593,7 +593,7 @@ class jjwg_MapsController extends SugarController
      * action quick_radius
      * Google Maps - Quick Radius Map
      */
-    function action_quick_radius()
+    public function action_quick_radius()
     {
         $this->view = 'quick_radius';
 
@@ -609,7 +609,7 @@ class jjwg_MapsController extends SugarController
      * action map_display
      * Google Maps - Output the Page with IFrame to Map Markers
      */
-    function action_quick_radius_display()
+    public function action_quick_radius_display()
     {
         $this->view = 'quick_radius_display';
     }
@@ -618,7 +618,7 @@ class jjwg_MapsController extends SugarController
      * action map_display
      * Google Maps - Output the Page with IFrame to Map Markers
      */
-    function action_map_display()
+    public function action_map_display()
     {
         $this->view = 'map_display';
         if (!isset($_REQUEST['current_post'])) {
@@ -634,7 +634,7 @@ class jjwg_MapsController extends SugarController
      * action donate
      * Google Maps - Output the Donate Page
      */
-    function action_donate()
+    public function action_donate()
     {
         $this->view = 'donate';
     }
@@ -643,7 +643,7 @@ class jjwg_MapsController extends SugarController
      * action map_markers
      * Google Maps - Output the Map Markers
      */
-    function action_map_markers()
+    public function action_map_markers()
     {
         header_remove('X-Frame-Options');
         $this->view = 'map_markers';
@@ -997,7 +997,7 @@ class jjwg_MapsController extends SugarController
      * $param $mod_strings_display mod_strings from display module
      * TODO: Use a custom defined field for the $marker['group']
      */
-    function getMarkerData($module_type, $display, $center_marker = false, $mod_strings_display = array())
+    public function getMarkerData($module_type, $display, $center_marker = false, $mod_strings_display = array())
     {
 
 //        echo "<pre>";
@@ -1118,7 +1118,7 @@ class jjwg_MapsController extends SugarController
      * Get Marker Data Custom for Mapping
      * @param $marker_object
      */
-    function getMarkerDataCustom($marker_object)
+    public function getMarkerDataCustom($marker_object)
     {
 
         // Define Marker
@@ -1166,7 +1166,7 @@ class jjwg_MapsController extends SugarController
      * Get Area Data Custom for Mapping
      * @param $area_object
      */
-    function getAreaDataCustom($area_object)
+    public function getAreaDataCustom($area_object)
     {
 
         // Define Area
@@ -1204,7 +1204,7 @@ class jjwg_MapsController extends SugarController
      * Check for valid longitude
      * @param $lng float
      */
-    function is_valid_lng($lng)
+    public function is_valid_lng($lng)
     {
         return (is_numeric($lng) && $lng >= -180 && $lng <= 180);
     }
@@ -1213,7 +1213,7 @@ class jjwg_MapsController extends SugarController
      * Check for valid latitude
      * @param $lat float
      */
-    function is_valid_lat($lat)
+    public function is_valid_lat($lat)
     {
         return (is_numeric($lat) && $lat >= -90 && $lat <= 90);
     }

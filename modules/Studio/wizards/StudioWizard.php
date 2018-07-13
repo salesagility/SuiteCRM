@@ -46,17 +46,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class StudioWizard
 {
-    var $tplfile = 'modules/Studio/wizards/tpls/wizard.tpl';
-    var $wizard = 'StudioWizard';
-    var $status = '';
-    var $assign = array();
+    public $tplfile = 'modules/Studio/wizards/tpls/wizard.tpl';
+    public $wizard = 'StudioWizard';
+    public $status = '';
+    public $assign = array();
     
-    function welcome()
+    public function welcome()
     {
         return $GLOBALS['mod_strings']['LBL_SW_WELCOME'];
     }
 
-    function options()
+    public function options()
     {
         $options = array('SelectModuleWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_MODULE'], 
     	                 'EditDropDownWizard'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_DROPDOWNS'],
@@ -71,10 +71,10 @@ class StudioWizard
         );
         return $options;
     }
-    function back()
+    public function back()
     {
     }
-    function process($option)
+    public function process($option)
     {
         switch ($option) {
             case 'SelectModuleWizard':
@@ -123,12 +123,12 @@ class StudioWizard
                 $this->display();
         }
     }
-    function display($error = '')
+    public function display($error = '')
     {
         echo $this->fetch($error);
     }
     
-    function fetch($error = '')
+    public function fetch($error = '')
     {
         global $mod_strings;
         echo getClassicModuleTitle('StudioWizard', array($mod_strings['LBL_MODULE_TITLE']), false);

@@ -6,7 +6,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Jjwg_MarkersViewMarker_Detail_Map extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -14,7 +14,7 @@ class Jjwg_MarkersViewMarker_Detail_Map extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Jjwg_MarkersViewMarker_Detail_Map()
+    public function Jjwg_MarkersViewMarker_Detail_Map()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -26,7 +26,7 @@ class Jjwg_MarkersViewMarker_Detail_Map extends SugarView
     }
 
 
-    function display()
+    public function display()
     {
         $custom_markers_dir = 'themes/default/images/jjwg_Markers/'; ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

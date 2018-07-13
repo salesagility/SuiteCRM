@@ -51,20 +51,20 @@ require_once('include/SubPanel/SubPanelDefinitions.php');
  */
 class SubPanelTiles
 {
-    var $id;
-    var $module;
-    var $focus;
-    var $start_on_field;
-    var $layout_manager;
-    var $layout_def_key;
-    var $show_tabs = false;
+    public $id;
+    public $module;
+    public $focus;
+    public $start_on_field;
+    public $layout_manager;
+    public $layout_def_key;
+    public $show_tabs = false;
 
-    var $subpanel_definitions;
+    public $subpanel_definitions;
 
-    var $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
+    public $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
     //should be the array.
 
-    function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
+    public function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
     {
         $this->focus = $focus;
         $this->id = $focus->id;
@@ -77,7 +77,7 @@ class SubPanelTiles
      * Return the current selected or requested subpanel tab
      * @return	string	The identifier for the selected subpanel tab (e.g., 'Other')
      */
-    function getSelectedGroup()
+    public function getSelectedGroup()
     {
         global $current_user;
 
@@ -124,7 +124,7 @@ class SubPanelTiles
      * @param string $selectedGroup	The requested tab group
      * @return array Visible tabs
      */
-    function getTabs($showTabs = true, $selectedGroup='')
+    public function getTabs($showTabs = true, $selectedGroup='')
     {
         global $current_user;
 
@@ -167,7 +167,7 @@ class SubPanelTiles
         }
         return $tabs;
     }
-    function display($showContainer = true, $forceTabless = false)
+    public function display($showContainer = true, $forceTabless = false)
     {
         global $layout_edit_mode, $sugar_version, $sugar_config, $current_user, $app_strings, $modListHeader;
 
@@ -381,7 +381,7 @@ class SubPanelTiles
     }
 
 
-    function getLayoutManager()
+    public function getLayoutManager()
     {
         require_once('include/generic/LayoutManager.php');
         if ($this->layout_manager == null) {
@@ -390,7 +390,7 @@ class SubPanelTiles
         return $this->layout_manager;
     }
 
-    function get_buttons($thisPanel,$panel_query=null)
+    public function get_buttons($thisPanel,$panel_query=null)
     {
         $subpanel_def = $thisPanel->get_buttons();
         $layout_manager = $this->getLayoutManager();

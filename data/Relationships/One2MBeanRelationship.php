@@ -50,7 +50,7 @@ require_once("data/Relationships/One2MRelationship.php");
 class One2MBeanRelationship extends One2MRelationship
 {
     //Type is read in sugarbean to determine query construction
-    var $type = "one-to-many";
+    public $type = "one-to-many";
 
     public function __construct($def)
     {

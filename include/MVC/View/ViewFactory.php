@@ -66,7 +66,7 @@ class ViewFactory
      * @param string $target_module
      * @return a|null
      */
-    static function loadView(
+    public static function loadView(
         $type = 'default',
         $module = '',
         $bean = null,
@@ -117,7 +117,7 @@ class ViewFactory
     /**
      * Load the view_<view>_config.php file which holds options used by the view.
      */
-    static function _loadConfig(&$view, $type)
+    public static function _loadConfig(&$view, $type)
     {
         $view_config_custom = array();
         $view_config_module = array();
@@ -224,7 +224,7 @@ class ViewFactory
      *
      * @return a valid SugarView
      */
-    static function _buildFromFile($file, &$bean, $view_object_map, $type, $module)
+    public static function _buildFromFile($file, &$bean, $view_object_map, $type, $module)
     {
         require_once($file);
         //try ModuleViewType first then try ViewType if that fails then use SugarView
@@ -268,7 +268,7 @@ class ViewFactory
      *
      * @return SugarView
      */
-    static function _buildClass($class, $bean, $view_object_map)
+    public static function _buildClass($class, $bean, $view_object_map)
     {
         $view = new $class();
         $view->init($bean, $view_object_map);

@@ -60,7 +60,7 @@ class ViewResetmodule extends SugarView
     	   );
     }
 
-    function display()
+    public function display()
     {
         $moduleName = $this->module = $_REQUEST['view_module'];
         if (isset($_REQUEST['handle']) && $_REQUEST['handle'] == "execute") {
@@ -91,7 +91,7 @@ class ViewResetmodule extends SugarView
         echo $ajax->getJavascript () ;
     }
     
-    function handleSave()
+    public function handleSave()
     {
         $out = "<script>ajaxStatus.flashStatus(SUGAR.language.get('app_strings', 'LBL_REQUEST_PROCESSED'), 2000);</script>";
         
@@ -139,7 +139,7 @@ class ViewResetmodule extends SugarView
      * 
      * @return html output record of the field deleted
      */
-    function removeCustomFields()
+    public function removeCustomFields()
     {
         $moduleName = $this->module;
         $class_name = $GLOBALS [ 'beanList' ] [ $moduleName ] ;
@@ -172,7 +172,7 @@ class ViewResetmodule extends SugarView
      * 
      * @return html output record of the files deleted
      */
-    function removeCustomLayouts()
+    public function removeCustomLayouts()
     {
         $module = StudioModuleFactory::getStudioModule($this->module) ;
         $sources = $module->getViewMetadataSources();
@@ -199,7 +199,7 @@ class ViewResetmodule extends SugarView
      * 
      * @return html output record of the files deleted
      */
-    function removeCustomRelationships()
+    public function removeCustomRelationships()
     {
         require_once 'modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php' ;
         $out = "";
@@ -220,7 +220,7 @@ class ViewResetmodule extends SugarView
         return $out;
     }
     
-    function removeCustomLabels()
+    public function removeCustomLabels()
     {
         $out = "";
         $languageDir = "custom/modules/{$this->module}/language";
@@ -241,7 +241,7 @@ class ViewResetmodule extends SugarView
         return $out;
     }
 	
-    function removeCustomExtensions()
+    public function removeCustomExtensions()
     {
         $out = "";
         $extDir = "custom/Extension/modules/{$this->module}";

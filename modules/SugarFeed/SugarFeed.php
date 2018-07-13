@@ -44,29 +44,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarFeed extends Basic
 {
-    var $new_schema = true;
-    var $module_dir = 'SugarFeed';
-    var $object_name = 'SugarFeed';
-    var $table_name = 'sugarfeed';
-    var $importable = false;
+    public $new_schema = true;
+    public $module_dir = 'SugarFeed';
+    public $object_name = 'SugarFeed';
+    public $table_name = 'sugarfeed';
+    public $importable = false;
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $assigned_user_link;
+    public $id;
+    public $name;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $modified_by_name;
+    public $created_by;
+    public $created_by_name;
+    public $description;
+    public $deleted;
+    public $created_by_link;
+    public $modified_user_link;
+    public $assigned_user_id;
+    public $assigned_user_name;
+    public $assigned_user_link;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -74,7 +74,7 @@ class SugarFeed extends Basic
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarFeed()
+    public function SugarFeed()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -86,7 +86,7 @@ class SugarFeed extends Basic
     }
 
 
-    static function activateModuleFeed($module, $updateDB = true)
+    public static function activateModuleFeed($module, $updateDB = true)
     {
         if ($module != 'UserFeed') {
             // UserFeed is a fake module, used for the user postings to the feed
@@ -107,7 +107,7 @@ class SugarFeed extends Basic
         }
     }
 
-    static function disableModuleFeed($module, $updateDB = true)
+    public static function disableModuleFeed($module, $updateDB = true)
     {
         if ($module != 'UserFeed') {
             // UserFeed is a fake module, used for the user postings to the feed
@@ -129,7 +129,7 @@ class SugarFeed extends Basic
         }
     }
 
-    static function flushBackendCache()
+    public static function flushBackendCache()
     {
         // This function will flush the cache files used for the module list and the link type lists
         sugar_cache_clear('SugarFeedModules');
@@ -144,7 +144,7 @@ class SugarFeed extends Basic
     }
 
 
-    static function getModuleFeedFiles($module)
+    public static function getModuleFeedFiles($module)
     {
         $baseDirList = array('modules/'.$module.'/SugarFeeds/', 'custom/modules/'.$module.'/SugarFeeds/');
 
@@ -171,7 +171,7 @@ class SugarFeed extends Basic
         return($fileList);
     }
 
-    static function getActiveFeedModules()
+    public static function getActiveFeedModules()
     {
         // Stored in a cache somewhere
         $feedModules = sugar_cache_retrieve('SugarFeedModules');
@@ -217,7 +217,7 @@ class SugarFeed extends Basic
         return $feedModules;
     }
 
-    static function getAllFeedModules()
+    public static function getAllFeedModules()
     {
         // Uncached, only used from the admin panel and during installation currently
         $feedModules = array('UserFeed'=>'UserFeed');
@@ -256,7 +256,7 @@ class SugarFeed extends Basic
      * @param $link_type boolean value indicating whether or not feed is a link type
      * @param $link_url String value of the URL (for link types only)
      */
-    static function pushFeed2($text, $bean, $link_type=false, $link_url=false)
+    public static function pushFeed2($text, $bean, $link_type=false, $link_url=false)
     {
         self::pushFeed($text, $bean->module_dir, $bean->id
                             ,$bean->assigned_user_id
@@ -265,7 +265,7 @@ class SugarFeed extends Basic
         );
     }
 
-    static function pushFeed($text, $module, $id,
+    public static function pushFeed($text, $module, $id,
         $record_assigned_user_id=false,
         $link_type=false,
         $link_url=false
@@ -299,7 +299,7 @@ class SugarFeed extends Basic
         $feed->save();
     }
 
-    static function getLinkTypes()
+    public static function getLinkTypes()
     {
         static $linkTypeList = null;
 
@@ -354,7 +354,7 @@ class SugarFeed extends Basic
         return $linkTypeList;
     }
 
-    static function getLinkClass($linkName)
+    public static function getLinkClass($linkName)
     {
         $linkTypeList = SugarFeed::getLinkTypes();
 
@@ -377,7 +377,7 @@ class SugarFeed extends Basic
         return($linkClass);
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $data = parent::get_list_view_data();
         $delete = '';
@@ -452,7 +452,7 @@ class SugarFeed extends Basic
         return  $data ;
     }
 
-    function fetchReplies($data)
+    public function fetchReplies($data)
     {
         $seedBean = new SugarFeed;
 
@@ -510,7 +510,7 @@ class SugarFeed extends Basic
         return $replyHTML;
     }
 
-    static function getTimeLapse($startDate)
+    public static function getTimeLapse($startDate)
     {
         global $timedate;
 

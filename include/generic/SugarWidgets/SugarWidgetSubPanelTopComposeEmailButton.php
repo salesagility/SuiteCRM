@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton
 {
-    var $form_value = '';
+    public $form_value = '';
 
     public function getWidgetId($buttonSuffix = true)
     {
@@ -53,7 +53,7 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
         return parent::getWidgetId();
     }
 
-    function display($defines, $additionalFormFields = NULL, $nonbutton = false)
+    public function display($defines, $additionalFormFields = NULL, $nonbutton = false)
     {
         if ((ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true) ||
                 $defines['module'] == "Activities" & !ACLController::checkAccess("Emails", 'edit', true))) {

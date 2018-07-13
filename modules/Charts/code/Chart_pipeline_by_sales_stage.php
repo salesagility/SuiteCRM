@@ -46,16 +46,16 @@ require_once('include/charts/Charts.php');
 
 class Chart_pipeline_by_sales_stage
 {
-    var $modules = array('Opportunities');
-    var $order = 0;
-    function __construct()
+    public $modules = array('Opportunities');
+    public $order = 0;
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Chart_pipeline_by_sales_stage()
+    public function Chart_pipeline_by_sales_stage()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -67,7 +67,7 @@ class Chart_pipeline_by_sales_stage
     }
 
 
-    function draw($extra_tools)
+    public function draw($extra_tools)
     {
         global $action;
         global $app_list_strings;
@@ -469,7 +469,7 @@ echo get_validate_chart_js();
         return $return;
     }
 
-    function constructQuery()
+    public function constructQuery()
     {
         global $current_user;
         global $timedate;
@@ -613,7 +613,7 @@ echo get_validate_chart_js();
         return $query;
     }
 
-    function constructGroupBy()
+    public function constructGroupBy()
     {
         return array( 'sales_stage', 'user_name' );
     }

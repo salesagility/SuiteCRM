@@ -171,7 +171,7 @@ class SubpanelQuickCreate
         self::__construct($module, $view, $proccessOverride);
     }
 
-    function process($module)
+    public function process($module)
     {
         if ($_REQUEST['target_action'] == 'QuickCreate') {
             $this->ev->view = 'QuickCreate';

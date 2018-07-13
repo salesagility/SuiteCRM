@@ -8,7 +8,7 @@ require_once('modules/jjwg_Markers/jjwg_Markers.php');
 
 class jjwg_MarkersDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         require('modules/jjwg_Markers/metadata/dashletviewdefs.php');
 
@@ -27,7 +27,7 @@ class jjwg_MarkersDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function jjwg_MarkersDashlet($id, $def = null)
+    public function jjwg_MarkersDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

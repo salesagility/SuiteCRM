@@ -44,48 +44,48 @@ if (!defined('sugarEntry') || !sugarEntry) {
 // Task is used to store customer information.
 class Task extends SugarBean
 {
-    var $field_name_map;
+    public $field_name_map;
 
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $assigned_user_id;
-    var $modified_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $description;
-    var $name;
-    var $status;
-    var $date_due_flag;
-    var $date_due;
-    var $time_due;
-    var $date_start_flag;
-    var $date_start;
-    var $time_start;
-    var $priority;
-    var $parent_type;
-    var $parent_id;
-    var $contact_id;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $assigned_user_id;
+    public $modified_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $description;
+    public $name;
+    public $status;
+    public $date_due_flag;
+    public $date_due;
+    public $time_due;
+    public $date_start_flag;
+    public $date_start;
+    public $time_start;
+    public $priority;
+    public $parent_type;
+    public $parent_id;
+    public $contact_id;
 
-    var $parent_name;
-    var $contact_name;
-    var $contact_phone;
-    var $contact_email;
-    var $assigned_user_name;
+    public $parent_name;
+    public $contact_name;
+    public $contact_phone;
+    public $contact_email;
+    public $assigned_user_name;
 
     //bug 28138 todo
     //	var $default_task_name_values = array('Assemble catalogs', 'Make travel arrangements', 'Send a letter', 'Send contract', 'Send fax', 'Send a follow-up letter', 'Send literature', 'Send proposal', 'Send quote', 'Call to schedule meeting', 'Setup evaluation', 'Get demo feedback', 'Arrange introduction', 'Escalate support request', 'Close out support request', 'Ship product', 'Arrange reference call', 'Schedule training', 'Send local user group information', 'Add to mailing list');
 
-    var $table_name = "tasks";
+    public $table_name = "tasks";
 
-    var $object_name = "Task";
-    var $module_dir = 'Tasks';
+    public $object_name = "Task";
+    public $module_dir = 'Tasks';
 
-    var $importable = true;
+    public $importable = true;
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_phone', 'contact_email', 'parent_name');
+    public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_phone', 'contact_email', 'parent_name');
 
 
     public function __construct()
@@ -108,9 +108,9 @@ class Task extends SugarBean
     }
 
 
-    var $new_schema = true;
+    public $new_schema = true;
 
-    function save($check_notify = FALSE)
+    public function save($check_notify = FALSE)
     {
         if (empty($this->status)) {
             $this->status = $this->getDefaultStatus();
@@ -118,12 +118,12 @@ class Task extends SugarBean
         return parent::save($check_notify);
     }
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->name";
     }
 
-    function create_export_query($order_by, $where, $relate_link_join='')
+    public function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -159,7 +159,7 @@ class Task extends SugarBean
         return $query;
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         parent::fill_in_additional_detail_fields();
         global $app_strings;
@@ -186,7 +186,7 @@ class Task extends SugarBean
         $this->fill_in_additional_parent_fields();
     }
 
-    function fill_in_additional_parent_fields()
+    public function fill_in_additional_parent_fields()
     {
         $this->parent_name = '';
         global $app_strings, $beanFiles, $beanList, $locale;
@@ -265,7 +265,7 @@ class Task extends SugarBean
         }
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         global $action, $currentModule, $focus, $current_module_strings, $app_list_strings, $timedate;
 
@@ -332,7 +332,7 @@ class Task extends SugarBean
         return $task_fields;
     }
 
-    function set_notification_body($xtpl, $task)
+    public function set_notification_body($xtpl, $task)
     {
         global $app_list_strings;
         global $timedate;
@@ -355,14 +355,14 @@ class Task extends SugarBean
         return $xtpl;
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return true;
 		}
         return false;
     }
-    function listviewACLHelper()
+    public function listviewACLHelper()
     {
         $array_assign = parent::listviewACLHelper();
         $is_owner = false;

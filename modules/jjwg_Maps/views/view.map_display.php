@@ -6,7 +6,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class Jjwg_MapsViewMap_Display extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -14,7 +14,7 @@ class Jjwg_MapsViewMap_Display extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Jjwg_MapsViewMap_Display()
+    public function Jjwg_MapsViewMap_Display()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -26,7 +26,7 @@ class Jjwg_MapsViewMap_Display extends SugarView
     }
 
 
-    function display()
+    public function display()
     {
         // Limit URI query string parameters. Used to avoid URL length errors.
         $valid_names = array('action', 'module', 'entryPoint', 'submit', 'cron', 'geocoding_process', 'process_trigger', 'distance', 'unit_type', 'record', 'related_id', 'related_module', 'quick_address', 'display_module', 'list_id', 'uid', 'current_post');

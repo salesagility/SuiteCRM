@@ -6,7 +6,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class VersionCheck
 {
-    function version_check($event, $arguments)
+    public function version_check($event, $arguments)
     {
         global $current_user;
 	

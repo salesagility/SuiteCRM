@@ -57,7 +57,7 @@ class DashletCacheBuilder
     /**
      * Builds the cache of Dashlets by scanning the system
      */
-    function buildCache()
+    public function buildCache()
     {
         global $beanList;
         $dashletFiles = array();

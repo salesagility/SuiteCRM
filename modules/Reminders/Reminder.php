@@ -45,15 +45,15 @@ class Reminder extends Basic
 {
     const UPGRADE_VERSION = '7.4.3';
 
-    var $name;
+    public $name;
 
-    var $new_schema = true;
-    var $module_dir = 'Reminders';
-    var $object_name = 'Reminder';
-    var $table_name = 'reminders';
-    var $tracker_visibility = false;
-    var $importable = false;
-    var $disable_row_level_security = true;
+    public $new_schema = true;
+    public $module_dir = 'Reminders';
+    public $object_name = 'Reminder';
+    public $table_name = 'reminders';
+    public $tracker_visibility = false;
+    public $importable = false;
+    public $disable_row_level_security = true;
 
     /**
      *
@@ -61,13 +61,13 @@ class Reminder extends Basic
      */
     public $date_willexecute;
 
-    var $popup;
-    var $email;
-    var $email_sent = false;
-    var $timer_popup;
-    var $timer_email;
-    var $related_event_module;
-    var $related_event_module_id;
+    public $popup;
+    public $email;
+    public $email_sent = false;
+    public $timer_popup;
+    public $timer_email;
+    public $related_event_module;
+    public $related_event_module_id;
 
     public $popup_viewed;
 

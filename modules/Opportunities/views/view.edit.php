@@ -52,7 +52,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class OpportunitiesViewEdit extends ViewEdit
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->useForSubpanel = true;
@@ -61,7 +61,7 @@ class OpportunitiesViewEdit extends ViewEdit
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function OpportunitiesViewEdit()
+    public function OpportunitiesViewEdit()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -73,7 +73,7 @@ class OpportunitiesViewEdit extends ViewEdit
     }
 
 
-    function display()
+    public function display()
     {
         global $app_list_strings;
         $json = getJSONobj();

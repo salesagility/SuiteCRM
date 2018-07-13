@@ -277,7 +277,7 @@ class SugarArray extends ArrayObject
      * @param mixed $default default value to return
      * @return mixed
      */
-    static public function staticGet($haystack, $needle, $default = null)
+    public static function staticGet($haystack, $needle, $default = null)
     {
         if (empty($haystack)) {
             return $default;

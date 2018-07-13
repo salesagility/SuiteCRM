@@ -53,7 +53,7 @@ require_once('include/SugarFields/Parsers/MetaParser.php');
 
 class QuickCreateMetaParser extends MetaParser
 {
-    function __construct()
+    public function __construct()
     {
         $this->mView = 'QuickCreate';
     }
@@ -61,7 +61,7 @@ class QuickCreateMetaParser extends MetaParser
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function QuickCreateMetaParser()
+    public function QuickCreateMetaParser()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -83,7 +83,7 @@ class QuickCreateMetaParser extends MetaParser
      * @param $masterCopy The file path of the mater copy of the metadata file to merge against
      * @return String format of metadata contents
      **/
-    function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $masterCopy=null)
+    public function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $masterCopy=null)
     {
         global $app_strings;
         $contents = file_get_contents($filePath);

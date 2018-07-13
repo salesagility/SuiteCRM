@@ -40,9 +40,9 @@
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 class SugarFieldCollection extends SugarFieldBase
 {
-    var $tpl_path;
+    public $tpl_path;
 	
-    function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $nolink = array('Users');
         if (in_array($vardef['module'], $nolink)) {
@@ -62,7 +62,7 @@ class SugarFieldCollection extends SugarFieldBase
         return $this->fetch($this->tpl_path);
     }
 
-    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex, $searchView = false)
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex, $searchView = false)
     {
         if ($searchView) {
             $form_name = 'search_form';
@@ -93,7 +93,7 @@ class SugarFieldCollection extends SugarFieldBase
         }
     }
 
-    function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $this->getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex, true);
     }

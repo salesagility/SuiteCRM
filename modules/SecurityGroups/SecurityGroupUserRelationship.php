@@ -10,20 +10,20 @@ require_once('data/SugarBean.php');
 class SecurityGroupUserRelationship extends SugarBean
 {
     // Stored fields
-    var $id;
-    var $securitygroup_id;
-    var $securitygroup_noninheritable;
-    var $user_id;
-    var $noninheritable;
-    var $primary_group;
+    public $id;
+    public $securitygroup_id;
+    public $securitygroup_noninheritable;
+    public $user_id;
+    public $noninheritable;
+    public $primary_group;
 
     // Related fields
-    var $securitygroup_name;
-    var $user_name;
+    public $securitygroup_name;
+    public $user_name;
 
-    var $table_name = "securitygroups_users";
-    var $object_name = "SecurityGroupUserRelationship";
-    var $column_fields = Array("id"
+    public $table_name = "securitygroups_users";
+    public $object_name = "SecurityGroupUserRelationship";
+    public $column_fields = Array("id"
         ,"securitygroup_id"
         ,"user_id"
         ,"noninheritable"
@@ -31,10 +31,10 @@ class SecurityGroupUserRelationship extends SugarBean
         ,'date_modified'
         );
 
-    var $new_schema = true;
+    public $new_schema = true;
 
-    var $additional_column_fields = Array();
-    var $field_defs = array (
+    public $additional_column_fields = Array();
+    public $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'securitygroup_id'=>array('name' =>'securitygroup_id', 'type' =>'char', 'len'=>'36', )
       , 'user_id'=>array('name' =>'user_id', 'type' =>'char', 'len'=>'36',)
@@ -43,7 +43,7 @@ class SecurityGroupUserRelationship extends SugarBean
       , 'date_modified'=>array ('name' => 'date_modified','type' => 'datetime')
       , 'deleted'=>array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>true)
       );
-    function __construct()
+    public function __construct()
     {
         $this->db = DBManagerFactory::getInstance();
         $this->dbManager = DBManagerFactory::getInstance();
@@ -54,7 +54,7 @@ class SecurityGroupUserRelationship extends SugarBean
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SecurityGroupUserRelationship()
+    public function SecurityGroupUserRelationship()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -66,7 +66,7 @@ class SecurityGroupUserRelationship extends SugarBean
     }
 
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         if (isset($this->securitygroup_id) && $this->securitygroup_id != "") {
             $query = "SELECT name from securitygroups where id='$this->securitygroup_id' AND deleted=0";
@@ -91,7 +91,7 @@ class SecurityGroupUserRelationship extends SugarBean
         }
     }
 
-    function create_list_query(&$order_by, &$where)
+    public function create_list_query(&$order_by, &$where)
     {
         $query = "SELECT id, first_name, last_name, user_name FROM users ";
         $where_auto = "deleted=0";

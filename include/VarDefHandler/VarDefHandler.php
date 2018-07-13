@@ -48,16 +48,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class VarDefHandler
 {
-    var $meta_array_name;
-    var $target_meta_array = false;
-    var $start_none = false;
-    var $extra_array = array();					//used to add custom items
-    var $options_array = array();
-    var $module_object;
-    var $start_none_lbl = null;
+    public $meta_array_name;
+    public $target_meta_array = false;
+    public $start_none = false;
+    public $extra_array = array();					//used to add custom items
+    public $options_array = array();
+    public $module_object;
+    public $start_none_lbl = null;
 
 
-    function __construct($module, $meta_array_name=null)
+    public function __construct($module, $meta_array_name=null)
     {
         $this->meta_array_name = $meta_array_name;
         $this->module_object = $module;
@@ -73,7 +73,7 @@ class VarDefHandler
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function VarDefHandler($module, $meta_array_name=null)
+    public function VarDefHandler($module, $meta_array_name=null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -84,7 +84,7 @@ class VarDefHandler
         self::__construct($module, $meta_array_name);
     }
 
-    function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false)
+    public function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false)
     {
         global $dictionary;
         global $current_language;
@@ -177,7 +177,7 @@ class VarDefHandler
     }
 
 
-    function compare_type($value_array)
+    public function compare_type($value_array)
     {
 
 		//Filter nothing?

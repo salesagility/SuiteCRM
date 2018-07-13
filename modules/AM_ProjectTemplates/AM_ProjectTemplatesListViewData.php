@@ -57,7 +57,7 @@ class AM_ProjectTemplatesListViewData extends ListViewData
 	 * @param GUID id id of the record
 	 * @return array string to attach to field
 	 */
-    function getAdditionalDetailsAjax($id)
+    public function getAdditionalDetailsAjax($id)
     {
         global $app_strings;
 

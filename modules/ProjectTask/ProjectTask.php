@@ -55,39 +55,39 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class ProjectTask extends SugarBean
 {
     // database table columns
-    var $id;
-    var $date_entered;
-    var $date_modified;
+    public $id;
+    public $date_entered;
+    public $date_modified;
     //var $assigned_user_id;
     //var $modified_user_id;
     //var $created_by;
-    var $name;
-    var $description;
-    var $project_id;
-    var $project_task_id;
-    var $date_start;
-    var $date_finish;
-    var $duration;
-    var $duration_unit;
-    var $percent_complete;
-    var $parent_task_id;
-    var $predecessors;
-    var $priority;
+    public $name;
+    public $description;
+    public $project_id;
+    public $project_task_id;
+    public $date_start;
+    public $date_finish;
+    public $duration;
+    public $duration_unit;
+    public $percent_complete;
+    public $parent_task_id;
+    public $predecessors;
+    public $priority;
 
     // related information
-    var $assigned_user_name;
-    var $parent_name;
-    var $depends_on_name;
-    var $email_id;
+    public $assigned_user_name;
+    public $parent_name;
+    public $depends_on_name;
+    public $email_id;
 
-    var $table_name = 'project_task';
-    var $object_name = 'ProjectTask';
-    var $module_dir = 'ProjectTask';
+    public $table_name = 'project_task';
+    public $object_name = 'ProjectTask';
+    public $module_dir = 'ProjectTask';
 
-    var $field_name_map;
-    var $new_schema = true;
+    public $field_name_map;
+    public $new_schema = true;
 
-    var $relationship_fields = array(
+    public $relationship_fields = array(
 		'email_id' => 'emails',
 	);
     /**
@@ -143,7 +143,7 @@ class ProjectTask extends SugarBean
     {
         $this->_skipParentUpdate = $skip;
     }
-    function save($check_notify = FALSE)
+    public function save($check_notify = FALSE)
     {
         //Bug 46012.  When saving new Project Tasks instance in a workflow, make sure we set a project_task_id value
         //associated with the Project if there is no project_task_id specified.
@@ -165,7 +165,7 @@ class ProjectTask extends SugarBean
     /*
      *
      */
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
         $this->project_name = $this->_get_project_name($this->project_id);
@@ -186,7 +186,7 @@ class ProjectTask extends SugarBean
     /*
      *
      */
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
         $this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
         //$this->parent_name = $this->_get_parent_name($this->parent_id);
@@ -196,7 +196,7 @@ class ProjectTask extends SugarBean
     /*
      *
      */
-    function get_summary_text()
+    public function get_summary_text()
     {
         return $this->name;
     }
@@ -204,7 +204,7 @@ class ProjectTask extends SugarBean
     /*
      *
      */
-    function _get_depends_on_name($depends_on_id)
+    public function _get_depends_on_name($depends_on_id)
     {
         $return_value = '';
 
@@ -220,7 +220,7 @@ class ProjectTask extends SugarBean
         return $return_value;
     }
 
-    function _get_project_name($project_id)
+    public function _get_project_name($project_id)
     {
         $return_value = '';
 
@@ -238,7 +238,7 @@ class ProjectTask extends SugarBean
     /*
      *
      */
-    function _get_parent_name($parent_id)
+    public function _get_parent_name($parent_id)
     {
         $return_value = '';
 
@@ -257,7 +257,7 @@ class ProjectTask extends SugarBean
     /*
      *
      */
-    function build_generic_where_clause($the_query_string)
+    public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
@@ -274,7 +274,7 @@ class ProjectTask extends SugarBean
         return $the_where;
     }
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         global $action, $currentModule, $focus, $current_module_strings, $app_list_strings, $timedate, $locale;
         $today = $timedate->handle_offset(date($GLOBALS['timedate']->get_db_date_time_format(), time()), $timedate->dbDayFormat, true);
@@ -313,14 +313,14 @@ class ProjectTask extends SugarBean
         return $task_fields;
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return true;
 		}
         return false;
     }
-    function listviewACLHelper()
+    public function listviewACLHelper()
     {
         $array_assign = parent::listviewACLHelper();
         $is_owner = false;
@@ -369,7 +369,7 @@ class ProjectTask extends SugarBean
         return $array_assign;
     }
 
-    function create_export_query($order_by, $where, $relate_link_join='')
+    public function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -474,7 +474,7 @@ class ProjectTask extends SugarBean
     * Retrieves the parent project task of a project task
     * returns project task bean
     */
-    function getProjectTaskParent()
+    public function getProjectTaskParent()
     {
         $projectTaskParent=false;
 
@@ -494,7 +494,7 @@ class ProjectTask extends SugarBean
     * Retrieves all the child project tasks of a project task
     * returns project task bean array
     */
-    function getAllSubProjectTasks()
+    public function getAllSubProjectTasks()
     {
         $projectTasksBeans = array();
 

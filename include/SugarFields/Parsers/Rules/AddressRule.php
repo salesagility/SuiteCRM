@@ -56,11 +56,11 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class AddressRule extends BaseRule
 {
-    function __construct()
+    public function __construct()
     {
     }
 
-    function parsePanels($panels, $view)
+    public function parsePanels($panels, $view)
     {
         $searchedAddressPanel = array();
 
@@ -116,7 +116,7 @@ class AddressRule extends BaseRule
      * @param $suffix The address suffix (billing, shipping, primary, alternate) to check for
      * @return boolean
      */
-    function hasAddressFieldsIntact($addressPanel, $suffix)
+    public function hasAddressFieldsIntact($addressPanel, $suffix)
     {
         $expression = '/^' . $suffix . '_address_(street|city|state|country|postalcode)$/si';
         $count = 0;
@@ -139,7 +139,7 @@ class AddressRule extends BaseRule
      * @param $street String key value of the street to search for
      * @returns $panels Array of view's panels with street value substituted
      */
-    function removeStreetFieldOverride($panels, $street)
+    public function removeStreetFieldOverride($panels, $street)
     {
         $expression = '/^' . $street . '_address_street$/si';
         foreach ($panels as $name=>$panel) {

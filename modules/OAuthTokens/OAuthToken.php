@@ -72,7 +72,7 @@ class OAuthToken extends SugarBean
     const ACCESS = 2;
     const INVALID = 3;
 
-    function __construct($token='', $secret='')
+    public function __construct($token='', $secret='')
     {
         parent::__construct();
         $this->token = $token;
@@ -127,7 +127,7 @@ class OAuthToken extends SugarBean
      * Generate random token/secret pair and create token
      * @return OAuthToken
      */
-    static function generate()
+    public static function generate()
     {
         $t = self::randomValue();
         $s = self::randomValue();
@@ -149,7 +149,7 @@ class OAuthToken extends SugarBean
      * @param string $token
 	 * @return OAuthToken
      */
-    static function load($token)
+    public static function load($token)
     {
         $ltoken = new self();
         $ltoken->retrieve($token);
@@ -235,7 +235,7 @@ class OAuthToken extends SugarBean
     /**
      * Clean up stale tokens
      */
-    static public function cleanup()
+    public static function cleanup()
     {
         $db = DBManagerFactory::getInstance();
         // delete invalidated tokens older than 1 day

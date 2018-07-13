@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class updateDependencies
 {
-    function update_dependency(&$bean, $event, $arguments)
+    public function update_dependency(&$bean, $event, $arguments)
     {
         //Get all tasks that are dependant on the current task being saved.
         $Task = BeanFactory::getBean('ProjectTask');
@@ -94,7 +94,7 @@ class updateDependencies
     }
 
     //Gets the difference in days between two dates
-    function count_days($start_date, $end_date)
+    public function count_days($start_date, $end_date)
     {
         $d1 = new DateTime($start_date);
         $d2 = new DateTime($end_date);

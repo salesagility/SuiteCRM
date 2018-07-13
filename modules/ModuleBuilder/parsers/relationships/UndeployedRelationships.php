@@ -57,7 +57,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * Automatically loads in any saved relationships
      * @param string $path  The pathname of the base module directory
      */
-    function __construct($path)
+    public function __construct($path)
     {
         $this->basepath = $path ;
         // pull the module and package names out of the path
@@ -74,7 +74,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * Find all modules, deployed and undeployed, that can participate in a relationship
      * @return array    Array of [$module][$subpanel]
      */
-    static function findRelatableModules($includeActivitiesSubmodules = true)
+    public static function findRelatableModules($includeActivitiesSubmodules = true)
     {
         // first find all deployed modules that we might participate in a relationship
         $relatableModules = parent::findRelatableModules ($includeActivitiesSubmodules) ;
@@ -101,7 +101,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * that the admin may move them around or otherwise edit them before the module is deployed
      * @param AbstractRelationship $relationship    The relationship to add
      */
-    function add($relationship)
+    public function add($relationship)
     {
         parent::add ($relationship) ;
         $this->addFieldsToUndeployedLayouts ($relationship) ; // must come after parent::add as we need the relationship_name in the relationships getFieldsToLayouts() which is called by addFieldsToUndeployedLayouts()
@@ -112,7 +112,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * In future, if we need to actually track deleted relationships then just call $relationship->delete() instead
      * @param string $relationshipName  The unique name for this relationship, as returned by $relationship->getName()
      */
-    function delete($relationshipName)
+    public function delete($relationshipName)
     {
         if ($relationship = $this->get ($relationshipName)) {
             $this->removeFieldsFromUndeployedLayouts ($relationship) ;
@@ -123,7 +123,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
     /*
      * Load the saved relationship definitions for this module
      */
-    function load()
+    public function load()
     {
         $this->relationships = parent::_load ($this->basepath) ;
     }
@@ -131,7 +131,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
     /*
      * Save this modules relationship definitions out to a working file
      */
-    function save()
+    public function save()
     {
         parent::_save ($this->relationships, $this->basepath) ;
     }
@@ -210,7 +210,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * Translate the set of relationship objects into files that the Module Loader can work with
      * @param $basepath string Pathname of the directory to contain the build
      */
-    function build($basepath = null, $installDefPrefix = null, $relationships = null)
+    public function build($basepath = null, $installDefPrefix = null, $relationships = null)
     {
         
         // first expand out any reference to Activities to its submodules
@@ -269,7 +269,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * Required by MBModule
      * @param reference installDef  Reference to the set of installDefs to which this relationship's installDefs should be added
      */
-    function addInstallDefs(&$installDef)
+    public function addInstallDefs(&$installDef)
     {
         foreach ($this->installDefs as $name => $def) {
             if (! empty ($def)) {

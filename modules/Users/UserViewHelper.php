@@ -774,7 +774,7 @@ class UserViewHelper
      * @param Mixed $user The user instance to set the user_type variable on
      * @return String value representing the user type
      */
-    function setUserType($user)
+    public function setUserType($user)
     {
         //bug #49175: user's always regular
         //need to get user_type from bean

@@ -40,7 +40,7 @@
 
 class hooks
 {
-    function load_js($event, $arguments)
+    public function load_js($event, $arguments)
     {
         $mapping = '';
 

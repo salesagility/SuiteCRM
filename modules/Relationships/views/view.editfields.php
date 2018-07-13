@@ -45,7 +45,7 @@ require_once('include/MVC/View/views/view.ajax.php');
 
 class ViewEditFields extends ViewAjax
 {
-    function __construct()
+    public function __construct()
     {
         $rel = $this->rel = $_REQUEST['rel'];
         $this->id = $_REQUEST['id'];
@@ -59,7 +59,7 @@ class ViewEditFields extends ViewAjax
         $this->fields = $link->_get_link_table_definition($rel, 'fields');
     }
 
-    function display()
+    public function display()
     {
 
         //echo "<pre>".print_r($this->fields, true)."</pre>";

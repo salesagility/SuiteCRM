@@ -6,7 +6,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class AssignGroups
 {
-    function popup_select(&$bean, $event, $arguments)
+    public function popup_select(&$bean, $event, $arguments)
     {
         global $sugar_config;
 
@@ -63,7 +63,7 @@ class AssignGroups
     } 
 
 
-    function popup_onload($event, $arguments)
+    public function popup_onload($event, $arguments)
     {
         if (!empty($_REQUEST['to_pdf']) || !empty($_REQUEST['sugar_body_only'])) {
             return;
@@ -118,7 +118,7 @@ EOQ;
         }
     }
 
-    function mass_assign($event, $arguments)
+    public function mass_assign($event, $arguments)
     {
         $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
         $module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;

@@ -45,7 +45,7 @@ include_once('include/generic/SugarWidgets/SugarWidgetField.php');
 
 class SugarWidgetSubPanelCheck extends SugarWidgetField
 {
-    function displayListPlain($layout_def)
+    public function displayListPlain($layout_def)
     {
         $value= $this->_get_list_value($layout_def);
 

@@ -45,14 +45,14 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class ContactsParseRule extends BaseRule
 {
-    function __construct()
+    public function __construct()
     {
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ContactsParseRule()
+    public function ContactsParseRule()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -65,7 +65,7 @@ class ContactsParseRule extends BaseRule
 
 
 
-    function preParse($panels, $view)
+    public function preParse($panels, $view)
     {
         if ($view == 'DetailView') {
             foreach ($panels as $name=>$panel) {
@@ -82,7 +82,7 @@ class ContactsParseRule extends BaseRule
         return $panels;
     }
 
-    function parsePanels(& $panels, $view)
+    public function parsePanels(& $panels, $view)
     {
         if ($view == 'EditView') {
             foreach ($panels as $name=>$panel) {

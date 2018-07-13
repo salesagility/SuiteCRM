@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class UpgradeSavedSearch
 {
-    function __construct()
+    public function __construct()
     {
         $result = DBManagerFactory::getInstance()->query("SELECT id FROM saved_search");
         while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {

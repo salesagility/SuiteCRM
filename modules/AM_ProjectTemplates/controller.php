@@ -27,13 +27,13 @@ class AM_ProjectTemplatesController extends SugarController
 {
 
     //Loads the gantt view
-    function action_view_GanttChart()
+    public function action_view_GanttChart()
     {
         $this->view = 'GanttChart';
     }
 
 
-    function action_create_project()
+    public function action_create_project()
     {
         global $current_user, $db, $mod_strings;
 
@@ -252,7 +252,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
 
-    function action_generate_chart()
+    public function action_generate_chart()
     {
         $db = DBManagerFactory::getInstance();
 
@@ -312,7 +312,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
     //Create new project task
-    function action_update_GanttChart()
+    public function action_update_GanttChart()
     {
         global $current_user, $db;
 
@@ -383,7 +383,7 @@ class AM_ProjectTemplatesController extends SugarController
 
 
     //mark project task as deleted
-    function action_delete_task()
+    public function action_delete_task()
     {
         $id = $_POST['task_id'];
         $task = new AM_TaskTemplates();
@@ -393,7 +393,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
     //Returns new task start date including any lag via ajax call
-    function action_get_end_date()
+    public function action_get_end_date()
     {
         global $db,  $timeDate;
 
@@ -415,7 +415,7 @@ class AM_ProjectTemplatesController extends SugarController
 
 
     //updates the order of the tasks
-    function action_update_order()
+    public function action_update_order()
     {
 
        //convert quotes in json string back to normal
@@ -432,7 +432,7 @@ class AM_ProjectTemplatesController extends SugarController
         }
     }
     //returns tasks for predecessor in the add task pop-up form
-    function action_get_predecessors()
+    public function action_get_predecessors()
     {
         global $mod_strings;
         $project_template = new AM_ProjectTemplates();
@@ -449,7 +449,7 @@ class AM_ProjectTemplatesController extends SugarController
     }
 
 
-    function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration,$order_number)
+    public function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration,$order_number)
     {
         $task = new AM_TaskTemplates();
         $task->name = $name;
@@ -477,7 +477,7 @@ class AM_ProjectTemplatesController extends SugarController
         $project_template->am_tasktemplates_am_projecttemplates->add($task_id);
     }
 
-    function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration)
+    public function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration)
     {
         $task = new AM_TaskTemplates();
 		

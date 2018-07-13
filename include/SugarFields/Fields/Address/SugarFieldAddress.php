@@ -70,7 +70,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 class SugarFieldAddress extends SugarFieldBase
 {
-    function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);
         global $app_strings;
@@ -89,7 +89,7 @@ class SugarFieldAddress extends SugarFieldBase
         return $this->fetch($this->findTemplate('DetailView'));
     }
     
-    function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
+    public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
         $this->setup($parentFieldArray, $vardef, $displayParams, $tabindex);        
         global $app_strings;

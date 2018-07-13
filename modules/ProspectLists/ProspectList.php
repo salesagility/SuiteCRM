@@ -53,45 +53,45 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class ProspectList extends SugarBean
 {
-    var $field_name_map;
+    public $field_name_map;
 
     // Stored fields
-    var $id;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $assigned_user_id;
-    var $created_by;
-    var $created_by_name;
-    var $modified_by_name;
-    var $list_type;
-    var $domain_name;
+    public $id;
+    public $date_entered;
+    public $date_modified;
+    public $modified_user_id;
+    public $assigned_user_id;
+    public $created_by;
+    public $created_by_name;
+    public $modified_by_name;
+    public $list_type;
+    public $domain_name;
 
-    var $name;
-    var $description;
+    public $name;
+    public $description;
 
     // These are related
-    var $assigned_user_name;
-    var $prospect_id;
-    var $contact_id;
-    var $lead_id;
+    public $assigned_user_name;
+    public $prospect_id;
+    public $contact_id;
+    public $lead_id;
 
     // module name definitions and table relations
-    var $table_name = "prospect_lists";
-    var $module_dir = 'ProspectLists';
-    var $rel_prospects_table = "prospect_lists_prospects";
-    var $object_name = "ProspectList";
+    public $table_name = "prospect_lists";
+    public $module_dir = 'ProspectLists';
+    public $rel_prospects_table = "prospect_lists_prospects";
+    public $object_name = "ProspectList";
 
     // This is used to retrieve related fields from form posts.
-    var $additional_column_fields = array(
+    public $additional_column_fields = array(
 		'assigned_user_name', 'assigned_user_id', 'campaign_id',
 	);
-    var $relationship_fields = array(
+    public $relationship_fields = array(
 		'campaign_id'=>'campaigns',
 		'prospect_list_prospects' => 'prospects',
 	);
 
-    var $entry_count;
+    public $entry_count;
 
     public function __construct()
     {
@@ -114,14 +114,14 @@ class ProspectList extends SugarBean
     }
 
 
-    var $new_schema = true;
+    public $new_schema = true;
 
-    function get_summary_text()
+    public function get_summary_text()
     {
         return "$this->name";
     }
 
-    function create_list_query($order_by, $where, $show_deleted = 0)
+    public function create_list_query($order_by, $where, $show_deleted = 0)
     {
         $custom_join = $this->getCustomJoin();
 
@@ -160,7 +160,7 @@ class ProspectList extends SugarBean
     }
 
 
-    function create_export_query($order_by, $where)
+    public function create_export_query($order_by, $where)
     {
         $query = "SELECT
                                 prospect_lists.*,
@@ -185,7 +185,7 @@ class ProspectList extends SugarBean
         return $query;
     }
 
-    function create_export_members_query($record_id)
+    public function create_export_members_query($record_id)
     {
         global $beanList, $beanFiles;
 
@@ -311,7 +311,7 @@ FROM prospect_lists_prospects plp
         return $query;
     }
 
-    function save_relationship_changes($is_update, $exclude = array())
+    public function save_relationship_changes($is_update, $exclude = array())
     {
         parent::save_relationship_changes($is_update, $exclude);
         if ($this->lead_id != "") {
@@ -325,7 +325,7 @@ FROM prospect_lists_prospects plp
         }
     }
 
-    function set_prospect_relationship($prospect_list_id, &$link_ids, $link_name)
+    public function set_prospect_relationship($prospect_list_id, &$link_ids, $link_name)
     {
         $link_field = sprintf("%s_id", $link_name);
 
@@ -334,7 +334,7 @@ FROM prospect_lists_prospects plp
         }
     }
 
-    function set_prospect_relationship_single($prospect_list_id, $link_id, $link_name)
+    public function set_prospect_relationship_single($prospect_list_id, $link_id, $link_name)
     {
         $link_field = sprintf("%s_id", $link_name);
 
@@ -342,7 +342,7 @@ FROM prospect_lists_prospects plp
     }
 
 
-    function clear_prospect_relationship($prospect_list_id, $link_id, $link_name)
+    public function clear_prospect_relationship($prospect_list_id, $link_id, $link_name)
     {
         $link_field = sprintf("%s_id", $link_name);
         $where_clause = " AND $link_field = '$link_id' ";
@@ -353,27 +353,27 @@ FROM prospect_lists_prospects plp
     }
 
 
-    function mark_relationships_deleted($id)
+    public function mark_relationships_deleted($id)
     {
     }
 
-    function fill_in_additional_list_fields()
+    public function fill_in_additional_list_fields()
     {
     }
 
-    function fill_in_additional_detail_fields()
+    public function fill_in_additional_detail_fields()
     {
         parent::fill_in_additional_detail_fields();
         $this->entry_count = $this->get_entry_count();
     }
 
 
-    function update_currency_id($fromid, $toid)
+    public function update_currency_id($fromid, $toid)
     {
     }
 
 
-    function get_entry_count()
+    public function get_entry_count()
     {
         $query = "SELECT count(*) AS num FROM prospect_lists_prospects WHERE prospect_list_id='$this->id' AND deleted = '0'";
         $result = $this->db->query($query, true, "Grabbing prospect_list entry count");
@@ -388,7 +388,7 @@ FROM prospect_lists_prospects plp
     }
 
 
-    function get_list_view_data()
+    public function get_list_view_data()
     {
         $temp_array = $this->get_list_view_array();
         $temp_array["ENTRY_COUNT"] = $this->get_entry_count();
@@ -398,7 +398,7 @@ FROM prospect_lists_prospects plp
     	builds a generic search based on the query string using or
     	do not include any $this-> because this is called on without having the class instantiated
     */
-    function build_generic_where_clause($the_query_string)
+    public function build_generic_where_clause($the_query_string)
     {
         $where_clauses = Array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
@@ -416,19 +416,19 @@ FROM prospect_lists_prospects plp
         return $the_where;
     }
 
-    function save($check_notify = FALSE)
+    public function save($check_notify = FALSE)
     {
         return parent::save($check_notify);
     }
 
-    function mark_deleted($id)
+    public function mark_deleted($id)
     {
         $query = "UPDATE prospect_lists_prospects SET deleted = 1 WHERE prospect_list_id = '{$id}' ";
         $this->db->query($query);
         return parent::mark_deleted($id);
     }
 
-    function bean_implements($interface)
+    public function bean_implements($interface)
     {
         switch ($interface) {
 			case 'ACL':return true;

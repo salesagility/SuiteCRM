@@ -49,37 +49,37 @@ class SearchForm
       * SearchForm Template to use (xtpl)
       * @var string
       */
-    var $tpl;
+    public $tpl;
     /**
      * SearchField meta data array to use. Populated from moduleDir/metadata/SearchFields
      * @var array
      */
-    var $searchFields;
+    public $searchFields;
     /**
      * Seed bean to use
      * @var bean
      */
-    var $bean;
+    public $bean;
     /**
      * Module the search from is for
      * @var string
      */
-    var $module;
+    public $module;
     /**
      * meta data for the tabs to display
      * @var array
      */
-    var $tabs;
+    public $tabs;
     /**
      * XTPL object
      * @var object
      */
-    var $xtpl;
+    public $xtpl;
     /**
      * Use to determine whether or not to show the saved search options
      * @var boolean
      */
-    var $showSavedSearchOptions = true;
+    public $showSavedSearchOptions = true;
 
     /**
      * loads SearchFields MetaData, sets member variables
@@ -89,7 +89,7 @@ class SearchForm
      * @param string $tpl template to use, defaults to moduleDir/SearchForm.html
      *
      */
-    function __construct($module, &$seedBean, $tpl = null)
+    public function __construct($module, &$seedBean, $tpl = null)
     {
         global $app_strings;
 
@@ -130,7 +130,7 @@ class SearchForm
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SearchForm($module, &$seedBean, $tpl = null)
+    public function SearchForm($module, &$seedBean, $tpl = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -148,7 +148,7 @@ class SearchForm
      * @param string $switchVar variable to use in switch statement
      * @param bool $addAllBeanFields true to process at all bean fields
      */
-    function populateFromArray(&$array, $switchVar = null, $addAllBeanFields = true)
+    public function populateFromArray(&$array, $switchVar = null, $addAllBeanFields = true)
     {
 
        //CL Bug:33176
@@ -227,7 +227,7 @@ class SearchForm
      * @param string $switchVar variable to use in switch statement
      * @param bool $addAllBeanFields true to process at all bean fields
      */
-    function populateFromRequest($switchVar = null, $addAllBeanFields = true)
+    public function populateFromRequest($switchVar = null, $addAllBeanFields = true)
     {
         $this->populateFromArray($_REQUEST, $switchVar, $addAllBeanFields);
     }
@@ -237,7 +237,7 @@ class SearchForm
      * The fuction will returns an array of filter conditions.
      *
      */
-    function generateSearchWhere($add_custom_fields = false, $module='')
+    public function generateSearchWhere($add_custom_fields = false, $module='')
     {
         global $timedate;
         $values = $this->searchFields;
@@ -443,7 +443,7 @@ class SearchForm
      *
      * @return string html
      */
-    function displayTabs($currentKey)
+    public function displayTabs($currentKey)
     {
         $GLOBALS['log']->debug('SearchForm.php->displayTabs(): tabs='.print_r($this->tabs,true));
 
@@ -486,7 +486,7 @@ class SearchForm
      * sets up the search forms, populates the preset values
      *
      */
-    function setup()
+    public function setup()
     {
         global $mod_strings, $app_strings, $app_list_strings, $theme, $timedate;
         $GLOBALS['log']->debug('SearchForm.php->setup()');
@@ -551,7 +551,7 @@ class SearchForm
      * @param string $view which view is currently being displayed
      *
      */
-    function displayHeader($view)
+    public function displayHeader($view)
     {
         global $current_user;
         $GLOBALS['log']->debug('SearchForm.php->displayHeader()');
@@ -578,7 +578,7 @@ class SearchForm
      * @param string $saved_views_text body of the saved views tab
      *
      */
-    function displayWithHeaders($view, $basic_search_text = '', $advanced_search_text = '', $saved_views_text = '')
+    public function displayWithHeaders($view, $basic_search_text = '', $advanced_search_text = '', $saved_views_text = '')
     {
         $GLOBALS['log']->debug('SearchForm.php->displayWithHeaders()');
         $this->displayHeader($view);
@@ -598,7 +598,7 @@ class SearchForm
      *
      * @return string html of contents
      */
-    function displayBasic($header = true, $return = false)
+    public function displayBasic($header = true, $return = false)
     {
         global $current_user;
 
@@ -630,7 +630,7 @@ class SearchForm
      *
      * @return string html of contents
      */
-    function displayAdvanced($header = true, $return = false, $listViewDefs='', $lv='')
+    public function displayAdvanced($header = true, $return = false, $listViewDefs='', $lv='')
     {
         global $current_user, $current_language;
         $GLOBALS['log']->debug('SearchForm.php->displayAdvanced()');
@@ -672,7 +672,7 @@ class SearchForm
      *
      * @return string html of contents
      */
-    function displaySavedViews($listViewDefs, $lv, $header = true, $return = false)
+    public function displaySavedViews($listViewDefs, $lv, $header = true, $return = false)
     {
         global $current_user;
 
@@ -691,7 +691,7 @@ class SearchForm
      *
      * @return string html of contents
      */
-    function getButtons()
+    public function getButtons()
     {
         global $app_strings;
 

@@ -46,12 +46,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('modules/Studio/DropDowns/DropDownHelper.php');
 class EditDropDownWizard extends StudioWizard
 {
-    var $wizard = 'EditDropDownWizard';
-    function welcome()
+    public $wizard = 'EditDropDownWizard';
+    public function welcome()
     {
         return 'You can rename the global dropdown list here.';
     }
-    function back()
+    public function back()
     {
         ob_clean();
         if (!empty($_SESSION['studio']['module'])) {
@@ -61,12 +61,12 @@ class EditDropDownWizard extends StudioWizard
         header('Location: index.php?action=wizard&module=Studio&wizard=StudioWizard');
         sugar_cleanup(true);
     }
-    function options()
+    public function options()
     {
         //		return array('EditDropdown'=>$GLOBALS['mod_strings']['LBL_SW_EDIT_DROPDOWNS'], 'CreateDropdown'=>$GLOBALS['mod_strings']['LBL_ED_CREATE_DROPDOWN'] );
     }
 	
-    function process($option)
+    public function process($option)
     {
         switch ($option) {
 		    case 'EditDropdown':
@@ -82,7 +82,7 @@ class EditDropDownWizard extends StudioWizard
 		}
     }
 	
-    function display()
+    public function display()
     {
         // override the parent display - don't display any wizard stuff
     }

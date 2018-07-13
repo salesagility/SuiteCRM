@@ -46,7 +46,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class Localization
 {
-    var $availableCharsets = array(
+    public $availableCharsets = array(
 		'BIG-5',        //Taiwan and Hong Kong
 		/*'CP866'			  // ms-dos Cyrillic */
 		/*'CP949'			  //Microsoft Korean */
@@ -77,14 +77,14 @@ class Localization
 		'UTF-8',        //UTF-8
 		'UTF-16LE',     //UTF-16LE
 		);
-    var $localeNameFormat;
-    var $localeNameFormatDefault;
-    var $default_export_charset = 'UTF-8';
-    var $default_email_charset = 'UTF-8';
-    var $currencies = array(); // array loaded with current currencies
-    var $invalidNameFormatUpgradeFilename = 'upgradeInvalidLocaleNameFormat.php';
+    public $localeNameFormat;
+    public $localeNameFormatDefault;
+    public $default_export_charset = 'UTF-8';
+    public $default_email_charset = 'UTF-8';
+    public $currencies = array(); // array loaded with current currencies
+    public $invalidNameFormatUpgradeFilename = 'upgradeInvalidLocaleNameFormat.php';
     /* Charset mappings for iconv */
-    var $iconvCharsetMap = array(
+    public $iconvCharsetMap = array(
         'KS_C_5601-1987' => 'CP949',
         'ISO-8859-8-I' => 'ISO-8859-8'
         );
@@ -118,7 +118,7 @@ class Localization
      * returns an array of Sugar Config defaults that are determined by locale settings
      * @return array
      */
-    function getLocaleConfigDefaults()
+    public function getLocaleConfigDefaults()
     {
         $coreDefaults = array(
 			'currency'								=> '',
@@ -145,7 +145,7 @@ class Localization
      * @param object user User in focus, default null (current_user)
      * @return string pref Most significant preference
      */
-    function getPrecedentPreference($prefName, $user=null, $sugarConfigPrefName = '')
+    public function getPrecedentPreference($prefName, $user=null, $sugarConfigPrefName = '')
     {
         global $current_user;
         global $sugar_config;
@@ -190,7 +190,7 @@ class Localization
     /**
      * wrapper for whatever currency system we implement
      */
-    function loadCurrencies()
+    public function loadCurrencies()
     {
         // doing it dirty here
         global $db;
@@ -230,7 +230,7 @@ class Localization
      * getter for currencies array
      * @return array $this->currencies returns array( id => array(name => X, etc
      */
-    function getCurrencies()
+    public function getCurrencies()
     {
         return $this->currencies;
     }
@@ -239,7 +239,7 @@ class Localization
      * retrieves default OOTB currencies for sugar_config and installer.
      * @return array ret Array of default currencies keyed by ISO4217 code
      */
-    function getDefaultCurrencies()
+    public function getDefaultCurrencies()
     {
         $ret = array(
 			'AUD' => array(	'name'		=> 'Australian Dollars',
@@ -303,7 +303,7 @@ class Localization
      * @param string charset Target charset
      * @return array Translated string pack
      */
-    function translateStringPack($strings, $charset)
+    public function translateStringPack($strings, $charset)
     {
         // handle recursive
         foreach ($strings as $k => $v) {
@@ -322,7 +322,7 @@ class Localization
      * @param	mixed the var (array or string) to translate
      * @return	mixed the translated variable
      */
-    function translateForEmail($var)
+    public function translateForEmail($var)
     {
         if (is_array($var)) {
             foreach ($var as $k => $v) {
@@ -340,7 +340,7 @@ class Localization
      * @param bean object A SugarBean
      * @return bean object The bean with translated strings
      */
-    function prepBeanForExport($bean)
+    public function prepBeanForExport($bean)
     {
         foreach ($bean->field_defs as $k => $field) {
             if (is_string($bean->$k)) {
@@ -361,7 +361,7 @@ class Localization
      * @param bool   forceIconv force using the iconv library instead of mb_string
      * @return string the translated string
      */
-    function translateCharset($string, $fromCharset, $toCharset='UTF-8', $forceIconv = false)
+    public function translateCharset($string, $fromCharset, $toCharset='UTF-8', $forceIconv = false)
     {
         $GLOBALS['log']->debug("Localization: translating [{$string}] from {$fromCharset} into {$toCharset}");
 
@@ -403,7 +403,7 @@ class Localization
     /**
      * translates a character set from one to another, and the into MIME-header friendly format
      */
-    function translateCharsetMIME($string, $fromCharset, $toCharset='UTF-8', $encoding="Q")
+    public function translateCharsetMIME($string, $fromCharset, $toCharset='UTF-8', $encoding="Q")
     {
         $previousEncoding = mb_internal_encoding();
         mb_internal_encoding($fromCharset);
@@ -412,7 +412,7 @@ class Localization
         return $result;
     }
 
-    function normalizeCharset($charset)
+    public function normalizeCharset($charset)
     {
         $charset = strtolower(preg_replace("/[\-\_]*/", "", $charset));
         return $charset;
@@ -421,7 +421,7 @@ class Localization
     /**
      * returns an array of charsets with keys for available translations; appropriate for get_select_options_with_id()
      */
-    function getCharsetSelect()
+    public function getCharsetSelect()
     {
         //jc:12293 - the "labels" or "human-readable" representations of the various charsets
         //should be translatable
@@ -440,7 +440,7 @@ class Localization
      * @param string charset to override ALL, pass a valid charset here
      * @return string charset the chosen character set
      */
-    function getExportCharset($charset='', $user=null)
+    public function getExportCharset($charset='', $user=null)
     {
         $charset = $this->getPrecedentPreference('default_export_charset', $user);
         return $charset;
@@ -450,7 +450,7 @@ class Localization
      * returns the charset preferred in descending order: User, Sugar Config, DEFAULT
      * @return string charset the chosen character set
      */
-    function getOutboundEmailCharset($user=null)
+    public function getOutboundEmailCharset($user=null)
     {
         $charset = $this->getPrecedentPreference('default_email_charset', $user);
         return $charset;
@@ -460,26 +460,26 @@ class Localization
 
     ///////////////////////////////////////////////////////////////////////////
     ////	NUMBER DISPLAY FORMATTING CODE
-    function getDecimalSeparator($user=null)
+    public function getDecimalSeparator($user=null)
     {
         // Bug50887 this is purposefully misspelled as ..._seperator to match the way it's defined throughout the app.
         $dec = $this->getPrecedentPreference('default_decimal_seperator', $user);
         return $dec;
     }
 
-    function getNumberGroupingSeparator($user=null)
+    public function getNumberGroupingSeparator($user=null)
     {
         $sep = $this->getPrecedentPreference('default_number_grouping_seperator', $user);
         return $sep;
     }
 
-    function getPrecision($user=null)
+    public function getPrecision($user=null)
     {
         $precision = $this->getPrecedentPreference('default_currency_significant_digits', $user);
         return $precision;
     }
 
-    function getCurrencySymbol($user=null)
+    public function getCurrencySymbol($user=null)
     {
         $dec = $this->getPrecedentPreference('default_currency_symbol', $user);
         return $dec;
@@ -492,7 +492,7 @@ class Localization
      * @param bool is_currency Flag to also return the currency symbol
      * @return string Formatted number
      */
-    function getLocaleFormattedNumber($number, $currencySymbol='', $is_currency=true, $user=null)
+    public function getLocaleFormattedNumber($number, $currencySymbol='', $is_currency=true, $user=null)
     {
         $fnum			= $number;
         $majorDigits	= '';
@@ -544,7 +544,7 @@ class Localization
     /**
      * returns Javascript to format numbers and currency for ***DISPLAY***
      */
-    function getNumberJs()
+    public function getNumberJs()
     {
         $out = <<<eoq
 
@@ -627,7 +627,7 @@ eoq;
      * get's the Name format macro string, preferring $current_user
      * @return string format Name Format macro for locale
      */
-    function getLocaleFormatMacro($user=null)
+    public function getLocaleFormatMacro($user=null)
     {
         $returnFormat = $this->getPrecedentPreference('default_locale_name_format', $user);
         return $returnFormat;
@@ -647,7 +647,7 @@ eoq;
      * when the formatted name would be blank
      * @return string formattedName
      */
-    function getLocaleFormattedName($firstName, $lastName, $salutationKey='', $title='', $format="", $user=null, $returnEmptyStringIfEmpty = false)
+    public function getLocaleFormattedName($firstName, $lastName, $salutationKey='', $title='', $format="", $user=null, $returnEmptyStringIfEmpty = false)
     {
         global $current_user;
         global $app_list_strings;
@@ -712,7 +712,7 @@ eoq;
      * @param string salutation Saluation, use app_strings default if not specified
      * @return string some Javascript
      */
-    function getNameJs($first='', $last='', $salutation='', $title='')
+    public function getNameJs($first='', $last='', $salutation='', $title='')
     {
         global $app_strings;
 

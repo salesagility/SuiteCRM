@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class FilterFactory
 {
-    static $filter_map = array();
+    public static $filter_map = array();
 
     public static function getInstance($source_name, $filter_name='')
     {

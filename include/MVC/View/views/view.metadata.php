@@ -43,12 +43,12 @@ require_once('include/DetailView/DetailView2.php');
 
 class ViewMetadata extends SugarView
 {
-    var $type ='detail';
-    var $dv;
+    public $type ='detail';
+    public $dv;
 	
 	
  	
-    function displayCheckBoxes($name,$values, $selected =array(), $attr='')
+    public function displayCheckBoxes($name,$values, $selected =array(), $attr='')
     {
         echo "<div $attr style='overflow:auto;float:left;width:200px;height:200px' >";
         foreach ($values as $value) {
@@ -58,7 +58,7 @@ class ViewMetadata extends SugarView
         echo "</div>";
     }
  	
-    function displaySelect($name,$values, $selected ='', $attr='')
+    public function displaySelect($name,$values, $selected ='', $attr='')
     {
         echo "<select name='$name' $attr>";
         foreach ($values as $value) {
@@ -70,7 +70,7 @@ class ViewMetadata extends SugarView
  	
  	
  	
-    function displayTextBoxes($values, $attr='')
+    public function displayTextBoxes($values, $attr='')
     {
         echo "<div $attr style='overflow:auto;float:left;width:400px;height:200px' >";
         foreach ($values as $value) {
@@ -82,14 +82,14 @@ class ViewMetadata extends SugarView
  	
  	
  	
-    function printValue($value, $depth=0)
+    public function printValue($value, $depth=0)
     {
         echo "<pre>";
         print_r($value);
         echo "</pre>";
     }
  	
-    function display()
+    public function display()
     {
         $do = !empty($_REQUEST['do'])?$_REQUEST['do']:'';
         echo "<form method='post'>";
@@ -248,11 +248,11 @@ EOQ;
 
 class VardefBrowser
 {
-    function __construct()
+    public function __construct()
     {
     }
 	
-    static function getModules()
+    public static function getModules()
     {
         $modules = array();
         foreach ($GLOBALS['beanList'] as $module=>$object) {
@@ -267,7 +267,7 @@ class VardefBrowser
         return $modules;
     }
 	
-    static function findFieldsWithAttributes($attributes, $modules=null)
+    public static function findFieldsWithAttributes($attributes, $modules=null)
     {
         $fields = array();
         if (empty($modules)) {
@@ -306,7 +306,7 @@ class VardefBrowser
         return $fields;
     }
 	
-    static function findVardefs($modules=null)
+    public static function findVardefs($modules=null)
     {
         $defs = array();
         if (empty($modules)) {
@@ -329,7 +329,7 @@ class VardefBrowser
     }
 	
 	
-    static function findFieldAttributes($attributes=array(), $modules=null, $byModule=false, $byType=false)
+    public static function findFieldAttributes($attributes=array(), $modules=null, $byModule=false, $byType=false)
     {
         $fields = array();
         if (empty($modules)) {

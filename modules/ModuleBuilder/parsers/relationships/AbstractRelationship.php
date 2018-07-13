@@ -105,7 +105,7 @@ class AbstractRelationship
      * Constructor
      * @param string $definition    Definition array for this relationship. Parameters are given in self::keys
      */
-    function __construct($definition)
+    public function __construct($definition)
     {
         // set any undefined attributes to the default value
         foreach (array ( 'readonly' , 'deleted' , 'relationship_only', 'for_activities', 'is_custom', 'from_studio' ) as $key) {
@@ -205,7 +205,7 @@ class AbstractRelationship
      * `relationship_name`, `lhs_module`, `lhs_table`, `lhs_key`, `rhs_module`, `rhs_table`,`rhs_key`, `join_table`, `join_key_lhs`, `join_key_rhs`, `relationship_type`, `relationship_role_column`, `relationship_role_column_value`, `reverse`,
      * @return array    Set of parameters to pass to an AbstractRelationship constructor - must contain at least ['relationship_type']='OneToOne' or 'OneToMany' or 'ManyToMany'
      */
-    function getDefinition()
+    public function getDefinition()
     {
         return $this->definition ;
     }
@@ -218,7 +218,7 @@ class AbstractRelationship
      * Define the labels to be added to the module for the new relationships
      * @return array    An array of system value => display value
      */
-    function buildLabels($update=false)
+    public function buildLabels($update=false)
     {
         $labelDefinitions = array ( ) ;
         if (!$this->relationship_only) {
@@ -250,7 +250,7 @@ class AbstractRelationship
         return $labelDefinitions ;
     }
 
-    function getLeftModuleSystemLabel()
+    public function getLeftModuleSystemLabel()
     {
         if ($this->lhs_module == $this->rhs_module) {
             return $this->lhs_module.'_L';
@@ -258,7 +258,7 @@ class AbstractRelationship
         return $this->lhs_module;
     }
 
-    function getRightModuleSystemLabel()
+    public function getRightModuleSystemLabel()
     {
         if ($this->lhs_module == $this->rhs_module) {
             return $this->rhs_module.'_R';
@@ -477,7 +477,7 @@ class AbstractRelationship
      * @param string $relationshipType  Cardinality of the relationship, for example, MB_ONETOONE or MB_ONETOMANY or MB_MANYTOMANY
      * @param bool $checkExisting check if a realtionship with the given name is already depolyed in this instance. If so, we will clones its table and column names to preserve existing data.
      */
-    function getRelationshipMetaData($relationshipType, $checkExisting = true)
+    public function getRelationshipMetaData($relationshipType, $checkExisting = true)
     {
         global $dictionary;
         $relationshipName = $this->definition [ 'relationship_name' ] ;
@@ -591,7 +591,7 @@ class AbstractRelationship
      * Used primarily in UndeployedRelationships to ensure that the subpanels we construct for Activities get their data from the correct relationships
      * @param string $activitiesSubModuleName Name of the activities submodule, such as Tasks
      */
-    function getActivitiesSubModuleRelationshipName($activitiesSubModuleName)
+    public function getActivitiesSubModuleRelationshipName($activitiesSubModuleName)
     {
         return $this->lhs_module . "_" . strtolower ($activitiesSubModuleName) ;
     }
@@ -604,7 +604,7 @@ class AbstractRelationship
      * @param string $ensureUnique 
      * @return string Valid column name trimmed to right length and with invalid characters removed
      */
-    static function getValidDBName($name, $ensureUnique = true)
+    public static function getValidDBName($name, $ensureUnique = true)
     {
         require_once 'modules/ModuleBuilder/parsers/constants.php' ;
         return getValidDBName($name, $ensureUnique, MB_MAXDBIDENTIFIERLENGTH);
@@ -615,7 +615,7 @@ class AbstractRelationship
      * @param string $type Relationship type
      * @return string Canonical type
      */
-    static function parseRelationshipType($type)
+    public static function parseRelationshipType($type)
     {
         $type = strtolower ($type) ;
         $type = preg_replace ('/[^\w]+/i', '', strtolower ($type)) ;
@@ -630,7 +630,7 @@ class AbstractRelationship
     }
 
     
-    function getJoinKeyLHS()
+    public function getJoinKeyLHS()
     {
         if (!isset($this->joinKeyLHS)) {
             $this->joinKeyLHS = $this->getValidDBName ($this->relationship_name . $this->lhs_module . "_ida"  , true) ;
@@ -639,7 +639,7 @@ class AbstractRelationship
         return $this->joinKeyLHS;
     }
     
-    function getJoinKeyRHS()
+    public function getJoinKeyRHS()
     {
         if (!isset($this->joinKeyRHS)) {
             $this->joinKeyRHS = $this->getValidDBName ($this->relationship_name . $this->rhs_module . "_idb"  , true) ;
@@ -653,7 +653,7 @@ class AbstractRelationship
      * @param string $sourceModule  The name of the primary module in the relationship
      * @return string Name of the id field
      */
-    function getIDName($sourceModule)
+    public function getIDName($sourceModule)
     {
         return ($sourceModule == $this->lhs_module) ? $this->getJoinKeyLHS() : $this->getJoinKeyRHS() ;
     }

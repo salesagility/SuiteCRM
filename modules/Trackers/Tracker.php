@@ -44,14 +44,14 @@ if (!class_exists('Tracker')) {
 
     class Tracker extends SugarBean
     {
-        var $module_dir = 'Trackers';
-        var $table_name = 'tracker';
-        var $object_name = 'Tracker';
-        var $disable_var_defs = true;
-        var $acltype = 'Tracker';
-        var $acl_category = 'Trackers';
-        var $disable_custom_fields = true;
-        var $column_fields = Array(
+        public $module_dir = 'Trackers';
+        public $table_name = 'tracker';
+        public $object_name = 'Tracker';
+        public $disable_var_defs = true;
+        public $acltype = 'Tracker';
+        public $acl_category = 'Trackers';
+        public $disable_custom_fields = true;
+        public $column_fields = Array(
         "id",
         "monitor_id",
         "user_id",
@@ -64,7 +64,7 @@ if (!class_exists('Tracker')) {
         "visible"
     );
 
-        function __construct()
+        public function __construct()
         {
             global $dictionary;
             if (isset($this->module_dir) && isset($this->object_name) && !isset($GLOBALS['dictionary'][$this->object_name])) {
@@ -98,7 +98,7 @@ if (!class_exists('Tracker')) {
          * @param mixed module_name Optional - return only items from this module, a string of the module or array of modules
          * @return array list
          */
-        function get_recently_viewed($user_id, $modules = '')
+        public function get_recently_viewed($user_id, $modules = '')
         {
             $path = 'modules/Trackers/BreadCrumbStack.php';
             if (defined('TEMPLATE_URL')) {
@@ -131,7 +131,7 @@ if (!class_exists('Tracker')) {
             return $list;
         }
 
-        function makeInvisibleForAll($item_id)
+        public function makeInvisibleForAll($item_id)
         {
             $query = "UPDATE $this->table_name SET visible = 0 WHERE item_id = '$item_id' AND visible = 1";
             $this->db->query($query, true);
@@ -146,7 +146,7 @@ if (!class_exists('Tracker')) {
             }
         }
 
-        static function logPage()
+        public static function logPage()
         {
             $time_on_last_page = 0;
             //no need to calculate it if it is a redirection page
@@ -164,7 +164,7 @@ if (!class_exists('Tracker')) {
          * bean_implements
          * Override method to support ACL roles
          */
-        function bean_implements($interface)
+        public function bean_implements($interface)
         {
             return false;
         }

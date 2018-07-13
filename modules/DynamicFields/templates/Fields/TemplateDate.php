@@ -45,11 +45,11 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateDate extends TemplateRange
 {
-    var $type = 'date';
-    var $len = '';
-    var $dateStrings;
+    public $type = 'date';
+    public $len = '';
+    public $dateStrings;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
         global $app_strings;
@@ -71,13 +71,13 @@ class TemplateDate extends TemplateRange
     }
 
 
-    function get_db_default($modify=false)
+    public function get_db_default($modify=false)
     {
         return '';
     }
 
     //BEGIN BACKWARDS COMPATABILITY
-    function get_xtpl_edit()
+    public function get_xtpl_edit()
     {
         global $timedate;
         $name = $this->name;
@@ -97,7 +97,7 @@ class TemplateDate extends TemplateRange
         return $returnXTPL;
     }
 
-    function get_field_def()
+    public function get_field_def()
     {
         $def = parent::get_field_def();
         if (!empty($def['default'])) {

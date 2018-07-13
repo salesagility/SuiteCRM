@@ -41,11 +41,11 @@
 
 class ListViewPackages extends ListViewSmarty
 {
-    var $secondaryDisplayColumns;
+    public $secondaryDisplayColumns;
     /**
      * Constructor  Call ListViewSmarty
      */
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }
@@ -53,7 +53,7 @@ class ListViewPackages extends ListViewSmarty
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ListViewPackages()
+    public function ListViewPackages()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -71,7 +71,7 @@ class ListViewPackages extends ListViewSmarty
      * @param data  the data to display on the page
      * @param file  the template file to parse
      */
-    function setup($data, $file, $where, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id', $id=NULL)
+    public function setup($data, $file, $where, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id', $id=NULL)
     {
         $this->data = $data;
         $this->tpl = $file;
@@ -80,7 +80,7 @@ class ListViewPackages extends ListViewSmarty
     /**
      * Override the display method
      */
-    function display($end = true)
+    public function display($end = true)
     {
         global $odd_bg, $even_bg, $app_strings;
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));

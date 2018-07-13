@@ -44,12 +44,12 @@ if (!defined('sugarEntry') || !sugarEntry) {
  */
 class DetailView extends ListView
 {
-    var $list_row_count = null;
-    var $return_to_list_only=false;
-    var $offset_key_mismatch=false;
-    var $no_record_found=false;
+    public $list_row_count = null;
+    public $return_to_list_only=false;
+    public $offset_key_mismatch=false;
+    public $no_record_found=false;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -61,7 +61,7 @@ class DetailView extends ListView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function DetailView()
+    public function DetailView()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -73,7 +73,7 @@ class DetailView extends ListView
     }
 
 
-    function processSugarBean($html_varName, $seed, $offset)
+    public function processSugarBean($html_varName, $seed, $offset)
     {
         global $row_count, $sugar_config;
 
@@ -235,7 +235,7 @@ class DetailView extends ListView
         return $object;
     }
 
-    function populateQueryWhere($isfirstview, $html_varName)
+    public function populateQueryWhere($isfirstview, $html_varName)
     {
         if ($isfirstview) {
             $this->query_where = $this->getVariableFromSession($_REQUEST['module'], 'QUERY_WHERE');
@@ -251,7 +251,7 @@ class DetailView extends ListView
         }
     }
 
-    function processListNavigation($xtpl, $html_varName, $current_offset, $display_audit_link = false , $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = NULL, $subpanel_def = NULL, $col_count = 20)
+    public function processListNavigation($xtpl, $html_varName, $current_offset, $display_audit_link = false , $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = NULL, $subpanel_def = NULL, $col_count = 20)
     {
         global $export_module, $sugar_config, $current_user;
         //intialize audit_link
@@ -374,7 +374,7 @@ class DetailView extends ListView
     }
 
 
-    function set_base_URL($html_varName)
+    public function set_base_URL($html_varName)
     {
         if (!isset($this->base_URL)) {
             $this->base_URL = $_SERVER['PHP_SELF'];
@@ -417,12 +417,12 @@ class DetailView extends ListView
             $this->base_URL .= "&offset=";
         }
     }
-    function setListViewRowCount($count)
+    public function setListViewRowCount($count)
     {
         $this->list_row_count = $count;
     }
 
-    function getListViewRowCount()
+    public function getListViewRowCount()
     {
         return $this->list_row_count;
     }
@@ -432,7 +432,7 @@ class DetailView extends ListView
      * if false in this case: the user changes the list query (which generates a new stamp) and pastes a URL
      * from a previously navigated item.
  	 */
-    function isRequestFromListView($html_varName)
+    public function isRequestFromListView($html_varName)
     {
         $varList = $this->getLocalSessionVariable($html_varName, "FROM_LIST_VIEW");
         if (isset($_GET['stamp']) && isset($varList) && $varList == $_GET['stamp']) {
@@ -448,7 +448,7 @@ class DetailView extends ListView
      * @param unknown_type $name - the name of the variable to set in the session
      * @param unknown_type $value - the value of the variable to set
      */
-    function getVariableFromSession($name, $value)
+    public function getVariableFromSession($name, $value)
     {
         if (isset($_SESSION[$name."2_".$value])) {
             return $_SESSION[$name."2_".$value];

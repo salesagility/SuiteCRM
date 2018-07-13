@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/MVC/View/SugarView.php');
 class ConfiguratorViewAddFontResult extends SugarView
 {
-    var $log="";
+    public $log="";
     /**
      * display the form
      */

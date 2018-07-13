@@ -47,10 +47,10 @@ if (!defined('sugarEntry') || !sugarEntry) {
      */
 class SugarWidgetTabs
 {
-    var $tabs;
-    var $current_key;
+    public $tabs;
+    public $current_key;
 
-    function __construct(&$tabs, $current_key, $jscallback)
+    public function __construct(&$tabs, $current_key, $jscallback)
     {
         $this->tabs = $tabs;
         $this->current_key = $current_key;
@@ -60,7 +60,7 @@ class SugarWidgetTabs
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function SugarWidgetTabs(&$tabs, $current_key, $jscallback)
+    public function SugarWidgetTabs(&$tabs, $current_key, $jscallback)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -72,7 +72,7 @@ class SugarWidgetTabs
     }
 
 
-    function display()
+    public function display()
     {
         $template = new Sugar_Smarty();
         $template->assign('subpanel_tabs', $this->tabs);

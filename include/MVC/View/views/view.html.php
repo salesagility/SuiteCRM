@@ -61,7 +61,7 @@ class ViewHtml extends SugarView
     }
 
 
-    function display()
+    public function display()
     {
     }
 }

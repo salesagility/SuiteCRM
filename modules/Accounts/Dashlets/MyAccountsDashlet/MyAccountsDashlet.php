@@ -49,7 +49,7 @@ require_once('include/Dashlets/DashletGeneric.php');
 
 class MyAccountsDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/Accounts/Dashlets/MyAccountsDashlet/MyAccountsDashlet.data.php');
@@ -69,7 +69,7 @@ class MyAccountsDashlet extends DashletGeneric
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyAccountsDashlet($id, $def = null)
+    public function MyAccountsDashlet($id, $def = null)
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -89,7 +89,7 @@ class MyAccountsDashlet extends DashletGeneric
      * @param array $lvsParams
      */
 
-    function process($lvsParams = array(), $id = null)
+    public function process($lvsParams = array(), $id = null)
     {
         if (isset($this->displayColumns) && array_search('email1', $this->displayColumns) !== false) {
             $lvsParams['custom_select'] = ', email_address as email1';

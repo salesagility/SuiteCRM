@@ -41,7 +41,7 @@ require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 
 class ViewDisplaydeploy extends SugarView
 {
-    function __construct()
+    public function __construct()
     {
         $smarty = new Sugar_Smarty();
         $smarty->assign('package', $_REQUEST['name']);
@@ -57,7 +57,7 @@ class ViewDisplaydeploy extends SugarView
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function ViewDisplaydeploy()
+    public function ViewDisplaydeploy()
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {

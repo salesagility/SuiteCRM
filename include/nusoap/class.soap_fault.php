@@ -61,25 +61,25 @@ class nusoap_fault extends nusoap_base
      * @var string
      * @access private
      */
-    var $faultcode;
+    public $faultcode;
     /**
      * The fault actor
      * @var string
      * @access private
      */
-    var $faultactor;
+    public $faultactor;
     /**
      * The fault string, a description of the fault
      * @var string
      * @access private
      */
-    var $faultstring;
+    public $faultstring;
     /**
      * The fault detail, typically a string or array of string
      * @var mixed
      * @access private
      */
-    var $faultdetail;
+    public $faultdetail;
 
     /**
     * constructor
@@ -89,7 +89,7 @@ class nusoap_fault extends nusoap_base
     * @param string $faultstring human readable error message
     * @param mixed $faultdetail detail, typically a string or array of string
     */
-    function nusoap_fault($faultcode,$faultactor='',$faultstring='',$faultdetail='')
+    public function nusoap_fault($faultcode,$faultactor='',$faultstring='',$faultdetail='')
     {
         parent::nusoap_base();
         $this->faultcode = $faultcode;
@@ -104,7 +104,7 @@ class nusoap_fault extends nusoap_base
     * @return	string	The serialization of the fault instance.
     * @access   public
     */
-    function serialize()
+    public function serialize()
     {
         $ns_string = '';
         foreach ($this->namespaces as $k => $v) {
