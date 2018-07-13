@@ -1551,7 +1551,7 @@ class ModulesCest
         $I->sendGET($url);
         $responseMeetingUsers = json_decode($I->grabResponse(), true);
         
-        $exp = $meetingsPayload['data']['relationship']['users'];
+        $exp = $meetingsPayload['data']['relationships']['users'];
         $I->assertSame($exp, responseMeetingUsers['data']);
         
         $I->comment('Update a chris accept_status using POST');
