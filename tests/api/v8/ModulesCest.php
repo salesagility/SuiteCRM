@@ -1552,7 +1552,7 @@ class ModulesCest
         $responseMeetingUsers = json_decode($I->grabResponse(), true);
         
         $exp = $meetingsPayload['data']['relationships']['users'];
-        $I->assertSame($exp, responseMeetingUsers['data']);
+        $I->assertSame($exp, $responseMeetingUsers['data']);
         
         $I->comment('Update a chris accept_status using POST');
         $url = $I->getInstanceURL() . self::$MEETINGS_RESOURCE . '/' .
