@@ -6631,11 +6631,11 @@ class InboundEmail extends SugarBean
             $this->connectMailserver();
             if (is_array($uids)) {
                 LoggerManager::getLogger()->warn('UIDS should be a string. Array given.');
-                $exUids = implode(',', $uids);
+                $uids = implode(',', $uids);
             } else {
                 $exUids = explode('::;::', $uids);
+                $uids = implode(",", $exUids);
             }
-            $uids = implode(",", $exUids);
             // imap_mail_move accepts comma-delimited lists of UIDs
             if ($copy) {
                 if (imap_mail_copy($this->conn, $uids, $toFolder, CP_UID)) {
