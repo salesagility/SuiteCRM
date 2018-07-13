@@ -1550,58 +1550,10 @@ class ModulesCest
             self::$MEETINGS_RECORD_ID . '/relationships/users';
         $I->sendGET($url);
         $responseMeetingUsers = json_decode($I->grabResponse(), true);
-        $I->assertNotEmpty($responseMeetingUsers);
-        $I->assertArrayHasKey('data', $responseMeetingUsers);
-        $I->assertNotEmpty($responseMeetingUsers['data']);
-
-        $I->comment('Verify Admin user');
-        $I->assertArrayHasKey('0', $responseMeetingUsers['data']);
-        $I->assertNotEmpty($responseMeetingUsers['data'][0]);
-        $I->assertArrayHasKey('id', $responseMeetingUsers['data'][0]);
-        $I->assertEquals('1', $responseMeetingUsers['data'][0]['id']);
-        $I->assertArrayHasKey('type', $responseMeetingUsers['data'][0]);
-        $I->assertEquals('Users', $responseMeetingUsers['data'][0]['type']);
-        $I->assertArrayHasKey('meta', $responseMeetingUsers['data'][0]);
-        $I->assertArrayHasKey('middle_table', $responseMeetingUsers['data'][0]['meta']);
-        $I->assertArrayHasKey('data', $responseMeetingUsers['data'][0]['meta']['middle_table']);
-        $I->assertArrayHasKey('attributes', $responseMeetingUsers['data'][0]['meta']['middle_table']['data']);
-        $I->assertArrayHasKey('accept_status', $responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']);
-        $I->assertEquals('accept', $responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['accept_status']);
-        $I->assertArrayHasKey('user_id', $responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']);
-        $I->assertEquals('1', $responseMeetingUsers['data'][0]['meta']['middle_table']['data']['attributes']['user_id']);
-
-        $I->comment('Verify Max user');
-        $I->assertArrayHasKey('1', $responseMeetingUsers['data']);
-        $I->assertNotEmpty($responseMeetingUsers['data'][1]);
-        $I->assertArrayHasKey('id', $responseMeetingUsers['data'][1]);
-        $I->assertEquals('seed_max_id', $responseMeetingUsers['data'][1]['id']);
-        $I->assertArrayHasKey('type', $responseMeetingUsers['data'][1]);
-        $I->assertEquals('Users', $responseMeetingUsers['data'][1]['type']);
-        $I->assertArrayHasKey('meta', $responseMeetingUsers['data'][1]);
-        $I->assertArrayHasKey('middle_table', $responseMeetingUsers['data'][1]['meta']);
-        $I->assertArrayHasKey('data', $responseMeetingUsers['data'][1]['meta']['middle_table']);
-        $I->assertArrayHasKey('attributes', $responseMeetingUsers['data'][1]['meta']['middle_table']['data']);
-        $I->assertArrayHasKey('accept_status', $responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']);
-        $I->assertEquals('none', $responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']['accept_status']);
-        $I->assertArrayHasKey('user_id', $responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']);
-        $I->assertEquals('seed_max_id', $responseMeetingUsers['data'][1]['meta']['middle_table']['data']['attributes']['user_id']);
-
-        $I->comment('Verify Chris user');
-        $I->assertArrayHasKey('2', $responseMeetingUsers['data']);
-        $I->assertNotEmpty($responseMeetingUsers['data'][2]);
-        $I->assertArrayHasKey('id', $responseMeetingUsers['data'][2]);
-        $I->assertEquals('seed_chris_id', $responseMeetingUsers['data'][2]['id']);
-        $I->assertArrayHasKey('type', $responseMeetingUsers['data'][2]);
-        $I->assertEquals('Users', $responseMeetingUsers['data'][2]['type']);
-        $I->assertArrayHasKey('meta', $responseMeetingUsers['data'][2]);
-        $I->assertArrayHasKey('middle_table', $responseMeetingUsers['data'][2]['meta']);
-        $I->assertArrayHasKey('data', $responseMeetingUsers['data'][2]['meta']['middle_table']);
-        $I->assertArrayHasKey('attributes', $responseMeetingUsers['data'][2]['meta']['middle_table']['data']);
-        $I->assertArrayHasKey('accept_status', $responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']);
-        $I->assertEquals('none', $responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']['accept_status']);
-        $I->assertArrayHasKey('user_id', $responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']);
-        $I->assertEquals('seed_chris_id', $responseMeetingUsers['data'][2]['meta']['middle_table']['data']['attributes']['user_id']);
-
+        
+        $exp = $meetingsPayload['data']['relationship']['users'];
+        $I->assertSame($exp, responseMeetingUsers['data']);
+        
         $I->comment('Update a chris accept_status using POST');
         $url = $I->getInstanceURL() . self::$MEETINGS_RESOURCE . '/' .
             self::$MEETINGS_RECORD_ID . '/relationships/users';
