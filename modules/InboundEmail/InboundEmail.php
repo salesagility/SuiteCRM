@@ -47,6 +47,8 @@ require_once('include/OutboundEmail/OutboundEmail.php');
 require_once('modules/InboundEmail/Overview.php');
 require_once('modules/InboundEmail/temp.php');
 
+require_once __DIR__ . '/../../include/SugarFolders/SugarFolders.php';
+
 function this_callback($str)
 {
     foreach ($str as $match) {
