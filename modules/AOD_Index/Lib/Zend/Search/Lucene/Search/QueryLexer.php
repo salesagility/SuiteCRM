@@ -96,7 +96,7 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
 
     public function __construct()
     {
-        parent::__construct( array(self::ST_WHITE_SPACE,
+        parent::__construct(array(self::ST_WHITE_SPACE,
                                    self::ST_SYNT_LEXEME,
                                    self::ST_LEXEME,
                                    self::ST_QUOTED_LEXEME,
@@ -308,15 +308,24 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
      */
     private function _translateInput($char)
     {
-        if        (strpos(self::QUERY_WHITE_SPACE_CHARS,    $char) !== false) { return self::IN_WHITE_SPACE;
-        } elseif (strpos(self::QUERY_SYNT_CHARS,           $char) !== false) { return self::IN_SYNT_CHAR;
-        } elseif (strpos(self::QUERY_MUTABLE_CHARS,        $char) !== false) { return self::IN_MUTABLE_CHAR;
-        } elseif (strpos(self::QUERY_LEXEMEMODIFIER_CHARS, $char) !== false) { return self::IN_LEXEME_MODIFIER;
-        } elseif (strpos(self::QUERY_ASCIIDIGITS_CHARS,    $char) !== false) { return self::IN_ASCII_DIGIT;
-        } elseif ($char === '"' )                                            { return self::IN_QUOTE;
-        } elseif ($char === '.' )                                            { return self::IN_DECIMAL_POINT;
-        } elseif ($char === '\\')                                            { return self::IN_ESCAPE_CHAR;
-        } else                                                                { return self::IN_CHAR;
+        if (strpos(self::QUERY_WHITE_SPACE_CHARS,    $char) !== false) {
+            return self::IN_WHITE_SPACE;
+        } elseif (strpos(self::QUERY_SYNT_CHARS,           $char) !== false) {
+            return self::IN_SYNT_CHAR;
+        } elseif (strpos(self::QUERY_MUTABLE_CHARS,        $char) !== false) {
+            return self::IN_MUTABLE_CHAR;
+        } elseif (strpos(self::QUERY_LEXEMEMODIFIER_CHARS, $char) !== false) {
+            return self::IN_LEXEME_MODIFIER;
+        } elseif (strpos(self::QUERY_ASCIIDIGITS_CHARS,    $char) !== false) {
+            return self::IN_ASCII_DIGIT;
+        } elseif ($char === '"') {
+            return self::IN_QUOTE;
+        } elseif ($char === '.') {
+            return self::IN_DECIMAL_POINT;
+        } elseif ($char === '\\') {
+            return self::IN_ESCAPE_CHAR;
+        } else {
+            return self::IN_CHAR;
         }
     }
 
@@ -391,9 +400,9 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
             // check,
             if ($this->_queryStringPosition == count($this->_queryString)  ||
                 $this->_queryString[$this->_queryStringPosition] != $lexeme) {
-                    require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
-                    throw new Zend_Search_Lucene_Search_QueryParserException('Two chars lexeme expected. ' . $this->_positionMsg());
-                }
+                require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+                throw new Zend_Search_Lucene_Search_QueryParserException('Two chars lexeme expected. ' . $this->_positionMsg());
+            }
 
             // duplicate character
             $lexeme .= $lexeme;

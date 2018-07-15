@@ -43,4 +43,5 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 class SuiteException extends Exception
-{}
+{
+}

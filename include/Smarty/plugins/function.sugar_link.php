@@ -33,7 +33,9 @@ r42268 - 2008-12-02 13:29:54 -0800 (Tue, 02 Dec 2008) - rob - Get some tweaks to
 */
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -76,43 +78,48 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 function smarty_function_sugar_link($params, &$smarty)
 {
-	if(empty($params['module'])){
-		$smarty->trigger_error("sugar_link: missing 'module' parameter");
-		return;
-	}
-	if(!empty($params['data']) && is_array($params['data'])){
-		$link_url = 'index.php?';
-		$link_url .= 'module=iFrames&action=index';
-		$link_url .= '&record='.$params['data']['0'];
-		$link_url .= '&tab=true';
-    }else{
-		$action = (!empty($params['action']))?$params['action']:'index';
+    if (empty($params['module'])) {
+        $smarty->trigger_error("sugar_link: missing 'module' parameter");
+        return;
+    }
+    if (!empty($params['data']) && is_array($params['data'])) {
+        $link_url = 'index.php?';
+        $link_url .= 'module=iFrames&action=index';
+        $link_url .= '&record='.$params['data']['0'];
+        $link_url .= '&tab=true';
+    } else {
+        $action = (!empty($params['action']))?$params['action']:'index';
 	    
-	    $link_url = 'index.php?';
-	    $link_url .= 'module='.$params['module'].'&action='.$action;
+        $link_url = 'index.php?';
+        $link_url .= 'module='.$params['module'].'&action='.$action;
 	
-	    if (!empty($params['record'])) { $link_url .= "&record=".$params['record']; }
-	    if (!empty($params['extraparams'])) { $link_url .= '&'.$params['extraparams']; }
-	}
+        if (!empty($params['record'])) {
+            $link_url .= "&record=".$params['record'];
+        }
+        if (!empty($params['extraparams'])) {
+            $link_url .= '&'.$params['extraparams'];
+        }
+    }
 	
-	if (isset($params['link_only']) && $params['link_only'] == 1 ) {
+    if (isset($params['link_only']) && $params['link_only'] == 1) {
         // Let them just get the url, they want to put it someplace
         return ajaxLink($link_url);
     }
 	
-	$id = (!empty($params['id']))?' id="'.$params['id'].'"':'';
-	$class = (!empty($params['class']))?' class="'.$params['class'].'"':'';
-	$style = (!empty($params['style']))?' style="'.$params['style'].'"':'';
-	$title = (!empty($params['title']))?' title="'.$params['title'].'"':'';
+    $id = (!empty($params['id']))?' id="'.$params['id'].'"':'';
+    $class = (!empty($params['class']))?' class="'.$params['class'].'"':'';
+    $style = (!empty($params['style']))?' style="'.$params['style'].'"':'';
+    $title = (!empty($params['title']))?' title="'.$params['title'].'"':'';
     $module = ' module="'.$params['module'].'"';
-	$accesskey = (!empty($params['accesskey']))?' accesskey="'.$params['accesskey'].'" ':'';
+    $accesskey = (!empty($params['accesskey']))?' accesskey="'.$params['accesskey'].'" ':'';
     $options = (!empty($params['options']))?' '.$params['options'].'':'';
-    if(!empty($params['data']) && is_array($params['data']))
-		$label =$params['data']['4'];
-	elseif ( !empty($params['label']) )
-	    $label = $params['label'];
-	else
-	    $label = (!empty($GLOBALS['app_list_strings']['moduleList'][$params['module']]))?$GLOBALS['app_list_strings']['moduleList'][$params['module']]:$params['module'];
+    if (!empty($params['data']) && is_array($params['data'])) {
+        $label =$params['data']['4'];
+    } elseif (!empty($params['label'])) {
+        $label = $params['label'];
+    } else {
+        $label = (!empty($GLOBALS['app_list_strings']['moduleList'][$params['module']]))?$GLOBALS['app_list_strings']['moduleList'][$params['module']]:$params['module'];
+    }
 
     $link = '<a href="'.ajaxLink($link_url).'"'.$id.$class.$style.$options.$title.'>'.$label;
     if (isset($params['caret']) && $params['caret'] === true) {

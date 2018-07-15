@@ -40,8 +40,6 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
-        
     }
 
     public function testEmailMan()
@@ -203,7 +201,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-	// test
+        // test
         
         
         $emailMan = new EmailMan();
@@ -229,7 +227,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails_email_addr_rel');
         $state->pushTable('tracker');
 
-	// test
+        // test
         
         
         $emailMan = new EmailMan();
@@ -263,7 +261,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-	// test
+        // test
         
         
         $emailMan = new EmailMan();
@@ -290,7 +288,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-	// test
+        // test
         
         $emailMan = new EmailMan();
 
@@ -316,7 +314,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-	// test
+        // test
         
         $emailMan = new EmailMan();
 
@@ -347,7 +345,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('emails');
         $state->pushTable('emails_email_addr_rel');
 
-	// test
+        // test
         
         
         
@@ -386,7 +384,7 @@ class EmailManTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('tracker');
         $state->pushGlobals();
 
-	// test
+        // test
         
         $emailMan = new EmailMan();
         $emailMan->test = true;

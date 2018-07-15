@@ -4,7 +4,6 @@ require_once 'include/utils/activity_utils.php';
 
 class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-
     public function setUp()
     {
         parent::setUp();
@@ -37,6 +36,5 @@ class activity_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         $state->popGlobals();
-        
     }
 }

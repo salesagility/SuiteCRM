@@ -41,56 +41,64 @@ require_once('include/MVC/View/SugarView.php');
 
 class CalendarViewSaveSettings extends SugarView
 {
-
-	function CalendarViewSettings(){
- 		parent::SugarView();
-	}
+    public function CalendarViewSettings()
+    {
+        parent::SugarView();
+    }
 	
-	function process(){
-		$this->display();
-	}
+    public function process()
+    {
+        $this->display();
+    }
 	
-	function display(){
-		global $current_user;
+    public function display()
+    {
+        global $current_user;
 		
-		$db_start = $this->to_db_time($_REQUEST['day_start_hours'],$_REQUEST['day_start_minutes'],$_REQUEST['day_start_meridiem']);
-		$db_end = $this->to_db_time($_REQUEST['day_end_hours'],$_REQUEST['day_end_minutes'],$_REQUEST['day_end_meridiem']);
+        $db_start = $this->to_db_time($_REQUEST['day_start_hours'],$_REQUEST['day_start_minutes'],$_REQUEST['day_start_meridiem']);
+        $db_end = $this->to_db_time($_REQUEST['day_end_hours'],$_REQUEST['day_end_minutes'],$_REQUEST['day_end_meridiem']);
 		
-		$current_user->setPreference('day_start_time', $db_start, 0, 'global', $current_user);
-		$current_user->setPreference('day_end_time', $db_end, 0, 'global', $current_user);
+        $current_user->setPreference('day_start_time', $db_start, 0, 'global', $current_user);
+        $current_user->setPreference('day_end_time', $db_end, 0, 'global', $current_user);
 		
-		$current_user->setPreference('CalendarActivities', base64_encode(serialize($_POST['activity'])) );
+        $current_user->setPreference('CalendarActivities', base64_encode(serialize($_POST['activity'])));
 
-		$current_user->setPreference('calendar_display_timeslots', $_REQUEST['display_timeslots'], 0, 'global', $current_user);
-		$current_user->setPreference('show_tasks', $_REQUEST['show_tasks'], 0, 'global', $current_user);
-		$current_user->setPreference('show_calls', $_REQUEST['show_calls'], 0, 'global', $current_user);
-		$current_user->setPreference('show_completed', $_REQUEST['show_completed'], 0, 'global', $current_user);
-		$current_user->setPreference('calendar_display_shared_separate', $_REQUEST['shared_calendar_separate'], 0, 'global', $current_user);
+        $current_user->setPreference('calendar_display_timeslots', $_REQUEST['display_timeslots'], 0, 'global', $current_user);
+        $current_user->setPreference('show_tasks', $_REQUEST['show_tasks'], 0, 'global', $current_user);
+        $current_user->setPreference('show_calls', $_REQUEST['show_calls'], 0, 'global', $current_user);
+        $current_user->setPreference('show_completed', $_REQUEST['show_completed'], 0, 'global', $current_user);
+        $current_user->setPreference('calendar_display_shared_separate', $_REQUEST['shared_calendar_separate'], 0, 'global', $current_user);
 
-		if(isset($_REQUEST['day']) && !empty($_REQUEST['day']))
-			header("Location: index.php?module=Calendar&action=index&view=".$_REQUEST['view']."&hour=0&day=".$_REQUEST['day']."&month=".$_REQUEST['month']."&year=".$_REQUEST['year']);
-		else
-			header("Location: index.php?module=Calendar&action=index");
-	}
+        if (isset($_REQUEST['day']) && !empty($_REQUEST['day'])) {
+            header("Location: index.php?module=Calendar&action=index&view=".$_REQUEST['view']."&hour=0&day=".$_REQUEST['day']."&month=".$_REQUEST['month']."&year=".$_REQUEST['year']);
+        } else {
+            header("Location: index.php?module=Calendar&action=index");
+        }
+    }
 	
-	private function to_db_time($hours,$minutes,$mer){
-		$hours = intval($hours);
-		$minutes = intval($minutes);
-		$mer = strtolower($mer);
-		if(!empty($mer)){
-			if(($mer) == 'am')
-				if($hours == 12)
-					$hours = $hours - 12;
-			if(($mer) == 'pm')
-				if($hours != 12)
-					$hours = $hours + 12;		
-		}
-		if($hours < 10)
-			$hours = "0".$hours;
-		if($minutes < 10)
-			$minutes = "0".$minutes;	
-		return $hours . ":". $minutes; 
-	}
-	
-
+    private function to_db_time($hours,$minutes,$mer)
+    {
+        $hours = intval($hours);
+        $minutes = intval($minutes);
+        $mer = strtolower($mer);
+        if (!empty($mer)) {
+            if (($mer) == 'am') {
+                if ($hours == 12) {
+                    $hours = $hours - 12;
+                }
+            }
+            if (($mer) == 'pm') {
+                if ($hours != 12) {
+                    $hours = $hours + 12;
+                }
+            }
+        }
+        if ($hours < 10) {
+            $hours = "0".$hours;
+        }
+        if ($minutes < 10) {
+            $minutes = "0".$minutes;
+        }	
+        return $hours . ":". $minutes;
+    }
 }

@@ -46,7 +46,6 @@ require_once('modules/Users/UserViewHelper.php');
 
 class UsersViewDetail extends ViewDetail
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -67,7 +66,7 @@ class UsersViewDetail extends ViewDetail
     }
 
 
-    function preDisplay()
+    public function preDisplay()
     {
         global $current_user, $app_strings, $sugar_config;
 
@@ -115,13 +114,11 @@ class UsersViewDetail extends ViewDetail
             && isset($sugar_config['lock_default_user_name'])
             && $sugar_config['lock_default_user_name']) {
             $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' =>"<input id='edit_button' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".'{$fields.id.value}'."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>");
-        }
-        elseif (is_admin($current_user)|| ($GLOBALS['current_user']->isAdminForModule('Users')&& !$this->bean->is_admin)
+        } elseif (is_admin($current_user)|| ($GLOBALS['current_user']->isAdminForModule('Users')&& !$this->bean->is_admin)
             || $_REQUEST['record'] == $current_user->id) {
             $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input title='".$app_strings['LBL_EDIT_BUTTON_TITLE']."' accessKey='".$app_strings['LBL_EDIT_BUTTON_KEY']."' name='Edit' id='edit_button' value='".$app_strings['LBL_EDIT_BUTTON_LABEL']."' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.return_id.value='".'{$fields.id.value}'."'; this.form.action.value='EditView'\" type='submit' value='" . $app_strings['LBL_EDIT_BUTTON_LABEL'] .  "'>");
             if ((is_admin($current_user)|| $GLOBALS['current_user']->isAdminForModule('Users')
             )) {
-
                 if (!$current_user->is_group) {
                     $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => "<input id='duplicate_button' title='" . $app_strings['LBL_DUPLICATE_BUTTON_TITLE'] . "' accessKey='" . $app_strings['LBL_DUPLICATE_BUTTON_KEY'] . "' class='button' onclick=\"this.form.return_module.value='Users'; this.form.return_action.value='DetailView'; this.form.isDuplicate.value=true; this.form.action.value='EditView'\" type='submit' name='Duplicate' value='" . $app_strings['LBL_DUPLICATE_BUTTON_LABEL'] . "'>");
 
@@ -130,7 +127,7 @@ class UsersViewDetail extends ViewDetail
                     }
 
                     if (!$this->bean->portal_only && !$this->bean->is_group && !$this->bean->external_auth_only
-                        && isset($sugar_config['passwordsetting']['SystemGeneratedPasswordON']) && $sugar_config['passwordsetting']['SystemGeneratedPasswordON']){
+                        && isset($sugar_config['passwordsetting']['SystemGeneratedPasswordON']) && $sugar_config['passwordsetting']['SystemGeneratedPasswordON']) {
                         $this->dv->defs['templateMeta']['form']['buttons'][] = array('customCode' => '<input title="'.translate('LBL_GENERATE_PASSWORD_BUTTON_TITLE','Users').'" class="button" LANGUAGE=javascript onclick="generatepwd(\'{$fields.id.value}\');" type="button" name="password" value="'.translate('LBL_GENERATE_PASSWORD_BUTTON_LABEL','Users').'">"');
                     }
                 }
@@ -160,7 +157,6 @@ class UsersViewDetail extends ViewDetail
             ob_end_clean();
             $this->ss->assign('ROLE_HTML', $role_html);
         }
-
     }
 
     public function getMetaDataFile()
@@ -182,7 +178,7 @@ class UsersViewDetail extends ViewDetail
         return $metadataFile;
     }
 
-    function display()
+    public function display()
     {
         if ($this->bean->portal_only == 1 || $this->bean->is_group == 1) {
             $this->options['show_subpanels'] = false;

@@ -7,13 +7,13 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     {
         self::markTestIncomplete('environment dependency');
         
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
         $state->pushGlobals();
         
-	// test
+        // test
         
         //execute the contructor and check for the Object type and  attributes
         $ical = new iCal();
@@ -54,8 +54,5 @@ class iCalTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 //        
 //        // clean up
-//        
-
-
-
+//
 }

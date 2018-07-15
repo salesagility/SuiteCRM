@@ -39,7 +39,9 @@
 
 
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 //holds various filter arrays for displaying vardef dropdowns
 //You can add your own if you would like

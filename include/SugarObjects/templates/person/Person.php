@@ -150,7 +150,6 @@ class Person extends Basic
             isset($app_list_strings[$this->field_defs['salutation']['options']]) &&
             isset($app_list_strings[$this->field_defs['salutation']['options']][$this->salutation])
         ) {
-
             $salutation = $app_list_strings[$this->field_defs['salutation']['options']][$this->salutation];
         } // if
 

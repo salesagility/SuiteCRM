@@ -128,7 +128,7 @@ class ViewList extends SugarView
     {
         $module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
         
-        if(!isset($module)) {
+        if (!isset($module)) {
             LoggerManager::getLogger()->fatal('Undefined module for list view prepare');
             return false;
         }
@@ -143,7 +143,7 @@ class ViewList extends SugarView
 
         $this->listViewDefs = $listViewDefs;
 
-        if(isset($viewdefs[$this->module]['ListView']['templateMeta'])) {
+        if (isset($viewdefs[$this->module]['ListView']['templateMeta'])) {
             $this->lv->templateMeta = $viewdefs[$this->module]['ListView']['templateMeta'];
         }
 
@@ -196,7 +196,6 @@ class ViewList extends SugarView
             $this->storeQuery->loadQuery($this->module);
             $this->storeQuery->populateRequest();
         } elseif (!empty($_REQUEST['update_stored_query'])) {
-            
             $updateKey = null;
             if (isset($_REQUEST['update_stored_query_key'])) {
                 $updateKey = $_REQUEST['update_stored_query_key'];
@@ -226,16 +225,18 @@ class ViewList extends SugarView
         $displayColumns = array();
         if (!empty($_REQUEST['displayColumns'])) {
             foreach (explode('|', $_REQUEST['displayColumns']) as $num => $col) {
-                if (!empty($this->listViewDefs[$module][$col]))
+                if (!empty($this->listViewDefs[$module][$col])) {
                     $displayColumns[$col] = $this->listViewDefs[$module][$col];
+                }
             }
         } else {
-            if(!isset($this->listViewDefs[$module])) {
+            if (!isset($this->listViewDefs[$module])) {
                 LoggerManager::getLogger()->warn('Listview definition is not set for module: ' . $module);
             } else {
                 foreach ($this->listViewDefs[$module] as $col => $this->params) {
-                    if (!empty($this->params['default']) && $this->params['default'])
+                    if (!empty($this->params['default']) && $this->params['default']) {
                         $displayColumns[$col] = $this->params;
+                    }
                 }
             }
         }
@@ -243,9 +244,11 @@ class ViewList extends SugarView
         if (!empty($_REQUEST['orderBy'])) {
             $this->params['orderBy'] = $_REQUEST['orderBy'];
             $this->params['overrideOrder'] = true;
-            if (!empty($_REQUEST['sortOrder'])) $this->params['sortOrder'] = $_REQUEST['sortOrder'];
+            if (!empty($_REQUEST['sortOrder'])) {
+                $this->params['sortOrder'] = $_REQUEST['sortOrder'];
+            }
         }
-        if(!isset($this->lv) || !$this->lv) {
+        if (!isset($this->lv) || !$this->lv) {
             $this->lv = new stdClass();
         }
         $this->lv->displayColumns = $displayColumns;
@@ -268,8 +271,9 @@ class ViewList extends SugarView
         $this->processSearchForm();
         $this->lv->searchColumns = $this->searchForm->searchColumns;
 
-        if (!$this->headers)
+        if (!$this->headers) {
             return;
+        }
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
             $this->lv->ss->assign("SEARCH", true);
             $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
@@ -288,13 +292,14 @@ class ViewList extends SugarView
 
         //search
         $view = 'basic_search';
-        if (!empty($_REQUEST['search_form_view']) && $_REQUEST['search_form_view'] == 'advanced_search')
+        if (!empty($_REQUEST['search_form_view']) && $_REQUEST['search_form_view'] == 'advanced_search') {
             $view = $_REQUEST['search_form_view'];
+        }
         $this->headers = true;
 
-        if (!empty($_REQUEST['search_form_only']) && $_REQUEST['search_form_only'])
+        if (!empty($_REQUEST['search_form_only']) && $_REQUEST['search_form_only']) {
             $this->headers = false;
-        elseif (!isset($_REQUEST['search_form']) || $_REQUEST['search_form'] != 'false') {
+        } elseif (!isset($_REQUEST['search_form']) || $_REQUEST['search_form'] != 'false') {
             if (isset($_REQUEST['searchFormTab']) && $_REQUEST['searchFormTab'] == 'advanced_search') {
                 $view = 'advanced_search';
             } else {
@@ -337,7 +342,9 @@ class ViewList extends SugarView
 
             $where_clauses = $this->searchForm->generateSearchWhere(true, $this->seed->module_dir);
 
-            if (count($where_clauses) > 0) $this->where = '(' . implode(' ) AND ( ', $where_clauses) . ')';
+            if (count($where_clauses) > 0) {
+                $this->where = '(' . implode(' ) AND ( ', $where_clauses) . ')';
+            }
             $GLOBALS['log']->info("List View Where Clause: $this->where");
         }
         if ($this->use_old_search) {

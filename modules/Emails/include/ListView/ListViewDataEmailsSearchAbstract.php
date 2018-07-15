@@ -58,8 +58,8 @@ abstract class ListViewDataEmailsSearchAbstract
      */
     public $seed;
 
-    public function __construct($listViewDataEmails) {
+    public function __construct($listViewDataEmails)
+    {
         $this->lvde = $listViewDataEmails;
     }
-
 }

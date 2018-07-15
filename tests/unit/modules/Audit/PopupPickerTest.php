@@ -2,10 +2,10 @@
 
 require_once 'modules/Audit/Popup_picker.php';
 
-class PopupPickerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {    
-    
-    public function testProcessPage() {
-        
+class PopupPickerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+{
+    public function testProcessPage()
+    {
         $state = new \SuiteCRM\StateSaver();
         
         $state->pushGlobals();
@@ -43,5 +43,4 @@ class PopupPickerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
         $state->popTable('sugarfeed');
         $state->popGlobals();
     }
-    
 }

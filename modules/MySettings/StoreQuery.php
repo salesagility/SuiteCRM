@@ -37,13 +37,15 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 class StoreQuery
 {
-    var $query = array();
+    public $query = array();
 
-    function addToQuery($name, $val)
+    public function addToQuery($name, $val)
     {
         $this->query[$name] = $val;
     }
@@ -57,7 +59,7 @@ class StoreQuery
      * @see SavedSearch
      * @param $name String name  to identify this query
      */
-    function SaveQuery($name)
+    public function SaveQuery($name)
     {
         global $current_user, $timedate;
         if (isset($this->query['module'])) {
@@ -103,13 +105,13 @@ class StoreQuery
         $current_user->setPreference($name . 'Q', $this->query);
     }
 
-    function clearQuery($name)
+    public function clearQuery($name)
     {
         $this->query = array();
         $this->saveQuery($name);
     }
 
-    function loadQuery($name)
+    public function loadQuery($name)
     {
         $saveType = $this->getSaveType($name);
         if ($saveType == 'all' || $saveType == 'myitems') {
@@ -124,7 +126,7 @@ class StoreQuery
         }
     }
 
-    function populateRequest()
+    public function populateRequest()
     {
         global $timedate;
 
@@ -157,12 +159,11 @@ class StoreQuery
                 // cn: bug 6546 storequery stomps correct value for 'module' in Activities
                 $_REQUEST[$key] = $value;
                 $_GET[$key] = $value;
-
             }
         }
     }
 
-    function getSaveType($name)
+    public function getSaveType($name)
     {
         global $sugar_config;
         $save_query = empty($sugar_config['save_query']) ?
@@ -188,7 +189,7 @@ class StoreQuery
     }
 
 
-    function saveFromRequest($name)
+    public function saveFromRequest($name)
     {
         if (isset($_REQUEST['query'])) {
             if (!empty($_REQUEST['clear_query']) && $_REQUEST['clear_query'] == 'true') {
@@ -204,7 +205,6 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
             } elseif ($saveType == 'all') {
                 // Bug 39580 - Added 'EmailTreeLayout','EmailGridWidths' to the list as these are added merely as side-effects of the fact that we store the entire
                 // $_REQUEST object which includes all cookies.  These are potentially quite long strings as well.
@@ -222,7 +222,7 @@ class StoreQuery
         }
     }
 
-    function saveFromGet($name)
+    public function saveFromGet($name)
     {
         if (isset($_GET['query'])) {
             if (!empty($_GET['clear_query']) && $_GET['clear_query'] == 'true') {
@@ -238,7 +238,6 @@ class StoreQuery
                     $this->query['query'] = true;
                 }
                 $this->saveQuery($name);
-
             } elseif ($saveType == 'all') {
                 $this->query = $_GET;
                 $this->saveQuery($name);

@@ -27,31 +27,33 @@
 require_once('modules/AOW_Actions/actions/actionCreateRecord.php');
 class actionModifyRecord extends actionCreateRecord
 {
-
-    function __construct($id = ''){
+    public function __construct($id = '')
+    {
         parent::__construct($id);
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function actionModifyRecord($id = ''){
+    public function actionModifyRecord($id = '')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id);
     }
 
 
-    function loadJS(){
+    public function loadJS()
+    {
         return parent::loadJS();
     }
 
-    function edit_display($line,SugarBean $bean = null, $params = array()){
+    public function edit_display($line,SugarBean $bean = null, $params = array())
+    {
         require_once("modules/AOW_WorkFlow/aow_utils.php");
 
         $modules = getModuleRelationships($bean->module_dir,'EditView', $params['rel_type']);
@@ -95,16 +97,20 @@ EOS;
         $html .= "cr_fields[" . $line . "] = \"" . trim(preg_replace('/\s+/', ' ',
                 getModuleFields($module, 'EditView', '', array(), array('email1', 'email2')))) . "\";";
         $html .= "cr_relationships[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($module)))."\";";
-        if($params && array_key_exists('field',$params)){
-            foreach($params['field'] as $key => $field){
-                if(is_array($params['value'][$key]))$params['value'][$key] = json_encode($params['value'][$key]);
+        if ($params && array_key_exists('field',$params)) {
+            foreach ($params['field'] as $key => $field) {
+                if (is_array($params['value'][$key])) {
+                    $params['value'][$key] = json_encode($params['value'][$key]);
+                }
 
                 $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n")," ",$params['value'][$key])."','".$params['value_type'][$key]."');";
             }
         }
-        if(isset($params['rel'])){
-            foreach($params['rel'] as $key => $field){
-                if(is_array($params['rel_value'][$key]))$params['rel_value'][$key] = json_encode($params['rel_value'][$key]);
+        if (isset($params['rel'])) {
+            foreach ($params['rel'] as $key => $field) {
+                if (is_array($params['rel_value'][$key])) {
+                    $params['rel_value'][$key] = json_encode($params['rel_value'][$key]);
+                }
 
                 $html .= "load_crrelline('".$line."','".$field."','".$params['rel_value'][$key]."','".$params['rel_value_type'][$key]."');";
             }
@@ -113,15 +119,17 @@ EOS;
         return $html;
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
-
-        if(isset($params['rel_type']) && $params['rel_type'] != '' && $bean->module_dir != $params['rel_type']){
+    public function run_action(SugarBean $bean, $params = array(), $in_save=false)
+    {
+        if (isset($params['rel_type']) && $params['rel_type'] != '' && $bean->module_dir != $params['rel_type']) {
             $relatedFields = $bean->get_linked_fields();
             $field = $relatedFields[$params['rel_type']];
-            if(!isset($field['module']) || $field['module'] == '') $field['module'] = getRelatedModule($bean->module_dir,$field['name']);
+            if (!isset($field['module']) || $field['module'] == '') {
+                $field['module'] = getRelatedModule($bean->module_dir,$field['name']);
+            }
             $linkedBeans = $bean->get_linked_beans($field['name'],$field['module']);
-            if($linkedBeans){
-                foreach($linkedBeans as $linkedBean){
+            if ($linkedBeans) {
+                foreach ($linkedBeans as $linkedBean) {
                     $this->set_record($linkedBean, $bean, $params, false);
                     $this->set_relationships($linkedBean, $bean, $params);
                 }
@@ -132,6 +140,4 @@ EOS;
         }
         return true;
     }
-
-
 }

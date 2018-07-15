@@ -615,7 +615,6 @@ class MssqlManager extends DBManager
         }
 
         return $newSQL;
-
     }
 
 
@@ -1132,6 +1131,7 @@ class MssqlManager extends DBManager
                 } else {
                     return 'LEFT(CONVERT(varchar(10),' . $string . ',120),10)';
                 }
+                // no break
             case 'ifnull':
                 if (empty($additional_parameters_string)) {
                     $additional_parameters_string = ",''";

@@ -27,7 +27,6 @@ require_once("modules/AOW_WorkFlow/aow_utils.php");
 
 class AOW_WorkFlowController extends SugarController
 {
-
     protected function action_getModuleFields()
     {
         if (!empty($_REQUEST['aow_module']) && $_REQUEST['aow_module'] != '') {
@@ -51,7 +50,7 @@ class AOW_WorkFlowController extends SugarController
     protected function action_getRelatedModule()
     {
         if (!empty($_REQUEST['aow_module']) && $_REQUEST['aow_module'] != '') {
-            if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+            if (isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != '') {
                 $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
             } else {
                 $module = $_REQUEST['aow_module'];
@@ -59,13 +58,12 @@ class AOW_WorkFlowController extends SugarController
             echo htmlspecialchars($module);
         }
         die;
-
     }
 
     protected function action_getModuleRelationships()
     {
         if (!empty($_REQUEST['aow_module']) && $_REQUEST['aow_module'] != '') {
-            if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+            if (isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != '') {
                 $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
             } else {
                 $module = $_REQUEST['aow_module'];
@@ -73,15 +71,14 @@ class AOW_WorkFlowController extends SugarController
             echo getModuleRelationships($module);
         }
         die;
-
     }
 
 
-    protected function action_getModuleOperatorField(){
-
+    protected function action_getModuleOperatorField()
+    {
         global $app_list_strings, $beanFiles, $beanList;
 
-        if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+        if (isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != '') {
             $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
         } else {
             $module = $_REQUEST['aow_module'];
@@ -89,20 +86,25 @@ class AOW_WorkFlowController extends SugarController
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
 
         require_once($beanFiles[$beanList[$module]]);
         $focus = new $beanList[$module];
         $vardef = $focus->getFieldDefinition($fieldname);
 
-        if($vardef){
-
-            switch($vardef['type']) {
+        if ($vardef) {
+            switch ($vardef['type']) {
                 case 'double':
                 case 'decimal':
                 case 'float':
@@ -131,8 +133,8 @@ class AOW_WorkFlowController extends SugarController
                     break;
             }
 
-            foreach($app_list_strings['aow_operator_list'] as $key => $keyValue){
-                if(!in_array($key, $valid_opp)){
+            foreach ($app_list_strings['aow_operator_list'] as $key => $keyValue) {
+                if (!in_array($key, $valid_opp)) {
                     unset($app_list_strings['aow_operator_list'][$key]);
                 }
             }
@@ -140,21 +142,20 @@ class AOW_WorkFlowController extends SugarController
 
 
             $app_list_strings['aow_operator_list'];
-            if($view == 'EditView'){
+            if ($view == 'EditView') {
                 echo "<select type='text' name='$aow_field' id='$aow_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_operator_list'], $value) ."</select>";
-            }else{
+            } else {
                 echo $app_list_strings['aow_operator_list'][$value];
             }
         }
         die;
-
     }
 
-    protected function action_getFieldTypeOptions(){
-
+    protected function action_getFieldTypeOptions()
+    {
         global $app_list_strings, $beanFiles, $beanList;
 
-        if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+        if (isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != '') {
             $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
         } else {
             $module = $_REQUEST['aow_module'];
@@ -162,18 +163,24 @@ class AOW_WorkFlowController extends SugarController
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
 
         require_once($beanFiles[$beanList[$module]]);
         $focus = new $beanList[$module];
         $vardef = $focus->getFieldDefinition($fieldname);
 
-        switch($vardef['type']) {
+        switch ($vardef['type']) {
             case 'double':
             case 'decimal':
             case 'float':
@@ -207,44 +214,49 @@ class AOW_WorkFlowController extends SugarController
                 break;
         }
 
-        if(!file_exists('modules/SecurityGroups/SecurityGroup.php')){
+        if (!file_exists('modules/SecurityGroups/SecurityGroup.php')) {
             unset($app_list_strings['aow_condition_type_list']['SecurityGroup']);
         }
-        foreach($app_list_strings['aow_condition_type_list'] as $key => $keyValue){
-            if(!in_array($key, $valid_opp)){
+        foreach ($app_list_strings['aow_condition_type_list'] as $key => $keyValue) {
+            if (!in_array($key, $valid_opp)) {
                 unset($app_list_strings['aow_condition_type_list'][$key]);
             }
         }
 
-        if($view == 'EditView'){
+        if ($view == 'EditView') {
             echo "<select type='text'  name='$aow_field' id='$aow_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_condition_type_list'], $value) ."</select>";
-        }else{
+        } else {
             echo $app_list_strings['aow_condition_type_list'][$value];
         }
         die;
-
     }
 
-    protected function action_getActionFieldTypeOptions(){
-
+    protected function action_getActionFieldTypeOptions()
+    {
         global $app_list_strings, $beanFiles, $beanList;
 
         $module = $_REQUEST['aow_module'];
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
 
         require_once($beanFiles[$beanList[$module]]);
         $focus = new $beanList[$module];
         $vardef = $focus->getFieldDefinition($fieldname);
 
-        switch($vardef['type']) {
+        switch ($vardef['type']) {
             case 'double':
             case 'decimal':
             case 'float':
@@ -270,31 +282,32 @@ class AOW_WorkFlowController extends SugarController
                 break;
             case 'relate':
                 $valid_opp = array('Value','Field');
-                if($vardef['module'] == 'Users') $valid_opp = array('Value','Field','Round_Robin','Least_Busy','Random');
+                if ($vardef['module'] == 'Users') {
+                    $valid_opp = array('Value','Field','Round_Robin','Least_Busy','Random');
+                }
                 break;
             default:
                 $valid_opp = array('Value','Field');
                 break;
         }
 
-        foreach($app_list_strings['aow_action_type_list'] as $key => $keyValue){
-            if(!in_array($key, $valid_opp)){
+        foreach ($app_list_strings['aow_action_type_list'] as $key => $keyValue) {
+            if (!in_array($key, $valid_opp)) {
                 unset($app_list_strings['aow_action_type_list'][$key]);
             }
         }
 
-        if($view == 'EditView'){
+        if ($view == 'EditView') {
             echo "<select type='text'  name='$aow_field' id='$aow_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_action_type_list'], $value) ."</select>";
-        }else{
+        } else {
             echo $app_list_strings['aow_action_type_list'][$value];
         }
         die;
-
     }
 
     protected function action_getModuleFieldType()
     {
-        if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+        if (isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != '') {
             $rel_module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
         } else {
             $rel_module = $_REQUEST['aow_module'];
@@ -303,18 +316,26 @@ class AOW_WorkFlowController extends SugarController
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
-        switch($_REQUEST['aow_type']) {
+        switch ($_REQUEST['aow_type']) {
             case 'Field':
-                if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
-                if($view == 'EditView'){
+                if (isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') {
+                    $module = $_REQUEST['alt_module'];
+                }
+                if ($view == 'EditView') {
                     echo "<select type='text'  name='$aow_field' id='$aow_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value, getValidFieldsTypes($module, $fieldname)) ."</select>";
-                }else{
+                } else {
                     echo getModuleFields($module, $view, $value);
                 }
                 break;
@@ -330,13 +351,13 @@ class AOW_WorkFlowController extends SugarController
             case 'SecurityGroup':
                 $module = 'Accounts';
                 $fieldname = 'SecurityGroups';
+                // no break
             case 'Value':
             default:
-                echo getModuleField($rel_module,$fieldname, $aow_field, $view, $value );
+                echo getModuleField($rel_module,$fieldname, $aow_field, $view, $value);
                 break;
         }
         die;
-
     }
 
     protected function action_getModuleFieldTypeSet()
@@ -345,24 +366,34 @@ class AOW_WorkFlowController extends SugarController
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
-        switch($_REQUEST['aow_type']) {
+        switch ($_REQUEST['aow_type']) {
             case 'Field':
                 $valid_fields = getValidFieldsTypes($module, $fieldname);
-                if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
-                if($view == 'EditView'){
+                if (isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') {
+                    $module = $_REQUEST['alt_module'];
+                }
+                if ($view == 'EditView') {
                     echo "<select type='text'  name='$aow_field' id='$aow_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value, $valid_fields) ."</select>";
-                }else{
+                } else {
                     echo getModuleFields($module, $view, $value);
                 }
                 break;
             case 'Date':
-                if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
+                if (isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') {
+                    $module = $_REQUEST['alt_module'];
+                }
                 echo getDateField($module, $aow_field, $view, $value);
                 break;
             Case 'Round_Robin':
@@ -372,22 +403,27 @@ class AOW_WorkFlowController extends SugarController
                 break;
             case 'Value':
             default:
-                echo getModuleField($module,$fieldname, $aow_field, $view, $value );
+                echo getModuleField($module,$fieldname, $aow_field, $view, $value);
                 break;
         }
         die;
-
     }
 
     protected function action_getModuleField()
     {
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
-        echo getModuleField($_REQUEST['aow_module'],$_REQUEST['aow_fieldname'], $_REQUEST['aow_newfieldname'], $view, $value );
+        echo getModuleField($_REQUEST['aow_module'],$_REQUEST['aow_fieldname'], $_REQUEST['aow_newfieldname'], $view, $value);
         die;
     }
 
@@ -397,32 +433,39 @@ class AOW_WorkFlowController extends SugarController
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
-        switch($_REQUEST['aow_type']) {
+        switch ($_REQUEST['aow_type']) {
             case 'Field':
-                if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
-                if($view == 'EditView'){
+                if (isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') {
+                    $module = $_REQUEST['alt_module'];
+                }
+                if ($view == 'EditView') {
                     echo "<select type='text'  name='$aow_field' id='$aow_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
-                }else{
+                } else {
                     echo getModuleFields($module, $view, $value);
                 }
                 break;
             case 'Value':
             default:
-                echo getModuleField($module,$fieldname, $aow_field, $view, $value );
+                echo getModuleField($module,$fieldname, $aow_field, $view, $value);
                 break;
         }
         die;
-
     }
 
-    protected function action_getRelActionFieldTypeOptions(){
-
+    protected function action_getRelActionFieldTypeOptions()
+    {
         global $app_list_strings, $beanFiles, $beanList;
 
         $module = $_REQUEST['aow_module'];
@@ -430,11 +473,17 @@ class AOW_WorkFlowController extends SugarController
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
 
         require_once($beanFiles[$beanList[$module]]);
@@ -450,53 +499,49 @@ class AOW_WorkFlowController extends SugarController
         }*/
         $valid_opp = array('Value','Field');
 
-        foreach($app_list_strings['aow_rel_action_type_list'] as $key => $keyValue){
-            if(!in_array($key, $valid_opp)){
+        foreach ($app_list_strings['aow_rel_action_type_list'] as $key => $keyValue) {
+            if (!in_array($key, $valid_opp)) {
                 unset($app_list_strings['aow_rel_action_type_list'][$key]);
             }
         }
 
-        if($view == 'EditView'){
+        if ($view == 'EditView') {
             echo "<select type='text'  name='$aow_field' id='$aow_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_rel_action_type_list'], $value) ."</select>";
-        }else{
+        } else {
             echo $app_list_strings['aow_rel_action_type_list'][$value];
         }
         die;
-
     }
 
-    protected function action_getAction(){
+    protected function action_getAction()
+    {
         global $beanList, $beanFiles;
 
         $action_name = 'action'.$_REQUEST['aow_action'];
         $line = $_REQUEST['line'];
 
-        if($_REQUEST['aow_module'] == '' || !isset($beanList[$_REQUEST['aow_module']])){
+        if ($_REQUEST['aow_module'] == '' || !isset($beanList[$_REQUEST['aow_module']])) {
             echo '';
             die;
         }
 
-        if(file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')){
-
+        if (file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')) {
             require_once('custom/modules/AOW_Actions/actions/'.$action_name.'.php');
-
-        } elseif(file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')){
-
+        } elseif (file_exists('modules/AOW_Actions/actions/'.$action_name.'.php')) {
             require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
-
         } else {
             echo '';
             die;
         }
 
         $custom_action_name = "custom" . $action_name;
-        if(class_exists($custom_action_name)){
+        if (class_exists($custom_action_name)) {
             $action_name = $custom_action_name;
         }
 
         $id = '';
         $params = array();
-        if(isset($_REQUEST['id'])){
+        if (isset($_REQUEST['id'])) {
             require_once('modules/AOW_Actions/AOW_Action.php');
             $aow_action = new AOW_Action();
             $aow_action->retrieve($_REQUEST['id']);
@@ -517,21 +562,27 @@ class AOW_WorkFlowController extends SugarController
         $module = $_REQUEST['aow_module'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
-        if(isset($_REQUEST['view'])) $view = $_REQUEST['view'];
-        else $view= 'EditView';
+        if (isset($_REQUEST['view'])) {
+            $view = $_REQUEST['view'];
+        } else {
+            $view= 'EditView';
+        }
 
-        if(isset($_REQUEST['aow_value'])) $value = $_REQUEST['aow_value'];
-        else $value = '';
+        if (isset($_REQUEST['aow_value'])) {
+            $value = $_REQUEST['aow_value'];
+        } else {
+            $value = '';
+        }
 
-        switch($_REQUEST['aow_type']) {
+        switch ($_REQUEST['aow_type']) {
             case 'Record Email':
                 echo '';
                 break;
             case 'Related Field':
                 $rel_field_list = getRelatedEmailableFields($module);
-                if($view == 'EditView'){
+                if ($view == 'EditView') {
                     echo "<select type='text'  name='$aow_field' id='$aow_field' title='' tabindex='116'>". get_select_options_with_id($rel_field_list, $value) ."</select>";
-                }else{
+                } else {
                     echo $rel_field_list[$value];
                 }
                 break;
@@ -543,26 +594,25 @@ class AOW_WorkFlowController extends SugarController
                 break;
             case 'Email Address':
             default:
-                if($view == 'EditView'){
+                if ($view == 'EditView') {
                     echo "<input type='text' name='$aow_field' id='$aow_field' size='25' title='' tabindex='116' value='$value'>";
-                }else{
+                } else {
                     echo $value;
                 }
                 break;
         }
         die;
-
     }
 
 
-    protected function action_testFlow(){
-
+    protected function action_testFlow()
+    {
         echo 'Started<br />';
         require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
         $workflow = new AOW_WorkFlow();
 
-        if($workflow->run_flows())echo 'PASSED';
-
+        if ($workflow->run_flows()) {
+            echo 'PASSED';
+        }
     }
-
 }

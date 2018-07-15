@@ -284,7 +284,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
      */
     public static function getDefaultEncoding()
     {
-       return self::_getInstance()->_defaultEncoding;
+        return self::_getInstance()->_defaultEncoding;
     }
 
     /**
@@ -382,7 +382,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
                     self::$_instance->_lastToken = $token;
                 } catch (Exception $e) {
                     if (strpos($e->getMessage(), 'There is no any rule for') !== false) {
-                        throw new Zend_Search_Lucene_Search_QueryParserException( 'Syntax error at char position ' . $token->position . '.', 0, $e);
+                        throw new Zend_Search_Lucene_Search_QueryParserException('Syntax error at char position ' . $token->position . '.', 0, $e);
                     }
 
                     require_once 'Zend/Search/Lucene/Exception.php';
@@ -391,7 +391,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
             }
 
             if (count(self::$_instance->_contextStack) != 0) {
-                throw new Zend_Search_Lucene_Search_QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing.' );
+                throw new Zend_Search_Lucene_Search_QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing.');
             }
 
             return self::$_instance->_context->getQuery();
@@ -478,7 +478,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     {
         if ($this->_lastToken === null) {
             require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
-            throw new Zend_Search_Lucene_Search_QueryParserException('Lexeme modifier parameter must follow lexeme modifier. Char position 0.' );
+            throw new Zend_Search_Lucene_Search_QueryParserException('Lexeme modifier parameter must follow lexeme modifier. Char position 0.');
         }
 
         switch ($this->_lastToken->type) {
@@ -493,7 +493,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
             default:
                 // It's not a user input exception
                 require_once 'Zend/Search/Lucene/Exception.php';
-                throw new Zend_Search_Lucene_Exception('Lexeme modifier parameter must follow lexeme modifier. Char position 0.' );
+                throw new Zend_Search_Lucene_Exception('Lexeme modifier parameter must follow lexeme modifier. Char position 0.');
         }
     }
 
@@ -516,7 +516,7 @@ class Zend_Search_Lucene_Search_QueryParser extends Zend_Search_Lucene_FSM
     {
         if (count($this->_contextStack) == 0) {
             require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
-            throw new Zend_Search_Lucene_Search_QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing. Char position ' . $this->_currentToken->position . '.' );
+            throw new Zend_Search_Lucene_Search_QueryParserException('Syntax Error: mismatched parentheses, every opening must have closing. Char position ' . $this->_currentToken->position . '.');
         }
 
         $query          = $this->_context->getQuery();

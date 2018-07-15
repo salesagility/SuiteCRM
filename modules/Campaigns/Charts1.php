@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -59,8 +61,8 @@ class charts
      * @param array targets: translated list of all activity types, targeted, bounced etc..
      * @param string campaign_id: chart for this campaign.
      */
-    function campaign_response_chart($targets,$campaign_id) {
-
+    public function campaign_response_chart($targets,$campaign_id)
+    {
         $focus = new Campaign();
         $leadSourceArr = array();
 
@@ -71,8 +73,7 @@ class charts
         $query.= " ORDER BY  activity_type, target_type";
 
         $result = $focus->db->query($query);
-        while($row = $focus->db->fetchByAssoc($result, false)) {
-
+        while ($row = $focus->db->fetchByAssoc($result, false)) {
             if (isset($leadSourceArr[$row['activity_type']]['value'])) {
                 $leadSourceArr[$row['activity_type']]['value']=0;
             }
@@ -102,7 +103,6 @@ class charts
                     $xtpl->assign("Y_BAR_ID",$bar_id);
                 }
             }
-
         }
     }
-    }// end charts class
+}// end charts class

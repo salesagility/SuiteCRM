@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,7 +51,7 @@ class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubP
         return parent::getWidgetId() . '_select_button';
     }
 
-    function display($widget_data, $additionalFormFields = null, $nonbutton = false)
+    public function display($widget_data, $additionalFormFields = null, $nonbutton = false)
     {
         global $app_strings;
         global $mod_strings;
@@ -68,7 +70,7 @@ class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubP
 
 
         $focus = $widget_data['focus'];
-        if(ACLController::moduleSupportsACL($widget_data['module']) && !ACLController::checkAccess($widget_data['module'], 'list', true)){
+        if (ACLController::moduleSupportsACL($widget_data['module']) && !ACLController::checkAccess($widget_data['module'], 'list', true)) {
             $button = ' <input type="button" name="' . $this->getWidgetId() . '" id="' . $this->getWidgetId() . '" class="button"' . "\n"
             . ' title="' . $this->title . '"'
             . ' value="' . $this->value . "\"\n"
@@ -78,7 +80,7 @@ class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubP
 
         //refresh the whole page after end of action?
         $refresh_page = 0;
-        if(!empty($widget_data['subpanel_definition']->_instance_properties['refresh_page'])){
+        if (!empty($widget_data['subpanel_definition']->_instance_properties['refresh_page'])) {
             $refresh_page = 1;
         }
 
@@ -90,10 +92,10 @@ class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubP
         }
         $link_field_name = $subpanel_definition->get_data_source_name(true);
         $popup_mode='multiselect';
-        if(isset($widget_data['mode'])){
+        if (isset($widget_data['mode'])) {
             $popup_mode=$widget_data['mode'];
         }
-        if(isset($widget_data['initial_filter_fields'])){
+        if (isset($widget_data['initial_filter_fields'])) {
             if (is_array($widget_data['initial_filter_fields'])) {
                 foreach ($widget_data['initial_filter_fields'] as $value=>$alias) {
                     if (isset($focus->$value) and !empty($focus->$value)) {
@@ -103,7 +105,7 @@ class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubP
             }
         }
         $create="true";
-        if(isset($widget_data['create'])){
+        if (isset($widget_data['create'])) {
             $create=$widget_data['create'];
         }
         $return_module = $_REQUEST['module'];
@@ -112,7 +114,7 @@ class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubP
 
         //field_to_name_array
         $fton_array= array('id' => 'subpanel_id');
-        if(isset($widget_data['field_to_name_array']) && is_array($widget_data['field_to_name_array'])){
+        if (isset($widget_data['field_to_name_array']) && is_array($widget_data['field_to_name_array'])) {
             $fton_array=array_merge($fton_array,$widget_data['field_to_name_array']);
         }
 
@@ -136,7 +138,6 @@ class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubP
         }
 
         if (is_array($this->button_properties) && !empty($this->button_properties['add_to_passthru_data']['return_type'])) {
-
             if ($this->button_properties['add_to_passthru_data']['return_type']=='report') {
                 $initial_filter = "&module_name=". urlencode($widget_data['module']);
             }

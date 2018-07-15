@@ -23,10 +23,9 @@ function smarty_core_create_dir_structure($params, &$smarty)
             $_dir = $params['dir'];
             $_dir_parts = preg_split('!/+!', $_dir, -1, PREG_SPLIT_NO_EMPTY);
             $_new_dir = (substr($_dir, 0, 1)=='/') ? '/' : getcwd().'/';
-            if($_use_open_basedir = !empty($_open_basedir_ini)) {
+            if ($_use_open_basedir = !empty($_open_basedir_ini)) {
                 $_open_basedirs = explode(':', $_open_basedir_ini);
             }
-
         } else {
             /* other-style paths */
             $_dir = str_replace('\\','/', $params['dir']);
@@ -35,17 +34,16 @@ function smarty_core_create_dir_structure($params, &$smarty)
                 /* leading "//" for network volume, or "[letter]:/" for full path */
                 $_new_dir = $_root_dir[1];
                 /* remove drive-letter from _dir_parts */
-                if (isset($_root_dir[3])) array_shift($_dir_parts);
-
+                if (isset($_root_dir[3])) {
+                    array_shift($_dir_parts);
+                }
             } else {
                 $_new_dir = str_replace('\\', '/', getcwd()).'/';
-
             }
 
-            if($_use_open_basedir = !empty($_open_basedir_ini)) {
+            if ($_use_open_basedir = !empty($_open_basedir_ini)) {
                 $_open_basedirs = explode(';', str_replace('\\', '/', $_open_basedir_ini));
             }
-
         }
 
         /* all paths use "/" only from here */
@@ -75,5 +73,3 @@ function smarty_core_create_dir_structure($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

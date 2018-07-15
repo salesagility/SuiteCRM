@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -58,12 +60,12 @@ global $current_user;
 
 $focus = new Role();
 
-if(isset($_REQUEST['record'])) {
+if (isset($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 }
-if(isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == '1') {
-	$focus->id = "";
-	unset($_REQUEST['record']);
+if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == '1') {
+    $focus->id = "";
+    unset($_REQUEST['record']);
 }
 global $theme;
 
@@ -75,12 +77,18 @@ $xtpl=new XTemplate ('modules/Roles/EditView.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 
-if (isset($_REQUEST['return_module'])) $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
-if (isset($_REQUEST['return_action'])) $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
-if (isset($_REQUEST['return_id'])) $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
+if (isset($_REQUEST['return_module'])) {
+    $xtpl->assign("RETURN_MODULE", $_REQUEST['return_module']);
+}
+if (isset($_REQUEST['return_action'])) {
+    $xtpl->assign("RETURN_ACTION", $_REQUEST['return_action']);
+}
+if (isset($_REQUEST['return_id'])) {
+    $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
+}
 // handle Create $module then Cancel
 if (empty($_REQUEST['return_id'])) {
-	$xtpl->assign("RETURN_ACTION", 'index');
+    $xtpl->assign("RETURN_ACTION", 'index');
 }
 $xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
 $xtpl->assign("JAVASCRIPT", get_set_focus_js() . get_chooser_js() . get_validate_record_js());
@@ -95,36 +103,27 @@ $chooser = new TemplateGroupChooser();
 $controller = new TabController();
 $chooser->args['id'] = 'edit_tabs';
 
-if(isset($_REQUEST['record']))
-{
-	$chooser->args['values_array'][0] = $focus->query_modules(1);
-	$chooser->args['values_array'][1] = $focus->query_modules(0);
+if (isset($_REQUEST['record'])) {
+    $chooser->args['values_array'][0] = $focus->query_modules(1);
+    $chooser->args['values_array'][1] = $focus->query_modules(0);
 
-	foreach ($chooser->args['values_array'][0] as $key=>$value)
-	{
-		$chooser->args['values_array'][0][$value] = $app_list_strings['moduleList'][$value];
-		unset($chooser->args['values_array'][0][$key]);
-	}
+    foreach ($chooser->args['values_array'][0] as $key=>$value) {
+        $chooser->args['values_array'][0][$value] = $app_list_strings['moduleList'][$value];
+        unset($chooser->args['values_array'][0][$key]);
+    }
 
-	foreach ($chooser->args['values_array'][1] as $key=>$value)
-	{
-		$chooser->args['values_array'][1][$value] = $app_list_strings['moduleList'][$value];
-		unset($chooser->args['values_array'][1][$key]);
-
-	}
-}
-else
-{
-	$chooser->args['values_array'] = $controller->get_tabs_system();
-	foreach ($chooser->args['values_array'][0] as $key=>$value)
-	{
-		$chooser->args['values_array'][0][$key] = $app_list_strings['moduleList'][$key];
-	}
-	foreach ($chooser->args['values_array'][1] as $key=>$value)
-	{
-	$chooser->args['values_array'][1][$key] = $app_list_strings['moduleList'][$key];
-	}
-
+    foreach ($chooser->args['values_array'][1] as $key=>$value) {
+        $chooser->args['values_array'][1][$value] = $app_list_strings['moduleList'][$value];
+        unset($chooser->args['values_array'][1][$key]);
+    }
+} else {
+    $chooser->args['values_array'] = $controller->get_tabs_system();
+    foreach ($chooser->args['values_array'][0] as $key=>$value) {
+        $chooser->args['values_array'][0][$key] = $app_list_strings['moduleList'][$key];
+    }
+    foreach ($chooser->args['values_array'][1] as $key=>$value) {
+        $chooser->args['values_array'][1][$key] = $app_list_strings['moduleList'][$key];
+    }
 }
 	
 $chooser->args['left_name'] = 'display_tabs';

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,48 +52,52 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class BaseRule
 {
+    public function __construct()
+    {
+    }
 
-function __construct() {
+    public function preParse($panels, $view)
+    {
+        return $panels;
+    }
 
-}
+    public function postParse($panels, $view)
+    {
+        return $this->parsePanels($panels, $view);
+    }
 
-function preParse($panels, $view) {
-   return $panels;
-}
+    public function parsePanels($panels, $view)
+    {
+        return $panels;
+    }
 
-function postParse($panels, $view) {
-   return $this->parsePanels($panels, $view);
-}
+    public function isCustomField($mixed)
+    {
+        if (is_array($mixed) && isset($mixed['name']) && preg_match('/.*?_c$/s', $mixed['name'])) {
+            return true;
+        } elseif (!is_array($mixed) && isset($mixed) && preg_match('/.*?_c$/s', $mixed)) {
+            return true;
+        }
+        return false;
+    }
 
-function parsePanels($panels, $view) {
-   return $panels;
-}
+    public function matches($mixed, $regExp)
+    {
+        if (is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'])) {
+            return true;
+        } elseif (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
+            return true;
+        }
+        return false;
+    }
 
-function isCustomField($mixed) {
-   if(is_array($mixed) && isset($mixed['name']) && preg_match('/.*?_c$/s', $mixed['name'])) {
-   	  return true;
-   } elseif(!is_array($mixed) && isset($mixed) && preg_match('/.*?_c$/s', $mixed)) {
-   	  return true;
-   }
-   return false;
-}
-
-function matches($mixed, $regExp) {
-   if(is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'])) {
-   	  return true;
-   } elseif(!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed)) {
-   	  return true;
-   }
-   return false;
-}
-
-function getMatch($mixed, $regExp) {
-   if(is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'], $matches)) {
-   	  return $matches;
-   } elseif(!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
-   	  return $matches;
-   }
-   return null;
-}
-
+    public function getMatch($mixed, $regExp)
+    {
+        if (is_array($mixed) && isset($mixed['name']) && preg_match($regExp, $mixed['name'], $matches)) {
+            return $matches;
+        } elseif (!is_array($mixed) && isset($mixed) && preg_match($regExp, $mixed, $matches)) {
+            return $matches;
+        }
+        return null;
+    }
 }

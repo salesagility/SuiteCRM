@@ -17,7 +17,6 @@
 
 function smarty_core_get_php_resource(&$params, &$smarty)
 {
-
     $params['resource_base_path'] = $smarty->trusted_dir;
     $smarty->_parse_resource_name($params, $smarty);
 
@@ -27,13 +26,13 @@ function smarty_core_get_php_resource(&$params, &$smarty)
 
     if ($params['resource_type'] == 'file') {
         $_readable = false;
-        if(file_exists($params['resource_name']) && is_readable($params['resource_name'])) {
+        if (file_exists($params['resource_name']) && is_readable($params['resource_name'])) {
             $_readable = true;
         } else {
             // test for file in include_path
             $_params = array('file_path' => $params['resource_name']);
             require_once(SMARTY_CORE_DIR . 'core.get_include_path.php');
-            if(smarty_core_get_include_path($_params, $smarty)) {
+            if (smarty_core_get_include_path($_params, $smarty)) {
                 $_include_path = $_params['new_file_path'];
                 $_readable = true;
             }
@@ -76,5 +75,3 @@ function smarty_core_get_php_resource(&$params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

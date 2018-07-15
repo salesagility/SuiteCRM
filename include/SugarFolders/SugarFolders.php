@@ -47,7 +47,8 @@ require_once('include/ytree/ExtNode.php');
 
 
 class SugarFolderEmptyException extends Exception
-{ }
+{
+}
 
 /**
  * Polymorphic buckets - place any item in a folder
@@ -169,7 +170,6 @@ class SugarFolder
      */
     public function setFolder($fields)
     {
-
         global $current_user;
         if (empty($fields['groupFoldersUser'])) {
             $fields['groupFoldersUser'] = $current_user->id;
@@ -215,7 +215,7 @@ class SugarFolder
     {
         global $current_user;
 
-        if(null === $user) {
+        if (null === $user) {
             $user = $current_user;
         }
 
@@ -307,7 +307,7 @@ class SugarFolder
     {
         global $current_user;
         
-        if(!$user) {
+        if (!$user) {
             $user = $current_user;
         }
 
@@ -422,7 +422,6 @@ class SugarFolder
         $email = new Email(); //Needed for email specific functions.
 
         while ($a = $this->db->fetchByAssoc($r)) {
-
             $temp = array();
             $temp['flagged'] = (is_null($a['flagged']) || $a['flagged'] == '0') ? '' : 1;
             $temp['status'] = (is_null($a['reply_to_status']) || $a['reply_to_status'] == '0') ? '' : 1;
@@ -592,7 +591,7 @@ class SugarFolder
             }
         }
 
-        if(empty($found)) {
+        if (empty($found)) {
             throw new SugarFolderEmptyException(
                 ' SugarFolder::retrieveFoldersForProcessing() Cannot Retrieve Folders - '.
                 'Please check the users inbound email settings.'
@@ -703,21 +702,21 @@ class SugarFolder
      * @param array $folders - array of folders table rows
      * @return array
      */
-    private function removeDeletedFolders($folders) {
-
+    private function removeDeletedFolders($folders)
+    {
         $ret = array();
 
-        foreach($folders as $folder) {
+        foreach ($folders as $folder) {
             $correct = false;
-            if(!$folder['id']) {
+            if (!$folder['id']) {
                 $correct = true;
             }
             $ie = BeanFactory::getBean('InboundEmail', $folder['id']);
-            if($ie) {
+            if ($ie) {
                 $correct = true;
             }
 
-            if($correct) {
+            if ($correct) {
                 $ret[] = $folder;
             }
         }
@@ -1088,7 +1087,6 @@ class SugarFolder
         global $current_user;
 
         $this->createSubscriptionForUser($current_user->id);
-
     }
 
 
@@ -1142,7 +1140,6 @@ class SugarFolder
             $r3 = $this->db->query($q3);
         } // if
         return array('status' => "done");
-
     } // fn
 
     public function findAllChildren($folderId, &$childrenArray)
@@ -1160,7 +1157,6 @@ class SugarFolder
                 $this->findAllChildren($a2['id'], $childrenArray);
             } // while
         } // if
-
     } // fn
 
     /**

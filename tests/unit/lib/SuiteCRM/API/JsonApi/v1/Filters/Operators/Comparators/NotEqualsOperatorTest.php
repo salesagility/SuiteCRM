@@ -23,7 +23,7 @@ class NotEqualsOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
     {
         $this->tester->expectException(
             new \SuiteCRM\Exception\InvalidArgumentException('[JsonApi][v1][Filters][Operators][Comparators][NotEqualsOperator][isValid][expected type to be string] $operator'),
-            function() {
+            function () {
                 self::$operator->isValid(array());
             }
         );

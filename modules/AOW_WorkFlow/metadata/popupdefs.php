@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
  * @package Advanced OpenWorkflow for SugarCRM

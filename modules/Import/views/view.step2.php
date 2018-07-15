@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,13 +52,13 @@ require_once('modules/Import/views/ImportView.php');
 
 class ImportViewStep2 extends ImportView
 {
- 	protected $pageTitleKey = 'LBL_STEP_2_TITLE';
+    protected $pageTitleKey = 'LBL_STEP_2_TITLE';
 
 
- 	/**
+    /**
      * @see SugarView::display()
      */
- 	public function display()
+    public function display()
     {
         global $mod_strings, $app_list_strings, $app_strings, $current_user, $import_bean_map, $import_mod_strings;
 
@@ -66,13 +68,13 @@ class ImportViewStep2 extends ImportView
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
         $this->ss->assign("IMP", $import_mod_strings);
         $this->ss->assign("CURRENT_STEP", $this->currentStep);
-        $this->ss->assign("TYPE",( !empty($_REQUEST['type']) ? $_REQUEST['type'] : "import" ));
-        $this->ss->assign("CUSTOM_DELIMITER", ( !empty($_REQUEST['custom_delimiter']) ? $_REQUEST['custom_delimiter'] : "," ));
+        $this->ss->assign("TYPE",(!empty($_REQUEST['type']) ? $_REQUEST['type'] : "import"));
+        $this->ss->assign("CUSTOM_DELIMITER", (!empty($_REQUEST['custom_delimiter']) ? $_REQUEST['custom_delimiter'] : ","));
         $this->ss->assign("CUSTOM_ENCLOSURE",htmlentities(
-            ( !empty($_REQUEST['custom_enclosure']) && $_REQUEST['custom_enclosure'] != 'other'
+            (!empty($_REQUEST['custom_enclosure']) && $_REQUEST['custom_enclosure'] != 'other'
                 ? $_REQUEST['custom_enclosure'] :
-                ( !empty($_REQUEST['custom_enclosure_other'])
-                    ? $_REQUEST['custom_enclosure_other'] : "" ) )));
+                (!empty($_REQUEST['custom_enclosure_other'])
+                    ? $_REQUEST['custom_enclosure_other'] : ""))));
 
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
         $this->ss->assign("HEADER", $app_strings['LBL_IMPORT']." ". $mod_strings['LBL_MODULE_NAME']);
@@ -84,34 +86,31 @@ class ImportViewStep2 extends ImportView
 
         // get user defined import maps
         $is_admin = is_admin($current_user);
-        if($is_admin)
+        if ($is_admin) {
             $savedMappingHelpText = $mod_strings['LBL_MY_SAVED_ADMIN_HELP'];
-        else
+        } else {
             $savedMappingHelpText = $mod_strings['LBL_MY_SAVED_HELP'];
+        }
 
         $this->ss->assign('savedMappingHelpText',$savedMappingHelpText);
         $this->ss->assign('is_admin',$is_admin);
 
         $import_map_seed = new ImportMap();
-        $custom_imports_arr = $import_map_seed->retrieve_all_by_string_fields( array('assigned_user_id' => $current_user->id, 'is_published' => 'no','module' => $_REQUEST['import_module']));
+        $custom_imports_arr = $import_map_seed->retrieve_all_by_string_fields(array('assigned_user_id' => $current_user->id, 'is_published' => 'no','module' => $_REQUEST['import_module']));
 
-        if( count($custom_imports_arr) )
-        {
+        if (count($custom_imports_arr)) {
             $custom = array();
-            foreach ( $custom_imports_arr as $import)
-            {
+            foreach ($custom_imports_arr as $import) {
                 $custom[] = array( "IMPORT_NAME" => $import->name,"IMPORT_ID"   => $import->id);
             }
             $this->ss->assign('custom_imports',$custom);
         }
 
         // get globally defined import maps
-        $published_imports_arr = $import_map_seed->retrieve_all_by_string_fields(array('is_published' => 'yes', 'module' => $_REQUEST['import_module'],) );
-        if ( count($published_imports_arr) )
-        {
+        $published_imports_arr = $import_map_seed->retrieve_all_by_string_fields(array('is_published' => 'yes', 'module' => $_REQUEST['import_module'],));
+        if (count($published_imports_arr)) {
             $published = array();
-            foreach ( $published_imports_arr as $import)
-            {
+            foreach ($published_imports_arr as $import) {
                 $published[] = array("IMPORT_NAME" => $import->name, "IMPORT_ID"   => $import->id);
             }
             $this->ss->assign('published_imports',$published);
@@ -122,8 +121,7 @@ class ImportViewStep2 extends ImportView
         $instructions = array();
         $lang_key = "CUSTOM";
 
-        for ($i = 1; isset($mod_strings["LBL_{$lang_key}_NUM_$i"]);$i++)
-        {
+        for ($i = 1; isset($mod_strings["LBL_{$lang_key}_NUM_$i"]);$i++) {
             $instructions[] = array(
                 "STEP_NUM"         => $mod_strings["LBL_NUM_$i"],
                 "INSTRUCTION_STEP" => $mod_strings["LBL_{$lang_key}_NUM_$i"],

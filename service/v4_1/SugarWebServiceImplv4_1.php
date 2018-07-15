@@ -85,7 +85,7 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
      *               'relationship_list' -- Array - The records link field data. The example is if asked about accounts contacts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    function get_relationships(
+    public function get_relationships(
         $session,
         $module_name,
         $module_id,
@@ -137,7 +137,6 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
                     true));
         } // if
         if ($result) {
-
             $list = $result['rows'];
             $filterFields = $result['fields_set_on_rows'];
 
@@ -161,10 +160,8 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
                         $linkoutput_list[] = self::$helperObject->get_return_value_for_link_fields($submoduleobject,
                             $submodulename, $related_module_link_name_to_fields_array);
                     } // if
-
                 } // foreach
             }
-
         } // if
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_relationships');
@@ -197,7 +194,7 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
      *
      * @return Array records that match search criteria
      */
-    function get_modified_relationships(
+    public function get_modified_relationships(
         $session,
         $module_name,
         $related_module,
@@ -318,5 +315,4 @@ class SugarWebServiceImplv4_1 extends SugarWebServiceImplv4
             'error' => $error->get_soap_array()
         );
     }
-
 }

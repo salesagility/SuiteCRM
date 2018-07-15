@@ -89,8 +89,6 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
-        
-        
     }
 
     public function testget_user_allowed_modules()
@@ -104,7 +102,6 @@ class security_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testget_user_disallowed_modules()
     {
-        
         self::markTestIncomplete('Test fails only in travis and php7, Test has environment specific issue.');
         
         //execute the method and test it it returns expected contents

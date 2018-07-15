@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -47,17 +49,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-if (isset($_POST['saveConfig'])){
+if (isset($_POST['saveConfig'])) {
     require_once('modules/Users/User.php');
-	$focus = new User();
-	$focus->retrieve($_POST['record']);	
-	if(!$focus->change_password($_POST['old_password'], $_POST['new_password']))
-		SugarApplication::redirect("index.php?action=ChangePassword&module=Users&record=".$_POST['record']."&error_password=".urlencode($focus->error_string));
+    $focus = new User();
+    $focus->retrieve($_POST['record']);	
+    if (!$focus->change_password($_POST['old_password'], $_POST['new_password'])) {
+        SugarApplication::redirect("index.php?action=ChangePassword&module=Users&record=".$_POST['record']."&error_password=".urlencode($focus->error_string));
+    }
     
-	// Send to new user wizard if it hasn't been run
-	$ut = $GLOBALS['current_user']->getPreference('ut');
-    if(empty($ut))
+    // Send to new user wizard if it hasn't been run
+    $ut = $GLOBALS['current_user']->getPreference('ut');
+    if (empty($ut)) {
         SugarApplication::redirect('index.php?module=Users&action=Wizard');
+    }
     
     // Otherwise, send to home page
     SugarApplication::redirect('index.php?module=Home&action=index');
@@ -97,9 +101,12 @@ $sugar_smarty->assign('SUBMIT_BUTTON',
   . 'type="submit" name="button" value="'.$app_strings['LBL_SAVE_BUTTON_LABEL'].'" />');
 
 
-if (isset($_SESSION['expiration_type']) && $_SESSION['expiration_type'] != '')
-	$sugar_smarty->assign('EXPIRATION_TYPE', $_SESSION['expiration_type']);/*
+if (isset($_SESSION['expiration_type']) && $_SESSION['expiration_type'] != '') {
+    $sugar_smarty->assign('EXPIRATION_TYPE', $_SESSION['expiration_type']);
+}/*
 if ($current_user->system_generated_password == '1')
 	$sugar_smarty->assign('EXPIRATION_TYPE', $mod_strings['LBL_PASSWORD_EXPIRATION_GENERATED']);*/
-if(isset($_REQUEST['error_password'])) $sugar_smarty->assign('EXPIRATION_TYPE', $_REQUEST['error_password']);
+if (isset($_REQUEST['error_password'])) {
+    $sugar_smarty->assign('EXPIRATION_TYPE', $_REQUEST['error_password']);
+}
 $sugar_smarty->display('modules/Users/Changenewpassword.tpl');

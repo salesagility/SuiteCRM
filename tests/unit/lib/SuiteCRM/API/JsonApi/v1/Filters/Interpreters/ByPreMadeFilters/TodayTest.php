@@ -16,7 +16,7 @@ class TodayTest extends SuiteCRM\StateCheckerUnitAbstract
     public function _before()
     {
         parent::_before();
-        if(self::$filter === null) {
+        if (self::$filter === null) {
             self::$filter = new \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\ByPreMadeFilters\Today();
         }
     }
@@ -37,5 +37,4 @@ class TodayTest extends SuiteCRM\StateCheckerUnitAbstract
             $actual
         );
     }
-
 }

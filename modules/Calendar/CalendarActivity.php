@@ -199,7 +199,6 @@ class CalendarActivity
         $show_calls = true,
         $show_completed = true
     ) {
-
         global $current_user;
         global $beanList;
         $act_list = array();
@@ -215,7 +214,6 @@ class CalendarActivity
         }
 
         foreach ($activities as $key => $activity) {
-
             if (ACLController::checkAccess($key, 'list', true)) {
                 /* END - SECURITY GROUPS */
                 $class = $beanList[$key];

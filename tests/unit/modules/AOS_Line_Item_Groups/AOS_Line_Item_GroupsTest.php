@@ -67,7 +67,6 @@ class AOS_Line_Item_GroupsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstr
         $state->popTable('aod_index');
         $state->popTable('tracker');
         $state->popTable('aos_line_item_groups');
-        
     }
 
     public function testsave()

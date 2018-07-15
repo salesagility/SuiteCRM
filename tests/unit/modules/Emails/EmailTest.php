@@ -45,12 +45,12 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_indexevent');
 
-	// test
+        // test
         
         $email = new Email();
         $this->assertEquals(false, $email->bean_implements('')); //test with blank value
@@ -227,7 +227,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('aod_index');
         $state->pushGlobals();
 
-	// test
+        // test
         
         
         $email = new Email();
@@ -542,7 +542,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testpickOneButton()
     {
-        
         $email = new Email();
 
         $expected = "<div><input	title=\"\"
@@ -697,10 +696,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //
 
 //
-
-
-
-
     }
 
     public function testhandleBodyInHTMLformat()
@@ -713,20 +708,18 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 //
 
 //
-
-
     }
 
     public function testlistviewACLHelper()
     {
         self::markTestIncomplete('environment dependency (span os a?)');
         
-	// save state
+        // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
         
-	// test
+        // test
         
         $email = new Email();
 
@@ -872,8 +865,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function test_genereateSearchImportedEmailsQuery()
     {
-        
-        
         $email = new Email();
 
         $expected = "SELECT emails.id , emails.mailbox_id, emails.name, emails.date_sent, emails.status, emails.type, emails.flagged, emails.reply_to_status,
@@ -890,7 +881,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         
         $email = new Email();
@@ -958,7 +949,7 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
 
-	// test
+        // test
         
         require_once 'include/utils/layout_utils.php';
         $email = new Email();
@@ -986,7 +977,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcheckInbox()
     {
-        
         $email = new Email();
 
         //test with empty string
@@ -1029,8 +1019,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testcid2Link()
@@ -1055,8 +1043,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testcids2Links()
@@ -1081,8 +1067,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testsetFieldNullable()
@@ -1104,8 +1088,6 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testrevertFieldNullable()
@@ -1127,7 +1109,5 @@ class EmailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 }

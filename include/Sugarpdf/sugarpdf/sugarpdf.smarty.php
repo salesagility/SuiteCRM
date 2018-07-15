@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -73,14 +75,16 @@ class SugarpdfSmarty extends Sugarpdf
     protected $smartyCell = false;
     protected $smartyAlign = "";
     
-    function preDisplay(){
+    public function preDisplay()
+    {
         parent::preDisplay();
         $this->print_header = false;
         $this->print_footer = false;
         $this->_initSmartyInstance();
     }
     
-    function display(){
+    public function display()
+    {
         //turn off all error reporting so that PHP warnings don't munge the PDF code
         $state = new \SuiteCRM\StateSaver();
         $state->pushPHPConfigOptions();
@@ -95,10 +99,10 @@ class SugarpdfSmarty extends Sugarpdf
         $this->AddPage();
         $this->SetFont(PDF_FONT_NAME_MAIN,'',8);
         
-        if(!empty($this->templateLocation)){
+        if (!empty($this->templateLocation)) {
             $str = $this->ss->fetch($this->templateLocation);
             $this->writeHTML($str, $this->smartyLn, $this->smartyFill, $this->smartyReseth, $this->smartyCell, $this->smartyAlign);
-        }else{
+        } else {
             $this->Error('The class SugarpdfSmarty has to be extended and you have to set a location for the Smarty template.');
         }
         
@@ -110,13 +114,13 @@ class SugarpdfSmarty extends Sugarpdf
     /**
      * Init the Sugar_Smarty object.
      */
-    private function _initSmartyInstance(){
-        if ( !($this->ss instanceof Sugar_Smarty) ) {
+    private function _initSmartyInstance()
+    {
+        if (!($this->ss instanceof Sugar_Smarty)) {
             require_once('include/Sugar_Smarty.php');
             $this->ss = new Sugar_Smarty();
             $this->ss->assign('MOD', $GLOBALS['mod_strings']);
             $this->ss->assign('APP', $GLOBALS['app_strings']);
         }
     }
-    
 }

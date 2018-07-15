@@ -221,8 +221,6 @@ class array_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $tempArray = array('Key1' => 'value1', 'Key2' => 'value2', 'Key3' => 'value3', 'key4' => 'value4');
         $actual = array_search_insensitive('value4', $tempArray);
         $this->assertTrue($actual);
-
-        
     }
 
     public function testget()

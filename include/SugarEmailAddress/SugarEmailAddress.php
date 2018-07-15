@@ -1271,7 +1271,7 @@ class SugarEmailAddress extends SugarBean
             $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
         } else {
             // Reset the opt in status
-           $new_confirmed_opt_in = self::COI_STAT_DISABLED;
+            $new_confirmed_opt_in = self::COI_STAT_DISABLED;
         }
 
         // determine how we are going to put in this address - UPDATE or INSERT
@@ -1299,18 +1299,18 @@ class SugarEmailAddress extends SugarBean
                 $upd_r = $this->db->query($upd_q);
 
 
-                    if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
-                        // reset confirm opt in
-                        $upd_q = 'UPDATE ' . $this->table_name . ' ' .
+                if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
+                    // reset confirm opt in
+                    $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                             'SET '.
                             'confirm_opt_in_date=NULL,' .
                             'confirm_opt_in_sent_date=NULL,' .
                             'confirm_opt_in_fail_date=NULL ' .
                             'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
-                        $upd_r = $this->db->query($upd_q);
-                        // set for audit table detection
-                        $duplicate->confirm_opt_in = null;
-                    }
+                    $upd_r = $this->db->query($upd_q);
+                    // set for audit table detection
+                    $duplicate->confirm_opt_in = null;
+                }
             }
 
             if (!empty($this->fetched_row)) {
