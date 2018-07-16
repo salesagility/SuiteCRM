@@ -248,9 +248,7 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
     public function testWithSearchdefs()
     {
-        // Make a new Indexer instance
         $this->indexer->setDocumentifier(new SearchDefsDocumentifier());
-        $this->indexer->setBatchSize(1);
 
         $this->indexRunner();
     }
