@@ -920,11 +920,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         }
         // Add Address Parameter
         $request_url = $base_url . "&address=" . urlencode($address);
-        // Add Hash Parameter as MD5 of Concatenation of Address and Secret
-        if (!empty($this->settings['geocoding_api_secret'])) {
-            $hash = md5($address.$this->settings['geocoding_api_secret']);
-            $request_url .= '&hash='.urlencode($hash);
-        }
+        $request_url.="&key=".urlencode($this->settings['google_maps_api_key']);
 
         $GLOBALS['log']->info(__METHOD__.' cURL Request URL: '.$request_url);
 
