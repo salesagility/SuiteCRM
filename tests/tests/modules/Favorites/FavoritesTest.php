@@ -19,12 +19,20 @@ class FavoritesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdeleteFavorite()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $favorites = new Favorites();
 
         //testing with an empty ID
         $result = $favorites->deleteFavorite('');
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        
     }
 
     public function testgetFavoriteID()

@@ -2,33 +2,17 @@
 
 class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    
-    protected function storeStateAll() 
+    public function setUp()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        return $state;
-    }
-    
-    protected function restoreStateAll($state) 
-    {
-        // clean up
-        
-        $state->popGlobals();
-        
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
     }
     
     public function testTracker()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         //execute the contructor and check for the Object type and  attributes
         $tracker = new Tracker();
 
@@ -44,19 +28,16 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('Tracker', 'acltype', $tracker);
         $this->assertAttributeEquals('Trackers', 'acl_category', $tracker);
         $this->assertAttributeEquals(true, 'disable_custom_fields', $tracker);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testget_recently_viewed()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
         
         $tracker = new Tracker();
 
@@ -67,16 +48,17 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);
+        $state->popGlobals();
+
     }
 
     public function testmakeInvisibleForAll()
     {
-        // save state
+        $state = new SuiteCRM\StateSaver();
         
-        $state = $this->storeStateAll();
         
-        // test
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $tracker = new Tracker();
 
@@ -85,54 +67,47 @@ class TrackerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $tracker->makeInvisibleForAll(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testbean_implements()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         $tracker = new Tracker();
 
         $this->assertEquals(false, $tracker->bean_implements('')); //test with blank value
         $this->assertEquals(false, $tracker->bean_implements('test')); //test with invalid value
         $this->assertEquals(false, $tracker->bean_implements('ACL')); //test with valid value
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testlogPage()
     {
-        $this->markTestIncomplete('Undefined variable: _SESSION');
-//        // save state
-//        
-//        $state = $this->storeStateAll();
-//        
-//        // test
-//        
-//
-//        //test without setting headerDisplayed
-//        Tracker::logPage();
-//        $this->assertEquals(null, $_SESSION['lpage']);
-//
-//        //test with headerDisplayed set
-//        $GLOBALS['app']->headerDisplayed = 1;
-//        Tracker::logPage();
-//        $this->assertEquals(time(), $_SESSION['lpage']);
-//        
-//        // clean up
-//        
-//        $this->restoreStateAll($state);
+        self::markTestIncomplete('Test parameters and local variables are not set');
+                
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushGlobals();
+        
+        //error_reporting(E_ERROR | E_PARSE);
+
+        //test without setting headerDisplayed
+        Tracker::logPage();        
+        $this->assertEquals(null, $_SESSION['lpage']);
+
+        //test with headerDisplayed set
+        $GLOBALS['app']->headerDisplayed = 1;
+        Tracker::logPage();
+        $this->assertEquals(time(), $_SESSION['lpage']);
+        
+        //$this->assertEquals(time(), null);
+        
+        // clean up
+        
+        $state->popGlobals();
+        
     }
 }

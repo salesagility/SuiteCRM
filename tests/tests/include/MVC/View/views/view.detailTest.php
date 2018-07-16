@@ -2,15 +2,38 @@
 
 class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    
+    protected $stateSaver;
+    
+    public function setUp()
+    {
+        parent::setUp();
+        
+        $this->stateSaver = new SuiteCRM\StateSaver();
+        $this->stateSaver->pushTable('email_addresses');
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+    
+    public function tearDown()
+    {   
+        $this->stateSaver->popTable('email_addresses');
+        
+        parent::tearDown();
+    }
+
     public function testViewDetail()
     {
         
-        // save state
+        // store state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        $state->pushTable('email_addresses');
         
-        // test 
+        // test
         
         //execute the contructor and check for the Object type and type attribute
         $view = new ViewDetail();
@@ -20,19 +43,23 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('email_addresses');
         $state->popGlobals();
+
     }
 
     public function testpreDisplay()
     {
         
-        // save state
+        // store state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        $state->pushTable('email_addresses');
         
-        // test 
+        // test
         
+
         //execute the method with required attributes preset, it will initialize the dv(detail view) attribute. 
         $view = new ViewDetail();
         $view->module = 'Users';
@@ -53,18 +80,24 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('email_addresses');
         $state->popGlobals();
+
     }
 
     public function testdisplay()
     {
         
-        // save state
+        // store state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        $state->pushTable('email_addresses');
         
-        // test 
+        // test
+        
+
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewDetail();
@@ -82,6 +115,9 @@ class ViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('email_addresses');
         $state->popGlobals();
+
+
     }
 }

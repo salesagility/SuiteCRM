@@ -2,6 +2,15 @@
 
 class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testAOS_Invoices()
     {
 
@@ -21,13 +30,12 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testSaveAndMark_deleted()
     {
-        // save state
-        
         $state = new SuiteCRM\StateSaver();
+        
         $state->pushTable('aos_invoices');
+        $state->pushTable('tracker');
         
-        // test
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aosInvoices = new AOS_Invoices();
         $aosInvoices->name = 'test';
@@ -46,6 +54,8 @@ class AOS_InvoicesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
+        $state->popTable('tracker');
         $state->popTable('aos_invoices');
+        
     }
 }

@@ -2,37 +2,17 @@
 
 
 class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
-{  
-    protected function storeStateAll() 
+{
+    public function setUp()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('securitygroups');
-        $state->pushTable('securitygroups_records');
-        $state->pushGlobals();
-        
-        return $state;
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
     }
-    
-    protected function restoreStateAll($state) 
-    {
-        // clean up
-        
-        $state->popGlobals();
-        $state->popTable('securitygroups_records');
-        $state->popTable('securitygroups');
-        
-    }
-    
     public function testSecurityGroup()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
 
         //execute the contructor and check for the Object type and  attributes
         $securityGroup = new SecurityGroup();
@@ -44,25 +24,24 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals('securitygroups', 'table_name', $securityGroup);
         $this->assertAttributeEquals('SecurityGroups', 'module_dir', $securityGroup);
         $this->assertAttributeEquals('SecurityGroup', 'object_name', $securityGroup);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgetGroupWhere()
     {
-        // save state
+        $state = new SuiteCRM\StateSaver();
         
-        $state = $this->storeStateAll();
         
-        // test
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $securityGroup = new SecurityGroup();
 
         //test with securitygroups module
-        $expected = " securitygroups.id in (\n                select secg.id from securitygroups secg\n                inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0\n                    and secu.user_id = '1'\n                where secg.deleted = 0\n            )";
+        $expected = " securitygroups.id in (
+                select secg.id from securitygroups secg
+                inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+                    and secu.user_id = '1'
+                where secg.deleted = 0
+            )";
         $actual = $securityGroup->getGroupWhere('securitygroups', 'SecurityGroups', 1);
         $this->assertSame($expected, $actual);
 
@@ -87,81 +66,65 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testgetGroupUsersWhere()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         $securityGroup = new SecurityGroup();
 
-        $expected = " users.id in (\n            select sec.user_id from securitygroups_users sec\n            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0\n                and secu.user_id = '1'\n            where sec.deleted = 0\n        )";
+        $expected = " users.id in (
+            select sec.user_id from securitygroups_users sec
+            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
+                and secu.user_id = '1'
+            where sec.deleted = 0
+        )";
         $actual = $securityGroup::getGroupUsersWhere(1);
 
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgetGroupJoin()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         $securityGroup = new SecurityGroup();
 
         //test with securitygroups module
-        $expected = " LEFT JOIN (select distinct secg.id from securitygroups secg\n    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0\n            and secu.user_id = '1'\n    where secg.deleted = 0\n) securitygroup_join on securitygroup_join.id = securitygroups.id ";
+        $expected = " LEFT JOIN (select distinct secg.id from securitygroups secg
+    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+            and secu.user_id = '1'
+    where secg.deleted = 0
+) securitygroup_join on securitygroup_join.id = securitygroups.id ";
         $actual = $securityGroup->getGroupJoin('securitygroups', 'SecurityGroups', 1);
         $this->assertSame($expected, $actual);
 
         //test with //test with securitygroups module
-        $expected = " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg\n    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0\n            and secu.user_id = '1'\n    inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0\n             and secr.module = 'Users'\n    where secg.deleted = 0\n) securitygroup_join on securitygroup_join.id = users.id ";
+        $expected = " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg
+    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0
+            and secu.user_id = '1'
+    inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0
+             and secr.module = 'Users'
+    where secg.deleted = 0
+) securitygroup_join on securitygroup_join.id = users.id ";
         $actual = $securityGroup->getGroupJoin('users', 'Users', 1);
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgetGroupUsersJoin()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         $securityGroup = new SecurityGroup();
 
-        $expected = " LEFT JOIN (\n            select distinct sec.user_id as id from securitygroups_users sec\n            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0\n                and secu.user_id = '1'\n            where sec.deleted = 0\n        ) securitygroup_join on securitygroup_join.id = users.id ";
+        $expected = " LEFT JOIN (
+            select distinct sec.user_id as id from securitygroups_users sec
+            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0
+                and secu.user_id = '1'
+            where sec.deleted = 0
+        ) securitygroup_join on securitygroup_join.id = users.id ";
         $actual = $securityGroup->getGroupUsersJoin(1);
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgroupHasAccess()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
 
         //test for listview
         $result = SecurityGroup::groupHasAccess('', '[SELECT_ID_LIST]');
@@ -174,26 +137,18 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with valid values
         $result = SecurityGroup::groupHasAccess('Users', '1');
         $this->assertEquals(false, $result);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testinherit()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
-        
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
 
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushGlobals();
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -204,28 +159,24 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             SecurityGroup::inherit($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        $state->popGlobals();
+        
     }
 
     public function testassign_default_groups()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -234,27 +185,23 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             SecurityGroup::assign_default_groups($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testinherit_creator()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
 
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -263,28 +210,23 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             SecurityGroup::inherit_creator($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testinherit_assigned()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
         $account->assigned_user_id = 1;
@@ -294,28 +236,23 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             SecurityGroup::inherit_assigned($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testinherit_parent()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -324,27 +261,23 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             SecurityGroup::inherit_parent($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testinherit_parentQuery()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
 
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $account = new Account();
         $account->id = 1;
 
@@ -353,74 +286,61 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             SecurityGroup::inherit_parentQuery($account, 'Accounts', 1, 1, $account->module_dir);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testinheritOne()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
 
         $result = $securityGroup->inheritOne(1, 1, 'Accounts');
         $this->assertEquals(false, $result);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgetMembershipCount()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
 
         $securityGroup = new SecurityGroup();
 
         $result = $securityGroup->getMembershipCount('1');
         $this->assertEquals(0, $result);
-        
+
         // clean up
         
-        $this->restoreStateAll($state);
+        $state->popGlobals();
+
     }
 
     public function testSaveAndRetrieveAndRemoveDefaultGroups()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('securitygroups');
+        $state->pushTable('tracker');
+
+	// test
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -453,22 +373,14 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $this->restoreStateAll($state);
+        $state->popTable('tracker');
+        $state->popTable('securitygroups');
+        $state->popTable('aod_index');
+
     }
 
     public function testgetSecurityModules()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
 
@@ -508,33 +420,32 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             'jjwg_Maps',
             'AOS_Product_Categories',
             'Spots' => 'Spots',
-            'SharedSecurityRules',
-            'SharedSecurityRulesActions',
-                );
+            'SurveyQuestionOptions' => 'SurveyQuestionOptions',
+            'SurveyQuestionResponses' => 'SurveyQuestionResponses',
+            'SurveyQuestions' => 'SurveyQuestions',
+            'SurveyResponses' => 'SurveyResponses',
+            'Surveys' => 'Surveys',
+            'SharedSecurityRules' => 'SharedSecurityRules',
+            'SharedSecurityRulesActions' => 'SharedSecurityRulesActions',
+        );
 
         $actual = $securityGroup->getSecurityModules();
         $actualKeys = array_keys($actual);
         sort($expected);
         sort($actualKeys);
         $this->assertSame($expected, $actualKeys);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgetLinkName()
     {
-        // save state
+        $state = new SuiteCRM\StateSaver();
         
-        $state = $this->storeStateAll();
-        
-        // test
         
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -545,23 +456,27 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $securityGroup->getLinkName('SecurityGroups', 'ACLRoles');
         $this->assertEquals('aclroles', $result);
 
+        //error_reporting(E_ALL);
+        ////error_reporting(E_ERROR | E_PARSE);
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testaddGroupToRecord()
     {
-        // save state
+        $state = new SuiteCRM\StateSaver();
         
-        $state = $this->storeStateAll();
+        $state->pushTable('securitygroups_records');
         
-        // test
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -571,25 +486,27 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $securityGroup->addGroupToRecord('Accounts', 1, 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        $state->popTable('securitygroups_records');
+        
     }
 
     public function testremoveGroupFromRecord()
     {
-        // save state
+        $state = new SuiteCRM\StateSaver();
         
-        $state = $this->storeStateAll();
         
-        // test
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -599,25 +516,20 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $securityGroup->removeGroupFromRecord('Accounts', 1, 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $this->restoreStateAll($state);
+        
     }
 
     public function testgetUserSecurityGroups()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -625,23 +537,14 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $securityGroup->getUserSecurityGroups('1');
 
         $this->assertTrue(is_array($result));
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgetAllSecurityGroups()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -649,23 +552,14 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $securityGroup->getAllSecurityGroups();
 
         $this->assertTrue(is_array($result));
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgetMembers()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -673,23 +567,14 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $securityGroup->getMembers();
 
         $this->assertTrue(is_array($result));
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 
     public function testgetPrimaryGroupID()
     {
-        // save state
-        
-        $state = $this->storeStateAll();
-        
-        // test
-        
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        //$db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $securityGroup = new SecurityGroup();
@@ -697,9 +582,5 @@ class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $securityGroup->getPrimaryGroupID();
 
         $this->assertEquals(null, $result);
-        
-        // clean up
-        
-        $this->restoreStateAll($state);
     }
 }

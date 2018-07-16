@@ -2,6 +2,15 @@
 
 class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testAOS_Contracts()
     {
 
@@ -23,15 +32,15 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsaveAndDelete()
     {
-        // save state
-        
         $state = new SuiteCRM\StateSaver();
+        
         $state->pushTable('aod_indexevent');
         $state->pushTable('aos_contracts');
+        $state->pushTable('tracker');
+        $state->pushTable('aod_index');
         $state->pushGlobals();
         
-        // test
-        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aosContracts = new AOS_Contracts();
         $aosContracts->name = 'test';
@@ -50,13 +59,21 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('aod_index');
+        $state->popTable('tracker');
         $state->popTable('aos_contracts');
         $state->popTable('aod_indexevent');
+        
     }
 
     public function testCreateReminderAndCreateLinkAndDeleteCall()
     {
-        $this->markTestIncomplete("Error: Class 'call' not found");
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('calls');
+        $state->pushTable('vcals');
+        $state->pushTable('tracker');
+        $state->pushGlobals();
         
         $call = new call();
 
@@ -81,7 +98,15 @@ class AOS_ContractsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //delete the call and verify that this record cannot be retrieved anymore.		
         $aosContracts->deleteCall();
-        $call->retrieve($aosContracts->call_id);
+        $result = $call->retrieve($aosContracts->call_id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('tracker');
+        $state->popTable('vcals');
+        $state->popTable('calls');
+        $state->popTable('aod_indexevent');
     }
 }

@@ -21,11 +21,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testis_self_referencing()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
         //test without setting any attributes
         $relationship = new Relationship();
 
@@ -60,7 +55,8 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -77,18 +73,24 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdelete()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             Relationship::delete('test_test', $db);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testget_other_module()
@@ -96,7 +98,8 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -115,7 +118,8 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -141,7 +145,8 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //unset and reconnect Db to resolve mysqli fetch exeception
         $db = DBManagerFactory::getInstance();
-        unset($db->database);
+        $db->disconnect();
+        unset ($db->database);
         $db->checkConnection();
 
         $relationship = new Relationship();
@@ -161,11 +166,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve_by_name()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
 
         $relationship = new Relationship();
 
@@ -190,11 +190,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testload_relationship_meta()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
         $relationship = new Relationship();
 
         $relationship->load_relationship_meta();
@@ -204,11 +199,12 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testbuild_relationship_cache()
     {
 
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
-
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $relationship = new Relationship();
 
         //execute the method and test if it works and does not throws an exception.
@@ -216,8 +212,12 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $relationship->build_relationship_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testcache_file_dir()
@@ -235,22 +235,27 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdelete_cache()
     {
 
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             Relationship::delete_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testtrace_relationship_module()
     {
-
-        //unset and reconnect Db to resolve mysqli fetch exeception
-        $db = DBManagerFactory::getInstance();
-        unset($db->database);
-        $db->checkConnection();
 
         $relationship = new Relationship();
         $result = $relationship->trace_relationship_module('Roles', 'Users');

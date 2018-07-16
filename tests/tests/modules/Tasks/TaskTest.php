@@ -2,16 +2,17 @@
 
 class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testTask()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-        
-        // test
-        
 
         //execute the contructor and check for the Object type and  attributes
         $task = new Task();
@@ -25,25 +26,19 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals(true, 'new_schema', $task);
         $this->assertAttributeEquals(true, 'importable', $task);
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
     }
 
     public function testsave()
     {
-        // save state
-        
         $state = new SuiteCRM\StateSaver();
-        $state->pushTable('tasks');
+        
+        $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
+        $state->pushTable('tasks');
+        $state->pushTable('tracker');
         $state->pushGlobals();
         
-        // test
-        
-
+        //error_reporting(E_ERROR | E_PARSE);
 
         $task = new Task();
 
@@ -63,23 +58,18 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $result = $task->retrieve($task->id);
         $this->assertEquals(null, $result);
         
-        // cleanup
+        // clean up
         
         $state->popGlobals();
-        $state->popTable('aod_indexevent');
+        $state->popTable('tracker');
         $state->popTable('tasks');
+        $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+        
     }
 
     public function testget_summary_text()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-        
-        // test
-        
         $task = new Task();
 
         //test without setting name
@@ -88,23 +78,10 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with name set
         $task->name = 'test';
         $this->assertEquals('test', $task->get_summary_text());
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
     }
 
     public function testcreate_export_query()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-        
-        // test
-        
         $task = new Task();
 
         //test with empty string params
@@ -116,16 +93,15 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = 'SELECT tasks.*, users.user_name as assigned_user_name  FROM tasks   LEFT JOIN users ON tasks.assigned_user_id=users.id where users.user_name = "" AND tasks.deleted=0 ORDER BY tasks.name';
         $actual = $task->create_export_query('tasks.id', 'users.user_name = ""');
         $this->assertSame($expected, $actual);
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $this->markTestIncomplete('method has no implementation');
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $task = new Task();
 
@@ -134,20 +110,23 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $task->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
+        $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        // save state
-        
         $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
         
-        // test
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $task = new Task();
         $task->contact_id = 1;
@@ -157,24 +136,21 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $task->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
+        
     }
 
     public function testfill_in_additional_parent_fields()
     {
-        // save state
-        
         $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
         
-        // test
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $task = new Task();
         $task->parent_type = 'Accounts';
@@ -185,25 +161,16 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $task->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
+        
     }
 
     public function testget_list_view_data()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-        
-        // test
-        
         $task = new Task();
         $current_theme = SugarThemeRegistry::current();
 
@@ -227,38 +194,16 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                 'CONTACT_PHONE' => '1234567',
                 'PRIORITY' => 'Medium',
                 'PARENT_MODULE' => 'Accounts',
-                'SET_COMPLETE' => '~'.preg_quote("<a id='' onclick='SUGAR.util.closeActivityPanel.show(\"Tasks\",\"\",\"Completed\",\"listview\",\"1\");'><img src=\"themes/$current_theme/images/close_inline")."\.\w+\?v="
-                    .'[\w-]+'
-                    .preg_quote("\"    title=Close border='0' alt=\"Close\" /></a>")
-                    .'~',
+                'SET_COMPLETE' => '<b><a id=\'\' class=\'list-view-data-icon\' title=\'Close\' onclick=\'SUGAR.util.closeActivityPanel.show("Tasks","","Completed","listview","1");\'><span class=\'suitepicon suitepicon-action-clear\'></span></a></b>',
                 'TITLE' => ": test\nAccount: test",
         );
 
         $actual = $task->get_list_view_data();
-        foreach ($expected as $expectedKey => $expectedVal) {
-            if ($expectedKey == 'SET_COMPLETE') {
-                $this->assertRegExp($expected[$expectedKey], $actual[$expectedKey]);
-            } else {
-                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
-            }
-        }
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
+        $this->assertSame($expected, $actual);
     }
 
     public function testset_notification_body()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-        
-        // test
-        
         $task = new Task();
 
         //test with attributes preset and verify template variables are set accordingly
@@ -278,44 +223,25 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals($task->priority, $result->_tpl_vars['TASK_PRIORITY']);
         $this->assertEquals('02/11/2016 17:30 UTC(+00:00)', $result->_tpl_vars['TASK_DUEDATE']);
         $this->assertEquals($task->description, $result->_tpl_vars['TASK_DESCRIPTION']);
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
     }
 
     public function testbean_implements()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-        
-        // test
-        
         $task = new Task();
 
         $this->assertEquals(false, $task->bean_implements('')); //test with blank value
         $this->assertEquals(false, $task->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $task->bean_implements('ACL')); //test with valid value
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
     }
 
     public function testlistviewACLHelper()
     {
         // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
+
+        $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
-        
-        // test
+
+	// test
         
         $task = new Task();
 
@@ -325,30 +251,15 @@ class TaskTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('aod_indexevent');
         $state->popGlobals();
+
     }
 
     public function testgetDefaultStatus()
     {
-        $this->markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "database::aod_indexevent".');
-        
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
-        $state->pushGlobals();
-        
-        // test
-        
         $task = new Task();
 
         $result = $task->getDefaultStatus();
         $this->assertEquals('Not Started', $result);
-        
-        // clean up
-        
-        $state->popTable('aod_indexevent');
-        $state->popGlobals();
     }
 }

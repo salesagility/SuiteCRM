@@ -2,6 +2,15 @@
 
 class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testACLRole()
     {
 
@@ -32,12 +41,8 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsetAction()
     {
-        // save state
-        
-        $state = new \SuiteCRM\StateSaver();
+        $state = new SuiteCRM\StateSaver();
         $state->pushTable('acl_roles_actions');
-        
-        // test
         
         $aclRole = new ACLRole();
 
@@ -46,15 +51,18 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aclRole->setAction('1', '1', '90');
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
-        $this->assertGreaterThanOrEqual($initial_count, $final_count);
+        $this->assertGreaterThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
         
         // clean up
-        
         $state->popTable('acl_roles_actions');
     }
 
     public function testmark_relationships_deleted()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aclRole = new ACLRole();
 
@@ -63,11 +71,19 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $aclRole->mark_relationships_deleted('1');
         $final_count = count($aclRole->retrieve_relationships('acl_roles_actions', array('role_id' => '1', 'action_id' => '1', 'access_override' => '90'), 'role_id'));
 
-        $this->assertLessThanOrEqual($initial_count, $final_count);
+        $this->assertLessThanOrEqual($initial_count, $final_count, "values were: [$initial_count], [$final_count]");
+        
+        // clean up
+        
+        
     }
 
     public function testgetUserRoles()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aclRole = new ACLRole();
 
@@ -78,6 +94,10 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with flase getAsNameArray param value
         $result = $aclRole->getUserRoles('1', false);
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        
     }
 
     public function testgetUserRoleNames()
@@ -113,12 +133,73 @@ class ACLRoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with empty value
         $result = $aclRole->getRoleActions('');
         $this->assertTrue(is_array($result));
-        $this->assertEquals(54, count($result));
+        $exp = [
+          'Accounts',
+          'Alerts',
+          'Bugs',
+          'Calls',
+          'Calls_Reschedule',
+          'Campaigns',
+          'AOP_Case_Events',
+          'AOP_Case_Updates',
+          'Cases',
+          'Contacts',
+          'AOS_Contracts',
+          'Documents',
+          'EAPM',
+          'EmailTemplates',
+          'EmailMarketing',
+          'Emails',
+          'FP_events',
+          'AOD_Index',
+          'AOD_IndexEvent',
+          'AOS_Invoices',
+          'AOK_Knowledge_Base_Categories',
+          'AOK_KnowledgeBase',
+          'Leads',
+          'FP_Event_Locations',
+          'jjwg_Maps',
+          'jjwg_Address_Cache',
+          'jjwg_Areas',
+          'jjwg_Markers',
+          'Meetings',
+          'Notes',
+          'Opportunities',
+          'OutboundEmailAccounts',
+          'AOS_PDF_Templates',
+          'AOW_Processed',
+          'AOS_Products',
+          'AOS_Product_Categories',
+          'AM_TaskTemplates',
+          'ProjectTask',
+          'Project',
+          'AM_ProjectTemplates',
+          'AOS_Quotes',
+          'AOR_Reports',
+          'AOR_Scheduled_Reports',
+          'SecurityGroups',
+          'SharedSecurityRules',
+          'SharedSecurityRulesActions',
+          'SharedSecurityRulesConditions',
+          'Spots',
+          'SurveyQuestionOptions',
+          'SurveyQuestionResponses',
+          'SurveyQuestions',
+          'SurveyResponses',
+          'Surveys',
+          'Prospects',
+          'ProspectLists',
+          'Tasks',
+          'TemplateSectionLine',
+          'Users',
+          'AOW_WorkFlow',
+        ];
+        $this->assertEquals($exp, array_keys($result));
 
         //test with non empty but non existing role id value, initially no roles exist.
         $result = $aclRole->getRoleActions('1');
         $this->assertTrue(is_array($result));
-        $this->assertEquals(54, count($result));
+        $this->assertEquals($exp, array_keys($result));
     }
 
     public function testtoArray()

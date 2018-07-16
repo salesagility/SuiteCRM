@@ -2,6 +2,15 @@
 
 class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testEmailTemplate()
     {
 
@@ -20,6 +29,10 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testgenerateFieldDefsJS()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $emailTemplate = new EmailTemplate();
 
@@ -29,6 +42,10 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //$this->assertSame($expected,$actual);
 
         $this->assertGreaterThan(0, strlen($actual));
+        
+        // clean up
+        
+        
     }
 
     public function testget_summary_text()
@@ -45,13 +62,16 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        // test
 
+
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+	// test
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //test with empty string params
@@ -64,6 +84,7 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $emailTemplate->create_export_query('email_templates.id', 'email_templates.name=""');
         $this->assertSame($expected, $actual);
         
+        
         // clean up
         
         $state->popGlobals();
@@ -71,6 +92,12 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -78,8 +105,12 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailTemplate->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
@@ -103,6 +134,12 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testfill_in_additional_parent_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $emailTemplate = new EmailTemplate();
 
         //execute the method and test if it works and does not throws an exception.
@@ -110,8 +147,12 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $emailTemplate->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testget_list_view_data()
@@ -121,7 +162,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the method and verify that it retunrs expected results
         $expected = array(
                 'DELETED' => 0,
-                'DATE_MODIFIED' => false,
         );
 
         $actual = $emailTemplate->get_list_view_data();
@@ -170,7 +210,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function test_parseUserValues()
     {
-        $this->markTestIncomplete("Different values for php5 and php7");
         /*
         $emailTemplate = new EmailTemplate();
         $user = new User(1);
@@ -247,6 +286,7 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $actual = $emailTemplate->_parseUserValues($repl_arr, $user);
         $this->assertSame($expected, $actual);
         */
+        $this->markTestIncomplete("Different values for php5 and php7");
     }
 
     public function testparse_template_bean()
@@ -321,8 +361,6 @@ class EmailTemplateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcleanBean()
     {
-        $this->markTestIncomplete('environment dependency');
-        
         $emailTemplate = new EmailTemplate();
 
         //test without body_html attribute

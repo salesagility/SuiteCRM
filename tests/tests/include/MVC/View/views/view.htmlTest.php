@@ -2,6 +2,15 @@
 
 class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testViewHtml()
     {
 
@@ -13,13 +22,23 @@ class ViewHtmlTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdisplay()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $view = new ViewHtml();
 
         //execute the method and test if it works and does not throws an exception.
         try {
             $view->display();
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 }

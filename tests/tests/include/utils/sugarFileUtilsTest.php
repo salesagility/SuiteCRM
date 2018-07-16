@@ -11,7 +11,10 @@ class sugar_file_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     }
 
     /*
-    public function setUp() {
+    public function setUp()
+    {
+        parent::setUp();
+
         $rootFs = org\bovigo\vfs\vfsStream::setup('root');
         $rootFs->addChild(org\bovigo\vfs\vfsStream::newDirectory('testDir'));
         $rootFs->addChild(org\bovigo\vfs\vfsStream::newFile('test.txt')->withContent("Hello world!"));

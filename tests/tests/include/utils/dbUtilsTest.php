@@ -32,13 +32,25 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
      */
     public function testdb_convert($string, $type, $params, $expected)
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
         //execute the method and test if it returns expected values for all types
         $actual = db_convert($string, $type, $params);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popTable('aod_indexevent');
     }
 
     public function testdb_concat()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method and test if it returns expected values
 
@@ -47,6 +59,10 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $expected = "LTRIM(RTRIM(CONCAT(IFNULL(Table1.Col1,''),' ',IFNULL(Table1.Col2,''),' ',IFNULL(Table1.Col3,''))))";
         $actual = db_concat($table, $fields);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        
     }
 
     public function testfrom_db_convert()
@@ -70,8 +86,8 @@ class db_utilsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
 
         $string = "'test'&trial<\">";
-        $expected = '&#039;test&#039;&trial&lt;&quot;&gt;';
-        $actual = to_html($string);
+        $expected = '&#039;test&#039;&amp;trial&lt;&quot;&gt;';
+        $actual = to_html($string, true);
         $this->assertSame($expected, $actual);
     }
 

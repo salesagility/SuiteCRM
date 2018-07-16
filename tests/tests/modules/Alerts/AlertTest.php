@@ -3,17 +3,17 @@
 
 class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testAlert()
     {
-        $this->markTestIncomplete("Incorrect state hash (in PHPUnitTest): Hash doesn't match at key \"database::oauth_tokens\".");
-        
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('oauth_tokens');
-        $state->pushTable('roles_users');
-        
-        // test
 
         //execute the contructor and check for the Object type and type attribute
         $alert = new Alert();
@@ -27,23 +27,14 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'new_schema', $alert);
         $this->assertAttributeEquals(true, 'disable_row_level_security', $alert);
         $this->assertAttributeEquals(false, 'importable', $alert);
-        
-        // clean up
-        
-        $state->popTable('roles_users');
-        $state->popTable('oauth_tokens');
     }
 
     public function testbean_implements()
     {
-        $this->markTestIncomplete("Incorrect state hash (in PHPUnitTest): Hash doesn't match at key \"database::oauth_tokens\".");
-        
-        // save state
-        
         $state = new SuiteCRM\StateSaver();
-        $state->pushTable('roles_users');
         
-        // test
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $alert = new Alert();
 
@@ -53,6 +44,6 @@ class AlertTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popTable('roles_users');
+        
     }
 }

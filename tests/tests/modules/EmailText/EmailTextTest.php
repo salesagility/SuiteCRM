@@ -4,16 +4,6 @@ class EmailTextTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEmailText()
     {
-        $this->markTestIncomplete('Incorrect state hash (in PHPUnitTest): Hash doesn\'t match at key "database::eapm".');
-        
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushTable('eapm');
-        $state->pushGlobals();
-        
-        // test
-        
 
         //execute the contructor and check for the Object type and  attributes
         $emailText = new EmailText();
@@ -28,10 +18,5 @@ class EmailTextTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $this->assertAttributeEquals(true, 'disable_row_level_security', $emailText);
         $this->assertAttributeEquals(true, 'disable_custom_fields', $emailText);
-        
-        // clean up
-        
-        $state->popTable('eapm');
-        $state->popGlobals();
     }
 }

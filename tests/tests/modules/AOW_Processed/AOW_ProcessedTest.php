@@ -2,6 +2,15 @@
 
 class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testAOW_Processed()
     {
 
@@ -21,10 +30,18 @@ class AOW_ProcessedTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbean_implements()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aowProcessed = new AOW_Processed();
         $this->assertEquals(false, $aowProcessed->bean_implements('')); //test with blank value
         $this->assertEquals(false, $aowProcessed->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $aowProcessed->bean_implements('ACL')); //test with valid value
+        
+        // clean up
+        
+        
     }
 }

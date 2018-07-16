@@ -4,14 +4,15 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testEAPM()
     {
-        $this->markTestIncomplete('environment dependency');
-        
-        // save state
+        // store state
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
         
         // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $eapm = new EAPM();
@@ -28,19 +29,25 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertAttributeEquals(true, 'disable_row_level_security', $eapm);
         
         // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
         
-        $state->popTable('aod_indexevent');
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
+        $state->popGlobals();
     }
 
     public function testbean_implements()
     {
-        // save state
+        // store state
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
+        $state->pushGlobals();
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
         
         // test
-
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $eapm = new EAPM();
         $this->assertEquals(false, $eapm->bean_implements('')); //test with blank value
@@ -48,19 +55,24 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(true, $eapm->bean_implements('ACL')); //test with valid value
         
         // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
         
-        $state->popTable('aod_indexevent');
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
+        $state->popGlobals();
     }
 
     public function testgetLoginInfo()
     {
-        // save state
+        // store state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
         
         // test
-
+        
         $eapm = new EAPM();
 
         //test with default value/false
@@ -72,16 +84,21 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(null, $result);
         
         // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
         
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
         $state->popGlobals();
     }
 
     public function testcreate_new_list_query()
     {
-        // save state
+        // store state
         
         $state = new SuiteCRM\StateSaver();
         $state->pushGlobals();
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
         
         // test
         
@@ -98,13 +115,24 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($expected, $actual);
         
         // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
         
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
         $state->popGlobals();
     }
 
     public function testsaveAndMarkDeletedAndValidated()
     {
-        $this->markTestSkipped('Validated column never gets updated in Db ');
+        self::markTestIncomplete('eapm table fails');
+        
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
+        
+        // test
         
         $eapm = new EAPM();
 
@@ -127,25 +155,31 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //retrieve back to test if validated attribute is updated in db
         $eapmValidated = $eapm->retrieve($eapm->id);
         //$this->assertEquals(1, $eapmValidated->validated);
+        $this->markTestSkipped('Validated column never gets updated in Db ');
 
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $eapm->mark_deleted($eapm->id);
         $result = $eapm->retrieve($eapm->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
+        
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
     }
 
     public function testfill_in_additional_detail_fields()
     {
-        $this->markTestIncomplete('environment dependency');
-        
-        // save state
         
         $state = new SuiteCRM\StateSaver();
+        $eapmTable = $state->pushTable('eapm');
+        $state->pushTable('tracker');
         $state->pushTable('aod_index');
-        $state->pushTable('eapm');
         
-        // test
-
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -153,17 +187,31 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $eapm->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
         
         // clean up
         
-        $state->popTable('eapm');
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
+        
         $state->popTable('aod_index');
+        $state->popTable('tracker');
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
     }
 
     public function testfill_in_additional_list_fields()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
+        
+        // test
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -171,12 +219,26 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $eapm->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
+        
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
     }
 
     public function testsave_cleanup()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
+        
+        // test
+        
         $eapm = new EAPM();
 
         //execute the method and verify attributes are set accordingly
@@ -185,10 +247,27 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('', $eapm->oauth_token);
         $this->assertEquals('', $eapm->oauth_secret);
         $this->assertEquals('', $eapm->api_data);
+        
+        // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
+        
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
     }
 
     public function testdelete_user_accounts()
     {
+        // store state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
+        
+        // test
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $eapm = new EAPM();
 
         //execute the method and test if it works and does not throws an exception.
@@ -196,26 +275,35 @@ class EAPMTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $eapm->delete_user_accounts(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
+        
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
     }
 
     public function testgetEAPMExternalApiDropDown()
-    {
-        $this->markTestIncomplete('Error: Call to undefined function getEAPMExternalApiDropDown()');
-        
-        // save state
+    {        
+        // store state
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushTable('aod_indexevent');
+        $state->pushTable('aod_index');
+        $eapmTable = $state->pushTable('eapm');
         
         // test
         
+
         $result = getEAPMExternalApiDropDown();
         $this->assertEquals(array('' => ''), $result);
         
-        // clean up
         
-        $state->popTable('aod_indexevent');
+        // clean up
+        DBManagerFactory::getInstance()->query("TRUNCATE TABLE eapm");
+        
+        self::assertEquals($eapmTable, $state->popTable('eapm'));
+        $state->popTable('aod_index');
     }
 }

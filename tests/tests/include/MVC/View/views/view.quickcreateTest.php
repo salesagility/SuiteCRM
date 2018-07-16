@@ -2,15 +2,21 @@
 
 class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testpreDisplay()
     {
-        // store state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        // test
-        
+        if(isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
 
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickcreate();
@@ -33,19 +39,30 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popGlobals();
+        if(isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 
     public function testdisplay()
     {
-        // store state
+        
+        if(isset($_SESSION)) {
+            $_session = $_SESSION;
+        }
+        
+        if(isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
         
         $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
         
-        // test
         
-
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with required child objects and parameters preset. it will return some html.
         $view = new ViewQuickcreate();
@@ -65,6 +82,18 @@ class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popGlobals();
+        
+        
+        if(isset($_session)) {
+            $_SESSION = $_session;
+        } else {
+            unset($_SESSION);
+        }
+        
+        if(isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 }

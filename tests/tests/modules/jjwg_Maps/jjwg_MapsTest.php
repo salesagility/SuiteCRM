@@ -23,6 +23,10 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testconfiguration()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         $jjwgMaps = new jjwg_Maps();
 
@@ -31,20 +35,25 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $jjwgMaps->configuration();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testsaveConfiguration()
     {
+        self::markTestIncomplete('environment dependency');
         
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
         $state->pushTable('config');
-        $state->pushGlobals();
-        
-        // test
+        $state->pushTable('tracker');
+
+	// test
         
         $jjwgMaps = new jjwg_Maps();
 
@@ -58,8 +67,9 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popGlobals();
+        $state->popTable('tracker');
         $state->popTable('config');
+
     }
 
     public function testupdateGeocodeInfo()
@@ -82,23 +92,23 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals(100, $bean->jjwg_maps_lat_c);
         $this->assertEquals(40, $bean->jjwg_maps_lng_c);
         
-        $jjwgMapsGeocodeStatusC = null;
-        if (isset($bean->jjwg_maps_geocode_status_c)) {
-            $jjwgMapsGeocodeStatusC = $bean->jjwg_maps_geocode_status_c;
+        
+        if (!isset($bean->jjwg_maps_geocode_status_c)) {
+            $beanJjwgMapsGeocodeStatusC = null;
         } else {
-            LoggerManager::getLogger()->warn('jjwg Maps geocode status c is not set for bean: ' . get_class($bean));
+            $beanJjwgMapsGeocodeStatusC = $bean->jjwg_maps_geocode_status_c;
         }
         
-        $this->assertEquals('', $jjwgMapsGeocodeStatusC);
+        $this->assertEquals('', $beanJjwgMapsGeocodeStatusC);
         
-        $jjwgMapsAddressC = null;
-        if (isset($bean->jjwg_maps_address_c)) {
-            $jjwgMapsAddressC = $bean->jjwg_maps_address_c;
+        
+        if (!isset($bean->jjwg_maps_address_c)) {
+            $beanJjwgMapsAddressC = null;
         } else {
-            LoggerManager::getLogger()->warn('jjwg Maps address c is not set for bean: ' . get_class($bean));
+            $beanJjwgMapsAddressC = $bean->jjwg_maps_address_c;
         }
         
-        $this->assertEquals('', $jjwgMapsAddressC);
+        $this->assertEquals('', $beanJjwgMapsAddressC);
     }
 
     public function testupdateRelatedMeetingsGeocodeInfo()
@@ -136,13 +146,12 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testupdateGeocodeInfoByAssocQuery()
     {
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts_cstm');
-        $state->pushGlobals();
-        
-        // test
+
+	// test
         
         $jjwgMaps = new jjwg_Maps();
 
@@ -160,19 +169,17 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         // clean up
         
-        $state->popGlobals();
         $state->popTable('accounts_cstm');
     }
 
     public function testupdateGeocodeInfoByBeanQuery()
     {
-        
-        // save state
-        
-        $state = new SuiteCRM\StateSaver();
+	// save state
+
+        $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts_cstm');
-        
-        // test
+
+	// test
         
         $jjwgMaps = new jjwg_Maps();
         $bean = new Account();
@@ -185,7 +192,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $bean->id = 1;
         $result = $jjwgMaps->updateGeocodeInfoByBeanQuery($bean);
         $this->assertSame(null, $result);
-        
         
         // clean up
         
@@ -218,65 +224,6 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with invalid geocode bean
         $result = $jjwgMaps->getGeocodeAddressesResult('accounts');
         $this->assertInstanceOf('mysqli_result', $result);
-    }
-
-    public function testgetGoogleMapsGeocode()
-    {
-        $this->markTestIncomplete('unpredictable behavior of google map api');
-        
-        $jjwgMaps = new jjwg_Maps();
-
-        //test with invalid value
-        $expected = array(
-                'address' => '',
-                'status' => 'INVALID_REQUEST',
-                'lat' => null,
-                'lng' => null,
-        );
-
-        $actual = $jjwgMaps->getGoogleMapsGeocode('');
-        $this->assertSame($expected, $actual);
-
-        //test with valid value
-        $expected = array(
-                'address' => 'washington D.C',
-                'status' => 'OK',
-                'lat' => 38.9071923,
-                'lng' => -77.0368707,
-        );
-        $actual = $jjwgMaps->getGoogleMapsGeocode('washington D.C');
-        $this->assertSame($expected, $actual);
-
-        //test with valid value and full array true
-        $expected =
-            array(
-                'results' => array(
-                        array(
-                                'address_components' => array(
-                                        array('long_name' => 'Washington', 'short_name' => 'D.C.', 'types' => array('locality', 'political')),
-                                        array('long_name' => 'District of Columbia', 'short_name' => 'District of Columbia', 'types' => array('administrative_area_level_2', 'political')),
-                                        array('long_name' => 'District of Columbia', 'short_name' => 'DC', 'types' => array('administrative_area_level_1', 'political'),
-                                        ),
-                                        array('long_name' => 'United States', 'short_name' => 'US', 'types' => array('country', 'political')),
-                                ),
-                                'formatted_address' => 'Washington, DC, USA',
-                                'geometry' => array(
-                                        'bounds' => array('northeast' => array('lat' => 38.9955479999999994333848007954657077789306640625, 'lng' => -76.909392999999994344761944375932216644287109375), 'southwest' => array('lat' => 38.8031495000000035133780329488217830657958984375, 'lng' => -77.1197399999999930741978459991514682769775390625)),
-                                        'location' => array('lat' => 38.90719229999999839719748706556856632232666015625, 'lng' => -77.0368706999999943718648864887654781341552734375),
-                                        'location_type' => 'APPROXIMATE',
-                                        'viewport' => array('northeast' => array('lat' => 38.9955479999999994333848007954657077789306640625, 'lng' => -76.909392999999994344761944375932216644287109375), 'southwest' => array('lat' => 38.8031495000000035133780329488217830657958984375, 'lng' => -77.1197399999999930741978459991514682769775390625)),
-                                ),
-                                'place_id' => 'ChIJW-T2Wt7Gt4kRKl2I1CJFUsI',
-                                'types' => array('locality', 'political'),
-                        ),
-                ),
-                'status' => 'OK',
-        );
-
-        $actual = $jjwgMaps->getGoogleMapsGeocode('washington D.C', true);
-
-        $this->assertSame(isset($expected['results']['geometry']) ? $expected['results']['geometry'] : null, isset($actual['results']['geometry']) ? $actual['results']['geometry'] : null);
-        //$this->assertSame($expected,$actual);
     }
 
     public function testdefineMapsAddress()
@@ -383,6 +330,12 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testlogGeocodeInfo()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
         $jjwgMaps = new jjwg_Maps();
 
         $bean = new Meeting();
@@ -394,8 +347,12 @@ class jjwg_MapsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $jjwgMaps->logGeocodeInfo($bean);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testgetProspectLists()

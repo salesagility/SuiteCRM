@@ -2,6 +2,15 @@
 
  class ViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
  {
+     public function setUp()
+    {
+        parent::setUp();
+
+         global $current_user;
+         get_sugar_config_defaults();
+         $current_user = new User();
+     }
+
      public function testViewEdit()
      {
 
@@ -18,13 +27,15 @@
 
      public function testpreDisplay()
      {
-        // save state 
         
-        $state = new \SuiteCRM\StateSaver();
-        $state->pushGlobals();
+        if(isset($_SESSION)) {
+            $session = $_SESSION;
+        }
         
-        // test
+        $state = new SuiteCRM\StateSaver();
         
+        
+         ////error_reporting(E_ERROR | E_PARSE);
 
         //execute the method with required attributes preset, it will initialize the ev(edit view) attribute.
         $view = new ViewEdit();
@@ -40,14 +51,25 @@
          $view->preDisplay();
          $this->assertInstanceOf('EditView', $view->ev);
          
-        // cleanup
+        // clean up
         
-        $state->popGlobals();
+        
+        
+        if(isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
      }
 
      public function testdisplay()
      {
 
+         $state = new SuiteCRM\StateSaver();
+         
+         
+         ////error_reporting(E_ERROR | E_PARSE);
+         
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewEdit();
          $view->module = 'Users';
@@ -60,5 +82,7 @@
          $renderedContent = ob_get_contents();
          ob_end_clean();
          $this->assertGreaterThan(0, strlen($renderedContent));
+         
+         
      }
  }

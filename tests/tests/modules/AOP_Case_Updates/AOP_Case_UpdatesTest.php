@@ -2,6 +2,15 @@
 
 class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testAOP_Case_Updates()
     {
 
@@ -22,16 +31,18 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave()
     {
-
-        // save state
+        
+        self::markTestIncomplete('environment dependency');
         
         $state = new SuiteCRM\StateSaver();
+        $state->pushTable('acl_actions');
+        $state->pushTable('aod_index');
         $state->pushTable('aod_indexevent');
         $state->pushTable('aop_case_updates');
         $state->pushGlobals();
         
-        // test
-        
+        //error_reporting(E_ERROR | E_PARSE);
+
         $aopCaseUpdates = new AOP_Case_Updates();
         $aopCaseUpdates->name = 'test name';
         $aopCaseUpdates->description = 'test description';
@@ -51,6 +62,8 @@ class AOP_Case_UpdatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->popGlobals();
         $state->popTable('aop_case_updates');
         $state->popTable('aod_indexevent');
+        $state->popTable('aod_index');
+        $state->popTable('acl_actions');
     }
 
     public function testgetCase()

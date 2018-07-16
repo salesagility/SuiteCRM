@@ -2,14 +2,18 @@
 
 class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+    }
+
     public function testpreDisplay()
     {
-        // store state
         
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        // test
+        if(isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
         
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickedit();
@@ -29,49 +33,13 @@ class ViewQuickeditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $_REQUEST['record'] = 1;
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
-        
+
         // clean up
-        
-        $state->popGlobals();
-    }
 
-    public function testdisplay()
-    {
-        // store state
-        
-        $state = new SuiteCRM\StateSaver();
-        $state->pushGlobals();
-        
-        // test
-        
-
-        //execute the method with required child objects and paramerers preset. it will rteturn some html.
-        $view = new ViewQuickedit();
-        $_REQUEST['module'] = 'Accounts';
-        $_REQUEST['action'] = 'SubpanelCreates';
-
-        try {
-            $view->bean = new Account();
-        } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
+        if(isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
         }
-
-        try {
-            ob_start();
-
-            $view->display();
-
-            $renderedContent = ob_get_contents();
-            ob_end_clean();
-
-            $this->assertGreaterThan(0, strlen($renderedContent));
-            $this->assertNotEquals(false, json_decode($renderedContent));
-        } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
-        }
-        
-        // clean up
-        
-        $state->popGlobals();
     }
 }

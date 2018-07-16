@@ -2,6 +2,15 @@
 
 class AOS_PDF_TemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testAOS_PDF_Templates()
     {
 

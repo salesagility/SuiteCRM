@@ -22,6 +22,12 @@ class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testloadAll()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
+        
 
         //execute the method and check if it works and doesn't throws an exception
         //this method only includes file so there is no output to test.
@@ -29,7 +35,11 @@ class SugarAutoLoaderTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             SugarAutoLoader::loadAll();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 }

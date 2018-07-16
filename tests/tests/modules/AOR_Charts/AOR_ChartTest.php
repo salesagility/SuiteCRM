@@ -22,7 +22,11 @@ class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testsave_lines()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
         $this->markTestSkipped('Skipping AOR Charts Tests');
+        //error_reporting(E_ERROR | E_PARSE);
 
         $aorChart = new AOR_Chart();
 
@@ -43,8 +47,12 @@ class AOR_ChartTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $result = $aorChart->save_lines($post, $bean, $postKey);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        
     }
 
     public function testbuildChartImageBar()

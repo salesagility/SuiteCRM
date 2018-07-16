@@ -3,8 +3,21 @@
 require_once 'modules/Audit/Audit.php';
 class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        global $current_user;
+        get_sugar_config_defaults();
+        $current_user = new User();
+    }
+
     public function testAudit()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
         $audit = new Audit();
@@ -12,6 +25,10 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('SugarBean', $audit);
         $this->assertAttributeEquals('Audit', 'module_dir', $audit);
         $this->assertAttributeEquals('Audit', 'object_name', $audit);
+        
+        // clean up
+        
+        
     }
 
     public function testget_summary_text()
@@ -28,7 +45,11 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testcreate_export_query()
     {
-        $this->markTestIncomplete('method has no implementation');
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $audit = new Audit();
 
@@ -37,14 +58,23 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->create_export_query('', '');
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
+        $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_list_fields()
     {
-        $this->markTestIncomplete('method has no implementation');
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -52,15 +82,23 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
+        $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_detail_fields()
     {
-
-        $this->markTestIncomplete('method has no implementation');
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -68,14 +106,23 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+
+        $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testfill_in_additional_parent_fields()
     {
-
-        $this->markTestIncomplete('method has no implementation');
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -83,14 +130,23 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->fill_in_additional_parent_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+
+        $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testget_list_view_data()
     {
-
-        $this->markTestIncomplete('method has no implementation');
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -98,14 +154,23 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->get_list_view_data();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+
+        $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testget_audit_link()
     {
-
-        $this->markTestIncomplete('method has no implementation');
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $audit = new Audit();
         //execute the method and test if it works and does not throws an exception.
@@ -113,8 +178,14 @@ class AuditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
             $audit->get_audit_link();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+
+        $this->markTestIncomplete('method has no implementation');
+        
+        // clean up
+        
+        
     }
 
     public function testget_audit_list()
