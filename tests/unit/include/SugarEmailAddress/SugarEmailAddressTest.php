@@ -25,6 +25,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->stateSaver = new SuiteCRM\StateSaver();
         $this->stateSaver->pushTable('contacts');
         $this->stateSaver->pushTable('email_addr_bean_rel');
+        $this->stateSaver->pushTable('email_addresses');
 
         global $current_user;
         get_sugar_config_defaults();
@@ -54,6 +55,7 @@ class SugarEmailAddressTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $db->query($query);
         
         
+        $this->stateSaver->popTable('email_addresses');
         $this->stateSaver->popTable('email_addr_bean_rel');
         $this->stateSaver->popTable('contacts');
         
