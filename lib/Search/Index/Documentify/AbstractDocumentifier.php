@@ -46,14 +46,19 @@
 
 namespace SuiteCRM\Search\Index\Documentify;
 
-
+/**
+ * Base class all Documentifier should implement.
+ *
+ * A Documentifier takes a SugarBean as a parameters and converts it into an associative array
+ *  suitable for document-oriented databases and json serialisation.
+ */
 abstract class AbstractDocumentifier
 {
     /**
-     * Converts a bean to an index-friendly document.
+     * Converts a bean to a document-friendly associative array.
      *
      * @param $bean \SugarBean
      * @return array
      */
-    public abstract function documentify($bean);
+    public abstract function documentify(\SugarBean $bean);
 }

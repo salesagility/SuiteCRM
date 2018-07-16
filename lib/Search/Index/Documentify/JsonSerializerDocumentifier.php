@@ -48,9 +48,18 @@ namespace SuiteCRM\Search\Index\Documentify;
 
 use SuiteCRM\Utility\BeanJsonSerializer;
 
+/**
+ * This class makes a document using a BeanJsonSerializer.
+ *
+ * Note: This documentifier does not use the search definitions files and is not module-customisable.
+ * It provides, on the other hand, a human-friendly document, making advanced search queries easier.
+ *
+ * @see BeanJsonSerializer
+ */
 class JsonSerializerDocumentifier extends AbstractDocumentifier
 {
-    public function documentify($bean)
+    /** @inheritdoc */
+    public function documentify(\SugarBean $bean)
     {
         $values = BeanJsonSerializer::toArray($bean);
         unset($values['id']);

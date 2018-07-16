@@ -50,34 +50,45 @@ use ParserSearchFields;
 
 require_once 'modules/ModuleBuilder/parsers/parser.searchfields.php';
 
+/**
+ * This class converts a SugarBean into a document using the customisable Search Defs framework.
+ *
+ * @see ParserSearchFields
+ */
 class SearchDefsDocumentifier extends AbstractDocumentifier
 {
-    private static $fields = [];
+    /** @var array a cache with fields definition */
+    protected static $fields = [];
 
-    public function documentify($bean)
+    /** @inheritdoc */
+    public function documentify(\SugarBean $bean)
     {
         $module_name = $bean->module_name;
 
         if (empty(self::$fields[$module_name]))
             self::$fields[$module_name] = $this->getFieldsToIndex($module_name);
 
-        $fields = self::$fields[$module_name];
+        // Making a friendly reference to the mapping
+        $fields = &self::$fields[$module_name];
 
         $body = [];
 
         foreach ($fields as $key => $value) {
             if (is_array($value)) {
                 foreach ($value as $subvalue) {
-                    if ($this->hasField($bean, $subvalue)) {
+                    if (property_exists($bean, $subvalue)) {
                         $body[$key][$subvalue] = $this->cleanValue($bean->$subvalue);
                     }
                 }
             } else {
-                if ($this->hasField($bean, $value)) {
+                if (property_exists($bean, $value)) {
                     $body[$value] = $this->cleanValue($bean->$value);
                 }
             }
         }
+
+        // TODO fix addresses and phone nesting
+        // Maybe create mappings from a field to a target path in the final document?
 
         if (isset($body['name'])) {
             $name = $body['name'];
@@ -88,11 +99,15 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
     }
 
     /**
+     * Parses the Search Defs files and creates a map of fields to index for a given module.
+     *
+     * The mapping is cached in the class property `$fields`.
+     *
      * @param $module string
      * @param ParserSearchFields|null $parser
      * @return string[]
      */
-    private function getFieldsToIndex($module, $parser = null)
+    protected function getFieldsToIndex($module, ParserSearchFields $parser = null)
     {
         if (empty($parser)) {
             $parser = new ParserSearchFields($module);
@@ -104,12 +119,12 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
 
         foreach ($fields as $key => $field) {
             if (isset($field['query_type']) && $field['query_type'] != 'default') {
-                //$this->log('*', "[$module]->$key is not a supported query type!");
+                // echo "[$module]->$key is not a supported query type!", PHP_EOL;
                 continue;
             };
 
             if (!empty($field['operator'])) {
-                //$this->log('*', "[$module]->$key has an operator!");
+                // echo "[$module]->$key has an operator!", PHP_EOL;
                 continue;
             }
 
@@ -130,27 +145,15 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
     }
 
     /**
-     * @param $bean
-     * @param $field
-     * @return bool
-     */
-    private function hasField($bean, $field)
-    {
-        if (!isset($bean->$field)) {
-            //$this->log('!', "{$bean->module_name}->$field does not exist!");
-
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * @param $s
+     * Converts a string to the proper document-friendly encoding and format.
+     *
+     * Most notably, converts HTML entities to UTF-8 characters.
+     *
+     * @param $string string
      * @return null|string|string[]
      */
-    private function cleanValue($s)
+    protected function cleanValue($string)
     {
-        return mb_convert_encoding($s, "UTF-8", "HTML-ENTITIES");
+        return mb_convert_encoding($string, 'UTF-8', 'HTML-ENTITIES');
     }
 }
