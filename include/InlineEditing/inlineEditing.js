@@ -266,13 +266,12 @@ function clickedawayclose(field,id,module, type){
 }
 
 $(document).on('click', function (e) {
-    if(clickListenerActive) {
+    if (clickListenerActive) {
         var field = ie_field;
         var id = ie_id;
         var module = ie_module;
         var type = ie_type;
         var message_field = ie_message_field;
-        var alertFlag = true;
 
         if (!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")) {
             var output_value = loadFieldHTMLValue(field, id, module);
@@ -308,11 +307,18 @@ $(document).on('click', function (e) {
                 }
             }
 
-            if (user_value == outputValueParse || user_value == output_value) {
-                var alertFlag = false;
+            var date_compare = false;
+            var output_value_compare = '';
+            if (type == 'datetimecombo' || type == 'datetime' || type == 'date') {
+                if (output_value == user_value) {
+                    output_value_compare = user_value;
+                    date_compare = true;
+                }
+            } else {
+                output_value_compare = $(output_value).text();
             }
-
-            if (alertFlag) {
+            if (user_value != output_value_compare) {
+                message_field = message_field != 'undefined' ? message_field : '';
                 var r = confirm(SUGAR.language.translate('app_strings', 'LBL_CONFIRM_CANCEL_INLINE_EDITING') + ' ' + message_field);
                 if (r == true) {
                     var output = setValueClose(output_value);
