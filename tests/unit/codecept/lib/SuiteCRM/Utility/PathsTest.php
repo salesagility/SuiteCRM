@@ -26,7 +26,7 @@ class PathsTest extends SuiteCRM\StateCheckerUnitAbstract
         }
 
         if(self::$projectPath === null) {
-            self::$projectPath = dirname(dirname(dirname(dirname(dirname(__DIR__)))));
+            self::$projectPath = dirname(dirname(dirname(dirname(dirname(dirname(__DIR__))))));
         }
     }
 
