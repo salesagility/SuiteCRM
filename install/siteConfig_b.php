@@ -54,7 +54,7 @@ if (is_file("config.php")) {
 
     if (!empty($sugar_config['disable_persistent_connections'])) {
         $_SESSION['disable_persistent_connections'] =
-		$sugar_config['disable_persistent_connections'];
+        $sugar_config['disable_persistent_connections'];
     }
     if (!empty($sugar_config['default_language'])) {
         $_SESSION['default_language'] = $sugar_config['default_language'];

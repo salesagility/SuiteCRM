@@ -51,7 +51,7 @@
      public function action_save()
      {
          require_once('include/upload_file.php');
-		
+        
          // CCL - Bugs 41103 and 43751.  41103 address the issue where the parent_id is set, but
          // the relate_id field overrides the relationship.  43751 fixes the problem where the relate_id and
          // parent_id are the same value (in which case it should just use relate_id) by adding the != check
@@ -66,7 +66,7 @@
              $this->bean->contact_id = $_REQUEST['parent_id'];
              $this->bean->contact_name = $_REQUEST['parent_name'];
          }
-		
+        
          $GLOBALS['log']->debug('PERFORMING NOTES SAVE');
          $upload_file = new UploadFile('uploadfile');
          $do_final_move = 0;
@@ -82,22 +82,22 @@
          } elseif (isset($_REQUEST['old_filename'])) {
              $this->bean->filename = $_REQUEST['old_filename'];
          }
-		
+        
          $check_notify = false;
          if (!empty($_POST['assigned_user_id']) &&
-		    (empty($this->bean->fetched_row) || $this->bean->fetched_row['assigned_user_id'] != $_POST['assigned_user_id']) &&
-		    ($_POST['assigned_user_id'] != $GLOBALS['current_user']->id)) {
+            (empty($this->bean->fetched_row) || $this->bean->fetched_row['assigned_user_id'] != $_POST['assigned_user_id']) &&
+            ($_POST['assigned_user_id'] != $GLOBALS['current_user']->id)) {
              $check_notify = true;
          }
          $this->bean->save($check_notify);
-	    
+        
          if ($do_final_move) {
              $upload_file->final_move($this->bean->id);
          } elseif (! empty($_REQUEST['old_id'])) {
              $upload_file->duplicate_file($_REQUEST['old_id'], $this->bean->id, $this->bean->filename);
          }
      }
-	
+    
      public function action_editview()
      {
          $this->view = 'edit';

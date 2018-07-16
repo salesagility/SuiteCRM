@@ -157,7 +157,7 @@ if ($is_edit) {
 
     $xtpl->parse("main");
     $xtpl->out("main");
-	
+    
     $javascript = new javascript();
     $javascript->setFormName('EditView');
     $javascript->setSugarBean($focus);

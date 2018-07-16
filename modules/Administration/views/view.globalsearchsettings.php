@@ -45,29 +45,29 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class AdministrationViewGlobalsearchsettings extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
 
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
-    	   $mod_strings['LBL_GLOBAL_SEARCH_SETTINGS']
-    	   );
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+           $mod_strings['LBL_GLOBAL_SEARCH_SETTINGS']
+           );
     }
 
     /**
-	 * @see SugarView::_getModuleTab()
-	 */
+     * @see SugarView::_getModuleTab()
+     */
     protected function _getModuleTab()
     {
         return 'Administration';
     }
 
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         require_once('modules/Home/UnifiedSearchAdvanced.php');

@@ -53,10 +53,10 @@ class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
         global $currentModule;
 
         $popup_request_data = array(
-			'call_back_function' => 'set_return',
-			'form_name' => 'EditView',
-			'field_to_name_array' => array(),
-		);
+            'call_back_function' => 'set_return',
+            'form_name' => 'EditView',
+            'field_to_name_array' => array(),
+        );
 
         $json_encoded_php_array = $this->_create_json_encoded_popup_request($popup_request_data);
         $title = $app_strings['LBL_ACCUMULATED_HISTORY_BUTTON_TITLE'];
@@ -67,15 +67,15 @@ class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
         $initial_filter = "&record=$id&module_name=$currentModule";
         if (ACLController::moduleSupportsACL($widget_data['module']) && !ACLController::checkAccess($widget_data['module'], 'detail', true)) {
             $temp =  '<input disabled type="button" name="summary_button" id="summary_button"'
-			. ' class="button"'
-			. ' title="' . $title . '"'
-			. ' value="' . $value . '"';
+            . ' class="button"'
+            . ' title="' . $title . '"'
+            . ' value="' . $value . '"';
             return $temp;
         }
         return '<input type="button" name="summary_button" id="summary_button"'
-			. ' class="button"'
-			. ' title="' . $title . '"'
-			. ' value="' . $value . '"'
-			. " onclick='open_popup(\"$module_name\",600,400,\"$initial_filter\",false,false,$json_encoded_php_array);' />\n";
+            . ' class="button"'
+            . ' title="' . $title . '"'
+            . ' value="' . $value . '"'
+            . " onclick='open_popup(\"$module_name\",600,400,\"$initial_filter\",false,false,$json_encoded_php_array);' />\n";
     }
 }

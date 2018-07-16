@@ -75,30 +75,30 @@ $button .= "<input type='hidden' name='return_id' value='{$focus->id}' />\n";
 $button .= "<input type='hidden' name='action' />\n";
 
 $button .= "<input title='"
-	. $app_strings['LBL_NEW_BUTTON_TITLE']
-	. "' accessyKey='".$app_strings['LBL_NEW_BUTTON_KEY']
-	. "' class='button' onclick=\"this.form.action.value='EditView'\" type='submit' name='New' value='  "
-	. $app_strings['LBL_NEW_BUTTON_LABEL']."  ' />\n";
+    . $app_strings['LBL_NEW_BUTTON_TITLE']
+    . "' accessyKey='".$app_strings['LBL_NEW_BUTTON_KEY']
+    . "' class='button' onclick=\"this.form.action.value='EditView'\" type='submit' name='New' value='  "
+    . $app_strings['LBL_NEW_BUTTON_LABEL']."  ' />\n";
 
 $button .= "</form>\n";
 
 $ListView = new ListView();
 $ListView->initNewXTemplate('modules/ProjectTask/SubPanelView.html',$current_module_strings);
 $ListView->xTemplateAssign("EDIT_INLINE_PNG",
-	SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
+    SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
 $ListView->xTemplateAssign("RETURN_URL",
-	"&return_module=".$currentModule."&return_action=DetailView&return_id=".$focus->id);
+    "&return_module=".$currentModule."&return_action=DetailView&return_id=".$focus->id);
 
 $header_text = '';
 if (is_admin($current_user)
-	&& $_REQUEST['module'] != 'DynamicLayout'
-	&& !empty($_SESSION['editinplace'])) {
+    && $_REQUEST['module'] != 'DynamicLayout'
+    && !empty($_SESSION['editinplace'])) {
     $header_text = " <a href='index.php?action=index"
-		. "&module=DynamicLayout"
-		. "&from_action=SubPanelView"
-		. "&from_module=ProjectTask"
-		. "'>"
-		.SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'"
+        . "&module=DynamicLayout"
+        . "&from_action=SubPanelView"
+        . "&from_module=ProjectTask"
+        . "'>"
+        .SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'"
 ,null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 $ListView->setHeaderTitle($project_module_strings['LBL_PROJECT_TASK_SUBPANEL_TITLE'] . $header_text);

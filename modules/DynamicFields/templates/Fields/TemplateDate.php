@@ -54,7 +54,7 @@ class TemplateDate extends TemplateRange
         parent::__construct();
         global $app_strings;
         $this->dateStrings = array(
-			$app_strings['LBL_NONE']=>'',
+            $app_strings['LBL_NONE']=>'',
             $app_strings['LBL_YESTERDAY']=> '-1 day',
             $app_strings['LBL_TODAY']=>'now',
             $app_strings['LBL_TOMORROW']=>'+1 day',

@@ -59,7 +59,7 @@ r46451 - 2009-04-23 16:57:40 -0700 (Thu, 23 Apr 2009) - jenny - tcpdf initial ch
 
 if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 
-	// DOCUMENT_ROOT fix for IIS Webserver
+    // DOCUMENT_ROOT fix for IIS Webserver
     if ((!isset($_SERVER['DOCUMENT_ROOT'])) OR (empty($_SERVER['DOCUMENT_ROOT']))) {
         if (isset($_SERVER['SCRIPT_FILENAME'])) {
             $_SERVER['DOCUMENT_ROOT'] = str_replace('\\', '/', substr($_SERVER['SCRIPT_FILENAME'], 0, 0-strlen($_SERVER['PHP_SELF'])));

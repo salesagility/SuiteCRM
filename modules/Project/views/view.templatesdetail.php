@@ -44,17 +44,17 @@ require_once('include/MVC/View/views/view.detail.php');
 class ProjectViewTemplatesDetail extends ViewDetail
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   $this->_getModuleTitleListParam($browserTitle),
-    	   "<a href='index.php?module=Project&action=EditView&record={$this->bean->id}'>{$this->bean->name}</a>",
-    	   $mod_strings['LBL_PROJECT_TEMPLATE']
-    	   );
+           $this->_getModuleTitleListParam($browserTitle),
+           "<a href='index.php?module=Project&action=EditView&record={$this->bean->id}'>{$this->bean->name}</a>",
+           $mod_strings['LBL_PROJECT_TEMPLATE']
+           );
     }
     
     public function display()

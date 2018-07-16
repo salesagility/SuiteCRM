@@ -64,9 +64,9 @@ class Popup_Picker
 {
 
 
-	/*
-	 *
-	 */
+    /*
+     *
+     */
     public function __construct()
     {
     }
@@ -195,12 +195,12 @@ EOHTML;
 
             $activity_fields = array(
                 'ID' => $audit['id'],
-			    'NAME' => $audit['field_name'],
+                'NAME' => $audit['field_name'],
                 'BEFORE_VALUE' => $before_value,
                 'AFTER_VALUE' => $after_value,
                 'CREATED_BY' => $audit['created_by'],
                 'DATE_CREATED' => $audit['date_created'],
-			);
+            );
 
             $xtpl->assign("ACTIVITY", $activity_fields);
 
@@ -219,7 +219,7 @@ EOHTML;
             // Put the rows in.
         }//end foreach
 
-		$xtpl->parse("audit");
+        $xtpl->parse("audit");
         $xtpl->out("audit");
         insert_popup_footer();
     }

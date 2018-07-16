@@ -142,7 +142,7 @@ class CampaignsViewDetail extends ViewDetail
             foreach ($alltabs as $key=>$name) {
                 if ($name != 'prospectlists' && $name!='emailmarketing' && $name != 'tracked_urls'
                 /* BEGIN - SECURITY GROUPS */
-                	&& $name != 'securitygroups'
+                    && $name != 'securitygroups'
                 /* END - SECURITY GROUPS */
                 ) {
                     //exclude subpanels that are not prospectlists, emailmarketing, or tracked urls

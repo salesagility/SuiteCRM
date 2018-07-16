@@ -38,10 +38,10 @@
  ********************************************************************************/
 
 $dictionary['SugarFeed'] = array(
-	'table'=>'sugarfeed',
-	'audited'=>false,
-	'fields'=>array (
-	 'name' => 
+    'table'=>'sugarfeed',
+    'audited'=>false,
+    'fields'=>array (
+     'name' => 
   array (
     'name' => 'name',
     'type' => 'name',
@@ -95,7 +95,7 @@ $dictionary['SugarFeed'] = array(
     'merge_filter' => 'selected',  //field will be enabled for merge and will be a part of the default search criteria..other valid values for this property are enabled and disabled, default value is disabled.
                             //property value is case insensitive.
   ),
-  	 'link_url' => 
+     'link_url' => 
   array (
     'name' => 'link_url',
     'type' => 'varchar',
@@ -108,7 +108,7 @@ $dictionary['SugarFeed'] = array(
     'merge_filter' => 'selected',  //field will be enabled for merge and will be a part of the default search criteria..other valid values for this property are enabled and disabled, default value is disabled.
                             //property value is case insensitive.
   ),
-   	 'link_type' => 
+     'link_type' => 
   array (
     'name' => 'link_type',
     'type' => 'varchar',
@@ -121,9 +121,9 @@ $dictionary['SugarFeed'] = array(
     'merge_filter' => 'selected',  //field will be enabled for merge and will be a part of the default search criteria..other valid values for this property are enabled and disabled, default value is disabled.
                             //property value is case insensitive.
   ),
-	 
+     
 ),
-	'relationships'=>array (
+    'relationships'=>array (
     ),
 
     'indices' => array (
@@ -134,7 +134,7 @@ $dictionary['SugarFeed'] = array(
                   )),
     ),
 
-	'optimistic_lock'=>true,
+    'optimistic_lock'=>true,
 );
 
 VardefManager::createVardef('SugarFeed','SugarFeed', array('basic',

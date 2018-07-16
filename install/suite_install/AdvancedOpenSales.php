@@ -21,7 +21,7 @@ function install_aos()
     if (!isset($sugar_config['aos']['quotes']['initialNumber'])) {
         $sugar_config['aos']['quotes']['initialNumber'] = '1';
     }
-	
+    
     ksort($sugar_config);
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
 }

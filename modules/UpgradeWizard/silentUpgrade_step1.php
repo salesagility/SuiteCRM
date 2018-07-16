@@ -103,17 +103,17 @@ function checkLoggerSettings()
     global $sugar_config;
     if (!isset($sugar_config['logger'])) {
         $sugar_config['logger'] =array (
-			'level'=>'fatal',
-		    'file' =>
-		     array (
-		      'ext' => '.log',
-		      'name' => 'sugarcrm',
-		      'dateFormat' => '%c',
-		      'maxSize' => '10MB',
-		      'maxLogs' => 10,
-		      'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
-		    ),
-		  );
+            'level'=>'fatal',
+            'file' =>
+             array (
+              'ext' => '.log',
+              'name' => 'sugarcrm',
+              'dateFormat' => '%c',
+              'maxSize' => '10MB',
+              'maxLogs' => 10,
+              'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
+            ),
+          );
         ksort($sugar_config);
         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
             //writing to the file
@@ -144,18 +144,18 @@ function checkResourceSettings()
     global $sugar_config;
     if (!isset($sugar_config['resource_management'])) {
         $sugar_config['resource_management'] =
-		  array (
-		    'special_query_limit' => 50000,
-		    'special_query_modules' =>
-		    array (
-		      0 => 'Reports',
-		      1 => 'Export',
-		      2 => 'Import',
-		      3 => 'Administration',
-		      4 => 'Sync',
-		    ),
-		    'default_limit' => 1000,
-		  );
+          array (
+            'special_query_limit' => 50000,
+            'special_query_modules' =>
+            array (
+              0 => 'Reports',
+              1 => 'Export',
+              2 => 'Import',
+              3 => 'Administration',
+              4 => 'Sync',
+            ),
+            'default_limit' => 1000,
+          );
         ksort($sugar_config);
         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
             //writing to the file
@@ -483,7 +483,7 @@ if ($upgradeType != constant('DCE_INSTANCE')) {
     $GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
     $patchName		= basename($argv[1]);
     $zip_from_dir	= substr($patchName, 0, strlen($patchName) - 4); // patch folder name (minus ".zip")
-	$path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
+    $path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
 
     $db				= &DBManagerFactory::getInstance();
     $UWstrings		= return_module_language('en_us', 'UpgradeWizard');
@@ -738,9 +738,9 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         $siv_write    = writeSilentUpgradeVars();
         if (!$siv_varset_1 || !$siv_varset_2 || !$siv_write) {
             logThis("Error with silent upgrade variables: origVersion write success is ({$siv_varset_1}) ".
-        		"-- destVersion write success is ({$siv_varset_2}) -- ".
-        		"writeSilentUpgradeVars success is ({$siv_write}) -- ".
-        		"path to cache dir is ({$GLOBALS['sugar_config']['cache_dir']})", $path);
+                "-- destVersion write success is ({$siv_varset_2}) -- ".
+                "writeSilentUpgradeVars success is ({$siv_write}) -- ".
+                "path to cache dir is ({$GLOBALS['sugar_config']['cache_dir']})", $path);
         }
         require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
         ///////////////////////////////////////////////////////////////////////////////
@@ -994,14 +994,14 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         }
 
         $must_have_modules= array(
-			  'Activities'=>'Activities',
-        	  'Calendar'=>'Calendar',
-        	  'Reports' => 'Reports',
-			  'Quotes' => 'Quotes',
-			  'Products' => 'Products',
-			  'Forecasts' => 'Forecasts',
-			  'Contracts' => 'Contracts',
-			  'KBDocuments' => 'KBDocuments'
+              'Activities'=>'Activities',
+              'Calendar'=>'Calendar',
+              'Reports' => 'Reports',
+              'Quotes' => 'Quotes',
+              'Products' => 'Products',
+              'Forecasts' => 'Forecasts',
+              'Contracts' => 'Contracts',
+              'KBDocuments' => 'KBDocuments'
         );
         $newModuleList = array_merge($newModuleList,$must_have_modules);
 

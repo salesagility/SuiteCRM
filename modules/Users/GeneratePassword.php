@@ -56,9 +56,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
     global $new_pwd;
     global $current_user;
 
-  	$mod_strings=return_module_language('','Users');
-  	$res=$GLOBALS['sugar_config']['passwordsetting'];
-	$regexmail = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
+    $mod_strings=return_module_language('','Users');
+    $res=$GLOBALS['sugar_config']['passwordsetting'];
+    $regexmail = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
 
 ///////////////////////////////////////////////////
 ///////  Retrieve user
@@ -120,10 +120,10 @@ if (isset($_POST['Users0emailAddress0'])) {
 ///////////////////////////////////////////////////
 ///////  Check email address
 
-	if (!preg_match($regexmail, $usr->emailAddress->getPrimaryAddress($usr))) {
-	    echo $mod_strings['ERR_EMAIL_INCORRECT'];
-	    return;
-	}
+    if (!preg_match($regexmail, $usr->emailAddress->getPrimaryAddress($usr))) {
+        echo $mod_strings['ERR_EMAIL_INCORRECT'];
+        return;
+    }
 
 ///////
 ///////////////////////////////////////////////////

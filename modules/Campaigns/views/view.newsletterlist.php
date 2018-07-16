@@ -68,8 +68,8 @@ class ViewNewsLetterList extends ViewList
     }
     
     /**
-	 * @see SugarView::preDisplay()
-	 */
+     * @see SugarView::preDisplay()
+     */
     public function preDisplay()
     {
         global $mod_strings;

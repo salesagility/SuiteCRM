@@ -48,7 +48,7 @@ interface ExternalAPIPlugin
      * Check if this API supports certain authentication method
      * If $method is empty, return the list of supported methods
      * @param string $method
-	 * @return array|bool
+     * @return array|bool
      */
     public function supports($method = '');
     /**

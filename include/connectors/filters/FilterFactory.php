@@ -66,7 +66,7 @@ class FilterFactory
             //check if this override wrapper file exists.
             require_once('include/connectors/ConnectorFactory.php');
             if (file_exists("modules/Connectors/connectors/filters/{$dir}/{$file}.php") ||
-			   file_exists("custom/modules/Connectors/connectors/filters/{$dir}/{$file}.php")) {
+               file_exists("custom/modules/Connectors/connectors/filters/{$dir}/{$file}.php")) {
                 ConnectorFactory::load($filter_name, 'filters');
                 try {
                     $filter_name .= '_filter';

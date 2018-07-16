@@ -342,16 +342,16 @@ class aSubPanel
                                 $start = array_slice($display_fields, 0, $index);
                                 $end = array_slice($display_fields, $index);
                                 $display_fields = array_merge(
-									$start,
-									array($def['vname'] => array('name' => $field, 'vname' => $def['vname'], 'width' => $def['width'] )),
-									$end
-								);
+                                    $start,
+                                    array($def['vname'] => array('name' => $field, 'vname' => $def['vname'], 'width' => $def['width'] )),
+                                    $end
+                                );
                             } else {
                                 $display_fields[$def['vname']] = array(
-									'name' => empty($def['alias']) ? $field : $def['alias'],
-									'vname' => $def['vname'],
-									'width' => $def['width'],
-								);
+                                    'name' => empty($def['alias']) ? $field : $def['alias'],
+                                    'vname' => $def['vname'],
+                                    'width' => $def['width'],
+                                );
                             }
                         }
                     } else {

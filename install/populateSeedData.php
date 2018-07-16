@@ -91,7 +91,7 @@ if ($memory_limit != "" && $memory_limit != "-1") { // if memory_limit is set
     }
 }
 $large_scale_test = empty($sugar_config['large_scale_test']) ?
-	false : $sugar_config['large_scale_test'];
+    false : $sugar_config['large_scale_test'];
 
 $seed_user = new User();
 $user_demo_data = new UserDemoData($seed_user, $large_scale_test);
@@ -119,8 +119,8 @@ $opportunity_ids = Array();
 // Determine the assigned user for all demo data.  This is the default user if set, or admin
 $assigned_user_name = "admin";
 if (!empty($sugar_config['default_user_name']) &&
-	!empty($sugar_config['create_default_user']) &&
-	$sugar_config['create_default_user']) {
+    !empty($sugar_config['create_default_user']) &&
+    $sugar_config['create_default_user']) {
     $assigned_user_name = $sugar_config['default_user_name'];
 }
 

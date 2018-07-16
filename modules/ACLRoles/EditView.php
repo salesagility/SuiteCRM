@@ -53,11 +53,11 @@ $sugar_smarty->assign('ISDUPLICATE', '');
 $duplicateString='';
 //mass localization
 /*foreach($modInvisList as $modinvisname){
-	$app_list_strings['moduleList'][$modinvisname] = $modinvisname;
+    $app_list_strings['moduleList'][$modinvisname] = $modinvisname;
 }*/
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 /*foreach($modInvisList as $modinvisname){
-	unset($app_list_strings['moduleList'][$modinvisname]);
+    unset($app_list_strings['moduleList'][$modinvisname]);
 }*/
 $role = new ACLRole();
 $role_name = '';
@@ -114,11 +114,11 @@ if (empty($role->id)) {
 echo getClassicModuleTitle("ACLRoles", $params, true);
 
 $buttons = array(
-	"<input title=".$app_strings['LBL_SAVE_BUTTON_TITLE']." id='save_button'
+    "<input title=".$app_strings['LBL_SAVE_BUTTON_TITLE']." id='save_button'
 		accessKey=".$app_strings['LBL_SAVE_BUTTON_KEY']." class='button primary'
 		onclick=\"this.form.action.value='Save';return check_form('EditView');\"
 		type='submit' name='button' value=".$app_strings['LBL_SAVE_BUTTON_LABEL']." >",
-	"<input title=".$app_strings['LBL_CANCEL_BUTTON_TITLE']."
+    "<input title=".$app_strings['LBL_CANCEL_BUTTON_TITLE']."
 		class='button cancel_button' accessKey=".$app_strings['LBL_CANCEL_BUTTON_KEY']."
 		type='submit' name='save' value=".$app_strings['LBL_CANCEL_BUTTON_LABEL']."
 		onclick=\"document.EditView.action.value='".$return['action']."';document.EditView.module.value='".$return['module']."';document.EditView.record.value='".$return['record']."';document.EditView.submit();\">",

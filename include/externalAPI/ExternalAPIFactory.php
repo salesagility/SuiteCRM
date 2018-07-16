@@ -179,8 +179,8 @@ class ExternalAPIFactory
     }
 
     /**
- 	* Clear API cache file
- 	*/
+    * Clear API cache file
+    */
     public static function clearCache()
     {
         $cached=sugar_cached('include/externalAPI.cache.php');

@@ -261,7 +261,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
                 // BEGIN SUGARCRM SPECIFIC
                 /*
                 // END SUGARCRM SPECIFIC
-				SaveToFile($cmp, gzcompress($cidtogidmap, 9), 'b');
+                SaveToFile($cmp, gzcompress($cidtogidmap, 9), 'b');
                 // BEGIN SUGARCRM SPECIFIC
                 */
                 SaveToFile($dirname."/".$cmp, gzcompress($cidtogidmap, 9), 'b');
@@ -277,7 +277,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
                 // BEGIN SUGARCRM SPECIFIC
                 /*
                 // END SUGARCRM SPECIFIC
-				$f = fopen($cmp, 'wb');
+                $f = fopen($cmp, 'wb');
                 // BEGIN SUGARCRM SPECIFIC
                 */
                 $f = fopen($dirname."/".$cmp, 'wb');
@@ -299,8 +299,8 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
         // BEGIN SUGARCRM SPECIFIC
         /*
         // END SUGARCRM SPECIFIC
-	    $s .= '$file='."'';\n";
-    	// BEGIN SUGARCRM SPECIFIC
+        $s .= '$file='."'';\n";
+        // BEGIN SUGARCRM SPECIFIC
         */
         $s .= $cidInfo;
         // END SUGARCRM SPECIFIC
@@ -309,7 +309,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
     // BEGIN SUGARCRM SPECIFIC
     /*
     // END SUGARCRM SPECIFIC
-	SaveToFile($basename.'.php',$s);
+    SaveToFile($basename.'.php',$s);
     // BEGIN SUGARCRM SPECIFIC
     */
     SaveToFile($dirname."/".$basename.'.php',$s);
@@ -438,40 +438,40 @@ function ReadAFM($file,&$map)
     $widths = array();
     $fm = array();
     $fix = array(
-		'Edot'=>'Edotaccent',
-		'edot'=>'edotaccent',
-		'Idot'=>'Idotaccent',
-		'Zdot'=>'Zdotaccent',
-		'zdot'=>'zdotaccent',
-		'Odblacute' => 'Ohungarumlaut',
-		'odblacute' => 'ohungarumlaut',
-		'Udblacute'=>'Uhungarumlaut',
-		'udblacute'=>'uhungarumlaut',
-		'Gcedilla'=>'Gcommaaccent'
-		,'gcedilla'=>'gcommaaccent',
-		'Kcedilla'=>'Kcommaaccent',
-		'kcedilla'=>'kcommaaccent',
-		'Lcedilla'=>'Lcommaaccent',
-		'lcedilla'=>'lcommaaccent',
-		'Ncedilla'=>'Ncommaaccent',
-		'ncedilla'=>'ncommaaccent',
-		'Rcedilla'=>'Rcommaaccent',
-		'rcedilla'=>'rcommaaccent',
-		'Scedilla'=>'Scommaaccent',
-		'scedilla'=>'scommaaccent',
-		'Tcedilla'=>'Tcommaaccent',
-		'tcedilla'=>'tcommaaccent',
-		'Dslash'=>'Dcroat',
-		'dslash'=>'dcroat',
-		'Dmacron'=>'Dcroat',
-		'dmacron'=>'dcroat',
-		'combininggraveaccent'=>'gravecomb',
-		'combininghookabove'=>'hookabovecomb',
-		'combiningtildeaccent'=>'tildecomb',
-		'combiningacuteaccent'=>'acutecomb',
-		'combiningdotbelow'=>'dotbelowcomb',
-		'dongsign'=>'dong'
-		);
+        'Edot'=>'Edotaccent',
+        'edot'=>'edotaccent',
+        'Idot'=>'Idotaccent',
+        'Zdot'=>'Zdotaccent',
+        'zdot'=>'zdotaccent',
+        'Odblacute' => 'Ohungarumlaut',
+        'odblacute' => 'ohungarumlaut',
+        'Udblacute'=>'Uhungarumlaut',
+        'udblacute'=>'uhungarumlaut',
+        'Gcedilla'=>'Gcommaaccent'
+        ,'gcedilla'=>'gcommaaccent',
+        'Kcedilla'=>'Kcommaaccent',
+        'kcedilla'=>'kcommaaccent',
+        'Lcedilla'=>'Lcommaaccent',
+        'lcedilla'=>'lcommaaccent',
+        'Ncedilla'=>'Ncommaaccent',
+        'ncedilla'=>'ncommaaccent',
+        'Rcedilla'=>'Rcommaaccent',
+        'rcedilla'=>'rcommaaccent',
+        'Scedilla'=>'Scommaaccent',
+        'scedilla'=>'scommaaccent',
+        'Tcedilla'=>'Tcommaaccent',
+        'tcedilla'=>'tcommaaccent',
+        'Dslash'=>'Dcroat',
+        'dslash'=>'dcroat',
+        'Dmacron'=>'Dcroat',
+        'dmacron'=>'dcroat',
+        'combininggraveaccent'=>'gravecomb',
+        'combininghookabove'=>'hookabovecomb',
+        'combiningtildeaccent'=>'tildecomb',
+        'combiningacuteaccent'=>'acutecomb',
+        'combiningdotbelow'=>'dotbelowcomb',
+        'dongsign'=>'dong'
+        );
     foreach ($a as $l) {
         $e = explode(' ', rtrim($l));
         if (count($e) < 2) {
@@ -714,27 +714,27 @@ function CheckTTF($file)
 
 $arg = $GLOBALS['argv'];
 if (count($arg) >= 3) {
-	ob_start();
-	array_shift($arg);
-	if (sizeof($arg) == 3) {
-		$arg[3] = $arg[2];
-		$arg[2] = true;
-	} else {
-		if (!isset($arg[2])) {
-			$arg[2] = true;
-		}
-		if (!isset($arg[3])) {
-			$arg[3] = 'cp1252';
-		}
-	}
-	if (!isset($arg[4])) {
-		$arg[4] = array();
-	}
-	MakeFont($arg[0], $arg[1], $arg[2], $arg[3], $arg[4]);
-	$t = ob_get_clean();
-	print preg_replace('!<BR( /)?>!i', "\n", $t);
+    ob_start();
+    array_shift($arg);
+    if (sizeof($arg) == 3) {
+        $arg[3] = $arg[2];
+        $arg[2] = true;
+    } else {
+        if (!isset($arg[2])) {
+            $arg[2] = true;
+        }
+        if (!isset($arg[3])) {
+            $arg[3] = 'cp1252';
+        }
+    }
+    if (!isset($arg[4])) {
+        $arg[4] = array();
+    }
+    MakeFont($arg[0], $arg[1], $arg[2], $arg[3], $arg[4]);
+    $t = ob_get_clean();
+    print preg_replace('!<BR( /)?>!i', "\n", $t);
 } else {
-	print "Usage: makefont.php <ttf/otf/pfb file> <afm/ufm file> <encoding> <patch>\n";
+    print "Usage: makefont.php <ttf/otf/pfb file> <afm/ufm file> <encoding> <patch>\n";
 }
 
 // BEGIN SUGARCRM SPECIFIC

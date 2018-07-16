@@ -43,8 +43,8 @@ class AM_ProjectTemplatesController extends SugarController
         $copy_all = isset($_POST['copy_all_tasks']) ? 1 : 0;
         $copy_tasks = isset($_POST['tasks']) ? $_POST['tasks'] : array() ;
 
-			
-		
+            
+        
         //Get project start date
         if ($project_start!='') {
             $dateformat = $current_user->getPreference('datef');
@@ -71,13 +71,13 @@ class AM_ProjectTemplatesController extends SugarController
         $bhours = array();
         foreach ($days as $day) {
             $bh = $businessHours->getBusinessHoursForDay($day);
-			
+            
             if ($bh) {
                 $bh = $bh[0];
                 if ($bh->open) {
                     $open_h = $bh ? $bh->opening_hours : 9;
                     $close_h = $bh ? $bh->closing_hours : 17;							
-					
+                    
                     $start_time = DateTime::createFromFormat('Y-m-d', $start);
 
                     $start_time = $start_time->modify('+'.$open_h.' Hours');
@@ -97,14 +97,14 @@ class AM_ProjectTemplatesController extends SugarController
             }
         }
         //-----------------------------------
-		
+        
 
         //default business hours array
         if ($override_business_hours != 1 || empty($bhours)) {
             $bhours = array ('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
         }
         //---------------------------
-		
+        
 
 
 
@@ -125,12 +125,12 @@ class AM_ProjectTemplatesController extends SugarController
 
         $template->load_relationship('am_projecttemplates_contacts_1');
         $template_contacts = $template->get_linked_beans('am_projecttemplates_contacts_1','Contact');
-		
+        
         $project->load_relationship('project_users_1');
         foreach ($template_users as $user) {
             $project->project_users_1->add($user->id);
         }
-		
+        
         $project->load_relationship('project_contacts_1');
         foreach ($template_contacts as $contact) {
             $project->project_contacts_1->add($contact->id);
@@ -210,7 +210,7 @@ class AM_ProjectTemplatesController extends SugarController
                 $project_task->date_start = $start;
                 $end = $enddate->format('Y-m-d');
                 $project_task->date_finish = $end;
-		
+        
                 //add one day to let the next task start on next day of it's finish.
                 $enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d');
             } else {
@@ -223,7 +223,7 @@ class AM_ProjectTemplatesController extends SugarController
 
                 $startdate = $enddate;
                 //add one day to let the next task start on next day of it's finish.
-		$enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;		    
+        $enddate_array[$count] = $enddate->modify('+1 Days')->format('Y-m-d'); //$end;		    
                 $enddate = $end;
             }
             $project_task->save();
@@ -270,11 +270,11 @@ class AM_ProjectTemplatesController extends SugarController
         //--- get the gantt chart start and end
 
         $start_date =  Date('Y-m-d');
-		
+        
         $query = "select max(duration) +1 from am_tasktemplates inner join am_tasktemplates_am_projecttemplates_c on am_tasktemplates_am_projecttemplatesam_tasktemplates_idb = am_tasktemplates.id and am_tasktemplates_am_projecttemplatesam_projecttemplates_ida = '{$pid}'";
         
         $duration = $db->getOne($query);
-		
+        
         if ($duration < 31) {
             $end_date = Date('Y-m-d', strtotime("+30 days"));
         } else {
@@ -358,7 +358,7 @@ class AM_ProjectTemplatesController extends SugarController
         $enddate = $startdate->modify('+'.$duration.' '.$duration_unit);
         $enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
         $enddate = $enddate->format('Y-m-d');
-		
+        
         //---------------
 
         if ($percent > 0) {
@@ -371,7 +371,7 @@ class AM_ProjectTemplatesController extends SugarController
         //count tasks
         $project_template->load_relationship('am_tasktemplates_am_projecttemplates');
         $tasks = $project_template->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');		
-		
+        
         $tid = count($tasks) + 1 ;
 
         if ($this->IsNullOrEmptyString($task_id)) {
@@ -480,7 +480,7 @@ class AM_ProjectTemplatesController extends SugarController
     public function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration)
     {
         $task = new AM_TaskTemplates();
-		
+        
         $task->retrieve($id);
         $task->name = $name;
         //$task->date_start = $start;

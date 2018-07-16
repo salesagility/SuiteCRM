@@ -62,12 +62,12 @@ $bodyHTML = html_entity_decode($_REQUEST['body_html'],ENT_QUOTES);
 
 while (strpos($bodyHTML, "ta_replace") !== false) {
 
-	//define the marker edges of the sub string to process (opening and closing tag brackets)
+    //define the marker edges of the sub string to process (opening and closing tag brackets)
     $marker = strpos($bodyHTML, "ta_replace");
     $start_border = strpos($bodyHTML, "input", $marker) - 1;// to account for opening '<' char;
-	$end_border = strpos($bodyHTML, '>', $start_border); //get the closing tag after marker ">";
+    $end_border = strpos($bodyHTML, '>', $start_border); //get the closing tag after marker ">";
 
-	//extract the input tag string
+    //extract the input tag string
     $working_str = substr($bodyHTML, $marker-3, $end_border-($marker-3));
 
     //replace input markup with text areas markups

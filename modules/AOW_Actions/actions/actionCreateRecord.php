@@ -205,14 +205,14 @@ class actionCreateRecord extends actionBase
                             case 'int':
                                 $value = format_number($bean->$fieldName);
                                 break;
-			    case 'relate':
-			        if (isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate') {
-			            $idName = $data['id_name'];
-			            $value = $bean->$idName;
-			        } else {
-			            $value = $bean->$fieldName;
-			        }
-				break;
+                case 'relate':
+                    if (isset($data['id_name']) && $record_vardefs[$field]['type'] === 'relate') {
+                        $idName = $data['id_name'];
+                        $value = $bean->$idName;
+                    } else {
+                        $value = $bean->$fieldName;
+                    }
+                break;
                             default:
                                 $value = $bean->$fieldName;
                                 break;

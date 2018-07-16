@@ -80,7 +80,7 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testdeleteAttachment()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();
@@ -197,7 +197,7 @@ class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testlistviewACLHelper()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushGlobals();

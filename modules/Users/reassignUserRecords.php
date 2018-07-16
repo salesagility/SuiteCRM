@@ -77,15 +77,15 @@ if (!empty($_GET['record'])) {
 if (!isset($_POST['fromuser']) && !isset($_GET['execute'])) {
     ///////////////////// BEGIN STEP 1 - Select users/modules /////////////////////////
     $exclude_modules = array(
-		"ImportMap",
-		"UsersLastImport",
-		"Dashboard",
-		"SavedSearch",
-		"UserPreference",
-	    "SugarFavorites",
-	    'OAuthKey',
-	    'OAuthToken',
-	);
+        "ImportMap",
+        "UsersLastImport",
+        "Dashboard",
+        "SavedSearch",
+        "UserPreference",
+        "SugarFavorites",
+        'OAuthKey',
+        'OAuthToken',
+    );
 
     if (isset($_GET['clear']) && $_GET['clear'] == 'true') {
         unset($_SESSION['reassignRecords']);
@@ -144,12 +144,12 @@ if (!isset($_SESSION['reassignRecords']['assignedModuleListCache'])) {
                 require_once($beanFiles[$p]);
                 $obj = new $p();
                 if (!isset($obj->field_defs['assigned_user_id']) ||
-			     	(
-					isset($obj->field_defs['assigned_user_id']) &&
-					isset($obj->field_defs['assigned_user_id']['source']) &&
-					$obj->field_defs['assigned_user_id']['source'] == "non-db"
-				)
-			  ) {
+                     (
+                    isset($obj->field_defs['assigned_user_id']) &&
+                    isset($obj->field_defs['assigned_user_id']['source']) &&
+                    $obj->field_defs['assigned_user_id']['source'] == "non-db"
+                )
+              ) {
                     unset($beanListDup[$m]);
                 }
             }
@@ -196,26 +196,26 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
             //Leon bug 20739
             echo $t_mod_strings[$meta['vname']] ."\n<BR>\n";
             switch ($meta['type']) {
-			case "text":
-				$tag = "input";
-				break;
-			case "multiselect":
-				$multi = "multiple=\"true\"";
-				$name .= "[]";
-				// no break - Continue into select
-			case "select":
-				$tag = "select";
-				$sel = '';
-				if (!empty($_SESSION['reassignRecords']['filters'][$meta['name']])) {
-				    $sel = $_SESSION['reassignRecords']['filters'][$meta['name']];
-				}
-				$extra = get_select_options_with_id($meta['dropdown'], $sel);
-				$extra .= "\n</select>";
-				break;
-			default:
-				//echo "Skipping field {$meta['name']} since the type is not supported<BR>";
-				continue;
-		}
+            case "text":
+                $tag = "input";
+                break;
+            case "multiselect":
+                $multi = "multiple=\"true\"";
+                $name .= "[]";
+                // no break - Continue into select
+            case "select":
+                $tag = "select";
+                $sel = '';
+                if (!empty($_SESSION['reassignRecords']['filters'][$meta['name']])) {
+                    $sel = $_SESSION['reassignRecords']['filters'][$meta['name']];
+                }
+                $extra = get_select_options_with_id($meta['dropdown'], $sel);
+                $extra .= "\n</select>";
+                break;
+            default:
+                //echo "Skipping field {$meta['name']} since the type is not supported<BR>";
+                continue;
+        }
             echo "<$tag $size name=\"$name\" $multi>\n$extra";
             echo "<BR>\n";
         }
@@ -273,7 +273,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
     $sugar_smarty = new Sugar_Smarty();
     $help_img = smarty_function_sugar_help(array("text"=>$mod_strings['LBL_REASS_VERBOSE_HELP']),$sugar_smarty);
     echo "<BR><input type=checkbox name=verbose> {$mod_strings_users['LBL_REASS_VERBOSE_OUTPUT']}".$help_img."<BR>\n";
-	
+    
     unset($_SESSION['reassignRecords']['modules']);
     $beanListFlip = array_flip($_SESSION['reassignRecords']['assignedModuleListCache']);
     foreach ($_POST['modules'] as $module) {
@@ -299,8 +299,8 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
         $q_select = "select id";
         $q_update = "update ";
         $q_set = " set assigned_user_id = '{$_POST['touser']}', ".
-			      "date_modified = '".TimeDate::getInstance()->nowDb()."', ".
-			      "modified_user_id = '{$current_user->id}' ";
+                  "date_modified = '".TimeDate::getInstance()->nowDb()."', ".
+                  "modified_user_id = '{$current_user->id}' ";
         $q_tables   = " {$object->table_name} ";
         $q_where  = "where {$object->table_name}.deleted=0 and {$object->table_name}.assigned_user_id = '{$_POST['fromuser']}' ";
 
@@ -318,30 +318,30 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
                 }
                 $addcstm = ($is_custom ? "_cstm" : "");
                 switch ($meta['type']) {
-					case "text":
-					case "select":
-						$q_where .= " and {$object->table_name}{$addcstm}.{$meta['dbname']} = '{$_POST[$meta['name']]}' ";
-						break;
-					case "multiselect":
-						if (empty($_POST[$meta['name']])) {
-						    continue;
-						}
-						$in_string = "";
-						$empty_check = "";
-						foreach ($_POST[$meta['name']] as $onevalue) {
-						    if (empty($onevalue)) {
-						        $empty_check .= " OR {$object->table_name}{$addcstm}.{$meta['dbname']} is null ";
-						    }
-						    $in_string .= "'$onevalue', ";
-						}
-						$in_string = substr($in_string, 0, count($in_string) - 3);
-						$q_where .= " and ({$object->table_name}{$addcstm}.{$meta['dbname']} in ($in_string) $empty_check)";
-						break;
-					default:
-						//echo "Skipping field {$meta['name']} since the type is not supported<BR>";
-						continue;
-						break;
-				}
+                    case "text":
+                    case "select":
+                        $q_where .= " and {$object->table_name}{$addcstm}.{$meta['dbname']} = '{$_POST[$meta['name']]}' ";
+                        break;
+                    case "multiselect":
+                        if (empty($_POST[$meta['name']])) {
+                            continue;
+                        }
+                        $in_string = "";
+                        $empty_check = "";
+                        foreach ($_POST[$meta['name']] as $onevalue) {
+                            if (empty($onevalue)) {
+                                $empty_check .= " OR {$object->table_name}{$addcstm}.{$meta['dbname']} is null ";
+                            }
+                            $in_string .= "'$onevalue', ";
+                        }
+                        $in_string = substr($in_string, 0, count($in_string) - 3);
+                        $q_where .= " and ({$object->table_name}{$addcstm}.{$meta['dbname']} in ($in_string) $empty_check)";
+                        break;
+                    default:
+                        //echo "Skipping field {$meta['name']} since the type is not supported<BR>";
+                        continue;
+                        break;
+                }
             }
         }
         $query = "$q_select from $q_tables $q_where";
@@ -370,7 +370,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
     echo "</form>\n";
 
 // debug
-	//print_r($_SESSION['reassignRecords']);
+    //print_r($_SESSION['reassignRecords']);
 ///////////////////// END STEP 2 - Confirm Selections /////////////////////////
 }
 /////////////////// BEGIN STEP 3 - Execute reassignment ///////////////////////

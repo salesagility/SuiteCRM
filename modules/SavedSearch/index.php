@@ -48,23 +48,23 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-	
+    
 if (!empty($_REQUEST['saved_search_action'])) {
     $ss = new SavedSearch();
-	
+    
     switch ($_REQUEST['saved_search_action']) {
         case 'update': // save here
-        	$savedSearchBean = loadBean($_REQUEST['search_module']);
+            $savedSearchBean = loadBean($_REQUEST['search_module']);
             $ss->handleSave('', true, false, $_REQUEST['saved_search_select'], $savedSearchBean);
             break;
-		case 'save': // save here
-			$savedSearchBean = loadBean($_REQUEST['search_module']);
-			$ss->handleSave('', true, false, null, $savedSearchBean);
-			break;
-		case 'delete': // delete here
-			$ss->handleDelete($_REQUEST['saved_search_select']);
-			break;			
-	}
+        case 'save': // save here
+            $savedSearchBean = loadBean($_REQUEST['search_module']);
+            $ss->handleSave('', true, false, null, $savedSearchBean);
+            break;
+        case 'delete': // delete here
+            $ss->handleDelete($_REQUEST['saved_search_select']);
+            break;			
+    }
 } elseif (!empty($_REQUEST['saved_search_select'])) { // requesting a search here.
     if (!empty($_REQUEST['searchFormTab'])) { // where is the request from  
         $searchFormTab = $_REQUEST['searchFormTab'];

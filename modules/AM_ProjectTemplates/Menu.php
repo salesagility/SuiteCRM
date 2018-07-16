@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings, $app_strings, $sugar_config;
 
-		
+        
 if (ACLController::checkAccess('AM_ProjectTemplates', 'edit', true)) {
     $module_menu[]=Array("index.php?module=AM_ProjectTemplates&action=EditView&return_module=AM_ProjectTemplates&return_action=index", $mod_strings['LNK_NEW_RECORD'],"Create", 'AM_ProjectTemplates');
 }

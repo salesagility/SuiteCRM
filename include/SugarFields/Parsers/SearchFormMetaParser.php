@@ -131,10 +131,10 @@ class SearchFormMetaParser extends MetaParser
             $id = is_array($row) ? $row['name'] : $row;
 
             /*
-  	 if(!isset($existingElements[$id])) {
-  	 	//$addEntry = $row;
-  	 }
-  	 */
+     if(!isset($existingElements[$id])) {
+         //$addEntry = $row;
+     }
+     */
 
             if (isset($existingElements[$id])) {
                 //Use master copy instead
@@ -142,11 +142,11 @@ class SearchFormMetaParser extends MetaParser
             }
 
             // Add it to the $panels
-  	 /*
-  	 if(!empty($addEntry)) {
-  	 	$section[] = $addEntry;
-  	 }
-  	 */
+     /*
+     if(!empty($addEntry)) {
+         $section[] = $addEntry;
+     }
+     */
         } //foreach
 
         return $section;
@@ -207,7 +207,7 @@ class SearchFormMetaParser extends MetaParser
                     // If it's a custom field we just set the name
                     $name = $customField;
                 } elseif (is_array($formElementNames) && count($formElementNames) == 1
-	   	  	           && (isset($vardefs[$formElementNames[0]]) || $formElementNames[0] == 'current_user_only')) {
+                       && (isset($vardefs[$formElementNames[0]]) || $formElementNames[0] == 'current_user_only')) {
                     $name = $formElementNames[0];
                 }
 

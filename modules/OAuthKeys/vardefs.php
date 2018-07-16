@@ -41,9 +41,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $dictionary['OAuthKey'] = array('table' => 'oauth_consumer',
-	'comment' => 'OAuth consumer keys',
-	'audited'=>false,
-	'fields' => array (
+    'comment' => 'OAuth consumer keys',
+    'audited'=>false,
+    'fields' => array (
           'c_key' =>
           array (
             'name' => 'c_key',
@@ -52,9 +52,9 @@ $dictionary['OAuthKey'] = array('table' => 'oauth_consumer',
             'required' => true,
             'comment' => 'Consumer public key',
             'importable' => 'required',
-        	'massupdate' => 0,
+            'massupdate' => 0,
             'reportable'=>false,
-        	'studio' => 'hidden',
+            'studio' => 'hidden',
           ),
           'c_secret' =>
           array (
@@ -62,12 +62,12 @@ $dictionary['OAuthKey'] = array('table' => 'oauth_consumer',
             'vname' => 'LBL_CONSSECRET',
             //'type' => 'encrypt',
             'type' => 'varchar',
-          	'required' => true,
+              'required' => true,
             'comment' => 'Consumer secret key',
             'importable' => 'required',
-        	'massupdate' => 0,
+            'massupdate' => 0,
             'reportable'=>false,
-        	'studio' => 'hidden',
+            'studio' => 'hidden',
           ),
           'tokens' =>
           array (

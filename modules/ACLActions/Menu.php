@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings;
 $module_menu = Array(
-	Array("index.php?module=ACLRoles&action=index", $mod_strings['LIST_ROLES'],"List"),
-	Array("index.php?module=ACLRoles&action=ListUsers", $mod_strings['LIST_ROLES_BY_USER'],"List"),
-	
-	);
+    Array("index.php?module=ACLRoles&action=index", $mod_strings['LIST_ROLES'],"List"),
+    Array("index.php?module=ACLRoles&action=ListUsers", $mod_strings['LIST_ROLES_BY_USER'],"List"),
+    
+    );

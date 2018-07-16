@@ -421,7 +421,7 @@ function get_subscription_lists_query($focus, $additional_fields = null)
         $all_news_type_pl_query .= " AND ( c.assigned_user_id ='".$current_user->id."' or ".$group_where.") ";
     }
     /* END - SECURITY GROUPS */
-		
+        
     $all_news_type_list =$focus->db->query($all_news_type_pl_query);
 
     //build array of all newsletter campaigns
@@ -764,7 +764,7 @@ function process_subscriptions($subscription_string_to_parse)
                 $exempt_list->$relationship->add($focus->id);
             } elseif ($subscription_list['list_type'] == 'default' || $subscription_list['list_type'] == 'test') {
                 //if list type is default or test, then delete the relationship
-            	//$exempt_list->$relationship->delete($subscription_list['id'],$focus->id);
+                //$exempt_list->$relationship->delete($subscription_list['id'],$focus->id);
             }
         }
 

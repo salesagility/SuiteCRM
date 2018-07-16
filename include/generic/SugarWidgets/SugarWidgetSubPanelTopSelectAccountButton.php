@@ -61,7 +61,7 @@ class SugarWidgetSubPanelTopSelectAccountButton extends SugarWidgetSubPanelTopSe
         /*
         * Bug25633 code change end
         */
-		
+        
         return parent::display($widget_data);
     }
 }

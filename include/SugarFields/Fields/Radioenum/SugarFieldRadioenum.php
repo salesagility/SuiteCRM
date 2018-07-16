@@ -60,7 +60,7 @@ class SugarFieldRadioenum extends SugarFieldBase
     public function getEmailTemplateValue($inputField, $vardef, $displayParams = array(), $tabindex = 0)
     {
         global $app_list_strings;
-		
+        
         /**
          * If array doesn't exist for some reason, return key.
          */

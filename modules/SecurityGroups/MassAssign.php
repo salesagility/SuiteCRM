@@ -67,7 +67,7 @@ if (isset($_POST['mass']) && is_array($_POST['mass'])) {
             $sugarbean->retrieve($id);
 
             //if($sugarbean->ACLAccess('Delete')){
-				
+                
             $GLOBALS['log']->debug("MassAssign - deleting relationship: $groupFocus->name");
             if ($sugarbean->module_dir == 'Users') {
                 $rel_name = "SecurityGroups";
@@ -76,15 +76,15 @@ if (isset($_POST['mass']) && is_array($_POST['mass'])) {
             }
             $sugarbean->load_relationship($rel_name);
             $sugarbean->$rel_name->delete($sugarbean->id,$groupFocus->id);
-				
+                
         //As of 6.3.0 many-to-many requires a link field set in both modules...so lets bypass that
-				//$groupFocus->removeGroupFromRecord($sugarbean->module_dir, $id, $groupFocus->id);
-			//}
+                //$groupFocus->removeGroupFromRecord($sugarbean->module_dir, $id, $groupFocus->id);
+            //}
         } else {
             $sugarbean->retrieve($id);
 
             //if($sugarbean->ACLAccess('Save')){
-				
+                
             $GLOBALS['log']->debug("MassAssign - adding relationship: $groupFocus->name");
             if ($sugarbean->module_dir == 'Users') {
                 $rel_name = "SecurityGroups";
@@ -94,23 +94,23 @@ if (isset($_POST['mass']) && is_array($_POST['mass'])) {
             $GLOBALS['log']->debug("MassAssign - adding relationship relationship name: ".$rel_name);
             $sugarbean->load_relationship($rel_name);
             $sugarbean->$rel_name->add($groupFocus->id);
-				
+                
 
             //As of 6.3.0 many-to-many requires a link field set in both modules...so lets bypass that
-				/**
-				//check existing
-				$query = "SELECT * FROM securitygroups_records WHERE securitygroup_id='$groupFocus->id' AND record_id='$id' AND module='$sugarbean->module_dir' AND deleted=0";
-				$db = DBManagerFactory::getInstance();
-				$result = $db->query($query);
-				$row = $db->fetchByAssoc($result);
-				if (empty($row))
-				{
-					$groupFocus->addGroupToRecord($sugarbean->module_dir, $id, $groupFocus->id);
-				}
-				*/
+                /**
+                //check existing
+                $query = "SELECT * FROM securitygroups_records WHERE securitygroup_id='$groupFocus->id' AND record_id='$id' AND module='$sugarbean->module_dir' AND deleted=0";
+                $db = DBManagerFactory::getInstance();
+                $result = $db->query($query);
+                $row = $db->fetchByAssoc($result);
+                if (empty($row))
+                {
+                    $groupFocus->addGroupToRecord($sugarbean->module_dir, $id, $groupFocus->id);
+                }
+                */
 
 
-			//}
+            //}
         }
     }
 }

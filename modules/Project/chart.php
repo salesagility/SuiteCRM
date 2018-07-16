@@ -224,7 +224,7 @@ class chart
         echo '</select><br /><br />';
         echo '</td>';
 
-			
+            
         echo '<td scope="row_label" nowrap="nowrap" >
                   <label for="field_chart">'.$mod_strings["LBL_DATE_START"].'</label>
               </td>
@@ -377,7 +377,7 @@ class chart
         elseif ($chart_type == "monthly") {
             echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
             /*foreach ($weeks as $week)
-			{
+            {
                 echo '<td class="main_table weeks" colspan="7">'.$week.'</td>';
             }*/
 
@@ -393,7 +393,7 @@ class chart
                 $wcount= 0;
                 foreach ($months as $month => $weeks) {//count the number of weeks in each month        
                     /*foreach ($weeks as $week)
-					{
+                    {
                         $wcount++;
                     }*/
                     $wcount+= count($weeks);

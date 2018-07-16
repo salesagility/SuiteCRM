@@ -196,7 +196,7 @@ EOREGEX
            (balanced == 0) then we don't need to do anything.
 
            otherwise, we need to balance the expression.
-		        */
+                */
         $reset = false;
         for ($i=0;$i<$token_count;++$i) {
             if (empty($tokens[$i])) {
@@ -207,9 +207,9 @@ EOREGEX
             $trim = trim($token);
             if ($trim) {
                 if ($trim[0] != '('
-						&& substr($trim,-1) == ')') {
+                        && substr($trim,-1) == ')') {
                     $trim=trim(substr($trim,0,
-								strpos($trim,'(')));
+                                strpos($trim,'(')));
                 }
                 $tokens[$i]=$trim;
                 $token=$trim;
@@ -329,7 +329,7 @@ EOREGEX
             }
 
             /* If it isn't obvious, when $skip_next is set, then we ignore the next real
-				token, that is we ignore whitespace.
+                token, that is we ignore whitespace.
                     */
             if ($skip_next) {
                 #whitespace does not count as a next token
@@ -345,217 +345,217 @@ EOREGEX
             $upper = strtoupper($token);
             switch ($upper) {
 
-					/* Tokens that get their own sections. These keywords have subclauses. */
-					case 'SELECT':
-					case 'ORDER':
-					case 'LIMIT':
-					case 'SET':
-					case 'DUPLICATE':
-					case 'VALUES':
-					case 'GROUP':
-					case 'ORDER':
-					case 'HAVING':
-					case 'INTO':
-					case 'WHERE':
-					case 'RENAME':
-					case 'CALL':
-					case 'PROCEDURE':
-					case 'FUNCTION':
-					case 'DATABASE':
-					case 'SERVER':
-					case 'LOGFILE':
-					case 'DEFINER':
-					case 'RETURNS':
-					case 'EVENT':
-					case 'TABLESPACE':
-					case 'VIEW':
-					case 'TRIGGER':
-					case 'DATA':
-					case 'DO':
-					case 'PASSWORD':
-					case 'USER':
-					case 'PLUGIN':
-					case 'FROM':
-					case 'FLUSH':
-					case 'KILL':
-					case 'RESET':
-					case 'START':
-					case 'STOP':
-					case 'PURGE':
-					case 'EXECUTE':
-					case 'PREPARE':
-					case 'DEALLOCATE':
-						if ($token == 'DEALLOCATE') {
-						    $skip_next = true;
-						}
-						/* this FROM is different from FROM in other DML (not join related) */
-						if ($token_category == 'PREPARE' && $upper == 'FROM') {
-						    continue 2;
-						}
+                    /* Tokens that get their own sections. These keywords have subclauses. */
+                    case 'SELECT':
+                    case 'ORDER':
+                    case 'LIMIT':
+                    case 'SET':
+                    case 'DUPLICATE':
+                    case 'VALUES':
+                    case 'GROUP':
+                    case 'ORDER':
+                    case 'HAVING':
+                    case 'INTO':
+                    case 'WHERE':
+                    case 'RENAME':
+                    case 'CALL':
+                    case 'PROCEDURE':
+                    case 'FUNCTION':
+                    case 'DATABASE':
+                    case 'SERVER':
+                    case 'LOGFILE':
+                    case 'DEFINER':
+                    case 'RETURNS':
+                    case 'EVENT':
+                    case 'TABLESPACE':
+                    case 'VIEW':
+                    case 'TRIGGER':
+                    case 'DATA':
+                    case 'DO':
+                    case 'PASSWORD':
+                    case 'USER':
+                    case 'PLUGIN':
+                    case 'FROM':
+                    case 'FLUSH':
+                    case 'KILL':
+                    case 'RESET':
+                    case 'START':
+                    case 'STOP':
+                    case 'PURGE':
+                    case 'EXECUTE':
+                    case 'PREPARE':
+                    case 'DEALLOCATE':
+                        if ($token == 'DEALLOCATE') {
+                            $skip_next = true;
+                        }
+                        /* this FROM is different from FROM in other DML (not join related) */
+                        if ($token_category == 'PREPARE' && $upper == 'FROM') {
+                            continue 2;
+                        }
 
-						$token_category = $upper;
-						#$join_type = 'JOIN';
-						if ($upper == 'FROM' && $token_category == 'FROM') {
-						    /* DO NOTHING*/
-						} else {
-						    continue 2;
-						}
-					break;
+                        $token_category = $upper;
+                        #$join_type = 'JOIN';
+                        if ($upper == 'FROM' && $token_category == 'FROM') {
+                            /* DO NOTHING*/
+                        } else {
+                            continue 2;
+                        }
+                    break;
 
-					/* These tokens get their own section, but have no subclauses.
-		                           These tokens identify the statement but have no specific subclauses of their own. */
-					case 'DELETE':
-					case 'ALTER':
-					case 'INSERT':
-					case 'REPLACE':
-					case 'TRUNCATE':
-					case 'CREATE':
-					case 'TRUNCATE':
-					case 'OPTIMIZE':
-					case 'GRANT':
-					case 'REVOKE':
-					case 'SHOW':
-					case 'HANDLER':
-					case 'LOAD':
-					case 'ROLLBACK':
-					case 'SAVEPOINT':
-					case 'UNLOCK':
-					case 'INSTALL':
-					case 'UNINSTALL':
-					case 'ANALZYE':
-					case 'BACKUP':
-					case 'CHECK':
-					case 'CHECKSUM':
-					case 'REPAIR':
-					case 'RESTORE':
-					case 'CACHE':
-					case 'DESCRIBE':
-					case 'EXPLAIN':
-					case 'USE':
-					case 'HELP':
-						$token_category = $upper; /* set the category in case these get subclauses
-		 							     in a future version of MySQL */
-						$out[$upper][0] = $upper;
-						continue 2;
-					break;
+                    /* These tokens get their own section, but have no subclauses.
+                                   These tokens identify the statement but have no specific subclauses of their own. */
+                    case 'DELETE':
+                    case 'ALTER':
+                    case 'INSERT':
+                    case 'REPLACE':
+                    case 'TRUNCATE':
+                    case 'CREATE':
+                    case 'TRUNCATE':
+                    case 'OPTIMIZE':
+                    case 'GRANT':
+                    case 'REVOKE':
+                    case 'SHOW':
+                    case 'HANDLER':
+                    case 'LOAD':
+                    case 'ROLLBACK':
+                    case 'SAVEPOINT':
+                    case 'UNLOCK':
+                    case 'INSTALL':
+                    case 'UNINSTALL':
+                    case 'ANALZYE':
+                    case 'BACKUP':
+                    case 'CHECK':
+                    case 'CHECKSUM':
+                    case 'REPAIR':
+                    case 'RESTORE':
+                    case 'CACHE':
+                    case 'DESCRIBE':
+                    case 'EXPLAIN':
+                    case 'USE':
+                    case 'HELP':
+                        $token_category = $upper; /* set the category in case these get subclauses
+                                          in a future version of MySQL */
+                        $out[$upper][0] = $upper;
+                        continue 2;
+                    break;
 
-					/* This is either LOCK TABLES or SELECT ... LOCK IN SHARE MODE*/
-					case 'LOCK':
-						if ($token_category == "") {
-						    $token_category = $upper;
-						    $out[$upper][0] = $upper;
-						} else {
-						    $token = 'LOCK IN SHARE MODE';
-						    $skip_next=true;
-						    $out['OPTIONS'][] = $token;
-						}
-						continue 2;
-					break;
+                    /* This is either LOCK TABLES or SELECT ... LOCK IN SHARE MODE*/
+                    case 'LOCK':
+                        if ($token_category == "") {
+                            $token_category = $upper;
+                            $out[$upper][0] = $upper;
+                        } else {
+                            $token = 'LOCK IN SHARE MODE';
+                            $skip_next=true;
+                            $out['OPTIONS'][] = $token;
+                        }
+                        continue 2;
+                    break;
 
-					case 'USING':
-						/* USING in FROM clause is different from USING w/ prepared statement*/
-						if ($token_category == 'EXECUTE') {
-						    $token_category=$upper;
-						    continue 2;
-						}
-						if ($token_category == 'FROM' && !empty($out['DELETE'])) {
-						    $token_category=$upper;
-						    continue 2;
-						}
-					break;
+                    case 'USING':
+                        /* USING in FROM clause is different from USING w/ prepared statement*/
+                        if ($token_category == 'EXECUTE') {
+                            $token_category=$upper;
+                            continue 2;
+                        }
+                        if ($token_category == 'FROM' && !empty($out['DELETE'])) {
+                            $token_category=$upper;
+                            continue 2;
+                        }
+                    break;
 
-					/* DROP TABLE is different from ALTER TABLE DROP ... */
-					case 'DROP':
-						if ($token_category != 'ALTER') {
-						    $token_category = $upper;
-						    $out[$upper][0] = $upper;
-						    continue 2;
-						}
-					break;
+                    /* DROP TABLE is different from ALTER TABLE DROP ... */
+                    case 'DROP':
+                        if ($token_category != 'ALTER') {
+                            $token_category = $upper;
+                            $out[$upper][0] = $upper;
+                            continue 2;
+                        }
+                    break;
 
-					case 'FOR':
-						$skip_next=true;
-						$out['OPTIONS'][] = 'FOR UPDATE';
-						continue 2;
-					break;
-
-
-					case 'UPDATE':
-						if ($token_category == "") {
-						    $token_category = $upper;
-						    continue 2;
-						}
-						if ($token_category == 'DUPLICATE') {
-						    continue 2;
-						}
-						break;
-					break;
-
-					case 'START':
-						$token = "BEGIN";
-						$out[$upper][0] = $upper;
-						$skip_next = true;
-					break;
-
-					/* These tokens are ignored. */
-					case 'BY':
-					case 'ALL':
-					case 'SHARE':
-					case 'MODE':
-					case 'TO':
-
-					case ';':
-						continue 2;
-						break;
-
-					case 'KEY':
-						if ($token_category == 'DUPLICATE') {
-						    continue 2;
-						}
-					break;
-
-					/* These tokens set particular options for the statement.  They never stand alone.*/
-					case 'DISTINCTROW':
-						$token='DISTINCT';
-						// no break
-					case 'DISTINCT':
-					case 'HIGH_PRIORITY':
-					case 'LOW_PRIORITY':
-					case 'DELAYED':
-					case 'IGNORE':
-					case 'FORCE':
-					case 'STRAIGHT_JOIN':
-					case 'SQL_SMALL_RESULT':
-					case 'SQL_BIG_RESULT':
-					case 'QUICK':
-					case 'SQL_BUFFER_RESULT':
-					case 'SQL_CACHE':
-					case 'SQL_NO_CACHE':
-					case 'SQL_CALC_FOUND_ROWS':
-						$out['OPTIONS'][] = $upper;
-						continue 2;
-					break;
-
-					case 'WITH':
-						if ($token_category == 'GROUP') {
-						    $skip_next=true;
-						    $out['OPTIONS'][] = 'WITH ROLLUP';
-						    continue 2;
-						}
-					break;
+                    case 'FOR':
+                        $skip_next=true;
+                        $out['OPTIONS'][] = 'FOR UPDATE';
+                        continue 2;
+                    break;
 
 
-					case 'AS':
-					break;
+                    case 'UPDATE':
+                        if ($token_category == "") {
+                            $token_category = $upper;
+                            continue 2;
+                        }
+                        if ($token_category == 'DUPLICATE') {
+                            continue 2;
+                        }
+                        break;
+                    break;
 
-					case '':
-					case ',':
-					case ';':
-						break;
+                    case 'START':
+                        $token = "BEGIN";
+                        $out[$upper][0] = $upper;
+                        $skip_next = true;
+                    break;
 
-					default:
-						break;
-				}
+                    /* These tokens are ignored. */
+                    case 'BY':
+                    case 'ALL':
+                    case 'SHARE':
+                    case 'MODE':
+                    case 'TO':
+
+                    case ';':
+                        continue 2;
+                        break;
+
+                    case 'KEY':
+                        if ($token_category == 'DUPLICATE') {
+                            continue 2;
+                        }
+                    break;
+
+                    /* These tokens set particular options for the statement.  They never stand alone.*/
+                    case 'DISTINCTROW':
+                        $token='DISTINCT';
+                        // no break
+                    case 'DISTINCT':
+                    case 'HIGH_PRIORITY':
+                    case 'LOW_PRIORITY':
+                    case 'DELAYED':
+                    case 'IGNORE':
+                    case 'FORCE':
+                    case 'STRAIGHT_JOIN':
+                    case 'SQL_SMALL_RESULT':
+                    case 'SQL_BIG_RESULT':
+                    case 'QUICK':
+                    case 'SQL_BUFFER_RESULT':
+                    case 'SQL_CACHE':
+                    case 'SQL_NO_CACHE':
+                    case 'SQL_CALC_FOUND_ROWS':
+                        $out['OPTIONS'][] = $upper;
+                        continue 2;
+                    break;
+
+                    case 'WITH':
+                        if ($token_category == 'GROUP') {
+                            $skip_next=true;
+                            $out['OPTIONS'][] = 'WITH ROLLUP';
+                            continue 2;
+                        }
+                    break;
+
+
+                    case 'AS':
+                    break;
+
+                    case '':
+                    case ',':
+                    case ';':
+                        break;
+
+                    default:
+                        break;
+                }
 
             if ($prev_category == $token_category) {
                 $out[$token_category][] = $token;
@@ -775,12 +775,12 @@ EOREGEX
         if (!$alias && $last['expr_type'] == 'colref') {
             $prev = array_pop($stripped);
             if ($prev['expr_type'] == 'operator' ||
-				   $prev['expr_type'] == 'const' ||
-				   $prev['expr_type'] == 'function' ||
-				   $prev['expr_type'] == 'expression' ||
-				   #$prev['expr_type'] == 'aggregate_function' ||
-				   $prev['expr_type'] == 'subquery' ||
-				   $prev['expr_type'] == 'colref') {
+                   $prev['expr_type'] == 'const' ||
+                   $prev['expr_type'] == 'function' ||
+                   $prev['expr_type'] == 'expression' ||
+                   #$prev['expr_type'] == 'aggregate_function' ||
+                   $prev['expr_type'] == 'subquery' ||
+                   $prev['expr_type'] == 'colref') {
                 $alias = $last['base_expr'];
 
                 #remove the last token
@@ -876,144 +876,144 @@ EOREGEX
             }
 
             switch ($upper) {
-					case 'OUTER':
-					case 'LEFT':
-					case 'RIGHT':
-					case 'NATURAL':
-					case 'CROSS':
-					case ',':
-					case 'JOIN':
-						break;
+                    case 'OUTER':
+                    case 'LEFT':
+                    case 'RIGHT':
+                    case 'NATURAL':
+                    case 'CROSS':
+                    case ',':
+                    case 'JOIN':
+                        break;
 
-					default:
-						$expression .= $token == '' ? " " : $token;
-						if ($ref_type) {
-						    $ref_expr .= $token == '' ? " " : $token;
-						}
-					break;
-				}
+                    default:
+                        $expression .= $token == '' ? " " : $token;
+                        if ($ref_type) {
+                            $ref_expr .= $token == '' ? " " : $token;
+                        }
+                    break;
+                }
 
             switch ($upper) {
-					case 'AS':
-						$token_count++;
-						$n=1;
-						$alias = "";
-						while ($alias == "") {
-						    $alias = trim($tokens[$i+$n]);
-						    ++$n;
-						}
+                    case 'AS':
+                        $token_count++;
+                        $n=1;
+                        $alias = "";
+                        while ($alias == "") {
+                            $alias = trim($tokens[$i+$n]);
+                            ++$n;
+                        }
 
-						continue;
-					break;
+                        continue;
+                    break;
 
-					case 'INDEX':
-						if ($token_category == 'CREATE') {
-						    $token_category = $upper;
-						    continue 2;
-						}
+                    case 'INDEX':
+                        if ($token_category == 'CREATE') {
+                            $token_category = $upper;
+                            continue 2;
+                        }
 
-					break;
+                    break;
 
-					case 'USING':
-					case 'ON':
-						$ref_type = $upper;
-						$ref_expr = "";
+                    case 'USING':
+                    case 'ON':
+                        $ref_type = $upper;
+                        $ref_expr = "";
 
-						// no break
-					case 'CROSS':
-					case 'USE':
-					case 'FORCE':
-					case 'IGNORE':
-					case 'INNER':
-					case 'OUTER':
-					#	$expression .= $token;
-						$token_count++;
-						continue;
-					break;
-
-
-
-					case 'FOR':
-						$token_count++;
-						$skip_next = true;
-						continue;
-					break;
-
-					case 'LEFT':
-					case 'RIGHT':
-					case 'STRAIGHT_JOIN':
-						$join_type=$saved_join_type;
-
-						$modifier = $upper . " ";
-						break;
+                        // no break
+                    case 'CROSS':
+                    case 'USE':
+                    case 'FORCE':
+                    case 'IGNORE':
+                    case 'INNER':
+                    case 'OUTER':
+                    #	$expression .= $token;
+                        $token_count++;
+                        continue;
+                    break;
 
 
-					case ',':
-						$modifier = 'CROSS';
 
-						// no break
-					case 'JOIN':
+                    case 'FOR':
+                        $token_count++;
+                        $skip_next = true;
+                        continue;
+                    break;
 
-						if ($first_join) {
-						    $join_type = 'JOIN';
-						    $saved_join_type = ($modifier ? $modifier : 'JOIN');
-						} else {
-						    $new_join_type = ($modifier ? $modifier : 'JOIN');
-						    $join_type = $saved_join_type;
-						    $saved_join_type = $new_join_type;
-						    unset($new_join_type);
-						}
+                    case 'LEFT':
+                    case 'RIGHT':
+                    case 'STRAIGHT_JOIN':
+                        $join_type=$saved_join_type;
 
-						$first_join = false;
-
-						if (!trim($alias)) {
-						    $alias = $table;
-						}
-
-						if ($subquery) {
-						    $sub_tree = $this->parse(trim($subquery,'()'));
-						    $base_expr=$subquery;
-						}
-
-						if (substr(trim($table),0,1) == '(') {
-						    $base_expr=$this->trimSubquery($table);
-						    $join_type = 'JOIN';
-						    $sub_tree = $this->process_from($this->split_sql($base_expr));
-						    $alias="";
-						}
+                        $modifier = $upper . " ";
+                        break;
 
 
-						if ($join_type == "") {
-						    $join_type='JOIN';
-						}
-						$expr[] = array('table'=>$table, 'alias'=>$alias,'join_type'=>$join_type,'ref_type'=> $ref_type,'ref_clause'=>$this->trimSubquery($ref_expr), 'base_expr' => $base_expr, 'sub_tree' => $sub_tree);
-						$modifier = "";
-						#$join_type=$saved_join_type;
+                    case ',':
+                        $modifier = 'CROSS';
+
+                        // no break
+                    case 'JOIN':
+
+                        if ($first_join) {
+                            $join_type = 'JOIN';
+                            $saved_join_type = ($modifier ? $modifier : 'JOIN');
+                        } else {
+                            $new_join_type = ($modifier ? $modifier : 'JOIN');
+                            $join_type = $saved_join_type;
+                            $saved_join_type = $new_join_type;
+                            unset($new_join_type);
+                        }
+
+                        $first_join = false;
+
+                        if (!trim($alias)) {
+                            $alias = $table;
+                        }
+
+                        if ($subquery) {
+                            $sub_tree = $this->parse(trim($subquery,'()'));
+                            $base_expr=$subquery;
+                        }
+
+                        if (substr(trim($table),0,1) == '(') {
+                            $base_expr=$this->trimSubquery($table);
+                            $join_type = 'JOIN';
+                            $sub_tree = $this->process_from($this->split_sql($base_expr));
+                            $alias="";
+                        }
 
 
-						$token_count = 0;
-						$table = $alias = $expression = $base_expr = $ref_type = $ref_expr = "";
-						$sub_tree=false;
-						$subquery = "";
+                        if ($join_type == "") {
+                            $join_type='JOIN';
+                        }
+                        $expr[] = array('table'=>$table, 'alias'=>$alias,'join_type'=>$join_type,'ref_type'=> $ref_type,'ref_clause'=>$this->trimSubquery($ref_expr), 'base_expr' => $base_expr, 'sub_tree' => $sub_tree);
+                        $modifier = "";
+                        #$join_type=$saved_join_type;
 
-					break;
+
+                        $token_count = 0;
+                        $table = $alias = $expression = $base_expr = $ref_type = $ref_expr = "";
+                        $sub_tree=false;
+                        $subquery = "";
+
+                    break;
 
 
-					default:
-						if ($token === false || empty($token) || $token === "") {
-						    continue;
-						}
+                    default:
+                        if ($token === false || empty($token) || $token === "") {
+                            continue;
+                        }
 
-						if ($token_count == 0) {
-						    if (!$table) {
-						        $table = $token ;
-						    }
-						} elseif ($token_count == 1) {
-						    $alias = $token;
-						}
-						$token_count++;
-					break;
-				}
+                        if ($token_count == 0) {
+                            if (!$table) {
+                                $table = $token ;
+                            }
+                        } elseif ($token_count == 1) {
+                            $alias = $token;
+                        }
+                        $token_count++;
+                    break;
+                }
             ++$i;
         }
         if (substr(trim($table),0,1) == '(') {
@@ -1045,53 +1045,53 @@ EOREGEX
         if (!$tokens) {
             return false;
         }
-	
+    
         foreach ($tokens as $token) {
             switch (strtoupper($token)) {
-					case ',':
-						$expression = trim($expression);
-						if ($expression[0] != '`' || substr($expression,-1) != '`') {
-						    $escaped = str_replace('`','``',$expression);
-						} else {
-						    $escaped = $expression;
-						}
-						$escaped = '`' . $escaped . '`';
+                    case ',':
+                        $expression = trim($expression);
+                        if ($expression[0] != '`' || substr($expression,-1) != '`') {
+                            $escaped = str_replace('`','``',$expression);
+                        } else {
+                            $escaped = $expression;
+                        }
+                        $escaped = '`' . $escaped . '`';
 
-						if (is_numeric(trim($expression))) {
-						    $type = 'pos';
-						} else {
+                        if (is_numeric(trim($expression))) {
+                            $type = 'pos';
+                        } else {
 
-						  	#search to see if the expression matches an alias
-						    foreach ($select as $clause) {
-						        if ($clause['alias'] == $escaped) {
-						            $type = 'alias';
-						        }
-						    }
+                            #search to see if the expression matches an alias
+                            foreach ($select as $clause) {
+                                if ($clause['alias'] == $escaped) {
+                                    $type = 'alias';
+                                }
+                            }
 
-						    if (!$type) {
-						        $type = "expression";
-						    }
-						}
+                            if (!$type) {
+                                $type = "expression";
+                            }
+                        }
 
-						$out[]=array('type'=>$type,'base_expr'=>$expression,'direction'=>$direction);
-						$escaped = "";
-						$expression = "";
-						$direction = "ASC";
-						$type = "";
-					break;
+                        $out[]=array('type'=>$type,'base_expr'=>$expression,'direction'=>$direction);
+                        $escaped = "";
+                        $expression = "";
+                        $direction = "ASC";
+                        $type = "";
+                    break;
 
-					case 'ASC':
-						$direction = "ASC";
-						break;
-					case 'DESC':
-						$direction = "DESC";
-					    break;
+                    case 'ASC':
+                        $direction = "ASC";
+                        break;
+                    case 'DESC':
+                        $direction = "DESC";
+                        break;
 
-					default:
-						$expression .= $token == '' ? ' ' : $token;
+                    default:
+                        $expression .= $token == '' ? ' ' : $token;
 
 
-				}
+                }
         }
         if ($expression) {
             $expression = trim($expression);
@@ -1106,7 +1106,7 @@ EOREGEX
                 $type = 'pos';
             } else {
 
-						#search to see if the expression matches an alias
+                        #search to see if the expression matches an alias
                 if (!$type && $select) {
                     foreach ($select as $clause) {
                         if (!is_array($clause)) {
@@ -1137,7 +1137,7 @@ EOREGEX
     }
 
     /* Some sections are just lists of expressions, like the WHERE and HAVING clauses.  This function
-	           processes these sections.  Recursive.
+               processes these sections.  Recursive.
     */
     private function process_expr_list($tokens)
     {
@@ -1201,72 +1201,72 @@ EOREGEX
                 /* it is either an operator, a colref or a constant */
             } else {
                 switch ($upper) {
-					case 'AND':
-					case '&&':
-					case 'BETWEEN':
-					case 'AND':
-					case 'BINARY':
-					case '&':
-					case '~':
-					case '|':
-					case '^':
-					case 'CASE':
-					case 'WHEN':
-					case 'END':
-					case 'DIV':
-					case '/':
-					case '<=>':
-					case '=':
-					case '>=':
-					case '>':
-					case 'IS':
-					case 'NOT':
-					case 'NULL':
-					case '<<':
-					case '<=':
-					case '<':
-					case 'LIKE':
-					case '-':
-					case '%':
-					case '!=':
-					case '<>':
-					case 'REGEXP':
-					case '!':
-					case '||':
-					case 'OR':
-					case '+':
-					case '>>':
-					case 'RLIKE':
-					case 'SOUNDS':
-					case '*':
-					case '-':
-					case 'XOR':
-					case 'IN':
-							$processed = false;
-							$type = "operator";
-							break;
-					default:
-						switch ($token[0]) {
-							case "'":
-							case '"':
-									$type = 'const';
-									break;
-							case '`':
-									$type = 'colref';
-									break;
+                    case 'AND':
+                    case '&&':
+                    case 'BETWEEN':
+                    case 'AND':
+                    case 'BINARY':
+                    case '&':
+                    case '~':
+                    case '|':
+                    case '^':
+                    case 'CASE':
+                    case 'WHEN':
+                    case 'END':
+                    case 'DIV':
+                    case '/':
+                    case '<=>':
+                    case '=':
+                    case '>=':
+                    case '>':
+                    case 'IS':
+                    case 'NOT':
+                    case 'NULL':
+                    case '<<':
+                    case '<=':
+                    case '<':
+                    case 'LIKE':
+                    case '-':
+                    case '%':
+                    case '!=':
+                    case '<>':
+                    case 'REGEXP':
+                    case '!':
+                    case '||':
+                    case 'OR':
+                    case '+':
+                    case '>>':
+                    case 'RLIKE':
+                    case 'SOUNDS':
+                    case '*':
+                    case '-':
+                    case 'XOR':
+                    case 'IN':
+                            $processed = false;
+                            $type = "operator";
+                            break;
+                    default:
+                        switch ($token[0]) {
+                            case "'":
+                            case '"':
+                                    $type = 'const';
+                                    break;
+                            case '`':
+                                    $type = 'colref';
+                                    break;
 
-							default:
-								if (is_numeric($token)) {
-								    $type = 'const';
-								} else {
-								    $type = 'colref';
-								}
-							break;
+                            default:
+                                if (is_numeric($token)) {
+                                    $type = 'const';
+                                } else {
+                                    $type = 'colref';
+                                }
+                            break;
 
-						}
-						#$processed = $token;
-						$processed = false;
-					}
+                        }
+                        #$processed = $token;
+                        $processed = false;
+                    }
             }
             /* is a reserved word? */
             if (($type != 'operator' && $type != 'in-list' && $type != 'sub_expr') && in_array($upper, $this->reserved)) {
@@ -1275,40 +1275,40 @@ EOREGEX
                     $type = 'reserved';
                 } else {
                     switch ($token) {
-							case 'AVG':
-							case 'SUM':
-							case 'COUNT':
-							case 'MIN':
-							case 'MAX':
-							case 'STDDEV':
-							case 'STDDEV_SAMP':
-							case 'STDDEV_POP':
-							case 'VARIANCE':
-							case 'VAR_SAMP':
-							case 'VAR_POP':
-							case 'GROUP_CONCAT':
-							case 'BIT_AND':
-							case 'BIT_OR':
-							case 'BIT_XOR':
-								$type = 'aggregate_function';
-								if (!empty($tokens[$key+1])) {
-								    $sub_expr = $tokens[$key+1];
-								}
-								#$skip_next=true;
-							break;
+                            case 'AVG':
+                            case 'SUM':
+                            case 'COUNT':
+                            case 'MIN':
+                            case 'MAX':
+                            case 'STDDEV':
+                            case 'STDDEV_SAMP':
+                            case 'STDDEV_POP':
+                            case 'VARIANCE':
+                            case 'VAR_SAMP':
+                            case 'VAR_POP':
+                            case 'GROUP_CONCAT':
+                            case 'BIT_AND':
+                            case 'BIT_OR':
+                            case 'BIT_XOR':
+                                $type = 'aggregate_function';
+                                if (!empty($tokens[$key+1])) {
+                                    $sub_expr = $tokens[$key+1];
+                                }
+                                #$skip_next=true;
+                            break;
 
-							default:
-								$type = 'function';
-								if (!empty($tokens[$key+1])) {
-								    $sub_expr = $tokens[$key+1];
-								} else {
-								    $sub_expr="()";
-								}
-								#$skip_next=true;
+                            default:
+                                $type = 'function';
+                                if (!empty($tokens[$key+1])) {
+                                    $sub_expr = $tokens[$key+1];
+                                } else {
+                                    $sub_expr="()";
+                                }
+                                #$skip_next=true;
 
 
-							break;
-						}
+                            break;
+                        }
                 }
             }
 
@@ -1431,632 +1431,632 @@ EOREGEX
     private function load_reserved_words()
     {
         $this->functions = array(
-		        'abs',
-		        'acos',
-		        'adddate',
-		        'addtime',
-		        'aes_encrypt',
-		        'aes_decrypt',
-		        'against',
-		        'ascii',
-		        'asin',
-		        'atan',
-		        'avg',
-		        'benchmark',
-		        'bin',
-		        'bit_and',
-		        'bit_or',
-		        'bitcount',
-		        'bitlength',
-		        'cast',
-		        'ceiling',
-		        'char',
-		        'char_length',
-		        'character_length',
-		        'charset',
-		        'coalesce',
-		        'coercibility',
-		        'collation',
-		        'compress',
-		        'concat',
-		        'concat_ws',
-		        'conection_id',
-		        'conv',
-		        'convert',
-		        'convert_tz',
-		        'cos',
-		        'cot',
-		        'count',
-		        'crc32',
-		        'curdate',
-		        'current_user',
-		        'currval',
-		        'curtime',
-		        'database',
-		        'date_add',
-		        'date_diff',
-		        'date_format',
-		        'date_sub',
-		        'day',
-		        'dayname',
-		        'dayofmonth',
-		        'dayofweek',
-		        'dayofyear',
-		        'decode',
-		        'default',
-		        'degrees',
-		        'des_decrypt',
-		        'des_encrypt',
-		        'elt',
-		        'encode',
-		        'encrypt',
-		        'exp',
-		        'export_set',
-		        'extract',
-		        'field',
-		        'find_in_set',
-		        'floor',
-		        'format',
-		        'found_rows',
-		        'from_days',
-		        'from_unixtime',
-		        'get_format',
-		        'get_lock',
-		        'group_concat',
-		        'greatest',
-		        'hex',
-		        'hour',
-		        'if',
-		        'ifnull',
-		        'in',
-		        'inet_aton',
-		        'inet_ntoa',
-		        'insert',
-		        'instr',
-		        'interval',
-		        'is_free_lock',
-		        'is_used_lock',
-		        'last_day',
-		        'last_insert_id',
-		        'lcase',
-		        'least',
-		        'left',
-		        'length',
-		        'ln',
-		        'load_file',
-		        'localtime',
-		        'localtimestamp',
-		        'locate',
-		        'log',
-		        'log2',
-		        'log10',
-		        'lower',
-		        'lpad',
-		        'ltrim',
-		        'make_set',
-		        'makedate',
-		        'maketime',
-		        'master_pos_wait',
-		        'match',
-		        'max',
-		        'md5',
-		        'microsecond',
-		        'mid',
-		        'min',
-		        'minute',
-		        'mod',
-		        'month',
-		        'monthname',
-		        'nextval',
-		        'now',
-		        'nullif',
-		        'oct',
-		        'octet_length',
-		        'old_password',
-		        'ord',
-		        'password',
-		        'period_add',
-		        'period_diff',
-		        'pi',
-		        'position',
-		        'pow',
-		        'power',
-		        'quarter',
-		        'quote',
-		        'radians',
-		        'rand',
-		        'release_lock',
-		        'repeat',
-		        'replace',
-		        'reverse',
-		        'right',
-		        'round',
-		        'row_count',
-		        'rpad',
-		        'rtrim',
-		        'sec_to_time',
-		        'second',
-		        'session_user',
-		        'sha',
-		        'sha1',
-		        'sign',
-		        'soundex',
-		        'space',
-		        'sqrt',
-		        'std',
-		        'stddev',
-		        'stddev_pop',
-		        'stddev_samp',
-		        'strcmp',
-		        'str_to_date',
-		        'subdate',
-		        'substr',
-		        'substring',
-		        'substring_index',
-		        'subtime',
-		        'sum',
-		        'sysdate',
-		        'system_user',
-		        'tan',
-		        'time',
-		        'timediff',
-		        'timestamp',
-		        'timestampadd',
-		        'timestampdiff',
-		        'time_format',
-		        'time_to_sec',
-		        'to_days',
-		        'trim',
-		        'truncate',
-		        'ucase',
-		        'uncompress',
-		        'uncompressed_length',
-		        'unhex',
-		        'unix_timestamp',
-		        'upper',
-		        'user',
-		        'utc_date',
-		        'utc_time',
-		        'utc_timestamp',
-		        'uuid',
-		        'var_pop',
-		        'var_samp',
-		        'variance',
-		        'version',
-		        'week',
-		        'weekday',
-		        'weekofyear',
-		        'year',
-		        'yearweek');
+                'abs',
+                'acos',
+                'adddate',
+                'addtime',
+                'aes_encrypt',
+                'aes_decrypt',
+                'against',
+                'ascii',
+                'asin',
+                'atan',
+                'avg',
+                'benchmark',
+                'bin',
+                'bit_and',
+                'bit_or',
+                'bitcount',
+                'bitlength',
+                'cast',
+                'ceiling',
+                'char',
+                'char_length',
+                'character_length',
+                'charset',
+                'coalesce',
+                'coercibility',
+                'collation',
+                'compress',
+                'concat',
+                'concat_ws',
+                'conection_id',
+                'conv',
+                'convert',
+                'convert_tz',
+                'cos',
+                'cot',
+                'count',
+                'crc32',
+                'curdate',
+                'current_user',
+                'currval',
+                'curtime',
+                'database',
+                'date_add',
+                'date_diff',
+                'date_format',
+                'date_sub',
+                'day',
+                'dayname',
+                'dayofmonth',
+                'dayofweek',
+                'dayofyear',
+                'decode',
+                'default',
+                'degrees',
+                'des_decrypt',
+                'des_encrypt',
+                'elt',
+                'encode',
+                'encrypt',
+                'exp',
+                'export_set',
+                'extract',
+                'field',
+                'find_in_set',
+                'floor',
+                'format',
+                'found_rows',
+                'from_days',
+                'from_unixtime',
+                'get_format',
+                'get_lock',
+                'group_concat',
+                'greatest',
+                'hex',
+                'hour',
+                'if',
+                'ifnull',
+                'in',
+                'inet_aton',
+                'inet_ntoa',
+                'insert',
+                'instr',
+                'interval',
+                'is_free_lock',
+                'is_used_lock',
+                'last_day',
+                'last_insert_id',
+                'lcase',
+                'least',
+                'left',
+                'length',
+                'ln',
+                'load_file',
+                'localtime',
+                'localtimestamp',
+                'locate',
+                'log',
+                'log2',
+                'log10',
+                'lower',
+                'lpad',
+                'ltrim',
+                'make_set',
+                'makedate',
+                'maketime',
+                'master_pos_wait',
+                'match',
+                'max',
+                'md5',
+                'microsecond',
+                'mid',
+                'min',
+                'minute',
+                'mod',
+                'month',
+                'monthname',
+                'nextval',
+                'now',
+                'nullif',
+                'oct',
+                'octet_length',
+                'old_password',
+                'ord',
+                'password',
+                'period_add',
+                'period_diff',
+                'pi',
+                'position',
+                'pow',
+                'power',
+                'quarter',
+                'quote',
+                'radians',
+                'rand',
+                'release_lock',
+                'repeat',
+                'replace',
+                'reverse',
+                'right',
+                'round',
+                'row_count',
+                'rpad',
+                'rtrim',
+                'sec_to_time',
+                'second',
+                'session_user',
+                'sha',
+                'sha1',
+                'sign',
+                'soundex',
+                'space',
+                'sqrt',
+                'std',
+                'stddev',
+                'stddev_pop',
+                'stddev_samp',
+                'strcmp',
+                'str_to_date',
+                'subdate',
+                'substr',
+                'substring',
+                'substring_index',
+                'subtime',
+                'sum',
+                'sysdate',
+                'system_user',
+                'tan',
+                'time',
+                'timediff',
+                'timestamp',
+                'timestampadd',
+                'timestampdiff',
+                'time_format',
+                'time_to_sec',
+                'to_days',
+                'trim',
+                'truncate',
+                'ucase',
+                'uncompress',
+                'uncompressed_length',
+                'unhex',
+                'unix_timestamp',
+                'upper',
+                'user',
+                'utc_date',
+                'utc_time',
+                'utc_timestamp',
+                'uuid',
+                'var_pop',
+                'var_samp',
+                'variance',
+                'version',
+                'week',
+                'weekday',
+                'weekofyear',
+                'year',
+                'yearweek');
 
         /* includes functions */
         $this->reserved = array(
-			'abs',
-			'acos',
-			'adddate',
-			'addtime',
-			'aes_encrypt',
-			'aes_decrypt',
-			'against',
-			'ascii',
-			'asin',
-			'atan',
-			'avg',
-			'benchmark',
-			'bin',
-			'bit_and',
-			'bit_or',
-			'bitcount',
-			'bitlength',
-			'cast',
-			'ceiling',
-			'char',
-			'char_length',
-			'character_length',
-			'charset',
-			'coalesce',
-			'coercibility',
-			'collation',
-			'compress',
-			'concat',
-			'concat_ws',
-			'conection_id',
-			'conv',
-			'convert',
-			'convert_tz',
-			'cos',
-			'cot',
-			'count',
-			'crc32',
-			'curdate',
-			'current_user',
-			'currval',
-			'curtime',
-			'database',
-			'date_add',
-			'date_diff',
-			'date_format',
-			'date_sub',
-			'day',
-			'dayname',
-			'dayofmonth',
-			'dayofweek',
-			'dayofyear',
-			'decode',
-			'default',
-			'degrees',
-			'des_decrypt',
-			'des_encrypt',
-			'elt',
-			'encode',
-			'encrypt',
-			'exp',
-			'export_set',
-			'extract',
-			'field',
-			'find_in_set',
-			'floor',
-			'format',
-			'found_rows',
-			'from_days',
-			'from_unixtime',
-			'get_format',
-			'get_lock',
-			'group_concat',
-			'greatest',
-			'hex',
-			'hour',
-			'if',
-			'ifnull',
-			'in',
-			'inet_aton',
-			'inet_ntoa',
-			'insert',
-			'instr',
-			'interval',
-			'is_free_lock',
-			'is_used_lock',
-			'last_day',
-			'last_insert_id',
-			'lcase',
-			'least',
-			'left',
-			'length',
-			'ln',
-			'load_file',
-			'localtime',
-			'localtimestamp',
-			'locate',
-			'log',
-			'log2',
-			'log10',
-			'lower',
-			'lpad',
-			'ltrim',
-			'make_set',
-			'makedate',
-			'maketime',
-			'master_pos_wait',
-			'match',
-			'max',
-			'md5',
-			'microsecond',
-			'mid',
-			'min',
-			'minute',
-			'mod',
-			'month',
-			'monthname',
-			'nextval',
-			'now',
-			'nullif',
-			'oct',
-			'octet_length',
-			'old_password',
-			'ord',
-			'password',
-			'period_add',
-			'period_diff',
-			'pi',
-			'position',
-			'pow',
-			'power',
-			'quarter',
-			'quote',
-			'radians',
-			'rand',
-			'release_lock',
-			'repeat',
-			'replace',
-			'reverse',
-			'right',
-			'round',
-			'row_count',
-			'rpad',
-			'rtrim',
-			'sec_to_time',
-			'second',
-			'session_user',
-			'sha',
-			'sha1',
-			'sign',
-			'soundex',
-			'space',
-			'sqrt',
-			'std',
-			'stddev',
-			'stddev_pop',
-			'stddev_samp',
-			'strcmp',
-			'str_to_date',
-			'subdate',
-			'substring',
-			'substring_index',
-			'subtime',
-			'sum',
-			'sysdate',
-			'system_user',
-			'tan',
-			'time',
-			'timediff',
-			'timestamp',
-			'timestampadd',
-			'timestampdiff',
-			'time_format',
-			'time_to_sec',
-			'to_days',
-			'trim',
-			'truncate',
-			'ucase',
-			'uncompress',
-			'uncompressed_length',
-			'unhex',
-			'unix_timestamp',
-			'upper',
-			'user',
-			'utc_date',
-			'utc_time',
-			'utc_timestamp',
-			'uuid',
-			'var_pop',
-			'var_samp',
-			'variance',
-			'version',
-			'week',
-			'weekday',
-			'weekofyear',
-			'year',
-			'yearweek',
-			'add',
-			'all',
-			'alter',
-			'analyze',
-			'and',
-			'as',
-			'asc',
-			'asensitive',
-			'auto_increment',
-			'bdb',
-			'before',
-			'berkeleydb',
-			'between',
-			'bigint',
-			'binary',
-			'blob',
-			'both',
-			'by',
-			'call',
-			'cascade',
-			'case',
-			'change',
-			'char',
-			'character',
-			'check',
-			'collate',
-			'column',
-			'columns',
-			'condition',
-			'connection',
-			'constraint',
-			'continue',
-			'create',
-			'cross',
-			'current_date',
-			'current_time',
-			'current_timestamp',
-			'cursor',
-			'database',
-			'databases',
-			'day_hour',
-			'day_microsecond',
-			'day_minute',
-			'day_second',
-			'dec',
-			'decimal',
-			'declare',
-			'default',
-			'delayed',
-			'delete',
-			'desc',
-			'describe',
-			'deterministic',
-			'distinct',
-			'distinctrow',
-			'div',
-			'double',
-			'drop',
-			'else',
-			'elseif',
-			'enclosed',
-			'escaped',
-			'exists',
-			'exit',
-			'explain',
-			'false',
-			'fetch',
-			'fields',
-			'float',
-			'for',
-			'force',
-			'foreign',
-			'found',
-			'frac_second',
-			'from',
-			'fulltext',
-			'grant',
-			'group',
-			'having',
-			'high_priority',
-			'hour_microsecond',
-			'hour_minute',
-			'hour_second',
-			'if',
-			'ignore',
-			'in',
-			'index',
-			'infile',
-			'inner',
-			'innodb',
-			'inout',
-			'insensitive',
-			'insert',
-			'int',
-			'integer',
-			'interval',
-			'into',
-			'io_thread',
-			'is',
-			'iterate',
-			'join',
-			'key',
-			'keys',
-			'kill',
-			'leading',
-			'leave',
-			'left',
-			'like',
-			'limit',
-			'lines',
-			'load',
-			'localtime',
-			'localtimestamp',
-			'lock',
-			'long',
-			'longblob',
-			'longtext',
-			'loop',
-			'low_priority',
-			'master_server_id',
-			'match',
-			'mediumblob',
-			'mediumint',
-			'mediumtext',
-			'middleint',
-			'minute_microsecond',
-			'minute_second',
-			'mod',
-			'natural',
-			'not',
-			'no_write_to_binlog',
-			'null',
-			'numeric',
-			'on',
-			'optimize',
-			'option',
-			'optionally',
-			'or',
-			'order',
-			'out',
-			'outer',
-			'outfile',
-			'precision',
-			'primary',
-			'privileges',
-			'procedure',
-			'purge',
-			'read',
-			'real',
-			'references',
-			'regexp',
-			'rename',
-			'repeat',
-			'replace',
-			'require',
-			'restrict',
-			'return',
-			'revoke',
-			'right',
-			'rlike',
-			'second_microsecond',
-			'select',
-			'sensitive',
-			'separator',
-			'set',
-			'show',
-			'smallint',
-			'some',
-			'soname',
-			'spatial',
-			'specific',
-			'sql',
-			'sqlexception',
-			'sqlstate',
-			'sqlwarning',
-			'sql_big_result',
-			'sql_calc_found_rows',
-			'sql_small_result',
-			'sql_tsi_day',
-			'sql_tsi_frac_second',
-			'sql_tsi_hour',
-			'sql_tsi_minute',
-			'sql_tsi_month',
-			'sql_tsi_quarter',
-			'sql_tsi_second',
-			'sql_tsi_week',
-			'sql_tsi_year',
-			'ssl',
-			'starting',
-			'straight_join',
-			'striped',
-			'table',
-			'tables',
-			'terminated',
-			'then',
-			'timestampadd',
-			'timestampdiff',
-			'tinyblob',
-			'tinyint',
-			'tinytext',
-			'to',
-			'trailing',
-			'true',
-			'undo',
-			'union',
-			'unique',
-			'unlock',
-			'unsigned',
-			'update',
-			'usage',
-			'use',
-			'user_resources',
-			'using',
-			'utc_date',
-			'utc_time',
-			'utc_timestamp',
-			'values',
-			'varbinary',
-			'varchar',
-			'varcharacter',
-			'varying',
-			'when',
-			'where',
-			'while',
-			'with',
-			'write',
-			'xor',
-			'year_month',
-			'zerofill'
-			);
+            'abs',
+            'acos',
+            'adddate',
+            'addtime',
+            'aes_encrypt',
+            'aes_decrypt',
+            'against',
+            'ascii',
+            'asin',
+            'atan',
+            'avg',
+            'benchmark',
+            'bin',
+            'bit_and',
+            'bit_or',
+            'bitcount',
+            'bitlength',
+            'cast',
+            'ceiling',
+            'char',
+            'char_length',
+            'character_length',
+            'charset',
+            'coalesce',
+            'coercibility',
+            'collation',
+            'compress',
+            'concat',
+            'concat_ws',
+            'conection_id',
+            'conv',
+            'convert',
+            'convert_tz',
+            'cos',
+            'cot',
+            'count',
+            'crc32',
+            'curdate',
+            'current_user',
+            'currval',
+            'curtime',
+            'database',
+            'date_add',
+            'date_diff',
+            'date_format',
+            'date_sub',
+            'day',
+            'dayname',
+            'dayofmonth',
+            'dayofweek',
+            'dayofyear',
+            'decode',
+            'default',
+            'degrees',
+            'des_decrypt',
+            'des_encrypt',
+            'elt',
+            'encode',
+            'encrypt',
+            'exp',
+            'export_set',
+            'extract',
+            'field',
+            'find_in_set',
+            'floor',
+            'format',
+            'found_rows',
+            'from_days',
+            'from_unixtime',
+            'get_format',
+            'get_lock',
+            'group_concat',
+            'greatest',
+            'hex',
+            'hour',
+            'if',
+            'ifnull',
+            'in',
+            'inet_aton',
+            'inet_ntoa',
+            'insert',
+            'instr',
+            'interval',
+            'is_free_lock',
+            'is_used_lock',
+            'last_day',
+            'last_insert_id',
+            'lcase',
+            'least',
+            'left',
+            'length',
+            'ln',
+            'load_file',
+            'localtime',
+            'localtimestamp',
+            'locate',
+            'log',
+            'log2',
+            'log10',
+            'lower',
+            'lpad',
+            'ltrim',
+            'make_set',
+            'makedate',
+            'maketime',
+            'master_pos_wait',
+            'match',
+            'max',
+            'md5',
+            'microsecond',
+            'mid',
+            'min',
+            'minute',
+            'mod',
+            'month',
+            'monthname',
+            'nextval',
+            'now',
+            'nullif',
+            'oct',
+            'octet_length',
+            'old_password',
+            'ord',
+            'password',
+            'period_add',
+            'period_diff',
+            'pi',
+            'position',
+            'pow',
+            'power',
+            'quarter',
+            'quote',
+            'radians',
+            'rand',
+            'release_lock',
+            'repeat',
+            'replace',
+            'reverse',
+            'right',
+            'round',
+            'row_count',
+            'rpad',
+            'rtrim',
+            'sec_to_time',
+            'second',
+            'session_user',
+            'sha',
+            'sha1',
+            'sign',
+            'soundex',
+            'space',
+            'sqrt',
+            'std',
+            'stddev',
+            'stddev_pop',
+            'stddev_samp',
+            'strcmp',
+            'str_to_date',
+            'subdate',
+            'substring',
+            'substring_index',
+            'subtime',
+            'sum',
+            'sysdate',
+            'system_user',
+            'tan',
+            'time',
+            'timediff',
+            'timestamp',
+            'timestampadd',
+            'timestampdiff',
+            'time_format',
+            'time_to_sec',
+            'to_days',
+            'trim',
+            'truncate',
+            'ucase',
+            'uncompress',
+            'uncompressed_length',
+            'unhex',
+            'unix_timestamp',
+            'upper',
+            'user',
+            'utc_date',
+            'utc_time',
+            'utc_timestamp',
+            'uuid',
+            'var_pop',
+            'var_samp',
+            'variance',
+            'version',
+            'week',
+            'weekday',
+            'weekofyear',
+            'year',
+            'yearweek',
+            'add',
+            'all',
+            'alter',
+            'analyze',
+            'and',
+            'as',
+            'asc',
+            'asensitive',
+            'auto_increment',
+            'bdb',
+            'before',
+            'berkeleydb',
+            'between',
+            'bigint',
+            'binary',
+            'blob',
+            'both',
+            'by',
+            'call',
+            'cascade',
+            'case',
+            'change',
+            'char',
+            'character',
+            'check',
+            'collate',
+            'column',
+            'columns',
+            'condition',
+            'connection',
+            'constraint',
+            'continue',
+            'create',
+            'cross',
+            'current_date',
+            'current_time',
+            'current_timestamp',
+            'cursor',
+            'database',
+            'databases',
+            'day_hour',
+            'day_microsecond',
+            'day_minute',
+            'day_second',
+            'dec',
+            'decimal',
+            'declare',
+            'default',
+            'delayed',
+            'delete',
+            'desc',
+            'describe',
+            'deterministic',
+            'distinct',
+            'distinctrow',
+            'div',
+            'double',
+            'drop',
+            'else',
+            'elseif',
+            'enclosed',
+            'escaped',
+            'exists',
+            'exit',
+            'explain',
+            'false',
+            'fetch',
+            'fields',
+            'float',
+            'for',
+            'force',
+            'foreign',
+            'found',
+            'frac_second',
+            'from',
+            'fulltext',
+            'grant',
+            'group',
+            'having',
+            'high_priority',
+            'hour_microsecond',
+            'hour_minute',
+            'hour_second',
+            'if',
+            'ignore',
+            'in',
+            'index',
+            'infile',
+            'inner',
+            'innodb',
+            'inout',
+            'insensitive',
+            'insert',
+            'int',
+            'integer',
+            'interval',
+            'into',
+            'io_thread',
+            'is',
+            'iterate',
+            'join',
+            'key',
+            'keys',
+            'kill',
+            'leading',
+            'leave',
+            'left',
+            'like',
+            'limit',
+            'lines',
+            'load',
+            'localtime',
+            'localtimestamp',
+            'lock',
+            'long',
+            'longblob',
+            'longtext',
+            'loop',
+            'low_priority',
+            'master_server_id',
+            'match',
+            'mediumblob',
+            'mediumint',
+            'mediumtext',
+            'middleint',
+            'minute_microsecond',
+            'minute_second',
+            'mod',
+            'natural',
+            'not',
+            'no_write_to_binlog',
+            'null',
+            'numeric',
+            'on',
+            'optimize',
+            'option',
+            'optionally',
+            'or',
+            'order',
+            'out',
+            'outer',
+            'outfile',
+            'precision',
+            'primary',
+            'privileges',
+            'procedure',
+            'purge',
+            'read',
+            'real',
+            'references',
+            'regexp',
+            'rename',
+            'repeat',
+            'replace',
+            'require',
+            'restrict',
+            'return',
+            'revoke',
+            'right',
+            'rlike',
+            'second_microsecond',
+            'select',
+            'sensitive',
+            'separator',
+            'set',
+            'show',
+            'smallint',
+            'some',
+            'soname',
+            'spatial',
+            'specific',
+            'sql',
+            'sqlexception',
+            'sqlstate',
+            'sqlwarning',
+            'sql_big_result',
+            'sql_calc_found_rows',
+            'sql_small_result',
+            'sql_tsi_day',
+            'sql_tsi_frac_second',
+            'sql_tsi_hour',
+            'sql_tsi_minute',
+            'sql_tsi_month',
+            'sql_tsi_quarter',
+            'sql_tsi_second',
+            'sql_tsi_week',
+            'sql_tsi_year',
+            'ssl',
+            'starting',
+            'straight_join',
+            'striped',
+            'table',
+            'tables',
+            'terminated',
+            'then',
+            'timestampadd',
+            'timestampdiff',
+            'tinyblob',
+            'tinyint',
+            'tinytext',
+            'to',
+            'trailing',
+            'true',
+            'undo',
+            'union',
+            'unique',
+            'unlock',
+            'unsigned',
+            'update',
+            'usage',
+            'use',
+            'user_resources',
+            'using',
+            'utc_date',
+            'utc_time',
+            'utc_timestamp',
+            'values',
+            'varbinary',
+            'varchar',
+            'varcharacter',
+            'varying',
+            'when',
+            'where',
+            'while',
+            'with',
+            'write',
+            'xor',
+            'year_month',
+            'zerofill'
+            );
 
         for ($i=0;$i<count($this->reserved);++$i) {
             $this->reserved[$i]=strtoupper($this->reserved[$i]);

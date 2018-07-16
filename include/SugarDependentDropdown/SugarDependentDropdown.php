@@ -64,42 +64,42 @@ class SugarDependentDropdown
      * ensure uniformity
      */
     public $defaults = array(
-		'name'		=> '',
-		'id'		=> '',
-		'type'		=> 'none',	// form element, valid "select", "input", "checkbox", "none"
-		'label_pos'	=> 'left',		// valid: 'left', 'right', 'top', 'bottom', 'none' (none)
-		'hidden'	=> array(),		// metadata to create hidden fields with values you choose
-	);
+        'name'		=> '',
+        'id'		=> '',
+        'type'		=> 'none',	// form element, valid "select", "input", "checkbox", "none"
+        'label_pos'	=> 'left',		// valid: 'left', 'right', 'top', 'bottom', 'none' (none)
+        'hidden'	=> array(),		// metadata to create hidden fields with values you choose
+    );
 
     /*
      * Fields that must exist in an element (single dropdown/field) metadata
      * array.
      */
     public $elementRequired = array(
-		'name',
-		'id',
-		//'values',
-		//'onchange',
-		//'force_render',
-	);
+        'name',
+        'id',
+        //'values',
+        //'onchange',
+        //'force_render',
+    );
 
     /**
      * Fields that will be merged down into individual elements and handlers
      */
     public $alwaysMerge = array(
-		'force_render',
-	);
+        'force_render',
+    );
 
     /*
      * Valid 'types' for a dependent dropdown
      */
     public $validTypes = array(
-		"select", 	// select dropdown
-		"input", 	// text input field
-		"checkbox",	// checkbox (radio buttons will not be supported)
-		"none", 	// blank
-		"multiple"	// custom functionality
-	);
+        "select", 	// select dropdown
+        "input", 	// text input field
+        "checkbox",	// checkbox (radio buttons will not be supported)
+        "none", 	// blank
+        "multiple"	// custom functionality
+    );
 
     /**
      * Sole constructor
@@ -181,7 +181,7 @@ class SugarDependentDropdown
     } // end init()
 
 
-	///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
     ////	PRIVATE UTILS
     /**
      * Verifies that an element is valid and has all the required info.
@@ -288,37 +288,37 @@ class SugarDependentDropdown
                  * Check based on "type"
                  */
                 switch ($element['type']) {
-					case "select":
-						if (isset($element['values'])) {
-						    $index = substr($indexName, 7, strlen($indexName));
+                    case "select":
+                        if (isset($element['values'])) {
+                            $index = substr($indexName, 7, strlen($indexName));
 
 
-						    /* if we have an array to iterate through - this is not the case with lazy-loaded values */
-						    if (is_array($element['values']) && !empty($element['values'])) {
-						        $index++; // string to int conversion, i know, sucks
-						        $nextElementKey = "element".$index;
-						        $nextElement = $elements[$nextElementKey];
+                            /* if we have an array to iterate through - this is not the case with lazy-loaded values */
+                            if (is_array($element['values']) && !empty($element['values'])) {
+                                $index++; // string to int conversion, i know, sucks
+                                $nextElementKey = "element".$index;
+                                $nextElement = $elements[$nextElementKey];
 
-						        foreach ($element['values'] as $key => $value) {
-						            if (!array_key_exists($key, $nextElement['handlers'])) {
-						                if ($this->debugMode) {
-						                    $this->debugOutput("SugarRouting: next-order element is missing a handler for value: [ {$key} ]");
-						                    $this->debugOutput($elements);
-						                    $this->debugOutput($nextElement);
-						                }
-						                return false;
-						            }
-						        }
-						    }
-						} else {
-						    if ($this->debugMode) {
-						        $this->debugOutput("SugarRouting: 'select' element found, no 'values' defined.");
-						        $this->debugOutput($element);
-						    }
-						    return false;
-						}
-					break; // end "select" check
-				}
+                                foreach ($element['values'] as $key => $value) {
+                                    if (!array_key_exists($key, $nextElement['handlers'])) {
+                                        if ($this->debugMode) {
+                                            $this->debugOutput("SugarRouting: next-order element is missing a handler for value: [ {$key} ]");
+                                            $this->debugOutput($elements);
+                                            $this->debugOutput($nextElement);
+                                        }
+                                        return false;
+                                    }
+                                }
+                            }
+                        } else {
+                            if ($this->debugMode) {
+                                $this->debugOutput("SugarRouting: 'select' element found, no 'values' defined.");
+                                $this->debugOutput($element);
+                            }
+                            return false;
+                        }
+                    break; // end "select" check
+                }
 
                 /*
                  * Handler "handlers" mini-element metadata definition verification
@@ -363,5 +363,5 @@ class SugarDependentDropdown
         echo "\n</pre>\n";
     }
     ////	END PRIVATE UTILS
-	///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 } // end Class def

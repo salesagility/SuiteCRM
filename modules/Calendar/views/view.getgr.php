@@ -45,12 +45,12 @@ class CalendarViewGetGR extends SugarView
     {
         parent::SugarView();
     }
-	
+    
     public function process()
     {
         $this->display();
     }
-	
+    
     public function display()
     {
         $state = new \SuiteCRM\StateSaver();

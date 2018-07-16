@@ -45,26 +45,26 @@ class CalendarViewQuickEdit extends SugarView
 {
     public $ev;
     protected $editable;	
-	
+    
     public function preDisplay()
     {
         $this->bean = $this->view_object_map['currentBean'];
-		
+        
         if ($this->bean->ACLAccess('Save')) {
             $this->editable = 1;
         } else {
             $this->editable = 0;
         }
     }
-	
+    
     public function display()
     {
         require_once("modules/Calendar/CalendarUtils.php");
-		
+        
         $module = $this->view_object_map['currentModule'];
-		
+        
         $_REQUEST['module'] = $module;
-				
+                
         $base = 'modules/' . $module . '/metadata/';
         $source = 'custom/'.$base.'quickcreatedefs.php';
         if (!file_exists($source)) {
@@ -76,7 +76,7 @@ class CalendarViewQuickEdit extends SugarView
                 }
             }
         }
-		
+        
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $module);
         $tpl = $this->getCustomFilePathIfExists('include/EditView/EditView.tpl');
 
@@ -88,7 +88,7 @@ class CalendarViewQuickEdit extends SugarView
         $this->ev->defs['templateMeta']['form']['headerTpl'] = "modules/Calendar/tpls/editHeader.tpl";
         $this->ev->defs['templateMeta']['form']['footerTpl'] = "modules/Calendar/tpls/empty.tpl";						
         $this->ev->process(false, "CalendarEditView");		
-		
+        
         if (!empty($this->bean->id)) {
             require_once('include/json_config.php');
             global $json;
@@ -98,20 +98,20 @@ class CalendarViewQuickEdit extends SugarView
         } else {
             $GRjavascript = "";
         }	
-	
+    
         $json_arr = array(
-				'access' => 'yes',
-				'module_name' => $this->bean->module_dir,
-				'record' => $this->bean->id,
-				'edit' => $this->editable,
-				'html'=> $this->ev->display(false, true),
-				'gr' => $GRjavascript,
-		);
-		
+                'access' => 'yes',
+                'module_name' => $this->bean->module_dir,
+                'record' => $this->bean->id,
+                'edit' => $this->editable,
+                'html'=> $this->ev->display(false, true),
+                'gr' => $GRjavascript,
+        );
+        
         if ($repeat_arr = CalendarUtils::get_sendback_repeat_data($this->bean)) {
             $json_arr = array_merge($json_arr,array("repeat" => $repeat_arr));
         }
-			
+            
         ob_clean();		
         echo json_encode($json_arr);
     }

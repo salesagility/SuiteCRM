@@ -47,8 +47,8 @@ class SchedulersViewDetail extends ViewDetail
 {
 
     /**
-	 * @see SugarView::_getModuleTitleListParam()
-	 */
+     * @see SugarView::_getModuleTitleListParam()
+     */
     protected function _getModuleTitleListParam()
     {
         global $mod_strings;
@@ -57,8 +57,8 @@ class SchedulersViewDetail extends ViewDetail
     }
 
     /**
- 	 * display
- 	 */
+     * display
+     */
     public function display()
     {
         $this->bean->parseInterval();

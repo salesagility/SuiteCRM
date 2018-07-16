@@ -101,25 +101,25 @@ class wsdl extends nusoap_base
     public $timeout = 0;
     public $response_timeout = 30;
     public $curl_options = array();	// User-specified cURL options
-	public $use_curl = false;			// whether to always try to use cURL
-	// for HTTP authentication
-	public $username = '';				// Username for HTTP authentication
-	public $password = '';				// Password for HTTP authentication
-	public $authtype = '';				// Type of HTTP authentication
-	public $certRequest = array();		// Certificate for HTTP SSL authentication
+    public $use_curl = false;			// whether to always try to use cURL
+    // for HTTP authentication
+    public $username = '';				// Username for HTTP authentication
+    public $password = '';				// Password for HTTP authentication
+    public $authtype = '';				// Type of HTTP authentication
+    public $certRequest = array();		// Certificate for HTTP SSL authentication
 
     /**
      * constructor
      *
      * @param string $wsdl WSDL document URL
-	 * @param string $proxyhost
-	 * @param string $proxyport
-	 * @param string $proxyusername
-	 * @param string $proxypassword
-	 * @param integer $timeout set the connection timeout
-	 * @param integer $response_timeout set the response timeout
-	 * @param array $curl_options user-specified cURL options
-	 * @param boolean $use_curl try to use cURL
+     * @param string $proxyhost
+     * @param string $proxyport
+     * @param string $proxyusername
+     * @param string $proxypassword
+     * @param integer $timeout set the connection timeout
+     * @param integer $response_timeout set the response timeout
+     * @param array $curl_options user-specified cURL options
+     * @param boolean $use_curl try to use cURL
      * @access public
      */
     public function wsdl($wsdl = '',$proxyhost=false,$proxyport=false,$proxyusername=false,$proxypassword=false,$timeout=0,$response_timeout=30,$curl_options=null,$use_curl=false)
@@ -171,7 +171,7 @@ class wsdl extends nusoap_base
                                     $urlparts = parse_url($url);
                                     if (!isset($urlparts['host'])) {
                                         $url = $wsdlparts['scheme'] . '://' . $wsdlparts['host'] . (isset($wsdlparts['port']) ? ':' .$wsdlparts['port'] : '') .
-												substr($wsdlparts['path'],0,strrpos($wsdlparts['path'],'/') + 1) .$urlparts['path'];
+                                                substr($wsdlparts['path'],0,strrpos($wsdlparts['path'],'/') + 1) .$urlparts['path'];
                                     }
                                     if (! in_array($url, $imported_urls)) {
                                         $this->parseWSDL($url);
@@ -187,7 +187,7 @@ class wsdl extends nusoap_base
                 }
             }
             // WSDL imports
-			$wsdlparts = parse_url($this->wsdl);	// this is bogusly simple!
+            $wsdlparts = parse_url($this->wsdl);	// this is bogusly simple!
             foreach ($this->import as $ns => $list) {
                 for ($ii = 0; $ii < count($list); $ii++) {
                     if (! $list[$ii]['loaded']) {
@@ -197,7 +197,7 @@ class wsdl extends nusoap_base
                             $urlparts = parse_url($url);
                             if (!isset($urlparts['host'])) {
                                 $url = $wsdlparts['scheme'] . '://' . $wsdlparts['host'] . (isset($wsdlparts['port']) ? ':' . $wsdlparts['port'] : '') .
-										substr($wsdlparts['path'],0,strrpos($wsdlparts['path'],'/') + 1) .$urlparts['path'];
+                                        substr($wsdlparts['path'],0,strrpos($wsdlparts['path'],'/') + 1) .$urlparts['path'];
                             }
                             if (! in_array($url, $imported_urls)) {
                                 $this->parseWSDL($url);
@@ -217,13 +217,13 @@ class wsdl extends nusoap_base
                 foreach ($bindingData['operations'] as $operation => $data) {
                     $this->debug('post-parse data gathering for ' . $operation);
                     $this->bindings[$binding]['operations'][$operation]['input'] =
-						isset($this->bindings[$binding]['operations'][$operation]['input']) ?
-						array_merge($this->bindings[$binding]['operations'][$operation]['input'], $this->portTypes[ $bindingData['portType'] ][$operation]['input']) :
-						$this->portTypes[ $bindingData['portType'] ][$operation]['input'];
+                        isset($this->bindings[$binding]['operations'][$operation]['input']) ?
+                        array_merge($this->bindings[$binding]['operations'][$operation]['input'], $this->portTypes[ $bindingData['portType'] ][$operation]['input']) :
+                        $this->portTypes[ $bindingData['portType'] ][$operation]['input'];
                     $this->bindings[$binding]['operations'][$operation]['output'] =
-						isset($this->bindings[$binding]['operations'][$operation]['output']) ?
-						array_merge($this->bindings[$binding]['operations'][$operation]['output'], $this->portTypes[ $bindingData['portType'] ][$operation]['output']) :
-						$this->portTypes[ $bindingData['portType'] ][$operation]['output'];
+                        isset($this->bindings[$binding]['operations'][$operation]['output']) ?
+                        array_merge($this->bindings[$binding]['operations'][$operation]['output'], $this->portTypes[ $bindingData['portType'] ][$operation]['output']) :
+                        $this->portTypes[ $bindingData['portType'] ][$operation]['output'];
                     if (isset($this->messages[ $this->bindings[$binding]['operations'][$operation]['input']['message'] ])) {
                         $this->bindings[$binding]['operations'][$operation]['input']['parts'] = $this->messages[ $this->bindings[$binding]['operations'][$operation]['input']['message'] ];
                     }
@@ -320,8 +320,8 @@ class wsdl extends nusoap_base
         if (!xml_parse($this->parser, $wsdl_string, true)) {
             // Display an error message.
             $errstr = sprintf(
-				'XML error parsing WSDL from %s on line %d: %s',
-				$wsdl,
+                'XML error parsing WSDL from %s on line %d: %s',
+                $wsdl,
                 xml_get_current_line_number($this->parser),
                 xml_error_string(xml_get_error_code($this->parser))
                 );
@@ -420,137 +420,137 @@ class wsdl extends nusoap_base
                             $this->messages[$this->currentMessage][$attrs['name']] = $attrs['element'] . '^';
                         }
                     }
-        			break;
-			    case 'portType':
-			        switch ($name) {
-			            case 'operation':
-			                $this->currentPortOperation = $attrs['name'];
-			                $this->debug("portType $this->currentPortType operation: $this->currentPortOperation");
-			                if (isset($attrs['parameterOrder'])) {
-			                    $this->portTypes[$this->currentPortType][$attrs['name']]['parameterOrder'] = $attrs['parameterOrder'];
-			                }
-			        		break;
-					    case 'documentation':
-					        $this->documentation = true;
-					        break;
-					    // merge input/output data
-					    default:
-					        $m = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
-					        $this->portTypes[$this->currentPortType][$this->currentPortOperation][$name]['message'] = $m;
-					        break;
-					}
-			    	break;
-				case 'binding':
-				    switch ($name) {
-				        case 'binding':
-				            // get ns prefix
-				            if (isset($attrs['style'])) {
-				                $this->bindings[$this->currentBinding]['prefix'] = $prefix;
-				            }
-					    	$this->bindings[$this->currentBinding] = array_merge($this->bindings[$this->currentBinding], $attrs);
-					    	break;
-						case 'header':
-						    $this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus]['headers'][] = $attrs;
-						    break;
-						case 'operation':
-						    if (isset($attrs['soapAction'])) {
-						        $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['soapAction'] = $attrs['soapAction'];
-						    }
-						    if (isset($attrs['style'])) {
-						        $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['style'] = $attrs['style'];
-						    }
-						    if (isset($attrs['name'])) {
-						        $this->currentOperation = $attrs['name'];
-						        $this->debug("current binding operation: $this->currentOperation");
-						        $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['name'] = $attrs['name'];
-						        $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['binding'] = $this->currentBinding;
-						        $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['endpoint'] = isset($this->bindings[$this->currentBinding]['endpoint']) ? $this->bindings[$this->currentBinding]['endpoint'] : '';
-						    }
-						    break;
-						case 'input':
-						    $this->opStatus = 'input';
-						    break;
-						case 'output':
-						    $this->opStatus = 'output';
-						    break;
-						case 'body':
-						    if (isset($this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus])) {
-						        $this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus] = array_merge($this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus], $attrs);
-						    } else {
-						        $this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus] = $attrs;
-						    }
-						    break;
-					}
-					break;
-				case 'service':
-					switch ($name) {
-					    case 'port':
-					        $this->currentPort = $attrs['name'];
-					        $this->debug('current port: ' . $this->currentPort);
-					        $this->ports[$this->currentPort]['binding'] = $this->getLocalPart($attrs['binding']);
+                    break;
+                case 'portType':
+                    switch ($name) {
+                        case 'operation':
+                            $this->currentPortOperation = $attrs['name'];
+                            $this->debug("portType $this->currentPortType operation: $this->currentPortOperation");
+                            if (isset($attrs['parameterOrder'])) {
+                                $this->portTypes[$this->currentPortType][$attrs['name']]['parameterOrder'] = $attrs['parameterOrder'];
+                            }
+                            break;
+                        case 'documentation':
+                            $this->documentation = true;
+                            break;
+                        // merge input/output data
+                        default:
+                            $m = isset($attrs['message']) ? $this->getLocalPart($attrs['message']) : '';
+                            $this->portTypes[$this->currentPortType][$this->currentPortOperation][$name]['message'] = $m;
+                            break;
+                    }
+                    break;
+                case 'binding':
+                    switch ($name) {
+                        case 'binding':
+                            // get ns prefix
+                            if (isset($attrs['style'])) {
+                                $this->bindings[$this->currentBinding]['prefix'] = $prefix;
+                            }
+                            $this->bindings[$this->currentBinding] = array_merge($this->bindings[$this->currentBinding], $attrs);
+                            break;
+                        case 'header':
+                            $this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus]['headers'][] = $attrs;
+                            break;
+                        case 'operation':
+                            if (isset($attrs['soapAction'])) {
+                                $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['soapAction'] = $attrs['soapAction'];
+                            }
+                            if (isset($attrs['style'])) {
+                                $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['style'] = $attrs['style'];
+                            }
+                            if (isset($attrs['name'])) {
+                                $this->currentOperation = $attrs['name'];
+                                $this->debug("current binding operation: $this->currentOperation");
+                                $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['name'] = $attrs['name'];
+                                $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['binding'] = $this->currentBinding;
+                                $this->bindings[$this->currentBinding]['operations'][$this->currentOperation]['endpoint'] = isset($this->bindings[$this->currentBinding]['endpoint']) ? $this->bindings[$this->currentBinding]['endpoint'] : '';
+                            }
+                            break;
+                        case 'input':
+                            $this->opStatus = 'input';
+                            break;
+                        case 'output':
+                            $this->opStatus = 'output';
+                            break;
+                        case 'body':
+                            if (isset($this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus])) {
+                                $this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus] = array_merge($this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus], $attrs);
+                            } else {
+                                $this->bindings[$this->currentBinding]['operations'][$this->currentOperation][$this->opStatus] = $attrs;
+                            }
+                            break;
+                    }
+                    break;
+                case 'service':
+                    switch ($name) {
+                        case 'port':
+                            $this->currentPort = $attrs['name'];
+                            $this->debug('current port: ' . $this->currentPort);
+                            $this->ports[$this->currentPort]['binding'] = $this->getLocalPart($attrs['binding']);
 
-					        break;
-					    case 'address':
-					        $this->ports[$this->currentPort]['location'] = $attrs['location'];
-					        $this->ports[$this->currentPort]['bindingType'] = $namespace;
-					        $this->bindings[ $this->ports[$this->currentPort]['binding'] ]['bindingType'] = $namespace;
-					        $this->bindings[ $this->ports[$this->currentPort]['binding'] ]['endpoint'] = $attrs['location'];
-					        break;
-					}
-					break;
-			}
+                            break;
+                        case 'address':
+                            $this->ports[$this->currentPort]['location'] = $attrs['location'];
+                            $this->ports[$this->currentPort]['bindingType'] = $namespace;
+                            $this->bindings[ $this->ports[$this->currentPort]['binding'] ]['bindingType'] = $namespace;
+                            $this->bindings[ $this->ports[$this->currentPort]['binding'] ]['endpoint'] = $attrs['location'];
+                            break;
+                    }
+                    break;
+            }
             // set status
             switch ($name) {
-			case 'import':
-			    if (isset($attrs['location'])) {
-			        $this->import[$attrs['namespace']][] = array('location' => $attrs['location'], 'loaded' => false);
-			        $this->debug('parsing import ' . $attrs['namespace']. ' - ' . $attrs['location'] . ' (' . count($this->import[$attrs['namespace']]).')');
-			    } else {
-			        $this->import[$attrs['namespace']][] = array('location' => '', 'loaded' => true);
-			        if (! $this->getPrefixFromNamespace($attrs['namespace'])) {
-			            $this->namespaces['ns'.(count($this->namespaces)+1)] = $attrs['namespace'];
-			        }
-			        $this->debug('parsing import ' . $attrs['namespace']. ' - [no location] (' . count($this->import[$attrs['namespace']]).')');
-			    }
-				break;
-			//wait for schema
-			//case 'types':
-			//	$this->status = 'schema';
-			//	break;
-			case 'message':
-				$this->status = 'message';
-				$this->messages[$attrs['name']] = array();
-				$this->currentMessage = $attrs['name'];
-				break;
-			case 'portType':
-				$this->status = 'portType';
-				$this->portTypes[$attrs['name']] = array();
-				$this->currentPortType = $attrs['name'];
-				break;
-			case "binding":
-				if (isset($attrs['name'])) {
-				    // get binding name
-				    if (strpos($attrs['name'], ':')) {
-				        $this->currentBinding = $this->getLocalPart($attrs['name']);
-				    } else {
-				        $this->currentBinding = $attrs['name'];
-				    }
-				    $this->status = 'binding';
-				    $this->bindings[$this->currentBinding]['portType'] = $this->getLocalPart($attrs['type']);
-				    $this->debug("current binding: $this->currentBinding of portType: " . $attrs['type']);
-				}
-				break;
-			case 'service':
-				$this->serviceName = $attrs['name'];
-				$this->status = 'service';
-				$this->debug('current service: ' . $this->serviceName);
-				break;
-			case 'definitions':
-				foreach ($attrs as $name => $value) {
-				    $this->wsdl_info[$name] = $value;
-				}
-				break;
-			}
+            case 'import':
+                if (isset($attrs['location'])) {
+                    $this->import[$attrs['namespace']][] = array('location' => $attrs['location'], 'loaded' => false);
+                    $this->debug('parsing import ' . $attrs['namespace']. ' - ' . $attrs['location'] . ' (' . count($this->import[$attrs['namespace']]).')');
+                } else {
+                    $this->import[$attrs['namespace']][] = array('location' => '', 'loaded' => true);
+                    if (! $this->getPrefixFromNamespace($attrs['namespace'])) {
+                        $this->namespaces['ns'.(count($this->namespaces)+1)] = $attrs['namespace'];
+                    }
+                    $this->debug('parsing import ' . $attrs['namespace']. ' - [no location] (' . count($this->import[$attrs['namespace']]).')');
+                }
+                break;
+            //wait for schema
+            //case 'types':
+            //	$this->status = 'schema';
+            //	break;
+            case 'message':
+                $this->status = 'message';
+                $this->messages[$attrs['name']] = array();
+                $this->currentMessage = $attrs['name'];
+                break;
+            case 'portType':
+                $this->status = 'portType';
+                $this->portTypes[$attrs['name']] = array();
+                $this->currentPortType = $attrs['name'];
+                break;
+            case "binding":
+                if (isset($attrs['name'])) {
+                    // get binding name
+                    if (strpos($attrs['name'], ':')) {
+                        $this->currentBinding = $this->getLocalPart($attrs['name']);
+                    } else {
+                        $this->currentBinding = $attrs['name'];
+                    }
+                    $this->status = 'binding';
+                    $this->bindings[$this->currentBinding]['portType'] = $this->getLocalPart($attrs['type']);
+                    $this->debug("current binding: $this->currentBinding of portType: " . $attrs['type']);
+                }
+                break;
+            case 'service':
+                $this->serviceName = $attrs['name'];
+                $this->status = 'service';
+                $this->debug('current service: ' . $this->serviceName);
+                break;
+            case 'definitions':
+                foreach ($attrs as $name => $value) {
+                    $this->wsdl_info[$name] = $value;
+                }
+                break;
+            }
         }
     }
 
@@ -911,23 +911,23 @@ class wsdl extends nusoap_base
             $b .= "<div id='$op' class='hidden'>
 				    <a href='#' onclick='popout()'><font color='#ffffff'>Close</font></a><br><br>";
             foreach ($data as $donnie => $marie) { // loop through opdata
-						if ($donnie == 'input' || $donnie == 'output') { // show input/output data
-						    $b .= "<font color='white'>".ucfirst($donnie).':</font><br>';
-						    foreach ($marie as $captain => $tenille) { // loop through data
-								if ($captain == 'parts') { // loop thru parts
-								    $b .= "&nbsp;&nbsp;$captain:<br>";
-								    //if(is_array($tenille)){
-								    foreach ($tenille as $joanie => $chachi) {
-								        $b .= "&nbsp;&nbsp;&nbsp;&nbsp;$joanie: $chachi<br>";
-								    }
-								    //}
-								} else {
-								    $b .= "&nbsp;&nbsp;$captain: $tenille<br>";
-								}
-						    }
-						} else {
-						    $b .= "<font color='white'>".ucfirst($donnie).":</font> $marie<br>";
-						}
+                        if ($donnie == 'input' || $donnie == 'output') { // show input/output data
+                            $b .= "<font color='white'>".ucfirst($donnie).':</font><br>';
+                            foreach ($marie as $captain => $tenille) { // loop through data
+                                if ($captain == 'parts') { // loop thru parts
+                                    $b .= "&nbsp;&nbsp;$captain:<br>";
+                                    //if(is_array($tenille)){
+                                    foreach ($tenille as $joanie => $chachi) {
+                                        $b .= "&nbsp;&nbsp;&nbsp;&nbsp;$joanie: $chachi<br>";
+                                    }
+                                    //}
+                                } else {
+                                    $b .= "&nbsp;&nbsp;$captain: $tenille<br>";
+                                }
+                            }
+                        } else {
+                            $b .= "<font color='white'>".ucfirst($donnie).":</font> $marie<br>";
+                        }
             }
             $b .= '</div>';
         }
@@ -1581,13 +1581,13 @@ class wsdl extends nusoap_base
                     $xml = "<$name$elementNS/>";
                 } else {
                     $xml = "<$name$elementNS xsi:nil=\"true\" xsi:type=\"" .
-						$this->getPrefixFromNamespace('http://schemas.xmlsoap.org/soap/encoding/') .
-						":Array\" " .
-						$this->getPrefixFromNamespace('http://schemas.xmlsoap.org/soap/encoding/') .
-						':arrayType="' .
-						$this->getPrefixFromNamespace($this->getPrefix($typeDef['arrayType'])) .
-						':' .
-						$this->getLocalPart($typeDef['arrayType'])."[0]\"/>";
+                        $this->getPrefixFromNamespace('http://schemas.xmlsoap.org/soap/encoding/') .
+                        ":Array\" " .
+                        $this->getPrefixFromNamespace('http://schemas.xmlsoap.org/soap/encoding/') .
+                        ':arrayType="' .
+                        $this->getPrefixFromNamespace($this->getPrefix($typeDef['arrayType'])) .
+                        ':' .
+                        $this->getLocalPart($typeDef['arrayType'])."[0]\"/>";
                 }
                 $this->debug("in serializeType: returning: $xml");
                 return $xml;
@@ -1622,16 +1622,16 @@ class wsdl extends nusoap_base
             // array.  Revisit this when coding the handling of null/nil values.
             if ($use == 'literal') {
                 $xml = "<$name$elementNS>"
-					.$contents
-					."</$name>";
+                    .$contents
+                    ."</$name>";
             } else {
                 $xml = "<$name$elementNS xsi:type=\"".$this->getPrefixFromNamespace('http://schemas.xmlsoap.org/soap/encoding/').':Array" '.
-					$this->getPrefixFromNamespace('http://schemas.xmlsoap.org/soap/encoding/')
-					.':arrayType="'
-					.$this->getPrefixFromNamespace($this->getPrefix($typeDef['arrayType']))
-					.":".$this->getLocalPart($typeDef['arrayType'])."[$rows$cols]\">"
-					.$contents
-					."</$name>";
+                    $this->getPrefixFromNamespace('http://schemas.xmlsoap.org/soap/encoding/')
+                    .':arrayType="'
+                    .$this->getPrefixFromNamespace($this->getPrefix($typeDef['arrayType']))
+                    .":".$this->getLocalPart($typeDef['arrayType'])."[$rows$cols]\">"
+                    .$contents
+                    ."</$name>";
             }
         } elseif ($phpType == 'scalar') {
             if (isset($typeDef['form']) && ($typeDef['form'] == 'qualified')) {
@@ -1771,9 +1771,9 @@ class wsdl extends nusoap_base
                 }
                 // if user took advantage of a minOccurs=0, then only serialize named parameters
                 if (isset($optionals)
-				    && (!isset($xvalue[$eName]))
-					&& ((!isset($attrs['nillable'])) || $attrs['nillable'] != 'true')
-					) {
+                    && (!isset($xvalue[$eName]))
+                    && ((!isset($attrs['nillable'])) || $attrs['nillable'] != 'true')
+                    ) {
                     if (isset($attrs['minOccurs']) && $attrs['minOccurs'] <> '0') {
                         $this->debug("apparent error: no value provided for element $eName with minOccurs=" . $attrs['minOccurs']);
                     }
@@ -1949,27 +1949,27 @@ class wsdl extends nusoap_base
 
         // get binding
         $this->bindings[ $this->serviceName . 'Binding' ]['operations'][$name] =
-		array(
-		'name' => $name,
-		'binding' => $this->serviceName . 'Binding',
-		'endpoint' => $this->endpoint,
-		'soapAction' => $soapaction,
-		'style' => $style,
-		'input' => array(
-			'use' => $use,
-			'namespace' => $namespace,
-			'encodingStyle' => $encodingStyle,
-			'message' => $name . 'Request',
-			'parts' => $in),
-		'output' => array(
-			'use' => $use,
-			'namespace' => $namespace,
-			'encodingStyle' => $encodingStyle,
-			'message' => $name . 'Response',
-			'parts' => $out),
-		'namespace' => $namespace,
-		'transport' => 'http://schemas.xmlsoap.org/soap/http',
-		'documentation' => $documentation);
+        array(
+        'name' => $name,
+        'binding' => $this->serviceName . 'Binding',
+        'endpoint' => $this->endpoint,
+        'soapAction' => $soapaction,
+        'style' => $style,
+        'input' => array(
+            'use' => $use,
+            'namespace' => $namespace,
+            'encodingStyle' => $encodingStyle,
+            'message' => $name . 'Request',
+            'parts' => $in),
+        'output' => array(
+            'use' => $use,
+            'namespace' => $namespace,
+            'encodingStyle' => $encodingStyle,
+            'message' => $name . 'Response',
+            'parts' => $out),
+        'namespace' => $namespace,
+        'transport' => 'http://schemas.xmlsoap.org/soap/http',
+        'documentation' => $documentation);
         // add portTypes
         // add messages
         if ($in) {

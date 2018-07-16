@@ -53,7 +53,7 @@ class FeedLinkHandlerYoutube extends FeedLinkHandlerLink
     {
         $match = array();
         preg_match('/v=([^\&]+)/', $link_url, $match);
-		
+        
         if (!empty($match[1])) {
             $feed->link_type = $link_type;
             $feed->link_url = $match[1];

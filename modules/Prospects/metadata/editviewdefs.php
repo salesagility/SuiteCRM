@@ -79,17 +79,17 @@ $viewdefs['Prospects']['EditView'] = array(
     
     array (
       array (
-	      'name' => 'primary_address_street',
+          'name' => 'primary_address_street',
           'hideLabel' => true,      
-	      'type' => 'address',
-	      'displayParams'=>array('key'=>'primary', 'rows'=>2, 'cols'=>30, 'maxlength'=>150),
+          'type' => 'address',
+          'displayParams'=>array('key'=>'primary', 'rows'=>2, 'cols'=>30, 'maxlength'=>150),
       ),
       
       array (
-	      'name' => 'alt_address_street',
-	      'hideLabel'=>true,
-	      'type' => 'address',
-	      'displayParams'=>array('key'=>'alt', 'copy'=>'primary', 'rows'=>2, 'cols'=>30, 'maxlength'=>150),      
+          'name' => 'alt_address_street',
+          'hideLabel'=>true,
+          'type' => 'address',
+          'displayParams'=>array('key'=>'alt', 'copy'=>'primary', 'rows'=>2, 'cols'=>30, 'maxlength'=>150),      
       ),
     ),
     array('email1'),
@@ -105,7 +105,7 @@ $viewdefs['Prospects']['EditView'] = array(
     ),
   'LBL_PANEL_ASSIGNMENT' => array(
     array (
-	  'assigned_user_name',
+      'assigned_user_name',
     ),    
 
   ),

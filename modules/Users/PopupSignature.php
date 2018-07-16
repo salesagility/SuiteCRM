@@ -71,7 +71,7 @@ echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['
 $xtpl = new XTemplate ('modules/Users/UserSignatureEditView.html');
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
-	
+    
 $xtpl->assign('CANCEL_SCRIPT', 'window.close()');
 
 if (isset($_REQUEST['return_module'])) {

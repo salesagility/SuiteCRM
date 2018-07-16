@@ -45,8 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class TasksViewEdit extends ViewEdit
 {
     /**
- 	 * @see SugarView::preDisplay()
- 	 */
+     * @see SugarView::preDisplay()
+     */
     public function preDisplay()
     {
         if ($_REQUEST['module'] != 'Tasks' && isset($_REQUEST['status']) && empty($_REQUEST['status'])) {

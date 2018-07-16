@@ -48,14 +48,14 @@ function upgrade_custom_relationships($modules = array())
     if (!is_admin($current_user)) {
         sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
     } 
-	
+    
     require_once("modules/ModuleBuilder/parsers/relationships/DeployedRelationships.php");
     require_once("modules/ModuleBuilder/parsers/relationships/OneToManyRelationship.php");
-	
+    
     if (empty($modules)) {
         $modules = $moduleList;
     }
-	
+    
     foreach ($modules as $module) {
         $depRels = new DeployedRelationships($module);
         $relList = $depRels->getRelationshipList();
@@ -81,10 +81,10 @@ function upgrade_custom_relationships($modules = array())
                                 $rhsDef['side'] = 'left';
                                 $fileContents = file_get_contents($filePath);
                                 $out = preg_replace(
-									'/\$dictionary[\w"\'\[\]]*?' . $relName . '["\'\[\]]*?\s*?=\s*?array\s*?\(.*?\);/s',
-									'$dictionary["' . $module . '"]["fields"]["' . $relName . '"]=' . var_export_helper($rhsDef) . ";",
-									$fileContents
-								);
+                                    '/\$dictionary[\w"\'\[\]]*?' . $relName . '["\'\[\]]*?\s*?=\s*?array\s*?\(.*?\);/s',
+                                    '$dictionary["' . $module . '"]["fields"]["' . $relName . '"]=' . var_export_helper($rhsDef) . ";",
+                                    $fileContents
+                                );
                                 file_put_contents($filePath, $out);
                             }
                         }
@@ -100,10 +100,10 @@ function upgrade_custom_relationships($modules = array())
                             if ($layout_defs[$module]["subpanel_setup"][$key]['get_subpanel_data'] == $relName) {
                                 $fileContents = file_get_contents($filePath);
                                 $out = preg_replace(
-									'/[\'"]get_subpanel_data[\'"]\s*=>\s*[\'"]' . $relName . '[\'"],/s',
-									"'get_subpanel_data' => '{$def["join_key_lhs"]}',",
-									$fileContents
-								);
+                                    '/[\'"]get_subpanel_data[\'"]\s*=>\s*[\'"]' . $relName . '[\'"],/s',
+                                    "'get_subpanel_data' => '{$def["join_key_lhs"]}',",
+                                    $fileContents
+                                );
                                 file_put_contents($filePath, $out);
                             }
                         }

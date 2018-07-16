@@ -86,7 +86,7 @@ $upload_max_filesize_bytes = return_bytes($upload_max_filesize);
 if ($upload_max_filesize_bytes < constant('SUGARCRM_MIN_UPLOAD_MAX_FILESIZE_BYTES')) {
     $GLOBALS['log']->debug("detected upload_max_filesize: $upload_max_filesize");
     print('<p class="error">' . $mod_strings['MSG_INCREASE_UPLOAD_MAX_FILESIZE'] . ' '
-		. get_cfg_var('cfg_file_path') . "</p>\n");
+        . get_cfg_var('cfg_file_path') . "</p>\n");
 }
 
 //
@@ -270,61 +270,61 @@ print( "<table>\n" );
 print( "<tr><th></th><th align=left>{$mod_strings['LBL_ML_NAME']}</th><th>{$mod_strings['LBL_ML_TYPE']}</th><th>{$mod_strings['LBL_ML_VERSION']}</th><th>{$mod_strings['LBL_ML_PUBLISHED']}</th><th>{$mod_strings['LBL_ML_UNINSTALLABLE']}</th><th>{$mod_strings['LBL_ML_DESCRIPTION']}</th></tr>\n" );
 foreach($upgrade_contents as $upgrade_content)
 {
-	if(!preg_match("#.*\.zip\$#", $upgrade_content))
-	{
-		continue;
-	}
+    if(!preg_match("#.*\.zip\$#", $upgrade_content))
+    {
+        continue;
+    }
 
-	$upgrade_content = clean_path($upgrade_content);
-	$the_base = basename($upgrade_content);
-	$the_md5 = md5_file($upgrade_content);
-	$md5_matches = $uh->findByMd5($the_md5);
+    $upgrade_content = clean_path($upgrade_content);
+    $the_base = basename($upgrade_content);
+    $the_md5 = md5_file($upgrade_content);
+    $md5_matches = $uh->findByMd5($the_md5);
 
-	if(0 == sizeof($md5_matches))
-	{
-		$target_manifest = remove_file_extension( $upgrade_content ) . '-manifest.php';
-		require_once($target_manifest);
+    if(0 == sizeof($md5_matches))
+    {
+        $target_manifest = remove_file_extension( $upgrade_content ) . '-manifest.php';
+        require_once($target_manifest);
 
-		$name = empty($manifest['name']) ? $upgrade_content : $manifest['name'];
-		$version = empty($manifest['version']) ? '' : $manifest['version'];
-		$published_date = empty($manifest['published_date']) ? '' : $manifest['published_date'];
-		$icon = '';
-		$description = empty($manifest['description']) ? 'None' : $manifest['description'];
-		$uninstallable = empty($manifest['is_uninstallable']) ? 'No' : 'Yes';
-		$type = getUITextForType( $manifest['type'] );
-		$manifest_type = $manifest['type'];
+        $name = empty($manifest['name']) ? $upgrade_content : $manifest['name'];
+        $version = empty($manifest['version']) ? '' : $manifest['version'];
+        $published_date = empty($manifest['published_date']) ? '' : $manifest['published_date'];
+        $icon = '';
+        $description = empty($manifest['description']) ? 'None' : $manifest['description'];
+        $uninstallable = empty($manifest['is_uninstallable']) ? 'No' : 'Yes';
+        $type = getUITextForType( $manifest['type'] );
+        $manifest_type = $manifest['type'];
 
-		if($view == 'default' && $manifest_type != 'patch')
-		{
-			continue;
-		}
+        if($view == 'default' && $manifest_type != 'patch')
+        {
+            continue;
+        }
 
-		if($view == 'module'
-			&& $manifest_type != 'module' && $manifest_type != 'theme' && $manifest_type != 'langpack')
-		{
-			continue;
-		}
+        if($view == 'module'
+            && $manifest_type != 'module' && $manifest_type != 'theme' && $manifest_type != 'langpack')
+        {
+            continue;
+        }
 
-		if(empty($manifest['icon']))
-		{
-			$icon = getImageForType( $manifest['type'] );
-		}
-		else
-		{
-			$path_parts = pathinfo( $manifest['icon'] );
-			$icon = "<!--not_in_theme!--><img src=\"" . remove_file_extension( $upgrade_content ) . "-icon." . $path_parts['extension'] . "\" alt =''>";
-		}
+        if(empty($manifest['icon']))
+        {
+            $icon = getImageForType( $manifest['type'] );
+        }
+        else
+        {
+            $path_parts = pathinfo( $manifest['icon'] );
+            $icon = "<!--not_in_theme!--><img src=\"" . remove_file_extension( $upgrade_content ) . "-icon." . $path_parts['extension'] . "\" alt =''>";
+        }
 
-		$upgrades_available++;
-		print( "<tr><td>$icon</td><td>$name</td><td>$type</td><td>$version</td><td>$published_date</td><td>$uninstallable</td><td>$description</td>\n" );
+        $upgrades_available++;
+        print( "<tr><td>$icon</td><td>$name</td><td>$type</td><td>$version</td><td>$published_date</td><td>$uninstallable</td><td>$description</td>\n" );
 
-		$upgrade_content = urlencode($upgrade_content);
+        $upgrade_content = urlencode($upgrade_content);
 
-		$form2 =<<<eoq
+        $form2 =<<<eoq
             <form action="{$form_action}_prepare" method="post">
             <td><input type=submit name="btn_mode" onclick="this.form.mode.value='Install';this.form.submit();" value="{$mod_strings['LBL_UW_BTN_INSTALL']}" /></td>
             <input type=hidden name="install_file" value="{$upgrade_content}" />
-			<input type=hidden name="mode"/>
+            <input type=hidden name="mode"/>
             </form>
 
             <form action="{$form_action}" method="post">
@@ -333,7 +333,7 @@ foreach($upgrade_contents as $upgrade_content)
             </form>
             </tr>
 eoq;
-		echo $form2;
+        echo $form2;
     }
 }
 print( "</table>\n" );

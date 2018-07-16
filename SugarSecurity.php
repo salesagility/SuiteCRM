@@ -52,7 +52,7 @@ class SugarSecure
         }
         echo '</table>';
     }
-	
+    
     public function save($file='')
     {
         $fp = fopen($file, 'a');
@@ -61,7 +61,7 @@ class SugarSecure
         }
         fclose($fp);
     }
-	
+    
     public function scan($path= '.', $ext = '.php')
     {
         $dir = dir($path);
@@ -75,7 +75,7 @@ class SugarSecure
             }
         }
     }
-	
+    
     public function scanContents($contents)
     {
         return;
@@ -129,7 +129,7 @@ class ScanFileIncludes extends SugarSecure
         }
     }
 }
-	
+    
 
 
 class SugarSecureManager
@@ -139,7 +139,7 @@ class SugarSecureManager
     {
         $this->scanners[] = new $class();
     }
-	
+    
     public function scan()
     {
         while ($scanner = current($this->scanners)) {
@@ -148,7 +148,7 @@ class SugarSecureManager
         }
         reset($this->scanners);
     }
-	
+    
     public function display()
     {
         while ($scanner = current($this->scanners)) {
@@ -158,7 +158,7 @@ class SugarSecureManager
         }
         reset($this->scanners);
     }
-	
+    
     public function save()
     {
         //reset($this->scanners);	

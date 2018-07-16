@@ -102,13 +102,13 @@ $hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
 $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
 if (!$hide_clear_button) {
     $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-		.$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-		.$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+        .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
+        .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
 }
 $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-	.$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-	.$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-	.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+    .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
+    .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
+    .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
 $button .= "</form>\n";
 
 
@@ -161,7 +161,7 @@ ob_start();
 $ListView->processListView($seed_bean, 'main', 'DOCUMENT');
 $output_html .= ob_get_contents();
 ob_end_clean();
-		
+        
 $output_html .= insert_popup_footer();
 
 

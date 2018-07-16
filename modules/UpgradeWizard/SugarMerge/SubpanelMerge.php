@@ -74,7 +74,7 @@ class SubpanelMerge extends ListViewMerge
         $this->mergeData = $this->newData;
         $this->newData = array($module=>array( $this->viewDefs=>array($this->panelName=>array('DEFAULT'=>$this->newData[$module]['list_fields']))));
     }
-	
+    
     /**
      * We take mergeData which is a copy of the new meta data prior to merging and set it's list_fields variable to the merged panels
      *
@@ -83,7 +83,7 @@ class SubpanelMerge extends ListViewMerge
     {
         $this->mergeData['list_fields'] = $this->buildPanels();
     }
-	
+    
     /**
      * This will save the merged data to a file
      *

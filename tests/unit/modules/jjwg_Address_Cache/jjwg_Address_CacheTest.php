@@ -48,7 +48,7 @@ class jjwg_Address_CacheTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstrac
     public function testSaveAndGetAddressCacheInfoAndDeleteAllAddressCache()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('jjwg_address_cache');

@@ -56,18 +56,18 @@ class ViewSearchView extends ViewListView
             $this->editLayout = $_REQUEST['searchlayout'];
         }
     }
- 	
+    
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME','Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
@@ -76,8 +76,8 @@ class ViewSearchView extends ViewListView
     }
 
     public function display(
- 	    $preview = false
- 	    ) {
+        $preview = false
+        ) {
         $packageName = (isset ($_REQUEST [ 'view_package' ])) ? $_REQUEST [ 'view_package' ] : '' ;
         require_once 'modules/ModuleBuilder/parsers/ParserFactory.php' ;
         $parser = ParserFactory::getParser ($this->editLayout , $this->editModule, $packageName) ;
@@ -102,9 +102,9 @@ class ViewSearchView extends ViewListView
         require_once ('modules/ModuleBuilder/MB/AjaxCompose.php') ;
         $ajax = new AjaxCompose () ;
         switch ($this->editLayout) {
- 			default:
- 				$searchLabel = 'LBL_' . strtoupper ($this->editLayout) ;
- 		}
+            default:
+                $searchLabel = 'LBL_' . strtoupper ($this->editLayout) ;
+        }
 
         $layoutLabel = 'LBL_LAYOUTS' ;
         $layoutView = 'layouts' ;

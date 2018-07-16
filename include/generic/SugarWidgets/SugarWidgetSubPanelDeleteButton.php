@@ -60,10 +60,10 @@ class SugarWidgetSubPanelDeleteButton extends SugarWidgetField
         $new_status = 'Held';
 
         switch ($module_name) {
-			case 'Tasks':
-				$new_status = 'Completed';
-				break;
-		}
+            case 'Tasks':
+                $new_status = 'Completed';
+                break;
+        }
         $subpanel = $layout_def['subpanel_id'];
         if (isset($layout_def['linked_field_set']) && !empty($layout_def['linked_field_set'])) {
             $linked_field= $layout_def['linked_field_set'] ;

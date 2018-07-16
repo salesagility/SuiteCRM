@@ -48,16 +48,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 $fields_array['SavedSearch'] = array ('column_fields' => Array(
-		'id'
-		,'search_module'
-		,'name'
-		,'description'
-		,'contents'
-		,'assigned_user_id'
-		,'date_entered'
-		,'date_modified'
-		,'deleted'
-		),
+        'id'
+        ,'search_module'
+        ,'name'
+        ,'description'
+        ,'contents'
+        ,'assigned_user_id'
+        ,'date_entered'
+        ,'date_modified'
+        ,'deleted'
+        ),
         'list_fields' =>  Array('id', 'module','name','description'),
-    	'required_fields' => array('id' => 1, 'name'=>1, 'module'=>1),
+        'required_fields' => array('id' => 1, 'name'=>1, 'module'=>1),
 );

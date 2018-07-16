@@ -48,9 +48,9 @@ function additionalDetailsCampaign($fields)
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Campaigns');
     }
-		
+        
     $overlib_string = '';
-	
+    
     if (!empty($fields['START_DATE'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_CAMPAIGN_START_DATE'] . '</b> ' . $fields['START_DATE'] . '<br>';
     }
@@ -61,7 +61,7 @@ function additionalDetailsCampaign($fields)
     if (!empty($fields['REFER_URL'])) {
         $overlib_string .= '<a target=_blank href='. $fields['REFER_URL'] . '>' . $fields['REFER_URL'] . '</a><br>';
     }
-	
+    
     if (!empty($fields['OBJECTIVE'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_CAMPAIGN_OBJECTIVE'] . '</b> ' . substr($fields['OBJECTIVE'], 0, 300);
         if (strlen($fields['OBJECTIVE']) > 300) {
@@ -75,9 +75,9 @@ function additionalDetailsCampaign($fields)
             $overlib_string .= '...';
         }
     }	
-	
+    
     return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => "index.php?action=EditView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}", 
-				 'viewLink' => "index.php?action=DetailView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}");
+                 'string' => $overlib_string, 
+                 'editLink' => "index.php?action=EditView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}", 
+                 'viewLink' => "index.php?action=DetailView&module=Campaigns&return_module=Campaigns&record={$fields['ID']}");
 }

@@ -60,7 +60,7 @@ $focus->retrieve($_POST['record']);
 if (isset($_POST['isDuplicate']) && $_POST['isDuplicate'] == true) {
     $focus->id='';
     $focus->name=$mod_strings['LBL_COPY_PREFIX'].' '.$focus->name;
-	
+    
     $focus->save();
     $return_id=$focus->id; 
     //duplicate the linked items.

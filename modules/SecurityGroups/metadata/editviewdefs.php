@@ -34,7 +34,7 @@ $viewdefs[$module_name]['EditView'] = array(
 
 
     array (
-    	'noninheritable',
+        'noninheritable',
     ),    
     array (
       'description',

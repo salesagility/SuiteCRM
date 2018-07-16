@@ -43,13 +43,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $subpanel_layout = array(
-	'buttons' => array(
+    'buttons' => array(
             array('widget_class' => 'SubPanelTopCreateButton'),
-			array('widget_class' => 'SubPanelTopSelectButton'),
-	),
+            array('widget_class' => 'SubPanelTopSelectButton'),
+    ),
 
-	'where' => '',
+    'where' => '',
 
 
-	'list_fields' => array(),
+    'list_fields' => array(),
 );

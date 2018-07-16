@@ -51,7 +51,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $app_strings;
 
 $dashletMeta['FavoritesDashlet'] = array('module'		=> 'Favorites',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'Favorites'),
+                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'Favorites'),
                                           'description' => 'A customizable view into Favorites',
                                           'icon'        => 'icon_Favorites_32.gif',
                                           'category'    => 'Module Views');

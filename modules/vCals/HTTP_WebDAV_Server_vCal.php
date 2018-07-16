@@ -340,7 +340,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                     echo "The service does not support content MD5 checksum verification";
                     return;
 
-				case 'HTTP_CONTENT_LENGTH': // RFC 2616 14.14
+                case 'HTTP_CONTENT_LENGTH': // RFC 2616 14.14
                     /* The meaning of the Content-Location header in PUT
                        or POST requests is undefined; servers are free
                        to ignore it in those cases. */

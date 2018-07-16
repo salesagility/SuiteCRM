@@ -46,7 +46,7 @@ if (isset($_REQUEST['perform_rebuild']) && $_REQUEST['perform_rebuild'] == 'true
     require_once('install/install_utils.php');
     $focus = new Scheduler();
     $focus->rebuildDefaultSchedulers();
-	
+    
     $admin_mod_strings = return_module_language($current_language, 'Administration'); ?>
 <table cellspacing="{CELLSPACING}" class="otherview">
 	<tr> 

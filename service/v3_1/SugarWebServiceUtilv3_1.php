@@ -51,18 +51,18 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         $tableName = $value->getTableName();
 
         return Array('module_name'=>$module, 'table_name' => $tableName,
-					'module_fields'=> $result['module_fields'],
-					'link_fields'=> $result['link_fields'],
-					);
+                    'module_fields'=> $result['module_fields'],
+                    'link_fields'=> $result['link_fields'],
+                    );
     } // fn
 
 
     /**
-	 * Track a view for a particular bean.
-	 *
-	 * @param SugarBean $seed
-	 * @param string $current_view
-	 */
+     * Track a view for a particular bean.
+     *
+     * @param SugarBean $seed
+     * @param string $current_view
+     */
     public function trackView($seed, $current_view)
     {
         $trackerManager = TrackerManager::getInstance();
@@ -279,17 +279,17 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
             } //foreach
         } //if
 
-		if ($value->module_dir == 'Meetings' || $value->module_dir == 'Calls') {
-		    if (isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
-		        $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
-		        $options_ret = array();
-		        foreach ($options_dom as $key=>$oneOption) {
-		            $options_ret[$key] = $this->get_name_value($key,$oneOption);
-		        }
+        if ($value->module_dir == 'Meetings' || $value->module_dir == 'Calls') {
+            if (isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
+                $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
+                $options_ret = array();
+                foreach ($options_dom as $key=>$oneOption) {
+                    $options_ret[$key] = $this->get_name_value($key,$oneOption);
+                }
 
-		        $module_fields['duration_minutes']['options'] = $options_ret;
-		    }
-		}
+                $module_fields['duration_minutes']['options'] = $options_ret;
+            }
+        }
 
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');

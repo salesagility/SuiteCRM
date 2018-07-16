@@ -65,10 +65,10 @@ class ProjectViewEdit extends ViewEdit
     public function display()
     {
         global $json;
-		
+        
         $this->bean->is_template = 0;
         $this->ev->ss->assign("is_template", 0);
- 		
+        
         $json = getJSONobj();
         $json_config = new json_config();
         if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {

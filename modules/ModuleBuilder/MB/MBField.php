@@ -50,9 +50,9 @@ class MBField
     public $reportable = true;
     public $default = 'MSI1';
     public $comment = '';
-	
-	
-	
+    
+    
+    
     public function getFieldVardef()
     {
         if (empty($this->name)) {
@@ -82,35 +82,35 @@ class MBField
             $vardef['default'] = $this->default;
         }
         switch ($this->type) {
-			case 'date':
-			case 'datetime':
-			case 'float':
-			case 'int':
-				$vardef['type']=$this->type;
-				return $vardef;
-			case 'bool':
-				$vardef['type'] = 'bool';
-				$vardef['default'] = (empty($vardef['default']))?0:1;
-				return $vardef;
-			case 'enum':
-				$vardef['type']='enum';
-				if (empty($this->options)) {
-				    $this->options = $this->name . '_list';
-				}
-				$vardef['options'] = $this->addDropdown();
-				return $vardef;
-			default:
-				$vardef['type']='varchar';
-				return $vardef;
-			
-		}
+            case 'date':
+            case 'datetime':
+            case 'float':
+            case 'int':
+                $vardef['type']=$this->type;
+                return $vardef;
+            case 'bool':
+                $vardef['type'] = 'bool';
+                $vardef['default'] = (empty($vardef['default']))?0:1;
+                return $vardef;
+            case 'enum':
+                $vardef['type']='enum';
+                if (empty($this->options)) {
+                    $this->options = $this->name . '_list';
+                }
+                $vardef['options'] = $this->addDropdown();
+                return $vardef;
+            default:
+                $vardef['type']='varchar';
+                return $vardef;
+            
+        }
     }
-	
+    
     public function addDropDown()
     {
         return $this->options;
     }
-	
+    
     public function addLabel()
     {
         return $this->vname;

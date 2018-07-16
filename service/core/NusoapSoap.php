@@ -125,7 +125,7 @@ abstract class NusoapSoap extends SugarSoapService
      * @param String $function - name of the function
      * @param Array $input - assoc array of input values: key = param name, value = param type
      * @param Array $output - assoc array of output values: key = param name, value = param type
-	 * @access public
+     * @access public
      */
     public function registerFunction($function, $input, $output)
     {
