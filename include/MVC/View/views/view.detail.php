@@ -39,6 +39,8 @@
 
 require_once('include/DetailView/DetailView2.php');
 
+require_once __DIR__ . '/../../../Exceptions/SuiteException.php';
+
 /**
  * Default view class for handling DetailViews
  *
@@ -88,6 +90,9 @@ class ViewDetail extends SugarView
     {
  	    $metadataFile = $this->getMetaDataFile();
  	    $this->dv = new DetailView2();
+            if (null === $this->ss) {
+                LoggerManager::getLogger()->warn('Sugar Smarty is not defined for ViewDetail::preDisplay()');
+            }
  	    $this->dv->ss =&  $this->ss;
  	    $this->dv->setup($this->module, $this->bean, $metadataFile, get_custom_file_if_exists('include/DetailView/DetailView.tpl'));
     }

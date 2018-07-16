@@ -49,6 +49,10 @@ class SharedSecurityRulesViewEdit extends ViewEdit
 {
     private function getConditionLines()
     {
+        if (!is_object($this->bean)) {
+            LoggerManager::getLogger()->warn('bean of SharedSecurityRulesViewEdit is not an object');
+            return array();
+        }
         if (!$this->bean->id) {
             return array();
         }

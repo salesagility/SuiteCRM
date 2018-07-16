@@ -78,6 +78,7 @@ class SharedSecurityRulesActions extends Basic
 
     public function save_lines($post_data, $parent, $key = '')
     {
+        $ret = null;
         
         $postDataKeyAction = null;
         if (!isset($post_data[$key . 'action'])) {
@@ -116,9 +117,10 @@ class SharedSecurityRulesActions extends Basic
                 if (trim($action->action) != '') {
                     $action->action_order = ++$j;
                     $action->sa_shared_security_rules_id = $parent->id;
-                    $action->save();
+                    $ret = $action->save();
                 }
             }
         }
+        return $ret;
     }
 }

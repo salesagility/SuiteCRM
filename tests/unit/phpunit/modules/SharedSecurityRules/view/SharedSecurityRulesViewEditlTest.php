@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,10 +38,27 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+include_once __DIR__ . '/../../../../../../modules/SharedSecurityRules/views/view.edit.php';
 
-class SuiteException extends Exception {
-    const FILE_NOT_FOUND = 1;
+/**
+ * SharedSecurityRulesViewEditTest
+ *
+ * @author gyula
+ */
+class SharedSecurityRulesViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
+    
+    public function testPreDisplay() {
+        $ssrve = new SharedSecurityRulesViewEdit();
+        ob_start();
+        try {
+            $ssrve->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals('<script>var conditionLines = []</script>', $contents);
+    }
+    
 }

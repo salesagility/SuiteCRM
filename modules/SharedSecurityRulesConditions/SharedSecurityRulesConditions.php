@@ -218,5 +218,7 @@ class SharedSecurityRulesConditions extends Basic
                 }
             }
         }
+        
+        return $lastParenthesisStartConditionIdArray;
     }
 }

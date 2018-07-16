@@ -5,7 +5,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2017 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2018 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,10 +38,59 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
 
-class SuiteException extends Exception {
-    const FILE_NOT_FOUND = 1;
+include_once __DIR__ . '/SharedSecurityRulesControllerMock.php';
+
+/**
+ * ControllerTest
+ *
+ * @author gyula
+ */
+class SharedSecurityRulesControllerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
+    
+    public function testActionFielddefs() {
+        $ctrl = new SharedSecurityRulesControllerMock();
+        ob_start();        
+        $ctrl->action_fielddefs();
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals(null, $contents);
+    }
+    
+    public function testActionGetAction() {
+        $ctrl = new SharedSecurityRulesControllerMock();
+        ob_start();        
+        $ctrl->publicActionGetAction();
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals(null, $contents);
+    }
+    
+    public function testActionGetModuleFieldType() {
+        $ctrl = new SharedSecurityRulesControllerMock();
+        ob_start();        
+        $ctrl->publicActionGetModuleFieldType();
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals(null, $contents);
+    }
+    
+    public function testActionGetFieldTypeOptions() {
+        $ctrl = new SharedSecurityRulesControllerMock();
+        ob_start();        
+        $ctrl->publicActionGetFieldTypeOptions();
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals(null, $contents);
+    }
+    
+    public function testActionGetModuleOperatorField() {
+        $ctrl = new SharedSecurityRulesControllerMock();
+        ob_start();        
+        $ctrl->publicActionGetModuleOperatorField();
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals(null, $contents);
+    }
+    
 }

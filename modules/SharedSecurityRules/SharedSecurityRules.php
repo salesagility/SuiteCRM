@@ -138,7 +138,7 @@ class SharedSecurityRules extends Basic
             unset($_POST['aow_actions_id']);
         }
 
-        parent::save($check_notify);
+        $id = parent::save($check_notify);
 
         require_once('modules/SharedSecurityRulesConditions/SharedSecurityRulesConditions.php');
         $condition = new SharedSecurityRulesConditions();
@@ -147,6 +147,8 @@ class SharedSecurityRules extends Basic
         require_once('modules/SharedSecurityRulesActions/SharedSecurityRulesActions.php');
         $action = new SharedSecurityRulesActions();
         $action->save_lines($_POST, $this, 'shared_rules_actions_');
+        
+        return $id;
     }
 
     /**
@@ -712,7 +714,11 @@ class SharedSecurityRules extends Basic
      */
     public function checkHistory(SugarBean $module, $field, $value)
     {
-        global $db;
+        $db = DBManagerFactory::getInstance();
+        if (!isset($module->field_defs[$field]['audited'])) {
+            LoggerManager::getLogger()->warn("$field field in not exists in given module field_defs for checking shared security rules history");
+            return false;
+        }
         if ($module->field_defs[$field]['audited'] == true) {
             $value = $db->quote($value);
             $field = $db->quote($field);

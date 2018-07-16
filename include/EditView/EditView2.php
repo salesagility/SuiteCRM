@@ -269,12 +269,9 @@ class EditView
             // Flag an error... we couldn't create the best guess meta-data file
             if (!file_exists("modules/$this->module/metadata/$metadataFileName.php")) {
                 global $app_strings;
-
-                $error = str_replace('[file]', "modules/$this->module/metadata/$metadataFileName.php",
-                    $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
+                $error = str_replace('[file]', "modules/$this->module/metadata/$metadataFileName.php", $app_strings['ERR_CANNOT_CREATE_METADATA_FILE']);
                 $GLOBALS['log']->fatal($error);
-                echo $error;
-                die();
+                throw new SuiteException('File not found: ' . $error, SuiteException::FILE_NOT_FOUND);
             }
 
             require("modules/$this->module/metadata/$metadataFileName.php");
