@@ -46,7 +46,6 @@
 
 namespace SuiteCRM\Search\Index;
 
-
 use InvalidArgumentException;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -54,15 +53,25 @@ use ReflectionClass;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 
+/**
+ * This class defines common methods and fields for a search indexer.
+ *
+ * A search indexer is a component with the task of creating an index to improve search efficiency.
+ * This is usually achieved by creating a copy of the sql database in an external service.
+ *
+ * It also offers logging facilities on a separate file using Monolog, and also colored console output if configured.
+ *
+ * @see \SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer
+ */
 abstract class AbstractIndexer
 {
-    /** @var bool */
+    /** @var bool when enabled lots output is echoed in the output stream */
     protected $echoLogsEnabled = false;
-    /** @var bool */
+    /** @var bool when enabled only beans changed after the last indexing should be indexed */
     protected $differentialIndexingEnabled = false;
-    /** @var AbstractDocumentifier * */
+    /** @var AbstractDocumentifier determines how a bean is converted into a document */
     protected $documentifier = null;
-    /** @var string[] */
+    /** @var string[] The modules that have to be indexed. This should be made customisable */
     protected $modulesToIndex = [
         'Accounts', 'Contacts', 'Users',
         'Opportunities', 'Leads', 'Emails',
@@ -80,6 +89,7 @@ abstract class AbstractIndexer
         $this->documentifier = new JsonSerializerDocumentifier();
         $this->logger = new Logger($this->getIndexerName());
 
+        // Set up Monolog logger
         try {
             $this->logger->pushHandler(new StreamHandler($this->logFile));
         } catch (\Exception $e) {
@@ -99,7 +109,9 @@ abstract class AbstractIndexer
     }
 
     /**
-     * @param $obj
+     * Method to retrieve the (short) class name of an object.
+     *
+     * @param $obj object
      * @return string
      */
     private function getObjectClassName($obj)
@@ -121,6 +133,7 @@ abstract class AbstractIndexer
      *
      * @param $type string @ = debug, - = info, * = warning, ! = error
      * @param $message string the message to log
+     * @return void
      */
     public function log($type, $message)
     {
@@ -155,21 +168,76 @@ abstract class AbstractIndexer
             echo " [$type] ", $message, PHP_EOL;
     }
 
+    /**
+     * Performs the indexing procedures for the whole database.
+     *
+     * All modules specified in `getModulesToIndex()` must be indexed.
+     * This method should adhere to the options set in the indexer, such as partial indexing.
+     *
+     * @see AbstractIndexer:getModulesToIndex
+     * @return void
+     */
     abstract function run();
 
+    /**
+     * Indexes a single module.
+     *
+     * If `$differentialIndexingEnabled` is set to `false` all beans in that module must be indexed.
+     *
+     * If `$differentialIndexingEnabled` is set to `true`, it should only perform indexing on beans
+     *  that have been created/modified/deleted after the last indexing run.
+     *  Additionally, beans that have been removed must be removed from the index too.
+     *
+     * @param $module string the name of the module, e.g. Accounts, Contacts, etc.
+     * @return void
+     */
     abstract function indexModule($module);
 
-    abstract function indexBean($bean);
+    /**
+     * Indexes a single bean.
+     *
+     * @param $bean \SugarBean
+     * @return void
+     */
+    abstract function indexBean(\SugarBean $bean);
 
-    abstract function indexBeans($module, $beans);
+    /**
+     * Indexes an array of SugarBeans.
+     *
+     * This should not take in account of the differential indexing.
+     *
+     * @param $module string name of the module, e.g. Accounts, Contacts, etc.
+     * @param $beans \SugarBean[]
+     * @return void
+     */
+    abstract function indexBeans($module, array $beans);
 
-    abstract function removeBean($bean);
+    /**
+     * Removes a bean from the index.
+     *
+     * @param \SugarBean $bean
+     * @return void
+     */
+    abstract function removeBean(\SugarBean $bean);
 
-    abstract function removeBeans($bean);
+    /**
+     * Removes an array of beans from the index.
+     *
+     * @param array $beans
+     * @return void
+     */
+    abstract function removeBeans(array $beans);
 
+    /**
+     * Deletes all the records from the index.
+     *
+     * @return void
+     */
     abstract function removeIndex();
 
     /**
+     * Returns whether logging should be echoed or not.
+     *
      * @return bool
      */
     public function isEchoLogsEnabled()
@@ -178,6 +246,8 @@ abstract class AbstractIndexer
     }
 
     /**
+     * Sets whether logging should be echoed or not.
+     *
      * @param bool $echoLogsEnabled
      */
     public function setEchoLogsEnabled($echoLogsEnabled)
@@ -186,6 +256,12 @@ abstract class AbstractIndexer
     }
 
     /**
+     * Returns whether the next indexing should be performed differentially or not.
+     *
+     * If it is set to `true`, the next indexing should only be performed on beans
+     *  that have been created/modified/deleted after the last indexing run.
+     *  Additionally, beans that have been removed must be removed from the index too.
+     *
      * @return bool
      */
     public function isDifferentialIndexingEnabled()
@@ -194,7 +270,10 @@ abstract class AbstractIndexer
     }
 
     /**
+     * Sets whether the next indexing should be performed differentially or not.
+     *
      * @param bool $differentialIndexingEnabled
+     * @see isDifferentialIndexingEnabled()
      */
     public function setDifferentialIndexingEnabled($differentialIndexingEnabled)
     {
@@ -202,6 +281,8 @@ abstract class AbstractIndexer
     }
 
     /**
+     * Returns the currently set Documentifier.
+     *
      * @return AbstractDocumentifier
      */
     public function getDocumentifier()
@@ -210,9 +291,13 @@ abstract class AbstractIndexer
     }
 
     /**
+     * Sets the documentifier to use for the future index runs.
+     *
+     * The documentifier converts a SugarBean into a index-friendly document.
+     *
      * @param AbstractDocumentifier $documentifier
      */
-    public function setDocumentifier($documentifier)
+    public function setDocumentifier(AbstractDocumentifier $documentifier)
     {
         $this->documentifier = $documentifier;
     }
@@ -228,6 +313,10 @@ abstract class AbstractIndexer
     }
 
     /**
+     * Returns the modules that have to be indexed.
+     *
+     * This can be overridden in subclasses to index different modules.
+     *
      * @return string[]
      */
     public function getModulesToIndex()
@@ -236,14 +325,18 @@ abstract class AbstractIndexer
     }
 
     /**
+     * Overrides the list of modules that have to be indexed for the next indexing runs.
+     *
      * @param $modules string[]
      */
-    public function setModulesToIndex($modules)
+    public function setModulesToIndex(array $modules)
     {
         $this->modulesToIndex = $modules;
     }
 
     /**
+     * Adds one or more module to index for the next indexing runs.
+     *
      * @param $modules string|string[]
      */
     public function addModulesToIndex($modules)

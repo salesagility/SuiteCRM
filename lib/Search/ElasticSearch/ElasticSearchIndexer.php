@@ -282,7 +282,7 @@ class ElasticSearchIndexer extends AbstractIndexer
      * @param $module string
      * @param $beans SugarBean[]
      */
-    public function indexBeans($module, $beans)
+    public function indexBeans($module, array $beans)
     {
         if (!is_array($beans)) {
             $this->log('!', "Non-array type found while indexing $module. "
@@ -423,7 +423,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     /**
      * @param $bean SugarBean
      */
-    public function indexBean($bean)
+    public function indexBean(SugarBean $bean)
     {
         $this->log('@', "Indexing {$bean->module_name}($bean->name)");
 
@@ -526,7 +526,7 @@ class ElasticSearchIndexer extends AbstractIndexer
     /**
      * @param $bean SugarBean
      */
-    public function removeBean($bean)
+    public function removeBean(SugarBean $bean)
     {
         $this->log('@', "Removing {$bean->module_name}($bean->name)");
 
@@ -540,7 +540,7 @@ class ElasticSearchIndexer extends AbstractIndexer
      * @param $beans SugarBean[]
      * @param bool $ignore404 deleting something that is not there won't throw an error
      */
-    public function removeBeans($beans, $ignore404 = true)
+    public function removeBeans(array $beans, $ignore404 = true)
     {
         $params = [];
 

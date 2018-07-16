@@ -177,19 +177,19 @@ class TestIndexer extends AbstractIndexer
     {
     }
 
-    function indexBean($bean)
+    function indexBean(SugarBean $bean)
     {
     }
 
-    function indexBeans($module, $beans)
+    function indexBeans($module, array $beans)
     {
     }
 
-    function removeBean($bean)
+    function removeBean(SugarBean $bean)
     {
     }
 
-    function removeBeans($bean)
+    function removeBeans(array $beans)
     {
     }
 
