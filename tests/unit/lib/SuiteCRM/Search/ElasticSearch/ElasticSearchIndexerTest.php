@@ -75,18 +75,27 @@ class ElasticSearchIndexerTest extends SuiteCRM\Search\SearchTestAbstract
             ->shouldReceive('bulk')
             ->times(5);
 
-        $mockedModule = 'MockedModule';
+        $mockedModule = 'Accounts';
 
-        $mockedBeans = [
-            (object)["id" => 1, 'name' => 'name 1', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
-            (object)["id" => 2, 'name' => 'name 2', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
-            (object)["id" => 3, 'name' => 'name 3', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
-            (object)["id" => 4, 'name' => 'name 4', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
-            (object)["id" => 5, 'name' => 'name 5', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]],
-            (object)["id" => 6, 'name' => 'name 6', "deleted" => true, "module_name" => $mockedModule, "column_fields" => ["name"]],
-            (object)["id" => 7, 'name' => 'name 7', "opt" => 'ciao', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name", "opt"]],
-            (object)["id" => 8, 'name' => 'name 8', "opt" => 'ciao', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name", "opt"]]
-        ];
+        $bean1 = BeanFactory::newBean($mockedModule);
+        $bean2 = BeanFactory::newBean($mockedModule);
+        $bean3 = BeanFactory::newBean($mockedModule);
+        $bean4 = BeanFactory::newBean($mockedModule);
+        $bean5 = BeanFactory::newBean($mockedModule);
+        $bean6 = BeanFactory::newBean($mockedModule);
+        $bean7 = BeanFactory::newBean($mockedModule);
+        $bean8 = BeanFactory::newBean($mockedModule);
+
+        $bean1->fromArray(["id" => 1, 'name' => 'name 1', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
+        $bean2->fromArray(["id" => 2, 'name' => 'name 2', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
+        $bean3->fromArray(["id" => 3, 'name' => 'name 3', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
+        $bean4->fromArray(["id" => 4, 'name' => 'name 4', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
+        $bean5->fromArray(["id" => 5, 'name' => 'name 5', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name"]]);
+        $bean6->fromArray(["id" => 6, 'name' => 'name 6', "deleted" => true, "module_name" => $mockedModule, "column_fields" => ["name"]]);
+        $bean7->fromArray(["id" => 7, 'name' => 'name 7', "opt" => 'ciao', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name", "opt"]]);
+        $bean8->fromArray(["id" => 8, 'name' => 'name 8', "opt" => 'ciao', "deleted" => false, "module_name" => $mockedModule, "column_fields" => ["name", "opt"]]);
+
+        $mockedBeans = [$bean1, $bean2, $bean3, $bean4, $bean5, $bean6, $bean7, $bean8];
 
         $i = new i($client);
 
