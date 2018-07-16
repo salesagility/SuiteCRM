@@ -2258,6 +2258,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('tracker');
         $state->pushTable('aod_index');
+        $state->pushGlobals();
 
         // test
 
@@ -2531,6 +2532,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
 
         // clean up
 
+        $state->popGlobals();
         $state->popTable('aod_index');
         $state->popTable('tracker');
     }
@@ -3734,8 +3736,10 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         if (!file_exists('custom/include')) {
             mkdir('custom/include');
         }
+        $noCustomIncludeVarDefHandler = false;
         if (!file_exists('custom/include/VarDefHandler')) {
             mkdir('custom/include/VarDefHandler');
+            $noCustomIncludeVarDefHandler = true;
         }
         copy('include/VarDefHandler/listvardefoverride.php', 'custom/include/VarDefHandler/listvardefoverride.php');
 
@@ -3759,6 +3763,13 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
 
 
         // clean up
+                       
+        unlink('custom/include/VarDefHandler/listvardefoverride.php');     
+        
+        if (!$noCustomIncludeVarDefHandler) {
+            rmdir('custom/include/VarDefHandler');
+        }
+        
         $state->popGlobals();
         $state->popTable('users');
         $state->popTable('aod_index');
