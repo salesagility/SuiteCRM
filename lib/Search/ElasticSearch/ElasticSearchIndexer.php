@@ -53,50 +53,43 @@ use Elasticsearch\Client;
 use JsonSchema\Exception\RuntimeException;
 use SugarBean;
 use SuiteCRM\Search\Index\AbstractIndexer;
+use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 
 class ElasticSearchIndexer extends AbstractIndexer
 {
-    /**
-     * @var string File containing a timestamp of the last (complete or differential) indexing.
-     */
+    /** @var string File containing a timestamp of the last (complete or differential) indexing. */
     const LOCK_FILE = 'cache/ElasticSearchIndex.lock';
-    /**
-     * @var string The name of the Elasticsearch index to use.
-     */
+    /** @var string The name of the Elasticsearch index to use. */
     private $index = 'main';
-    /**
-     * @var Client
-     */
+    /** @var Client */
     private $client = null;
-
-    /**
-     * Without search defs the indexing is faster and more reliable with known data,
-     * but it is not yet customisable by the user. *
-     */
+    /** @var int the size of the batch to be sent to the Elasticsearch while batch indexing */
     private $batchSize = 1000;
 
     // stats
+    /** @var int number of modules indexed */
     private $indexedModulesCount;
+    /** @var int number of records (beans) indexed */
     private $indexedRecordsCount;
+    /** @var int number of record fields indexed */
     private $indexedFieldsCount;
+    /** @var int number of records (beans) removed */
     private $removedRecordsCount;
-    /** @var bool|Carbon */
+    /** @var Carbon|false the timestamp of the last indexing. false if unknown */
     private $lastRunTimestamp = false;
 
     /**
      * ElasticSearchIndexer constructor.
      * @param Client|null $client
      */
-    public function __construct($client = null)
+    public function __construct(Client $client = null)
     {
         parent::__construct();
 
-        if (!empty($client))
-            $this->client = $client;
-        else
-            $this->client = ElasticSearchClientBuilder::getClient();
+        $this->client = !empty($client) ? $client : ElasticSearchClientBuilder::getClient();
     }
 
+    /** @inheritdoc */
     public function run()
     {
         $this->log('@', 'Starting indexing procedures');
@@ -136,7 +129,9 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
-     * Reads the lock file and returns a Carbon timestamp or `null` if the fail could not be found.
+     * Reads the lock file.
+     *
+     * Returns a Carbon timestamp or `null` if the file could not be found.
      *
      * @return bool|Carbon
      */
@@ -167,6 +162,13 @@ class ElasticSearchIndexer extends AbstractIndexer
         return $this->differentialIndexingEnabled && $this->lastRunTimestamp !== false;
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * The current index (this::getIndex()) is removed if no index is specified.
+     *
+     * @param null $index
+     */
     public function removeIndex($index = null)
     {
         if (empty($index)) {
@@ -181,7 +183,15 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->log('@', "Removed index '$index'");
     }
 
-    public function createIndex($index, $body = null)
+    /**
+     * Creates a new index in the Elasticsearch server.
+     *
+     * The optional $body can be used to set up the index settings, mappings, etc.
+     *
+     * @param $index string name of the index
+     * @param array|null $body options of the index
+     */
+    public function createIndex($index, array $body = null)
     {
         $params = ['index' => $index];
 
@@ -193,6 +203,11 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->log('@', "Created new index '$index'");
     }
 
+    /**
+     * Retrieves the default params to set up an optimised default index for Elasticsearch.
+     *
+     * @return array
+     */
     private function getDefaultMapParams()
     {
         $fields = [
@@ -201,6 +216,8 @@ class ElasticSearchIndexer extends AbstractIndexer
                 "ignore_above" => 256
             ]
         ];
+
+        // TODO map dates?
 
         return [
             'mappings' => [
@@ -235,9 +252,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         ];
     }
 
-    /**
-     * @param $module string
-     */
+    /** @inheritdoc */
     public function indexModule($module)
     {
         $seed = BeanFactory::getBean($module);
@@ -278,10 +293,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->indexedModulesCount++;
     }
 
-    /**
-     * @param $module string
-     * @param $beans SugarBean[]
-     */
+    /** @inheritdoc */
     public function indexBeans($module, array $beans)
     {
         if (!is_array($beans)) {
@@ -302,10 +314,17 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
+     * Creates a batch indexing request for Elasticsearch.
+     *
+     * The size of the batch is defined by `this::batchSize`.
+     *
+     * Additionally, Beans marked as deleted will be remove from the index.
+     *
      * @param $module string
      * @param $beans SugarBean[]
+     * @see batchSize
      */
-    private function indexBatch($module, $beans)
+    private function indexBatch($module, array $beans)
     {
         $params = ['body' => []];
 
@@ -336,18 +355,27 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
+     * Creates the body of a Elasticsearch request for a given bean.
+     *
+     * It uses a Documentifier to make a document out of a SugarBean.
+     *
      * @param $bean SugarBean
      * @return array
+     * @see AbstractDocumentifier
      */
-    private function makeIndexParamsBodyFromBean($bean)
+    private function makeIndexParamsBodyFromBean(SugarBean $bean)
     {
         return $this->documentifier->documentify($bean);
     }
 
     /**
-     * @param $params
+     * Sends a batch request with the given params.
+     *
+     * Sends the requests and attempts to parse errors and fix the number of indexed records in case of errors.
+     *
+     * @param $params array
      */
-    private function sendBatch(&$params)
+    private function sendBatch(array &$params)
     {
         // sends the batch over to the server
         $responses = $this->client->bulk($params);
@@ -374,6 +402,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         unset($responses);
     }
 
+    /** Writes the lock file with the current timestamp to the default location */
     private function writeLockFile()
     {
         $this->log('@', "Writing lock file to " . self::LOCK_FILE);
@@ -381,8 +410,10 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
-     * @param $end
-     * @param $start
+     * Shows statistics for the past run.
+     *
+     * @param $end float
+     * @param $start float
      */
     private function statistics($end, $start)
     {
@@ -405,9 +436,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
     }
 
-    /**
-     * Removes all the indexes from Elasticsearch, effectively nuking all data.
-     */
+    /** Removes all the indexes from Elasticsearch, effectively nuking all data. */
     public function removeAllIndices()
     {
         $this->log('@', "Deleting all indices");
@@ -420,9 +449,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
     }
 
-    /**
-     * @param $bean SugarBean
-     */
+    /** @inheritdoc */
     public function indexBean(SugarBean $bean)
     {
         $this->log('@', "Indexing {$bean->module_name}($bean->name)");
@@ -433,10 +460,12 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
+     * Generates the params for indexing a bean from the bean itself.
+     *
      * @param $bean SugarBean
      * @return array
      */
-    private function makeIndexParamsFromBean($bean)
+    private function makeIndexParamsFromBean(SugarBean $bean)
     {
         $args = $this->makeParamsHeaderFromBean($bean);
         $args['body'] = $this->makeIndexParamsBodyFromBean($bean);
@@ -444,10 +473,12 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
+     * Generates the headers for indexing a bean from the bean itself.
+     *
      * @param $bean SugarBean
      * @return array
      */
-    private function makeParamsHeaderFromBean($bean)
+    private function makeParamsHeaderFromBean(SugarBean $bean)
     {
         $args = [
             'index' => $this->index,
@@ -458,63 +489,51 @@ class ElasticSearchIndexer extends AbstractIndexer
         return $args;
     }
 
-    /**
-     * @return int
-     */
+    /** @return int */
     public function getRemovedRecordsCount()
     {
         return $this->removedRecordsCount;
     }
 
-    /**
-     * @return int
-     */
+    /** @return int */
     public function getIndexedRecordsCount()
     {
         return $this->indexedRecordsCount;
     }
 
-    /**
-     * @return int
-     */
+    /** @return int */
     public function getIndexedFieldsCount()
     {
         return $this->indexedFieldsCount;
     }
 
-    /**
-     * @return int
-     */
+    /** @return int */
     public function getIndexedModulesCount()
     {
         return $this->indexedModulesCount;
     }
 
-    /**
-     * @return int
-     */
+    /** @return int */
     public function getBatchSize()
     {
         return $this->batchSize;
     }
 
-    /**
-     * @param int $batchSize
-     */
+    /** @param int $batchSize */
     public function setBatchSize($batchSize)
     {
         $this->batchSize = $batchSize;
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     public function getIndex()
     {
         return $this->index;
     }
 
     /**
+     * Sets the name of the Elasticsearch index to send requests to.
+     *
      * @param string $index
      */
     public function setIndex($index)
@@ -523,9 +542,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         $this->index = $index;
     }
 
-    /**
-     * @param $bean SugarBean
-     */
+    /** @inheritdoc */
     public function removeBean(SugarBean $bean)
     {
         $this->log('@', "Removing {$bean->module_name}($bean->name)");
@@ -535,9 +552,8 @@ class ElasticSearchIndexer extends AbstractIndexer
     }
 
     /**
-     * Removes a set of beans from the index.
+     * @inheritdoc
      *
-     * @param $beans SugarBean[]
      * @param bool $ignore404 deleting something that is not there won't throw an error
      */
     public function removeBeans(array $beans, $ignore404 = true)
@@ -559,7 +575,7 @@ class ElasticSearchIndexer extends AbstractIndexer
      *
      * Returns `false` in case of failure or the time it took to perform the operation in microseconds.
      *
-     * @return bool|int
+     * @return int|false
      */
     public function ping()
     {
@@ -611,6 +627,12 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
     }
 
+    /**
+     * Retrieves the last time a module was indexed from a metadata stored in the Elasticsearch index.
+     *
+     * @param $module string
+     * @return string a datetime string
+     */
     private function getModuleLastIndexed($module)
     {
         $meta = $this->getMeta($module);
@@ -618,12 +640,13 @@ class ElasticSearchIndexer extends AbstractIndexer
         if (isset($meta['last_index'])) {
             return $meta['last_index'];
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("Last index metadata not found.");
         }
     }
 
     /**
      * Returns whether the Elasticsearch is enabled by user configuration or not.
+     *
      * @return bool
      */
     public static function isEnabled()
@@ -631,6 +654,7 @@ class ElasticSearchIndexer extends AbstractIndexer
         return true;
     }
 
+    /** Resets the counters to zero. */
     private function resetCounts()
     {
         $this->indexedModulesCount = 0;
