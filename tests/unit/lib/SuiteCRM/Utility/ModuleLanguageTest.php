@@ -26,7 +26,6 @@ class ModuleLanguageTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetCurrentLanguage()
     {
-        $this->markTestIncomplete('Call to a member function getModuleLanguageStrings() on null');
         $language = self::$language->getModuleLanguageStrings(new \SuiteCRM\Utility\CurrentLanguage(), 'Accounts');
         $this->assertNotEmpty($language);
         $this->assertArrayHasKey('LBL_MODULE_NAME', $language);
