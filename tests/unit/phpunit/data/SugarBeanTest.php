@@ -39,8 +39,8 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 include_once __DIR__ . '/SugarBeanMock.php';
-include_once __DIR__ . '/../../../include/SubPanel/SubPanelDefinitions.php';
-include_once __DIR__ . '/../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
+include_once __DIR__ . '/../../../../include/SubPanel/SubPanelDefinitions.php';
+include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
 
 use SuiteCRM\StateCheckerConfig;
 use SuiteCRM\Test\SuitePHPUnit_Framework_TestCase;
@@ -94,7 +94,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         global $dictionary;
 
         // test dup3
-        include_once __DIR__ . '/../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
+        include_once __DIR__ . '/../../../../modules/AM_ProjectTemplates/AM_ProjectTemplates_sugar.php';
         $bean = new AM_ProjectTemplates_sugar();
         self::assertInstanceOf(DBManager::class, $bean->db);
         self::assertEquals('AM_ProjectTemplates', $bean->module_name);

@@ -38,20 +38,21 @@
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-use SuiteCRM\LangException;
-use SuiteCRM\LangText;
+use SuiteCRM\ErrorMessage;
+use SuiteCRM\ErrorMessageException;
 
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
 
+
 /**
- * LangExceptionTest
+ * ErrorMessageTest
  *
  * @author gyula
  */
-class LangExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+class ErrorMessageTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {
@@ -62,19 +63,19 @@ class LangExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         global $app_strings, $mod_strings;
 
-        include_once __DIR__ . '/../../../include/utils.php';
-        include_once __DIR__ . '/../../../include/SugarTheme/SugarTheme.php';
-        include_once __DIR__ . '/../../../include/SugarTheme/SugarThemeRegistry.php';
-        include __DIR__ . '/../../../include/language/en_us.lang.php';
-        include_once __DIR__ . '/../../../include/SugarObjects/SugarConfig.php';
-        include_once __DIR__ . '/../../../include/SugarLogger/LoggerManager.php';
+        include_once __DIR__ . '/../../../../include/utils.php';
+        include_once __DIR__ . '/../../../../include/SugarTheme/SugarTheme.php';
+        include_once __DIR__ . '/../../../../include/SugarTheme/SugarThemeRegistry.php';
+        include __DIR__ . '/../../../../include/language/en_us.lang.php';
+        include_once __DIR__ . '/../../../../include/SugarObjects/SugarConfig.php';
+        include_once __DIR__ . '/../../../../include/SugarLogger/LoggerManager.php';
 
-        include_once __DIR__ . '/../../../include/ErrorMessageException.php';
-        include_once __DIR__ . '/../../../include/ErrorMessage.php';
-        include_once __DIR__ . '/../../../include/LangText.php';
-        include_once __DIR__ . '/../../../include/JsonApiErrorObject.php';
-        include_once __DIR__ . '/../../../include/LangExceptionInterface.php';
-        include_once __DIR__ . '/../../../include/LangException.php';
+        include_once __DIR__ . '/../../../../include/ErrorMessageException.php';
+        include_once __DIR__ . '/../../../../include/ErrorMessage.php';
+        include_once __DIR__ . '/../../../../include/LangText.php';
+        include_once __DIR__ . '/../../../../include/JsonApiErrorObject.php';
+        include_once __DIR__ . '/../../../../include/LangExceptionInterface.php';
+        include_once __DIR__ . '/../../../../include/LangException.php';
     }
 
     public function tearDown()
@@ -82,12 +83,16 @@ class LangExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         parent::tearDown();
     }
 
-    public function testGetLangMessage()
+    public function testLog()
     {
-        global $app_strings;
-        $app_strings['LBL_LANG_TEST_LABEL'] = 'Lang text with {variable} in text';
-        $e = new LangException('Test message', 123, null, new LangText('LBL_LANG_TEST_LABEL', ['variable' => 'foo']));
-        $langMessage = $e->getLangMessage();
-        $this->assertEquals('Lang text with foo in text', $langMessage, 'Incorrect translation for LangException message');
+        try {
+            ErrorMessage::handler('A test error message', 'debug', true, 321);
+            $this->assertFalse(true, 'Error handler should throw an exception in this scenario.');
+        } catch (ErrorMessageException $e) {
+            $message = $e->getMessage();
+            $code = $e->getCode();
+            $this->assertEquals('A test error message', $message, 'Incorrect exception message given.');
+            $this->assertEquals(321, $code, 'Incorrect exception code given.');
+        }
     }
 }

@@ -41,6 +41,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /* bootstrap sugarcrm */
+echo "CWD:" . getcwd() . "\n";
 chdir('../');
 define('sugarEntry',TRUE);
 global $sugar_config, $db;
