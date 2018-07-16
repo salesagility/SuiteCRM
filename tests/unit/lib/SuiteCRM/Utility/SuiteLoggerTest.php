@@ -60,7 +60,6 @@ class SuiteLoggerTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testLogCritical()
     {
-        $this->markTestIncomplete('Call to a member function critical() on null');
         self::$logger->critical('test');
         $lastLine = $this->getLastLogMessage();
         preg_match('/\[CRITICAL\] test/', $lastLine, $matches);
