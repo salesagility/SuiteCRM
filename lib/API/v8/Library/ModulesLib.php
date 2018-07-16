@@ -79,9 +79,14 @@ class ModulesLib
      * @param Response $res
      * @param array $args
      * @return array list => SugarBean[], current_offset => 0, row_count => 0
+     * @throws BadRequestException
      * @throws ModuleNotFoundException
-     * @throws \InvalidArgumentException
      * @throws NotAllowed
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\InvalidArgumentException
+     * @throws \SuiteCRM\API\v8\Exception\ApiException
+     * @throws \SuiteCRM\Exception\Exception
      */
     public function generatePaginatedModuleRecords(Request $req, Response $res, array $args = array())
     {
@@ -126,8 +131,8 @@ class ModulesLib
             // Add links object to $bean
             $bean['links'] =
                 Links::get()
-                ->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)
-                ->toJsonApiResponse();
+                    ->withSelf($config['site_url'] . '/api/' . $req->getUri()->getPath() . '/' . $moduleBean->id)
+                    ->toJsonApiResponse();
 
             // Append bean to resource object in the response
             $response['list'][] = $bean;
@@ -139,12 +144,14 @@ class ModulesLib
     }
 
     /**
+     * @see ModulesLib::generatePaginatedLinksFromModuleRecords
      * @param Request $req
      * @param Response $res
      * @param array $args
      * @param array $paginatedModuleRecords return value from ModulesLib::generatePaginatedLinksFromModuleRecords
-     * @see ModulesLib::generatePaginatedLinksFromModuleRecords
      * @return Links
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function generatePaginatedLinksFromModuleRecords(Request $req, Response $res, $args, $paginatedModuleRecords)
     {
@@ -223,8 +230,11 @@ class ModulesLib
 
     /**
      * Handle sorting in the request
+     *
      * @param Request $req
      * @return string
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     protected function getSorting(Request $req)
     {
@@ -252,10 +262,13 @@ class ModulesLib
     /**
      * @param Request $req
      * @param \SugarBean $module
-     * @param array route arguments
+     * @param array $args route arguments
      * @return array
+     * @throws BadRequestException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \SuiteCRM\API\JsonApi\v1\Filters\Interpreters\InvalidArgumentException
      * @throws \SuiteCRM\Exception\Exception
-     * @throws \SuiteCRM\API\v8\Exception\BadRequestException
      */
     protected function getModuleList(Request $req, \SugarBean $module, array $args = array())
     {
