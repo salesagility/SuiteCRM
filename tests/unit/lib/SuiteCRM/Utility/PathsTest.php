@@ -42,7 +42,6 @@ class PathsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetLibraryPath()
     {
-        $this->markTestIncomplete('Call to a member function getLibraryPath() on null');
         $expected =  self::$projectPath.'/lib';
         $actual = self::$paths->getLibraryPath();
         $this->assertEquals($expected, $actual);
@@ -50,7 +49,6 @@ class PathsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testGetContainersPath()
     {
-        $this->markTestIncomplete('Call to a member function getContainersFilePath() on null');
         $expected =  self::$projectPath.'/lib/API/core/containers.php';
         $actual = self::$paths->getContainersFilePath();
         $this->assertEquals($expected, $actual);
