@@ -7,7 +7,7 @@ use SuiteCRM\API\v8\Exception\NotImplementedException;
 use SuiteCRM\LangText;
 use UnitTester;
 
-class NotImplementedExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
+class NotImplementedExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var UnitTester

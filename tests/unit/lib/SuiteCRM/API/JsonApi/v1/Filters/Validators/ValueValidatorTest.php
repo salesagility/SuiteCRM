@@ -1,7 +1,7 @@
 <?php
 
 
-class ValueValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
+class ValueValidatorTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester

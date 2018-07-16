@@ -5,7 +5,7 @@ namespace SuiteCRM\Exception;
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 
-class ModuleNotFoundExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
+class ModuleNotFoundExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester

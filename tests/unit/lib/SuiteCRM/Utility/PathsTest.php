@@ -1,7 +1,7 @@
 <?php
 
 
-class PathsTest extends SuiteCRM\StateCheckerUnitAbstract
+class PathsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester

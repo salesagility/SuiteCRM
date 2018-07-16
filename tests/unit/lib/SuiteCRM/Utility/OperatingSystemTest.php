@@ -1,7 +1,7 @@
 <?php
 
 
-class OperatingSystemTest extends \SuiteCRM\StateCheckerUnitAbstract
+class OperatingSystemTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester

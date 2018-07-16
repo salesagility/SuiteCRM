@@ -1,7 +1,7 @@
 <?php
 
 
-class FieldOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
+class FieldOperatorTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester

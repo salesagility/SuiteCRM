@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\InvalidJsonApiRequestException;
 
-class InvalidJsonApiRequestExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
+class InvalidJsonApiRequestExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester

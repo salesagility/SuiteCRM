@@ -1,7 +1,7 @@
 <?php
 
 
-class LessThanOperatorTest extends SuiteCRM\StateCheckerUnitAbstract
+class LessThanOperatorTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester

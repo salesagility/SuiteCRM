@@ -6,7 +6,7 @@ use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\LangText;
 use UnitTester;
 
-class ApiExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
+class ApiExceptionTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var UnitTester

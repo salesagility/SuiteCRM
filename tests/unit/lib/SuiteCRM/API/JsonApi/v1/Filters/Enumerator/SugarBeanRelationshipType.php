@@ -1,7 +1,7 @@
 <?php
 
 
-class SugarBeanRelationshipType extends SuiteCRM\StateCheckerUnitAbstract
+class SugarBeanRelationshipType extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester

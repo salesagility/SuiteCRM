@@ -1,7 +1,7 @@
 <?php
 
 
-class FilterInterpreterTest extends SuiteCRM\StateCheckerUnitAbstract
+class FilterInterpreterTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     /**
      * @var \UnitTester
