@@ -72,10 +72,10 @@ function smarty_function_sugar_translate($params, &$smarty)
         if (empty($params['select'])) {
             $value = "";
         } else {
-            $value = translate($params['label'] , $module, $params['select']);
+            $value = translate($params['label'], $module, $params['select']);
         }
     } else {
-        $value = translate($params['label'] , $module);
+        $value = translate($params['label'], $module);
     }
     if (!empty($params['for_js']) && $params['for_js']) {
         $value = addslashes($value);

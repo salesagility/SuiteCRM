@@ -234,4 +234,4 @@ $dictionary['SchedulersJob'] = array('table' => 'job_queue',
     ),
 );
 
-VardefManager::createVardef('SchedulersJobs','SchedulersJob', array('assignable'));
+VardefManager::createVardef('SchedulersJobs', 'SchedulersJob', array('assignable'));

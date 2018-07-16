@@ -61,7 +61,7 @@ if (is_admin($current_user)) {
                 if ($mod->bean_implements('ACL') && empty($mod->acl_display_only)) {
                     // BUG 10339: do not display messages for upgrade wizard
                     if (!isset($_REQUEST['upgradeWizard'])) {
-                        echo translate('LBL_ADDING','ACL','') . $mod->module_dir . '<br>';
+                        echo translate('LBL_ADDING', 'ACL', '') . $mod->module_dir . '<br>';
                     }
                     if (!empty($mod->acltype)) {
                         ACLAction::addActions($mod->getACLCategory(), $mod->acltype);

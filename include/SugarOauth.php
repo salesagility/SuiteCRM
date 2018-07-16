@@ -55,7 +55,7 @@
          * @param string $consumer_secret
          * @param array $params OAuth options
          */
-        public function __construct($consumer_key , $consumer_secret, $params = null)
+        public function __construct($consumer_key, $consumer_secret, $params = null)
         {
             $this->_oauth_config = array(
                 'consumerKey' => $consumer_key,
@@ -166,7 +166,7 @@
         public function fetch($url, $params = null, $method = 'GET', $headers = null)
         {
             $acc = $this->makeAccessToken();
-            if (strpos($url,'?')) {
+            if (strpos($url, '?')) {
                 list($clean_url, $query) = explode('?', $url);
                 if ($query) {
                     $url = $clean_url;

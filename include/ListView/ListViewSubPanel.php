@@ -491,7 +491,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                                         unset($_content);
                                     } else {
                                         $doNotProcessTheseActions = array("edit_button", "close_button","remove_button");
-                                        if (!in_array($list_field['name'],$doNotProcessTheseActions) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
+                                        if (!in_array($list_field['name'], $doNotProcessTheseActions) && '' != ($_content = $layout_manager->widgetDisplay($list_field))) {
                                             $button_contents[$aVal][] = $_content;
                                             unset($_content);
                                         } else {

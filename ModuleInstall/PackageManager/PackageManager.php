@@ -413,12 +413,12 @@ class PackageManager
         return("$my_zip_dir/$file_in_zip");
     }
 
-    public function extractManifest($zip_file,$base_tmp_upgrade_dir)
+    public function extractManifest($zip_file, $base_tmp_upgrade_dir)
     {
         global $sugar_config;
         $base_upgrade_dir       = $this->upload_dir."/upgrades";
         $base_tmp_upgrade_dir   = "$base_upgrade_dir/temp";
-        return $this->extractFile($zip_file, "manifest.php",$base_tmp_upgrade_dir);
+        return $this->extractFile($zip_file, "manifest.php", $base_tmp_upgrade_dir);
     }
 
     public function validate_manifest($manifest)
@@ -488,7 +488,7 @@ class PackageManager
         $GLOBALS['log']->debug("BaseFileName: ".$base_filename);
         $base_upgrade_dir       = $this->upload_dir.'/upgrades';
         $base_tmp_upgrade_dir   = "$base_upgrade_dir/temp";
-        $manifest_file = $this->extractManifest($base_filename,$base_tmp_upgrade_dir);
+        $manifest_file = $this->extractManifest($base_filename, $base_tmp_upgrade_dir);
         $GLOBALS['log']->debug("Manifest: ".$manifest_file);
         if ($view == 'module') {
             $license_file = $this->extractFile($base_filename, 'LICENSE.txt', $base_tmp_upgrade_dir);
@@ -523,12 +523,12 @@ class PackageManager
             $target_manifest = remove_file_extension($target_path) . "-manifest.php";
 
             if (isset($manifest['icon']) && $manifest['icon'] != "") {
-                $icon_location = $this->extractFile($tempFile ,$manifest['icon'], $base_tmp_upgrade_dir);
+                $icon_location = $this->extractFile($tempFile, $manifest['icon'], $base_tmp_upgrade_dir);
                 $path_parts = pathinfo($icon_location);
                 copy($icon_location, remove_file_extension($target_path) . "-icon." . $path_parts['extension']);
             }
 
-            if (copy($tempFile , $target_path)) {
+            if (copy($tempFile, $target_path)) {
                 copy($manifest_file, $target_manifest);
                 if ($display_messages) {
                     $messages = '<script>ajaxStatus.flashStatus("' .$base_filename.$mod_strings['LBL_UW_UPLOAD_SUCCESS'] . ', 5000");</script>';
@@ -675,23 +675,23 @@ class PackageManager
         $icon = "";
         switch ($type) {
             case "full":
-                $icon = SugarThemeRegistry::current()->getImage("Upgrade", "" ,null,null,'.gif', "Upgrade");
+                $icon = SugarThemeRegistry::current()->getImage("Upgrade", "", null, null, '.gif', "Upgrade");
 
                 break;
             case "langpack":
-                $icon = SugarThemeRegistry::current()->getImage("LanguagePacks", "",null,null,'.gif',"Language Packs");
+                $icon = SugarThemeRegistry::current()->getImage("LanguagePacks", "", null, null, '.gif', "Language Packs");
 
                 break;
             case "module":
-                $icon = SugarThemeRegistry::current()->getImage("ModuleLoader", "" ,null,null,'.gif', "Module Loader");
+                $icon = SugarThemeRegistry::current()->getImage("ModuleLoader", "", null, null, '.gif', "Module Loader");
 
                 break;
             case "patch":
-                $icon = SugarThemeRegistry::current()->getImage("PatchUpgrades", "",null,null,'.gif', "Patch Upgrades");
+                $icon = SugarThemeRegistry::current()->getImage("PatchUpgrades", "", null, null, '.gif', "Patch Upgrades");
 
                 break;
             case "theme":
-                $icon = SugarThemeRegistry::current()->getImage("Themes", "",null,null,'.gif', "Themes");
+                $icon = SugarThemeRegistry::current()->getImage("Themes", "", null, null, '.gif', "Themes");
 
                 break;
             default:
@@ -706,7 +706,7 @@ class PackageManager
         global $current_language;
         $uh = new UpgradeHistory();
         $base_upgrade_dir       = "upload://upgrades";
-        $uContent = findAllFiles($base_upgrade_dir, array() , false, 'zip');
+        $uContent = findAllFiles($base_upgrade_dir, array(), false, 'zip');
         $upgrade_contents = array();
         $content_values = array_values($uContent);
         $alreadyProcessed = array();

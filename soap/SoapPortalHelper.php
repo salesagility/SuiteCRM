@@ -206,7 +206,7 @@ function get_notes_in_module($in, $module, $orderBy = '')
             require_once 'include/SugarSQLValidate.php';
             $valid = new SugarSQLValidate();
             $fakeWhere = " 1=1 ";
-            if ($valid->validateQueryClauses($fakeWhere,$orderBy)) {
+            if ($valid->validateQueryClauses($fakeWhere, $orderBy)) {
                 $query .= ' ORDER BY '. $orderBy;
             } else {
                 $GLOBALS['log']->error("Bad order by: $orderBy");
@@ -382,7 +382,7 @@ function login_user($portal_auth)
 }
 
 
-function portal_get_entry_list_limited($session, $module_name,$where, $order_by, $select_fields, $row_offset, $limit)
+function portal_get_entry_list_limited($session, $module_name, $where, $order_by, $select_fields, $row_offset, $limit)
 {
     global  $beanList, $beanFiles, $portal_modules;
     $error = new SoapError();
@@ -420,14 +420,14 @@ function portal_get_entry_list_limited($session, $module_name,$where, $order_by,
         //if no Cases have been loaded into the session as viewable, then do not issue query, just return empty list
         //issuing a query with no cases loaded in session will return ALL the Cases, which is not a good thing
         if (!empty($_SESSION['viewable'][$module_name])) {
-            $list =  get_related_list(get_module_in($module_name), new aCase(), $where,$order_by, $row_offset, $limit);
+            $list =  get_related_list(get_module_in($module_name), new aCase(), $where, $order_by, $row_offset, $limit);
         }
     } elseif ($module_name == 'Contacts') {
         $sugar = new Contact();
-        $list =  get_related_list(get_module_in($module_name), new Contact(), $where,$order_by);
+        $list =  get_related_list(get_module_in($module_name), new Contact(), $where, $order_by);
     } elseif ($module_name == 'Accounts') {
         $sugar = new Account();
-        $list =  get_related_list(get_module_in($module_name), new Account(), $where,$order_by);
+        $list =  get_related_list(get_module_in($module_name), new Account(), $where, $order_by);
     } elseif ($module_name == 'Bugs') {
 
         //if the related bugs have not yet been loaded into the session object,
@@ -469,7 +469,7 @@ function portal_get_entry_list_limited($session, $module_name,$where, $order_by,
         }
     }
     $output_list = filter_return_list($output_list, $select_fields, $module_name);
-    $field_list = filter_field_list($field_list,$select_fields, $module_name);
+    $field_list = filter_field_list($field_list, $select_fields, $module_name);
 
     return array('result_count'=>sizeof($output_list), 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
 }

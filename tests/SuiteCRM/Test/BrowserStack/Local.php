@@ -15,7 +15,7 @@ class Local extends \BrowserStack\Local
     public function start($arguments)
     {
         foreach ($arguments as $key => $value) {
-            $this->add_args($key,$value);
+            $this->add_args($key, $value);
         }
 
         $this->binary = new LocalBinary();
@@ -29,7 +29,7 @@ class Local extends \BrowserStack\Local
         }
         $call = $call . "2>&1";
         $return_message = shell_exec($call);
-        $data = json_decode($return_message,true);
+        $data = json_decode($return_message, true);
         if ($data["state"] != "connected") {
             throw new LocalException($data['message']['message']);
         }

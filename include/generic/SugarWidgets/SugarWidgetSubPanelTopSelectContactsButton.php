@@ -155,7 +155,7 @@ class SugarWidgetSubPanelTopSelectContactsButton extends SugarWidgetSubPanelTopS
         //field_to_name_array
         $fton_array= array('id' => 'subpanel_id');
         if (isset($widget_data['field_to_name_array']) && is_array($widget_data['field_to_name_array'])) {
-            $fton_array=array_merge($fton_array,$widget_data['field_to_name_array']);
+            $fton_array=array_merge($fton_array, $widget_data['field_to_name_array']);
         }
 
         $return_url = "index.php?module=$return_module&action=$return_action&subpanel=$subpanel_name&record=$return_id&sugar_body_only=1";
@@ -174,7 +174,7 @@ class SugarWidgetSubPanelTopSelectContactsButton extends SugarWidgetSubPanelTopS
 		);
 
         if (is_array($this->button_properties) && !empty($this->button_properties['add_to_passthru_data'])) {
-            $popup_request_data['passthru_data']= array_merge($popup_request_data['passthru_data'],$this->button_properties['add_to_passthru_data']);
+            $popup_request_data['passthru_data']= array_merge($popup_request_data['passthru_data'], $this->button_properties['add_to_passthru_data']);
         }
 
         if (is_array($this->button_properties) && !empty($this->button_properties['add_to_passthru_data']['return_type'])) {

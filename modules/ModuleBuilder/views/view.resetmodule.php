@@ -55,7 +55,7 @@ class ViewResetmodule extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
+    	   translate('LBL_MODULE_NAME', 'Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
@@ -70,7 +70,7 @@ class ViewResetmodule extends SugarView
         $ajax = new AjaxCompose () ;
         $ajax->addCrumb (translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")') ;
         $ajax->addCrumb (translate($moduleName), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $moduleName . '")') ;
-        $ajax->addCrumb (translate('LBL_RESET') . " " . translate($moduleName) , '') ;
+        $ajax->addCrumb (translate('LBL_RESET') . " " . translate($moduleName), '') ;
         
         $smarty = new Sugar_Smarty () ;
         $smarty->assign("module", $moduleName);
@@ -83,8 +83,8 @@ class ViewResetmodule extends SugarView
         ));
         
         $ajax->addSection ( 
-            'center', 
-            "Reset ". translate($moduleName) , 
+            'center',
+            "Reset ". translate($moduleName),
             $smarty->fetch('modules/ModuleBuilder/tpls/resetModule.tpl') //"This works now" 
         ) ;
         
@@ -122,12 +122,12 @@ class ViewResetmodule extends SugarView
         
         $ajax->addCrumb (translate('LBL_STUDIO'), 'ModuleBuilder.main("studio")') ;
         $ajax->addCrumb (translate($this->module), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module=' . $this->module . '")') ;
-        $ajax->addCrumb ("Reset ". translate($this->module) , '') ;
+        $ajax->addCrumb ("Reset ". translate($this->module), '') ;
         
         
         $ajax->addSection ( 
-            'center', 
-            "Reset ". translate($this->module) , 
+            'center',
+            "Reset ". translate($this->module),
             $out
         ) ;
         
@@ -227,7 +227,7 @@ class ViewResetmodule extends SugarView
         if (is_dir($languageDir)) {
             $files = scandir($languageDir);
             foreach ($files as $langFile) {
-                if (substr($langFile, 0 ,1) == '.') {
+                if (substr($langFile, 0, 1) == '.') {
                     continue;
                 }
                 $language = substr($langFile, 0, strlen($langFile) - 9);

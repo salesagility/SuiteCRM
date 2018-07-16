@@ -953,7 +953,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
         }
 
         $frqFile = $this->openCompoundFile('.frq');
-        $frqFile->seek($termInfo->freqPointer,SEEK_CUR);
+        $frqFile->seek($termInfo->freqPointer, SEEK_CUR);
         $docId  = 0;
         $result = array();
 
@@ -1074,7 +1074,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
         }
 
         $frqFile = $this->openCompoundFile('.frq');
-        $frqFile->seek($termInfo->freqPointer,SEEK_CUR);
+        $frqFile->seek($termInfo->freqPointer, SEEK_CUR);
         $result = array();
         $docId = 0;
 
@@ -1201,7 +1201,7 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
         }
 
         $frqFile = $this->openCompoundFile('.frq');
-        $frqFile->seek($termInfo->freqPointer,SEEK_CUR);
+        $frqFile->seek($termInfo->freqPointer, SEEK_CUR);
 
         $docId = 0;
         $freqs = array();

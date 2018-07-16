@@ -142,7 +142,7 @@ class FieldsMetaData extends SugarBean
     public function mark_deleted($id)
     {
         $query = "DELETE FROM $this->table_name WHERE  id='$id'";
-        $this->db->query($query, true,"Error deleting record: ");
+        $this->db->query($query, true, "Error deleting record: ");
         $this->mark_relationships_deleted($id);
     }
 

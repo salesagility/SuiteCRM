@@ -66,14 +66,14 @@ class chart
         $this->draw($this->start_date, $this->end_date, $this->projects, $this->users, $this->contacts, $this->tasks, $this->chart_type);
     }
 
-    public function draw($start_date, $end_date, $sel_projects ,$sel_users, $sel_contacts, $resources, $chart_type)
+    public function draw($start_date, $end_date, $sel_projects, $sel_users, $sel_contacts, $resources, $chart_type)
     {
         global $current_user, $db, $mod_strings;
 
         if ($chart_type == "monthly") {
-            list($time_span,$day_count) = $this->year_week($start_date, $end_date);
+            list($time_span, $day_count) = $this->year_week($start_date, $end_date);
         } elseif ($chart_type == "quarterly") {
-            list($time_span,$day_count) = $this->year_quarter($start_date, $end_date);
+            list($time_span, $day_count) = $this->year_quarter($start_date, $end_date);
         } else {
             $time_span = $this->year_month($start_date, $end_date);
             $day_count = $this->count_days($start_date, $end_date) + 1;
@@ -530,15 +530,15 @@ class chart
                 $i=0;
                 for ($x=0; $x< $day_count; $x++) {
                     //Get date for each day
-                    $dateq = $this->get_month_dates($start_date,$x);
+                    $dateq = $this->get_month_dates($start_date, $x);
 
                     $class = '';
                     $square = '';
                     $dup = 0;
 
                     for ($c=0; $c < $count; $c++) {
-                        $ds_month = $this->count_months($start_date, $resource->tasks[$c]['start_day'],$x);
-                        $de_month = $this->count_months($start_date, $resource->tasks[$c]['end_day'],$x);
+                        $ds_month = $this->count_months($start_date, $resource->tasks[$c]['start_day'], $x);
+                        $de_month = $this->count_months($start_date, $resource->tasks[$c]['end_day'], $x);
 
                         if (($ds_month == 0 || $de_month == 0) && $resource->tasks[$c]['start_day'] <= $resource->tasks[$c]['end_day'] && $resource->tasks[$c]['start_day'] >=0 && $resource->tasks[$c]['end_day']>=0) {
                             $dup++;
@@ -576,7 +576,7 @@ class chart
             $count++;
             $y = $dt->format('Y');
             $c = ceil($dt->format('m')/3);
-            $m = mb_substr($GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')],0, 3);
+            $m = mb_substr($GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')], 0, 3);
             
             $aResult[$y][$c][$count] = $m;
         }
@@ -621,9 +621,9 @@ class chart
     
         foreach ($period as $dt) {
             $y = $dt->format('Y');
-            $m = mb_substr($GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')],0, 3);
+            $m = mb_substr($GLOBALS['app_list_strings']['dom_cal_month_short'][$dt->format('n')], 0, 3);
             $j = $dt->format('j');
-            $d = mb_substr($GLOBALS['app_list_strings']['dom_cal_day_short'][$dt->format('w')+1],0, 1);
+            $d = mb_substr($GLOBALS['app_list_strings']['dom_cal_day_short'][$dt->format('w')+1], 0, 1);
 
             $aResult[$y][$m][$j] = $d;
         }
@@ -649,7 +649,7 @@ class chart
 
 
     //count number of months between task start day and chart current month 
-    public function count_months($start, $day,$x)
+    public function count_months($start, $day, $x)
     {
         $sdate = DateTime::createFromFormat('Y-m-d', $start);
         $edate = DateTime::createFromFormat('Y-m-d', $start);

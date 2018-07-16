@@ -105,12 +105,12 @@ if (!empty($_REQUEST['record'])) {
         $where = substr(trim($where), 5, strlen($where));
     }
     $orderBy = '';
-    $query = $focus->create_export_query($orderBy,$where);
+    $query = $focus->create_export_query($orderBy, $where);
 
-    $result = $db->query($query,true,"Error mail merging {$_SESSION['MAILMERGE_MODULE']}: "."<BR>$query");
+    $result = $db->query($query, true, "Error mail merging {$_SESSION['MAILMERGE_MODULE']}: "."<BR>$query");
 
     $new_arr = array();
-    while ($val = $db->fetchByAssoc($result,false)) {
+    while ($val = $db->fetchByAssoc($result, false)) {
         array_push($new_arr, $val['id']);
     }
     $_SESSION['MAILMERGE_RECORD'] = $new_arr;
@@ -188,7 +188,7 @@ $xtpl->assign("MAILMERGE_TEMPLATES", get_select_options_with_id(getDocumentRevis
 
 if (isset($_SESSION['MAILMERGE_MODULE'])) {
     $module_select_text = $mod_strings['LBL_MAILMERGE_SELECTED_MODULE'];
-    $xtpl->assign("MAILMERGE_NUM_SELECTED_OBJECTS",count($_SESSION['MAILMERGE_RECORD'])." ".$_SESSION['MAILMERGE_MODULE']." Selected");
+    $xtpl->assign("MAILMERGE_NUM_SELECTED_OBJECTS", count($_SESSION['MAILMERGE_RECORD'])." ".$_SESSION['MAILMERGE_MODULE']." Selected");
 } else {
     $module_select_text = $mod_strings['LBL_MAILMERGE_MODULE'];
 }
@@ -232,7 +232,7 @@ WHERE ((active_date <= $currentDate AND exp_date > $currentDate)
 	OR (active_date <= $currentDate AND ((exp_date = $empty_date OR (exp_date is NULL)))))
 AND is_template = 1 AND template_type = 'mailmerge' AND documents.deleted = 0 ORDER BY document_name";
 
-    $result = $document->db->query($query,true,"Error retrieving $document->object_name list: ");
+    $result = $document->db->query($query, true, "Error retrieving $document->object_name list: ");
 
     $list = Array();
     $list['None'] = 'None';

@@ -104,7 +104,7 @@ class SearchFormMetaParser extends MetaParser
 );
 ?>";
 
-        $header = preg_replace('/(\d+)[\s]=>[\s]?/',"",$header);
+        $header = preg_replace('/(\d+)[\s]=>[\s]?/', "", $header);
         return $header;
     }
 

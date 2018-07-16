@@ -208,7 +208,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     {
         $bu_path = str_replace('\\', '/', $bu_path);
         //get path after root
-        $jpos = strpos($bu_path,'jssource');
+        $jpos = strpos($bu_path, 'jssource');
         if ($jpos===false) {
             $process_path = $bu_path;
         } else {
@@ -243,7 +243,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
      * @from_path file name and path to be processed
      * @to_path file name and path to be  used to place newly compressed contents
      */
-    function CompressFiles($from_path,$to_path)
+    function CompressFiles($from_path, $to_path)
     {
         if (!defined('JSMIN_AS_LIB')) {
             define('JSMIN_AS_LIB', true);
@@ -349,7 +349,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
         }
     }
 
-    function reverseScripts($from_path,$to_path='')
+    function reverseScripts($from_path, $to_path='')
     {
         $from_path = str_replace('\\', '/', $from_path);
         if (empty($to_path)) {
@@ -415,7 +415,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
      * @from_path root directory where processing should take place
      * @to_path root directory where processing should take place, this gets filled in dynamically
      */
-    function BackUpAndCompressScriptFiles($from_path,$to_path = '', $backup = true)
+    function BackUpAndCompressScriptFiles($from_path, $to_path = '', $backup = true)
     {
         //check to see if provided paths are legit
         if (!file_exists($from_path)) {
@@ -454,7 +454,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                       //make sure you go into directory tree and not out of tree
                     if ($dir!= '.' && $dir!= '..') {
                         //make recursive call to process this directory
-                        BackUpAndCompressScriptFiles($from_path.'/'.$dir, $to_path,$backup);
+                        BackUpAndCompressScriptFiles($from_path.'/'.$dir, $to_path, $backup);
                     }
                 }
             }

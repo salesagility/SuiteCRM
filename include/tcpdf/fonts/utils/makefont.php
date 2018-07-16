@@ -214,7 +214,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
         if (($type == 'TrueType') OR ($type == 'TrueTypeUnicode')) {
             CheckTTF($fontfile);
         }
-        $f = fopen($fontfile,'rb');
+        $f = fopen($fontfile, 'rb');
         if (!$f) {
             die('Error: Unable to open '.$fontfile);
         }
@@ -312,7 +312,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
     SaveToFile($basename.'.php',$s);
     // BEGIN SUGARCRM SPECIFIC
     */
-    SaveToFile($dirname."/".$basename.'.php',$s);
+    SaveToFile($dirname."/".$basename.'.php', $s);
     // END SUGARCRM SPECIFIC
     print "Font definition file generated (".$basename.".php)\n";
     // BEGIN SUGARCRM SPECIFIC
@@ -335,8 +335,8 @@ function ReadMap($enc)
     $cc2gn = array();
     foreach ($a as $l) {
         if ($l{0} == '!') {
-            $e = preg_split('/[ \\t]+/',rtrim($l));
-            $cc = hexdec(substr($e[0],1));
+            $e = preg_split('/[ \\t]+/', rtrim($l));
+            $cc = hexdec(substr($e[0], 1));
             $gn = $e[2];
             $cc2gn[$cc] = $gn;
         }
@@ -364,7 +364,7 @@ function ReadUFM($file, &$cidtogidmap)
     $widths = array();
     $fm = array();
     foreach ($a as $l) {
-        $e = explode(' ',chop($l));
+        $e = explode(' ', chop($l));
         if (count($e) < 2) {
             continue;
         }
@@ -428,7 +428,7 @@ function ReadUFM($file, &$cidtogidmap)
 /**
  * Read AFM file
  */
-function ReadAFM($file,&$map)
+function ReadAFM($file, &$map)
 {
     //Read a font metric file
     $a = file($file);

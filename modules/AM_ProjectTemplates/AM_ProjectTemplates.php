@@ -98,7 +98,7 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
 				
                 // Get all users for the project template
                 $focus->load_relationship('users');
-                $users = $focus->get_linked_beans('am_projecttemplates_users_1','User');
+                $users = $focus->get_linked_beans('am_projecttemplates_users_1', 'User');
                 foreach ($users as $a) {
                     if (!in_array($a->id, $userInvitees)) {
                         $deleteUsers[$a->id] = $a->id;
@@ -121,7 +121,7 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
 
                 // Get all contacts for the project
                 $focus->load_relationship('contacts');
-                $contacts = $focus->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+                $contacts = $focus->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
                 foreach ($contacts as $a) {
                     if (!in_array($a->id, $contactInvitees)) {
                         $deleteContacts[$a->id] = $a->id;
@@ -152,7 +152,7 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
 			
             // Process users
             $focus->load_relationship('users');
-            $focus->get_linked_beans('am_projecttemplates_users_1','User');
+            $focus->get_linked_beans('am_projecttemplates_users_1', 'User');
             foreach ($userInvitees as $user_id) {
                 if (empty($user_id) || isset($existingUsers[$user_id]) || isset($deleteUsers[$user_id])) {
                     continue;
@@ -162,7 +162,7 @@ class AM_ProjectTemplates extends AM_ProjectTemplates_sugar
 
             // Process contacts
             $focus->load_relationship('contacts');
-            $focus->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+            $focus->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
             foreach ($contactInvitees as $contact_id) {
                 if (empty($contact_id) || isset($existingContacts[$contact_id]) || isset($deleteContacts[$contact_id])) {
                     continue;

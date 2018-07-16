@@ -94,7 +94,7 @@ $GLOBALS['log']->info("InboundEmail Edit View");
 
 /* Start custom setup logic */
 // status drop down
-$status = get_select_options_with_id_separate_key($app_list_strings['user_status_dom'],$app_list_strings['user_status_dom'], $focus->status);
+$status = get_select_options_with_id_separate_key($app_list_strings['user_status_dom'], $app_list_strings['user_status_dom'], $focus->status);
 // default MAILBOX value
 if (empty($focus->mailbox)) {
     $mailbox = 'INBOX';
@@ -138,7 +138,7 @@ if ($focus->is_personal) {
 $mailbox_type = get_select_options_with_id($domMailBoxType, $focus->mailbox_type);
 
 // auto-reply email template
-$email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name', '','name',true);
+$email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name', true);
 
 if (!empty($focus->stored_options)) {
     $storedOptions = unserialize(base64_decode($focus->stored_options));
@@ -305,9 +305,9 @@ $xtpl->assign('REPLY_TO_NAME', $reply_to_name);
 $xtpl->assign('REPLY_TO_ADDR', $reply_to_addr);
 $createCaseRowStyle = "display:none";
 if ($focus->template_id) {
-    $xtpl->assign("EDIT_TEMPLATE","visibility:inline");
+    $xtpl->assign("EDIT_TEMPLATE", "visibility:inline");
 } else {
-    $xtpl->assign("EDIT_TEMPLATE","visibility:hidden");
+    $xtpl->assign("EDIT_TEMPLATE", "visibility:hidden");
 }
 if ($focus->port == 110 || $focus->port == 995) {
     $xtpl->assign('DISPLAY', "display:''");
@@ -348,13 +348,13 @@ if ($focus->is_personal) {
 }
 
 
-$xtpl->assign('hasGrpFld',$focus->groupfolder_id == null ? '' : 'checked="1"');
+$xtpl->assign('hasGrpFld', $focus->groupfolder_id == null ? '' : 'checked="1"');
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER', get_select_options_with_id($app_list_strings['dom_int_bool'], $leaveMessagesOnMailServer));
 
 $distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $distrib_method);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
-$xtpl->assign('DISTRIBUTION_OPTIONS', getAOPAssignField('distribution_options',$distributionAssignOptions));
+$xtpl->assign('DISTRIBUTION_OPTIONS', getAOPAssignField('distribution_options', $distributionAssignOptions));
 $xtpl->assign('distribution_user_name', $distribution_user_name);
 $xtpl->assign('distribution_user_id', $distribution_user_id);
 
@@ -363,9 +363,9 @@ $xtpl->assign('distribution_user_id', $distribution_user_id);
 $xtpl->assign('CREATE_CASE_ROW_STYLE', $createCaseRowStyle);
 $xtpl->assign('CREATE_CASE_EMAIL_TEMPLATE_OPTIONS', get_select_options_with_id($email_templates_arr, $create_case_email_template));
 if (!empty($create_case_email_template)) {
-    $xtpl->assign("CREATE_CASE_EDIT_TEMPLATE","visibility:inline");
+    $xtpl->assign("CREATE_CASE_EDIT_TEMPLATE", "visibility:inline");
 } else {
-    $xtpl->assign("CREATE_CASE_EDIT_TEMPLATE","visibility:hidden");
+    $xtpl->assign("CREATE_CASE_EDIT_TEMPLATE", "visibility:hidden");
 }
 
 $quicksearch_js = "";

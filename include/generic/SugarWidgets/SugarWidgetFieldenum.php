@@ -182,12 +182,12 @@ class SugarWidgetFieldEnum extends SugarWidgetReportField
             $value = unencodeMultienum($value);
             $cell=array();
             foreach ($value as $val) {
-                $returnVal = translate($field_def['options'],$field_def['module'],$val);
+                $returnVal = translate($field_def['options'], $field_def['module'], $val);
                 if (!is_array($returnVal)) {
-                    array_push($cell, translate($field_def['options'],$field_def['module'],$val));
+                    array_push($cell, translate($field_def['options'], $field_def['module'], $val));
                 }
             }
-            $cell = implode(", ",$cell);
+            $cell = implode(", ", $cell);
         }
         return $cell;
     }

@@ -63,7 +63,7 @@ function get_body(&$ss, $vardef)
     $ss->assign('show_meridiem', $show_meridiem);
     $ss->assign('default_minutes_values', array_flip($td->minutesStrings));
     $ss->assign('default_meridiem_values', array_flip($td->meridiemStrings));
-    if (isset($vardef['display_default']) && strstr($vardef['display_default'] , '&')) {
+    if (isset($vardef['display_default']) && strstr($vardef['display_default'], '&')) {
         $dt = explode("&", $vardef['display_default']); //+1 day&06:00pm
         $date = $dt[0];
         $defaultTime = $dt[1];

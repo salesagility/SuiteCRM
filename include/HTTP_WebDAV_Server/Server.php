@@ -439,7 +439,7 @@ class HTTP_WebDAV_Server
 
         // tell clients what we found
         $this->http_status("200 OK");
-        header("DAV: "  .join("," , $dav));
+        header("DAV: "  .join(",", $dav));
         header("Allow: ".join(", ", $allow));
     }
 
@@ -573,7 +573,7 @@ class HTTP_WebDAV_Server
                             // lockdiscovery is handled by the base class
                             $files["files"][$filekey]["props"][]
                                 = $this->mkprop("DAV:",
-                                                "lockdiscovery" ,
+                                                "lockdiscovery",
                                                 $this->lockdiscovery($files["files"][$filekey]['path']));
                         } else {
                             // add empty value for this property
@@ -646,7 +646,7 @@ class HTTP_WebDAV_Server
                         switch ($prop["name"]) {
                         case "creationdate":
                             echo "     <D:creationdate ns0:dt=\"dateTime.tz\">"
-                                . gmdate("Y-m-d\\TH:i:s\\Z",$prop['val'])
+                                . gmdate("Y-m-d\\TH:i:s\\Z", $prop['val'])
                                 . "</D:creationdate>\n";
                             break;
                         case "getlastmodified":
@@ -1367,7 +1367,7 @@ class HTTP_WebDAV_Server
             $http_host.= ":$port";
         }
 
-        list($http_header_host,$http_header_port)  = explode(":",$_SERVER["HTTP_HOST"]);
+        list($http_header_host, $http_header_port)  = explode(":", $_SERVER["HTTP_HOST"]);
         if (isset($http_header_port) && $http_header_port != 80) {
             $http_header_host .= ":".$http_header_port;
         }
@@ -1513,8 +1513,8 @@ class HTTP_WebDAV_Server
         $uuid{16} = $hex{$n};
 
         // return formated uuid
-        return substr($uuid,  0, 8)."-"
-            .  substr($uuid,  8, 4)."-"
+        return substr($uuid, 0, 8)."-"
+            .  substr($uuid, 8, 4)."-"
             .  substr($uuid, 12, 4)."-"
             .  substr($uuid, 16, 4)."-"
             .  substr($uuid, 20);
@@ -1663,7 +1663,7 @@ class HTTP_WebDAV_Server
             }
 
             if (@is_array($uris[$uri])) {
-                $uris[$uri] = array_merge($uris[$uri],$list);
+                $uris[$uri] = array_merge($uris[$uri], $list);
             } else {
                 $uris[$uri] = $list;
             }

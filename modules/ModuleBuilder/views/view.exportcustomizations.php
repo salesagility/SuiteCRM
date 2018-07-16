@@ -48,7 +48,7 @@ class ViewExportcustomizations extends SugarView
         global $mod_strings;
         
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -69,11 +69,11 @@ class ViewExportcustomizations extends SugarView
         $smarty->assign('custom', $custom);
         $smarty->assign('nb_mod', $nb_mod);
         $smarty->assign('defaultHelp', 'exportHelp');
-        $smarty->assign('moduleList',$GLOBALS['app_list_strings']['moduleList']);  
-        $smarty->assign('moduleList',$GLOBALS['app_list_strings']['moduleList']);  
+        $smarty->assign('moduleList', $GLOBALS['app_list_strings']['moduleList']);  
+        $smarty->assign('moduleList', $GLOBALS['app_list_strings']['moduleList']);  
         $ajax = new AjaxCompose();
         $ajax->addCrumb($mod_strings['LBL_STUDIO'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard")');
-        $ajax->addSection('center', $mod_strings['LBL_EC_TITLE'],$smarty->fetch($this->getCustomFilePathIfExists('modules/ModuleBuilder/tpls/exportcustomizations.tpl')));
+        $ajax->addSection('center', $mod_strings['LBL_EC_TITLE'], $smarty->fetch($this->getCustomFilePathIfExists('modules/ModuleBuilder/tpls/exportcustomizations.tpl')));
         echo $ajax->getJavascript();
     }
 }

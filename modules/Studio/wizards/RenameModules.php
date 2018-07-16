@@ -340,9 +340,9 @@ class RenameModules
         $smarty->assign('dropdown_lang', $selected_lang);
 
         $editImage = SugarThemeRegistry::current()->getImage('edit_inline', '');
-        $smarty->assign('editImage',$editImage);
+        $smarty->assign('editImage', $editImage);
         $deleteImage = SugarThemeRegistry::current()->getImage('delete_inline', '');
-        $smarty->assign('deleteImage',$deleteImage);
+        $smarty->assign('deleteImage', $deleteImage);
         $smarty->display("modules/Studio/wizards/RenameModules.tpl");
     }
 
@@ -445,7 +445,7 @@ class RenameModules
 
         //Now we can write out the replaced language strings for each module
         if (count($replacementStrings) > 0) {
-            $GLOBALS['log']->debug("Writing out labels for subpanel changes for module $moduleName, labels: " . var_export($replacementStrings,true));
+            $GLOBALS['log']->debug("Writing out labels for subpanel changes for module $moduleName, labels: " . var_export($replacementStrings, true));
             ParserLabel::addLabels($this->selectedLanguage, $replacementStrings, $moduleName);
             $this->renamedModules[$moduleName] = true;
         }
@@ -560,7 +560,7 @@ class RenameModules
 
         //Now we can write out the replaced language strings for each module
         if (count($replacementStrings) > 0) {
-            $GLOBALS['log']->debug("Writing out labels for link changes for module $moduleName, labels: " . var_export($replacementStrings,true));
+            $GLOBALS['log']->debug("Writing out labels for link changes for module $moduleName, labels: " . var_export($replacementStrings, true));
             ParserLabel::addLabels($this->selectedLanguage, $replacementStrings, $moduleName);
             $this->renamedModules[$moduleName] = true;
         }
@@ -617,7 +617,7 @@ class RenameModules
                 require($dashletData['meta']);
                 $dashletTitle = $dashletMeta[$dashletName]['title'];
                 $currentModuleStrings = return_module_language($this->selectedLanguage, $moduleName);
-                $modStringKey = array_search($dashletTitle,$currentModuleStrings);
+                $modStringKey = array_search($dashletTitle, $currentModuleStrings);
                 if ($modStringKey !== FALSE) {
                     $replacedString = str_replace(html_entity_decode_utf8($replacementLabels['prev_plural'], ENT_QUOTES), $replacementLabels['plural'], $dashletTitle);
                     if ($replacedString == $dashletTitle) {
@@ -630,7 +630,7 @@ class RenameModules
 
         //Now we can write out the replaced language strings for each module
         if (count($replacementStrings) > 0) {
-            $GLOBALS['log']->debug("Writing out labels for dashlet changes for module $moduleName, labels: " . var_export($replacementStrings,true));
+            $GLOBALS['log']->debug("Writing out labels for dashlet changes for module $moduleName, labels: " . var_export($replacementStrings, true));
             ParserLabel::addLabels($this->selectedLanguage, $replacementStrings, $moduleName);
         }
     }

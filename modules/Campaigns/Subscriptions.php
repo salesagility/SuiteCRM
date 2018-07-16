@@ -109,7 +109,7 @@ $orig_vals_array = constructDDSubscriptionList($focus);
 
 $this->ss->assign('APP', $app_strings);
 $this->ss->assign('MOD', $mod_strings);
-$this->ss->assign('title',  $title);
+$this->ss->assign('title', $title);
 
 $this->ss->assign('enabled_subs', $orig_vals_array[0]);
 $this->ss->assign('disabled_subs', $orig_vals_array[1]);
@@ -126,7 +126,7 @@ $this->ss->display('modules/Campaigns/Subscriptions.tpl');
 /*
  *This function constructs Drag and Drop multiselect box of subscriptions for display in manage subscription form
 */
-function constructDDSubscriptionList($focus,$classname='')
+function constructDDSubscriptionList($focus, $classname='')
 {
     require_once("include/templates/TemplateDragDropChooser.php");
     global $mod_strings;

@@ -144,7 +144,7 @@ class Relationship extends SugarBean
         //it will return the module name on the other side of the relationship
 
         $query = "SELECT relationship_name, rhs_module, lhs_module FROM relationships WHERE deleted=0 AND relationship_name = '".$relationship_name."'";
-        $result = $db->query($query,true," Error searching relationships table..");
+        $result = $db->query($query, true, " Error searching relationships table..");
         $row  =  $db->fetchByAssoc($result);
         if ($row != null) {
             if ($row['rhs_module']==$base_module) {
@@ -167,7 +167,7 @@ class Relationship extends SugarBean
         //it will return the module name on the other side of the relationship
 
         $query = "SELECT * FROM relationships WHERE deleted=0 AND lhs_module = '".$lhs_module."' AND rhs_module = '".$rhs_module."'";
-        $result = $db->query($query,true," Error searching relationships table..");
+        $result = $db->query($query, true, " Error searching relationships table..");
         $row  =  $db->fetchByAssoc($result);
         if ($row != null) {
             return $row;
@@ -195,7 +195,7 @@ class Relationship extends SugarBean
         if (!empty($type)) {
             $query .= " AND relationship_type='$type'";
         }
-        $result = $db->query($query,true," Error searching relationships table..");
+        $result = $db->query($query, true, " Error searching relationships table..");
         $row  =  $db->fetchByAssoc($result);
         if ($row != null) {
             return $row['relationship_name'];

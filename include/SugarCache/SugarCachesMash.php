@@ -80,7 +80,7 @@ class SugarCachesMash extends SugarCacheAbstract
     protected function _getExternal(
         $key
         ) {
-        return zget('/tmp/'.$this->_keyPrefix.'/'.$key,null);
+        return zget('/tmp/'.$this->_keyPrefix.'/'.$key, null);
     }
     
     /**

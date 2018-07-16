@@ -101,7 +101,7 @@ class TabGroupHelper
             $app_strings = return_application_language($grouptab_lang);
             if (empty($app_strings[$labelID]) || $app_strings[$labelID] != $labelValue) {
                 $contents = return_custom_app_list_strings_file_contents($grouptab_lang);
-                $new_contents = replace_or_add_app_string($labelID,$labelValue, $contents);
+                $new_contents = replace_or_add_app_string($labelID, $labelValue, $contents);
                 save_custom_app_list_strings_contents($new_contents, $grouptab_lang);
 
                 $languages = get_languages();
@@ -112,7 +112,7 @@ class TabGroupHelper
                     $app_strings = return_application_language($language);
                     if (!isset($app_strings[$labelID])) {
                         $contents = return_custom_app_list_strings_file_contents($language);
-                        $new_contents = replace_or_add_app_string($labelID,$labelValue, $contents);
+                        $new_contents = replace_or_add_app_string($labelID, $labelValue, $contents);
                         save_custom_app_list_strings_contents($new_contents, $language);
                     }
                 }

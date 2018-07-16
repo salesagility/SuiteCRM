@@ -248,7 +248,7 @@ class ViewSugarFieldCollection
                     require_once('include/TemplateHandler/TemplateHandler.php');
                     $tph = new TemplateHandler();
                     $javascript = $tph->createQuickSearchCode(array($collection_field_vardef['name']=>$collection_field_vardef), array($v), $this->form_name);
-                    $javascript = str_replace('<script language="javascript">'."if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}sqs_objects['{$collection_field_vardef['name']}']=","",$javascript);
+                    $javascript = str_replace('<script language="javascript">'."if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}sqs_objects['{$collection_field_vardef['name']}']=", "", $javascript);
                     $javascript = substr($javascript, 0, -10);//remove ";</script>"
                     $javascriptPHP = $this->json->decode($javascript);
                     foreach ($javascriptPHP['populate_list'] as $kk=>$vv) {
@@ -315,7 +315,7 @@ FRA;
         }
         if (isset($this->displayParams['allow_new']) && ($this->displayParams['allow_new'] === false || $this->displayParams['allow_new'] === 'false')) {
             $this->displayParams['allow_new']='false';
-            $this->displayParams['class']=str_replace('sqsNoAutofill','',$this->displayParams['class']);
+            $this->displayParams['class']=str_replace('sqsNoAutofill', '', $this->displayParams['class']);
         } else {
             $this->displayParams['allow_new']='true';
             $this->displayParams['class'].=' sqsNoAutofill';
@@ -333,23 +333,23 @@ FRA;
     public function init_tpl()
     {
         foreach ($this->extra_var as $k=>$v) {
-            $this->ss->assign($k,$v);
+            $this->ss->assign($k, $v);
         }
         if ($this->action_type == 'editview') {
-            $this->ss->assign('quickSearchCode',$this->createQuickSearchCode());
+            $this->ss->assign('quickSearchCode', $this->createQuickSearchCode());
             $this->createPopupCode();// this code populate $this->displayParams with popupdata.
             $this->tpl_path = $this->edit_tpl_path;
         } elseif ($this->action_type == 'detailview') {
             $this->tpl_path = $this->detail_tpl_path;
         }
 
-        $this->ss->assign('displayParams',$this->displayParams);
-        $this->ss->assign('vardef',$this->vardef);
-        $this->ss->assign('module',$this->related_module);
-        $this->ss->assign('values',$this->bean->{$this->value_name});
-        $this->ss->assign('showSelectButton',$this->showSelectButton);
-        $this->ss->assign('hideShowHideButton',$this->hideShowHideButton);
-        $this->ss->assign('APP',$GLOBALS['app_strings']);
+        $this->ss->assign('displayParams', $this->displayParams);
+        $this->ss->assign('vardef', $this->vardef);
+        $this->ss->assign('module', $this->related_module);
+        $this->ss->assign('values', $this->bean->{$this->value_name});
+        $this->ss->assign('showSelectButton', $this->showSelectButton);
+        $this->ss->assign('hideShowHideButton', $this->hideShowHideButton);
+        $this->ss->assign('APP', $GLOBALS['app_strings']);
     }
     /*
      * Display the collection field after retrieving the cached row.
@@ -533,9 +533,9 @@ FRA;
         }
 
         $lastClass = get_class($this);
-        $classList = array($this->type,str_replace('ViewSugarField','',$lastClass));
+        $classList = array($this->type,str_replace('ViewSugarField', '', $lastClass));
         while ($lastClass = get_parent_class($lastClass)) {
-            $classList[] = str_replace('ViewSugarField','',$lastClass);
+            $classList[] = str_replace('ViewSugarField', '', $lastClass);
         }
 
         $tplName = '';

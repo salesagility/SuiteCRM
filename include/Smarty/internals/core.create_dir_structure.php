@@ -28,7 +28,7 @@ function smarty_core_create_dir_structure($params, &$smarty)
             }
         } else {
             /* other-style paths */
-            $_dir = str_replace('\\','/', $params['dir']);
+            $_dir = str_replace('\\', '/', $params['dir']);
             $_dir_parts = preg_split('!/+!', $_dir, -1, PREG_SPLIT_NO_EMPTY);
             if (preg_match('!^((//)|([a-zA-Z]:/))!', $_dir, $_root_dir)) {
                 /* leading "//" for network volume, or "[letter]:/" for full path */

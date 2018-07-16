@@ -305,48 +305,48 @@ function xhprof_generate_dot_script($raw_data, $threshold, $source, $page,
             $name .= addslashes(isset($page) ? $page : $symbol);
         } else {
             $shape = "box";
-            $name = addslashes($symbol)."\\nInc: ". sprintf("%.3f",$info["wt"] / 1000) .
+            $name = addslashes($symbol)."\\nInc: ". sprintf("%.3f", $info["wt"] / 1000) .
               " ms (" . sprintf("%.1f%%", 100 * $info["wt"] / $totals["wt"]).")";
         }
         if ($left === null) {
             $label = ", label=\"".$name."\\nExcl: "
-               .(sprintf("%.3f",$info["excl_wt"] / 1000.0))." ms ("
+               .(sprintf("%.3f", $info["excl_wt"] / 1000.0))." ms ("
                .sprintf("%.1f%%", 100 * $info["excl_wt"] / $totals["wt"])
                . ")\\n".$info["ct"]." total calls\"";
         } else {
             if (isset($left[$symbol]) && isset($right[$symbol])) {
                 $label = ", label=\"".addslashes($symbol).
-                  "\\nInc: ".(sprintf("%.3f",$left[$symbol]["wt"] / 1000.0))
+                  "\\nInc: ".(sprintf("%.3f", $left[$symbol]["wt"] / 1000.0))
                   ." ms - "
-                  .(sprintf("%.3f",$right[$symbol]["wt"] / 1000.0))." ms = "
-                  .(sprintf("%.3f",$info["wt"] / 1000.0))." ms".
+                  .(sprintf("%.3f", $right[$symbol]["wt"] / 1000.0))." ms = "
+                  .(sprintf("%.3f", $info["wt"] / 1000.0))." ms".
                   "\\nExcl: "
-                  .(sprintf("%.3f",$left[$symbol]["excl_wt"] / 1000.0))
-                  ." ms - ".(sprintf("%.3f",$right[$symbol]["excl_wt"] / 1000.0))
-                   ." ms = ".(sprintf("%.3f",$info["excl_wt"] / 1000.0))." ms".
-                  "\\nCalls: ".(sprintf("%.3f",$left[$symbol]["ct"]))." - "
-                   .(sprintf("%.3f",$right[$symbol]["ct"]))." = "
-                   .(sprintf("%.3f",$info["ct"]))."\"";
+                  .(sprintf("%.3f", $left[$symbol]["excl_wt"] / 1000.0))
+                  ." ms - ".(sprintf("%.3f", $right[$symbol]["excl_wt"] / 1000.0))
+                   ." ms = ".(sprintf("%.3f", $info["excl_wt"] / 1000.0))." ms".
+                  "\\nCalls: ".(sprintf("%.3f", $left[$symbol]["ct"]))." - "
+                   .(sprintf("%.3f", $right[$symbol]["ct"]))." = "
+                   .(sprintf("%.3f", $info["ct"]))."\"";
             } elseif (isset($left[$symbol])) {
                 $label = ", label=\"".addslashes($symbol).
-                  "\\nInc: ".(sprintf("%.3f",$left[$symbol]["wt"] / 1000.0))
-                   ." ms - 0 ms = ".(sprintf("%.3f",$info["wt"] / 1000.0))
+                  "\\nInc: ".(sprintf("%.3f", $left[$symbol]["wt"] / 1000.0))
+                   ." ms - 0 ms = ".(sprintf("%.3f", $info["wt"] / 1000.0))
                    ." ms"."\\nExcl: "
-                   .(sprintf("%.3f",$left[$symbol]["excl_wt"] / 1000.0))
+                   .(sprintf("%.3f", $left[$symbol]["excl_wt"] / 1000.0))
                    ." ms - 0 ms = "
-                   .(sprintf("%.3f",$info["excl_wt"] / 1000.0))." ms".
-                  "\\nCalls: ".(sprintf("%.3f",$left[$symbol]["ct"]))." - 0 = "
-                  .(sprintf("%.3f",$info["ct"]))."\"";
+                   .(sprintf("%.3f", $info["excl_wt"] / 1000.0))." ms".
+                  "\\nCalls: ".(sprintf("%.3f", $left[$symbol]["ct"]))." - 0 = "
+                  .(sprintf("%.3f", $info["ct"]))."\"";
             } else {
                 $label = ", label=\"".addslashes($symbol).
                   "\\nInc: 0 ms - "
-                  .(sprintf("%.3f",$right[$symbol]["wt"] / 1000.0))
-                  ." ms = ".(sprintf("%.3f",$info["wt"] / 1000.0))." ms".
+                  .(sprintf("%.3f", $right[$symbol]["wt"] / 1000.0))
+                  ." ms = ".(sprintf("%.3f", $info["wt"] / 1000.0))." ms".
                   "\\nExcl: 0 ms - "
-                  .(sprintf("%.3f",$right[$symbol]["excl_wt"] / 1000.0))
-                  ." ms = ".(sprintf("%.3f",$info["excl_wt"] / 1000.0))." ms".
-                  "\\nCalls: 0 - ".(sprintf("%.3f",$right[$symbol]["ct"]))
-                  ." = ".(sprintf("%.3f",$info["ct"]))."\"";
+                  .(sprintf("%.3f", $right[$symbol]["excl_wt"] / 1000.0))
+                  ." ms = ".(sprintf("%.3f", $info["excl_wt"] / 1000.0))." ms".
+                  "\\nCalls: 0 - ".(sprintf("%.3f", $right[$symbol]["ct"]))
+                  ." = ".(sprintf("%.3f", $info["ct"]))."\"";
             }
         }
         $result .= "N" . $sym_table[$symbol]["id"];

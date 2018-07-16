@@ -73,7 +73,7 @@ class SugarWidgetSubPanelGetLatestButton extends SugarWidgetField
             . '&return_id=' . $_REQUEST['record']
             . '&get_latest_for_id=' . $layout_def['fields']['LINKED_ID'];
 
-        $edit_icon_html = SugarThemeRegistry::current()->getImage('getLatestDocument','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_GET_LATEST']);
+        $edit_icon_html = SugarThemeRegistry::current()->getImage('getLatestDocument', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_GET_LATEST']);
         if ($layout_def['EditView']) {
             return '<a href="' . $href . '"' . "title ='". $app_strings['LNK_GET_LATEST_TOOLTIP']  ."'"
             . 'class="listViewTdToolsS1">' . $edit_icon_html . '&nbsp;' . $app_strings['LNK_GET_LATEST'] .'</a>&nbsp;';

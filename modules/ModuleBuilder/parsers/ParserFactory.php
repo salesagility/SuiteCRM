@@ -57,7 +57,7 @@ class ParserFactory
      * @return AbstractMetaDataParser
      */
 
-    public static function getParser($view , $moduleName , $packageName = null , $subpanelName = null)
+    public static function getParser($view, $moduleName, $packageName = null, $subpanelName = null)
     {
         $GLOBALS [ 'log' ]->info ("ParserFactory->getParser($view,$moduleName,$packageName,$subpanelName )") ;
         $sm = null;

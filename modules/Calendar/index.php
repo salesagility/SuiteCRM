@@ -58,7 +58,7 @@ if (empty($_REQUEST['view'])) {
     if (isset($_SESSION['CALENDAR_VIEW']) && in_array($_SESSION['CALENDAR_VIEW'], $views)) {
         $_REQUEST['view'] = $_SESSION['CALENDAR_VIEW'];
     } else {
-        $_REQUEST['view'] = SugarConfig::getInstance()->get('calendar.default_view','agendaWeek');
+        $_REQUEST['view'] = SugarConfig::getInstance()->get('calendar.default_view', 'agendaWeek');
     }
 }
 
@@ -76,7 +76,7 @@ if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {
         $cal->add_activities($shared_user);
     }
 } else {
-    if (array_key_exists($cal->view,$views)) {
+    if (array_key_exists($cal->view, $views)) {
         $cal->add_activities($GLOBALS['current_user']);
     }
 }
@@ -89,7 +89,7 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
     $cal->setPrint(true);
 }
 
-$display = new CalendarDisplay($cal,"", $views);
+$display = new CalendarDisplay($cal, "", $views);
 
     $display->display_title();
     if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {

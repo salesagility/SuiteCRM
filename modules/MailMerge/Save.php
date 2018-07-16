@@ -50,7 +50,7 @@ $document_id = $_POST['document_id'];
 $selObjs = urldecode($_POST['selected_objects_def']);
 
 $item_ids = array();
-parse_str($selObjs,$item_ids);
+parse_str($selObjs, $item_ids);
 
 $class_name = $beanList[$module];
 $includedir = $beanFiles[$class_name];

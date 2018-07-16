@@ -152,7 +152,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
                 case MB_DASHLETSEARCH:
                 case MB_DASHLET:
                     $type = $module->getType();
-                    $this->_sourceFilename = $this->getFileName($view, $moduleName, null,MB_CUSTOMMETADATALOCATION);
+                    $this->_sourceFilename = $this->getFileName($view, $moduleName, null, MB_CUSTOMMETADATALOCATION);
                     $needSave = false;
                     if (file_exists("custom/modules/{$moduleName}/metadata/" . basename($this->_sourceFilename))) {
                         $loaded = $this->_loadFromFile("custom/modules/{$moduleName}/metadata/" . basename($this->_sourceFilename));
@@ -180,7 +180,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
                 case MB_POPUPLIST:
                 case MB_POPUPSEARCH:
                     $type = $module->getType();
-                    $this->_sourceFilename = $this->getFileName($view, $moduleName, null,MB_CUSTOMMETADATALOCATION);
+                    $this->_sourceFilename = $this->getFileName($view, $moduleName, null, MB_CUSTOMMETADATALOCATION);
 
                     global $current_language;
                     $mod = return_module_language($current_language, $moduleName);
@@ -280,7 +280,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 
         $GLOBALS ['log']->debug(get_class($this) . "->save(): writing to " . $this->getFileName($this->_view,
                 $this->_moduleName, null, MB_WORKINGMETADATALOCATION));
-        $this->_saveToFile($this->getFileName($this->_view, $this->_moduleName,  null,MB_WORKINGMETADATALOCATION), $layoutDefinitions);
+        $this->_saveToFile($this->getFileName($this->_view, $this->_moduleName, null, MB_WORKINGMETADATALOCATION), $layoutDefinitions);
     }
 
     /**

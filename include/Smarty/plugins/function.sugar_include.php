@@ -78,7 +78,7 @@ function smarty_function_sugar_include($params, &$smarty)
         foreach ($params['include'] as $include) {
             if (isset($include['file'])) {
                 $file = $include['file'];
-                if (preg_match('/[\.]js$/si',$file)) {
+                if (preg_match('/[\.]js$/si', $file)) {
                     $code .= "<script src=\"". getJSPath($include['file']) ."\"></script>";
                 } elseif (preg_match('/[\.]php$/si', $file)) {
                     require_once($file);

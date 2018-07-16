@@ -94,7 +94,7 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
      */
     public function loadDataSet($maxResults = 0)
     {
-        if (!$eapmBean = EAPM::getLoginInfo($this->_eapmName,true)) {
+        if (!$eapmBean = EAPM::getLoginInfo($this->_eapmName, true)) {
             throw new Exception("Authentication error with {$this->_eapmName}");
         }
 

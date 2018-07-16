@@ -104,7 +104,7 @@ class CampaignsViewDetail extends ViewDetail
             window.setTimeout('ajax_C_LOG_Status.hideStatus()', 1500);
             window.setTimeout(\"ajax_C_LOG_Status.showStatus('".$mess."')\",2000);
             window.setTimeout('ajax_C_LOG_Status.hideStatus()', 5000); ";
-            $this->ss->assign("MSG_SCRIPT",$confirm_msg);
+            $this->ss->assign("MSG_SCRIPT", $confirm_msg);
         }
 
         if (($this->bean->campaign_type == 'Email') || ($this->bean->campaign_type == 'NewsLetter')) {

@@ -68,7 +68,7 @@ class DocumentsViewExtdoc extends SugarView
         if (!isset($_REQUEST['apiName'])) {
             $apiName = 'IBMSmartCloud';
         } else {
-            $tmpApi = ExternalAPIFactory::loadAPI($_REQUEST['apiName'],true);
+            $tmpApi = ExternalAPIFactory::loadAPI($_REQUEST['apiName'], true);
             if ($tmpApi === false) {
                 $GLOBALS['log']->error(string_format($mod_strings['ERR_INVALID_EXTERNAL_API_ACCESS'], array($_REQUEST['apiName'])));
                 return;
@@ -86,8 +86,8 @@ class DocumentsViewExtdoc extends SugarView
         // bug50952 - must actually make sure we can log in, not just that we've got a EAPM record
         // getLoginInfo only checks to see if user has logged in correctly ONCE to ExternalAPI
         // Need to manually attempt to fetch the EAPM record, we don't want to give them the signup screen when they just have a deactivated account.
-        $eapmBean = EAPM::getLoginInfo($apiName,true);
-        $api = ExternalAPIFactory::loadAPI($apiName,true);
+        $eapmBean = EAPM::getLoginInfo($apiName, true);
+        $api = ExternalAPIFactory::loadAPI($apiName, true);
         $validSession = true;
 
         if (!empty($eapmBean)) {
@@ -112,7 +112,7 @@ class DocumentsViewExtdoc extends SugarView
                 $smarty = new Sugar_Smarty();
                 echo $smarty->fetch($tpl_file);
             } else {
-                $output = string_format(translate('LBL_ERR_FAILED_QUICKCHECK','EAPM'), array($apiName));
+                $output = string_format(translate('LBL_ERR_FAILED_QUICKCHECK', 'EAPM'), array($apiName));
                 $output .= '<form method="POST" target="_EAPM_CHECK" action="index.php">';
                 $output .= '<input type="hidden" name="module" value="EAPM">';
                 $output .= '<input type="hidden" name="action" value="Save">';
@@ -130,7 +130,7 @@ class DocumentsViewExtdoc extends SugarView
             return;
         }
 
-        $searchDataLower = $api->searchDoc($file_search,true);
+        $searchDataLower = $api->searchDoc($file_search, true);
 
         // In order to emulate the list views for the SugarFields, I need to uppercase all of the key names.
         $searchData = array();
@@ -165,25 +165,25 @@ class DocumentsViewExtdoc extends SugarView
         );
 
         $ss = new Sugar_Smarty();
-        $ss->assign('searchFieldLabel',translate('LBL_SEARCH_EXTERNAL_DOCUMENT','Documents'));
-        $ss->assign('displayedNote',translate('LBL_EXTERNAL_DOCUMENT_NOTE','Documents'));
-        $ss->assign('APP',$GLOBALS['app_strings']);
-        $ss->assign('MOD',$GLOBALS['mod_strings']);
+        $ss->assign('searchFieldLabel', translate('LBL_SEARCH_EXTERNAL_DOCUMENT', 'Documents'));
+        $ss->assign('displayedNote', translate('LBL_EXTERNAL_DOCUMENT_NOTE', 'Documents'));
+        $ss->assign('APP', $GLOBALS['app_strings']);
+        $ss->assign('MOD', $GLOBALS['mod_strings']);
         $ss->assign('data', $searchData);
-        $ss->assign('displayColumns',$displayColumns);
-        $ss->assign('imgPath',SugarThemeRegistry::current()->getImageURL($apiName.'_image_inline.png'));
+        $ss->assign('displayColumns', $displayColumns);
+        $ss->assign('imgPath', SugarThemeRegistry::current()->getImageURL($apiName.'_image_inline.png'));
 
         if ($isPopup) {
-            $ss->assign('linkTarget','');
-            $ss->assign('isPopup',1);
-            $ss->assign('elemBaseName',$_REQUEST['elemBaseName']);
+            $ss->assign('linkTarget', '');
+            $ss->assign('isPopup', 1);
+            $ss->assign('elemBaseName', $_REQUEST['elemBaseName']);
         } else {
-            $ss->assign('linkTarget','_new');
-            $ss->assign('isPopup',0);
-            $ss->assign('elemBaseName','');
+            $ss->assign('linkTarget', '_new');
+            $ss->assign('isPopup', 0);
+            $ss->assign('elemBaseName', '');
         }
-        $ss->assign('apiName',$apiName);
-        $ss->assign('DCSEARCH',$file_search);
+        $ss->assign('apiName', $apiName);
+        $ss->assign('DCSEARCH', $file_search);
 
         if ($isPopup) {
             // Need the popup header... I feel so dirty.
@@ -193,7 +193,7 @@ class DocumentsViewExtdoc extends SugarView
             $output_html = ob_get_contents();
             ob_end_clean();
             
-            $output_html .= get_form_header(translate('LBL_SEARCH_FORM_TITLE','Documents'), '', false);
+            $output_html .= get_form_header(translate('LBL_SEARCH_FORM_TITLE', 'Documents'), '', false);
             
             echo($output_html);
         }

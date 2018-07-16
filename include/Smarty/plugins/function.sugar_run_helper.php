@@ -66,6 +66,6 @@ function smarty_function_sugar_run_helper($params, &$smarty)
         require_once($params['include']);
     }
 
-    $_contents = $funcName($params['bean'],$params['field'],$params['value'],$params['displayType'],$params['tabindex']);
+    $_contents = $funcName($params['bean'], $params['field'], $params['value'], $params['displayType'], $params['tabindex']);
     return $_contents;
 }

@@ -210,7 +210,7 @@ class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //verify thhat Request parameters are set
         $this->assertEquals('Accounts', $_REQUEST['search_module']);
-        $this->assertEquals('test text',  $_REQUEST['description']);
+        $this->assertEquals('test text', $_REQUEST['description']);
         $this->assertEquals('some content', $_REQUEST['test_content']);
 
         // clean up

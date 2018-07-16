@@ -2783,7 +2783,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            if (($p_path == "")
 	    || ((substr($p_path, 0, 1) != "/")
 		    && (substr($p_path, 0, 3) != "../")
-			&& (substr($p_path,1,2)!=":/"))) {
+			&& (substr($p_path, 1, 2)!=":/"))) {
                $p_path = "./".$p_path;
            }
 
@@ -3715,13 +3715,13 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_binary_data = fread($this->zip_fd, 26);
 
            // ----- Look for invalid block size
-           if (mb_strlen($v_binary_data,'iso-8859-1') != 26) {
+           if (mb_strlen($v_binary_data, 'iso-8859-1') != 26) {
                $p_header['filename'] = "";
                $p_header['status'] = "invalid_header";
                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Invalid block size : ".strlen($v_binary_data));
 
                // ----- Error log
-               PclZip::privErrorLog(PCLZIP_ERR_BAD_FORMAT, "Invalid block size : ".mb_strlen($v_binary_data,'iso-8859-1'));
+               PclZip::privErrorLog(PCLZIP_ERR_BAD_FORMAT, "Invalid block size : ".mb_strlen($v_binary_data, 'iso-8859-1'));
 
                // ----- Return
                //--(MAGIC-PclTrace)--//PclTraceFctEnd(__FILE__, __LINE__, PclZip::errorCode(), PclZip::errorInfo());
@@ -3836,13 +3836,13 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_binary_data = fread($this->zip_fd, 42);
 
            // ----- Look for invalid block size
-           if (mb_strlen($v_binary_data,'iso-8859-1') != 42) {
+           if (mb_strlen($v_binary_data, 'iso-8859-1') != 42) {
                $p_header['filename'] = "";
                $p_header['status'] = "invalid_header";
                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Invalid block size : ".strlen($v_binary_data));
 
                // ----- Error log
-               PclZip::privErrorLog(PCLZIP_ERR_BAD_FORMAT, "Invalid block size : ".mb_strlen($v_binary_data,'iso-8859-1'));
+               PclZip::privErrorLog(PCLZIP_ERR_BAD_FORMAT, "Invalid block size : ".mb_strlen($v_binary_data, 'iso-8859-1'));
 
                // ----- Return
                //--(MAGIC-PclTrace)--//PclTraceFctEnd(__FILE__, __LINE__, PclZip::errorCode(), PclZip::errorInfo());
@@ -4097,11 +4097,11 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_binary_data = fread($this->zip_fd, 18);
 
            // ----- Look for invalid block size
-           if (mb_strlen($v_binary_data,'iso-8859-1') != 18) {
+           if (mb_strlen($v_binary_data, 'iso-8859-1') != 18) {
                //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Invalid End of Central Dir Record size : ".strlen($v_binary_data));
 
                // ----- Error log
-               PclZip::privErrorLog(PCLZIP_ERR_BAD_FORMAT, "Invalid End of Central Dir Record size : ".mb_strlen($v_binary_data,'iso-8859-1'));
+               PclZip::privErrorLog(PCLZIP_ERR_BAD_FORMAT, "Invalid End of Central Dir Record size : ".mb_strlen($v_binary_data, 'iso-8859-1'));
 
                // ----- Return
                //--(MAGIC-PclTrace)--//PclTraceFctEnd(__FILE__, __LINE__, PclZip::errorCode(), PclZip::errorInfo());
@@ -4362,7 +4362,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 5, "Position before rewind : ".ftell($this->zip_fd)."'");
                    @rewind($this->zip_fd);
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 5, "Position after rewind : ".ftell($this->zip_fd)."'");
-                   if (@fseek($this->zip_fd,  $v_header_list[$i]['offset'])) {
+                   if (@fseek($this->zip_fd, $v_header_list[$i]['offset'])) {
                        // ----- Close the zip file
                        $this->privCloseFd();
                        $v_temp_zip->privCloseFd();
@@ -5270,7 +5270,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
               $p_path = substr($p_path, $v_position+1);
           }
           // ----- Change potential windows directory separator
-          if ((strpos($p_path, '\\') > 0) || (substr($p_path, 0,1) == '\\')) {
+          if ((strpos($p_path, '\\') > 0) || (substr($p_path, 0, 1) == '\\')) {
               $p_path = strtr($p_path, '\\', '/');
           }
       }

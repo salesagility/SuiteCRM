@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 if (isset($_REQUEST['uid'])) {
-    $merge_ids = explode(',',$_REQUEST['uid']);
+    $merge_ids = explode(',', $_REQUEST['uid']);
     // Bug 18852 - Check to make sure we have ACL Edit privledges on both records involved in the merge before proceeding
     if (($bean1 = SugarModule::get($_REQUEST['action_module'])->loadBean()) !== false
             && ($bean2 = SugarModule::get($_REQUEST['action_module'])->loadBean()) !== false) {
@@ -87,8 +87,8 @@ if (isset($_REQUEST['uid'])) {
     if (empty($order_by)) {
         $order_by = '';
     }
-    $query = $focus->create_export_query($order_by,$where);
-    $result = $focus->db->query($query,true);
+    $query = $focus->create_export_query($order_by, $where);
+    $result = $focus->db->query($query, true);
     
     /*
     $query = 'select * from '.$focus->table_name.' where deleted=0';

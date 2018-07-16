@@ -140,7 +140,7 @@ $xtpl->assign("CREATED_BY", $focus->created_by_name);
 $xtpl->assign("MODIFIED_BY", $focus->modified_by_name);
 //if text only is set to true, then make sure input is checked and value set to 1
 if (isset($focus->text_only) && $focus->text_only) {
-    $xtpl->assign("TEXT_ONLY_CHECKED","CHECKED");
+    $xtpl->assign("TEXT_ONLY_CHECKED", "CHECKED");
 }
 $xtpl->assign("NAME", $focus->name);
 $xtpl->assign("DESCRIPTION", $focus->description);
@@ -166,7 +166,7 @@ if (!empty($focus->body)) {
     $xtpl->assign('ALT_CHECKED', '');
 }
 if ($focus->published == 'on') {
-    $xtpl->assign("PUBLISHED","CHECKED");
+    $xtpl->assign("PUBLISHED", "CHECKED");
 }
 
 
@@ -175,7 +175,7 @@ if ($focus->published == 'on') {
 ///////////////////////////////////////////////////////////////////////////////
 $note = new Note();
 $where = "notes.parent_id='{$focus->id}'";
-$notes_list = $note->get_full_list("notes.name", $where,true);
+$notes_list = $note->get_full_list("notes.name", $where, true);
 
 if (! isset($notes_list)) {
     $notes_list = array();
@@ -192,7 +192,7 @@ $xtpl->assign("ATTACHMENTS", $attachments);
 
 global $current_user;
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-    $xtpl->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
+    $xtpl->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT'])."</a>");
 }
 
 $xtpl->assign("DESCRIPTION", $focus->description);

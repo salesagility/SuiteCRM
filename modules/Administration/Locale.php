@@ -51,7 +51,7 @@ require_once('modules/Configurator/Configurator.php');
 echo getClassicModuleTitle(
         "Administration",
         array(
-            "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+            "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
            $mod_strings['LBL_MANAGE_LOCALE'],
            ),
         false
@@ -99,7 +99,7 @@ $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
 $sugar_smarty->assign('LANGUAGES', get_languages());
-$sugar_smarty->assign("JAVASCRIPT",get_set_focus_js());
+$sugar_smarty->assign("JAVASCRIPT", get_set_focus_js());
 $sugar_smarty->assign('config', $sugar_config);
 $sugar_smarty->assign('error', $errors);
 $sugar_smarty->assign("exportCharsets", get_select_options_with_id($locale->getCharsetSelect(), $sugar_config['default_export_charset']));

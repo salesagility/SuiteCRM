@@ -223,7 +223,7 @@ class AbstractRelationships
      * Save the set of relationships to a file
      * @param string $basepath  Base directory in which to store the relationships information
      */
-    protected function _save($relationships , $basepath)
+    protected function _save($relationships, $basepath)
     {
         $GLOBALS [ 'log' ]->info (get_class ($this) . ": saving relationships to " . $basepath . '/relationships.php') ;
         $header = file_get_contents ('modules/ModuleBuilder/MB/header.php') ;
@@ -296,12 +296,12 @@ class AbstractRelationships
         }
 
         // bug33522 - if our relationship basename is in the special cases
-        if (in_array($name , $this->specialCaseBaseNames)) {
+        if (in_array($name, $this->specialCaseBaseNames)) {
             //add a _1 (or _suffix#) and check to see if it already exists
             $name = $name . "_" . ( string ) ($suffix ++);
             while (isset ($allRelationships [ $name ])) {
                 // if it does exist, strip off the _1 previously added and try again
-                $name = substr($name , 0 , -2) . "_" . ( string ) ($suffix ++);
+                $name = substr($name, 0, -2) . "_" . ( string ) ($suffix ++);
             }
         }
 
@@ -314,7 +314,7 @@ class AbstractRelationships
      * @param string $installDefPrefix  Pathname prefix for the installdefs, for example for ModuleBuilder use "<basepath>/SugarModules"
      * @param array $relationships      Relationships to implement
      */
-    protected function build($basepath , $installDefPrefix , $relationships)
+    protected function build($basepath, $installDefPrefix, $relationships)
     {
         global $sugar_config;
         // keep the relationships data separate from any other build data by ading /relationships to the basepath
@@ -365,7 +365,7 @@ class AbstractRelationships
      * @param array $labelDefinitions       Array of System label => Display label pairs
      * @return null Nothing to be added to the installdefs for an undeployed module
      */
-    protected function saveLabels($basepath , $installDefPrefix , $relationshipName , $labelDefinitions)
+    protected function saveLabels($basepath, $installDefPrefix, $relationshipName, $labelDefinitions)
     {
         global $sugar_config;
         
@@ -431,7 +431,7 @@ class AbstractRelationships
      * @param array $relationshipMetaData   Set of metadata definitions in the form $relationshipMetaData[$relationshipName]
      * @return array $installDefs           Set of new installDefs
      */
-    protected function saveRelationshipMetaData($basepath , $installDefPrefix , $relationshipName , $relationshipMetaData)
+    protected function saveRelationshipMetaData($basepath, $installDefPrefix, $relationshipName, $relationshipMetaData)
     {
         mkdir_recursive ("$basepath/relationships") ;
         
@@ -452,7 +452,7 @@ class AbstractRelationships
      * @param array $subpanelDefinitions    Set of subpanel definitions in the form $subpanelDefinitions[$for_module][]
      * @return array $installDefs           Set of new installDefs
      */
-    protected function saveSubpanelDefinitions($basepath , $installDefPrefix , $relationshipName , $subpanelDefinitions)
+    protected function saveSubpanelDefinitions($basepath, $installDefPrefix, $relationshipName, $subpanelDefinitions)
     {
         mkdir_recursive ("$basepath/layoutdefs/") ;
         
@@ -489,7 +489,7 @@ class AbstractRelationships
      * @param array $linkFieldDefinitions   Set of link field definitions in the form $linkFieldDefinitions[$for_module]
      * @return array $installDefs           Set of new installDefs
      */
-    protected function saveVardefs($basepath , $installDefPrefix , $relationshipName , $vardefs)
+    protected function saveVardefs($basepath, $installDefPrefix, $relationshipName, $vardefs)
     {
         mkdir_recursive ("$basepath/vardefs/") ;
         $GLOBALS [ 'log' ]->debug (get_class ($this) . "->saveVardefs(): vardefs =" . print_r ($vardefs, true)) ;
@@ -553,7 +553,7 @@ class AbstractRelationships
             $key = $mb->getPackage ($name)->key ;
             if (strlen ($key) < strlen ($deployedName)) {
                 $position = stripos ($deployedName, $key) ;
-                $moduleName = trim(substr($deployedName , strlen($key)) , '_'); //use trim rather than just assuming that _ is between packageName and moduleName in the deployedName
+                $moduleName = trim(substr($deployedName, strlen($key)), '_'); //use trim rather than just assuming that _ is between packageName and moduleName in the deployedName
                 if ($position !== false && $position == 0 && (isset ($mb->packages [ $name ]->modules [ $moduleName ]))) {
                     $packageName = $name ;
                     break ;

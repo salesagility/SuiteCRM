@@ -107,7 +107,7 @@ if ($twitter_enabled) {
         while ($i < count($tweets)) {
             $limit = 104;
 
-            $tweets[$i]['text'] = format_feed_tweets($db, $tweets[$i],$limit);
+            $tweets[$i]['text'] = format_feed_tweets($db, $tweets[$i], $limit);
 
             if (count($tweets[$i]['entities']['hashtags']) > 0) {
                 $tweets[$i]['text'] = replace_hashtags($db, $tweets[$i]);

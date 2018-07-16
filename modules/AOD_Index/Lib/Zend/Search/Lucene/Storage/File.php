@@ -171,7 +171,7 @@ abstract class Zend_Search_Lucene_Storage_File
         $this->_fwrite(chr($value>>24 & 0xFF) .
                         chr($value>>16 & 0xFF) .
                         chr($value>>8  & 0xFF) .
-                        chr($value     & 0xFF),   4);
+                        chr($value     & 0xFF), 4);
     }
 
 
@@ -225,7 +225,7 @@ abstract class Zend_Search_Lucene_Storage_File
                             chr($value>>24 & 0xFF) .
                             chr($value>>16 & 0xFF) .
                             chr($value>>8  & 0xFF) .
-                            chr($value     & 0xFF),   8);
+                            chr($value     & 0xFF), 8);
         } else {
             $this->writeLong32Bit($value);
         }
@@ -381,8 +381,8 @@ abstract class Zend_Search_Lucene_Storage_File
                     if (ord($str_val[$count])   == 0xC0 &&
                         ord($str_val[$count+1]) == 0x80) {
                         $str_val[$count] = 0;
-                        $str_val = substr($str_val,0,$count+1)
-                                 . substr($str_val,$count+2);
+                        $str_val = substr($str_val, 0, $count+1)
+                                 . substr($str_val, $count+2);
                     }
                     $count += $addBytes;
                 }

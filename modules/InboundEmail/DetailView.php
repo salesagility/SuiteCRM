@@ -66,7 +66,7 @@ $offset=0;
 
 
 /* end standard DetailView layout process */
-$exServ = explode('::',$focus->service);
+$exServ = explode('::', $focus->service);
 if ($focus->delete_seen == 1) {
     $delete_seen = $mod_strings['LBL_MARK_READ_NO'];
 } else {

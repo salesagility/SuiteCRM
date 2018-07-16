@@ -202,4 +202,4 @@ $dictionary['EAPM'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('EAPM','EAPM', array('basic','assignable'));
+VardefManager::createVardef('EAPM', 'EAPM', array('basic','assignable'));

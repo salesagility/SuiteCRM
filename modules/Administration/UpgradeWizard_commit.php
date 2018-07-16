@@ -132,12 +132,12 @@ $install_type   = getInstallType($install_file);
 
 //from here on out, the install_file is used as the file path to copy or rename the physical file, so let's remove the stream wrapper if it's set
 //and replace it with the proper upload location
-if (strpos($install_file,'upload://') === 0) {
+if (strpos($install_file, 'upload://') === 0) {
     //get the upload location if it's set, or default to 'upload'
     $upload_dir = empty($GLOBALS['sugar_config']['upload_dir']) ? 'upload' : rtrim($GLOBALS['sugar_config']['upload_dir'], '/\\');
 
     //replace the wrapper in the file name with the directory
-    $install_file = str_replace('upload:/',$upload_dir,$install_file);
+    $install_file = str_replace('upload:/', $upload_dir, $install_file);
     $_REQUEST['install_file'] = $install_file;
 }
 

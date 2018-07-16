@@ -42,7 +42,7 @@
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
-ini_set('memory_limit',-1);
+ini_set('memory_limit', -1);
 ///////////////////////////////////////////////////////////////////////////////
 ////	UTILITIES THAT MUST BE LOCAL :(
  //Bug 24890, 24892. default_permissions not written to config.php. Following function checks and if
@@ -61,7 +61,7 @@ ini_set('memory_limit',-1);
                      'group' => '',
              );
          ksort($sugar_config);
-         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
              //writing to the file
          }
      }
@@ -87,7 +87,7 @@ function checkLoggerSettings()
             ),
           );
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
@@ -114,14 +114,14 @@ function checkResourceSettings()
             'default_limit' => 1000,
           );
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
 }
 
 
-function verifyArguments($argv,$usage_regular)
+function verifyArguments($argv, $usage_regular)
 {
     $upgradeType = '';
     $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
@@ -189,7 +189,7 @@ if (substr($sapi_type, 0, 3) != 'cli') {
 
 // only run from command line
 if (isset($_SERVER['HTTP_USER_AGENT'])) {
-    fwrite(STDERR,'This utility may only be run from the command line or command prompt.');
+    fwrite(STDERR, 'This utility may only be run from the command line or command prompt.');
     exit(1);
 }
 //Clean_string cleans out any file  passed in as a parameter
@@ -239,7 +239,7 @@ define('DCE_INSTANCE', 'DCE_Instance');
 global $cwd;
 $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
 
-$upgradeType = verifyArguments($argv,$usage_regular);
+$upgradeType = verifyArguments($argv, $usage_regular);
 
 $path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
 $subdirs		= array('full', 'langpack', 'module', 'patch', 'theme', 'temp');
@@ -318,7 +318,7 @@ $_SESSION['zip_from_dir'] = $zip_from_dir;
 
 mkdir_recursive($unzip_dir);
 if (!is_dir($unzip_dir)) {
-    fwrite(STDERR,"\n{$unzip_dir} is not an available directory\nFAILURE\n");
+    fwrite(STDERR, "\n{$unzip_dir} is not an available directory\nFAILURE\n");
     exit(1);
 }
 unzip($argv[1], $unzip_dir);
@@ -360,7 +360,7 @@ logThis('Upgrading user preferences finish .', $path);
 // clear out the theme cache
 if (is_dir($GLOBALS['sugar_config']['cache_dir'].'themes')) {
     $allModFiles = array();
-    $allModFiles = findAllFiles($GLOBALS['sugar_config']['cache_dir'].'themes',$allModFiles);
+    $allModFiles = findAllFiles($GLOBALS['sugar_config']['cache_dir'].'themes', $allModFiles);
     foreach ($allModFiles as $file) {
         //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
         if (file_exists($file)) {
@@ -536,7 +536,7 @@ if (version_compare($sugar_version, '6.5.0', '<') && function_exists('repairUpgr
 ///////////////////////////////////////////////////////////////////////////////
 ////	TAKE OUT TRASH
 if (empty($errors)) {
-    set_upgrade_progress('end','in_progress','unlinkingfiles','in_progress');
+    set_upgrade_progress('end', 'in_progress', 'unlinkingfiles', 'in_progress');
     logThis('Taking out the trash, unlinking temp files.', $path);
     unlinkUWTempFiles();
     removeSilentUpgradeVarsCache();

@@ -71,7 +71,7 @@ class SugarCacheZend extends SugarCacheAbstract
         $key,
         $value
         ) {
-        zend_shm_cache_store($key,serialize($value),$this->_expireTimeout);
+        zend_shm_cache_store($key, serialize($value), $this->_expireTimeout);
     }
 
     /**

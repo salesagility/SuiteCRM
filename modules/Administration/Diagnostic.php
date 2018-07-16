@@ -64,11 +64,11 @@ if (empty($db)) {
 }
 
 echo getClassicModuleTitle(
-        "Administration", 
+        "Administration",
         array(
             "<a href='index.php?module=Administration&action=index'>{$mod_strings['LBL_MODULE_NAME']}</a>",
            translate('LBL_DIAGNOSTIC_TITLE')
-           ), 
+           ),
         false
         );
 
@@ -88,7 +88,7 @@ $sugar_smarty->assign("MODULE", $currentModule);
 $sugar_smarty->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
 
 
-$sugar_smarty->assign("ADVANCED_SEARCH_PNG", SugarThemeRegistry::current()->getImage('advanced_search','border="0"',null,null,'.gif',$app_strings['LNK_ADVANCED_FILTER']));
-$sugar_smarty->assign("BASIC_SEARCH_PNG", SugarThemeRegistry::current()->getImage('basic_search','border="0"',null,null,'.gif',$app_strings['LNK_BASIC_FILTER']));
+$sugar_smarty->assign("ADVANCED_SEARCH_PNG", SugarThemeRegistry::current()->getImage('advanced_search', 'border="0"', null, null, '.gif', $app_strings['LNK_ADVANCED_FILTER']));
+$sugar_smarty->assign("BASIC_SEARCH_PNG", SugarThemeRegistry::current()->getImage('basic_search', 'border="0"', null, null, '.gif', $app_strings['LNK_BASIC_FILTER']));
 
 $sugar_smarty->display("modules/Administration/Diagnostic.tpl");

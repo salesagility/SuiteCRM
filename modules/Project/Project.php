@@ -190,7 +190,7 @@ class Project extends SugarBean
         $query.= ' FROM project_task';
         $query.= " WHERE parent_id='{$project_id}' AND deleted=0";
 
-        $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+        $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
             $return_value = $row['total_estimated_effort'];
@@ -210,7 +210,7 @@ class Project extends SugarBean
         $query.=  ' FROM project_task';
         $query.=  " WHERE parent_id='{$project_id}' AND deleted=0";
 
-        $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+        $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
             $return_value = $row['total_actual_effort'];
@@ -303,7 +303,7 @@ class Project extends SugarBean
         $projectTasks = array();
 
         $query = "SELECT * FROM project_task WHERE project_id = '" . $this->id. "' AND deleted = 0 ORDER BY project_task_id";
-        $result = $this->db->query($query,true,"Error retrieving project tasks");
+        $result = $this->db->query($query, true, "Error retrieving project tasks");
         $row = $this->db->fetchByAssoc($result);
 
         while ($row != null) {
@@ -345,7 +345,7 @@ class Project extends SugarBean
         $current_template_id = "";
 
         $focus->load_relationship('am_projecttemplates_project_1');
-        $project_template = $focus->get_linked_beans('am_projecttemplates_project_1','AM_ProjectTemplates');
+        $project_template = $focus->get_linked_beans('am_projecttemplates_project_1', 'AM_ProjectTemplates');
         foreach ($project_template as $ptemplate) {
             $current_template_id = $ptemplate->id;
         }				
@@ -393,7 +393,7 @@ class Project extends SugarBean
 				
                 // Get all users for the project
                 $focus->load_relationship('users');
-                $users = $focus->get_linked_beans('project_users_1','User');
+                $users = $focus->get_linked_beans('project_users_1', 'User');
                 foreach ($users as $a) {
                     if (!in_array($a->id, $userInvitees)) {
                         $deleteUsers[$a->id] = $a->id;
@@ -416,7 +416,7 @@ class Project extends SugarBean
 
                 // Get all contacts for the project
                 $focus->load_relationship('contacts');
-                $contacts = $focus->get_linked_beans('project_contacts_1','Contact');
+                $contacts = $focus->get_linked_beans('project_contacts_1', 'Contact');
                 foreach ($contacts as $a) {
                     if (!in_array($a->id, $contactInvitees)) {
                         $deleteContacts[$a->id] = $a->id;
@@ -447,7 +447,7 @@ class Project extends SugarBean
 			
             // Process users
             $focus->load_relationship('users');
-            $focus->get_linked_beans('project_users_1','User');
+            $focus->get_linked_beans('project_users_1', 'User');
             foreach ($userInvitees as $user_id) {
                 if (empty($user_id) || isset($existingUsers[$user_id]) || isset($deleteUsers[$user_id])) {
                     continue;
@@ -457,7 +457,7 @@ class Project extends SugarBean
 
             // Process contacts
             $focus->load_relationship('contacts');
-            $focus->get_linked_beans('project_contacts_1','Contact');
+            $focus->get_linked_beans('project_contacts_1', 'Contact');
             foreach ($contactInvitees as $contact_id) {
                 if (empty($contact_id) || isset($existingContacts[$contact_id]) || isset($deleteContacts[$contact_id])) {
                     continue;
@@ -542,10 +542,10 @@ class Project extends SugarBean
 			
             //copy all resources from template to project
             $template->load_relationship('am_projecttemplates_users_1');
-            $template_users = $template->get_linked_beans('am_projecttemplates_users_1','User');
+            $template_users = $template->get_linked_beans('am_projecttemplates_users_1', 'User');
 
             $template->load_relationship('am_projecttemplates_contacts_1');
-            $template_contacts = $template->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+            $template_contacts = $template->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
 			
 
             foreach ($template_users as $user) {

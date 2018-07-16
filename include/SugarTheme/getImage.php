@@ -76,7 +76,7 @@ if (isset($_REQUEST['spriteNamespace'])) {
 
 $filename_arr = explode('?', $filename);
 $filename = $filename_arr[0];
-$file_ext = substr($filename,-3);
+$file_ext = substr($filename, -3);
 
 $extensions = SugarThemeRegistry::current()->imageExtensions;
 if (!in_array($file_ext, $extensions)) {
@@ -111,9 +111,9 @@ if (($ifmod || $iftag) && ($ifmod !== false && $iftag !== false)) {
 header("Last-Modified: ".gmdate('D, d M Y H:i:s \G\M\T', $last_modified_time));
 
 // now send the content
-if (substr($filename,-3) == 'gif') {
+if (substr($filename, -3) == 'gif') {
     header("Content-Type: image/gif");
-} elseif (substr($filename,-3) == 'png') {
+} elseif (substr($filename, -3) == 'png') {
     header("Content-Type: image/png");
 }
 

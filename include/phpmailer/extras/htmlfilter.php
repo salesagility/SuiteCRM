@@ -604,7 +604,7 @@ function tln_fixurl($attname, &$attvalue, $trans_image_path, $block_external_ima
     if ($attvalue && ($attvalue[0] =='"'|| $attvalue[0] == "'")) {
         // remove the double quotes
         $sQuote = $attvalue[0];
-        $attvalue = trim(substr($attvalue,1,-1));
+        $attvalue = trim(substr($attvalue, 1, -1));
     }
 
     /**
@@ -617,7 +617,7 @@ function tln_fixurl($attname, &$attvalue, $trans_image_path, $block_external_ima
         $attvalue = $sQuote . $trans_image_path . $sQuote;
     } else {
         // first, disallow 8 bit characters and control characters
-        if (preg_match('/[\0-\37\200-\377]+/',$attvalue)) {
+        if (preg_match('/[\0-\37\200-\377]+/', $attvalue)) {
             switch ($attname) {
                 case 'href':
                     $attvalue = $sQuote . 'http://invalid-stuff-detected.example.com' . $sQuote;
@@ -689,7 +689,7 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
             case '>':
                  if ($bEndTag) {
                      $sToken .= $char;
-                     if (preg_match('/\<\/\s*style\s*\>/i',$sToken,$aMatch)) {
+                     if (preg_match('/\<\/\s*style\s*\>/i', $sToken, $aMatch)) {
                          $newpos = $i + 1;
                          $bSucces = true;
                          break 2;
@@ -704,8 +704,8 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
             case '!':
                 if ($sToken == '<') {
                     // possible comment
-                    if (isset($body{$i+2}) && substr($body,$i,3) == '!--') {
-                        $i = strpos($body,'-->',$i+3);
+                    if (isset($body{$i+2}) && substr($body, $i, 3) == '!--') {
+                        $i = strpos($body, '-->', $i+3);
                         if ($i === false) { // no end comment
                             $i = strlen($body);
                         }
@@ -745,26 +745,26 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
     //                           "url(\\1$trans_image_path\\2)", $content);
 
     // first check for 8bit sequences and disallowed control characters
-    if (preg_match('/[\16-\37\200-\377]+/',$content)) {
+    if (preg_match('/[\16-\37\200-\377]+/', $content)) {
         $content = '<!-- style block removed by html filter due to presence of 8bit characters -->';
         return array($content, $newpos);
     }
 
     // remove @import line
-    $content = preg_replace("/^\s*(@import.*)$/mi","\n<!-- @import rules forbidden -->\n",$content);
+    $content = preg_replace("/^\s*(@import.*)$/mi", "\n<!-- @import rules forbidden -->\n", $content);
 
     $content = preg_replace("/(\\\\)?u(\\\\)?r(\\\\)?l(\\\\)?/i", 'url', $content);
-    preg_match_all("/url\s*\((.+)\)/si",$content,$aMatch);
+    preg_match_all("/url\s*\((.+)\)/si", $content, $aMatch);
     if (count($aMatch)) {
         $aValue = $aReplace = array();
         foreach ($aMatch[1] as $sMatch) {
             // url value
             $urlvalue = $sMatch;
-            tln_fixurl('style',$urlvalue, $trans_image_path, $block_external_images);
+            tln_fixurl('style', $urlvalue, $trans_image_path, $block_external_images);
             $aValue[] = $sMatch;
             $aReplace[] = $urlvalue;
         }
-        $content = str_replace($aValue,$aReplace,$content);
+        $content = str_replace($aValue, $aReplace, $content);
     }
 
     /**

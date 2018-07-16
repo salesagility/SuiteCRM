@@ -135,7 +135,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
     public function getCalendarListFeed()
     {
         $uri = self::CALENDAR_FEED_URI . '/default';
-        return parent::getFeed($uri,'Zend_Gdata_Calendar_ListFeed');
+        return parent::getFeed($uri, 'Zend_Gdata_Calendar_ListFeed');
     }
 
     /**
@@ -154,7 +154,7 @@ class Zend_Gdata_Calendar extends Zend_Gdata
         } else {
             $uri = $location;
         }
-        return parent::getEntry($uri,'Zend_Gdata_Calendar_ListEntry');
+        return parent::getEntry($uri, 'Zend_Gdata_Calendar_ListEntry');
     }
 
     public function insertEvent($event, $uri=null)

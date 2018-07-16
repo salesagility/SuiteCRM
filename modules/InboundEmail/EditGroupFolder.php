@@ -118,8 +118,8 @@ $smarty->assign('group_folder_array', $json->encode($groupFoldersOrig));
 $smarty->assign('group_folder_options', get_select_options_with_id($groupFolders, $addToGroupFolder));
 
 
-$smarty->assign('CSS',SugarThemeRegistry::current()->getCSS());
+$smarty->assign('CSS', SugarThemeRegistry::current()->getCSS());
 
 
-$smarty->assign('languageStrings', getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js",  $GLOBALS['sugar_config']['js_lang_version']));
+$smarty->assign('languageStrings', getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js", $GLOBALS['sugar_config']['js_lang_version']));
 echo $smarty->fetch("modules/Emails/templates/_createGroupFolder.tpl");

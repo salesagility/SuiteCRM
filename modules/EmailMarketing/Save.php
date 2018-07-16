@@ -57,7 +57,7 @@ global $timedate;
 global $current_user;
 if (!empty($_POST['meridiem'])) {
     $time_start = isset($_POST['time_start']) ? $_POST['time_start'] : $_POST['wiz_step3_time_start'];
-    $_POST['time_start'] = $timedate->merge_time_meridiem($time_start,$timedate->get_time_format(), $_POST['meridiem']);
+    $_POST['time_start'] = $timedate->merge_time_meridiem($time_start, $timedate->get_time_format(), $_POST['meridiem']);
 }
 
 if (empty($_REQUEST['time_start'])) {
@@ -135,7 +135,7 @@ if ($marketing->all_prospect_lists==1) {
 } else {
     if (is_array($_REQUEST['message_for'])) {
         foreach ($_REQUEST['message_for'] as $prospect_list_id) {
-            $key=array_search($prospect_list_id,$prospectlists);
+            $key=array_search($prospect_list_id, $prospectlists);
             if ($key === null or $key === false) {
                 $marketing->prospectlists->add($prospect_list_id);
             } else {
@@ -144,7 +144,7 @@ if ($marketing->all_prospect_lists==1) {
         }
         if (count($prospectlists) != 0) {
             foreach ($prospectlists as $key=>$list_id) {
-                $marketing->prospectlists->delete($marketing->id,$list_id);
+                $marketing->prospectlists->delete($marketing->id, $list_id);
             }
         }
     }

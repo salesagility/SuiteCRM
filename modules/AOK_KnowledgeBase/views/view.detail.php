@@ -72,6 +72,6 @@ class AOK_KnowledgeBaseViewDetail extends ViewDetail
 
     public function setDecodeHTML()
     {
-        $this->bean->description = html_entity_decode(str_replace('&nbsp;',' ',$this->bean->description));
+        $this->bean->description = html_entity_decode(str_replace('&nbsp;', ' ', $this->bean->description));
     }
 }

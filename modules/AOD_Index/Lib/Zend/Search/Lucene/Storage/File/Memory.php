@@ -499,8 +499,8 @@ class Zend_Search_Lucene_Storage_File_Memory extends Zend_Search_Lucene_Storage_
                     if (ord($str_val[$count])   == 0xC0 &&
                         ord($str_val[$count+1]) == 0x80) {
                         $str_val[$count] = 0;
-                        $str_val = substr($str_val,0,$count+1)
-                                 . substr($str_val,$count+2);
+                        $str_val = substr($str_val, 0, $count+1)
+                                 . substr($str_val, $count+2);
                     }
                     $count += $addBytes;
                 }

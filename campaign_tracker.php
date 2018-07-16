@@ -59,7 +59,7 @@ require_once('include/entryPoint.php');
 require_once('modules/Campaigns/utils.php');
 
 if (!empty($_REQUEST['identifier'])) {
-    $keys=log_campaign_activity($_REQUEST['identifier'],'link');
+    $keys=log_campaign_activity($_REQUEST['identifier'], 'link');
 }
 
 if (empty($_REQUEST['track'])) {

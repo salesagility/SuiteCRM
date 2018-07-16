@@ -70,7 +70,7 @@ if (!empty($_REQUEST['name'])) {
         if (substr_count($name, 'act_guid') > 0) {
             $name = str_replace('act_guid', '', $name);
     
-            $role->setAction($role->id,$name, $value);
+            $role->setAction($role->id, $name, $value);
         }
     }
     echo "result = {role_id:'$role->id', module:'$flc_module'}";

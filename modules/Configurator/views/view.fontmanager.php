@@ -66,13 +66,13 @@ class ConfiguratorViewFontManager extends SugarView
         }
         $fontManager = new FontManager();
         if (!$fontManager->listFontFiles()) {
-            $error = implode("<br>",$fontManager->errors);
+            $error = implode("<br>", $fontManager->errors);
         }
 
-        $this->ss->assign("MODULE_TITLE", 
+        $this->ss->assign("MODULE_TITLE",
             getClassicModuleTitle(
-                $mod_strings['LBL_MODULE_ID'], 
-                array($mod_strings['LBL_FONTMANAGER_TITLE']), 
+                $mod_strings['LBL_MODULE_ID'],
+                array($mod_strings['LBL_FONTMANAGER_TITLE']),
                 false
                 )
             );

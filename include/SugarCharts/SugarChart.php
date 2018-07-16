@@ -198,29 +198,29 @@ class SugarChart
     public function xmlProperties()
     {
         // open the properties tag
-        $properties = $this->tab("<properties>",1);
+        $properties = $this->tab("<properties>", 1);
 
         // grab the property and value from the chart_properties variable
         foreach ($this->chart_properties as $key => $value) {
             if (is_array($value)) {
                 continue;
             }
-            $properties .= $this->tab("<$key>$value</$key>",2);
+            $properties .= $this->tab("<$key>$value</$key>", 2);
         }
 
         if (!empty($this->colors_list)) {
             // open the colors tag
-            $properties .= $this->tab("<colors>",2);
+            $properties .= $this->tab("<colors>", 2);
             foreach ($this->colors_list as $color) {
-                $properties .= $this->tab("<color>$color</color>",3);
+                $properties .= $this->tab("<color>$color</color>", 3);
             }
 
             // close the colors tag
-            $properties .= $this->tab("</colors>",2);
+            $properties .= $this->tab("</colors>", 2);
         }
 
         // close the properties tag
-        $properties .= $this->tab("</properties>",1);
+        $properties .= $this->tab("</properties>", 1);
 
         return $properties;
     }
@@ -261,13 +261,13 @@ class SugarChart
         // to compensate, the yMax should be at least one step above the max value
         $this->chart_yAxis['yMax'] += $this->chart_yAxis['yStep'];
 
-        $yAxis = $this->tab("<yAxis>" ,1);
+        $yAxis = $this->tab("<yAxis>", 1);
 
         foreach ($this->chart_yAxis as $key => $value) {
-            $yAxis .= $this->tabValue("{$key}",$value, 2);
+            $yAxis .= $this->tabValue("{$key}", $value, 2);
         }
 
-        $yAxis .= $this->tab("</yAxis>" ,1);
+        $yAxis .= $this->tab("</yAxis>", 1);
 
         return $yAxis;
     }
@@ -311,9 +311,9 @@ class SugarChart
      * @return	string with tabs appended before it
      */
 
-    public function tabValue($tag,$value,$depth)
+    public function tabValue($tag, $value, $depth)
     {
-        return $this->tab("<{$tag}>".htmlspecialchars($value,ENT_QUOTES)."</{$tag}>",$depth);
+        return $this->tab("<{$tag}>".htmlspecialchars($value, ENT_QUOTES)."</{$tag}>", $depth);
     }
     /**
      * returns xml data format
@@ -354,12 +354,12 @@ class SugarChart
     public function processDataGroup($tablevel, $title, $value, $label, $link)
     {
         $link = $this->forceHideDataGroupLink ? '' : $link;
-        $data = $this->tab('<group>',$tablevel);
-        $data .= $this->tabValue('title',$title,$tablevel+1);
-        $data .= $this->tabValue('value',$value,$tablevel+1);
-        $data .= $this->tabValue('label',$label,$tablevel+1);
-        $data .= $this->tab('<link>' . $link . '</link>',$tablevel+1);
-        $data .= $this->tab('</group>',$tablevel);
+        $data = $this->tab('<group>', $tablevel);
+        $data .= $this->tabValue('title', $title, $tablevel+1);
+        $data .= $this->tabValue('value', $value, $tablevel+1);
+        $data .= $this->tabValue('label', $label, $tablevel+1);
+        $data .= $this->tab('<link>' . $link . '</link>', $tablevel+1);
+        $data .= $this->tab('</group>', $tablevel);
         return $data;
     }
 
@@ -458,32 +458,32 @@ class SugarChart
             $amount = $this->is_currency ? $this->convertCurrency($this->calculateGroupByTotal($value)) : $this->calculateGroupByTotal($value);
             $label = $this->is_currency ? ($this->currency_symbol . $this->formatNumber($amount)) : $amount;
 
-            $data .= $this->tab('<group>',2);
+            $data .= $this->tab('<group>', 2);
             if (!empty($this->display_labels[$key])) {
-                $data .= $this->tabValue('title', $this->display_labels[$key],3);
-                $data .= $this->tabValue('id', ++$idcounter,3);
+                $data .= $this->tabValue('title', $this->display_labels[$key], 3);
+                $data .= $this->tabValue('id', ++$idcounter, 3);
             } else {
-                $data .= $this->tabValue('title', $key,3);
+                $data .= $this->tabValue('title', $key, 3);
             }
-            $data .= $this->tabValue('value',$amount,3);
-            $data .= $this->tabValue('label',$label,3);
-            $data .= $this->tab('<link></link>',3);
-            $data .= $this->tab('<subgroups>',3);
+            $data .= $this->tabValue('value', $amount, 3);
+            $data .= $this->tabValue('label', $label, 3);
+            $data .= $this->tab('<link></link>', 3);
+            $data .= $this->tab('<subgroups>', 3);
 
             foreach ($value as $k => $v) {
                 $amount = $this->is_currency ? $this->convertCurrency($v) : $v;
                 $label = $this->is_currency ? ($this->currency_symbol . $this->formatNumber($amount)) : $amount;
 
-                $data .= $this->tab('<group>',4);
-                $data .= $this->tabValue('title',$k,5);
-                $data .= $this->tabValue('value',$amount,5);
-                $data .= $this->tabValue('label',$label,5);
-                $data .= $this->tab('<link></link>',5);
-                $data .= $this->tab('</group>',4);
+                $data .= $this->tab('<group>', 4);
+                $data .= $this->tabValue('title', $k, 5);
+                $data .= $this->tabValue('value', $amount, 5);
+                $data .= $this->tabValue('label', $label, 5);
+                $data .= $this->tab('<link></link>', 5);
+                $data .= $this->tab('</group>', 4);
                 $this->checkYAxis($v);
             }
-            $data .= $this->tab('</subgroups>',3);
-            $data .= $this->tab('</group>',2);
+            $data .= $this->tab('</subgroups>', 3);
+            $data .= $this->tab('</group>', 2);
         }
 
         return $data;
@@ -529,14 +529,14 @@ class SugarChart
             }
 
             $data .= $this->tab('<group>', 2);
-            $data .= $this->tabValue('title',$key, 3);
-            $data .= $this->tabValue('value',$value, 3);
-            $data .= $this->tabValue('label',$label, 3);
+            $data .= $this->tabValue('title', $key, 3);
+            $data .= $this->tabValue('value', $value, 3);
+            $data .= $this->tabValue('label', $label, 3);
             if (isset($drill_down) && $drill_down) {
                 if ($this->group_by[0] == 'm') {
                     $additional_param = '&date_closed_advanced=' . urlencode($key);
                 } elseif ($this->group_by[0] == 'sales_stage') {
-                    $additional_param = '&sales_stage_advanced[]='.urlencode(array_search($key,$GLOBALS['app_list_strings']['sales_stage_dom']));
+                    $additional_param = '&sales_stage_advanced[]='.urlencode(array_search($key, $GLOBALS['app_list_strings']['sales_stage_dom']));
                 } else {
                     $additional_param = "&" . $this->group_by[0] . "=" . urlencode($key);
                 }
@@ -577,13 +577,13 @@ class SugarChart
             $amount = $this->is_currency ? $this->convertCurrency($total) : $total;
             $label = $this->is_currency ? ($this->currency_symbol . $this->formatNumber($amount) . 'K') : $amount;
 
-            $data .= $this->tab('<group>',2);
-            $data .= $this->tabValue('title',$groupByKey,3);
-            $data .= $this->tabValue('value',$amount,3);
-            $data .= $this->tabValue('label',$label,3);
-            $data .= $this->tab('<link>' . $url . '</link>',3);
+            $data .= $this->tab('<group>', 2);
+            $data .= $this->tabValue('title', $groupByKey, 3);
+            $data .= $this->tabValue('value', $amount, 3);
+            $data .= $this->tabValue('label', $label, 3);
+            $data .= $this->tab('<link>' . $url . '</link>', 3);
 
-            $data .= $this->tab('<subgroups>',3);
+            $data .= $this->tab('<subgroups>', 3);
             $processed = array();
 
             if (isset($drill_down) && $drill_down != '') {
@@ -631,8 +631,8 @@ class SugarChart
                 }
             }
 
-            $data .= $this->tab('</subgroups>',3);
-            $data .= $this->tab('</group>',2);
+            $data .= $this->tab('</subgroups>', 3);
+            $data .= $this->tab('</group>', 2);
         }
         return $data;
     }
@@ -680,9 +680,9 @@ class SugarChart
 
     public function xmlData()
     {
-        $data = $this->tab('<data>',1);
+        $data = $this->tab('<data>', 1);
         $data .= $this->processXmlData();
-        $data .= $this->tab('</data>',1);
+        $data .= $this->tab('</data>', 1);
 
         return $data;
     }
@@ -711,7 +711,7 @@ class SugarChart
      *			string $xmlContents contents of the xml file
      * @return	string boolean denoting whether save has failed
      */
-    public function saveXMLFile($xmlFilename,$xmlContents)
+    public function saveXMLFile($xmlFilename, $xmlContents)
     {
         global $app_strings;
         global $locale;
@@ -731,7 +731,7 @@ class SugarChart
         }
 
         // write the contents to the file
-        if (fwrite($fh,$xmlContents) === FALSE) {
+        if (fwrite($fh, $xmlContents) === FALSE) {
             $GLOBALS['log']->debug("Cannot write to file ($xmlFilename)");
             return false;
         }
@@ -754,7 +754,7 @@ class SugarChart
 
         $chartStringsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         $chartStringsXML .= "<sugarlanguage version=\"1.0\">\n";
-        $chartStringsXML .= $this->tab("<charts>",1);
+        $chartStringsXML .= $this->tab("<charts>", 1);
 
         if (empty($app_list_strings)) {
             //set module and application string arrays based upon selected language
@@ -763,10 +763,10 @@ class SugarChart
 
         // retrieve the strings defined at include/language/en_us.lang.php
         foreach ($app_list_strings['chart_strings'] as $tag => $chart_string) {
-            $chartStringsXML .= $this->tab("<$tag>$chart_string</$tag>",2);
+            $chartStringsXML .= $this->tab("<$tag>$chart_string</$tag>", 2);
         }
 
-        $chartStringsXML .= $this->tab("</charts>",1);
+        $chartStringsXML .= $this->tab("</charts>", 1);
         $chartStringsXML .= "</sugarlanguage>\n";
 
         $this->saveXMLFile($xmlFile, $chartStringsXML);
@@ -798,7 +798,7 @@ class SugarChart
     }
 
 
-    public function getDashletScript($id,$xmlFile="")
+    public function getDashletScript($id, $xmlFile="")
     {
         $xmlFile = (!$xmlFile) ? $sugar_config['tmp_dir']. $current_user->id . '_' . $this->id . '.xml' : $xmlFile;
         $chartStringsXML = $GLOBALS['sugar_config']['tmp_dir'].'chart_strings.' . $current_language .'.lang.xml';

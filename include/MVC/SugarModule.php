@@ -78,7 +78,7 @@ class SugarModule
             return false;
         }
 
-        return is_a($focus,$template);
+        return is_a($focus, $template);
     }
 
     /**

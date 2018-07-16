@@ -143,7 +143,7 @@ switch ($_REQUEST['adminAction']) {
 		    foreach ($ids as $id) {
 		        if (!empty($id)) {
 		            $bean = new $beanList[$target]();
-		            $bean->retrieve($id,true,false);
+		            $bean->retrieve($id, true, false);
 		            $bean->new_with_id = false;
 		            $bean->save(); // cleanBean() is called on save()
 		            $count++;

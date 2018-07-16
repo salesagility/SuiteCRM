@@ -13,8 +13,8 @@
      You can find the whole class documentation on the pChart web site.
  */
 
- define("TEXT_POS_TOP"		, 690001);
- define("TEXT_POS_RIGHT"	, 690002);
+ define("TEXT_POS_TOP", 690001);
+ define("TEXT_POS_RIGHT", 690002);
 
  /* pSplit class definition */
  class pSplit
@@ -27,7 +27,7 @@
      }
 
      /* Create the encoded string */
-     public function drawSplitPath($Object,$Values,$Format="")
+     public function drawSplitPath($Object, $Values, $Format="")
      {
          $this->pChartObject = $Object;
 
@@ -71,7 +71,7 @@
          if ($TextPos == TEXT_POS_RIGHT) {
              $MaxWidth = 0;
              foreach ($Data["Series"][$LabelSerie]["Data"] as $Key => $Label) {
-                 $Boundardies = $Object->getTextBox(0,0,$Object->FontName,$Object->FontSize,0,$Label);
+                 $Boundardies = $Object->getTextBox(0, 0, $Object->FontName, $Object->FontSize, 0, $Label);
                  if ($Boundardies[1]["X"] > $MaxWidth) {
                      $MaxWidth = $Boundardies[1]["X"] + $TextPadding*2;
                  }
@@ -102,38 +102,38 @@
 
              $PolyGon = "";
 
-             $Angle    = $Object->getAngle($X2,$RightY1,$X1,$LeftY1);
+             $Angle    = $Object->getAngle($X2, $RightY1, $X1, $LeftY1);
              $VectorX1 = cos(deg2rad($Angle+90)) * $Force + ($X2-$X1)/2 + $X1;
              $VectorY1 = sin(deg2rad($Angle+90)) * $Force + ($RightY1-$LeftY1)/2 + $LeftY1;
              $VectorX2 = cos(deg2rad($Angle-90)) * $Force + ($X2-$X1)/2 + $X1;
              $VectorY2 = sin(deg2rad($Angle-90)) * $Force + ($RightY1-$LeftY1)/2 + $LeftY1;
 
-             $Points = $Object->drawBezier($X1,$LeftY1,$X2,$RightY1,$VectorX1,$VectorY1,$VectorX2,$VectorY2,$Settings);
+             $Points = $Object->drawBezier($X1, $LeftY1, $X2, $RightY1, $VectorX1, $VectorY1, $VectorX2, $VectorY2, $Settings);
              foreach ($Points as $Key => $Pos) {
                  $PolyGon[] = $Pos["X"];
                  $PolyGon[] = $Pos["Y"];
              }
 
 
-             $Angle    = $Object->getAngle($X2,$RightY2,$X1,$LeftY2);
+             $Angle    = $Object->getAngle($X2, $RightY2, $X1, $LeftY2);
              $VectorX1 = cos(deg2rad($Angle+90)) * $Force + ($X2-$X1)/2 +$X1;
              $VectorY1 = sin(deg2rad($Angle+90)) * $Force + ($RightY2-$LeftY2)/2 + $LeftY2;
              $VectorX2 = cos(deg2rad($Angle-90)) * $Force + ($X2-$X1)/2 +$X1;
              $VectorY2 = sin(deg2rad($Angle-90)) * $Force + ($RightY2-$LeftY2)/2 + $LeftY2;
 
-             $Points = $Object->drawBezier($X1,$LeftY2,$X2,$RightY2,$VectorX1,$VectorY1,$VectorX2,$VectorY2,$Settings);
+             $Points = $Object->drawBezier($X1, $LeftY2, $X2, $RightY2, $VectorX1, $VectorY1, $VectorX2, $VectorY2, $Settings);
              $Points = array_reverse($Points);
              foreach ($Points as $Key => $Pos) {
                  $PolyGon[] = $Pos["X"];
                  $PolyGon[] = $Pos["Y"];
              }
 
-             $Object->drawPolygon($PolyGon,$Settings);
+             $Object->drawPolygon($PolyGon, $Settings);
 
              if ($TextPos == TEXT_POS_RIGHT) {
-                 $Object->drawText($X2+$TextPadding,($RightY2-$RightY1)/2+$RightY1,$Label,array("Align"=>TEXT_ALIGN_MIDDLELEFT));
+                 $Object->drawText($X2+$TextPadding, ($RightY2-$RightY1)/2+$RightY1, $Label, array("Align"=>TEXT_ALIGN_MIDDLELEFT));
              } else {
-                 $Object->drawText($X2,$RightY1-$TextPadding,$Label,array("Align"=>TEXT_ALIGN_BOTTOMRIGHT));
+                 $Object->drawText($X2, $RightY1-$TextPadding, $Label, array("Align"=>TEXT_ALIGN_BOTTOMRIGHT));
              }
 
              $LeftY  = $LeftY2;

@@ -404,7 +404,7 @@ class Opportunity extends SugarBean
 				(trim($this->account_id) != trim($this->rel_fields_before_value['account_id']))) {
             //unlink the old record.
             $this->load_relationship('accounts');
-            $this->accounts->delete($this->id,$this->rel_fields_before_value['account_id']);
+            $this->accounts->delete($this->id, $this->rel_fields_before_value['account_id']);
         }
         // Bug 38529 & 40938 - exclude currency_id
         parent::save_relationship_changes($is_update, array('currency_id'));
@@ -419,7 +419,7 @@ class Opportunity extends SugarBean
         global $app_list_strings;
         $default = $app_list_strings['opportunity_relationship_type_default_key'];
         $this->load_relationship('contacts');
-        $this->contacts->add($contact_id,array('contact_role'=>$default));
+        $this->contacts->add($contact_id, array('contact_role'=>$default));
     }
 
     public function set_notification_body($xtpl, $oppty)
@@ -455,7 +455,7 @@ class Opportunity extends SugarBean
             /* BEGIN - SECURITY GROUPS */
             else {
                 global $current_user;
-                $parent_bean = BeanFactory::getBean('Accounts',$this->account_id);
+                $parent_bean = BeanFactory::getBean('Accounts', $this->account_id);
                 if ($parent_bean !== false) {
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
@@ -491,7 +491,7 @@ class Opportunity extends SugarBean
 			. " AND a_o.opportunity_id='$opp_id'"
 			. " AND a_o.deleted=0"
 			. " AND acc.deleted=0";
-        $result = $db->query($query, true,"Error filling in opportunity account details: ");
+        $result = $db->query($query, true, "Error filling in opportunity account details: ");
         $row = $db->fetchByAssoc($result);
         if ($row != null) {
             $ret_array['name'] = $row['name'];

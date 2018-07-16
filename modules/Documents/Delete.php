@@ -68,7 +68,7 @@ if (!$focus->ACLAccess('Delete')) {
 if (isset($_REQUEST['object']) && $_REQUEST['object']="documentrevision") {
     //delete document revision.
     $focus = new DocumentRevision();
-    UploadFile::unlink_file($_REQUEST['revision_id'],$_REQUEST['filename']);
+    UploadFile::unlink_file($_REQUEST['revision_id'], $_REQUEST['filename']);
 }
 
 $focus->mark_deleted($_REQUEST['record']);

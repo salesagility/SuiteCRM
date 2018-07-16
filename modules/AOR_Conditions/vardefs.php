@@ -216,4 +216,4 @@ $dictionary['AOR_Condition'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Conditions','AOR_Condition', array('basic'));
+VardefManager::createVardef('AOR_Conditions', 'AOR_Condition', array('basic'));

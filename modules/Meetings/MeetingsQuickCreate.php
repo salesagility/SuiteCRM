@@ -89,14 +89,14 @@ class MeetingsQuickCreate extends QuickCreate
         }
 
         
-        $date_start_array=explode(" ",trim($focus->date_start));
+        $date_start_array=explode(" ", trim($focus->date_start));
         if (count($date_start_array)==2) {
             $focus->time_start = $timedate->to_db_time($date_start_array[1], false);
             //$focus->date_start = $date_start_array[0];
         }
 
         $this->ss->assign("DATE_START", $focus->date_start);
-        $this->ss->assign("TIME_START", substr($focus->time_start,0,5));
+        $this->ss->assign("TIME_START", substr($focus->time_start, 0, 5));
         $time_start_hour = intval(substr($focus->time_start, 0, 2));
         $time_start_minutes = substr($focus->time_start, 3, 5);
         

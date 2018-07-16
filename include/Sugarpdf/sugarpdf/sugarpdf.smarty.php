@@ -97,7 +97,7 @@ class SugarpdfSmarty extends Sugarpdf
         
         //Create new page           
         $this->AddPage();
-        $this->SetFont(PDF_FONT_NAME_MAIN,'',8);
+        $this->SetFont(PDF_FONT_NAME_MAIN, '', 8);
         
         if (!empty($this->templateLocation)) {
             $str = $this->ss->fetch($this->templateLocation);

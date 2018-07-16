@@ -435,7 +435,7 @@ EOQ;
     }
 
 
-    public function handleSave($prefix,$redirect=true, $useRequired=false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         global $current_user;
 	
@@ -465,13 +465,13 @@ EOQ;
         $focus->save($check_notify);
 
         if (!empty($_POST['duplicate_parent_id'])) {
-            clone_relationship($focus->db, array('opportunities_contacts'),'opportunity_id',  $_POST['duplicate_parent_id'], $focus->id);
+            clone_relationship($focus->db, array('opportunities_contacts'), 'opportunity_id', $_POST['duplicate_parent_id'], $focus->id);
         }
         $return_id = $focus->id;
 	
         $GLOBALS['log']->debug("Saved record with id of ".$return_id);
         if ($redirect) {
-            handleRedirect($return_id,"Opportunities");
+            handleRedirect($return_id, "Opportunities");
         } else {
             return $focus;
         }

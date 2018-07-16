@@ -13,13 +13,13 @@
      You can find the whole class documentation on the pChart web site.
  */
 
- define("UNKNOWN"		, 0.123456789);
- define("IGNORED"		, -1);
+ define("UNKNOWN", 0.123456789);
+ define("IGNORED", -1);
 
- define("LABEL_POSITION_LEFT"	, 880001);
- define("LABEL_POSITION_RIGHT"	, 880002);
- define("LABEL_POSITION_TOP"	, 880003);
- define("LABEL_POSITION_BOTTOM"	, 880004);
+ define("LABEL_POSITION_LEFT", 880001);
+ define("LABEL_POSITION_RIGHT", 880002);
+ define("LABEL_POSITION_TOP", 880003);
+ define("LABEL_POSITION_BOTTOM", 880004);
 
  /* pStock class definition */
  class pSurface
@@ -38,7 +38,7 @@
      }
 
      /* Define the grid size and initialise the 2D matrix */
-     public function setGrid($XSize=10,$YSize=10)
+     public function setGrid($XSize=10, $YSize=10)
      {
          for ($X=0; $X<=$XSize; $X++) {
              for ($Y=0; $Y<=$YSize; $Y++) {
@@ -51,7 +51,7 @@
      }
 
      /* Add a point on the grid */
-     public function addPoint($X,$Y,$Value,$Force=TRUE)
+     public function addPoint($X, $Y, $Value, $Force=TRUE)
      {
          if ($X < 0 || $X >$this->GridSizeX) {
              return(0);
@@ -121,7 +121,7 @@
                  $Value = $Labels[$X];
              }
 
-             $this->pChartObject->drawText($XPos,$YPos,$Value,$Settings);
+             $this->pChartObject->drawText($XPos, $YPos, $Value, $Settings);
          }
      }
 
@@ -167,12 +167,12 @@
                  $Value = $Labels[$Y];
              }
 
-             $this->pChartObject->drawText($XPos,$YPos,$Value,$Settings);
+             $this->pChartObject->drawText($XPos, $YPos, $Value, $Settings);
          }
      }
 
      /* Draw the area arround the specified Threshold */
-     public function drawContour($Threshold,$Format="")
+     public function drawContour($Threshold, $Format="")
      {
          $R		= isset($Format["R"]) ? $Format["R"] : 0;
          $G		= isset($Format["G"]) ? $Format["G"] : 0;
@@ -199,16 +199,16 @@
                      $Y2 = floor($Y0+$Y*$YSize+$YSize);
 
                      if ($X > 0 && $this->Points[$X-1][$Y] != UNKNOWN && $this->Points[$X-1][$Y] != IGNORED && $this->Points[$X-1][$Y] < $Threshold) {
-                         $this->pChartObject->drawLine($X1,$Y1,$X1,$Y2,$Color);
+                         $this->pChartObject->drawLine($X1, $Y1, $X1, $Y2, $Color);
                      }
                      if ($Y > 0 && $this->Points[$X][$Y-1] != UNKNOWN && $this->Points[$X][$Y-1] != IGNORED && $this->Points[$X][$Y-1] < $Threshold) {
-                         $this->pChartObject->drawLine($X1,$Y1,$X2,$Y1,$Color);
+                         $this->pChartObject->drawLine($X1, $Y1, $X2, $Y1, $Color);
                      }
                      if ($X < $this->GridSizeX && $this->Points[$X+1][$Y] != UNKNOWN && $this->Points[$X+1][$Y] != IGNORED && $this->Points[$X+1][$Y] < $Threshold) {
-                         $this->pChartObject->drawLine($X2,$Y1,$X2,$Y2,$Color);
+                         $this->pChartObject->drawLine($X2, $Y1, $X2, $Y2, $Color);
                      }
                      if ($Y < $this->GridSizeY && $this->Points[$X][$Y+1] != UNKNOWN && $this->Points[$X][$Y+1] != IGNORED && $this->Points[$X][$Y+1] < $Threshold) {
-                         $this->pChartObject->drawLine($X1,$Y2,$X2,$Y2,$Color);
+                         $this->pChartObject->drawLine($X1, $Y2, $X2, $Y2, $Color);
                      }
                  }
              }
@@ -289,7 +289,7 @@
                          $Settings["BorderB"] = $B+$Surrounding;
                      }
 
-                     $this->pChartObject->drawFilledRectangle($X1,$Y1,$X2-1,$Y2-1,$Settings);
+                     $this->pChartObject->drawFilledRectangle($X1, $Y1, $X2-1, $Y2-1, $Settings);
                  }
              }
          }
@@ -309,12 +309,12 @@
          shuffle($Missing);
      
          foreach ($Missing as $Key => $Pos) {
-             $Pos = preg_split("/,/",$Pos);
+             $Pos = preg_split("/,/", $Pos);
              $X   = $Pos[0];
              $Y   = $Pos[1];
 
              if ($this->Points[$X][$Y] == UNKNOWN) {
-                 $NearestNeighbor = $this->getNearestNeighbor($X,$Y);
+                 $NearestNeighbor = $this->getNearestNeighbor($X, $Y);
 
                  $Value = 0;
                  $Points = 0;
@@ -335,15 +335,15 @@
      }
 
      /* Return the nearest Neighbor distance of a point */
-     public function getNearestNeighbor($Xp,$Yp)
+     public function getNearestNeighbor($Xp, $Yp)
      {
          $Nearest = UNKNOWN;
          for ($X=0;$X<=$this->GridSizeX;$X++) {
              for ($Y=0;$Y<=$this->GridSizeY;$Y++) {
                  if ($this->Points[$X][$Y] != UNKNOWN && $this->Points[$X][$Y] != IGNORED) {
-                     $DistanceX = max($Xp,$X)-min($Xp,$X);
-                     $DistanceY = max($Yp,$Y)-min($Yp,$Y);
-                     $Distance  = max($DistanceX,$DistanceY);
+                     $DistanceX = max($Xp, $X)-min($Xp, $X);
+                     $DistanceY = max($Yp, $Y)-min($Yp, $Y);
+                     $Distance  = max($DistanceX, $DistanceY);
                      if ($Distance < $Nearest || $Nearest == UNKNOWN) {
                          $Nearest = $Distance;
                      }

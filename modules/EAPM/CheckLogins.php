@@ -45,7 +45,7 @@ require_once('include/externalAPI/ExternalAPIFactory.php');
 
 global $app_strings;
 
-$checkList = ExternalAPIFactory::listAPI('',true);
+$checkList = ExternalAPIFactory::listAPI('', true);
 
 if (!empty($_REQUEST['api'])) {
     // Check just one login type
@@ -80,7 +80,7 @@ if (is_array($checkList)) {
                     $apiLabel = $apiName;
                 }
 
-                $thisFail['label'] = str_replace('{0}',$apiLabel,translate('LBL_ERR_FAILED_QUICKCHECK','EAPM'));
+                $thisFail['label'] = str_replace('{0}', $apiLabel, translate('LBL_ERR_FAILED_QUICKCHECK', 'EAPM'));
                 
                 $failList[$apiName] = $thisFail;
             }

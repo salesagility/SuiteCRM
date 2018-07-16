@@ -69,7 +69,7 @@ class ViewMain extends SugarView
         global $mod_strings;
 
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -112,14 +112,14 @@ class ViewMain extends SugarView
         $smarty->assign('ADMIN', is_admin($current_user));
         $smarty->display('modules/ModuleBuilder/tpls/includes.tpl');
         if ($mbt) {
-            $smarty->assign('TREE',$mbt->fetch());
+            $smarty->assign('TREE', $mbt->fetch());
             $smarty->assign('TREElabel', $mbt->getName());
         }
         $userPref = $current_user->getPreference('mb_assist', 'Assistant');
         if (!$userPref) {
             $userPref="na";
         }
-        $smarty->assign('userPref',$userPref);
+        $smarty->assign('userPref', $userPref);
 
         ///////////////////////////////////
         require_once('include/SugarTinyMCE.php');

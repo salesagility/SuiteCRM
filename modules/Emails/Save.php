@@ -216,7 +216,7 @@ if (!empty($_REQUEST['to_addrs_ids'])) {
 if (isset($_REQUEST['object_type']) && !empty($_REQUEST['object_type']) && isset($_REQUEST['object_id']) && !empty($_REQUEST['object_id'])) {
     //run linking code only if the object_id has not been linked as part of the contacts above and it is an OOB relationship
     $GLOBALS['log']->debug("CESELY".$_REQUEST['object_type']);
-    if (!in_array($_REQUEST['object_id'],$exContactIds)) {
+    if (!in_array($_REQUEST['object_id'], $exContactIds)) {
         $rel = strtolower($_REQUEST['object_type']);
         if ($focus->load_relationship($rel)) {
             $focus->$rel->add($_REQUEST['object_id']);
@@ -230,7 +230,7 @@ if (isset($_REQUEST['object_type']) && !empty($_REQUEST['object_type']) && isset
 // If came from email archiving edit view, this would have been set from form input.
 if (!isset($focus->date_start)) {
     $timedate = TimeDate::getInstance();
-    list($focus->date_start,  $focus->time_start) = $timedate->split_date_time($timedate->now());
+    list($focus->date_start, $focus->time_start) = $timedate->split_date_time($timedate->now());
 }
 
 $focus->date_sent = "";

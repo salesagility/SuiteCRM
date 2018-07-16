@@ -235,7 +235,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
             foreach ($additionalFormFields as $key => $value) {
                 $returnLink .= $key.'='.$value.'&';
             }
-            $returnLink = rtrim($returnLink,'&');
+            $returnLink = rtrim($returnLink, '&');
 
             return $returnLink;
         } else {
@@ -272,7 +272,7 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
 
         if (isset($_REQUEST['layout_def_key']) && $_REQUEST['layout_def_key'] == 'UserEAPM') {
             // Subpanels generally don't go on the editview, so we have to handle this special
-            $megaLink = $this->_get_form($defines, $additionalFormFields,true);
+            $megaLink = $this->_get_form($defines, $additionalFormFields, true);
         //$button = "<input title='$this->title' accesskey='$this->access_key' class='button' type='submit' name='$inputID' id='$inputID' value='$this->form_value' onclick='javascript:document.location=\"index.php?".$megaLink."\"; return false;'/>";
         } else {
             $button = $this->_get_form($defines, $additionalFormFields);

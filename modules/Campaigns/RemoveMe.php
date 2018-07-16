@@ -61,7 +61,7 @@ if (!empty($_REQUEST['identifier'])) {
         $current_user->retrieve('1');
     }
     
-    $keys=log_campaign_activity($_REQUEST['identifier'],'removed');
+    $keys=log_campaign_activity($_REQUEST['identifier'], 'removed');
     global $current_language;
     $mod_strings = return_module_language($current_language, 'Campaigns');
 

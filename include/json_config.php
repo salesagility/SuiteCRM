@@ -162,17 +162,17 @@ class json_config
             $users = $focus->get_call_users();
         } elseif ($module == 'Project') {
             $focus->load_relationships('users');
-            $users=$focus->get_linked_beans('project_users_1','User');
+            $users=$focus->get_linked_beans('project_users_1', 'User');
         } elseif ($module == 'AM_ProjectTemplates') {
             $focus->load_relationships('users');
-            $users=$focus->get_linked_beans('am_projecttemplates_users_1','User');
+            $users=$focus->get_linked_beans('am_projecttemplates_users_1', 'User');
         }		
 		
 		
         $module_arr['users_arr'] = array();
 
         foreach ($users as $user) {
-            array_push($module_arr['users_arr'],  $this->populateBean($user));
+            array_push($module_arr['users_arr'], $this->populateBean($user));
         }
 
         $module_arr['orig_users_arr_hash'] = array();
@@ -186,11 +186,11 @@ class json_config
         $focus->load_relationships('contacts');
 
         if ($module == 'Project') {
-            $contacts=$focus->get_linked_beans('project_contacts_1','Contact');
+            $contacts=$focus->get_linked_beans('project_contacts_1', 'Contact');
         } elseif ($module == 'AM_ProjectTemplates') {
-            $contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+            $contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
         } else {
-            $contacts=$focus->get_linked_beans('contacts','Contact');
+            $contacts=$focus->get_linked_beans('contacts', 'Contact');
         }
 
         foreach ($contacts as $contact) {
@@ -201,7 +201,7 @@ class json_config
 
         if ($module != 'Project' && $module != 'AM_ProjectTemplates') {
             $focus->load_relationships('leads');
-            $leads=$focus->get_linked_beans('leads','Lead');
+            $leads=$focus->get_linked_beans('leads', 'Lead');
             foreach ($leads as $lead) {
                 array_push($module_arr['users_arr'], $this->populateBean($lead));
             }
@@ -213,7 +213,7 @@ class json_config
     {
         global $current_language;
         $currentModule = 'Calendar';
-        $mod_list_strings = return_mod_list_strings_language($current_language,$currentModule);
+        $mod_list_strings = return_mod_list_strings_language($current_language, $currentModule);
 
         global $json;
         $str = "\n".$this->global_registry_var_name."['calendar_strings'] =  {\"dom_cal_month_long\":". $json->encode($mod_list_strings['dom_cal_month_long']).",\"dom_cal_weekdays_long\":". $json->encode($mod_list_strings['dom_cal_weekdays_long'])."}\n";
@@ -221,7 +221,7 @@ class json_config
             $module = 'Home';
         }
         $currentModule = $module;
-        $mod_strings = return_module_language($current_language,$currentModule);
+        $mod_strings = return_module_language($current_language, $currentModule);
         return  $str . "\n".$this->global_registry_var_name."['meeting_strings'] =  ". $json->encode($mod_strings)."\n";
     }
 
@@ -231,7 +231,7 @@ class json_config
         require_once('include/utils/db_utils.php');
         $all_fields = $focus->column_fields;
         // MEETING SPECIFIC
-		$all_fields = array_merge($all_fields,array('required','accept_status','name')); // need name field for contacts and users
+		$all_fields = array_merge($all_fields, array('required','accept_status','name')); // need name field for contacts and users
         $all_fields = $this->listFilter($focus->module_dir, $all_fields);
         //$all_fields = array_merge($focus->column_fields,$focus->additional_column_fields);
 
@@ -244,8 +244,8 @@ class json_config
         foreach ($all_fields as $field) {
             if (isset($focus->$field) && !is_object($focus->$field)) {
                 $focus->$field =  from_html($focus->$field);
-                $focus->$field =  preg_replace("/\r\n/","<BR>",$focus->$field);
-                $focus->$field =  preg_replace("/\n/","<BR>",$focus->$field);
+                $focus->$field =  preg_replace("/\r\n/", "<BR>", $focus->$field);
+                $focus->$field =  preg_replace("/\n/", "<BR>", $focus->$field);
                 $module_arr['fields'][$field] = $focus->$field;
             }
         }

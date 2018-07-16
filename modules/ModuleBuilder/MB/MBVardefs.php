@@ -109,17 +109,17 @@ class MBVardefs
         //		$object_name = $this->key_name;
         //		$_object_name = strtolower($this->name);
         $module_name = $this->name;
-        $this->loadTemplate($by_group,'basic',  MB_TEMPLATES . '/basic/vardefs.php');
+        $this->loadTemplate($by_group, 'basic', MB_TEMPLATES . '/basic/vardefs.php');
         foreach ($this->iTemplates as $template=>$val) {
             $file = MB_IMPLEMENTS . '/' . $template . '/vardefs.php';
-            $this->loadTemplate($by_group,$template, $file);
+            $this->loadTemplate($by_group, $template, $file);
         }
         foreach ($this->templates as $template=>$val) {
             if ($template == 'basic') {
                 continue;
             }
             $file = MB_TEMPLATES . '/' . $template . '/vardefs.php';
-            $this->loadTemplate($by_group,$template, $file);
+            $this->loadTemplate($by_group, $template, $file);
         }
 
         if ($by_group) {
@@ -162,7 +162,7 @@ class MBVardefs
     public function save()
     {
         $header = file_get_contents('modules/ModuleBuilder/MB/header.php');
-        write_array_to_file('vardefs', $this->vardef, $this->path . '/vardefs.php','w', $header);
+        write_array_to_file('vardefs', $this->vardef, $this->path . '/vardefs.php', 'w', $header);
     }
 
     public function build($path)

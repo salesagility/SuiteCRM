@@ -202,7 +202,7 @@ class aSubPanel
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function aSubPanel($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array())
+    public function aSubPanel($name, $instance_properties, $parent_bean, $reload = false, $original_only = false, $search_query = '', $collections = array())
     {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
         if (isset($GLOBALS['log'])) {
@@ -597,7 +597,7 @@ class SubPanelDefinitions
      * @param array $layout_def_override - if you wish to override the default loaded layout defs you pass them in here.
      * @return SubPanelDefinitions
      */
-    public function __construct($focus , $layout_def_key = '' , $layout_def_override = '')
+    public function __construct($focus, $layout_def_key = '', $layout_def_override = '')
     {
         $this->_focus = $focus ;
         if (! empty ($layout_def_override)) {
@@ -639,7 +639,7 @@ class SubPanelDefinitions
 
             //activities is a special use case in that if it is hidden,
             //then the history tab should be hidden too.
-            if (!empty($hidden_panels) && is_array($hidden_panels) && in_array('activities',$hidden_panels)) {
+            if (!empty($hidden_panels) && is_array($hidden_panels) && in_array('activities', $hidden_panels)) {
                 //add history to list hidden_panels
                 $hidden_panels['history'] = 'history';
             }
@@ -657,7 +657,7 @@ class SubPanelDefinitions
 
                 // make sure the module attribute is set, else none of this works...
                 if (!isset($values_array [ 'module' ])) {
-                    $GLOBALS['log']->debug("SubPanelDefinitions->get_available_tabs(): no module defined in subpaneldefs for '$key' =>" . var_export($values_array,true) . " - ingoring subpanel defintion") ;
+                    $GLOBALS['log']->debug("SubPanelDefinitions->get_available_tabs(): no module defined in subpaneldefs for '$key' =>" . var_export($values_array, true) . " - ingoring subpanel defintion") ;
                     continue;
                 }
 
@@ -692,7 +692,7 @@ class SubPanelDefinitions
      * @return boolean|aSubPanel        Returns aSubPanel object or boolean false if one is not found or it can't be
      *      displayed due to ACL reasons.
      */
-    public function load_subpanel($name , $reload = false , $original_only = false, $search_query = '', $collections = array())
+    public function load_subpanel($name, $reload = false, $original_only = false, $search_query = '', $collections = array())
     {
         if (!is_dir('modules/' . $this->layout_defs [ 'subpanel_setup' ][ strtolower ($name) ] [ 'module' ])) {
             return false;
@@ -712,7 +712,7 @@ class SubPanelDefinitions
     /**
      * Load the layout def file and associate the definition with a variable in the file.
      */
-    public function open_layout_defs($reload = false , $layout_def_key = '' , $original_only = false)
+    public function open_layout_defs($reload = false, $layout_def_key = '', $original_only = false)
     {
         $layout_defs [ $this->_focus->module_dir ] = array ( ) ;
         $layout_defs [ $layout_def_key ] = array ( ) ;

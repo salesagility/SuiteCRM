@@ -55,7 +55,7 @@ if (!is_admin($focus)) {
     $sugar_smarty->assign('APP', $app_strings);
     $sugar_smarty->assign('APP_LIST', $app_list_strings);
     
-    $categories = ACLAction::getUserActions($_REQUEST['record'],true);
+    $categories = ACLAction::getUserActions($_REQUEST['record'], true);
     
     //clear out any removed tabs from user display
     if (!$GLOBALS['current_user']->isAdminForModule('Users')) {
@@ -80,7 +80,7 @@ if (!is_admin($focus)) {
     $sugar_smarty->assign('TDWIDTH', $tdwidth);
     $sugar_smarty->assign('ACTION_NAMES', $names);
     
-    $title = getClassicModuleTitle('',array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_ROLES_SUBPANEL_TITLE']), '');
+    $title = getClassicModuleTitle('', array($mod_strings['LBL_MODULE_NAME'],$mod_strings['LBL_ROLES_SUBPANEL_TITLE']), '');
     
     $sugar_smarty->assign('TITLE', $title);
     $sugar_smarty->assign('USER_ID', $focus->id);
@@ -93,5 +93,5 @@ if (!is_admin($focus)) {
     $modules_exempt_from_availability_check=array('Users'=>'Users','ACLRoles'=>'ACLRoles',);
     $subpanel = new SubPanelTiles($focus, 'UserRoles');
     
-    echo $subpanel->display(true,true);
+    echo $subpanel->display(true, true);
 }

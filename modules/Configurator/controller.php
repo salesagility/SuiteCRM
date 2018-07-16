@@ -71,7 +71,7 @@ class ConfiguratorController extends SugarController
             $fontManager = new FontManager();
             $fontManager->filename = $_REQUEST['filename'];
             if (!$fontManager->deleteFont()) {
-                $urlSTR .='&error='.urlencode(implode("<br>",$fontManager->errors));
+                $urlSTR .='&error='.urlencode(implode("<br>", $fontManager->errors));
             }
         }
         header("Location: $urlSTR");
@@ -156,7 +156,7 @@ class ConfiguratorController extends SugarController
         //The save of the admin wizard stops the post silent install from re-showing the admin wizard on each login
         $postSilentInstallAdminWizardCompleted = $current_user->getPreference('postSilentInstallAdminWizardCompleted');
         if (isset($postSilentInstallAdminWizardCompleted) && !$postSilentInstallAdminWizardCompleted) {
-            $current_user->setPreference('postSilentInstallAdminWizardCompleted',true);
+            $current_user->setPreference('postSilentInstallAdminWizardCompleted', true);
         }
 
         // Bug 37310 - Delete any existing currency that matches the one we've just set the default to during the admin wizard
@@ -197,7 +197,7 @@ class ConfiguratorController extends SugarController
 
             foreach ($installation_scenarios as $scenario) {
                 //If the item is not in $_SESSION['scenarios'], then unset them as they are not required
-                if (!in_array($scenario['key'],$_REQUEST['scenarios'])) {
+                if (!in_array($scenario['key'], $_REQUEST['scenarios'])) {
                     foreach ($scenario['modules'] as $module) {
                         if (($removeKey = array_search($module, $enabled_tabs)) !== false) {
                             unset($enabled_tabs[$removeKey]);
@@ -224,12 +224,12 @@ class ConfiguratorController extends SugarController
             }
             //Write the tabstructure to custom so that the grouping are not shown for the un-selected scenarios
             $fp = sugar_fopen('custom/include/tabConfig.php', 'w');
-            $fileContents = "<?php \n" .'$GLOBALS["tabStructure"] ='.var_export($GLOBALS['tabStructure'],true).';';
+            $fileContents = "<?php \n" .'$GLOBALS["tabStructure"] ='.var_export($GLOBALS['tabStructure'], true).';';
             fwrite($fp, $fileContents);
             fclose($fp);
             //Write the dashlets to custom so that the dashlets are not shown for the un-selected scenarios
             $fp = sugar_fopen('custom/modules/Home/dashlets.php', 'w');
-            $fileContents = "<?php \n" .'$defaultDashlets ='.var_export($defaultDashlets,true).';';
+            $fileContents = "<?php \n" .'$defaultDashlets ='.var_export($defaultDashlets, true).';';
             fwrite($fp, $fileContents);
             fclose($fp);
             // End of the scenario implementations

@@ -119,7 +119,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         // Available fields are those that are in the Model and the original layout definition, but not already shown in the View
         // So, because the formats of the two are different we brute force loop through View and unset the fields we find in a copy of Model
         $availableFields = $this->_getModelFields();
-        $GLOBALS['log']->debug(get_class($this)."->getAvailableFields(): _getModelFields returns: ".implode(",",array_keys($availableFields)));
+        $GLOBALS['log']->debug(get_class($this)."->getAvailableFields(): _getModelFields returns: ".implode(",", array_keys($availableFields)));
         if (! empty($this->_viewdefs)) {
             foreach ($this->_viewdefs ['panels'] as $panel) {
                 foreach ($panel as $row) {
@@ -142,19 +142,19 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 
     public function writeWorkingFile()
     {
-        $this->_writeToFile($this->_workingFile,$this->_view,$this->_module,$this->_viewdefs,$this->_variables);
+        $this->_writeToFile($this->_workingFile, $this->_view, $this->_module, $this->_viewdefs, $this->_variables);
     }
 
     public function handleSave()
     {
-        $this->_writeToFile($this->_customFile,$this->_view,$this->_module,$this->_viewdefs,$this->_variables);
+        $this->_writeToFile($this->_customFile, $this->_view, $this->_module, $this->_viewdefs, $this->_variables);
         // now clear the cache so that the results are immediately visible
         include_once('include/TemplateHandler/TemplateHandler.php');
         if (strtolower($this->_view) == 'quickcreate') {
-            TemplateHandler::clearCache($this->_module,"form_SubPanelQuickCreate_{$this->_module}.tpl");
-            TemplateHandler::clearCache($this->_module,"form_DCQuickCreate_{$this->_module}.tpl");
+            TemplateHandler::clearCache($this->_module, "form_SubPanelQuickCreate_{$this->_module}.tpl");
+            TemplateHandler::clearCache($this->_module, "form_DCQuickCreate_{$this->_module}.tpl");
         } else {
-            TemplateHandler::clearCache($this->_module,"{$this->_view}.tpl");
+            TemplateHandler::clearCache($this->_module, "{$this->_view}.tpl");
         }
     }
 
@@ -163,7 +163,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
         $this->_viewdefs = array();
         $viewdefs = null;
 
-        $loaded = $this->_loadFromFile($view,$this->_sourceFile,$module);
+        $loaded = $this->_loadFromFile($view, $this->_sourceFile, $module);
         $this->_viewdefs = $loaded['viewdefs'][$module][$view];
         $this->_variables = $loaded['variables'];
     }
@@ -338,7 +338,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 $modelFields[$field] = array('name' => $field, 'label' => $def ['label']);
             }
         }
-        $GLOBALS['log']->debug(print_r($modelFields,true));
+        $GLOBALS['log']->debug(print_r($modelFields, true));
         foreach ($this->_fieldDefs as $field => $def) {
             if ((!empty($def['studio']) && $def['studio'] == 'visible')
             || (empty($def['studio']) &&  (empty($def ['source']) || $def ['source'] == 'db' || $def ['source'] == 'custom_fields') && $def ['type'] != 'id' && strcmp($field, 'deleted') != 0 && (empty($def ['dbType']) || $def ['dbType'] != 'id') && (empty($def ['dbtype']) || $def ['dbtype'] != 'id'))) {
@@ -348,7 +348,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 $GLOBALS['log']->debug(get_class($this)."->_getModelFields(): skipping $field from modelFields as it fails the test for inclusion");
             }
         }
-        $GLOBALS['log']->debug(get_class($this)."->_getModelFields(): remaining entries in modelFields are: ".implode(",",array_keys($modelFields)));
+        $GLOBALS['log']->debug(get_class($this)."->_getModelFields(): remaining entries in modelFields are: ".implode(",", array_keys($modelFields)));
         return $modelFields;
     }
 

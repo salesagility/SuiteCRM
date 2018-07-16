@@ -150,7 +150,7 @@ function smarty_function_sugar_action_menu($params, &$smarty)
                         'html' => $subitem
                     );
                 }
-                array_push($menus['items'],array(
+                array_push($menus['items'], array(
                     'html' => $sub_first,
                     'items' => $sub,
                     'submenuHtmlOptions' => array(
@@ -158,7 +158,7 @@ function smarty_function_sugar_action_menu($params, &$smarty)
                     )
                 ));
             } elseif (strlen($item)) {
-                array_push($menus['items'],array(
+                array_push($menus['items'], array(
                     'html' => $item
                 ));
             }

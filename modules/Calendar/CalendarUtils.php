@@ -121,9 +121,9 @@ class CalendarUtils
         }
 
         if ($bean->field_defs[ $start_field ]['type'] == "date") {
-            $timestamp = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(),$bean->$start_field,new DateTimeZone('UTC'))->format('U');
+            $timestamp = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(), $bean->$start_field, new DateTimeZone('UTC'))->format('U');
         } else {
-            $timestamp = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$bean->$start_field,new DateTimeZone('UTC'))->format('U');
+            $timestamp = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $bean->$start_field, new DateTimeZone('UTC'))->format('U');
         }
         $arr['timestamp'] = $timestamp;
         $arr['time_start'] = $GLOBALS['timedate']->fromTimestamp($arr['timestamp'])->format($GLOBALS['timedate']->get_time_format());
@@ -138,9 +138,9 @@ class CalendarUtils
         $arr['offset'] = $date_start->format('H') * 3600 + $date_start->format('i') * 60;
 
         if ($bean->field_defs[ $start_field ]['type'] == "date") {
-            $date_end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(),$bean->$end_field,new DateTimeZone('UTC'));
+            $date_end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(), $bean->$end_field, new DateTimeZone('UTC'));
         } else {
-            $date_end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$bean->$end_field,new DateTimeZone('UTC'));
+            $date_end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $bean->$end_field, new DateTimeZone('UTC'));
         }
 
         if ($bean->object_name != 'Task') {
@@ -205,8 +205,8 @@ class CalendarUtils
         if (!empty($bean->repeat_parent_id)) {
             $arr['repeat_parent_id'] = $bean->repeat_parent_id;
         }
-        $arr = array_merge($arr,$field_arr);
-        $arr = array_merge($arr,CalendarUtils::get_time_data($bean));
+        $arr = array_merge($arr, $field_arr);
+        $arr = array_merge($arr, CalendarUtils::get_time_data($bean));
 
         return $arr;
     }
@@ -246,8 +246,8 @@ class CalendarUtils
                 $date_start = $bean->date_start;
             }
 
-            $date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format() ,$date_start);
-            $arr = array_merge($arr,array(
+            $date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $date_start);
+            $arr = array_merge($arr, array(
                 'current_dow' => $date->format("w"),
                 'default_repeat_until' => $date->get("+1 Month")->format($GLOBALS['timedate']->get_date_format()),
             ));
@@ -263,7 +263,7 @@ class CalendarUtils
      * @param array $params
      * @return array
      */
-    public static function build_repeat_sequence($date_start,$params)
+    public static function build_repeat_sequence($date_start, $params)
     {
         $arr = array();
 
@@ -298,7 +298,7 @@ class CalendarUtils
         /** 
          * @var SugarDateTime $start Recurrence start date.
          */
-        $start = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$date_start);
+        $start = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $date_start);
         /** 
          * @var SugarDateTime $end Recurrence end date. Used if recurrence ends by date.
          */
@@ -315,7 +315,7 @@ class CalendarUtils
         $w = $interval; // for week iteration
         $last_dow = $start->format("w");
 
-        $limit = SugarConfig::getInstance()->get('calendar.max_repeat_count',1000);
+        $limit = SugarConfig::getInstance()->get('calendar.max_repeat_count', 1000);
 
         while ($i < $count || ($count == 0 && $current->format("U") < $end->format("U"))) {
             $skip = false;
@@ -327,7 +327,7 @@ class CalendarUtils
                     $day_index = $last_dow;
                     for ($d = $last_dow + 1; $d <= $last_dow + 7; $d++) {
                         $day_index = $d % 7;
-                        if (strpos($dow,(string)($day_index)) !== false) {
+                        if (strpos($dow, (string)($day_index)) !== false) {
                             break;
                         }
                     }
@@ -375,7 +375,7 @@ class CalendarUtils
      * @param array $time_arr array of datetimes
      * @return array
      */
-    public static function save_repeat_activities(SugarBean $bean,$time_arr)
+    public static function save_repeat_activities(SugarBean $bean, $time_arr)
     {
 
         // Here we will create single big inserting query for each invitee relationship
@@ -433,7 +433,7 @@ class CalendarUtils
             $clone->id = "";
             $clone->date_start = $date_start;
             // TODO CHECK DATETIME VARIABLE
-            $date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$date_start);
+            $date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $date_start);
             $date = $date->get("+{$bean->duration_hours} Hours")->get("+{$bean->duration_minutes} Minutes");
             $date_end = $date->format($GLOBALS['timedate']->get_date_time_format());
             $clone->date_end = $date_end;
@@ -467,7 +467,7 @@ class CalendarUtils
                 if ($i < 44) {
                     $clone->date_start = $date_start;
                     $clone->date_end = $date_end;
-                    $arr[] = array_merge(array('id' => $clone->id),CalendarUtils::get_time_data($clone));
+                    $arr[] = array_merge(array('id' => $clone->id), CalendarUtils::get_time_data($clone));
                 }
                 $i++;
             }

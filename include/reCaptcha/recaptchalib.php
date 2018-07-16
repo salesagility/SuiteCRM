@@ -54,7 +54,7 @@ function _recaptcha_qsencode($data)
     }
 
     // Cut the last '&'
-    $req=substr($req,0,strlen($req)-1);
+    $req=substr($req, 0, strlen($req)-1);
     return $req;
 }
 
@@ -217,7 +217,7 @@ function _recaptcha_aes_pad($val)
 
 /* Mailhide related code */
 
-function _recaptcha_aes_encrypt($val,$ky)
+function _recaptcha_aes_encrypt($val, $ky)
 {
     if (! function_exists ("mcrypt_encrypt")) {
         die ("To use reCAPTCHA Mailhide, you need to have the mcrypt php module installed.");

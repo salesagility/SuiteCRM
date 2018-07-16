@@ -128,7 +128,7 @@ function hasPasswordExpired($username)
 
 		    case '2':
 		    	$login=$current_user->getPreference('loginexpiration');
-		    	$current_user->setPreference('loginexpiration',$login+1);
+		    	$current_user->setPreference('loginexpiration', $login+1);
 		        $current_user->save();
 		        if ($login+1 >= $res[$type.'expirationlogin']) {
 		            $_SESSION['expiration_type']= $mod_strings['LBL_PASSWORD_EXPIRATION_LOGIN'];

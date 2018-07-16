@@ -62,7 +62,7 @@ class ViewShowDuplicates extends SugarView
             sugar_die("Unauthorized access to this area.");
         }
 
-        parse_str($_SESSION['SHOW_DUPLICATES'],$_POST);
+        parse_str($_SESSION['SHOW_DUPLICATES'], $_POST);
         $post = array_map("securexss", $_POST);
         foreach ($post as $k => $v) {
             $_POST[$k] = $v;

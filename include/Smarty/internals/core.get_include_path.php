@@ -23,11 +23,11 @@ function smarty_core_get_include_path(&$params, &$smarty)
     if (!isset($_path_array)) {
         $_ini_include_path = ini_get('include_path');
 
-        if (strstr($_ini_include_path,';')) {
+        if (strstr($_ini_include_path, ';')) {
             // windows pathnames
-            $_path_array = explode(';',$_ini_include_path);
+            $_path_array = explode(';', $_ini_include_path);
         } else {
-            $_path_array = explode(':',$_ini_include_path);
+            $_path_array = explode(':', $_ini_include_path);
         }
     }
     foreach ($_path_array as $_include_path) {

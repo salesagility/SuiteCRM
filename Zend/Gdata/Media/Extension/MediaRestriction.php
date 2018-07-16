@@ -58,7 +58,7 @@ class Zend_Gdata_Media_Extension_MediaRestriction extends Zend_Gdata_Extension
      * @param string $relationship
      * @param string $type
      */
-    public function __construct($text = null, $relationship = null,  $type = null)
+    public function __construct($text = null, $relationship = null, $type = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();

@@ -61,7 +61,7 @@ $GLOBALS['installing'] = true;
 if (!isset($install_script) || !$install_script) {
     die($mod_strings['ERR_NO_DIRECT_SCRIPT']);
 }
-ini_set("output_buffering","0");
+ini_set("output_buffering", "0");
 set_time_limit(3600);
 // flush after each output so the user can see the progress in real-time
 ob_implicit_flush();
@@ -156,7 +156,7 @@ $bottle = handleSugarConfig();
 //handleLog4Php();
 
 $server_software = $_SERVER["SERVER_SOFTWARE"];
-if (strpos($server_software,'Microsoft-IIS') !== false) {
+if (strpos($server_software, 'Microsoft-IIS') !== false) {
     installLog("calling handleWebConfig()");
     handleWebConfig();
 } else {
@@ -317,7 +317,7 @@ echo "<br>";
             $db->createTableParams($table, $rel_data['fields'], $rel_data['indices']);
         }
 
-        SugarBean::createRelationshipMeta($rel_name,$db,$table,$rel_dictionary,'');
+        SugarBean::createRelationshipMeta($rel_name, $db, $table, $rel_dictionary, '');
     }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -430,7 +430,7 @@ FP;
     }
     if (!empty($_SESSION['setup_system_name'])) {
         $admin=new Administration();
-        $admin->saveSetting('system','name',$_SESSION['setup_system_name']);
+        $admin->saveSetting('system', 'name', $_SESSION['setup_system_name']);
     }
 
     // Bug 28601 - Set the default list of tabs to show
@@ -534,13 +534,13 @@ if (!is_null($_SESSION['scenarios'])) {
 
 //Write the tabstructure to custom so that the grouping are not shown for the un-selected scenarios
 $fp = sugar_fopen('custom/include/tabConfig.php', 'w');
-$fileContents = "<?php \n" .'$GLOBALS["tabStructure"] ='.var_export($GLOBALS['tabStructure'],true).';';
+$fileContents = "<?php \n" .'$GLOBALS["tabStructure"] ='.var_export($GLOBALS['tabStructure'], true).';';
 fwrite($fp, $fileContents);
 fclose($fp);
 
 //Write the dashlets to custom so that the dashlets are not shown for the un-selected scenarios
 $fp = sugar_fopen('custom/modules/Home/dashlets.php', 'w');
-$fileContents = "<?php \n" .'$defaultDashlets ='.var_export($defaultDashlets,true).';';
+$fileContents = "<?php \n" .'$defaultDashlets ='.var_export($defaultDashlets, true).';';
 fwrite($fp, $fileContents);
 fclose($fp);
 
@@ -618,7 +618,7 @@ installLog('retrieveSettings');
 //$focus->retrieveSettings();
 // switch off the adminwizard (mark that we have got past this point)
 installLog('AdminWizard OFF');
-$focus->saveSetting('system','adminwizard',1);
+$focus->saveSetting('system', 'adminwizard', 1);
 
 installLog('saveConfig');
 $focus->saveConfig();
@@ -777,4 +777,4 @@ EOQ;
 echo $out;
 
 $loginURL = str_replace('install.php', 'index.php', "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
-installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL) , array('function' => 'redirect', 'arguments' => $loginURL));
+installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL), array('function' => 'redirect', 'arguments' => $loginURL));

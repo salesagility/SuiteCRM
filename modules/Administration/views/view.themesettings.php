@@ -83,7 +83,7 @@ class AdministrationViewThemesettings extends SugarView
         
         if (isset($_REQUEST['disabled_themes'])) {
             $configurator = new Configurator();
-            $configurator->config['disabled_themes'] = implode(',',$_REQUEST['disabled_themes']);
+            $configurator->config['disabled_themes'] = implode(',', $_REQUEST['disabled_themes']);
             $configurator->config['default_theme'] = $_REQUEST['default_theme'];
             $configurator->handleOverride();
         }
@@ -110,8 +110,8 @@ class AdministrationViewThemesettings extends SugarView
         foreach (SugarThemeRegistry::unAvailableThemes() as $dir => $theme) {
             $disabled[] = array("theme" => $theme, "dir" => $dir);
         }
-        $this->ss->assign('available_themes',SugarThemeRegistry::allThemesDefs());
-        $this->ss->assign('default_theme',$GLOBALS['sugar_config']['default_theme']);
+        $this->ss->assign('available_themes', SugarThemeRegistry::allThemesDefs());
+        $this->ss->assign('default_theme', $GLOBALS['sugar_config']['default_theme']);
         $this->ss->assign("THEMES", get_select_options_with_id(SugarThemeRegistry::allThemes(), $GLOBALS['sugar_config']['default_theme']));
         $this->ss->assign('enabled_modules', json_encode($enabled));
         $this->ss->assign('disabled_modules', json_encode($disabled));

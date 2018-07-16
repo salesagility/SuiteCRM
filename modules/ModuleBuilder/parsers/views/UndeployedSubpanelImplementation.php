@@ -65,7 +65,7 @@ class UndeployedSubpanelImplementation extends AbstractMetaDataImplementation im
      * @param string $moduleName     The name of the module to which this subpanel belongs
      * @param string $packageName    If not empty, the name of the package to which this subpanel belongs
      */
-    public function __construct($subpanelName , $moduleName , $packageName)
+    public function __construct($subpanelName, $moduleName, $packageName)
     {
         $this->_subpanelName = $subpanelName ;
         $this->_moduleName = $moduleName ;

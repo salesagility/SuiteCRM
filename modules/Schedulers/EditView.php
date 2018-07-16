@@ -112,7 +112,7 @@ $javascript->addToValidateBinaryDependency('time_minute_from', 'alpha', 'Active 
 $dtStart = $focus->date_time_start;
 $dtEnd = $focus->date_time_end;
 if (!empty($dtStart)) {
-    $exStart = explode(" ",$dtStart);
+    $exStart = explode(" ", $dtStart);
     $date_start = $exStart[0];
     $time_start = $exStart[1];
 } else {
@@ -122,7 +122,7 @@ if (!empty($dtStart)) {
 }
 
 if (!empty($dtEnd) && $dtEnd != '2020-12-31 23:59') {
-    $exEnd = explode(" ",$dtEnd);
+    $exEnd = explode(" ", $dtEnd);
     $date_end = $exEnd[0];
     $time_end = $exEnd[1];
 } else {
@@ -325,7 +325,7 @@ if ($focus->catch_up == 1) {
 }
 // job
 if (strstr($focus->job, 'url::')) {
-    $job_url = str_replace('url::','', $focus->job);
+    $job_url = str_replace('url::', '', $focus->job);
 } else {
     $job_url = 'http://';
 }

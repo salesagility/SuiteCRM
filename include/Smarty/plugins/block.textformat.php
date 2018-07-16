@@ -72,7 +72,7 @@ function smarty_block_textformat($params, $content, &$smarty)
     }
 
     // split into paragraphs
-    $_paragraphs = preg_split('![\r\n][\r\n]!',$content);
+    $_paragraphs = preg_split('![\r\n][\r\n]!', $content);
     $_output = '';
 
     for ($_x = 0, $_y = count($_paragraphs); $_x < $_y; $_x++) {

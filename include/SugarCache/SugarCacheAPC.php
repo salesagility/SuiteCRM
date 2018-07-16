@@ -67,9 +67,9 @@ class SugarCacheAPC extends SugarCacheAbstract
     /**
      * @see SugarCacheAbstract::_setExternal()
      */
-    protected function _setExternal($key,$value)
+    protected function _setExternal($key, $value)
     {
-        apc_store($key,$value,$this->_expireTimeout);
+        apc_store($key, $value, $this->_expireTimeout);
     }
 
     /**

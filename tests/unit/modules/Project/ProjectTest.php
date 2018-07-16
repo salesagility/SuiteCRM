@@ -16,8 +16,8 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the contructor and check for the Object type and  attributes
         $project = new Project();
 
-        $this->assertInstanceOf('Project',$project);
-        $this->assertInstanceOf('SugarBean',$project);
+        $this->assertInstanceOf('Project', $project);
+        $this->assertInstanceOf('SugarBean', $project);
 
 
         $this->assertAttributeEquals('project', 'table_name', $project);
@@ -112,11 +112,11 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $project = new Project();
 
         //test without setting name
-        $this->assertEquals(Null,$project->get_summary_text());
+        $this->assertEquals(Null, $project->get_summary_text());
 
         //test with name set
         $project->name = "test";
-        $this->assertEquals('test',$project->get_summary_text());
+        $this->assertEquals('test', $project->get_summary_text());
     }
 
 
@@ -127,13 +127,13 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with empty string params
         $expected = "project.name LIKE '%%'";
         $actual = $project->build_generic_where_clause('');
-        $this->assertSame($expected,$actual);
+        $this->assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "project.name LIKE '%test%'";
         $actual = $project->build_generic_where_clause('test');
-        $this->assertSame($expected,$actual);
+        $this->assertSame($expected, $actual);
     }
 
     /**

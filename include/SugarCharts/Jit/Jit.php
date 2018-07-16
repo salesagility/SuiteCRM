@@ -79,9 +79,9 @@ class Jit extends JsChart
     }
 	
 
-    public function getDashletScript($id,$xmlFile="")
+    public function getDashletScript($id, $xmlFile="")
     {
-        parent::getDashletScript($id,$xmlFile);
+        parent::getDashletScript($id, $xmlFile);
         return $this->ss->fetch('include/SugarCharts/Jit/tpls/DashletGenericChartScript.tpl');
     }
 }

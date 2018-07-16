@@ -135,7 +135,7 @@ class SubPanelTilesTabs extends SubPanelTiles
         foreach ($GLOBALS['tabStructure'] as $mainTab => $subModules) {
             foreach ($subModules['modules'] as $key => $subModule) {
                 foreach ($tabs as $subpanelID) {
-                    if (isset($moduleNames[ $subpanelID ]) && strcasecmp($subModule , $moduleNames[ $subpanelID ]) === 0) {
+                    if (isset($moduleNames[ $subpanelID ]) && strcasecmp($subModule, $moduleNames[ $subpanelID ]) === 0) {
                         // Bug #44344 : Custom relationships under same module only show once in subpanel tabs
                         $groups [ translate ($mainTab) ] [ 'modules' ] [] = $subpanelID ;
                         $found [ $subpanelID ] = true ;

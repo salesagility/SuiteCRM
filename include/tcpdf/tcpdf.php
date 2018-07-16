@@ -3167,7 +3167,7 @@ if (!class_exists('TCPDF', false)) {
                 $this->setFontSubBuffer($fontkey, 'diff', $d);
             }
             if (!$this->empty_string($file)) {
-                if ((strcasecmp($type,'TrueType') == 0) OR (strcasecmp($type, 'TrueTypeUnicode') == 0)) {
+                if ((strcasecmp($type, 'TrueType') == 0) OR (strcasecmp($type, 'TrueTypeUnicode') == 0)) {
                     $this->FontFiles[$file] = array('length1' => $originalsize, 'fontdir' => $fontdir);
                 } elseif ($type != 'core') {
                     $this->FontFiles[$file] = array('length1' => $size1, 'length2' => $size2, 'fontdir' => $fontdir);
@@ -3585,7 +3585,7 @@ if (!class_exists('TCPDF', false)) {
                 $lm = ($this->LineWidth / 2);
                 $x = $this->x;
                 $y = $this->y;
-                if (strpos($border,'L') !== false) {
+                if (strpos($border, 'L') !== false) {
                     if ($this->rtl) {
                         $xk = ($x - $w) * $k;
                     } else {
@@ -3593,7 +3593,7 @@ if (!class_exists('TCPDF', false)) {
                     }
                     $s .= sprintf('%.2F %.2F m %.2F %.2F l S ', $xk, (($this->h - $y + $lm) * $k), $xk, (($this->h - ($y + $h + $lm)) * $k));
                 }
-                if (strpos($border,'T') !== false) {
+                if (strpos($border, 'T') !== false) {
                     if ($this->rtl) {
                         $xk = ($x - $w + $lm) * $k;
                         $xwk = ($x - $lm) * $k;
@@ -3603,7 +3603,7 @@ if (!class_exists('TCPDF', false)) {
                     }
                     $s .= sprintf('%.2F %.2F m %.2F %.2F l S ', $xk, (($this->h - $y) * $k), $xwk, (($this->h - $y) * $k));
                 }
-                if (strpos($border,'R') !== false) {
+                if (strpos($border, 'R') !== false) {
                     if ($this->rtl) {
                         $xk = $x * $k;
                     } else {
@@ -3611,7 +3611,7 @@ if (!class_exists('TCPDF', false)) {
                     }
                     $s .= sprintf('%.2F %.2F m %.2F %.2F l S ', $xk, (($this->h - $y + $lm) * $k), $xk, (($this->h - ($y + $h + $lm))* $k));
                 }
-                if (strpos($border,'B') !== false) {
+                if (strpos($border, 'B') !== false) {
                     if ($this->rtl) {
                         $xk = ($x - $w + $lm) * $k;
                         $xwk = ($x - $lm) * $k;
@@ -3633,7 +3633,7 @@ if (!class_exists('TCPDF', false)) {
                     if ($stretch > 2) {
                         // spacing
                         //Calculate character spacing in points
-                        $char_space = (($w - $width - (2 * $this->cMargin)) * $this->k) / max($this->GetNumChars($txt)-1,1);
+                        $char_space = (($w - $width - (2 * $this->cMargin)) * $this->k) / max($this->GetNumChars($txt)-1, 1);
                         //Set character spacing
                         $rs .= sprintf('BT %.2F Tc ET ', $char_space);
                     } else {
@@ -4043,7 +4043,7 @@ if (!class_exists('TCPDF', false)) {
             // remove carriage returns
             $txt = str_replace("\r", '', $txt);
             // remove last newline (if any)
-            if (substr($txt,-1) == "\n") {
+            if (substr($txt, -1) == "\n") {
                 $txt = substr($txt, 0, -1);
             }
             // divide text in blocks
@@ -6532,7 +6532,7 @@ if (!class_exists('TCPDF', false)) {
                 foreach ($this->viewer_preferences['PrintPageRange'] as $k => $v) {
                     $PrintPageRangeNum .= ' '.($v - 1).'';
                 }
-                $this->_out('/PrintPageRange ['.substr($PrintPageRangeNum,1).']');
+                $this->_out('/PrintPageRange ['.substr($PrintPageRangeNum, 1).']');
             }
             if (isset($this->viewer_preferences['NumCopies'])) {
                 $this->_out('/NumCopies '.intval($this->viewer_preferences['NumCopies']));
@@ -7561,7 +7561,7 @@ if (!class_exists('TCPDF', false)) {
         * @since 2.1.000 (2008-01-07)
         * @see StartTransform(), StopTransform()
         */
-        public function MirrorP($x='',$y='')
+        public function MirrorP($x='', $y='')
         {
             $this->Scale(-100, -100, $x, $y);
         }
@@ -7575,7 +7575,7 @@ if (!class_exists('TCPDF', false)) {
         * @since 2.1.000 (2008-01-07)
         * @see StartTransform(), StopTransform()
         */
-        public function MirrorL($angle=0, $x='',$y='')
+        public function MirrorL($angle=0, $x='', $y='')
         {
             $this->Scale(-100, 100, $x, $y);
             $this->Rotate(-2*($angle-90), $x, $y);
@@ -8974,7 +8974,7 @@ if (!class_exists('TCPDF', false)) {
                         $chardata[$i]['level'] += 2;
                     }
                 }
-                $maxlevel = max($chardata[$i]['level'],$maxlevel);
+                $maxlevel = max($chardata[$i]['level'], $maxlevel);
             }
 
             // L1. On each line, reset the embedding level of the following characters to the paragraph embedding level:
@@ -9336,10 +9336,10 @@ if (!class_exists('TCPDF', false)) {
         protected function _JScolor($color)
         {
             static $aColors = array('transparent', 'black', 'white', 'red', 'green', 'blue', 'cyan', 'magenta', 'yellow', 'dkGray', 'gray', 'ltGray');
-            if (substr($color,0,1) == '#') {
-                return sprintf("['RGB',%.3F,%.3F,%.3F]", hexdec(substr($color,1,2))/255, hexdec(substr($color,3,2))/255, hexdec(substr($color,5,2))/255);
+            if (substr($color, 0, 1) == '#') {
+                return sprintf("['RGB',%.3F,%.3F,%.3F]", hexdec(substr($color, 1, 2))/255, hexdec(substr($color, 3, 2))/255, hexdec(substr($color, 5, 2))/255);
             }
-            if (!in_array($color,$aColors)) {
+            if (!in_array($color, $aColors)) {
                 $this->Error('Invalid color: '.$color);
             }
             return 'color.'.$color;
@@ -10541,12 +10541,12 @@ if (!class_exists('TCPDF', false)) {
 						break;
 					}
 					case 'x': {// custom fill color
-						list($c,$m,$y,$k) = $chunks;
+						list($c, $m, $y, $k) = $chunks;
 						$this->_out(''.$c.' '.$m.' '.$y.' '.$k.' k');
 						break;
 					}
 					case 'X': { // custom stroke color
-						list($c,$m,$y,$k) = $chunks;
+						list($c, $m, $y, $k) = $chunks;
 						$this->_out(''.$c.' '.$m.' '.$y.' '.$k.' K');
 						break;
 					}
@@ -11920,7 +11920,7 @@ if (!class_exists('TCPDF', false)) {
 												$currentxpos = $xmatches[1];
 												$function = function ($matches) {
 												    global $spacew;
-												    $newx = sprintf("%.2F",(floatval($matches[1]) + $spacew));
+												    $newx = sprintf("%.2F", (floatval($matches[1]) + $spacew));
 												    return "".$newx." ".$matches[2]." ".$matches[3]." ".$matches[4]." x*#!#*x".$matches[5].$matches[6];
 												};
 
@@ -11935,9 +11935,9 @@ if (!class_exists('TCPDF', false)) {
 												$currentxpos = $xmatches[1];
 												$function = function ($matches) {
 												    global $spacew;
-												    $newx1 = sprintf("%.3F",(floatval($matches[1]) + $spacew));
-												    $newx2 = sprintf("%.3F",(floatval($matches[3]) + $spacew));
-												    $newx3 = sprintf("%.3F",(floatval($matches[5]) + $spacew));
+												    $newx1 = sprintf("%.3F", (floatval($matches[1]) + $spacew));
+												    $newx2 = sprintf("%.3F", (floatval($matches[3]) + $spacew));
+												    $newx3 = sprintf("%.3F", (floatval($matches[5]) + $spacew));
 												    return "".$newx1." ".$matches[2]." ".$newx2." ".$matches[4]." ".$newx3." ".$matches[6]." x*#!#*x".$matches[7].$matches[8];
 												};
 												// justify block

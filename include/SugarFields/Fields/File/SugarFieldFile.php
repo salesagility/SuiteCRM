@@ -41,7 +41,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 
 class SugarFieldFile extends SugarFieldBase
 {
-    private function fillInOptions(&$vardef,&$displayParams)
+    private function fillInOptions(&$vardef, &$displayParams)
     {
         if (isset($vardef['allowEapm']) && $vardef['allowEapm'] == true) {
             if (empty($vardef['docType'])) {
@@ -77,15 +77,15 @@ class SugarFieldFile extends SugarFieldBase
 
     public function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
-        $this->fillInOptions($vardef,$displayParams);
+        $this->fillInOptions($vardef, $displayParams);
         return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
     public function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex)
     {
-        $this->fillInOptions($vardef,$displayParams);
+        $this->fillInOptions($vardef, $displayParams);
 
-        $keys = $this->getAccessKey($vardef,'FILE',$vardef['module']);
+        $keys = $this->getAccessKey($vardef, 'FILE', $vardef['module']);
         $displayParams['accessKeySelect'] = $keys['accessKeySelect'];
         $displayParams['accessKeySelectLabel'] = $keys['accessKeySelectLabel'];
         $displayParams['accessKeySelectTitle'] = $keys['accessKeySelectTitle'];
@@ -104,7 +104,7 @@ class SugarFieldFile extends SugarFieldBase
     public function save(&$bean, $params, $field, $vardef, $prefix = '')
     {
         $fakeDisplayParams = array();
-        $this->fillInOptions($vardef,$fakeDisplayParams);
+        $this->fillInOptions($vardef, $fakeDisplayParams);
 
         require_once('include/upload_file.php');
         $upload_file = new UploadFile($prefix . $field . '_file');
@@ -167,7 +167,7 @@ class SugarFieldFile extends SugarFieldBase
         } elseif (!empty($params[$prefix . $field . '_remoteName'])) {
             // We aren't moving, we might need to do some remote linking
             $displayParams = array();
-            $this->fillInOptions($vardef,$displayParams);
+            $this->fillInOptions($vardef, $displayParams);
             
             if (isset($params[$prefix . $vardef['docId']])
                  && ! empty($params[$prefix . $vardef['docId']])

@@ -95,7 +95,7 @@ class SugarRestJSON extends SugarRest
             if (!is_array($data)) {
                 $data = array($data);
             }
-            $res = call_user_func_array(array( $this->implementation, $method),$data);
+            $res = call_user_func_array(array( $this->implementation, $method), $data);
             $GLOBALS['log']->info('End: SugarRestJSON->serve');
             return $res;
         } // else

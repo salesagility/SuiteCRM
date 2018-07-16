@@ -84,7 +84,7 @@ $step_txt = "Step 2: ";
 if (!empty($_SESSION['SELECTED_OBJECTS_DEF'])) {
     $selObjs = $_SESSION['SELECTED_OBJECTS_DEF'];
     $sel_obj = array();
-    parse_str($selObjs,$sel_obj);
+    parse_str($selObjs, $sel_obj);
     $idArray = array();
     $_SESSION['MAILMERGE_WHERE'] = "";
     foreach ($sel_obj as $key => $value) {
@@ -133,10 +133,10 @@ if (isset($_SESSION['MAILMERGE_SKIP_REL']) && $_SESSION['MAILMERGE_SKIP_REL']) {
 }
 
 $xtpl->assign("MAILMERGE_MODULE", $_SESSION['MAILMERGE_MODULE']);
-$xtpl->assign("MAILMERGE_PREV", SugarThemeRegistry::current()->getImage('previous','border="0" style="margin-left: 1px;" id="prevItems" onClick="decreaseOffset();getObjects();"',null,null,'.gif',$mod_strings['LBL_BACK']));
-$xtpl->assign("MAILMERGE_NEXT", SugarThemeRegistry::current()->getImage('next','border="0" style="margin-left: 1px;" alt="Next" id="nextItems" onClick="increaseOffset();getObjects();"',null,null,'.gif',$mod_strings['LBL_NEXT']));
-$xtpl->assign("MAILMERGE_RIGHT_TO_LEFT", SugarThemeRegistry::current()->getImage('leftarrow_big','border="0" style="margin-left: 1px;"  onClick="moveLeft();"',null,null,'.gif',$mod_strings['LBL_REMOVE']));
-$xtpl->assign("MAILMERGE_LEFT_TO_RIGHT", SugarThemeRegistry::current()->getImage('rightarrow_big','border="0" style="margin-left: 1px;" onClick="moveRight();"',null,null,'.gif',$mod_strings['LBL_ADD']));
+$xtpl->assign("MAILMERGE_PREV", SugarThemeRegistry::current()->getImage('previous', 'border="0" style="margin-left: 1px;" id="prevItems" onClick="decreaseOffset();getObjects();"', null, null, '.gif', $mod_strings['LBL_BACK']));
+$xtpl->assign("MAILMERGE_NEXT", SugarThemeRegistry::current()->getImage('next', 'border="0" style="margin-left: 1px;" alt="Next" id="nextItems" onClick="increaseOffset();getObjects();"', null, null, '.gif', $mod_strings['LBL_NEXT']));
+$xtpl->assign("MAILMERGE_RIGHT_TO_LEFT", SugarThemeRegistry::current()->getImage('leftarrow_big', 'border="0" style="margin-left: 1px;"  onClick="moveLeft();"', null, null, '.gif', $mod_strings['LBL_REMOVE']));
+$xtpl->assign("MAILMERGE_LEFT_TO_RIGHT", SugarThemeRegistry::current()->getImage('rightarrow_big', 'border="0" style="margin-left: 1px;" onClick="moveRight();"', null, null, '.gif', $mod_strings['LBL_ADD']));
 $xtpl->assign("MAIL_MERGE_HEADER_STEP_2", $step_txt);
 if ($_SESSION['MAILMERGE_MODULE'] == 'CampaignProspects') {
     $rel_options = array("Contacts"=>"Contacts", "Leads" => "Leads", "Prospects" => "Prospects", "Users"=>"Users");

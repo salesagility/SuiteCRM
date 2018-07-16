@@ -38,7 +38,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $emails = $aorScheduledReports->get_email_recipients();
 
         $this->assertTrue(is_array($emails));
-        $this->assertEquals('test@test.com',$emails[0]);
+        $this->assertEquals('test@test.com', $emails[0]);
 
 
         $aorScheduledReports->mark_deleted($aorScheduledReports->id);
@@ -57,9 +57,9 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 
 		//execute the contructor and check for the Object type and  attributes
         $aorScheduledReports = new AOR_Scheduled_Reports();
-        $this->assertInstanceOf('AOR_Scheduled_Reports',$aorScheduledReports);
-        $this->assertInstanceOf('Basic',$aorScheduledReports);
-        $this->assertInstanceOf('SugarBean',$aorScheduledReports);
+        $this->assertInstanceOf('AOR_Scheduled_Reports', $aorScheduledReports);
+        $this->assertInstanceOf('Basic', $aorScheduledReports);
+        $this->assertInstanceOf('SugarBean', $aorScheduledReports);
 
         $this->assertAttributeEquals('AOR_Scheduled_Reports', 'module_dir', $aorScheduledReports);
         $this->assertAttributeEquals('AOR_Scheduled_Reports', 'object_name', $aorScheduledReports);
@@ -98,7 +98,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
 		
 
         //test without a older last_run date
-        $aorScheduledReports->last_run = date("d-m-y H:i:s", mktime(0,0,0,10,3,2014));
+        $aorScheduledReports->last_run = date("d-m-y H:i:s", mktime(0, 0, 0, 10, 3, 2014));
         $this->assertTrue($aorScheduledReports->shouldRun(new DateTime()));
 
 

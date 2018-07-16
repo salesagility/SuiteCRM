@@ -75,7 +75,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
             $options['obm_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
         }
 
-        parent::__construct($id,$options);
+        parent::__construct($id, $options);
     }
 
     /**
@@ -112,7 +112,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
         $data = $this->getChartData($this->constructQuery());
 
         //I have taken out the sort as this will throw off the labels we have calculated
-        $data = $this->sortData($data,'m', false, 'sales_stage', true, true);
+        $data = $this->sortData($data, 'm', false, 'sales_stage', true, true);
 
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
         $canvasId = 'rGraphOutcomeByMonth'.uniqid();
@@ -243,22 +243,22 @@ EOD;
     protected function constructQuery()
     {
         $query = "SELECT sales_stage,".
-            db_convert('opportunities.date_closed','date_format',array("'%Y-%m'"),array("'YYYY-MM'"))." as m, ".
+            db_convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'"))." as m, ".
             "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
-        $query .= " WHERE opportunities.date_closed >= ".db_convert("'".$this->obm_date_start."'",'date') .
-            " AND opportunities.date_closed <= ".db_convert("'".$this->obm_date_end."'",'date') .
+        $query .= " WHERE opportunities.date_closed >= ".db_convert("'".$this->obm_date_start."'", 'date') .
+            " AND opportunities.date_closed <= ".db_convert("'".$this->obm_date_end."'", 'date') .
             " AND opportunities.deleted=0";
         if (count($this->obm_ids) > 0) {
-            $query .= " AND opportunities.assigned_user_id IN ('" . implode("','",$this->obm_ids) . "')";
+            $query .= " AND opportunities.assigned_user_id IN ('" . implode("','", $this->obm_ids) . "')";
         }
         $query .= " GROUP BY sales_stage,".
-            db_convert('opportunities.date_closed','date_format',array("'%Y-%m'"),array("'YYYY-MM'")) .
+            db_convert('opportunities.date_closed', 'date_format', array("'%Y-%m'"), array("'YYYY-MM'")) .
             " ORDER BY m";
 
         return $query;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();
@@ -271,11 +271,11 @@ EOD;
             $key = $i["m"];
             $stage = $i["sales_stage"];
             $stage_dom_option = $i["sales_stage_dom_option"];
-            if (!in_array($key,$chart['labels'])) {
+            if (!in_array($key, $chart['labels'])) {
                 $chart['labels'][] = $key;
                 $chart['data'][] = array();
             }
-            if (!in_array($stage,$chart['key'])) {
+            if (!in_array($stage, $chart['key'])) {
                 $chart['key'][] = $stage;
             }
 

@@ -131,4 +131,4 @@ $dictionary['AOW_Action'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOW_Actions','AOW_Action', array('basic'));
+VardefManager::createVardef('AOW_Actions', 'AOW_Action', array('basic'));

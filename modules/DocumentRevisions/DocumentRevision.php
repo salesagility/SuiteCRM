@@ -147,12 +147,12 @@ class DocumentRevision extends SugarBean
         // If we don't have a document_id, find it.
         if (empty($this->document_id)) {
             $query = "SELECT document_id FROM document_revisions WHERE id = '".$this->db->quote($this->id)."'";
-            $ret = $this->db->query($query,true);
+            $ret = $this->db->query($query, true);
             $row = $this->db->fetchByAssoc($ret);
             $this->document_id = $row['document_id'];
         }
         $query = "UPDATE documents set document_revision_id='".$this->db->quote($this->id)."', doc_type='".$this->db->quote($this->doc_type)."', doc_url='".$this->db->quote($this->doc_url)."', doc_id='".$this->db->quote($this->doc_id)."' where id = '".$this->db->quote($this->document_id)."'";
-        $this->db->query($query,true);
+        $this->db->query($query, true);
 
         return $saveRet;
     }
@@ -163,7 +163,7 @@ class DocumentRevision extends SugarBean
 
     public function retrieve($id = -1, $encode=false, $deleted=true)
     {
-        $ret = parent::retrieve($id, $encode,$deleted);
+        $ret = parent::retrieve($id, $encode, $deleted);
 
         return $ret;
     }
@@ -191,7 +191,7 @@ class DocumentRevision extends SugarBean
 
         //find the document name and current version.
         $query = "SELECT document_name, revision, document_revision_id FROM documents, document_revisions where documents.id = '".$this->db->quote($this->document_id)."' AND document_revisions.id = documents.document_revision_id";
-        $result = $this->db->query($query,true,"Error fetching document details...:");
+        $result = $this->db->query($query, true, "Error fetching document details...:");
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
             $this->document_name = $row['document_name'];
@@ -275,7 +275,7 @@ class DocumentRevision extends SugarBean
         //find the document name and current version.
         $query = "SELECT documents.document_name, revision FROM documents, document_revisions where documents.id = '$doc_id'";
         $query .= " AND document_revisions.id = documents.document_revision_id";
-        $result = $this->db->query($query,true,"Error fetching document details...:");
+        $result = $this->db->query($query, true, "Error fetching document details...:");
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
             $this->name = $row['document_name'];

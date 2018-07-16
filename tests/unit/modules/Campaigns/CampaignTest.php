@@ -367,18 +367,18 @@ WHERE  emailman.campaign_id = ''
        AND emailman.deleted = 0
        AND emailman.deleted = 0  ";
         $expected = trim($expected);
-        $expected = str_replace(' ','', $expected);
-        $expected = str_replace("\n",'', $expected);
-        $expected = str_replace("\t",'', $expected);
-        $expected = str_replace("\r",'', $expected);
+        $expected = str_replace(' ', '', $expected);
+        $expected = str_replace("\n", '', $expected);
+        $expected = str_replace("\t", '', $expected);
+        $expected = str_replace("\r", '', $expected);
         $expected = strtolower($expected);
 
         $actual = $campaign->get_queue_items();
         $actual = trim($actual);
-        $actual = str_replace(' ','', $actual);
-        $actual = str_replace("\n",'', $actual);
-        $actual = str_replace("\t",'', $actual);
-        $actual = str_replace("\t",'', $actual);
+        $actual = str_replace(' ', '', $actual);
+        $actual = str_replace("\n", '', $actual);
+        $actual = str_replace("\t", '', $actual);
+        $actual = str_replace("\t", '', $actual);
         $actual = strtolower($actual);
 
         $this->assertSame($expected, $actual);
@@ -443,18 +443,18 @@ WHERE  emailman.campaign_id = ''
        AND emailman.deleted = 0  ";
 
         $expected = trim($expected);
-        $expected = str_replace(' ','', $expected);
-        $expected = str_replace("\n",'', $expected);
-        $expected = str_replace("\r",'', $expected);
-        $expected = str_replace("\t",'', $expected);
+        $expected = str_replace(' ', '', $expected);
+        $expected = str_replace("\n", '', $expected);
+        $expected = str_replace("\r", '', $expected);
+        $expected = str_replace("\t", '', $expected);
         $expected = strtolower($expected);
 
         $actual = $campaign->get_queue_items(array('EMAIL_MARKETING_ID_VALUE' => 1, 'group_by' => 'users.id'));
         $actual = trim($actual);
-        $actual = str_replace(' ','', $actual);
-        $actual = str_replace("\n",'', $actual);
-        $actual = str_replace("\r",'', $actual);
-        $actual = str_replace("\t",'', $actual);
+        $actual = str_replace(' ', '', $actual);
+        $actual = str_replace("\n", '', $actual);
+        $actual = str_replace("\r", '', $actual);
+        $actual = str_replace("\t", '', $actual);
         $actual = strtolower($actual);
         $this->assertSame($expected, $actual);
     }

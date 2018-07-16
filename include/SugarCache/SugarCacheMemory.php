@@ -61,7 +61,7 @@ class SugarCacheMemory extends SugarCacheAbstract
      *
      * Does nothing; cache is gone after request is done.
      */
-    protected function _setExternal($key,$value)
+    protected function _setExternal($key, $value)
     {
     }
     

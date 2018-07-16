@@ -169,7 +169,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
          $this->mod_strings = $mod_strings;
 
          if ($this->type == 1) {
-             $this->lv->initNewXTemplate($this->template,$this->mod_strings);
+             $this->lv->initNewXTemplate($this->template, $this->mod_strings);
              $this->prefix = $prefix;
              $this->lv->setQuery($where, $limit, $orderBy, $prefix);
              $this->lv->show_select_menu = false;
@@ -183,7 +183,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
              $this->lv->select = false;
              $this->lv->mailMerge = false;
              $this->lv->multiSelect = false;
-             $this->lv->setup($this->focus, $this->template, $where, $params, $offset, $limit,  $filter_fields, $id_field);
+             $this->lv->setup($this->focus, $this->template, $where, $params, $offset, $limit, $filter_fields, $id_field);
          }
      }
 

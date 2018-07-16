@@ -56,14 +56,14 @@ class TemplateBoolean extends TemplateField
             $returnXTPL[$this->name . '_help'] = translate($this->help, $this->bean->module_dir);
         }
         if (isset($this->bean->$name)) {
-            if (strcmp($this->bean->$name ,'1') ==0  || strcmp($this->bean->$name,'on')==0 || strcmp($this->bean->$name,'yes')==0 || strcmp($this->bean->$name, 'true')==0) {
+            if (strcmp($this->bean->$name, '1') ==0  || strcmp($this->bean->$name, 'on')==0 || strcmp($this->bean->$name, 'yes')==0 || strcmp($this->bean->$name, 'true')==0) {
                 $returnXTPL[$this->name . '_checked'] = 'checked';
                 $returnXTPL[$this->name] = 'checked';
             }
         } else {
             if (empty($this->bean->id)) {
                 if (!empty($this->default_value)) {
-                    if (!(strcmp($this->default_value,'false')==0 || strcmp($this->default_value,'no')==0 || strcmp($this->default_value,'off')==0)) {
+                    if (!(strcmp($this->default_value, 'false')==0 || strcmp($this->default_value, 'no')==0 || strcmp($this->default_value, 'off')==0)) {
                         $returnXTPL[$this->name . '_checked'] = 'checked';
                         $returnXTPL[$this->name] = 'checked';
                     }
@@ -105,7 +105,7 @@ class TemplateBoolean extends TemplateField
         $returnXTPL[$this->name] = '';
 
         if (isset($this->bean->$name)) {
-            if (strcmp($this->bean->$name ,'1') ==0  || strcmp($this->bean->$name,'on')==0 || strcmp($this->bean->$name,'yes')==0 || strcmp($this->bean->$name, 'true')==0) {
+            if (strcmp($this->bean->$name, '1') ==0  || strcmp($this->bean->$name, 'on')==0 || strcmp($this->bean->$name, 'yes')==0 || strcmp($this->bean->$name, 'true')==0) {
                 $returnXTPL[$this->name . '_checked'] = 'checked';
                 $returnXTPL[$this->name] = 'checked';
             }

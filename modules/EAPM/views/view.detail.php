@@ -83,9 +83,9 @@ class EAPMViewDetail extends ViewDetail
         $iconPath = $this->getModuleTitleIconPath($this->module);
         $params = array();
         if (!empty($iconPath) && !$browserTitle) {
-            $params[] = "<a href='index.php?module=Users&action=index'><!--not_in_theme!--><img src='{$iconPath}' alt='".translate('LBL_MODULE_NAME','Users')."' title='".translate('LBL_MODULE_NAME','Users')."' align='absmiddle'></a>";
+            $params[] = "<a href='index.php?module=Users&action=index'><!--not_in_theme!--><img src='{$iconPath}' alt='".translate('LBL_MODULE_NAME', 'Users')."' title='".translate('LBL_MODULE_NAME', 'Users')."' align='absmiddle'></a>";
         } else {
-            $params[] = translate('LBL_MODULE_NAME','Users');
+            $params[] = translate('LBL_MODULE_NAME', 'Users');
         }
         $params[] = "<a href='index.php?module={$returnModule}&action=EditView&record={$returnId}'>".$returnName."</a>";
         if ($returnAction == 'EditView') {

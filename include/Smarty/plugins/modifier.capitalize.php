@@ -33,7 +33,7 @@ function smarty_modifier_capitalize_ucfirst($string, $uc_digits = null)
         return;
     }
     
-    if (substr($string[0],0,1) != "'" && !preg_match("!\d!",$string[0]) || $_uc_digits) {
+    if (substr($string[0], 0, 1) != "'" && !preg_match("!\d!", $string[0]) || $_uc_digits) {
         return ucfirst($string[0]);
     } else {
         return $string[0];

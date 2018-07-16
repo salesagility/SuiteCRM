@@ -151,7 +151,7 @@ class Popup_Picker
 
         $form->assign('request_data', $request_data);
 
-        $form->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['campaign_type_dom'],""));
+        $form->assign("TYPE_OPTIONS", get_select_options_with_id($app_list_strings['campaign_type_dom'], ""));
         ob_start();
         insert_popup_header($theme);
         $output_html .= ob_get_contents();
@@ -172,7 +172,7 @@ class Popup_Picker
         $ListView->process_for_popups = true;
         $ListView->setXTemplate($form);
         $ListView->multi_select_popup=$multi_select;  //FOR MULTI-SELECT
-        $ListView->xTemplate->assign("TAG_TYPE","A"); //FOR MULTI-SELECT
+        $ListView->xTemplate->assign("TAG_TYPE", "A"); //FOR MULTI-SELECT
         $ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE']); //FOR MULTI-SELECT
         $ListView->setHeaderText($button); //FOR MULTI-SELECT
         $ListView->setQuery($where, '', 'name', 'CAMPAIGN');

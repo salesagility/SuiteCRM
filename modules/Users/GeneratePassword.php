@@ -56,7 +56,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     global $new_pwd;
     global $current_user;
 
-    $mod_strings=return_module_language('','Users');
+    $mod_strings=return_module_language('', 'Users');
     $res=$GLOBALS['sugar_config']['passwordsetting'];
     $regexmail = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
 

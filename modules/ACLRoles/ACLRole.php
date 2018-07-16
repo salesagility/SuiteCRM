@@ -95,7 +95,7 @@ class ACLRole extends SugarBean
     {
         $relationship_data = array('role_id'=>$role_id, 'action_id'=>$action_id,);
         $additional_data = array('access_override'=>$access);
-        $this->set_relationship('acl_roles_actions',$relationship_data,true, true,$additional_data);
+        $this->set_relationship('acl_roles_actions', $relationship_data, true, true, $additional_data);
     }
 
 

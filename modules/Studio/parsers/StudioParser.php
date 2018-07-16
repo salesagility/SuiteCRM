@@ -91,13 +91,13 @@ class StudioParser
 
     public function parseRows($str)
     {
-        preg_match_all("'(<tr[^>]*)>(.*?)(</tr[^>]*>)'si", $str, $this->rows,PREG_SET_ORDER);
+        preg_match_all("'(<tr[^>]*)>(.*?)(</tr[^>]*>)'si", $str, $this->rows, PREG_SET_ORDER);
     }
 
     public function parseNames($str)
     {
         $results = array();
-        preg_match_all("'name[ ]*=[ ]*[\'\"]+([a-zA-Z0-9\_]+)[\'\"]+'si", $str, $results,PREG_SET_ORDER);
+        preg_match_all("'name[ ]*=[ ]*[\'\"]+([a-zA-Z0-9\_]+)[\'\"]+'si", $str, $results, PREG_SET_ORDER);
         return $results;
     }
 
@@ -105,8 +105,8 @@ class StudioParser
     {
         $mod = array();
         $app = array();
-        preg_match_all("'\{MOD\.([a-zA-Z0-9\_]+)\}'si", $str, $mod,PREG_SET_ORDER);
-        preg_match_all("'\{APP\.([a-zA-Z0-9\_]+)\}'si", $str, $app,PREG_SET_ORDER);
+        preg_match_all("'\{MOD\.([a-zA-Z0-9\_]+)\}'si", $str, $mod, PREG_SET_ORDER);
+        preg_match_all("'\{APP\.([a-zA-Z0-9\_]+)\}'si", $str, $app, PREG_SET_ORDER);
         return array_merge($app, $mod);
     }
 
@@ -131,7 +131,7 @@ class StudioParser
     }
     public function parseCols($str)
     {
-        preg_match_all("'(<td[^>]*?)>(.*?)(</td[^>]*?>)'si", $str, $this->cols,PREG_SET_ORDER);
+        preg_match_all("'(<td[^>]*?)>(.*?)(</td[^>]*?>)'si", $str, $this->cols, PREG_SET_ORDER);
     }
     public function parse($str)
     {
@@ -160,7 +160,7 @@ class StudioParser
 
 EOQ;
     }
-    public function buildImageButtons($buttons,$horizontal=true)
+    public function buildImageButtons($buttons, $horizontal=true)
     {
         $text = '<table cellspacing=2><tr>';
         foreach ($buttons as $button) {
@@ -189,13 +189,13 @@ EOQ;
     public function generateButtons()
     {
         global $mod_strings;
-        $imageSave = SugarThemeRegistry::current()->getImage('studio_save', '',null,null,'.gif',$mod_strings['LBL_SAVE']);
-        $imagePublish = SugarThemeRegistry::current()->getImage('studio_publish', '',null,null,'.gif',$mod_strings['LBL_PUBLISH']);
-        $imageHistory = SugarThemeRegistry::current()->getImage('studio_history', '',null,null,'.gif',$mod_strings['LBL_HISTORY']);
-        $imageAddRows = SugarThemeRegistry::current()->getImage('studio_addRows', '',null,null,'.gif',$mod_strings['LBL_ADDROWS']);
-        $imageUndo = SugarThemeRegistry::current()->getImage('studio_undo', '',null,null,'.gif',$mod_strings['LBL_UNDO']);
-        $imageRedo = SugarThemeRegistry::current()->getImage('studio_redo', '',null,null,'.gif',$mod_strings['LBL_REDO']);
-        $imageAddField = SugarThemeRegistry::current()->getImage('studio_addField', '',null,null,'.gif',$mod_strings['LBL_ADDFIELD']);
+        $imageSave = SugarThemeRegistry::current()->getImage('studio_save', '', null, null, '.gif', $mod_strings['LBL_SAVE']);
+        $imagePublish = SugarThemeRegistry::current()->getImage('studio_publish', '', null, null, '.gif', $mod_strings['LBL_PUBLISH']);
+        $imageHistory = SugarThemeRegistry::current()->getImage('studio_history', '', null, null, '.gif', $mod_strings['LBL_HISTORY']);
+        $imageAddRows = SugarThemeRegistry::current()->getImage('studio_addRows', '', null, null, '.gif', $mod_strings['LBL_ADDROWS']);
+        $imageUndo = SugarThemeRegistry::current()->getImage('studio_undo', '', null, null, '.gif', $mod_strings['LBL_UNDO']);
+        $imageRedo = SugarThemeRegistry::current()->getImage('studio_redo', '', null, null, '.gif', $mod_strings['LBL_REDO']);
+        $imageAddField = SugarThemeRegistry::current()->getImage('studio_addField', '', null, null, '.gif', $mod_strings['LBL_ADDFIELD']);
         $buttons = array();
 
         $buttons[] = array('image'=>$imageUndo,'text'=>$GLOBALS['mod_strings']['LBL_BTN_UNDO'],'actionScript'=>"onclick='jstransaction.undo()'" );
@@ -401,7 +401,7 @@ EOQ;
     public function enableLabelEditor($str)
     {
         global $mod_strings;
-        $image = SugarThemeRegistry::current()->getImage('edit_inline', "onclick='studiojs.handleLabelClick(\"$2\", 1);' onmouseover='this.style.cursor=\"default\"'",null,null,'.gif',$mod_strings['LBL_EDIT']);
+        $image = SugarThemeRegistry::current()->getImage('edit_inline', "onclick='studiojs.handleLabelClick(\"$2\", 1);' onmouseover='this.style.cursor=\"default\"'", null, null, '.gif', $mod_strings['LBL_EDIT']);
         $match = array ("'>[^<]*\{(MOD.)([^\}]*)\}'si" => "$image<span id='label$2' onclick='studiojs.handleLabelClick(\"$2\", 2);' >{".'$1$2' . "}</span><span id='span$2' style='display:none'><input type='text' id='$2' name='$2' msi='label' value='{".'$1$2' . "}' onblur='studiojs.endLabelEdit(\"$2\")'></span>");
         $keys = array_keys($match);
         $matches = array();
@@ -625,7 +625,7 @@ EOQ;
     {
         ob_clean();
         require_once('modules/Studio/SugarBackup.php');
-        $file = str_replace('custom/working/', '' ,$file);
+        $file = str_replace('custom/working/', '', $file);
 
         $filebk = SugarBackup::oldestBackup($file);
         $oldMatches = array();

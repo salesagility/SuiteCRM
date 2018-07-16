@@ -188,13 +188,13 @@ foreach ($temp_field_array as $field_array) {
         } elseif (isset ($app_strings[$field_array['vname']]) && $app_strings[$field_array['vname']] != '') {
             $xtpl->assign("FIELD_LABEL", $app_strings[$field_array['vname']]);
         } else {
-            $xtpl->assign("FIELD_LABEL",$tempName);
+            $xtpl->assign("FIELD_LABEL", $tempName);
         }
         //if required add signage.
         if (!empty($focus->merge_bean->required_fields[$col_name]) or $col_name=='team_name') {
-            $xtpl->assign("REQUIRED_SYMBOL","<span class='required'>".$app_strings['LBL_REQUIRED_SYMBOL']."</span>");
+            $xtpl->assign("REQUIRED_SYMBOL", "<span class='required'>".$app_strings['LBL_REQUIRED_SYMBOL']."</span>");
         } else {
-            $xtpl->assign("REQUIRED_SYMBOL","");
+            $xtpl->assign("REQUIRED_SYMBOL", "");
         }
 
         $xtpl->assign("CELL_WIDTH", "20%");
@@ -207,11 +207,11 @@ foreach ($temp_field_array as $field_array) {
         }
 
 
-        if (preg_match('/.*?_address_street$/',$tempName)) {
+        if (preg_match('/.*?_address_street$/', $tempName)) {
             $field_check = 'text';
         }
 
-        $xtpl->assign("EDIT_FIELD_NAME",$tempName);
+        $xtpl->assign("EDIT_FIELD_NAME", $tempName);
         $xtpl->assign("TAB_INDEX", $field_count);
 
         switch ($field_check) {
@@ -238,13 +238,13 @@ foreach ($temp_field_array as $field_array) {
                 break;
             case ('enum'):
                 $xtpl->assign("SELECT_OPTIONS", get_select_options_with_id($app_list_strings[$field_array['options']], $select_row_curr_field_value));
-                $xtpl->assign("CELL_WIDTH",$col_width);
+                $xtpl->assign("CELL_WIDTH", $col_width);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_dropdown");
                 break;
             case ('multienum'):
                 $select_row_curr_field_value = unencodeMultienum($select_row_curr_field_value);
                 $xtpl->assign("SELECT_OPTIONS", get_select_options_with_id($app_list_strings[$field_array['options']], $select_row_curr_field_value));
-                $xtpl->assign("CELL_WIDTH",$col_width);
+                $xtpl->assign("CELL_WIDTH", $col_width);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_multidropdown");
                 break;
                 //popup fields need to be fixed.., cant automate with vardefs
@@ -257,7 +257,7 @@ foreach ($temp_field_array as $field_array) {
                 //get_related_name
                 $tempId = $field_array['id_name'];
                 if (empty($select_row_curr_field_value)) {
-                    $related_name=get_related_name($field_array,$focus->merge_bean->$tempId);
+                    $related_name=get_related_name($field_array, $focus->merge_bean->$tempId);
                     if ($related_name !== false) {
                         $select_row_curr_field_value=$related_name;
                     }
@@ -265,8 +265,8 @@ foreach ($temp_field_array as $field_array) {
                 if ($field_check == 'link') {//relate type should not enter this.
                     $exclude[$tempName] =$tempName;
                 }
-                $xtpl->assign("POPUP_ID_FIELD",$tempId);
-                $xtpl->assign("POPUP_NAME_FIELD",$tempName);
+                $xtpl->assign("POPUP_ID_FIELD", $tempId);
+                $xtpl->assign("POPUP_NAME_FIELD", $tempName);
                 $xtpl->assign("POPUP_NAME_VALUE", $select_row_curr_field_value);
                 $xtpl->assign("POPUP_ID_VALUE", $focus->merge_bean->$tempId);
                 $xtpl->assign("POPUP_MODULE", $field_array['module']);
@@ -334,9 +334,9 @@ foreach ($temp_field_array as $field_array) {
                     break;
                 case ('multienum'):
                     if ($mergeBeanArray[$id]->$tempName != '' and isset($field_array['options']) and isset($app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName])) {
-                        display_field_value(str_replace("^","",$app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName]));
+                        display_field_value(str_replace("^", "", $app_list_strings[$field_array['options']][$mergeBeanArray[$id]->$tempName]));
                     } else {
-                        display_field_value(str_replace("^","",$mergeBeanArray[$id]->$tempName));
+                        display_field_value(str_replace("^", "", $mergeBeanArray[$id]->$tempName));
                     }
                     $field_name="main.".$section_name.".merge_cell_field_value";
                     break;
@@ -345,7 +345,7 @@ foreach ($temp_field_array as $field_array) {
                     $related_name=false;
                     $tempId = $field_array['id_name'];
                     if (empty($mergeBeanArray[$id]->$tempName) && !empty($mergeBeanArray[$id]->$tempId)) {
-                        $related_name=get_related_name($field_array,$mergeBeanArray[$id]->$tempId);
+                        $related_name=get_related_name($field_array, $mergeBeanArray[$id]->$tempId);
                         if ($related_name !== false) {
                             $mergeBeanArray[$id]->$tempName=$related_name;
                         }
@@ -396,18 +396,18 @@ foreach ($merge_ids_array as $id) {
 }
 
 if ($diff_field_count>0) {
-    $xtpl->assign("DIFF_HEADER","<tr height='20'><td colspan=2><strong>{$mod_strings['LBL_DIFF_COL_VALUES']}</strong></td>".implode(' ',$header_cols)."</tr>");
-    $xtpl->assign("SIMILAR_HEADER","<tr height='20'><td colspan=20><strong>{$mod_strings['LBL_SAME_COL_VALUES']}</strong></td></tr>");
-    $xtpl->assign("GROUP_PARTITION","<tr height=3><td colspan=20' class='listViewHRS1'></td></tr>");
+    $xtpl->assign("DIFF_HEADER", "<tr height='20'><td colspan=2><strong>{$mod_strings['LBL_DIFF_COL_VALUES']}</strong></td>".implode(' ', $header_cols)."</tr>");
+    $xtpl->assign("SIMILAR_HEADER", "<tr height='20'><td colspan=20><strong>{$mod_strings['LBL_SAME_COL_VALUES']}</strong></td></tr>");
+    $xtpl->assign("GROUP_PARTITION", "<tr height=3><td colspan=20' class='listViewHRS1'></td></tr>");
 } else {
-    $xtpl->assign("SIMILAR_HEADER","<tr height='20'><td colspan=2><strong>{$mod_strings['LBL_SAME_COL_VALUES']}</strong></td>".implode(' ',$header_cols)."</tr>");
+    $xtpl->assign("SIMILAR_HEADER", "<tr height='20'><td colspan=2><strong>{$mod_strings['LBL_SAME_COL_VALUES']}</strong></td>".implode(' ', $header_cols)."</tr>");
 }
 $merge_verify=$mod_strings['LBL_DELETE_MESSAGE'].'\\n';
 foreach ($merge_records_names as $name) {
     $merge_verify.= $name."\\n";
 }
 $merge_verify.='\\n'.$mod_strings['LBL_PROCEED'];
-$xtpl->assign("MERGE_VERIFY",$merge_verify);
+$xtpl->assign("MERGE_VERIFY", $merge_verify);
 
 global $beanList;
 
@@ -417,7 +417,7 @@ if ($focus->merge_bean->object_name == 'Case') {
     $focus->merge_bean->object_name = 'aCase';
 }
 
-$mod=array_search($focus->merge_bean->object_name,$beanList);
+$mod=array_search($focus->merge_bean->object_name, $beanList);
 $mod_strings = return_module_language($current_language, $mod);
 
 //add javascript for required fields enforcement.
@@ -427,7 +427,7 @@ $javascript->setFormName('EditView');
 $javascript->setSugarBean($focus->merge_bean);
 $javascript->addAllFields('');
 if (isset($focus->merge_bean->field_defs['team_name'])) {
-    $javascript->addFieldGeneric('team_name', 'varchar', $app_strings['LBL_TEAM'] ,'true');
+    $javascript->addFieldGeneric('team_name', 'varchar', $app_strings['LBL_TEAM'], 'true');
 }
 $xtpl->assign("VALIDATION_JS", $javascript->getScript());
 
@@ -441,7 +441,7 @@ function display_field_value($value)
 {
     global $xtpl, $max_data_length, $mod_strings;
     if (strlen($value)-$max_data_length > 3) {
-        $xtpl->assign("FIELD_VALUE", substr($value,0,$max_data_length).'...');
+        $xtpl->assign("FIELD_VALUE", substr($value, 0, $max_data_length).'...');
     } else {
         $xtpl->assign("FIELD_VALUE", $value);
     }
@@ -501,7 +501,7 @@ function show_field($field_def)
 /* if the attribute of type relate and name is empty fetch using the vardef entries.
  *
  */
-function get_related_name($field_def,$id_value)
+function get_related_name($field_def, $id_value)
 {
     if (!empty($field_def['rname']) && !empty($field_def['id_name']) && !empty($field_def['table'])) {
         if (!empty($id_value)) {

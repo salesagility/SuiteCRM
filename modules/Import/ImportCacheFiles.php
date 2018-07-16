@@ -206,7 +206,7 @@ class ImportCacheFiles
         if (is_dir($importdir)) {
             $files = dir($importdir);
             while (false !== ($file = $files->read())) {
-                if (!is_dir($file) && stristr($file,'.csv')) {
+                if (!is_dir($file) && stristr($file, '.csv')) {
                     unlink("$importdir/$file");
                 }
             }

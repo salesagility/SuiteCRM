@@ -111,7 +111,7 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
     	
         // Add a string replace to swap out @@FIELD@@ for the actual field,
         // we can't do this through customCode directly because the sugar_field smarty function returns smarty code to run on the second pass
-        if (!empty($code) && strpos($code,'@@FIELD@@') !== FALSE) {
+        if (!empty($code) && strpos($code, '@@FIELD@@') !== FALSE) {
             // First we need to fetch extra data about the field
             // sfp == SugarFieldParams
             $sfp = $params;
@@ -125,7 +125,7 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
             
             $fieldText = smarty_function_sugar_field($sfp, $smarty);
 
-            $code = str_replace('@@FIELD@@',$fieldText,$code);
+            $code = str_replace('@@FIELD@@', $fieldText, $code);
         }
 
         //eggsurplus bug 28321: add support for rendering customCode AND normal field rendering

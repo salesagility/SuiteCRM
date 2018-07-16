@@ -55,8 +55,8 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 
         $project_template->retrieve($_REQUEST["record"]);
         //Get project_template resources (users & contacts)
-        $resources1 = $project_template->get_linked_beans('am_projecttemplates_users_1','User');
-        $resources2 = $project_template->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+        $resources1 = $project_template->get_linked_beans('am_projecttemplates_users_1', 'User');
+        $resources2 = $project_template->get_linked_beans('am_projecttemplates_contacts_1', 'Contact');
         //Combine resources into array of objects
         $resource_array = array();
         foreach ($resources1 as $user) {
@@ -115,7 +115,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
 							<label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE']; ?></label>
 							<?php
 							echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
-									'.get_select_options_with_id($app_list_strings['relationship_type_list'],'').'
+									'.get_select_options_with_id($app_list_strings['relationship_type_list'], '').'
 							</select>'; ?>
 
 					
@@ -247,7 +247,7 @@ class AM_ProjectTemplatesViewGanttChart extends ViewDetail
                              <select id="tasks" name="tasks[]" multiple style="margin-bottom:12px; width:95%; padding: .4em;" >';
                                 
         $this->bean->load_relationship('am_tasktemplates_am_projecttemplates');
-        $task_list = $this->bean->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
+        $task_list = $this->bean->get_linked_beans('am_tasktemplates_am_projecttemplates', 'AM_TaskTemplates');
 
         //From the query above, populates the select box
         foreach ($task_list as $task) {

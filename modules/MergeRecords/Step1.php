@@ -120,7 +120,7 @@ echo getClassicModuleTitle($focus->merge_bean->module_dir, $params, true);
 $xtpl = new XTemplate ('modules/MergeRecords/Step1.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
-$xtpl->assign("BEANDATA",$json->encode($bean_data));
+$xtpl->assign("BEANDATA", $json->encode($bean_data));
 //This is for the implemetation of finding all dupes for a module, not just
 //dupes for a particular record
 //commenting this out for now
@@ -130,7 +130,7 @@ $xtpl->assign("BEANDATA",$json->encode($bean_data));
 $xtpl->assign("MERGE_MODULE", $focus->merge_module);
 $xtpl->assign("ID", $focus->merge_bean->id);
 
-$xtpl->assign("FIELD_AVAIL_OPTIONS", get_select_options_with_id($avail_fields,''));
+$xtpl->assign("FIELD_AVAIL_OPTIONS", get_select_options_with_id($avail_fields, ''));
 $xtpl->assign("LBL_ADD_BUTTON", translate('LBL_ADD_BUTTON'));
 
 if (isset($_REQUEST['return_id'])) {
@@ -152,10 +152,10 @@ $xtpl->assign("DELETE_INLINE_IMAGE", SugarThemeRegistry::current()->getImageURL(
 //process preloaded filter.
 $pre_loaded=null;
 foreach ($sel_fields as $colName=>$colLabel) {
-    $pre_loaded.=addFieldRow($colName,$colLabel,$bean_data[$colName]);
+    $pre_loaded.=addFieldRow($colName, $colLabel, $bean_data[$colName]);
 }
-$xtpl->assign("PRE_LOADED_FIELDS",$pre_loaded);
-$xtpl->assign("OPERATOR_OPTIONS",$json->encode($app_list_strings['merge_operators_dom']));
+$xtpl->assign("PRE_LOADED_FIELDS", $pre_loaded);
+$xtpl->assign("OPERATOR_OPTIONS", $json->encode($app_list_strings['merge_operators_dom']));
 
 
 $xtpl->parse("main.field_select_block");
@@ -169,13 +169,13 @@ $xtpl->out("main");
  * preload the filter criteria based on the vardef.
  * <span><table><tr><td></td><td></td><td></td></tr></table></span>
  */
-function addFieldRow($colName,$colLabel,$colValue)
+function addFieldRow($colName, $colLabel, $colValue)
 {
     global $theme, $app_list_strings;
     
     static $operator_options;
     if (empty($operator_options)) {
-        $operator_options= get_select_options_with_id($app_list_strings['merge_operators_dom'],'');
+        $operator_options= get_select_options_with_id($app_list_strings['merge_operators_dom'], '');
     }
 
     $LBL_REMOVE = translate('LBL_REMOVE');

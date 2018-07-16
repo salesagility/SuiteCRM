@@ -153,7 +153,7 @@ function commitAjaxFinalTouches($persistence)
             $email->from_name = $current_user->full_name;
             $email->from_addr = $current_user->email1;
             isValidEmailAddress($email->from_addr);
-            $email->to_addrs_arr = $email->parse_addrs($current_user->email1,'','','');
+            $email->to_addrs_arr = $email->parse_addrs($current_user->email1, '', '', '');
             $email->cc_addrs_arr = array();
             $email->bcc_addrs_arr = array();
             $email->date_entered = $nowDateTime;
@@ -424,7 +424,7 @@ function preflightCheckJsonDiffFiles($persistence)
         ///////////////////////////////////////////////////////////////////////
         ////	DIFFS
         // compare md5s and build up a manual merge list
-        $targetFile = clean_path(".".str_replace(getcwd(),'',$destFile));
+        $targetFile = clean_path(".".str_replace(getcwd(), '', $destFile));
         $targetMd5 = '0';
         if (is_file($destFile)) {
             if (strpos($targetFile, '.php')) {
@@ -625,7 +625,7 @@ function preflightCheckJsonPrepSchemaCheck($persistence, $preflight=true)
                 if (strpos($line, '--') === false) {
                     $completeLine .= " ".trim($line);
                     if (strpos($line, ';') !== false) {
-                        $completeLine = str_replace(';','',$completeLine);
+                        $completeLine = str_replace(';', '', $completeLine);
                         $persistence['sql_to_check'][] = $completeLine;
                         $completeLine = ''; //reset for next loop
                     }
@@ -664,7 +664,7 @@ function preflightCheckJsonSchemaCheck($persistence)
 
         // populate newTables array to prevent "getting sample data" from non-existent tables
         $newTables = array();
-        if (strtoupper(substr($completeLine,1,5)) == 'CREAT') {
+        if (strtoupper(substr($completeLine, 1, 5)) == 'CREAT') {
             $newTables[] = getTableFromQuery($completeLine);
         }
 
@@ -877,7 +877,7 @@ function systemCheckJsonCheckFiles($persistence)
                 logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
                 // don't warn yet - we're going to use this to check against replacement files
                 $filesNotWritable[$i] = $file;
-                $filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
+                $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
                 $filesOut .= "<tr>".
 								"<td valign='top'><span class='error'>{$file}</span></td>".
 								"<td valign='top'>{$filesNWPerms[$i]}</td>".
@@ -890,7 +890,7 @@ function systemCheckJsonCheckFiles($persistence)
                 logThis('File ['.$file.'] not writable - saving for display');
                 // don't warn yet - we're going to use this to check against replacement files
                 $filesNotWritable[$i] = $file;
-                $filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
+                $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
                 $owner = posix_getpwuid(fileowner($file));
                 $group = posix_getgrgid(filegroup($file));
                 $filesOut .= "<tr>".

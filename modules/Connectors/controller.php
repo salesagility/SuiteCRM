@@ -225,7 +225,7 @@ class ConnectorsController extends SugarController
             $source = SourceFactory::getSource($source_id);
 
             $method = 'ext_'.$_REQUEST['source_func'];
-            if (method_exists($source,$method)) {
+            if (method_exists($source, $method)) {
                 echo $json->encode($source->$method($_REQUEST));
             } else {
                 echo $json->encode(array('error'=>true,'errorMessage'=>'Could Not Find Function: '.$method.' in class: '.get_class($source)));
@@ -788,7 +788,7 @@ class ConnectorsController extends SugarController
         require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
         $parser = ParserFactory::getParser($view, $module);
 
-        if (!array_key_exists($field['0']['name'],$parser->_fielddefs)) {
+        if (!array_key_exists($field['0']['name'], $parser->_fielddefs)) {
             //add newly created fields to fielddefs as they wont be there.
             $parser->_fielddefs[ $field['0']['name'] ] = $field['0'];
         }

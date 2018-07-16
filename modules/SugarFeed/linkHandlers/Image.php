@@ -71,9 +71,9 @@ class FeedLinkHandlerImage extends FeedLinkHandlerLink
             $imageData[0] = 0;
             $imageData[1] = 0;
         } else {
-            if (max($imageData[0],$imageData[1]) > 425) {
+            if (max($imageData[0], $imageData[1]) > 425) {
                 // This is a large image, we need to set some specific width/height properties so that the browser can scale it.
-                $scale = 425 / max($imageData[0],$imageData[1]);
+                $scale = 425 / max($imageData[0], $imageData[1]);
                 $imageData[0] = floor($imageData[0]*$scale);
                 $imageData[1] = floor($imageData[1]*$scale);
             }

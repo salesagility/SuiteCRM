@@ -171,7 +171,7 @@ class AOW_WorkFlow extends Basic
      */
     public function run_flows()
     {
-        $flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
+        $flows = AOW_WorkFlow::get_full_list('', " aow_workflow.status = 'Active'  AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'In_Scheduler' OR aow_workflow.run_when = 'Create') ");
 
         foreach ((array)$flows as $flow) {
             $flow->run_flow();
@@ -295,7 +295,7 @@ class AOW_WorkFlow extends Basic
             while ($row = $this->db->fetchByAssoc($result)) {
                 $condition = new AOW_Condition();
                 $condition->retrieve($row['id']);
-                $query = $this->build_query_where($condition,$module,$query);
+                $query = $this->build_query_where($condition, $module, $query);
                 if (empty($query)) {
                     return $query;
                 }
@@ -345,7 +345,7 @@ class AOW_WorkFlow extends Basic
         if (isset($path[0]) && $path[0] != $module->module_dir) {
             foreach ($path as $rel) {
                 $query = $this->build_flow_query_join($rel, $condition_module, 'relationship', $query);
-                $condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
+                $condition_module = new $beanList[getRelatedModule($condition_module->module_dir, $rel)];
                 $table_alias = $rel;
             }
         }
@@ -601,7 +601,7 @@ class AOW_WorkFlow extends Basic
                 }
                 $field = $condition_bean->$field;
 
-                if (in_array($data['type'],$dateFields)) {
+                if (in_array($data['type'], $dateFields)) {
                     $field = strtotime($field);
                 }
 
@@ -614,7 +614,7 @@ class AOW_WorkFlow extends Basic
                         }
                         $value = $condition_bean->$value;
 
-                        if (in_array($data['type'],$dateFields)) {
+                        if (in_array($data['type'], $dateFields)) {
                             $value = strtotime($value);
                         }
 
@@ -627,7 +627,7 @@ class AOW_WorkFlow extends Basic
                         } else {
                             $value = $condition_bean->fetched_row[$condition->field];
                         }
-                        if (in_array($data['type'],$dateFields)) {
+                        if (in_array($data['type'], $dateFields)) {
                             $value = strtotime($value);
                         }
                         switch ($condition->operator) {
@@ -716,7 +716,7 @@ class AOW_WorkFlow extends Basic
                         // no break
                     case 'Value':
                     default:
-                        if (in_array($data['type'],$dateFields) && trim($value) != '') {
+                        if (in_array($data['type'], $dateFields) && trim($value) != '') {
                             $value = strtotime($value);
                         } elseif ($data['type'] == 'bool' && (!boolval($value) || strtolower($value) == 'false')) {
                             $value = 0;
@@ -763,32 +763,32 @@ class AOW_WorkFlow extends Basic
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains": return strpos($var1,$var2);
-            case "Starts_With": return strrpos($var1,$var2, -strlen($var1));
-            case "Ends_With": return strpos($var1,$var2,strlen($var1) - strlen($var2));
+            case "Contains": return strpos($var1, $var2);
+            case "Starts_With": return strrpos($var1, $var2, -strlen($var1));
+            case "Ends_With": return strpos($var1, $var2, strlen($var1) - strlen($var2));
             case "is_null": return $var1 == '';
             case "One_of":
                 if (is_array($var1)) {
                     foreach ($var1 as $var) {
-                        if (in_array($var,$var2)) {
+                        if (in_array($var, $var2)) {
                             return true;
                         }
                     }
                     return false;
                 } else {
-                    return in_array($var1,$var2);
+                    return in_array($var1, $var2);
                 }
                 // no break
             case "Not_One_of":
                 if (is_array($var1)) {
                     foreach ($var1 as $var) {
-                        if (in_array($var,$var2)) {
+                        if (in_array($var, $var2)) {
                             return false;
                         }
                     }
                     return true;
                 } else {
-                    return !in_array($var1,$var2);
+                    return !in_array($var1, $var2);
                 }
                 // no break
             case "Equal_To":

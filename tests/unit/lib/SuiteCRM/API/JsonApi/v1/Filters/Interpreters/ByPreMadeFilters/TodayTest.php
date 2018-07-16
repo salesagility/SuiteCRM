@@ -29,7 +29,7 @@ class TodayTest extends SuiteCRM\StateCheckerUnitAbstract
     public function testGetByPreMadeFilter()
     {
         $today = new \DateTime();
-        $today = $today->setTime(0,0,0);
+        $today = $today->setTime(0, 0, 0);
         $expected = 'date_entered >= "'. $today->format(DATE_ATOM) . '"';
         $actual = self::$filter->getByPreMadeFilter();
         $this->assertEquals(

@@ -339,7 +339,7 @@ function buildRedirectURL($return_id='', $return_module='')
 function getLikeForEachWord($fieldname, $value, $minsize=4)
 {
     $value = trim($value);
-    $values = explode(' ',$value);
+    $values = explode(' ', $value);
     $ret = '';
     foreach ($values as $val) {
         if (strlen($val) >= $minsize) {
@@ -365,7 +365,7 @@ function isCloseAndCreateNewPressed()
  * @see include/generic/Save2.php
  */
 
-function add_prospects_to_prospect_list($parent_id,$child_id)
+function add_prospects_to_prospect_list($parent_id, $child_id)
 {
     $focus=BeanFactory::getBean('Prospects');
     if (is_array($child_id)) {
@@ -393,7 +393,7 @@ function add_prospects_to_prospect_list($parent_id,$child_id)
     }
 }
 
-function add_to_prospect_list($query_panel,$parent_module,$parent_type,$parent_id,$child_id,$link_attribute,$link_type,$parent)
+function add_to_prospect_list($query_panel, $parent_module, $parent_type, $parent_id, $child_id, $link_attribute, $link_type, $parent)
 {
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$query_panel);
     $GLOBALS['log']->debug('add_prospects_to_prospect_list:parameters:'.$parent_module);
@@ -433,7 +433,7 @@ function add_to_prospect_list($query_panel,$parent_module,$parent_type,$parent_i
         $thisPanel->_instance_properties['function_parameters']['EMAIL_MARKETING_ID_VALUE'] = $_REQUEST['marketing_id'];
     }
 
-    $result = SugarBean::get_union_related_list($parent, '', '', '', 0, -99,-99,'', $thisPanel);
+    $result = SugarBean::get_union_related_list($parent, '', '', '', 0, -99, -99, '', $thisPanel);
 
     if (!empty($result['list'])) {
         foreach ($result['list'] as $object) {
@@ -452,7 +452,7 @@ function add_to_prospect_list($query_panel,$parent_module,$parent_type,$parent_i
 }
 
 //Link rows returned by a report to parent record.
-function save_from_report($report_id,$parent_id, $module_name, $relationship_attr_name)
+function save_from_report($report_id, $parent_id, $module_name, $relationship_attr_name)
 {
     global $beanFiles;
     global $beanList;
@@ -472,7 +472,7 @@ function save_from_report($report_id,$parent_id, $module_name, $relationship_att
     //fetch report definition.
     global $current_language, $report_modules, $modules_report;
 
-    $mod_strings = return_module_language($current_language,"Reports");
+    $mod_strings = return_module_language($current_language, "Reports");
 
 
     $saved = new SavedReport();

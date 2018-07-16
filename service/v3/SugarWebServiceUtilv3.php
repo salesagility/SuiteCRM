@@ -40,7 +40,7 @@
 require_once('service/core/SoapHelperWebService.php');
 class SugarWebServiceUtilv3 extends SoapHelperWebServices
 {
-    public function get_name_value($field,$value)
+    public function get_name_value($field, $value)
     {
         if ($value instanceof Link2 && !method_exists($value, '__toString')) {
             $value = '';
@@ -165,7 +165,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
                         $options_dom = array();
                     }
                     foreach ($options_dom as $key=>$oneOption) {
-                        $options_ret[$key] = $this->get_name_value($key,$oneOption);
+                        $options_ret[$key] = $this->get_name_value($key, $oneOption);
                     }
                 }
 
@@ -287,7 +287,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
                 if ($view == 'subpanel') {
                     $results = $this->get_subpanel_defs($module_name, $type);
                 } else {
-                    $v = new SugarView(null,array());
+                    $v = new SugarView(null, array());
                     $v->module = $module_name;
                     $v->type = $view;
                     $fullView = ucfirst($view) . 'View';
@@ -357,10 +357,10 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
             $result = array();
 
             if (isset($response['list'])) {
-                $result = $this->format_upcoming_activities_entries($response['list'],$meta['date_field']);
+                $result = $this->format_upcoming_activities_entries($response['list'], $meta['date_field']);
             }
 
-            $results = array_merge($results,$result);
+            $results = array_merge($results, $result);
         }
 
         //Sort the result list by the date due flag in ascending order
@@ -372,7 +372,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
         return $results;
     }
 
-    public function generateUpcomingActivitiesWhereClause($seed,$meta)
+    public function generateUpcomingActivitiesWhereClause($seed, $meta)
     {
         $query = array();
         $query_date = TimeDate::getInstance()->nowDb();
@@ -386,7 +386,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
             $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".$GLOBALS['db']->quote($meta['status'])."' ";
         }
 
-        return implode(" AND ",$query);
+        return implode(" AND ", $query);
     }
     /**
      * Given a list of bean entries, format the expected response.
@@ -395,7 +395,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
      * @param string $date_field Name of the field storing the date field we are examining
      * @return array The results.
      */
-    public function format_upcoming_activities_entries($list,$date_field)
+    public function format_upcoming_activities_entries($list, $date_field)
     {
         $results = array();
         foreach ($list as $bean) {

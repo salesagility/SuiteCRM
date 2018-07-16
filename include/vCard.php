@@ -91,25 +91,25 @@ class vCard
 
     public function setTitle($title)
     {
-        $this->setProperty("TITLE",$title);
+        $this->setProperty("TITLE", $title);
     }
     public function setORG($org, $dep)
     {
-        $this->setProperty("ORG","$org;$dep");
+        $this->setProperty("ORG", "$org;$dep");
     }
-    public function setAddress($address, $city, $state,$postal, $country, $type, $encoding='')
+    public function setAddress($address, $city, $state, $postal, $country, $type, $encoding='')
     {
         if (!empty($encoding)) {
             $encoding = ";ENCODING={$encoding}";
         }
-        $this->setProperty("ADR;$type$encoding",";;$address;$city;$state;$postal;$country");
+        $this->setProperty("ADR;$type$encoding", ";;$address;$city;$state;$postal;$country");
     }
 
     public function setName($first_name, $last_name, $prefix)
     {
-        $this->name = strtr($first_name.'_'.$last_name, ' ' , '_');
-        $this->setProperty('N',$last_name.';'.$first_name.';;'.$prefix);
-        $this->setProperty('FN',"$prefix $first_name $last_name");
+        $this->name = strtr($first_name.'_'.$last_name, ' ', '_');
+        $this->setProperty('N', $last_name.';'.$first_name.';;'.$prefix);
+        $this->setProperty('FN', "$prefix $first_name $last_name");
     }
 
     public function setEmail($address)
@@ -127,7 +127,7 @@ class vCard
     }
     public function setBirthDate($date)
     {
-        $this->setProperty('BDAY',$date);
+        $this->setProperty('BDAY', $date);
     }
     public function getProperty($name)
     {
@@ -324,7 +324,7 @@ class vCard
                     $GLOBALS['log']->debug('I found a company name');
                     if (!empty($value)) {
                         $GLOBALS['log']->debug('I found a company name (fer real)');
-                        if (is_a($bean,"Contact") || is_a($bean,"Lead")) {
+                        if (is_a($bean, "Contact") || is_a($bean, "Lead")) {
                             $GLOBALS['log']->debug('And Im dealing with a person!');
                             $accountBean = BeanFactory::getBean('Accounts');
                             // It's a contact, we better try and match up an account
@@ -343,7 +343,7 @@ class vCard
                                 if (file_exists('custom/include/vCardTrimStrings.php')) {
                                     require_once('custom/include/vCardTrimStrings.php');
                                 }
-                                $short_company_name = trim(preg_replace(array_keys($vCardTrimStrings), $vCardTrimStrings,$full_company_name), " ,.");
+                                $short_company_name = trim(preg_replace(array_keys($vCardTrimStrings), $vCardTrimStrings, $full_company_name), " ,.");
 
                                 $GLOBALS['log']->debug('Trying an extended search for: ' . $short_company_name);
                                 $result = $accountBean->retrieve_by_string_fields(array('name' => $short_company_name, 'deleted' => 0));

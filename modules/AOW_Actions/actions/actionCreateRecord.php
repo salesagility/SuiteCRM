@@ -114,7 +114,7 @@ class actionCreateRecord extends actionBase
                         $params['value'][$key] = json_encode($params['value'][$key]);
                     }
 
-                    $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n"), ' ',$params['value'][$key])."','".$params['value_type'][$key]."');";
+                    $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n"), ' ', $params['value'][$key])."','".$params['value_type'][$key]."');";
                 }
             }
             if (isset($params['rel'])) {
@@ -275,14 +275,14 @@ class actionCreateRecord extends actionBase
                                 require_once 'modules/SecurityGroups/SecurityGroup.php';
                                 $security_group = new SecurityGroup();
                                 $security_group->retrieve($params['value'][$key][1]);
-                                $group_users = $security_group->get_linked_beans('users','User');
+                                $group_users = $security_group->get_linked_beans('users', 'User');
                                 $users = array();
                                 $r_users = array();
                                 if ($params['value'][$key][2] != '') {
                                     require_once 'modules/ACLRoles/ACLRole.php';
                                     $role = new ACLRole();
                                     $role->retrieve($params['value'][$key][2]);
-                                    $role_users = $role->get_linked_beans('users','User');
+                                    $role_users = $role->get_linked_beans('users', 'User');
                                     foreach ($role_users as $role_user) {
                                         $r_users[$role_user->id] = $role_user->name;
                                     }
@@ -298,7 +298,7 @@ class actionCreateRecord extends actionBase
                                 require_once 'modules/ACLRoles/ACLRole.php';
                                 $role = new ACLRole();
                                 $role->retrieve($params['value'][$key][2]);
-                                $role_users = $role->get_linked_beans('users','User');
+                                $role_users = $role->get_linked_beans('users', 'User');
                                 $users = array();
                                 foreach ($role_users as $role_user) {
                                     $users[$role_user->id] = $role_user->name;

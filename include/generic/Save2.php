@@ -66,12 +66,12 @@ require_once('include/formbase.php');
 $refreshsubpanel=true;
 if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
     save_from_report($_REQUEST['subpanel_id'] //report_id
-                     ,$_REQUEST['record'] //parent_id
-                     ,$_REQUEST['module'] //module_name
-                     ,$_REQUEST['subpanel_field_name'] //link attribute name
+                     , $_REQUEST['record'] //parent_id
+                     , $_REQUEST['module'] //module_name
+                     , $_REQUEST['subpanel_field_name'] //link attribute name
     );
 } elseif (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'addtoprospectlist') {
-    $GLOBALS['log']->debug(print_r($_REQUEST,true));
+    $GLOBALS['log']->debug(print_r($_REQUEST, true));
     if (!empty($_REQUEST['prospect_list_id']) and !empty($_REQUEST['prospect_ids'])) {
         add_prospects_to_prospect_list(
             $_REQUEST['prospect_list_id'],
@@ -80,7 +80,7 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
     } else {
         $parent = BeanFactory::getBean($_REQUEST['module'], $_REQUEST['record']);
         add_to_prospect_list(urldecode($_REQUEST['subpanel_module_name']),$_REQUEST['parent_module'],$_REQUEST['parent_type'],$_REQUEST['subpanel_id'],
-            $_REQUEST['child_id'],$_REQUEST['link_attribute'],$_REQUEST['link_type'], $parent);
+            $_REQUEST['child_id'], $_REQUEST['link_attribute'], $_REQUEST['link_type'], $parent);
     }
 
     $refreshsubpanel=false;
@@ -102,7 +102,7 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
         require_once('modules/Campaigns/utils.php');
         //call util function to create the campaign log entry
         foreach ($campaign_ids as $id) {
-            create_campaign_log_entry($id, $focus, $focus->module_dir,$focus, $focus->id);
+            create_campaign_log_entry($id, $focus, $focus->module_dir, $focus, $focus->id);
         }
         $refreshsubpanel=true;
     }
@@ -119,7 +119,7 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
     if (!empty($_REQUEST['select_entire_list']) &&  $_REQUEST['select_entire_list'] != 'undefined' && isset($_REQUEST['current_query_by_page'])) {
         $order_by = '';
         $current_query_by_page = $_REQUEST['current_query_by_page'];
-        $current_query_by_page_array = json_decode(html_entity_decode($current_query_by_page),true);
+        $current_query_by_page_array = json_decode(html_entity_decode($current_query_by_page), true);
 
         $module = $current_query_by_page_array['module'];
         $seed = BeanFactory::getBean($module);
@@ -159,9 +159,9 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
         }
         
         $query = $seed->create_new_list_query($order_by, $where_clauses);
-        $result = DBManagerFactory::getInstance()->query($query,true);
+        $result = DBManagerFactory::getInstance()->query($query, true);
         $uids = array();
-        while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result,false)) {
+        while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
             array_push($uids, $val['id']);
         }
         $_REQUEST['subpanel_id'] = $uids;
@@ -182,8 +182,8 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
         //parameters to the add metod.
         $add_values =array();
         foreach ($_REQUEST as $key=>$value) {
-            if (strpos($key,"REL_ATTRIBUTE_") !== false) {
-                $add_values[substr($key,14)]=$value;
+            if (strpos($key, "REL_ATTRIBUTE_") !== false) {
+                $add_values[substr($key, 14)]=$value;
             }
         }
         $relName = $_REQUEST['subpanel_field_name'];
@@ -191,7 +191,7 @@ if (isset($_REQUEST['return_type'])  && $_REQUEST['return_type'] == 'report') {
         if ($focus->module_name == 'Users' && $relName == 'SecurityGroups' && !is_admin($GLOBALS['current_user'])) {
             sugar_die('Access denied');
         }
-        $focus->$relName->add($_REQUEST['subpanel_id'],$add_values);
+        $focus->$relName->add($_REQUEST['subpanel_id'], $add_values);
         $focus->save();
     }
 }

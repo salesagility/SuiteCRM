@@ -121,4 +121,4 @@ $dictionary['Calls_Reschedule'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('Calls_Reschedule','Calls_Reschedule', array('basic','assignable'));
+VardefManager::createVardef('Calls_Reschedule', 'Calls_Reschedule', array('basic','assignable'));

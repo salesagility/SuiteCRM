@@ -50,10 +50,10 @@ foreach ($beanFiles as $bean => $file) {
         $focus = new $bean();
         if ($focus->is_AuditEnabled()) {
             if (!$focus->db->tableExists($focus->get_audit_table_name())) {
-                printf($mod_strings['LBL_REBUILD_AUDIT_SEARCH'],$focus->get_audit_table_name(), $focus->object_name);
+                printf($mod_strings['LBL_REBUILD_AUDIT_SEARCH'], $focus->get_audit_table_name(), $focus->object_name);
                 $focus->create_audit_table();
             } else {
-                printf($mod_strings['LBL_REBUILD_AUDIT_SKIP'],$focus->object_name);
+                printf($mod_strings['LBL_REBUILD_AUDIT_SKIP'], $focus->object_name);
             }
         }
     }

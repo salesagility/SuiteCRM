@@ -97,7 +97,7 @@ class ViewConfigureAjaxUI extends SugarView
 
         $this->ss->assign('enabled_mods', json_encode($enabled));
         $this->ss->assign('disabled_mods', json_encode($disabled));
-        $this->ss->assign('title',$this->getModuleTitle(false));
+        $this->ss->assign('title', $this->getModuleTitle(false));
 
         echo $this->ss->fetch('modules/Administration/templates/ConfigureAjaxUI.tpl');
     }

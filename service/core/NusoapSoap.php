@@ -140,7 +140,7 @@ abstract class NusoapSoap extends SugarSoapService
         if (isset($_REQUEST['style']) && ($_REQUEST['style'] == 'document')) {
             $style = "document";
         } // if
-        $this->server->register($function, $input, $output, $this->getNameSpace(), '',$style, $use);
+        $this->server->register($function, $input, $output, $this->getNameSpace(), '', $style, $use);
     } // fn
 
     /**

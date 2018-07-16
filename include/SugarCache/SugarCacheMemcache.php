@@ -99,7 +99,7 @@ class SugarCacheMemcache extends SugarCacheAbstract
             $config = SugarConfig::getInstance();
             $this->_host = $config->get('external_cache.memcache.host', $this->_host);
             $this->_port = $config->get('external_cache.memcache.port', $this->_port);
-            if (!@$this->_memcache->connect($this->_host,$this->_port)) {
+            if (!@$this->_memcache->connect($this->_host, $this->_port)) {
                 return false;
             }
             if ($config->get('external_cache.memcache.disable_compression', false)) {

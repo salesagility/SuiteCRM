@@ -566,7 +566,7 @@ class parseCSV
             }
 			($this->sort_reverse) ? krsort($rows, $sort_type) : ksort($rows, $sort_type) ;
             if ($this->offset !== null || $this->limit !== null) {
-                $rows = array_slice($rows, ($this->offset === null ? 0 : $this->offset) , $this->limit, true);
+                $rows = array_slice($rows, ($this->offset === null ? 0 : $this->offset), $this->limit, true);
             }
         }
         if (!$this->keep_file_data) {
@@ -585,7 +585,7 @@ class parseCSV
      * @param   delimiter   field delimiter to use
      * @return  CSV data (text string)
      */
-    public function unparse($data = array(), $fields = array(), $append = false , $is_php = false, $delimiter = null)
+    public function unparse($data = array(), $fields = array(), $append = false, $is_php = false, $delimiter = null)
     {
         if (!is_array($data) || empty($data)) {
             $data = &$this->data;

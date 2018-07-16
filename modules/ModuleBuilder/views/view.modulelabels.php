@@ -56,7 +56,7 @@ class ViewModulelabels extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
+    	   translate('LBL_MODULE_NAME', 'Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
@@ -87,11 +87,11 @@ class ViewModulelabels extends SugarView
         $smarty->assign('selected_lang', $selected_lang);
         $smarty->assign('view_package', $package_name);
         $smarty->assign('view_module', $module_name);
-        $smarty->assign('mb','1');
+        $smarty->assign('mb', '1');
         $smarty->assign('available_languages', get_languages());
         ///////////////////////////////////////////////////////////////////
         ////ASSISTANT
-        $smarty->assign('assistant',array('group'=>'module', 'key'=>'labels'));
+        $smarty->assign('assistant', array('group'=>'module', 'key'=>'labels'));
         /////////////////////////////////////////////////////////////////
         ////ASSISTANT
 
@@ -100,7 +100,7 @@ class ViewModulelabels extends SugarView
         $ajax->addCrumb($package_name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$package->name. '")');
         $ajax->addCrumb($module_name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_package='.$package->name.'&view_module='. $module_name . '")');
         $ajax->addCrumb($bak_mod_strings['LBL_LABELS'], '');
-        $ajax->addSection('center', $bak_mod_strings['LBL_LABELS'],$smarty->fetch('modules/ModuleBuilder/tpls/labels.tpl'));
+        $ajax->addSection('center', $bak_mod_strings['LBL_LABELS'], $smarty->fetch('modules/ModuleBuilder/tpls/labels.tpl'));
         echo $ajax->getJavascript();
     }
 }

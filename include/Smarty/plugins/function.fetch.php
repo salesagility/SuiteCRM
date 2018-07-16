@@ -37,9 +37,9 @@ function smarty_function_fetch($params, &$smarty)
         }
         
         // fetch the file
-        if ($fp = @fopen($params['file'],'r')) {
+        if ($fp = @fopen($params['file'], 'r')) {
             while (!feof($fp)) {
-                $content .= fgets ($fp,4096);
+                $content .= fgets ($fp, 4096);
             }
             fclose($fp);
         } else {
@@ -48,7 +48,7 @@ function smarty_function_fetch($params, &$smarty)
         }
     } else {
         // not a local file
-        if (preg_match('!^http://!i',$params['file'])) {
+        if (preg_match('!^http://!i', $params['file'])) {
             // http fetch
             if ($uri_parts = parse_url($params['file'])) {
                 // set defaults
@@ -95,7 +95,7 @@ function smarty_function_fetch($params, &$smarty)
                             break;
                         case "header":
                             if (!empty($param_value)) {
-                                if (!preg_match('![\w\d-]+: .+!',$param_value)) {
+                                if (!preg_match('![\w\d-]+: .+!', $param_value)) {
                                     $smarty->_trigger_fatal_error("[plugin] invalid header format '".$param_value."'");
                                     return;
                                 } else {
@@ -141,9 +141,9 @@ function smarty_function_fetch($params, &$smarty)
                 }
                 if (!empty($proxy_host) && !empty($proxy_port)) {
                     $_is_proxy = true;
-                    $fp = fsockopen($proxy_host,$proxy_port,$errno,$errstr,$timeout);
+                    $fp = fsockopen($proxy_host, $proxy_port, $errno, $errstr, $timeout);
                 } else {
-                    $fp = fsockopen($server_name,$port,$errno,$errstr,$timeout);
+                    $fp = fsockopen($server_name, $port, $errno, $errstr, $timeout);
                 }
 
                 if (!$fp) {
@@ -178,15 +178,15 @@ function smarty_function_fetch($params, &$smarty)
 
                     fputs($fp, "\r\n");
                     while (!feof($fp)) {
-                        $content .= fgets($fp,4096);
+                        $content .= fgets($fp, 4096);
                     }
                     fclose($fp);
-                    $csplit = preg_split("!\r\n\r\n!",$content,2);
+                    $csplit = preg_split("!\r\n\r\n!", $content, 2);
 
                     $content = $csplit[1];
 
                     if (!empty($params['assign_headers'])) {
-                        $smarty->assign($params['assign_headers'],preg_split("!\r\n!",$csplit[0]));
+                        $smarty->assign($params['assign_headers'], preg_split("!\r\n!", $csplit[0]));
                     }
                 }
             } else {
@@ -195,9 +195,9 @@ function smarty_function_fetch($params, &$smarty)
             }
         } else {
             // ftp fetch
-            if ($fp = @fopen($params['file'],'r')) {
+            if ($fp = @fopen($params['file'], 'r')) {
                 while (!feof($fp)) {
-                    $content .= fgets ($fp,4096);
+                    $content .= fgets ($fp, 4096);
                 }
                 fclose($fp);
             } else {
@@ -209,7 +209,7 @@ function smarty_function_fetch($params, &$smarty)
 
 
     if (!empty($params['assign'])) {
-        $smarty->assign($params['assign'],$content);
+        $smarty->assign($params['assign'], $content);
     } else {
         return $content;
     }

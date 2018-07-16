@@ -182,7 +182,7 @@ class MBLanguage
         foreach ($this->strings as $lang=>$values) {
             //Check if the module Label has changed.
             $renameLang = $rename || empty($values) || (isset($values['LBL_MODULE_NAME']) && $this->label != $values['LBL_MODULE_NAME']);
-            $mod_strings = return_module_language(str_replace('.lang.php','',$lang), 'ModuleBuilder');
+            $mod_strings = return_module_language(str_replace('.lang.php', '', $lang), 'ModuleBuilder');
             $required = array(
                 'LBL_LIST_FORM_TITLE'=>$this->label . " " . $mod_strings['LBL_LIST'],
                 'LBL_MODULE_NAME'=>$this->label,
@@ -203,7 +203,7 @@ class MBLanguage
                     $values[$k] = $v;
                 }
             }
-            write_array_to_file('mod_strings', $values, $save_path .'/'.$lang,'w', $header);
+            write_array_to_file('mod_strings', $values, $save_path .'/'.$lang, 'w', $header);
         }
         $app_save_path = $this->path . '/../../language/application';
         mkdir_recursive($app_save_path);

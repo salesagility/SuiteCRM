@@ -118,12 +118,12 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
     }
 
     $ListView = new ListView();
-    $ListView->initNewXTemplate('modules/Campaigns/Schedule.html',$current_module_strings);
+    $ListView->initNewXTemplate('modules/Campaigns/Schedule.html', $current_module_strings);
 
     if ($test) {
-        $ListView->xTemplateAssign("SCHEDULE_MESSAGE_HEADER",$current_module_strings['LBL_SCHEDULE_MESSAGE_TEST']);
+        $ListView->xTemplateAssign("SCHEDULE_MESSAGE_HEADER", $current_module_strings['LBL_SCHEDULE_MESSAGE_TEST']);
     } else {
-        $ListView->xTemplateAssign("SCHEDULE_MESSAGE_HEADER",$current_module_strings['LBL_SCHEDULE_MESSAGE_EMAILS']);
+        $ListView->xTemplateAssign("SCHEDULE_MESSAGE_HEADER", $current_module_strings['LBL_SCHEDULE_MESSAGE_EMAILS']);
     }
 
     //force multi-select popup
@@ -135,14 +135,14 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
     $ListView->show_select_menu = false;
     $ListView->show_delete_button = false;
     $ListView->setDisplayHeaderAndFooter(false);
-    $ListView->xTemplateAssign("RETURN_MODULE",$_POST['return_module']);
-    $ListView->xTemplateAssign("RETURN_ACTION",$_POST['return_action']);
-    $ListView->xTemplateAssign("RETURN_ID",$_POST['record']);
+    $ListView->xTemplateAssign("RETURN_MODULE", $_POST['return_module']);
+    $ListView->xTemplateAssign("RETURN_ACTION", $_POST['return_action']);
+    $ListView->xTemplateAssign("RETURN_ID", $_POST['record']);
     $ListView->setHeaderTitle($current_module_strings['LBL_LIST_FORM_TITLE']);
     $ListView->setQuery($where, "", "date_modified desc", "EMAILMARKETING", false);
 
     if ($test) {
-        $ListView->xTemplateAssign("MODE",$_POST['mode']);
+        $ListView->xTemplateAssign("MODE", $_POST['mode']);
         //finds all marketing messages that have an association with prospect list of the test.
         //this query can be siplified using sub-selects.
         $query="select distinct email_marketing.id email_marketing_id from email_marketing ";

@@ -158,7 +158,7 @@
          $index = $start;
          $db = DBManagerFactory::getInstance();
 
-         $result = $db->limitQuery(SugarVCR::retrieve($module),$start,($offset+VCREND),false);
+         $result = $db->limitQuery(SugarVCR::retrieve($module), $start, ($offset+VCREND), false);
          $index++;
 
          $ids = array();

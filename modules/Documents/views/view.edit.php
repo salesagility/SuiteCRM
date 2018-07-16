@@ -118,8 +118,8 @@ class DocumentsViewEdit extends ViewEdit
 
         //get related document name.
         if (!empty($this->bean->related_doc_id)) {
-            $this->ss->assign("RELATED_DOCUMENT_NAME",Document::get_document_name($this->bean->related_doc_id));
-            $this->ss->assign("RELATED_DOCUMENT_ID",$this->bean->related_doc_id);
+            $this->ss->assign("RELATED_DOCUMENT_NAME", Document::get_document_name($this->bean->related_doc_id));
+            $this->ss->assign("RELATED_DOCUMENT_ID", $this->bean->related_doc_id);
             if (!empty($this->bean->related_doc_rev_id)) {
                 $this->ss->assign("RELATED_DOCUMENT_REVISION_OPTIONS", get_select_options_with_id(DocumentRevision::get_document_revisions($this->bean->related_doc_id), $this->bean->related_doc_rev_id));
             } else {
@@ -132,7 +132,7 @@ class DocumentsViewEdit extends ViewEdit
 
         //set parent information in the form.
         if (isset($_REQUEST['parent_id'])) {
-            $this->ss->assign("PARENT_ID",$_REQUEST['parent_id']);
+            $this->ss->assign("PARENT_ID", $_REQUEST['parent_id']);
         } //if
 
         if (isset($_REQUEST['parent_name'])) {
@@ -142,25 +142,25 @@ class DocumentsViewEdit extends ViewEdit
                 switch (strtolower($_REQUEST['parent_type'])) {
 
                     case "contracts":
-                        $this->ss->assign("LBL_PARENT_NAME",$mod_strings['LBL_CONTRACT_NAME']);
+                        $this->ss->assign("LBL_PARENT_NAME", $mod_strings['LBL_CONTRACT_NAME']);
                         break;
 
                     //todo remove leads case.
                     case "leads":
-                        $this->ss->assign("LBL_PARENT_NAME",$mod_strings['LBL_CONTRACT_NAME']);
+                        $this->ss->assign("LBL_PARENT_NAME", $mod_strings['LBL_CONTRACT_NAME']);
                         break;
                 } //switch
             } //if
         } //if
 
         if (isset($_REQUEST['parent_type'])) {
-            $this->ss->assign("PARENT_TYPE",$_REQUEST['parent_type']);
+            $this->ss->assign("PARENT_TYPE", $_REQUEST['parent_type']);
         }
 
         if ($load_signed) {
             $this->ss->assign("RELATED_DOCUMENT_REVISION_DISABLED", "disabled");
             $this->ss->assign("RELATED_DOCUMENT_BUTTON_AVAILABILITY", "hidden");
-            $this->ss->assign("LOAD_SIGNED_ID",$_REQUEST['load_signed_id']);
+            $this->ss->assign("LOAD_SIGNED_ID", $_REQUEST['load_signed_id']);
         } else {
             $this->ss->assign("RELATED_DOCUMENT_BUTTON_AVAILABILITY", "button");
         } //if-else

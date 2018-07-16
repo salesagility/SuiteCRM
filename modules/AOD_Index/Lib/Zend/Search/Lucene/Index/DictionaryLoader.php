@@ -152,8 +152,8 @@ class Zend_Search_Lucene_Index_DictionaryLoader
                         if (ord($termSuffix[$count1]) == 0xC0 &&
                             ord($termSuffix[$count1+1]) == 0x80) {
                             $termSuffix[$count1] = 0;
-                            $termSuffix = substr($termSuffix,0,$count1+1)
-                                        . substr($termSuffix,$count1+2);
+                            $termSuffix = substr($termSuffix, 0, $count1+1)
+                                        . substr($termSuffix, $count1+2);
                         }
                         $count1 += $addBytes;
                     }

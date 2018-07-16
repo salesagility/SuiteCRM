@@ -51,7 +51,7 @@ class ViewModule extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
+    	   translate('LBL_MODULE_NAME', 'Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
@@ -74,10 +74,10 @@ class ViewModule extends SugarView
         $types = (empty($module_name)) ? MBModule::getTypes() : $this->mbModule->mbvardefs->templates ;
         
         foreach ($types as $type=>$definition) {
-            $translated_type[$type]=translate('LBL_TYPE_'.strtoupper($type),'ModuleBuilder');
+            $translated_type[$type]=translate('LBL_TYPE_'.strtoupper($type), 'ModuleBuilder');
         }
         natcasesort($translated_type);
-        $smarty->assign('types',$translated_type);
+        $smarty->assign('types', $translated_type);
 		
         $smarty->assign('package', $package);
         $smarty->assign('module', $this->mbModule);
@@ -85,7 +85,7 @@ class ViewModule extends SugarView
 
         $ajax = new AjaxCompose();
         $ajax->addCrumb($GLOBALS['mod_strings']['LBL_MODULEBUILDER'], 'ModuleBuilder.main("mb")');
-        $ajax->addCrumb(' '. $package->name,'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$package->name.'")');
+        $ajax->addCrumb(' '. $package->name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$package->name.'")');
         if (empty($module_name)) {
             $module_name = translate('LBL_NEW_MODULE', 'ModuleBuilder');
         }

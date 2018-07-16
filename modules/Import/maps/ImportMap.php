@@ -110,9 +110,9 @@ class ImportMap extends SugarBean
     {
         $mapping_arr = array();
         if (!empty($this->content)) {
-            $pairs = explode("&",$this->content);
+            $pairs = explode("&", $this->content);
             foreach ($pairs as $pair) {
-                list($name,$value) = explode("=",$pair);
+                list($name, $value) = explode("=", $pair);
                 $mapping_arr[trim($name)] = $value;
             }
         }
@@ -144,9 +144,9 @@ class ImportMap extends SugarBean
     {
         $defa_arr = array();
         if (!empty($this->default_values)) {
-            $pairs = explode("&",$this->default_values);
+            $pairs = explode("&", $this->default_values);
             foreach ($pairs as $pair) {
-                list($name,$value) = explode("=",$pair);
+                list($name, $value) = explode("=", $pair);
                 $defa_arr[trim($name)] = $value;
             }
         }
@@ -172,9 +172,9 @@ class ImportMap extends SugarBean
     /**
      * @see SugarBean::retrieve()
      */
-    public function retrieve($id = -1, $encode=true,$deleted=true)
+    public function retrieve($id = -1, $encode=true, $deleted=true)
     {
-        $returnVal = parent::retrieve($id,$encode,$deleted);
+        $returnVal = parent::retrieve($id, $encode, $deleted);
 
         if (!($returnVal instanceOf $this)) {
             return $returnVal;
@@ -322,7 +322,7 @@ class ImportMap extends SugarBean
                         assigned_user_id = '$user_id'
                     WHERE id = '{$this->id}'";
 
-        $this->db->query($query,true,"Error marking import map published: ");
+        $this->db->query($query, true, "Error marking import map published: ");
 
         return true;
     }
@@ -340,10 +340,10 @@ class ImportMap extends SugarBean
                     FROM {$this->table_name}
                     " . $this->get_where($fields_array);
 
-        $result = $this->db->query($query,true," Error: ");
+        $result = $this->db->query($query, true, " Error: ");
         $obj_arr = array();
 
-        while ($row = $this->db->fetchByAssoc($result,FALSE)) {
+        while ($row = $this->db->fetchByAssoc($result, FALSE)) {
             $focus = new ImportMap();
 
             foreach ($this->column_fields as $field) {
@@ -382,7 +382,7 @@ class ImportMap extends SugarBean
 
         //retrieve user preferences and populate preference array
         $preference_values_str = $current_user->getPreference('field_values', 'import');
-        $preference_values = json_decode($preference_values_str,true);
+        $preference_values = json_decode($preference_values_str, true);
 
         foreach ($import_step_fields as $val) {
             //overwrite preference array with new values from request if the value is different or new

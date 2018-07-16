@@ -136,7 +136,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                 if (strtolower($_SERVER["REQUEST_METHOD"]) == 'get') {
                     $query_arr = $_REQUEST;
                 } else {
-                    parse_str($_REQUEST['parms'],$query_arr);
+                    parse_str($_REQUEST['parms'], $query_arr);
                 }
             } else {
                 $this->path = $this->_urldecode($_SERVER["PATH_INFO"]);
@@ -145,9 +145,9 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
                     $this->path = stripslashes($this->path);
                 }
 
-                $query_str = preg_replace('/^\//','',$this->path);
+                $query_str = preg_replace('/^\//', '', $this->path);
                 $query_arr =  array();
-                parse_str($query_str,$query_arr);
+                parse_str($query_str, $query_arr);
             }
 
 

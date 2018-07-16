@@ -200,7 +200,7 @@ $server->register(
     array('return'=>'tns:get_entry_list_result'),
     $NAMESPACE);
 
-function portal_get_entry_list($session, $module_name,$where, $order_by, $select_fields)
+function portal_get_entry_list($session, $module_name, $where, $order_by, $select_fields)
 {
     return portal_get_entry_list_limited($session, $module_name, $where, $order_by, $select_fields, 0, "");
 }
@@ -300,7 +300,7 @@ $server->register(
     array('return'=>'tns:get_entry_result'),
     $NAMESPACE);
 
-function portal_get_entry($session, $module_name, $id,$select_fields)
+function portal_get_entry($session, $module_name, $id, $select_fields)
 {
     global  $beanList, $beanFiles;
     $error = new SoapError();
@@ -346,7 +346,7 @@ function portal_get_entry($session, $module_name, $id,$select_fields)
         $field_list = get_field_list($seed, true);
     }
     $output_list = filter_return_list($output_list, $select_fields, $module_name);
-    $field_list = filter_field_list($field_list,$select_fields, $module_name);
+    $field_list = filter_field_list($field_list, $select_fields, $module_name);
 
     return array('field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
 }
@@ -358,7 +358,7 @@ $server->register(
     array('return'=>'tns:set_entry_result'),
     $NAMESPACE);
 
-function portal_set_entry($session,$module_name, $name_value_list)
+function portal_set_entry($session, $module_name, $name_value_list)
 {
     global  $beanList, $beanFiles, $valid_modules_for_contact;
 
@@ -457,7 +457,7 @@ $server->register(
         array('return'=>'tns:set_entry_result'),
         $NAMESPACE);
 
-function portal_set_note_attachment($session,$note)
+function portal_set_note_attachment($session, $note)
 {
     $error = new SoapError();
     if (!portal_validate_authenticated($session)) {
@@ -505,7 +505,7 @@ $server->register(
     array('return'=>'tns:return_note_attachment'),
     $NAMESPACE);
 
-function portal_get_note_attachment($session,$id)
+function portal_get_note_attachment($session, $id)
 {
     $error = new SoapError();
     if (! portal_validate_authenticated($session)) {
@@ -525,7 +525,7 @@ function portal_get_note_attachment($session,$id)
     if (!isset($note->filename)) {
         $note->filename = '';
     }
-    $file= $ns->retrieveFile($id,$note->filename);
+    $file= $ns->retrieveFile($id, $note->filename);
     if ($file == -1) {
         $error->set_error('no_file');
         $file = '';
@@ -539,7 +539,7 @@ $server->register(
     array('return'=>'tns:error_value'),
     $NAMESPACE);
 
-function portal_relate_note_to_module($session,$note_id, $module_name, $module_id)
+function portal_relate_note_to_module($session, $note_id, $module_name, $module_id)
 {
     global  $beanList, $beanFiles, $current_user;
     $error = new SoapError();
@@ -576,7 +576,7 @@ $server->register(
     array('return'=>'tns:get_entry_result'),
     $NAMESPACE);
 
-function portal_get_related_notes($session,$module_name, $module_id, $select_fields, $order_by)
+function portal_get_related_notes($session, $module_name, $module_id, $select_fields, $order_by)
 {
     global  $beanList, $beanFiles;
     $error = new SoapError();
@@ -619,7 +619,7 @@ function portal_get_related_notes($session,$module_name, $module_id, $select_fie
         }
     }
     $output_list = filter_return_list($output_list, $select_fields, $module_name);
-    $field_list = filter_field_list($field_list,$select_fields, $module_name);
+    $field_list = filter_field_list($field_list, $select_fields, $module_name);
 
 
     return array('result_count'=>sizeof($output_list), 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());
@@ -664,7 +664,7 @@ function portal_get_related_list($session, $module_name, $rel_module, $module_id
         }
     }
     $output_list = filter_return_list($output_list, $select_fields, $module_name);
-    $field_list = filter_field_list($field_list,$select_fields, $module_name);
+    $field_list = filter_field_list($field_list, $select_fields, $module_name);
 
 
     return array('result_count'=>$list['result_count'], 'next_offset'=>0,'field_list'=>$field_list, 'entry_list'=>$output_list, 'error'=>$error->get_soap_array());

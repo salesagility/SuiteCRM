@@ -75,7 +75,7 @@ class MBPackageTree
             if (empty($node['label'])) {
                 $node['label'] = $node['name'];
             }
-            $yn = new Node($parent->id . '/' . $node['name'],$node['label']);
+            $yn = new Node($parent->id . '/' . $node['name'], $node['label']);
             if (!empty($node['action'])) {
                 $yn->set_property('action', $node['action']);
             }

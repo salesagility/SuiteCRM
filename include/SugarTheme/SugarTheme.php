@@ -300,11 +300,11 @@ class SugarTheme
             $themedef = array();
             include("themes/{$defaults['parentTheme']}/themedef.php");
             foreach ($themedef as $key => $value) {
-                if (property_exists(__CLASS__,$key)) {
+                if (property_exists(__CLASS__, $key)) {
                     // For all arrays ( except colors and fonts ) you can just specify the items
                     // to change instead of all of the values
-                    if (is_array($this->$key) && !in_array($key,array('colors','fonts'))) {
-                        $this->$key = array_merge($this->$key,$value);
+                    if (is_array($this->$key) && !in_array($key, array('colors','fonts'))) {
+                        $this->$key = array_merge($this->$key, $value);
                     } else {
                         $this->$key = $value;
                     }
@@ -312,11 +312,11 @@ class SugarTheme
             }
         }
         foreach ($defaults as $key => $value) {
-            if (property_exists(__CLASS__,$key)) {
+            if (property_exists(__CLASS__, $key)) {
                 // For all arrays ( except colors and fonts ) you can just specify the items
                 // to change instead of all of the values
-                if (is_array($this->$key) && !in_array($key,array('colors','fonts'))) {
-                    $this->$key = array_merge($this->$key,$value);
+                if (is_array($this->$key) && !in_array($key, array('colors','fonts'))) {
+                    $this->$key = array_merge($this->$key, $value);
                 } else {
                     $this->$key = $value;
                 }
@@ -743,7 +743,7 @@ EOHTML;
 
         // trap deprecated use of image extension
         if (is_null($ext)) {
-            $imageNameExp = explode('.',$imageName);
+            $imageNameExp = explode('.', $imageName);
             if (count($imageNameExp) == 1) {
                 $imageName .= '.gif';
             }
@@ -773,7 +773,7 @@ EOHTML;
 
         // img caching
         if (empty($cached_results[$imageName])) {
-            $imageURL = $this->getImageURL($imageName,false);
+            $imageURL = $this->getImageURL($imageName, false);
             if (empty($imageURL)) {
                 return false;
             }
@@ -809,7 +809,7 @@ EOHTML;
         }
 
         // sprite keys are base on imageURL
-        $imageURL = $this->getImageURL($imageName,false);
+        $imageURL = $this->getImageURL($imageName, false);
         if (empty($imageURL)) {
             $this->_spriteCache[$imageName] = false;
             return false;
@@ -925,7 +925,7 @@ EOHTML;
             $imagePath = $filename;
         } elseif (isset($this->parentTheme)
                 && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
-                && ($filename = SugarThemeRegistry::get($this->parentTheme)->getImageURL($imageName,false)) != '') {
+                && ($filename = SugarThemeRegistry::get($this->parentTheme)->getImageURL($imageName, false)) != '') {
             $imagePath = $filename;
         } elseif (($filename = $this->_getImageFileName('custom/'.$this->getDefaultImagePath().'/'.$imageName)) != '') {
             $imagePath = $filename;
@@ -1006,7 +1006,7 @@ EOHTML;
         $fullFileName = $this->getCSSPath().'/'.$cssFileName;
         if (isset($this->parentTheme)
                 && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
-                && ($filename = SugarThemeRegistry::get($this->parentTheme)->getCSSURL($cssFileName,false)) != '') {
+                && ($filename = SugarThemeRegistry::get($this->parentTheme)->getCSSURL($cssFileName, false)) != '') {
             $cssFileContents .= file_get_contents($filename);
         } else {
             if (is_file($defaultFileName)) {
@@ -1051,7 +1051,7 @@ EOHTML;
         }
 
         // now write the css to cache
-        sugar_file_put_contents($cssFilePath,$cssFileContents);
+        sugar_file_put_contents($cssFilePath, $cssFileContents);
 
         $this->_cssCache[$cssFileName] = $fullFileName;
 
@@ -1085,7 +1085,7 @@ EOHTML;
         $defaultFileName = $this->getDefaultJSPath().'/'.$jsFileName;
         if (isset($this->parentTheme)
                 && SugarThemeRegistry::get($this->parentTheme) instanceOf SugarTheme
-                && ($filename = SugarThemeRegistry::get($this->parentTheme)->getJSURL($jsFileName,false)) != ''    && !in_array($jsFileName,$this->ignoreParentFiles)) {
+                && ($filename = SugarThemeRegistry::get($this->parentTheme)->getJSURL($jsFileName, false)) != ''    && !in_array($jsFileName, $this->ignoreParentFiles)) {
             $jsFileContents .= file_get_contents($filename);
         } else {
             if (is_file($defaultFileName)) {
@@ -1110,14 +1110,14 @@ EOHTML;
         $jsFilePath = create_cache_directory($fullFileName);
 
         // minify the js
-        if (!inDeveloperMode()&& !is_file(str_replace('.js','-min.js',$jsFilePath))) {
+        if (!inDeveloperMode()&& !is_file(str_replace('.js', '-min.js', $jsFilePath))) {
             $jsFileContents = SugarMin::minify($jsFileContents);
-            $jsFilePath = str_replace('.js','-min.js',$jsFilePath);
-            $fullFileName = str_replace('.js','-min.js',$fullFileName);
+            $jsFilePath = str_replace('.js', '-min.js', $jsFilePath);
+            $fullFileName = str_replace('.js', '-min.js', $fullFileName);
         }
 
         // now write the js to cache
-        sugar_file_put_contents($jsFilePath,$jsFileContents);
+        sugar_file_put_contents($jsFilePath, $jsFileContents);
 
         $this->_jsCache[$jsFileName] = $fullFileName;
 
@@ -1161,7 +1161,7 @@ EOHTML;
                         continue;
                     }
                     if (!isset($imageArray[$file])) {
-                        $imageArray[$file] = $this->getImageURL($file,false);
+                        $imageArray[$file] = $this->getImageURL($file, false);
                     }
                 }
                 closedir($dir);

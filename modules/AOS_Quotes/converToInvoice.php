@@ -53,7 +53,7 @@
     $rawRow['template_ddown_c'] = ' ';
     $rawRow['quote_number'] = $rawRow['number'];
     $rawRow['number'] = '';
-    $dt = explode(' ',$rawRow['date_entered']);
+    $dt = explode(' ', $rawRow['date_entered']);
     $rawRow['quote_date'] = $dt[0];
     $rawRow['invoice_date'] = date('Y-m-d');
     $rawRow['total_amt'] = format_number($rawRow['total_amt']);

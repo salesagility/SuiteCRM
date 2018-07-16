@@ -436,7 +436,7 @@ background-position: -{$offset_x}px -{$offset_y}px;
      */
     private function initSpriteImg($w, $h)
     {
-        $this->spriteImg = imagecreatetruecolor($w,$h);
+        $this->spriteImg = imagecreatetruecolor($w, $h);
         $transparent = imagecolorallocatealpha($this->spriteImg, 0, 0, 0, 127);
         imagefill($this->spriteImg, 0, 0, $transparent);
         imagealphablending($this->spriteImg, false);

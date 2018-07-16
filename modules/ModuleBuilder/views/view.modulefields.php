@@ -52,7 +52,7 @@ class ViewModulefields extends SugarView
         global $mod_strings;
         
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -121,7 +121,7 @@ class ViewModulefields extends SugarView
             $ajax->addCrumb($mod_strings['LBL_STUDIO'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard")');
             $ajax->addCrumb(translate($module_name), 'ModuleBuilder.getContent("module=ModuleBuilder&action=wizard&view_module='.$module_name.'")');
             $ajax->addCrumb($mod_strings['LBL_FIELDS'], '');
-            $ajax->addSection('center', $mod_strings['LBL_EDIT_FIELDS'],$smarty->fetch('modules/ModuleBuilder/tpls/MBModule/fields.tpl'));
+            $ajax->addSection('center', $mod_strings['LBL_EDIT_FIELDS'], $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/fields.tpl'));
             $_REQUEST['field'] = '';
 
             echo $ajax->getJavascript();
@@ -140,10 +140,10 @@ class ViewModulefields extends SugarView
 
             if (file_exists($this->mbModule->path. '/language/'.$current_language.'.lang.php')) {
                 include($this->mbModule->path .'/language/'.$current_language.'.lang.php');
-                $this->mbModule->setModStrings($current_language,$mod_strings);
+                $this->mbModule->setModStrings($current_language, $mod_strings);
             } elseif (file_exists($this->mbModule->path. '/language/en_us.lang.php')) {
                 include($this->mbModule->path .'/language/en_us.lang.php');
-                $this->mbModule->setModStrings('en_us',$mod_strings);
+                $this->mbModule->setModStrings('en_us', $mod_strings);
             }
 
             foreach ($this->mbModule->mbvardefs->vardefs['fields'] as $k=>$v) {
@@ -160,7 +160,7 @@ class ViewModulefields extends SugarView
 
             foreach ($this->mbModule->mbvardefs->vardefs['fields'] as $k=>$v) {
                 if ($k != $module_name) {
-                    $titleLBL[$k]=translate("LBL_".strtoupper($k),'ModuleBuilder');
+                    $titleLBL[$k]=translate("LBL_".strtoupper($k), 'ModuleBuilder');
                 } else {
                     $titleLBL[$k]=$k;
                 }
@@ -196,15 +196,15 @@ class ViewModulefields extends SugarView
             $smarty->assign('title', $titleLBL);
             $smarty->assign('package', $package);
             $smarty->assign('module', $this->mbModule);
-            $smarty->assign('editLabelsMb','1');
+            $smarty->assign('editLabelsMb', '1');
             $smarty->assign('studio', false);
 
             $ajax = new AjaxCompose();
             $ajax->addCrumb($bak_mod_strings['LBL_MODULEBUILDER'], 'ModuleBuilder.main("mb")');
-            $ajax->addCrumb($package->name,'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$package->name.'")');
+            $ajax->addCrumb($package->name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$package->name.'")');
             $ajax->addCrumb($module_name, 'ModuleBuilder.getContent("module=ModuleBuilder&action=module&view_package='.$package->name.'&view_module='. $module_name . '")');
             $ajax->addCrumb($bak_mod_strings['LBL_FIELDS'], '');
-            $ajax->addSection('center', $bak_mod_strings["LBL_FIELDS"],$smarty->fetch('modules/ModuleBuilder/tpls/MBModule/fields.tpl'));
+            $ajax->addSection('center', $bak_mod_strings["LBL_FIELDS"], $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/fields.tpl'));
             $_REQUEST['field'] = '';
 
             echo $ajax->getJavascript();

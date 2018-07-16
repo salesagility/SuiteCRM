@@ -56,7 +56,7 @@ class CalendarViewGetGRUsers extends SugarView
         $users_arr = array();
         require_once("modules/Users/User.php");	
     
-        $user_ids = explode(",", trim($_REQUEST['users'],','));	
+        $user_ids = explode(",", trim($_REQUEST['users'], ','));	
         $user_ids = array_unique($user_ids);	
 
         require_once('include/json_config.php');

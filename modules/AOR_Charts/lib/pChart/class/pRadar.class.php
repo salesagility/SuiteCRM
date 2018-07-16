@@ -13,13 +13,13 @@
      You can find the whole class documentation on the pChart web site.
  */
 
- define("SEGMENT_HEIGHT_AUTO"		, 690001);
+ define("SEGMENT_HEIGHT_AUTO", 690001);
 
- define("RADAR_LAYOUT_STAR"		, 690011);
- define("RADAR_LAYOUT_CIRCLE"		, 690012);
+ define("RADAR_LAYOUT_STAR", 690011);
+ define("RADAR_LAYOUT_CIRCLE", 690012);
 
- define("RADAR_LABELS_ROTATED"		, 690021);
- define("RADAR_LABELS_HORIZONTAL"	, 690022);
+ define("RADAR_LABELS_ROTATED", 690021);
+ define("RADAR_LABELS_HORIZONTAL", 690022);
 
  /* pRadar class definition */
  class pRadar
@@ -32,7 +32,7 @@
      }
 
      /* Draw a radar chart */
-     public function drawRadar($Object,$Values,$Format="")
+     public function drawRadar($Object, $Values, $Format="")
      {
          $this->pChartObject = $Object;
 
@@ -121,7 +121,7 @@
          $CenterX = ($X2-$X1)/2 + $X1;
          $CenterY = ($Y2-$Y1)/2 + $Y1;
 
-         $EdgeHeight = min(($X2-$X1)/2,($Y2-$Y1)/2);
+         $EdgeHeight = min(($X2-$X1)/2, ($Y2-$Y1)/2);
          if ($WriteLabels) {
              $EdgeHeight = $EdgeHeight - $FontSize - $LabelPadding - $TicksLength;
          }
@@ -141,7 +141,7 @@
                  }
              }
              $MaxSegments = $EdgeHeight/20;
-             $Scale = $Object->computeScale(0,$Max,$MaxSegments,array(1,2,5));
+             $Scale = $Object->computeScale(0, $Max, $MaxSegments, array(1,2,5));
 
              $Segments      = $Scale["Rows"];
              $SegmentHeight = $Scale["RowHeight"];
@@ -168,10 +168,10 @@
                          $PointArray[] = cos(deg2rad($i+$AxisRotation)) * $EdgeHeight + $CenterX;
                          $PointArray[] = sin(deg2rad($i+$AxisRotation)) * $EdgeHeight + $CenterY;
                      }
-                     $Object->drawPolygon($PointArray,$Color);
+                     $Object->drawPolygon($PointArray, $Color);
                  } elseif ($Layout == RADAR_LAYOUT_CIRCLE) {
                      $Color = array("R"=>$BackgroundR,"G"=>$BackgroundG,"B"=>$BackgroundB,"Alpha"=>$BackgroundAlpha);
-                     $Object->drawFilledCircle($CenterX,$CenterY,$EdgeHeight,$Color);
+                     $Object->drawFilledCircle($CenterX, $CenterY, $EdgeHeight, $Color);
                  }
              } else {
                  $GradientROffset	= ($BackgroundGradient["EndR"] - $BackgroundGradient["StartR"]) / $Segments;
@@ -188,12 +188,12 @@
                              $PointArray[] = cos(deg2rad($i+$AxisRotation)) * ($EdgeHeight/$Segments)*$j + $CenterX;
                              $PointArray[] = sin(deg2rad($i+$AxisRotation)) * ($EdgeHeight/$Segments)*$j + $CenterY;
                          }
-                         $Object->drawPolygon($PointArray,$Color);
+                         $Object->drawPolygon($PointArray, $Color);
                      }
                  } elseif ($Layout == RADAR_LAYOUT_CIRCLE) {
                      for ($j=$Segments;$j>=1;$j--) {
                          $Color = array("R"=>$BackgroundGradient["StartR"]+$GradientROffset*$j,"G"=>$BackgroundGradient["StartG"]+$GradientGOffset*$j,"B"=>$BackgroundGradient["StartB"]+$GradientBOffset*$j,"Alpha"=>$BackgroundGradient["StartAlpha"]+$GradientAlphaOffset*$j);
-                         $Object->drawFilledCircle($CenterX,$CenterY,($EdgeHeight/$Segments)*$j,$Color);
+                         $Object->drawFilledCircle($CenterX, $CenterY, ($EdgeHeight/$Segments)*$j, $Color);
                      }
                  }
              }
@@ -211,13 +211,13 @@
                      $EdgeX2 = cos(deg2rad($i+$AxisRotation+(360/$Points))) * ($EdgeHeight/$Segments)*$j + $CenterX;
                      $EdgeY2 = sin(deg2rad($i+$AxisRotation+(360/$Points))) * ($EdgeHeight/$Segments)*$j + $CenterY;
 
-                     $Object->drawLine($EdgeX1,$EdgeY1,$EdgeX2,$EdgeY2,$Color);
+                     $Object->drawLine($EdgeX1, $EdgeY1, $EdgeX2, $EdgeY2, $Color);
                  }
              }
          } elseif ($Layout == RADAR_LAYOUT_CIRCLE) {
              for ($j=1;$j<=$Segments;$j++) {
                  $Radius = ($EdgeHeight/$Segments)*$j;
-                 $Object->drawCircle($CenterX,$CenterY,$Radius,$Radius,$Color);
+                 $Object->drawCircle($CenterX, $CenterY, $Radius, $Radius, $Color);
              }
          }
 
@@ -252,7 +252,7 @@
                      $EdgeY1 = ($EdgeY2 - $EdgeY1)/2 + $EdgeY1;
                  }
 
-                 $Object->drawText($EdgeX1,$EdgeY1,$Label,$Options);
+                 $Object->drawText($EdgeX1, $EdgeY1, $Label, $Options);
              }
          }
 
@@ -263,9 +263,9 @@
              $EdgeY = sin(deg2rad($i+$AxisRotation)) * ($EdgeHeight+$TicksLength) + $CenterY;
 
              if ($ID % $SkipLabels == 0) {
-                 $Object->drawLine($CenterX,$CenterY,$EdgeX,$EdgeY,$Color);
+                 $Object->drawLine($CenterX, $CenterY, $EdgeX, $EdgeY, $Color);
              } else {
-                 $Object->drawLine($CenterX,$CenterY,$EdgeX,$EdgeY,$ColorDotted);
+                 $Object->drawLine($CenterX, $CenterY, $EdgeX, $EdgeY, $ColorDotted);
              }
 
              if ($WriteLabels) {
@@ -280,31 +280,31 @@
 
                  if ($ID % $SkipLabels == 0) {
                      if ($LabelPos == RADAR_LABELS_ROTATED) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Angle"=>(360-($i+$AxisRotation+$Axisoffset))-90,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Angle"=>(360-($i+$AxisRotation+$Axisoffset))-90,"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
                      } else {
                          if ((floor($LabelX) == floor($CenterX)) && (floor($LabelY) <  floor($CenterY))) {
-                             $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
+                             $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
                          }
                          if ((floor($LabelX) >  floor($CenterX)) && (floor($LabelY) <  floor($CenterY))) {
-                             $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_BOTTOMLEFT));
+                             $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_BOTTOMLEFT));
                          }
                          if ((floor($LabelX) >  floor($CenterX)) && (floor($LabelY) == floor($CenterY))) {
-                             $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_MIDDLELEFT));
+                             $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_MIDDLELEFT));
                          }
                          if ((floor($LabelX) >  floor($CenterX)) && (floor($LabelY) >  floor($CenterY))) {
-                             $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_TOPLEFT));
+                             $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_TOPLEFT));
                          }
                          if ((floor($LabelX) <  floor($CenterX)) && (floor($LabelY) <  floor($CenterY))) {
-                             $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_BOTTOMRIGHT));
+                             $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_BOTTOMRIGHT));
                          }
                          if ((floor($LabelX) <  floor($CenterX)) && (floor($LabelY) == floor($CenterY))) {
-                             $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_MIDDLERIGHT));
+                             $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_MIDDLERIGHT));
                          }
                          if ((floor($LabelX) <  floor($CenterX)) && (floor($LabelY) >  floor($CenterY))) {
-                             $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_TOPRIGHT));
+                             $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_TOPRIGHT));
                          }
                          if ((floor($LabelX) == floor($CenterX)) && (floor($LabelY) >  floor($CenterY))) {
-                             $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_TOPMIDDLE));
+                             $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_TOPMIDDLE));
                          }
                      }
                  }
@@ -328,7 +328,7 @@
                      $Plot[$ID][] = array($X,$Y,$Value);
 
                      if ($RecordImageMap) {
-                         $this->pChartObject->addToImageMap("CIRCLE",floor($X).",".floor($Y).",".floor($PointRadius),$this->pChartObject->toHTMLColor($Palette[$ID]["R"],$Palette[$ID]["G"],$Palette[$ID]["B"]),$DataS["Description"],$Data["Series"][$LabelSerie]["Data"][$Key]." = ".$Value);
+                         $this->pChartObject->addToImageMap("CIRCLE", floor($X).",".floor($Y).",".floor($PointRadius), $this->pChartObject->toHTMLColor($Palette[$ID]["R"], $Palette[$ID]["G"], $Palette[$ID]["B"]), $DataS["Description"], $Data["Series"][$LabelSerie]["Data"][$Key]." = ".$Value);
                      }
                  }
                  $ID++;
@@ -350,7 +350,7 @@
                      $PointsArray[] = $Points[$i][0];
                      $PointsArray[] = $Points[$i][1];
                  }
-                 $Object->drawPolygon($PointsArray,$Color);
+                 $Object->drawPolygon($PointsArray, $Color);
              }
 
              $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$Palette[$ID]["Alpha"],"Surrounding"=>$PointSurrounding);
@@ -366,29 +366,29 @@
 
              /* Loop to the starting points if asked */
              if ($LineLoopStart && $DrawLines) {
-                 $Object->drawLine($Points[count($Points)-1][0],$Points[count($Points)-1][1],$Points[0][0],$Points[0][1],$Color);
+                 $Object->drawLine($Points[count($Points)-1][0], $Points[count($Points)-1][1], $Points[0][0], $Points[0][1], $Color);
              }
 
              /* Draw the lines & points */
              for ($i=0; $i<count($Points);$i++) {
                  if ($DrawLines && $i < count($Points)-1) {
-                     $Object->drawLine($Points[$i][0],$Points[$i][1],$Points[$i+1][0],$Points[$i+1][1],$Color);
+                     $Object->drawLine($Points[$i][0], $Points[$i][1], $Points[$i+1][0], $Points[$i+1][1], $Color);
                  }
 
                  if ($DrawPoints) {
-                     $Object->drawFilledCircle($Points[$i][0],$Points[$i][1],$PointRadius,$Color);
+                     $Object->drawFilledCircle($Points[$i][0], $Points[$i][1], $PointRadius, $Color);
                  }
 
                  if ($WriteValuesInBubble && $WriteValues) {
-                     $TxtPos = $this->pChartObject->getTextBox($Points[$i][0],$Points[$i][1],$ValueFontName,$ValueFontSize,0,$Points[$i][2]);
+                     $TxtPos = $this->pChartObject->getTextBox($Points[$i][0], $Points[$i][1], $ValueFontName, $ValueFontSize, 0, $Points[$i][2]);
                      $Radius = floor(($TxtPos[1]["X"] - $TxtPos[0]["X"] + $ValuePadding*2)/2);
 
-                     $this->pChartObject->drawFilledCircle($Points[$i][0],$Points[$i][1],$Radius+$OuterBubbleRadius,$OuterColor);
-                     $this->pChartObject->drawFilledCircle($Points[$i][0],$Points[$i][1],$Radius,$InnerColor);
+                     $this->pChartObject->drawFilledCircle($Points[$i][0], $Points[$i][1], $Radius+$OuterBubbleRadius, $OuterColor);
+                     $this->pChartObject->drawFilledCircle($Points[$i][0], $Points[$i][1], $Radius, $InnerColor);
                  }
 
                  if ($WriteValues) {
-                     $this->pChartObject->drawText($Points[$i][0]-1,$Points[$i][1]-1,$Points[$i][2],$TextSettings);
+                     $this->pChartObject->drawText($Points[$i][0]-1, $Points[$i][1]-1, $Points[$i][2], $TextSettings);
                  }
              }
          }
@@ -397,7 +397,7 @@
 
 
      /* Draw a radar chart */
-     public function drawPolar($Object,$Values,$Format="")
+     public function drawPolar($Object, $Values, $Format="")
      {
          $this->pChartObject = $Object;
 
@@ -488,7 +488,7 @@
          $CenterX = ($X2-$X1)/2 + $X1;
          $CenterY = ($Y2-$Y1)/2 + $Y1;
 
-         $EdgeHeight = min(($X2-$X1)/2,($Y2-$Y1)/2);
+         $EdgeHeight = min(($X2-$X1)/2, ($Y2-$Y1)/2);
          if ($WriteLabels) {
              $EdgeHeight = $EdgeHeight - $FontSize - $LabelPadding - $TicksLength;
          }
@@ -508,7 +508,7 @@
                  }
              }
              $MaxSegments = $EdgeHeight/20;
-             $Scale = $Object->computeScale(0,$Max,$MaxSegments,array(1,2,5));
+             $Scale = $Object->computeScale(0, $Max, $MaxSegments, array(1,2,5));
 
              $Segments      = $Scale["Rows"];
              $SegmentHeight = $Scale["RowHeight"];
@@ -522,7 +522,7 @@
 
              if ($BackgroundGradient == NULL) {
                  $Color = array("R"=>$BackgroundR,"G"=>$BackgroundG,"B"=>$BackgroundB,"Alpha"=>$BackgroundAlpha);
-                 $Object->drawFilledCircle($CenterX,$CenterY,$EdgeHeight,$Color);
+                 $Object->drawFilledCircle($CenterX, $CenterY, $EdgeHeight, $Color);
              } else {
                  $GradientROffset	= ($BackgroundGradient["EndR"] - $BackgroundGradient["StartR"]) / $Segments;
                  $GradientGOffset	= ($BackgroundGradient["EndG"] - $BackgroundGradient["StartG"]) / $Segments;
@@ -531,7 +531,7 @@
 
                  for ($j=$Segments;$j>=1;$j--) {
                      $Color      = array("R"=>$BackgroundGradient["StartR"]+$GradientROffset*$j,"G"=>$BackgroundGradient["StartG"]+$GradientGOffset*$j,"B"=>$BackgroundGradient["StartB"]+$GradientBOffset*$j,"Alpha"=>$BackgroundGradient["StartAlpha"]+$GradientAlphaOffset*$j);
-                     $Object->drawFilledCircle($CenterX,$CenterY,($EdgeHeight/$Segments)*$j,$Color);
+                     $Object->drawFilledCircle($CenterX, $CenterY, ($EdgeHeight/$Segments)*$j, $Color);
                  }
              }
              $Object->Shadow = $RestoreShadow;
@@ -541,7 +541,7 @@
          $Color = array("R"=>$AxisR,"G"=>$AxisG,"B"=>$AxisB,"Alpha"=>$AxisAlpha);
          for ($j=1;$j<=$Segments;$j++) {
              $Radius = ($EdgeHeight/$Segments)*$j;
-             $Object->drawCircle($CenterX,$CenterY,$Radius,$Radius,$Color);
+             $Object->drawCircle($CenterX, $CenterY, $Radius, $Radius, $Color);
          }
 
          if ($DrawAxisValues) {
@@ -564,7 +564,7 @@
                  $EdgeY1 = sin(deg2rad($Angle+$AxisRotation)) * ($EdgeHeight/$Segments)*$j + $CenterY;
                  $Label  = $j*$SegmentHeight;
 
-                 $Object->drawText($EdgeX1,$EdgeY1,$Label,$Options);
+                 $Object->drawText($EdgeX1, $EdgeY1, $Label, $Options);
              }
          }
 
@@ -574,7 +574,7 @@
              $EdgeX = cos(deg2rad($i+$AxisRotation)) * ($EdgeHeight+$TicksLength) + $CenterX;
              $EdgeY = sin(deg2rad($i+$AxisRotation)) * ($EdgeHeight+$TicksLength) + $CenterY;
 
-             $Object->drawLine($CenterX,$CenterY,$EdgeX,$EdgeY,$Color);
+             $Object->drawLine($CenterX, $CenterY, $EdgeX, $EdgeY, $Color);
 
              if ($WriteLabels) {
                  $LabelX = cos(deg2rad($i+$AxisRotation)) * ($EdgeHeight+$LabelPadding+$TicksLength) + $CenterX;
@@ -582,31 +582,31 @@
                  $Label = $i."°";
 
                  if ($LabelPos == RADAR_LABELS_ROTATED) {
-                     $Object->drawText($LabelX,$LabelY,$Label,array("Angle"=>(360-$i),"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
+                     $Object->drawText($LabelX, $LabelY, $Label, array("Angle"=>(360-$i),"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
                  } else {
                      if ((floor($LabelX) == floor($CenterX)) && (floor($LabelY) <  floor($CenterY))) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
                      }
                      if ((floor($LabelX) >  floor($CenterX)) && (floor($LabelY) <  floor($CenterY))) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_BOTTOMLEFT));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_BOTTOMLEFT));
                      }
                      if ((floor($LabelX) >  floor($CenterX)) && (floor($LabelY) == floor($CenterY))) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_MIDDLELEFT));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_MIDDLELEFT));
                      }
                      if ((floor($LabelX) >  floor($CenterX)) && (floor($LabelY) >  floor($CenterY))) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_TOPLEFT));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_TOPLEFT));
                      }
                      if ((floor($LabelX) <  floor($CenterX)) && (floor($LabelY) <  floor($CenterY))) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_BOTTOMRIGHT));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_BOTTOMRIGHT));
                      }
                      if ((floor($LabelX) <  floor($CenterX)) && (floor($LabelY) == floor($CenterY))) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_MIDDLERIGHT));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_MIDDLERIGHT));
                      }
                      if ((floor($LabelX) <  floor($CenterX)) && (floor($LabelY) >  floor($CenterY))) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_TOPRIGHT));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_TOPRIGHT));
                      }
                      if ((floor($LabelX) == floor($CenterX)) && (floor($LabelY) >  floor($CenterY))) {
-                         $Object->drawText($LabelX,$LabelY,$Label,array("Align"=>TEXT_ALIGN_TOPMIDDLE));
+                         $Object->drawText($LabelX, $LabelY, $Label, array("Align"=>TEXT_ALIGN_TOPMIDDLE));
                      }
                  }
              }
@@ -627,7 +627,7 @@
                      $Y = sin(deg2rad($Angle+$AxisRotation)) * $Length  + $CenterY;
 
                      if ($RecordImageMap) {
-                         $this->pChartObject->addToImageMap("CIRCLE",floor($X).",".floor($Y).",".floor($PointRadius),$this->pChartObject->toHTMLColor($Palette[$ID]["R"],$Palette[$ID]["G"],$Palette[$ID]["B"]),$DataSet["Description"],$Data["Series"][$LabelSerie]["Data"][$Key]."&deg = ".$Value);
+                         $this->pChartObject->addToImageMap("CIRCLE", floor($X).",".floor($Y).",".floor($PointRadius), $this->pChartObject->toHTMLColor($Palette[$ID]["R"], $Palette[$ID]["G"], $Palette[$ID]["B"]), $DataSet["Description"], $Data["Series"][$LabelSerie]["Data"][$Key]."&deg = ".$Value);
                      }
 
                      $Plot[$ID][] = array($X,$Y,$Value);
@@ -652,7 +652,7 @@
                      $PointsArray[] = $Points[$i][1];
                  }
 
-                 $Object->drawPolygon($PointsArray,$Color);
+                 $Object->drawPolygon($PointsArray, $Color);
              }
 
              $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$Palette[$ID]["Alpha"],"Surrounding"=>$PointSurrounding);
@@ -668,29 +668,29 @@
 
              /* Loop to the starting points if asked */
              if ($LineLoopStart && $DrawLines) {
-                 $Object->drawLine($Points[count($Points)-1][0],$Points[count($Points)-1][1],$Points[0][0],$Points[0][1],$Color);
+                 $Object->drawLine($Points[count($Points)-1][0], $Points[count($Points)-1][1], $Points[0][0], $Points[0][1], $Color);
              }
        
              /* Draw the lines & points */
              for ($i=0; $i<count($Points);$i++) {
                  if ($DrawLines && $i < count($Points)-1) {
-                     $Object->drawLine($Points[$i][0],$Points[$i][1],$Points[$i+1][0],$Points[$i+1][1],$Color);
+                     $Object->drawLine($Points[$i][0], $Points[$i][1], $Points[$i+1][0], $Points[$i+1][1], $Color);
                  }
 
                  if ($DrawPoints) {
-                     $Object->drawFilledCircle($Points[$i][0],$Points[$i][1],$PointRadius,$Color);
+                     $Object->drawFilledCircle($Points[$i][0], $Points[$i][1], $PointRadius, $Color);
                  }
 
                  if ($WriteValuesInBubble && $WriteValues) {
-                     $TxtPos = $this->pChartObject->getTextBox($Points[$i][0],$Points[$i][1],$ValueFontName,$ValueFontSize,0,$Points[$i][2]);
+                     $TxtPos = $this->pChartObject->getTextBox($Points[$i][0], $Points[$i][1], $ValueFontName, $ValueFontSize, 0, $Points[$i][2]);
                      $Radius = floor(($TxtPos[1]["X"] - $TxtPos[0]["X"] + $ValuePadding*2)/2);
 
-                     $this->pChartObject->drawFilledCircle($Points[$i][0],$Points[$i][1],$Radius+$OuterBubbleRadius,$OuterColor);
-                     $this->pChartObject->drawFilledCircle($Points[$i][0],$Points[$i][1],$Radius,$InnerColor);
+                     $this->pChartObject->drawFilledCircle($Points[$i][0], $Points[$i][1], $Radius+$OuterBubbleRadius, $OuterColor);
+                     $this->pChartObject->drawFilledCircle($Points[$i][0], $Points[$i][1], $Radius, $InnerColor);
                  }
 
                  if ($WriteValues) {
-                     $this->pChartObject->drawText($Points[$i][0]-1,$Points[$i][1]-1,$Points[$i][2],$TextSettings);
+                     $this->pChartObject->drawText($Points[$i][0]-1, $Points[$i][1]-1, $Points[$i][2], $TextSettings);
                  }
              }
          }

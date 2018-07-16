@@ -209,9 +209,9 @@ class ProjectController extends SugarController
         $tid = $count+1;
 
         if ($this->IsNullOrEmptyString($task_id)) {
-            $this->create_task($task_name,$start,$enddate,$project_id, $milestone_flag,$status, $tid, $predecessor, $rel_type, $duration,$duration_unit,$resource,$percent,$note,$actual_duration,$tid);
+            $this->create_task($task_name, $start, $enddate, $project_id, $milestone_flag, $status, $tid, $predecessor, $rel_type, $duration, $duration_unit, $resource, $percent, $note, $actual_duration, $tid);
         } else {
-            $this->update_task($task_id,$task_name,$start,$enddate,$project_id, $milestone_flag,$status, $predecessor, $rel_type, $duration,$duration_unit,$resource,$percent,$note,$actual_duration);
+            $this->update_task($task_id, $task_name, $start, $enddate, $project_id, $milestone_flag, $status, $predecessor, $rel_type, $duration, $duration_unit, $resource, $percent, $note, $actual_duration);
         }
     }
 
@@ -281,7 +281,7 @@ class ProjectController extends SugarController
     }
 
 
-    public function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration,$order_number)
+    public function create_task($name, $start, $end, $project_id, $milestone_flag, $status, $project_task_id, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration, $order_number)
     {
         $task = new ProjectTask();
         $task->name = $name;
@@ -303,7 +303,7 @@ class ProjectController extends SugarController
         $task->save();
     }
 
-    public function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description,$actual_duration)
+    public function update_task($id, $name, $start, $end, $project_id, $milestone_flag, $status, $predecessors, $rel_type, $duration, $duration_unit, $resource, $percent_complete, $description, $actual_duration)
     {
         $task = new ProjectTask();
         $task->retrieve($id);

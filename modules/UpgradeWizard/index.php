@@ -520,7 +520,7 @@ $smarty->assign('STEP_BACK', $stepBack);
 $smarty->assign('STEP_RECHECK', $stepRecheck);
 $smarty->assign('step', $steps['files'][$_REQUEST['step']]);
 $smarty->assign('UW_HISTORY', $uwHistory);
-$smarty->assign('disableNextForLicense',$disableNextForLicense);
+$smarty->assign('disableNextForLicense', $disableNextForLicense);
 $u_allow='true';
 if (isset($stop) && $stop == true) {
     $frozen = (isset($frozen)) ? "<br />".$frozen : '';

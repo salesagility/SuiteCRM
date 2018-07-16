@@ -244,7 +244,7 @@ class ACLAction extends SugarBean
     * @return ARRAY of ACLActionsArray
     */
 
-    public static function getUserActions($user_id,$refresh=false, $category='',$type='', $action='')
+    public static function getUserActions($user_id, $refresh=false, $category='', $type='', $action='')
     {
         //check in the session if we already have it loaded
         if (!$refresh && !empty($_SESSION['ACL'][$user_id])) {
@@ -455,7 +455,7 @@ class ACLAction extends SugarBean
      * @param STRING $type
      * @return boolean
      */
-    public static function userNeedsSecurityGroup($user_id, $category, $action,$type='module')
+    public static function userNeedsSecurityGroup($user_id, $category, $action, $type='module')
     {
         //check if we don't have it set in the cache if not lets reload the cache
 
@@ -489,7 +489,7 @@ class ACLAction extends SugarBean
     /**
     public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false){
     */
-    public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false, $in_group = false)
+    public static function userHasAccess($user_id, $category, $action, $type='module', $is_owner = false, $in_group = false)
     {
         global $current_user;
         if ($current_user->isAdminForModule($category)&& !isset($_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'])) {
@@ -522,7 +522,7 @@ class ACLAction extends SugarBean
     * @param STRING $type
     * @return INT (ACCESS LEVEL)
     */
-    public static function getUserAccessLevel($user_id, $category, $action,$type='module')
+    public static function getUserAccessLevel($user_id, $category, $action, $type='module')
     {
         if (empty($_SESSION['ACL'][$user_id][$category][$type][$action])) {
             ACLAction::getUserActions($user_id, false);
@@ -546,7 +546,7 @@ class ACLAction extends SugarBean
     * @param STRING $type
     * @return boolean
     */
-    public static function userNeedsOwnership($user_id, $category, $action,$type='module')
+    public static function userNeedsOwnership($user_id, $category, $action, $type='module')
     {
         //check if we don't have it set in the cache if not lets reload the cache
 

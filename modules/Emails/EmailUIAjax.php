@@ -322,8 +322,8 @@ if (isset($_REQUEST['emailUIAction'])) {
                     foreach ($all_fields as $field) {
                         if (isset($note->$field)) {
                             $note->$field = from_html($note->$field);
-                            $note->$field = preg_replace('/\r\n/','<BR>',$note->$field);
-                            $note->$field = preg_replace('/\n/','<BR>',$note->$field);
+                            $note->$field = preg_replace('/\r\n/', '<BR>', $note->$field);
+                            $note->$field = preg_replace('/\n/', '<BR>', $note->$field);
                             $js_fields_arr[$i][$field] = addslashes($note->$field);
                         }
                     }

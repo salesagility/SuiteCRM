@@ -120,7 +120,7 @@ $xtpl->assign("REPLY_TO_ADDR", $focus->reply_to_addr);
 $xtpl->assign("DATE_START", $focus->date_start);
 $xtpl->assign("TIME_START", $focus->time_start);
 
-$email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name');
+$email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name');
 if ($focus->template_id) {
     $xtpl->assign("EMAIL_TEMPLATE", $email_templates_arr[$focus->template_id]);
 }
@@ -149,7 +149,7 @@ if (!empty($focus->all_prospect_lists)) {
 }
 
 if (!empty($focus->status)) {
-    $xtpl->assign("STATUS",$app_list_strings['email_marketing_status_dom'][$focus->status]);
+    $xtpl->assign("STATUS", $app_list_strings['email_marketing_status_dom'][$focus->status]);
 }
 $emails=array();
 $mailboxes=get_campaign_mailboxes($emails);

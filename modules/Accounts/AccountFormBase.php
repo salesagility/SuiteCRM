@@ -249,7 +249,7 @@ EOQ;
     }
 
 
-    public function getFormBody($prefix,$mod='', $formname='')
+    public function getFormBody($prefix, $mod='', $formname='')
     {
         if (!ACLController::checkAccess('Accounts', 'edit', true)) {
             return '';
@@ -297,7 +297,7 @@ EOQ;
 
 
 
-    public function getWideFormBody($prefix, $mod='',$formname='',  $contact='')
+    public function getWideFormBody($prefix, $mod='', $formname='', $contact='')
     {
         if (!ACLController::checkAccess('Accounts', 'edit', true)) {
             return '';
@@ -397,7 +397,7 @@ EOQ;
     }
 
 
-    public function handleSave($prefix,$redirect=true, $useRequired=false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         require_once('include/formbase.php');
 
@@ -540,7 +540,7 @@ EOQ;
             return;
         }
         if ($redirect) {
-            handleRedirect($return_id,'Accounts');
+            handleRedirect($return_id, 'Accounts');
         } else {
             return $focus;
         }

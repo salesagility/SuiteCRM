@@ -64,11 +64,11 @@ if (preg_match('/\d+([^\d])\d+([^\d]*)/s', $time_format, $match)) {
 }
 
 if (!empty($_POST[$prefix.'due_meridiem'])) {
-    $_POST[$prefix.'time_due'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_due'],$timedate->get_time_format(), $_POST[$prefix.'due_meridiem']);
+    $_POST[$prefix.'time_due'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_due'], $timedate->get_time_format(), $_POST[$prefix.'due_meridiem']);
 }
 
 if (!empty($_POST[$prefix.'start_meridiem'])) {
-    $_POST[$prefix.'time_start'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_start'],$timedate->get_time_format(), $_POST[$prefix.'start_meridiem']);
+    $_POST[$prefix.'time_start'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_start'], $timedate->get_time_format(), $_POST[$prefix.'start_meridiem']);
 }
 
 if (isset($_POST[$prefix.'time_due']) && !empty($_POST[$prefix.'time_due'])) {
@@ -154,4 +154,4 @@ if (!isset($GLOBALS['check_notify'])) {
 $focus->save($GLOBALS['check_notify']);
 $return_id = $focus->id;
 
-handleRedirect($return_id,'Tasks');
+handleRedirect($return_id, 'Tasks');

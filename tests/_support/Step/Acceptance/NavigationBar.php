@@ -101,7 +101,7 @@ class NavigationBar extends Tester
                 $I->wait(1);
                 $I->click($allMenuButton);
                 $allMenu = 'div.navbar-header > #mobile_menu';
-                $I->waitForElementVisible($allMenu,  120);
+                $I->waitForElementVisible($allMenu, 120);
                 $I->click($link, $allMenu);
                 break;
             case DesignBreakPoint::sm:

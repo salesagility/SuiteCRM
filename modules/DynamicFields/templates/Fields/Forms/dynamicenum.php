@@ -111,7 +111,7 @@ function get_body(&$ss, $vardef)
     $ss->assign('selected_options', $selected_options);
     $ss->assign('multi', isset($multi) ? $multi: false);
     $ss->assign('radio', isset($radio) ? $radio: false);
-    $ss->assign('dropdown_name',(!empty($vardef['options']) ? $vardef['options'] : ''));
+    $ss->assign('dropdown_name', (!empty($vardef['options']) ? $vardef['options'] : ''));
 
     require_once('include/JSON.php');
     $json = new JSON();

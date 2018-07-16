@@ -83,7 +83,7 @@ $subclasses = getListOfExtendingClasses("Person");
 
 $beanList = filterFieldsFromBeans($subclasses);
 
-$xtpl->assign("BEAN_LIST",json_encode($beanList));
+$xtpl->assign("BEAN_LIST", json_encode($beanList));
 
 $personTypeList = "<select id='personTypeSelect'>";
 if (count($beanList) > 0) {
@@ -120,11 +120,11 @@ $popup_request_data = array(
 		),
 );
 $encoded_users_popup_request_data = $json->encode($popup_request_data);
-$xtpl->assign('encoded_campaigns_popup_request_data' , $json->encode($popup_request_data));
+$xtpl->assign('encoded_campaigns_popup_request_data', $json->encode($popup_request_data));
 
 $field_defs_js = "var field_defs = {'Contacts':[";
 
-$xtpl->assign("WEB_POST_URL",$web_post_url);
+$xtpl->assign("WEB_POST_URL", $web_post_url);
 
 if (!empty($focus)) {
     if (empty($focus->assigned_user_id) && empty($focus->id)) {
@@ -141,7 +141,7 @@ if (!empty($focus)) {
 }
 
 
-$xtpl->assign("REDIRECT_URL_DEFAULT",'http://');
+$xtpl->assign("REDIRECT_URL_DEFAULT", 'http://');
 
 if (isset($_REQUEST['campaign_id']) && isValidId($_REQUEST['campaign_id'])) {
     $campaign = new Campaign();
@@ -163,7 +163,7 @@ function getListOfExtendingClasses($superclass)
     $subclasses = array();
     foreach ($GLOBALS['moduleList'] as $mod) {
         $item = BeanFactory::getBean($mod);
-        if ($item && is_subclass_of($item,$superclass)) {
+        if ($item && is_subclass_of($item, $superclass)) {
             $subclasses[] = $item;
         }
     }

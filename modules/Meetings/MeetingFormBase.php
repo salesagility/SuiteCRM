@@ -154,7 +154,7 @@ EOF;
 			<input type="hidden" name="${prefix}action" value="Save">
 
 EOQ;
-        $the_form	.= $this->getFormBody($prefix, 'Meetings',"{$prefix}MeetingSave");
+        $the_form	.= $this->getFormBody($prefix, 'Meetings', "{$prefix}MeetingSave");
         $the_form .= <<<EOQ
 		<p><input title="$lbl_save_button_title" accessKey="$lbl_save_button_key" class="button" type="submit" name="button" value="  $lbl_save_button_label  " ></p>
 		</form>
@@ -173,7 +173,7 @@ EOQ;
      * @param	bool redirect default True
      * @param	bool useRequired default True
      */
-    public function handleSave($prefix,$redirect=true, $useRequired=false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         require_once('include/formbase.php');
 
@@ -216,7 +216,7 @@ EOQ;
         }
 
         if (isset($_POST[$prefix.'meridiem']) && !empty($_POST[$prefix.'meridiem'])) {
-            $_POST[$prefix.'time_start'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_start'],$timedate->get_time_format(), $_POST[$prefix.'meridiem']);
+            $_POST[$prefix.'time_start'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_start'], $timedate->get_time_format(), $_POST[$prefix.'meridiem']);
         }
 
         if (isset($_POST[$prefix.'time_start']) && strlen($_POST[$prefix.'date_start']) == 10) {

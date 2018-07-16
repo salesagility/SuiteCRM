@@ -191,14 +191,14 @@ class XML_HTMLSax3_OpeningTagState
                     $context->unscanCharacter();
                 }
                 $context->handler_object_element->
-                    {$context->handler_method_opening}($context->htmlsax, $tag, 
+                    {$context->handler_method_opening}($context->htmlsax, $tag,
                     $Attributes, TRUE);
                 $context->handler_object_element->
-                    {$context->handler_method_closing}($context->htmlsax, $tag, 
+                    {$context->handler_method_closing}($context->htmlsax, $tag,
                     TRUE);
             } else {
                 $context->handler_object_element->
-                    {$context->handler_method_opening}($context->htmlsax, $tag, 
+                    {$context->handler_method_opening}($context->htmlsax, $tag,
                     $Attributes, FALSE);
             }
         }

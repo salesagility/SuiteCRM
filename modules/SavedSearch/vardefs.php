@@ -147,5 +147,5 @@ $dictionary['SavedSearch'] = array('table' => 'saved_search',
        array('name' =>'idx_desc', 'type'=>'index', 'fields'=>array('name','deleted')))
 );
 
-VardefManager::createVardef('SavedSearch','SavedSearch', array(
+VardefManager::createVardef('SavedSearch', 'SavedSearch', array(
 ));

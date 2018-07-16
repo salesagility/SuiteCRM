@@ -78,7 +78,7 @@ class EmployeesViewDetail extends ViewDetail
 
         $theTitle = "<div class='moduleTitle'>\n";
 
-        $module = preg_replace("/ /","",$this->module);
+        $module = preg_replace("/ /", "", $this->module);
 
         $params = $this->_getModuleTitleParams();
         $count = count($params);

@@ -61,7 +61,7 @@ class MBRelationship
      * @param string $path      The base path of the module directory within the ModuleBuilder package directory
      * @param string $key_name  The Fully Qualified Name for this module - that is, $packageName_$name
      */
-    public function __construct($name , $path , $key_name)
+    public function __construct($name, $path, $key_name)
     {
         $this->implementation = new UndeployedRelationships ($path) ;
         $this->moduleName = $key_name ;

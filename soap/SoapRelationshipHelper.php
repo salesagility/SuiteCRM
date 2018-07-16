@@ -83,7 +83,7 @@ function retrieve_relationships_properties($module_1, $module_2, $relationship_n
  * show_deleted is if deleted items should be shown or not
  *
  */
-function retrieve_relationships($module_name,  $related_module, $relationship_query, $show_deleted, $offset, $max_results)
+function retrieve_relationships($module_name, $related_module, $relationship_query, $show_deleted, $offset, $max_results)
 {
     global  $beanList, $beanFiles, $dictionary, $current_user;
 
@@ -94,7 +94,7 @@ function retrieve_relationships($module_name,  $related_module, $relationship_qu
         return array('result'=>$result_list, 'error'=>$error->get_soap_array());
     }
 
-    $result = retrieve_relationship_query($module_name,  $related_module, $relationship_query, $show_deleted, $offset, $max_results);
+    $result = retrieve_relationship_query($module_name, $related_module, $relationship_query, $show_deleted, $offset, $max_results);
 
     if (empty($result['module_1'])) {
         $error->set_error('no_relationship_support');
@@ -231,7 +231,7 @@ function retrieve_modified_relationships($module_name, $related_module, $relatio
                         $fieldname = "m1.".$mod->db->getValidDBName($field);
                     } else {
                         // There is a dot in here somewhere.
-                        list($table_part,$field_part) = explode('.',$field);
+                        list($table_part, $field_part) = explode('.', $field);
                         $fieldname = $mod->db->getValidDBName($table_part).".".$mod->db->getValidDBName($field_part);
                     }
                     $field_select .= $fieldname;
@@ -384,12 +384,12 @@ function get_from_statement($query)
     if (sizeof($query) == 1) {
         $query = explode('from', $query[0]);
     }
-    $query = explode('ORDER BY',$query[1]);
+    $query = explode('ORDER BY', $query[1]);
 
     return ' FROM ' . $query[0];
 }
 
-function retrieve_relationship_query($module_name,  $related_module, $relationship_query, $show_deleted, $offset, $max_results)
+function retrieve_relationship_query($module_name, $related_module, $relationship_query, $show_deleted, $offset, $max_results)
 {
     global  $beanList, $beanFiles, $dictionary, $current_user;
     $error = new SoapError();

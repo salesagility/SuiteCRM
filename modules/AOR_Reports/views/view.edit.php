@@ -116,7 +116,7 @@ class AOR_ReportsViewEdit extends ViewEdit
         while ($row = $this->bean->db->fetchByAssoc($result)) {
             $field_name = new AOR_Field();
             $field_name->retrieve($row['id']);
-            $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
+            $field_name->module_path = implode(":", unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();
 
 
@@ -136,7 +136,7 @@ class AOR_ReportsViewEdit extends ViewEdit
         if (!$this->bean->id) {
             return array();
         }
-        foreach ($this->bean->get_linked_beans('aor_charts','AOR_Charts') as $chart) {
+        foreach ($this->bean->get_linked_beans('aor_charts', 'AOR_Charts') as $chart) {
             $charts[] = $chart->toArray();
         }
         return $charts;

@@ -50,13 +50,13 @@ function smarty_outputfilter_trimwhitespace($source, &$smarty)
     $source = trim(preg_replace('/((?<!\?>)\n)[\s]+/m', '\1', $source));
 
     // replace textarea blocks
-    smarty_outputfilter_trimwhitespace_replace("@@@SMARTY:TRIM:TEXTAREA@@@",$_textarea_blocks, $source);
+    smarty_outputfilter_trimwhitespace_replace("@@@SMARTY:TRIM:TEXTAREA@@@", $_textarea_blocks, $source);
 
     // replace pre blocks
-    smarty_outputfilter_trimwhitespace_replace("@@@SMARTY:TRIM:PRE@@@",$_pre_blocks, $source);
+    smarty_outputfilter_trimwhitespace_replace("@@@SMARTY:TRIM:PRE@@@", $_pre_blocks, $source);
 
     // replace script blocks
-    smarty_outputfilter_trimwhitespace_replace("@@@SMARTY:TRIM:SCRIPT@@@",$_script_blocks, $source);
+    smarty_outputfilter_trimwhitespace_replace("@@@SMARTY:TRIM:SCRIPT@@@", $_script_blocks, $source);
 
     return $source;
 }

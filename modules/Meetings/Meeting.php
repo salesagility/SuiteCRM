@@ -148,7 +148,7 @@ class Meeting extends SugarBean
      * @param $view string
      * @param $is_owner bool
      */
-    public function ACLAccess($view,$is_owner='not_set',$in_group='not_set')
+    public function ACLAccess($view, $is_owner='not_set', $in_group='not_set')
     {
         // don't check if meeting is being synced from Outlook
         if ($this->syncing == false) {
@@ -163,7 +163,7 @@ class Meeting extends SugarBean
 					}
 			}
         }
-        return parent::ACLAccess($view,$is_owner,$in_group);
+        return parent::ACLAccess($view, $is_owner, $in_group);
     }
 
     /**
@@ -249,7 +249,7 @@ class Meeting extends SugarBean
             $this->type = 'Sugar';
         }
 
-        if (isset($api) && is_a($api,'WebMeeting') && empty($this->in_relationship_update)) {
+        if (isset($api) && is_a($api, 'WebMeeting') && empty($this->in_relationship_update)) {
             // Make sure the API initialized and it supports Web Meetings
             // Also make suer we have an ID, the external site needs something to reference
             if (!isset($this->id) || empty($this->id)) {
@@ -262,7 +262,7 @@ class Meeting extends SugarBean
                 if ($api->canInvite) {
                     $notifyList = $this->get_notification_recipients();
                     foreach ($notifyList as $person) {
-                        $api->inviteAttendee($this,$person,$check_notify);
+                        $api->inviteAttendee($this, $person, $check_notify);
                     }
                 }
             } else {
@@ -399,7 +399,7 @@ class Meeting extends SugarBean
         if (!empty($this->contact_id)) {
             $query  = "SELECT first_name, last_name FROM contacts ";
             $query .= "WHERE id='$this->contact_id' AND deleted=0";
-            $result = $this->db->limitQuery($query,0,1,true," Error filling in additional detail fields: ");
+            $result = $this->db->limitQuery($query, 0, 1, true, " Error filling in additional detail fields: ");
 
             // Get the contact name.
             $row = $this->db->fetchByAssoc($result);
@@ -485,7 +485,7 @@ class Meeting extends SugarBean
             $this->date_start = $_REQUEST['date_start'];
         }
         if (!empty($this->date_start)) {
-            $td = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$this->date_start);
+            $td = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $this->date_start);
             if (!empty($td)) {
                 if (!empty($this->duration_hours) && $this->duration_hours != '') {
                     $td = $td->modify("+{$this->duration_hours} hours");
@@ -501,7 +501,7 @@ class Meeting extends SugarBean
 
         global $app_list_strings;
         $parent_types = $app_list_strings['record_type_display'];
-        $disabled_parent_types = ACLController::disabledModuleList($parent_types,false, 'list');
+        $disabled_parent_types = ACLController::disabledModuleList($parent_types, false, 'list');
         foreach ($disabled_parent_types as $disabled_parent_type) {
             if ($disabled_parent_type != $this->parent_type) {
                 unset($parent_types[$disabled_parent_type]);
@@ -671,7 +671,7 @@ class Meeting extends SugarBean
                 
         $xtpl->assign("MEETING_TO", $meetingCurrentNotifyUserNewAssingnedUserName);
         $xtpl->assign("MEETING_SUBJECT", trim($meeting->name));
-        $xtpl->assign("MEETING_STATUS",(isset($meeting->status)? $app_list_strings['meeting_status_dom'][$meeting->status]:""));
+        $xtpl->assign("MEETING_STATUS", (isset($meeting->status)? $app_list_strings['meeting_status_dom'][$meeting->status]:""));
         $typekey = strtolower($meeting->type);
         if (isset($meeting->type)) {
             if (!empty($app_list_strings['eapm_list'][$typekey])) {
@@ -709,7 +709,7 @@ class Meeting extends SugarBean
 
         $notify_mail = parent::create_notification_email($notify_user);
 
-        $path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;
+        $path = SugarConfig::getInstance()->get('upload_dir', 'upload/') . $this->id;
 
         require_once("modules/vCals/vCal.php");
         $content = vCal::get_ical_event($this, $GLOBALS['current_user']);
@@ -717,7 +717,7 @@ class Meeting extends SugarBean
         if (is_dir($path)) {
             LoggerManager::getLogger()->warn('file_put_contents(' . $path . '): failed to open stream: Is a directory ');
         } else {
-            if (file_put_contents($path,$content)) {
+            if (file_put_contents($path, $content)) {
                 $notify_mail->AddAttachment($path, 'meeting.ics', 'base64', 'text/calendar');
             }
         }
@@ -732,7 +732,7 @@ class Meeting extends SugarBean
     {
         parent::send_assignment_notifications($notify_user, $admin);
 
-        $path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;
+        $path = SugarConfig::getInstance()->get('upload_dir', 'upload/') . $this->id;
                 
         if (is_dir($path)) {
             LoggerManager::getLogger()->warn('Meeting send_assignment_notifications: unlink(' . $path . '): Is a directory');
@@ -789,12 +789,12 @@ class Meeting extends SugarBean
     }
 
 
-    public function set_accept_status(&$user,$status)
+    public function set_accept_status(&$user, $status)
     {
         if ($user->object_name == 'User') {
             $relate_values = array('user_id'=>$user->id,'meeting_id'=>$this->id);
             $data_values = array('accept_status'=>$status);
-            $this->set_relationship($this->rel_users_table, $relate_values, true, true,$data_values);
+            $this->set_relationship($this->rel_users_table, $relate_values, true, true, $data_values);
             global $current_user;
 
             if ($this->update_vcal) {
@@ -803,11 +803,11 @@ class Meeting extends SugarBean
         } elseif ($user->object_name == 'Contact') {
             $relate_values = array('contact_id'=>$user->id,'meeting_id'=>$this->id);
             $data_values = array('accept_status'=>$status);
-            $this->set_relationship($this->rel_contacts_table, $relate_values, true, true,$data_values);
+            $this->set_relationship($this->rel_contacts_table, $relate_values, true, true, $data_values);
         } elseif ($user->object_name == 'Lead') {
             $relate_values = array('lead_id'=>$user->id,'meeting_id'=>$this->id);
             $data_values = array('accept_status'=>$status);
-            $this->set_relationship($this->rel_leads_table, $relate_values, true, true,$data_values);
+            $this->set_relationship($this->rel_leads_table, $relate_values, true, true, $data_values);
         }
     }
 
@@ -888,7 +888,7 @@ class Meeting extends SugarBean
             //parent_name_owner not being set for whatever reason so we need to figure this out
             elseif (!empty($this->parent_type) && !empty($this->parent_id)) {
                 global $current_user;
-                $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                $parent_bean = BeanFactory::getBean($this->parent_type, $this->parent_id);
                 if ($parent_bean !== false) {
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
@@ -921,7 +921,7 @@ class Meeting extends SugarBean
             //contact_name_owner not being set for whatever reason so we need to figure this out
             else {
                 global $current_user;
-                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                $parent_bean = BeanFactory::getBean('Contacts', $this->contact_id);
                 if ($parent_bean !== false) {
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }

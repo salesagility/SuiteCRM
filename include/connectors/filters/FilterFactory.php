@@ -59,7 +59,7 @@ class FilterFactory
             }
 
             //split the wrapper name to find the path to the file.
-            $dir = str_replace('_','/',$filter_name);
+            $dir = str_replace('_', '/', $filter_name);
             $parts = explode("/", $dir);
             $file = $parts[count($parts)-1];
 

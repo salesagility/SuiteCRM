@@ -400,7 +400,7 @@ function format_number($amount, $round = null, $decimals = null, $params = array
 
     if (empty($params['human'])) {
         $amount = number_format(round($amount, $round), $decimals, $dec_sep, $num_grp_sep);
-        $amount = format_place_symbol($amount, $symbol,(empty($params['symbol_space']) ? false : true));
+        $amount = format_place_symbol($amount, $symbol, (empty($params['symbol_space']) ? false : true));
     } else {
         // If amount is more greater than a thousand(positive or negative)
         if (strpos($amount, '.') > 0) {
@@ -411,9 +411,9 @@ function format_number($amount, $round = null, $decimals = null, $params = array
             $amount = round(($amount / 1000), 0);
             $amount = number_format($amount, 0, $dec_sep, $num_grp_sep); // add for SI bug 52498
             $amount = $amount . 'k';
-            $amount = format_place_symbol($amount, $symbol,(empty($params['symbol_space']) ? false : true));
+            $amount = format_place_symbol($amount, $symbol, (empty($params['symbol_space']) ? false : true));
         } else {
-            $amount = format_place_symbol($amount, $symbol,(empty($params['symbol_space']) ? false : true));
+            $amount = format_place_symbol($amount, $symbol, (empty($params['symbol_space']) ? false : true));
         }
     }
 
@@ -483,11 +483,11 @@ function format_money($amount, $for_display = TRUE)
     // Currently, it stays closer to the existing format, and just rounds to two decimal points
     if (isset($amount)) {
         if ($for_display) {
-            return sprintf("%0.02f",$amount);
+            return sprintf("%0.02f", $amount);
         } else {
             // If it's an editable field, don't use a thousand seperator.
             // Or perhaps we will want to, but it doesn't matter right now.
-            return sprintf("%0.02f",$amount);
+            return sprintf("%0.02f", $amount);
         }
     } else {
         return;
@@ -649,7 +649,7 @@ function getCurrencyNameDropDown($focus, $field='currency_name', $value='', $vie
             $listitems[$item->name] = $item->name;
         }
         return '<select name="'.$field.'" id="'.$field.'" />'.
-            get_select_options_with_id($listitems,$value).'</select>';
+            get_select_options_with_id($listitems, $value).'</select>';
     } else {
         $currency = new Currency();
         if (isset($focus->currency_id)) {
@@ -695,7 +695,7 @@ function getCurrencySymbolDropDown($focus, $field='currency_name', $value='', $v
             $listitems[$item->symbol] = $item->symbol;
         }
         return '<select name="'.$field.'" id="'.$field.'" />'.
-            get_select_options_with_id($listitems,$value).'</select>';
+            get_select_options_with_id($listitems, $value).'</select>';
     } else {
         $currency = new Currency();
         if (isset($focus->currency_id)) {

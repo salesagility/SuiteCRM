@@ -79,7 +79,7 @@ class EmployeesViewList extends ViewList
 
         $theTitle = "<div class='moduleTitle'>\n<h2>";
 
-        $module = preg_replace("/ /","",$this->module);
+        $module = preg_replace("/ /", "", $this->module);
 
         $params = $this->_getModuleTitleParams();
         $count = count($params);
@@ -131,7 +131,7 @@ EOHTML;
             return;
         }
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
-            $this->lv->ss->assign("SEARCH",true);
+            $this->lv->ss->assign("SEARCH", true);
             $this->lv->ss->assign('savedSearchData', $this->searchForm->getSavedSearchData());
 
             $tplFile = 'include/ListView/ListViewGeneric.tpl';

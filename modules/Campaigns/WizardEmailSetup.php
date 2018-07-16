@@ -57,7 +57,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $mod_strings,$app_list_strings,$app_strings,$current_user;
 
 
-if (!is_admin($current_user)&& !is_admin_for_module($GLOBALS['current_user'],'Campaigns')) {
+if (!is_admin($current_user)&& !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
     sugar_die("Unauthorized access to administration.");
 }
 
@@ -118,13 +118,13 @@ if (isset($focus->settings['massemailer_campaign_emails_per_run']) && !empty($fo
 if (!isset($focus->settings['massemailer_tracking_entities_location_type']) or empty($focus->settings['massemailer_tracking_entities_location_type']) or $focus->settings['massemailer_tracking_entities_location_type']=='1') {
     $ss->assign("DEFAULT_CHECKED", "checked");
     $ss->assign("TRACKING_ENTRIES_LOCATION_STATE", "disabled");
-    $ss->assign("TRACKING_ENTRIES_LOCATION",$mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
+    $ss->assign("TRACKING_ENTRIES_LOCATION", $mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
 } else {
     $ss->assign("USERDEFINED_CHECKED", "checked");
-    $ss->assign("TRACKING_ENTRIES_LOCATION",$focus->settings["massemailer_tracking_entities_location"]);
+    $ss->assign("TRACKING_ENTRIES_LOCATION", $focus->settings["massemailer_tracking_entities_location"]);
 }
 
-$ss->assign("SITEURL",$sugar_config['site_url']);
+$ss->assign("SITEURL", $sugar_config['site_url']);
 
 // Change the default campaign to not store a copy of each message.
 if (!empty($focus->settings['massemailer_email_copy']) and $focus->settings['massemailer_email_copy']=='1') {

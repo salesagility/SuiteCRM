@@ -88,7 +88,7 @@ class EmployeesViewEdit extends ViewEdit
         if (!empty($this->bean->id)) {
             global $app_list_strings;
             if (!empty($this->bean->status)) {
-                $this->ss->assign('STATUS_READONLY',$app_list_strings['user_status_dom'][$this->bean->status]);
+                $this->ss->assign('STATUS_READONLY', $app_list_strings['user_status_dom'][$this->bean->status]);
             }
             if (!empty($this->bean->employee_status)) {
                 $this->ss->assign('EMPLOYEE_STATUS_READONLY', $app_list_strings['employee_status_dom'][$this->bean->employee_status]);

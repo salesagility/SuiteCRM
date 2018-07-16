@@ -255,19 +255,19 @@ EOD;
             "count(*) as opp_count FROM opportunities ";
         $query .= " WHERE opportunities.deleted=0 ";
         if (count($this->lsbo_ids) > 0) {
-            $query .= "AND opportunities.assigned_user_id IN ('".implode("','",$this->lsbo_ids)."') ";
+            $query .= "AND opportunities.assigned_user_id IN ('".implode("','", $this->lsbo_ids)."') ";
         }
         if (count($this->lsbo_lead_sources) > 0) {
-            $query .= "AND opportunities.lead_source IN ('".implode("','",$this->lsbo_lead_sources)."') ";
+            $query .= "AND opportunities.lead_source IN ('".implode("','", $this->lsbo_lead_sources)."') ";
         } else {
-            $query .= "AND opportunities.lead_source IN ('".implode("','",array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
+            $query .= "AND opportunities.lead_source IN ('".implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
         }
         $query .= " GROUP BY sales_stage,lead_source ORDER BY lead_source,sales_stage";
 
         return $query;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();
@@ -281,11 +281,11 @@ EOD;
             $keyDom = $i["lead_source_dom_option"];
             $stage = $i["sales_stage"];
             $stageDom = $i["sales_stage_dom_option"];
-            if (!in_array($key,$chart['labels'])) {
+            if (!in_array($key, $chart['labels'])) {
                 $chart['labels'][] = $key;
                 $chart['data'][] = array();
             }
-            if (!in_array($stage,$chart['key'])) {
+            if (!in_array($stage, $chart['key'])) {
                 $chart['key'][] = $stage;
             }
 

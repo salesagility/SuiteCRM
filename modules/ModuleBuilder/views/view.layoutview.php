@@ -89,7 +89,7 @@ class ViewLayoutView extends SugarView
         global $mod_strings;
 
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -102,7 +102,7 @@ class ViewLayoutView extends SugarView
     public function display($preview = false)
     {
         global $mod_strings ;
-        $parser = ParserFactory::getParser($this->editLayout,$this->editModule,$this->package);
+        $parser = ParserFactory::getParser($this->editLayout, $this->editModule, $this->package);
 
         if (isset($this->view_object_map['new_parser'])) {
             $parser = $this->view_object_map['new_parser'];
@@ -121,10 +121,10 @@ class ViewLayoutView extends SugarView
         // assign buttons
         $images = array ( 'icon_save' => 'studio_save' , 'icon_publish' => 'studio_publish' , 'icon_address' => 'icon_Address' , 'icon_emailaddress' => 'icon_EmailAddress' , 'icon_phone' => 'icon_Phone' ) ;
         foreach ($images as $image => $file) {
-            $smarty->assign ($image, SugarThemeRegistry::current()->getImage($file,'',null,null,'.gif',$file)) ;
+            $smarty->assign ($image, SugarThemeRegistry::current()->getImage($file, '', null, null, '.gif', $file)) ;
         }
 
-        $requiredFields = implode($parser->getRequiredFields () , ',');
+        $requiredFields = implode($parser->getRequiredFields (), ',');
         $slashedRequiredFields = addslashes($requiredFields);
         $buttons = array ( ) ;
         $disableLayout = false;
@@ -136,12 +136,12 @@ class ViewLayoutView extends SugarView
 
             //Check if we need to synch edit view to other layouts
             if ($this->editLayout == MB_DETAILVIEW || $this->editLayout == MB_QUICKCREATE) {
-                $parser2 = ParserFactory::getParser(MB_EDITVIEW,$this->editModule,$this->package);
+                $parser2 = ParserFactory::getParser(MB_EDITVIEW, $this->editModule, $this->package);
                 if ($this->editLayout == MB_DETAILVIEW) {
                     $disableLayout = $parser2->getSyncDetailEditViews();
                 }
                 if (!empty($_REQUEST['copyFromEditView'])) {
-                    $editViewPanels = $parser2->convertFromCanonicalForm ($parser2->_viewdefs [ 'panels' ] , $parser2->_fielddefs) ;
+                    $editViewPanels = $parser2->convertFromCanonicalForm ($parser2->_viewdefs [ 'panels' ], $parser2->_fielddefs) ;
                     $parser->_viewdefs [ 'panels' ] = $editViewPanels;
                     $parser->_fielddefs = $parser2->_fielddefs;
                     $parser->setUseTabs($parser2->getUseTabs());
@@ -261,7 +261,7 @@ class ViewLayoutView extends SugarView
 
         $translatedViewType = '' ;
         if (isset ($labels [ strtolower ($this->editLayout) ])) {
-            $translatedViewType = translate ($labels [ strtolower($this->editLayout) ] , 'ModuleBuilder') ;
+            $translatedViewType = translate ($labels [ strtolower($this->editLayout) ], 'ModuleBuilder') ;
         } elseif (isset($this->sm)) {
             foreach ($this->sm->sources as $file => $def) {
                 if (!empty($def['view']) && $def['view'] == $this->editLayout && !empty($def['name'])) {
@@ -295,7 +295,7 @@ class ViewLayoutView extends SugarView
 
         // set up language files
         $smarty->assign ('language', $parser->getLanguage()) ; // for sugar_translate in the smarty template
-        $smarty->assign('from_mb',$this->fromModuleBuilder);
+        $smarty->assign('from_mb', $this->fromModuleBuilder);
         $smarty->assign('calc_field_list', json_encode($parser->getCalculatedFields()));
         if ($this->fromModuleBuilder) {
             $mb = new ModuleBuilder () ;

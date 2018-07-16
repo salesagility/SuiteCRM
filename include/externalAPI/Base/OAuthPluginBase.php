@@ -121,7 +121,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
         if (!empty($this->oauth_token) && !empty($this->oauth_secret)) {
             return array('success'=>true);
         } else {
-            return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN','EAPM'));
+            return array('success'=>false,'errorMessage'=>translate('LBL_ERR_NO_TOKEN', 'EAPM'));
         }
     }
 
@@ -201,7 +201,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin
             }
         } else {
             $accReq = $this->getOauthAccessURL();
-            $oauth->setToken($_SESSION['eapm_oauth_token'],$_SESSION['eapm_oauth_secret']);
+            $oauth->setToken($_SESSION['eapm_oauth_token'], $_SESSION['eapm_oauth_secret']);
             $GLOBALS['log']->debug("OAuth access token: {$accReq}");
             $access_token_info = $oauth->getAccessToken($accReq);
             $GLOBALS['log']->debug("OAuth token: ".var_export($access_token_info, true));

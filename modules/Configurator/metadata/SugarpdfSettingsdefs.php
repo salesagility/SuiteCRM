@@ -139,7 +139,7 @@ $SugarpdfSettings = array(
     "sugarpdf_pdf_protection"=>array(
         "label"=>$mod_strings["PDF_PROTECTION"],
         "info_label"=>$mod_strings["PDF_PROTECTION_INFO"],
-        "value"=>explode(",",PDF_PROTECTION),
+        "value"=>explode(",", PDF_PROTECTION),
         "class"=>"advanced",
         "type"=>"multiselect",
         "selectList"=>array("print"=>"Print", "modify"=>"Modify", "copy"=>"Copy", "annot-forms"=>"Annotations and forms"),

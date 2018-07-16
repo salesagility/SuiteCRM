@@ -81,7 +81,7 @@ class SugarTab
             $selected_group = $key_all;
         }
 
-        $moreTabs = array_slice($mainTabs,$max_tabs);
+        $moreTabs = array_slice($mainTabs, $max_tabs);
         /* If the current tab is in the 'More' menu, move it into the visible menu. */
         if (!empty($moreTabs[$selected_group])) {
             $temp = array($selected_group => $mainTabs[$selected_group]);

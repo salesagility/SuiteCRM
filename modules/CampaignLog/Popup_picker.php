@@ -175,9 +175,9 @@ class Popup_Picker
         $ListView->setXTemplate($form);
         $ListView->multi_select_popup=$multi_select;  //FOR MULTI-SELECT
 		if ($multi_select) {
-		    $ListView->xTemplate->assign("TAG_TYPE","SPAN");
+		    $ListView->xTemplate->assign("TAG_TYPE", "SPAN");
 		} else {
-		    $ListView->xTemplate->assign("TAG_TYPE","A");
+		    $ListView->xTemplate->assign("TAG_TYPE", "A");
 		}//FOR MULTI-SELECT
 		//$ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE']); //FOR MULTI-SELECT
 		//$ListView->setHeaderText($button); //FOR MULTI-SELECT

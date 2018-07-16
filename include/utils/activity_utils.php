@@ -41,7 +41,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 
-function build_related_list_by_user_id($bean, $user_id,$where)
+function build_related_list_by_user_id($bean, $user_id, $where)
 {
     $bean_id_name = strtolower($bean->object_name).'_id';
 

@@ -80,7 +80,7 @@ if (!empty($_POST['selected_objects'])) {
 $selObjs = $_SESSION['SELECTED_OBJECTS_DEF'];
 $sel_obj = array();
 
-parse_str(stripslashes(html_entity_decode($selObjs, ENT_QUOTES)),$sel_obj);
+parse_str(stripslashes(html_entity_decode($selObjs, ENT_QUOTES)), $sel_obj);
 foreach ($sel_obj as $key=>$value) {
     $sel_obj[$key] = stripslashes($value);
 }
@@ -110,7 +110,7 @@ if (count($relArray) > 0) {
             $seed->retrieve($relArray[$key]);
             $name = "";
             if ($relModule  == "Contacts") {
-                $name = $locale->getLocaleFormattedName($seed->first_name,$seed->last_name);
+                $name = $locale->getLocaleFormattedName($seed->first_name, $seed->last_name);
             } else {
                 $name = $seed->name;
             }
@@ -124,7 +124,7 @@ if (count($relArray) > 0) {
 $xtpl->assign("MAILMERGE_MODULE", $_SESSION['MAILMERGE_MODULE']);
 $xtpl->assign("MAILMERGE_DOCUMENT_ID", $document_id);
 $xtpl->assign("MAILMERGE_TEMPLATE", $revision->filename." (rev. ".$revision->revision.")");
-$xtpl->assign("MAILMERGE_SELECTED_OBJECTS", get_select_options_with_id($builtArray,'0'));
+$xtpl->assign("MAILMERGE_SELECTED_OBJECTS", get_select_options_with_id($builtArray, '0'));
 $xtpl->assign("MAILMERGE_SELECTED_OBJECTS_DEF", urlencode($selObjs));
 $step_num = 4;
 

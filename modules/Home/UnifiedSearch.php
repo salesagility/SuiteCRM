@@ -41,14 +41,14 @@ $queryString = ! empty($_REQUEST['query_string']) ? $_REQUEST['query_string'] : 
 
 $luceneSearch = !empty($sugar_config['aod']['enable_aod']);
 
-if (array_key_exists('showGSDiv',$_REQUEST) || !empty($_REQUEST['search_fallback'])) {
+if (array_key_exists('showGSDiv', $_REQUEST) || !empty($_REQUEST['search_fallback'])) {
     //Search from vanilla sugar search or request for the same
     $luceneSearch = false;
 }
 
 if (!$luceneSearch) {
     if (!empty($sugar_config['aod']['enable_aod'])) {
-        echo "<a href='index.php?action=UnifiedSearch&module=Home&query_string=".urlencode($queryString)."'>".translate("LBL_USE_AOD_SEARCH","AOD_Index")."</a>";
+        echo "<a href='index.php?action=UnifiedSearch&module=Home&query_string=".urlencode($queryString)."'>".translate("LBL_USE_AOD_SEARCH", "AOD_Index")."</a>";
     }
     require_once('modules/Home/UnifiedSearchAdvanced.php');
     global $mod_strings, $modListHeader, $app_strings, $beanList, $beanFiles;
@@ -57,7 +57,7 @@ if (!$luceneSearch) {
     return;
 }
 require_once('include/utils.php');
-echo "<a href='index.php?action=UnifiedSearch&module=Home&search_fallback=1&query_string=".urlencode($queryString)."'>".translate("LBL_USE_VANILLA_SEARCH","AOD_Index")."</a>";
+echo "<a href='index.php?action=UnifiedSearch&module=Home&search_fallback=1&query_string=".urlencode($queryString)."'>".translate("LBL_USE_VANILLA_SEARCH", "AOD_Index")."</a>";
 
 $index = BeanFactory::getBean("AOD_Index")->getIndex();
 $hits = array();
@@ -70,13 +70,13 @@ if (!empty($_REQUEST['start'])) {
 if (!empty($_REQUEST['total'])) {
     $total = $_REQUEST['total'];
 }
-if (array_key_exists('listViewStartButton',$_REQUEST)) {
+if (array_key_exists('listViewStartButton', $_REQUEST)) {
     $start = 0;
-} elseif (array_key_exists('listViewPrevButton',$_REQUEST)) {
-    $start = max($start - $amount,0);
-} elseif (array_key_exists('listViewNextButton',$_REQUEST)) {
-    $start = min($start + $amount,$total);
-} elseif (array_key_exists('listViewEndButton',$_REQUEST)) {
+} elseif (array_key_exists('listViewPrevButton', $_REQUEST)) {
+    $start = max($start - $amount, 0);
+} elseif (array_key_exists('listViewNextButton', $_REQUEST)) {
+    $start = min($start + $amount, $total);
+} elseif (array_key_exists('listViewEndButton', $_REQUEST)) {
     $start = floor($total / $amount) * $amount;
 }
 if ($queryString) {
@@ -90,47 +90,47 @@ if ($queryString) {
 <form name='UnifiedSearchAdvancedMain' action='index.php' method='POST' class="search_form">
     <input type='hidden' name='query_string' value='test'>
     <input type='hidden' name='action' value='UnifiedSearch'>
-    <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate("LBL_SEARCH_QUERY_PLACEHOLDER","AOD_Index");?>' value='<?php echo $queryString;?>'>
-    <input type="submit" class="button primary" value="<?php echo translate("LBL_SEARCH_BUTTON","AOD_Index");?>">&nbsp;
+    <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate("LBL_SEARCH_QUERY_PLACEHOLDER", "AOD_Index");?>' value='<?php echo $queryString;?>'>
+    <input type="submit" class="button primary" value="<?php echo translate("LBL_SEARCH_BUTTON", "AOD_Index");?>">&nbsp;
 </form>
 <table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
-    <?php getPaginateHTML($queryString, $start,$amount,$total); ?>
+    <?php getPaginateHTML($queryString, $start, $amount, $total); ?>
     <thead>
     <tr height='20'>
         <th scope='col' width='10%'data-hide="phone">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
-                        <?php echo translate("LBL_SEARCH_RESULT_MODULE","AOD_Index"); ?>
+                        <?php echo translate("LBL_SEARCH_RESULT_MODULE", "AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='30%' data-toggle="true">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
-                        <?php echo translate("LBL_SEARCH_RESULT_NAME","AOD_Index"); ?>
+                        <?php echo translate("LBL_SEARCH_RESULT_NAME", "AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='30%' data-hide="phone">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap; width:100%; text-align:left;'>
-                        <?php echo translate("LBL_SEARCH_RESULT_SUMMARY","AOD_Index"); ?>
+                        <?php echo translate("LBL_SEARCH_RESULT_SUMMARY", "AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
         <th scope='col' width='25%' data-hide="phone,phonelandscape">
             <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_DATE_CREATED","AOD_Index"); ?>
+                <?php echo translate("LBL_SEARCH_RESULT_DATE_CREATED", "AOD_Index"); ?>
             </div>
         </th>
         <th scope='col' width='25%' data-hide="phone,phonelandscape">
             <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_DATE_MODIFIED","AOD_Index"); ?>
+                <?php echo translate("LBL_SEARCH_RESULT_DATE_MODIFIED", "AOD_Index"); ?>
             </div>
         </th>
         <th scope='col' width='10%'>
             <div style='white-space: nowrap; width:100%; text-align:left;'>
-                <?php echo translate("LBL_SEARCH_RESULT_SCORE","AOD_Index"); ?>
+                <?php echo translate("LBL_SEARCH_RESULT_SCORE", "AOD_Index"); ?>
             </div>
         </th>
     </tr>
@@ -148,7 +148,7 @@ if ($queryString) {
         ."</tr>";
         }
     } else {
-        echo "<tr><td>".translate("LBL_SEARCH_RESULT_EMPTY","AOD_Index")."</td></td>";
+        echo "<tr><td>".translate("LBL_SEARCH_RESULT_EMPTY", "AOD_Index")."</td></td>";
     }
 ?>
 </table>
@@ -175,17 +175,17 @@ function getRecordSummary(SugarBean $bean)
         }
         $key = strtolower($key);
 
-        if (in_array($key,array('date_entered','date_modified','name'))) {
+        if (in_array($key, array('date_entered','date_modified','name'))) {
             continue;
         }
         $summary[] = $bean->$key;
     }
     $summary = array_filter($summary);
-    return implode(' || ',$summary);
+    return implode(' || ', $summary);
 }
 function getScoreDisplay($hit)
 {
-    return number_format(100*$hit->score,2);
+    return number_format(100*$hit->score, 2);
 }
 function unCamelCase($input, $sep = " ")
 {
@@ -196,7 +196,7 @@ function getModuleLabel($module)
 {
     return translate('LBL_MODULE_NAME', $module);
 }
-function cacheQuery($queryString,$resArray)
+function cacheQuery($queryString, $resArray)
 {
     $file = create_cache_directory('modules/AOD_Index/QueryCache/' . md5($queryString));
     $out = serialize($resArray);
@@ -233,16 +233,16 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
         $tmphits = $index->find($queryString);
         $hits = array();
         foreach ($tmphits as $hit) {
-            $bean = BeanFactory::getBean($hit->record_module,$hit->record_id);
+            $bean = BeanFactory::getBean($hit->record_module, $hit->record_id);
             if (empty($bean)) {
                 continue;
             }
             if ($bean->bean_implements('ACL') && !is_admin($current_user)) {
                 //Annoyingly can't use the following as it always passes true for is_owner checks on list
                 //$bean->ACLAccess('list');
-                $in_group = SecurityGroup::groupHasAccess($bean->module_dir,$bean->id, 'list');
+                $in_group = SecurityGroup::groupHasAccess($bean->module_dir, $bean->id, 'list');
                 $is_owner = $bean->isOwner($current_user->id);
-                $access = ACLController::checkAccess($bean->module_dir,'list', $is_owner, 'module', $in_group);
+                $access = ACLController::checkAccess($bean->module_dir, 'list', $is_owner, 'module', $in_group);
                 if (!$access) {
                     continue;
                 }
@@ -259,11 +259,11 @@ function doSearch($index, $queryString, $start = 0, $amount = 20)
             $hits[] = $newHit;
         }
         //Cache results so pagination is nice and snappy.
-        cacheQuery($queryString,$hits);
+        cacheQuery($queryString, $hits);
     }
 
     $total = count($hits);
-    $hits = array_slice($hits,$start,$amount);
+    $hits = array_slice($hits, $start, $amount);
     $res = array('total'=>$total,'hits' => $hits);
     return $res;
 }
@@ -299,7 +299,7 @@ function getPaginateHTML($queryString, $start, $amount, $total)
             <button type="submit" id="listViewPrevButton_top" name="listViewPrevButton" class="button" title="Previous" <?php echo $first ? 'disabled="disabled"' : ''?>>
                 <span class='suitepicon suitepicon-action-left'></span>
             </button>
-            <span class="pageNumbers">(<?php echo $total ? $start+1 : 0; ?> - <?php echo min($start + $amount,$total); ?> of <?php echo $total; ?>)</span>
+            <span class="pageNumbers">(<?php echo $total ? $start+1 : 0; ?> - <?php echo min($start + $amount, $total); ?> of <?php echo $total; ?>)</span>
             <button type="submit" id="listViewNextButton_top" name="listViewNextButton" title="Next" class="button" <?php echo $last ? 'disabled="disabled"' : ''?>>
                 <span class='suitepicon suitepicon-action-right'></span>
             </button>

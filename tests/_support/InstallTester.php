@@ -114,7 +114,7 @@ class InstallTester extends \Codeception\Actor
         $I->fillField('[name=setup_site_admin_password]', $webDriverHelper->getAdminPassword());
         $I->fillField('[name=setup_site_admin_password_retype]', $webDriverHelper->getAdminPassword());
         $I->fillField('[name=setup_site_url]', $webDriverHelper->getInstanceURL());
-        $I->fillField('[name=email1]','install.tester@example.com');
+        $I->fillField('[name=email1]', 'install.tester@example.com');
 
 
         $I->click('Next');
@@ -128,7 +128,7 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $I->comment('wait for installer progress to finish');
-        $I->waitForElement('[type=submit]',90);
+        $I->waitForElement('[type=submit]', 90);
         $I->dontSeeMissingLabels();
         $I->dontSeeErrors();
     }

@@ -42,7 +42,7 @@
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
-ini_set('memory_limit',-1);
+ini_set('memory_limit', -1);
 ///////////////////////////////////////////////////////////////////////////////
 ////	UTILITIES THAT MUST BE LOCAL :(
 function prepSystemForUpgradeSilent()
@@ -90,7 +90,7 @@ function clearCacheSU($thedir, $extension)
                      'group' => '',
              );
          ksort($sugar_config);
-         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
              //writing to the file
          }
      }
@@ -115,7 +115,7 @@ function checkLoggerSettings()
             ),
           );
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
@@ -130,7 +130,7 @@ function checkLeadConversionSettings()
     if (!isset($sugar_config['lead_conv_activity_opt'])) {
         $sugar_config['lead_conv_activity_opt'] = 'copy';
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
@@ -157,7 +157,7 @@ function checkResourceSettings()
             'default_limit' => 1000,
           );
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
@@ -301,7 +301,7 @@ function addDefaultModuleRoles($defaultRoles = array())
     }
 }
 
-function verifyArguments($argv,$usage_regular)
+function verifyArguments($argv, $usage_regular)
 {
     $upgradeType = '';
     $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
@@ -367,7 +367,7 @@ if (substr($sapi_type, 0, 3) != 'cli') {
 
 // only run from command line
 if (isset($_SERVER['HTTP_USER_AGENT'])) {
-    fwrite(STDERR,'This utility may only be run from the command line or command prompt.');
+    fwrite(STDERR, 'This utility may only be run from the command line or command prompt.');
     exit(1);
 }
 //Clean_string cleans out any file  passed in as a parameter
@@ -414,7 +414,7 @@ define('DCE_INSTANCE', 'DCE_Instance');
 global $cwd;
 $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
 
-$upgradeType = verifyArguments($argv,$usage_regular);
+$upgradeType = verifyArguments($argv, $usage_regular);
 
 ///////////////////////////////////////////////////////////////////////////////
 //////  Verify that all the arguments are appropriately placed////////////////
@@ -443,7 +443,7 @@ $errors = array();
 
 
 if ($upgradeType != constant('DCE_INSTANCE')) {
-    ini_set('error_reporting',1);
+    ini_set('error_reporting', 1);
     require_once('include/entryPoint.php');
     require_once('include/SugarLogger/SugarLogger.php');
     require_once('include/utils/zip_utils.php');
@@ -549,7 +549,7 @@ if ($upgradeType != constant('DCE_INSTANCE')) {
     mkdir_recursive($unzip_dir);
     if (!is_dir($unzip_dir)) {
         echo "\n{$unzip_dir} is not an available directory\nFAILURE\n";
-        fwrite(STDERR,"\n{$unzip_dir} is not an available directory\nFAILURE\n");
+        fwrite(STDERR, "\n{$unzip_dir} is not an available directory\nFAILURE\n");
         exit(1);
     }
 
@@ -582,10 +582,10 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
     if ($configOptions['db_type'] == 'mysql') {
         //Change the db wait_timeout for this session
         $now_timeout = $db->getOne("select @@wait_timeout");
-        logThis('Wait Timeout before change ***** '.$now_timeout , $path);
+        logThis('Wait Timeout before change ***** '.$now_timeout, $path);
         $db->query("set wait_timeout=28800");	
         $now_timeout = $db->getOne("select @@wait_timeout");	
-        logThis('Wait Timeout after change ***** '.$now_timeout , $path);
+        logThis('Wait Timeout after change ***** '.$now_timeout, $path);
     }
 
     ////	END UPGRADE UPGRADEWIZARD
@@ -597,7 +597,7 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         // provides $manifest array
         include("$unzip_dir/manifest.php");
         if (!isset($manifest)) {
-            fwrite(STDERR,"\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
+            fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
             exit(1);
         } else {
             copy("$unzip_dir/manifest.php", $sugar_config['upload_dir']."/upgrades/patch/{$zip_from_dir}-manifest.php");
@@ -605,12 +605,12 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
             $error = validate_manifest($manifest);
             if (!empty($error)) {
                 $error = strip_tags(br2nl($error));
-                fwrite(STDERR,"\n{$error}\n\nFAILURE\n");
+                fwrite(STDERR, "\n{$error}\n\nFAILURE\n");
                 exit(1);
             }
         }
     } else {
-        fwrite(STDERR,"\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
+        fwrite(STDERR, "\nThe patch did not contain a proper manifest.php file.  Cannot continue.\n\n");
         exit(1);
     }
 
@@ -663,20 +663,20 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
     }
 
     if (!didThisStepRunBefore('preflight')) {
-        set_upgrade_progress('preflight','in_progress');
+        set_upgrade_progress('preflight', 'in_progress');
         //Quickcreatedefs on the basis of editviewdefs
         updateQuickCreateDefs();
-        set_upgrade_progress('preflight','done');
+        set_upgrade_progress('preflight', 'done');
     }
     ////////////////COMMIT PROCESS BEGINS///////////////////////////////////////////////////////////////
     ////	MAKE BACKUPS OF TARGET FILES
 
     if (!didThisStepRunBefore('commit')) {
-        set_upgrade_progress('commit','in_progress','commit','in_progress');
-        if (!didThisStepRunBefore('commit','commitMakeBackupFiles')) {
-            set_upgrade_progress('commit','in_progress','commitMakeBackupFiles','in_progress');
+        set_upgrade_progress('commit', 'in_progress', 'commit', 'in_progress');
+        if (!didThisStepRunBefore('commit', 'commitMakeBackupFiles')) {
+            set_upgrade_progress('commit', 'in_progress', 'commitMakeBackupFiles', 'in_progress');
             $errors = commitMakeBackupFiles($rest_dir, $install_file, $unzip_dir, $zip_from_dir, array());
-            set_upgrade_progress('commit','in_progress','commitMakeBackupFiles','done');
+            set_upgrade_progress('commit', 'in_progress', 'commitMakeBackupFiles', 'done');
         }
 
         //Need to make sure we have the matching copy of SetValueAction for static/instance method matching
@@ -691,10 +691,10 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
 
             if (is_file($file)) {
                 include($file);
-                if (!didThisStepRunBefore('commit','pre_install')) {
-                    set_upgrade_progress('commit','in_progress','pre_install','in_progress');
+                if (!didThisStepRunBefore('commit', 'pre_install')) {
+                    set_upgrade_progress('commit', 'in_progress', 'pre_install', 'in_progress');
                     pre_install();
-                    set_upgrade_progress('commit','in_progress','pre_install','done');
+                    set_upgrade_progress('commit', 'in_progress', 'pre_install', 'done');
                 }
             }
         }
@@ -703,7 +703,7 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         $cachedir = sugar_cached('smarty');
         if (is_dir($cachedir)) {
             $allModFiles = array();
-            $allModFiles = findAllFiles($cachedir,$allModFiles);
+            $allModFiles = findAllFiles($cachedir, $allModFiles);
             foreach ($allModFiles as $file) {
                 //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
                 if (file_exists($file)) {
@@ -715,21 +715,21 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         //Also add the three-way merge here. The idea is after the 451 html files have
         //been converted run the 3-way merge. If 500 then just run the 3-way merge
         if (file_exists('modules/UpgradeWizard/SugarMerge/SugarMerge.php')) {
-            set_upgrade_progress('end','in_progress','threewaymerge','in_progress');
+            set_upgrade_progress('end', 'in_progress', 'threewaymerge', 'in_progress');
             require_once('modules/UpgradeWizard/SugarMerge/SugarMerge.php');
             $merger = new SugarMerge($zipBasePath);
             $merger->mergeAll();
-            set_upgrade_progress('end','in_progress','threewaymerge','done');
+            set_upgrade_progress('end', 'in_progress', 'threewaymerge', 'done');
         }
         ///////////////////////////////////////////////////////////////////////////////
         ////	COPY NEW FILES INTO TARGET INSTANCE
 
-        if (!didThisStepRunBefore('commit','commitCopyNewFiles')) {
-            set_upgrade_progress('commit','in_progress','commitCopyNewFiles','in_progress');
+        if (!didThisStepRunBefore('commit', 'commitCopyNewFiles')) {
+            set_upgrade_progress('commit', 'in_progress', 'commitCopyNewFiles', 'in_progress');
             $split = commitCopyNewFiles($unzip_dir, $zip_from_dir);
             $copiedFiles = $split['copiedFiles'];
             $skippedFiles = $split['skippedFiles'];
-            set_upgrade_progress('commit','in_progress','commitCopyNewFiles','done');
+            set_upgrade_progress('commit', 'in_progress', 'commitCopyNewFiles', 'done');
         }
         require_once(clean_path($unzip_dir.'/scripts/upgrade_utils.php'));
         $new_sugar_version = getUpgradeVersion();
@@ -766,12 +766,12 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
             $trackerManager->pause();
             $trackerManager->unsetMonitors();
 
-            if (!didThisStepRunBefore('commit','post_install')) {
+            if (!didThisStepRunBefore('commit', 'post_install')) {
                 $file = "$unzip_dir/" . constant('SUGARCRM_POST_INSTALL_FILE');
                 if (is_file($file)) {
                     //set_upgrade_progress('commit','in_progress','post_install','in_progress');
                     $progArray['post_install']='in_progress';
-                    post_install_progress($progArray,'set');
+                    post_install_progress($progArray, 'set');
                     global $moduleList;
                     include($file);
                     post_install();
@@ -782,7 +782,7 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
                     //set process to done
                     $progArray['post_install']='done';
                     //set_upgrade_progress('commit','in_progress','post_install','done');
-                    post_install_progress($progArray,'set');
+                    post_install_progress($progArray, 'set');
                 }
             }
             //clean vardefs
@@ -864,8 +864,8 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         ////	REGISTER UPGRADE
         if (empty($errors)) {
             logThis('Registering upgrade with UpgradeHistory', $path);
-            if (!didThisStepRunBefore('commit','upgradeHistory')) {
-                set_upgrade_progress('commit','in_progress','upgradeHistory','in_progress');
+            if (!didThisStepRunBefore('commit', 'upgradeHistory')) {
+                set_upgrade_progress('commit', 'in_progress', 'upgradeHistory', 'in_progress');
                 $file_action = "copied";
                 // if error was encountered, script should have died before now
                 $new_upgrade = new UpgradeHistory();
@@ -884,8 +884,8 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
                     $new_upgrade->description = $new_upgrade->description." Silent Upgrade was used to upgrade the instance.";
                 }
                 $new_upgrade->save();
-                set_upgrade_progress('commit','in_progress','upgradeHistory','done');
-                set_upgrade_progress('commit','done','commit','done');
+                set_upgrade_progress('commit', 'in_progress', 'upgradeHistory', 'done');
+                set_upgrade_progress('commit', 'done', 'commit', 'done');
             }
         }
 
@@ -893,7 +893,7 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         $cachedir = sugar_cached('smarty');
         if (is_dir($cachedir)) {
             $allModFiles = array();
-            $allModFiles = findAllFiles($cachedir,$allModFiles);
+            $allModFiles = findAllFiles($cachedir, $allModFiles);
             foreach ($allModFiles as $file) {
                 //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
                 if (file_exists($file)) {
@@ -906,7 +906,7 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         $cachedir = sugar_cached('modules');
         if (is_dir($cachedir)) {
             $allModFiles = array();
-            $allModFiles = findAllFiles($cachedir,$allModFiles);
+            $allModFiles = findAllFiles($cachedir, $allModFiles);
             foreach ($allModFiles as $file) {
                 //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
                 if (file_exists($file)) {
@@ -919,7 +919,7 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
         $cachedir = sugar_cached('themes');
         if (is_dir($cachedir)) {
             $allModFiles = array();
-            $allModFiles = findAllFiles($cachedir,$allModFiles);
+            $allModFiles = findAllFiles($cachedir, $allModFiles);
             foreach ($allModFiles as $file) {
                 //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
                 if (file_exists($file)) {
@@ -942,14 +942,14 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
     //fix_dropdown_list();
     }
 
-    set_upgrade_progress('end','in_progress','end','in_progress');
+    set_upgrade_progress('end', 'in_progress', 'end', 'in_progress');
     /////////////////////////Old Logger settings///////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////
 
     if (function_exists('deleteCache')) {
-        set_upgrade_progress('end','in_progress','deleteCache','in_progress');
+        set_upgrade_progress('end', 'in_progress', 'deleteCache', 'in_progress');
         @deleteCache();
-        set_upgrade_progress('end','in_progress','deleteCache','done');
+        set_upgrade_progress('end', 'in_progress', 'deleteCache', 'done');
     }
 
     ///////////////////////////////////////////////////////////////////////////////
@@ -964,13 +964,13 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
 
     require_once('modules/Administration/Administration.php');
     $admin = new Administration();
-    $admin->saveSetting('system','adminwizard',1);
+    $admin->saveSetting('system', 'adminwizard', 1);
 
 
     if ($ce_to_pro_ent) {
         //check to see if there are any new files that need to be added to systems tab
         //retrieve old modules list
-        logThis('check to see if new modules exist',$path);
+        logThis('check to see if new modules exist', $path);
         $oldModuleList = array();
         $newModuleList = array();
         include($argv[3].'/include/modules.php');
@@ -1003,10 +1003,10 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
               'Contracts' => 'Contracts',
               'KBDocuments' => 'KBDocuments'
         );
-        $newModuleList = array_merge($newModuleList,$must_have_modules);
+        $newModuleList = array_merge($newModuleList, $must_have_modules);
 
         //new modules list now has left over modules which are new to this install, so lets add them to the system tabs
-        logThis('new modules to add are '.var_export($newModuleList,true),$path);
+        logThis('new modules to add are '.var_export($newModuleList, true), $path);
 
         //grab the existing system tabs
         $tabs = $newTB->get_system_tabs();
@@ -1018,7 +1018,7 @@ logThis("*** SILENT UPGRADE INITIATED.", $path);
 
         //now assign the modules to system tabs
         $newTB->set_system_tabs($tabs);
-        logThis('module tabs updated',$path);
+        logThis('module tabs updated', $path);
     }
 
     //Also set the tracker settings if  flavor conversion ce->pro or ce->ent

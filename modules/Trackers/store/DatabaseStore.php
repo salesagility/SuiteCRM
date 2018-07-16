@@ -81,13 +81,13 @@ class DatabaseStore implements Store
             return;
         }
 
-        $id = DBManagerFactory::getInstance()->getAutoIncrementSQL($monitor->table_name,'id');
+        $id = DBManagerFactory::getInstance()->getAutoIncrementSQL($monitor->table_name, 'id');
         if (!empty($id)) {
             $columns[] = 'id';
             $values[] = $id;
         }
 
-        $query = "INSERT INTO $monitor->table_name (" .implode("," , $columns). " ) VALUES ( ". implode("," , $values). ')';
+        $query = "INSERT INTO $monitor->table_name (" .implode(",", $columns). " ) VALUES ( ". implode(",", $values). ')';
         DBManagerFactory::getInstance()->query($query);
     }
 }

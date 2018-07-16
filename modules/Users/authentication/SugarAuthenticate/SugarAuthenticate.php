@@ -118,7 +118,7 @@ class SugarAuthenticate
             }
             // now that user is authenticated, reset loginfailed
             if ($usr->getPreference('loginfailed') != '' && $usr->getPreference('loginfailed') != 0) {
-                $usr->setPreference('loginfailed','0');
+                $usr->setPreference('loginfailed', '0');
                 $usr->savePreferencesToDB();
             }
             return $this->postLoginAuthenticate();
@@ -126,9 +126,9 @@ class SugarAuthenticate
             //if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
             if (!empty($usr_id)) {
                 if (($logout=$usr->getPreference('loginfailed'))=='') {
-                    $usr->setPreference('loginfailed','1');
+                    $usr->setPreference('loginfailed', '1');
                 } else {
-                    $usr->setPreference('loginfailed',$logout+1);
+                    $usr->setPreference('loginfailed', $logout+1);
                 }
                 $usr->savePreferencesToDB();
             }

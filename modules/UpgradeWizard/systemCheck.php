@@ -83,7 +83,7 @@ foreach ($files as $file) {
             logThis('WINDOWS: File ['.$file.'] not readable - saving for display');
             // don't warn yet - we're going to use this to check against replacement files
             $filesNotWritable[$i] = $file;
-            $filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
+            $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
             $filesOut .= "<tr>".
                             "<td><span class='error'>{$file}</span></td>".
                             "<td>{$filesNWPerms[$i]}</td>".
@@ -96,7 +96,7 @@ foreach ($files as $file) {
             logThis('File ['.$file.'] not writable - saving for display');
             // don't warn yet - we're going to use this to check against replacement files
             $filesNotWritable[$i] = $file;
-            $filesNWPerms[$i] = substr(sprintf('%o',fileperms($file)), -4);
+            $filesNWPerms[$i] = substr(sprintf('%o', fileperms($file)), -4);
             $owner = posix_getpwuid(fileowner($file));
             $group = posix_getgrgid(filegroup($file));
             $filesOut .= "<tr>".

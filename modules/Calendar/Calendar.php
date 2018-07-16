@@ -162,17 +162,17 @@ class Calendar
 			);
         }
 		
-        $current_date_db = $date_arr['year']."-".str_pad($date_arr['month'],2,"0",STR_PAD_LEFT)."-".str_pad($date_arr['day'],2,"0",STR_PAD_LEFT);
+        $current_date_db = $date_arr['year']."-".str_pad($date_arr['month'], 2, "0", STR_PAD_LEFT)."-".str_pad($date_arr['day'], 2, "0", STR_PAD_LEFT);
         $this->date_time = $GLOBALS['timedate']->fromString($current_date_db);	
         
         $this->show_tasks = $current_user->getPreference('show_tasks');
         if (is_null($this->show_tasks)) {
-            $this->show_tasks = SugarConfig::getInstance()->get('calendar.show_tasks_by_default',true);
+            $this->show_tasks = SugarConfig::getInstance()->get('calendar.show_tasks_by_default', true);
         }
         
         $this->show_calls = $current_user->getPreference('show_calls');
         if (is_null($this->show_calls)) {
-            $this->show_calls = SugarConfig::getInstance()->get('calendar.show_calls_by_default',true);
+            $this->show_calls = SugarConfig::getInstance()->get('calendar.show_calls_by_default', true);
         }
         
         // Show completed Meetings, Calls, Tasks
@@ -181,9 +181,9 @@ class Calendar
             $this->show_completed = SugarConfig::getInstance()->get('calendar.show_completed_by_default', true);
         }
         
-        $this->enable_repeat = SugarConfig::getInstance()->get('calendar.enable_repeat',true);	
+        $this->enable_repeat = SugarConfig::getInstance()->get('calendar.enable_repeat', true);	
 
-        if (in_array($this->view,array('month','year'))) {
+        if (in_array($this->view, array('month','year'))) {
             $this->style = "basic";
         } else {
             $displayTimeslots = $GLOBALS['current_user']->getPreference('calendar_display_timeslots');
@@ -213,19 +213,19 @@ class Calendar
 		
         $this->day_start_time = $current_user->getPreference('day_start_time');
         if (is_null($this->day_start_time)) {
-            $this->day_start_time = SugarConfig::getInstance()->get('calendar.default_day_start',"08:00");
+            $this->day_start_time = SugarConfig::getInstance()->get('calendar.default_day_start', "08:00");
         }
         $this->day_end_time = $current_user->getPreference('day_end_time');
         if (is_null($this->day_end_time)) {
-            $this->day_end_time = SugarConfig::getInstance()->get('calendar.default_day_end',"19:00");
+            $this->day_end_time = SugarConfig::getInstance()->get('calendar.default_day_end', "19:00");
         }
 			
         if ($this->view == "day") {
-            $this->time_step = SugarConfig::getInstance()->get('calendar.day_timestep',15);
+            $this->time_step = SugarConfig::getInstance()->get('calendar.day_timestep', 15);
         } elseif ($this->view == "week" || $this->view == "shared") {
-            $this->time_step = SugarConfig::getInstance()->get('calendar.week_timestep',30);
+            $this->time_step = SugarConfig::getInstance()->get('calendar.week_timestep', 30);
         } elseif ($this->view == "month") {
-            $this->time_step = SugarConfig::getInstance()->get('calendar.month_timestep',60);
+            $this->time_step = SugarConfig::getInstance()->get('calendar.month_timestep', 60);
         } else {
             $this->time_step = 60;
         }
@@ -320,9 +320,9 @@ class Calendar
                 }	
 
                 if (isset($this->activityList[ $act->sugar_bean->module_name ]['start']) && !empty($this->activityList[ $act->sugar_bean->module_name ]['start'])) {
-                    $item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean, $this->activityList[ $act->sugar_bean->module_name ]['start'], $this->activityList[ $act->sugar_bean->module_name ]['end']));
+                    $item = array_merge($item, CalendarUtils::get_time_data($act->sugar_bean, $this->activityList[ $act->sugar_bean->module_name ]['start'], $this->activityList[ $act->sugar_bean->module_name ]['end']));
                 } else {
-                    $item = array_merge($item,CalendarUtils::get_time_data($act->sugar_bean));
+                    $item = array_merge($item, CalendarUtils::get_time_data($act->sugar_bean));
                 }
 
 
@@ -382,8 +382,8 @@ class Calendar
      */	
     public function calculate_day_range()
     {
-        list($hour_start,$minute_start) =  explode(":",$this->day_start_time);		
-        list($hour_end,$minute_end) =  explode(":",$this->day_end_time);
+        list($hour_start, $minute_start) =  explode(":", $this->day_start_time);		
+        list($hour_end, $minute_end) =  explode(":", $this->day_end_time);
         $this->scroll_slot = intval($hour_start * (60 / $this->time_step) + ($minute_start / $this->time_step));
         $this->celcount = (($hour_end * 60 + $minute_end) - ($hour_start * 60 + $minute_start)) / $this->time_step;
     }	
@@ -393,7 +393,7 @@ class Calendar
      * @param User $user user object
      * @param string $type
      */	
-    public function add_activities($user,$type='sugar')
+    public function add_activities($user, $type='sugar')
     {
         global $timedate;
         $start_date_time = $this->date_time;
