@@ -160,9 +160,9 @@ class Popup_Picker
             $formbody = $formBase->$getFormMethod($prefix, $mod, $formBody);
 
             $addform = '<table><tr><td nowrap="nowrap" valign="top">'
-				. str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
-				. '</td></tr></table>'
-				. '<input type="hidden" name="action" value="Popup" />';
+                . str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
+                . '</td></tr></table>'
+                . '<input type="hidden" name="action" value="Popup" />';
             $formSave = <<<EOQ
 			<input type="hidden" name="create" value="true">
 			<input type="hidden" name="popup" value="true">
@@ -209,19 +209,19 @@ EOQ;
             $multi_select = true;
             $button .= "<input type='hidden' name='mode' value='MultiSelect'>";
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('$currentModule',document.MassUpdate,'mass[]','" .$app_strings['ERR_NOTHING_SELECTED']."', request_data.field_to_name_array);\" title='"
-				.$app_strings['LBL_SELECT_BUTTON_TITLE']."' value='  "
-				.$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' />\n";
+                .$app_strings['LBL_SELECT_BUTTON_TITLE']."' value='  "
+                .$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' />\n";
         }
 
         //END:FOR MULTI-SELECT
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-				.$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-				.$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
+                .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-			.$app_strings['LBL_CANCEL_BUTTON_TITLE']."' value='  "
-			.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' value='  "
+            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
 
         if (isset($this->_popupMeta['templateForm'])) {
             $form = new XTemplate($this->_popupMeta['templateForm']);

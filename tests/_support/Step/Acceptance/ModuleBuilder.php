@@ -1,7 +1,6 @@
 <?php
 namespace Step\Acceptance;
 
-
 use Helper\WebDriverHelper;
 use SuiteCRM\Enumerator\SugarObjectType;
 

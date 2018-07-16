@@ -776,8 +776,8 @@ class PackageManager
                 $upgrades_available++;
 
                 $packages[] = array('name' => $name, 'version' => $version, 'published_date' => $published_date,
-                	'description' => $description, 'uninstallable' =>$uninstallable, 'type' => $type,
-                	'file' => fileToHash($upgrade_content), 'file_install' => fileToHash($upgrade_content), 'unFile' => fileToHash($upgrade_content));
+                    'description' => $description, 'uninstallable' =>$uninstallable, 'type' => $type,
+                    'file' => fileToHash($upgrade_content), 'file_install' => fileToHash($upgrade_content), 'unFile' => fileToHash($upgrade_content));
             }//fi
         }//rof
         return $packages;
@@ -846,69 +846,69 @@ class PackageManager
             }
             $upgrades_installed++;
             switch ($type) {
-				case "theme":
-				case "langpack":
-				case "module":
-				case "patch":
-					if ($populate) {
-					    $manifest_file = $this->extractManifest($filename, $base_tmp_upgrade_dir);
-					    require_once($manifest_file);
-					    $GLOBALS['log']->info("Filling in upgrade_history table");
-					    $populate = false;
-					    if (isset($manifest['name'])) {
-					        $name = $manifest['name'];
-					        $installed->name = $name;
-					    }
-					    if (isset($manifest['description'])) {
-					        $description = $manifest['description'];
-					        $installed->description = $description;
-					    }
-					    if (isset($installdefs) && isset($installdefs['id'])) {
-					        $id_name  = $installdefs['id'];
-					        $installed->id_name = $id_name;
-					    }
+                case "theme":
+                case "langpack":
+                case "module":
+                case "patch":
+                    if ($populate) {
+                        $manifest_file = $this->extractManifest($filename, $base_tmp_upgrade_dir);
+                        require_once($manifest_file);
+                        $GLOBALS['log']->info("Filling in upgrade_history table");
+                        $populate = false;
+                        if (isset($manifest['name'])) {
+                            $name = $manifest['name'];
+                            $installed->name = $name;
+                        }
+                        if (isset($manifest['description'])) {
+                            $description = $manifest['description'];
+                            $installed->description = $description;
+                        }
+                        if (isset($installdefs) && isset($installdefs['id'])) {
+                            $id_name  = $installdefs['id'];
+                            $installed->id_name = $id_name;
+                        }
 
-					    $serial_manifest = array();
-					    $serial_manifest['manifest'] = (isset($manifest) ? $manifest : '');
-					    $serial_manifest['installdefs'] = (isset($installdefs) ? $installdefs : '');
-					    $serial_manifest['upgrade_manifest'] = (isset($upgrade_manifest) ? $upgrade_manifest : '');
-					    $installed->manifest = base64_encode(serialize($serial_manifest));
-					    $installed->save();
-					} else {
-					    $serial_manifest = unserialize(base64_decode($installed->manifest));
-					    $manifest = $serial_manifest['manifest'];
-					}
-					if (($upgrades_installed==0 || $uh->UninstallAvailable($installeds, $installed))
-						&& is_file($filename) && !empty($manifest['is_uninstallable'])) {
-					    $uninstallable = true;
-					}
-					$enabled = $installed->enabled;
-					if (!$enabled) {
-					    $enabled_string = 'DISABLED';
-					}
-					$file_uninstall = $filename;
-					if (!$uninstallable) {
-					    $file_uninstall = 'UNINSTALLABLE';
-					    $enabled_string = 'UNINSTALLABLE';
-					} else {
-					    $file_uninstall = fileToHash($file_uninstall);
-					}
+                        $serial_manifest = array();
+                        $serial_manifest['manifest'] = (isset($manifest) ? $manifest : '');
+                        $serial_manifest['installdefs'] = (isset($installdefs) ? $installdefs : '');
+                        $serial_manifest['upgrade_manifest'] = (isset($upgrade_manifest) ? $upgrade_manifest : '');
+                        $installed->manifest = base64_encode(serialize($serial_manifest));
+                        $installed->save();
+                    } else {
+                        $serial_manifest = unserialize(base64_decode($installed->manifest));
+                        $manifest = $serial_manifest['manifest'];
+                    }
+                    if (($upgrades_installed==0 || $uh->UninstallAvailable($installeds, $installed))
+                        && is_file($filename) && !empty($manifest['is_uninstallable'])) {
+                        $uninstallable = true;
+                    }
+                    $enabled = $installed->enabled;
+                    if (!$enabled) {
+                        $enabled_string = 'DISABLED';
+                    }
+                    $file_uninstall = $filename;
+                    if (!$uninstallable) {
+                        $file_uninstall = 'UNINSTALLABLE';
+                        $enabled_string = 'UNINSTALLABLE';
+                    } else {
+                        $file_uninstall = fileToHash($file_uninstall);
+                    }
 
-				$packages[] = array(
-				    'name' => $name,
-				    'version' => $version,
-				    'type' => $type,
-				    'published_date' => $date_entered,
-				    'description' => $description,
-				    'uninstallable' =>$uninstallable,
-				    'file_install' =>  $file_uninstall ,
-				    'file' =>  fileToHash($filename),
-				    'enabled' => $enabled_string
-				);
-				break;
-				default:
-				break;
-			}
+                $packages[] = array(
+                    'name' => $name,
+                    'version' => $version,
+                    'type' => $type,
+                    'published_date' => $date_entered,
+                    'description' => $description,
+                    'uninstallable' =>$uninstallable,
+                    'file_install' =>  $file_uninstall ,
+                    'file' =>  fileToHash($filename),
+                    'enabled' => $enabled_string
+                );
+                break;
+                default:
+                break;
+            }
         }//rof
         return $packages;
     }

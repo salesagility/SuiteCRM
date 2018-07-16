@@ -55,9 +55,9 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
     public function displayList(&$layout_def)
     {
         global $app_strings;
-		
+        
         global $current_user;
-		
+        
         $parent_record_id = $_REQUEST['record'];
         $parent_module = $_REQUEST['module'];
 
@@ -72,23 +72,23 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         $record = $layout_def['fields']['ID'];
         $current_module=$layout_def['module'];	
         $hideremove=false;			
-		
+        
         $return_module = $_REQUEST['module'];
         $return_action = 'SubPanelViewer';
         $subpanel = $layout_def['subpanel_id'];
         $return_id = $_REQUEST['record'];
-		
-		
+        
+        
         $focus = new Project();
-		
+        
         $focus->retrieve($return_id);
-		
+        
         if ($current_user->id == $focus->assigned_user_id || is_admin($current_user)) {
             $is_owner = true;
         } else {
             $is_owner = false;
         }
-				
+                
         if (isset($layout_def['linked_field_set']) && !empty($layout_def['linked_field_set'])) {
             $linked_field= $layout_def['linked_field_set'] ;
         } else {
@@ -103,21 +103,21 @@ class SugarWidgetSubPanelRemoveButtonProjects extends SugarWidgetField
         $icon_remove_text = strtolower($app_strings['LBL_ID_FF_REMOVE']);
         $icon_remove_html = SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" border="0"',null,null,'.gif','');//setting alt to blank on purpose on subpanels for 508
         $remove_url = $layout_def['start_link_wrapper']
-			. "index.php?module=$parent_module"
-			. "&action=$action"
-			. "&record=$parent_record_id"
-			. "&linked_field=$linked_field"
-			. "&linked_id=$record"
-			. "&return_url=" . urlencode(urlencode($return_url))
-			. "&refresh_page=1"
-			. $layout_def['end_link_wrapper'];
+            . "index.php?module=$parent_module"
+            . "&action=$action"
+            . "&record=$parent_record_id"
+            . "&linked_field=$linked_field"
+            . "&linked_id=$record"
+            . "&return_url=" . urlencode(urlencode($return_url))
+            . "&refresh_page=1"
+            . $layout_def['end_link_wrapper'];
         $remove_confirmation_text = $app_strings['NTC_REMOVE_CONFIRMATION'];
         //based on listview since that lets you select records
         if ($layout_def['ListView'] && !$hideremove && $is_owner) {
             return '<a href="' . $remove_url . '"'
-			. ' class="listViewTdToolsS1"'
-			. " onclick=\"return confirm('$remove_confirmation_text');\""
-			. ">$icon_remove_html&nbsp;$icon_remove_text</a>";
+            . ' class="listViewTdToolsS1"'
+            . " onclick=\"return confirm('$remove_confirmation_text');\""
+            . ">$icon_remove_html&nbsp;$icon_remove_text</a>";
         } else {
             return '';
         }

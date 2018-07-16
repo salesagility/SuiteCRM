@@ -69,16 +69,16 @@ class SugarRestService extends SugarWebService
         $name = clean_string($name, 'ALPHANUM');
         $type = '';
         switch (strtolower($name)) {
-			case 'json':
-				$type = 'JSON';
-				break;
-			case 'rss':
-				$type = 'RSS';
-				break;
-			case 'serialize':
-				$type = 'Serialize';
-				break;
-		}
+            case 'json':
+                $type = 'JSON';
+                break;
+            case 'rss':
+                $type = 'RSS';
+                break;
+            case 'serialize':
+                $type = 'Serialize';
+                break;
+        }
         $classname = "SugarRest$type";
         if (!file_exists('service/core/REST/' . $classname . '.php')) {
             return 'SugarRest';
@@ -118,7 +118,7 @@ class SugarRestService extends SugarWebService
      * @param String $function - name of the function
      * @param Array $input - assoc array of input values: key = param name, value = param type
      * @param Array $output - assoc array of output values: key = param name, value = param type
-	 * @access public
+     * @access public
      */
     public function registerFunction($function, $input, $output)
     {

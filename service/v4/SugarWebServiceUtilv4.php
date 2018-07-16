@@ -245,17 +245,17 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
             } //foreach
         } //if
 
-		if ($value->module_dir == 'Meetings' || $value->module_dir == 'Calls') {
-		    if (isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
-		        $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
-		        $options_ret = array();
-		        foreach ($options_dom as $key=>$oneOption) {
-		            $options_ret[$key] = $this->get_name_value($key,$oneOption);
-		        }
+        if ($value->module_dir == 'Meetings' || $value->module_dir == 'Calls') {
+            if (isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
+                $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
+                $options_ret = array();
+                foreach ($options_dom as $key=>$oneOption) {
+                    $options_ret[$key] = $this->get_name_value($key,$oneOption);
+                }
 
-		        $module_fields['duration_minutes']['options'] = $options_ret;
-		    }
-		}
+                $module_fields['duration_minutes']['options'] = $options_ret;
+            }
+        }
 
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
@@ -409,9 +409,9 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                             }//fi
                         }//fi
                     }//fi
-				    if (empty($seed->reminder_time)) {
-				        $seed->reminder_time = -1;
-				    }
+                    if (empty($seed->reminder_time)) {
+                        $seed->reminder_time = -1;
+                    }
                     if ($seed->reminder_time == -1) {
                         $defaultRemindrTime = $current_user->getPreference('reminder_time');
                         if ($defaultRemindrTime != -1) {
@@ -448,13 +448,13 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         if ($select_fields !== FALSE) {
             $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
             return array(
-				'name_value_lists' => $ret_values,
-			);
+                'name_value_lists' => $ret_values,
+            );
         } else {
             $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
             return array(
-				'ids' => $ids,
-			);
+                'ids' => $ids,
+            );
         }
     }
 
@@ -521,29 +521,29 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         global $beanList, $beanFiles;
         $results = array();
         switch ($type) {
-	        case 'wireless':
+            case 'wireless':
 
                 if (file_exists('custom/modules/'.$module.'/metadata/wireless.subpaneldefs.php')) {
                     require_once('custom/modules/'.$module.'/metadata/wireless.subpaneldefs.php');
                 } elseif (file_exists('modules/'.$module.'/metadata/wireless.subpaneldefs.php')) {
-	                require_once('modules/'.$module.'/metadata/wireless.subpaneldefs.php');
-	            }
+                    require_once('modules/'.$module.'/metadata/wireless.subpaneldefs.php');
+                }
 
                 //If an Ext/WirelessLayoutdefs/wireless.subpaneldefs.ext.php file exists, then also load it as well
                 if (file_exists('custom/modules/'.$module.'/Ext/WirelessLayoutdefs/wireless.subpaneldefs.ext.php')) {
                     require_once('custom/modules/'.$module.'/Ext/WirelessLayoutdefs/wireless.subpaneldefs.ext.php');
                 }
-	            break;
+                break;
 
-	        case 'default':
-	        default:
-	            if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php')) {
-	                require ('modules/'.$module.'/metadata/subpaneldefs.php');
-	            }
-	            if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
-	                require ('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
-	            }
-	    }
+            case 'default':
+            default:
+                if (file_exists ('modules/'.$module.'/metadata/subpaneldefs.php')) {
+                    require ('modules/'.$module.'/metadata/subpaneldefs.php');
+                }
+                if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
+                    require ('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php');
+                }
+        }
 
         //Filter results for permissions
         foreach ($layout_defs[$module]['subpanel_setup'] as $subpanel => $subpaneldefs) {

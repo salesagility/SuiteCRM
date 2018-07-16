@@ -80,8 +80,8 @@ class SugarFieldHandler
                     $field = 'datetime';
                     break;
                case 'url':
-               		$field = 'link';
-               		break;
+                       $field = 'link';
+                       break;
                case 'varchar':
                     $field = 'base';
                     break;

@@ -53,11 +53,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class Link
 {
 
-	/* Private variables.*/
+    /* Private variables.*/
     public $_log;
     public $_relationship_name; //relationship this attribute is tied to.
-	public $_bean; //stores a copy of the bean.
-	public $_relationship= '';
+    public $_bean; //stores a copy of the bean.
+    public $_relationship= '';
     public $_bean_table_name;
     public $_bean_key_name='id';
     private $relationship_fields = array();
@@ -274,7 +274,7 @@ class Link
         $bean_is_lhs=$this->_get_bean_position();
 
         if ($this->_relationship->relationship_type=='one-to-one' or $this->_relationship->relationship_type=='many-to-one' or
-   			($this->_relationship->relationship_type=='one-to-many' && !$bean_is_lhs)) {
+            ($this->_relationship->relationship_type=='one-to-many' && !$bean_is_lhs)) {
             if ($bean_is_lhs) {
                 $table = $this->_relationship->rhs_table;
                 $key = $this->_relationship->rhs_key;
@@ -313,8 +313,8 @@ class Link
                 $table_with_alias = $this->_relationship->join_table. " ".$params['join_table_alias'];
                 $table = $params['join_table_alias'];
                 $rel_table_with_alias =
-					$this->_relationship->join_table. " ".
-					$params['join_table_link_alias'];
+                    $this->_relationship->join_table. " ".
+                    $params['join_table_link_alias'];
                 $rel_table = $params['join_table_link_alias'];
             }
 
@@ -436,7 +436,7 @@ class Link
         $GLOBALS['log']->debug("getQuery, Relationship role column name=".$this->_relationship->relationship_role_column);
 
         if ($this->_relationship->relationship_type=='one-to-one' or $this->_relationship->relationship_type=='many-to-one' or
-		     ($this->_relationship->relationship_type=='one-to-many' && !$bean_is_lhs)) {
+             ($this->_relationship->relationship_type=='one-to-many' && !$bean_is_lhs)) {
             $GLOBALS['log']->debug("Processing one-to-one,many-to-one,one-to-many.");
 
             if ($this->add_distinct) {
@@ -639,7 +639,7 @@ class Link
     public function _add_many_to_one_bean_based($key)
     {
 
-		//make a copy of this bean to avoid recursion.
+        //make a copy of this bean to avoid recursion.
         $bean=new $this->_bean->object_name;
         $bean->retrieve($this->_bean->id);
 
@@ -688,8 +688,8 @@ class Link
         //if multiple keys are passed then check for unsupported relationship types.
         if (count($keys) > 1) {
             if (($this->_relationship->relationship_type == 'one-to-one')
-				or ($this->_relationship->relationship_type == 'one-to-many' and !$bean_is_lhs)
-				or ($this->_relationship->relationship_type == 'many-to-one')) {
+                or ($this->_relationship->relationship_type == 'one-to-many' and !$bean_is_lhs)
+                or ($this->_relationship->relationship_type == 'many-to-one')) {
                 $GLOBALS['log']->fatal("Invalid parameters passed to function, the relationship does not support addition of multiple records.");
                 return;
             }
@@ -697,7 +697,7 @@ class Link
         $GLOBALS['log']->debug("Relationship type = {$this->_relationship->relationship_type}");
         foreach ($keys as $key) {
 
-			//fetch the related record using the key and update.
+            //fetch the related record using the key and update.
             if ($this->_relationship->relationship_type=='one-to-one' || $this->_relationship->relationship_type == 'one-to-many') {
                 $this->_add_one_to_many_table_based($key,$bean_is_lhs);
             }
@@ -712,7 +712,7 @@ class Link
             if ($this->_relationship->relationship_type=='many-to-many') {
                 //replace existing relationships for one-to-one
                 if (!empty($GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type']) &&
-					($GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type'] == 'one-to-one')) {
+                    ($GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type'] == 'one-to-one')) {
                     //Remove all existing links with either bean.
                     $old_rev = isset($this->_relationship->reverse) ? false : $this->_relationship->reverse;
                     $this->_relationship->reverse = true;
@@ -743,9 +743,9 @@ class Link
 
                 //reverse will be set to true only for self-referencing many-to-many relationships.
                 if ($this->_is_self_relationship() && !empty($GLOBALS['dictionary'][$this->_relationship_name]) &&
-					!empty($GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type']) &&
-					$GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type'] == 'many-to-many' ||
-				(!empty($this->_relationship->reverse) && $this->_relationship->reverse == true)) {
+                    !empty($GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type']) &&
+                    $GLOBALS['dictionary'][$this->_relationship_name]['true_relationship_type'] == 'many-to-many' ||
+                (!empty($this->_relationship->reverse) && $this->_relationship->reverse == true)) {
                     //swap key values;
                     $temp=$additional_values[$this->_relationship->join_key_lhs];
                     $additional_values[$this->_relationship->join_key_lhs]=$additional_values[$this->_relationship->join_key_rhs];
@@ -789,7 +789,7 @@ class Link
     public function _add_many_to_many($add_values)
     {
 
-		//add date modified.
+        //add date modified.
         $add_values['date_modified']=  $GLOBALS['timedate']->nowDb();
 
         //check whether duplicate exist or not.
@@ -797,18 +797,18 @@ class Link
 
 /*			switch($this->when_dup_relationship_found) {
 
-				case 1: //do nothing.
-					$GLOBALS['log']->debug("Executing default option, no action.");
-					break;
+                case 1: //do nothing.
+                    $GLOBALS['log']->debug("Executing default option, no action.");
+                    break;
 
-				case 3: //delete the record first, then create a new entry.
-					$this->_delete_row($this->_relationship->join_table,$this->_duplicate_key);
-					$this->_insert_row($add_values);
-					break;
+                case 3: //delete the record first, then create a new entry.
+                    $this->_delete_row($this->_relationship->join_table,$this->_duplicate_key);
+                    $this->_insert_row($add_values);
+                    break;
 
-				default:
-				case 2: //update the record.
-*/					$this->_update_row($add_values,$this->_relationship->join_table,$this->_duplicate_where);
+                default:
+                case 2: //update the record.
+*/                    $this->_update_row($add_values,$this->_relationship->join_table,$this->_duplicate_where);
         /*					break;
         			}*/
         } else {
@@ -899,17 +899,17 @@ class Link
                 }
             } else {
                 //do nothing because the row that stores the relationship keys is being deleted.
-    			//todo log an error message here.
-    			//if this is the case and related_id is passed then log a message asking the user
-    			//to clear the relationship using the bean.
+                //todo log an error message here.
+                //if this is the case and related_id is passed then log a message asking the user
+                //to clear the relationship using the bean.
             }
         }
 
         if ($_relationship->relationship_type=='many-to-one') {
             //do nothing because the row that stores the relationship keys is being deleted.
-			//todo log an error message here.
-   			//if this is the case and related_id is passed then log a message asking the user
-   			//to clear the relationship using the bean.
+            //todo log an error message here.
+            //if this is the case and related_id is passed then log a message asking the user
+            //to clear the relationship using the bean.
         }
 
         if ($_relationship->relationship_type=='many-to-many') {
@@ -990,7 +990,7 @@ class Link
     public function relationship_exists($table_name, $join_key_values)
     {
 
-		//find the key values for the table.
+        //find the key values for the table.
         $dup_keys=$this->_get_alternate_key_fields($table_name);
         if (empty($dup_keys)) {
             $GLOBALS['log']->debug("No alternate key define, skipping duplicate check..");

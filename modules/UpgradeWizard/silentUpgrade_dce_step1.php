@@ -103,17 +103,17 @@ function checkLoggerSettings()
     global $sugar_config;
     if (!isset($sugar_config['logger'])) {
         $sugar_config['logger'] =array (
-			'level'=>'fatal',
-		    'file' =>
-		     array (
-		      'ext' => '.log',
-		      'name' => 'sugarcrm',
-		      'dateFormat' => '%c',
-		      'maxSize' => '10MB',
-		      'maxLogs' => 10,
-		      'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
-		    ),
-		  );
+            'level'=>'fatal',
+            'file' =>
+             array (
+              'ext' => '.log',
+              'name' => 'sugarcrm',
+              'dateFormat' => '%c',
+              'maxSize' => '10MB',
+              'maxLogs' => 10,
+              'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
+            ),
+          );
         ksort($sugar_config);
         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
             //writing to the file
@@ -129,18 +129,18 @@ function checkResourceSettings()
     global $sugar_config;
     if (!isset($sugar_config['resource_management'])) {
         $sugar_config['resource_management'] =
-		  array (
-		    'special_query_limit' => 50000,
-		    'special_query_modules' =>
-		    array (
-		      0 => 'Reports',
-		      1 => 'Export',
-		      2 => 'Import',
-		      3 => 'Administration',
-		      4 => 'Sync',
-		    ),
-		    'default_limit' => 1000,
-		  );
+          array (
+            'special_query_limit' => 50000,
+            'special_query_modules' =>
+            array (
+              0 => 'Reports',
+              1 => 'Export',
+              2 => 'Import',
+              3 => 'Administration',
+              4 => 'Sync',
+            ),
+            'default_limit' => 1000,
+          );
         ksort($sugar_config);
         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
             //writing to the file

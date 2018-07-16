@@ -78,14 +78,14 @@ class CasesQuickCreate extends QuickCreate
         $json = getJSONobj();
         
         $popup_request_data = array(
-			'call_back_function' => 'set_return',
-			'form_name' => 'casesQuickCreate',
-			'field_to_name_array' => array(
-				'id' => 'account_id',
-				'name' => 'account_name',
-			),
-		);
-	
+            'call_back_function' => 'set_return',
+            'form_name' => 'casesQuickCreate',
+            'field_to_name_array' => array(
+                'id' => 'account_id',
+                'name' => 'account_name',
+            ),
+        );
+    
         $encoded_popup_request_data = $json->encode($popup_request_data);
         $this->ss->assign('encoded_popup_request_data', $encoded_popup_request_data);
     }

@@ -44,11 +44,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class CalendarUtils
 {
 
-	/**
-	 * Find first day of week according to user's settings
-	 * @param SugarDateTime $date
-	 * @return SugarDateTime $date
-	 */
+    /**
+     * Find first day of week according to user's settings
+     * @param SugarDateTime $date
+     * @return SugarDateTime $date
+     */
     public static function get_first_day_of_week(SugarDateTime $date)
     {
         $fdow = $GLOBALS['current_user']->get_first_day_of_week();
@@ -66,39 +66,39 @@ class CalendarUtils
     public static function get_fields()
     {
         return array(
-			'Meetings' => array(
-				'name',
-				'duration_hours',
-				'duration_minutes',
-				'status',
-				'related_to',
-				'parent_name',
-				'parent_id',
-				'parent_type',
-				'priority'
-			),
-			'Calls' => array(
-				'name',
-				'duration_hours',
-				'duration_minutes',
-				'status',
-				'related_to',
-				'parent_name',
-				'parent_id',
-				'parent_type',
-				'priority'
-			),
-			'Tasks' => array(
-				'name',
-				'status',
-				'related_to',
-				'parent_name',
-				'parent_id',
-				'parent_type',
-				'priority',
-				'date_due'
-			),
-		);
+            'Meetings' => array(
+                'name',
+                'duration_hours',
+                'duration_minutes',
+                'status',
+                'related_to',
+                'parent_name',
+                'parent_id',
+                'parent_type',
+                'priority'
+            ),
+            'Calls' => array(
+                'name',
+                'duration_hours',
+                'duration_minutes',
+                'status',
+                'related_to',
+                'parent_name',
+                'parent_id',
+                'parent_type',
+                'priority'
+            ),
+            'Tasks' => array(
+                'name',
+                'status',
+                'related_to',
+                'parent_name',
+                'parent_id',
+                'parent_type',
+                'priority',
+                'date_due'
+            ),
+        );
     }
 
     /**
@@ -192,16 +192,16 @@ class CalendarUtils
         }
 
         $arr = array(
-				'access' => 'yes',
-				'type' => strtolower($bean->object_name),
-				'module_name' => $bean->module_dir,
-				'user_id' => $bean->assigned_user_id,
-				'detail' => 1,
-				'edit' => 1,
-				'name' => $bean->name,
-				'record' => $bean->id,
-				'users' => $user_ids,
-			);
+                'access' => 'yes',
+                'type' => strtolower($bean->object_name),
+                'module_name' => $bean->module_dir,
+                'user_id' => $bean->assigned_user_id,
+                'detail' => 1,
+                'edit' => 1,
+                'name' => $bean->name,
+                'record' => $bean->id,
+                'users' => $user_ids,
+            );
         if (!empty($bean->repeat_parent_id)) {
             $arr['repeat_parent_id'] = $bean->repeat_parent_id;
         }
@@ -231,12 +231,12 @@ class CalendarUtils
             $arr = array();
             if (!empty($bean->repeat_type)) {
                 $arr = array(
-	 				'repeat_type' => $bean->repeat_type,
-	 				'repeat_interval' => $bean->repeat_interval,
-	 				'repeat_dow' => $bean->repeat_dow,
-	 				'repeat_until' => $bean->repeat_until,
-	 				'repeat_count' => $bean->repeat_count,
-	 			);
+                    'repeat_type' => $bean->repeat_type,
+                    'repeat_interval' => $bean->repeat_interval,
+                    'repeat_dow' => $bean->repeat_dow,
+                    'repeat_until' => $bean->repeat_until,
+                    'repeat_count' => $bean->repeat_count,
+                );
             }
 
             // TODO CHECK DATETIME VARIABLE
@@ -248,9 +248,9 @@ class CalendarUtils
 
             $date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format() ,$date_start);
             $arr = array_merge($arr,array(
-		 		'current_dow' => $date->format("w"),
-		 		'default_repeat_until' => $date->get("+1 Month")->format($GLOBALS['timedate']->get_date_format()),
-		 	));
+                'current_dow' => $date->format("w"),
+                'default_repeat_until' => $date->get("+1 Month")->format($GLOBALS['timedate']->get_date_format()),
+            ));
 
             return $arr;
         }
@@ -302,7 +302,7 @@ class CalendarUtils
         /** 
          * @var SugarDateTime $end Recurrence end date. Used if recurrence ends by date.
          */
-		 
+         
         if (!empty($params['until'])) {
             $end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(), $until);
             $end->modify("+1 Day");
@@ -312,46 +312,46 @@ class CalendarUtils
         $current = clone $start;
 
         $i = 1; // skip the first iteration
-		$w = $interval; // for week iteration
-		$last_dow = $start->format("w");
+        $w = $interval; // for week iteration
+        $last_dow = $start->format("w");
 
         $limit = SugarConfig::getInstance()->get('calendar.max_repeat_count',1000);
 
         while ($i < $count || ($count == 0 && $current->format("U") < $end->format("U"))) {
             $skip = false;
             switch ($type) {
-				case "Daily":
-					$current->modify("+{$interval} Days");
-					break;
-				case "Weekly":
-					$day_index = $last_dow;
-					for ($d = $last_dow + 1; $d <= $last_dow + 7; $d++) {
-					    $day_index = $d % 7;
-					    if (strpos($dow,(string)($day_index)) !== false) {
-					        break;
-					    }
-					}
-					$step = $day_index - $last_dow;
-					$last_dow = $day_index;
-					if ($step <= 0) {
-					    $step += 7;
-					    $w++;
-					}
-					if ($w % $interval != 0) {
-					    $skip = true;
-					}
+                case "Daily":
+                    $current->modify("+{$interval} Days");
+                    break;
+                case "Weekly":
+                    $day_index = $last_dow;
+                    for ($d = $last_dow + 1; $d <= $last_dow + 7; $d++) {
+                        $day_index = $d % 7;
+                        if (strpos($dow,(string)($day_index)) !== false) {
+                            break;
+                        }
+                    }
+                    $step = $day_index - $last_dow;
+                    $last_dow = $day_index;
+                    if ($step <= 0) {
+                        $step += 7;
+                        $w++;
+                    }
+                    if ($w % $interval != 0) {
+                        $skip = true;
+                    }
 
-					$current->modify("+{$step} Days");
-					break;
-				case "Monthly":
-					$current->modify("+{$interval} Months");
-					break;
-				case "Yearly":
-					$current->modify("+{$interval} Years");
-					break;
-				default:
-					return array();
-			}
+                    $current->modify("+{$step} Days");
+                    break;
+                case "Monthly":
+                    $current->modify("+{$interval} Months");
+                    break;
+                case "Yearly":
+                    $current->modify("+{$interval} Years");
+                    break;
+                default:
+                    return array();
+            }
 
             if ($skip) {
                 continue;
@@ -378,7 +378,7 @@ class CalendarUtils
     public static function save_repeat_activities(SugarBean $bean,$time_arr)
     {
 
-		// Here we will create single big inserting query for each invitee relationship
+        // Here we will create single big inserting query for each invitee relationship
         // rather than using relationships framework due to performance issues.
         // Relationship framework runs very slowly
 
@@ -472,7 +472,7 @@ class CalendarUtils
                 $i++;
             }
         }
-		
+        
         if ($users_filled) {
             $db->query($qu_users);
         }
@@ -482,7 +482,7 @@ class CalendarUtils
         if ($leads_filled) {
             $db->query($qu_leads);
         }
-		
+        
         vCal::cache_sugar_vcal($GLOBALS['current_user']);
         return $arr;
     }
@@ -524,7 +524,7 @@ class CalendarUtils
     public static function correctRecurrences(SugarBean $bean, $beanId)
     {
         $db = DBManagerFactory::getInstance();
-		
+        
         $qu = "SELECT id FROM {$bean->table_name} WHERE repeat_parent_id = '{$beanId}' AND deleted = 0 ORDER BY date_start";
         $re = $db->query($qu);
 

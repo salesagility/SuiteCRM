@@ -95,13 +95,13 @@ $focus->to_addrs_arr = $focus->parse_addrs($_REQUEST['to_addrs'], $_REQUEST['to_
 
 // make sure the cc_* and bcc_* fields are at least empty if not set
 $fields_to_check = array(
-	'cc_addrs',
-	'cc_addrs_ids',
-	'bcc_addrs',
-	'bcc_addrs_ids',
-	'cc_addrs_names',
-	'cc_addrs_emails',
-	'bcc_addrs_emails',
+    'cc_addrs',
+    'cc_addrs_ids',
+    'bcc_addrs',
+    'bcc_addrs_ids',
+    'cc_addrs_names',
+    'cc_addrs_emails',
+    'bcc_addrs_emails',
 );
 foreach ($fields_to_check as $field_to_check) {
     if (!isset($_REQUEST[$field_to_check])) {
@@ -296,5 +296,5 @@ if ($focus->type == 'draft') {
 } elseif (isset($_POST['return_id']) && $_POST['return_id'] != "") {
     $return_id = $_POST['return_id'];
 }
-	header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
+    header("Location: index.php?action=$return_action&module=$return_module&record=$return_id");
 

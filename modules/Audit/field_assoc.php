@@ -63,9 +63,9 @@ $genericAssocFieldsArray = array('assigned_user_id' =>
                                   'contact_id' =>
                                   array('table_name' => 'contacts',
                                     'select_field_name' => 
-                                    		array('first_name',
-                                    			  'last_name',
-                                    		),
+                                            array('first_name',
+                                                  'last_name',
+                                            ),
                                     'select_field_join'  => 'id',
                                   ),
                                   'fixed_in_release' =>

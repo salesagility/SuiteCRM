@@ -55,20 +55,20 @@ if (!isset($_REQUEST['adv_interval']) || $_REQUEST['adv_interval'] == 'false' ||
 
     // days of week
     $xtDays = array(1 => 'mon',
-					2 => 'tue',
-					3 => 'wed',
-					4 => 'thu',
-					5 => 'fri',
-					6 => 'sat',
-					0 => 'sun');
-					
+                    2 => 'tue',
+                    3 => 'wed',
+                    4 => 'thu',
+                    5 => 'fri',
+                    6 => 'sat',
+                    0 => 'sun');
+                    
     if ((isset($_REQUEST['mon']) && $_REQUEST['mon'] == 'true') &&
-		(isset($_REQUEST['tue']) && $_REQUEST['tue'] == 'true') &&
-		(isset($_REQUEST['wed']) && $_REQUEST['wed'] == 'true') &&
-		(isset($_REQUEST['thu']) && $_REQUEST['thu'] == 'true') &&
-		(isset($_REQUEST['fri']) && $_REQUEST['fri'] == 'true') &&
-		(isset($_REQUEST['sat']) && $_REQUEST['sat'] == 'true') &&
-		(isset($_REQUEST['sun']) && $_REQUEST['sun'] == 'true')) {
+        (isset($_REQUEST['tue']) && $_REQUEST['tue'] == 'true') &&
+        (isset($_REQUEST['wed']) && $_REQUEST['wed'] == 'true') &&
+        (isset($_REQUEST['thu']) && $_REQUEST['thu'] == 'true') &&
+        (isset($_REQUEST['fri']) && $_REQUEST['fri'] == 'true') &&
+        (isset($_REQUEST['sat']) && $_REQUEST['sat'] == 'true') &&
+        (isset($_REQUEST['sun']) && $_REQUEST['sun'] == 'true')) {
         $_REQUEST['day_of_week'] = '*';
     } else {
         $day_string = '';

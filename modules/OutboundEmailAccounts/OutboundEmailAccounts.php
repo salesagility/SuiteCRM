@@ -44,9 +44,9 @@ require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts_sugar.php');
 class OutboundEmailAccounts extends OutboundEmailAccounts_sugar
 {
 
-	/**
-	 * @var string
-	 */
+    /**
+     * @var string
+     */
     public $mail_smtppass;
 
     public function __construct()

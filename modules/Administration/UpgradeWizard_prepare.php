@@ -166,58 +166,58 @@ if (!empty($dependencies)) {
     }//fi
 }
 switch ($install_type) {
-	case "full":
-	case "patch":
-		if (!is_writable("config.php")) {
-		    die($mod_strings['ERR_UW_CONFIG']);
-		}
-		break;
-	case "theme":
-		break;
-	case "langpack":
-		// find name of language pack: find single file in include/language/xx_xx.lang.php
-		$d = dir("$unzip_dir/$zip_from_dir/include/language");
-		while ($f = $d->read()) {
-		    if ($f == "." || $f == "..") {
-		        continue;
-		    } elseif (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
-		        $new_lang_name = $match[1];
-		    }
-		}
-		if ($new_lang_name == "") {
-		    die($mod_strings['ERR_UW_NO_LANGPACK'].$install_file);
-		}
-		$hidden_fields .= "<input type=hidden name=\"new_lang_name\" value=\"$new_lang_name\"/>";
+    case "full":
+    case "patch":
+        if (!is_writable("config.php")) {
+            die($mod_strings['ERR_UW_CONFIG']);
+        }
+        break;
+    case "theme":
+        break;
+    case "langpack":
+        // find name of language pack: find single file in include/language/xx_xx.lang.php
+        $d = dir("$unzip_dir/$zip_from_dir/include/language");
+        while ($f = $d->read()) {
+            if ($f == "." || $f == "..") {
+                continue;
+            } elseif (preg_match("/(.*)\.lang\.php\$/", $f, $match)) {
+                $new_lang_name = $match[1];
+            }
+        }
+        if ($new_lang_name == "") {
+            die($mod_strings['ERR_UW_NO_LANGPACK'].$install_file);
+        }
+        $hidden_fields .= "<input type=hidden name=\"new_lang_name\" value=\"$new_lang_name\"/>";
 
-		$new_lang_desc = getLanguagePackName("$unzip_dir/$zip_from_dir/include/language/$new_lang_name.lang.php");
-		if ($new_lang_desc == "") {
-		    die($mod_strings['ERR_UW_NO_LANG_DESC_1']."include/language/$new_lang_name.lang.php".$mod_strings['ERR_UW_NO_LANG_DESC_2']."$install_file.");
-		}
-		$hidden_fields .= "<input type=hidden name=\"new_lang_desc\" value=\"$new_lang_desc\"/>";
+        $new_lang_desc = getLanguagePackName("$unzip_dir/$zip_from_dir/include/language/$new_lang_name.lang.php");
+        if ($new_lang_desc == "") {
+            die($mod_strings['ERR_UW_NO_LANG_DESC_1']."include/language/$new_lang_name.lang.php".$mod_strings['ERR_UW_NO_LANG_DESC_2']."$install_file.");
+        }
+        $hidden_fields .= "<input type=hidden name=\"new_lang_desc\" value=\"$new_lang_desc\"/>";
 
-		if (!is_writable("config.php")) {
-		    die($mod_strings['ERR_UW_CONFIG']);
-		}
-		break;
-	case "module":
-		$previous_install = array();
-		if (!empty($id_name) & !empty($version)) {
-		    $previous_install = $uh->determineIfUpgrade($id_name, $version);
-		}
-		$previous_version = (empty($previous_install['version'])) ? '' : $previous_install['version'];
-		$previous_id = (empty($previous_install['id'])) ? '' : $previous_install['id'];
-		$show_files = false;
-		//rrs pull out unique_key
-		$hidden_fields .= "<input type=hidden name=\"author\" value=\"$author\"/>";
-		$hidden_fields .= "<input type=hidden name=\"name\" value=\"$name\"/>";
-		$hidden_fields .= "<input type=hidden name=\"description\" value=\"$description\"/>";
-		$hidden_fields .= "<input type=hidden name=\"is_uninstallable\" value=\"$is_uninstallable\"/>";
-		$hidden_fields .= "<input type=hidden name=\"id_name\" value=\"$id_name\"/>";
-		$hidden_fields .= "<input type=hidden name=\"previous_version\" value=\"$previous_version\"/>";
-		$hidden_fields .= "<input type=hidden name=\"previous_id\" value=\"$previous_id\"/>";
-		break;
-	default:
-		die($mod_strings['ERR_UW_WRONG_TYPE'].$install_type);
+        if (!is_writable("config.php")) {
+            die($mod_strings['ERR_UW_CONFIG']);
+        }
+        break;
+    case "module":
+        $previous_install = array();
+        if (!empty($id_name) & !empty($version)) {
+            $previous_install = $uh->determineIfUpgrade($id_name, $version);
+        }
+        $previous_version = (empty($previous_install['version'])) ? '' : $previous_install['version'];
+        $previous_id = (empty($previous_install['id'])) ? '' : $previous_install['id'];
+        $show_files = false;
+        //rrs pull out unique_key
+        $hidden_fields .= "<input type=hidden name=\"author\" value=\"$author\"/>";
+        $hidden_fields .= "<input type=hidden name=\"name\" value=\"$name\"/>";
+        $hidden_fields .= "<input type=hidden name=\"description\" value=\"$description\"/>";
+        $hidden_fields .= "<input type=hidden name=\"is_uninstallable\" value=\"$is_uninstallable\"/>";
+        $hidden_fields .= "<input type=hidden name=\"id_name\" value=\"$id_name\"/>";
+        $hidden_fields .= "<input type=hidden name=\"previous_version\" value=\"$previous_version\"/>";
+        $hidden_fields .= "<input type=hidden name=\"previous_id\" value=\"$previous_id\"/>";
+        break;
+    default:
+        die($mod_strings['ERR_UW_WRONG_TYPE'].$install_type);
 }
 
 
@@ -320,32 +320,32 @@ eoq2;
 }
 
 switch ($mode) {
-	case "Install":
-		if ($install_type == "langpack") {
-		    print($mod_strings['LBL_UW_LANGPACK_READY']);
-		    echo '<br><br>';
-		}
-		break;
-	case "Uninstall":
-		if ($install_type == "langpack") {
-		    print($mod_strings['LBL_UW_LANGPACK_READY_UNISTALL']);
-		    echo '<br><br>';
-		} elseif ($install_type != "module") {
-		    print($mod_strings['LBL_UW_FILES_REMOVED']);
-		}
-		break;
-	case "Disable":
-		if ($install_type == "langpack") {
-		    print($mod_strings['LBL_UW_LANGPACK_READY_DISABLE']);
-		    echo '<br><br>';
-		}
-		break;
-	case "Enable":
-		if ($install_type == "langpack") {
-		    print($mod_strings['LBL_UW_LANGPACK_READY_ENABLE']);
-		    echo '<br><br>';
-		}
-		break;
+    case "Install":
+        if ($install_type == "langpack") {
+            print($mod_strings['LBL_UW_LANGPACK_READY']);
+            echo '<br><br>';
+        }
+        break;
+    case "Uninstall":
+        if ($install_type == "langpack") {
+            print($mod_strings['LBL_UW_LANGPACK_READY_UNISTALL']);
+            echo '<br><br>';
+        } elseif ($install_type != "module") {
+            print($mod_strings['LBL_UW_FILES_REMOVED']);
+        }
+        break;
+    case "Disable":
+        if ($install_type == "langpack") {
+            print($mod_strings['LBL_UW_LANGPACK_READY_DISABLE']);
+            echo '<br><br>';
+        }
+        break;
+    case "Enable":
+        if ($install_type == "langpack") {
+            print($mod_strings['LBL_UW_LANGPACK_READY_ENABLE']);
+            echo '<br><br>';
+        }
+        break;
 }
 
 
@@ -475,7 +475,7 @@ if ($mode == "Disable" || $mode == "Enable") {
         print('</ul>');
     } else {
         echo '<script>' .
-	        'function handleFileChange(){';
+            'function handleFileChange(){';
         echo 'return true;';
         echo '}</script>';
     }
@@ -486,9 +486,9 @@ if ($mode == "Disable" || $mode == "Enable") {
     echo '}</script>';
 }
 echo '<script>' .
-         		'function validateForm(process){'.
-         			'return (handleCommit(process) && handleFileChange());'.
-         		'}'.
+                 'function validateForm(process){'.
+                     'return (handleCommit(process) && handleFileChange());'.
+                 '}'.
                 'function handleCommit(process){
         if(process == 1) {
             if(document.getElementById("radio_license_agreement_reject") != null && document.getElementById("radio_license_agreement_accept") != null){

@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class FeedLogicBase
 {
     public $module = '';
-	
+    
     public function pushFeed($bean, $event, $arguments)
     {
     }

@@ -85,13 +85,13 @@ class SchedulersJob extends Basic
     public $new_schema		= true;
     public $process_save_dates = true;
     // related fields
-	public $job_name;	// the Scheduler's 'name' field
-	public $job;		// the Scheduler's 'job' field
-	// object specific attributes
-	public $user; // User object
-	public $scheduler; // Scheduler parent
-	public $min_interval = 30; // minimal interval for job reruns
-	protected $job_done = true;
+    public $job_name;	// the Scheduler's 'name' field
+    public $job;		// the Scheduler's 'job' field
+    // object specific attributes
+    public $user; // User object
+    public $scheduler; // Scheduler parent
+    public $min_interval = 30; // minimal interval for job reruns
+    protected $job_done = true;
     protected $old_user;
 
     /**
@@ -173,17 +173,17 @@ class SchedulersJob extends Basic
         // cURL inits
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $job); // set url
-		curl_setopt($ch, CURLOPT_FAILONERROR, true); // silent failure (code >300);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // do not follow location(); inits - we always use the current
-		curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true); // silent failure (code >300);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // do not follow location(); inits - we always use the current
+        curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
         curl_setopt($ch, CURLOPT_DNS_USE_GLOBAL_CACHE, false);  // not thread-safe
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // return into a variable to continue program execution
-		curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); // never times out - bad idea?
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 secs for connect timeout
-		curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);  // open brand new conn
-		curl_setopt($ch, CURLOPT_HEADER, true); // do not return header info with result
-		curl_setopt($ch, CURLOPT_NOPROGRESS, true); // do not have progress bar
-		$urlparts = parse_url($job);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // return into a variable to continue program execution
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); // never times out - bad idea?
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 secs for connect timeout
+        curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);  // open brand new conn
+        curl_setopt($ch, CURLOPT_HEADER, true); // do not return header info with result
+        curl_setopt($ch, CURLOPT_NOPROGRESS, true); // do not have progress bar
+        $urlparts = parse_url($job);
         if (empty($urlparts['port'])) {
             if (isset($urlparts['scheme']) && $urlparts['scheme'] == 'https') {
                 $urlparts['port'] = 443;
@@ -192,11 +192,11 @@ class SchedulersJob extends Basic
             }
         }
         curl_setopt($ch, CURLOPT_PORT, $urlparts['port']); // set port as reported by Server
-		//TODO make the below configurable
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // most customers will not have Certificate Authority account
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // most customers will not have Certificate Authority account
+        //TODO make the below configurable
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // most customers will not have Certificate Authority account
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // most customers will not have Certificate Authority account
 
-		curl_setopt($ch, CURLOPT_NOSIGNAL, true); // ignore any cURL signals to PHP (for multi-threading)
+        curl_setopt($ch, CURLOPT_NOSIGNAL, true); // ignore any cURL signals to PHP (for multi-threading)
         $result = curl_exec($ch);
         $cInfo = curl_getinfo($ch);	//url,content_type,header_size,request_size,filetime,http_code
         //ssl_verify_result,total_time,namelookup_time,connect_time
@@ -430,28 +430,28 @@ class SchedulersJob extends Basic
     public function errorHandler($errno, $errstr, $errfile, $errline)
     {
         switch ($errno) {
-    		case E_USER_WARNING:
-    		case E_COMPILE_WARNING:
-    		case E_CORE_WARNING:
-    		case E_WARNING:
-    			$type = "Warning";
-    			break;
-    		case E_USER_ERROR:
-    		case E_COMPILE_ERROR:
-    		case E_CORE_ERROR:
-    		case E_ERROR:
-    			$type = "Fatal Error";
-	    		break;
-    		case E_PARSE:
-    			$type = "Parse Error";
-	    		break;
-    		case E_RECOVERABLE_ERROR:
-    			$type = "Recoverable Error";
-	    		break;
-		    default:
-		        // Ignore errors we don't know about
-		        return;
-    	}
+            case E_USER_WARNING:
+            case E_COMPILE_WARNING:
+            case E_CORE_WARNING:
+            case E_WARNING:
+                $type = "Warning";
+                break;
+            case E_USER_ERROR:
+            case E_COMPILE_ERROR:
+            case E_CORE_ERROR:
+            case E_ERROR:
+                $type = "Fatal Error";
+                break;
+            case E_PARSE:
+                $type = "Parse Error";
+                break;
+            case E_RECOVERABLE_ERROR:
+                $type = "Recoverable Error";
+                break;
+            default:
+                // Ignore errors we don't know about
+                return;
+        }
         $errstr = strip_tags($errstr);
         $this->errors .= sprintf(translate('ERR_PHP', 'SchedulersJobs'), $type, $errno, $errstr, $errfile, $errline)."\n";
     }

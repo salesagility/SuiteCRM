@@ -44,41 +44,41 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 
 $dictionary['project_task_project_tasks'] = array(
-	'table' => 'project_task_project_tasks',
-	'fields' => array(
-		'id' => array(
-			'name' => 'id',
-			'vname' => 'LBL_ID',
-			'required' => true,
-			'type' => 'id',
-		),
-		'project_task_id' => array(
-			'name' => 'project_task_id',
-			'vname' => 'LBL_PROJECT_TASK_ID',
-			'required' => true,
-			'type' => 'id',
-		),
+    'table' => 'project_task_project_tasks',
+    'fields' => array(
+        'id' => array(
+            'name' => 'id',
+            'vname' => 'LBL_ID',
+            'required' => true,
+            'type' => 'id',
+        ),
+        'project_task_id' => array(
+            'name' => 'project_task_id',
+            'vname' => 'LBL_PROJECT_TASK_ID',
+            'required' => true,
+            'type' => 'id',
+        ),
         'predecessor_project_task_id' => array(
             'name' => 'predecessor_project_task_id',
             'vname' => 'LBL_PROJECT_TASK_ID',
             'required' => true,
             'type' => 'id',
         ),        
-		'deleted' => array(
-			'name' => 'deleted',
-			'vname' => 'LBL_DELETED',
-			'type' => 'bool',
-			'required' => false,
-			'default' => '0',
-		),
-	),
-	'indices' => array(
-		array(
-			'name' =>'proj_rel_pk',
-			'type' =>'primary',
-			'fields'=>array('id')
-		),
-	),
+        'deleted' => array(
+            'name' => 'deleted',
+            'vname' => 'LBL_DELETED',
+            'type' => 'bool',
+            'required' => false,
+            'default' => '0',
+        ),
+    ),
+    'indices' => array(
+        array(
+            'name' =>'proj_rel_pk',
+            'type' =>'primary',
+            'fields'=>array('id')
+        ),
+    ),
 
     'relationships' => array(
         'project_task_project_tasks' => array(

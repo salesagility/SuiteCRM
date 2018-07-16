@@ -75,17 +75,17 @@ function checkLoggerSettings()
     global $sugar_config;
     if (!isset($sugar_config['logger'])) {
         $sugar_config['logger'] =array (
-			'level'=>'fatal',
-		    'file' =>
-		     array (
-		      'ext' => '.log',
-		      'name' => 'sugarcrm',
-		      'dateFormat' => '%c',
-		      'maxSize' => '10MB',
-		      'maxLogs' => 10,
-		      'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
-		    ),
-		  );
+            'level'=>'fatal',
+            'file' =>
+             array (
+              'ext' => '.log',
+              'name' => 'sugarcrm',
+              'dateFormat' => '%c',
+              'maxSize' => '10MB',
+              'maxLogs' => 10,
+              'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
+            ),
+          );
         ksort($sugar_config);
         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
             //writing to the file
@@ -101,18 +101,18 @@ function checkResourceSettings()
     global $sugar_config;
     if (!isset($sugar_config['resource_management'])) {
         $sugar_config['resource_management'] =
-		  array (
-		    'special_query_limit' => 50000,
-		    'special_query_modules' =>
-		    array (
-		      0 => 'Reports',
-		      1 => 'Export',
-		      2 => 'Import',
-		      3 => 'Administration',
-		      4 => 'Sync',
-		    ),
-		    'default_limit' => 1000,
-		  );
+          array (
+            'special_query_limit' => 50000,
+            'special_query_modules' =>
+            array (
+              0 => 'Reports',
+              1 => 'Export',
+              2 => 'Import',
+              3 => 'Administration',
+              4 => 'Sync',
+            ),
+            'default_limit' => 1000,
+          );
         ksort($sugar_config);
         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
             //writing to the file
@@ -253,58 +253,58 @@ global $sugar_config;
 $isDCEInstance = false;
 $errors = array();
 
-	require('config.php');
-	if (isset($argv[3])) {
-	    if (is_dir($argv[3])) {
-	        $cwd = $argv[3];
-	        chdir($cwd);
-	    }
-	}
+    require('config.php');
+    if (isset($argv[3])) {
+        if (is_dir($argv[3])) {
+            $cwd = $argv[3];
+            chdir($cwd);
+        }
+    }
 
-	require_once("{$cwd}/sugar_version.php"); // provides $sugar_version & $sugar_flavor
+    require_once("{$cwd}/sugar_version.php"); // provides $sugar_version & $sugar_flavor
 
-	global $sugar_config;
-	$configOptions = $sugar_config['dbconfig'];
+    global $sugar_config;
+    $configOptions = $sugar_config['dbconfig'];
 
     $GLOBALS['log']	= LoggerManager::getLogger('SugarCRM');
-	$patchName		= basename($argv[1]);
-	$zip_from_dir	= substr($patchName, 0, strlen($patchName) - 4); // patch folder name (minus ".zip")
-	$path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
+    $patchName		= basename($argv[1]);
+    $zip_from_dir	= substr($patchName, 0, strlen($patchName) - 4); // patch folder name (minus ".zip")
+    $path			= $argv[2]; // custom log file, if blank will use ./upgradeWizard.log
     $db				= &DBManagerFactory::getInstance();
-	$UWstrings		= return_module_language('en_us', 'UpgradeWizard', true);
-	$adminStrings	= return_module_language('en_us', 'Administration', true);
+    $UWstrings		= return_module_language('en_us', 'UpgradeWizard', true);
+    $adminStrings	= return_module_language('en_us', 'Administration', true);
     $app_list_strings = return_app_list_strings_language('en_us');
-	$mod_strings	= array_merge($adminStrings, $UWstrings);
-	$subdirs		= array('full', 'langpack', 'module', 'patch', 'theme', 'temp');
-	global $unzip_dir;
+    $mod_strings	= array_merge($adminStrings, $UWstrings);
+    $subdirs		= array('full', 'langpack', 'module', 'patch', 'theme', 'temp');
+    global $unzip_dir;
     $license_accepted = false;
     if (isset($argv[5]) && (strtolower($argv[5])=='yes' || strtolower($argv[5])=='y')) {
         $license_accepted = true;
     }
-	//////////////////////////////////////////////////////////////////////////////
-	//Adding admin user to the silent upgrade
+    //////////////////////////////////////////////////////////////////////////////
+    //Adding admin user to the silent upgrade
 
-	$current_user = new User();
-	if (isset($argv[4])) {
-	    //if being used for internal upgrades avoid admin user verification
-	    $user_name = $argv[4];
-	    $q = "select id from users where user_name = '" . $user_name . "' and is_admin=1";
-	    $result = DBManagerFactory::getInstance()->query($q, false);
-	    $logged_user = DBManagerFactory::getInstance()->fetchByAssoc($result);
-	    if (isset($logged_user['id']) && $logged_user['id'] != null) {
-	        //do nothing
-	        $current_user->retrieve($logged_user['id']);
-	    } else {
-	        echo "Not an admin user in users table. Please provide an admin user\n";
-	        exit(1);
-	    }
-	} else {
-	    echo "*******************************************************************************\n";
-	    echo "*** ERROR: 4th parameter must be a valid admin user.\n";
-	    echo $usage;
-	    echo "FAILURE\n";
-	    exit(1);
-	}
+    $current_user = new User();
+    if (isset($argv[4])) {
+        //if being used for internal upgrades avoid admin user verification
+        $user_name = $argv[4];
+        $q = "select id from users where user_name = '" . $user_name . "' and is_admin=1";
+        $result = DBManagerFactory::getInstance()->query($q, false);
+        $logged_user = DBManagerFactory::getInstance()->fetchByAssoc($result);
+        if (isset($logged_user['id']) && $logged_user['id'] != null) {
+            //do nothing
+            $current_user->retrieve($logged_user['id']);
+        } else {
+            echo "Not an admin user in users table. Please provide an admin user\n";
+            exit(1);
+        }
+    } else {
+        echo "*******************************************************************************\n";
+        echo "*** ERROR: 4th parameter must be a valid admin user.\n";
+        echo $usage;
+        echo "FAILURE\n";
+        exit(1);
+    }
 
 /////retrieve admin user
 

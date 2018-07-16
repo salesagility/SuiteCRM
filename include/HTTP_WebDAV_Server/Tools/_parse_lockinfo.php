@@ -95,14 +95,14 @@ class _parse_lockinfo
 
         // set tag and data handlers
         xml_set_element_handler($xml_parser,
-								array(&$this, "_startElement"),
-								array(&$this, "_endElement"));
+                                array(&$this, "_startElement"),
+                                array(&$this, "_endElement"));
         xml_set_character_data_handler($xml_parser,
-									   array(&$this, "_data"));
+                                       array(&$this, "_data"));
 
         // we want a case sensitive parser
         xml_parser_set_option($xml_parser,
-							  XML_OPTION_CASE_FOLDING, false);
+                              XML_OPTION_CASE_FOLDING, false);
 
         // parse input
         while ($this->success && !feof($f_in)) {
@@ -165,16 +165,16 @@ class _parse_lockinfo
         } elseif ($ns == "DAV:") {
             // parse only the essential tags
             switch ($tag) {
-			case "write":
-				$this->locktype = $tag;
-				break;
-			case "exclusive":
-			case "shared":
-				$this->lockscope = $tag;
-				break;
-			case "owner":
-				$this->collect_owner = true;
-				break;
+            case "write":
+                $this->locktype = $tag;
+                break;
+            case "exclusive":
+            case "shared":
+                $this->lockscope = $tag;
+                break;
+            case "owner":
+                $this->collect_owner = true;
+                break;
             }
         }
     }

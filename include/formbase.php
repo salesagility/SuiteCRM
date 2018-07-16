@@ -82,8 +82,8 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
     }
 
     if (!empty($_POST['assigned_user_id']) && 
-	    ($focus->assigned_user_id != $_POST['assigned_user_id']) && 
-	    ($_POST['assigned_user_id'] != $current_user->id)) {
+        ($focus->assigned_user_id != $_POST['assigned_user_id']) && 
+        ($_POST['assigned_user_id'] != $current_user->id)) {
         $GLOBALS['check_notify'] = true;
     }
     if (isset($_POST['dup_checked']) && $_POST['dup_checked'] && isset($_POST['id']) && $_POST['id'] != '') {
@@ -254,8 +254,8 @@ function buildRedirectURL($return_id='', $return_module='')
         $return_module = $return_module;
     }
     if (isset($_REQUEST['return_action']) && $_REQUEST['return_action'] != "") {
-	    
-	   //if we are doing a "Close and Create New"
+        
+       //if we are doing a "Close and Create New"
         if (isCloseAndCreateNewPressed()) {
             $return_action = "EditView";    
             $isDuplicate = "true";        
@@ -269,12 +269,12 @@ function buildRedirectURL($return_id='', $return_module='')
         } 
         // if we create a new record "Save", we want to redirect to the DetailView
         elseif (isset($_REQUEST['action']) && $_REQUEST['action'] == "Save" 
-			&& $_REQUEST['return_module'] != 'Activities'
-			&& $_REQUEST['return_module'] != 'Home' 
-			&& $_REQUEST['return_module'] != 'Forecasts' 
-			&& $_REQUEST['return_module'] != 'Calendar'
-			&& $_REQUEST['return_module'] != 'MailMerge'
-			) {
+            && $_REQUEST['return_module'] != 'Activities'
+            && $_REQUEST['return_module'] != 'Home' 
+            && $_REQUEST['return_module'] != 'Forecasts' 
+            && $_REQUEST['return_module'] != 'Calendar'
+            && $_REQUEST['return_module'] != 'MailMerge'
+            ) {
             $return_action = 'DetailView';
         } elseif ($_REQUEST['return_module'] == 'Activities' || $_REQUEST['return_module'] == 'Calendar') {
             $return_module = $_REQUEST['module'];
@@ -287,7 +287,7 @@ function buildRedirectURL($return_id='', $return_module='')
     } else {
         $return_action = "DetailView";
     }
-	
+    
     if (isset($_REQUEST['return_id']) && $_REQUEST['return_id'] != "") {
         $return_id = $_REQUEST['return_id'];
     }

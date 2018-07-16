@@ -56,7 +56,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testProspectList()
     {
 
-		//execute the contructor and check for the Object type and  attributes
+        //execute the contructor and check for the Object type and  attributes
         $prospectList = new ProspectList();
 
         $this->assertInstanceOf('ProspectList',$prospectList);
@@ -74,7 +74,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-		
+        
 
         $prospectList = new ProspectList();
 
@@ -108,7 +108,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testsave()
     {
 
-	// save state
+    // save state
 
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('aod_index');
@@ -331,7 +331,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $prospectList = new ProspectList();
 
         $this->assertEquals(false, $prospectList->bean_implements('')); //test with blank value
-		$this->assertEquals(false, $prospectList->bean_implements('test')); //test with invalid value
-		$this->assertEquals(true, $prospectList->bean_implements('ACL')); //test with valid value
+        $this->assertEquals(false, $prospectList->bean_implements('test')); //test with invalid value
+        $this->assertEquals(true, $prospectList->bean_implements('ACL')); //test with valid value
     }
 }

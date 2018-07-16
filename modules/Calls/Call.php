@@ -116,14 +116,14 @@ class Call extends SugarBean
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'contact_id', 'user_id', 'contact_name');
     public $relationship_fields = array(	'account_id'		=> 'accounts',
-										'opportunity_id'	=> 'opportunities',
-										'contact_id'		=> 'contacts',
-										'case_id'			=> 'cases',
-										'user_id'			=> 'users',
-										'assigned_user_id'	=> 'users',
-										'note_id'			=> 'notes',
+                                        'opportunity_id'	=> 'opportunities',
+                                        'contact_id'		=> 'contacts',
+                                        'case_id'			=> 'cases',
+                                        'user_id'			=> 'users',
+                                        'assigned_user_id'	=> 'users',
+                                        'note_id'			=> 'notes',
                                         'lead_id'			=> 'leads',
-								);
+                                );
 
     public function __construct()
     {
@@ -169,18 +169,18 @@ class Call extends SugarBean
         if ($this->syncing == false) {
             $view = strtolower($view);
             switch ($view) {
-				case 'edit':
-				case 'save':
-				case 'editview':
-				case 'delete':
-					if (!empty($this->recurring_source) && $this->recurring_source != "Sugar") {
-					    return false;
-					}
-			}
+                case 'edit':
+                case 'save':
+                case 'editview':
+                case 'delete':
+                    if (!empty($this->recurring_source) && $this->recurring_source != "Sugar") {
+                        return false;
+                    }
+            }
         }
         return parent::ACLAccess($view,$is_owner,$in_group);
     }
-	
+    
     // save date_end by calculating user input
     // this is for calendar
     public function save($check_notify = false)
@@ -245,8 +245,8 @@ class Call extends SugarBean
 
         if (isset($_REQUEST['reminders_data'])) {
             $reminderData = json_encode(
-				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
-			);
+                $this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+            );
             Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
         }
 
@@ -264,31 +264,31 @@ class Call extends SugarBean
         foreach ($reminders as $r => $reminder) {
             foreach ($reminder['invitees'] as $i => $invitee) {
                 switch ($invitee['module']) {
-					case "Users":
-						if (in_array($invitee['module_id'], $this->users_arr) === false) {
-						    // add to uninvited
-						    $uninvited[] = $reminderData[$r]['invitees'][$i];
-						    // remove user
-						    unset($reminderData[$r]['invitees'][$i]);
-						}
-						break;
-					case "Contacts":
-						if (in_array($invitee['module_id'], $this->contacts_arr) === false) {
-						    // add to uninvited
-						    $uninvited[] = $reminderData[$r]['invitees'][$i];
-						    // remove contact
-						    unset($reminderData[$r]['invitees'][$i]);
-						}
-						break;
-					case "Leads":
-						if (in_array($invitee['module_id'], $this->leads_arr) === false) {
-						    // add to uninvited
-						    $uninvited[] = $reminderData[$r]['invitees'][$i];
-						    // remove lead
-						    unset($reminderData[$r]['invitees'][$i]);
-						}
-						break;
-				}
+                    case "Users":
+                        if (in_array($invitee['module_id'], $this->users_arr) === false) {
+                            // add to uninvited
+                            $uninvited[] = $reminderData[$r]['invitees'][$i];
+                            // remove user
+                            unset($reminderData[$r]['invitees'][$i]);
+                        }
+                        break;
+                    case "Contacts":
+                        if (in_array($invitee['module_id'], $this->contacts_arr) === false) {
+                            // add to uninvited
+                            $uninvited[] = $reminderData[$r]['invitees'][$i];
+                            // remove contact
+                            unset($reminderData[$r]['invitees'][$i]);
+                        }
+                        break;
+                    case "Leads":
+                        if (in_array($invitee['module_id'], $this->leads_arr) === false) {
+                            // add to uninvited
+                            $uninvited[] = $reminderData[$r]['invitees'][$i];
+                            // remove lead
+                            unset($reminderData[$r]['invitees'][$i]);
+                        }
+                        break;
+                }
             }
         }
         return $reminderData;
@@ -584,13 +584,13 @@ class Call extends SugarBean
 
         if (strtolower(get_class($call->current_notify_user)) == 'contact') {
             $xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
-				  '/index.php?entryPoint=acceptDecline&module=Calls&contact_id='.$call->current_notify_user->id.'&record='.$call->id);
+                  '/index.php?entryPoint=acceptDecline&module=Calls&contact_id='.$call->current_notify_user->id.'&record='.$call->id);
         } elseif (strtolower(get_class($call->current_notify_user)) == 'lead') {
             $xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
-				  '/index.php?entryPoint=acceptDecline&module=Calls&lead_id='.$call->current_notify_user->id.'&record='.$call->id);
+                  '/index.php?entryPoint=acceptDecline&module=Calls&lead_id='.$call->current_notify_user->id.'&record='.$call->id);
         } else {
             $xtpl->assign("ACCEPT_URL", $sugar_config['site_url'].
-				  '/index.php?entryPoint=acceptDecline&module=Calls&user_id='.$call->current_notify_user->id.'&record='.$call->id);
+                  '/index.php?entryPoint=acceptDecline&module=Calls&user_id='.$call->current_notify_user->id.'&record='.$call->id);
         }
 
         $xtpl->assign("CALL_TO", $call->current_notify_user->new_assigned_user_name);
@@ -739,8 +739,8 @@ class Call extends SugarBean
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 

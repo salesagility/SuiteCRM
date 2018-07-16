@@ -79,10 +79,10 @@ if ($focus->delete_seen == 1) {
 //$queue = '<a href="index.php?module=Queues&action=EditView&record='.$a['id'].'">'.$a['name'].'</a>';
 $groupName = '';
 if ($focus->group_id) {
-	
-	//$group = new Group();
-	//$group->retrieve($focus->group_id);
-	//$groupName = $group->user_name;
+    
+    //$group = new Group();
+    //$group->retrieve($focus->group_id);
+    //$groupName = $group->user_name;
 }
 
 if ($focus->template_id) {
@@ -237,7 +237,7 @@ if ($focus->is_personal) {
     $xtpl->assign('EDIT_GROUP_FOLDER_STYLE', "display:none");
 } else {
     $is_auto_import = $app_list_strings['checkbox_dom']['2'];
-	
+    
     if (!empty($focus->groupfolder_id)) {
         $is_auto_import = $app_list_strings['checkbox_dom']['1'];
         $leaveMessagesOnMailServerStyle = "display:''";

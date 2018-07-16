@@ -42,12 +42,12 @@
 class ProjectViewTemplatesEdit extends ViewEdit
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         $crumbs = array();
         $crumbs[] = $this->_getModuleTitleListParam($browserTitle);
         if (!empty($this->bean->id)) {

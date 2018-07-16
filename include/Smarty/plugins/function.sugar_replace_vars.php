@@ -71,18 +71,18 @@ function smarty_function_sugar_replace_vars($params, &$smarty)
             }
 
             if (isset($fields[$match]['type']) && $fields[$match]['type']=='enum'
-				&& isset($fields[$match]['options']) && isset($fields[$match]['options'][$value])) {
+                && isset($fields[$match]['options']) && isset($fields[$match]['options'][$value])) {
                 $subject = str_replace($matches[0][$i], $fields[$match]['options'][$value], $subject);
             } else {
                 $subject = str_replace($matches[0][$i], $value, $subject);
             }
         }
     }
-		
+        
     if (!empty($params['assign'])) {
         $smarty->assign($params['assign'], $subject);
         return '';
     }
-	
+    
     return $subject;
 }

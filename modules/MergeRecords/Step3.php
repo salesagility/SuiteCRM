@@ -63,7 +63,7 @@ global $filter_for_valid_editable_attributes;
 //filter condition for fields in vardefs that can participate in merge.
 $filter_for_valid_editable_attributes =
     array(
-		array('type'=>'datetimecombo','source'=>'db'),
+        array('type'=>'datetimecombo','source'=>'db'),
          array('type'=>'datetime','source'=>'db'),
          array('type'=>'varchar','source'=>'db'),
          array('type'=>'enum','source'=>'db'),
@@ -298,8 +298,8 @@ foreach ($temp_field_array as $field_array) {
                 $xtpl->assign("THEME", $theme);
                 $xtpl->parse("main.".$section_name.".merge_cell_edit_date");
                 break;
-			case ('datetimecombo'):
-				$xtpl->assign("CALENDAR_LANG", "en");
+            case ('datetimecombo'):
+                $xtpl->assign("CALENDAR_LANG", "en");
                 $xtpl->assign("USER_DATEFORMAT", $timedate->get_user_time_format());
                 $xtpl->assign("CALENDAR_DATEFORMAT", $timedate->get_cal_date_format());
                 $xtpl->assign("EDIT_FIELD_VALUE", $select_row_curr_field_value);
@@ -350,7 +350,7 @@ foreach ($temp_field_array as $field_array) {
                             $mergeBeanArray[$id]->$tempName=$related_name;
                         }
                     }
-               	    display_field_value($mergeBeanArray[$id]->$tempName);
+                       display_field_value($mergeBeanArray[$id]->$tempName);
                     $field_name="main.".$section_name.".merge_cell_field_value";
                     break;
                 default:

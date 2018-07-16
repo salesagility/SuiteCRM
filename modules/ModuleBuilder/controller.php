@@ -202,12 +202,12 @@ class ModuleBuilderController extends SugarController
     public function action_DeployPackage()
     {
         global $current_user;
-    	
+        
         if (defined('TEMPLATE_URL')) {
             sugar_cache_reset();
             SugarTemplateUtilities::disableCache();
         }
-    	
+        
         //increment etag for menu so the new module shows up when the AJAX UI reloads
         $current_user->incrementETag("mainMenuETag");
 
@@ -433,7 +433,7 @@ class ModuleBuilderController extends SugarController
     {
         global $mod_strings;
         require_once ('modules/DynamicFields/FieldCases.php') ;
-    	    	
+                
         $field = get_widget ($_REQUEST [ 'type' ]) ;
         $_REQUEST [ 'name' ] = trim ($_POST [ 'name' ]) ;
 

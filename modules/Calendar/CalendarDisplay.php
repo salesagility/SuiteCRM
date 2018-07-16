@@ -46,41 +46,41 @@ if (!defined('sugarEntry') || !sugarEntry) {
 class CalendarDisplay
 {
 
-	/**
-	 * colors of items on calendar
-	 */
+    /**
+     * colors of items on calendar
+     */
     public $activity_colors = array(
-		'Meetings' => array(
-			'border' => '87719C',
-			'body' => '6B5171',
-			'text' => 'E5E5E5'
-		),
-		'Calls' => array(
-			'border' => '487166',
-			'body' => '72B3A1',
-			'text' => 'E5E5E5'
-		),
-		'Tasks' => array(
-			'border' => '515A71',
-			'body' => '707C9C',
-			'text' => 'E5E5E5'
-		),
-		'FP_events' => array(
-			'border' => 'C29B8A',
-			'body' => '7D6459',
-			'text' => 'E5E5E5'
-		),
-		'Project' => array(
-			'border' => '699DC9',
-			'body' => '557FA3',
-			'text' => 'E5E5E5'
-		),
-		'ProjectTask' => array(
-			'border' => '83C489',
-			'body' => '659769',
-			'text' => 'E5E5E5'
-		),
-	);
+        'Meetings' => array(
+            'border' => '87719C',
+            'body' => '6B5171',
+            'text' => 'E5E5E5'
+        ),
+        'Calls' => array(
+            'border' => '487166',
+            'body' => '72B3A1',
+            'text' => 'E5E5E5'
+        ),
+        'Tasks' => array(
+            'border' => '515A71',
+            'body' => '707C9C',
+            'text' => 'E5E5E5'
+        ),
+        'FP_events' => array(
+            'border' => 'C29B8A',
+            'body' => '7D6459',
+            'text' => 'E5E5E5'
+        ),
+        'Project' => array(
+            'border' => '699DC9',
+            'body' => '557FA3',
+            'text' => 'E5E5E5'
+        ),
+        'ProjectTask' => array(
+            'border' => '83C489',
+            'body' => '659769',
+            'text' => 'E5E5E5'
+        ),
+    );
     /**
      * constructor
      * @param Calendar $cal
@@ -125,7 +125,7 @@ class CalendarDisplay
         $ss->assign('activityColors',json_encode($this->checkActivity($this->activity_colors)));
         $ss->assign('dashlet',$cal->dashlet);
         $ss->assign('grid_start_ts',intval($cal->grid_start_ts));
-		
+        
         $ss->assign('year', $cal->date_time->format('Y'));
         $ss->assign('month', $cal->date_time->format('m'));
         $ss->assign('day', $cal->date_time->format('d'));
@@ -136,7 +136,7 @@ class CalendarDisplay
 
 
         $ss->assign('basic_min_height',"'auto'");
-		
+        
         $ss->assign('isPrint', $this->cal->isPrint() ? 'true': 'false');
 
 
@@ -372,13 +372,13 @@ class CalendarDisplay
         if ($view == 'month' || $view == 'sharedMonth') {
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
                 switch ($dateFormat['date']{$i}) {
-					case "Y":
-						$str .= " ".$date_time->year;
-						break;
-					case "m":
-						$str .= " ".$date_time->get_month_name();
-						break;
-				}
+                    case "Y":
+                        $str .= " ".$date_time->year;
+                        break;
+                    case "m":
+                        $str .= " ".$date_time->get_month_name();
+                        break;
+                }
             }
         } elseif ($view == 'agendaWeek' || $view == 'sharedWeek') {
             $first_day = $date_time;
@@ -388,62 +388,62 @@ class CalendarDisplay
 
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
                 switch ($dateFormat['date']{$i}) {
-						case "Y":
-							$str .= " ".$first_day->year;
-							break;
-						case "m":
-							$str .= " ".$first_day->get_month_name();
-							break;
-						case "d":
-							$str .= " ".$first_day->get_day();
-							break;
-					}
+                        case "Y":
+                            $str .= " ".$first_day->year;
+                            break;
+                        case "m":
+                            $str .= " ".$first_day->get_month_name();
+                            break;
+                        case "d":
+                            $str .= " ".$first_day->get_day();
+                            break;
+                    }
             }
             $str .= " - ";
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
                 switch ($dateFormat['date']{$i}) {
-						case "Y":
-							$str .= " ".$last_day->year;
-							break;
-						case "m":
-							$str .= " ".$last_day->get_month_name();
-							break;
-						case "d":
-							$str .= " ".$last_day->get_day();
-							break;
-					}
+                        case "Y":
+                            $str .= " ".$last_day->year;
+                            break;
+                        case "m":
+                            $str .= " ".$last_day->get_month_name();
+                            break;
+                        case "d":
+                            $str .= " ".$last_day->get_day();
+                            break;
+                    }
             }
         } elseif ($view == 'agendaDay') {
             $str .= $date_time->get_day_of_week()." ";
 
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
                 switch ($dateFormat['date']{$i}) {
-							case "Y":
-								$str .= " ".$date_time->year;
-								break;
-							case "m":
-								$str .= " ".$date_time->get_month_name();
-								break;
-							case "d":
-								$str .= " ".$date_time->get_day();
-								break;
-						}
+                            case "Y":
+                                $str .= " ".$date_time->year;
+                                break;
+                            case "m":
+                                $str .= " ".$date_time->get_month_name();
+                                break;
+                            case "d":
+                                $str .= " ".$date_time->get_day();
+                                break;
+                        }
             }
         } elseif ($view == 'mobile') {
             $str .= $date_time->get_day_of_week()." ";
 
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
                 switch ($dateFormat['date']{$i}) {
-						case "Y":
-							$str .= " ".$date_time->year;
-							break;
-						case "m":
-							$str .= " ".$date_time->get_month_name();
-							break;
-						case "d":
-							$str .= " ".$date_time->get_day();
-							break;
-					}
+                        case "Y":
+                            $str .= " ".$date_time->year;
+                            break;
+                        case "m":
+                            $str .= " ".$date_time->get_month_name();
+                            break;
+                        case "d":
+                            $str .= " ".$date_time->get_day();
+                            break;
+                    }
             }
         } elseif ($view == 'year') {
             $str .= $date_time->year;
@@ -456,30 +456,30 @@ class CalendarDisplay
 
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
                 switch ($dateFormat['date']{$i}) {
-						case "Y":
-							$str .= " ".$first_day->year;
-							break;
-						case "m":
-							$str .= " ".$first_day->get_month_name();
-							break;
-						case "d":
-							$str .= " ".$first_day->get_day();
-							break;
-					}
+                        case "Y":
+                            $str .= " ".$first_day->year;
+                            break;
+                        case "m":
+                            $str .= " ".$first_day->get_month_name();
+                            break;
+                        case "d":
+                            $str .= " ".$first_day->get_day();
+                            break;
+                    }
             }
             $str .= " - ";
             for ($i=0; $i<strlen($dateFormat['date']); $i++) {
                 switch ($dateFormat['date']{$i}) {
-						case "Y":
-							$str .= " ".$last_day->year;
-							break;
-						case "m":
-							$str .= " ".$last_day->get_month_name();
-							break;
-						case "d":
-							$str .= " ".$last_day->get_day();
-							break;
-					}
+                        case "Y":
+                            $str .= " ".$last_day->year;
+                            break;
+                        case "m":
+                            $str .= " ".$last_day->get_month_name();
+                            break;
+                        case "d":
+                            $str .= " ".$last_day->get_day();
+                            break;
+                    }
             }
         }
         return $str;
@@ -587,44 +587,44 @@ class CalendarDisplay
     public function convertPHPToMomentFormat($format)
     {
         $replacements = array(
-			'd' => 'DD',
-			'D' => 'ddd',
-			'j' => 'D',
-			'l' => 'dddd',
-			'N' => 'E',
-			'S' => 'o',
-			'w' => 'e',
-			'z' => 'DDD',
-			'W' => 'W',
-			'F' => 'MMMM',
-			'm' => 'MM',
-			'M' => 'MMM',
-			'n' => 'M',
-			't' => '', // no equivalent
-			'L' => '', // no equivalent
-			'o' => 'YYYY',
-			'Y' => 'YYYY',
-			'y' => 'YY',
-			'a' => 'a',
-			'A' => 'A',
-			'B' => '', // no equivalent
-			'g' => 'h',
-			'G' => 'H',
-			'h' => 'hh',
-			'H' => 'HH',
-			'i' => 'mm',
-			's' => 'ss',
-			'u' => 'SSS',
-			'e' => 'zz', // deprecated since version 1.6.0 of moment.js
-			'I' => '', // no equivalent
-			'O' => '', // no equivalent
-			'P' => '', // no equivalent
-			'T' => '', // no equivalent
-			'Z' => '', // no equivalent
-			'c' => '', // no equivalent
-			'r' => '', // no equivalent
-			'U' => 'X',
-		);
+            'd' => 'DD',
+            'D' => 'ddd',
+            'j' => 'D',
+            'l' => 'dddd',
+            'N' => 'E',
+            'S' => 'o',
+            'w' => 'e',
+            'z' => 'DDD',
+            'W' => 'W',
+            'F' => 'MMMM',
+            'm' => 'MM',
+            'M' => 'MMM',
+            'n' => 'M',
+            't' => '', // no equivalent
+            'L' => '', // no equivalent
+            'o' => 'YYYY',
+            'Y' => 'YYYY',
+            'y' => 'YY',
+            'a' => 'a',
+            'A' => 'A',
+            'B' => '', // no equivalent
+            'g' => 'h',
+            'G' => 'H',
+            'h' => 'hh',
+            'H' => 'HH',
+            'i' => 'mm',
+            's' => 'ss',
+            'u' => 'SSS',
+            'e' => 'zz', // deprecated since version 1.6.0 of moment.js
+            'I' => '', // no equivalent
+            'O' => '', // no equivalent
+            'P' => '', // no equivalent
+            'T' => '', // no equivalent
+            'Z' => '', // no equivalent
+            'c' => '', // no equivalent
+            'r' => '', // no equivalent
+            'U' => 'X',
+        );
         $momentFormat = strtr($format, $replacements);
         return $momentFormat;
     }

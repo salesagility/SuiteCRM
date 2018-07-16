@@ -228,7 +228,7 @@ class LogicHook
         // Now iterate through the array for the appropriate hook
         if (!empty($hook_array[$event])) {
 
-			// Apply sorting to the hooks using the sort index.
+            // Apply sorting to the hooks using the sort index.
             // Hooks with matching sort indexes will be processed in no particular order.
             $sorted_indexes = array();
             foreach ($hook_array[$event] as $idx => $hook_details) {

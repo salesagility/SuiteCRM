@@ -46,14 +46,14 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 
 $dashletData['MyCallsDashlet']['searchFields'] = array(
-													   
+                                                       
                                                        'name'        => array('default' => ''),
                                                        'status'           => array('default' => array('Planned')),
                                                        'date_entered'       => array('default' => ''),
                                                        'date_start'             => array('default' => ''),
                                                        
                                                        'assigned_user_id' => array('type'    => 'assigned_user_name',
-                   																   'label'   => 'LBL_ASSIGNED_TO', 
+                                                                                      'label'   => 'LBL_ASSIGNED_TO', 
                                                                                    'default' => $current_user->name));
 $dashletData['MyCallsDashlet']['columns'] = array('set_complete' => array('width' => '5', 
                                                                           'label' => 'LBL_LIST_CLOSE',
@@ -72,8 +72,8 @@ $dashletData['MyCallsDashlet']['columns'] = array('set_complete' => array('width
                                                                          'id' => 'PARENT_ID',
                                                                          'ACLTag' => 'PARENT',
                                                                          'related_fields' => array('parent_id', 'parent_type'),
-																		 'default' => true,
-																		),
+                                                                         'default' => true,
+                                                                        ),
                                                   
                                                   'duration' => array('width'    => '10', 
                                                                       'label'    => 'LBL_DURATION',
@@ -85,14 +85,14 @@ $dashletData['MyCallsDashlet']['columns'] = array('set_complete' => array('width
                                                                         'label'   => 'LBL_DATE',
                                                                         'default' => true,
                                                                         'related_fields' => array('time_start')),
-											'set_accept_links'=> array('width'    => '10', 
-																	   'label'    => translate('LBL_ACCEPT_THIS', 'Meetings'),
-																	   'sortable' => false,
-																	    'related_fields' => array('status'),
-																		'default' => true),
+                                            'set_accept_links'=> array('width'    => '10', 
+                                                                       'label'    => translate('LBL_ACCEPT_THIS', 'Meetings'),
+                                                                       'sortable' => false,
+                                                                        'related_fields' => array('status'),
+                                                                        'default' => true),
                                                   'status' => array('width'   => '8', 
                                                                     'label'   => 'LBL_STATUS',
-																	'default'  => true),
+                                                                    'default'  => true),
                                                   'date_entered' => array('width'   => '15', 
                                                                           'label'   => 'LBL_DATE_ENTERED'),
                                                   'date_modified' => array('width'   => '15', 

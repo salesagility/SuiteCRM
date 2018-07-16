@@ -84,8 +84,8 @@ class SoapError
     public function get_soap_array()
     {
         return Array('number'=>$this->number,
-					 'name'=>$this->name,
-					 'description'=>$this->description);
+                     'name'=>$this->name,
+                     'description'=>$this->description);
     }
 
     public function getName()

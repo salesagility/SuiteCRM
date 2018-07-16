@@ -470,8 +470,8 @@ class DashletGeneric extends Dashlet
         // Check for 'last_name' column sorting with related fields (last_name, first_name)
         // See ListViewData.php for actual sorting change.
         if ($lvdOrderBy['orderBy'] == 'last_name' && !empty($displayColumns['NAME']) && !empty($displayColumns['NAME']['related_fields']) &&
-			in_array('last_name', $displayColumns['NAME']['related_fields']) &&
-			in_array('first_name', $displayColumns['NAME']['related_fields'])) {
+            in_array('last_name', $displayColumns['NAME']['related_fields']) &&
+            in_array('first_name', $displayColumns['NAME']['related_fields'])) {
             $lvsParams['overrideLastNameOrder'] = true;
         }
 

@@ -83,17 +83,17 @@ $opp_query1  = "select camp.name, camp.actual_cost,camp.budget,camp.expected_rev
             $opp_data1=$campaign->db->fetchByAssoc($opp_result1);
  //get the click-throughs
  $query_click = "SELECT count(*) hits ";
-			$query_click.= " FROM campaign_log ";
-			$query_click.= " WHERE campaign_id = '$campaign_id' AND activity_type='link' AND related_type='CampaignTrackers' AND archived=0 AND deleted=0";
+            $query_click.= " FROM campaign_log ";
+            $query_click.= " WHERE campaign_id = '$campaign_id' AND activity_type='link' AND related_type='CampaignTrackers' AND archived=0 AND deleted=0";
 
             //if $marketing id is specified, then lets filter the chart by the value
             if (!empty($marketing_id)) {
                 $query_click.= " AND marketing_id ='$marketing_id'";
             }
 
-			$query_click.= " GROUP BY  activity_type, target_type";
-			$query_click.= " ORDER BY  activity_type, target_type";
-			$result = $campaign->db->query($query_click);
+            $query_click.= " GROUP BY  activity_type, target_type";
+            $query_click.= " ORDER BY  activity_type, target_type";
+            $result = $campaign->db->query($query_click);
 
 
   $xtpl->assign("OPP_COUNT", $opp_data1['opp_count']);
@@ -104,7 +104,7 @@ $opp_query1  = "select camp.name, camp.actual_cost,camp.budget,camp.expected_rev
 
 
 
-	$currency  = new Currency();
+    $currency  = new Currency();
 if (isset($focus->currency_id) && !empty($focus->currency_id)) {
     $currency->retrieve($focus->currency_id);
     if ($currency->deleted != 1) {

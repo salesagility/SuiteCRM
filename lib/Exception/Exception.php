@@ -40,7 +40,6 @@
 
 namespace SuiteCRM\Exception;
 
-
 use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Controller\ApiController;
 use SuiteCRM\Enumerator\ExceptionCode;

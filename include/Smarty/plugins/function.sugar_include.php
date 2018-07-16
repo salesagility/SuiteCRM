@@ -60,12 +60,12 @@ function smarty_function_sugar_include($params, &$smarty)
         if (!isset($params['file'])) {
             $smarty->trigger_error($app_strings['ERR_MISSING_REQUIRED_FIELDS'] . 'include');
         } 
-		
+        
         $includeFile = $params['file'];
         if (!file_exists($includeFile)) {
             $smarty->trigger_error($app_strings['ERR_NO_SUCH_FILE'] . ': ' . $includeFile);
         }
-		
+        
         ob_start();
         require($includeFile);
         $output_html = ob_get_contents();

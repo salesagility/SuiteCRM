@@ -49,22 +49,22 @@ class TeamDemoData
     public $_large_scale_test;
 
     public $guids = array(
-		'jim'	=> 'seed_jim_id',
-		'sarah'	=> 'seed_sarah_id',
-		'sally'	=> 'seed_sally_id',
-		'max'	=> 'seed_max_id',
-		'will'	=> 'seed_will_id',
-		'chris'	=> 'seed_chris_id',
-	/*
-	 * Pending fix of demo data mechanism
-		'jim'	=> 'jim00000-0000-0000-0000-000000000000',
-		'sarah'	=> 'sarah000-0000-0000-0000-000000000000',
-		'sally'	=> 'sally000-0000-0000-0000-000000000000',
-		'max'	=> 'max00000-0000-0000-0000-000000000000',
-		'will'	=> 'will0000-0000-0000-0000-000000000000',
-		'chris'	=> 'chris000-0000-0000-0000-000000000000',
-	*/
-	);
+        'jim'	=> 'seed_jim_id',
+        'sarah'	=> 'seed_sarah_id',
+        'sally'	=> 'seed_sally_id',
+        'max'	=> 'seed_max_id',
+        'will'	=> 'seed_will_id',
+        'chris'	=> 'seed_chris_id',
+    /*
+     * Pending fix of demo data mechanism
+        'jim'	=> 'jim00000-0000-0000-0000-000000000000',
+        'sarah'	=> 'sarah000-0000-0000-0000-000000000000',
+        'sally'	=> 'sally000-0000-0000-0000-000000000000',
+        'max'	=> 'max00000-0000-0000-0000-000000000000',
+        'will'	=> 'will0000-0000-0000-0000-000000000000',
+        'chris'	=> 'chris000-0000-0000-0000-000000000000',
+    */
+    );
 
     /**
      * Constructor for creating demo data for teams

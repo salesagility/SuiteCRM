@@ -46,13 +46,13 @@ if (!defined('sugarEntry') || !sugarEntry) {
 global $current_user;
 
 $dashletData['MyBugsDashlet']['searchFields'] = array('date_entered'          => array('default' => ''),
-													  ''                      => array('default' => ''),
-													  'priority'              => array('default' => ''),
+                                                      ''                      => array('default' => ''),
+                                                      'priority'              => array('default' => ''),
                                                       'status'                => array('default' => array('Assigned', 'New', 'Pending')),
                                                       'type'                  => array('default' => ''),
                                                       'name'                  => array('default' => ''),
                                                       'assigned_user_id'      => array('type'    => 'assigned_user_name',
-																			         'label' => 'LBL_ASSIGNED_TO', 
+                                                                                     'label' => 'LBL_ASSIGNED_TO', 
                                                                                      'default' => $current_user->name));
 $dashletData['MyBugsDashlet']['columns'] = array('bug_number' => array('width'   => '5', 
                                                                        'label'   => 'LBL_NUMBER',

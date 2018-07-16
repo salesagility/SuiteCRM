@@ -50,7 +50,7 @@
      if (isset ($vardef['type']) && $vardef['type'] == 'multienum') {
          $multi = true;
      }
- 		
+        
      $selected_options = "";
      if ($multi && !empty($vardef['default'])) {
          $selected_options = unencodeMultienum($vardef['default']);
@@ -77,7 +77,7 @@
              $package_strings = $module->mblanguage->appListStrings[$lang.'.lang.php'];
          }
      }
-	
+    
      global $app_list_strings;
      $my_list_strings = $app_list_strings;
      $my_list_strings = array_merge($my_list_strings, $package_strings);

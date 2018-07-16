@@ -62,7 +62,7 @@ if (empty($_REQUEST['view'])) {
     }
 }
 
-	$_SESSION['CALENDAR_VIEW'] = $_REQUEST['view'];
+    $_SESSION['CALENDAR_VIEW'] = $_REQUEST['view'];
 
 $cal = new Calendar($_REQUEST['view'], array(), $views);
 
@@ -91,11 +91,11 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
 
 $display = new CalendarDisplay($cal,"", $views);
 
-	$display->display_title();
-	if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {
-	    $display->display_shared_html($cal->view);
-	}
-	$display->display_calendar_header();
-	$display->display();
-	$display->display_calendar_footer();
+    $display->display_title();
+    if ($cal->view == "sharedMonth" || $cal->view == "sharedWeek") {
+        $display->display_shared_html($cal->view);
+    }
+    $display->display_calendar_header();
+    $display->display();
+    $display->display_calendar_footer();
 

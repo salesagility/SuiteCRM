@@ -55,8 +55,8 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
     public function displayList(&$layout_def)
     {
         global $app_strings;
-		
-				
+        
+                
         $parent_record_id = $_REQUEST['record'];
         $parent_module = $_REQUEST['module'];
 
@@ -67,12 +67,12 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
         $return_action = 'SubPanelViewer';
         $subpanel = $layout_def['subpanel_id'];
         $return_id = $_REQUEST['record'];
-		
-		
+        
+        
         if (isset($GLOBALS['FOCUS'])) {
             $focus = $GLOBALS['FOCUS'];
         }
-		
+        
         /* Handle case where we generate subpanels from MySettings/LoadTabSubpanels.php */
         elseif ($return_module == 'MySettings') {
             global $beanList, $beanFiles;
@@ -83,10 +83,10 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
             $focus = new $class();
             $focus->retrieve($return_id);
         }
-		
+        
         //CCL - Comment out restriction to not remove assigned user
         //if($focus->assigned_user_id == $record) return '';
-		
+        
         if (isset($layout_def['linked_field_set']) && !empty($layout_def['linked_field_set'])) {
             $linked_field= $layout_def['linked_field_set'] ;
         } else {
@@ -100,19 +100,19 @@ class SugarWidgetSubPanelRemoveButtonMeetings extends SugarWidgetField
 
         $icon_remove_text = $app_strings['LBL_ID_FF_REMOVE'];
         $remove_url = $layout_def['start_link_wrapper']
-			. "index.php?module=$parent_module"
-			. "&action=$action"
-			. "&record=$parent_record_id"
-			. "&linked_field=$linked_field"
-			. "&linked_id=$record"
-			. "&return_url=" . urlencode(urlencode($return_url))
-			. "&refresh_page=$refresh_page"
-			. $layout_def['end_link_wrapper'];
+            . "index.php?module=$parent_module"
+            . "&action=$action"
+            . "&record=$parent_record_id"
+            . "&linked_field=$linked_field"
+            . "&linked_id=$record"
+            . "&return_url=" . urlencode(urlencode($return_url))
+            . "&refresh_page=$refresh_page"
+            . $layout_def['end_link_wrapper'];
         $remove_confirmation_text = $app_strings['NTC_REMOVE_CONFIRMATION'];
         //based on listview since that lets you select records
         if ($layout_def['ListView']) {
             return "<a href=\"javascript:sub_p_rem('$subpanel', '$linked_field'" .", '$record', $refresh_page);\""
-			        . ' class="listViewTdToolsS1"' . " onclick=\"return sp_rem_conf();\"" . ">$icon_remove_text</a>";
+                    . ' class="listViewTdToolsS1"' . " onclick=\"return sp_rem_conf();\"" . ">$icon_remove_text</a>";
         } else {
             return '';
         }

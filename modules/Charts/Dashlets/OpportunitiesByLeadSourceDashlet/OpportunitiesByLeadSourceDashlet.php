@@ -195,10 +195,10 @@ EOD;
             $sugarChart->url_params['assigned_user_id'] = array_values($this->pbls_ids);
         $sugarChart->getData($this->constructQuery());
         $sugarChart->data_set = $sugarChart->sortData($sugarChart->data_set, 'lead_source', true);
-		$xmlFile = $sugarChart->getXMLFileName($this->id);
-		$sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
+        $xmlFile = $sugarChart->getXMLFileName($this->id);
+        $sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
 
-		return $this->getTitle('<div align="center"></div>') .
+        return $this->getTitle('<div align="center"></div>') .
             '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
         */
     }

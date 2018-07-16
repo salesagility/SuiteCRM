@@ -62,7 +62,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
     public function __construct($view , $moduleName , $packageName)
     {
 
-    	// BEGIN ASSERTIONS
+        // BEGIN ASSERTIONS
         if (! isset ($this->_fileVariables [ $view ])) {
             sugar_die (get_class ($this) . ": View $view is not supported") ;
         }
@@ -194,16 +194,16 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
         // END ASSERTIONS
 
         $filenames = array (  	MB_DASHLETSEARCH => 'dashletviewdefs',
-        						MB_DASHLET => 'dashletviewdefs',
-        						MB_LISTVIEW => 'listviewdefs' ,
-        						MB_BASICSEARCH => 'searchdefs' ,
-        						MB_ADVANCEDSEARCH => 'searchdefs' ,
-        						MB_EDITVIEW => 'editviewdefs' ,
-        						MB_DETAILVIEW => 'detailviewdefs' ,
-        						MB_QUICKCREATE => 'quickcreatedefs',
-					        	MB_POPUPSEARCH => 'popupdefs',
-					        	MB_POPUPLIST => 'popupdefs',
-        						) ;
+                                MB_DASHLET => 'dashletviewdefs',
+                                MB_LISTVIEW => 'listviewdefs' ,
+                                MB_BASICSEARCH => 'searchdefs' ,
+                                MB_ADVANCEDSEARCH => 'searchdefs' ,
+                                MB_EDITVIEW => 'editviewdefs' ,
+                                MB_DETAILVIEW => 'detailviewdefs' ,
+                                MB_QUICKCREATE => 'quickcreatedefs',
+                                MB_POPUPSEARCH => 'popupdefs',
+                                MB_POPUPLIST => 'popupdefs',
+                                ) ;
 
         switch ($type) {
             case MB_HISTORYMETADATALOCATION:

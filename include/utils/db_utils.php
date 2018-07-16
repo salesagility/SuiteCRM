@@ -66,10 +66,10 @@ function from_db_convert($string, $type)
 }
 
 $toHTML = array(
-	'"' => '&quot;',
-	'<' => '&lt;',
-	'>' => '&gt;',
-	"'" => '&#039;',
+    '"' => '&quot;',
+    '<' => '&lt;',
+    '>' => '&gt;',
+    "'" => '&#039;',
 );
 $GLOBALS['toHTML_keys'] = array_keys($toHTML);
 $GLOBALS['toHTML_values'] = array_values($toHTML);

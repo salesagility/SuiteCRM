@@ -99,12 +99,12 @@ function get_new_record_form()
     global $currentModule;
     global $current_user;
     global $timedate;
-	
+    
     $the_form = get_left_form_header($mod_strings['LBL_NEW_FORM_TITLE']);
     $form = new XTemplate ('modules/Campaigns/Forms.html');
 
     $module_select = empty($_REQUEST['module_select']) ? ''
-		: $_REQUEST['module_select'];
+        : $_REQUEST['module_select'];
     $form->assign('MOD', $mod_strings);
     $form->assign('APP', $app_strings);
     $form->assign('THEME', SugarThemeRegistry::current()->__toString());
@@ -122,10 +122,10 @@ function get_new_record_form()
     $form->parse('main');
     $the_form .= $form->text('main');
 
-	
+    
     $focus = new Campaign();
-	
-	
+    
+    
     $javascript = new javascript();
     $javascript->setFormName('quick_save');
     $javascript->setSugarBean($focus);

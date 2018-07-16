@@ -90,11 +90,11 @@ $step_num = 3;
 $xtpl->assign("PREV_STEP", '2');
 $xtpl->assign("STEP_NUM", "Step 3:");
 $popup_request_data = array ('call_back_function' => 'set_return', 'form_name' => 'EditView', 'field_to_name_array' => array ('id' => 'rel_id', 'name' => 'rel_name',),);
-	$json = getJSONobj();
+    $json = getJSONobj();
 
-	// must urlencode to put into the filter request string
-	// because IE gets an out of memory error when it is passed
-	// as the usual object literal
+    // must urlencode to put into the filter request string
+    // because IE gets an out of memory error when it is passed
+    // as the usual object literal
 $encoded_popup_request_data = urlencode($json->encode($popup_request_data));
 
 $modules = $modules_array;
@@ -150,15 +150,15 @@ foreach ($sel_obj as $key => $value) {
 		name='button' onclick='open_popup(document.EditView.rel_type_{$code}.value, 600, 400,
 			\"&html=mail_merge&rel_module=$umodule&id=$ukey&request_data=$encoded_popup_request_data\", true, false, {});' $disabled/>";
     $items = array(
-	'ID' => $key,
-	'NAME' => $value,
-	'CODE' => $code,
-	'TYPE_OPTIONS' => get_select_options_with_id($modules, '0'),
-	'CHANGE_RELATIONSHIP' => $change_parent_button,
-	'CONTACT_ID' => $contact_id,
-	'CONTACT_NAME' => $full_name,
-	'REL_MODULE' => $_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO'],
-	);
+    'ID' => $key,
+    'NAME' => $value,
+    'CODE' => $code,
+    'TYPE_OPTIONS' => get_select_options_with_id($modules, '0'),
+    'CHANGE_RELATIONSHIP' => $change_parent_button,
+    'CONTACT_ID' => $contact_id,
+    'CONTACT_NAME' => $full_name,
+    'REL_MODULE' => $_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO'],
+    );
 
     $xtpl->assign("MAILMERGE", $items);
 

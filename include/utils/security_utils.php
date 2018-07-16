@@ -79,14 +79,14 @@ function query_module_access_list(&$user)
 function query_user_has_roles($user_id)
 {
     $role = new Role();
-	
+    
     return $role->check_user_role_count($user_id);
 }
 
 function get_user_allowed_modules($user_id)
 {
     $role = new Role();
-	
+    
     $allowed = $role->query_user_allowed_modules($user_id);
     return $allowed;
 }

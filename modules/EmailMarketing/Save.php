@@ -63,7 +63,7 @@ if (!empty($_POST['meridiem'])) {
 if (empty($_REQUEST['time_start'])) {
     if (!empty($_REQUEST['date_start'])) {
         $_REQUEST['date_start'] = $_REQUEST['date_start'];// . ' 00:00';
-		$_POST['date_start'] = $_POST['date_start'];// . ' 00:00';
+        $_POST['date_start'] = $_POST['date_start'];// . ' 00:00';
     }
 } else {
     if (!empty($_REQUEST['date_start'])) {

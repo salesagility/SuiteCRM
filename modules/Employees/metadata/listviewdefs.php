@@ -84,9 +84,9 @@ $listViewDefs['Employees'] = array(
         'label' => 'LBL_LIST_EMPLOYEE_STATUS', 
         'link' => false,
         'default' => true),    
-	'DATE_ENTERED' => array (
-	    'width' => '10',
-	    'label' => 'LBL_DATE_ENTERED',
-	    'default' => true),
+    'DATE_ENTERED' => array (
+        'width' => '10',
+        'label' => 'LBL_DATE_ENTERED',
+        'default' => true),
 );
 

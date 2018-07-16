@@ -215,25 +215,25 @@ if (((defined('MODULE_INSTALLER_PACKAGE_SCAN') && MODULE_INSTALLER_PACKAGE_SCAN)
 //
 if ($install_type == 'patch' || $install_type == 'module') {
     switch ($mode) {
- 		case 'Install':
- 			$file = "$unzip_dir/" . constant('SUGARCRM_PRE_INSTALL_FILE');
-			if (is_file($file)) {
-			    print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
-			    include($file);
-			    pre_install();
-			}
- 			break;
- 		case 'Uninstall':
- 			$file = "$unzip_dir/" . constant('SUGARCRM_PRE_UNINSTALL_FILE');
-			if (is_file($file)) {
-			    print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
-			    include($file);
-			    pre_uninstall();
-			}
- 			break;
- 		default:
- 			break;
- 		}
+        case 'Install':
+            $file = "$unzip_dir/" . constant('SUGARCRM_PRE_INSTALL_FILE');
+            if (is_file($file)) {
+                print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
+                include($file);
+                pre_install();
+            }
+            break;
+        case 'Uninstall':
+            $file = "$unzip_dir/" . constant('SUGARCRM_PRE_UNINSTALL_FILE');
+            if (is_file($file)) {
+                print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
+                include($file);
+                pre_uninstall();
+            }
+            break;
+        default:
+            break;
+        }
 }
 
 //
@@ -333,19 +333,19 @@ switch ($install_type) {
         switch ($mode) {
             case "Install":
             //here we can determine if this is an upgrade or a new version
-            	if (!empty($previous_version)) {
-            	    $mi->install("$unzip_dir", true, $previous_version);
-            	} else {
-            	    $mi->install("$unzip_dir");
-            	}
+                if (!empty($previous_version)) {
+                    $mi->install("$unzip_dir", true, $previous_version);
+                } else {
+                    $mi->install("$unzip_dir");
+                }
 
-				$file = "$unzip_dir/" . constant('SUGARCRM_POST_INSTALL_FILE');
-				if (is_file($file)) {
-				    print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
-				    include($file);
-				    post_install();
-				}
-            	break;
+                $file = "$unzip_dir/" . constant('SUGARCRM_POST_INSTALL_FILE');
+                if (is_file($file)) {
+                    print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
+                    include($file);
+                    post_install();
+                }
+                break;
             case "Uninstall":
                 if ($remove_tables == 'false') {
                     $GLOBALS['mi_remove_tables'] = false;
@@ -378,42 +378,42 @@ switch ($install_type) {
     case "full":
         // purposely flow into "case: patch"
     case "patch":
- 		switch ($mode) {
- 			case 'Install':
- 				$file = "$unzip_dir/" . constant('SUGARCRM_POST_INSTALL_FILE');
-				if (is_file($file)) {
-				    print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
-				    include($file);
-				    post_install();
-				}
+        switch ($mode) {
+            case 'Install':
+                $file = "$unzip_dir/" . constant('SUGARCRM_POST_INSTALL_FILE');
+                if (is_file($file)) {
+                    print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
+                    include($file);
+                    post_install();
+                }
 
-				UWrebuild();
- 				break;
- 			case 'Uninstall':
- 				$file = "$unzip_dir/" . constant('SUGARCRM_POST_UNINSTALL_FILE');
- 				if (is_file($file)) {
- 				    print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
- 				    include($file);
- 				    post_uninstall();
- 				}
+                UWrebuild();
+                break;
+            case 'Uninstall':
+                $file = "$unzip_dir/" . constant('SUGARCRM_POST_UNINSTALL_FILE');
+                if (is_file($file)) {
+                    print("{$mod_strings['LBL_UW_INCLUDING']}: $file <br>\n");
+                    include($file);
+                    post_uninstall();
+                }
 
-				if (is_dir($rest_dir)) {
-				    rmdir_recursive($rest_dir);
-				}
+                if (is_dir($rest_dir)) {
+                    rmdir_recursive($rest_dir);
+                }
 
-				UWrebuild();
- 				break;
- 			default:
- 				break;
- 		}
+                UWrebuild();
+                break;
+            default:
+                break;
+        }
 
-		require("sugar_version.php");
-		$sugar_config['sugar_version'] = $sugar_version;
-		ksort($sugar_config);
+        require("sugar_version.php");
+        $sugar_config['sugar_version'] = $sugar_version;
+        ksort($sugar_config);
 
-		if (!write_array_to_file("sugar_config", $sugar_config, "config.php")) {
-		    die($mod_strings['ERR_UW_UPDATE_CONFIG']);
-		}
+        if (!write_array_to_file("sugar_config", $sugar_config, "config.php")) {
+            die($mod_strings['ERR_UW_UPDATE_CONFIG']);
+        }
         break;
     default:
         break;
@@ -427,14 +427,14 @@ switch ($mode) {
         //determine if this module has already been installed given the unique_key to
         //identify the module
        // $new_upgrade->checkForExisting($unique_key);
-       	if (!empty($previous_id)) {
-       	    $new_upgrade->id = $previous_id;
-       	    $uh = new UpgradeHistory();
-       	    $uh->retrieve($previous_id);
-       	    if (is_file($uh->filename)) {
-       	        unlink($uh->filename);
-       	    }
-       	}
+           if (!empty($previous_id)) {
+               $new_upgrade->id = $previous_id;
+               $uh = new UpgradeHistory();
+               $uh->retrieve($previous_id);
+               if (is_file($uh->filename)) {
+                   unlink($uh->filename);
+               }
+           }
         $new_upgrade->filename      = $install_file;
         $new_upgrade->md5sum        = md5_file($install_file);
         $new_upgrade->type          = $install_type;
@@ -456,13 +456,13 @@ switch ($mode) {
                 }
                 if (isset($url_conf['type']) && $url_conf['type'] == 'popup') {
                     echo '<script type="text/javascript">window.open("' . $url_conf['url']
-        			   . '","' . (empty($url_conf['name']) ? 'sugar_popup' : $url_conf['name']) . '","'
-        			   . 'height=' . (empty($url_conf['height']) ? '500' : $url_conf['height']) . ','
-        			   . 'width=' . (empty($url_conf['width']) ? '800' : $url_conf['width']) . '");</script>';
+                       . '","' . (empty($url_conf['name']) ? 'sugar_popup' : $url_conf['name']) . '","'
+                       . 'height=' . (empty($url_conf['height']) ? '500' : $url_conf['height']) . ','
+                       . 'width=' . (empty($url_conf['width']) ? '800' : $url_conf['width']) . '");</script>';
                 } else {
                     echo '<iframe src="' . $url_conf['url'] . '" '
-        			   . 'width="' . (empty($url_conf['width']) ? '100%' : $url_conf['width']) . '" '
-        			   . 'height="' . (empty($url_conf['height']) ? '500px' : $url_conf['height']) . '"></iframe>';
+                       . 'width="' . (empty($url_conf['width']) ? '100%' : $url_conf['width']) . '" '
+                       . 'height="' . (empty($url_conf['height']) ? '500px' : $url_conf['height']) . '"></iframe>';
                 }
             }
         }

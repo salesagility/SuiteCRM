@@ -48,44 +48,44 @@ $viewdefs['Bugs']['DetailView'] = array(
 
 'panels' =>array (
   'lbl_bug_information'=>array(
-	  array (
-	    'bug_number',
-	    'priority',
-	  ),
+      array (
+        'bug_number',
+        'priority',
+      ),
 
-	  array (
-	    array (
-	      'name' => 'name',
-	      'label' => 'LBL_SUBJECT',
-	    ),
-	    'status',
-	  ),
+      array (
+        array (
+          'name' => 'name',
+          'label' => 'LBL_SUBJECT',
+        ),
+        'status',
+      ),
 
-	  array (
-	    'type',
-	    'source',
-	  ),
+      array (
+        'type',
+        'source',
+      ),
 
-	  array (
-	    'product_category',
-	    'resolution',
-	  ),
+      array (
+        'product_category',
+        'resolution',
+      ),
 
-	  array (
-	    array (
-	      'name' => 'found_in_release',
-	      'label' => 'LBL_FOUND_IN_RELEASE',
-	    ),
-	    'fixed_in_release',
-	  ),
+      array (
+        array (
+          'name' => 'found_in_release',
+          'label' => 'LBL_FOUND_IN_RELEASE',
+        ),
+        'fixed_in_release',
+      ),
 
-	  array (
-	    'description',
-	  ),
+      array (
+        'description',
+      ),
 
-	  array (
-	    'work_log',
-	  ),
+      array (
+        'work_log',
+      ),
 
   ),
 

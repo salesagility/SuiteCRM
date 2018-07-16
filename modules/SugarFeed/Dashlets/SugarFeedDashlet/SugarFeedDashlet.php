@@ -248,12 +248,12 @@ class SugarFeedDashlet extends DashletGeneric
                 $all_modules = array_merge($regular_modules, $owner_modules, $admin_modules);
                 $module_limiter = " sugarfeed.related_module in ('" . implode("','", $all_modules) . "')";
             } elseif (count($owner_modules) > 0
-				) {
+                ) {
                 $module_limiter = " ((sugarfeed.related_module IN ('".implode("','", $regular_modules)."') "
-					.") ";
+                    .") ";
                 if (count($owner_modules) > 0) {
                     $module_limiter .= "OR (sugarfeed.related_module IN('".implode("','", $owner_modules)."') AND sugarfeed.assigned_user_id = '".$current_user->id."' "
-						.") ";
+                        .") ";
                 }
                 $module_limiter .= ")";
             }
@@ -270,7 +270,7 @@ class SugarFeedDashlet extends DashletGeneric
                                     'date_entered',
                                     'created_by',
                                     /* BEGIN - SECURITY GROUPS */
-									//related_module now included but keep this here just in case
+                                    //related_module now included but keep this here just in case
                                     'related_module',
                                     'related_id',
                                     /* END - SECURITY GROUPS */
@@ -383,7 +383,7 @@ class SugarFeedDashlet extends DashletGeneric
             //allow for bold and italic user tags
             $text = preg_replace('/&amp;lt;(\/*[bi])&amp;gt;/i','<$1>', $text);
             SugarFeed::pushFeed($text, 'UserFeed', $GLOBALS['current_user']->id,
-								$GLOBALS['current_user']->id,
+                                $GLOBALS['current_user']->id,
                                 $_REQUEST['link_type'], $_REQUEST['link_url']
                                 );
         }
@@ -396,7 +396,7 @@ class SugarFeedDashlet extends DashletGeneric
             //allow for bold and italic user tags
             $text = preg_replace('/&amp;lt;(\/*[bi])&amp;gt;/i','<$1>', $text);
             SugarFeed::pushFeed($text, 'SugarFeed', $_REQUEST['parentFeed'],
-								$GLOBALS['current_user']->id,
+                                $GLOBALS['current_user']->id,
                                 '', ''
                                 );
         }
@@ -583,7 +583,7 @@ enableQS(false);
         global $current_user;
 
         if ((!empty($this->selectedCategories) && !in_array('UserFeed',$this->selectedCategories))
-			) {
+            ) {
             // The user feed system isn't enabled, don't let them post notes
             return '';
         }

@@ -54,7 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 $current_module_strings = return_module_language($current_language, "Opportunities");
 $seedOpportunity = new Opportunity();
-	
+    
 //build top 5 opportunity list
 $where = "opportunities.sales_stage <> 'Closed Won' AND opportunities.sales_stage <> 'Closed Lost' AND opportunities.assigned_user_id='".$current_user->id."'";
 $header_text = '';

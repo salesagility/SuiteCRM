@@ -84,12 +84,12 @@ class ProspectList extends SugarBean
 
     // This is used to retrieve related fields from form posts.
     public $additional_column_fields = array(
-		'assigned_user_name', 'assigned_user_id', 'campaign_id',
-	);
+        'assigned_user_name', 'assigned_user_id', 'campaign_id',
+    );
     public $relationship_fields = array(
-		'campaign_id'=>'campaigns',
-		'prospect_list_prospects' => 'prospects',
-	);
+        'campaign_id'=>'campaigns',
+        'prospect_list_prospects' => 'prospects',
+    );
 
     public $entry_count;
 
@@ -190,18 +190,18 @@ class ProspectList extends SugarBean
         global $beanList, $beanFiles;
 
         $members = array(	'Accounts' 	=> array('has_custom_fields' => false, 'fields' => array()),
-					'Contacts' 	=> array('has_custom_fields' => false, 'fields' => array()),
-					'Users' 	=> array('has_custom_fields' => false, 'fields' => array()),
-					'Prospects' 	=> array('has_custom_fields' => false, 'fields' => array()),
-					'Leads' 	=> array('has_custom_fields' => false, 'fields' => array())
-				);
+                    'Contacts' 	=> array('has_custom_fields' => false, 'fields' => array()),
+                    'Users' 	=> array('has_custom_fields' => false, 'fields' => array()),
+                    'Prospects' 	=> array('has_custom_fields' => false, 'fields' => array()),
+                    'Leads' 	=> array('has_custom_fields' => false, 'fields' => array())
+                );
 
         // query all custom fields in the fields_meta_data table for the modules which are being exported
         $db = DBManagerFactory::getInstance();
         $result = $db->query("select name, custom_module, type, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
-			implode("', '", array_keys($members)) . "')",
-			true,
-			"ProspectList::create_export_members_query() : error querying custom fields");
+            implode("', '", array_keys($members)) . "')",
+            true,
+            "ProspectList::create_export_members_query() : error querying custom fields");
 
         // cycle through the custom fields and put them in the members array according to
         // what module the field belongs
@@ -221,7 +221,7 @@ class ProspectList extends SugarBean
                         $memberarr['fields'][$fieldname] = "'{{$val['type']} from=\"{$val['custom_module']}.{$val['name']}\" to=\"{$val['ext2']}.{$val['ext3']}\"}' AS " . $fieldname;
                     } else {
                         $memberarr['fields'][$fieldname] =
-							strtolower($membername) . '_cstm.' . $fieldname . ' AS ' . $fieldname;
+                            strtolower($membername) . '_cstm.' . $fieldname . ' AS ' . $fieldname;
                     }
                 }
                 // else, only if for this module no entry exists for this field, query an empty string
@@ -431,8 +431,8 @@ FROM prospect_lists_prospects plp
     public function bean_implements($interface)
     {
         switch ($interface) {
-			case 'ACL':return true;
-		}
+            case 'ACL':return true;
+        }
         return false;
     }
 }

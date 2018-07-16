@@ -75,7 +75,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     $contactForm = new ContactFormBase();
     require_once('modules/Accounts/AccountFormBase.php');
     $accountForm = new AccountFormBase();
-	
+    
     require_once('modules/Opportunities/OpportunityFormBase.php');
     $oppForm = new OpportunityFormBase();
     if (!isset($_POST['selectedContact']) && !isset($_POST['ContinueContact'])) {
@@ -89,10 +89,10 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
             return;
         }
     }
-	
+    
     if (empty($_POST['selectedAccount']) && empty($_POST['ContinueAccount'])) {
         $duplicateAccounts = $accountForm->checkForDuplicates('Accounts');
-		
+        
         if (isset($duplicateAccounts)) {
             $xtpl->assign('FORMBODY', $accountForm->buildTableForm($duplicateAccounts));
             $xtpl->parse('main.formnoborder');
@@ -167,7 +167,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
             $call= $callForm->handleSave('Appointments',false, false);
         }
     }
-	
+    
     if (isset($call)) {
         if (isset($contact)) {
             $call->load_relationship('contacts');
@@ -219,7 +219,7 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
             $contact->notes->add($contactnote->id);
         }
     }
-	
+    
     if (isset($contact)) {
         $contact->track_view($current_user->id, 'Contacts');
         if (isset($_POST['selectedContact']) && $_POST['selectedContact'] == $contact->id) {
@@ -296,14 +296,14 @@ if (isset($_POST['handle']) && $_POST['handle'] == 'Save') {
     $xtpl->assign('HEADER', $app_strings['LBL_RELATED_RECORDS']);
     $xtpl->parse("main.hrrow");
     $popup_request_data = array(
-	'call_back_function' => 'set_return',
-	'form_name' => 'BusinessCard',
-	'field_to_name_array' => array(
-		'id' => 'selectedAccount',
-		'name' => 'display_account_name',
-		),
-	);
-	
+    'call_back_function' => 'set_return',
+    'form_name' => 'BusinessCard',
+    'field_to_name_array' => array(
+        'id' => 'selectedAccount',
+        'name' => 'display_account_name',
+        ),
+    );
+    
     $json = getJSONobj();
     $encoded_contact_popup_request_data = $json->encode($popup_request_data);
 

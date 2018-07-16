@@ -79,9 +79,9 @@ class EmailAddressRule extends BaseRule
                             $panels[$name][$rowCount][$key] = '';
                         } elseif (!is_array($column) && !empty($column)) {
                             if (preg_match('/^email(s|2)$/si', $column) ||
-	   	  	 	      preg_match('/^invalid_email$/si', $column) ||
-	   	  	 	      preg_match('/^email_opt_out$/si', $column) ||
-	   	  	 	      preg_match('/^primary_email$/si', $column)) {
+                      preg_match('/^invalid_email$/si', $column) ||
+                      preg_match('/^email_opt_out$/si', $column) ||
+                      preg_match('/^primary_email$/si', $column)) {
                                 $panels[$name][$rowCount][$key] = '';
                             }
                         }

@@ -8,7 +8,7 @@ $viewdefs['ACLRoles']['DetailView'] = array(
                                          ),                                            
                            ),
     'panels' => array(
-	      
+          
      ),
     
     

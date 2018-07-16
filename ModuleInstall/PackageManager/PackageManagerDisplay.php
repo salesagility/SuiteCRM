@@ -437,27 +437,27 @@ class PackageManagerDisplay
         }
         //Add by jchi 6/23/2008 to fix the bug 21667
         $filegrid_column_ary = array(
-			'Name' => $mod_strings['LBL_ML_NAME'],
-			'Install' => $mod_strings['LBL_ML_INSTALL'],
-			'Delete' => $mod_strings['LBL_ML_DELETE'],
-			'Type' => $mod_strings['LBL_ML_TYPE'],
-			'Version' => $mod_strings['LBL_ML_VERSION'],
-			'Published' => $mod_strings['LBL_ML_PUBLISHED'],
-			'Uninstallable' => $mod_strings['LBL_ML_UNINSTALLABLE'],
-			'Description' => $mod_strings['LBL_ML_DESCRIPTION']
-		);
+            'Name' => $mod_strings['LBL_ML_NAME'],
+            'Install' => $mod_strings['LBL_ML_INSTALL'],
+            'Delete' => $mod_strings['LBL_ML_DELETE'],
+            'Type' => $mod_strings['LBL_ML_TYPE'],
+            'Version' => $mod_strings['LBL_ML_VERSION'],
+            'Published' => $mod_strings['LBL_ML_PUBLISHED'],
+            'Uninstallable' => $mod_strings['LBL_ML_UNINSTALLABLE'],
+            'Description' => $mod_strings['LBL_ML_DESCRIPTION']
+        );
 
         $filegridinstalled_column_ary = array(
-			'Name' => $mod_strings['LBL_ML_NAME'],
-			'Install' => $mod_strings['LBL_ML_INSTALL'],
-			'Action' => $mod_strings['LBL_ML_ACTION'],
-			'Enable_Or_Disable' => $mod_strings['LBL_ML_ENABLE_OR_DISABLE'],
-			'Type' => $mod_strings['LBL_ML_TYPE'],
-			'Version' => $mod_strings['LBL_ML_VERSION'],
-			'Date_Installed' => $mod_strings['LBL_ML_INSTALLED'],
-			'Uninstallable' => $mod_strings['LBL_ML_UNINSTALLABLE'],
-			'Description' => $mod_strings['LBL_ML_DESCRIPTION']
-		);
+            'Name' => $mod_strings['LBL_ML_NAME'],
+            'Install' => $mod_strings['LBL_ML_INSTALL'],
+            'Action' => $mod_strings['LBL_ML_ACTION'],
+            'Enable_Or_Disable' => $mod_strings['LBL_ML_ENABLE_OR_DISABLE'],
+            'Type' => $mod_strings['LBL_ML_TYPE'],
+            'Version' => $mod_strings['LBL_ML_VERSION'],
+            'Date_Installed' => $mod_strings['LBL_ML_INSTALLED'],
+            'Uninstallable' => $mod_strings['LBL_ML_UNINSTALLABLE'],
+            'Description' => $mod_strings['LBL_ML_DESCRIPTION']
+        );
 
         $ss->assign('ML_FILEGRID_COLUMN',$filegrid_column_ary);
         $ss->assign('ML_FILEGRIDINSTALLED_COLUMN',$filegridinstalled_column_ary);
@@ -579,33 +579,33 @@ class PackageManagerDisplay
             $link = "";
 
             switch ($type) {
-				case "theme":
-				case "langpack":
-				case "module":
-				case "patch":
-				$manifest_file = extractManifest($filename);
-				require_once($manifest_file);
+                case "theme":
+                case "langpack":
+                case "module":
+                case "patch":
+                $manifest_file = extractManifest($filename);
+                require_once($manifest_file);
 
-				$name = empty($manifest['name']) ? $filename : $manifest['name'];
-				$description = empty($manifest['description']) ? $mod_strings['LBL_UW_NONE'] : $manifest['description'];
-				if (($upgrades_installed==0 || $uh->UninstallAvailable($installeds, $installed))
-					&& is_file($filename) && !empty($manifest['is_uninstallable'])) {
-				    $link = urlencode($filename);
-				} else {
-				    $link = 'false';
-				}
+                $name = empty($manifest['name']) ? $filename : $manifest['name'];
+                $description = empty($manifest['description']) ? $mod_strings['LBL_UW_NONE'] : $manifest['description'];
+                if (($upgrades_installed==0 || $uh->UninstallAvailable($installeds, $installed))
+                    && is_file($filename) && !empty($manifest['is_uninstallable'])) {
+                    $link = urlencode($filename);
+                } else {
+                    $link = 'false';
+                }
 
-				break;
-				default:
-					break;
-			}
+                break;
+                default:
+                    break;
+            }
 
             if ($view == 'default' && $type != 'patch') {
                 continue;
             }
 
             if ($view == 'module'
-				&& $type != 'module' && $type != 'theme' && $type != 'langpack') {
+                && $type != 'module' && $type != 'theme' && $type != 'langpack') {
                 continue;
             }
 
@@ -622,8 +622,8 @@ class PackageManagerDisplay
             }
             $installed_objects[] = array('icon' => $icon, 'name' => $name, 'type' => $type, 'version' => $version, 'date_entered' => $date_entered, 'description' => $description, 'file' => $link);
             //print( "<form action=\"" . $form_action . "_prepare\" method=\"post\">\n" );
-			//print( "<tr><td>$icon</td><td>$name</td><td>$type</td><td>$version</td><td>$date_entered</td><td>$description</td><td>$link</td></tr>\n" );
-			//print( "</form>\n" );
+            //print( "<tr><td>$icon</td><td>$name</td><td>$type</td><td>$version</td><td>$date_entered</td><td>$description</td><td>$link</td></tr>\n" );
+            //print( "</form>\n" );
         }
     }
 }

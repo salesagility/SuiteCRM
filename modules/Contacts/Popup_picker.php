@@ -96,9 +96,9 @@ class Popup_Picker
         // TODO: cleanup the construction of $addform
         $formbody = $formBase->getFormBody('','','EmailEditView');
         $addform = '<table><tr><td nowrap="nowrap" valign="top">'
-			.str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
-			. '</td></tr></table>'
-			. '<input type="hidden" name="action" value="Popup" />';
+            .str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
+            . '</td></tr></table>'
+            . '<input type="hidden" name="action" value="Popup" />';
         $formSave = <<<EOQ
 		<input type="submit" name="button" class="button" title="$lbl_save_button_title" value="  $lbl_save_button_label  " />
 		<input type="button" name="button" class="button" title="{$app_strings['LBL_CANCEL_BUTTON_TITLE']}" accesskey="{$app_strings['LBL_CANCEL_BUTTON_KEY']}" value="{$app_strings['LBL_CANCEL_BUTTON_LABEL']}" onclick="toggleDisplay('addform');" />
@@ -110,13 +110,13 @@ EOQ;
         $button  = "<form action='index.php' method='post' name='form' id='form'>\n";
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-				.$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-				.$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
+                .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-			.$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-			.$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-			.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
+            .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
+            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
         $button .= "</form>\n";
 
         $form = new XTemplate('modules/Contacts/Address_picker.html');
@@ -133,11 +133,11 @@ EOQ;
 
         // fill in for mass update
         $button = "<input type='hidden' name='module' value='Contacts'>".
-		          "<input type='hidden' id='form_action' name='action' value='CloseContactAddressPopup'>".
-		          "<input type='hidden' name='massupdate' value='true'>".
-		          "<input type='hidden' name='delete' value='false'>".
-		          "<input type='hidden' name='mass' value='Array'>".
-		          "<input type='hidden' name='Update' value='Update'>";
+                  "<input type='hidden' id='form_action' name='action' value='CloseContactAddressPopup'>".
+                  "<input type='hidden' name='massupdate' value='true'>".
+                  "<input type='hidden' name='delete' value='false'>".
+                  "<input type='hidden' name='mass' value='Array'>".
+                  "<input type='hidden' name='Update' value='Update'>";
 
         if (isset($_REQUEST['mass']) && is_array($_REQUEST['mass'])) {
             foreach (array_unique($_REQUEST['mass']) as $record) {
@@ -257,20 +257,20 @@ EOJS;
         if (!empty($_REQUEST['mode']) && strtoupper($_REQUEST['mode']) == 'MULTISELECT') {
             $multi_select=true;
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back_selected('Contacts',document.MassUpdate,'mass[]','" .$app_strings['ERR_NOTHING_SELECTED']."');\" title='"
-				.$app_strings['LBL_SELECT_BUTTON_TITLE']."' accesskey='"
-				.$app_strings['LBL_SELECT_BUTTON_KEY']."' value='  "
-				.$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' />\n";
+                .$app_strings['LBL_SELECT_BUTTON_TITLE']."' accesskey='"
+                .$app_strings['LBL_SELECT_BUTTON_KEY']."' value='  "
+                .$app_strings['LBL_SELECT_BUTTON_LABEL']."  ' />\n";
         }
         //END:FOR MULTI-SELECT
         if (!$hide_clear_button) {
             $button .= "<input type='button' name='button' class='button' onclick=\"send_back('','');\" title='"
-				.$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
-				.$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
+                .$app_strings['LBL_CLEAR_BUTTON_TITLE']."' value='  "
+                .$app_strings['LBL_CLEAR_BUTTON_LABEL']."  ' />\n";
         }
         $button .= "<input type='submit' name='button' class='button' onclick=\"window.close();\" title='"
-			.$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
-			.$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
-			.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
+            .$app_strings['LBL_CANCEL_BUTTON_TITLE']."' accesskey='"
+            .$app_strings['LBL_CANCEL_BUTTON_KEY']."' value='  "
+            .$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
         $button .= "</form>\n";
 
         $form = new XTemplate('modules/Contacts/MailMergePicker.html');

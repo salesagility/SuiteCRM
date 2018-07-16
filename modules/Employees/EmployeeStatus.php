@@ -54,9 +54,9 @@ function getEmployeeStatusOptions($focus, $name = 'employee_status', $value = nu
     if (($view == 'EditView' || $view == 'MassUpdate') && is_admin($current_user)) {
         $employee_status  = "<select name='$name'";
         if (!empty($sugar_config['default_user_name']) 
-			&& $sugar_config['default_user_name'] == $focus->user_name 
-			&& isset($sugar_config['lock_default_user_name']) 
-			&& $sugar_config['lock_default_user_name']) {
+            && $sugar_config['default_user_name'] == $focus->user_name 
+            && isset($sugar_config['lock_default_user_name']) 
+            && $sugar_config['lock_default_user_name']) {
             $employee_status .= " disabled ";
         }
         $employee_status .= ">";
@@ -64,11 +64,11 @@ function getEmployeeStatusOptions($focus, $name = 'employee_status', $value = nu
         $employee_status .= "</select>\n";
         return $employee_status;
     }
-	   	
+        
     if (isset($app_list_strings['employee_status_dom'][$focus->employee_status])) {
         return $app_list_strings['employee_status_dom'][$focus->employee_status];
     }
-	  
+      
     return $focus->employee_status;
 }
 

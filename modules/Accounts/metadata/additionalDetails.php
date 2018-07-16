@@ -52,10 +52,10 @@ function additionalDetailsAccount($fields)
         $mod_strings = return_module_language($current_language, 'Accounts');
     }
     $overlib_string = '';
-	
+    
     if (!empty($fields['BILLING_ADDRESS_STREET']) || !empty($fields['BILLING_ADDRESS_CITY']) ||
-		!empty($fields['BILLING_ADDRESS_STATE']) || !empty($fields['BILLING_ADDRESS_POSTALCODE']) ||
-		!empty($fields['BILLING_ADDRESS_COUNTRY'])) {
+        !empty($fields['BILLING_ADDRESS_STATE']) || !empty($fields['BILLING_ADDRESS_POSTALCODE']) ||
+        !empty($fields['BILLING_ADDRESS_COUNTRY'])) {
         $overlib_string .= '<b>' . $mod_strings['LBL_BILLING_ADDRESS'] . '</b><br>';
     }
     if (!empty($fields['BILLING_ADDRESS_STREET'])) {
@@ -82,11 +82,11 @@ function additionalDetailsAccount($fields)
     if (!empty($fields['BILLING_ADDRESS_COUNTRY'])) {
         $overlib_string .= $fields['BILLING_ADDRESS_COUNTRY'] . '<br>';
     }
-	
+    
     if (strlen($overlib_string) > 0 && !(strrpos($overlib_string, '<br>') == strlen($overlib_string) - 4)) {
         $overlib_string .= '<br>';
     }  
-	
+    
     if (!empty($fields['PHONE_FAX'])) {
         $overlib_string .= '<b>'. $mod_strings['LBL_FAX'] . '</b> <span class="phone">' . $fields['PHONE_FAX'] . '</span><br>';
     }
@@ -107,7 +107,7 @@ function additionalDetailsAccount($fields)
     }	
 
     return array('fieldToAddTo' => 'NAME', 
-				 'string' => $overlib_string, 
-				 'editLink' => "index.php?action=EditView&module=Accounts&return_module=Accounts&record={$fields['ID']}", 
-				 'viewLink' => "index.php?action=DetailView&module=Accounts&return_module=Accounts&record={$fields['ID']}");
+                 'string' => $overlib_string, 
+                 'editLink' => "index.php?action=EditView&module=Accounts&return_module=Accounts&record={$fields['ID']}", 
+                 'viewLink' => "index.php?action=DetailView&module=Accounts&return_module=Accounts&record={$fields['ID']}");
 }

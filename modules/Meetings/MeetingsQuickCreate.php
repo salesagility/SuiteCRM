@@ -60,7 +60,7 @@ class MeetingsQuickCreate extends QuickCreate
         $this->ss->assign("CALENDAR_DATEFORMAT", $timedate->get_cal_date_format());
         $this->ss->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
         $this->ss->assign("USER_DATEFORMAT", '('. $timedate->get_user_date_format().')');
-		
+        
 
 
         
@@ -99,7 +99,7 @@ class MeetingsQuickCreate extends QuickCreate
         $this->ss->assign("TIME_START", substr($focus->time_start,0,5));
         $time_start_hour = intval(substr($focus->time_start, 0, 2));
         $time_start_minutes = substr($focus->time_start, 3, 5);
-		
+        
         if ($time_start_minutes > 0 && $time_start_minutes < 15) {
             $time_start_minutes = "15";
         } elseif ($time_start_minutes > 15 && $time_start_minutes < 30) {
@@ -110,8 +110,8 @@ class MeetingsQuickCreate extends QuickCreate
             $time_start_hour += 1;
             $time_start_minutes = "00";
         }
-		
-		
+        
+        
         // We default the to assume that the time preference is set to 11:00 (i.e. without meridiem)
         $hours_arr = array ();
         $num_of_hours = 24;
@@ -122,7 +122,7 @@ class MeetingsQuickCreate extends QuickCreate
             $num_of_hours = 13;
             $start_at = 1;
         } 
-		
+        
         /*
         // Seems to be problematic... $time_meridiem is always empty
         if (empty ($time_meridiem)) {
@@ -130,7 +130,7 @@ class MeetingsQuickCreate extends QuickCreate
         	$start_at = 0;
         }
         */
-		
+        
         for ($i = $start_at; $i < $num_of_hours; $i ++) {
             $i = $i."";
             if (strlen($i) == 1) {
@@ -155,7 +155,7 @@ class MeetingsQuickCreate extends QuickCreate
                 if (!isset($focus->meridiem_AM_values)) {
                     $focus->meridiem_AM_values = array('AM'=>'AM', 'PM'=>'PM');
                 }
-		       
+               
                 $this->ss->assign("TIME_MERIDIEM", get_select_options_with_id($focus->meridiem_AM_values, $time_start_hour < 12 ? 'AM' : 'PM'));
             } //if-else
         }

@@ -60,7 +60,7 @@ class AbstractRelationship
     public static $definitionKeys = array ( 
         // atttributes of this relationship - here in the definition so they are preserved across saves and loads
         'for_activities',
-    	'is_custom',
+        'is_custom',
         'from_studio',
         'readonly' , // a readonly relationship cannot be Built by subclasses of AbstractRelationships
         'deleted' , // a deleted relationship will not be built, and if it had been built previously the built relationship will be removed
@@ -237,14 +237,14 @@ class AbstractRelationship
                 $layout_defs = array();
             }
             $labelDefinitions [] = array (
-        		'module' => $this->rhs_module ,
-        		'system_label' => isset($rightSysLabel)?$rightSysLabel : 'LBL_' . strtoupper ($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE' ,
-        		'display_label' => ($update && !empty($_REQUEST [ 'lhs_label' ]))?$_REQUEST [ 'lhs_label' ] :(empty($this->lhs_label) ? translate ($this->lhs_module) : $this->lhs_label),
-        	) ;
+                'module' => $this->rhs_module ,
+                'system_label' => isset($rightSysLabel)?$rightSysLabel : 'LBL_' . strtoupper ($this->relationship_name . '_FROM_' . $this->getLeftModuleSystemLabel()) . '_TITLE' ,
+                'display_label' => ($update && !empty($_REQUEST [ 'lhs_label' ]))?$_REQUEST [ 'lhs_label' ] :(empty($this->lhs_label) ? translate ($this->lhs_module) : $this->lhs_label),
+            ) ;
             $labelDefinitions [] = array (
-            	'module' => $this->lhs_module ,
-            	'system_label' =>  isset($leftSysLabel)?$leftSysLabel :'LBL_' . strtoupper ($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE' ,
-            	'display_label' => ($update && !empty($_REQUEST [ 'rhs_label' ]))?$_REQUEST [ 'rhs_label' ] :(empty($this->rhs_label) ? translate ($this->rhs_module) : $this->rhs_label),
+                'module' => $this->lhs_module ,
+                'system_label' =>  isset($leftSysLabel)?$leftSysLabel :'LBL_' . strtoupper ($this->relationship_name . '_FROM_' . $this->getRightModuleSystemLabel()) . '_TITLE' ,
+                'display_label' => ($update && !empty($_REQUEST [ 'rhs_label' ]))?$_REQUEST [ 'rhs_label' ] :(empty($this->rhs_label) ? translate ($this->rhs_module) : $this->rhs_label),
             ) ;
         }
         return $labelDefinitions ;
@@ -280,7 +280,7 @@ class AbstractRelationship
 
         return $labels;
     }
-	
+    
     /*
      * GET methods called by the BUILD methods of the subclasses to construct the relationship metadata
      */
@@ -316,9 +316,9 @@ class AbstractRelationship
         }
         $subpanelDefinition [ 'get_subpanel_data' ] = $source ;
         $subpanelDefinition [ 'top_buttons' ] = array(
-		    array('widget_class' => "SubPanelTopButtonQuickCreate"),
-		    array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
-		);
+            array('widget_class' => "SubPanelTopButtonQuickCreate"),
+            array('widget_class' => 'SubPanelTopSelectButton', 'mode'=>'MultiSelect')
+        );
         
         return array ( $subpanelDefinition );
     }
@@ -644,7 +644,7 @@ class AbstractRelationship
         if (!isset($this->joinKeyRHS)) {
             $this->joinKeyRHS = $this->getValidDBName ($this->relationship_name . $this->rhs_module . "_idb"  , true) ;
         }
-    	
+        
         return $this->joinKeyRHS;
     }
     
@@ -686,7 +686,7 @@ class AbstractRelationship
                 return $layout_defs[$this->lhs_module]['subpanel_setup'][strtolower($this->rhs_module)]['title_key'];
             }
         }
-    	
+        
         if ($left) {
             $titleKeyName = $this->getRightModuleSystemLabel();
             $sourceModule = $this->rhs_module;
@@ -694,13 +694,13 @@ class AbstractRelationship
             $titleKeyName = $this->getLeftModuleSystemLabel();
             $sourceModule = $this->lhs_module;
         }
-    	
+        
         if (!empty($titleKeyName)) {
             $title_key = 'LBL_' . strtoupper ($this->relationship_name . '_FROM_' . $titleKeyName) . '_TITLE' ;
         } else {
             $title_key = 'LBL_' . strtoupper ($this->relationship_name . '_FROM_' . $sourceModule) . '_TITLE' ;
         }
-		
+        
         return $title_key;
     }
 }

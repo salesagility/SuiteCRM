@@ -55,21 +55,21 @@ require_once('modules/MySettings/TabController.php');
 class ViewConfiguretabs extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
-    	   $mod_strings['LBL_CONFIG_TABS']
-    	   );
+           "<a href='index.php?module=Administration&action=index'>".$mod_strings['LBL_MODULE_NAME']."</a>",
+           $mod_strings['LBL_CONFIG_TABS']
+           );
     }
     
     /**
-	 * @see SugarView::preDisplay()
-	 */
+     * @see SugarView::preDisplay()
+     */
     public function preDisplay()
     {
         global $current_user;
@@ -80,8 +80,8 @@ class ViewConfiguretabs extends SugarView
     }
     
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         global $mod_strings;

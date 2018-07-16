@@ -68,10 +68,10 @@ if (!empty($_POST['assigned_user_id']) && ($project->assigned_user_id != $_POST[
     $GLOBALS['check_notify'] = true;
 }
 
-	if (!$project->ACLAccess('Save')) {
-	    ACLController::displayNoAccess(true);
-	    sugar_cleanup(true);
-	}
+    if (!$project->ACLAccess('Save')) {
+        ACLController::displayNoAccess(true);
+        sugar_cleanup(true);
+    }
 
 if (empty($project->project_id)) {
     $project->project_id = $_POST['relate_id'];
@@ -86,14 +86,14 @@ if (isset($_REQUEST['form'])) {
     // need to refresh the page properly
 
     $return_module = empty($_REQUEST['return_module']) ? 'ProjectTask'
-		: $_REQUEST['return_module'];
+        : $_REQUEST['return_module'];
 
     $return_action = empty($_REQUEST['return_action']) ? 'index'
-		: $_REQUEST['return_action'];
+        : $_REQUEST['return_action'];
 
     $return_id = empty($_REQUEST['return_id']) ? $project->id
-		: $_REQUEST['return_id'];
-		
+        : $_REQUEST['return_id'];
+        
     //if this navigation is going to list view, do not show the bean id, it will populate the mass update.
     if ($return_action == 'index') {
         $return_id ='';

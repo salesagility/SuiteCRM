@@ -125,55 +125,55 @@ class javascript
             }
             if (isset($this->sugarbean->field_name_map[$field]['validation'])) {
                 switch ($this->sugarbean->field_name_map[$field]['validation']['type']) {
-					case 'range':
+                    case 'range':
                         $min = false;
                         $max = false;
-						if (isset($this->sugarbean->field_name_map[$field]['validation']['min'])) {
-						    $min = filter_var($this->sugarbean->field_name_map[$field]['validation']['min'], FILTER_VALIDATE_INT);
-						}
-						if (isset($this->sugarbean->field_name_map[$field]['validation']['max'])) {
-						    $max = filter_var($this->sugarbean->field_name_map[$field]['validation']['max'], FILTER_VALIDATE_INT);
-						}
+                        if (isset($this->sugarbean->field_name_map[$field]['validation']['min'])) {
+                            $min = filter_var($this->sugarbean->field_name_map[$field]['validation']['min'], FILTER_VALIDATE_INT);
+                        }
+                        if (isset($this->sugarbean->field_name_map[$field]['validation']['max'])) {
+                            $max = filter_var($this->sugarbean->field_name_map[$field]['validation']['max'], FILTER_VALIDATE_INT);
+                        }
                         if ($min !== false && $max !== false && $min > $max) {
                             $max = $min;
                         }
-						if (!empty($displayField)) {
-						    $dispField = $displayField;
-						} else {
-						    $dispField = $field;
-						}
-						$this->addFieldRange($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $min, $max);
-						break;
-					case 'isbefore':
-						$compareTo = $this->sugarbean->field_name_map[$field]['validation']['compareto'];
-						if (!empty($displayField)) {
-						    $dispField = $displayField;
-						} else {
-						    $dispField = $field;
-						}
-						if (!empty($this->sugarbean->field_name_map[$field]['validation']['blank']) && $this->sugarbean->field_name_map[$field]['validation']['blank']) {
-						    $this->addFieldDateBeforeAllowBlank($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo);
-						} else {
-						    $this->addFieldDateBefore($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo);
-						}
-						break;
+                        if (!empty($displayField)) {
+                            $dispField = $displayField;
+                        } else {
+                            $dispField = $field;
+                        }
+                        $this->addFieldRange($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $min, $max);
+                        break;
+                    case 'isbefore':
+                        $compareTo = $this->sugarbean->field_name_map[$field]['validation']['compareto'];
+                        if (!empty($displayField)) {
+                            $dispField = $displayField;
+                        } else {
+                            $dispField = $field;
+                        }
+                        if (!empty($this->sugarbean->field_name_map[$field]['validation']['blank']) && $this->sugarbean->field_name_map[$field]['validation']['blank']) {
+                            $this->addFieldDateBeforeAllowBlank($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo);
+                        } else {
+                            $this->addFieldDateBefore($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo);
+                        }
+                        break;
                     // Bug #47961 Adding new type of validation: through callback function
                     case 'callback':
                         $dispField = $displayField ? $displayField : $field;
                         $this->addFieldCallback($dispField, $this->sugarbean->field_name_map[$field]['type'], $vname, $required, $prefix, $this->sugarbean->field_name_map[$field]['validation']['callback']);
                         break;
-					default:
-						if (!empty($displayField)) {
-						    $dispField = $displayField;
-						} else {
-						    $dispField = $field;
-						}
+                    default:
+                        if (!empty($displayField)) {
+                            $dispField = $displayField;
+                        } else {
+                            $dispField = $field;
+                        }
 
-						$type = (!empty($this->sugarbean->field_name_map[$field]['custom_type']))?$this->sugarbean->field_name_map[$field]['custom_type']:$this->sugarbean->field_name_map[$field]['type'];
+                        $type = (!empty($this->sugarbean->field_name_map[$field]['custom_type']))?$this->sugarbean->field_name_map[$field]['custom_type']:$this->sugarbean->field_name_map[$field]['type'];
 
-						$this->addFieldGeneric($dispField,$type,$vname,$required,$prefix);
-						break;
-				}
+                        $this->addFieldGeneric($dispField,$type,$vname,$required,$prefix);
+                        break;
+                }
             } else {
                 if (!empty($displayField)) {
                     $dispField = $displayField;

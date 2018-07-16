@@ -56,17 +56,17 @@ abstract class SugarSoapService extends SugarWebService
     protected $implementationClass = 'SugarWebServiceImpl';
     protected $registryClass = "";
     protected $soapURL = "";
-	
+    
     /**
      * This is an abstract method. The implementation method should registers all the functions you want to expose as services.
      *
      * @param String $function - name of the function
      * @param Array $input - assoc array of input values: key = param name, value = param type
      * @param Array $output - assoc array of output values: key = param name, value = param type
-	 * @access public
+     * @access public
      */
     abstract public function registerFunction($function, $input, $output);
-	
+    
     /**
      * This is an abstract method. This implementation method should register all the complex type	 
      * 
@@ -79,9 +79,9 @@ abstract class SugarSoapService extends SugarWebService
      * @param Array $attrs - array(array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'xsd:string[]'))
      * @param String $arrayType - arrayType: namespace:name (xsd:string)
      * @access public
-     */	
+     */    
     abstract public function registerType($name, $typeClass, $phpType, $compositor, $restrictionBase, $elements, $attrs=array(), $arrayType='');
-	
+    
     /**
      * Constructor
      *
@@ -90,7 +90,7 @@ abstract class SugarSoapService extends SugarWebService
     {
         $this->setObservers();
     }
-	
+    
     /**
      * This method sets the soap server object on all the observers
      * @access public
@@ -106,7 +106,7 @@ abstract class SugarSoapService extends SugarWebService
             }
         }
     } // fn
-	
+    
     /**
      * This method returns the soapURL
      *
@@ -117,12 +117,12 @@ abstract class SugarSoapService extends SugarWebService
     {
         return $this->soapURL;
     }
-		
+        
     public function getSoapVersion()
     {
         return $this->soap_version;
     }
-	
+    
     /**
      * This method returns the namespace
      *
@@ -133,7 +133,7 @@ abstract class SugarSoapService extends SugarWebService
     {
         return $this->namespace;
     }
-	
+    
     /**
      * This mehtod returns registered implementation class
      *
@@ -155,7 +155,7 @@ abstract class SugarSoapService extends SugarWebService
     {
         return $this->registryClass;
     }
-	
+    
     /**
      * This mehtod returns server
      *

@@ -818,10 +818,10 @@ class nusoap_server extends nusoap_base
         } else {
             $payload = $this->responseSOAP;
             // Some combinations of PHP+Web server allow the Status
-			// to come through as a header.  Since OK is the default
-			// just do nothing.
-			// $this->outgoing_headers[] = "HTTP/1.0 200 OK";
-			// $this->outgoing_headers[] = "Status: 200 OK";
+            // to come through as a header.  Since OK is the default
+            // just do nothing.
+            // $this->outgoing_headers[] = "HTTP/1.0 200 OK";
+            // $this->outgoing_headers[] = "Status: 200 OK";
         }
         // add debug data if in debug mode
         if (isset($this->debug_flag) && $this->debug_flag) {
@@ -969,7 +969,7 @@ class nusoap_server extends nusoap_base
     {
         return $soapmsg;
     }
-	
+    
     /**
     * gets the HTTP content type for the current response.
     *
@@ -982,7 +982,7 @@ class nusoap_server extends nusoap_base
     {
         return 'text/xml';
     }
-	
+    
     /**
     * gets the HTTP content type charset for the current response.
     * returns false for non-text content types.
@@ -1073,12 +1073,12 @@ class nusoap_server extends nusoap_base
         }
 
         $this->operations[$name] = array(
-	    'name' => $name,
-	    'in' => $in,
-	    'out' => $out,
-	    'namespace' => $namespace,
-	    'soapaction' => $soapaction,
-	    'style' => $style);
+        'name' => $name,
+        'in' => $in,
+        'out' => $out,
+        'namespace' => $namespace,
+        'soapaction' => $soapaction,
+        'style' => $style);
         if ($this->wsdl) {
             $this->wsdl->addOperation($name,$in,$out,$namespace,$soapaction,$style,$use,$documentation,$encodingStyle);
         }
@@ -1176,12 +1176,12 @@ class nusoap_server extends nusoap_base
         $this->wsdl->schemas[$schemaTargetNamespace][0]->imports['http://schemas.xmlsoap.org/soap/encoding/'][0] = array('location' => '', 'loaded' => true);
         $this->wsdl->schemas[$schemaTargetNamespace][0]->imports['http://schemas.xmlsoap.org/wsdl/'][0] = array('location' => '', 'loaded' => true);
         $this->wsdl->bindings[$serviceName.'Binding'] = array(
-        	'name'=>$serviceName.'Binding',
+            'name'=>$serviceName.'Binding',
             'style'=>$style,
             'transport'=>$transport,
             'portType'=>$serviceName.'PortType');
         $this->wsdl->ports[$serviceName.'Port'] = array(
-        	'binding'=>$serviceName.'Binding',
+            'binding'=>$serviceName.'Binding',
             'location'=>$endpoint,
             'bindingType'=>'http://schemas.xmlsoap.org/wsdl/soap/');
     }

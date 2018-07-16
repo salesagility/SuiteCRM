@@ -62,8 +62,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 */
 class nusoap_xmlschema extends nusoap_base
 {
-	
-	// files
+    
+    // files
     public $schema = '';
     public $xml = '';
     // namespaces
@@ -130,7 +130,7 @@ class nusoap_xmlschema extends nusoap_base
     *
     * @param string $xml path/URL to XML file
     * @param string $type (schema | xml)
-	* @return boolean
+    * @return boolean
     * @access public
     */
     public function parseFile($xml,$type)
@@ -165,7 +165,7 @@ class nusoap_xmlschema extends nusoap_base
         // parse xml string
         if ($xml != "") {
 
-	    	// Create an XML parser.
+            // Create an XML parser.
             $this->parser = xml_parser_create();
             // Set the options for parsing the XML data.
             xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, 0);
@@ -186,9 +186,9 @@ class nusoap_xmlschema extends nusoap_base
             if (!xml_parse($this->parser,$xml,true)) {
                 // Display an error message.
                 $errstr = sprintf('XML error parsing XML schema on line %d: %s',
-				xml_get_current_line_number($this->parser),
-				xml_error_string(xml_get_error_code($this->parser))
-				);
+                xml_get_current_line_number($this->parser),
+                xml_error_string(xml_get_error_code($this->parser))
+                );
                 $this->debug($errstr);
                 $this->debug("XML payload:\n" . $xml);
                 $this->setError($errstr);
@@ -216,7 +216,7 @@ class nusoap_xmlschema extends nusoap_base
         }
         return $scope . $ename . '_ContainedType';
     }
-	
+    
     /**
     * start-element handler
     *
@@ -227,8 +227,8 @@ class nusoap_xmlschema extends nusoap_base
     */
     public function schemaStartElement($parser, $name, $attrs)
     {
-		
-		// position in the total number of elements, starting from 0
+        
+        // position in the total number of elements, starting from 0
         $pos = $this->position++;
         $depth = $this->depth++;
         // set self as current value for this depth
@@ -247,7 +247,7 @@ class nusoap_xmlschema extends nusoap_base
         } else {
             $prefix = '';
         }
-		
+        
         // loop thru attributes, expanding, and registering namespace declarations
         if (count($attrs) > 0) {
             foreach ($attrs as $k => $v) {
@@ -282,34 +282,34 @@ class nusoap_xmlschema extends nusoap_base
         }
         // find status, register data
         switch ($name) {
-			case 'all':			// (optional) compositor content for a complexType
-			case 'choice':
-			case 'group':
-			case 'sequence':
-				//$this->xdebug("compositor $name for currentComplexType: $this->currentComplexType and currentElement: $this->currentElement");
-				$this->complexTypes[$this->currentComplexType]['compositor'] = $name;
-				//if($name == 'all' || $name == 'sequence'){
-				//	$this->complexTypes[$this->currentComplexType]['phpType'] = 'struct';
-				//}
-			break;
-			case 'attribute':	// complexType attribute
-            	//$this->xdebug("parsing attribute $attrs[name] $attrs[ref] of value: ".$attrs['http://schemas.xmlsoap.org/wsdl/:arrayType']);
-            	$this->xdebug("parsing attribute:");
-            	$this->appendDebug($this->varDump($attrs));
-				if (!isset($attrs['form'])) {
-				    // TODO: handle globals
-				    $attrs['form'] = $this->schemaInfo['attributeFormDefault'];
-				}
-            	if (isset($attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'])) {
-            	    $v = $attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'];
-            	    if (!strpos($v, ':')) {
-            	        // no namespace in arrayType attribute value...
-            	        if ($this->defaultNamespace[$pos]) {
-            	            // ...so use the default
-            	            $attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'] = $this->defaultNamespace[$pos] . ':' . $attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'];
-            	        }
-            	    }
-            	}
+            case 'all':			// (optional) compositor content for a complexType
+            case 'choice':
+            case 'group':
+            case 'sequence':
+                //$this->xdebug("compositor $name for currentComplexType: $this->currentComplexType and currentElement: $this->currentElement");
+                $this->complexTypes[$this->currentComplexType]['compositor'] = $name;
+                //if($name == 'all' || $name == 'sequence'){
+                //	$this->complexTypes[$this->currentComplexType]['phpType'] = 'struct';
+                //}
+            break;
+            case 'attribute':	// complexType attribute
+                //$this->xdebug("parsing attribute $attrs[name] $attrs[ref] of value: ".$attrs['http://schemas.xmlsoap.org/wsdl/:arrayType']);
+                $this->xdebug("parsing attribute:");
+                $this->appendDebug($this->varDump($attrs));
+                if (!isset($attrs['form'])) {
+                    // TODO: handle globals
+                    $attrs['form'] = $this->schemaInfo['attributeFormDefault'];
+                }
+                if (isset($attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'])) {
+                    $v = $attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'];
+                    if (!strpos($v, ':')) {
+                        // no namespace in arrayType attribute value...
+                        if ($this->defaultNamespace[$pos]) {
+                            // ...so use the default
+                            $attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'] = $this->defaultNamespace[$pos] . ':' . $attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'];
+                        }
+                    }
+                }
                 if (isset($attrs['name'])) {
                     $this->attributes[$attrs['name']] = $attrs;
                     $aname = $attrs['name'];
@@ -324,226 +324,226 @@ class nusoap_xmlschema extends nusoap_base
                     $this->attributes[$attrs['ref']] = $attrs;
                 }
                 
-				if ($this->currentComplexType) {	// This should *always* be
-				    $this->complexTypes[$this->currentComplexType]['attrs'][$aname] = $attrs;
-				}
-				// arrayType attribute
-				if (isset($attrs['http://schemas.xmlsoap.org/wsdl/:arrayType']) || $this->getLocalPart($aname) == 'arrayType') {
-				    $this->complexTypes[$this->currentComplexType]['phpType'] = 'array';
-				    $prefix = $this->getPrefix($aname);
-				    if (isset($attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'])) {
-				        $v = $attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'];
-				    } else {
-				        $v = '';
-				    }
-				    if (strpos($v,'[,]')) {
-				        $this->complexTypes[$this->currentComplexType]['multidimensional'] = true;
-				    }
-				    $v = substr($v,0,strpos($v,'[')); // clip the []
-				    if (!strpos($v,':') && isset($this->typemap[$this->XMLSchemaVersion][$v])) {
-				        $v = $this->XMLSchemaVersion.':'.$v;
-				    }
-				    $this->complexTypes[$this->currentComplexType]['arrayType'] = $v;
-				}
-			break;
-			case 'complexContent':	// (optional) content for a complexType
-				$this->xdebug("do nothing for element $name");
-			break;
-			case 'complexType':
-				array_push($this->complexTypeStack, $this->currentComplexType);
-				if (isset($attrs['name'])) {
-				    // TODO: what is the scope of named complexTypes that appear
-				    //       nested within other c complexTypes?
-				    $this->xdebug('processing named complexType '.$attrs['name']);
-				    //$this->currentElement = false;
-				    $this->currentComplexType = $attrs['name'];
-				    $this->complexTypes[$this->currentComplexType] = $attrs;
-				    $this->complexTypes[$this->currentComplexType]['typeClass'] = 'complexType';
-				    // This is for constructs like
-				    //           <complexType name="ListOfString" base="soap:Array">
-				    //                <sequence>
-				    //                    <element name="string" type="xsd:string"
-				    //                        minOccurs="0" maxOccurs="unbounded" />
-				    //                </sequence>
-				    //            </complexType>
-				    if (isset($attrs['base']) && preg_match('/:Array$/',$attrs['base'])) {
-				        $this->xdebug('complexType is unusual array');
-				        $this->complexTypes[$this->currentComplexType]['phpType'] = 'array';
-				    } else {
-				        $this->complexTypes[$this->currentComplexType]['phpType'] = 'struct';
-				    }
-				} else {
-				    $name = $this->CreateTypeName($this->currentElement);
-				    $this->xdebug('processing unnamed complexType for element ' . $this->currentElement . ' named ' . $name);
-				    $this->currentComplexType = $name;
-				    //$this->currentElement = false;
-				    $this->complexTypes[$this->currentComplexType] = $attrs;
-				    $this->complexTypes[$this->currentComplexType]['typeClass'] = 'complexType';
-				    // This is for constructs like
-				    //           <complexType name="ListOfString" base="soap:Array">
-				    //                <sequence>
-				    //                    <element name="string" type="xsd:string"
-				    //                        minOccurs="0" maxOccurs="unbounded" />
-				    //                </sequence>
-				    //            </complexType>
-				    if (isset($attrs['base']) && preg_match('/:Array$/',$attrs['base'])) {
-				        $this->xdebug('complexType is unusual array');
-				        $this->complexTypes[$this->currentComplexType]['phpType'] = 'array';
-				    } else {
-				        $this->complexTypes[$this->currentComplexType]['phpType'] = 'struct';
-				    }
-				}
-				$this->complexTypes[$this->currentComplexType]['simpleContent'] = 'false';
-			break;
-			case 'element':
-				array_push($this->elementStack, $this->currentElement);
-				if (!isset($attrs['form'])) {
-				    if ($this->currentComplexType) {
-				        $attrs['form'] = $this->schemaInfo['elementFormDefault'];
-				    } else {
-				        // global
-				        $attrs['form'] = 'qualified';
-				    }
-				}
-				if (isset($attrs['type'])) {
-				    $this->xdebug("processing typed element ".$attrs['name']." of type ".$attrs['type']);
-				    if (! $this->getPrefix($attrs['type'])) {
-				        if ($this->defaultNamespace[$pos]) {
-				            $attrs['type'] = $this->defaultNamespace[$pos] . ':' . $attrs['type'];
-				            $this->xdebug('used default namespace to make type ' . $attrs['type']);
-				        }
-				    }
-				    // This is for constructs like
-				    //           <complexType name="ListOfString" base="soap:Array">
-				    //                <sequence>
-				    //                    <element name="string" type="xsd:string"
-				    //                        minOccurs="0" maxOccurs="unbounded" />
-				    //                </sequence>
-				    //            </complexType>
-				    if ($this->currentComplexType && $this->complexTypes[$this->currentComplexType]['phpType'] == 'array') {
-				        $this->xdebug('arrayType for unusual array is ' . $attrs['type']);
-				        $this->complexTypes[$this->currentComplexType]['arrayType'] = $attrs['type'];
-				    }
-				    $this->currentElement = $attrs['name'];
-				    $ename = $attrs['name'];
-				} elseif (isset($attrs['ref'])) {
-				    $this->xdebug("processing element as ref to ".$attrs['ref']);
-				    $this->currentElement = "ref to ".$attrs['ref'];
-				    $ename = $this->getLocalPart($attrs['ref']);
-				} else {
-				    $type = $this->CreateTypeName($this->currentComplexType . '_' . $attrs['name']);
-				    $this->xdebug("processing untyped element " . $attrs['name'] . ' type ' . $type);
-				    $this->currentElement = $attrs['name'];
-				    $attrs['type'] = $this->schemaTargetNamespace . ':' . $type;
-				    $ename = $attrs['name'];
-				}
-				if (isset($ename) && $this->currentComplexType) {
-				    $this->xdebug("add element $ename to complexType $this->currentComplexType");
-				    $this->complexTypes[$this->currentComplexType]['elements'][$ename] = $attrs;
-				} elseif (!isset($attrs['ref'])) {
-				    $this->xdebug("add element $ename to elements array");
-				    $this->elements[ $attrs['name'] ] = $attrs;
-				    $this->elements[ $attrs['name'] ]['typeClass'] = 'element';
-				}
-			break;
-			case 'enumeration':	//	restriction value list member
-				$this->xdebug('enumeration ' . $attrs['value']);
-				if ($this->currentSimpleType) {
-				    $this->simpleTypes[$this->currentSimpleType]['enumeration'][] = $attrs['value'];
-				} elseif ($this->currentComplexType) {
-				    $this->complexTypes[$this->currentComplexType]['enumeration'][] = $attrs['value'];
-				}
-			break;
-			case 'extension':	// simpleContent or complexContent type extension
-				$this->xdebug('extension ' . $attrs['base']);
-				if ($this->currentComplexType) {
-				    $ns = $this->getPrefix($attrs['base']);
-				    if ($ns == '') {
-				        $this->complexTypes[$this->currentComplexType]['extensionBase'] = $this->schemaTargetNamespace . ':' . $attrs['base'];
-				    } else {
-				        $this->complexTypes[$this->currentComplexType]['extensionBase'] = $attrs['base'];
-				    }
-				} else {
-				    $this->xdebug('no current complexType to set extensionBase');
-				}
-			break;
-			case 'import':
-			    if (isset($attrs['schemaLocation'])) {
-			        $this->xdebug('import namespace ' . $attrs['namespace'] . ' from ' . $attrs['schemaLocation']);
-			        $this->imports[$attrs['namespace']][] = array('location' => $attrs['schemaLocation'], 'loaded' => false);
-			    } else {
-			        $this->xdebug('import namespace ' . $attrs['namespace']);
-			        $this->imports[$attrs['namespace']][] = array('location' => '', 'loaded' => true);
-			        if (! $this->getPrefixFromNamespace($attrs['namespace'])) {
-			            $this->namespaces['ns'.(count($this->namespaces)+1)] = $attrs['namespace'];
-			        }
-			    }
-			break;
-			case 'include':
-			    if (isset($attrs['schemaLocation'])) {
-			        $this->xdebug('include into namespace ' . $this->schemaTargetNamespace . ' from ' . $attrs['schemaLocation']);
-			        $this->imports[$this->schemaTargetNamespace][] = array('location' => $attrs['schemaLocation'], 'loaded' => false);
-			    } else {
-			        $this->xdebug('ignoring invalid XML Schema construct: include without schemaLocation attribute');
-			    }
-			break;
-			case 'list':	// simpleType value list
-				$this->xdebug("do nothing for element $name");
-			break;
-			case 'restriction':	// simpleType, simpleContent or complexContent value restriction
-				$this->xdebug('restriction ' . $attrs['base']);
-				if ($this->currentSimpleType) {
-				    $this->simpleTypes[$this->currentSimpleType]['type'] = $attrs['base'];
-				} elseif ($this->currentComplexType) {
-				    $this->complexTypes[$this->currentComplexType]['restrictionBase'] = $attrs['base'];
-				    if (strstr($attrs['base'],':') == ':Array') {
-				        $this->complexTypes[$this->currentComplexType]['phpType'] = 'array';
-				    }
-				}
-			break;
-			case 'schema':
-				$this->schemaInfo = $attrs;
-				$this->schemaInfo['schemaVersion'] = $this->getNamespaceFromPrefix($prefix);
-				if (isset($attrs['targetNamespace'])) {
-				    $this->schemaTargetNamespace = $attrs['targetNamespace'];
-				}
-				if (!isset($attrs['elementFormDefault'])) {
-				    $this->schemaInfo['elementFormDefault'] = 'unqualified';
-				}
-				if (!isset($attrs['attributeFormDefault'])) {
-				    $this->schemaInfo['attributeFormDefault'] = 'unqualified';
-				}
-			break;
-			case 'simpleContent':	// (optional) content for a complexType
-				if ($this->currentComplexType) {	// This should *always* be
-					$this->complexTypes[$this->currentComplexType]['simpleContent'] = 'true';
-				} else {
-				    $this->xdebug("do nothing for element $name because there is no current complexType");
-				}
-			break;
-			case 'simpleType':
-				array_push($this->simpleTypeStack, $this->currentSimpleType);
-				if (isset($attrs['name'])) {
-				    $this->xdebug("processing simpleType for name " . $attrs['name']);
-				    $this->currentSimpleType = $attrs['name'];
-				    $this->simpleTypes[ $attrs['name'] ] = $attrs;
-				    $this->simpleTypes[ $attrs['name'] ]['typeClass'] = 'simpleType';
-				    $this->simpleTypes[ $attrs['name'] ]['phpType'] = 'scalar';
-				} else {
-				    $name = $this->CreateTypeName($this->currentComplexType . '_' . $this->currentElement);
-				    $this->xdebug('processing unnamed simpleType for element ' . $this->currentElement . ' named ' . $name);
-				    $this->currentSimpleType = $name;
-				    //$this->currentElement = false;
-				    $this->simpleTypes[$this->currentSimpleType] = $attrs;
-				    $this->simpleTypes[$this->currentSimpleType]['phpType'] = 'scalar';
-				}
-			break;
-			case 'union':	// simpleType type list
-				$this->xdebug("do nothing for element $name");
-			break;
-			default:
-				$this->xdebug("do not have any logic to process element $name");
-		}
+                if ($this->currentComplexType) {	// This should *always* be
+                    $this->complexTypes[$this->currentComplexType]['attrs'][$aname] = $attrs;
+                }
+                // arrayType attribute
+                if (isset($attrs['http://schemas.xmlsoap.org/wsdl/:arrayType']) || $this->getLocalPart($aname) == 'arrayType') {
+                    $this->complexTypes[$this->currentComplexType]['phpType'] = 'array';
+                    $prefix = $this->getPrefix($aname);
+                    if (isset($attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'])) {
+                        $v = $attrs['http://schemas.xmlsoap.org/wsdl/:arrayType'];
+                    } else {
+                        $v = '';
+                    }
+                    if (strpos($v,'[,]')) {
+                        $this->complexTypes[$this->currentComplexType]['multidimensional'] = true;
+                    }
+                    $v = substr($v,0,strpos($v,'[')); // clip the []
+                    if (!strpos($v,':') && isset($this->typemap[$this->XMLSchemaVersion][$v])) {
+                        $v = $this->XMLSchemaVersion.':'.$v;
+                    }
+                    $this->complexTypes[$this->currentComplexType]['arrayType'] = $v;
+                }
+            break;
+            case 'complexContent':	// (optional) content for a complexType
+                $this->xdebug("do nothing for element $name");
+            break;
+            case 'complexType':
+                array_push($this->complexTypeStack, $this->currentComplexType);
+                if (isset($attrs['name'])) {
+                    // TODO: what is the scope of named complexTypes that appear
+                    //       nested within other c complexTypes?
+                    $this->xdebug('processing named complexType '.$attrs['name']);
+                    //$this->currentElement = false;
+                    $this->currentComplexType = $attrs['name'];
+                    $this->complexTypes[$this->currentComplexType] = $attrs;
+                    $this->complexTypes[$this->currentComplexType]['typeClass'] = 'complexType';
+                    // This is for constructs like
+                    //           <complexType name="ListOfString" base="soap:Array">
+                    //                <sequence>
+                    //                    <element name="string" type="xsd:string"
+                    //                        minOccurs="0" maxOccurs="unbounded" />
+                    //                </sequence>
+                    //            </complexType>
+                    if (isset($attrs['base']) && preg_match('/:Array$/',$attrs['base'])) {
+                        $this->xdebug('complexType is unusual array');
+                        $this->complexTypes[$this->currentComplexType]['phpType'] = 'array';
+                    } else {
+                        $this->complexTypes[$this->currentComplexType]['phpType'] = 'struct';
+                    }
+                } else {
+                    $name = $this->CreateTypeName($this->currentElement);
+                    $this->xdebug('processing unnamed complexType for element ' . $this->currentElement . ' named ' . $name);
+                    $this->currentComplexType = $name;
+                    //$this->currentElement = false;
+                    $this->complexTypes[$this->currentComplexType] = $attrs;
+                    $this->complexTypes[$this->currentComplexType]['typeClass'] = 'complexType';
+                    // This is for constructs like
+                    //           <complexType name="ListOfString" base="soap:Array">
+                    //                <sequence>
+                    //                    <element name="string" type="xsd:string"
+                    //                        minOccurs="0" maxOccurs="unbounded" />
+                    //                </sequence>
+                    //            </complexType>
+                    if (isset($attrs['base']) && preg_match('/:Array$/',$attrs['base'])) {
+                        $this->xdebug('complexType is unusual array');
+                        $this->complexTypes[$this->currentComplexType]['phpType'] = 'array';
+                    } else {
+                        $this->complexTypes[$this->currentComplexType]['phpType'] = 'struct';
+                    }
+                }
+                $this->complexTypes[$this->currentComplexType]['simpleContent'] = 'false';
+            break;
+            case 'element':
+                array_push($this->elementStack, $this->currentElement);
+                if (!isset($attrs['form'])) {
+                    if ($this->currentComplexType) {
+                        $attrs['form'] = $this->schemaInfo['elementFormDefault'];
+                    } else {
+                        // global
+                        $attrs['form'] = 'qualified';
+                    }
+                }
+                if (isset($attrs['type'])) {
+                    $this->xdebug("processing typed element ".$attrs['name']." of type ".$attrs['type']);
+                    if (! $this->getPrefix($attrs['type'])) {
+                        if ($this->defaultNamespace[$pos]) {
+                            $attrs['type'] = $this->defaultNamespace[$pos] . ':' . $attrs['type'];
+                            $this->xdebug('used default namespace to make type ' . $attrs['type']);
+                        }
+                    }
+                    // This is for constructs like
+                    //           <complexType name="ListOfString" base="soap:Array">
+                    //                <sequence>
+                    //                    <element name="string" type="xsd:string"
+                    //                        minOccurs="0" maxOccurs="unbounded" />
+                    //                </sequence>
+                    //            </complexType>
+                    if ($this->currentComplexType && $this->complexTypes[$this->currentComplexType]['phpType'] == 'array') {
+                        $this->xdebug('arrayType for unusual array is ' . $attrs['type']);
+                        $this->complexTypes[$this->currentComplexType]['arrayType'] = $attrs['type'];
+                    }
+                    $this->currentElement = $attrs['name'];
+                    $ename = $attrs['name'];
+                } elseif (isset($attrs['ref'])) {
+                    $this->xdebug("processing element as ref to ".$attrs['ref']);
+                    $this->currentElement = "ref to ".$attrs['ref'];
+                    $ename = $this->getLocalPart($attrs['ref']);
+                } else {
+                    $type = $this->CreateTypeName($this->currentComplexType . '_' . $attrs['name']);
+                    $this->xdebug("processing untyped element " . $attrs['name'] . ' type ' . $type);
+                    $this->currentElement = $attrs['name'];
+                    $attrs['type'] = $this->schemaTargetNamespace . ':' . $type;
+                    $ename = $attrs['name'];
+                }
+                if (isset($ename) && $this->currentComplexType) {
+                    $this->xdebug("add element $ename to complexType $this->currentComplexType");
+                    $this->complexTypes[$this->currentComplexType]['elements'][$ename] = $attrs;
+                } elseif (!isset($attrs['ref'])) {
+                    $this->xdebug("add element $ename to elements array");
+                    $this->elements[ $attrs['name'] ] = $attrs;
+                    $this->elements[ $attrs['name'] ]['typeClass'] = 'element';
+                }
+            break;
+            case 'enumeration':	//	restriction value list member
+                $this->xdebug('enumeration ' . $attrs['value']);
+                if ($this->currentSimpleType) {
+                    $this->simpleTypes[$this->currentSimpleType]['enumeration'][] = $attrs['value'];
+                } elseif ($this->currentComplexType) {
+                    $this->complexTypes[$this->currentComplexType]['enumeration'][] = $attrs['value'];
+                }
+            break;
+            case 'extension':	// simpleContent or complexContent type extension
+                $this->xdebug('extension ' . $attrs['base']);
+                if ($this->currentComplexType) {
+                    $ns = $this->getPrefix($attrs['base']);
+                    if ($ns == '') {
+                        $this->complexTypes[$this->currentComplexType]['extensionBase'] = $this->schemaTargetNamespace . ':' . $attrs['base'];
+                    } else {
+                        $this->complexTypes[$this->currentComplexType]['extensionBase'] = $attrs['base'];
+                    }
+                } else {
+                    $this->xdebug('no current complexType to set extensionBase');
+                }
+            break;
+            case 'import':
+                if (isset($attrs['schemaLocation'])) {
+                    $this->xdebug('import namespace ' . $attrs['namespace'] . ' from ' . $attrs['schemaLocation']);
+                    $this->imports[$attrs['namespace']][] = array('location' => $attrs['schemaLocation'], 'loaded' => false);
+                } else {
+                    $this->xdebug('import namespace ' . $attrs['namespace']);
+                    $this->imports[$attrs['namespace']][] = array('location' => '', 'loaded' => true);
+                    if (! $this->getPrefixFromNamespace($attrs['namespace'])) {
+                        $this->namespaces['ns'.(count($this->namespaces)+1)] = $attrs['namespace'];
+                    }
+                }
+            break;
+            case 'include':
+                if (isset($attrs['schemaLocation'])) {
+                    $this->xdebug('include into namespace ' . $this->schemaTargetNamespace . ' from ' . $attrs['schemaLocation']);
+                    $this->imports[$this->schemaTargetNamespace][] = array('location' => $attrs['schemaLocation'], 'loaded' => false);
+                } else {
+                    $this->xdebug('ignoring invalid XML Schema construct: include without schemaLocation attribute');
+                }
+            break;
+            case 'list':	// simpleType value list
+                $this->xdebug("do nothing for element $name");
+            break;
+            case 'restriction':	// simpleType, simpleContent or complexContent value restriction
+                $this->xdebug('restriction ' . $attrs['base']);
+                if ($this->currentSimpleType) {
+                    $this->simpleTypes[$this->currentSimpleType]['type'] = $attrs['base'];
+                } elseif ($this->currentComplexType) {
+                    $this->complexTypes[$this->currentComplexType]['restrictionBase'] = $attrs['base'];
+                    if (strstr($attrs['base'],':') == ':Array') {
+                        $this->complexTypes[$this->currentComplexType]['phpType'] = 'array';
+                    }
+                }
+            break;
+            case 'schema':
+                $this->schemaInfo = $attrs;
+                $this->schemaInfo['schemaVersion'] = $this->getNamespaceFromPrefix($prefix);
+                if (isset($attrs['targetNamespace'])) {
+                    $this->schemaTargetNamespace = $attrs['targetNamespace'];
+                }
+                if (!isset($attrs['elementFormDefault'])) {
+                    $this->schemaInfo['elementFormDefault'] = 'unqualified';
+                }
+                if (!isset($attrs['attributeFormDefault'])) {
+                    $this->schemaInfo['attributeFormDefault'] = 'unqualified';
+                }
+            break;
+            case 'simpleContent':	// (optional) content for a complexType
+                if ($this->currentComplexType) {	// This should *always* be
+                    $this->complexTypes[$this->currentComplexType]['simpleContent'] = 'true';
+                } else {
+                    $this->xdebug("do nothing for element $name because there is no current complexType");
+                }
+            break;
+            case 'simpleType':
+                array_push($this->simpleTypeStack, $this->currentSimpleType);
+                if (isset($attrs['name'])) {
+                    $this->xdebug("processing simpleType for name " . $attrs['name']);
+                    $this->currentSimpleType = $attrs['name'];
+                    $this->simpleTypes[ $attrs['name'] ] = $attrs;
+                    $this->simpleTypes[ $attrs['name'] ]['typeClass'] = 'simpleType';
+                    $this->simpleTypes[ $attrs['name'] ]['phpType'] = 'scalar';
+                } else {
+                    $name = $this->CreateTypeName($this->currentComplexType . '_' . $this->currentElement);
+                    $this->xdebug('processing unnamed simpleType for element ' . $this->currentElement . ' named ' . $name);
+                    $this->currentSimpleType = $name;
+                    //$this->currentElement = false;
+                    $this->simpleTypes[$this->currentSimpleType] = $attrs;
+                    $this->simpleTypes[$this->currentSimpleType]['phpType'] = 'scalar';
+                }
+            break;
+            case 'union':	// simpleType type list
+                $this->xdebug("do nothing for element $name");
+            break;
+            default:
+                $this->xdebug("do not have any logic to process element $name");
+        }
     }
 
     /**
@@ -889,7 +889,7 @@ class nusoap_xmlschema extends nusoap_base
     * @return string
     * @access public
     * @deprecated
-	*/
+    */
     public function typeToForm($name,$type)
     {
         // get typedef
@@ -921,7 +921,7 @@ class nusoap_xmlschema extends nusoap_base
         }
         return $buffer;
     }
-	
+    
     /**
     * adds a complex type to the schema
     * 
@@ -966,20 +966,20 @@ class nusoap_xmlschema extends nusoap_base
     public function addComplexType($name,$typeClass='complexType',$phpType='array',$compositor='',$restrictionBase='',$elements=array(),$attrs=array(),$arrayType='')
     {
         $this->complexTypes[$name] = array(
-	    'name'		=> $name,
-	    'typeClass'	=> $typeClass,
-	    'phpType'	=> $phpType,
-		'compositor'=> $compositor,
-	    'restrictionBase' => $restrictionBase,
-		'elements'	=> $elements,
-	    'attrs'		=> $attrs,
-	    'arrayType'	=> $arrayType
-		);
-		
+        'name'		=> $name,
+        'typeClass'	=> $typeClass,
+        'phpType'	=> $phpType,
+        'compositor'=> $compositor,
+        'restrictionBase' => $restrictionBase,
+        'elements'	=> $elements,
+        'attrs'		=> $attrs,
+        'arrayType'	=> $arrayType
+        );
+        
         $this->xdebug("addComplexType $name:");
         $this->appendDebug($this->varDump($this->complexTypes[$name]));
     }
-	
+    
     /**
     * adds a simple type to the schema
     *
@@ -995,13 +995,13 @@ class nusoap_xmlschema extends nusoap_base
     public function addSimpleType($name, $restrictionBase='', $typeClass='simpleType', $phpType='scalar', $enumeration=array())
     {
         $this->simpleTypes[$name] = array(
-	    'name'			=> $name,
-	    'typeClass'		=> $typeClass,
-	    'phpType'		=> $phpType,
-	    'type'			=> $restrictionBase,
-	    'enumeration'	=> $enumeration
-		);
-		
+        'name'			=> $name,
+        'typeClass'		=> $typeClass,
+        'phpType'		=> $phpType,
+        'type'			=> $restrictionBase,
+        'enumeration'	=> $enumeration
+        );
+        
         $this->xdebug("addSimpleType $name:");
         $this->appendDebug($this->varDump($this->simpleTypes[$name]));
     }
@@ -1020,7 +1020,7 @@ class nusoap_xmlschema extends nusoap_base
         }
         $this->elements[ $attrs['name'] ] = $attrs;
         $this->elements[ $attrs['name'] ]['typeClass'] = 'element';
-		
+        
         $this->xdebug("addElement " . $attrs['name']);
         $this->appendDebug($this->varDump($this->elements[ $attrs['name'] ]));
     }

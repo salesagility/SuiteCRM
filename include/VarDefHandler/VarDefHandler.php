@@ -180,7 +180,7 @@ class VarDefHandler
     public function compare_type($value_array)
     {
 
-		//Filter nothing?
+        //Filter nothing?
         if (!is_array($this->target_meta_array)) {
             return true;
         }

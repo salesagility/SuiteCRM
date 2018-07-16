@@ -45,16 +45,16 @@ class ViewModulefields extends SugarView
     public $mbModule;
     
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME','Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     public function display()
@@ -233,7 +233,7 @@ class ViewModulefields extends SugarView
         }
         return $def;
     }
-	
+    
     public function isValidStudioField(
         $def
         ) {
@@ -259,7 +259,7 @@ class ViewModulefields extends SugarView
                 return true;
             }
         }
-		
+        
         return false;
     }
 }

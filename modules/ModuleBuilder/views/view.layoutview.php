@@ -82,16 +82,16 @@ class ViewLayoutView extends SugarView
     }
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
 
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME','Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     // DO NOT REMOVE - overrides parent ViewEdit preDisplay() which attempts to load a bean for a non-existent module
@@ -154,26 +154,26 @@ class ViewLayoutView extends SugarView
                     'id' => 'saveBtn' ,
                     'text' => translate ('LBL_BTN_SAVE') ,
                     'actionScript' => "onclick='if(Studio2.checkGridLayout(\"{$this->editLayout}\")) Studio2.handleSave();'",
-                	'disabled' => $disableLayout,
+                    'disabled' => $disableLayout,
                 ) ;
                 $buttons [] = array (
                     'id' => 'publishBtn' ,
                     'text' => translate ('LBL_BTN_SAVEPUBLISH') ,
                     'actionScript' => "onclick='if(Studio2.checkGridLayout(\"{$this->editLayout}\")) Studio2.handlePublish();'",
-                	'disabled' => $disableLayout,
+                    'disabled' => $disableLayout,
                 ) ;
                 $buttons [] = array ( 'id' => 'spacer' , 'width' => '33px' ) ;
                 $buttons [] = array (
-	                'id' => 'historyBtn' ,
-	                'text' => translate ('LBL_HISTORY') ,
-	                'actionScript' => "onclick='ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\")'",
+                    'id' => 'historyBtn' ,
+                    'text' => translate ('LBL_HISTORY') ,
+                    'actionScript' => "onclick='ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\")'",
                     'disabled' => $disableLayout,
                 ) ;
                 $buttons [] = array (
-	                'id' => 'historyDefault' ,
-	                'text' => translate ('LBL_RESTORE_DEFAULT') ,
-	                'actionScript' => "onclick='ModuleBuilder.history.revert(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$history->getLast()}\", \"\")'",
-                	'disabled' => $disableLayout,
+                    'id' => 'historyDefault' ,
+                    'text' => translate ('LBL_RESTORE_DEFAULT') ,
+                    'actionScript' => "onclick='ModuleBuilder.history.revert(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$history->getLast()}\", \"\")'",
+                    'disabled' => $disableLayout,
                 ) ;
             } else {
                 $buttons [] = array (
@@ -214,8 +214,8 @@ class ViewLayoutView extends SugarView
                 $html .= "<td style='width:{$button['width']}'> </td>";
             } else {
                 $html .= "<td><input id='{$button['id']}' type='button' valign='center' class='button' style='cursor:pointer' "
-        	       . "onmousedown='this.className=\"buttonOn\";return false;' onmouseup='this.className=\"button\"' "
-        	       . "onmouseout='this.className=\"button\"' {$button['actionScript']} value = '{$button['text']}'" ;
+                   . "onmousedown='this.className=\"buttonOn\";return false;' onmouseup='this.className=\"button\"' "
+                   . "onmouseout='this.className=\"button\"' {$button['actionScript']} value = '{$button['text']}'" ;
                 if (!empty($button['disabled'])) {
                     $html .= " disabled";
                 }
@@ -248,10 +248,10 @@ class ViewLayoutView extends SugarView
         }
 
         $labels = array (
-        			MB_EDITVIEW => 'LBL_EDITVIEW' ,
-        			MB_DETAILVIEW => 'LBL_DETAILVIEW' ,
-        			MB_QUICKCREATE => 'LBL_QUICKCREATE',
-        			) ;
+                    MB_EDITVIEW => 'LBL_EDITVIEW' ,
+                    MB_DETAILVIEW => 'LBL_DETAILVIEW' ,
+                    MB_QUICKCREATE => 'LBL_QUICKCREATE',
+                    ) ;
 
         $layoutLabel = 'LBL_LAYOUTS' ;
         $layoutView = 'layouts' ;
@@ -294,7 +294,7 @@ class ViewLayoutView extends SugarView
         }
 
         // set up language files
-		$smarty->assign ('language', $parser->getLanguage()) ; // for sugar_translate in the smarty template
+        $smarty->assign ('language', $parser->getLanguage()) ; // for sugar_translate in the smarty template
         $smarty->assign('from_mb',$this->fromModuleBuilder);
         $smarty->assign('calc_field_list', json_encode($parser->getCalculatedFields()));
         if ($this->fromModuleBuilder) {

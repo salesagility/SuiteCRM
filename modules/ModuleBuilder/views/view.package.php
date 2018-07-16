@@ -42,16 +42,16 @@ require_once('modules/ModuleBuilder/MB/ModuleBuilder.php');
 class Viewpackage extends SugarView
 {
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
-	    
+        
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME','Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     public function display()
@@ -76,7 +76,7 @@ class Viewpackage extends SugarView
         } else {
             $name = (!empty($_REQUEST['package']))?$_REQUEST['package']:'';
             $mb->getPackage($name);
-			
+            
             require_once ('modules/ModuleBuilder/MB/MBPackageTree.php') ;
             $mbt = new MBPackageTree();
             $nodes = $mbt->fetchNodes();
@@ -89,10 +89,10 @@ class Viewpackage extends SugarView
                     }
                 }
             }
-			
+            
             $json = getJSONobj();
             $smarty->assign('package_labels', $json->encode($package_labels));            	
-			
+            
             $this->package =& $mb->packages[$name];
             $this->loadModuleTypes();
             $this->loadPackageHelp($name);
@@ -133,27 +133,27 @@ class Viewpackage extends SugarView
         }
     }
     public function loadPackageHelp(
- 	    $name
- 	    ) {
+        $name
+        ) {
         $this->package->help['default'] = (empty($name))?'create':'modify';
         $this->package->help['group'] = 'package';
     }
 
     public function generatePackageButtons(
- 	    $packages
- 	    ) {
+        $packages
+        ) {
         global $mod_strings;
         $this->buttons[$mod_strings['LBL_NEW_PACKAGE']] = array(
- 										'action' => "module=ModuleBuilder&action=package&new=1",
-										'help' => 'newPackage',
+                                        'action' => "module=ModuleBuilder&action=package&new=1",
+                                        'help' => 'newPackage',
                                         'linkId' => 'newPackageLink',
                                         'icon' => 'new-package'
- 										);
+                                        );
         foreach ($packages as $package) {
             $this->buttons[$package] = array(
- 										'action' =>"module=ModuleBuilder&action=package&package={$package}",
+                                        'action' =>"module=ModuleBuilder&action=package&package={$package}",
                                         'icon' => 'existing-package'
- 										);
+                                        );
         }
     }
 }

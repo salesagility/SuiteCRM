@@ -103,9 +103,9 @@ if (is_array($optimum) && (count($optimum) > 0) && !empty($optimum['serial'])) {
     $focus->service = $optimum['serial'];
 } else {
     // no save
-	// allowing bad save to allow Email Campaigns configuration to continue even without IMAP
-	$focus->service = "::::::".$focus->protocol."::::"; // save bogus info.
-	$error = "&error=true";
+    // allowing bad save to allow Email Campaigns configuration to continue even without IMAP
+    $focus->service = "::::::".$focus->protocol."::::"; // save bogus info.
+    $error = "&error=true";
 }
 ////	END SERVICE STRING CONCAT
 /////////////////////////////////////////////////////////

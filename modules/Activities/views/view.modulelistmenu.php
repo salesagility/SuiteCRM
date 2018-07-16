@@ -51,7 +51,7 @@ class ActivitiesViewModulelistmenu extends ViewModulelistmenu
                 ->getImage($row['module_name'],'border="0" align="absmiddle"',null,null,'.gif',$row['item_summary']);
         }
         $this->ss->assign('LAST_VIEWED',$history);
- 	    
+        
         $this->ss->display('include/MVC/View/tpls/modulelistmenu.tpl');
     }
 }

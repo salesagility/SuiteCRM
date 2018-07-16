@@ -62,14 +62,14 @@ class DetailViewMerge extends EditViewMerge
      */
     protected $viewDefs = 'DetailView';
     /**
-	 * Determines if getFields should analyze panels to determine if it is a MultiPanel
-	 *
-	 * @var BOOLEAN
-	 */
+     * Determines if getFields should analyze panels to determine if it is a MultiPanel
+     *
+     * @var BOOLEAN
+     */
     protected $scanForMultiPanel = true;	/**
-	 * Parses out the fields for each files meta data and then calls on mergeFields and setPanels
-	 *
-	 */
+     * Parses out the fields for each files meta data and then calls on mergeFields and setPanels
+     *
+     */
     protected function mergeMetaData()
     {
         $this->originalFields = $this->getFields($this->originalData[$this->module][$this->viewDefs][$this->panelName]);
@@ -90,7 +90,7 @@ class DetailViewMerge extends EditViewMerge
             $this->customFields[$new_index] = $this->customFields[$original_index];
             unset($this->customFields[$original_index]);
         }
-		
+        
         $this->customPanelIds = $this->getPanelIds($this->customData[$this->module][$this->viewDefs][$this->panelName]);		
         $this->newFields = $this->getFields($this->newData[$this->module][$this->viewDefs][$this->panelName]);
         //echo var_export($this->newFields, true);

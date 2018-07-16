@@ -151,18 +151,18 @@ class campaign_charts
                         }
                         $count = (isset($leadSourceArr[$key][$outcome]) && is_array($leadSourceArr[$key][$outcome]) && is_array($leadSourceArr[$key][$outcome]['total'])) ? array_sum($leadSourceArr[$key][$outcome]['total']) : 0;
                         $camp_data[$translation][$outcome] =
-							array(
-								"numerical_value" => $count,
-								"group_text" => $translation,
-								"group_key" => "",
-								"count" => "{$count}",
-								"group_label" => $alttext,
-								"numerical_label" => "Hits",
-								"numerical_key" => "hits",
-								"module" => 'Campaigns',
-								"group_base_text" => $outcome,
-								"link" => $key
-							);
+                            array(
+                                "numerical_value" => $count,
+                                "group_text" => $translation,
+                                "group_key" => "",
+                                "count" => "{$count}",
+                                "group_label" => $alttext,
+                                "numerical_label" => "Hits",
+                                "numerical_key" => "hits",
+                                "module" => 'Campaigns',
+                                "group_base_text" => $outcome,
+                                "link" => $key
+                            );
                     }
                 }
 
@@ -202,7 +202,7 @@ class campaign_charts
      * @param string $dashlet_id
      * @return string
      */public function campaign_response_roi($datay= array(),$targets=array(),$campaign_id= null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id=''
-		) {
+        ) {
         global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
 
         $not_empty = false;

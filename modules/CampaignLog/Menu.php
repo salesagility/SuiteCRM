@@ -50,4 +50,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings, $app_strings;
 $module_menu = Array(
-	);
+    );

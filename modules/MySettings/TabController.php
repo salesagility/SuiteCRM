@@ -64,9 +64,9 @@ class TabController
     public function get_system_tabs()
     {
         global $moduleList;
-	
+    
         static $system_tabs_result = null;
-	
+    
         // if the value is not already cached, then retrieve it.
         if (empty($system_tabs_result) || !self::$isCacheValid) {
             $administration = new Administration();
@@ -95,7 +95,7 @@ class TabController
             }
             self::$isCacheValid = true;
         }
-		
+        
         return $system_tabs_result;
     }
 
@@ -107,7 +107,7 @@ class TabController
         foreach ($tabs as $tab) {
             unset($unsetTabs[$tab]);
         }
-	
+    
         $should_hide_iframes = !file_exists('modules/iFrames/iFrame.php');
         if ($should_hide_iframes) {
             if (isset($unsetTabs['iFrames'])) {
@@ -211,9 +211,9 @@ class TabController
     public function get_old_user_tabs($user)
     {
         $system_tabs = $this->get_system_tabs();
-	
+    
         $tabs = $user->getPreference('tabs');
-	
+    
         if (!empty($tabs)) {
             $tabs = $this->get_key_array($tabs);
             $tabs['Home'] =  'Home';
@@ -236,7 +236,7 @@ class TabController
         foreach ($tabs as $tab) {
             unset($system_tabs[$tab]);
         }
-	
+    
         return array($tabs,$system_tabs);
     }
 
@@ -246,7 +246,7 @@ class TabController
         $hide_tabs = $this->get_user_tabs($user, 'hide');
         $remove_tabs = $this->get_user_tabs($user, 'remove');
         $system_tabs = $this->get_system_tabs();
-	
+    
         // remove access to tabs that roles do not give them permission to
 
         foreach ($system_tabs as $key=>$value) {
@@ -272,7 +272,7 @@ class TabController
                 unset($hide_tabs[$key]);
             }
         }
-		
+        
         // remove tabs from user if admin has removed specific tabs
         foreach ($remove_tabs as $key=>$value) {
             if (isset($display_tabs[$key])) {

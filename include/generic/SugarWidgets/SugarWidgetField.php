@@ -70,8 +70,8 @@ class SugarWidgetField extends SugarWidget
     public function display($layout_def)
     {
         //print $layout_def['start_link_wrapper']."===";
-		$context = $this->layout_manager->getAttribute('context'); //_ppd($context);
-		$func_name = 'display'.$context;
+        $context = $this->layout_manager->getAttribute('context'); //_ppd($context);
+        $func_name = 'display'.$context;
 
         if (!empty ($context) && method_exists($this, $func_name)) {
             return $this-> $func_name ($layout_def);

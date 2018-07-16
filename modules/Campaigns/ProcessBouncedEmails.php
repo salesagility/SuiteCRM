@@ -164,7 +164,7 @@ function campaign_process_bounced_emails(&$email, &$email_header)
     global $sugar_config;
     $emailFromAddress = $email_header->fromaddress;
     $email_description = $email->raw_source;
-    	
+        
     //if raw_source is empty, try using the description instead
     if (empty($email_description)) {
         $email_description = $email->description;
@@ -175,10 +175,10 @@ function campaign_process_bounced_emails(&$email, &$email_header)
     if (preg_match('/MAILER-DAEMON|POSTMASTER/i',$emailFromAddress)) {
         $email_description=quoted_printable_decode($email_description);
         $matches=array();
-		
+        
         //do we have the identifier tag in the email?
         $identifierScanResults = checkBouncedEmailForIdentifier($email_description);
-		
+        
         if ($identifierScanResults['found']) {
             $matches = $identifierScanResults['matches'];
             $identifiers = $identifierScanResults['identifiers'];
@@ -187,7 +187,7 @@ function campaign_process_bounced_emails(&$email, &$email_header)
                 //array should have only one element in it.
                 $identifier = trim($identifiers[0]);
                 $row = getExistingCampaignLogEntry($identifier);
-				
+                
                 //Found entry
                 if (!empty($row)) {
                     //do not create another campaign_log record is we already have an

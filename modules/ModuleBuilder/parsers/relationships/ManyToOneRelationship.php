@@ -52,7 +52,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 class ManyToOneRelationship extends AbstractRelationship
 {
-	
+    
 
     /*
      * Constructor
@@ -63,19 +63,19 @@ class ManyToOneRelationship extends AbstractRelationship
     {
         parent::__construct ($definition) ;
         $onetomanyDef = array_merge($definition, array(
-	        'rhs_label'    => isset($definition['lhs_label'])    ? $definition['lhs_label']    : null,
-	        'lhs_label'    => isset($definition['rhs_label'])    ? $definition['rhs_label']    : null,
-	        'lhs_subpanel' => isset($definition['rhs_subpanel']) ? $definition['rhs_subpanel'] : null,
-	        'rhs_subpanel' => isset($definition['lhs_subpanel']) ? $definition['lhs_subpanel'] : null,
-	        'lhs_module'   => isset($definition['rhs_module'])   ? $definition['rhs_module']   : null,
-	        'lhs_table'    => isset($definition['rhs_table'])    ? $definition['rhs_table']    : null,
-	        'lhs_key'      => isset($definition['rhs_key'])      ? $definition['rhs_key']      : null,
-	        'rhs_module'   => isset($definition['lhs_module'])   ? $definition['lhs_module']   : null,
-	        'rhs_table'    => isset($definition['lhs_table'])    ? $definition['lhs_table']    : null,
-	        'rhs_key'      => isset($definition['lhs_key'])      ? $definition['lhs_key']      : null,
-	        'join_key_lhs' => isset($definition['join_key_rhs']) ? $definition['join_key_rhs'] : null,
-	        'join_key_rhs' => isset($definition['join_key_lhs']) ? $definition['join_key_lhs'] : null,
-	        'relationship_type' => MB_ONETOMANY,
+            'rhs_label'    => isset($definition['lhs_label'])    ? $definition['lhs_label']    : null,
+            'lhs_label'    => isset($definition['rhs_label'])    ? $definition['rhs_label']    : null,
+            'lhs_subpanel' => isset($definition['rhs_subpanel']) ? $definition['rhs_subpanel'] : null,
+            'rhs_subpanel' => isset($definition['lhs_subpanel']) ? $definition['lhs_subpanel'] : null,
+            'lhs_module'   => isset($definition['rhs_module'])   ? $definition['rhs_module']   : null,
+            'lhs_table'    => isset($definition['rhs_table'])    ? $definition['rhs_table']    : null,
+            'lhs_key'      => isset($definition['rhs_key'])      ? $definition['rhs_key']      : null,
+            'rhs_module'   => isset($definition['lhs_module'])   ? $definition['lhs_module']   : null,
+            'rhs_table'    => isset($definition['lhs_table'])    ? $definition['lhs_table']    : null,
+            'rhs_key'      => isset($definition['lhs_key'])      ? $definition['lhs_key']      : null,
+            'join_key_lhs' => isset($definition['join_key_rhs']) ? $definition['join_key_rhs'] : null,
+            'join_key_rhs' => isset($definition['join_key_lhs']) ? $definition['join_key_lhs'] : null,
+            'relationship_type' => MB_ONETOMANY,
         ));
         $this->one_to_many = new OneToManyRelationship($onetomanyDef);
     }
@@ -83,7 +83,7 @@ class ManyToOneRelationship extends AbstractRelationship
     /*
      * BUILD methods called during the build
      */
-	
+    
     public function buildLabels($update = false)
     {
         return $this->one_to_many->buildLabels();

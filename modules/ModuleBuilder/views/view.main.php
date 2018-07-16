@@ -62,16 +62,16 @@ class ViewMain extends SugarView
 
 
     /**
-	 * @see SugarView::_getModuleTitleParams()
-	 */
+     * @see SugarView::_getModuleTitleParams()
+     */
     protected function _getModuleTitleParams($browserTitle = false)
     {
         global $mod_strings;
 
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
-    	   ModuleBuilderController::getModuleTitle(),
-    	   );
+           translate('LBL_MODULE_NAME','Administration'),
+           ModuleBuilderController::getModuleTitle(),
+           );
     }
 
     public function display()
@@ -88,26 +88,26 @@ class ViewMain extends SugarView
         $smarty->assign('mod', $mod_strings);
         //Replaced by javascript function "setMode"
         switch ($type) {
- 			case 'studio':
- 				//$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=wizard")');
- 				require_once('modules/ModuleBuilder/Module/StudioTree.php');
-				$mbt = new StudioTree();
-				break;
- 			case 'mb':
- 				//$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=package&package=")');
- 				require_once('modules/ModuleBuilder/MB/MBPackageTree.php');
-				$mbt = new MBPackageTree();
-				break;
- 			case 'dropdowns':
- 			   // $admin = is_admin($current_user);
- 			    require_once('modules/ModuleBuilder/Module/DropDownTree.php');
- 			    $mbt = new DropDownTree();
- 			    break;
- 			default:
- 				//$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=home")');
-				require_once('modules/ModuleBuilder/Module/MainTree.php');
-				$mbt = new MainTree();
- 		}
+            case 'studio':
+                //$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=wizard")');
+                require_once('modules/ModuleBuilder/Module/StudioTree.php');
+                $mbt = new StudioTree();
+                break;
+            case 'mb':
+                //$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=package&package=")');
+                require_once('modules/ModuleBuilder/MB/MBPackageTree.php');
+                $mbt = new MBPackageTree();
+                break;
+            case 'dropdowns':
+               // $admin = is_admin($current_user);
+                require_once('modules/ModuleBuilder/Module/DropDownTree.php');
+                $mbt = new DropDownTree();
+                break;
+            default:
+                //$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=home")');
+                require_once('modules/ModuleBuilder/Module/MainTree.php');
+                $mbt = new MainTree();
+        }
         $smarty->assign('TEST_STUDIO', displayStudioForCurrentUser());
         $smarty->assign('ADMIN', is_admin($current_user));
         $smarty->display('modules/ModuleBuilder/tpls/includes.tpl');

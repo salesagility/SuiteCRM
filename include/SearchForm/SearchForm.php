@@ -370,7 +370,7 @@ class SearchForm
                             $where .= " OR ";
                         }
                         switch ($operator) {
-                        	case 'subquery':
+                            case 'subquery':
                                 $in = 'IN';
                                 if (isset($parms['subquery_in_clause'])) {
                                     if (!is_array($parms['subquery_in_clause'])) {
@@ -403,7 +403,7 @@ class SearchForm
                                     $where .= "{$db_field} $in ({$parms['subquery']} '{$field_value}%')";
                                 }
 
-    	                    	break;
+                                break;
                             case 'like':
                                 $where .=  $db_field . " like ".$this->bean->db->quoted($field_value.'%');
                                 break;
@@ -418,7 +418,7 @@ class SearchForm
                                     $field_value = explode('<>', $field_value);
                                 }
                                 $where .= "(". $db_field . " >= ".$this->bean->db->quoted($field_value[0]) .
-                                	" AND " .$db_field . " <= ".$this->bean->db->quoted($field_value[1]).")";
+                                    " AND " .$db_field . " <= ".$this->bean->db->quoted($field_value[1]).")";
                                 break;
                         }
                     }

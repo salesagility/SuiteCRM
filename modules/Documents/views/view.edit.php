@@ -70,8 +70,8 @@ class DocumentsViewEdit extends ViewEdit
 
 
     /**
-	 * @see SugarView::display()
-	 */
+     * @see SugarView::display()
+     */
     public function display()
     {
         global $app_list_strings, $mod_strings;
@@ -105,13 +105,13 @@ class DocumentsViewEdit extends ViewEdit
         }
 
         $popup_request_data = array(
-			'call_back_function' => 'document_set_return',
-			'form_name' => 'EditView',
-			'field_to_name_array' => array(
-				'id' => 'related_doc_id',
-				'document_name' => 'related_document_name',
-				),
-			);
+            'call_back_function' => 'document_set_return',
+            'form_name' => 'EditView',
+            'field_to_name_array' => array(
+                'id' => 'related_doc_id',
+                'document_name' => 'related_document_name',
+                ),
+            );
         $json = getJSONobj();
         $this->ss->assign('encoded_document_popup_request_data', $json->encode($popup_request_data));
 
@@ -141,21 +141,21 @@ class DocumentsViewEdit extends ViewEdit
             if (!empty($_REQUEST['parent_type'])) {
                 switch (strtolower($_REQUEST['parent_type'])) {
 
-					case "contracts":
-						$this->ss->assign("LBL_PARENT_NAME",$mod_strings['LBL_CONTRACT_NAME']);
-						break;
+                    case "contracts":
+                        $this->ss->assign("LBL_PARENT_NAME",$mod_strings['LBL_CONTRACT_NAME']);
+                        break;
 
-					//todo remove leads case.
-					case "leads":
-						$this->ss->assign("LBL_PARENT_NAME",$mod_strings['LBL_CONTRACT_NAME']);
-						break;
-				} //switch
+                    //todo remove leads case.
+                    case "leads":
+                        $this->ss->assign("LBL_PARENT_NAME",$mod_strings['LBL_CONTRACT_NAME']);
+                        break;
+                } //switch
             } //if
         } //if
 
-		if (isset($_REQUEST['parent_type'])) {
-		    $this->ss->assign("PARENT_TYPE",$_REQUEST['parent_type']);
-		}
+        if (isset($_REQUEST['parent_type'])) {
+            $this->ss->assign("PARENT_TYPE",$_REQUEST['parent_type']);
+        }
 
         if ($load_signed) {
             $this->ss->assign("RELATED_DOCUMENT_REVISION_DISABLED", "disabled");

@@ -51,18 +51,18 @@ global $mod_strings;
 
 if (ACLController::checkAccess('Project', 'edit', true)) {
     $module_menu[] = array("index.php?module=Project&action=EditView&return_module=Project&return_action=DetailView",
-	$mod_strings['LNK_NEW_PROJECT'], 'Create');
+    $mod_strings['LNK_NEW_PROJECT'], 'Create');
 }
 if (ACLController::checkAccess('Project', 'list', true)) {
     $module_menu[] = array('index.php?module=Project&action=index',
-	$mod_strings['LNK_PROJECT_LIST'], 'List');
+    $mod_strings['LNK_PROJECT_LIST'], 'List');
 }
     /*
 if(ACLController::checkAccess('ProjectTask', 'edit', true))$module_menu[] = array("index.php?module=ProjectTask&action=EditView&return_module=ProjectTask&return_action=DetailView",
-	$mod_strings['LNK_NEW_PROJECT_TASK'], 'CreateProjectTask');
+    $mod_strings['LNK_NEW_PROJECT_TASK'], 'CreateProjectTask');
     */
 if (ACLController::checkAccess('ProjectTask', 'list', true)) {
     $module_menu[] = array('index.php?module=ProjectTask&action=index',
-	$mod_strings['LNK_PROJECT_TASK_LIST'], 'View_Project_Tasks');
+    $mod_strings['LNK_PROJECT_TASK_LIST'], 'View_Project_Tasks');
 }
 

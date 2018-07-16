@@ -424,9 +424,9 @@ EOQ;
                     $focus->leads_arr[] = $_POST['parent_id'];
                 }
                 // Call the Call module's save function to handle saving other fields besides
-	    	// the users and contacts relationships
+            // the users and contacts relationships
             $focus->update_vcal = false;    // Bug #49195 : don't update vcal b/s related users aren't saved yet, create vcal cache below
-	    	$focus->save(true);
+            $focus->save(true);
                 $return_id = $focus->id;
 
                 // Process users
@@ -507,7 +507,7 @@ EOQ;
                 }
 
                 ////	END REBUILD INVITEE RELATIONSHIPS
-	    	///////////////////////////////////////////////////////////////////////////
+            ///////////////////////////////////////////////////////////////////////////
             }
         }
 
