@@ -68,6 +68,8 @@ class SugarPHPMailer extends PHPMailer
      * @var string
      */
     public $Body_html;
+    
+    private static $FromNameOrigin = null;
 
     /**
      * Constructor.
@@ -75,6 +77,9 @@ class SugarPHPMailer extends PHPMailer
      */
     public function __construct($exceptions = null)
     {
+        if (null == self::$FromNameOrigin) {
+            self::$FromNameOrigin = $this->FromName;
+        }
         parent::__construct($exceptions);
         global $locale;
         global $current_user;
@@ -232,8 +237,16 @@ class SugarPHPMailer extends PHPMailer
 eoq;
                 $this->Body = $head . $this->Body . '</body></html>';
             }
+            
+            $fromName = $this->FromName;
+            
+            // checking if username already set for phpmailer and 
+            // using that as username instead fromname
+            if ($this->FromName == self::$FromNameOrigin && !empty($this->Username)) {
+                $fromName = $this->Username;
+            }
 
-            $this->FromName = $locale->translateCharset(trim($this->FromName), 'UTF-8', $OBCharset);
+            $this->FromName = $locale->translateCharset(trim($fromName), 'UTF-8', $OBCharset);
 
         }
     }

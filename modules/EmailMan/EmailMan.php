@@ -567,6 +567,7 @@ class EmailMan extends SugarBean
                 $this->ref_email->description_html = $body_html;
                 $this->ref_email->description = $body_text;
                 $this->ref_email->from_addr = $from_address;
+                isValidEmailAddress($this->ref_email->from_addr);
                 $this->ref_email->from_addr_name = $from_address_name;
                 $this->ref_email->assigned_user_id = $sender_id;
                 if ($this->test) {
@@ -729,6 +730,7 @@ class EmailMan extends SugarBean
             $email->description = $mail->AltBody;
         }
         $email->from_addr = $mail->From;
+        isValidEmailAddress($email->from_addr);
         $email->assigned_user_id = $this->user_id;
         $email->parent_type = $this->related_type;
         $email->parent_id = $this->related_id;
@@ -989,6 +991,7 @@ class EmailMan extends SugarBean
                 $this->current_mailbox->retrieve($this->current_emailmarketing->inbound_email_id);
                 //extract the email address.
                 $this->mailbox_from_addr = $this->current_mailbox->get_stored_options('from_addr', 'nobody@example.com', null);
+                isValidEmailAddress($this->mailbox_from_addr);
             }
 
             // fetch campaign details..
@@ -1018,7 +1021,9 @@ class EmailMan extends SugarBean
             $mail->ClearAllRecipients();
             $mail->ClearReplyTos();
             $mail->Sender = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            isValidEmailAddress($mail->Sender);
             $mail->From = $this->current_emailmarketing->from_addr ? $this->current_emailmarketing->from_addr : $this->mailbox_from_addr;
+            isValidEmailAddress($mail->From);
             $mail->FromName = $locale->translateCharsetMIME(trim($this->current_emailmarketing->from_name), 'UTF-8', $OBCharset);
             
             $mail->ClearCustomHeaders();
@@ -1420,6 +1425,7 @@ class EmailMan extends SugarBean
         $defaults = $emailObj->getSystemDefaultEmail();
 
         $mailer->From = $defaults['email'];
+        isValidEmailAddress($mailer->From);
         $mailer->FromName = $defaults['name'];
 
         $mailer->Subject = from_html($emailTemplate->subject);

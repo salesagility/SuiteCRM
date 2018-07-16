@@ -727,6 +727,7 @@ class Email extends Basic
 
         $mail->Subject = from_html($mod_strings['LBL_TEST_EMAIL_SUBJECT']);
         $mail->From = $fromaddress;
+        isValidEmailAddress($mail->From);
 
         if ($fromname != '') {
             $mail->FromName = html_entity_decode($fromname, ENT_QUOTES);
@@ -735,6 +736,7 @@ class Email extends Basic
         }
 
         $mail->Sender = $mail->From;
+        isValidEmailAddress($mail->Sender);
         $mail->AddAddress($toaddress);
         $mail->Body = $mod_strings['LBL_TEST_EMAIL_BODY'];
 
@@ -942,6 +944,7 @@ class Email extends Basic
         if (empty($request['fromAccount'])) {
             $defaults = $current_user->getPreferredEmail();
             $mail->From = $defaults['email'];
+            isValidEmailAddress($mail->From);
             $mail->FromName = $defaults['name'];
             $replyToName = $mail->FromName;
             //$replyToAddress = $current_user->emailAddress->getReplyToAddress($current_user);
@@ -956,6 +959,7 @@ class Email extends Basic
             //$replyToAddress = "";
             if (!empty($storedOptions)) {
                 $fromAddress = $storedOptions['from_addr'];
+                isValidEmailAddress($fromAddress);
                 $fromName = from_html($storedOptions['from_name']);
                 $replyToAddress = (isset($storedOptions['reply_to_addr']) ? $storedOptions['reply_to_addr'] : "");
                 $replyToName = (isset($storedOptions['reply_to_name']) ? from_html($storedOptions['reply_to_name']) : "");
@@ -981,11 +985,13 @@ class Email extends Basic
             }
             // end of code to remove
             $mail->From = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
+            isValidEmailAddress($mail->From);
             $mail->FromName = (!empty($fromName)) ? $fromName : $defaults['name'];
             $replyToName = (!empty($replyToName)) ? $replyToName : $mail->FromName;
         }
 
         $mail->Sender = $mail->From; /* set Return-Path field in header to reduce spam score in emails sent via Sugar's Email module */
+        isValidEmailAddress($mail->Sender);
 
         if (!empty($replyToAddress)) {
             $mail->AddReplyTo($replyToAddress, $locale->translateCharsetMIME(trim($replyToName), 'UTF-8', $OBCharset));
@@ -1243,6 +1249,7 @@ class Email extends Basic
             // saving a draft OR saving a sent email
             $decodedFromName = mb_decode_mimeheader($mail->FromName);
             $this->from_addr = "{$decodedFromName} <{$mail->From}>";
+            isValidEmailAddress($this->from_addr);
             $this->from_addr_name = $this->from_addr;
             $this->to_addrs = $_REQUEST['sendTo'];
             $this->to_addrs_names = $_REQUEST['sendTo'];
@@ -1516,7 +1523,7 @@ class Email extends Basic
         $tmpNote->filename = $filename;
         $tmpNote->file_mime_type = $mimeType;
         $noteFile = "upload://{$tmpNote->id}";
-
+        
         if (!file_exists($fileLocation)) {
             LoggerManager::getLogger()->warn('Email error: File Location not found for save temp note attachments. File location was: "' . $fileLocation . '"');
         } else {
@@ -1524,13 +1531,13 @@ class Email extends Basic
             if (!copy($fileLocation, $noteFile)) {
                 $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
             } else {
-
+                
                 if (!$tmpNote->save()) {
                     return false;
                 }
             }
         }
-
+        
         return true;
     }
 
@@ -2788,21 +2795,25 @@ class Email extends Basic
         $ieId = $this->mailbox_id;
         $mail = $this->setMailer($mail, '', $ieId);
 
-
-
+        
+        
         if ($mail->oe->type === 'system') {
-            $mail->From =
-            $sender =
-            $ReplyToAddr = $mail->oe->smtp_from_addr;
+            $mail->From = 
+                $sender =
+                $ReplyToAddr = $mail->oe->smtp_from_addr;
+            isValidEmailAddress($mail->From);
             $ReplyToName = $mail->oe->smtp_from_name;
         } else {
 
             // FROM ADDRESS
             if (!empty($this->from_addr)) {
                 $mail->From = $this->from_addr;
+                isValidEmailAddress($mail->From);
             } else {
                 $mail->From = $current_user->getPreference('mail_fromaddress');
+                isValidEmailAddress($mail->From);
                 $this->from_addr = $mail->From;
+                isValidEmailAddress($this->from_addr);
             }
             // FROM NAME
             if (!empty($this->from_name)) {
@@ -2822,15 +2833,18 @@ class Email extends Basic
             }
 
             $sender = $mail->From;
+            isValidEmailAddress($sender);
             if (!empty($this->reply_to_addr)) {
                 $ReplyToAddr = $this->reply_to_addr;
             } else {
                 $ReplyToAddr = $mail->From;
             }
+            isValidEmailAddress($ReplyToAddr);
         }
-
-
+        
+        
         $mail->Sender = $sender; /* set Return-Path field in header to reduce spam score in emails sent via Sugar's Email module */
+        isValidEmailAddress($mail->Sender);
         $mail->AddReplyTo($ReplyToAddr, $locale->translateCharsetMIME(trim($ReplyToName), 'UTF-8', $OBCharset));
 
         //$mail->Subject = html_entity_decode($this->name, ENT_QUOTES, 'UTF-8');
@@ -3267,6 +3281,7 @@ class Email extends Basic
         $email_fields = $this->get_list_view_array();
         $this->retrieveEmailText();
         $email_fields['FROM_ADDR'] = $this->from_addr_name;
+        isValidEmailAddress($email_fields['FROM_ADDR']);
         $email_fields['FROM_ADDR_NAME'] = $this->from_addr_name;
         $email_fields['TO_ADDRS'] = $this->to_addrs;
         $email_fields['TO_ADDRS_NAMES'] = $this->to_addrs_names;
@@ -3452,12 +3467,14 @@ class Email extends Basic
             //regular email addresses.
             $temp['to_addrs'] = preg_replace('/[\x00-\x08\x0B-\x1F]/', '', $a['to_addrs']);
             $temp['from'] = preg_replace('/[\x00-\x08\x0B-\x1F]/', '', $a['from_addr']);
+            isValidEmailAddress($temp['from']);
             if (empty($temp['from']) || empty($temp['to_addrs'])) {
                 //Retrieve email addresses seperatly.
                 $tmpEmail = new Email();
                 $tmpEmail->id = $a['id'];
                 $tmpEmail->retrieveEmailAddresses();
                 $temp['from'] = $tmpEmail->from_addr;
+                isValidEmailAddress($temp['from']);
                 $temp['to_addrs'] = $tmpEmail->to_addrs;
             }
 
@@ -3512,6 +3529,7 @@ class Email extends Basic
         //Handle from and to addr joins
         if (!empty($_REQUEST['from_addr'])) {
             $from_addr = $this->db->quote(strtolower($_REQUEST['from_addr']));
+            isValidEmailAddress($from_addr);
             $query['joins'] .= "INNER JOIN emails_email_addr_rel er_from ON er_from.email_id = emails.id AND er_from.deleted = 0 INNER JOIN email_addresses ea_from ON ea_from.id = er_from.email_address_id
                                 AND er_from.address_type='from' AND emails_text.from_addr LIKE '%" . $from_addr . "%'";
         }
@@ -4127,6 +4145,7 @@ eoq;
         if (isset($request['from_addr']) && $request['from_addr'] != $request['from_addr_name'] . ' &lt;' . $request['from_addr_email'] . '&gt;') {
             if (false === strpos($request['from_addr'], '&lt;')) { // we have an email only?
                 $bean->from_addr = $request['from_addr'];
+                isValidEmailAddress($bean->from_addr);
                 $bean->from_name = '';
                 $bean->reply_to_addr = $bean->from_addr;
                 $bean->reply_to_name = $bean->from_name;
@@ -4134,15 +4153,18 @@ eoq;
                 $newFromAddr = str_replace($old, $new, $request['from_addr']);
                 $bean->from_addr = substr($newFromAddr, (1 + strpos($newFromAddr, '<')),
                     (strpos($newFromAddr, '>') - strpos($newFromAddr, '<')) - 1);
+                isValidEmailAddress($bean->from_addr);
                 $bean->from_name = substr($newFromAddr, 0, (strpos($newFromAddr, '<') - 1));
                 $bean->reply_to_addr = $bean->from_addr;
                 $bean->reply_to_name = $bean->from_name;
             }
         } elseif (!empty($request['from_addr_email']) && isset($request['from_addr_email'])) {
             $bean->from_addr = $request['from_addr_email'];
+            isValidEmailAddress($bean->from_addr);
             $bean->from_name = $request['from_addr_name'];
         } else {
             $bean->from_addr = $bean->getSystemDefaultEmail();
+            isValidEmailAddress($bean->from_addr);
             $bean->reply_to_addr = $bean->from_addr['email'];
             $bean->reply_to_name = $bean->from_addr['name'];
         }
