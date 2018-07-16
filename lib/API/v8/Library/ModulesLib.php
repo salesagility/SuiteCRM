@@ -43,7 +43,7 @@ namespace SuiteCRM\API\v8\Library;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use League\Url\Components\Query;
+use League\Uri\Components\Query;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\FilterInterpreter;
 use SuiteCRM\API\JsonApi\v1\Filters\Interpreters\SuiteInterpreter;
 use SuiteCRM\API\JsonApi\v1\Links;
@@ -315,6 +315,8 @@ class ModulesLib
      * @param null|array $sort
      * @param null|array $fields eg array ('fields' => 'Accounts' => array('name', 'description'))
      * @return string
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     private function generatePaginationUrl(
         Request $req,
@@ -323,7 +325,8 @@ class ModulesLib
         $filter = null,
         $sort = null,
         $fields = null
-    ) {
+    )
+    {
         $config = $this->containers->get('ConfigurationManager');
         $query = new Query();
         $pagination = array();
@@ -338,11 +341,11 @@ class ModulesLib
 
 
         if ($filter !== null) {
-            $query->modify(array('filter' => $filter));
+            $query->withContent(array('filter' => $filter));
         }
 
         if ($sort !== null) {
-            $query->modify(array('sort' => implode(',', $sort)));
+            $query->withContent(array('sort' => implode(',', $sort)));
         }
 
 
@@ -351,11 +354,11 @@ class ModulesLib
             foreach ($fields as $module => $moduleFields) {
                 $queryFields['fields'][$module] = $fields[$module];
             }
-            $query->modify($queryFields);
+            $query->withContent($queryFields);
         }
 
-        $query->modify($pagination);
-        $queryString = $query->get();
+        $query->withContent($pagination);
+        $queryString = $query->getContent();
         if ($queryString !== null) {
             return $config['site_url'] . '/api/' . $req->getUri()->getPath() . '?' . $queryString;
         }
