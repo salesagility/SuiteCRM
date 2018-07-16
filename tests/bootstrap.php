@@ -1,11 +1,10 @@
 <?php
 /**
- *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2018 SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -16,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
  *
  * You should have received a copy of the GNU Affero General Public License along with
@@ -34,60 +33,25 @@
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for technical reasons, the Appropriate Legal Notices must
- * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+/* bootstrap composer's autoloader */
+require_once __DIR__ . '/../vendor/autoload.php';
 
-namespace SuiteCRM;
+/* bootstrap sugarcrm */
+chdir('../');
+define('sugarEntry',TRUE);
+global $sugar_config, $db;
+require_once 'include/utils.php';
+require_once 'include/modules.php';
+require_once 'include/entryPoint.php';
+//Oddly entry point loads app_strings but not app_list_strings, manually do this here.
+$GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
 
-use PHPUnit_Framework_TestCase;
-
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
-
-/**
- * StateCheckerPHPUnitTestCaseAbstract
- *
- * @author SalesAgility
- */
-abstract class StateCheckerPHPUnitTestCaseAbstract extends PHPUnit_Framework_TestCase
-{
-    use StateCheckerTrait;
-    
-    protected static $verbose = true;
+/* VERY BAD :-( - but for now at least tests are running */
+$GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
 
 
-    /**
-     * Collect state information and storing a hash
-     */
-    protected function setUp()
-    {
-        
-        if (self::$verbose) {
-            $currentTestName = get_class($this) . '::' . $this->getName(false);
-            echo "\t" . $currentTestName  . " ..";
-            for ($i = 60; $i > strlen($currentTestName); $i--) {
-                echo ".";
-            }
-        }
-        
-        $this->beforeStateCheck();
-        parent::setUp();
-    }
-    
-    /**
-     * Collect state information and comparing hash
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-        $this->afterStateCheck();
-        
-        if (self::$verbose) {
-            echo " [done]\n";
-        }
-    }
-    
-}
+define('SUITE_PHPUNIT_RUNNER', true);
