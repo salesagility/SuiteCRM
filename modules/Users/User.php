@@ -1736,19 +1736,7 @@ EOQ;
         $class = ''
     ) {
         $emailLink = '';
-        global $sugar_config;
-
-        if (!isset($sugar_config['email_default_client'])) {
-            $this->setDefaultsInConfig();
-        }
-
-        $userPref = $this->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
+        $client = $this->getEmailClient();
 
         if ($client == 'sugar') {
             require_once('modules/Emails/EmailUI.php');
@@ -1768,6 +1756,31 @@ EOQ;
         }
 
         return $emailLink;
+    }
+
+    /**
+     * Returns the email client type that should be used for this user.
+     * Either "sugar" for the "SuiteCRM E-mail Client" or "mailto" for the
+     * "External Email Client".
+     *
+     * @return string
+     */
+    public function getEmailClient() {
+        global $sugar_config;
+
+        if (!isset($sugar_config['email_default_client'])) {
+            $this->setDefaultsInConfig();
+        }
+
+        $userPref = $this->getPreference('email_link_type');
+        $defaultPref = $sugar_config['email_default_client'];
+        if ($userPref != '') {
+            $client = $userPref;
+        } else {
+            $client = $defaultPref;
+        }
+
+        return $client;
     }
 
     /**
@@ -1793,20 +1806,7 @@ EOQ;
     ) {
         require_once('modules/Emails/EmailUI.php');
         $emailLink = '';
-        global $sugar_config;
-
-
-        if (!isset($sugar_config['email_default_client'])) {
-            $this->setDefaultsInConfig();
-        }
-
-        $userPref = $this->getPreference('email_link_type');
-        $defaultPref = $sugar_config['email_default_client'];
-        if ($userPref != '') {
-            $client = $userPref;
-        } else {
-            $client = $defaultPref;
-        }
+        $client = $this->getEmailClient();
 
         if ($client == 'sugar') {
             $emailUI = new EmailUI();
