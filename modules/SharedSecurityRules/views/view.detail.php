@@ -72,7 +72,13 @@ class SharedSecurityRulesViewDetail extends ViewDetail
             if ($condition_name) {
             
                 if ($condition_name->value_type == 'Date') {
-                    $condition_name->value = unserialize(base64_decode($condition_name->value));
+                    $conditionNameValue = null;
+                    if (!isset($condition_name->value)) {
+                        LoggerManager::getLogger()->warn('a Date Condition has not value');
+                    } else {
+                        $conditionNameValue = $condition_name->value;
+                    }
+                    $condition_name->value = unserialize(base64_decode($conditionNameValue));
                 }
                 $condition_item = $condition_name->toArray();
 

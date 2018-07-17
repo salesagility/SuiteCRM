@@ -46,6 +46,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 require_once('include/TemplateHandler/TemplateHandler.php');
 require_once('include/EditView/SugarVCR.php');
 
+require_once __DIR__ . '/../Exceptions/SuiteException.php';
+
 /**
  * New EditView
  * @api
