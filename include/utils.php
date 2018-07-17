@@ -209,7 +209,7 @@ function make_sugar_config(&$sugar_config)
     'linkexpirationtype' => '1',
     'systexpiration' => '0',
     'systexpirationtime' => '',
-    'systexpirationtype' => '0',
+    'systexpirationtype' => '1',
     'systexpirationlogin' => '',
         ) : $passwordsetting,
         'use_sprites' => function_exists('imagecreatetruecolor'),

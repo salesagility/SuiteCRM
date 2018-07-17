@@ -212,7 +212,7 @@ function merge_passwordsetting($sugar_config, $sugar_version) {
         'linkexpirationtype' => '1',
         'systexpiration' => '0',
         'systexpirationtime' => '',
-        'systexpirationtype' => '0',
+        'systexpirationtype' => '1',
         'systexpirationlogin' => '',
         'factoremailtmpl' => '',
         ) ,

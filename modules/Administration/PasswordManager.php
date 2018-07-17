@@ -57,7 +57,7 @@ function clearPasswordSettings()
     $_POST['passwordsetting_linkexpirationtype'] = '1';
     $_POST['passwordsetting_systexpiration'] = '0';
     $_POST['passwordsetting_systexpirationtime'] = '';
-    $_POST['passwordsetting_systexpirationtype'] = '0';
+    $_POST['passwordsetting_systexpirationtype'] = '1';
     $_POST['passwordsetting_systexpirationlogin'] = '';
 }
 

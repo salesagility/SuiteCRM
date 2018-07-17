@@ -251,7 +251,7 @@ function merge_passwordsetting($sugar_config, $sugar_version) {
             'userexpirationlogin' => '',
             'systexpiration' => '0',
             'systexpirationtime' => '',
-            'systexpirationtype' => '0',
+            'systexpirationtype' => '1',
             'systexpirationlogin' => '',
             'lockoutexpiration' => '0',
             'lockoutexpirationtime' => '',
