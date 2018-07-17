@@ -1,9 +1,11 @@
 <?php
 
-class SavedSearchTest extends PHPUnit_Framework_TestCase
+class SavedSearchTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -32,12 +34,17 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
 
     public function testgetForm()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $savedSearch = new SavedSearch(array('id', 'name'), 'id', 'ASC');
         $result = $savedSearch->getForm('Leads');
 
         $this->assertGreaterThan(0, strlen($result));
+        
+        // clean up
     }
 
     public function testgetSelect()
@@ -48,36 +55,36 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, strlen($result));
     }
 
-    public function testMain()
-    {
-        $savedSearch = new SavedSearch();
-
-        $savedSearch->name = 'test';
-        $savedSearch->search_module = 'Leads';
-        $savedSearch->save();
-
-        //test for record ID to verify that record is saved
-        $this->assertTrue(isset($savedSearch->id));
-        $this->assertEquals(36, strlen($savedSearch->id));
+//    public function testMain()
 
 
-        // Where is the unit test?
-        // Where is the main method?
-        // Why is this combined?
-        // TODO: TASK: UNDEFINED - build the tests for the following methods.
-        $this->markTestIncomplete('');
-//        //test handleSave method
-//        $this->handleSaveAndRetrieveSavedSearch($savedSearch->id);
 //
-//        //test returnSavedSearch method
-//        $this->returnSavedSearch($savedSearch->id);
+
+
+
 //
-//        //test returnSavedSearchContents method
-//        $this->returnSavedSearchContents($savedSearch->id);
+//        //test for record ID to verify that record is saved
+
+
 //
-//        //test handleDelete method
-//        $this->handleDelete($savedSearch->id);
-    }
+//
+//        // Where is the unit test?
+//        // Where is the main method?
+//        // Why is this combined?
+//        // TODO: TASK: UNDEFINED - build the tests for the following methods.
+
+    ////        //test handleSave method
+
+    ////
+    ////        //test returnSavedSearch method
+
+    ////
+    ////        //test returnSavedSearchContents method
+
+    ////
+    ////        //test handleDelete method
+
+
 
     public function handleSaveAndRetrieveSavedSearch($id)
     {
@@ -108,6 +115,12 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
 
     public function returnSavedSearch($id)
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $savedSearch = new SavedSearch();
 
         //execute the method and test if it works and does not throws an exception.
@@ -115,12 +128,20 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
             $savedSearch->returnSavedSearch($id);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function returnSavedSearchContents($id)
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $savedSearch = new SavedSearch();
 
         //execute the method and test if it works and does not throws an exception.
@@ -128,8 +149,10 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
             $result = $savedSearch->returnSavedSearchContents($id);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testhandleRedirect()
@@ -138,12 +161,19 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
 
         $search_query = '&orderBy=&sortOrder=&query=&searchFormTab=&showSSDIV=';
 
-        //$savedSearch->handleRedirect("Leads", $search_query, 1, 'true');
+        
         $this->markTestIncomplete('method uses die');
     }
 
     public function testfill_in_additional_list_fields()
     {
+        // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('saved_search');
+
+        // test
+        
         $savedSearch = new SavedSearch();
 
         $savedSearch->assigned_user_id = 1;
@@ -153,10 +183,22 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals('Leads', $savedSearch->search_module);
         $this->assertEquals('Administrator', $savedSearch->assigned_user_name);
+        
+        // clean up
+        
+        $state->popTable('saved_search');
     }
 
     public function testpopulateRequest()
     {
+        // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('saved_search');
+        $state->pushGlobals();
+
+        // test
+        
         $savedSearch = new SavedSearch();
 
         $savedSearch->contents = array('search_module' => 'Accounts',
@@ -168,7 +210,12 @@ class SavedSearchTest extends PHPUnit_Framework_TestCase
 
         //verify thhat Request parameters are set
         $this->assertEquals('Accounts', $_REQUEST['search_module']);
-        $this->assertEquals('test text',  $_REQUEST['description']);
+        $this->assertEquals('test text', $_REQUEST['description']);
         $this->assertEquals('some content', $_REQUEST['test_content']);
+
+        // clean up
+        
+        $state->popTable('saved_search');
+        $state->popGlobals();
     }
 }

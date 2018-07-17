@@ -44,7 +44,7 @@ require_once('modules/SurveyResponses/SurveyResponses.php');
 
 class SurveyResponsesDashlet extends DashletGeneric
 {
-    function __construct($id, $def = null)
+    public function __construct($id, $def = null)
     {
         global $current_user, $app_strings;
         require('modules/SurveyResponses/metadata/dashletviewdefs.php');

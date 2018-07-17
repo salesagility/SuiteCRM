@@ -1,9 +1,11 @@
 <?php
 
-class SchedulersJobTest extends PHPUnit_Framework_TestCase
+class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -11,6 +13,9 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
 
     public function testSchedulersJob()
     {
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('email_addresses');
+        
         //execute the contructor and check for the Object type and  attributes
         $schedulersJob = new SchedulersJob();
 
@@ -26,11 +31,18 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(true, 'process_save_dates', $schedulersJob);
         $this->assertAttributeEquals(30, 'min_interval', $schedulersJob);
         $this->assertAttributeEquals(true, 'job_done', $schedulersJob);
+        
+        // clean up
+        
+        $state->popTable('email_addresses');
     }
 
     public function testcheck_date_relationships_load()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $schedulersJob = new SchedulersJob();
         $schedulersJob->execute_time = '2015-01-01 00:00:00';
@@ -38,6 +50,8 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $schedulersJob->check_date_relationships_load();
 
         $this->assertEquals('2015-01-01 00:00:00', $schedulersJob->execute_time_db);
+        
+        // clean up
     }
 
     public function testhandleDateFormat()
@@ -55,6 +69,8 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
 
     public function testfireUrl()
     {
+        self::markTestIncomplete('environment dependency: curl_setopt(): CURLOPT_DNS_USE_GLOBAL_CACHE cannot be activated when thread safety is enabled ');
+        
         $schedulersJob = new SchedulersJob();
 
         //test with invalid param
@@ -63,8 +79,6 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
 
         //test with valid param
         self::markTestIncomplete();
-        //$result = $schedulersJob->fireUrl('https://suitecrm.com/');
-        //$this->assertEquals(true, $result);
     }
 
     public function testget_list_view_data()
@@ -88,6 +102,12 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -95,12 +115,22 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
             $schedulersJob->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testfailJob()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        
+        // test
+        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->failJob();
@@ -114,10 +144,23 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(SchedulersJob::JOB_FAILURE, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
     }
 
     public function testsucceedJob()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        
+        // test
+        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->succeedJob();
@@ -131,10 +174,21 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(SchedulersJob::JOB_SUCCESS, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
     }
 
     public function testonFailureRetry()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -142,14 +196,22 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
             $schedulersJob->onFailureRetry();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
+        
+        // clean up
     }
 
-    public function testonFinalFailure()
+    public function testOnFinalFailure()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $schedulersJob = new SchedulersJob();
 
         //execute the method and test if it works and does not throws an exception.
@@ -157,14 +219,26 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
             $schedulersJob->onFinalFailure();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
 
         $this->markTestIncomplete('method has no implementation: logic hooks not defined');
+        
+        // clean up
     }
 
     public function testresolveJob()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        
+        // test
+        
+        
         $schedulersJob = new SchedulersJob();
 
         //test for JOB_FAILURE
@@ -186,10 +260,23 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(SchedulersJob::JOB_SUCCESS, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
     }
 
     public function testpostponeJobAndMark_deleted()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        
+        // test
+        
         $schedulersJob = new SchedulersJob();
 
         $result = $schedulersJob->postponeJob('test message', 1);
@@ -207,10 +294,23 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $schedulersJob->mark_deleted($schedulersJob->id);
         $result = $schedulersJob->retrieve($schedulersJob->id);
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
     }
 
     public function testunexpectedExit()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        
+        // test
+        
         $schedulersJob = new SchedulersJob();
 
         //create conditions to mark job_done as false
@@ -226,13 +326,26 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(SchedulersJob::JOB_FAILURE, $schedulersJob->resolution);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
     }
 
     public function testrunJobId()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        
+        // test
+        
 
         //test with invalid job id
-        $result = SchedulersJob::runJobId('1','');
+        $result = SchedulersJob::runJobId('1', '');
         $this->assertEquals('Job 1 not found.', $result);
 
         //test with valid job id
@@ -253,10 +366,23 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Job '.$schedulersJob->id.' belongs to another client, can not run as test_client.', $result);
 
         $schedulersJob->mark_deleted($schedulersJob->id);
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
     }
 
     public function testerrorHandler()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_index');
+        
+        // test
+        
+
         $schedulersJob = new SchedulersJob();
 
         //execute the method with different Error Types
@@ -276,6 +402,10 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $schedulersJob->errors = '';
         $schedulersJob->errorHandler(E_RECOVERABLE_ERROR, 'test err', 'testfile', '1');
         $this->assertEquals("Recoverable Error [4096]: test err in testfile on line 1\n", $schedulersJob->errors);
+        
+        // clean up
+        
+        $state->popTable('aod_index');
     }
 
     public function testrunJob()
@@ -294,7 +424,7 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
 
         $schedulersJob->target = 'function::processAOW_Workflow';
         $result = $schedulersJob->runJob();
-        $this->assertEquals(true, $result);
+        $this->assertEquals(false, $result);
         $schedulersJob->mark_deleted($schedulersJob->id);
 
         //test with valid user
@@ -302,9 +432,5 @@ class SchedulersJobTest extends PHPUnit_Framework_TestCase
         $schedulersJob->assigned_user_id = 1;
 
         self::markTestIncomplete();
-//        $schedulersJob->target = 'url::https://suitecrm.com/';
-//        $result = $schedulersJob->runJob();
-//        $this->assertEquals(true, $result);
-//        $schedulersJob->mark_deleted($schedulersJob->id);
     }
 }

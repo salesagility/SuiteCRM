@@ -153,8 +153,8 @@ class SugarView
     ) {
         $this->bean = $bean;
         $this->view_object_map = $view_object_map;
-        $this->action = $GLOBALS['action'];
-        $this->module = $GLOBALS['module'];
+        $this->action = isset($GLOBALS['action']) ? $GLOBALS['action'] : null;
+        $this->module = isset($GLOBALS['module']) ? $GLOBALS['module'] : null;
         $this->_initSmarty();
     }
 
@@ -866,9 +866,6 @@ class SugarView
         $template->assign('SUGAR_GRP1', getVersionedPath('cache/include/javascript/sugar_grp1.js'));
         $template->assign('CALENDAR', getVersionedPath('include/javascript/calendar.js'));
 
-        if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-            $template->assign('HEADERSYNC', getVersionedPath('modules/Sync/headersync.js'));
-        }
         echo $template->fetch('include/MVC/View/tpls/displayLoginJS.tpl');
     }
 
@@ -986,10 +983,6 @@ EOHTML;
             );
 
             echo $this->_getModLanguageJS();
-
-            if (isset($sugar_config['disc_client']) && $sugar_config['disc_client']) {
-                echo getVersionedScript('modules/Sync/headersync.js');
-            }
 
             //echo out the $js_vars variables as javascript variables
             echo "<script type='text/javascript'>\n";
@@ -1149,7 +1142,7 @@ EOHTML;
                 '&help_action=' .
                 $this->action .
                 '&key=' .
-                $GLOBALS['server_unique_key'] .
+                (isset($GLOBALS['server_unique_key']) ? $GLOBALS['server_unique_key'] : null) .
                 '\'))';
             $label =
                 (isset($GLOBALS['app_list_strings']['moduleList'][$this->module]) ?
@@ -1264,7 +1257,7 @@ EOHTML;
     private function _calculateFooterMetrics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $this->responseTime = number_format(round($deltaTime, 2), 2);
         // Print out the resources used in constructing the page.
         $this->fileResources = count(get_included_files());
@@ -1276,7 +1269,7 @@ EOHTML;
     private function _getStatistics()
     {
         $endTime = microtime(true);
-        $deltaTime = $endTime - $GLOBALS['startTime'];
+        $deltaTime = $endTime - (isset($GLOBALS['startTime']) ? $GLOBALS['startTime'] : null);
         $response_time_string =
             $GLOBALS['app_strings']['LBL_SERVER_RESPONSE_TIME'] .
             ' ' .

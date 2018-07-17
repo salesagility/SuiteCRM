@@ -6,7 +6,7 @@
  * Tests that the fields comply with the JSON Api Spec.
  * @see http://jsonapi.org/format/1.0/#document-member-names
  */
-class FieldValidatorTest extends \Codeception\Test\Unit
+class FieldValidatorTest extends SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -19,21 +19,20 @@ class FieldValidatorTest extends \Codeception\Test\Unit
     /** @var  \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator $fieldOperator */
     private static $fieldOperator;
 
-    protected function _before()
+    public function _before()
     {
+        parent::_before();
         $containers = $this->tester->getContainerInterface();
-        if(self::$fieldValidator === null) {
+        if (self::$fieldValidator === null) {
             self::$fieldValidator = new \SuiteCRM\API\JsonApi\v1\Filters\Validators\FieldValidator($containers);
         }
 
-        if(self::$fieldOperator === null) {
+        if (self::$fieldOperator === null) {
             self::$fieldOperator = new \SuiteCRM\API\JsonApi\v1\Filters\Operators\FieldOperator($containers);
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testIsValidWithWrongDataType()
     {
@@ -41,7 +40,7 @@ class FieldValidatorTest extends \Codeception\Test\Unit
             new \SuiteCRM\Exception\InvalidArgumentException(
                 '[JsonApi][v1][Filters][Validators][FieldValidator][isValid][expected type to be string] $fieldKey'
             ),
-            function() {
+            function () {
                 self::$fieldValidator->isValid(array());
             }
         );

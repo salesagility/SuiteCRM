@@ -986,7 +986,6 @@ class Zend_Search_Lucene_MultiSearcher implements Zend_Search_Lucene_Interface
  * @copyright  Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-class Zend_Search_Lucene_Interface_MultiSearcher
-    extends Zend_Search_Lucene_MultiSearcher
+class Zend_Search_Lucene_Interface_MultiSearcher extends Zend_Search_Lucene_MultiSearcher
 {
 }

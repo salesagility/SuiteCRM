@@ -197,7 +197,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         $tabDefs = array();
         $this->setUseTabs(false);
         foreach ($this->_viewdefs ['panels'] as $panelID => $panel) {
-
             $tabDefs [strtoupper($panelID)] = array();
 
             // panel or tab setting
@@ -269,7 +268,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                 $availableFields[$key]['translatedLabel'] = translate(isset($def ['label']) ? $def ['label'] : $def['vname'],
                     $this->_moduleName);
             }
-
         }
 
         // Available fields are those that are in the Model and the original layout definition, but not already shown in the View
@@ -320,7 +318,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
      */
     public function addField($def, $panelID = false)
     {
-
         if (count($this->_viewdefs ['panels']) == 0) {
             $GLOBALS ['log']->error(get_class($this) . "->addField(): _viewdefs empty for module {$this->_moduleName} and view {$this->_view}");
         }
@@ -328,11 +325,10 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         // if a panelID was not provided, use the first available panel in the list
         if (!$panelID) {
             $panels = array_keys($this->_viewdefs ['panels']);
-            list ($dummy, $panelID) = each($panels);
+            $panelId = array_shift(array_keys($panels));
         }
 
         if (isset ($this->_viewdefs ['panels'] [$panelID])) {
-
             $panel = $this->_viewdefs ['panels'] [$panelID];
             $lastrow = count($panel) - 1; // index starts at 0
             $maxColumns = $this->getMaxColumns();
@@ -379,22 +375,19 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
         $result = false;
         reset($this->_viewdefs);
-        $firstPanel = each($this->_viewdefs ['panels']);
-        $firstPanelID = $firstPanel ['key'];
+        $firstPanelID = array_shift(array_keys($this->_viewdefs['panels']));
 
         foreach ($this->_viewdefs ['panels'] as $panelID => $panel) {
             $lastRowTouched = false;
             $lastRowID = count($this->_viewdefs ['panels'] [$panelID]) - 1; // zero offset
 
             foreach ($panel as $rowID => $row) {
-
                 foreach ($row as $colID => $field) {
                     if ($field == $fieldName) {
                         $lastRowTouched = $rowID;
                         $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID] = $this->FILLER ['name'];
                     }
                 }
-
             }
 
             // if we removed a field from the last row of this panel, tidy up if the last row now consists only of (empty) or (filler)
@@ -415,14 +408,12 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                         unset ($this->_viewdefs ['panels'] [$panelID]);
                     }
                 }
-
             }
 
             $result |= ($lastRowTouched !== false); // explicitly compare to false as row 0 will otherwise evaluate as false
         }
 
         return $result;
-
     }
 
     /**
@@ -513,7 +504,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                         }
                     }
                 }
-
             }
         }
 
@@ -538,7 +528,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
             } else {
                 $tabDefs [strtoupper($panelID)] ['panelDefault'] = 'expanded';
             }
-
         }
         $this->setTabDefs($tabDefs);
 
@@ -552,7 +541,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
         }
 
         $GLOBALS ['log']->debug(print_r($this->_viewdefs ['panels'], true));
-
     }
 
     /**
@@ -612,7 +600,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     }
                     //Backwards compatibility and a safeguard against multiple calls to _convertToCanonicalForm
                     if (is_array($fieldname)) {
-
                         $newRow [$colID - $offset] = $fieldname;
                         continue;
                     } else {
@@ -638,7 +625,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                             else {
                                 if (isset ($fieldDefinitions [$fieldname])) {
                                     $newRow [$colID - $offset] = self::_trimFieldDefs($fieldDefinitions [$fieldname]);
-
                                 } //No additional info on this field can be found, jsut use the name;
                                 else {
                                     $newRow [$colID - $offset] = $fieldname;

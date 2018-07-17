@@ -37,37 +37,41 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-class FieldViewer{
-	function __construct(){
-		$this->ss = new Sugar_Smarty();
-	}
+class FieldViewer
+{
+    public function __construct()
+    {
+        $this->ss = new Sugar_Smarty();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function FieldViewer(){
+    public function FieldViewer()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
-	function getLayout($vardef){
+    public function getLayout($vardef)
+    {
+        if (empty($vardef['type'])) {
+            $vardef['type'] = 'varchar';
+        }
+        $mod = return_module_language($GLOBALS['current_language'], 'DynamicFields');
+        $this->ss->assign('vardef', $vardef);
+        $this->ss->assign('MOD', $mod);
+        $this->ss->assign('APP', $GLOBALS['app_strings']);
+        //Only display range search option if in Studio, not ModuleBuilder
+        $this->ss->assign('range_search_option_enabled', empty($_REQUEST['view_package']));
 
-		if(empty($vardef['type']))$vardef['type'] = 'varchar';
-		$mod = return_module_language($GLOBALS['current_language'], 'DynamicFields');
-		$this->ss->assign('vardef', $vardef);
-		$this->ss->assign('MOD', $mod);
-		$this->ss->assign('APP', $GLOBALS['app_strings']);
-		//Only display range search option if in Studio, not ModuleBuilder
-		$this->ss->assign('range_search_option_enabled', empty($_REQUEST['view_package']));
-
-		$GLOBALS['log']->debug('FieldViewer.php->getLayout() = '.$vardef['type']);
-		switch($vardef['type']){
+        $GLOBALS['log']->debug('FieldViewer.php->getLayout() = '.$vardef['type']);
+        switch ($vardef['type']) {
 			case 'address':
                 return $this->ss->fetch('modules/DynamicFields/templates/Fields/Forms/address.tpl');
 			case 'bool':
@@ -121,18 +125,17 @@ class FieldViewer{
 				return get_body($this->ss, $vardef);
 			default:
 				$file = false;
-				if(file_exists('custom/modules/DynamicFields/templates/Fields/Forms/' . $vardef['type'] . '.php')){
-					$file = 'custom/modules/DynamicFields/templates/Fields/Forms/' . $vardef['type'] . '.php';
-				} elseif(file_exists('modules/DynamicFields/templates/Fields/Forms/' . $vardef['type'] . '.php')){
-					$file = 'modules/DynamicFields/templates/Fields/Forms/' . $vardef['type'] . '.php';
+				if (file_exists('custom/modules/DynamicFields/templates/Fields/Forms/' . $vardef['type'] . '.php')) {
+				    $file = 'custom/modules/DynamicFields/templates/Fields/Forms/' . $vardef['type'] . '.php';
+				} elseif (file_exists('modules/DynamicFields/templates/Fields/Forms/' . $vardef['type'] . '.php')) {
+				    $file = 'modules/DynamicFields/templates/Fields/Forms/' . $vardef['type'] . '.php';
 				}
-				if(!empty($file)){
-					require_once($file);
-					return get_body($this->ss, $vardef);
-				}else{
-					return $this->ss->fetch('modules/DynamicFields/templates/Fields/Forms/varchar.tpl');
+				if (!empty($file)) {
+				    require_once($file);
+				    return get_body($this->ss, $vardef);
+				} else {
+				    return $this->ss->fetch('modules/DynamicFields/templates/Fields/Forms/varchar.tpl');
 				}
 		}
-	}
-
+    }
 }

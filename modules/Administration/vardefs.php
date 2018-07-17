@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -75,44 +77,44 @@ $dictionary['UpgradeHistory'] = array(
                 'type'       => 'id',
                 'required'   => true,
                 'reportable' => false,
-    		    'comment' => 'Unique identifier'
+                'comment' => 'Unique identifier'
         ),
         'filename' => array (
                 'name' => 'filename',
                 'type' => 'varchar',
                 'len' => '255',
-    		    'comment' => 'Cached filename containing the upgrade scripts and content'
+                'comment' => 'Cached filename containing the upgrade scripts and content'
         ),
         'md5sum' => array (
                 'name' => 'md5sum',
                 'type' => 'varchar',
                 'len' => '32',
-    		    'comment' => 'The MD5 checksum of the upgrade file'
+                'comment' => 'The MD5 checksum of the upgrade file'
         ),
         'type' => array (
                 'name' => 'type',
                 'type' => 'varchar',
                 'len' => '30',
-    		    'comment' => 'The upgrade type (module, patch, theme, etc)'
+                'comment' => 'The upgrade type (module, patch, theme, etc)'
         ),
         'status' => array (
                 'name' => 'status',
                 'type' => 'varchar',
                 'len' => '50',
-    		    'comment' => 'The status of the upgrade (ex:  "installed")',
+                'comment' => 'The status of the upgrade (ex:  "installed")',
         ),
         'version' => array (
                 'name' => 'version',
                 'type' => 'varchar',
                 'len' => '64',
-    		    'comment' => 'Version as contained in manifest file'
+                'comment' => 'Version as contained in manifest file'
         ),
-		'name' => array (
+        'name' => array (
                 'name'  => 'name',
                 'type'  => 'varchar',
                 'len'   => '255',
         ),
-		'description' => array (
+        'description' => array (
                 'name'  => 'description',
                 'type'  => 'text',
         ),
@@ -120,18 +122,18 @@ $dictionary['UpgradeHistory'] = array(
                 'name' => 'id_name',
                 'type' => 'varchar',
                 'len' => '255',
-    		    'comment' => 'The unique id of the module'
+                'comment' => 'The unique id of the module'
         ),
         'manifest' => array (
                 'name' => 'manifest',
                 'type' => 'longtext',
-    		    'comment' => 'A serialized copy of the manifest file.'
+                'comment' => 'A serialized copy of the manifest file.'
         ),
         'date_entered' => array (
                 'name' => 'date_entered',
                 'type' => 'datetime',
                 'required'=>true,
-    		    'comment' => 'Date of upgrade or module load'
+                'comment' => 'Date of upgrade or module load'
         ),
         'enabled' => array(
                                       'name' => 'enabled',

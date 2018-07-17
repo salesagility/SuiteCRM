@@ -274,7 +274,6 @@ function validate_user($user_name, $password)
             return false;
         }
     }
-
 }
 
 /**
@@ -354,7 +353,7 @@ function add_contacts_matching_email_address(&$output_list, $email_address, &$se
  */
 function add_leads_matching_email_address(&$output_list, $email_address, &$seed_lead, &$msi_id)
 {
-    $safe_email_address = $GLOBALS['db']->quote($email_address);
+    $safe_email_address = DBManagerFactory::getInstance()->quote($email_address);
     if (!$seed_lead->ACLAccess('ListView')) {
         return;
     }
@@ -526,7 +525,6 @@ function get_contact_array($contact, $msi_id = '0')
         "msi_id" => $msi_id,
         "email_address" => $contact->email1
     );
-
 }
 
 /**
@@ -713,7 +711,6 @@ function get_opportunity_array($value, $msi_id = '0')
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 function opportunity_by_search($name, $where = '', $msi_id = '0')
@@ -756,7 +753,6 @@ function get_bean_array($value, $msi_id, $type)
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 /**
@@ -777,7 +773,6 @@ function get_case_array($value, $msi_id)
         "msi_id" => $msi_id,
         "email_address" => ''
     );
-
 }
 
 function bug_by_search($name, $where = '', $msi_id = '0')
@@ -888,7 +883,7 @@ function track_email($user_name, $password, $parent_id, $contact_ids, $date_sent
 
     foreach ($id_list as $id) {
         if (!empty($id)) {
-            $email->set_emails_contact_invitee_relationship($email->id, $GLOBALS['db']->quote($id));
+            $email->set_emails_contact_invitee_relationship($email->id, DBManagerFactory::getInstance()->quote($id));
         }
     }
 
@@ -969,7 +964,6 @@ function create_account($user_name, $password, $name, $phone, $website)
     $account->save();
 
     return $account->id;
-
 }
 
 function create_case($user_name, $password, $name)

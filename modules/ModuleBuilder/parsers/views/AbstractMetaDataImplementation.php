@@ -226,11 +226,10 @@ abstract class AbstractMetaDataImplementation
         $this->_variables = $variables;
         // now remove the modulename preamble from the loaded defs
         reset($defs);
-        $temp = each($defs);
 
-        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($temp['value'], true));
+        $GLOBALS['log']->debug(get_class($this) . "->_loadFromFile: returning " . print_r($defs, true));
 
-        return $temp['value']; // 'value' contains the value part of 'key'=>'value' part
+        return array_shift($defs); // 'value' contains the value part of 'key'=>'value' part
     }
 
     /**
@@ -395,14 +394,12 @@ abstract class AbstractMetaDataImplementation
     protected function _mergeFielddefs(&$fielddefs, $layout)
     {
         foreach ($layout as $key => $def) {
-
             if ((string)$key == 'templateMeta') {
                 continue;
             }
 
             if (is_array($def)) {
-                if (isset ($def ['name']) && !is_array($def ['name'])) // found a 'name' definition, that is not the definition of a field called name :)
-                {
+                if (isset ($def ['name']) && !is_array($def ['name'])) { // found a 'name' definition, that is not the definition of a field called name :)
                     // if this is a module field, then merge in the definition,
                     // otherwise this is a new field defined in the layout, so just take the definition
                     $fielddefs [$def ['name']] =
@@ -418,7 +415,6 @@ abstract class AbstractMetaDataImplementation
                 }
             }
         }
-
     }
 
     /**
@@ -444,7 +440,6 @@ abstract class AbstractMetaDataImplementation
      */
     public function getFileNameInPackage($view, $moduleName, $packageName, $type = MB_BASEMETADATALOCATION)
     {
-
         $type = strtolower($type);
 
         // BEGIN ASSERTIONS
@@ -470,23 +465,21 @@ abstract class AbstractMetaDataImplementation
         );
 
         switch ($type) {
-            case MB_HISTORYMETADATALOCATION :
+            case MB_HISTORYMETADATALOCATION:
                 return 'custom/history/modulebuilder/packages/' . $packageName . '/modules/'
                     . $moduleName . '/metadata/' . $filenames [$view] . '.php';
-            default :
+            default:
                 // get the module again, all so we can call this method statically
                 // without relying on the module stored in the class variables
                 $mb = new ModuleBuilder ();
                 $module = &$mb->getPackageModule($packageName, $moduleName);
                 return $module->getModuleDir() . '/metadata/' . $filenames [$view] . '.php';
         }
-
     }
 
     public function getModuleDir()
     {
         return $this->module->key_name;
     }
-
 }
 

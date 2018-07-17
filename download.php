@@ -42,7 +42,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-global $db;
+$db = DBManagerFactory::getInstance();
 
 if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUEST['type']) || !isset($_SESSION['authenticated_user_id'])) {
     die("Not a Valid Entry Point");
@@ -70,6 +70,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         }
         $bean_name = $beanList[$module];
+        if ($bean_name == 'aCase') {
+            $bean_name = 'Case';
+        }
         if (!file_exists('modules/' . $module . '/' . $bean_name . '.php')) {
             die($app_strings['ERROR_TYPE_NOT_VALID']);
         }
@@ -106,7 +109,6 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             header('Location: ' . $focusRevision->doc_url);
             sugar_die("Remote file detected, location header sent.");
         }
-
     } // if
     $temp = explode("_", $_REQUEST['id'], 2);
     if (is_array($temp)) {
@@ -130,7 +132,6 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
     }
 
     if (!file_exists($local_location) || strpos($local_location, "..")) {
-
         if (isset($image_field)) {
             header("Content-Type: image/png");
             header("Content-Disposition: attachment; filename=\"No-Image.png\"");
@@ -168,7 +169,7 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
             $query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
 
-            //$query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
+        //$query .= "WHERE " . $file_type . ".id= '" . $db->quote($image_id) . "'";
         } elseif (!isset($_REQUEST['isTempFile']) && !isset($_REQUEST['tempName']) && isset($_REQUEST['type']) && $file_type != 'temp') { //make sure not email temp file.
             $query = "SELECT filename name FROM " . $file_type . " ";
             $query .= "WHERE " . $file_type . ".id= '" . $db->quote($_REQUEST['id']) . "'";
@@ -183,8 +184,8 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
         }
 
         if ($doQuery && isset($query)) {
-            $rs = $GLOBALS['db']->query($query);
-            $row = $GLOBALS['db']->fetchByAssoc($rs);
+            $rs = DBManagerFactory::getInstance()->query($query);
+            $row = DBManagerFactory::getInstance()->fetchByAssoc($rs);
 
             if (empty($row)) {
                 die($app_strings['ERROR_NO_RECORD']);
@@ -206,7 +207,6 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             } else {
                 $download_location = "upload://{$_REQUEST['id']}";
             }
-
         } else {
             if (isset($_REQUEST['tempName']) && isset($_REQUEST['isTempFile'])) {
                 // downloading a temp file (email 2.0)
@@ -236,9 +236,9 @@ if ((!isset($_REQUEST['isProfile']) && empty($_REQUEST['id'])) || empty($_REQUES
             }
         } else {
             header('Content-type: ' . $mime_type);
-            if($_REQUEST['preview'] === "yes"){ 
-                header( "Content-Disposition: inline; filename=\"".$name."\";"); }
-            else{
+            if ($_REQUEST['preview'] === "yes") {
+                header("Content-Disposition: inline; filename=\"".$name."\";");
+            } else {
                 header("Content-Disposition: attachment; filename=\"" . $name . "\";");
             }
         }

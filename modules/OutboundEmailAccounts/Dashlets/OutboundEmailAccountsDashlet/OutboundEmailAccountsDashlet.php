@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -49,14 +51,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts.php');
 
-class OutboundEmailAccountsDashlet extends DashletGeneric {
-    function __construct($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/OutboundEmailAccounts/metadata/dashletviewdefs.php');
+class OutboundEmailAccountsDashlet extends DashletGeneric
+{
+    public function __construct($id, $def = null)
+    {
+        global $current_user, $app_strings;
+        require('modules/OutboundEmailAccounts/metadata/dashletviewdefs.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'OutboundEmailAccounts');
+        if (empty($def['title'])) {
+            $this->title = translate('LBL_HOMEPAGE_TITLE', 'OutboundEmailAccounts');
+        }
 
         $this->searchFields = $dashletData['OutboundEmailAccountsDashlet']['searchFields'];
         $this->columns = $dashletData['OutboundEmailAccountsDashlet']['columns'];

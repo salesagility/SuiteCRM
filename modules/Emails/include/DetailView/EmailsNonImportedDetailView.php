@@ -61,8 +61,7 @@ class EmailsNonImportedDetailView extends EmailsDetailView
         $tpl = 'include/DetailView/DetailView.tpl',
         $createFocus = true,
         $metadataFileName = 'nonimporteddetailviewdefs'
-    )
-    {
+    ) {
         parent::setup($module, $focus, $metadataFile, $tpl, $createFocus, $metadataFileName);
     }
 
@@ -72,14 +71,26 @@ class EmailsNonImportedDetailView extends EmailsDetailView
      */
     public function populateBean($request = array())
     {
-        if (!empty($request['uid']) && !empty($request['inbound_email_record'])&& !empty($request['msgno'])) {
+        $log = LoggerManager::getLogger();
+        if (!empty($request['uid'])
+            && !empty($request['inbound_email_record'])
+            && !empty($request['msgno'])
+        ) {
+            /** @var InboundEmail $inboundEmail **/
             $inboundEmail = BeanFactory::getBean('InboundEmail', $request['inbound_email_record']);
 
-            $email = $inboundEmail->returnNonImportedEmail($_REQUEST['msgno'], $request['uid']);
+            if (
+                $inboundEmail === false
+                || empty($inboundEmail->id)
+            ) {
+                $log->fatal('Unable to find inbound email account ' . $request['inbound_email_record']);
+            }
+
+            $email = $inboundEmail->returnNonImportedEmail($request);
             $this->focus = $email;
             $this->populateFields();
         } else {
-            $GLOBALS['log']->debug('Unable to populate bean, no inbound_email_record and uid parameter found');
+            $log->debug('Unable to populate bean, missing inbound_email_record and uid parameter in request');
         }
     }
 }

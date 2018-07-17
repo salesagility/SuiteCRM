@@ -1,9 +1,11 @@
 <?php
 
-class NoteTest extends PHPUnit_Framework_TestCase
+class NoteTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -28,7 +30,10 @@ class NoteTest extends PHPUnit_Framework_TestCase
 
     public function testsafeAttachmentName()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
 
         $note = new Note();
 
@@ -42,10 +47,20 @@ class NoteTest extends PHPUnit_Framework_TestCase
         $note->safeAttachmentName();
         $this->assertEquals('.txt', $note->name);
         $this->assertEquals('test.php.txt', $note->filename);
+        
+        // clean up
     }
 
     public function testmark_deleted()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        $state->pushTable('aod_index');
+        $state->pushTable('tracker');
+        
+        
+        
+        
         $note = new Note();
 
         //execute the method and test if it works and does not throws an exception.
@@ -53,17 +68,36 @@ class NoteTest extends PHPUnit_Framework_TestCase
             $note->mark_deleted(1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popTable('aod_index');
     }
 
     public function testdeleteAttachment()
     {
+
+    // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        $state->pushTable('tracker');
+
+        // test
+        
         $note = new Note();
 
         $note->id = 1;
         $result = $note->deleteAttachment();
         $this->assertEquals(true, $result);
+
+        // clean up
+        
+        $state->popTable('tracker');
+        $state->popGlobals();
     }
 
     public function testget_summary_text()
@@ -95,6 +129,12 @@ class NoteTest extends PHPUnit_Framework_TestCase
 
     public function testfill_in_additional_list_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $note = new Note();
 
         //execute the method and test if it works and does not throws an exception.
@@ -102,12 +142,20 @@ class NoteTest extends PHPUnit_Framework_TestCase
             $note->fill_in_additional_list_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testfill_in_additional_detail_fields()
     {
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $note = new Note();
 
         //execute the method and test if it works and does not throws an exception.
@@ -115,8 +163,10 @@ class NoteTest extends PHPUnit_Framework_TestCase
             $note->fill_in_additional_detail_fields();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testget_list_view_data()
@@ -146,11 +196,23 @@ class NoteTest extends PHPUnit_Framework_TestCase
 
     public function testlistviewACLHelper()
     {
+
+    // save state
+
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushGlobals();
+
+        // test
+        
         $note = new Note();
 
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $note->listviewACLHelper();
         $this->assertSame($expected, $actual);
+
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbean_implements()

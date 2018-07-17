@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings;
 $module_menu = Array(
-	Array("index.php?module=ACLRoles&action=index", $mod_strings['LIST_ROLES'],"List"),
-	Array("index.php?module=ACLRoles&action=ListUsers", $mod_strings['LIST_ROLES_BY_USER'],"List"),
-	
-	);
+    Array("index.php?module=ACLRoles&action=index", $mod_strings['LIST_ROLES'],"List"),
+    Array("index.php?module=ACLRoles&action=ListUsers", $mod_strings['LIST_ROLES_BY_USER'],"List"),
+    
+    );

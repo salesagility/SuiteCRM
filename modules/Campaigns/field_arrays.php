@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,25 +48,25 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 $fields_array['Campaign'] = array ('column_fields' => array(
-				"id", "date_entered",
-				"date_modified", "modified_user_id",
-				"assigned_user_id", "created_by",
-				"name", "start_date",
-				"end_date", "status",
-				"budget", "expected_cost",
-				"actual_cost", "expected_revenue",
-				"campaign_type", "objective",
-				"content", "tracker_key","refer_url","tracker_text",
-				"tracker_count","currency_id","impressions",
+                "id", "date_entered",
+                "date_modified", "modified_user_id",
+                "assigned_user_id", "created_by",
+                "name", "start_date",
+                "end_date", "status",
+                "budget", "expected_cost",
+                "actual_cost", "expected_revenue",
+                "campaign_type", "objective",
+                "content", "tracker_key","refer_url","tracker_text",
+                "tracker_count","currency_id","impressions",
                 "frequency",
-	),
+    ),
         'list_fields' => array(
-				'id', 'name', 'status',
-				'campaign_type','assigned_user_id','assigned_user_name','end_date',
-				'refer_url',"currency_id",
-	),
+                'id', 'name', 'status',
+                'campaign_type','assigned_user_id','assigned_user_name','end_date',
+                'refer_url',"currency_id",
+    ),
         'required_fields' => array(
-				'name'=>1, 'end_date'=>2,
-				'status'=>3, 'campaign_type'=>4
-	),
+                'name'=>1, 'end_date'=>2,
+                'status'=>3, 'campaign_type'=>4
+    ),
 );

@@ -52,10 +52,9 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
  */
 class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
 {
-
-    var $cal_encoding = "";
-    var $cal_charset = "";
-    var $http_spec = "";
+    public $cal_encoding = "";
+    public $cal_charset = "";
+    public $http_spec = "";
 
     /**
      * Constructor for the WebDAV srver
@@ -103,7 +102,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         // check the HTTP auth headers for a user
         if (empty($_REQUEST['user_name']) && !empty($_SERVER['PHP_AUTH_USER'])) {
             $_REQUEST['user_name'] = $_SERVER['PHP_AUTH_USER'];
-            $_REQUEST['key'] = $_SERVER['PHP_AUTH_PW'];
+            $_REQUEST['password'] = $_SERVER['PHP_AUTH_PW'];
         }
 
         if (!empty($sugar_config['session_dir'])) {
@@ -156,7 +155,19 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
             $this->user_focus->retrieve(clean_string($query_arr['user_id']));
             $this->user_focus->loadPreferences();
         } else {
-            if (!empty($query_arr['email'])) {
+            if (isset($query_arr['password'])) {
+                $user = $this->user_focus;
+                $user->retrieve_by_string_fields(['user_name' => $query_arr['user_name']]);
+                if ($user->id === null
+                    && !$user::findUserPassword($user->user_name, md5($query_arr['password']))
+                ) {
+                    $this->http_status("401 not authorized");
+                    echo 'Invalid username or password';
+                    return;
+                }
+
+                $this->user_focus->authenticated = true;
+            } elseif (!empty($query_arr['email'])) {
                 // clean the string!
                 $query_arr['email'] = clean_string($query_arr['email']);
                 //get user info
@@ -181,7 +192,7 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
     }
 
 
-    function GET()
+    public function GET()
     {
         return true;
     }
@@ -201,28 +212,28 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         } else {
             if ($this->vcal_type == 'ics') {
                 // DO HTTP AUTHORIZATION for iCal:
-                if (empty($this->publish_key) ||
-                    $this->publish_key != $this->user_focus->getPreference('calendar_publish_key')
+                if (isset($this->publish_key)
+                    && $this->publish_key === $this->user_focus->getPreference('calendar_publish_key')
+                    || $this->user_focus->is_authenticated()
                 ) {
-                    $this->http_status("401 not authorized");
-                    header('WWW-Authenticate: Basic realm="SugarCRM iCal"');
-                    echo 'Authorization required';
+                    $this->http_status("200 OK");
+                    header('Content-Type: text/calendar; charset="' . $this->cal_charset . '"');
+                    $result = mb_convert_encoding(html_entity_decode($this->vcal_focus->getVcalIcal($this->user_focus,
+                        $_REQUEST['num_months']), ENT_QUOTES, $this->cal_charset), $this->cal_encoding);
+                    ob_end_clean();
+                    echo $result;
 
                     return;
                 }
 
-                $this->http_status("200 OK");
-                header('Content-Type: text/calendar; charset="' . $this->cal_charset . '"');
-                $result = mb_convert_encoding(html_entity_decode($this->vcal_focus->getVcalIcal($this->user_focus,
-                    $_REQUEST['num_months']), ENT_QUOTES, $this->cal_charset), $this->cal_encoding);
-                ob_end_clean();
-                echo $result;
+                $this->http_status("401 not authorized");
+                header('WWW-Authenticate: Basic realm="SugarCRM iCal"');
+                echo 'Authorization required';
             } else {
                 $this->http_status("404 Not Found");
                 ob_end_clean();
             }
         }
-
     }
 
     /**
@@ -245,5 +256,4 @@ class HTTP_WebDAV_Server_iCal extends HTTP_WebDAV_Server
         header("HTTP/$this->http_spec $status");
         header("X-WebDAV-Status: $status", true);
     }
-
-    }
+}

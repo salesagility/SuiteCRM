@@ -58,7 +58,7 @@ class Zend_Gdata_Media_Extension_MediaCredit extends Zend_Gdata_Extension
      * @param string $role
      * @param string $scheme
      */
-    public function __construct($text = null, $role = null,  $scheme = null)
+    public function __construct($text = null, $role = null, $scheme = null)
     {
         $this->registerAllNamespaces(Zend_Gdata_Media::$namespaces);
         parent::__construct();

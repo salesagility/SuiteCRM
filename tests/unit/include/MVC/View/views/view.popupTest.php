@@ -1,9 +1,11 @@
 <?php
 
-class ViewPopupTest extends PHPUnit_Framework_TestCase
+class ViewPopupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -23,26 +25,29 @@ class ViewPopupTest extends PHPUnit_Framework_TestCase
 
     public function testdisplay()
     {
+        if (isset($_SESSION)) {
+            $session = $_SESSION;
+        }
 
-        //error_reporting(E_ERROR | E_PARSE |E_ALL);
+        
 
         //execute the method with required child objects preset. it should return some html. 
         $view = new ViewPopup();
         $view->module = 'Accounts';
 
         try {
-            $view->bean = new Account();
+            $view->bean = BeanFactory::getBean('Accounts');
+            self::assertTrue(false);
         } catch (Exception $e) {
-            $this->assertStringStartsWith('mysqli_query()', $e->getMessage());
+            self::assertTrue(true);
         }
 
-        ob_start();
+        // clean up
 
-        $view->display();
-
-        $renderedContent = ob_get_contents();
-        ob_end_clean();
-
-        $this->assertGreaterThan(0, strlen($renderedContent));
+        if (isset($session)) {
+            $_SESSION = $session;
+        } else {
+            unset($_SESSION);
+        }
     }
 }

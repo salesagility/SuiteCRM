@@ -1,6 +1,6 @@
 <?php
 
-class RelationshipTest extends PHPUnit_Framework_TestCase
+class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testRelationship()
     {
@@ -54,7 +54,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -72,21 +72,29 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
 
     public function testdelete()
     {
-
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        $db = DBManagerFactory::getInstance();
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             Relationship::delete('test_test', $db);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testget_other_module()
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -106,7 +114,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -133,7 +141,7 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
     {
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->disconnect();
         unset ($db->database);
         $db->checkConnection();
@@ -155,7 +163,6 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
 
     public function testretrieve_by_name()
     {
-
         $relationship = new Relationship();
 
         //test with invalid relationship
@@ -178,7 +185,6 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
 
     public function testload_relationship_meta()
     {
-
         $relationship = new Relationship();
 
         $relationship->load_relationship_meta();
@@ -187,7 +193,12 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_relationship_cache()
     {
-
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         $relationship = new Relationship();
 
         //execute the method and test if it works and does not throws an exception.
@@ -195,8 +206,10 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
             $relationship->build_relationship_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testcache_file_dir()
@@ -213,19 +226,25 @@ class RelationshipTest extends PHPUnit_Framework_TestCase
 
     public function testdelete_cache()
     {
-
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
         //execute the method and test if it works and does not throws an exception.
         try {
             Relationship::delete_cache();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
         }
+        
+        // clean up
     }
 
     public function testtrace_relationship_module()
     {
-
         $relationship = new Relationship();
         $result = $relationship->trace_relationship_module('Roles', 'Users');
         $this->assertInstanceOf('User', $result);
