@@ -685,6 +685,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testverify_data()
     {
         global $mod_strings;
+        include __DIR__ . '/../../../../../modules/Users/language/en_us.lang.php';
 
         $mod_strings['ERR_EMAIL_NO_OPTS'] = "";
 
