@@ -51,11 +51,16 @@ use Robo\Task\Base\loadTasks;
 use SuiteCRM\Robo\Traits\CliRunnerTrait;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
+use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 use SuiteCRM\Search\MasterSearch;
 use SuiteCRM\Search\SearchQuery;
 use SuiteCRM\Utility\BeanJsonSerializer;
 
+/**
+ * Class ElasticSearchCommands
+ * @package SuiteCRM\Robo\Plugin\Commands
+ */
 class ElasticSearchCommands extends \Robo\Tasks
 {
     use loadTasks;
@@ -70,51 +75,85 @@ class ElasticSearchCommands extends \Robo\Tasks
         $this->bootstrap();
     }
 
-    public function elasticSearch($query, $size = 50, $showJson = false)
+    /**
+     * Performs a search using the given parameters.
+     *
+     * The full Elasticsearch query string syntax is available. See link below.
+     *
+     * @see https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl-query-string-query.html#query-string-syntax
+     * @param string $query The search query. See elasticsearch syntax.
+     * @param int $size How many results to show
+     * @param bool $showJson if set to `1` shows a JSON for each results.
+     */
+    public function elasticSearch($query, $size = 20, $showJson = false)
     {
         $engine = new MasterSearch();
 
         $results = $engine->search('ElasticSearchEngine', SearchQuery::fromString($query, $size));
 
-        foreach ($results as $key => $module) {
-            $this->printModuleResults($showJson, $key, $module);
+        if (!empty($results)) {
+            foreach ($results as $key => $module) {
+                $this->printModuleResults($showJson, $key, $module);
+            }
+        } else {
+            echo 'No results matching your query. Try broadening your criteria.';
         }
 
-        echo PHP_EOL;
+        $time = round($engine->getSearchTime() * 1000);
+        echo PHP_EOL, "Search performed in $time ms", PHP_EOL, PHP_EOL;
     }
 
     /**
-     * @param $showJson
-     * @param $key
-     * @param $module
+     * Print the results for each module.
+     *
+     * @param bool $showJson
+     * @param string $module
+     * @param array $ids
      */
-    private function printModuleResults($showJson, $key, $module)
+    private function printModuleResults($showJson, $module, array $ids)
     {
-        echo "\n### $key ###\n";
-        foreach ($module as $id) {
-            $bean = BeanFactory::getBean($key, $id);
+        echo "\n### $module ###\n";
+        foreach ($ids as $id) {
+            $bean = BeanFactory::getBean($module, $id);
             echo "  * ", mb_convert_encoding($bean->name, "UTF-8", "HTML-ENTITIES"), PHP_EOL;
 
-            if ($showJson) echo BeanJsonSerializer::serialize($bean, true, true);
+            if ($showJson) {
+                echo BeanJsonSerializer::serialize($bean, true, true);
+            }
         }
     }
 
     /**
      * Indexes the sql database in the Elasticsearch engine.
      *
-     * @param bool $differential Use search that uses to timestamps to perform an optimised indexing.
-     * @param bool $searchdefs
+     * Differential indexing will only update (and fetch) beans that have been created/modified/removed since the last run.
+     * This should be much faster than a full index.
+     *
+     * The two documentifiers differ slightly on the type of structure they output.
+     * See the relative classes to know more.
+     *
+     * NOTE: from CLI passing `true` or `false` won't work. Use `0` and `1`, instead as parameters.
+     *
+     * @param int $differential 0 = full index | 1 = differential index
+     * @param int $searchdefs 0 = BeanJsonSerializer | 1 = SearchDefsDocumentifier
+     * @see ElasticSearchIndexer::run()
+     * @see SearchDefsDocumentifier
+     * @see JsonSerializerDocumentifier
      */
-    public function elasticIndex($differential = true, $searchdefs = false)
+    public function elasticIndex($differential = 1, $searchdefs = 0)
     {
         $indexer = new ElasticSearchIndexer();
         $indexer->setEchoLogsEnabled(true);
         $indexer->setDifferentialIndexingEnabled($differential);
-        if ($searchdefs)
+        if ($searchdefs) {
             $indexer->setDocumentifier(new SearchDefsDocumentifier());
+        }
         $indexer->run();
     }
 
+    /**
+     * Deletes the Elasticsearch index.
+     */
     public function elasticRmIndex()
     {
         $indexer = new ElasticSearchIndexer();
