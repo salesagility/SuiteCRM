@@ -1,4 +1,7 @@
 <?php
+
+use SuiteCRM\StateCheckerPHPUnitTestCaseAbstract;
+use SuiteCRM\StateSaver;
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -44,8 +47,26 @@
  *
  * @author gyula
  */
-class SharedSecurityRulesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
+class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
     
+    /**
+     *
+     * @var StateSaver
+     */
+    protected $state;
+
+    protected function setUp() {
+        parent::setUp();
+        $this->state = new StateSaver();
+        $this->state->pushTable('aod_indexevent');
+    }
+    
+    protected function tearDown() {
+        $this->state->popTable('aod_indexevent');
+        parent::tearDown();
+    }
+
+
     public function testBeanImplementsIfNotImplemented() {
         $ssr = BeanFactory::getBean('SharedSecurityRules');
         $result = $ssr->bean_implements('should_not_implemented_for_test');
@@ -53,9 +74,30 @@ class SharedSecurityRulesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstra
     }
     
     public function testSave() {
+        $state = new StateSaver();
+        $state->pushTable('users');
+        $state->pushTable('sharedsecurityrules');
+        $state->pushGlobals();
+        
+        $usr = BeanFactory::getBean('Users');
+        $usr->save();
+        $this->assertTrue((bool)$usr->id);
+        
+        global $current_user;
+        $current_user = $usr;
+        
         $ssr = BeanFactory::getBean('SharedSecurityRules');
         $id = $ssr->save();
         $this->assertTrue(isValidId($id));
+        
+        $ssr = BeanFactory::getBean('SharedSecurityRules', $id);
+        $this->assertEquals($id, $ssr->id);
+                        
+        $this->assertTrue(isset($_SESSION['ACL'][$usr->id]) && is_array($_SESSION['ACL'][$usr->id]));
+        
+        $state->popGlobals();
+        $state->popTable('sharedsecurityrules');
+        $state->popTable('users');
     }
     
     public function testCheckRules() {
