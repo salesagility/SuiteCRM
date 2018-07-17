@@ -115,7 +115,17 @@ class ElasticSearchIndexer extends AbstractIndexer
         $start = microtime(true);
 
         foreach ($modules as $module) {
-            $this->indexModule($module);
+            try {
+                $this->indexModule($module);
+            } catch (\Exception $e) {
+                $message = sprintf(
+                    "Failed to index module %s! Exception details follow.\r\n%s - Trace:\r\n%s",
+                    $module,
+                    $e->getMessage(),
+                    $e->getTraceAsString()
+                );
+                $this->log('!', $message);
+            }
         }
 
         $end = microtime(true);
