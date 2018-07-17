@@ -42,7 +42,6 @@ namespace SuiteCRM\Search;
 /**
  * Class MasterSearch performs a unified search using one of the available search engines.
  *
- * @package SuiteCRM\Search
  * @author Vittorio Iocolano
  */
 class MasterSearch
@@ -106,6 +105,8 @@ class MasterSearch
     /**
      * Perform a search with the given query and engine.
      *
+     * Results are grouped by module.
+     *
      * @param $engine string|SearchEngine
      * @param $query SearchQuery
      * @return array[] ids
@@ -124,6 +125,7 @@ class MasterSearch
 
     /**
      * Binds a class name / engine name to a file.
+     *
      * @param $className string
      * @param $file string
      */

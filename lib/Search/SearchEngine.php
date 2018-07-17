@@ -8,7 +8,9 @@
 
 namespace SuiteCRM\Search;
 
-
+/**
+ * This abstract class offers the interface and utilities for other classes to be used as search engines.
+ */
 abstract class SearchEngine
 {
     /**
@@ -20,10 +22,8 @@ abstract class SearchEngine
     public function searchAndView($query)
     {
         $this->validateQuery($query);
-
-        $this->search($query);
-
-        return $this->makeView($this->search($query));
+        $results = $this->search($query);
+        return $this->makeView($results);
     }
 
     /**
@@ -34,6 +34,7 @@ abstract class SearchEngine
      */
     public function makeView($results)
     {
+        // TODO
         return new \SugarView();
     }
 

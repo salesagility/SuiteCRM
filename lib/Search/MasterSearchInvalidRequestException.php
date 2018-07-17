@@ -46,7 +46,9 @@
 
 namespace SuiteCRM\Search;
 
-
+/**
+ * This exception is thrown when an invalid request is sent to a component of the Master Search.
+ */
 class MasterSearchInvalidRequestException extends \RuntimeException
 {
 

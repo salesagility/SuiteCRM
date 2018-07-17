@@ -20,8 +20,6 @@ namespace SuiteCRM\Search;
  *  'query' => 'search this'
  * ]
  * </code>
- *
- * @package SuiteCRM\Search
  */
 class SearchQuery
 {
@@ -88,9 +86,31 @@ class SearchQuery
         $this->query['query'] = trim($this->query['query']);
     }
 
+    /**
+     * Replaces $what with $with in the search query string.
+     *
+     * @param $what
+     * @param $with
+     */
     public function replace($what, $with)
     {
         $this->query['query'] = str_replace($what, $with, $this->query['query']);
+    }
+
+    /**
+     * Removes forward facing slashes used for escaping in the query string.
+     */
+    public function stripSlashes()
+    {
+        $this->query['query'] = stripslashes($this->query['query']);
+    }
+
+    /**
+     * Escapes regular expressions so that they are not recognised as such in the query string.
+     */
+    public function escapeRegex()
+    {
+        $this->query['query'] = preg_quote($this->query['query']);
     }
 
     /**
