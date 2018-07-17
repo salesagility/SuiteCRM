@@ -48,6 +48,10 @@ require_once('modules/AOW_Actions/actions/actionBase.php');
 class actionAccessLevel extends actionBase
 {
 
+    /**
+     * 
+     * @return array
+     */
     public function loadJS()
     {
         return array('modules/SharedSecurityRulesActions/actions/actionAccessLevel.js');

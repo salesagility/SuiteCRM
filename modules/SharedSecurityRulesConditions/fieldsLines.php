@@ -42,6 +42,16 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
+/**
+ * 
+ * @global array $mod_strings
+ * @global string $current_language
+ * @param SugarBean $focus
+ * @param string $field
+ * @param mixed $value
+ * @param string $view
+ * @return string
+ */
 function display_condition_lines(SugarBean $focus, $field, $value, $view)
 {
     global $mod_strings, $current_language;

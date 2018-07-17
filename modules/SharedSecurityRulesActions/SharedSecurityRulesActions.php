@@ -186,6 +186,13 @@ class SharedSecurityRulesActions extends Basic
         return false;
     }
 
+    /**
+     * 
+     * @param array $post_data
+     * @param SugarBean $parent
+     * @param string $key
+     * @return string
+     */
     public function save_lines($post_data, $parent, $key = '')
     {
         $ret = null;
