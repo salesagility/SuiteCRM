@@ -51,13 +51,15 @@ if (!defined('sugarEntry')) {
     define('SUITE_CLI_RUNNER', true);
 }
 
-require 'config.php';
-require 'config_override.php';
-require_once 'vendor/autoload.php';
-require_once 'include/database/DBManagerFactory.php';
-require_once 'include/utils.php';
-require_once 'include/modules.php';
-require_once 'include/entryPoint.php';
+$root = __DIR__ . '/../../../';
+
+require $root . 'config.php';
+require $root . 'config_override.php';
+require_once $root . 'vendor/autoload.php';
+require_once $root . 'include/database/DBManagerFactory.php';
+require_once $root . 'include/utils.php';
+require_once $root . 'include/modules.php';
+require_once $root . 'include/entryPoint.php';
 
 /**
  * This Trait creates a fully working instance of SugarCRM.
