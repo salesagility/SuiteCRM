@@ -56,7 +56,7 @@ class ActionAccessLevelTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
     public function testEditDisplay() {
         $aal = new actionAccessLevel();
         $ret = $aal->edit_display('test_line');
-        $this->assertEquals('<input type="hidden" name="aow_email_type_list" id="aow_email_type_list" value="
+        $this->assertContains('<input type="hidden" name="aow_email_type_list" id="aow_email_type_list" value="
 <OPTION selected value=\'\'>--None--</OPTION>
 <OPTION value=\'Specify User\'>User</OPTION>
 <OPTION value=\'Users\'>Users</OPTION>">
@@ -68,7 +68,8 @@ class ActionAccessLevelTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 <OPTION value=\'none\'>No Access</OPTION>
 <OPTION value=\'view\'>View Only</OPTION>
 <OPTION value=\'view_edit\'>View & Edit</OPTION>
-<OPTION value=\'view_edit_delete\'>View, Edit & Delete</OPTION>"><table border=\'0\' cellpadding=\'0\' cellspacing=\'0\' width=\'100%\' data-workflow-action=\'setRule\'><tr><td id="name_label" scope="row" valign="top"><label>Options:<span class="required">*</span></label></td><td valign="top" scope="row"><button type="button" onclick="add_emailLine(test_line)"><img src="themes/SuiteP/images/id-ff-add.png?v=hugKZyWapd2pgxC_vXV6xw"></button><table id="emailLinetest_line_table" width="100%" class="email-line"></table></td></tr></table><script id =\'aow_scripttest_line\'></script>', $ret);
+<OPTION value=\'view_edit_delete\'>View, Edit & Delete</OPTION>"><table border=\'0\' cellpadding=\'0\' cellspacing=\'0\' width=\'100%\' data-workflow-action=\'setRule\'><tr><td id="name_label" scope="row" valign="top"><label>Options:<span class="required">*</span></label></td><td valign="top" scope="row"><button type="button" onclick="add_emailLine(test_line)"><img src="themes/SuiteP/images/id-ff-add.png?v=', $ret);
+        $this->assertContains('"></button><table id="emailLinetest_line_table" width="100%" class="email-line"></table></td></tr></table><script id =\'aow_scripttest_line\'></script>', $ret);
     }
     
 }
