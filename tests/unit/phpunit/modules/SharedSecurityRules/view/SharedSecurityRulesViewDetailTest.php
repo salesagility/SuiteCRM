@@ -53,6 +53,7 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $state->pushTable('accounts');
         $state->pushTable('accounts_cstm');
         $state->pushTable('sharedsecurityrulesconditions');
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
         
         global $current_user;
@@ -96,6 +97,7 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $this->assertTrue(isset($_SESSION['ACL'][$uid]));
         
         $state->popGlobals();
+        $state->popTable('aod_indexevent');
         $state->popTable('sharedsecurityrulesconditions');
         $state->popTable('accounts_cstm');
         $state->popTable('accounts');
@@ -108,6 +110,7 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $state->pushTable('accounts');
         $state->pushTable('accounts_cstm');
         $state->pushTable('sharedsecurityrulesconditions');
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
         
         global $current_user;
@@ -150,6 +153,7 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $this->assertTrue(isset($_SESSION['ACL'][$uid]));
         
         $state->popGlobals();
+        $state->popTable('aod_indexevent');
         $state->popTable('sharedsecurityrulesconditions');
         $state->popTable('accounts_cstm');
         $state->popTable('accounts');
@@ -160,6 +164,7 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('accounts');
         $state->pushTable('accounts_cstm');
+        $state->pushTable('aod_indexevent');
         $state->pushGlobals();
         
         $ssrvd = new SharedSecurityRulesViewDetail();
@@ -178,11 +183,15 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $this->assertEquals('<script>var conditionLines = []</script>', $contents);
         
         $state->popGlobals();
+        $state->popTable('aod_indexevent');
         $state->popTable('accounts_cstm');
         $state->popTable('accounts');
     }
     
     public function testPreDisplayWithNoBeanId() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
         $ssrvd = new SharedSecurityRulesViewDetail();
         $ssrvd->bean = BeanFactory::getBean('Accounts');
         ob_start();
@@ -195,9 +204,14 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $contents = ob_get_contents();
         ob_end_clean();
         $this->assertEquals('<script>var conditionLines = []</script>', $contents);
+        
+        $state->popTable('aod_indexevent');
     }
     
     public function testPreDisplay() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        
         $ssrvd = new SharedSecurityRulesViewDetail();
         ob_start();
         try {
@@ -209,6 +223,8 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $contents = ob_get_contents();
         ob_end_clean();
         $this->assertEquals('<script>var conditionLines = []</script>', $contents);
+        
+        $state->popTable('aod_indexevent');
     }
     
 }
