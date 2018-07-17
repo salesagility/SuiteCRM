@@ -246,7 +246,7 @@ class SugarSQLValidate
             return false;
         }
 
-        foreach ($parts AS $part) {
+        foreach ($parts as $part) {
             //the user_hash column is forbidden in passed in SQL
             if ($part == "user_hash") {
                 return false;

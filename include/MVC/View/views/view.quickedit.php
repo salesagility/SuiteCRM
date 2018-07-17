@@ -81,7 +81,7 @@ class ViewQuickedit extends ViewAjax
     {
         if (!empty($_REQUEST['source_module']) && $_REQUEST['source_module'] != 'undefined' && !empty($_REQUEST['record'])) {
             $this->bean = loadBean($_REQUEST['source_module']);
-            if ($this->bean instanceOf SugarBean
+            if ($this->bean instanceof SugarBean
                     && !in_array($this->bean->object_name, array('EmailMan'))) {
                 $this->bean->retrieve($_REQUEST['record']);
                 if (!empty($this->bean->id)) {
@@ -125,7 +125,7 @@ class ViewQuickedit extends ViewAjax
      */
     public function display()
     {
-        if (($this->bean instanceOf SugarBean) && !$this->bean->ACLAccess('edit')) {
+        if (($this->bean instanceof SugarBean) && !$this->bean->ACLAccess('edit')) {
             $no_defs_js = '<script>SUGAR.ajaxUI.loadContent("index.php?module=' . $this->bean->module_dir . '&action=Noaccess&record=' . $this->bean->id.'")</script>';
             echo json_encode(array('scriptOnly'=> $no_defs_js));
             return;

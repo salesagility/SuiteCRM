@@ -176,7 +176,7 @@ class ImportMap extends SugarBean
     {
         $returnVal = parent::retrieve($id, $encode, $deleted);
 
-        if (!($returnVal instanceOf $this)) {
+        if (!($returnVal instanceof $this)) {
             return $returnVal;
         }
 
@@ -242,7 +242,7 @@ class ImportMap extends SugarBean
         parent::save();
 
         // Bug 29365 - The enclosure character isn't saved correctly if it's a tab using MssqlManager, so resave it
-        if ($enclosure == '\\t' && $this->db instanceOf MssqlManager) {
+        if ($enclosure == '\\t' && $this->db instanceof MssqlManager) {
             $this->enclosure = $enclosure;
             parent::save();
         }

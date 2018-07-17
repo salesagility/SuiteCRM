@@ -169,8 +169,8 @@ class Sugarpdf extends TCPDF
         $this->setHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
         // set header and footer fonts
-        $this->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        $this->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+        $this->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+        $this->setFooterFont(array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
         //set margins
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
@@ -214,7 +214,7 @@ class Sugarpdf extends TCPDF
         $headerfont = $this->getHeaderFont();
         $headerdata = $this->getHeaderData();
 
-        if (($headerdata['logo']) AND ($headerdata['logo'] != K_BLANK_IMAGE)) {
+        if (($headerdata['logo']) and ($headerdata['logo'] != K_BLANK_IMAGE)) {
 
             // START SUGARPDF
             $logo = K_PATH_CUSTOM_IMAGES.$headerdata['logo'];
@@ -640,7 +640,7 @@ class Sugarpdf extends TCPDF
     public function getNumLines($txt, $w=0)
     {
         $lines = 0;
-        if (empty($w) OR ($w <= 0)) {
+        if (empty($w) or ($w <= 0)) {
             if ($this->rtl) {
                 $w = $this->x - $this->lMargin;
             } else {

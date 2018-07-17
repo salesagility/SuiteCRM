@@ -72,7 +72,7 @@ class Release extends SugarBean
     public $new_schema = true;
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array();
+    public $additional_column_fields = array();
 
     public function __construct()
     {
@@ -164,7 +164,7 @@ class Release extends SugarBean
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
         array_push($where_clauses, "name like '$the_query_string%'");
 

@@ -40,6 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$module_menu = Array(
+$module_menu = array(
 
 );

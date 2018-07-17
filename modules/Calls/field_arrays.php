@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Call'] = array ('column_fields' => Array("id"
+$fields_array['Call'] = array ('column_fields' => array("id"
 		, "date_entered"
 		, "date_modified"
 		, "assigned_user_id"
@@ -67,7 +67,7 @@ $fields_array['Call'] = array ('column_fields' => Array("id"
 		,'reminder_time'
 		,'outlook_id'
 		),
-        'list_fields' => Array('id', 'duration_hours', 'direction', 'status', 'name', 'parent_type', 'parent_name', 'parent_id', 'date_start', 'time_start', 'assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_id','first_name','last_name','required','outlook_id','accept_status'
+        'list_fields' => array('id', 'duration_hours', 'direction', 'status', 'name', 'parent_type', 'parent_name', 'parent_id', 'date_start', 'time_start', 'assigned_user_name', 'assigned_user_id', 'contact_name', 'contact_id','first_name','last_name','required','outlook_id','accept_status'
 		),
         'required_fields' => array("name"=>1, "date_start"=>2, "time_start"=>3,),
 );

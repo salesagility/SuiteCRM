@@ -368,7 +368,7 @@ class M2MRelationship extends SugarRelationship
         $db = DBManagerFactory::getInstance();
         $query = $this->getQuery($link, $params);
         $result = $db->query($query);
-        $rows = Array();
+        $rows = array();
         $idField = $link->getSide() == REL_LHS ? $this->def['join_key_rhs'] : $this->def['join_key_lhs'];
         while ($row = $db->fetchByAssoc($result, false)) {
             if (empty($row['id']) && empty($row[$idField])) {

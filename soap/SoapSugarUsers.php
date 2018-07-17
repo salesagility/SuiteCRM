@@ -573,7 +573,7 @@ function get_entries($session, $module_name, $ids, $select_fields)
                 'value' => 'Access to this object is denied since it has been deleted or does not exist'
             );
             $list[] = array('name' => 'deleted', 'value' => '1');
-            $output_list[] = Array(
+            $output_list[] = array(
                 'id' => $id,
                 'module_name' => $module_name,
                 'name_value_list' => $list,
@@ -905,8 +905,8 @@ function get_related_notes($session, $module_name, $module_id, $select_fields)
     }
     $list = $seed->get_linked_beans('notes', 'Note', array(), 0, -1, 0);
 
-    $output_list = Array();
-    $field_list = Array();
+    $output_list = array();
+    $field_list = array();
     foreach ($list as $value) {
         $output_list[] = get_return_value($value, 'Notes');
         if (empty($field_list)) {

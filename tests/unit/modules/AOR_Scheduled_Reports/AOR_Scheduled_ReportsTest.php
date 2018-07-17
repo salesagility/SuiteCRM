@@ -22,7 +22,7 @@ class AOR_Scheduled_ReportsTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbst
         $aorScheduledReports = new AOR_Scheduled_Reports();
         $aorScheduledReports->name = "test";
         $aorScheduledReports->description = "test description";
-        $_POST['email_recipients']= Array('email_target_type'=> array('Email Address','all','Specify User')  ,'email' =>array('test@test.com','','1') );
+        $_POST['email_recipients']= array('email_target_type'=> array('Email Address','all','Specify User')  ,'email' =>array('test@test.com','','1') );
 
 
         //test save and test for record ID to verify that record is saved

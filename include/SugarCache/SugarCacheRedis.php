@@ -97,7 +97,7 @@ class SugarCacheRedis extends SugarCacheAbstract
     protected function _getRedisObject()
     {
         try {
-            if (!($this->_redis instanceOf Redis)) {
+            if (!($this->_redis instanceof Redis)) {
                 $this->_redis = new Redis();
                 $this->_host = SugarConfig::getInstance()->get('external_cache.redis.host', $this->_host);
                 $this->_port = SugarConfig::getInstance()->get('external_cache.redis.port', $this->_port);

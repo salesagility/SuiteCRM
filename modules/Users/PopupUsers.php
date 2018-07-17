@@ -67,9 +67,9 @@ $seed_object = new User();
 
 $where = "";
 if (isset($_REQUEST['query'])) {
-    $search_fields = Array("first_name", "last_name", "user_name");
+    $search_fields = array("first_name", "last_name", "user_name");
 
-    $where_clauses = Array();
+    $where_clauses = array();
 
     append_where_clause($where_clauses, "first_name", "users.first_name");
     append_where_clause($where_clauses, "last_name", "users.last_name");

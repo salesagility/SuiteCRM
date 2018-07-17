@@ -148,8 +148,8 @@ class Lead extends Person implements EmailInterface
     public $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('assigned_user_name', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
-    public $relationship_fields = Array('email_id'=>'emails','call_id'=>'calls','meeting_id'=>'meetings','task_id'=>'tasks',);
+    public $additional_column_fields = array('assigned_user_name', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
+    public $relationship_fields = array('email_id'=>'emails','call_id'=>'calls','meeting_id'=>'meetings','task_id'=>'tasks',);
 
     public function __construct()
     {
@@ -359,7 +359,7 @@ class Lead extends Person implements EmailInterface
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
         array_push($where_clauses, "leads.last_name like '$the_query_string%'");
@@ -511,10 +511,10 @@ class Lead extends Person implements EmailInterface
 
         foreach ($this->field_defs as $field => $value) {
             if (!empty($value['source']) && $value['source'] == 'custom_fields') {
-                if (!empty($tempBean->field_defs[$field]) AND isset($tempBean->field_defs[$field])) {
+                if (!empty($tempBean->field_defs[$field]) and isset($tempBean->field_defs[$field])) {
                     $form .= "<tr><td nowrap colspan='4' class='dataLabel'>".$mod_strings[$tempBean->field_defs[$field]['vname']].":";
 
-                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) AND (($tempBean->custom_fields->avail_fields[$field]['required']== 1) OR ($tempBean->custom_fields->avail_fields[$field]['required']== '1') OR ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') OR ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
+                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) and (($tempBean->custom_fields->avail_fields[$field]['required']== 1) or ($tempBean->custom_fields->avail_fields[$field]['required']== '1') or ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') or ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
                         $form .= "&nbsp;<span class='required'>".$lbl_required_symbol."</span>";
                     }
                     $form .= "</td></tr>";
@@ -529,12 +529,12 @@ class Lead extends Person implements EmailInterface
                         $array = null;
                     }
 
-                    if (!empty($value['options']) AND isset($value['options'])) {
+                    if (!empty($value['options']) and isset($value['options'])) {
                         $form .= "<select " . $multiple . " name='".$prefix.$field.$array."'>";
                         $form .= get_select_options_with_id($app_list_strings[$value['options']], $this->$field);
                         $form .= "</select";
                     } elseif ($value['type'] == 'bool') {
-                        if (($this->$field == 1) OR ($this->$field == '1')) {
+                        if (($this->$field == 1) or ($this->$field == '1')) {
                             $checked = 'checked';
                         } else {
                             $checked = '';
@@ -565,7 +565,7 @@ class Lead extends Person implements EmailInterface
                         }
                     }
 
-                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) AND (($tempBean->custom_fields->avail_fields[$field]['required']== 1) OR ($tempBean->custom_fields->avail_fields[$field]['required']== '1') OR ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') OR ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
+                    if (!empty($tempBean->custom_fields->avail_fields[$field]['required']) and (($tempBean->custom_fields->avail_fields[$field]['required']== 1) or ($tempBean->custom_fields->avail_fields[$field]['required']== '1') or ($tempBean->custom_fields->avail_fields[$field]['required']== 'true') or ($tempBean->custom_fields->avail_fields[$field]['required']== true))) {
                         $form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'relate', true,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
                     }
 

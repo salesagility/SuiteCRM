@@ -157,7 +157,7 @@ class TeamDemoData
      */
     public function _seed_data_get_teamset_list()
     {
-        $teamsets = Array();
+        $teamsets = array();
         $teamsets[] = array("East", "West");
         $teamsets[] = array("East", "West", "1");
         $teamsets[] = array("West", "East");
@@ -173,7 +173,7 @@ class TeamDemoData
      */
     public function _seed_data_get_team_list()
     {
-        $teams = Array();
+        $teams = array();
         //bug 28138 todo
         $teams[] = "north";
         $teams[] = "south";

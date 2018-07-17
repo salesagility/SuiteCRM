@@ -91,7 +91,7 @@ class Campaign extends SugarBean
 				'assigned_user_name', 'assigned_user_id',
 	);
 
-    public $relationship_fields = Array('prospect_list_id'=>'prospect_lists');
+    public $relationship_fields = array('prospect_list_id'=>'prospect_lists');
 
     public $new_schema = true;
         
@@ -229,7 +229,7 @@ class Campaign extends SugarBean
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
         array_push($where_clauses, "campaigns.name like '$the_query_string%'");
 

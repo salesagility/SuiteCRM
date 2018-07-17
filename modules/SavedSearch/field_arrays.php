@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['SavedSearch'] = array ('column_fields' => Array(
+$fields_array['SavedSearch'] = array ('column_fields' => array(
         'id'
         ,'search_module'
         ,'name'
@@ -58,6 +58,6 @@ $fields_array['SavedSearch'] = array ('column_fields' => Array(
         ,'date_modified'
         ,'deleted'
         ),
-        'list_fields' =>  Array('id', 'module','name','description'),
+        'list_fields' =>  array('id', 'module','name','description'),
         'required_fields' => array('id' => 1, 'name'=>1, 'module'=>1),
 );

@@ -58,7 +58,7 @@ class Audit extends SugarBean
 
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array();
+    public $additional_column_fields = array();
 
     public function __construct()
     {

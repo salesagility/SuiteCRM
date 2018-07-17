@@ -89,7 +89,7 @@ class CampaignTracker extends SugarBean
     /* $column_fields holds a list of columns that exist in this bean's table. This list is referenced
     * when fetching or saving data for the bean. As you modify a table you need to keep this up to date.
     */
-    public $column_fields = Array(
+    public $column_fields = array(
             'id'
             ,'tracker_key'
             ,'tracker_url'
@@ -98,8 +98,8 @@ class CampaignTracker extends SugarBean
     );
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('campaign_id');
-    public $relationship_fields = Array('campaing_id'=>'campaign');
+    public $additional_column_fields = array('campaign_id');
+    public $relationship_fields = array('campaing_id'=>'campaign');
 
     public $required_fields =  array('tracker_name'=>1,'tracker_url'=>1);
 

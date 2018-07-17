@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Document'] = array ('column_fields' => Array("id"
+$fields_array['Document'] = array ('column_fields' => array("id"
         ,"document_name"
         ,"description"
         ,"category_id"
@@ -65,7 +65,7 @@ $fields_array['Document'] = array ('column_fields' => Array("id"
         ,"is_template"
         ,"template_type"
         ),
-        'list_fields' =>  Array("id"
+        'list_fields' =>  array("id"
         ,"document_name"
         ,"description"
         ,"category_id"
@@ -84,5 +84,5 @@ $fields_array['Document'] = array ('column_fields' => Array("id"
         ,"file_url"
         ,"file_url_noimage"
         ),
-        'required_fields' => Array("document_name"=>1,"active_date"=>1,"revision"=>1),
+        'required_fields' => array("document_name"=>1,"active_date"=>1,"revision"=>1),
 );

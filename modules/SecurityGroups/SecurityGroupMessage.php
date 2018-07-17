@@ -25,7 +25,7 @@ class SecurityGroupMessage extends Basic
     public $modified_user_link;
 
 
-    public $additional_column_fields = Array();
+    public $additional_column_fields = array();
     public $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'name'=>array('name' =>'name', 'type' =>'varchar', 'len'=>'255', )

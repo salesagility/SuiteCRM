@@ -52,9 +52,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
          $this->list = $this->focus->get_full_list('name');
          $this->focus->retrieve('-99');
          if (is_array($this->list)) {
-             $this->list = array_merge(Array($this->focus), $this->list);
+             $this->list = array_merge(array($this->focus), $this->list);
          } else {
-             $this->list = Array($this->focus);
+             $this->list = array($this->focus);
          }
      }
      public function handleAdd()

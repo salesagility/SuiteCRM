@@ -201,7 +201,7 @@ class actionSendEmail extends actionBase
                     case 'Users':
                         $users = array();
                         switch ($params['email'][$key][0]) {
-                            Case 'security_group':
+                            case 'security_group':
                                 if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
                                     $security_group = new SecurityGroup();
@@ -226,13 +226,13 @@ class actionSendEmail extends actionBase
                                 }
                             //No Security Group module found - fall through.
                             // no break
-                            Case 'role':
+                            case 'role':
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();
                                 $role->retrieve($params['email'][$key][2]);
                                 $users = $role->get_linked_beans('users', 'User');
                                 break;
-                            Case 'all':
+                            case 'all':
                             default:
                                 $db = DBManagerFactory::getInstance();
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
@@ -516,7 +516,7 @@ class actionSendEmail extends actionBase
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
-            if ($relatedBean instanceOf SugarBean && !empty($relatedBean->id)) {
+            if ($relatedBean instanceof SugarBean && !empty($relatedBean->id)) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;
             }

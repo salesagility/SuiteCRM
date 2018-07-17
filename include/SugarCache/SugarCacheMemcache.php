@@ -94,7 +94,7 @@ class SugarCacheMemcache extends SugarCacheAbstract
      */
     protected function _getMemcacheObject()
     {
-        if (!($this->_memcache instanceOf Memcache)) {
+        if (!($this->_memcache instanceof Memcache)) {
             $this->_memcache = new Memcache();
             $config = SugarConfig::getInstance();
             $this->_host = $config->get('external_cache.memcache.host', $this->_host);

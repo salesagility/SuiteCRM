@@ -749,7 +749,7 @@ class Meeting extends SugarBean
         $query = "SELECT meetings_users.required, meetings_users.accept_status, meetings_users.user_id from meetings_users where meetings_users.meeting_id='$this->id' AND meetings_users.deleted=0";
         $GLOBALS['log']->debug("Finding linked records $this->object_name: ".$query);
         $result = $this->db->query($query, true);
-        $list = Array();
+        $list = array();
 
         while ($row = $this->db->fetchByAssoc($result)) {
             $template = new User(); // PHP 5 will retrieve by reference, always over-writing the "old" one
@@ -772,7 +772,7 @@ class Meeting extends SugarBean
         $GLOBALS['log']->debug("Finding linked records $this->object_name: ");
         $query = "SELECT meetings_users.required, meetings_users.accept_status, meetings_users.meeting_id from meetings_users where meetings_users.user_id='$user->id' AND( meetings_users.accept_status IS NULL OR	meetings_users.accept_status='none') AND meetings_users.deleted=0";
         $result = $this->db->query($query, true);
-        $list = Array();
+        $list = array();
 
         while ($row = $this->db->fetchByAssoc($result)) {
             $record = $template->retrieve($row['meeting_id']);

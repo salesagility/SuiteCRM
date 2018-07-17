@@ -267,11 +267,11 @@ class actionCreateRecord extends actionBase
                                 break;
                         }
                         break;
-                    Case 'Round_Robin':
-                    Case 'Least_Busy':
-                    Case 'Random':
+                    case 'Round_Robin':
+                    case 'Least_Busy':
+                    case 'Random':
                         switch ($params['value'][$key][0]) {
-                            Case 'security_group':
+                            case 'security_group':
                                 require_once 'modules/SecurityGroups/SecurityGroup.php';
                                 $security_group = new SecurityGroup();
                                 $security_group->retrieve($params['value'][$key][1]);
@@ -294,7 +294,7 @@ class actionCreateRecord extends actionBase
                                     $users[$group_user->id] = $group_user->name;
                                 }
                                 break;
-                            Case 'role':
+                            case 'role':
                                 require_once 'modules/ACLRoles/ACLRole.php';
                                 $role = new ACLRole();
                                 $role->retrieve($params['value'][$key][2]);
@@ -304,7 +304,7 @@ class actionCreateRecord extends actionBase
                                     $users[$role_user->id] = $role_user->name;
                                 }
                                 break;
-                            Case 'all':
+                            case 'all':
                             default:
                                 $users = get_user_array(false);
                                 break;
@@ -319,17 +319,17 @@ class actionCreateRecord extends actionBase
                             $value = $users[0];
                         } else {
                             switch ($params['value_type'][$key]) {
-                                Case 'Round_Robin':
+                                case 'Round_Robin':
                                     $value = getRoundRobinUser($users, $this->id);
                                     break;
-                                Case 'Least_Busy':
+                                case 'Least_Busy':
                                     $user_id = 'assigned_user_id';
                                     if (isset($record_vardefs[$field]['id_name']) && $record_vardefs[$field]['id_name'] != '') {
                                         $user_id = $record_vardefs[$field]['id_name'];
                                     }
                                     $value = getLeastBusyUser($users, $user_id, $record);
                                     break;
-                                Case 'Random':
+                                case 'Random':
                                 default:
                                     shuffle($users);
                                     $value = $users[0];

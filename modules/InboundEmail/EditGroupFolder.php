@@ -83,7 +83,7 @@ $smarty->assign('ID', $focus->id);
 // module specific
 
 $ret = $focus->getFoldersForSettings($current_user);
-$groupFolders = Array();
+$groupFolders = array();
 $groupFoldersOrig = array();
 foreach ($ret['groupFolders'] as $key => $value) {
     if (!empty($focus->id)) {

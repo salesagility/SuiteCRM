@@ -336,7 +336,7 @@ function portal_get_entry($session, $module_name, $id, $select_fields)
         $seed->description = $body;
     }
 
-    $output_list = Array();
+    $output_list = array();
     $output_list[] = get_return_value($seed, $module_name);
 
     //$output_list[0]['name_value_list']['description'] = array('name'=>'description', 'value'=>$seed->description);
@@ -609,8 +609,8 @@ function portal_get_related_notes($session, $module_name, $module_id, $select_fi
 
 
 
-    $output_list = Array();
-    $field_list = Array();
+    $output_list = array();
+    $field_list = array();
     foreach ($list as $value) {
         $output_list[] = get_return_value($value, 'Notes');
         $_SESSION['viewable']['Notes'][$value->id] = $value->id;
@@ -654,8 +654,8 @@ function portal_get_related_list($session, $module_name, $rel_module, $module_id
 
     $list = get_related_in_module("('".DBManagerFactory::getInstance()->quote($module_id)."')", $module_name, $rel_module, $order_by, $offset, $limit);
 
-    $output_list = Array();
-    $field_list = Array();
+    $output_list = array();
+    $field_list = array();
     foreach ($list as $value) {
         $output_list[] = get_return_value($value, $rel_module);
         $_SESSION['viewable'][$rel_module][$value->id] = $value->id;

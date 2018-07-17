@@ -67,7 +67,7 @@ class ContactOpportunityRelationship extends SugarBean
 
     public $table_name = "opportunities_contacts";
     public $object_name = "ContactOpportunityRelationship";
-    public $column_fields = Array("id"
+    public $column_fields = array("id"
 		,"contact_id"
 		,"opportunity_id"
 		,"contact_role"
@@ -76,7 +76,7 @@ class ContactOpportunityRelationship extends SugarBean
 
     public $new_schema = true;
 
-    public $additional_column_fields = Array();
+    public $additional_column_fields = array();
     public $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
       , 'contact_id'=>array('name' =>'contact_id', 'type' =>'char', 'len'=>'36', )

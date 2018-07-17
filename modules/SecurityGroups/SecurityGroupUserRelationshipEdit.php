@@ -57,8 +57,8 @@ $xtpl->assign("RETURN_ID", $_REQUEST['return_id']);
 $xtpl->assign("THEME", $theme);
 $xtpl->assign("IMAGE_PATH", $image_path);$xtpl->assign("PRINT_URL", "index.php?".$GLOBALS['request_string']);
 $xtpl->assign("ID", $focus->id);
-$xtpl->assign("SECURITYGROUP", $securityGroup = Array("NAME" => $focus->securitygroup_name, "ID" => $focus->securitygroup_id));
-$xtpl->assign("USER", $user = Array("NAME" => $focus->user_name, "ID" => $focus->user_id));
+$xtpl->assign("SECURITYGROUP", $securityGroup = array("NAME" => $focus->securitygroup_name, "ID" => $focus->securitygroup_id));
+$xtpl->assign("USER", $user = array("NAME" => $focus->user_name, "ID" => $focus->user_id));
 
 echo "\n<p>\n";
 echo get_module_title($mod_strings['LBL_MODULE_NAME'], $mod_strings['LBL_SECURITYGROUP_USER_FORM_TITLE'].": ".$securityGroup['NAME'] . " - ". $user['NAME'], true);

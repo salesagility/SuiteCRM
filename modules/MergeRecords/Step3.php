@@ -363,9 +363,9 @@ foreach ($temp_field_array as $field_array) {
             //add an array of fields/values to the json array
             //for setting all the values for merge
             if ($field_check == 'relate' or $field_check == 'link') {
-                $temp_array = Array ();
+                $temp_array = array ();
                 $tempId = $field_array['id_name'];
-                $json_data['popup_fields'] = Array ($tempName => $mergeBeanArray[$id]->$tempName,$tempId => $mergeBeanArray[$id]->$tempId,);
+                $json_data['popup_fields'] = array ($tempName => $mergeBeanArray[$id]->$tempName,$tempId => $mergeBeanArray[$id]->$tempId,);
             } elseif ($field_check == 'teamset') {
                 $json_data['field_value'] = TeamSetManager::getCommaDelimitedTeams($mergeBeanArray[$id]->team_set_id, $mergeBeanArray[$id]->team_id, true);
                 $json_data['field_value2'] = TeamSetManager::getTeamsFromSet($mergeBeanArray[$id]->team_set_id);

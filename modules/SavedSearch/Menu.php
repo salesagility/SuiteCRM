@@ -47,4 +47,4 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$module_menu = Array();
+$module_menu = array();

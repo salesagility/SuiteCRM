@@ -77,7 +77,7 @@ class UsersLastImport extends SugarBean
         "deleted"
         );
     public $new_schema = true;
-    public $additional_column_fields = Array();
+    public $additional_column_fields = array();
 
     /**
      * Constructor

@@ -81,8 +81,8 @@ if (is_file("config.php")) {
     }
     if (!empty($sugar_config['languages'])) {
         // We need to encode the languages in a way that can be retrieved later.
-        $language_keys = Array();
-        $language_values = Array();
+        $language_keys = array();
+        $language_values = array();
 
         foreach ($sugar_config['languages'] as $key=>$value) {
             $language_keys[] = $key;

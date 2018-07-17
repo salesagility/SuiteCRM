@@ -130,9 +130,9 @@ class Account extends Company implements EmailInterface
     public $importable = true;
     public $new_schema = true;
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('assigned_user_name', 'assigned_user_id', 'opportunity_id', 'bug_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id'
+    public $additional_column_fields = array('assigned_user_name', 'assigned_user_id', 'opportunity_id', 'bug_id', 'case_id', 'contact_id', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id', 'parent_name', 'member_id'
 	);
-    public $relationship_fields = Array('opportunity_id'=>'opportunities', 'bug_id' => 'bugs', 'case_id'=>'cases',
+    public $relationship_fields = array('opportunity_id'=>'opportunities', 'bug_id' => 'bugs', 'case_id'=>'cases',
 									'contact_id'=>'contacts', 'task_id'=>'tasks', 'note_id'=>'notes',
 									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails','member_id'=>'members',
 									'project_id'=>'project',
@@ -273,7 +273,7 @@ class Account extends Company implements EmailInterface
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
         array_push($where_clauses, "accounts.name like '$the_query_string%'");
         if (is_numeric($the_query_string)) {

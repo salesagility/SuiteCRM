@@ -847,7 +847,7 @@ class OAuthUtil
             // returns the headers in the same case as they are in the
             // request
             $out = array();
-            foreach ($headers AS $key => $value) {
+            foreach ($headers as $key => $value) {
                 $key = str_replace(
                     " ",
                     "-",

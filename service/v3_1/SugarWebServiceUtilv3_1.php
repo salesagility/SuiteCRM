@@ -50,7 +50,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 
         $tableName = $value->getTableName();
 
-        return Array('module_name'=>$module, 'table_name' => $tableName,
+        return array('module_name'=>$module, 'table_name' => $tableName,
                     'module_fields'=> $result['module_fields'],
                     'link_fields'=> $result['link_fields'],
                     );

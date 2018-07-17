@@ -102,7 +102,7 @@ function MakeFont($fontfile, $fmfile, $embedded=true, $enc='cp1252', $patch=arra
     $ffext = strtolower(substr($fontfile, -3));
     $fmext = strtolower(substr($fmfile, -3));
     if ($fmext == 'afm') {
-        if (($ffext == 'ttf') OR ($ffext == 'otf')) {
+        if (($ffext == 'ttf') or ($ffext == 'otf')) {
             $type = 'TrueType';
         } elseif ($ffext == 'pfb') {
             $type = 'Type1';
@@ -125,7 +125,7 @@ function MakeFont($fontfile, $fmfile, $embedded=true, $enc='cp1252', $patch=arra
         $fd = MakeFontDescriptor($fm, empty($map));
     } elseif ($fmext == 'ufm') {
         $enc = '';
-        if (($ffext == 'ttf') OR ($ffext == 'otf')) {
+        if (($ffext == 'ttf') or ($ffext == 'otf')) {
             $type = 'TrueTypeUnicode';
         } else {
             die('Error: not a TrueType font: '.$ffext);
@@ -179,7 +179,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
     $s .= '$up='.$fm['UnderlinePosition'].";\n";
     $s .= '$ut='.$fm['UnderlineThickness'].";\n";
     if ($dw <= 0) {
-        if (isset($fm['Widths'][32]) AND ($fm['Widths'][32] > 0)) {
+        if (isset($fm['Widths'][32]) and ($fm['Widths'][32] > 0)) {
             // assign default space width
             $dw = $fm['Widths'][32];
         } else {
@@ -211,7 +211,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
     // END SUGARCRM SPECIFIC
     if ($embedded) {
         //Embedded font
-        if (($type == 'TrueType') OR ($type == 'TrueTypeUnicode')) {
+        if (($type == 'TrueType') or ($type == 'TrueTypeUnicode')) {
             CheckTTF($fontfile);
         }
         $f = fopen($fontfile, 'rb');
@@ -232,7 +232,7 @@ r47930 - 2009-06-02 16:21:39 -0700 (Tue, 02 Jun 2009) - jenny - Updating with ch
                 die('Error: font file does not seem to be valid Type1');
             }
             $size1 = $pos + 6;
-            if ($header AND (ord($file{$size1}) == 128)) {
+            if ($header and (ord($file{$size1}) == 128)) {
                 //Strip second binary header
                 $file = substr($file, 0, $size1).substr($file, $size1+6);
             }
@@ -383,12 +383,12 @@ function ReadUFM($file, &$cidtogidmap)
                     $fm['CapXHeight'] = $e[13];
                 }
                 // Set GID
-                if (($cc >= 0) AND ($cc < 0xFFFF) AND $glyph) {
+                if (($cc >= 0) and ($cc < 0xFFFF) and $glyph) {
                     $cidtogidmap{($cc * 2)} = chr($glyph >> 8);
                     $cidtogidmap{(($cc * 2) + 1)} = chr($glyph & 0xFF);
                 }
             }
-            if (($gn == '.notdef') AND (!isset($fm['MissingWidth']))) {
+            if (($gn == '.notdef') and (!isset($fm['MissingWidth']))) {
                 $fm['MissingWidth'] = $w;
             }
         } elseif ($code == 'FontName') {
@@ -538,7 +538,7 @@ function ReadAFM($file, &$map)
         if (!isset($widths['.notdef'])) {
             $widths['.notdef'] = 600;
         }
-        if (!isset($widths['Delta']) AND isset($widths['increment'])) {
+        if (!isset($widths['Delta']) and isset($widths['increment'])) {
             $widths['Delta'] = $widths['increment'];
         }
         //Order widths according to map
@@ -574,7 +574,7 @@ function MakeFontDescriptor($fm, $symbolic=false)
     $fd .= ",'CapHeight'=>".$ch;
     //Flags
     $flags = 0;
-    if (isset($fm['IsFixedPitch']) AND $fm['IsFixedPitch']) {
+    if (isset($fm['IsFixedPitch']) and $fm['IsFixedPitch']) {
         $flags += 1<<0;
     }
     if ($symbolic) {
@@ -582,7 +582,7 @@ function MakeFontDescriptor($fm, $symbolic=false)
     } else {
         $flags += 1<<5;
     }
-    if (isset($fm['ItalicAngle']) AND ($fm['ItalicAngle'] != 0)) {
+    if (isset($fm['ItalicAngle']) and ($fm['ItalicAngle'] != 0)) {
         $flags += 1<<6;
     }
     $fd .= ",'Flags'=>".$flags;
@@ -704,7 +704,7 @@ function CheckTTF($file)
     $pp = ($fsType & 0x04) != 0;
     $e = ($fsType & 0x08) != 0;
     fclose($f);
-    if ($rl AND (!$pp) AND (!$e)) {
+    if ($rl and (!$pp) and (!$e)) {
         print "Warning: font license does not allow embedding\n";
     }
 }

@@ -181,7 +181,7 @@ class Link
             $query = $this->getQuery();
         }
         $result = $this->_db->query($query, true);
-        $list = Array();
+        $list = array();
         while ($row = $this->_db->fetchByAssoc($result)) {
             if ($role) {
                 $list[] = $row;

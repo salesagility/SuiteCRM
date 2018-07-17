@@ -1055,7 +1055,7 @@ class Smarty_Compiler extends Smarty
 
         $arg_list = array();
         foreach ($attrs as $arg_name => $arg_value) {
-            if ($arg_name != 'file' AND $arg_name != 'once' AND $arg_name != 'assign') {
+            if ($arg_name != 'file' and $arg_name != 'once' and $arg_name != 'assign') {
                 if (is_bool($arg_value)) {
                     $arg_value = $arg_value ? 'true' : 'false';
                 }

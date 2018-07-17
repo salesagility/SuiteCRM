@@ -605,7 +605,7 @@ class SoapHelperWebServices
     {
         $GLOBALS['log']->info('Begin/End: SoapHelperWebServices->array_get_return_value');
 
-        return Array(
+        return array(
             'id' => $array['id'],
             'module_name' => $module,
             'name_value_list' => $this->array_get_name_value_list($array)
@@ -623,7 +623,7 @@ class SoapHelperWebServices
         $value = clean_sensitive_data($value->field_defs, $value);
         $GLOBALS['log']->info('End: SoapHelperWebServices->get_return_value_for_fields');
 
-        return Array(
+        return array(
             'id' => $value->id,
             'module_name' => $module,
             'name_value_list' => $this->get_name_value_list_for_fields($value, $fields)
@@ -975,7 +975,7 @@ class SoapHelperWebServices
         $value = clean_sensitive_data($value->field_defs, $value);
         $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
 
-        return Array(
+        return array(
             'id' => $value->id,
             'module_name' => $module,
             'name_value_list' => $this->get_name_value_list($value)
@@ -991,7 +991,7 @@ class SoapHelperWebServices
         $result = $this->get_field_list($value, $fields, $translate);
         $GLOBALS['log']->info('End: SoapHelperWebServices->get_return_module_fields');
 
-        return Array(
+        return array(
             'module_name' => $module,
             'module_fields' => $result['module_fields'],
             'link_fields' => $result['link_fields'],

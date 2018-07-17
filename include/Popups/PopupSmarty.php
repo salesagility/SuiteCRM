@@ -298,10 +298,10 @@ class PopupSmarty extends ListViewSmarty
         $seed,
         $file = null,
         $where = null,
-        $params = Array(),
+        $params = array(),
         $offset = 0,
         $limit = -1,
-        $filter_fields = Array(),
+        $filter_fields = array(),
         $id_field = 'id',
         $id = null
     ) {

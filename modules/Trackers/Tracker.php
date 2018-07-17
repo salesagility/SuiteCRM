@@ -51,7 +51,7 @@ if (!class_exists('Tracker')) {
         public $acltype = 'Tracker';
         public $acl_category = 'Trackers';
         public $disable_custom_fields = true;
-        public $column_fields = Array(
+        public $column_fields = array(
         "id",
         "monitor_id",
         "user_id",

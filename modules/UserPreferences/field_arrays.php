@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['UserPreferences'] = array ('column_fields' => Array(
+$fields_array['UserPreferences'] = array ('column_fields' => array(
         'id'
         ,'category'
         ,'name'

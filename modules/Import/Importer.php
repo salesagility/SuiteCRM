@@ -461,7 +461,7 @@ class Importer
     protected function cloneExistingBean($focus)
     {
         $existing_focus = clone $this->bean;
-        if (!($existing_focus->retrieve($focus->id) instanceOf SugarBean)) {
+        if (!($existing_focus->retrieve($focus->id) instanceof SugarBean)) {
             return false;
         } else {
             $newData = $focus->toArray();
