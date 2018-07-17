@@ -48,6 +48,7 @@ namespace SuiteCRM\Robo\Plugin\Commands;
 
 use BeanFactory;
 use Robo\Task\Base\loadTasks;
+use SuiteCRM\Robo\Traits\CliRunnerTrait;
 use SuiteCRM\Robo\Traits\RoboTrait;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchIndexer;
 use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
@@ -59,6 +60,7 @@ class ElasticSearchCommands extends \Robo\Tasks
 {
     use loadTasks;
     use RoboTrait;
+    use CliRunnerTrait;
 
     /**
      * ElasticSearchCommands constructor.
@@ -67,35 +69,6 @@ class ElasticSearchCommands extends \Robo\Tasks
     {
         $this->bootstrap();
     }
-
-    //region necessaryEvil
-    private function bootstrap()
-    {
-        if (!defined('sugarEntry')) {
-            define('sugarEntry', true);
-            define('SUITE_PHPUNIT_RUNNER', true);
-        }
-
-        require 'config.php';
-        require 'config_override.php';
-
-        require_once 'vendor/autoload.php';
-
-        require_once 'include/database/DBManagerFactory.php';
-
-        require_once 'include/utils.php';
-        require_once 'include/modules.php';
-        require_once 'include/entryPoint.php';
-
-        //Oddly entry point loads app_strings but not app_list_strings, manually do this here.
-        $GLOBALS['current_language'] = 'en_us';
-        $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
-
-        /* VERY BAD :-( - but for now at least tests are running */
-        $GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
-    }
-
-    //endregion
 
     public function elasticSearch($query, $size = 50, $showJson = false)
     {
