@@ -67,10 +67,11 @@ class SugarLoggerMonologHandler extends AbstractProcessingHandler
 
         $message = $record['message'];
         $level = $record['level'];
+        $channel = $record['channel'];
 
         $level = $this->monologLevelToSugarLoggerLevel($level);
 
-        $logger->$level($message);
+        $logger->$level("[$channel] $message");
     }
 
     /**
