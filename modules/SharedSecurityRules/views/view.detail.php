@@ -157,7 +157,23 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                     $modulePathDisplay[] = $currentBean->module_name;
                 }
             }
-            $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
+            
+            $currentBeanFieldNamMapVName = null;
+            if (!isset($currentBean->field_name_map[$field]['vname'])) {
+                if (!isset($currentBean->field_name_map[$field])) {
+                    if (!isset($field)) {
+                        LoggerManager::getLogger()->warn('current bean field map index is not set');
+                    } else {
+                        LoggerManager::getLogger()->warn('current bean field map is not set at index: ' . $field);
+                    }
+                } else {
+                    LoggerManager::getLogger()->warn('current bean field map index error');
+                }
+            } else {
+                $currentBeanFieldNamMapVName = $currentBean->field_name_map[$field]['vname'];
+            }
+            
+            $fieldDisplay = $currentBeanFieldNamMapVName;
             $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
             $fieldDisplay = trim($fieldDisplay, ':');
             foreach ($modulePathDisplay as &$module) {
