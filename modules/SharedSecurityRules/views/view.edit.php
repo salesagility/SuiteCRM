@@ -47,6 +47,11 @@ require_once("modules/SharedSecurityRules/SharedSecurityRules.php");
 
 class SharedSecurityRulesViewEdit extends ViewEdit
 {
+    
+    /**
+     * 
+     * @return array
+     */
     private function getConditionLines()
     {
         if (!is_object($this->bean)) {
@@ -82,6 +87,9 @@ class SharedSecurityRulesViewEdit extends ViewEdit
         return $conditions;
     }
 
+    /**
+     * 
+     */
     public function preDisplay()
     {
         $conditions = $this->getConditionLines();
@@ -90,6 +98,14 @@ class SharedSecurityRulesViewEdit extends ViewEdit
         parent::preDisplay();
     }
 
+    /**
+     * 
+     * @global array $app_list_strings
+     * @param string $modulePath
+     * @param string $field
+     * @param string $reportModule
+     * @return array
+     */
     private function getDisplayForField($modulePath, $field, $reportModule)
     {
         global $app_list_strings;

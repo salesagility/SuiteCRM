@@ -48,6 +48,11 @@ require_once 'modules/AOR_Reports/aor_utils.php';
 
 class SharedSecurityRulesViewDetail extends ViewDetail
 {
+    
+    /**
+     * 
+     * @return array
+     */
     private function getConditionLines()
     {
         if (!is_object($this->bean)) {
@@ -84,6 +89,9 @@ class SharedSecurityRulesViewDetail extends ViewDetail
         return $conditions;
     }
 
+    /**
+     * 
+     */
     public function preDisplay()
     {
         $conditions = $this->getConditionLines();
@@ -93,6 +101,14 @@ class SharedSecurityRulesViewDetail extends ViewDetail
         parent::preDisplay();
     }
 
+    /**
+     * 
+     * @global array $app_list_strings
+     * @param string $modulePath
+     * @param string $field
+     * @param string $reportModule
+     * @return array
+     */
     private function getDisplayForField($modulePath, $field, $reportModule)
     {
         global $app_list_strings;

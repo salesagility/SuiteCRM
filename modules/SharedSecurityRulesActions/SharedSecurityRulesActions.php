@@ -44,28 +44,138 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class SharedSecurityRulesActions extends Basic
 {
+    
+    /**
+     *
+     * @var bool
+     */
     public $new_schema = true;
+    
+    /**
+     *
+     * @var string
+     */
     public $module_dir = 'SharedSecurityRulesActions';
+    
+    /**
+     *
+     * @var string
+     */
     public $object_name = 'SharedSecurityRulesActions';
+    
+    /**
+     *
+     * @var string
+     */
     public $table_name = 'sharedsecurityrulesactions';
+    
+    /**
+     *
+     * @var bool
+     */
     public $importable = false;
+    
+    /**
+     *
+     * @var string
+     */
     public $id;
+    
+    /**
+     *
+     * @var string 
+     */
     public $name;
+    
+    /**
+     *
+     * @var string 
+     */
     public $date_entered;
+    
+    /**
+     *
+     * @var string 
+     */
     public $date_modified;
+    
+    /**
+     *
+     * @var string 
+     */
     public $modified_user_id;
+    
+    /**
+     *
+     * @var string 
+     */
     public $modified_by_name;
+    
+    /**
+     *
+     * @var string 
+     */
     public $created_by;
+    
+    /**
+     *
+     * @var string 
+     */
     public $created_by_name;
+    
+    /**
+     *
+     * @var string 
+     */
     public $description;
+    
+    /**
+     *
+     * @var bool 
+     */
     public $deleted;
+    
+    /**
+     *
+     * @var string 
+     */
     public $created_by_link;
+    
+    /**
+     *
+     * @var string 
+     */
     public $modified_user_link;
+    
+    /**
+     *
+     * @var string 
+     */
     public $assigned_user_id;
+    
+    /**
+     *
+     * @var string 
+     */
     public $assigned_user_name;
+    
+    /**
+     *
+     * @var type 
+     */
     public $assigned_user_link;
+    
+    /**
+     *
+     * @var mixed 
+     */
     public $SecurityGroups;
 
+    /**
+     * 
+     * @param string $interface
+     * @return boolean
+     */
     public function bean_implements($interface)
     {
         switch ($interface) {

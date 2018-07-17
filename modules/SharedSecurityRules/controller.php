@@ -47,6 +47,11 @@ require_once("modules/AOW_WorkFlow/aow_utils.php");
 
 class SharedSecurityRulesController extends SugarController
 {
+    
+    /**
+     * 
+     * @return null
+     */
     public function action_fielddefs()
     {
         $request = $_REQUEST;
@@ -64,6 +69,12 @@ class SharedSecurityRulesController extends SugarController
         return $this->protectedDie();
     }
 
+    /**
+     * 
+     * @global array $beanList
+     * @global array $beanFiles
+     * @return null
+     */
     protected function action_getAction()
     {
         global $beanList, $beanFiles;
@@ -140,6 +151,10 @@ class SharedSecurityRulesController extends SugarController
         return $this->protectedDie();
     }
 
+    /**
+     * 
+     * @return null
+     */
     protected function action_getModuleFieldType()
     {
         $request = $_REQUEST;
@@ -227,6 +242,13 @@ class SharedSecurityRulesController extends SugarController
         return $this->protectedDie();
     }
 
+    /**
+     * 
+     * @global array $app_list_strings
+     * @global array $beanFiles
+     * @global array $beanList
+     * @return null
+     */
     protected function action_getFieldTypeOptions()
     {
         global $app_list_strings, $beanFiles, $beanList;
@@ -344,6 +366,13 @@ class SharedSecurityRulesController extends SugarController
         return $this->protectedDie();
     }
 
+    /**
+     * 
+     * @global array $app_list_strings
+     * @global array $beanFiles
+     * @global array $beanList
+     * @return null
+     */
     protected function action_getModuleOperatorField()
     {
         global $app_list_strings, $beanFiles, $beanList;
@@ -459,6 +488,9 @@ class SharedSecurityRulesController extends SugarController
         return $this->protectedDie();
     }
     
+    /**
+     * 
+     */
     protected function protectedDie() {
         die();
     }
