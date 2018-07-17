@@ -95,11 +95,8 @@ class SharedSecurityRulesViewDetail extends ViewDetail
                     $condition_item['module_path_display'] = $display['module'];
                     $condition_item['field_label'] = $display['field'];
                 }
-                if (isset($conditions[$condition_item['condition_order']])) {
-                    $conditions[] = $condition_item;
-                } else {
-                    $conditions[$condition_item['condition_order']] = $condition_item;
-                }
+                
+                $conditions[$condition_item['condition_order']] = $condition_item;
                 
             }
         }
