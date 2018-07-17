@@ -60,7 +60,7 @@ abstract class SearchEngine
      * If it is impossible to validate the query a `MasterSearchInvalidRequestException` should be thrown.
      *
      * @param $query SearchQuery the query to validate
-     * @throws MasterSearchInvalidRequestException if the query is not valid
+     * @throws \SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException if the query is not valid
      */
     protected abstract function validateQuery(&$query);
 }

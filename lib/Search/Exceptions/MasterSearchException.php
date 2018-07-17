@@ -40,16 +40,16 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 25/06/18
- * Time: 16:40
+ * Date: 17/07/18
+ * Time: 09:30
  */
 
-namespace SuiteCRM\Search;
+namespace SuiteCRM\Search\Exceptions;
 
 /**
- * This exception is thrown when an invalid request is sent to a component of the Master Search.
+ * A generic MasterSearch exception that should be thrown when an error internal to MasterSearch is detected.
  */
-class MasterSearchInvalidRequestException extends \RuntimeException
+class MasterSearchException extends \RuntimeException
 {
 
 }

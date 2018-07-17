@@ -46,7 +46,7 @@
 
 use Elasticsearch\Client;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
-use SuiteCRM\Search\MasterSearchInvalidRequestException;
+use SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 

@@ -45,7 +45,7 @@
  * Time: 09:22
  */
 
-use SuiteCRM\Search\MasterSearchInvalidRequestException;
+use SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchQuery;
 
 /** @noinspection PhpIncludeInspection */
