@@ -47,6 +47,7 @@
 namespace SuiteCRM\Search\Index;
 
 use InvalidArgumentException;
+use LoggerManager;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use ReflectionClass;
@@ -93,8 +94,8 @@ abstract class AbstractIndexer
         try {
             $this->logger->pushHandler(new StreamHandler($this->logFile));
         } catch (\Exception $e) {
-            $GLOBALS['log']->error('Failed to create indexer log stream handler.');
-            $GLOBALS['log']->error($e);
+            LoggerManager::getLogger()->error('Failed to create indexer log stream handler.');
+            LoggerManager::getLogger()->error($e);
         }
     }
 
@@ -160,8 +161,8 @@ abstract class AbstractIndexer
         try {
             $this->logger->log($level, $message);
         } catch (\Exception $e) {
-            $GLOBALS['log']->error('Failed to log indexer info with Monolog.');
-            $GLOBALS['log']->error($e);
+            LoggerManager::getLogger()->error('Failed to log indexer info with Monolog.');
+            LoggerManager::getLogger()->error($e);
         }
 
         if ($this->echoLogsEnabled)

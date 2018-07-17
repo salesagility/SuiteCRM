@@ -46,6 +46,7 @@
 
 namespace SuiteCRM\Search\ElasticSearch;
 
+use LoggerManager;
 use SugarBean;
 
 class ElasticSearchHooks
@@ -60,7 +61,7 @@ class ElasticSearchHooks
         } catch (\Exception $e) {
             $message = 'Failed to add bean to index because: ' . $e->getMessage();
             if (isset($indexer)) $indexer->log('!', $message);
-            $GLOBALS['log']->error();
+            LoggerManager::getLogger()->error($message);
         }
     }
 
@@ -94,7 +95,7 @@ class ElasticSearchHooks
         } catch (\Exception $e) {
             $message = 'Failed to remove bean from index because: ' . $e->getMessage();
             if (isset($indexer)) $indexer->log('!', $message);
-            $GLOBALS['log']->error($message);
+            LoggerManager::getLogger()->error($message);
         }
     }
 }

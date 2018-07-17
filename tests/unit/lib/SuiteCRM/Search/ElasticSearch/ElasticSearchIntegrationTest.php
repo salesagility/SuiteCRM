@@ -255,7 +255,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
     public function testDifferentialIndexing()
     {
-        $GLOBALS['timedate']->allow_cache = false;
+        global $timedate;
+        $timedate->allow_cache = false;
 
         $module = 'Contacts';
         /** @var Contact $bean */
