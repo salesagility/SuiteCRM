@@ -219,9 +219,7 @@ class StateChecker
         $this->lastHash = $hash;
         
         if (!$this->checkHash($hash, $key)) {
-            if ($key != 'errlevel') { // TODO: temporary remove the error level check from state
-                throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
-            }
+            throw new StateCheckerException('Hash doesn\'t match at key "' . $key . '".');
         }
         
         if (StateCheckerConfig::get('saveTraces')) {
@@ -322,7 +320,7 @@ class StateChecker
         foreach ($objects as $name => $object) {
             if (!$object->isDir() && !$this->isExcludedFile($name)) {
                 $fileObject = $object;
-                $fileObject->modifyTime = filemtime($name);
+                $fileObject->fileSize = filesize($name);
                 $fileObject->hash = $this->getHash((array)$fileObject, 'filesys::' . $fileObject);
                 $files[] = $name;
             }
@@ -385,7 +383,8 @@ class StateChecker
     
     protected $lashHashAll = null;
     
-    public function getLastHashAll() {
+    public function getLastHashAll()
+    {
         return $this->lashHashAll;
     }
     

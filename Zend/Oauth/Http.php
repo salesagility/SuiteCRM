@@ -80,7 +80,7 @@ class Zend_Oauth_Http
      * @return void
      */
     public function __construct(
-        Zend_Oauth_Consumer $consumer, 
+        Zend_Oauth_Consumer $consumer,
         array $parameters = null,
         Zend_Oauth_Http_Utility $utility = null
     ) {

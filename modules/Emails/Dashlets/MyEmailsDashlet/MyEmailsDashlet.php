@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,15 +47,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 
 
-class MyEmailsDashlet extends DashletGeneric {
-    function __construct($id, $def = null) {
+class MyEmailsDashlet extends DashletGeneric
+{
+    public function __construct($id, $def = null)
+    {
         global $current_user, $app_strings, $dashletData;
-		require('modules/Emails/Dashlets/MyEmailsDashlet/MyEmailsDashlet.data.php');
+        require('modules/Emails/Dashlets/MyEmailsDashlet/MyEmailsDashlet.data.php');
 
         parent::__construct($id, $def);
 
-        if(empty($def['title']))
+        if (empty($def['title'])) {
             $this->title = translate('LBL_MY_EMAILS', 'Emails');
+        }
 
         $this->searchFields = $dashletData['MyEmailsDashlet']['searchFields'];
         $this->hasScript = true;  // dashlet has javascript attached to it
@@ -66,25 +71,26 @@ class MyEmailsDashlet extends DashletGeneric {
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function MyEmailsDashlet($id, $def = null){
+    public function MyEmailsDashlet($id, $def = null)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($id, $def);
     }
 
 
-    function process($lvsParams = array(), $id = null) {
+    public function process($lvsParams = array(), $id = null)
+    {
         global $current_language, $app_list_strings, $image_path, $current_user;
         //$where = 'emails.deleted = 0 AND emails.assigned_user_id = \''.$current_user->id.'\' AND emails.type = \'inbound\' AND emails.status = \'unread\'';
         $mod_strings = return_module_language($current_language, 'Emails');
 
         if ($this->myItemsOnly) {
-        	$this->filters['assigned_user_id'] = $current_user->id;
+            $this->filters['assigned_user_id'] = $current_user->id;
         }
         $this->filters['type'] = array("inbound");
         $this->filters['status'] = array("unread");
@@ -95,7 +101,8 @@ class MyEmailsDashlet extends DashletGeneric {
         parent::process($lvsParams);
     }
 
-    function displayScript() {
+    public function displayScript()
+    {
         global $current_language;
 
         $mod_strings = return_module_language($current_language, 'Emails');

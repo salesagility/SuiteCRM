@@ -146,6 +146,7 @@ class AOPAssignManager
                     break;
                 }
             //No Security Group module found - fall through.
+            // no break
             case 'role':
                 $users = $this->getRoleUsers($distributionOptions[2]);
                 break;

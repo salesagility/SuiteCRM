@@ -110,7 +110,7 @@ abstract class Zend_Gdata_Gapps_Query extends Zend_Gdata_Query
          if ($domain !== null) {
              return Zend_Gdata_Gapps::APPS_BASE_FEED_URI . '/' . $domain;
          }
-         else if ($this->_domain !== null) {
+         elseif ($this->_domain !== null) {
              return Zend_Gdata_Gapps::APPS_BASE_FEED_URI . '/' . $this->_domain;
          }
          else {

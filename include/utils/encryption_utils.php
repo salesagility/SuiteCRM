@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,14 +42,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Pear/Crypt_Blowfish/Blowfish.php');
 
-function sugarEncode($key, $data){
-	return base64_encode($data);
+function sugarEncode($key, $data)
+{
+    return base64_encode($data);
 }
 
 
-function sugarDecode($key, $encoded){
-	$data = base64_decode($encoded);
-	return $data;
+function sugarDecode($key, $encoded)
+{
+    $data = base64_decode($encoded);
+    return $data;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -57,27 +61,28 @@ function sugarDecode($key, $encoded){
  * @param string type
  * @return string key
  */
-function blowfishGetKey($type) {
-	$key = array();
+function blowfishGetKey($type)
+{
+    $key = array();
 
-	$type = str_rot13($type);
+    $type = str_rot13($type);
 
-	$keyCache = "custom/blowfish/{$type}.php";
+    $keyCache = "custom/blowfish/{$type}.php";
 
-	// build cache dir if needed
-	if(!file_exists('custom/blowfish')) {
-		mkdir_recursive('custom/blowfish');
-	}
+    // build cache dir if needed
+    if (!file_exists('custom/blowfish')) {
+        mkdir_recursive('custom/blowfish');
+    }
 
-	// get key from cache, or build if not exists
-	if(file_exists($keyCache)) {
-		include($keyCache);
-	} else {
-		// create a key
-		$key[0] = create_guid();
-		write_array_to_file('key', $key, $keyCache);
-	}
-	return $key[0];
+    // get key from cache, or build if not exists
+    if (file_exists($keyCache)) {
+        include($keyCache);
+    } else {
+        // create a key
+        $key[0] = create_guid();
+        write_array_to_file('key', $key, $keyCache);
+    }
+    return $key[0];
 }
 
 /**
@@ -86,10 +91,11 @@ function blowfishGetKey($type) {
  * @param STRING data - string to be encrypted and encoded
  * @return string
  */
-function blowfishEncode($key, $data){
-	$bf = new Crypt_Blowfish($key);
-	$encrypted = $bf->encrypt($data);
-	return base64_encode($encrypted);
+function blowfishEncode($key, $data)
+{
+    $bf = new Crypt_Blowfish($key);
+    $encrypted = $bf->encrypt($data);
+    return base64_encode($encrypted);
 }
 
 /**
@@ -98,8 +104,9 @@ function blowfishEncode($key, $data){
  * @param STRING encoded base64 encoded blowfish encrypted data
  * @return string
  */
-function blowfishDecode($key, $encoded){
-	$data = base64_decode($encoded);
-	$bf = new Crypt_Blowfish($key);
-	return trim($bf->decrypt($data));
+function blowfishDecode($key, $encoded)
+{
+    $data = base64_decode($encoded);
+    $bf = new Crypt_Blowfish($key);
+    return trim($bf->decrypt($data));
 }

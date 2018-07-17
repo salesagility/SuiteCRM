@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,42 +43,42 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $subpanel_layout = array(
-	'top_buttons' => array(
-		array('widget_class' => 'SubPanelTopCreateButton'),
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Accounts'),
-	),
+    'top_buttons' => array(
+        array('widget_class' => 'SubPanelTopCreateButton'),
+        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Accounts'),
+    ),
 
-	'where' => '',
-	
+    'where' => '',
+    
 
-	'list_fields' => array(
-		'name' => array(
- 		 	'vname' => 'LBL_LIST_NAME',
-			'widget_class' => 'SubPanelDetailViewLink',
-			'width' => '25%',
-		),
-		'phone_office' => array(
- 		 	'vname' => 'LBL_LIST_PHONE',
-			'width' => '20%',
-		),		
-		'email1' => array(
- 		 	'vname' => 'LBL_LIST_EMAIL',
+    'list_fields' => array(
+        'name' => array(
+            'vname' => 'LBL_LIST_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '25%',
+        ),
+        'phone_office' => array(
+            'vname' => 'LBL_LIST_PHONE',
+            'width' => '20%',
+        ),		
+        'email1' => array(
+            'vname' => 'LBL_LIST_EMAIL',
             'widget_class' => 'SubPanelEmailLink',
-			'width' => '20%',
-		),		
-		'assigned_user_name' => array(
- 		 	'vname' => 'LBL_ASSIGNED_TO',
-			'width' => '20%',
-		),
-		'edit_button' => array(
-			'vname' => 'LBL_EDIT_BUTTON',
-			'widget_class' => 'SubPanelEditButton',
-			'width' => '4%',
-		),
-		'remove_button' => array(
-			'vname' => 'LBL_REMOVE',
-			'widget_class' => 'SubPanelRemoveButton',
-			'width' => '4%',
-		),
-	),
+            'width' => '20%',
+        ),		
+        'assigned_user_name' => array(
+            'vname' => 'LBL_ASSIGNED_TO',
+            'width' => '20%',
+        ),
+        'edit_button' => array(
+            'vname' => 'LBL_EDIT_BUTTON',
+            'widget_class' => 'SubPanelEditButton',
+            'width' => '4%',
+        ),
+        'remove_button' => array(
+            'vname' => 'LBL_REMOVE',
+            'widget_class' => 'SubPanelRemoveButton',
+            'width' => '4%',
+        ),
+    ),
 );

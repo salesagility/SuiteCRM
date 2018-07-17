@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,19 +57,16 @@ $focus = new ContactOpportunityRelationship();
 
 $focus->retrieve($_REQUEST['record']);
 
-foreach($focus->column_fields as $field)
-{
-	safe_map($field, $focus, true);
+foreach ($focus->column_fields as $field) {
+    safe_map($field, $focus, true);
 }
 
-foreach($focus->additional_column_fields as $field)
-{
-	safe_map($field, $focus, true);
+foreach ($focus->additional_column_fields as $field) {
+    safe_map($field, $focus, true);
 }
 
 // send them to the edit screen.
-if(isset($_REQUEST['record']) && $_REQUEST['record'] != "")
-{
+if (isset($_REQUEST['record']) && $_REQUEST['record'] != "") {
     $recordID = $_REQUEST['record'];
 }
 

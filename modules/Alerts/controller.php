@@ -45,8 +45,8 @@ class AlertsController extends SugarController
         $bean = BeanFactory::getBean('Alerts');
 
         $this->view_object_map['Flash'] = '';
-        $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered","alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
-        if($this->view_object_map['Results'] == '') {
+        $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered", "alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
+        if ($this->view_object_map['Results'] == '') {
             $this->view_object_map['Flash'] =$app_strings['LBL_NOTIFICATIONS_NONE'];
         }
         $this->view = 'default';
@@ -66,44 +66,44 @@ class AlertsController extends SugarController
         $type = 'info';
 
 
-        if(isset($_POST['name'])) {
+        if (isset($_POST['name'])) {
             $name = $_POST['name'];
         }
-        if(isset($_POST['description'])) {
+        if (isset($_POST['description'])) {
             $description = $_POST['description'];
         }
-        if(isset($_POST['is_read'])) {
+        if (isset($_POST['is_read'])) {
             $is_read = $_POST['is_read'];
         }
-        if(isset($_POST['url_redirect'])) {
+        if (isset($_POST['url_redirect'])) {
             $url_redirect = $_POST['url_redirect'];
         } else {
             $url_redirect = null;
         }
 
-        if($url_redirect == null) {
+        if ($url_redirect == null) {
             $url_redirect = 'index.php?fakeid='. uniqid('fake_', true);
         }
 
-        if(isset($_POST['target_module'])) {
+        if (isset($_POST['target_module'])) {
             $target_module = $_POST['target_module'];
         }
-        if(isset($_POST['type'])) {
+        if (isset($_POST['type'])) {
             $type = $_POST['type'];
         }
-        if(isset($_POST['reminder_id'])) {
+        if (isset($_POST['reminder_id'])) {
             $reminder_id = $_POST['reminder_id'];
         }
 
         $shouldShowReminderPopup = false;
 
-        if(isset($_POST) && $reminder_id) {
+        if (isset($_POST) && $reminder_id) {
             $bean = BeanFactory::getBean('Alerts');
             $result = $bean->get_full_list(
                 "",
                 "alerts.assigned_user_id = '" . $current_user->id . "' AND reminder_id = '" . $reminder_id . "'"
             );
-            if(empty($result)) {
+            if (empty($result)) {
                 $bean = BeanFactory::newBean('Alerts');
                 $bean->name = $name;
                 $bean->description = $description;

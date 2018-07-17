@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -58,18 +60,20 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
     public function __construct(
         $id,
         array $options = null
-    )
-    {
+    ) {
         global $timedate;
 
-        if(empty($options['mypbss_date_start']))
+        if (empty($options['mypbss_date_start'])) {
             $options['mypbss_date_start'] = $timedate->nowDbDate();
-        if(empty($options['mypbss_date_end']))
+        }
+        if (empty($options['mypbss_date_end'])) {
             $options['mypbss_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
-        if(empty($options['title']))
+        }
+        if (empty($options['title'])) {
             $options['title'] = translate('LBL_MY_PIPELINE_FORM_TITLE', 'Home');
+        }
 
-        parent::__construct($id,$options);
+        parent::__construct($id, $options);
     }
 
     /**
@@ -80,11 +84,13 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
         global $app_list_strings;
 
         $selected_datax = array();
-        if (count($this->mypbss_sales_stages) > 0)
-            foreach ($this->mypbss_sales_stages as $key)
+        if (count($this->mypbss_sales_stages) > 0) {
+            foreach ($this->mypbss_sales_stages as $key) {
                 $selected_datax[] = $key;
-        else
+            }
+        } else {
             $selected_datax = array_keys($app_list_strings['sales_stage_dom']);
+        }
 
         $this->_searchFields['mypbss_sales_stages']['options'] = $app_list_strings['sales_stage_dom'];
         $this->_searchFields['mypbss_sales_stages']['input_name0'] = $selected_datax;
@@ -109,8 +115,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
         $group_by = $this->constructGroupBy();
 
         $currency_symbol = $sugar_config['default_currency_symbol'];
-        if ($current_user->getPreference('currency')){
-
+        if ($current_user->getPreference('currency')) {
             $currency = new Currency();
             $currency->retrieve($current_user->getPreference('currency'));
             $currency_symbol = $currency->symbol;
@@ -147,8 +152,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
         $startDate = $timedate->to_display_date($this->mypbss_date_start, false);
         $endDate = $timedate->to_display_date($this->mypbss_date_end, false);
 
-        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
-        {
+        if (!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1) {
             return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
@@ -298,10 +302,9 @@ EOD;
      * @param  $query string
      * @return array
      */
-    function getChartData(
+    public function getChartData(
         $query
-    )
-    {
+    ) {
         global $app_list_strings, $db;
 
         $data = array();
@@ -317,8 +320,7 @@ EOD;
                 $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
                 array_push($selected_datax, $key);
             }
-        }
-        else {
+        } else {
             $datax = $app_list_strings['sales_stage_dom'];
             $selected_datax = array_keys($app_list_strings['sales_stage_dom']);
         }
@@ -326,15 +328,15 @@ EOD;
         $result = $db->query($query);
         $row = $db->fetchByAssoc($result, false);
 
-        while($row != null){
+        while ($row != null) {
             $temp_data[] = $row;
             $row = $db->fetchByAssoc($result, false);
         }
 
         // reorder and set the array based on the order of selected_datax
-        foreach($selected_datax as $sales_stage){
-            foreach($temp_data as $key => $value){
-                if ($value['sales_stage'] == $sales_stage){
+        foreach ($selected_datax as $sales_stage) {
+            foreach ($temp_data as $key => $value) {
+                if ($value['sales_stage'] == $sales_stage) {
                     $value['sales_stage'] = $app_list_strings['sales_stage_dom'][$value['sales_stage']];
                     $value['key'] = $sales_stage;
                     $value['value'] = $value['sales_stage'];
@@ -352,10 +354,9 @@ EOD;
      */
     private function getHorizBarTotal(
         $dataset
-    )
-    {
+    ) {
         $total = 0;
-        foreach($dataset as $value){
+        foreach ($dataset as $value) {
             $total += $value;
         }
 
@@ -374,11 +375,12 @@ EOD;
                         sum(amount_usdollar/1000) AS total
                     FROM users,opportunities  ";
         $query .= " WHERE opportunities.assigned_user_id IN ('{$GLOBALS['current_user']->id}') " .
-            " AND opportunities.date_closed >= ". db_convert("'".$this->mypbss_date_start."'",'date').
-            " AND opportunities.date_closed <= ".db_convert("'".$this->mypbss_date_end."'",'date') .
+            " AND opportunities.date_closed >= ". db_convert("'".$this->mypbss_date_start."'", 'date').
+            " AND opportunities.date_closed <= ".db_convert("'".$this->mypbss_date_end."'", 'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
-        if ( count($this->mypbss_sales_stages) > 0 )
-            $query .= " AND opportunities.sales_stage IN ('" . implode("','",$this->mypbss_sales_stages) . "') ";
+        if (count($this->mypbss_sales_stages) > 0) {
+            $query .= " AND opportunities.sales_stage IN ('" . implode("','", $this->mypbss_sales_stages) . "') ";
+        }
         $query .= " GROUP BY opportunities.sales_stage ,users.user_name,opportunities.assigned_user_id";
 
         return $query;
@@ -395,7 +397,7 @@ EOD;
         return $groupBy;
     }
 
-    protected function prepareChartData($dataset,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($dataset, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();
@@ -405,8 +407,7 @@ EOD;
         $chart['tooltips']= array();
         $chart['total'] = 0;
 
-        foreach($dataset as $data)
-        {
+        foreach ($dataset as $data) {
             $formattedFloat = (float)number_format((float)$data['total'], 2, '.', '');
             $chart['labels'][] = $data['sales_stage'];
             $chart['key'][] = $data['key'];
@@ -417,5 +418,4 @@ EOD;
         }
         return $chart;
     }
-
 }

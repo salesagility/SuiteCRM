@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,40 +42,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-class ACLJSController{
-
-	public function __construct($module,$form='', $is_owner=false){
-
-		$this->module = $module;
-		$this->is_owner = $is_owner;
-		$this->form = $form;
-	}
+class ACLJSController
+{
+    public function __construct($module, $form='', $is_owner=false)
+    {
+        $this->module = $module;
+        $this->is_owner = $is_owner;
+        $this->form = $form;
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ACLJSController($module,$form='', $is_owner=false){
+    public function ACLJSController($module, $form='', $is_owner=false)
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($module, $form, $is_owner);
     }
 
 
-	function getJavascript(){
-		global $action;
-		if(!ACLController::moduleSupportsACL($this->module)){
-			return '';
-		}
-		$script = "<SCRIPT>\n//BEGIN ACL JAVASCRIPT\n";
+    public function getJavascript()
+    {
+        global $action;
+        if (!ACLController::moduleSupportsACL($this->module)) {
+            return '';
+        }
+        $script = "<SCRIPT>\n//BEGIN ACL JAVASCRIPT\n";
 
-		if($action == 'DetailView'){
-			if(!ACLController::checkAccess($this->module,'edit', $this->is_owner)){
-			$script .= <<<EOQ
+        if ($action == 'DetailView') {
+            if (!ACLController::checkAccess($this->module, 'edit', $this->is_owner)) {
+                $script .= <<<EOQ
 						if(typeof(document.DetailView) != 'undefined'){
 							if(typeof(document.DetailView.elements['Edit']) != 'undefined'){
 								document.DetailView.elements['Edit'].disabled = 'disabled';
@@ -83,26 +86,24 @@ class ACLJSController{
 							}
 						}
 EOQ;
-}
-			if(!ACLController::checkAccess($this->module,'delete', $this->is_owner)){
-			$script .= <<<EOQ
+            }
+            if (!ACLController::checkAccess($this->module, 'delete', $this->is_owner)) {
+                $script .= <<<EOQ
 						if(typeof(document.DetailView) != 'undefined'){
 							if(typeof(document.DetailView.elements['Delete']) != 'undefined'){
 								document.DetailView.elements['Delete'].disabled = 'disabled';
 							}
 						}
 EOQ;
-}
-		}
-		if(file_exists('modules/'. $this->module . '/metadata/acldefs.php')){
-			include('modules/'. $this->module . '/metadata/acldefs.php');
+            }
+        }
+        if (file_exists('modules/'. $this->module . '/metadata/acldefs.php')) {
+            include('modules/'. $this->module . '/metadata/acldefs.php');
 
-			foreach($acldefs[$this->module]['forms'] as $form_name=>$form){
-
-				foreach($form as $field_name=>$field){
-
-					if($field['app_action'] == $action){
-						switch($form_name){
+            foreach ($acldefs[$this->module]['forms'] as $form_name=>$form) {
+                foreach ($form as $field_name=>$field) {
+                    if ($field['app_action'] == $action) {
+                        switch ($form_name) {
 							case 'by_id':
 								$script .= $this->getFieldByIdScript($field_name, $field);
 								break;
@@ -113,80 +114,68 @@ EOQ;
 								$script .= $this->getFieldByFormScript($form_name, $field_name, $field);
 								break;
 						}
-					}
+                    }
+                }
+            }
+        }
+        $script .=  '</SCRIPT>';
 
-				}
-			}
-		}
-		$script .=  '</SCRIPT>';
+        return $script;
+    }
 
-		return $script;
-
-
-	}
-
-	function getHTMLValues($def){
-		$return_array = array();
-		switch($def['display_option']){
+    public function getHTMLValues($def)
+    {
+        $return_array = array();
+        switch ($def['display_option']) {
 			case 'clear_link':
 				$return_array['href']= "#";
 				$return_array['className']= "nolink";
 				break;
-			default;
+			default:
 				$return_array[$def['display_option']] = $def['display_option'];
 				break;
 
 		}
-		return $return_array;
+        return $return_array;
+    }
 
-	}
+    public function getFieldByIdScript($name, $def)
+    {
+        $script = '';
+        if (!ACLController::checkAccess($def['module'], $def['action_option'], true)) {
+            foreach ($this->getHTMLValues($def) as $key=>$value) {
+                $script .=  "\nif(document.getElementById('$name'))document.getElementById('$name')." . $key . '="' .$value. '";'. "\n";
+            }
+        }
+        return $script;
+    }
 
-	function getFieldByIdScript($name, $def){
-		$script = '';
-		if(!ACLController::checkAccess($def['module'], $def['action_option'], true)){
-		foreach($this->getHTMLValues($def) as $key=>$value){
-			$script .=  "\nif(document.getElementById('$name'))document.getElementById('$name')." . $key . '="' .$value. '";'. "\n";
-		}
-		}
-		return $script;
-
-	}
-
-	function getFieldByNameScript($name, $def){
-		$script = '';
-		if(!ACLController::checkAccess($def['module'], $def['action_option'], true)){
-
-		foreach($this->getHTMLValues($def) as $key=>$value){
-			$script .=  <<<EOQ
+    public function getFieldByNameScript($name, $def)
+    {
+        $script = '';
+        if (!ACLController::checkAccess($def['module'], $def['action_option'], true)) {
+            foreach ($this->getHTMLValues($def) as $key=>$value) {
+                $script .=  <<<EOQ
 			var aclfields = document.getElementsByName('$name');
 			for(var i in aclfields){
 				aclfields[i].$key = '$value';
 			}
 EOQ;
-		}
-		}
-		return $script;
+            }
+        }
+        return $script;
+    }
 
-	}
-
-	function getFieldByFormScript($form, $name, $def){
-		$script = '';
-
-
-		if(!ACLController::checkAccess($def['module'], $def['action_option'], true)){
-			foreach($this->getHTMLValues($def) as $key=>$value){
-				$script .= "\nif(typeof(document.$form.$name.$key) != 'undefined')\n document.$form.$name.".$key . '="' .$value. '";';
-			}
-		}
-		return $script;
-
-	}
+    public function getFieldByFormScript($form, $name, $def)
+    {
+        $script = '';
 
 
-
-
-
-
-
-
+        if (!ACLController::checkAccess($def['module'], $def['action_option'], true)) {
+            foreach ($this->getHTMLValues($def) as $key=>$value) {
+                $script .= "\nif(typeof(document.$form.$name.$key) != 'undefined')\n document.$form.$name.".$key . '="' .$value. '";';
+            }
+        }
+        return $script;
+    }
 }

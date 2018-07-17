@@ -433,8 +433,14 @@ eoq;
         global $focus;
         $myBean = $focus;
         $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
-
+        
+        $enableConfirmedOptIn = null;
+        if (isset($configurator->config['email_enable_confirm_opt_in'])) {
+            $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
+        }
+        
         if (!empty($bean)) {
             $myBean = $bean;
         } else {
@@ -453,7 +459,6 @@ eoq;
         if (!is_object($myBean)) {
             $GLOBALS['log']->warn('incorrect bean');
         } else {
-
             if (is_array($emailField)) {
                 $emailFields = $emailField;
             } else {
@@ -505,7 +510,6 @@ eoq;
                             $addresses = $myBean->emailAddress->addresses;
                             foreach ($addresses as $address) {
                                 if ($address['email_address'] === $myBean->{$emailField}) {
-
                                     if (!empty($myBean->id)) {
                                         $myBean->retrieve();
                                     }
@@ -548,7 +552,6 @@ eoq;
                                             $emailLink .= $email_tick;
                                         }
                                         $emailLink .= $myBean->{$emailField};
-
                                     }
                                     $emailLink .= '</a>';
 

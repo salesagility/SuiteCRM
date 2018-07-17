@@ -39,15 +39,13 @@ r24477 - 2007-07-19 18:01:09 -0700 (Thu, 19 Jul 2007) - majed - smarty get_image
 
 function smarty_function_sugar_image($params, &$smarty)
 {
-	
-	if(!isset($params['name'])){
-		$smarty->trigger_error("sugar_field: missing 'name' parameter");
-		return;
-	}
-	$height = (!empty($params['height']))?$params['height']:'48';
-	$width = (!empty($params['width']))?$params['width']:'48';
-	$image = (!empty($params['image']))?$params['image']:$params['name'];
-	$altimage = (!empty($params['altimage']))?$params['altimage']:$params['name'];
-	return getStudioIcon($image, $altimage, $height, $width);
-	
+    if (!isset($params['name'])) {
+        $smarty->trigger_error("sugar_field: missing 'name' parameter");
+        return;
+    }
+    $height = (!empty($params['height']))?$params['height']:'48';
+    $width = (!empty($params['width']))?$params['width']:'48';
+    $image = (!empty($params['image']))?$params['image']:$params['name'];
+    $altimage = (!empty($params['altimage']))?$params['altimage']:$params['name'];
+    return getStudioIcon($image, $altimage, $height, $width);
 }

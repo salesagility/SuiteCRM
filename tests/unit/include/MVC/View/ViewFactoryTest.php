@@ -9,7 +9,7 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
         
         
-        //error_reporting(E_ERROR | E_WARNING | E_PARSE);
+        
 
         //check with invalid input. must return sugaview instance
         $view = ViewFactory::loadView('default', '');
@@ -24,8 +24,6 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertInstanceOf('UsersViewList', $view);
         
         // clean up
-        
-        
     }
 
     public function test_loadConfig()
@@ -37,7 +35,7 @@ class ViewFactoryTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertSame($options, $view->options);
 
         //check with a valid module which does not implement it's own view config. method must not change the view options.
-         $view = ViewFactory::loadView('detail', 'Users');
+        $view = ViewFactory::loadView('detail', 'Users');
         $options = $view->options;
         ViewFactory::_loadConfig($view, 'detail');
         $this->assertSame($options, $view->options);

@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,25 +48,25 @@ $listViewDefs['EmailMan'] = array(
         'width' => '10', 
         'label' => 'LBL_LIST_CAMPAIGN', 
         'link' => true,
-		'customCode' => '<a href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}">{$CAMPAIGN_NAME}</a>',
+        'customCode' => '<a href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}">{$CAMPAIGN_NAME}</a>',
         'default' => true),
     'RECIPIENT_NAME' => array(
-		'sortable' => false,
+        'sortable' => false,
         'width' => '10', 
         'label' => 'LBL_LIST_RECIPIENT_NAME',
-		'customCode' => '<a href="index.php?module={$RELATED_TYPE}&action=DetailView&record={$RELATED_ID}">{$RECIPIENT_NAME}</a>', 
+        'customCode' => '<a href="index.php?module={$RELATED_TYPE}&action=DetailView&record={$RELATED_ID}">{$RECIPIENT_NAME}</a>', 
         'default' => true),
     'RECIPIENT_EMAIL' => array(
-		'sortable' => false,
+        'sortable' => false,
         'width' => '10', 
         'label' => 'LBL_LIST_RECIPIENT_EMAIL',
-		'customCode' => '{$RECIPIENT_EMAIL}</a>',
+        'customCode' => '{$RECIPIENT_EMAIL}</a>',
         'default' => true),
     'MESSAGE_NAME' => array(
-		'sortable' => false,
+        'sortable' => false,
         'width' => '10', 
         'label' => 'LBL_LIST_MESSAGE_NAME',
-		'customCode' => '<a href="index.php?module=EmailMarketing&action=DetailView&record={$MARKETING_ID}">{$MESSAGE_NAME}</a>',
+        'customCode' => '<a href="index.php?module=EmailMarketing&action=DetailView&record={$MARKETING_ID}">{$MESSAGE_NAME}</a>',
         'default' => true),
     'SEND_DATE_TIME' => array(
         'width' => '10', 

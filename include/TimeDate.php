@@ -478,7 +478,7 @@ class TimeDate
      * @param string $time
      * @return string New datetime string
      */
-    function merge_date_time($date, $time)
+    public function merge_date_time($date, $time)
     {
         return $date . ' ' . $time;
     }
@@ -489,7 +489,7 @@ class TimeDate
      * @param string $datetime
      * @return array
      */
-    function split_date_time($datetime)
+    public function split_date_time($datetime)
     {
         return explode(' ', $datetime, 2);
     }
@@ -499,7 +499,7 @@ class TimeDate
      * Get user date format in Javascript form
      * @return string
      */
-    function get_cal_date_format()
+    public function get_cal_date_format()
     {
         return $this->getCalFormat($this->get_date_format());
     }
@@ -508,7 +508,7 @@ class TimeDate
      * Get user time format in Javascript form
      * @return string
      */
-    function get_cal_time_format()
+    public function get_cal_time_format()
     {
         return $this->getCalFormat($this->get_time_format());
     }
@@ -517,7 +517,7 @@ class TimeDate
      * Get user date&time format in Javascript form
      * @return string
      */
-    function get_cal_date_time_format()
+    public function get_cal_date_time_format()
     {
         return $this->getCalFormat($this->get_date_time_format());
     }
@@ -526,7 +526,7 @@ class TimeDate
      * @param string $format
      * @return string
      */
-    function getCalFormat($format)
+    public function getCalFormat($format)
     {
         return str_replace(array_keys(self::$format_to_str), array_values(self::$format_to_str), $format);
     }
@@ -709,7 +709,6 @@ class TimeDate
      */
     public function fromDb($date)
     {
-        
         if ($date instanceof DateTime) {
             $date = $date->format(self::DB_DATETIME_FORMAT);
         }
@@ -1002,7 +1001,7 @@ class TimeDate
      * @param User $user User owning the conversion formats
      * @return string Date in display format
      */
-    function to_display_date_time($date, $meridiem = true, $convert_tz = true, $user = null)
+    public function to_display_date_time($date, $meridiem = true, $convert_tz = true, $user = null)
     {
         return $this->_convert($date, self::DB_DATETIME_FORMAT, self::$gmtTimezone, $this->get_date_time_format($user),
             $convert_tz ? $this->_getUserTZ($user) : self::$gmtTimezone, true);
@@ -1084,7 +1083,7 @@ class TimeDate
      * @param string $to Destination format
      * @return string Converted date
      */
-    function to_display($date, $from, $to)
+    public function to_display($date, $from, $to)
     {
         return $this->_convert($date, $from, self::$gmtTimezone, $to, self::$gmtTimezone);
     }
@@ -1385,7 +1384,7 @@ class TimeDate
      *
      * @return Time string
      */
-    function get_default_midnight()
+    public function get_default_midnight()
     {
         return $this->_get_midnight($this->get_time_format());
     }
@@ -1682,7 +1681,6 @@ class TimeDate
             } else {
                 $ignoreNextChar = false;
                 $newFormat .= $char;
-
             }
             if ($char == "\\") {
                 $ignoreNextChar = true;
@@ -1808,7 +1806,7 @@ class TimeDate
      * @param string $mer
      * @return string
      */
-    function merge_time_meridiem($date, $format, $mer)
+    public function merge_time_meridiem($date, $format, $mer)
     {
         $date = trim($date);
         if (empty($date)) {
@@ -1846,7 +1844,7 @@ class TimeDate
      * values will be derived
      * @return     string        date formatted and adjusted for TZ and DST
      */
-    function handle_offset($date, $format, $to = true, $user = null, $usetimezone = null)
+    public function handle_offset($date, $format, $to = true, $user = null, $usetimezone = null)
     {
         $tz = empty($usetimezone) ? $this->_getUserTZ($user) : new DateTimeZone($usetimezone);
         $dateobj = new SugarDateTime($date, $to ? self::$gmtTimezone : $tz);
@@ -1861,7 +1859,7 @@ class TimeDate
      * Get current GMT datetime in DB format
      * @return string
      */
-    function get_gmt_db_datetime()
+    public function get_gmt_db_datetime()
     {
         return $this->nowDb();
     }
@@ -1871,7 +1869,7 @@ class TimeDate
      * Get current GMT date in DB format
      * @return string
      */
-    function get_gmt_db_date()
+    public function get_gmt_db_date()
     {
         return $this->nowDbDate();
     }
@@ -1886,7 +1884,7 @@ class TimeDate
      * @param $date
      * @return array
      */
-    function handleOffsetMax($date)
+    public function handleOffsetMax($date)
     {
         $min = new DateTime($date, $this->_getUserTZ());
         $min->setTime(0, 0);
@@ -1927,7 +1925,7 @@ class TimeDate
      * @param $olddatetime
      * @return string
      */
-    function convert_to_gmt_datetime($olddatetime)
+    public function convert_to_gmt_datetime($olddatetime)
     {
         if (!empty($olddatetime)) {
             return date('Y-m-d H:i:s', strtotime($olddatetime) - date('Z'));
@@ -2005,7 +2003,7 @@ class TimeDate
      * @deprecated moved to SugarView
      * @return string JS code
      */
-    function get_javascript_validation()
+    public function get_javascript_validation()
     {
         return SugarView::getJavascriptValidation();
     }
@@ -2027,7 +2025,7 @@ class TimeDate
      * @param string $attrs Additional attributes for SELECT
      * @return string SELECT HTML
      */
-    function AMPMMenu($prefix, $date, $attrs = '')
+    public function AMPMMenu($prefix, $date, $attrs = '')
     {
         $tf = $this->get_time_format();
         $am = strpbrk($tf, 'aA');
@@ -2056,7 +2054,7 @@ class TimeDate
      * TODO: Remove after full switch to fields
      * @return string
      */
-    function get_user_date_format()
+    public function get_user_date_format()
     {
         return str_replace(array('Y', 'm', 'd'), array('yyyy', 'mm', 'dd'), $this->get_date_format());
     }
@@ -2067,7 +2065,7 @@ class TimeDate
      * @deprecated
      * @return string
      */
-    function get_user_time_format()
+    public function get_user_time_format()
     {
         global $sugar_config;
         $time_pref = $this->get_time_format();
@@ -2078,5 +2076,4 @@ class TimeDate
 
         return '23:00'; //default
     }
-
 }

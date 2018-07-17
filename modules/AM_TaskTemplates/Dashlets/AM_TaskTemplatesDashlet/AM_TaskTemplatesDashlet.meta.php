@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,7 +48,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $app_strings;
 
 $dashletMeta['AM_TaskTemplatesDashlet'] = array('module'		=> 'AM_TaskTemplates',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AM_TaskTemplates'), 
+                                          'title'       => translate('LBL_HOMEPAGE_TITLE', 'AM_TaskTemplates'), 
                                           'description' => 'A customizable view into AM_TaskTemplates',
                                           'icon'        => 'icon_AM_TaskTemplates_32.gif',
                                           'category'    => 'Module Views');

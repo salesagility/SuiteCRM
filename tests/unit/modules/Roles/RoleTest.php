@@ -33,7 +33,7 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
 
         $role = new Role();
 
@@ -45,8 +45,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $this->assertEquals('test', $role->get_summary_text());
         
         // clean up
-        
-        
     }
 
     public function testcreate_export_query()
@@ -103,7 +101,7 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state = new \SuiteCRM\StateSaver();
         $state->pushTable('email_addresses');
 
-	// test
+        // test
         
         $role = new Role();
 
@@ -131,7 +129,6 @@ class RoleTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popTable('email_addresses');
-
     }
 
     public function get_users($id)

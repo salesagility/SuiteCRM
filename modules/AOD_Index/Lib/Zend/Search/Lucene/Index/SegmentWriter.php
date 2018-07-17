@@ -425,7 +425,6 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
         $this->_prevIndexTermInfo = null;
         $this->_lastIndexPosition = 24;
         $this->_termCount         = 0;
-
     }
 
     /**
@@ -482,7 +481,6 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
             $indexPosition = $this->_tisFile->tell();
             $this->_tiiFile->writeVInt($indexPosition - $this->_lastIndexPosition);
             $this->_lastIndexPosition = $indexPosition;
-
         }
         $this->_termCount++;
     }
@@ -530,9 +528,9 @@ abstract class Zend_Search_Lucene_Index_SegmentWriter
                 $charBytes = 1;
                 if ((ord($term->text[$prefixBytes]) & 0xC0) == 0xC0) {
                     $charBytes++;
-                    if (ord($term->text[$prefixBytes]) & 0x20 ) {
+                    if (ord($term->text[$prefixBytes]) & 0x20) {
                         $charBytes++;
-                        if (ord($term->text[$prefixBytes]) & 0x10 ) {
+                        if (ord($term->text[$prefixBytes]) & 0x10) {
                             $charBytes++;
                         }
                     }

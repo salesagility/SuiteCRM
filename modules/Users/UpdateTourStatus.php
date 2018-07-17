@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,4 +44,4 @@ global $app_strings;
 global $app_list_strings;
 global $mod_strings;
 
-$current_user->setPreference('viewed_tour',$_REQUEST['viewed']);
+$current_user->setPreference('viewed_tour', $_REQUEST['viewed']);

@@ -94,23 +94,19 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
      */
     public function loadDataSet($maxResults = 0)
     {
-         if ( !$eapmBean = EAPM::getLoginInfo($this->_eapmName,true) )
-         {
+        if (!$eapmBean = EAPM::getLoginInfo($this->_eapmName, true)) {
             throw new Exception("Authentication error with {$this->_eapmName}");
-         }
+        }
 
         $api = ExternalAPIFactory::loadAPI($this->_eapmName);
         $api->loadEAPM($eapmBean);
         $conn = $api->getConnector();
 
         $feed = $conn->getList(array('maxResults' => $maxResults, 'startIndex' => $this->_offset));
-        if($feed !== FALSE)
-        {
+        if ($feed !== FALSE) {
             $this->_totalRecordCount = $feed['totalResults'];
             $this->_recordSet = $feed['records'];
-        }
-        else
-        {
+        } else {
             throw new Exception("Unable to retrieve {$this->_eapmName} feed.");
         }
     }

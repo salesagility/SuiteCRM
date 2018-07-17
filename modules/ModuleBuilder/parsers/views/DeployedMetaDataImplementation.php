@@ -77,7 +77,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
      * @param string $moduleName
      * @throws Exception Thrown if the provided view doesn't exist for this module
      */
-    function __construct($view, $moduleName)
+    public function __construct($view, $moduleName)
     {
         // BEGIN ASSERTIONS
         if (!isset ($GLOBALS ['beanList'] [$moduleName])) {
@@ -152,7 +152,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
                 case MB_DASHLETSEARCH:
                 case MB_DASHLET:
                     $type = $module->getType();
-                    $this->_sourceFilename = $this->getFileName($view, $moduleName, null,MB_CUSTOMMETADATALOCATION);
+                    $this->_sourceFilename = $this->getFileName($view, $moduleName, null, MB_CUSTOMMETADATALOCATION);
                     $needSave = false;
                     if (file_exists("custom/modules/{$moduleName}/metadata/" . basename($this->_sourceFilename))) {
                         $loaded = $this->_loadFromFile("custom/modules/{$moduleName}/metadata/" . basename($this->_sourceFilename));
@@ -180,7 +180,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
                 case MB_POPUPLIST:
                 case MB_POPUPSEARCH:
                     $type = $module->getType();
-                    $this->_sourceFilename = $this->getFileName($view, $moduleName, null,MB_CUSTOMMETADATALOCATION);
+                    $this->_sourceFilename = $this->getFileName($view, $moduleName, null, MB_CUSTOMMETADATALOCATION);
 
                     global $current_language;
                     $mod = return_module_language($current_language, $moduleName);
@@ -247,13 +247,12 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 
         $this->_fielddefs = $fieldDefinitions;
         $this->_history = new History ($this->getFileName($view, $moduleName, null, MB_HISTORYMETADATALOCATION));
-
     }
 
     /**
      * @return string module name
      */
-    function getLanguage()
+    public function getLanguage()
     {
         return $this->_moduleName;
     }
@@ -281,7 +280,7 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
 
         $GLOBALS ['log']->debug(get_class($this) . "->save(): writing to " . $this->getFileName($this->_view,
                 $this->_moduleName, null, MB_WORKINGMETADATALOCATION));
-        $this->_saveToFile($this->getFileName($this->_view, $this->_moduleName,  null,MB_WORKINGMETADATALOCATION), $layoutDefinitions);
+        $this->_saveToFile($this->getFileName($this->_view, $this->_moduleName, null, MB_WORKINGMETADATALOCATION), $layoutDefinitions);
     }
 
     /**
@@ -329,7 +328,6 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
      */
     public function getFileName($view, $moduleName, $packageName, $type = MB_CUSTOMMETADATALOCATION)
     {
-
         $pathMap = array(
             MB_BASEMETADATALOCATION => '',
             MB_CUSTOMMETADATALOCATION => 'custom/',
@@ -357,7 +355,6 @@ class DeployedMetaDataImplementation extends AbstractMetaDataImplementation impl
             if (!empty($def['view'])) {
                 $filenames[$def['view']] = substr($file, 0, strlen($file) - 4);
             }
-
         }
 
         // BEGIN ASSERTIONS

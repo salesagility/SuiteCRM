@@ -491,7 +491,6 @@ class Email extends Basic
             default:
                 return false;
         }
-
     }
 
     /**
@@ -613,7 +612,7 @@ class Email extends Basic
      * @param string $addresses
      * @return array
      */
-    function email2ParseAddressesForAddressesOnly($addresses)
+    public function email2ParseAddressesForAddressesOnly($addresses)
     {
         $addresses = from_html($addresses);
         $pattern = '/@.*,/U';
@@ -947,7 +946,7 @@ class Email extends Basic
             isValidEmailAddress($mail->From);
             $mail->FromName = $defaults['name'];
             $replyToName = $mail->FromName;
-            //$replyToAddress = $current_user->emailAddress->getReplyToAddress($current_user);
+        //$replyToAddress = $current_user->emailAddress->getReplyToAddress($current_user);
         } else {
             // passed -> user -> system default
             $ie = new InboundEmail();
@@ -981,7 +980,6 @@ class Email extends Basic
                 if (!empty($storedOptions['reply_to_addr'])) {
                     $replyToAddress = $storedOptions['reply_to_addr'];
                 }
-
             }
             // end of code to remove
             $mail->From = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
@@ -1132,7 +1130,6 @@ class Email extends Basic
 
         /* handle template attachments */
         if (!empty($request['templateAttachments'])) {
-
             $exNotes = explode("::", $request['templateAttachments']);
             foreach ($exNotes as $noteId) {
                 $noteId = trim($noteId);
@@ -1148,12 +1145,10 @@ class Email extends Basic
                             $mail->AddAttachment($fileLocation, $filename, 'base64', $mime_type);
                             // only save attachments if we're archiving or drafting
                             if ((($this->type == 'draft') && !empty($this->id)) || (isset($request['saveToSugar']) && $request['saveToSugar'] == 1)) {
-
                                 if ($note->parent_id != $this->id) {
                                     $this->saveTempNoteAttachments($filename, $fileLocation, $mime_type);
                                 }
                             } // if
-
                         } // if
                     } else {
                         //$fileLocation = $this->et->userCacheDir."/{$file}";
@@ -1283,16 +1278,11 @@ class Email extends Basic
                             if ($bean->load_relationship('emails')) {
                                 $bean->emails->add($this->id);
                             } // if
-
                         } // if
-
                     } // if
-
                 } // if
-
             } else {
                 if (!class_exists('aCase')) {
-
                 } else {
                     $c = new aCase();
                     if ($caseId = InboundEmail::getCaseIdFromCaseNumber($mail->Subject, $c)) {
@@ -1303,7 +1293,6 @@ class Email extends Basic
                         $this->parent_id = $caseId;
                     } // if
                 }
-
             } // else
 
             ////	LINK EMAIL TO SUGARBEANS BASED ON EMAIL ADDY
@@ -1311,31 +1300,31 @@ class Email extends Basic
             $this->save();
         }
 
-		if(!empty($request['fromAccount'])) {
-			if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
-				$sentFolder = $ie->get_stored_options("sentFolder");
-				if (!empty($sentFolder)) {
-					// Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
-					$emailbody = $mail->CreateBody();
-					$emailheader = $mail->CreateHeader();
-					$data = $emailheader . "\r\n" . $emailbody . "\r\n";
-					$ie->mailbox = $sentFolder;
-					if ($ie->connectMailserver() == 'true') {
-						$connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
-						$returnData = imap_append($ie->conn,$connectString, $data, "\\Seen");
-						if (!$returnData) {
-							$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
-						} // if
-					} else {
-						$GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
-					} // else
-				} else {
-					$GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
-				} // else
-			} // if
-		} // if
+        if (!empty($request['fromAccount'])) {
+            if (isset($ie->id) && !$ie->isPop3Protocol() && $mail->oe->mail_smtptype != 'gmail') {
+                $sentFolder = $ie->get_stored_options("sentFolder");
+                if (!empty($sentFolder)) {
+                    // Call CreateBody() before CreateHeader() as that is where boundary IDs are generated.
+                    $emailbody = $mail->CreateBody();
+                    $emailheader = $mail->CreateHeader();
+                    $data = $emailheader . "\r\n" . $emailbody . "\r\n";
+                    $ie->mailbox = $sentFolder;
+                    if ($ie->connectMailserver() == 'true') {
+                        $connectString = $ie->getConnectString($ie->getServiceString(), $ie->mailbox);
+                        $returnData = imap_append($ie->conn, $connectString, $data, "\\Seen");
+                        if (!$returnData) {
+                            $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} for {$ie->name}");
+                        } // if
+                    } else {
+                        $GLOBALS['log']->debug("could not connect to mail serve for folder {$ie->mailbox} for {$ie->name}");
+                    } // else
+                } else {
+                    $GLOBALS['log']->debug("could not copy email to {$ie->mailbox} sent folder as its empty");
+                } // else
+            } // if
+        } // if
 		return true;
-	} // end email2send
+    } // end email2send
 
     /**
      * Generates a config-specified separated name and addresses to be used in compose email screen for
@@ -1404,7 +1393,7 @@ class Email extends Basic
      * @param Array $arr - list of strings
      * @return string the list of strings delimited by email_address_separator
      */
-    function _arrayToDelimitedString($arr)
+    public function _arrayToDelimitedString($arr)
     {
         // bug 51804: outlook does not respect the correct email address separator (',') , so let
         // clients override the default.
@@ -1435,7 +1424,6 @@ class Email extends Basic
         if ($this->isDuplicate) {
             $GLOBALS['log']->debug("EMAIL - tried to save a duplicate Email record");
         } else {
-
             if (empty($this->id)) {
                 $this->id = create_guid();
                 $this->new_with_id = true;
@@ -1527,11 +1515,9 @@ class Email extends Basic
         if (!file_exists($fileLocation)) {
             LoggerManager::getLogger()->warn('Email error: File Location not found for save temp note attachments. File location was: "' . $fileLocation . '"');
         } else {
-
             if (!copy($fileLocation, $noteFile)) {
                 $GLOBALS['log']->fatal("EMAIL 2.0: could not copy SugarDocument revision file $fileLocation => $noteFile");
             } else {
-                
                 if (!$tmpNote->save()) {
                     return false;
                 }
@@ -1598,7 +1584,7 @@ class Email extends Basic
         }
     }
 
-    function linkEmailToAddress($id, $type)
+    public function linkEmailToAddress($id, $type)
     {
         // TODO: make this update?
         $q1 = "SELECT * FROM emails_email_addr_rel WHERE email_id = '{$this->id}' AND email_address_id = '{$id}' AND address_type = '{$type}' AND deleted = 0";
@@ -1628,7 +1614,7 @@ class Email extends Basic
         "bcc_addrs" => "bcc_addrs_names",
     );
 
-    function cleanEmails($emails)
+    public function cleanEmails($emails)
     {
         if (empty($emails)) {
             return '';
@@ -1804,7 +1790,6 @@ class Email extends Basic
     public function getNotes($id, $duplicate = false)
     {
         if (!class_exists('Note')) {
-
         }
 
         $exRemoved = array();
@@ -2175,8 +2160,6 @@ class Email extends Basic
      */
     public function handleAttachments()
     {
-
-
         global $mod_strings;
 
         ///////////////////////////////////////////////////////////////////////////
@@ -2575,7 +2558,7 @@ class Email extends Basic
      * @param array Array of signatures
      * @return bool
      */
-    function hasSignatureInBody($sig)
+    public function hasSignatureInBody($sig)
     {
         // strpos can't handle line breaks - normalize
         $html = $this->removeAllNewlines($this->description_html);
@@ -2943,7 +2926,6 @@ class Email extends Basic
         $is_owner = false;
         $in_group = false; //SECURITY GROUPS
         if (!empty($this->parent_name)) {
-
             if (!empty($this->parent_name_owner)) {
                 global $current_user;
                 $is_owner = $current_user->id == $this->parent_name_owner;
@@ -3053,7 +3035,6 @@ class Email extends Basic
         $singleSelect = false,
         $ifListForExport = false
     ) {
-
         if ($return_array) {
             return parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type,
                 $return_array, $parentbean, $singleSelect);
@@ -3070,7 +3051,6 @@ class Email extends Basic
 
         $query .= " LEFT JOIN users ON emails.assigned_user_id=users.id \n";
         if ($where != "" && (strpos($where, "contacts.first_name") > 0)) {
-
             $query .= " JOIN contacts ON contacts.id= emails_beans.bean_id AND emails_beans.bean_module='Contacts' and contacts.deleted=0 \n";
         }
 
@@ -3165,7 +3145,6 @@ class Email extends Basic
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
         if ($row != null) {
-
             $contact = new Contact();
             $contact->retrieve($row['id']);
             $this->contact_name = $contact->full_name;
@@ -3493,7 +3472,7 @@ class Email extends Basic
      * @param string $id
      * @return boolean
      */
-    function doesImportedEmailHaveAttachment($id)
+    public function doesImportedEmailHaveAttachment($id)
     {
         $hasAttachment = false;
         $query = "SELECT id FROM notes where parent_id='$id' AND parent_type='Emails' AND file_mime_type is not null AND deleted=0";
@@ -3512,7 +3491,7 @@ class Email extends Basic
      *
      * @return String Query to be executed.
      */
-    function _genereateSearchImportedEmailsQuery()
+    public function _genereateSearchImportedEmailsQuery()
     {
         global $timedate;
 
@@ -3547,8 +3526,7 @@ class Email extends Basic
         //If we are explicitly looking for attachments.  Do not use a distinct query as the to_addr is defined
         //as a text which equals clob in oracle and the distinct query can not be executed correctly.
         $addDistinctKeyword = "";
-        if (!empty($_REQUEST['attachmentsSearch']) && $_REQUEST['attachmentsSearch'] == 1) //1 indicates yes
-        {
+        if (!empty($_REQUEST['attachmentsSearch']) && $_REQUEST['attachmentsSearch'] == 1) { //1 indicates yes
             $query['where'] .= " AND EXISTS ( SELECT id FROM notes n WHERE n.parent_id = emails.id AND n.deleted = 0 AND n.filename is not null )";
         } else {
             if (!empty($_REQUEST['attachmentsSearch']) && $_REQUEST['attachmentsSearch'] == 2) {
@@ -3898,7 +3876,7 @@ eoq;
 						</td>
 					</tr>
 					<tr>';
-//<td valign="middle" height="30"  colspan="'.$colspan.'" id="hiddenhead" onClick="hideUserSelect();" onMouseOver="this.style.border = \'outset red 1px\';" onMouseOut="this.style.border = \'inset white 0px\';this.style.borderBottom = \'inset red 1px\';">
+        //<td valign="middle" height="30"  colspan="'.$colspan.'" id="hiddenhead" onClick="hideUserSelect();" onMouseOver="this.style.border = \'outset red 1px\';" onMouseOut="this.style.border = \'inset white 0px\';this.style.borderBottom = \'inset red 1px\';">
         $out .= '		<td style="padding:5px" class="oddListRowS1" bgcolor="#fdfdfd" valign="top" align="left" style="left:0;top:0;">
 							' . $userTable . '
 						</td>
@@ -4436,9 +4414,9 @@ eoq;
         }
 
         $emailAddressString = $emailAddress->email_address;
-        if(!$this->isValidEmail($emailAddressString)) {
+        if (!$this->isValidEmail($emailAddressString)) {
             $emailAddressString = $emailAddress->email_address[0]['email_address'];
-            if(!$this->isValidEmail($emailAddressString)) {
+            if (!$this->isValidEmail($emailAddressString)) {
                 throw new Exception('Invalid email address: ' . $emailAddressString);
             }
         }
@@ -4469,7 +4447,6 @@ eoq;
 
         $dbResult = $db->query($query);
         while ($row = $db->fetchByAssoc($dbResult)) {
-
             if ($ret) {
                 throw new RuntimeException('More than one bean related to a primary email address: ' . $emailAddressString);
             }
@@ -4479,7 +4456,7 @@ eoq;
             $actionSendEmail = new actionSendEmail();
             $date = new DateTime();
             $now = $date->format($timedate::DB_DATETIME_FORMAT);
-            if(!$actionSendEmail->run_action($bean, $params)) {
+            if (!$actionSendEmail->run_action($bean, $params)) {
                 $emailAddress->confirm_opt_in_fail_date = $now;
             } else {
                 $emailAddress->confirm_opt_in_sent_date = $now;
@@ -4497,7 +4474,8 @@ eoq;
      * @param string $emailAddressString
      * @return boolean
      */
-    private function isValidEmail($emailAddressString) {
+    private function isValidEmail($emailAddressString)
+    {
         return filter_var($emailAddressString, FILTER_VALIDATE_EMAIL);
     }
 
