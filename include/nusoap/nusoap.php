@@ -9132,7 +9132,7 @@ class nusoap_client extends nusoap_base  {
 		global $proxy_config;
 		if(!$proxyhost){
 			if(empty($proxy_config)){
-				if(!empty($GLOBALS['db'])){
+				if(!empty(DBManagerFactory::getInstance())){
 
 					$proxy_config = new Administration();
 					$proxy_config->retrieveSettings('proxy');

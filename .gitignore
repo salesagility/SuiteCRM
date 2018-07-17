@@ -6,6 +6,7 @@ cache/*
 upload/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
+custom/
 custom/history/*
 custom/blowfish/*
 custom/modulebuilder/*
@@ -72,6 +73,7 @@ SuiteCRM.kdev4
 #Ignore composer vendor folder
 vendor/
 public/
+
 
 
 #Ignore Sass Generated files in SuiteP

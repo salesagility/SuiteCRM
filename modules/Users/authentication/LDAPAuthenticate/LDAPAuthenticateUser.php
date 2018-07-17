@@ -212,10 +212,10 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 
 
 			ldap_close($ldapconn);
-			$dbresult = $GLOBALS['db']->query("SELECT id, status FROM users WHERE user_name='" . $name . "' AND deleted = 0");
+			$dbresult = DBManagerFactory::getInstance()->query("SELECT id, status FROM users WHERE user_name='" . $name . "' AND deleted = 0");
 
 			//user already exists use this one
-			if($row = $GLOBALS['db']->fetchByAssoc($dbresult)){
+			if($row = DBManagerFactory::getInstance()->fetchByAssoc($dbresult)){
 				if($row['status'] != 'Inactive')
 					return $row['id'];
 				else

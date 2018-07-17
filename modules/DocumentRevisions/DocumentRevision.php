@@ -164,6 +164,10 @@ class DocumentRevision extends SugarBean {
 
 	function is_authenticated()
 	{
+            if (!isset($this->authenticated)) {
+                LoggerManager::getLogger()->warn('DocumentRevision::$authenticated is not defined');
+                return null;
+            }
 		return $this->authenticated;
 	}
 

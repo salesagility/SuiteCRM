@@ -1048,7 +1048,7 @@ class Scheduler extends SugarBean {
 
 			// job functions
 			self::$job_strings = array('url::' => 'URL');
-			foreach($job_strings as $k=>$v){
+			foreach(self::$job_strings as $k=>$v){
 				self::$job_strings['function::' . $v] = $mod_strings['LBL_'.strtoupper($v)];
 			}
 		}

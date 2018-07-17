@@ -1,11 +1,10 @@
 <?php
 
 
-class AOR_ReportTest extends PHPUnit_Framework_TestCase
+class AOR_ReportTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function testAOR_Report()
     {
-        error_reporting(E_ERROR | E_PARSE);
 
         //execute the contructor and check for the Object type and  attributes
         $aor_Report = new AOR_Report();
@@ -32,6 +31,19 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testsave()
     {
+        
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('aor_charts');
+        $state->pushTable('aor_fields');
+        $state->pushTable('aor_reports');
+        $state->pushGlobals();
+        $state->pushPHPConfigOptions();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
 
         //populate value for aor_fields related/child object
@@ -68,6 +80,15 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $aor_Report->mark_deleted($aor_Report->id);
 
         unset($aor_Report);
+        
+        // clean up
+        
+        $state->popPHPConfigOptions();
+        $state->popGlobals();
+        $state->popTable('aor_reports');
+        $state->popTable('aor_fields');
+        $state->popTable('aor_charts');
+        $state->popTable('aod_indexevent');
     }
 
     public function testload_report_beans()
@@ -79,7 +100,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
             $aor_Report->load_report_beans();
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
     }
 
@@ -107,6 +128,13 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_group_report()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
         $aor_Report->id = '1';
@@ -127,10 +155,22 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $this->assertNotEquals($html1, $html2);
         $this->assertNotEquals($html1, $html3);
         $this->assertNotEquals($html2, $html3);
+        
+        // clean up
+        
+        $state->popGlobals();
+        
     }
 
     public function testbuild_report_html()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -149,6 +189,10 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         //verify that group and identifier exist in the strings
         $this->assertContains('grouptest', $html3);
         $this->assertContains('testidentifier', $html3);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testgetTotalHTML()
@@ -182,18 +226,25 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
     public function testbuild_report_csv()
     {
 
+        $this->markTestIncomplete('Can Not be implemented');
+
         //this method uses exit so it cannot be tested
 
         /*$aor_Report = new AOR_Report();
         $aor_Report->report_module = "Accounts";
         $aor_Report->build_report_csv();
         */
-
-        $this->markTestIncomplete('Can Not be implemented');
     }
 
     public function testbuild_report_query()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -204,10 +255,21 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         //execute the method with parameter and verify that it returns a non empty string
         $actual = $aor_Report->build_report_query('name');
         $this->assertGreaterThan(0, strlen($actual));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_report_query_select()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
         $query_array = array();
@@ -215,6 +277,10 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         //execute the method with parameters and verify that it returns an array.
         $actual = $aor_Report->build_report_query_select($query_array, 'name');
         $this->assertTrue(is_array($actual));
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_report_query_join()
@@ -223,7 +289,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $aor_Report->report_module = 'Accounts';
 
         //test with type custom and verify that it retunrs expected results
-        $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `contacts` ON `accounts`.id = `contacts`.id_c '));
+        $expected = array('join' => array('accounts_contacts' => 'LEFT JOIN `accounts_cstm` `accounts_contacts` ON `accounts`.id = `contacts`.id_c '));
         $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(), 'custom', array());
         $this->assertSame($expected, $actual);
 
@@ -237,6 +303,13 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
 
     public function testbuild_report_access_query()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
 
         //test without alias and verify that it retunrs expected results
@@ -246,10 +319,21 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         //test with alias and verify that it retunrs expected results
         $result = $aor_Report->build_report_access_query(new AOR_Report(), 'rep');
         $this->assertEquals('', $result);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 
     public function testbuild_report_query_where()
     {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushGlobals();
+        
+        // test
+        
         $aor_Report = new AOR_Report();
         $aor_Report->report_module = 'Accounts';
 
@@ -257,5 +341,9 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $expected = array('where' => array('accounts.deleted = 0 '));
         $actual = $aor_Report->build_report_query_where();
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $state->popGlobals();
     }
 }

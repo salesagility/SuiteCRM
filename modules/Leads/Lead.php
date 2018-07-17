@@ -305,8 +305,21 @@ class Lead extends Person {
 	function get_list_view_data(){
 
 		$temp_array = parent::get_list_view_data();
+                
+                $value = null;
+                if (empty($temp_array['ACC_NAME_FROM_ACCOUNTS'])) {
+                    
+                    if (isset($temp_array['ACCOUNT_NAME'])) {
+                        $value = $temp_array['ACCOUNT_NAME'];
+                    } else {
+                        LoggerManager::getLogger()->warn('Account name is not defined for Lead list view data');
+                    }
+                    
+                } else {
+                    $value = $temp_array['ACC_NAME_FROM_ACCOUNTS'];
+                }
 
-		$temp_array['ACC_NAME_FROM_ACCOUNTS'] = empty($temp_array['ACC_NAME_FROM_ACCOUNTS']) ? ($temp_array['ACCOUNT_NAME']) : ($temp_array['ACC_NAME_FROM_ACCOUNTS']);
+		$temp_array['ACC_NAME_FROM_ACCOUNTS'] = $value;
 
 		return $temp_array;
 	}
@@ -345,7 +358,7 @@ class Lead extends Person {
 	*/
 	function build_generic_where_clause ($the_query_string) {
 	$where_clauses = Array();
-	$the_query_string = $GLOBALS['db']->quote($the_query_string);
+	$the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
 	array_push($where_clauses, "leads.last_name like '$the_query_string%'");
 	array_push($where_clauses, "leads.account_name like '$the_query_string%'");
@@ -528,12 +541,27 @@ class Lead extends Person {
 					} elseif($value['type'] == 'date' ) {
 						$form .= "<input name='".$prefix.$field."' id='jscal_field".$field."' type='text'  size='11' maxlength='10' value='".$this->$field."'>&nbsp;".SugarThemeRegistry::current()->getImage("jscalendar", "id='jscal_trigger".$field."' align='absmiddle'", null, null, ".gif", $mod_strings['LBL_ENTERDATE'])."' <span class='dateFormat'>yyyy-mm-dd</span><script type='text/javascript'>Calendar.setup ({inputField : 'jscal_field".$field."', ifFormat : '%Y-%m-%d', showsTime : false, button : 'jscal_trigger".$field."', singleClick : true, step : 1, weekNumbers:false}); addToValidate('ConvertLead', '".$field."', 'date', false,'".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
 					} else {
-						$form .= "<input name='".$prefix.$field."' type='text' value='".$this->$field."'>";
+                                            
+                                            $thisField = null;
+                                            if (isset($this->$field)) {
+                                                $thisField = $this->$field;
+                                            } else {
+                                                LoggerManager::getLogger()->warn('Field is not set (Lead): ' . $field);
+                                            }
+                                            
+						$form .= "<input name='".$prefix.$field."' type='text' value='".$thisField."'>";
 
-						if($this->custom_fields->avail_fields[$field]['type'] == 'int') {
+                                                $customFieldsAvailType = null;
+                                                if (isset($this->custom_fields->avail_fields[$field]['type'])) {
+                                                    $customFieldsAvailType = $this->custom_fields->avail_fields[$field]['type'];
+                                                } else {
+                                                    LoggerManager::getLogger()->warn('Custom Fields / Avail Fields / Fields / type is not set. (Lead)');
+                                                }
+                                                
+						if($customFieldsAvailType == 'int') {
 							$form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'int', false,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
 						}
-						elseif($this->custom_fields->avail_fields[$field]['type'] == 'float') {
+						elseif($customFieldsAvailType == 'float') {
 							$form .= "<script>addToValidate('ConvertLead', '".$prefix.$field."', 'float', false,'".$prefix.":".$mod_strings[$tempBean->field_defs[$field]['vname']]."' );</script>";
 						}
 

@@ -184,7 +184,15 @@ class SchedulersJob extends Basic
 		curl_setopt($ch, CURLOPT_NOPROGRESS, true); // do not have progress bar
 		$urlparts = parse_url($job);
 		if(empty($urlparts['port'])) {
-		    if($urlparts['scheme'] == 'https'){
+                    
+                    $urlPartsSheme = null;
+                    if (isset($urlparts['scheme'])) {
+                        $urlPartsSheme = $urlparts['scheme'];
+                    } else {
+                        LoggerManager::getLogger()->warn('URL Parts Sheme is not defined in ShedulersJob::fireUrl');
+                    }
+                    
+		    if($urlPartsSheme == 'https'){
 				$urlparts['port'] = 443;
 			} else {
 				$urlparts['port'] = 80;
@@ -203,6 +211,11 @@ class SchedulersJob extends Basic
 									//speed_upload,download_content_length,upload_content_length
 									//starttransfer_time,redirect_time
 		if(curl_errno($ch)) {
+                    
+                    if (!isset($this->errors)) {
+                        $this->errors = '';
+                    }
+                    
 		    $this->errors .= curl_errno($ch)."\n";
 		}
 		curl_close($ch);

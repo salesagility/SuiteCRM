@@ -1,10 +1,38 @@
 <?php
 
 
-class SecurityGroupTest extends PHPUnit_Framework_TestCase
-{
+class SecurityGroupTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
+{  
+    protected function storeStateAll() 
+    {
+        // save state
+        
+        $state = new SuiteCRM\StateSaver();
+        $state->pushTable('securitygroups');
+        $state->pushTable('securitygroups_records');
+        $state->pushGlobals();
+        
+        return $state;
+    }
+    
+    protected function restoreStateAll($state) 
+    {
+        // clean up
+        
+        $state->popGlobals();
+        $state->popTable('securitygroups_records');
+        $state->popTable('securitygroups');
+        
+    }
+    
     public function testSecurityGroup()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //execute the contructor and check for the Object type and  attributes
         $securityGroup = new SecurityGroup();
@@ -16,11 +44,20 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals('securitygroups', 'table_name', $securityGroup);
         $this->assertAttributeEquals('SecurityGroups', 'module_dir', $securityGroup);
         $this->assertAttributeEquals('SecurityGroup', 'object_name', $securityGroup);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetGroupWhere()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         $securityGroup = new SecurityGroup();
 
@@ -47,20 +84,40 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
                                AND secg.deleted = 0) ";
         $actual = $securityGroup->getGroupWhere($table_name, $module, $user_id);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetGroupUsersWhere()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $securityGroup = new SecurityGroup();
 
         $expected = " users.id in (\n            select sec.user_id from securitygroups_users sec\n            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0\n                and secu.user_id = '1'\n            where sec.deleted = 0\n        )";
         $actual = $securityGroup::getGroupUsersWhere(1);
 
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetGroupJoin()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $securityGroup = new SecurityGroup();
 
         //test with securitygroups module
@@ -72,19 +129,39 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $expected = " LEFT JOIN (select distinct secr.record_id as id from securitygroups secg\n    inner join securitygroups_users secu on secg.id = secu.securitygroup_id and secu.deleted = 0\n            and secu.user_id = '1'\n    inner join securitygroups_records secr on secg.id = secr.securitygroup_id and secr.deleted = 0\n             and secr.module = 'Users'\n    where secg.deleted = 0\n) securitygroup_join on securitygroup_join.id = users.id ";
         $actual = $securityGroup->getGroupJoin('users', 'Users', 1);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetGroupUsersJoin()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         $securityGroup = new SecurityGroup();
 
         $expected = " LEFT JOIN (\n            select distinct sec.user_id as id from securitygroups_users sec\n            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0\n                and secu.user_id = '1'\n            where sec.deleted = 0\n        ) securitygroup_join on securitygroup_join.id = users.id ";
         $actual = $securityGroup->getGroupUsersJoin(1);
         $this->assertSame($expected, $actual);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgroupHasAccess()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //test for listview
         $result = SecurityGroup::groupHasAccess('', '[SELECT_ID_LIST]');
@@ -97,12 +174,23 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         //test with valid values
         $result = SecurityGroup::groupHasAccess('Users', '1');
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testinherit()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -116,15 +204,25 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             SecurityGroup::inherit($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testassign_default_groups()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -136,14 +234,24 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             SecurityGroup::assign_default_groups($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testinherit_creator()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -155,15 +263,25 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             SecurityGroup::inherit_creator($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testinherit_assigned()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -176,15 +294,25 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             SecurityGroup::inherit_assigned($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testinherit_parent()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -196,14 +324,24 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             SecurityGroup::inherit_parent($account, false);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testinherit_parentQuery()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -215,15 +353,25 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             SecurityGroup::inherit_parentQuery($account, 'Accounts', 1, 1, $account->module_dir);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testinheritOne()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -231,13 +379,23 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
 
         $result = $securityGroup->inheritOne(1, 1, 'Accounts');
         $this->assertEquals(false, $result);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetMembershipCount()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -245,13 +403,23 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
 
         $result = $securityGroup->getMembershipCount('1');
         $this->assertEquals(0, $result);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testSaveAndRetrieveAndRemoveDefaultGroups()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -282,13 +450,23 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
 
         //delete the security group as well for cleanup
         $securityGroup->mark_deleted($securityGroup->id);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetSecurityModules()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -337,13 +515,23 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         sort($expected);
         sort($actualKeys);
         $this->assertSame($expected, $actualKeys);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetLinkName()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
 
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -355,14 +543,22 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $result = $securityGroup->getLinkName('SecurityGroups', 'ACLRoles');
         $this->assertEquals('aclroles', $result);
 
-        error_reporting(E_ALL);
-        //error_reporting(E_ERROR | E_PARSE);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testaddGroupToRecord()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -373,14 +569,24 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             $securityGroup->addGroupToRecord('Accounts', 1, 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testremoveGroupFromRecord()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -391,14 +597,24 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
             $securityGroup->removeGroupFromRecord('Accounts', 1, 1);
             $this->assertTrue(true);
         } catch (Exception $e) {
-            $this->fail();
+            $this->fail("\nException: " . get_class($e) . ": " . $e->getMessage() . "\nin " . $e->getFile() . ':' . $e->getLine() . "\nTrace:\n" . $e->getTraceAsString() . "\n");
         }
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetUserSecurityGroups()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -407,12 +623,22 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $result = $securityGroup->getUserSecurityGroups('1');
 
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetAllSecurityGroups()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -421,12 +647,22 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $result = $securityGroup->getAllSecurityGroups();
 
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetMembers()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -435,12 +671,22 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $result = $securityGroup->getMembers();
 
         $this->assertTrue(is_array($result));
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 
     public function testgetPrimaryGroupID()
     {
+        // save state
+        
+        $state = $this->storeStateAll();
+        
+        // test
+        
         //unset and reconnect Db to resolve mysqli fetch exeception
-        global $db;
+        $db = DBManagerFactory::getInstance();
         unset($db->database);
         $db->checkConnection();
 
@@ -449,5 +695,9 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $result = $securityGroup->getPrimaryGroupID();
 
         $this->assertEquals(null, $result);
+        
+        // clean up
+        
+        $this->restoreStateAll($state);
     }
 }
