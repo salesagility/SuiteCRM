@@ -165,8 +165,9 @@ abstract class AbstractIndexer
             LoggerManager::getLogger()->error($e);
         }
 
-        if ($this->echoLogsEnabled)
+        if ($this->echoLogsEnabled) {
             echo " [$type] ", $message, PHP_EOL;
+        }
     }
 
     /**

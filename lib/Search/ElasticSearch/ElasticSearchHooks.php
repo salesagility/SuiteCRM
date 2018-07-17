@@ -55,12 +55,15 @@ class ElasticSearchHooks
     {
         try {
             $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer))
+            if ($this->isBlacklisted($bean, $indexer)) {
                 return;
+            }
             $indexer->indexBean($bean);
         } catch (\Exception $e) {
             $message = 'Failed to add bean to index because: ' . $e->getMessage();
-            if (isset($indexer)) $indexer->log('!', $message);
+            if (isset($indexer)) {
+                $indexer->log('!', $message);
+            }
             LoggerManager::getLogger()->error($message);
         }
     }
@@ -89,12 +92,15 @@ class ElasticSearchHooks
     {
         try {
             $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer))
+            if ($this->isBlacklisted($bean, $indexer)) {
                 return;
+            }
             $indexer->removeBean($bean);
         } catch (\Exception $e) {
             $message = 'Failed to remove bean from index because: ' . $e->getMessage();
-            if (isset($indexer)) $indexer->log('!', $message);
+            if (isset($indexer)) {
+                $indexer->log('!', $message);
+            }
             LoggerManager::getLogger()->error($message);
         }
     }

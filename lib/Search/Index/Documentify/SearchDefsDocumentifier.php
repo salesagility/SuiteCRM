@@ -65,8 +65,9 @@ class SearchDefsDocumentifier extends AbstractDocumentifier
     {
         $module_name = $bean->module_name;
 
-        if (empty(self::$fields[$module_name]))
+        if (empty(self::$fields[$module_name])) {
             self::$fields[$module_name] = $this->getFieldsToIndex($module_name);
+        }
 
         // Making a friendly reference to the mapping
         $fields = &self::$fields[$module_name];

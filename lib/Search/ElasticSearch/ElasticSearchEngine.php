@@ -67,10 +67,7 @@ class ElasticSearchEngine extends SearchEngine
      */
     public function __construct(Client $client = null)
     {
-        if (empty($client))
-            $this->client = ElasticSearchClientBuilder::getClient();
-        else
-            $this->client = $client;
+        $this->client = empty($client) ? ElasticSearchClientBuilder::getClient() : $client;
     }
 
     /**

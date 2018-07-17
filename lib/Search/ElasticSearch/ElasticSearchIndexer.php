@@ -120,8 +120,9 @@ class ElasticSearchIndexer extends AbstractIndexer
 
         $end = microtime(true);
 
-        if ($this->differentialIndexingEnabled)
+        if ($this->differentialIndexingEnabled) {
             $this->writeLockFile();
+        }
 
         $this->statistics($end, $start);
 
@@ -195,8 +196,9 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $params = ['index' => $index];
 
-        if (!empty($body) && is_array($body))
+        if (!empty($body) && is_array($body)) {
             $params['body'] = $body;
+        }
 
         $this->client->indices()->create($params);
 
@@ -282,8 +284,9 @@ class ElasticSearchIndexer extends AbstractIndexer
         }
 
         if ($beans === null) {
-            if (!$differentialIndexing)
+            if (!$differentialIndexing) {
                 $this->log('#', sprintf('Skipping %s because $beans was null. The table is probably empty', $module));
+            }
             return;
         }
 
@@ -560,8 +563,9 @@ class ElasticSearchIndexer extends AbstractIndexer
     {
         $params = [];
 
-        if ($ignore404)
+        if ($ignore404) {
             $params['client']['ignore'] = [404];
+        }
 
         foreach ($beans as $bean) {
             $params['body'][] = ['delete' => $this->makeParamsHeaderFromBean($bean)];
