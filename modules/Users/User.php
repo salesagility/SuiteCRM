@@ -564,7 +564,7 @@ class User extends Person implements EmailInterface
      */
     public static function getLicensedUsersWhere()
     {
-        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . $GLOBALS['db']->convert('user_name', 'length') . ">0";
+        return "deleted=0 AND status='Active' AND user_name IS NOT NULL AND is_group=0 AND portal_only=0  AND " . DBManagerFactory::getInstance()->convert('user_name', 'length') . ">0";
 
         return "1<>1";
     }
@@ -588,7 +588,7 @@ class User extends Person implements EmailInterface
             if ($smtp_error) {
                 $msg .= 'SMTP server settings required first.';
                 $GLOBALS['log']->warn($msg);
-                if(isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
+                if (isset($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED'])) {
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_SMTP_REQUIRED']);
                 }
             } else {
@@ -598,7 +598,7 @@ class User extends Person implements EmailInterface
                     SugarApplication::appendErrorMessage($mod_strings['ERR_USER_FACTOR_CHANGE_DISABLED']);
                 }
             }
-            if($tmpUser) {
+            if ($tmpUser) {
                 $this->factor_auth = $tmpUser->factor_auth;
                 $this->factor_auth_interface = $tmpUser->factor_auth_interface;
             }
@@ -644,7 +644,7 @@ class User extends Person implements EmailInterface
         parent::save($check_notify);
 
         // User Profile specific save for Email addresses
-        if(!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
+        if (!$this->emailAddress->saveAtUserProfile($_REQUEST)) {
             $GLOBALS['log']->error('Email address save error');
             return false;
         }
@@ -920,7 +920,7 @@ EOQ;
             $GLOBALS['log']->fatal('Invalid Argument: Username is not set');
             return false;
         }
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $before = $name;
         $name = $db->quote($name);
         if ($before && !$name) {
@@ -1003,13 +1003,47 @@ EOQ;
         global $sugar_config, $mod_strings;
 
         $messages = array();
+        
+        if (!isset($sugar_config['passwordsetting']['minpwdlength'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: minpwdlength ($sugar_config[passwordsetting][minpwdlength])');
+            $sugar_config['passwordsetting']['minpwdlength'] = null;
+        }
 
         $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['oneupper'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: oneupper ($sugar_config[passwordsetting][oneupper])');
+            $sugar_config['passwordsetting']['oneupper'] = null;
+        }
+
         $oneupper = $sugar_config['passwordsetting']['oneupper'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onelower'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onelower ($sugar_config[passwordsetting][onelower])');
+            $sugar_config['passwordsetting']['onelower'] = null;
+        }
+        
         $onelower = $sugar_config['passwordsetting']['onelower'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onenumber'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onenumber ($sugar_config[passwordsetting][onenumber])');
+            $sugar_config['passwordsetting']['onenumber'] = null;
+        }
+        
         $onenumber = $sugar_config['passwordsetting']['onenumber'];
+        
+        
+        if (!isset($sugar_config['passwordsetting']['onespecial'])) {
+            LoggerManager::getLogger()->warn('User passwordValidationCheck: Undefined index: onespecial ($sugar_config[passwordsetting][onespecial])');
+            $sugar_config['passwordsetting']['onespecial'] = null;
+        }
+        
         $onespecial = $sugar_config['passwordsetting']['onespecial'];
 
+        
         if ($minpwdlength && strlen($newPassword) < $minpwdlength) {
             $messages[] = sprintf($mod_strings['ERR_PASSWORD_MINPWDLENGTH'], $minpwdlength);
         }
@@ -1026,7 +1060,7 @@ EOQ;
             $messages[] = $mod_strings['ERR_PASSWORD_ONENUMBER'];
         }
 
-        if ($onespecial && false !== strpbrk($newPassword, "#$%^&*()+=-[]';,./{}|:<>?~")) {
+        if ($onespecial && false === strpbrk($newPassword, "#$%^&*()+=-[]';,./{}|:<>?~")) {
             $messages[] = $mod_strings['ERR_PASSWORD_SPECCHARS'];
         }
 
@@ -1158,7 +1192,11 @@ EOQ;
         $user_fields = parent::get_list_view_data();
 
         if ($this->is_admin) {
-            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', $mod_strings['LBL_CHECKMARK']);
+            if (!isset($mod_strings['LBL_CHECKMARK'])) {
+                LoggerManager::getLogger()->warn('A language label not found: LBL_CHECKMARK');
+            }
+            $checkmark = isset($mod_strings['LBL_CHECKMARK']) ? $mod_strings['LBL_CHECKMARK'] : null;
+            $user_fields['IS_ADMIN_IMAGE'] = SugarThemeRegistry::current()->getImage('check_inline', '', null, null, '.gif', $checkmark);
         } elseif (!$this->is_admin) {
             $user_fields['IS_ADMIN'] = '';
         }
@@ -1267,7 +1305,8 @@ EOQ;
         // First, get the list of IDs.
         $query = "SELECT meeting_id as id from meetings_users where user_id='$this->id' AND deleted=0";
 
-        return $this->build_related_list($query, new Meeting());
+        $meeting = new Meeting();
+        return $this->build_related_list($query, $meeting);
     }
 
     public function get_calls()
@@ -1375,7 +1414,7 @@ EOQ;
         return array('email' => $prefAddr, 'name' => $this->name);
     }
 
-// fn
+    // fn
 
     public function getSystemDefaultNameAndEmail()
     {
@@ -1387,7 +1426,7 @@ EOQ;
         return array('email' => $prefAddr, 'name' => $fullName);
     }
 
-// fn
+    // fn
 
     /**
      * sets User email default in config.php if not already set by install - i.
@@ -1931,6 +1970,7 @@ EOQ;
         $mail->setMailerForSystem();
         //$mail->IsHTML(true);
         $mail->From = $defaults['email'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $defaults['name'];
         $mail->ClearAllRecipients();
         $mail->ClearReplyTos();
@@ -1979,6 +2019,7 @@ EOQ;
             $emailObj->description = $mail->Body;
             $emailObj->description_html = null;
             $emailObj->from_addr = $mail->From;
+            isValidEmailAddress($emailObj->from_addr);
             $emailObj->parent_type = 'User';
             $emailObj->date_sent = TimeDate::getInstance()->nowDb();
             $emailObj->modified_user_id = '1';
@@ -2038,19 +2079,20 @@ EOQ;
         return $editorType;
     }
 
-    public function getSubThemes() {
+    public function getSubThemes()
+    {
         $sugarTheme = new SugarTheme(array());
         $subThemes = $sugarTheme->getSubThemes();
         return $subThemes;
     }
 
-    public function getSubTheme() {
+    public function getSubTheme()
+    {
         $subTheme = $this->getPreference('subtheme');
-        if(!$subTheme) {
+        if (!$subTheme) {
             $sugarTheme = new SugarTheme(array());
             $subTheme = $sugarTheme->getSubThemeDefault();
         }
         return $subTheme;
     }
-
 }

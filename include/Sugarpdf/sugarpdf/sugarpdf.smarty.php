@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -50,7 +52,8 @@ require_once('include/Sugarpdf/Sugarpdf.php');
  * @author bsoufflet
  *
  */
-class SugarpdfSmarty extends Sugarpdf{
+class SugarpdfSmarty extends Sugarpdf
+{
     
     /**
      * 
@@ -72,40 +75,52 @@ class SugarpdfSmarty extends Sugarpdf{
     protected $smartyCell = false;
     protected $smartyAlign = "";
     
-    function preDisplay(){
+    public function preDisplay()
+    {
         parent::preDisplay();
         $this->print_header = false;
         $this->print_footer = false;
         $this->_initSmartyInstance();
     }
     
-    function display(){
+    public function display()
+    {
         //turn off all error reporting so that PHP warnings don't munge the PDF code
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushPHPConfigOptions();
+        
+        $maxExecutionTime = ini_get('max_execution_time');
+        $errorReporting = error_reporting();
+        
         error_reporting(E_ALL);
         set_time_limit(1800);
         
         //Create new page           
         $this->AddPage();
-        $this->SetFont(PDF_FONT_NAME_MAIN,'',8);
+        $this->SetFont(PDF_FONT_NAME_MAIN, '', 8);
         
-        if(!empty($this->templateLocation)){
+        if (!empty($this->templateLocation)) {
             $str = $this->ss->fetch($this->templateLocation);
             $this->writeHTML($str, $this->smartyLn, $this->smartyFill, $this->smartyReseth, $this->smartyCell, $this->smartyAlign);
-        }else{
+        } else {
             $this->Error('The class SugarpdfSmarty has to be extended and you have to set a location for the Smarty template.');
         }
+        
+        $state->popPHPConfigOptions();
+        ini_set('max_execution_time', $maxExecutionTime);
+        error_reporting($errorReporting);
     }
     
     /**
      * Init the Sugar_Smarty object.
      */
-    private function _initSmartyInstance(){
-        if ( !($this->ss instanceof Sugar_Smarty) ) {
+    private function _initSmartyInstance()
+    {
+        if (!($this->ss instanceof Sugar_Smarty)) {
             require_once('include/Sugar_Smarty.php');
             $this->ss = new Sugar_Smarty();
             $this->ss->assign('MOD', $GLOBALS['mod_strings']);
             $this->ss->assign('APP', $GLOBALS['app_strings']);
         }
     }
-    
 }

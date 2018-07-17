@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,10 +57,10 @@ $dictionary['opportunities_contacts'] = array ( 'table' => 'opportunities_contac
       
                                                       )
  
-  	  , 'relationships' => array ('opportunities_contacts' => array('lhs_module'=> 'Opportunities', 'lhs_table'=> 'opportunities', 'lhs_key' => 'id',
-							  'rhs_module'=> 'Contacts', 'rhs_table'=> 'contacts', 'rhs_key' => 'id',
-							  'relationship_type'=>'many-to-many',
-							  'join_table'=> 'opportunities_contacts', 'join_key_lhs'=>'opportunity_id', 'join_key_rhs'=>'contact_id',
-							  ))
+      , 'relationships' => array ('opportunities_contacts' => array('lhs_module'=> 'Opportunities', 'lhs_table'=> 'opportunities', 'lhs_key' => 'id',
+                              'rhs_module'=> 'Contacts', 'rhs_table'=> 'contacts', 'rhs_key' => 'id',
+                              'relationship_type'=>'many-to-many',
+                              'join_table'=> 'opportunities_contacts', 'join_key_lhs'=>'opportunity_id', 'join_key_rhs'=>'contact_id',
+                              ))
  
  );

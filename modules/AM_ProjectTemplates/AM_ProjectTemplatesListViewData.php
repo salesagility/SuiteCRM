@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -45,7 +47,8 @@ require_once('include/EditView/SugarVCR.php');
  * Data set for ListView
  * @api
  */
-class AM_ProjectTemplatesListViewData extends ListViewData{
+class AM_ProjectTemplatesListViewData extends ListViewData
+{
 
 
 	/**
@@ -54,18 +57,17 @@ class AM_ProjectTemplatesListViewData extends ListViewData{
 	 * @param GUID id id of the record
 	 * @return array string to attach to field
 	 */
-	function getAdditionalDetailsAjax($id)
+    public function getAdditionalDetailsAjax($id)
     {
         global $app_strings;
 
         $jscalendarImage = '<span class="suitepicon suitepicon-action-info" title="'.$app_strings['LBL_ADDITIONAL_DETAILS'].'"></span>';
-		$jsdetailviewImage = '<span class="suitepicon suitepicon-action-view-record"></span>';
+        $jsdetailviewImage = '<span class="suitepicon suitepicon-action-view-record"></span>';
 
         $extra = "<span id='aadspan_" . $id . "' "
                 . "onclick=\"location.href='index.php?module=AM_ProjectTemplates&action=DetailView&record=". $id ."'\" "
 				. "><!--not_in_theme!-->".$app_strings['LBL_ADDITIONAL_DETAILS']."'</span>";
 
         //return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
-	}
-
+    }
 }

@@ -35,7 +35,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $success;
+    public $success;
 
     /**
      *
@@ -43,7 +43,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $props;
+    public $props;
 
     /**
      *
@@ -51,7 +51,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $depth;
+    public $depth;
 
     /**
      *
@@ -59,7 +59,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $mode;
+    public $mode;
 
     /**
      *
@@ -67,7 +67,7 @@ class _parse_proppatch
      * @var
      * @access
      */
-    var $current;
+    public $current;
 
     /**
      * constructor
@@ -75,7 +75,7 @@ class _parse_proppatch
      * @param  string  path of input stream
      * @access public
      */
-    function __construct($path)
+    public function __construct($path)
     {
         $this->success = true;
 
@@ -101,7 +101,7 @@ class _parse_proppatch
         xml_parser_set_option($xml_parser,
                               XML_OPTION_CASE_FOLDING, false);
 
-        while($this->success && !feof($f_in)) {
+        while ($this->success && !feof($f_in)) {
             $line = fgets($f_in);
             if (is_string($line)) {
                 $had_input = true;
@@ -109,7 +109,7 @@ class _parse_proppatch
             }
         }
 
-        if($had_input) {
+        if ($had_input) {
             $this->success &= xml_parse($xml_parser, "", true);
         }
 
@@ -127,12 +127,13 @@ class _parse_proppatch
      * @return void
      * @access private
      */
-    function _startElement($parser, $name, $attrs)
+    public function _startElement($parser, $name, $attrs)
     {
         if (strstr($name, " ")) {
             list($ns, $tag) = explode(" ", $name);
-            if ($ns == "")
+            if ($ns == "") {
                 $this->success = false;
+            }
         } else {
             $ns = "";
             $tag = $name;
@@ -153,7 +154,7 @@ class _parse_proppatch
         if ($this->depth >= 4) {
             $this->current["val"] .= "<$tag";
             foreach ($attr as $key => $val) {
-                $this->current["val"] .= ' '.$key.'="'.str_replace('"','&quot;', $val).'"';
+                $this->current["val"] .= ' '.$key.'="'.str_replace('"', '&quot;', $val).'"';
             }
             $this->current["val"] .= ">";
         }
@@ -171,12 +172,13 @@ class _parse_proppatch
      * @return void
      * @access private
      */
-    function _endElement($parser, $name)
+    public function _endElement($parser, $name)
     {
         if (strstr($name, " ")) {
             list($ns, $tag) = explode(" ", $name);
-            if ($ns == "")
+            if ($ns == "") {
                 $this->success = false;
+            }
         } else {
             $ns = "";
             $tag = $name;
@@ -204,11 +206,10 @@ class _parse_proppatch
      * @return void
      * @access private
      */
-    function _data($parser, $data) {
+    public function _data($parser, $data)
+    {
         if (isset($this->current)) {
             $this->current["val"] .= $data;
         }
     }
 }
-
-?>

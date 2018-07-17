@@ -457,8 +457,14 @@ class SugarBean
             }
 
             if (isset($GLOBALS['dictionary'][$this->object_name]) && !$this->disable_vardefs) {
-                $this->field_name_map = $dictionary[$this->object_name]['fields'];
-                $this->field_defs = $dictionary[$this->object_name]['fields'];
+                $this->field_name_map = isset($dictionary[$this->object_name]['fields']) ? $dictionary[$this->object_name]['fields'] : null;
+                
+                if (!isset($dictionary[$this->object_name]['fields'])) {
+                    LoggerManager::getLogger()->warn('SugarBean constructor error: Object has not fields in dictionary. Object name was: ' . $this->object_name);
+                    $this->field_defs = null;
+                } else {
+                    $this->field_defs = $dictionary[$this->object_name]['fields'];
+                }
 
                 if (!empty($dictionary[$this->object_name]['optimistic_locking'])) {
                     $this->optimistic_lock = true;
@@ -544,9 +550,8 @@ class SugarBean
         }
         foreach ($this->field_defs as $field => $value) {
             if ((isset($value['default']) || !empty($value['display_default'])) && ($force || empty($this->$field))) {
-
                 if (!isset($value['type'])) {
-                    $GLOBALS['log']->fatal('Undefined index: type');
+                    $GLOBALS['log']->warn('Undefined index: type');
                     $type = null;
                 } else {
                     $type = $value['type'];
@@ -575,6 +580,7 @@ class SugarBean
                         if (isset($this->$field)) {
                             break;
                         }
+                        // no break
                     default:
                         if (isset($value['default']) && $value['default'] !== '') {
                             $this->$field = htmlentities($value['default'], ENT_QUOTES, 'UTF-8');
@@ -604,11 +610,9 @@ class SugarBean
         if ($time) {
             $dtAry = explode('&', $value, 2);
             $now = $timedate->getNow(true);
-            try {
-                $dateValue = $now->modify($dtAry[0]);
-            } catch (Exception $e) {
-                $GLOBALS['log']->fatal('DateTime error: ' . $e->getMessage());
-                throw $e;
+            $dateValue = $now->modify($dtAry[0]);
+            if ($dateValue === false) {
+                $GLOBALS['log']->fatal('Invalid modifier for DateTime::modify(): ' . $dtAry[0]);
             }
             if (!empty($dtAry[1])) {
                 $timeValue = $timedate->fromString($dtAry[1]);
@@ -626,7 +630,6 @@ class SugarBean
                 $results = $now->modify($value);
             } catch (Exception $e) {
                 $GLOBALS['log']->fatal('DateTime error: ' . $e->getMessage());
-                throw $e;
             }
             if (is_bool($results)) {
                 $GLOBALS['log']->fatal('Type Error: Argument 1 passed to TimeDate::asUser() ' .
@@ -695,7 +698,7 @@ class SugarBean
      *
      *  Internal function, do not override.
      */
-    public static function createRelationshipMeta($key, $db, $tablename, $dictionary, $module_dir, $is_custom = false)
+    public static function createRelationshipMeta($key, $db, $tablename, array $dictionary, $module_dir, $is_custom = false)
     {
         //load the module dictionary if not supplied.
         if (empty($dictionary) && !empty($module_dir)) {
@@ -814,8 +817,7 @@ class SugarBean
         $max = -1,
         $show_deleted = 0,
         $subpanel_def= null
-    )
-    {
+    ) {
         if (is_null($subpanel_def)) {
             $GLOBALS['log']->fatal('subpanel_def is null');
         }
@@ -884,7 +886,7 @@ class SugarBean
             $subqueries = SugarBean::build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by);
             $all_fields = array();
             foreach ($subqueries as $i => $subquery) {
-                $query_fields = $GLOBALS['db']->getSelectFieldsFromQuery($subquery['select']);
+                $query_fields = DBManagerFactory::getInstance()->getSelectFieldsFromQuery($subquery['select']);
                 foreach ($query_fields as $field => $select) {
                     if (!in_array($field, $all_fields)) {
                         $all_fields[] = $field;
@@ -1030,7 +1032,6 @@ class SugarBean
      */
     protected static function build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by)
     {
-
         global $beanList;
         $subqueries = array();
 
@@ -1040,11 +1041,9 @@ class SugarBean
         }
 
         foreach ($subpanel_list as $this_subpanel) {
-
             if (
                 method_exists($this_subpanel, 'isDatasourceFunction')
             ) {
-
                 if (!$this_subpanel->isDatasourceFunction() || ($this_subpanel->isDatasourceFunction()
                         && isset($this_subpanel->_instance_properties['generate_select'])
                         && $this_subpanel->_instance_properties['generate_select'])
@@ -1220,8 +1219,7 @@ class SugarBean
         $subpanel_def= null,
         $query_row_count = '',
         $secondary_queries = array()
-    )
-    {
+    ) {
         if (is_null($subpanel_def)) {
             $GLOBALS['log']->fatal('subpanel_def is null');
         }
@@ -1428,7 +1426,6 @@ class SugarBean
                         $current_bean->id = null;
                     }
                     $list[$current_bean->id] = $current_bean;
-
                 }
                 // go to the next row
                 $index++;
@@ -2046,8 +2043,7 @@ class SugarBean
         $end_index = -1,
         $deleted = 0,
         $optional_where = ""
-    )
-    {
+    ) {
         //if bean_name is Case then use aCase
         if ($bean_name == "Case") {
             $bean_name = "aCase";
@@ -2458,7 +2454,7 @@ class SugarBean
                     $type .= $def['dbType'];
                 }
 
-                if ($def['type'] == 'html' || $def['type'] == 'longhtml') {
+                if (isset($def['type']) && ($def['type'] == 'html' || $def['type'] == 'longhtml')) {
                     $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
                 } elseif (
                     (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
@@ -2468,7 +2464,6 @@ class SugarBean
                 }
             }
         }
-
     }
 
     /**
@@ -2574,7 +2569,7 @@ class SugarBean
                     case 'encrypt':
                         $this->$field = $this->encrpyt_before_save($this->$field);
                         break;
-                    default :
+                    default:
                         //do nothing
                 }
                 if ($reformatted) {
@@ -2861,7 +2856,7 @@ class SugarBean
             $GLOBALS['log']->fatal('SugarBean::handle_remaining_relate_fields $field_defs should be an array');
         } else {
             foreach ((array)$this->field_defs as $def) {
-                if ($def ['type'] == 'relate' && isset($def ['id_name'])
+                if ((isset($def['type']) && $def ['type'] == 'relate') && isset($def ['id_name'])
                     && isset($def ['link']) && isset($def['save'])) {
                     if (in_array($def['id_name'], $exclude) || in_array($def['id_name'], $this->relationship_fields)) {
                         // continue to honor the exclude array and exclude any relationships that will be handled
@@ -3219,7 +3214,15 @@ class SugarBean
             $notify_mail->setMailerForSystem();
 
             if (empty($admin->settings['notify_send_from_assigning_user'])) {
-                $notify_mail->From = $admin->settings['notify_fromaddress'];
+                if (!isset($admin->settings['notify_fromaddress'])) {
+                    LoggerManager::getLogger()->warn('admin settings / notify from address is not set');
+                    $adminSettingsNotifyFromAddress = null;
+                } else {
+                    $adminSettingsNotifyFromAddress = $admin->settings['notify_fromaddress'];
+                }
+                
+                $notify_mail->From = $adminSettingsNotifyFromAddress;
+                isValidEmailAddress($notify_mail->From);
                 $notify_mail->FromName = (empty($admin->settings['notify_fromname']))
                     ? "" : $admin->settings['notify_fromname'];
             } else {
@@ -3227,6 +3230,7 @@ class SugarBean
                 $fromAddress = $current_user->emailAddress->getReplyToAddress($current_user);
                 $fromAddress = !empty($fromAddress) ? $fromAddress : $admin->settings['notify_fromaddress'];
                 $notify_mail->From = $fromAddress;
+                isValidEmailAddress($notify_mail->From);
                 //Use the users full name is available otherwise default to system name
                 $from_name = !empty($admin->settings['notify_fromname']) ? $admin->settings['notify_fromname'] : "";
                 $from_name = !empty($current_user->full_name) ? $current_user->full_name : $from_name;
@@ -3313,7 +3317,7 @@ class SugarBean
         if (in_array('set_notification_body', get_class_methods($this))) {
             $xtpl = $this->set_notification_body($xtpl, $this);
         } else {
-            $xtpl->assign("OBJECT", translate('LBL_MODULE_NAME'));
+            $xtpl->assign("OBJECT", translate('LBL_MODULE_NAME', $this->module_name));
             $template_name = "Default";
         }
         if (!empty($_SESSION["special_notification"]) && $_SESSION["special_notification"]) {
@@ -3438,8 +3442,7 @@ class SugarBean
         $show_deleted = 0,
         $singleSelect = false,
         $select_fields = array()
-    )
-    {
+    ) {
         $GLOBALS['log']->debug("get_list:  order_by = '$order_by' and where = '$where' and limit = '$limit'");
         if (isset($_SESSION['show_deleted'])) {
             $show_deleted = 1;
@@ -3520,8 +3523,7 @@ class SugarBean
         $parentbean = null,
         $singleSelect = false,
         $ifListForExport = false
-    )
-    {
+    ) {
         $selectedFields = array();
         $secondarySelectedFields = array();
         $ret_array = array();
@@ -4398,8 +4400,7 @@ class SugarBean
         $limit = -1,
         $max = -1,
         $show_deleted = 0
-    )
-    {
+    ) {
         $GLOBALS['log']->debug("get_detail:  order_by = '$order_by' and where = '$where' and limit = '$limit' " .
             "and offset = '$offset'");
         if (isset($_SESSION['show_deleted'])) {
@@ -4741,6 +4742,10 @@ class SugarBean
             return;
         }
         foreach ($this->field_defs as $fieldDef) {
+            if (!isset($fieldDef['name'])) {
+                LoggerManager::getLogger()->warn("Field definition has not 'name'");
+                return;
+            }
             $field = $fieldDef['name'];
             if (!isset($this->processed_dates_times[$field])) {
                 $this->processed_dates_times[$field] = '1';
@@ -4920,8 +4925,8 @@ class SugarBean
             $query .= " , " . $table . ".created_by owner";
         }
         $query .= ' FROM ' . $table . ' WHERE deleted=0 AND id=';
-        $result = $GLOBALS['db']->query($query . "'$id'");
-        $row = $GLOBALS['db']->fetchByAssoc($result);
+        $result = DBManagerFactory::getInstance()->query($query . "'$id'");
+        $row = DBManagerFactory::getInstance()->fetchByAssoc($result);
         if ($return_array) {
             return $row;
         }
@@ -4969,7 +4974,6 @@ class SugarBean
                          ($this->object_name == $related_module && $this->$id_name != $this->id))
                     ) {
                         if (!empty($this->$id_name) && isset($this->$name)) {
-
                             $mod = BeanFactory::getBean($related_module, $this->$id_name);
                             if ($mod) {
                                 if (!empty($field['rname'])) {
@@ -5070,8 +5074,7 @@ class SugarBean
         $row_offset = 0,
         $limit = -1,
         $max = -1
-    )
-    {
+    ) {
         global $layout_edit_mode;
 
         if (isset($layout_edit_mode) && $layout_edit_mode) {
@@ -5293,7 +5296,7 @@ class SugarBean
         /**
          * @var DBManager $db
          */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $db->query('DELETE FROM cron_remove_documents WHERE bean_id=' . $db->quoted($this->id));
 
         return true;
@@ -5314,7 +5317,7 @@ class SugarBean
             $return = true;
         } elseif (!empty($this->field_defs)) {
             foreach ($this->field_defs as $fieldDef) {
-                if ($fieldDef['type'] != 'image') {
+                if (!isset($fieldDef['type']) || $fieldDef['type'] != 'image') {
                     continue;
                 }
                 $return = true;
@@ -5452,7 +5455,7 @@ class SugarBean
         /**
          * @var DBManager $db
          */
-        global $db;
+        $db = DBManagerFactory::getInstance();
         $record = array(
             'bean_id' => $db->quoted($this->id),
             'module' => $db->quoted($this->module_name),
@@ -5546,8 +5549,7 @@ class SugarBean
         $order_by = '',
         $limit = '',
         $row_offset = 0
-    )
-    {
+    ) {
         $db = DBManagerFactory::getInstance('listviews');
         // No need to do an additional query
         $GLOBALS['log']->debug("Finding linked records $this->object_name: " . $query);
@@ -5904,8 +5906,7 @@ class SugarBean
         $check_duplicates = true,
         $do_update = false,
         $data_values = null
-    )
-    {
+    ) {
         $where = '';
 
         // make sure there is a date modified
@@ -6233,7 +6234,6 @@ class SugarBean
     public function auditBean($isUpdate)
     {
         if ($this->is_AuditEnabled() && $isUpdate) {
-
             $auditDataChanges = $this->db->getAuditDataChanges($this);
 
             if (!empty($auditDataChanges)) {

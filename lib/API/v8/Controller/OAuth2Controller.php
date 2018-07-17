@@ -72,7 +72,6 @@ class OAuth2Controller extends ApiController
             } catch (OAuthServerException $exception) {
                 return $exception->generateHttpResponse($response);
             }
-            
         } catch (\Exception $e) {
             $payload = $this->handleExceptionIntoPayloadError($request, $e, isset($payload) ? $payload : []);
         }

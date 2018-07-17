@@ -48,11 +48,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 }
 
 /**
- * Description of JsonApiErrorObjectTest
+ * JsonApiErrorObjectTest
  *
  * @author gyula
  */
-class JsonApiErrorObjectTest extends PHPUnit_Framework_TestCase
+class JsonApiErrorObjectTest extends \SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
     public function setUp()
     {
@@ -137,12 +137,16 @@ class JsonApiErrorObjectTest extends PHPUnit_Framework_TestCase
             'meta' => [
                 'about' => 'Exception',
                 'class' => 'SuiteCRM\\LangException',
-                'code' => '123',
+                'code' => 123,
                 'langMessage' => 'Test text with variable bar.',
             ],
-            'code' => '123',
+            'code' => 123,
         ];
         $actual = $error->export();
+        
+        if (inDeveloperMode()) {
+            unset($actual['meta']['debug']);
+        }
 
         $this->assertEquals($expected, $actual, 'API Error Object retrive error from exception.');
     }

@@ -1,32 +1,36 @@
 <?php
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-class Jjwg_MapsViewQuick_Radius extends SugarView {
-
- 	function __construct() {
- 		parent::__construct();
- 	}
+class Jjwg_MapsViewQuick_Radius extends SugarView
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function Jjwg_MapsViewQuick_Radius(){
+    public function Jjwg_MapsViewQuick_Radius()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-	function display() {
-
-        if (!isset($_REQUEST['quick_address'])) $_REQUEST['quick_address'] = '';
-?>
+    public function display()
+    {
+        if (!isset($_REQUEST['quick_address'])) {
+            $_REQUEST['quick_address'] = '';
+        } ?>
 
 <div class="moduleTitle"><h2><?php echo $GLOBALS['mod_strings']['LBL_MAP_QUICK_RADIUS']; ?><div class="clear"></div></h2></div>
 <div class="clear"></div>
@@ -51,11 +55,14 @@ class Jjwg_MapsViewQuick_Radius extends SugarView {
         </td>
         <td>
             <select id="display_module" tabindex="111" title="<?php echo $GLOBALS['mod_strings']['LBL_MODULE_TYPE']; ?>" name="display_module">
-                <?php foreach ($GLOBALS['jjwg_config']['valid_geocode_modules'] as $module) { ?>
+                <?php foreach ($GLOBALS['jjwg_config']['valid_geocode_modules'] as $module) {
+            ?>
                     <option value="<?php echo htmlspecialchars($module); ?>" <?php
-                    if (!empty($_REQUEST['display_module']) && $module == $_REQUEST['display_module']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($GLOBALS['app_list_strings']['moduleList'][$module]); ?>
-                <?php } ?>
+                    if (!empty($_REQUEST['display_module']) && $module == $_REQUEST['display_module']) {
+                        echo 'selected="selected"';
+                    } ?>><?php echo htmlspecialchars($GLOBALS['app_list_strings']['moduleList'][$module]); ?>
+                <?php
+        } ?>
             </select>
         </td>
     </tr>
@@ -67,11 +74,14 @@ class Jjwg_MapsViewQuick_Radius extends SugarView {
             <input type="text" name="distance" id="distance"
             value="<?php echo htmlspecialchars($_REQUEST['distance']); ?>" title='' tabindex='121' size="10" maxlength="10">
             <select id="unit_type" tabindex="131" title="<?php echo $GLOBALS['mod_strings']['LBL_DISTANCE']; ?>" name="unit_type">
-                <?php foreach ($GLOBALS['app_list_strings']['map_unit_type_list'] as $key=>$value) { ?>
+                <?php foreach ($GLOBALS['app_list_strings']['map_unit_type_list'] as $key=>$value) {
+            ?>
                     <option value="<?php echo htmlspecialchars($key); ?>" <?php
-                    if ($key == $_REQUEST['unit_type']) echo 'selected="selected"';
-                    ?>><?php echo htmlspecialchars($value); ?>
-                <?php } ?>
+                    if ($key == $_REQUEST['unit_type']) {
+                        echo 'selected="selected"';
+                    } ?>><?php echo htmlspecialchars($value); ?>
+                <?php
+        } ?>
             </select>
         </td>
     </tr>
@@ -81,5 +91,5 @@ class Jjwg_MapsViewQuick_Radius extends SugarView {
 </form>
 
 <?php
-  }
+    }
 }

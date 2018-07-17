@@ -58,7 +58,7 @@ class updatePortal
             global $sugar_config;
             $aop_config = $sugar_config['aop'];
 
-            $template = BeanFactory::getBean('EmailTemplates',$aop_config['joomla_account_creation_email_template_id']);
+            $template = BeanFactory::getBean('EmailTemplates', $aop_config['joomla_account_creation_email_template_id']);
 
             $search = array("\$joomla_pass", "\$portal_address");
             $replace = array($bean->joomla_account_access, $aop_config['joomla_url']);
@@ -92,6 +92,7 @@ class updatePortal
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
         $mail->From = $emailSettings['from_address'];
+        isValidEmailAddress($mail->From);
         $mail->FromName = $emailSettings['from_name'];
         $mail->clearAllRecipients();
         $mail->clearReplyTos();

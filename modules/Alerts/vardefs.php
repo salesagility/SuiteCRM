@@ -73,6 +73,15 @@ $dictionary['Alert'] = array(
                     'type'		=> 'varchar',
                     'massupdate' => false,
                     'studio'=> 'false',
+                ),
+            'reminder_id' =>
+                array(
+                    'name'		=> 'reminder_id',
+                    'type' => 'id',
+                    'required' => false,
+                    'reportable' => false,
+                    'studio'=> 'false',
+                    'comment' => 'The id of the reminder that created this alert',
                 )
 ),
 	'relationships'=>array (
@@ -80,7 +89,7 @@ $dictionary['Alert'] = array(
 	'optimistic_locking'=>true,
 		'unified_search'=>false,
 	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('Alerts','Alert', array('basic','assignable'));
+VardefManager::createVardef('Alerts', 'Alert', array('basic','assignable'));

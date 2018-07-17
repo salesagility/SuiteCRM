@@ -44,7 +44,6 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 class CasesController extends SugarController
 {
-
     public function action_get_kb_articles()
     {
         global $mod_strings;
@@ -61,12 +60,12 @@ class CasesController extends SugarController
         $offset = 0;
         $limit = 30;
 
-        $result = $GLOBALS['db']->limitQuery($query, $offset, $limit);
+        $result = DBManagerFactory::getInstance()->limitQuery($query, $offset, $limit);
 
         $echo = '<table>';
         $echo .= '<tr><th>' . $mod_strings['LBL_SUGGESTION_BOX_REL'] . '</th><th>' . $mod_strings['LBL_SUGGESTION_BOX_TITLE'] . '</th><th>' . $mod_strings['LBL_SUGGESTION_BOX_STATUS'] . '</th></tr>';
         $count = 1;
-        while ($row = $GLOBALS['db']->fetchByAssoc($result)) {
+        while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
             $kb = BeanFactory::getBean('AOK_KnowledgeBase', $row['id']);
             $echo .= '<tr class="kb_article" data-id="' . $kb->id . '">';
             $echo .= '<td> &nbsp;' . $count . '</td>';
@@ -115,5 +114,4 @@ class CasesController extends SugarController
     {
         return (!isset($question) || trim($question) === '');
     }
-
 }

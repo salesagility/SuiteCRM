@@ -25,9 +25,9 @@
  */
 
 $dictionary['AOS_Line_Item_Groups'] = array(
-	'table'=>'aos_line_item_groups',
-	'audited'=>true,
-	'fields'=>array (
+    'table'=>'aos_line_item_groups',
+    'audited'=>true,
+    'fields'=>array (
   'total_amt' => 
   array (
     'required' => false,
@@ -348,18 +348,18 @@ $dictionary['AOS_Line_Item_Groups'] = array(
  
 ),
 'relationships'=>array (
-	'groups_aos_product_quotes' =>
-	array (
+    'groups_aos_product_quotes' =>
+    array (
                 'lhs_module' => 'AOS_Line_Item_Groups',
                 'lhs_table' => 'aos_line_item_groups',
-	'lhs_key' => 'id',
-	'rhs_module'=> 'AOS_Products_Quotes', 
-	'rhs_table'=> 'aos_products_quotes', 
-	'rhs_key' => 'group_id',
-	'relationship_type'=>'one-to-many',
-	),
+    'lhs_key' => 'id',
+    'rhs_module'=> 'AOS_Products_Quotes', 
+    'rhs_table'=> 'aos_products_quotes', 
+    'rhs_key' => 'group_id',
+    'relationship_type'=>'one-to-many',
+    ),
 ),
-	'optimistic_lock'=>true,
+    'optimistic_lock'=>true,
 );
 require_once('include/SugarObjects/VardefManager.php');
-VardefManager::createVardef('AOS_Line_Item_Groups','AOS_Line_Item_Groups', array('basic','assignable'));
+VardefManager::createVardef('AOS_Line_Item_Groups', 'AOS_Line_Item_Groups', array('basic','assignable'));

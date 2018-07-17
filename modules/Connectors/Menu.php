@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+} 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -43,23 +45,21 @@ global $mod_strings;
 global $current_user;
 $actions = array('ModifyProperties', 'ModifyDisplay', 
 'ModifyMapping', 'ConnectorSettings');
-if(in_array($GLOBALS['action'], $actions)){
-	$module_menu[]=Array("index.php?module=Connectors&action=ConnectorSettings", $mod_strings['LBL_ADMINISTRATION_MAIN'],"icon_Connectors");
-	$module_menu[]=Array("index.php?module=Connectors&action=ModifyProperties", $mod_strings['LBL_MODIFY_PROPERTIES_TITLE'],"icon_ConnectorConfig_16");
-	$module_menu[]=Array("index.php?module=Connectors&action=ModifyDisplay", $mod_strings['LBL_MODIFY_DISPLAY_TITLE'],"icon_ConnectorEnable_16");
-	$module_menu[]=Array("index.php?module=Connectors&action=ModifyMapping", $mod_strings['LBL_MODIFY_MAPPING_TITLE'],"icon_ConnectorMap_16");
-
-
+if (in_array($GLOBALS['action'], $actions)) {
+    $module_menu[]=Array("index.php?module=Connectors&action=ConnectorSettings", $mod_strings['LBL_ADMINISTRATION_MAIN'],"icon_Connectors");
+    $module_menu[]=Array("index.php?module=Connectors&action=ModifyProperties", $mod_strings['LBL_MODIFY_PROPERTIES_TITLE'],"icon_ConnectorConfig_16");
+    $module_menu[]=Array("index.php?module=Connectors&action=ModifyDisplay", $mod_strings['LBL_MODIFY_DISPLAY_TITLE'],"icon_ConnectorEnable_16");
+    $module_menu[]=Array("index.php?module=Connectors&action=ModifyMapping", $mod_strings['LBL_MODIFY_MAPPING_TITLE'],"icon_ConnectorMap_16");
 }
 
-if(!empty($_REQUEST['merge_module']) && ($GLOBALS['action'] == 'Step1' || $GLOBALS['action'] == 'Step2')) {
-   $merge_module = $_REQUEST['merge_module'];
-   $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $merge_module);
-   if(file_exists("custom/modules/{$merge_module}/Menu.php")) {
-   	 require("custom/modules/{$merge_module}/Menu.php");
-   } else if(file_exists("modules/{$merge_module}/Menu.php")) {
-   	 require("modules/{$merge_module}/Menu.php");
-   }
-   $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $GLOBALS['module']);
+if (!empty($_REQUEST['merge_module']) && ($GLOBALS['action'] == 'Step1' || $GLOBALS['action'] == 'Step2')) {
+    $merge_module = $_REQUEST['merge_module'];
+    $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $merge_module);
+    if (file_exists("custom/modules/{$merge_module}/Menu.php")) {
+        require("custom/modules/{$merge_module}/Menu.php");
+    } elseif (file_exists("modules/{$merge_module}/Menu.php")) {
+        require("modules/{$merge_module}/Menu.php");
+    }
+    $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $GLOBALS['module']);
 }
 

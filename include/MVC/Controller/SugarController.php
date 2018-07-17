@@ -174,12 +174,12 @@ class SugarController
      */
     protected $action_view_map = array();
 
-	/**
-	 * This can be set from the application to tell us whether we have authorization to
-	 * process the action. If this is set we will default to the noaccess view.
-	 *@var bool
+    /**
+     * This can be set from the application to tell us whether we have authorization to
+     * process the action. If this is set we will default to the noaccess view.
+     *@var bool
      */
-	public $hasAccess ;
+    public $hasAccess ;
 
     /**
      * Map case sensitive filenames to action.  This is used for linux/unix systems
@@ -191,13 +191,14 @@ class SugarController
         'listview' => 'ListView'
     );
 
-	/**
-	 * Constructor. This ie meant to load up the module, action, record as well
-	 * as the mapping arrays.
-	 */
-	public function __construct()
-	{
-        $this->hasAccess = true;}
+    /**
+     * Constructor. This ie meant to load up the module, action, record as well
+     * as the mapping arrays.
+     */
+    public function __construct()
+    {
+        $this->hasAccess = true;
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
@@ -368,7 +369,6 @@ class SugarController
      */
     final public function execute()
     {
-
         try {
             $this->process();
             if (!empty($this->view)) {
@@ -379,8 +379,6 @@ class SugarController
         } catch (Exception $e) {
             $this->handleException($e);
         }
-
-
     }
 
     protected function showException(Exception $e)
@@ -516,7 +514,6 @@ class SugarController
      */
     private function do_action()
     {
-
         $function = $this->getActionMethodName();
         if ($this->hasFunction($function)) {
             $GLOBALS['log']->debug('Performing action: ' . $function . ' MODULE: ' . $this->module);
@@ -618,7 +615,6 @@ class SugarController
      */
     protected function redirect()
     {
-
         if (!empty($this->redirect_url)) {
             SugarApplication::redirect($this->redirect_url);
         }
@@ -660,7 +656,7 @@ class SugarController
                 }
             }
             if ($sf != null) {
-                $sf->save($this->bean, $_POST, $field, $properties);
+                $sf->save($this->bean, isset($_POST) ? $_POST : null, $field, $properties);
             }
         }
 
@@ -768,7 +764,7 @@ class SugarController
 
             set_time_limit(0);//I'm wondering if we will set it never goes timeout here.
             // until we have more efficient way of handling MU, we have to disable the limit
-            $GLOBALS['db']->setQueryLimit(0);
+            DBManagerFactory::getInstance()->setQueryLimit(0);
             require_once("include/MassUpdate.php");
             require_once('modules/MySettings/StoreQuery.php');
             $seed = loadBean($_REQUEST['module']);
@@ -897,7 +893,6 @@ class SugarController
                         'header' => $dashlet->title . ' : ' . $mod_strings['LBL_OPTIONS'],
                         'body' => $dashlet->displayOptions()
                     )));
-
             }
         } else {
             return '0';
@@ -1107,7 +1102,8 @@ class SugarController
      * 
      * @global array $app_strings using for user messages about error/success status of action
      */
-    public function action_sendConfirmOptInEmail() {
+    public function action_sendConfirmOptInEmail()
+    {
         global $app_strings;
 
         if (!($this->bean instanceof Company || $this->bean instanceof Person)) {
@@ -1122,7 +1118,6 @@ class SugarController
             } else {
                 $emailAddressStringCaps = strtoupper($this->bean->email1);
                 if ($emailAddressStringCaps) {
-
                     $emailAddress = new EmailAddress();
                     $emailAddress->retrieve_by_string_fields(array(
                         'email_address_caps' => $emailAddressStringCaps,
@@ -1147,5 +1142,4 @@ class SugarController
         }
         $this->view = 'detail';
     }
-
 }

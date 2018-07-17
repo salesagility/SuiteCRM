@@ -1,9 +1,11 @@
 <?php
 
-class ViewQuickcreateTest extends PHPUnit_Framework_TestCase
+class ViewQuickcreateTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();
@@ -11,6 +13,9 @@ class ViewQuickcreateTest extends PHPUnit_Framework_TestCase
 
     public function testpreDisplay()
     {
+        if (isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
 
         //check without setting any values, it should execute without any issues.
         $view = new ViewQuickcreate();
@@ -30,11 +35,32 @@ class ViewQuickcreateTest extends PHPUnit_Framework_TestCase
         $_REQUEST['record'] = 1;
         $view->preDisplay();
         $this->assertNotSame($request, $_REQUEST);
+        
+        // clean up
+        
+        if (isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 
     public function testdisplay()
     {
-        error_reporting(E_ERROR | E_PARSE);
+        if (isset($_SESSION)) {
+            $_session = $_SESSION;
+        }
+        
+        if (isset($_REQUEST)) {
+            $_request = $_REQUEST;
+        }
+        
+        $state = new SuiteCRM\StateSaver();
+        
+        
+        
+        
+        
 
         //execute the method with required child objects and parameters preset. it will return some html.
         $view = new ViewQuickcreate();
@@ -51,5 +77,21 @@ class ViewQuickcreateTest extends PHPUnit_Framework_TestCase
 
         $this->assertGreaterThan(0, strlen($renderedContent));
         $this->assertEquals(false, json_decode($renderedContent)); //check that it doesn't return json. 
+        
+        // clean up
+        
+        
+        
+        if (isset($_session)) {
+            $_SESSION = $_session;
+        } else {
+            unset($_SESSION);
+        }
+        
+        if (isset($_request)) {
+            $_REQUEST = $_request;
+        } else {
+            unset($_REQUEST);
+        }
     }
 }

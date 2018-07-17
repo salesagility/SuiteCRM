@@ -30,8 +30,8 @@ class InstallTester extends \Codeception\Actor
         $I = $this;
         $scenario = $I->getScenario();
 
-        if(version_compare(phpversion(), SUITECRM_PHP_REC_VERSION, '>=')) {
-            $scenario->skip('PHP Version '. PHP_VERSION .' meets the recommended requirements.');
+        if (!$this->isOldPhpVersionDetected()) {
+            $scenario->comment('PHP Version '. PHP_VERSION .' meets the recommended requirements.');
         } else {
             $scenario->comment('PHP Version '. PHP_VERSION .' does not meet the recommended requirements.');
             $I->see('Old PHP Version Detected');
@@ -90,8 +90,7 @@ class InstallTester extends \Codeception\Actor
         // TODO: TASK: UNDEFINED - Add tests for form validation
 
         // Select Database type
-        switch ($webDriverHelper->getDatabaseDriver())
-        {
+        switch ($webDriverHelper->getDatabaseDriver()) {
             case \SuiteCRM\Enumerator\DatabaseDriver::MYSQL:
                 $I->checkOption('#setup_db_type[value=mysql]');
                 break;
@@ -115,7 +114,7 @@ class InstallTester extends \Codeception\Actor
         $I->fillField('[name=setup_site_admin_password]', $webDriverHelper->getAdminPassword());
         $I->fillField('[name=setup_site_admin_password_retype]', $webDriverHelper->getAdminPassword());
         $I->fillField('[name=setup_site_url]', $webDriverHelper->getInstanceURL());
-        $I->fillField('[name=email1]','install.tester@example.com');
+        $I->fillField('[name=email1]', 'install.tester@example.com');
 
 
         $I->click('Next');
@@ -129,7 +128,9 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $I->comment('wait for installer progress to finish');
-        $I->waitForElement('#loginform',360);
+        $I->waitForElement('[type=submit]', 90);
+        $I->dontSeeMissingLabels();
+        $I->dontSeeErrors();
     }
 
     /**
@@ -139,5 +140,19 @@ class InstallTester extends \Codeception\Actor
     {
         $I = $this;
         $I->dontSee('LBL_');
+    }
+
+    public function dontSeeErrors()
+    {
+        $I = $this;
+        $I->dontSee('Warning');
+        $I->dontSee('Notice');
+        $I->dontSee('Error');
+        $I->dontSee('error');
+    }
+
+    protected function isOldPhpVersionDetected()
+    {
+        return $this->executeJS('return document.getElementsByName(\'setup_old_php\').length > 0;');
     }
 }

@@ -66,6 +66,9 @@ class SugarEmailAddress extends SugarBean
     const COI_STAT_OPT_IN = 'opt-in';
     const COI_STAT_CONFIRMED_OPT_IN = 'confirmed-opt-in';
 
+    /** @var boolean $tracker_visibility */
+    public $tracker_visibility = false;
+    
     /**
      * @var string $table_name
      */
@@ -847,6 +850,7 @@ class SugarEmailAddress extends SugarBean
         $post_from_email_address_widget = (isset($_REQUEST[$module . '_email_widget_id']));
         $primaryValue = $primary;
         $widgetCount = 0;
+        $widget_id = '';
         $hasEmailValue = false;
         $email_ids = array();
 
@@ -865,7 +869,6 @@ class SugarEmailAddress extends SugarBean
             if (empty($widget_id)) {
                 $GLOBALS['log']->debug('Widget not found, so it should be an update and not a create');
             }
-
 
             //Iterate over the widgets for this module, in case there are multiple email widgets for this module
             while (isset($_REQUEST[$module . $widget_id . 'emailAddress' . $widgetCount])) {
@@ -998,8 +1001,8 @@ class SugarEmailAddress extends SugarBean
                                     $email_id = (array_key_exists($k, $email_ids)) ? $email_ids[$k] : null;
                                     $primary = ($k == $primaryValue) ? true : false;
                                     $replyTo = ($k == $replyToField) ? true : false;
-                                    $invalid = (in_array($k, $invalidValues)) ? true : false;
-                                    $optOut = (in_array($k, $optOutValues)) ? true : false;
+                                    $invalid = (in_array($k, (array)$invalidValues)) ? true : false;
+                                    $optOut = (in_array($k, (array)$optOutValues)) ? true : false;
                                     $optIn = (in_array($k, $optInValues)) ? true : false;
                                     $this->addAddress(
                                         trim($new_addrs[$k]),
@@ -1249,7 +1252,7 @@ class SugarEmailAddress extends SugarBean
 
         // confirmed opt in check
         if (!is_null($optInFlag)) {
-            $optInFlag = 0;
+            $optInFlag = (int)$optInFlag;
         }
 
         $isValidEmailAddress = ($opt_out !== 1 && $invalid !== 1);
@@ -1268,7 +1271,7 @@ class SugarEmailAddress extends SugarBean
             $new_confirmed_opt_in = self::COI_STAT_OPT_IN;
         } else {
             // Reset the opt in status
-           $new_confirmed_opt_in = self::COI_STAT_DISABLED;
+            $new_confirmed_opt_in = self::COI_STAT_DISABLED;
         }
 
         // determine how we are going to put in this address - UPDATE or INSERT
@@ -1296,18 +1299,18 @@ class SugarEmailAddress extends SugarBean
                 $upd_r = $this->db->query($upd_q);
 
 
-                    if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
-                        // reset confirm opt in
-                        $upd_q = 'UPDATE ' . $this->table_name . ' ' .
+                if ($new_confirmed_opt_in === self::COI_STAT_DISABLED) {
+                    // reset confirm opt in
+                    $upd_q = 'UPDATE ' . $this->table_name . ' ' .
                             'SET '.
                             'confirm_opt_in_date=NULL,' .
                             'confirm_opt_in_sent_date=NULL,' .
                             'confirm_opt_in_fail_date=NULL ' .
                             'WHERE id=\'' . $this->db->quote($duplicate_email['id']) . '\'';
-                        $upd_r = $this->db->query($upd_q);
-                        // set for audit table detection
-                        $duplicate->confirm_opt_in = null;
-                    }
+                    $upd_r = $this->db->query($upd_q);
+                    // set for audit table detection
+                    $duplicate->confirm_opt_in = null;
+                }
             }
 
             if (!empty($this->fetched_row)) {
@@ -2050,7 +2053,14 @@ class SugarEmailAddress extends SugarBean
     public function getOptInStatus()
     {
         $configurator = new Configurator();
-        $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        
+        $enableConfirmedOptIn = null;
+        if (isset($configurator->config['email_enable_confirm_opt_in'])) {
+            $enableConfirmedOptIn = $configurator->config['email_enable_confirm_opt_in'];
+        } else {
+            LoggerManager::getLogger()->warn('EmailUI::populateComposeViewFields: $configurator->config[email_enable_confirm_opt_in] is not set');
+        }
+        
         $optInFromFlags = $this->getOptInIndicationFromFlags();
 
         if ($enableConfirmedOptIn === self::COI_STAT_DISABLED) {

@@ -1,31 +1,34 @@
 <?php
 
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
-class Jjwg_AreasViewArea_Detail_Map extends SugarView {
-
-  public function __construct() {
-    parent::__construct();
-  }
+class Jjwg_AreasViewArea_Detail_Map extends SugarView
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function Jjwg_AreasViewArea_Detail_Map(){
+    public function Jjwg_AreasViewArea_Detail_Map()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-  function display() {
-
-?>
+    public function display()
+    {
+        ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -133,7 +136,5 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </body>
 </html>
 <?php
-
-  }
-
+    }
 }

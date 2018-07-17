@@ -2,12 +2,11 @@
 
 namespace SuiteCRM\Exception;
 
-use Codeception\Test\Unit;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\LangText;
 use UnitTester;
 
-class ApiExceptionTest extends Unit
+class ApiExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var UnitTester
@@ -19,16 +18,15 @@ class ApiExceptionTest extends Unit
      */
     private static $exception;
 
-    protected function _before()
+    public function _before()
     {
-        if(self::$exception === null) {
+        parent::_before();
+        if (self::$exception === null) {
             self::$exception = new ApiException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetMessage()
     {

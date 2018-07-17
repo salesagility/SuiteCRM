@@ -1,9 +1,11 @@
-<?PHP
+<?php
 
-class AOS_PDF_TemplatesTest extends PHPUnit_Framework_TestCase
+class AOS_PDF_TemplatesTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 {
-    protected function setUp()
+    public function setUp()
     {
+        parent::setUp();
+
         global $current_user;
         get_sugar_config_defaults();
         $current_user = new User();

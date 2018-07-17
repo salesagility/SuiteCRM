@@ -184,7 +184,6 @@ class TemplateHandler
         $contents = $this->ss->fetch($tpl);
         // Insert validation and quick search stuff here
         if ($view === 'EditView' || $ajaxSave || $view === 'ConvertLead' || strpos($view, 'QuickCreate')) {
-
             global $dictionary, $beanList, $app_strings, $mod_strings;
             $mod = $beanList[$module];
 
@@ -242,7 +241,7 @@ class TemplateHandler
             } //foreach
 
             //Create a base class with field_name_map property
-            $sugarBean = new SugarBean();
+            $sugarBean = BeanFactory::getBean($module); // $sugarBean = new SugarBean();
             $sugarBean->field_name_map = $defs;
             $sugarBean->module_dir = $module;
 
@@ -267,14 +266,12 @@ class TemplateHandler
             //4) have id_name in vardef entry
             //5) not already been added to Array
             foreach ($sugarBean->field_name_map as $name => $def) {
-
                 if ($def['type'] === 'relate' &&
                     isset($defs2[$name]) &&
                     (!isset($defs2[$name]['validateDependency']) || $defs2[$name]['validateDependency'] === true) &&
                     isset($def['id_name']) &&
                     !in_array($name, $validatedFields)
                 ) {
-
                     if (isset($mod_strings[$def['vname']])
                         || isset($app_strings[$def['vname']])
                         || translate($def['vname'], $sugarBean->module_dir) != $def['vname']
@@ -297,16 +294,21 @@ class TemplateHandler
         } else {
             if (preg_match('/^SearchForm_.+/', $view)) {
                 global $dictionary, $beanList;
-                $mod = $beanList[$module];
+                if (!isset($beanList[$module])) {
+                    LoggerManager::getLogger()->warn('Template handler trying to build a template but module not found in module list. Module was: ' . $module);
+                    $mod = null;
+                } else {
+                    $mod = $beanList[$module];
 
-                if ($mod === 'aCase') {
-                    $mod = 'Case';
+                    if ($mod === 'aCase') {
+                        $mod = 'Case';
+                    }
+
+                    $defs = $dictionary[$mod]['fields'];
+                    $contents .= '{literal}';
+                    $contents .= $this->createQuickSearchCode($defs, array(), $view);
+                    $contents .= '{/literal}';
                 }
-
-                $defs = $dictionary[$mod]['fields'];
-                $contents .= '{literal}';
-                $contents .= $this->createQuickSearchCode($defs, array(), $view);
-                $contents .= '{/literal}';
             }
         }//if
 
@@ -412,8 +414,7 @@ class TemplateHandler
     {
         $sqs_objects = array();
         require_once('include/QuickSearchDefaults.php');
-        if ($this instanceof TemplateHandler) //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
-        {
+        if ($this instanceof TemplateHandler) { //If someone calls createQuickSearchCode as a static method (@see ImportViewStep3) $this becomes anoter object, not TemplateHandler
             $qsd = QuickSearchDefaults::getQuickSearchDefaults($this->getQSDLookup());
         } else {
             $qsd = QuickSearchDefaults::getQuickSearchDefaults(array());
@@ -439,13 +440,11 @@ class TemplateHandler
                     !empty($field['quicksearch'])
                 ) {
                     if (preg_match('/^(Campaigns|Teams|Users|Contacts|Accounts)$/si', $field['module'], $matches)) {
-
                         if ($matches[0] === 'Campaigns') {
                             $sqs_objects[$name . '_' . $parsedView] = $qsd->loadQSObject('Campaigns', 'Campaign',
                                 $field['name'], $field['id_name'], $field['id_name']);
                         } else {
                             if ($matches[0] === 'Users') {
-
                                 if (!empty($f['name']) && !empty($f['id_name'])) {
                                     $sqs_objects[$name . '_' . $parsedView] = $qsd->getQSUser($f['name'],
                                         $f['id_name']);
@@ -542,7 +541,6 @@ class TemplateHandler
                         && (!isset($field['id_name']) || !preg_match('/_c$/si', $field['id_name']))
                         && preg_match('/^(Campaigns|Teams|Users|Contacts|Accounts)$/si', $field['module'], $matches)
                     ) {
-
                         if ($matches[0] === 'Campaigns') {
                             $sqs_objects[$name] = $qsd->loadQSObject('Campaigns', 'Campaign', $field['name'],
                                 $field['id_name'], $field['id_name']);
@@ -550,12 +548,11 @@ class TemplateHandler
                             if ($matches[0] === 'Users') {
                                 if ($field['name'] === 'reports_to_name') {
                                     $sqs_objects[$name] = $qsd->getQSUser('reports_to_name', 'reports_to_id');
-                                    // Bug #52994 : QuickSearch for a 1-M User relationship changes assigned to user
+                                // Bug #52994 : QuickSearch for a 1-M User relationship changes assigned to user
                                 } elseif ($field['name'] === 'assigned_user_name') {
                                     $sqs_objects[$name] = $qsd->getQSUser('assigned_user_name', 'assigned_user_id');
                                 } else {
                                     $sqs_objects[$name] = $qsd->getQSUser($field['name'], $field['id_name']);
-
                                 }
                             } else {
                                 if ($matches[0] === 'Campaigns') {
@@ -654,7 +651,6 @@ class TemplateHandler
                         }
                     }
                 }
-
             } //foreach
         }
 
@@ -684,5 +680,3 @@ class TemplateHandler
         return array();
     }
 }
-
-?>

@@ -76,27 +76,27 @@ function get_merge_query($seed, $merge_module, $key)
 
     $relModule = $seed->module_dir;
 
-	$select = "";
-    if(!empty($selQuery[$relModule][$merge_module])){
+    $select = "";
+    if (!empty($selQuery[$relModule][$merge_module])) {
         $select = $selQuery[$relModule][$merge_module];
-	} else {
-	    $lowerRelModule = strtolower($relModule);
-	    if($seed->load_relationship($lowerRelModule)) {
-    		$params = array('join_table_alias' => 'r1', 'join_table_link_alias' => 'r2', 'join_type' => 'LEFT JOIN');
-	    	$join = $seed->$lowerRelModule->getJoin($params);
-		    $select = "SELECT {$seed->table_name}.* FROM {$seed->table_name} $join";
-	    }
-	}
+    } else {
+        $lowerRelModule = strtolower($relModule);
+        if ($seed->load_relationship($lowerRelModule)) {
+            $params = array('join_table_alias' => 'r1', 'join_table_link_alias' => 'r2', 'join_type' => 'LEFT JOIN');
+            $join = $seed->$lowerRelModule->getJoin($params);
+            $select = "SELECT {$seed->table_name}.* FROM {$seed->table_name} $join";
+        }
+    }
 
-	if(empty($select)) {
-	    $select = "SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts";
-	}
+    if (empty($select)) {
+        $select = "SELECT contacts.first_name, contacts.last_name, contacts.id, contacts.date_entered FROM contacts";
+    }
 
-	if(empty($whereQuery[$relModule][$merge_module])){
-		$select .= " WHERE {$seed->table_name}.id = '{$seed->db->quote($key)}'";
-	}else{
-		$select .= " WHERE ". $whereQuery[$relModule][$merge_module] . "'{$seed->db->quote($key)}'";
-	}
+    if (empty($whereQuery[$relModule][$merge_module])) {
+        $select .= " WHERE {$seed->table_name}.id = '{$seed->db->quote($key)}'";
+    } else {
+        $select .= " WHERE ". $whereQuery[$relModule][$merge_module] . "'{$seed->db->quote($key)}'";
+    }
     $select .=  " ORDER BY {$seed->table_name}.date_entered";
     return $select;
 }

@@ -183,7 +183,9 @@ class History implements HistoryInterface
             $new_file = $this->getFileByTimestamp($time);
         }
         // now we have a unique filename, copy the file into the history
-        copy($path, $new_file);
+        if (file_exists($path)) {
+            copy($path, $new_file);
+        }
         $this->_list [] = $time;
 
         // finally, trim the number of files we're holding in the history to that specified in the configuration
@@ -247,6 +249,4 @@ class History implements HistoryInterface
     {
         return $this->_dirname . DIRECTORY_SEPARATOR . $this->_basename . '_' . $timestamp;
     }
-
-
 }

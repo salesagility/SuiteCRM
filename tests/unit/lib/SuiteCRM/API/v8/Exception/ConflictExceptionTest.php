@@ -6,7 +6,7 @@ use Psr\Log\LogLevel;
 use SuiteCRM\API\v8\Exception\ApiException;
 use SuiteCRM\API\v8\Exception\ConflictException;
 
-class ConflictExceptionTest extends \Codeception\Test\Unit
+class ConflictExceptionTest extends \SuiteCRM\StateCheckerUnitAbstract
 {
     /**
      * @var \UnitTester
@@ -23,16 +23,15 @@ class ConflictExceptionTest extends \Codeception\Test\Unit
         $this->assertEquals('[SuiteCRM] [API] [Conflict] ', self::$exception->getMessage());
     }
 
-    protected function _before()
+    public function _before()
     {
-        if(self::$exception === null) {
+        parent::_before();
+        if (self::$exception === null) {
             self::$exception = new ConflictException();
         }
     }
 
-    protected function _after()
-    {
-    }
+
 
     public function testGetSetDetail()
     {

@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -40,7 +42,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 
 require_once('include/connectors/sources/ext/rest/rest.php');
 
@@ -60,8 +64,6 @@ class ext_rest_facebook extends ext_rest
         $this->allowedModuleList = array('Accounts' => $app_list_strings['moduleList']['Accounts'],
             'Contacts' => $app_list_strings['moduleList']['Contacts'],
             'Leads' => $app_list_strings['moduleList']['Leads']);
-
-
     }
 
     /**

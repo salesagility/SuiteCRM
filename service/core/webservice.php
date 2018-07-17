@@ -1,5 +1,7 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -51,8 +53,9 @@ require_once('SoapHelperWebService.php');
 require_once('SugarRestUtils.php');
 require_once($webservice_path);
 require_once($registry_path);
-if(isset($webservice_impl_class_path))
+if (isset($webservice_impl_class_path)) {
     require_once($webservice_impl_class_path);
+}
 $url = $GLOBALS['sugar_config']['site_url'].$location;
 $service = new $webservice_class($url);
 $service->registerClass($registry_class);
@@ -66,4 +69,4 @@ $service_object = $service;
 $service->serve();
 
 
-		
+        

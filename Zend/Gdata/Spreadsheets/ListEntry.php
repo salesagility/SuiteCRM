@@ -83,7 +83,7 @@ class Zend_Gdata_Spreadsheets_ListEntry extends Zend_Gdata_Entry
     protected function takeChildFromDOM($child)
     {
         switch ($child->namespaceURI) {
-        case $this->lookupNamespace('gsx');
+        case $this->lookupNamespace('gsx'):
             $custom = new Zend_Gdata_Spreadsheets_Extension_Custom($child->localName);
             $custom->transferFromDOM($child);
             $this->addCustom($custom);

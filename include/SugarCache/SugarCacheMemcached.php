@@ -67,10 +67,11 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     public function useBackend()
     {
-        if ( extension_loaded('memcached')
+        if (extension_loaded('memcached')
                 && empty($GLOBALS['sugar_config']['external_cache_disabled_memcached'])
-                && $this->_getMemcachedObject() )
+                && $this->_getMemcachedObject()) {
             return true;
+        }
             
         return false;
     }
@@ -88,11 +89,11 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     protected function _getMemcachedObject()
     {
-        if ( !($this->_memcached instanceOf Memcached) ) {
+        if (!($this->_memcached instanceOf Memcached)) {
             $this->_memcached = new Memcached();
             $this->_host = SugarConfig::getInstance()->get('external_cache.memcache.host', $this->_host);
             $this->_port = SugarConfig::getInstance()->get('external_cache.memcache.port', $this->_port);
-            if ( !@$this->_memcached->addServer($this->_host,$this->_port) ) {
+            if (!@$this->_memcached->addServer($this->_host, $this->_port)) {
                 return false;
             }
         }
@@ -106,8 +107,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
     protected function _setExternal(
         $key,
         $value
-        )
-    {
+        ) {
         $this->_getMemcachedObject()->set($key, $value, $this->_expireTimeout);
     }
     
@@ -116,10 +116,9 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     protected function _getExternal(
         $key
-        )
-    {
+        ) {
         $returnValue = $this->_getMemcachedObject()->get($key);
-        if ( $this->_getMemcachedObject()->getResultCode() != Memcached::RES_SUCCESS ) {
+        if ($this->_getMemcachedObject()->getResultCode() != Memcached::RES_SUCCESS) {
             return null;
         }
 
@@ -131,8 +130,7 @@ class SugarCacheMemcached extends SugarCacheAbstract
      */
     protected function _clearExternal(
         $key
-        )
-    {
+        ) {
         $this->_getMemcachedObject()->delete($key);
     }
     

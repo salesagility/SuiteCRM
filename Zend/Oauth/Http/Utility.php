@@ -43,7 +43,7 @@ class Zend_Oauth_Http_Utility
      * @return array
      */
     public function assembleParams(
-        $url, 
+        $url,
         Zend_Oauth_Config_ConfigInterface $config,
         array $serviceProviderParams = null
     ) {

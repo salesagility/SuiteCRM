@@ -264,52 +264,52 @@ class Zend_Gdata_Exif_Extension_Tags extends Zend_Gdata_Extension
     {
         $absoluteNodeName = $child->namespaceURI . ':' . $child->localName;
         switch ($absoluteNodeName) {
-            case $this->lookupNamespace('exif') . ':' . 'distance';
+            case $this->lookupNamespace('exif') . ':' . 'distance':
                 $distance = new Zend_Gdata_Exif_Extension_Distance();
                 $distance->transferFromDOM($child);
                 $this->_distance = $distance;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'exposure';
+            case $this->lookupNamespace('exif') . ':' . 'exposure':
                 $exposure = new Zend_Gdata_Exif_Extension_Exposure();
                 $exposure->transferFromDOM($child);
                 $this->_exposure = $exposure;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'flash';
+            case $this->lookupNamespace('exif') . ':' . 'flash':
                 $flash = new Zend_Gdata_Exif_Extension_Flash();
                 $flash->transferFromDOM($child);
                 $this->_flash = $flash;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'focallength';
+            case $this->lookupNamespace('exif') . ':' . 'focallength':
                 $focalLength = new Zend_Gdata_Exif_Extension_FocalLength();
                 $focalLength->transferFromDOM($child);
                 $this->_focalLength = $focalLength;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'fstop';
+            case $this->lookupNamespace('exif') . ':' . 'fstop':
                 $fStop = new Zend_Gdata_Exif_Extension_FStop();
                 $fStop->transferFromDOM($child);
                 $this->_fStop = $fStop;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'imageUniqueID';
+            case $this->lookupNamespace('exif') . ':' . 'imageUniqueID':
                 $imageUniqueId = new Zend_Gdata_Exif_Extension_ImageUniqueId();
                 $imageUniqueId->transferFromDOM($child);
                 $this->_imageUniqueId = $imageUniqueId;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'iso';
+            case $this->lookupNamespace('exif') . ':' . 'iso':
                 $iso = new Zend_Gdata_Exif_Extension_Iso();
                 $iso->transferFromDOM($child);
                 $this->_iso = $iso;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'make';
+            case $this->lookupNamespace('exif') . ':' . 'make':
                 $make = new Zend_Gdata_Exif_Extension_Make();
                 $make->transferFromDOM($child);
                 $this->_make = $make;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'model';
+            case $this->lookupNamespace('exif') . ':' . 'model':
                 $model = new Zend_Gdata_Exif_Extension_Model();
                 $model->transferFromDOM($child);
                 $this->_model = $model;
                 break;
-            case $this->lookupNamespace('exif') . ':' . 'time';
+            case $this->lookupNamespace('exif') . ':' . 'time':
                 $time = new Zend_Gdata_Exif_Extension_Time();
                 $time->transferFromDOM($child);
                 $this->_time = $time;

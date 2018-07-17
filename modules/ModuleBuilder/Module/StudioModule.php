@@ -133,7 +133,7 @@ class StudioModule
      * If all else fails, fall back on type 'basic'...
      * @return string Module's type
      */
-    function getType()
+    public function getType()
     {
         // first, get a list of a possible parent types
         $templates = array();
@@ -364,7 +364,6 @@ class StudioModule
         }
 
         return $layouts;
-
     }
 
     /**
@@ -428,7 +427,7 @@ class StudioModule
      * Return an object containing all the relationships participated in by this module
      * @return AbstractRelationships Set of relationships
      */
-    function getRelationships()
+    public function getRelationships()
     {
         return new DeployedRelationships ($this->module);
     }
@@ -437,7 +436,7 @@ class StudioModule
      * Gets a list of subpanels used by the current module
      * @return array
      */
-    function getSubpanels()
+    public function getSubpanels()
     {
         if (!empty($GLOBALS['current_user']) && empty($GLOBALS['modListHeader'])) {
             $GLOBALS['modListHeader'] = query_module_access_list($GLOBALS['current_user']);
@@ -472,7 +471,6 @@ class StudioModule
         }
 
         return $nodes;
-
     }
 
     /**

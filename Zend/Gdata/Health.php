@@ -162,7 +162,7 @@ class Zend_Gdata_Health extends Zend_Gdata
 
         if($query === null)  {
             $uri = self::CLIENTLOGIN_PROFILELIST_FEED_URI;
-        } else if ($query instanceof Zend_Gdata_Query) {
+        } elseif ($query instanceof Zend_Gdata_Query) {
             $uri = $query->getQueryUrl();
         } else {
             $uri = $query;
@@ -195,10 +195,10 @@ class Zend_Gdata_Health extends Zend_Gdata
 
         if ($query instanceof Zend_Gdata_Query) {
             $uri = $query->getQueryUrl();
-        } else if ($this->_httpClient->getClientLoginToken() !== null &&
+        } elseif ($this->_httpClient->getClientLoginToken() !== null &&
                    $query == null) {
             $uri = self::CLIENTLOGIN_PROFILE_FEED_URI . '/' . $this->getProfileID();
-        } else if ($query === null) {
+        } elseif ($query === null) {
             $uri = self::AUTHSUB_PROFILE_FEED_URI;
         } else {
             $uri = $query;
@@ -224,7 +224,7 @@ class Zend_Gdata_Health extends Zend_Gdata
             require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                 'Query must not be null');
-        } else if ($query instanceof Zend_Gdata_Query) {
+        } elseif ($query instanceof Zend_Gdata_Query) {
             $uri = $query->getQueryUrl();
         } else {
             $uri = $query;

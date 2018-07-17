@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,9 +41,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
-class TemplateId extends TemplateField{
-    var $type='id';
-    var $len = 36 ;
-    
-    
+class TemplateId extends TemplateField
+{
+    public $type='id';
+    public $len = 36 ;
 }

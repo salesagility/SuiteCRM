@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -55,10 +57,10 @@ $rules = new SugarRouting($ie, $current_user);
 $actions = $rules->getActionsDOM();
 
 $strings = array();
-foreach($app_strings as $k => $v) {
-	if(strpos($k, "LBL_ROUTING_") !== false) {
-		$strings[$k] = $v;
-	}
+foreach ($app_strings as $k => $v) {
+    if (strpos($k, "LBL_ROUTING_") !== false) {
+        $strings[$k] = $v;
+    }
 }
 
 

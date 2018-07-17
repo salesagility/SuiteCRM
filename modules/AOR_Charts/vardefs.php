@@ -23,10 +23,10 @@
  */
 
 $dictionary['AOR_Chart'] = array(
-	'table'=>'aor_charts',
-	'audited'=>false,
-	'duplicate_merge'=>true,
-	'fields'=>array (
+    'table'=>'aor_charts',
+    'audited'=>false,
+    'duplicate_merge'=>true,
+    'fields'=>array (
         "aor_report" => array (
             'name' => 'aor_report',
             'type' => 'link',
@@ -82,8 +82,8 @@ $dictionary['AOR_Chart'] = array(
                 'vname' => 'LBL_Y_FIELD',
                 'type' => 'int',
             ),
-	),
-	'relationships'=>array (
+    ),
+    'relationships'=>array (
         "aor_charts_aor_reports" => array (
             'lhs_module'=> 'AOR_Reports',
             'lhs_table'=> 'aor_reports',
@@ -93,12 +93,12 @@ $dictionary['AOR_Chart'] = array(
             'rhs_key' => 'aor_report_id',
             'relationship_type'=>'one-to-many',
         ),
-	),
-	'optimistic_locking'=>true,
-	'unified_search'=>true,
+    ),
+    'optimistic_locking'=>true,
+    'unified_search'=>true,
 );
 
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Charts','AOR_Chart', array('basic'));
+VardefManager::createVardef('AOR_Charts', 'AOR_Chart', array('basic'));

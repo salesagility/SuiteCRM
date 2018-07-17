@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -64,7 +66,7 @@ $admin->retrieveSettings("notify");
 ////	END HELPER FUNCTIONS
 ///////////////////////////////////////////////////////////////////////////////
 
-if(isset($_REQUEST['userOffset'])) { // ajax call to lookup timezone
+if (isset($_REQUEST['userOffset'])) { // ajax call to lookup timezone
     echo 'userTimezone = "' . TimeDate::guessTimezone($_REQUEST['userOffset']) . '";';
     exit();
 }
@@ -76,10 +78,10 @@ $sugar_smarty->assign('APP', $app_strings);
 
 global $current_user;
 $selectedZone = $current_user->getPreference('timezone');
-if(empty($selectedZone) && !empty($_REQUEST['gmto'])) {
-	$selectedZone = TimeDate::guessTimezone(-1 * $_REQUEST['gmto']);
+if (empty($selectedZone) && !empty($_REQUEST['gmto'])) {
+    $selectedZone = TimeDate::guessTimezone(-1 * $_REQUEST['gmto']);
 }
-if(empty($selectedZone)) {
+if (empty($selectedZone)) {
     $selectedZone = TimeDate::guessTimezone();
 }
 $sugar_smarty->assign('TIMEZONE_CURRENT', $selectedZone);
