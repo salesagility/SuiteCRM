@@ -261,7 +261,9 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $state->pushTable('cases');
         $state->pushTable('sugarfeed');
         $state->pushTable('tracker');
+        $state->pushTable('cases_cstm');
         $state->pushGlobals();
+        
         
         $aCase = new aCase();
         $aCase->name = 'test';
@@ -281,6 +283,7 @@ class aCaseTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         // clean up
         
         $state->popGlobals();
+        $state->popTable('cases_cstm');
         $state->popTable('tracker');
         $state->popTable('sugarfeed');
         $state->popTable('cases');

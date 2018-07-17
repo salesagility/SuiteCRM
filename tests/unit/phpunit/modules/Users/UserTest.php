@@ -689,7 +689,7 @@ class UserTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $mod_strings['ERR_EMAIL_NO_OPTS'] = "";
 
-        $user = new User();
+        $user = BeanFactory::getBean('Users');
 
         $user->retrieve(1);
 
