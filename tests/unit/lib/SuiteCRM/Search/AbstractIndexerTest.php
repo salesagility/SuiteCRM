@@ -56,7 +56,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 {
     public function testLog()
     {
-        $indexer = new TestIndexer();
+        $indexer = new IndexerMock();
         $indexer->setEchoLogsEnabled(true);
 
         ob_start();
@@ -77,7 +77,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testConstruct()
     {
-        $indexer = new TestIndexer();
+        $indexer = new IndexerMock();
         self::assertInstanceOf(AbstractIndexer::class, $indexer);
     }
 
@@ -89,7 +89,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         $doc = new SearchDefsDocumentifier();
         $modules = ['Module1', 'Module2'];
 
-        $i = new TestIndexer();
+        $i = new IndexerMock();
 
         $i->setEchoLogsEnabled($output);
         $i->setDifferentialIndexingEnabled($differential);
@@ -101,7 +101,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
         self::assertEquals($doc, $i->getDocumentifier());
         self::assertEquals($modules, $i->getModulesToIndex());
 
-        $i = new TestIndexer();
+        $i = new IndexerMock();
 
         $output = true;
         $differential = false;
@@ -121,7 +121,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testAddModulesToIndex()
     {
-        $i = new TestIndexer();
+        $i = new IndexerMock();
         $i->addModulesToIndex('Foo');
 
         self::assertContains('Foo', $i->getModulesToIndex());
@@ -143,7 +143,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testGetDocumentifierName()
     {
-        $i = new TestIndexer();
+        $i = new IndexerMock();
         $doc1 = new JsonSerializerDocumentifier();
         $doc2 = new SearchDefsDocumentifier();
         $doc1Exp = 'JsonSerializerDocumentifier';
@@ -158,16 +158,16 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testGetIndexerName()
     {
-        $i = new TestIndexer();
+        $i = new IndexerMock();
 
-        $expected = "TestIndexer";
+        $expected = "IndexerMock";
         $actual = $i->getIndexerName();
 
         self::assertEquals($expected, $actual, "Indexer name does not match");
     }
 }
 
-class TestIndexer extends AbstractIndexer
+class IndexerMock extends AbstractIndexer
 {
     function run()
     {

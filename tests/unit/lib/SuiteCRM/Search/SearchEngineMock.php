@@ -46,7 +46,7 @@
 
 use SuiteCRM\Search\SearchEngine;
 
-class TestSearchEngine extends SearchEngine
+class SearchEngineMock extends SearchEngine
 {
 
     public function searchAndView($query)
