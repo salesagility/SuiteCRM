@@ -46,12 +46,107 @@ include_once __DIR__ . '/../../../../../../modules/SharedSecurityRules/views/vie
  * @author gyula
  */
 class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
-    
-    public function testPreDisplay() {
-        $ssrve = new SharedSecurityRulesViewDetail();
+          
+    public function testPreDisplayWithBeanIdAndSharedSecurityRoleCondition() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('sharedsecurityrulesconditions');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $this->assertTrue((bool)$usr);
+        $_REQUEST['page'] = 'EditView';
+        $_REQUEST['module'] = 'Users';
+        $_REQUEST['action'] = 'Save';
+        $_REQUEST['Users1emailAddress1'] = 'test@email.com';
+        $_REQUEST['Users1emailAddressId1'] = 'test_email_id';
+        $query = "INSERT INTO email_addresses (`id`, deleted) VALUES ('test_email_id', 0);";
+        $ret = DBManagerFactory::getInstance()->query($query);        
+        $uid = $usr->save();
+        $this->assertEquals($uid, $usr->id);
+        $current_user = $usr;
+        
+        $ssrvd = new SharedSecurityRulesViewDetail();
+        $ssrvd->bean = BeanFactory::getBean('Accounts');
+        $id = $ssrvd->bean->save();
+        $this->assertEquals($ssrvd->bean->id, $id);
+        
+        $ssrc = BeanFactory::getBean('SharedSecurityRulesConditions');
+        $this->assertTrue((bool)$ssrc);
+        $ssrc->sa_shared_sec_rules_id = $ssrvd->bean->id;
+        $id = $ssrc->save();
+        $this->assertEquals($ssrc->id, $id);
+        
         ob_start();
         try {
-            $ssrve->preDisplay();
+            $ssrvd->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();        
+        $this->assertContains($ssrvd->bean->id, $contents);
+        $this->assertContains($ssrc->id, $contents);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('sharedsecurityrulesconditions');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+        $state->popTable('users');
+    } 
+    
+    public function testPreDisplayWithBeanId() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushGlobals();
+        
+        $ssrvd = new SharedSecurityRulesViewDetail();
+        $ssrvd->bean = BeanFactory::getBean('Accounts');
+        $id = $ssrvd->bean->save();
+        $this->assertEquals($ssrvd->bean->id, $id);
+        ob_start();
+        try {
+            $ssrvd->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals('<script>var conditionLines = []</script>', $contents);
+        
+        $state->popGlobals();
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
+    public function testPreDisplayWithNoBeanId() {
+        $ssrvd = new SharedSecurityRulesViewDetail();
+        $ssrvd->bean = BeanFactory::getBean('Accounts');
+        ob_start();
+        try {
+            $ssrvd->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals('<script>var conditionLines = []</script>', $contents);
+    }
+    
+    public function testPreDisplay() {
+        $ssrvd = new SharedSecurityRulesViewDetail();
+        ob_start();
+        try {
+            $ssrvd->preDisplay();
             $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
         } catch (SuiteException $e) {
             $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());

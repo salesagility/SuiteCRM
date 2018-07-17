@@ -104,6 +104,24 @@ class SharedSecurityRulesConditions extends Basic
      * @var mixed 
      */
     public $SecurityGroups;
+    
+    /**
+     *
+     * @var string
+     */
+    public $value_type;
+    
+    /**
+     *
+     * @var string 
+     */
+    public $module_path;
+    
+    /**
+     *
+     * @var string
+     */
+    public $field;
 
     /**
      * 

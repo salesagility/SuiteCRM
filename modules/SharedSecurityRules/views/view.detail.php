@@ -67,23 +67,34 @@ class SharedSecurityRulesViewDetail extends ViewDetail
         $result = $this->bean->db->query($sql);
         $conditions = array();
         while ($row = $this->bean->db->fetchByAssoc($result)) {
-            $condition_name = new SharedSecurityRulesConditions();
+            
+            $condition_name = BeanFactory::getBean('SharedSecurityRulesConditions', $row['id']);
+            if ($condition_name) {
+            
+                if ($condition_name->value_type == 'Date') {
+                    $condition_name->value = unserialize(base64_decode($condition_name->value));
+                }
+                $condition_item = $condition_name->toArray();
 
-            $condition_name->retrieve($row['id']);
-            if ($condition_name->value_type == 'Date') {
-                $condition_name->value = unserialize(base64_decode($condition_name->value));
-            }
-            $condition_item = $condition_name->toArray();
-
-            if (!$condition_name->parenthesis) {
-                $display = $this->getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->flow_module);
-                $condition_item['module_path_display'] = $display['module'];
-                $condition_item['field_label'] = $display['field'];
-            }
-            if (isset($conditions[$condition_item['condition_order']])) {
-                $conditions[] = $condition_item;
-            } else {
-                $conditions[$condition_item['condition_order']] = $condition_item;
+                if (!$condition_name->parenthesis) {
+                    
+                    $beanFlowModule = null;
+                    if (isset($this->bean->flow_module)) {
+                        $beanFlowModule = $this->bean->flow_module;
+                    } else {
+                        LoggerManager::getLogger()->warn('SharedSecurityRulesViewDetail::getConditionLines() bean did not has flow module');
+                    }
+                    
+                    $display = $this->getDisplayForField($condition_name->module_path, $condition_name->field, $beanFlowModule);
+                    $condition_item['module_path_display'] = $display['module'];
+                    $condition_item['field_label'] = $display['field'];
+                }
+                if (isset($conditions[$condition_item['condition_order']])) {
+                    $conditions[] = $condition_item;
+                } else {
+                    $conditions[$condition_item['condition_order']] = $condition_item;
+                }
+                
             }
         }
         return $conditions;
@@ -112,40 +123,45 @@ class SharedSecurityRulesViewDetail extends ViewDetail
     private function getDisplayForField($modulePath, $field, $reportModule)
     {
         global $app_list_strings;
+        $fieldDisplay = null;
         $modulePathDisplay = array();
         $currentBean = BeanFactory::getBean($reportModule);
-        $modulePathDisplay[] = $currentBean->module_name;
-        if (is_array($modulePath)) {
-            $split = $modulePath;
+        if (!$currentBean) {
+            LoggerManager::getLogger()->warn('SharedSecurityRulesViewDetail::getDisplayForField() did not get module parameter');
         } else {
-            $split = explode(':', $modulePath);
-        }
-        if ($split && $split[0] == $currentBean->module_dir) {
-            array_shift($split);
-        }
-        foreach ($split as $relName) {
-            if (empty($relName)) {
-                continue;
-            }
-            if (!empty($currentBean->field_name_map[$relName]['vname'])) {
-                $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir), ':');
-            }
-            $thisModule = getRelatedModule($currentBean->module_dir, $relName);
-            $currentBean = BeanFactory::getBean($thisModule);
-
-            if (!empty($moduleLabel)) {
-                $modulePathDisplay[] = $moduleLabel;
+            $modulePathDisplay[] = $currentBean->module_name;
+            if (is_array($modulePath)) {
+                $split = $modulePath;
             } else {
-                $modulePathDisplay[] = $currentBean->module_name;
+                $split = explode(':', $modulePath);
             }
-        }
-        $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
-        $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
-        $fieldDisplay = trim($fieldDisplay, ':');
-        foreach ($modulePathDisplay as &$module) {
-            $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
-                    isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
-                    );
+            if ($split && $split[0] == $currentBean->module_dir) {
+                array_shift($split);
+            }
+            foreach ($split as $relName) {
+                if (empty($relName)) {
+                    continue;
+                }
+                if (!empty($currentBean->field_name_map[$relName]['vname'])) {
+                    $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir), ':');
+                }
+                $thisModule = getRelatedModule($currentBean->module_dir, $relName);
+                $currentBean = BeanFactory::getBean($thisModule);
+
+                if (!empty($moduleLabel)) {
+                    $modulePathDisplay[] = $moduleLabel;
+                } else {
+                    $modulePathDisplay[] = $currentBean->module_name;
+                }
+            }
+            $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
+            $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
+            $fieldDisplay = trim($fieldDisplay, ':');
+            foreach ($modulePathDisplay as &$module) {
+                $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
+                        isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
+                        );
+            }
         }
         return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
     }
