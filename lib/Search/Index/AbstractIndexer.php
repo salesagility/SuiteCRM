@@ -53,6 +53,7 @@ use Monolog\Logger;
 use ReflectionClass;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
+use SuiteCRM\SugarLogger\SugarLoggerMonologHandler;
 
 /**
  * This class defines common methods and fields for a search indexer.
@@ -97,6 +98,9 @@ abstract class AbstractIndexer
             LoggerManager::getLogger()->error('Failed to create indexer log stream handler.');
             LoggerManager::getLogger()->error($e);
         }
+
+        // Set up SugarLog handler
+        $this->logger->pushHandler(new SugarLoggerMonologHandler());
     }
 
     /**
@@ -128,9 +132,13 @@ abstract class AbstractIndexer
     /**
      * Used to log actions and errors performed by the indexer.
      *
-     * They are displayed to the console if `echoLogsEnabled` is `true`;
+     * They are displayed to the console if `echoLogsEnabled` is `true`.
+     *
+     * This calls the standard SuiteCRM logger.
      *
      * It will also attempt to save the output on a separate log file.
+     *
+     * To summarise this will log in: stdOut, standard logging, and separate logging file.
      *
      * @param $type string @ = debug, - = info, * = warning, ! = error
      * @param $message string the message to log
