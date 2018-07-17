@@ -55,8 +55,17 @@ class ACLController {
 
 		global $current_user;
 		if(is_admin($current_user))return true;
-		//calendar is a special case since it has 3 modules in it (calls, meetings, tasks)
 
+        // Line items checks for parent modules to determine ACL
+        if ($category === AOS_Products_Quotes::class) {
+          return (
+              ACLAction::userHasAccess($current_user->id, AOS_Quotes::class, $action, $type, $is_owner, $in_group)
+              || ACLAction::userHasAccess($current_user->id, AOS_Invoices::class, $action, $type, $is_owner, $in_group)
+              || ACLAction::userHasAccess($current_user->id, AOS_Contracts::class, $action, $type, $is_owner, $in_group)
+          );
+        }
+
+      //calendar is a special case since it has 3 modules in it (calls, meetings, tasks)
 		if($category == 'Calendar'){
 			/**
 			return ACLAction::userHasAccess($current_user->id, 'Calls', $action,$type, $is_owner) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action,'module', $is_owner) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action,'module', $is_owner);
