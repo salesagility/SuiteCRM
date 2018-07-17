@@ -210,7 +210,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return array $view The view(s) requested.  Current supported types are edit, detail, list, and subpanel.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function get_module_layout($session, $a_module_names, $a_type, $a_view, $md5 = FALSE)
+    public function get_module_layout($session, $a_module_names, $a_type, $a_view, $md5 = false)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_layout');
 
@@ -259,7 +259,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
     public function get_module_layout_md5($session, $module_name, $type, $view)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_layout_md5');
-        $results = self::get_module_layout($session, $module_name, $type, $view, TRUE);
+        $results = self::get_module_layout($session, $module_name, $type, $view, true);
         return array('md5'=> $results);
         $GLOBALS['log']->info('End: SugarWebServiceImpl->get_module_layout_md5');
     }

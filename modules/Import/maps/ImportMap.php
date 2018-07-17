@@ -199,7 +199,7 @@ class ImportMap extends SugarBean
      * @param  string $enclosure
      * @return bool
      */
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         $args = func_get_args();
         return call_user_func_array(array($this, '_save'), $args);
@@ -343,7 +343,7 @@ class ImportMap extends SugarBean
         $result = $this->db->query($query, true, " Error: ");
         $obj_arr = array();
 
-        while ($row = $this->db->fetchByAssoc($result, FALSE)) {
+        while ($row = $this->db->fetchByAssoc($result, false)) {
             $focus = new ImportMap();
 
             foreach ($this->column_fields as $field) {

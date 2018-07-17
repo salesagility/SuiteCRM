@@ -74,7 +74,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
             $monitor->setValue('item_id', $seed->id);
             $monitor->setValue('item_summary', $seed->get_summary_text());
             $monitor->setValue('visible', true);
-            $trackerManager->saveMonitor($monitor, TRUE, TRUE);
+            $trackerManager->saveMonitor($monitor, true, true);
         }
     }
 
@@ -294,7 +294,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
             $seedRelease = new Release();
-            $options = $seedRelease->get_releases(TRUE, "Active");
+            $options = $seedRelease->get_releases(true, "Active");
             $options_ret = array();
             foreach ($options as $name=>$value) {
                 $options_ret[] =  array('name'=> $name , 'value'=>$value);
@@ -346,7 +346,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      *
      * @return string - Contents base64'd.
      */
-    public function get_file_contents_base64($filename, $remove = FALSE)
+    public function get_file_contents_base64($filename, $remove = false)
     {
         $contents = "";
         if (file_exists($filename)) {

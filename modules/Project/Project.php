@@ -333,7 +333,7 @@ class Project extends SugarBean
         return '';
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         global $current_user, $db;
 		

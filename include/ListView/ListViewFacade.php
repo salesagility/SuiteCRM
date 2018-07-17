@@ -187,7 +187,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
          }
      }
 
-     public function display($title = '', $section = 'main', $return = FALSE)
+     public function display($title = '', $section = 'main', $return = false)
      {
          if ($this->type == 1) {
              ob_start();

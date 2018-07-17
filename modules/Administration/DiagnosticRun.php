@@ -354,7 +354,7 @@ function executephpinfo()
     ob_clean();
 
     $handle = sugar_fopen($cacheDir."phpinfo.html", "w");
-    if (fwrite($handle, $phpinfo) === FALSE) {
+    if (fwrite($handle, $phpinfo) === false) {
         echo "Cannot write to file ".$cacheDir."phpinfo.html<br>";
     }
     fclose($handle);
@@ -558,7 +558,7 @@ function executebeanlistbeanfiles()
     ob_clean();
 
     $handle = sugar_fopen($cacheDir."beanFiles.html", "w");
-    if (fwrite($handle, $content) === FALSE) {
+    if (fwrite($handle, $content) === false) {
         echo "Cannot write to file ".$cacheDir."beanFiles.html<br>";
     }
     fclose($handle);
@@ -728,7 +728,7 @@ function executevardefs()
     ob_clean();
 
     $handle = sugar_fopen($cacheDir."vardefschema.html", "w");
-    if (fwrite($handle, $vardefFormattedOutput) === FALSE) {
+    if (fwrite($handle, $vardefFormattedOutput) === false) {
         echo "Cannot write to file ".$cacheDir."vardefschema.html<br>";
     }
     fclose($handle);

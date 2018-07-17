@@ -313,7 +313,7 @@ class ACLAction extends SugarBean
         $has_user_role = false; //used for user_role_precedence
 		$has_role = false; //used to determine if default actions can be ignored. If a user has a defined role don't use the defaults
 		/* END - SECURITY GROUPS */
-        while ($row = $db->fetchByAssoc($result, FALSE)) {
+        while ($row = $db->fetchByAssoc($result, false)) {
             /* BEGIN - SECURITY GROUPS */
             if ($has_user_role == false && $row['user_role'] == 1) {
                 $has_user_role = true;

@@ -152,12 +152,12 @@ class ImportViewStep1 extends ImportView
     private function getAllImportableExternalEAPMs()
     {
         ExternalAPIFactory::clearCache();
-        return ExternalAPIFactory::getModuleDropDown('Import', TRUE, FALSE);
+        return ExternalAPIFactory::getModuleDropDown('Import', true, false);
     }
 
     private function getAuthenticatedImportableExternalEAPMs()
     {
-        return ExternalAPIFactory::getModuleDropDown('Import', FALSE, FALSE);
+        return ExternalAPIFactory::getModuleDropDown('Import', false, false);
     }
     /**
      * Returns JS used in this view

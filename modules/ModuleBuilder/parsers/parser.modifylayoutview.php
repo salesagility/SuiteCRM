@@ -210,7 +210,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 } else {
                     $property = $slotComponents ['3'];
                     if ($value == '(filler)') {
-                        $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID] = NULL;
+                        $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID] = null;
                     } else {
                         $this->_viewdefs ['panels'] [$panelID] [$rowID] [$colID] [$property] = $value;
                     }
@@ -276,7 +276,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
 
     // add a new field to the end of a panel
     // don't write out (caller should call handleSave() when ready)
-    public function _addField($properties, $panelID = FALSE)
+    public function _addField($properties, $panelID = false)
     {
 
         // if a panelID was not passed, use the first available panel in the list
@@ -292,7 +292,7 @@ class ParserModifyLayoutView extends ModuleBuilderParser
                 foreach ($panel_contents as $row_id => $row) {
                     foreach ($row as $col_id => $col) {
                         if ($col['name'] == '(filler)') {
-                            $this->_viewdefs['panels'][$loop_panelID][$row_id][$col_id] = NULL;
+                            $this->_viewdefs['panels'][$loop_panelID][$row_id][$col_id] = null;
                         } elseif ($col['name'] == '(empty)') {
                             unset($this->_viewdefs['panels'][$loop_panelID][$row_id][$col_id]);
                         }

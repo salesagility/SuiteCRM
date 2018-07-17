@@ -245,7 +245,7 @@ class Campaign extends SugarBean
         return $the_where;
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
 
 			//US DOLLAR

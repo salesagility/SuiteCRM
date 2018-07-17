@@ -177,7 +177,7 @@ class Meeting extends SugarBean
 
     // save date_end by calculating user input
     // this is for calendar
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         global $timedate;
         global $current_user;
@@ -257,7 +257,7 @@ class Meeting extends SugarBean
                 $this->new_with_id = true;
             }
             $response = $api->scheduleMeeting($this);
-            if ($response['success'] == TRUE) {
+            if ($response['success'] == true) {
                 // Need to send out notifications
                 if ($api->canInvite) {
                     $notifyList = $this->get_notification_recipients();

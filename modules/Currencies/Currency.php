@@ -247,7 +247,7 @@ class Currency extends SugarBean
         $data = parent::get_list_view_data();
         return $data;
     }
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         sugar_cache_clear('currency_list');
         return parent::save($check_notify);
@@ -476,7 +476,7 @@ function unformat_number($string)
 }
 
 // deprecated use format_number() above
-function format_money($amount, $for_display = TRUE)
+function format_money($amount, $for_display = true)
 {
     // This function formats an amount for display.
     // Later on, this should be converted to use proper thousand and decimal seperators

@@ -46,7 +46,7 @@ class Zend_Gdata_Contacts_Extension_Email extends Zend_Gdata_Extension
 
     protected $_rootNamespace = 'gd';
     protected $_rootElement = 'email';
-    protected $_isPrimary = FALSE;
+    protected $_isPrimary = false;
     protected $_emailType = null;
     protected $_email = null;
     /**

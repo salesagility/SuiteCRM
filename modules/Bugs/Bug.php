@@ -391,7 +391,7 @@ class Bug extends SugarBean
         return false;
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         return parent::save($check_notify);
     }
@@ -402,7 +402,7 @@ function getReleaseDropDown()
     static $releases = null;
     if (!$releases) {
         $seedRelease = new Release();
-        $releases = $seedRelease->get_releases(TRUE, "Active");
+        $releases = $seedRelease->get_releases(true, "Active");
     }
     return $releases;
 }

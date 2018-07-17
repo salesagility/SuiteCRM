@@ -117,7 +117,7 @@ class ImportListView
      * @param bool $return True if we should return the content rather than echoing.
      * @return
      */
-    public function display($return = FALSE)
+    public function display($return = false)
     {
         global $app_strings,$mod_strings;
 

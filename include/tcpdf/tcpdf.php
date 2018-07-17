@@ -4536,11 +4536,11 @@ if (!class_exists('TCPDF', false)) {
             }
             // get image dimensions
             $imsize = @getimagesize($file);
-            if ($imsize === FALSE) {
+            if ($imsize === false) {
                 // encode spaces on filename
                 $file = str_replace(' ', '%20', $file);
                 $imsize = @getimagesize($file);
-                if ($imsize === FALSE) {
+                if ($imsize === false) {
                     $this->Error('[Image] No such file or directory in '.$file);
                 }
             }

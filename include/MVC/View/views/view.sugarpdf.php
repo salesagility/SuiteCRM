@@ -57,7 +57,7 @@ class ViewSugarpdf extends SugarView
      * The atributs of this object are destroy in the output method.
      * @var Sugarpdf object
      */
-    public $sugarpdfBean=NULL;
+    public $sugarpdfBean=null;
 
 
     public function __construct()

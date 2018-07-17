@@ -731,7 +731,7 @@ class SugarChart
         }
 
         // write the contents to the file
-        if (fwrite($fh, $xmlContents) === FALSE) {
+        if (fwrite($fh, $xmlContents) === false) {
             $GLOBALS['log']->debug("Cannot write to file ($xmlFilename)");
             return false;
         }

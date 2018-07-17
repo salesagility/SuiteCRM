@@ -73,7 +73,7 @@ class ViewShowDuplicates extends SugarView
         $lead = new Lead();
         require_once('modules/Leads/LeadFormBase.php');
         $leadForm = new LeadFormBase();
-        $GLOBALS['check_notify'] = FALSE;
+        $GLOBALS['check_notify'] = false;
 
         $query = 'SELECT id, first_name, last_name, title FROM leads WHERE deleted=0 ';
 

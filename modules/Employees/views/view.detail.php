@@ -129,9 +129,9 @@ EOHTML;
             $this->ss->assign('DISPLAY_DUPLICATE', true);
         }
 
-        $showDeleteButton = FALSE;
+        $showDeleteButton = false;
         if ($_REQUEST['record'] != $GLOBALS['current_user']->id && $GLOBALS['current_user']->isAdminForModule('Users')) {
-            $showDeleteButton = TRUE;
+            $showDeleteButton = true;
             if (empty($this->bean->user_name)) { //Indicates just employee
                 $deleteWarning = $GLOBALS['mod_strings']['LBL_DELETE_EMPLOYEE_CONFIRM'];
             } else {

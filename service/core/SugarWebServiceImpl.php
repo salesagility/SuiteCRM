@@ -514,7 +514,7 @@ class SugarWebServiceImpl
         } // if
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->set_entries');
-        return self::$helperObject->new_handle_set_entries($module_name, $name_value_lists, FALSE);
+        return self::$helperObject->new_handle_set_entries($module_name, $name_value_lists, false);
     }
 
     /**

@@ -73,7 +73,7 @@ class SugarWidgetSubPanelTopSelectUsersButton extends SugarWidgetSubPanelTopSele
         return $GLOBALS['app_strings']['LBL_SELECT_USER_BUTTON_LABEL'];
     }
     //widget_data is the collection of attributes associated with the button in the layout_defs file.
-    public function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
+    public function display($widget_data, $additionalFormFields = null, $nonbutton = false)
     {
         global $app_strings;
         $initial_filter = '';

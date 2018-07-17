@@ -411,7 +411,7 @@ EOQ;
         if (isset($GLOBALS['check_notify'])) {
             $check_notify = $GLOBALS['check_notify'];
         } else {
-            $check_notify = FALSE;
+            $check_notify = false;
         }
 
         if (empty($_POST['record']) && empty($_POST['dup_checked'])) {

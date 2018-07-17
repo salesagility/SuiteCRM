@@ -171,7 +171,7 @@ class Employee extends Person
     {
         //none of the checks from the users module are valid here since the user_name and
         //is_admin_on fields are not editable.
-        return TRUE;
+        return true;
     }
 
     public function get_list_view_data()

@@ -82,9 +82,9 @@ if (!$marketing->ACLAccess('Save')) {
 }
 
 if (!empty($_POST['assigned_user_id']) && ($marketing->assigned_user_id != $_POST['assigned_user_id']) && ($_POST['assigned_user_id'] != $current_user->id)) {
-    $check_notify = TRUE;
+    $check_notify = true;
 } else {
-    $check_notify = FALSE;
+    $check_notify = false;
 }
 foreach ($marketing->column_fields as $field) {
     if ($field == 'all_prospect_lists') {

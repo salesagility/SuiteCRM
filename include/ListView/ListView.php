@@ -112,7 +112,7 @@ class ListView
     {
         global $sugar_config;
 
-        $populateOnly = $this->ignorePopulateOnly ? FALSE : (!empty($sugar_config['save_query']) && $sugar_config['save_query'] == 'populate_only');
+        $populateOnly = $this->ignorePopulateOnly ? false : (!empty($sugar_config['save_query']) && $sugar_config['save_query'] == 'populate_only');
         if (isset($seed->module_dir) && $populateOnly) {
             if (empty($GLOBALS['displayListView']) && strcmp(strtolower($_REQUEST['action']), 'popup') != 0 && (!empty($_REQUEST['clear_query']) || $_REQUEST['module'] == $seed->module_dir && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI')&& (empty($_SESSION['last_search_mod']) || $_SESSION['last_search_mod'] != $seed->module_dir)))) {
                 $_SESSION['last_search_mod'] = $_REQUEST['module'] ;
@@ -450,10 +450,10 @@ class ListView
                             $fieldType = isset($vardef['custom_type'])?$vardef['custom_type']:$vardef['type'];
                             $tmpField = SugarFieldHandler::getSugarField($fieldType, true);
                         } else {
-                            $tmpField = NULL;
+                            $tmpField = null;
                         }
 
-                        if ($tmpField != NULL) {
+                        if ($tmpField != null) {
                             $widget_contents = SugarFieldHandler::displaySmarty($list_field['fields'], $vardef, 'ListView', $list_field);
                         } else {
                             // No SugarField for this particular type

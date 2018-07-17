@@ -97,7 +97,7 @@ class Zend_Gdata_MediaMimeStream
                 $filePath . ' does not exist or is not readable.');
         }
 
-        $this->_fileHandle = fopen($filePath, 'rb', TRUE);
+        $this->_fileHandle = fopen($filePath, 'rb', true);
         $this->_boundaryString = '=_' . md5(microtime(1) . rand(1, 20));
         $entry = $this->wrapEntry($xmlString, $fileContentType);
         $closingBoundary = new Zend_Gdata_MimeBodyString("\r\n--{$this->_boundaryString}--\r\n");
@@ -136,7 +136,7 @@ class Zend_Gdata_MediaMimeStream
     public function read($bytesRequested)
     {
         if($this->_currentPart >= count($this->_parts)) {
-          return FALSE;
+          return false;
         }
 
         $activePart = $this->_parts[$this->_currentPart];
@@ -145,7 +145,7 @@ class Zend_Gdata_MediaMimeStream
         while(strlen($buffer) < $bytesRequested) {
           $this->_currentPart += 1;
           $nextBuffer = $this->read($bytesRequested - strlen($buffer));
-          if($nextBuffer === FALSE) {
+          if($nextBuffer === false) {
             break;
           }
           $buffer .= $nextBuffer;

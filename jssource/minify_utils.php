@@ -106,11 +106,11 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
             //process each group array
             foreach ($fg as $loc=>$trgt) {
-                $already_minified = FALSE;
+                $already_minified = false;
                 $minified_loc = str_replace('.js', '-min.js', $loc);
                 if (is_file($minified_loc)) {
                     $loc = $minified_loc;
-                    $already_minified = TRUE;
+                    $already_minified = true;
                 }
                 $relpath = $loc;
                 $loc = $from_path.'/'.$loc;
@@ -323,7 +323,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
                 //minify javascript
                 //$jMin = new JSMin($from_path,$to_path,$lic_arr);
                 $min_file = str_replace('.js', '-min.js', $from_path);
-                if (strpos($from_path, '-min.js') !== FALSE) {
+                if (strpos($from_path, '-min.js') !== false) {
                     $min_file = $from_path;
                 }
 

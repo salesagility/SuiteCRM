@@ -178,7 +178,7 @@ class Sugarpdf extends TCPDF
         $this->setFooterMargin(PDF_MARGIN_FOOTER);
 
         //set auto page breaks
-        $this->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $this->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM);
 
         //set image scale factor
         $this->setImageScale(PDF_IMAGE_SCALE_RATIO);
@@ -219,11 +219,11 @@ class Sugarpdf extends TCPDF
             // START SUGARPDF
             $logo = K_PATH_CUSTOM_IMAGES.$headerdata['logo'];
             $imsize = @getimagesize($logo);
-            if ($imsize === FALSE) {
+            if ($imsize === false) {
                 // encode spaces on filename
                 $logo = str_replace(' ', '%20', $logo);
                 $imsize = @getimagesize($logo);
-                if ($imsize === FALSE) {
+                if ($imsize === false) {
                     $logo = K_PATH_IMAGES.$headerdata['logo'];
                 }
             }
@@ -329,7 +329,7 @@ class Sugarpdf extends TCPDF
      * @param $options Array which can contain : width (array 'column name'=>'width value + % OR nothing'), isheader (bool), header (array), fill (string: HTML color), ishtml (bool) default: false, border (0: no border (defaul), 1: frame or all of the following characters: L ,T ,R ,B), align (L: left align, C: center, R: right align, J: justification), stretch (array 'column name'=>stretch type)
      * @see MultiCell()
      */
-    public function writeCellTable($item, $options=NULL)
+    public function writeCellTable($item, $options=null)
     {
         // Save initial font values
         $fontFamily = $this->getFontFamily();
@@ -433,7 +433,7 @@ class Sugarpdf extends TCPDF
      * @param $options Array which can contain : table (array of "HTML proprty"=>"value"),td (array of "HTML proprty"=>"value"), tr (array of "HTML proprty"=>"value"), isheader(bool), header (array of "HTML proprty"=>"value"), width (array 'column name'=>'width value + unit OR nothing')
      * @return the HTML code if $returnHtml set to true
      */
-    public function writeHTMLTable($item, $returnHtml=false, $options=NULL)
+    public function writeHTMLTable($item, $returnHtml=false, $options=null)
     {
         //TODO ISSUE - width in % for the td have to be multiply by the number of column.
         //     ex: for a width of 20% in a table of 6 columns the width will have to be 120% (20*6).

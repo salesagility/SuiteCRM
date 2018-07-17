@@ -152,7 +152,7 @@ class UpgradeMetaHelper
                 fopen($file_queries_file, 'w+');
             }
         }
-        if (!isset($files_queries) || $files_queries == NULL) {
+        if (!isset($files_queries) || $files_queries == null) {
             $files_queries = array();
         }
         $files_queries[$currStep]=$value;

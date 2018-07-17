@@ -68,7 +68,7 @@ foreach ($focus->column_fields as $field) {
 }
 
 
-$check_notify = FALSE;
+$check_notify = false;
 
 $focus->save($check_notify);
 $return_id = $focus->id;

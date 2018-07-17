@@ -111,7 +111,7 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
     	
         // Add a string replace to swap out @@FIELD@@ for the actual field,
         // we can't do this through customCode directly because the sugar_field smarty function returns smarty code to run on the second pass
-        if (!empty($code) && strpos($code, '@@FIELD@@') !== FALSE) {
+        if (!empty($code) && strpos($code, '@@FIELD@@') !== false) {
             // First we need to fetch extra data about the field
             // sfp == SugarFieldParams
             $sfp = $params;

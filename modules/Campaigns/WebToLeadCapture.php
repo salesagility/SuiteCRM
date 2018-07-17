@@ -159,7 +159,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             if (!empty($GLOBALS['check_notify'])) {
                 $lead->save($GLOBALS['check_notify']);
             } else {
-                $lead->save(FALSE);
+                $lead->save(false);
             }
         }
 
@@ -179,7 +179,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             $redirect_url = $_POST['redirect_url'];
             $query_string = '';
             $first_char = '&';
-            if (strpos($redirect_url, '?') === FALSE) {
+            if (strpos($redirect_url, '?') === false) {
                 $first_char = '?';
             }
             $first_iteration = true;

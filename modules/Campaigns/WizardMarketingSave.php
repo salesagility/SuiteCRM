@@ -87,9 +87,9 @@ if (!$marketing->ACLAccess('Save')) {
 }
 
 if (!empty($_REQUEST['assigned_user_id']) && ($marketing->assigned_user_id != $_REQUEST['assigned_user_id']) && ($_POST['assigned_user_id'] != $current_user->id)) {
-    $check_notify = TRUE;
+    $check_notify = true;
 } else {
-    $check_notify = FALSE;
+    $check_notify = false;
 }
 
     foreach ($_REQUEST as $key => $val) {

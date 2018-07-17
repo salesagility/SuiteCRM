@@ -97,7 +97,7 @@ class Zend_Gdata_HttpAdapterStreamingSocket extends Zend_Http_Client_Adapter_Soc
 
         //read from $body, write to socket
         $chunk = $body->read(self::CHUNK_SIZE);
-        while ($chunk !== FALSE) {
+        while ($chunk !== false) {
             if (! @fwrite($this->socket, $chunk)) {
                 require_once 'Zend/Http/Client/Adapter/Exception.php';
                 throw new Zend_Http_Client_Adapter_Exception(

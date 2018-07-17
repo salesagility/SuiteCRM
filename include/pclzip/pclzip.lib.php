@@ -299,7 +299,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_add_path = "";
            $v_remove_path = "";
            $v_remove_all_path = false;
-           $v_options[PCLZIP_OPT_NO_COMPRESSION] = FALSE;
+           $v_options[PCLZIP_OPT_NO_COMPRESSION] = false;
 
            // ----- Look for variable options arguments
            $v_size = func_num_args();
@@ -457,7 +457,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            $v_add_path = "";
            $v_remove_path = "";
            $v_remove_all_path = false;
-           $v_options[PCLZIP_OPT_NO_COMPRESSION] = FALSE;
+           $v_options[PCLZIP_OPT_NO_COMPRESSION] = false;
 
            // ----- Look for variable options arguments
            $v_size = func_num_args();
@@ -695,7 +695,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "$v_size arguments passed to the method");
 
            // ----- Default values for option
-           $v_options[PCLZIP_OPT_EXTRACT_AS_STRING] = FALSE;
+           $v_options[PCLZIP_OPT_EXTRACT_AS_STRING] = false;
 
            // ----- Look for arguments
            if ($v_size > 0) {
@@ -853,7 +853,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "$v_size arguments passed to the method");
 
            // ----- Default values for option
-           $v_options[PCLZIP_OPT_EXTRACT_AS_STRING] = FALSE;
+           $v_options[PCLZIP_OPT_EXTRACT_AS_STRING] = false;
 
            // ----- Look for arguments
            if ($v_size > 1) {
@@ -904,7 +904,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        $v_path .= $v_options[PCLZIP_OPT_ADD_PATH];
                    }
                    if (!isset($v_options[PCLZIP_OPT_EXTRACT_AS_STRING])) {
-                       $v_options[PCLZIP_OPT_EXTRACT_AS_STRING] = FALSE;
+                       $v_options[PCLZIP_OPT_EXTRACT_AS_STRING] = false;
                    //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Option PCLZIP_OPT_EXTRACT_AS_STRING not set.");
                    } else {
                        //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Option PCLZIP_OPT_EXTRACT_AS_STRING set.");
@@ -3420,7 +3420,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                        // ----- Decompress the file
                        $v_file_content = @gzinflate($v_buffer);
                        unset($v_buffer);
-                       if ($v_file_content === FALSE) {
+                       if ($v_file_content === false) {
                            //--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 2, "Unable to inflate compressed file");
 
                            // ----- Change the file status
@@ -3665,7 +3665,7 @@ r5573 - 2005-06-03 16:32:18 -0700 (Fri, 03 Jun 2005) - bob - checking in chosen 
                    $v_data = @fread($this->zip_fd, $p_entry['compressed_size']);
 
                    // ----- Decompress the file
-                   if (($p_string = @gzinflate($v_data)) === FALSE) {
+                   if (($p_string = @gzinflate($v_data)) === false) {
                        // TBC
                    }
                }

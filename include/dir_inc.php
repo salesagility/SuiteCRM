@@ -149,7 +149,7 @@ function rmdir_recursive($path)
     }
     $d->close();
     $rmOk = @rmdir($path);
-    if ($rmOk === FALSE) {
+    if ($rmOk === false) {
         $GLOBALS['log']->error("ERROR: Unable to remove directory $path");
     }
     return($status);

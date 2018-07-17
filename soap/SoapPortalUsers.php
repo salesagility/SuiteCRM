@@ -432,7 +432,7 @@ function portal_set_entry($session, $module_name, $name_value_list)
             $id = $seed->save();
         } else {
             $contact = new Contact();
-            $contact->disable_row_level_security = TRUE;
+            $contact->disable_row_level_security = true;
             $contact->retrieve($_SESSION['user_id']);
             $seed->contact_id = $contact;
 

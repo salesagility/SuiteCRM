@@ -416,7 +416,7 @@ FROM prospect_lists_prospects plp
         return $the_where;
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         return parent::save($check_notify);
     }

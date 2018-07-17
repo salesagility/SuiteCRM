@@ -363,7 +363,7 @@ class HTMLPurifier_Arborize
                 if ($level > 0) {
                     $tokens[] = $start;
                 }
-                if ($end !== NULL) {
+                if ($end !== null) {
                     $closingTokens[$level][] = $end;
                 }
                 if ($node instanceof HTMLPurifier_Node_Element) {
@@ -8100,7 +8100,7 @@ class HTMLPurifier_Queue
             $this->input = array();
         }
         if (empty($this->output)) {
-            return NULL;
+            return null;
         }
         return array_pop($this->output);
     }
@@ -9925,10 +9925,10 @@ class HTMLPurifier_Zipper
      * the hole with a value. (Usually you should supply a $t, unless you
      * are at the end of the array.)
      */
-    public function toArray($t = NULL)
+    public function toArray($t = null)
     {
         $a = $this->front;
-        if ($t !== NULL) {
+        if ($t !== null) {
             $a[] = $t;
         }
         for ($i = count($this->back)-1; $i >= 0; $i--) {
@@ -9944,10 +9944,10 @@ class HTMLPurifier_Zipper
      */
     public function next($t)
     {
-        if ($t !== NULL) {
+        if ($t !== null) {
             array_push($this->front, $t);
         }
-        return empty($this->back) ? NULL : array_pop($this->back);
+        return empty($this->back) ? null : array_pop($this->back);
     }
 
     /**
@@ -9971,10 +9971,10 @@ class HTMLPurifier_Zipper
      */
     public function prev($t)
     {
-        if ($t !== NULL) {
+        if ($t !== null) {
             array_push($this->back, $t);
         }
-        return empty($this->front) ? NULL : array_pop($this->front);
+        return empty($this->front) ? null : array_pop($this->front);
     }
 
     /**
@@ -9984,7 +9984,7 @@ class HTMLPurifier_Zipper
      */
     public function delete()
     {
-        return empty($this->back) ? NULL : array_pop($this->back);
+        return empty($this->back) ? null : array_pop($this->back);
     }
 
     /**
@@ -10002,7 +10002,7 @@ class HTMLPurifier_Zipper
      */
     public function insertBefore($t)
     {
-        if ($t !== NULL) {
+        if ($t !== null) {
             array_push($this->front, $t);
         }
     }
@@ -10013,7 +10013,7 @@ class HTMLPurifier_Zipper
      */
     public function insertAfter($t)
     {
-        if ($t !== NULL) {
+        if ($t !== null) {
             array_push($this->back, $t);
         }
     }
@@ -19682,7 +19682,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $e = $context->get('ErrorCollector', true);
         $i = false; // injector index
         list($zipper, $token) = HTMLPurifier_Zipper::fromArray($tokens);
-        if ($token === NULL) {
+        if ($token === null) {
             return array();
         }
         $reprocess = false; // whether or not to reprocess the same token
@@ -19788,7 +19788,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             }
 
             // handle case of document end
-            if ($token === NULL) {
+            if ($token === null) {
                 // kill processing if stack is empty
                 if (empty($this->stack)) {
                     break;

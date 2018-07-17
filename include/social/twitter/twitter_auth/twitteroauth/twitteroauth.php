@@ -25,11 +25,11 @@ class TwitterOAuth
     /* Set connect timeout. */
     public $connecttimeout = 30; 
     /* Verify SSL Cert. */
-    public $ssl_verifypeer = FALSE;
+    public $ssl_verifypeer = false;
     /* Respons format. */
     public $format = 'json';
     /* Decode returned json data. */
-    public $decode_json = TRUE;
+    public $decode_json = true;
     /* Contains the last HTTP headers returned. */
     public $http_info;
     /* Set the useragnet. */
@@ -75,14 +75,14 @@ class TwitterOAuth
     /**
      * construct TwitterOAuth object
      */
-    public function __construct($consumer_key, $consumer_secret, $oauth_token = NULL, $oauth_token_secret = NULL)
+    public function __construct($consumer_key, $consumer_secret, $oauth_token = null, $oauth_token_secret = null)
     {
         $this->sha1_method = new OAuthSignatureMethod_HMAC_SHA1();
         $this->consumer = new OAuthConsumer($consumer_key, $consumer_secret);
         if (!empty($oauth_token) && !empty($oauth_token_secret)) {
             $this->token = new OAuthConsumer($oauth_token, $oauth_token_secret);
         } else {
-            $this->token = NULL;
+            $this->token = null;
         }
     }
 
@@ -107,7 +107,7 @@ class TwitterOAuth
      *
      * @returns a string
      */
-    public function getAuthorizeURL($token, $sign_in_with_twitter = TRUE)
+    public function getAuthorizeURL($token, $sign_in_with_twitter = true)
     {
         if (is_array($token)) {
             $token = $token['oauth_token'];
@@ -218,7 +218,7 @@ class TwitterOAuth
      *
      * @return API results
      */
-    public function http($url, $method, $postfields = NULL)
+    public function http($url, $method, $postfields = null)
     {
         $this->http_info = array();
         $ci = curl_init();
@@ -226,15 +226,15 @@ class TwitterOAuth
         curl_setopt($ci, CURLOPT_USERAGENT, $this->useragent);
         curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->connecttimeout);
         curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout);
-        curl_setopt($ci, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ci, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ci, CURLOPT_HTTPHEADER, array('Expect:'));
         curl_setopt($ci, CURLOPT_SSL_VERIFYPEER, $this->ssl_verifypeer);
         curl_setopt($ci, CURLOPT_HEADERFUNCTION, array($this, 'getHeader'));
-        curl_setopt($ci, CURLOPT_HEADER, FALSE);
+        curl_setopt($ci, CURLOPT_HEADER, false);
 
         switch ($method) {
       case 'POST':
-        curl_setopt($ci, CURLOPT_POST, TRUE);
+        curl_setopt($ci, CURLOPT_POST, true);
         if (!empty($postfields)) {
             curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
         }

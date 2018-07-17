@@ -51,7 +51,7 @@
      }
 
      /* Add a point on the grid */
-     public function addPoint($X, $Y, $Value, $Force=TRUE)
+     public function addPoint($X, $Y, $Value, $Force=true)
      {
          if ($X < 0 || $X >$this->GridSizeX) {
              return(0);
@@ -79,10 +79,10 @@
          $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
          $Padding		= isset($Format["Padding"]) ? $Format["Padding"] : 5;
          $Position		= isset($Format["Position"]) ? $Format["Position"] : LABEL_POSITION_TOP;
-         $Labels		= isset($Format["Labels"]) ? $Format["Labels"] : NULL;
+         $Labels		= isset($Format["Labels"]) ? $Format["Labels"] : null;
          $CountOffset	= isset($Format["CountOffset"]) ? $Format["CountOffset"] : 0;
 
-         if ($Labels != NULL && !is_array($Labels)) {
+         if ($Labels != null && !is_array($Labels)) {
              $Label = $Labels;
              $Labels = "";
              $Labels[] = $Label;
@@ -115,7 +115,7 @@
          for ($X=0;$X<=$this->GridSizeX;$X++) {
              $XPos = floor($X0+$X*$XSize + $XSize/2);
 
-             if ($Labels == NULL || !isset($Labels[$X])) {
+             if ($Labels == null || !isset($Labels[$X])) {
                  $Value = $X+$CountOffset;
              } else {
                  $Value = $Labels[$X];
@@ -135,10 +135,10 @@
          $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
          $Padding		= isset($Format["Padding"]) ? $Format["Padding"] : 5;
          $Position		= isset($Format["Position"]) ? $Format["Position"] : LABEL_POSITION_LEFT;
-         $Labels		= isset($Format["Labels"]) ? $Format["Labels"] : NULL;
+         $Labels		= isset($Format["Labels"]) ? $Format["Labels"] : null;
          $CountOffset	= isset($Format["CountOffset"]) ? $Format["CountOffset"] : 0;
 
-         if ($Labels != NULL && !is_array($Labels)) {
+         if ($Labels != null && !is_array($Labels)) {
              $Label = $Labels;
              $Labels = "";
              $Labels[] = $Label;
@@ -161,7 +161,7 @@
          for ($Y=0;$Y<=$this->GridSizeY;$Y++) {
              $YPos = floor($Y0+$Y*$YSize + $YSize/2);
 
-             if ($Labels == NULL || !isset($Labels[$Y])) {
+             if ($Labels == null || !isset($Labels[$Y])) {
                  $Value = $Y+$CountOffset;
              } else {
                  $Value = $Labels[$Y];
@@ -218,7 +218,7 @@
      /* Draw the surface chart */
      public function drawSurface($Format="")
      {
-         $Palette		= isset($Format["Palette"]) ? $Format["Palette"] : NULL;
+         $Palette		= isset($Format["Palette"]) ? $Format["Palette"] : null;
          $ShadeR1		= isset($Format["ShadeR1"]) ? $Format["ShadeR1"] : 77;
          $ShadeG1		= isset($Format["ShadeG1"]) ? $Format["ShadeG1"] : 205;
          $ShadeB1		= isset($Format["ShadeB1"]) ? $Format["ShadeB1"] : 21;
@@ -227,7 +227,7 @@
          $ShadeG2		= isset($Format["ShadeG2"]) ? $Format["ShadeG2"] : 135;
          $ShadeB2		= isset($Format["ShadeB2"]) ? $Format["ShadeB2"] : 61;
          $ShadeA2		= isset($Format["ShadeA2"]) ? $Format["ShadeA2"] : 100;
-         $Border		= isset($Format["Border"]) ? $Format["Border"] : FALSE;
+         $Border		= isset($Format["Border"]) ? $Format["Border"] : false;
          $BorderR		= isset($Format["BorderR"]) ? $Format["BorderR"] : 0;
          $BorderG		= isset($Format["BorderG"]) ? $Format["BorderG"] : 0;
          $BorderB		= isset($Format["BorderB"]) ? $Format["BorderB"] : 0;
@@ -249,7 +249,7 @@
                      $X2 = floor($X0+$X*$XSize+$XSize);
                      $Y2 = floor($Y0+$Y*$YSize+$YSize);
 
-                     if ($Palette != NULL) {
+                     if ($Palette != null) {
                          if (isset($Palette[$Value]) && isset($Palette[$Value]["R"])) {
                              $R = $Palette[$Value]["R"];
                          } else {

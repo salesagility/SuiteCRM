@@ -331,7 +331,7 @@ EOQ;
             if (!empty($GLOBALS['check_notify'])) {
                 $focus->save($GLOBALS['check_notify']);
             } else {
-                $focus->save(FALSE);
+                $focus->save(false);
             }
         }
 

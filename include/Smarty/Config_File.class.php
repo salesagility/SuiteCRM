@@ -74,7 +74,7 @@ class Config_File
      *
      * @param string $config_path (optional) path to the config files
      */
-    public function __construct($config_path = NULL)
+    public function __construct($config_path = null)
     {
         if (isset($config_path)) {
             $this->set_path($config_path);
@@ -111,7 +111,7 @@ class Config_File
      * @param string $var_name (optional) variable to get info for
      * @return string|array a value or array of values
      */
-    public function get($file_name, $section_name = NULL, $var_name = NULL)
+    public function get($file_name, $section_name = null, $var_name = null)
     {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
@@ -197,7 +197,7 @@ class Config_File
      * @param string $section_name (optional) section to get info for
      * @return array an array of variables names from the specified file/section
      */
-    public function get_var_names($file_name, $section = NULL)
+    public function get_var_names($file_name, $section = null)
     {
         if (empty($file_name)) {
             $this->_trigger_error_msg('Empty config file name');
@@ -220,9 +220,9 @@ class Config_File
      *
      * @param string $file_name file to clear config data for
      */
-    public function clear($file_name = NULL)
+    public function clear($file_name = null)
     {
-        if ($file_name === NULL) {
+        if ($file_name === null) {
             $this->_config_data = array();
         } elseif (isset($this->_config_data[$file_name])) {
             $this->_config_data[$file_name] = array();

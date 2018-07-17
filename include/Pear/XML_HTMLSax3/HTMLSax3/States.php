@@ -117,7 +117,7 @@ class XML_HTMLSax3_ClosingTagState
                 }
             }
             $context->handler_object_element->
-                {$context->handler_method_closing}($context->htmlsax, $tag, FALSE);
+                {$context->handler_method_closing}($context->htmlsax, $tag, false);
         }
         return XML_HTMLSAX3_STATE_START;
     }
@@ -144,7 +144,7 @@ class XML_HTMLSax3_OpeningTagState
         $context->ignoreWhitespace();
         $attributename = $context->scanUntilCharacters("=/> \n\r\t");
         while ($attributename != '') {
-            $attributevalue = NULL;
+            $attributevalue = null;
             $context->ignoreWhitespace();
             $char = $context->scanCharacter();
             if ($char == '=') {
@@ -161,8 +161,8 @@ class XML_HTMLSax3_OpeningTagState
                     $attributevalue =
                         $context->scanUntilCharacters("> \n\r\t");
                 }
-            } elseif ($char !== NULL) {
-                $attributevalue = NULL;
+            } elseif ($char !== null) {
+                $attributevalue = null;
                 $context->unscanCharacter();
             }
             $Attributes[$attributename] = $attributevalue;
@@ -192,14 +192,14 @@ class XML_HTMLSax3_OpeningTagState
                 }
                 $context->handler_object_element->
                     {$context->handler_method_opening}($context->htmlsax, $tag,
-                    $Attributes, TRUE);
+                    $Attributes, true);
                 $context->handler_object_element->
                     {$context->handler_method_closing}($context->htmlsax, $tag,
-                    TRUE);
+                    true);
             } else {
                 $context->handler_object_element->
                     {$context->handler_method_opening}($context->htmlsax, $tag,
-                    $Attributes, FALSE);
+                    $Attributes, false);
             }
         }
         return XML_HTMLSAX3_STATE_START;

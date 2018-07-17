@@ -261,7 +261,7 @@ class TemplateField
         $GLOBALS['log']->debug('get_db_default(): default_value='.$this->default_value);
         if (!$modify or empty($this->new_field_definition['default_value']) or $this->new_field_definition['default_value'] != $this->default_value) {
             if (!is_null($this->default_value)) { // add a default value if it is not null - we want to set a default even if default_value is '0', which is not null, but which is empty()
-                if (NULL == trim($this->default_value)) {
+                if (null == trim($this->default_value)) {
                     return " DEFAULT NULL";
                 } else {
                     return " DEFAULT '$this->default_value'";

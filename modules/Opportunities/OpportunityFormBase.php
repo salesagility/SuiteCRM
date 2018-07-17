@@ -457,7 +457,7 @@ EOQ;
         if (!ACLController::checkAccess($focus->module_dir, 'edit', $focus->isOwner($current_user->id))) {
             ACLController::displayNoAccess(true);
         }
-        $check_notify = FALSE;
+        $check_notify = false;
         if (isset($GLOBALS['check_notify'])) {
             $check_notify = $GLOBALS['check_notify'];
         }

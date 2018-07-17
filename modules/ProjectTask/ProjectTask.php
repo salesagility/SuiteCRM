@@ -143,7 +143,7 @@ class ProjectTask extends SugarBean
     {
         $this->_skipParentUpdate = $skip;
     }
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         //Bug 46012.  When saving new Project Tasks instance in a workflow, make sure we set a project_task_id value
         //associated with the Project if there is no project_task_id specified.

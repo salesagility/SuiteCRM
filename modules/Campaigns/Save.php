@@ -57,9 +57,9 @@ if (!$focus->ACLAccess('Save')) {
     sugar_cleanup(true);
 }
 if (!empty($_POST['assigned_user_id']) && ($focus->assigned_user_id != $_POST['assigned_user_id']) && ($_POST['assigned_user_id'] != $current_user->id)) {
-    $check_notify = TRUE;
+    $check_notify = true;
 } else {
-    $check_notify = FALSE;
+    $check_notify = false;
 }
 
 require_once('include/formbase.php');

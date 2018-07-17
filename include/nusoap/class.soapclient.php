@@ -182,7 +182,7 @@ class nusoap_client extends nusoap_base
 	public $certRequest = array();		// Certificate for HTTP SSL authentication
 	public $requestHeaders = false;	// SOAP headers in request (text)
 	public $responseHeaders = '';		// SOAP headers from response (incomplete namespace resolution) (text)
-	public $responseHeader = NULL;		// SOAP Header from response (parsed)
+	public $responseHeader = null;		// SOAP Header from response (parsed)
 	public $document = '';				// SOAP body response portion (incomplete namespace resolution) (text)
 	public $endpoint;
     public $forceEndpoint = '';		// overrides WSDL endpoint

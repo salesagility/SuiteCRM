@@ -169,7 +169,7 @@ class AM_ProjectTemplatesController extends SugarController
             $project_task->utilization = $row['utilization'];
             
             if ($copy_all == 0 && !in_array($row['id'], $copy_tasks)) {
-                $project_task->assigned_user_id = NULL;
+                $project_task->assigned_user_id = null;
             } else {
                 $project_task->assigned_user_id = $row['assigned_user_id'];
             }

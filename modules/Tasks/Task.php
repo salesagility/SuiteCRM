@@ -110,7 +110,7 @@ class Task extends SugarBean
 
     public $new_schema = true;
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         if (empty($this->status)) {
             $this->status = $this->getDefaultStatus();

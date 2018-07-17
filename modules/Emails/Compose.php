@@ -82,7 +82,7 @@ function initFullCompose($ret)
  * @param Bool $forFullCompose If full compose is set to TRUE, then continue execution and include the full Emails UI.  Otherwise
  *             the data generated is returned.
  */
-function generateComposeDataPackage($data, $forFullCompose = TRUE)
+function generateComposeDataPackage($data, $forFullCompose = true)
 {
     // we will need the following:
     if (isset($data['parent_type']) && !empty($data['parent_type']) &&

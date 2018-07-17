@@ -251,7 +251,7 @@ class DetailView extends ListView
         }
     }
 
-    public function processListNavigation($xtpl, $html_varName, $current_offset, $display_audit_link = false, $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = NULL, $subpanel_def = NULL, $col_count = 20)
+    public function processListNavigation($xtpl, $html_varName, $current_offset, $display_audit_link = false, $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = null, $subpanel_def = null, $col_count = 20)
     {
         global $export_module, $sugar_config, $current_user;
         //intialize audit_link
