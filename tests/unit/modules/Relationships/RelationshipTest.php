@@ -72,11 +72,10 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdelete()
     {
-
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         $db = DBManagerFactory::getInstance();
         
@@ -89,8 +88,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testget_other_module()
@@ -166,7 +163,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testretrieve_by_name()
     {
-
         $relationship = new Relationship();
 
         //test with invalid relationship
@@ -189,7 +185,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testload_relationship_meta()
     {
-
         $relationship = new Relationship();
 
         $relationship->load_relationship_meta();
@@ -198,11 +193,10 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testbuild_relationship_cache()
     {
-
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         $relationship = new Relationship();
@@ -216,8 +210,6 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testcache_file_dir()
@@ -234,11 +226,10 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
     public function testdelete_cache()
     {
-
         $state = new SuiteCRM\StateSaver();
         
         
-        //error_reporting(E_ERROR | E_PARSE);
+        
         
         
         //execute the method and test if it works and does not throws an exception.
@@ -250,13 +241,10 @@ class RelationshipTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         }
         
         // clean up
-        
-        
     }
 
     public function testtrace_relationship_module()
     {
-
         $relationship = new Relationship();
         $result = $relationship->trace_relationship_module('Roles', 'Users');
         $this->assertInstanceOf('User', $result);

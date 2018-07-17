@@ -84,7 +84,7 @@ class ParserModifyListView extends ModuleBuilderParser
      * @param string $module_name
      * @param string $submodule
      */
-    function init($module_name, $submodule = '')
+    public function init($module_name, $submodule = '')
     {
         global $app_list_strings;
         $this->module_name = $module_name;
@@ -116,7 +116,7 @@ class ParserModifyListView extends ModuleBuilderParser
     /**
      * @return string
      */
-    function getLanguage()
+    public function getLanguage()
     {
         return $this->language_module;
     }
@@ -124,7 +124,7 @@ class ParserModifyListView extends ModuleBuilderParser
     /**
      * @param $defs re-key array so that every entry has a key=name and all keys are lowercase - makes it easier in handleSave() later...
      */
-    function fixKeys(&$defs)
+    public function fixKeys(&$defs)
     {
         $temp = array();
         foreach ($defs as $key => $value) {
@@ -146,7 +146,7 @@ class ParserModifyListView extends ModuleBuilderParser
      * returns the default fields for a listview
      * Called only when displaying the listview for editing; not called when saving
      */
-    function getDefaultFields()
+    public function getDefaultFields()
     {
         $this->defaults = array();
         foreach ($this->listViewDefs as $key => $def) {
@@ -155,8 +155,7 @@ class ParserModifyListView extends ModuleBuilderParser
             if (!empty ($def ['default'])) {
                 if (!isset($def['studio']) || $def['studio'] === true) {
                     $this->defaults [$key] = $def;
-                } else // anything which doesn't go into the defaults is a reserved field - this makes sure we don't miss anything
-                {
+                } else { // anything which doesn't go into the defaults is a reserved field - this makes sure we don't miss anything
                     $this->reserved [$key] = $def;
                 }
             }
@@ -168,7 +167,7 @@ class ParserModifyListView extends ModuleBuilderParser
     /**
      * returns additional fields available for users to create fields
      */
-    function getAdditionalFields()
+    public function getAdditionalFields()
     {
         $this->additional = array();
         foreach ($this->listViewDefs as $key => $def) {
@@ -184,7 +183,7 @@ class ParserModifyListView extends ModuleBuilderParser
     /**
      * returns unused fields that are available for using in either default or additional list views
      */
-    function getAvailableFields()
+    public function getAvailableFields()
     {
         $this->availableFields = array();
         $lowerFieldList = array_change_key_case($this->listViewDefs);
@@ -202,8 +201,7 @@ class ParserModifyListView extends ModuleBuilderParser
             if ($fieldName == 'currency_id') {
                 continue;
             }
-            if (!isset ($lowerFieldList [$fieldName])) // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
-            {
+            if (!isset ($lowerFieldList [$fieldName])) { // bug 16728 - check this first, so that other conditions (e.g., studio == visible) can't override and add duplicate entries
                 // bug 19656: this test changed after 5.0.0b - we now remove all ID type fields - whether set as type, or dbtype, from the fielddefs
                 if ($this->isValidField($key, $def)) {
                     $label = (isset ($def ['vname'])) ? $def ['vname'] : (isset($def ['label']) ? $def['label'] : $def['name']);
@@ -218,7 +216,7 @@ class ParserModifyListView extends ModuleBuilderParser
     /**
      * @return array
      */
-    function getFieldDefs()
+    public function getFieldDefs()
     {
         return $this->module->field_defs;
     }
@@ -228,7 +226,7 @@ class ParserModifyListView extends ModuleBuilderParser
      * @param array $def
      * @return bool
      */
-    function isValidField($key, $def)
+    public function isValidField($key, $def)
     {
         //Allow fields that are studio visible
         if (!empty ($def ['studio']) && $def ['studio'] == 'visible') {
@@ -259,7 +257,7 @@ class ParserModifyListView extends ModuleBuilderParser
      * @param string $fieldName
      * @return array
      */
-    function getField($fieldName)
+    public function getField($fieldName)
     {
         $fieldName = strtolower($fieldName);
         foreach ($this->listViewDefs as $key => $def) {
@@ -283,7 +281,7 @@ class ParserModifyListView extends ModuleBuilderParser
      * @param $listfielddef
      * @return mixed
      */
-    function addRelateData($fieldname, $listfielddef)
+    public function addRelateData($fieldname, $listfielddef)
     {
         $modFieldDef = $this->module->field_defs [strtolower($fieldname)];
         if (!empty($modFieldDef['module']) && !empty($modFieldDef['id_name'])) {
@@ -299,7 +297,7 @@ class ParserModifyListView extends ModuleBuilderParser
     /**
      * @return array
      */
-    function _loadLayoutFromRequest()
+    public function _loadLayoutFromRequest()
     {
         $GLOBALS['log']->debug("ParserModifyListView->_loadLayoutFromRequest()");
         $fields = array();
@@ -376,7 +374,7 @@ class ParserModifyListView extends ModuleBuilderParser
     /**
      * handleSave
      */
-    function handleSave()
+    public function handleSave()
     {
         $fields = $this->_loadLayoutFromRequest();
         $this->_writeToFile($this->customFile, 'ListView', $this->module_name, $fields, $this->_variables);

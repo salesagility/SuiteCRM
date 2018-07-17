@@ -51,7 +51,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
  *
  * @author SalesAgility
  */
-trait StateCheckerTrait {
+trait StateCheckerTrait
+{
    
     /**
      *
@@ -130,8 +131,8 @@ trait StateCheckerTrait {
      * 
      * @throws StateCheckerException
      */
-    protected function beforeStateCheck() {
-        
+    protected function beforeStateCheck()
+    {
         $mode = StateCheckerConfig::get('testStateCheckMode');
         
         switch ($mode) {
@@ -153,16 +154,14 @@ trait StateCheckerTrait {
             default:
                 throw new StateCheckerException('Incorect state check mode: ' . $mode);
         }
-        
-        
     }
     
     /**
      * 
      * @throws StateCheckerException
      */
-    protected function afterStateCheck() {
-        
+    protected function afterStateCheck()
+    {
         $mode = StateCheckerConfig::get('testStateCheckMode');
         
         switch ($mode) {
@@ -184,7 +183,5 @@ trait StateCheckerTrait {
             default:
                 throw new StateCheckerException('Incorect state check mode: ' . $mode);
         }
-        
     }
-    
 }

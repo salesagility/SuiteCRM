@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -44,44 +46,47 @@ require_once('modules/DynamicFields/templates/Fields/TemplateRange.php');
 
 class TemplateCurrency extends TemplateRange
 {
-    var $max_size = 25;
-    var $len = 26 ;
-    var $precision = 6;
-    var $type='currency';
+    public $max_size = 25;
+    public $len = 26 ;
+    public $precision = 6;
+    public $type='currency';
 
-    function delete($df){
-    	parent::delete($df);
-    	//currency id
-    	$currency_id = new TemplateCurrencyId();
-    	$currency_id->name = 'currency_id';
-    	$currency_id->delete($df);
+    public function delete($df)
+    {
+        parent::delete($df);
+        //currency id
+        $currency_id = new TemplateCurrencyId();
+        $currency_id->name = 'currency_id';
+        $currency_id->delete($df);
     }
 
-    function save($df){
-    	//the currency field
-		$this->default = unformat_number($this->default);
-		$this->default_value = $this->default;
-    	parent::save($df);
+    public function save($df)
+    {
+        //the currency field
+        $this->default = unformat_number($this->default);
+        $this->default_value = $this->default;
+        parent::save($df);
 
-    	//currency id
-    	$currency_id = new TemplateCurrencyId();
-    	$currency_id->name = 'currency_id';
-    	$currency_id->vname = 'LBL_CURRENCY';
-    	$currency_id->label = $currency_id->vname;
-    	$currency_id->save($df);
-    	//$df->addLabel($currency_id->vname);
+        //currency id
+        $currency_id = new TemplateCurrencyId();
+        $currency_id->name = 'currency_id';
+        $currency_id->vname = 'LBL_CURRENCY';
+        $currency_id->label = $currency_id->vname;
+        $currency_id->save($df);
+        //$df->addLabel($currency_id->vname);
     }
 
-    function get_field_def(){
-    	$def = parent::get_field_def();
-		$def['precision'] = (!empty($this->precision)) ? $this->precision : 6;
-    	return $def;
+    public function get_field_def()
+    {
+        $def = parent::get_field_def();
+        $def['precision'] = (!empty($this->precision)) ? $this->precision : 6;
+        return $def;
     }
 
-	function get_db_type()
-	{
-		$precision = (!empty($this->precision)) ? $this->precision : 6;
-		$len = (!empty($this->len)) ? $this->len:26;
-		return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $len, $precision); 
-	}
+    public function get_db_type()
+    {
+        $precision = (!empty($this->precision)) ? $this->precision : 6;
+        $len = (!empty($this->len)) ? $this->len:26;
+        return " ".sprintf(DBManagerFactory::getInstance()->getColumnType("decimal_tpl"), $len, $precision);
+    }
 }

@@ -22,7 +22,9 @@ function smarty_core_write_compiled_include($params, &$smarty)
                    $params['compiled_content'], $_match_source, PREG_SET_ORDER);
     
     // no nocache-parts found: done
-    if (count($_match_source)==0) return;
+    if (count($_match_source)==0) {
+        return;
+    }
 
     // convert the matched php-code to functions
     $_include_compiled =  "<?php /* Smarty version ".$smarty->_version.", created on ".strftime("%Y-%m-%d %H:%M:%S")."\n";
@@ -53,7 +55,9 @@ function smarty_core_write_compiled_include($params, &$smarty)
                 } else {
                     $open_tag .= $token;
                 }
-                if ($open_tag == '<?php ') break;
+                if ($open_tag == '<?php ') {
+                    break;
+                }
             }
 
             for ($i=0, $count = count($tokens); $i < $count; $i++) {
@@ -62,7 +66,7 @@ function smarty_core_write_compiled_include($params, &$smarty)
                         $tokens[$i] = '$' . $this_varname;
                     } else {
                         $tokens[$i] = $tokens[$i][1];
-                    }                   
+                    }
                 }
             }
             $source = implode('', $tokens);
@@ -86,6 +90,3 @@ $source
     smarty_core_write_file($_params, $smarty);
     return true;
 }
-
-
-?>

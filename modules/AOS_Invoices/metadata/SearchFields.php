@@ -6,7 +6,9 @@
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
  
- if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+ if (!defined('sugarEntry') || !sugarEntry) {
+     die('Not A Valid Entry Point');
+ }
 /**
  * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
@@ -32,30 +34,30 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 $searchFields['AOS_Invoices'] = 
-	array (
-		'name' => array( 'query_type'=>'default'),
-		'account_type'=> array('query_type'=>'default', 'options' => 'account_type_dom', 'template_var' => 'ACCOUNT_TYPE_OPTIONS'),
-		'industry'=> array('query_type'=>'default', 'options' => 'industry_dom', 'template_var' => 'INDUSTRY_OPTIONS'),
-		'annual_revenue'=> array('query_type'=>'default'),
-		'address_street'=> array('query_type'=>'default','db_field'=>array('billing_address_street','shipping_address_street')),
-		'address_city'=> array('query_type'=>'default','db_field'=>array('billing_address_city','shipping_address_city')),
-		'address_state'=> array('query_type'=>'default','db_field'=>array('billing_address_state','shipping_address_state')),
-		'address_postalcode'=> array('query_type'=>'default','db_field'=>array('billing_address_postalcode','shipping_address_postalcode')),
-		'address_country'=> array('query_type'=>'default','db_field'=>array('billing_address_country','shipping_address_country')),
-		'rating'=> array('query_type'=>'default'),
-		'phone'=> array('query_type'=>'default','db_field'=>array('phone_office')),
-		'email'=> array('query_type'=>'default','db_field'=>array('email1','email2')),
-		'website'=> array('query_type'=>'default'),
-		'ownership'=> array('query_type'=>'default'),
-		'employees'=> array('query_type'=>'default'),
-		'ticker_symbol'=> array('query_type'=>'default'),
-		'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
-		'assigned_user_id'=> array('query_type'=>'default'),
+    array (
+        'name' => array( 'query_type'=>'default'),
+        'account_type'=> array('query_type'=>'default', 'options' => 'account_type_dom', 'template_var' => 'ACCOUNT_TYPE_OPTIONS'),
+        'industry'=> array('query_type'=>'default', 'options' => 'industry_dom', 'template_var' => 'INDUSTRY_OPTIONS'),
+        'annual_revenue'=> array('query_type'=>'default'),
+        'address_street'=> array('query_type'=>'default','db_field'=>array('billing_address_street','shipping_address_street')),
+        'address_city'=> array('query_type'=>'default','db_field'=>array('billing_address_city','shipping_address_city')),
+        'address_state'=> array('query_type'=>'default','db_field'=>array('billing_address_state','shipping_address_state')),
+        'address_postalcode'=> array('query_type'=>'default','db_field'=>array('billing_address_postalcode','shipping_address_postalcode')),
+        'address_country'=> array('query_type'=>'default','db_field'=>array('billing_address_country','shipping_address_country')),
+        'rating'=> array('query_type'=>'default'),
+        'phone'=> array('query_type'=>'default','db_field'=>array('phone_office')),
+        'email'=> array('query_type'=>'default','db_field'=>array('email1','email2')),
+        'website'=> array('query_type'=>'default'),
+        'ownership'=> array('query_type'=>'default'),
+        'employees'=> array('query_type'=>'default'),
+        'ticker_symbol'=> array('query_type'=>'default'),
+        'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+        'assigned_user_id'=> array('query_type'=>'default'),
         'favorites_only' => array(
             'query_type'=>'format',
             'operator' => 'subquery',
-			'checked_only' => true,
-			'subquery' => "SELECT favorites.parent_id FROM favorites
+            'checked_only' => true,
+            'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
 			                        and favorites.parent_type = 'AOS_Invoices'
 			                        and favorites.assigned_user_id = '{1}'",

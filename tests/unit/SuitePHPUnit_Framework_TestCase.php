@@ -128,5 +128,4 @@ class SuitePHPUnit_Framework_TestCase extends SuiteCRM\StateCheckerPHPUnitTestCa
         
         parent::tearDown();
     }
-
 }

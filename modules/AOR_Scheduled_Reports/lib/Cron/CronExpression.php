@@ -292,7 +292,6 @@ class CronExpression
 
         // Set a hard limit to bail on an impossible date
         for ($i = 0; $i < 1000; $i++) {
-
             foreach ($parts as $position => $part) {
                 $satisfied = false;
                 // Get the field object used to validate this part

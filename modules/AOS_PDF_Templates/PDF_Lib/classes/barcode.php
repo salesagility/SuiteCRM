@@ -42,7 +42,8 @@
 //               info@tecnick.com
 //============================================================+
 
-class PDFBarcode {
+class PDFBarcode
+{
 	
 	protected $barcode_array;
 	protected $gapwidth;

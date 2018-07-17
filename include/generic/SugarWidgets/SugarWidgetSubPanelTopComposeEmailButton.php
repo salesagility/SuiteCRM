@@ -42,17 +42,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
-class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton {
+class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopButton
+{
+    public $form_value = '';
 
-    var $form_value = '';
-
-    public function getWidgetId($buttonSuffix = true) {
+    public function getWidgetId($buttonSuffix = true)
+    {
         global $app_strings;
         $this->form_value = $app_strings['LBL_COMPOSE_EMAIL_BUTTON_LABEL'];
         return parent::getWidgetId();
     }
 
-    function display($defines, $additionalFormFields = NULL, $nonbutton = false) {
+    public function display($defines, $additionalFormFields = NULL, $nonbutton = false)
+    {
         if ((ACLController::moduleSupportsACL($defines['module']) && !ACLController::checkAccess($defines['module'], 'edit', true) ||
                 $defines['module'] == "Activities" & !ACLController::checkAccess("Emails", 'edit', true))) {
             $temp = '';
@@ -93,7 +95,7 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
                 $relatedAccountId = $bean->account_id;
                 /** @var Account $relatedAccountBean */
                 $relatedAccountBean = BeanFactory::getBean('Accounts', $relatedAccountId);
-                if(!empty($relatedAccountBean) && !empty($relatedAccountBean->email1)) {
+                if (!empty($relatedAccountBean) && !empty($relatedAccountBean->email1)) {
                     $bean->email1 = $relatedAccountBean->email1;
                     $bean->name = $relatedAccountBean->name;
                 }
@@ -112,5 +114,4 @@ class SugarWidgetSubPanelTopComposeEmailButton extends SugarWidgetSubPanelTopBut
 
         return $button;
     }
-
 }

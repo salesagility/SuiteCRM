@@ -86,7 +86,7 @@ if ($focus->is_authenticated()) {
     }
     if (isset($reset_language_on_default_user) && $reset_language_on_default_user &&
          $focus->user_name == $sugar_config['default_user_name']) {
-            $authenticated_user_language = $sugar_config['default_language'];
+        $authenticated_user_language = $sugar_config['default_language'];
     }
 
     $_SESSION['authenticated_user_theme'] = $authenticated_user_theme;
@@ -103,7 +103,6 @@ if ($focus->is_authenticated()) {
     if (file_exists($tmp_file_name)) {
         unlink($tmp_file_name);
     }
-
 } else {
     $_SESSION['login_user_name'] = $focus->user_name;
     $_SESSION['login_password'] = $username_password;

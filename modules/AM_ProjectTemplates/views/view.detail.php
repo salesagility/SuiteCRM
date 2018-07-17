@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /**
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
@@ -22,29 +24,30 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/MVC/View/views/view.detail.php');
 
-class AM_ProjectTemplatesViewDetail extends ViewDetail {
-
-
-    function __construct(){
+class AM_ProjectTemplatesViewDetail extends ViewDetail
+{
+    public function __construct()
+    {
         parent::__construct();
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    function AM_ProjectTemplatesViewDetail(){
+    public function AM_ProjectTemplatesViewDetail()
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct();
     }
 
 
-    function display(){
+    public function display()
+    {
         global $app_strings, $mod_strings;
         parent::display();
 
@@ -140,16 +143,15 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
                              <label for="tasks" id="tasks_label">'.$mod_strings['LBL_COPY_SEL_TASKS'].':</label>
                              <select id="tasks" name="tasks[]" multiple style="margin-bottom:12px; width:95%; padding: .4em;" >';
                                 
-								$this->bean->load_relationship('am_tasktemplates_am_projecttemplates');
-								$task_list = $this->bean->get_linked_beans('am_tasktemplates_am_projecttemplates','AM_TaskTemplates');
+        $this->bean->load_relationship('am_tasktemplates_am_projecttemplates');
+        $task_list = $this->bean->get_linked_beans('am_tasktemplates_am_projecttemplates', 'AM_TaskTemplates');
 
-                                //From the query above, populates the select box
-                                foreach( $task_list as $task)
-                                {
-                                    echo '<option value="'.$task->id.'">'.$task->name.'</option>';
-                                }
+        //From the query above, populates the select box
+        foreach ($task_list as $task) {
+            echo '<option value="'.$task->id.'">'.$task->name.'</option>';
+        }
 
-							 echo '</select><br />
+        echo '</select><br />
 
 							 <input type="hidden" name="template_id" value="'.$this->bean->id .'" />
 
@@ -158,6 +160,4 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
                 </p>
               </div>';
     }
-
-
 }

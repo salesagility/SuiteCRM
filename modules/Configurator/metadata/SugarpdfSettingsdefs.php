@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -137,7 +139,7 @@ $SugarpdfSettings = array(
     "sugarpdf_pdf_protection"=>array(
         "label"=>$mod_strings["PDF_PROTECTION"],
         "info_label"=>$mod_strings["PDF_PROTECTION_INFO"],
-        "value"=>explode(",",PDF_PROTECTION),
+        "value"=>explode(",", PDF_PROTECTION),
         "class"=>"advanced",
         "type"=>"multiselect",
         "selectList"=>array("print"=>"Print", "modify"=>"Modify", "copy"=>"Copy", "annot-forms"=>"Annotations and forms"),

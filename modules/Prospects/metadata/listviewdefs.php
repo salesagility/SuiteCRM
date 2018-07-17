@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -42,10 +44,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 $listViewDefs['Prospects'] = array(
-	'FULL_NAME' => array(
-		'width' => '20', 
-		'label' => 'LBL_LIST_NAME', 
-		'link' => true,
+    'FULL_NAME' => array(
+        'width' => '20', 
+        'label' => 'LBL_LIST_NAME', 
+        'link' => true,
         'related_fields' => array('first_name', 'last_name'),
         'orderBy' => 'last_name',
         'default' => true),
@@ -67,10 +69,10 @@ $listViewDefs['Prospects'] = array(
         'label' => 'LBL_LIST_PHONE', 
         'link' => false,
         'default' => true), 
-	'DATE_ENTERED' => array (
-	    'type' => 'datetime',
-	    'label' => 'LBL_DATE_ENTERED',
-	    'width' => '10',
-	    'default' => true,
-	  ),  
+    'DATE_ENTERED' => array (
+        'type' => 'datetime',
+        'label' => 'LBL_DATE_ENTERED',
+        'width' => '10',
+        'default' => true,
+      ),  
 );

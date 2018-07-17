@@ -41,7 +41,7 @@
 
 
 global $sugar_version;
-if(!defined('sugarEntry') || !sugarEntry) {
+if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
 
@@ -50,39 +50,39 @@ if(!defined('sugarEntry') || !sugarEntry) {
 $uwFilesCurrent = findAllFiles('modules/UpgradeWizard/', array());
 
 // handle 4.x to 4.5.x+ (no UpgradeWizard module)
-if(count($uwFilesCurrent) < 5) {
-	$uwFiles = array(
-		'modules/UpgradeWizard/language/en_us.lang.php',
-		'modules/UpgradeWizard/cancel.php',
-		'modules/UpgradeWizard/commit.php',
-		'modules/UpgradeWizard/commitJson.php',
-		'modules/UpgradeWizard/end.php',
-		'modules/UpgradeWizard/Forms.php',
-		'modules/UpgradeWizard/index.php',
-		'modules/UpgradeWizard/Menu.php',
-		'modules/UpgradeWizard/preflight.php',
-		'modules/UpgradeWizard/preflightJson.php',
-		'modules/UpgradeWizard/start.php',
-		'modules/UpgradeWizard/su_utils.php',
-		'modules/UpgradeWizard/su.php',
-		'modules/UpgradeWizard/systemCheck.php',
-		'modules/UpgradeWizard/systemCheckJson.php',
-		'modules/UpgradeWizard/upgradeWizard.js',
-		'modules/UpgradeWizard/upload.php',
-		'modules/UpgradeWizard/uw_ajax.php',
-		'modules/UpgradeWizard/uw_files.php',
-		'modules/UpgradeWizard/uw_main.tpl',
-		'modules/UpgradeWizard/uw_utils.php',
-	);
+if (count($uwFilesCurrent) < 5) {
+    $uwFiles = array(
+        'modules/UpgradeWizard/language/en_us.lang.php',
+        'modules/UpgradeWizard/cancel.php',
+        'modules/UpgradeWizard/commit.php',
+        'modules/UpgradeWizard/commitJson.php',
+        'modules/UpgradeWizard/end.php',
+        'modules/UpgradeWizard/Forms.php',
+        'modules/UpgradeWizard/index.php',
+        'modules/UpgradeWizard/Menu.php',
+        'modules/UpgradeWizard/preflight.php',
+        'modules/UpgradeWizard/preflightJson.php',
+        'modules/UpgradeWizard/start.php',
+        'modules/UpgradeWizard/su_utils.php',
+        'modules/UpgradeWizard/su.php',
+        'modules/UpgradeWizard/systemCheck.php',
+        'modules/UpgradeWizard/systemCheckJson.php',
+        'modules/UpgradeWizard/upgradeWizard.js',
+        'modules/UpgradeWizard/upload.php',
+        'modules/UpgradeWizard/uw_ajax.php',
+        'modules/UpgradeWizard/uw_files.php',
+        'modules/UpgradeWizard/uw_main.tpl',
+        'modules/UpgradeWizard/uw_utils.php',
+    );
 } else {
-	$uwFilesCurrent = findAllFiles('ModuleInstall', $uwFilesCurrent);
-	$uwFilesCurrent = findAllFiles('include/javascript/yui', $uwFilesCurrent);
-	$uwFilesCurrent[] = 'HandleAjaxCall.php';
+    $uwFilesCurrent = findAllFiles('ModuleInstall', $uwFilesCurrent);
+    $uwFilesCurrent = findAllFiles('include/javascript/yui', $uwFilesCurrent);
+    $uwFilesCurrent[] = 'HandleAjaxCall.php';
 
-	$uwFiles = array();
-	foreach($uwFilesCurrent as $file) {
-		$uwFiles[] = str_replace("./", "", clean_path($file));
-	}
+    $uwFiles = array();
+    foreach ($uwFilesCurrent as $file) {
+        $uwFiles[] = str_replace("./", "", clean_path($file));
+    }
 }
 ////	END DYNAMICALLY GENERATE UPGRADEWIZARD MODULE FILE LIST
 ///////////////////////////////////////////////////////////////////////////////

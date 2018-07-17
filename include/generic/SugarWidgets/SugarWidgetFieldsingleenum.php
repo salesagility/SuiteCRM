@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,26 +43,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
  
-class SugarWidgetFieldSingleEnum extends SugarWidgetFieldEnum {
-    
-    function displayInput($layout_def) {
+class SugarWidgetFieldSingleEnum extends SugarWidgetFieldEnum
+{
+    public function displayInput($layout_def)
+    {
         global $app_list_strings;
 
-        if(!empty($layout_def['remove_blank']) && $layout_def['remove_blank']) {
-            if ( is_array($layout_def['options']) ) {
+        if (!empty($layout_def['remove_blank']) && $layout_def['remove_blank']) {
+            if (is_array($layout_def['options'])) {
                 $ops = $layout_def['options'];
+            } elseif (isset($layout_def['options']) && isset($app_list_strings[$layout_def['options']])) {
+                $ops = $app_list_strings[$layout_def['options']];
+                if (array_key_exists('', $app_list_strings[$layout_def['options']])) {
+                    unset($ops['']);
+                }
+            } else {
+                $ops = array();
             }
-            elseif (isset($layout_def['options']) && isset($app_list_strings[$layout_def['options']])){ 
-            	$ops = $app_list_strings[$layout_def['options']];
-                if(array_key_exists('', $app_list_strings[$layout_def['options']])) {
-             	   unset($ops['']);
-	            }
-            }
-            else{
-            	$ops = array();
-            }
-        }
-        else {
+        } else {
             $ops = $app_list_strings[$layout_def['options']];
         }
         

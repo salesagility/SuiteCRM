@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -56,7 +58,7 @@ class SugarHttpClient
      */
     public function callRest($url, $postArgs)
     {
-        if(!function_exists("curl_init")) {
+        if (!function_exists("curl_init")) {
             $this->last_error = 'ERROR_NO_CURL';
             $GLOBALS['log']->fatal("REST call failed - no cURL!");
             return false;
@@ -71,7 +73,7 @@ class SugarHttpClient
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         $GLOBALS['log']->debug("HTTP client call: $url -> $postArgs");
         $response = curl_exec($curl);
-        if($response === false) {
+        if ($response === false) {
             $this->last_error = 'ERROR_REQUEST_FAILED';
             $curl_errno = curl_errno($curl);
             $curl_error = curl_error($curl);
