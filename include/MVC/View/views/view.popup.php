@@ -220,11 +220,12 @@ class ViewPopup extends SugarView
                 $popup->th->ss->assign($this->override_popup['template_data']);
             }
             echo $popup->display();
+
         } else {
-            if (file_exists('modules/' . $this->module . '/Popup_picker.php')) {
-                require_once('modules/' . $this->module . '/Popup_picker.php');
+            if (file_exists(get_custom_file_if_exists('modules/' . $this->module . '/Popup_picker.php'))) {
+                require_once(get_custom_file_if_exists('modules/' . $this->module . '/Popup_picker.php'));
             } else {
-                require_once('include/Popups/Popup_picker.php');
+                require_once(get_custom_file_if_exists('include/Popups/Popup_picker.php'));
             }
 
             $popup = new Popup_Picker();
