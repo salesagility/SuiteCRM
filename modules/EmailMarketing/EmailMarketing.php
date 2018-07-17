@@ -107,7 +107,7 @@ class EmailMarketing extends SugarBean
         $userTimeZone = $current_user->getPreference('timezone');
         $timeZone = new DateTimeZone($userTimeZone);
 
-        if ($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start,$timeZone)) {
+        if ($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start, $timeZone)) {
             $dateStart = $timedate->asDb($dateTime);
             $this->date_start = $dateStart;
         }
@@ -117,10 +117,10 @@ class EmailMarketing extends SugarBean
 
     public function retrieve($id = -1, $encode=true, $deleted=true)
     {
-        parent::retrieve($id,$encode,$deleted);
+        parent::retrieve($id, $encode, $deleted);
 
         global $timedate;
-        $date_start_array=explode(" ",trim($this->date_start));
+        $date_start_array=explode(" ", trim($this->date_start));
         if (count($date_start_array)==2) {
             $this->time_start = $date_start_array[1];
             $this->date_start = $date_start_array[0];

@@ -55,7 +55,7 @@ class ViewLabels extends ViewModulefields
         global $mod_strings;
 
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -80,7 +80,7 @@ class ViewLabels extends ViewModulefields
         $smarty = new Sugar_Smarty();
         global $mod_strings;
         $smarty->assign('mod_strings', $mod_strings);
-        $smarty->assign('available_languages',get_languages());
+        $smarty->assign('available_languages', get_languages());
 
 
         $objectName = BeanFactory::getObjectName($editModule);
@@ -128,9 +128,9 @@ class ViewLabels extends ViewModulefields
 
         //we shouldn't set the $refresh=true here, or will lost template language mod_strings.
         //return_module_language($selected_lang, $editModule,false) : the mod_strings will be included from cache files here.
-        foreach (return_module_language($selected_lang, $editModule,false) as $name=>$label) {
+        foreach (return_module_language($selected_lang, $editModule, false) as $name=>$label) {
             //#25294
-            if ($allLabels || isset($vnames[$name]) || preg_match('/lbl_city|lbl_country|lbl_billing_address|lbl_alt_address|lbl_shipping_address|lbl_postal_code|lbl_state$/si' , $name)) {
+            if ($allLabels || isset($vnames[$name]) || preg_match('/lbl_city|lbl_country|lbl_billing_address|lbl_alt_address|lbl_shipping_address|lbl_postal_code|lbl_state$/si', $name)) {
                 $formatted_mod_strings[$name] = htmlentities($label, ENT_QUOTES, 'UTF-8');
             }
         }

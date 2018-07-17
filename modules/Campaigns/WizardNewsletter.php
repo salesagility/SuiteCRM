@@ -112,9 +112,9 @@ $qsd->setFormName('wizform');
 $sqs_objects = array('parent_name' => $qsd->getQSParent(), 
                     'assigned_user_name' => $qsd->getQSUser(),
                     //'prospect_list_name' => getProspectListQSObjects(),
-                    'test_name' => getProspectListQSObjects('prospect_list_type_test', 'test_name','wiz_step3_test_name_id'),
-                    'unsubscription_name' => getProspectListQSObjects('prospect_list_type_exempt', 'unsubscription_name','wiz_step3_unsubscription_name_id'),
-                    'subscription_name' => getProspectListQSObjects('prospect_list_type_default', 'subscription_name','wiz_step3_subscription_name_id'),
+                    'test_name' => getProspectListQSObjects('prospect_list_type_test', 'test_name', 'wiz_step3_test_name_id'),
+                    'unsubscription_name' => getProspectListQSObjects('prospect_list_type_exempt', 'unsubscription_name', 'wiz_step3_unsubscription_name_id'),
+                    'subscription_name' => getProspectListQSObjects('prospect_list_type_default', 'subscription_name', 'wiz_step3_subscription_name_id'),
                     );
                     
 
@@ -238,7 +238,7 @@ if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty(
     if (!empty($_REQUEST['record'])) {
         $record =   $_REQUEST['record'];
     }
-    $ss->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$record. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
+    $ss->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$record. "'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT'])."</a>");
 }
 
 echo $currency->getJavascript();
@@ -319,7 +319,7 @@ $focus->load_relationship('tracked_urls');
 
 $trkr_lists = $focus->tracked_urls->get();
 $trkr_html ='';    
-$ss->assign('TRACKER_COUNT',count($trkr_lists));
+$ss->assign('TRACKER_COUNT', count($trkr_lists));
 if (count($trkr_lists)>0) {
     global $odd_bg, $even_bg, $hilite_bg;
     
@@ -605,8 +605,8 @@ if ($campaign_type == 'general') {
     foreach ($steps as $key => $step) {
         $_steps[$key] = false;
     }
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
-    $ss->assign('HIDE_CONTINUE','hidden');
+    $ss->assign('NAV_ITEMS', create_wiz_menu_items($_steps, 'campaign', $mrkt_string, $summ_url, 'dotlist'));
+    $ss->assign('HIDE_CONTINUE', 'hidden');
 } elseif ($campaign_type == 'email' || $campaign_type == 'survey') {
     $steps = create_email_steps();
     if ($focus->id) {
@@ -620,8 +620,8 @@ if ($campaign_type == 'general') {
     $campaign_id = $focus->id;
     $marketing_id = isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : null;
     $template_id = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : null;
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'email',$mrkt_string,$summ_url, 'dotlist', $campaign_id, $marketing_id, $template_id));
-    $ss->assign('HIDE_CONTINUE','submit');
+    $ss->assign('NAV_ITEMS', create_wiz_menu_items($_steps, 'email', $mrkt_string, $summ_url, 'dotlist', $campaign_id, $marketing_id, $template_id));
+    $ss->assign('HIDE_CONTINUE', 'submit');
 } else {
     $steps = create_newsletter_steps();
 
@@ -633,13 +633,13 @@ if ($campaign_type == 'general') {
     foreach ($steps as $key => $step) {
         $_steps[$key] = false;
     }
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'newsletter',$mrkt_string,$summ_url, 'dotlist'));
-    $ss->assign('HIDE_CONTINUE','submit');
+    $ss->assign('NAV_ITEMS', create_wiz_menu_items($_steps, 'newsletter', $mrkt_string, $summ_url, 'dotlist'));
+    $ss->assign('HIDE_CONTINUE', 'submit');
 }
 
 $ss->assign('TOTAL_STEPS', count($steps));
-$sshtml = create_wiz_step_divs($steps,$ss);
-$ss->assign('STEPS',$sshtml);
+$sshtml = create_wiz_step_divs($steps, $ss);
+$ss->assign('STEPS', $sshtml);
      	   	
 
 /**************************** FINAL END OF PAGE UI Stuff *******************/
@@ -702,7 +702,7 @@ function create_email_steps()
 }
 
 
-function create_wiz_step_divs($steps,$ss)
+function create_wiz_step_divs($steps, $ss)
 {
     $step_html = '';
     if (isset($steps)  && !empty($steps)) {
@@ -717,7 +717,7 @@ function create_wiz_step_divs($steps,$ss)
     return $step_html;
 }
 
-function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null, $campaign_id = null, $marketing_id = null, $template_id = null)
+function create_wiz_menu_items($steps, $type, $mrkt_string, $summ_url, $view = null, $campaign_id = null, $marketing_id = null, $template_id = null)
 {
     global $mod_strings;
 

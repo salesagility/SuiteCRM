@@ -274,7 +274,7 @@ class DBManagerFactory
             $info=ob_get_contents();
             ob_end_clean();
 
-            $is_freetds = (strpos($info,'FreeTDS') !== false);
+            $is_freetds = (strpos($info, 'FreeTDS') !== false);
         }
 
         return $is_freetds;

@@ -94,9 +94,9 @@ class ImportViewStep1 extends ImportView
         global $sugar_config;
 
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false));
-        $this->ss->assign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_DELETE']));
-        $this->ss->assign("PUBLISH_INLINE_PNG",  SugarThemeRegistry::current()->getImage('publish_inline','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_PUBLISH']));
-        $this->ss->assign("UNPUBLISH_INLINE_PNG",  SugarThemeRegistry::current()->getImage('unpublish_inline','align="absmiddle" border="0"', null,null,'.gif',$mod_strings['LBL_UNPUBLISH']));
+        $this->ss->assign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_DELETE']));
+        $this->ss->assign("PUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('publish_inline', 'align="absmiddle" border="0"', null, null, '.gif', $mod_strings['LBL_PUBLISH']));
+        $this->ss->assign("UNPUBLISH_INLINE_PNG", SugarThemeRegistry::current()->getImage('unpublish_inline', 'align="absmiddle" border="0"', null, null, '.gif', $mod_strings['LBL_UNPUBLISH']));
         $this->ss->assign("IMPORT_MODULE", $_REQUEST['import_module']);
 
         $showModuleSelection = ($this->importModule == 'Administration');
@@ -128,8 +128,8 @@ class ImportViewStep1 extends ImportView
         $submitContent .= "<input title=\"".$mod_strings['LBL_IMPORT_COMPLETE']."\" onclick=\"SUGAR.importWizard.closeDialog();\" class=\"button\" type=\"submit\" name=\"finished\" value=\"  ".$mod_strings['LBL_IMPORT_COMPLETE']."  \" id=\"finished\">";
         $submitContent .= "<input title=\"".$mod_strings['LBL_NEXT']."\" class=\"button primary\" type=\"submit\" name=\"button\" value=\"  ".$mod_strings['LBL_NEXT']."  \"  id=\"gonext\"></td></tr></table>";
 
-        $this->ss->assign("JAVASCRIPT",$this->_getJS());
-        $this->ss->assign("CONTENT",$content);
+        $this->ss->assign("JAVASCRIPT", $this->_getJS());
+        $this->ss->assign("CONTENT", $content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
 

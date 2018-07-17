@@ -62,7 +62,7 @@ if (isset($_REQUEST['record'])) {
 <?php
 
 $users = get_user_array(true, "Active", $record);
-echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'],array($mod_strings['LBL_MODULE_NAME']), true);
+echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['LBL_MODULE_NAME']), true);
 echo "<form action='index.php' name='Users'>
 <input type='hidden' name='action' value='ListRoles'>
 <input type='hidden' name='module' value='Users'>

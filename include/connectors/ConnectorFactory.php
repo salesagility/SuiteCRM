@@ -78,7 +78,7 @@ class ConnectorFactory
      */
     public static function loadClass($class, $type)
     {
-        $dir = str_replace('_','/',$class);
+        $dir = str_replace('_', '/', $class);
         $parts = explode("/", $dir);
         $file = $parts[count($parts)-1] . '.php';
         if (file_exists("custom/modules/Connectors/connectors/{$type}/{$dir}/$file")) {

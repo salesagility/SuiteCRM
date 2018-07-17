@@ -57,7 +57,7 @@ require_once('modules/EmailTemplates/EmailTemplateFormBase.php');
 $form = new EmailTemplateFormBase();
 sugar_cache_clear('select_array:'.$focus->object_name.'namebase_module=\''. (isset($focus->base_module) ? $focus->base_module : null).'\'name');
 if (isset($_REQUEST['inpopupwindow']) and $_REQUEST['inpopupwindow'] == true) {
-    $focus=$form->handleSave('',false, false); //do not redirect.
+    $focus=$form->handleSave('', false, false); //do not redirect.
     $body1 = "
 		<script type='text/javascript'>
 			function refreshTemplates() {
@@ -69,5 +69,5 @@ if (isset($_REQUEST['inpopupwindow']) and $_REQUEST['inpopupwindow'] == true) {
 		</script>";
     echo  $body1;
 } else {
-    $form->handleSave('',true, false, true, 'download');
+    $form->handleSave('', true, false, true, 'download');
 }

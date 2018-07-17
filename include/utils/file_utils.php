@@ -54,7 +54,7 @@ function clean_path($path)
     // clean directory/file path with a functional equivalent
     $appendpath = '';
     if (is_windows() && strlen($path) >= 2 && $path[0].$path[1] == "\\\\") {
-        $path = substr($path,2);
+        $path = substr($path, 2);
         $appendpath = "\\\\";
     }
     $path = str_replace("\\", "/", $path);
@@ -65,7 +65,7 @@ function clean_path($path)
 
 function create_cache_directory($file)
 {
-    $paths = explode('/',$file);
+    $paths = explode('/', $file);
     $dir = rtrim($GLOBALS['sugar_config']['cache_dir'], '/\\');
     if (!file_exists($dir)) {
         sugar_mkdir($dir, 0775);
@@ -164,7 +164,7 @@ function write_encoded_file($soap_result, $write_to_dir, $write_to_file="")
 
 function create_custom_directory($file)
 {
-    $paths = explode('/',$file);
+    $paths = explode('/', $file);
     $dir = 'custom';
     if (!file_exists($dir)) {
         sugar_mkdir($dir, 0755);
@@ -277,7 +277,7 @@ function getFiles(&$arr, $dir, $pattern = null)
  * @param string $filename
  * @param int $retbytes
  */
-function readfile_chunked($filename,$retbytes=true)
+function readfile_chunked($filename, $retbytes=true)
 {
     $chunksize = 1*(1024*1024); // how many bytes per chunk
     $buffer = '';
@@ -435,7 +435,7 @@ function get_mime_content_type_from_filename($filename)
             'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
         );
 
-        $exp = explode('.',$filename);
+        $exp = explode('.', $filename);
         $pop = array_pop($exp);
         $ext = strtolower($pop);
         if (array_key_exists($ext, $mime_types)) {

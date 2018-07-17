@@ -52,7 +52,7 @@ require_once('include/SugarObjects/forms/FormBase.php');
 
 class CallFormBase extends FormBase
 {
-    public function getFormBody($prefix, $mod='', $formname='',$cal_date='',$cal_time='')
+    public function getFormBody($prefix, $mod='', $formname='', $cal_date='', $cal_time='')
     {
         if (!ACLController::checkAccess('Calls', 'edit', true)) {
             return '';
@@ -91,9 +91,9 @@ class CallFormBase extends FormBase
         $default_status = $app_list_strings['call_status_default'];
         $default_parent_type= $app_list_strings['record_type_default_key'];
         $date = TimeDate::getInstance()->nowDb();
-        $default_date_start = $timedate->to_display_date($date,false);
+        $default_date_start = $timedate->to_display_date($date, false);
         $default_time_start = $timedate->to_display_time($date);
-        $time_ampm = $timedate->AMPMMenu($prefix,$default_time_start);
+        $time_ampm = $timedate->AMPMMenu($prefix, $default_time_start);
         $lbl_save_button_title = $app_strings['LBL_SAVE_BUTTON_TITLE'];
         $lbl_save_button_key = $app_strings['LBL_SAVE_BUTTON_KEY'];
         $lbl_save_button_label = $app_strings['LBL_SAVE_BUTTON_LABEL'];
@@ -203,7 +203,7 @@ EOQ;
     }
 
 
-    public function handleSave($prefix,$redirect=true,$useRequired=false)
+    public function handleSave($prefix, $redirect=true, $useRequired=false)
     {
         require_once('include/formbase.php');
 
@@ -252,7 +252,7 @@ EOQ;
         }
 
         if (isset($_POST[$prefix.'meridiem']) && !empty($_POST[$prefix.'meridiem'])) {
-            $_POST[$prefix.'time_start'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_start'],$timedate->get_time_format(), $_POST[$prefix.'meridiem']);
+            $_POST[$prefix.'time_start'] = $timedate->merge_time_meridiem($_POST[$prefix.'time_start'], $timedate->get_time_format(), $_POST[$prefix.'meridiem']);
         }
 
         if (isset($_POST[$prefix.'time_start']) && strlen($_POST[$prefix.'date_start']) == 10) {
@@ -566,8 +566,8 @@ EOQ;
         $default_parent_type= $app_list_strings['record_type_default_key'];
         $date = TimeDate::getInstance()->nowDb();
         $default_date_start = $timedate->to_display_date($date);
-        $default_time_start = $timedate->to_display_time($date,true);
-        $time_ampm = $timedate->AMPMMenu($prefix,$default_time_start);
+        $default_time_start = $timedate->to_display_time($date, true);
+        $time_ampm = $timedate->AMPMMenu($prefix, $default_time_start);
         $form =	<<<EOQ
 			<input type="hidden"  name="${prefix}direction" value="Outbound">
 			<input type="hidden" name="${prefix}record" value="">

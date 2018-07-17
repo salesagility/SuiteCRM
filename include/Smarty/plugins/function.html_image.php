@@ -36,7 +36,7 @@
  */
 function smarty_function_html_image($params, &$smarty)
 {
-    require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
+    require_once $smarty->_get_plugin_filepath('shared', 'escape_special_chars');
     
     $alt = '';
     $file = '';
@@ -88,7 +88,7 @@ function smarty_function_html_image($params, &$smarty)
         return;
     }
 
-    if (substr($file,0,1) == '/') {
+    if (substr($file, 0, 1) == '/') {
         $_image_path = $basedir . $file;
     } else {
         $_image_path = $file;

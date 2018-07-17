@@ -73,7 +73,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
             $options['title'] = translate('LBL_MY_PIPELINE_FORM_TITLE', 'Home');
         }
 
-        parent::__construct($id,$options);
+        parent::__construct($id, $options);
     }
 
     /**
@@ -375,11 +375,11 @@ EOD;
                         sum(amount_usdollar/1000) AS total
                     FROM users,opportunities  ";
         $query .= " WHERE opportunities.assigned_user_id IN ('{$GLOBALS['current_user']->id}') " .
-            " AND opportunities.date_closed >= ". db_convert("'".$this->mypbss_date_start."'",'date').
-            " AND opportunities.date_closed <= ".db_convert("'".$this->mypbss_date_end."'",'date') .
+            " AND opportunities.date_closed >= ". db_convert("'".$this->mypbss_date_start."'", 'date').
+            " AND opportunities.date_closed <= ".db_convert("'".$this->mypbss_date_end."'", 'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
         if (count($this->mypbss_sales_stages) > 0) {
-            $query .= " AND opportunities.sales_stage IN ('" . implode("','",$this->mypbss_sales_stages) . "') ";
+            $query .= " AND opportunities.sales_stage IN ('" . implode("','", $this->mypbss_sales_stages) . "') ";
         }
         $query .= " GROUP BY opportunities.sales_stage ,users.user_name,opportunities.assigned_user_id";
 
@@ -397,7 +397,7 @@ EOD;
         return $groupBy;
     }
 
-    protected function prepareChartData($dataset,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($dataset, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();

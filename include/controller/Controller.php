@@ -195,7 +195,7 @@ class Controller extends SugarBean
 						  WHERE ".$this->focus->controller_def['parent_var']."='$parent_id'
 						  AND ".$this->focus->table_name.".deleted='0'
 						 ";
-            $result = $this->db->query($query,true," Error capturing max start order: ");
+            $result = $this->db->query($query, true, " Error capturing max start order: ");
             $row = $this->db->fetchByAssoc($result);
 
             if (!is_null($row['max_start'])) {
@@ -244,7 +244,7 @@ class Controller extends SugarBean
 
         $query .=	"	WHERE id='$affected_id'";
         $query .=   "	AND ".$this->focus->table_name.".deleted='0'";
-        $result = $this->db->query($query,true," Error updating affected order id: ");
+        $result = $this->db->query($query, true, " Error updating affected order id: ");
         //end function update_affected_order
     }
 
@@ -264,7 +264,7 @@ class Controller extends SugarBean
         }
 
         //echo $query."<BR>";
-        $result = $this->db->query($query,true," Error capturing affected id: ");
+        $result = $this->db->query($query, true, " Error capturing affected id: ");
         $row = $this->db->fetchByAssoc($result);
 
         return $row['id'];
@@ -289,7 +289,7 @@ class Controller extends SugarBean
 				  WHERE ".$this->focus->controller_def['parent_var']."='$parent_id'
 				  AND ".$this->focus->table_name.".deleted='0'
 						 ";
-            $result = $this->db->query($query,true," Error capturing max start order: ");
+            $result = $this->db->query($query, true, " Error capturing max start order: ");
             $row = $this->db->fetchByAssoc($result);
 
             if ($this->focus->controller_def['start_axis']=="x") {
@@ -348,7 +348,7 @@ class Controller extends SugarBean
         $query .= "WHERE ".$this->focus->controller_def['start_var']." > ".$current_position." AND deleted=0 ";
         $query .= "AND ".$this->focus->controller_def['parent_var']." = '".$parent_id."'";
 
-        $result = $this->db->query($query,true," Error updating the delete_adjust_order: ");
+        $result = $this->db->query($query, true, " Error updating the delete_adjust_order: ");
         //end delete_adjust_order
     }
     //End Delete Functions/////////////////////////

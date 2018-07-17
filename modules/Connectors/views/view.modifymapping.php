@@ -55,7 +55,7 @@ class ViewModifyMapping extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
     	   "<a href='index.php?module=Connectors&action=ConnectorSettings'>".$mod_strings['LBL_ADMINISTRATION_MAIN']."</a>",
     	   $mod_strings['LBL_MODIFY_MAPPING_TITLE']
     	   );

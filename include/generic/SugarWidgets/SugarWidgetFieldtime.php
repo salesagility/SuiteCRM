@@ -49,7 +49,7 @@ class SugarWidgetFieldTime extends SugarWidgetFieldDateTime
         // i guess qualifier and column_function are the same..
         if (! empty($layout_def['column_function'])) {
             $func_name = 'displayList'.$layout_def['column_function'];
-            if (method_exists($this,$func_name)) {
+            if (method_exists($this, $func_name)) {
                 return $this->$func_name($layout_def)." \n";
             }
         }

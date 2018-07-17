@@ -206,12 +206,12 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $jjwgAreas = new jjwg_Areas();
 
         //test without setting up coordinates
-        $this->assertEquals(false,  $jjwgAreas->is_point_in_area(100, 40));
+        $this->assertEquals(false, $jjwgAreas->is_point_in_area(100, 40));
 
         //test with coordinates set
         $jjwgAreas->coordinates = '100,40,10 101,81,11 102,82,12';
-        $this->assertEquals(false,  $jjwgAreas->is_point_in_area(101, 40));
-        $this->assertEquals(true,  $jjwgAreas->is_point_in_area(100, 40));
+        $this->assertEquals(false, $jjwgAreas->is_point_in_area(101, 40));
+        $this->assertEquals(true, $jjwgAreas->is_point_in_area(100, 40));
     }
 
     public function testpoint_in_polygon()
@@ -219,11 +219,11 @@ class jjwg_AreasTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $jjwgAreas = new jjwg_Areas();
 
         //test without setting up coordinates
-        $this->assertEquals(false,  $jjwgAreas->point_in_polygon('100,40,0.0'));
+        $this->assertEquals(false, $jjwgAreas->point_in_polygon('100,40,0.0'));
 
         //test with coordinates set
         $jjwgAreas->coordinates = '100,40,10 101,81,11 102,82,12';
-        $this->assertEquals(true,  $jjwgAreas->point_in_polygon('100,40,0.0'));
+        $this->assertEquals(true, $jjwgAreas->point_in_polygon('100,40,0.0'));
     }
 
     public function testpoint_on_vertex()

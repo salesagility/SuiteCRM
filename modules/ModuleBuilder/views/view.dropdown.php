@@ -49,7 +49,7 @@ class ViewDropdown extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
+    	   translate('LBL_MODULE_NAME', 'Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
@@ -63,13 +63,13 @@ class ViewDropdown extends SugarView
             require_once ('modules/ModuleBuilder/Module/DropDownTree.php');
             $mbt = new DropDownTree();
             $ajax->addSection('west', $mbt->getName(), $mbt->fetchNodes());
-            $smarty->assign('refreshTree',true);
+            $smarty->assign('refreshTree', true);
         }
 
         global $mod_strings;
 
-        $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage('delete_inline', '',null,null,'.gif',$mod_strings['LBL_MB_DELETE']));
-        $smarty->assign('editImage', SugarThemeRegistry::current()->getImage('edit_inline', '',null,null,'.gif',$mod_strings['LBL_EDIT'], true, '.gif'));
+        $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage('delete_inline', '', null, null, '.gif', $mod_strings['LBL_MB_DELETE']));
+        $smarty->assign('editImage', SugarThemeRegistry::current()->getImage('edit_inline', '', null, null, '.gif', $mod_strings['LBL_EDIT'], true, '.gif'));
         $smarty->assign('action', 'savedropdown');
         $body = $smarty->fetch('modules/ModuleBuilder/tpls/MBModule/dropdown.tpl');
         $ajax->addSection('east2', $mod_strings['LBL_SECTION_DROPDOWNED'], $body);
@@ -164,7 +164,7 @@ class ViewDropdown extends SugarView
         $smarty->assign('APP', $GLOBALS['app_strings']);
         $smarty->assign('MOD', $GLOBALS['mod_strings']);
         $smarty->assign('selected_lang', $selected_lang);
-        $smarty->assign('available_languages',get_languages());
+        $smarty->assign('available_languages', get_languages());
         $smarty->assign('package_name', $package_name);
         return $smarty;
     }

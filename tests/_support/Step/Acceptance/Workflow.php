@@ -34,7 +34,7 @@ class Workflow extends Tester
 
     public function setConditionOperator($row, $operator, $type)
     {
-        $this->waitForElementVisible('#aow_conditions_operator[' . $row . ']',10);
+        $this->waitForElementVisible('#aow_conditions_operator[' . $row . ']', 10);
         $this->selectOption('#aow_conditions_operator[' . $row . ']', $operator);
 
         $this->waitForElementVisible('#aow_conditions_value_type[' . $row . ']', 10);

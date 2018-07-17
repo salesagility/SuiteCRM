@@ -50,13 +50,13 @@ foreach ($beanFiles as $classname => $filename) {
         $handle = file_get_contents($filename);
         $patterns = array ('/class '.$classname.'/','/function '.$classname.'/');
         $replace = array ('class SugarCore'.$classname,'function SugarCore'.$classname);
-        $data = preg_replace($patterns,$replace, $handle);
-        sugar_file_put_contents($filename,$data);
+        $data = preg_replace($patterns, $replace, $handle);
+        sugar_file_put_contents($filename, $data);
         
         // Rename the SugarBean file into SugarCore.SugarBean (Ex: SugarCore.Call.php)
-        $pos=strrpos($filename,"/");
+        $pos=strrpos($filename, "/");
         $newfilename=substr_replace($filename, 'SugarCore.', $pos+1, 0);
-        sugar_rename($filename,$newfilename);
+        sugar_rename($filename, $newfilename);
         
         //Create a new SugarBean that extends CoreBean
         $fileHandle = sugar_fopen($filename, 'w') ;

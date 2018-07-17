@@ -137,8 +137,8 @@ class StudioWizard
         $sugar_smarty->assign('options', $this->options());
         $sugar_smarty->assign('MOD', $GLOBALS['mod_strings']);
         $sugar_smarty->assign('option', (!empty($_REQUEST['option'])?$_REQUEST['option']:''));
-        $sugar_smarty->assign('wizard',$this->wizard);
-        $sugar_smarty->assign('error',$error);
+        $sugar_smarty->assign('wizard', $this->wizard);
+        $sugar_smarty->assign('error', $error);
         $sugar_smarty->assign('status', $this->status);
         $sugar_smarty->assign('mod', $mod_strings);
         foreach ($this->assign as $name=>$value) {

@@ -59,7 +59,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
       * @throws Exception Thrown if the provided view doesn't exist for this module
       */
 
-    public function __construct($view , $moduleName , $packageName)
+    public function __construct($view, $moduleName, $packageName)
     {
 
         // BEGIN ASSERTIONS
@@ -107,15 +107,15 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
 
         $loaded = null ;
         foreach (array ( MB_BASEMETADATALOCATION , MB_HISTORYMETADATALOCATION ) as $type) {
-            $this->_sourceFilename = $this->getFileNameInPackage ($view, $moduleName, $packageName , $type) ;
+            $this->_sourceFilename = $this->getFileNameInPackage ($view, $moduleName, $packageName, $type) ;
             if ($view == MB_POPUPSEARCH || $view == MB_POPUPLIST) {
-                $layout = $this->_loadFromPopupFile ($this->_sourceFilename , null, $view);
+                $layout = $this->_loadFromPopupFile ($this->_sourceFilename, null, $view);
             } else {
                 $layout = $this->_loadFromFile ($this->_sourceFilename);
             }
             if (null !== $layout) {
                 // merge in the fielddefs from this layout
-                $this->_mergeFielddefs ($fielddefs , $layout) ;
+                $this->_mergeFielddefs ($fielddefs, $layout) ;
                 $loaded = $layout ;
             }
         }
@@ -127,7 +127,7 @@ class UndeployedMetaDataImplementation extends AbstractMetaDataImplementation im
         $this->_viewdefs = $loaded ;
         $sourceFilename = $this->getFileNameInPackage ($view, $moduleName, $packageName, MB_BASEMETADATALOCATION);
         if ($view == MB_POPUPSEARCH || $view == MB_POPUPLIST) {
-            $layout = $this->_loadFromPopupFile ($sourceFilename , null, $view);
+            $layout = $this->_loadFromPopupFile ($sourceFilename, null, $view);
         } else {
             $layout = $this->_loadFromFile ($sourceFilename) ;
         }

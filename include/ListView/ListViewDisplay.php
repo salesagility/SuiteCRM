@@ -137,7 +137,7 @@ class ListViewDisplay
         $params['handleMassupdate'] = true by default, have massupdate.php handle massupdates?
      * @param string:'id' $id_field
      */
-    public function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1,  $filter_fields = array(), $id_field = 'id', $id = null)
+    public function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1, $filter_fields = array(), $id_field = 'id', $id = null)
     {
         $this->should_process = true;
         if (isset($seed->module_dir) && !$this->shouldProcess($seed->module_dir)) {
@@ -319,7 +319,7 @@ class ListViewDisplay
         } else {
             // delete
             if (
-                ACLController::checkAccess($this->seed->module_dir,'delete',true)
+                ACLController::checkAccess($this->seed->module_dir, 'delete', true)
                 && $this->delete
             ) {
                 if ($this->show_action_dropdown_as_delete) {
@@ -339,8 +339,8 @@ class ListViewDisplay
             $mass->setSugarBean($this->seed);
             if (
                 (
-                    ACLController::checkAccess($this->seed->module_dir,'edit',true)
-                    && ACLController::checkAccess($this->seed->module_dir,'massupdate',true)
+                    ACLController::checkAccess($this->seed->module_dir, 'edit', true)
+                    && ACLController::checkAccess($this->seed->module_dir, 'massupdate', true)
                 )
                 && $this->showMassupdateFields && $mass->doMassUpdateFieldsExistForFocus()
             ) {
@@ -359,14 +359,14 @@ class ListViewDisplay
             // add to target list
             if (
                 $this->targetList
-                && ACLController::checkAccess('ProspectLists','edit',true)
+                && ACLController::checkAccess('ProspectLists', 'edit', true)
             ) {
                 $menuItems[] = $this->buildTargetList($location);
             }
 
             // export
             if (
-                ACLController::checkAccess($this->seed->module_dir,'export',true)
+                ACLController::checkAccess($this->seed->module_dir, 'export', true)
                 && $this->export
             ) {
                 $menuItems[] = $this->buildExportLink($location);
@@ -651,7 +651,7 @@ class ListViewDisplay
 			}
 			open_popup('ProspectLists','600','400','',true,false,{ 'call_back_function':'set_return_and_save_targetlist','form_name':'targetlist_form','field_to_name_array':{'id':'prospect_list'} } );
 EOF;
-        $js = str_replace(array("\r","\n"),'',$js);
+        $js = str_replace(array("\r","\n"), '', $js);
         return "<a href='javascript:void(0)' class=\"parent-dropdown-action-handler\" id=\"targetlist_listview_". $loc ." \" onclick=\"$js\">{$app_strings['LBL_ADD_TO_PROSPECT_LIST_BUTTON_LABEL']}</a>";
     }
     /**

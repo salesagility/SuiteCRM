@@ -371,7 +371,7 @@ class Person extends Basic
         $this->lawful_basis = '^'.$basis.'^';
         $this->lawful_basis_source = $source;
         $date = TimeDate::getInstance()->nowDb();
-        $date_test = $timedate->to_display_date($date,false);
+        $date_test = $timedate->to_display_date($date, false);
         $this->date_reviewed = $date_test;
 
         return (bool)$this->save();

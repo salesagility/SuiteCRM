@@ -13,20 +13,20 @@
      You can find the whole class documentation on the pChart web site.
  */
 
- define("NODE_TYPE_FREE"	, 690001);
- define("NODE_TYPE_CENTRAL"	, 690002);
+ define("NODE_TYPE_FREE", 690001);
+ define("NODE_TYPE_CENTRAL", 690002);
 
- define("NODE_SHAPE_CIRCLE"	, 690011);
- define("NODE_SHAPE_TRIANGLE"	, 690012);
- define("NODE_SHAPE_SQUARE"	, 690013);
+ define("NODE_SHAPE_CIRCLE", 690011);
+ define("NODE_SHAPE_TRIANGLE", 690012);
+ define("NODE_SHAPE_SQUARE", 690013);
 
- define("ALGORITHM_RANDOM"	, 690021);
- define("ALGORITHM_WEIGHTED"	, 690022);
- define("ALGORITHM_CIRCULAR"	, 690023);
- define("ALGORITHM_CENTRAL"	, 690024);
+ define("ALGORITHM_RANDOM", 690021);
+ define("ALGORITHM_WEIGHTED", 690022);
+ define("ALGORITHM_CIRCULAR", 690023);
+ define("ALGORITHM_CENTRAL", 690024);
 
- define("LABEL_CLASSIC"		, 690031);
- define("LABEL_LIGHT"		, 690032);
+ define("LABEL_CLASSIC", 690031);
+ define("LABEL_LIGHT", 690032);
 
  /* pSpring class definition */
  class pSpring
@@ -133,7 +133,7 @@
      }
 
      /* Set link properties */
-     public function linkProperties($FromNode,$ToNode,$Settings)
+     public function linkProperties($FromNode, $ToNode, $Settings)
      {
          if (!isset($this->Data[$FromNode])) {
              return(0);
@@ -219,7 +219,7 @@
      }
 
      /* Add a node */
-     public function addNode($NodeID,$Settings="")
+     public function addNode($NodeID, $Settings="")
      {
          /* if the node already exists, ignore */
          if (isset($this->Data[$NodeID])) {
@@ -284,7 +284,7 @@
      }
 
      /* Set color attribute for a list of nodes */
-     public function setNodesColor($Nodes,$Settings="")
+     public function setNodesColor($Nodes, $Settings="")
      {
          if (is_array($Nodes)) {
              foreach ($Nodes as $Key => $NodeID) {
@@ -372,7 +372,7 @@
          $this->Data[$SourceID]["Connections"][] = $TargetID;
      }
      /* Get the median linked nodes position */
-     public function getMedianOffset($Key,$X,$Y)
+     public function getMedianOffset($Key, $X, $Y)
      {
          $Cpt = 1;
          if (isset($this->Data[$Key]["Connections"])) {
@@ -415,7 +415,7 @@
          foreach ($this->Data as $Key => $Settings) {
              if (isset($Settings["Connections"])) {
                  foreach ($Settings["Connections"] as $ID => $ConnectionID) {
-                     $this->checkConnection($ConnectionID,$Key);
+                     $this->checkConnection($ConnectionID, $Key);
                  }
              }
          }
@@ -448,7 +448,7 @@
                      }
 
                      $Ring  = $MaxConnections - $Connections;
-                     $Angle = rand(0,360);
+                     $Angle = rand(0, 360);
            
                      $this->Data[$Key]["X"] = cos(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterX;
                      $this->Data[$Key]["Y"] = sin(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterY;
@@ -488,14 +488,14 @@
                                  $Tries = 0;
                                  while (!$Done && $Tries <= $Weight*2) {
                                      $Tries++;
-                                     $Angle = floor(rand(0,$Weight)*$AngleDivision);
+                                     $Angle = floor(rand(0, $Weight)*$AngleDivision);
                                      if (!isset($this->Data[$BiggestPartner]["Angular"][$Angle]) || !isset($this->Data[$BiggestPartner]["Angular"])) {
                                          $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
                                          $Done = TRUE;
                                      }
                                  }
                                  if (!$Done) {
-                                     $Angle = rand(0,360);
+                                     $Angle = rand(0, 360);
                                      $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
                                  }
 
@@ -526,12 +526,12 @@
 
                          if ($Connections == $i) {
                              $Ring  = $MaxConnections - $Connections;
-                             $Angle = rand(0,360);
+                             $Angle = rand(0, 360);
 
                              $X = cos(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterX;
                              $Y = sin(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterY;
 
-                             $MedianOffset = $this->getMedianOffset($Key,$X,$Y);
+                             $MedianOffset = $this->getMedianOffset($Key, $X, $Y);
 
                              $this->Data[$Key]["X"] = $MedianOffset["X"];
                              $this->Data[$Key]["Y"] = $MedianOffset["Y"];
@@ -542,8 +542,8 @@
          } elseif ($Algorithm == ALGORITHM_RANDOM) {
              foreach ($this->Data as $Key => $Settings) {
                  if ($Settings["Type"] == NODE_TYPE_FREE) {
-                     $this->Data[$Key]["X"] = $CenterX + rand(-20,20);
-                     $this->Data[$Key]["Y"] = $CenterY + rand(-20,20);
+                     $this->Data[$Key]["X"] = $CenterX + rand(-20, 20);
+                     $this->Data[$Key]["Y"] = $CenterY + rand(-20, 20);
                  }
                  if ($Settings["Type"] == NODE_TYPE_CENTRAL) {
                      $this->Data[$Key]["X"] = $CenterX;
@@ -571,12 +571,12 @@
                          $Y2 = $this->Data[$Key2]["Y"];
                          $FreeZone = $this->Data[$Key2]["FreeZone"];
 
-                         $Distance = $this->getDistance($X1,$Y1,$X2,$Y2);
-                         $Angle    = $this->getAngle($X1,$Y1,$X2,$Y2) + 180;
+                         $Distance = $this->getDistance($X1, $Y1, $X2, $Y2);
+                         $Angle    = $this->getAngle($X1, $Y1, $X2, $Y2) + 180;
 
                          /* Nodes too close, repulsion occurs */
                          if ($Distance < $FreeZone) {
-                             $Force = log(pow(2,$FreeZone-$Distance));
+                             $Force = log(pow(2, $FreeZone-$Distance));
                              if ($Force > 1) {
                                  $this->Data[$Key]["Vectors"][] = array("Type"=>"R","Angle"=>$Angle % 360,"Force"=>$Force);
                              }
@@ -592,8 +592,8 @@
                              $Y2 = $this->Data[$NodeID]["Y"];
                              $FreeZone = $this->Data[$Key2]["FreeZone"];
 
-                             $Distance = $this->getDistance($X1,$Y1,$X2,$Y2);
-                             $Angle    = $this->getAngle($X1,$Y1,$X2,$Y2);
+                             $Distance = $this->getDistance($X1, $Y1, $X2, $Y2);
+                             $Angle    = $this->getAngle($X1, $Y1, $X2, $Y2);
 
                              if ($Distance > $FreeZone) {
                                  $Force = log(($Distance-$FreeZone)+1);
@@ -694,7 +694,7 @@
                              $Y4 = $Link["Y2"];
 
                              if (!($X1 == $X3 && $X2 == $X4 && $Y1 == $Y3 && $Y2 == $Y4)) {
-                                 if ($this->intersect($X1,$Y1,$X2,$Y2,$X3,$Y3,$X4,$Y4)) {
+                                 if ($this->intersect($X1, $Y1, $X2, $Y2, $X3, $Y3, $X4, $Y4)) {
                                      if ($Link["Source"] != $Settings["Name"] && $Link["Source"] != $this->Data[$NodeID]["Name"] && $Link["Destination"] != $Settings["Name"] && $Link["Destination"] != $this->Data[$NodeID]["Name"]) {
                                          $Conflicts++;
                                      }
@@ -752,7 +752,7 @@
      }
 
      /* Create the encoded string */
-     public function drawSpring($Object,$Settings="")
+     public function drawSpring($Object, $Settings="")
      {
          $this->pChartObject = $Object;
 
@@ -833,7 +833,7 @@
 
                          $X2 = $this->Data[$NodeID]["X"];
                          $Y2 = $this->Data[$NodeID]["Y"];
-                         $this->pChartObject->drawLine($X,$Y,$X2,$Y2,$Color);
+                         $this->pChartObject->drawLine($X, $Y, $X2, $Y2, $Color);
                          $Drawn[$Key][$NodeID] = TRUE;
 
                          if (isset($this->Links) && $this->Links != "") {
@@ -843,15 +843,15 @@
                                  $TxtY  = ($Y2 - $Y)/2 + $Y;
 
                                  if ($X <= $X2) {
-                                     $Angle = (360-$this->getAngle($X,$Y,$X2,$Y2)) % 360;
+                                     $Angle = (360-$this->getAngle($X, $Y, $X2, $Y2)) % 360;
                                  } else {
-                                     $Angle = (360-$this->getAngle($X2,$Y2,$X,$Y)) % 360;
+                                     $Angle = (360-$this->getAngle($X2, $Y2, $X, $Y)) % 360;
                                  }
 
                                  $Settings          = $Color;
                                  $Settings["Angle"] = $Angle;
                                  $Settings["Align"] = TEXT_ALIGN_BOTTOMMIDDLE;
-                                 $this->pChartObject->drawText($TxtX,$TxtY,$Name,$Settings);
+                                 $this->pChartObject->drawText($TxtX, $TxtY, $Name, $Settings);
                              }
                          }
                      }
@@ -866,7 +866,7 @@
                  $Y	 = $Settings["Y"];
                  $FreeZone = $Settings["FreeZone"];
 
-                 $this->pChartObject->drawFilledCircle($X,$Y,$FreeZone,array("R"=>0,"G"=>0,"B"=>0,"Alpha"=>2));
+                 $this->pChartObject->drawFilledCircle($X, $Y, $FreeZone, array("R"=>0,"G"=>0,"B"=>0,"Alpha"=>2));
              }
          }
 
@@ -883,7 +883,7 @@
              $Color	 = array("R"=>$Settings["R"],"G"=>$Settings["G"],"B"=>$Settings["B"],"Alpha"=>$Settings["Alpha"],"BorderR"=>$Settings["BorderR"],"BorderG"=>$Settings["BorderG"],"BorderB"=>$Settings["BorderB"],"BorderApha"=>$Settings["BorderAlpha"]);
 
              if ($Shape == NODE_SHAPE_CIRCLE) {
-                 $this->pChartObject->drawFilledCircle($X,$Y,$Size,$Color);
+                 $this->pChartObject->drawFilledCircle($X, $Y, $Size, $Color);
              } elseif ($Shape == NODE_SHAPE_TRIANGLE) {
                  $Points = "";
                  $Points[] = cos(deg2rad(270)) * $Size + $X;
@@ -892,11 +892,11 @@
                  $Points[] = sin(deg2rad(45)) * $Size + $Y;
                  $Points[] = cos(deg2rad(135)) * $Size + $X;
                  $Points[] = sin(deg2rad(135)) * $Size + $Y;
-                 $this->pChartObject->drawPolygon($Points,$Color);
+                 $this->pChartObject->drawPolygon($Points, $Color);
              } elseif ($Shape == NODE_SHAPE_SQUARE) {
                  $Offset = $Size/2;
                  $Size = $Size / 2;
-                 $this->pChartObject->drawFilledRectangle($X-$Offset,$Y-$Offset,$X+$Offset,$Y+$Offset,$Color);
+                 $this->pChartObject->drawFilledRectangle($X-$Offset, $Y-$Offset, $X+$Offset, $Y+$Offset, $Color);
              }
 
              if ($Name != "") {
@@ -904,7 +904,7 @@
 
                  if ($this->Labels["Type"] == LABEL_LIGHT) {
                      $LabelOptions["Align"] = TEXT_ALIGN_BOTTOMLEFT;
-                     $this->pChartObject->drawText($X,$Y,$Name,$LabelOptions);
+                     $this->pChartObject->drawText($X, $Y, $Name, $LabelOptions);
                  } elseif ($this->Labels["Type"] == LABEL_CLASSIC) {
                      $LabelOptions["Align"]         = TEXT_ALIGN_TOPMIDDLE;
                      $LabelOptions["DrawBox"]       = TRUE;
@@ -914,7 +914,7 @@
                      $LabelOptions["BoxRounded"]    = TRUE;
                      $LabelOptions["NoShadow"]      = TRUE;
 
-                     $this->pChartObject->drawText($X,$Y+$Size+$TextPadding,$Name,$LabelOptions);
+                     $this->pChartObject->drawText($X, $Y+$Size+$TextPadding, $Name, $LabelOptions);
                  }
              }
          }
@@ -936,7 +936,7 @@
                          $X2 = cos(deg2rad($Angle)) * $Force * $Factor + $X1;
                          $Y2 = sin(deg2rad($Angle)) * $Force * $Factor + $Y1;
 
-                         $this->pChartObject->drawArrow($X1,$Y1,$X2,$Y2,$Color);
+                         $this->pChartObject->drawArrow($X1, $Y1, $X2, $Y2, $Color);
                      }
                  }
              }
@@ -946,17 +946,17 @@
      }
 
      /* Return the distance between two points */
-     public function getDistance($X1,$Y1,$X2,$Y2)
+     public function getDistance($X1, $Y1, $X2, $Y2)
      {
          return (sqrt(($X2-$X1)*($X2-$X1)+($Y2-$Y1)*($Y2-$Y1)));
      }
 
      /* Return the angle made by a line and the X axis */
-     public function getAngle($X1,$Y1,$X2,$Y2)
+     public function getAngle($X1, $Y1, $X2, $Y2)
      {
          $Opposite = $Y2 - $Y1;
          $Adjacent = $X2 - $X1;
-         $Angle = rad2deg(atan2($Opposite,$Adjacent));
+         $Angle = rad2deg(atan2($Opposite, $Adjacent));
          if ($Angle > 0) {
              return($Angle);
          } else {
@@ -964,7 +964,7 @@
          }
      }
 
-     public function intersect($X1,$Y1,$X2,$Y2,$X3,$Y3,$X4,$Y4)
+     public function intersect($X1, $Y1, $X2, $Y2, $X3, $Y3, $X4, $Y4)
      {
          $A = (($X3 * $Y4 - $X4 * $Y3) * ($X1 - $X2) - ($X1 * $Y2 - $X2 * $Y1) * ($X3 - $X4));
          $B = (($Y1 - $Y2) * ($X3 - $X4) - ($Y3 - $Y4) * ($X1 - $X2));
@@ -980,8 +980,8 @@
          }
          $Yi = $Xi * (($Y1 - $Y2)/$C) + (($X1 * $Y2 - $X2 * $Y1)/$C);
 
-         if ($Xi >= min($X1,$X2) && $Xi >= min($X3,$X4) && $Xi <= max($X1,$X2) && $Xi <= max($X3,$X4)) {
-             if ($Yi >= min($Y1,$Y2) && $Yi >= min($Y3,$Y4) && $Yi <= max($Y1,$Y2) && $Yi <= max($Y3,$Y4)) {
+         if ($Xi >= min($X1, $X2) && $Xi >= min($X3, $X4) && $Xi <= max($X1, $X2) && $Xi <= max($X3, $X4)) {
+             if ($Yi >= min($Y1, $Y2) && $Yi >= min($Y3, $Y4) && $Yi <= max($Y1, $Y2) && $Yi <= max($Y3, $Y4)) {
                  return(TRUE);
              }
          }

@@ -89,7 +89,7 @@ class nusoap_fault extends nusoap_base
     * @param string $faultstring human readable error message
     * @param mixed $faultdetail detail, typically a string or array of string
     */
-    public function nusoap_fault($faultcode,$faultactor='',$faultstring='',$faultdetail='')
+    public function nusoap_fault($faultcode, $faultactor='', $faultstring='', $faultdetail='')
     {
         parent::nusoap_base();
         $this->faultcode = $faultcode;

@@ -595,11 +595,11 @@ class XMLSecurityDSig
     public static function generateGUID($prefix='pfx')
     {
         $uuid = md5(uniqid(mt_rand(), true));
-        $guid =  $prefix.substr($uuid,0,8)."-".
-                substr($uuid,8,4)."-".
-                substr($uuid,12,4)."-".
-                substr($uuid,16,4)."-".
-                substr($uuid,20,12);
+        $guid =  $prefix.substr($uuid, 0, 8)."-".
+                substr($uuid, 8, 4)."-".
+                substr($uuid, 12, 4)."-".
+                substr($uuid, 16, 4)."-".
+                substr($uuid, 20, 12);
         return $guid;
     }
 

@@ -85,7 +85,7 @@ if (!empty($_REQUEST['remove_default_id'])) {
     if (!isset($cfg->config['addAjaxBannedModules'])) {
         $cfg->config['addAjaxBannedModules'] = array();
     }
-    if (!in_array('SecurityGroups',$cfg->config['addAjaxBannedModules'])) {
+    if (!in_array('SecurityGroups', $cfg->config['addAjaxBannedModules'])) {
         $cfg->config['addAjaxBannedModules'][] = 'SecurityGroups';
     }
 

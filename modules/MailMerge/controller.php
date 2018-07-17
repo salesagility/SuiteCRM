@@ -108,9 +108,9 @@ class MailMergeController extends SugarController
 
             if ($using_cp) {
                 $fields = array('id', 'first_name', 'last_name');
-                $dataList = $seed->retrieveTargetList($where, $fields, $offset,-1,$max,$deleted);
+                $dataList = $seed->retrieveTargetList($where, $fields, $offset, -1, $max, $deleted);
             } else {
-                $dataList = $seed->get_list($order_by, $where, $offset,-1,$max,$deleted);
+                $dataList = $seed->get_list($order_by, $where, $offset, -1, $max, $deleted);
             }
 
             $list = $dataList['list'];

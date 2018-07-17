@@ -172,7 +172,7 @@ class SearchForm
                     }
                     if ($addAllBeanFields) {
                         foreach ($this->bean->field_name_map as $key => $params) {
-                            if (in_array($key . '_basic' , $arrayKeys) && !in_array($key, $searchFieldsKeys)) {
+                            if (in_array($key . '_basic', $arrayKeys) && !in_array($key, $searchFieldsKeys)) {
                                 $this->searchFields[$key] = array('query_type' => 'default',
                                                                   'value'      => $array[$key . '_basic']);
                             }
@@ -445,7 +445,7 @@ class SearchForm
      */
     public function displayTabs($currentKey)
     {
-        $GLOBALS['log']->debug('SearchForm.php->displayTabs(): tabs='.print_r($this->tabs,true));
+        $GLOBALS['log']->debug('SearchForm.php->displayTabs(): tabs='.print_r($this->tabs, true));
 
         $tabPanel = new SugarWidgetTabs($this->tabs, $currentKey, 'SUGAR.searchForm.searchFormSelect');
 
@@ -557,7 +557,7 @@ class SearchForm
         $GLOBALS['log']->debug('SearchForm.php->displayHeader()');
         $header_text = '';
         if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-            $header_text = "<a href='index.php?action=index&module=DynamicLayout&from_action=SearchForm&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif','Edit Layout')."</a>";
+            $header_text = "<a href='index.php?action=index&module=DynamicLayout&from_action=SearchForm&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', 'Edit Layout')."</a>";
         }
 
         echo $header_text . $this->displayTabs($this->module . '|' . $view);

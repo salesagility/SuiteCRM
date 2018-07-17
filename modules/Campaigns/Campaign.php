@@ -214,12 +214,12 @@ class Campaign extends SugarBean
         if ($this->campaign_type != 'Email') {
             $temp_array['OPTIONAL_LINK']="display:none";
         }
-        $temp_array['TRACK_CAMPAIGN_TITLE'] = translate("LBL_TRACK_BUTTON_TITLE",'Campaigns');
+        $temp_array['TRACK_CAMPAIGN_TITLE'] = translate("LBL_TRACK_BUTTON_TITLE", 'Campaigns');
         $temp_array['TRACK_CAMPAIGN_IMAGE'] = SugarThemeRegistry::current()->getImageURL('view_status.gif');
-        $temp_array['LAUNCH_WIZARD_TITLE'] = translate("LBL_TO_WIZARD_TITLE",'Campaigns');
+        $temp_array['LAUNCH_WIZARD_TITLE'] = translate("LBL_TO_WIZARD_TITLE", 'Campaigns');
         $temp_array['LAUNCH_WIZARD_IMAGE'] = SugarThemeRegistry::current()->getImageURL('edit_wizard.gif');
-        $temp_array['TRACK_VIEW_ALT_TEXT'] = translate("LBL_TRACK_BUTTON_TITLE",'Campaigns');
-        $temp_array['LAUNCH_WIZ_ALT_TEXT'] = translate("LBL_TO_WIZARD_TITLE",'Campaigns');
+        $temp_array['TRACK_VIEW_ALT_TEXT'] = translate("LBL_TRACK_BUTTON_TITLE", 'Campaigns');
+        $temp_array['LAUNCH_WIZ_ALT_TEXT'] = translate("LBL_TO_WIZARD_TITLE", 'Campaigns');
 
         return $temp_array;
     }
@@ -348,7 +348,7 @@ class Campaign extends SugarBean
             unset($query_array['group_by']);
         }
 
-        $query = (implode(" ",$query_array));
+        $query = (implode(" ", $query_array));
         return $query;
     }
 
@@ -380,7 +380,7 @@ class Campaign extends SugarBean
 
         //get select query from email man
         $man = new EmailMan();
-        $listquery= $man->create_queue_items_query('',str_replace(array("WHERE","where"),"",$query_array['where']),null,$query_array);
+        $listquery= $man->create_queue_items_query('', str_replace(array("WHERE","where"), "", $query_array['where']), null, $query_array);
         return $listquery;
     }
     //	function get_prospect_list_entries() {
@@ -434,7 +434,7 @@ class Campaign extends SugarBean
     {
         //include the distinct filter if a marketing id is defined, which means we need to filter out duplicates by the passed in group by.
         //if no marketing id is specified, it is understood there might be duplicate target entries so no need to filter out
-        if ((strpos($query,'marketing_id') !== false)&& isset($params['distinct'])) {
+        if ((strpos($query, 'marketing_id') !== false)&& isset($params['distinct'])) {
             $pattern = '/SELECT(.*?)(\s){1}FROM(\s){1}/is';  // ignores the case
             $replacement = 'SELECT COUNT(DISTINCT ' . $params['distinct'] . ') c FROM ';
             $query = preg_replace($pattern, $replacement, $query, 1);

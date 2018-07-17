@@ -78,7 +78,7 @@ class ConfiguratorViewEdit extends ViewEdit
         global $mod_strings;
         
         return array(
-           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
            $mod_strings['LBL_SYSTEM_SETTINGS']
            );
     }
@@ -130,7 +130,7 @@ class ConfiguratorViewEdit extends ViewEdit
         $this->ss->assign('error', $configurator->errors);
         $this->ss->assign("AUTO_REFRESH_INTERVAL_OPTIONS", get_select_options_with_id($app_list_strings['dashlet_auto_refresh_options_admin'], isset($configurator->config['dashlet_auto_refresh_min']) ? $configurator->config['dashlet_auto_refresh_min'] : 30));
         $this->ss->assign('LANGUAGES', get_languages());
-        $this->ss->assign("JAVASCRIPT",get_set_focus_js(). get_configsettings_js());
+        $this->ss->assign("JAVASCRIPT", get_set_focus_js(). get_configsettings_js());
         $this->ss->assign('company_logo', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $this->ss->assign("settings", $focus->settings);
         $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $mailSendType));
@@ -155,9 +155,9 @@ class ConfiguratorViewEdit extends ViewEdit
             $this->ss->assign('lead_conv_activities', get_select_options_with_id(Lead::getActivitiesOptions(), ''));
         }
         if (!empty($configurator->config['logger']['file']['suffix'])) {
-            $this->ss->assign('filename_suffix', get_select_options_with_id(SugarLogger::$filename_suffix,$configurator->config['logger']['file']['suffix']));
+            $this->ss->assign('filename_suffix', get_select_options_with_id(SugarLogger::$filename_suffix, $configurator->config['logger']['file']['suffix']));
         } else {
-            $this->ss->assign('filename_suffix', get_select_options_with_id(SugarLogger::$filename_suffix,''));
+            $this->ss->assign('filename_suffix', get_select_options_with_id(SugarLogger::$filename_suffix, ''));
         }
         if (isset($configurator->config['logger_visible'])) {
             $this->ss->assign('logger_visible', $configurator->config['logger_visible']);

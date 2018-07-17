@@ -344,4 +344,4 @@ $dictionary['AOR_Field'] = array(
 if (!class_exists('VardefManager')) {
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Fields','AOR_Field', array('basic'));
+VardefManager::createVardef('AOR_Fields', 'AOR_Field', array('basic'));

@@ -56,7 +56,7 @@ $curr_lang = 'en_us';
 if (isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)) {
     $curr_lang = $GLOBALS['current_language'];
 }
-$mod_strings = return_module_language($curr_lang, 'UpgradeWizard',true);
+$mod_strings = return_module_language($curr_lang, 'UpgradeWizard', true);
 
 $curr_lang = 'en_us';
 if (isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)) {
@@ -66,9 +66,9 @@ return_module_language($curr_lang, 'UpgradeWizard');
 
 logThis('at preflight.php');
 //set the upgrade progress status.
-set_upgrade_progress('preflight','in_progress');
+set_upgrade_progress('preflight', 'in_progress');
 $php_warnings = '';
-if (version_compare(phpversion(),'5.2.0') >=0) {
+if (version_compare(phpversion(), '5.2.0') >=0) {
     $stop = true; // flag to show "next"
     if (isset($_SESSION['files'])) {
         unset($_SESSION['files']);
@@ -386,7 +386,7 @@ eoq5;
     $uwMain = $final.$form5;
 
     //set the upgrade progress status.
-    set_upgrade_progress('preflight','done');
+    set_upgrade_progress('preflight', 'done');
 } else {
     $stop = true;
     if (empty($mod_strings['LBL_INCOMPATIBLE_PHP_VERSION'])) {

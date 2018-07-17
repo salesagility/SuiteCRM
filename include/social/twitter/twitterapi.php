@@ -44,12 +44,12 @@ $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_se
 /* If method is set change API call made. Test is called by default. */
 $tweets = $connection->get('statuses/user_timeline', array('screen_name' => $_REQUEST['twitter_user']));
 
-$formatted_display = format_tweets($db,$tweets);
+$formatted_display = format_tweets($db, $tweets);
 
 echo $formatted_display;
 
 
-function format_tweets($db,$tweets)
+function format_tweets($db, $tweets)
 {
     $i = 0;
     $html ='';
@@ -65,7 +65,7 @@ function format_tweets($db,$tweets)
     foreach ($tweets as $tweet) {
         $limit = 255;
 
-        $tweet['text'] = format_feed_tweets($db,$tweet, $limit);
+        $tweet['text'] = format_feed_tweets($db, $tweet, $limit);
 
         if (count($tweet['entities']['hashtags']) > 0) {
             $tweets['text'] = replace_hashtags($db, $tweet);

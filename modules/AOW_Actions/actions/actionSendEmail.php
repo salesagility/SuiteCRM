@@ -67,12 +67,12 @@ class actionSendEmail extends actionBase
         return array('modules/AOW_Actions/actions/actionSendEmail.js');
     }
 
-    public function edit_display($line,SugarBean $bean = null, $params = array())
+    public function edit_display($line, SugarBean $bean = null, $params = array())
     {
         global $app_list_strings;
         $email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 
-        if (!in_array($bean->module_dir,getEmailableModules())) {
+        if (!in_array($bean->module_dir, getEmailableModules())) {
             unset($app_list_strings['aow_email_type_list']['Record Email']);
         }
         $targetOptions = getRelatedEmailableFields($bean->module_dir);
@@ -111,8 +111,8 @@ class actionSendEmail extends actionBase
         $html .= "<td valign='top'>";
         $html .= "<select name='aow_actions_param[".$line."][email_template]' id='aow_actions_param_email_template".$line."' onchange='show_edit_template_link(this,".$line.");' >".get_select_options_with_id($email_templates_arr, $params['email_template'])."</select>";
 
-        $html .= "&nbsp;<a href='javascript:open_email_template_form(".$line.")' >".translate('LBL_CREATE_EMAIL_TEMPLATE','AOW_Actions')."</a>";
-        $html .= "&nbsp;<span name='edit_template' id='aow_actions_edit_template_link".$line."' $hidden><a href='javascript:edit_email_template_form(".$line.")' >".translate('LBL_EDIT_EMAIL_TEMPLATE','AOW_Actions')."</a></span>";
+        $html .= "&nbsp;<a href='javascript:open_email_template_form(".$line.")' >".translate('LBL_CREATE_EMAIL_TEMPLATE', 'AOW_Actions')."</a>";
+        $html .= "&nbsp;<span name='edit_template' id='aow_actions_edit_template_link".$line."' $hidden><a href='javascript:edit_email_template_form(".$line.")' >".translate('LBL_EDIT_EMAIL_TEMPLATE', 'AOW_Actions')."</a></span>";
         $html .= "</td>";
         $html .= "</tr>";
         $html .= "<tr>";
@@ -206,13 +206,13 @@ class actionSendEmail extends actionBase
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
                                     $security_group = new SecurityGroup();
                                     $security_group->retrieve($params['email'][$key][1]);
-                                    $users = $security_group->get_linked_beans('users','User');
+                                    $users = $security_group->get_linked_beans('users', 'User');
                                     $r_users = array();
                                     if ($params['email'][$key][2] != '') {
                                         require_once('modules/ACLRoles/ACLRole.php');
                                         $role = new ACLRole();
                                         $role->retrieve($params['email'][$key][2]);
-                                        $role_users = $role->get_linked_beans('users','User');
+                                        $role_users = $role->get_linked_beans('users', 'User');
                                         foreach ($role_users as $role_user) {
                                             $r_users[$role_user->id] = $role_user->name;
                                         }
@@ -230,7 +230,7 @@ class actionSendEmail extends actionBase
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();
                                 $role->retrieve($params['email'][$key][2]);
-                                $users = $role->get_linked_beans('users','User');
+                                $users = $role->get_linked_beans('users', 'User');
                                 break;
                             Case 'all':
                             default:
@@ -268,9 +268,9 @@ class actionSendEmail extends actionBase
                             } elseif ($bean->load_relationship($relField)) {
                                 $rel_module = $bean->$relField->getRelatedModuleName();
                             }
-                            $linkedBeans = $bean->get_linked_beans($relField,$rel_module);
+                            $linkedBeans = $bean->get_linked_beans($relField, $rel_module);
                         } else {
-                            $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
+                            $linkedBeans = $bean->get_linked_beans($field['link'], $field['module']);
                         }
                         if ($linkedBeans) {
                             foreach ($linkedBeans as $linkedBean) {
@@ -409,10 +409,10 @@ class actionSendEmail extends actionBase
                 }
             } elseif ($bean_arr['type'] == 'link') {
                 if (!isset($bean_arr['module']) || $bean_arr['module'] == '') {
-                    $bean_arr['module'] = getRelatedModule($bean->module_dir,$bean_arr['name']);
+                    $bean_arr['module'] = getRelatedModule($bean->module_dir, $bean_arr['name']);
                 }
                 if (isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress') {
-                    $linkedBeans = $bean->get_linked_beans($bean_arr['name'],$bean_arr['module'], array(), 0, 1);
+                    $linkedBeans = $bean->get_linked_beans($bean_arr['name'], $bean_arr['module'], array(), 0, 1);
                     if ($linkedBeans) {
                         $linkedBean = $linkedBeans[0];
                         if (!isset($object_arr[$linkedBean->module_dir])) {
@@ -439,15 +439,15 @@ class actionSendEmail extends actionBase
 
         $url =  $cleanUrl."/index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}";
 
-        $template->subject = str_replace("\$contact_user","\$user",$template->subject);
-        $template->body_html = str_replace("\$contact_user","\$user",$template->body_html);
-        $template->body = str_replace("\$contact_user","\$user",$template->body);
+        $template->subject = str_replace("\$contact_user", "\$user", $template->subject);
+        $template->body_html = str_replace("\$contact_user", "\$user", $template->body_html);
+        $template->body = str_replace("\$contact_user", "\$user", $template->body);
         $template->subject = aowTemplateParser::parse_template($template->subject, $object_arr);
         $template->body_html = aowTemplateParser::parse_template($template->body_html, $object_arr);
-        $template->body_html = str_replace("\$url",$url,$template->body_html);
+        $template->body_html = str_replace("\$url", $url, $template->body_html);
         $template->body_html = str_replace('$sugarurl', $sugar_config['site_url'], $template->body_html);
         $template->body = aowTemplateParser::parse_template($template->body, $object_arr);
-        $template->body = str_replace("\$url",$url,$template->body);
+        $template->body = str_replace("\$url", $url, $template->body);
         $template->body = str_replace('$sugarurl', $sugar_config['site_url'], $template->body);
     }
 
@@ -456,7 +456,7 @@ class actionSendEmail extends actionBase
         $attachments = array();
         if ($template->id != '') {
             $note_bean = new Note();
-            $notes = $note_bean->get_full_list('',"parent_type = 'Emails' AND parent_id = '".$template->id."'");
+            $notes = $note_bean->get_full_list('', "parent_type = 'Emails' AND parent_id = '".$template->id."'");
 
             if ($notes != null) {
                 foreach ($notes as $note) {
@@ -506,9 +506,9 @@ class actionSendEmail extends actionBase
 
         //now create email
         if ($mail->Send()) {
-            $emailObj->to_addrs= implode(',',$emailTo);
-            $emailObj->cc_addrs= implode(',',$emailCc);
-            $emailObj->bcc_addrs= implode(',',$emailBcc);
+            $emailObj->to_addrs= implode(',', $emailTo);
+            $emailObj->cc_addrs= implode(',', $emailCc);
+            $emailObj->bcc_addrs= implode(',', $emailBcc);
             $emailObj->type= 'out';
             $emailObj->deleted = '0';
             $emailObj->name = $mail->Subject;

@@ -61,8 +61,8 @@ class ViewCampaignconfig extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
-    	   translate('LBL_CAMPAIGN_CONFIG_TITLE','Administration'),
+    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
+    	   translate('LBL_CAMPAIGN_CONFIG_TITLE', 'Administration'),
     	   );
     }
     
@@ -74,7 +74,7 @@ class ViewCampaignconfig extends SugarView
         global $current_user;
  	    
         if (!is_admin($current_user)
- 	            && !is_admin_for_module($GLOBALS['current_user'],'Campaigns')) {
+ 	            && !is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
             sugar_die("Unauthorized access to administration.");
         }
     }
@@ -114,12 +114,12 @@ class ViewCampaignconfig extends SugarView
         if (!isset($focus->settings['massemailer_tracking_entities_location_type']) or empty($focus->settings['massemailer_tracking_entities_location_type']) or $focus->settings['massemailer_tracking_entities_location_type']=='1') {
             $this->ss->assign("default_checked", "checked");
             $this->ss->assign("TRACKING_ENTRIES_LOCATION_STATE", "disabled");
-            $this->ss->assign("TRACKING_ENTRIES_LOCATION",$mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
+            $this->ss->assign("TRACKING_ENTRIES_LOCATION", $mod_strings['TRACKING_ENTRIES_LOCATION_DEFAULT_VALUE']);
         } else {
             $this->ss->assign("userdefined_checked", "checked");
-            $this->ss->assign("TRACKING_ENTRIES_LOCATION",$focus->settings["massemailer_tracking_entities_location"]);
+            $this->ss->assign("TRACKING_ENTRIES_LOCATION", $focus->settings["massemailer_tracking_entities_location"]);
         }
-        $this->ss->assign("SITEURL",$sugar_config['site_url']);
+        $this->ss->assign("SITEURL", $sugar_config['site_url']);
         
         
         // Change the default campaign to not store a copy of each message.
@@ -132,7 +132,7 @@ class ViewCampaignconfig extends SugarView
         $email = new Email();
         $this->ss->assign('ROLLOVER', $email->rolloverStyle);
         
-        $this->ss->assign("JAVASCRIPT",get_validate_record_js());
+        $this->ss->assign("JAVASCRIPT", get_validate_record_js());
         $this->ss->display("modules/EmailMan/tpls/campaignconfig.tpl");
     }
 }

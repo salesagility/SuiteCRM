@@ -58,7 +58,7 @@ global $app_strings;
 
 //-----------begin replacing text input tags that have been marked with text area tags
 //get array of text areas strings to process
-$bodyHTML = html_entity_decode($_REQUEST['body_html'],ENT_QUOTES);
+$bodyHTML = html_entity_decode($_REQUEST['body_html'], ENT_QUOTES);
 
 while (strpos($bodyHTML, "ta_replace") !== false) {
 
@@ -71,7 +71,7 @@ while (strpos($bodyHTML, "ta_replace") !== false) {
     $working_str = substr($bodyHTML, $marker-3, $end_border-($marker-3));
 
     //replace input markup with text areas markups
-    $new_str = str_replace('input','textarea',$working_str);
+    $new_str = str_replace('input', 'textarea', $working_str);
     $new_str = str_replace("type=\"text\"", ' ', $new_str);
     $new_str = $new_str . '> </textarea';
 
@@ -82,7 +82,7 @@ while (strpos($bodyHTML, "ta_replace") !== false) {
     $new_str = str_replace('/> </textarea>', '> </textarea>', $new_str);
 
     //merge the processed string back into bodyhtml string
-    $bodyHTML = str_replace($working_str , $new_str, $bodyHTML);
+    $bodyHTML = str_replace($working_str, $new_str, $bodyHTML);
 }
 //<<<----------end replacing marked text inputs with text area tags
 
@@ -110,7 +110,7 @@ $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 $webformlink = "<b>$mod_strings[LBL_DOWNLOAD_TEXT_WEB_TO_LEAD_FORM]</b><br/>";
 $webformlink .= "<a href=\"index.php?entryPoint=download&id={$guid}&isTempFile=1&tempName=WebToLeadForm.html&type=temp\">$mod_strings[LBL_DOWNLOAD_WEB_TO_LEAD_FORM]</a>";
-$xtpl->assign("LINK_TO_WEB_FORM",$webformlink);
+$xtpl->assign("LINK_TO_WEB_FORM", $webformlink);
 $xtpl->assign("RAW_SOURCE", $html);
 $xtpl->parse("main.copy_source");
 $xtpl->parse("main");

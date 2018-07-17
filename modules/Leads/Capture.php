@@ -76,7 +76,7 @@ if (!empty($_POST['user']) && !empty($users[$_POST['user']])) {
         $_POST['record'] ='';
 
         if (isset($_POST['_splitName'])) {
-            $name = explode(' ',$_POST['name']);
+            $name = explode(' ', $_POST['name']);
             if (sizeof($name) == 1) {
                 $_POST['first_name'] = '';
                 $_POST['last_name'] = $name[0];

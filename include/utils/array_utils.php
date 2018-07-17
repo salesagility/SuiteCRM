@@ -66,7 +66,7 @@ function var_export_helper($tempArray)
 function override_value_to_string($array_name, $value_name, $value)
 {
     $string = "\${$array_name}[". var_export($value_name, true). "] = ";
-    $string .= var_export_helper($value,true);
+    $string .= var_export_helper($value, true);
     return $string . ";";
 }
 
@@ -104,10 +104,10 @@ function override_value_to_string_recursive($key_names, $array_name, $value, $ev
 function override_recursive_helper($key_names, $array_name, $value)
 {
     if (empty($key_names)) {
-        return "=".var_export_helper($value,true).";";
+        return "=".var_export_helper($value, true).";";
     } else {
         $key = array_shift($key_names);
-        return "[".var_export($key,true)."]". override_recursive_helper($key_names, $array_name,$value);
+        return "[".var_export($key, true)."]". override_recursive_helper($key_names, $array_name, $value);
     }
 }
 

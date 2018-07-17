@@ -142,7 +142,7 @@ if (!empty ($_REQUEST['display'])) {
         echo $mod_strings['LBL_LOG_NOT_CHANGED'].'<br>';
     } else {
         $fp = sugar_fopen($logFile, 'r');
-        fseek($fp, $pos , SEEK_END);
+        fseek($fp, $pos, SEEK_END);
         echo '<pre>';
         while ($line = fgets($fp)) {
             $line = filter_var($line, FILTER_SANITIZE_SPECIAL_CHARS);

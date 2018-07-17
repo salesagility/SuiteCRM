@@ -53,10 +53,10 @@ if (!defined('SMARTY_CORE_DIR')) {
     define('SMARTY_CORE_DIR', SMARTY_DIR . 'internals' . DIRECTORY_SEPARATOR);
 }
 
-define('SMARTY_PHP_PASSTHRU',   0);
-define('SMARTY_PHP_QUOTE',      1);
-define('SMARTY_PHP_REMOVE',     2);
-define('SMARTY_PHP_ALLOW',      3);
+define('SMARTY_PHP_PASSTHRU', 0);
+define('SMARTY_PHP_QUOTE', 1);
+define('SMARTY_PHP_REMOVE', 2);
+define('SMARTY_PHP_ALLOW', 3);
 
 /**
  * @package Smarty
@@ -625,7 +625,7 @@ class Smarty
             foreach ($tpl_var as $_key => $_val) {
                 if ($_key != '') {
                     if (!@is_array($this->_tpl_vars[$_key])) {
-                        settype($this->_tpl_vars[$_key],'array');
+                        settype($this->_tpl_vars[$_key], 'array');
                     }
                     if ($merge && is_array($_val)) {
                         foreach ($_val as $_mkey => $_mval) {
@@ -639,7 +639,7 @@ class Smarty
         } else {
             if ($tpl_var != '' && isset($value)) {
                 if (!@is_array($this->_tpl_vars[$tpl_var])) {
-                    settype($this->_tpl_vars[$tpl_var],'array');
+                    settype($this->_tpl_vars[$tpl_var], 'array');
                 }
                 if ($merge && is_array($value)) {
                     foreach ($value as $_mkey => $_mval) {
@@ -662,7 +662,7 @@ class Smarty
     {
         if ($tpl_var != '' && isset($value)) {
             if (!@is_array($this->_tpl_vars[$tpl_var])) {
-                settype($this->_tpl_vars[$tpl_var],'array');
+                settype($this->_tpl_vars[$tpl_var], 'array');
             }
             if ($merge && is_array($value)) {
                 foreach ($value as $_key => $_val) {
@@ -1289,9 +1289,7 @@ class Smarty
 
             if ($this->_cache_serials) {
                 // strip nocache-tags from output
-                $_smarty_results = preg_replace('!(\{/?nocache\:[0-9a-f]{32}#\d+\})!s'
-                                                ,''
-                                                ,$_smarty_results);
+                $_smarty_results = preg_replace('!(\{/?nocache\:[0-9a-f]{32}#\d+\})!s', '', $_smarty_results);
             }
             // restore initial cache_info
             $this->_cache_info = array_pop($_cache_info);
@@ -1436,7 +1434,7 @@ class Smarty
             // if a _cache_serial was set, we also have to write an include-file:
             if ($this->_cache_include_info) {
                 require_once(SMARTY_CORE_DIR . 'core.write_compiled_include.php');
-                smarty_core_write_compiled_include(array_merge($this->_cache_include_info, array('compiled_content'=>$_compiled_content, 'resource_name'=>$resource_name)),  $this);
+                smarty_core_write_compiled_include(array_merge($this->_cache_include_info, array('compiled_content'=>$_compiled_content, 'resource_name'=>$resource_name)), $this);
             }
 
             $_params = array('compile_path'=>$compile_path, 'compiled_content' => $_compiled_content);
@@ -1758,7 +1756,7 @@ class Smarty
 
         if (isset($auto_id)) {
             // make auto_id safe for directory names
-            $auto_id = str_replace('%7C',$_compile_dir_sep,(urlencode($auto_id)));
+            $auto_id = str_replace('%7C', $_compile_dir_sep, (urlencode($auto_id)));
             // split into separate directories
             $_return .= $auto_id . $_compile_dir_sep;
         }

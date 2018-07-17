@@ -210,7 +210,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return array $view The view(s) requested.  Current supported types are edit, detail, list, and subpanel.
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function get_module_layout($session, $a_module_names, $a_type, $a_view,$md5 = FALSE)
+    public function get_module_layout($session, $a_module_names, $a_type, $a_view, $md5 = FALSE)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_module_layout');
 
@@ -274,7 +274,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return Array    'modules' -- Array - An array of module names
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function get_available_modules($session,$filter='all')
+    public function get_available_modules($session, $filter='all')
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_available_modules');
 
@@ -377,7 +377,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
      * @return Array return_search_result 	- Array('Accounts' => array(array('name' => 'first_name', 'value' => 'John', 'name' => 'last_name', 'value' => 'Do')))
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function search_by_module($session, $search_string, $modules, $offset, $max_results,$assigned_user_id = '', $select_fields = array())
+    public function search_by_module($session, $search_string, $modules, $offset, $max_results, $assigned_user_id = '', $select_fields = array())
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->search_by_module');
         global  $beanList, $beanFiles;
@@ -445,12 +445,12 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
     			    ) {
                     $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
                     $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     $emailQuery = false;
 
@@ -484,7 +484,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
                     //Pull in any db fields used for the unified search query so the correct joins will be added
                     $selectOnlyQueryFields = array();
                     foreach ($unifiedSearchFields[$name] as $field => $def) {
-                        if (isset($def['db_field']) && !in_array($field,$filterFields)) {
+                        if (isset($def['db_field']) && !in_array($field, $filterFields)) {
                             $filterFields[] = $field;
                             $selectOnlyQueryFields[] = $field;
                         }
@@ -612,7 +612,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl
         $linkoutput_list = array();
 
         // get all the related mmodules data.
-        $result = self::$helperObject->getRelationshipResults($mod, $link_field_name, $related_fields, $related_module_query,$order_by);
+        $result = self::$helperObject->getRelationshipResults($mod, $link_field_name, $related_fields, $related_module_query, $order_by);
         if (self::$helperObject->isLogLevelDebug()) {
             $GLOBALS['log']->debug('SoapHelperWebServices->get_relationships - return data for getRelationshipResults is ' . var_export($result, true));
         } // if

@@ -42,7 +42,7 @@
 //// php.exe -f silentUpgrade.php [Path to Upgrade Package zip] [Path to Log file] [Path to Instance]
 //// See below the Usage for more details.
 /////////////////////////////////////////////////////////////////////////////////////////
-ini_set('memory_limit',-1);
+ini_set('memory_limit', -1);
 ///////////////////////////////////////////////////////////////////////////////
 ////	UTILITIES THAT MUST BE LOCAL :(
 //local function for clearing cache
@@ -76,7 +76,7 @@ function clearCacheSU($thedir, $extension)
                      'group' => '',
              );
          ksort($sugar_config);
-         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+         if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
              //writing to the file
          }
      }
@@ -101,7 +101,7 @@ function checkLoggerSettings()
             ),
           );
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
@@ -128,7 +128,7 @@ function checkResourceSettings()
             'default_limit' => 1000,
           );
         ksort($sugar_config);
-        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config,'config.php')) {
+        if (is_writable('config.php') && write_array_to_file("sugar_config", $sugar_config, 'config.php')) {
             //writing to the file
         }
     }
@@ -236,7 +236,7 @@ function addDefaultModuleRoles($defaultRoles = array())
     }
 }
 
-function verifyArguments($argv,$usage_dce,$usage_regular)
+function verifyArguments($argv, $usage_dce, $usage_regular)
 {
     $upgradeType = '';
     $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
@@ -304,7 +304,7 @@ function verifyArguments($argv,$usage_dce,$usage_regular)
     return $upgradeType;
 }
 
-function upgradeDCEFiles($argv,$instanceUpgradePath)
+function upgradeDCEFiles($argv, $instanceUpgradePath)
 {
     //copy and update following files from upgrade package
     $upgradeTheseFiles = array('cron.php','download.php','index.php','install.php','soap.php','sugar_version.php','vcal_server.php');
@@ -315,7 +315,7 @@ function upgradeDCEFiles($argv,$instanceUpgradePath)
             if (!is_dir(dirname($destFile))) {
                 mkdir_recursive(dirname($destFile)); // make sure the directory exists
             }
-            copy_recursive($srcFile,$destFile);
+            copy_recursive($srcFile, $destFile);
             $_GET['TEMPLATE_PATH'] = $destFile;
             $_GET['CONVERT_FILE_ONLY'] = true;
             if (!class_exists('TemplateConverter')) {
@@ -345,7 +345,7 @@ if (substr($sapi_type, 0, 3) != 'cli') {
 
 // only run from command line
 if (isset($_SERVER['HTTP_USER_AGENT'])) {
-    fwrite(STDERR,'This utility may only be run from the command line or command prompt.');
+    fwrite(STDERR, 'This utility may only be run from the command line or command prompt.');
     exit(1);
 }
 //Clean_string cleans out any file  passed in as a parameter
@@ -416,7 +416,7 @@ define('DCE_INSTANCE', 'DCE_Instance');
 global $cwd;
 $cwd = getcwd(); // default to current, assumed to be in a valid SugarCRM root dir.
 
-$upgradeType = verifyArguments($argv,$usage_dce,$usage_regular);
+$upgradeType = verifyArguments($argv, $usage_dce, $usage_regular);
 
 ///////////////////////////////////////////////////////////////////////////////
 //////  Verify that all the arguments are appropriately placed////////////////
@@ -604,7 +604,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
 
         //check to see if there are any new files that need to be added to systems tab
         //retrieve old modules list
-        logThis('check to see if new modules exist',$path);
+        logThis('check to see if new modules exist', $path);
         $oldModuleList = array();
         $newModuleList = array();
         include($argv[4].'/include/modules.php');
@@ -684,7 +684,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
             }
         }
         //new modules list now has left over modules which are new to this install, so lets add them to the system tabs
-        logThis('new modules to add are '.var_export($newModuleList,true),$path);
+        logThis('new modules to add are '.var_export($newModuleList, true), $path);
 
         //grab the existing system tabs
         $tabs = $newTB->get_system_tabs();
@@ -696,7 +696,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
 
         //now assign the modules to system tabs
         $newTB->set_system_tabs($tabs);
-        logThis('module tabs updated',$path);
+        logThis('module tabs updated', $path);
 
 
 
@@ -729,13 +729,13 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                 logThis(" Finish {$newtemplate_path}/modules/Administration/upgradeTeams.php", $path);
 
                 //update the users records to have default team
-                logThis('running query to populate default_team on users table',$path);
+                logThis('running query to populate default_team on users table', $path);
                 DBManagerFactory::getInstance()->query("update users set default_team = (select teams.id from teams where teams.name = concat('(',users.user_name, ')') or team.associated_user_id = users.id)");
             }
 
             //run upgrade script for dashlets to include sales/marketing
             if (function_exists('upgradeDashletsForSalesAndMarketing')) {
-                logThis('calling upgradeDashlets script',$path);
+                logThis('calling upgradeDashlets script', $path);
                 upgradeDashletsForSalesAndMarketing();
             }
         }
@@ -798,10 +798,10 @@ if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version
     }
 }
 
-set_upgrade_progress('end','done','end','done');
+set_upgrade_progress('end', 'done', 'end', 'done');
 
 if (file_exists($newtemplate_path . '/modules/Configurator/Configurator.php')) {
-    set_upgrade_progress('configurator','in_progress');
+    set_upgrade_progress('configurator', 'in_progress');
     require_once($newtemplate_path . '/include/utils/array_utils.php');
     if (!class_exists('Configurator')) {
         require_once($newtemplate_path . '/modules/Configurator/Configurator.php');
@@ -810,19 +810,19 @@ if (file_exists($newtemplate_path . '/modules/Configurator/Configurator.php')) {
     if (class_exists('Configurator')) {
         $Configurator->parseLoggerSettings();
     }
-    set_upgrade_progress('configurator','done');
+    set_upgrade_progress('configurator', 'done');
 }
 
 //unset the logger previously instantiated
 if (file_exists($newtemplate_path . '/include/SugarLogger/LoggerManager.php')) {
-    set_upgrade_progress('logger','in_progress');
+    set_upgrade_progress('logger', 'in_progress');
     if (!class_exists('LoggerManager')) {
     }
     if (class_exists('LoggerManager')) {
         unset($GLOBALS['log']);
         $GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
     }
-    set_upgrade_progress('logger','done');
+    set_upgrade_progress('logger', 'done');
 }
 
 ///////////////////////////////////////////////////////////////////////////////

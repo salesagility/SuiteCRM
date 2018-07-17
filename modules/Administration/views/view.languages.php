@@ -106,7 +106,7 @@ class ViewLanguages extends SugarView
         $this->ss->assign('MOD', $GLOBALS['mod_strings']);
         $this->ss->assign('enabled_langs', json_encode($enabled));
         $this->ss->assign('disabled_langs', json_encode($disabled));
-        $this->ss->assign('title',$this->getModuleTitle(false));
+        $this->ss->assign('title', $this->getModuleTitle(false));
 
         echo $this->ss->fetch('modules/Administration/templates/Languages.tpl');
     }

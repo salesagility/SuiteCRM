@@ -66,7 +66,7 @@ function getControl(
     global $current_language, $app_strings, $dictionary, $app_list_strings, $current_user;
     
     // use the mod_strings for this module
-    $mod_strings = return_module_language($current_language,$module);
+    $mod_strings = return_module_language($current_language, $module);
     
     // set the filename for this control
     $file = create_cache_directory('modules/Import/') . $module . $fieldname . '.tpl';
@@ -176,7 +176,7 @@ function getControl(
         }
     }
     // fill in function return values
-    if (!in_array($fieldname,array('email1','email2'))) {
+    if (!in_array($fieldname, array('email1','email2'))) {
         if (!empty($fieldlist[$fieldname]['function']['returns']) && $fieldlist[$fieldname]['function']['returns'] == 'html') {
             $function = $fieldlist[$fieldname]['function']['name'];
             // include various functions required in the various vardefs
@@ -185,8 +185,8 @@ function getControl(
             }
             $value = $function($focus, $fieldname, $value, 'EditView');
             // Bug 22730 - add a hack for the currency type dropdown, since it's built by a function.
-            if (preg_match('/getCurrency.*DropDown/s',$function)) {
-                $value = str_ireplace('</select>','<option value="">'.$app_strings['LBL_NONE'].'</option></select>',$value);
+            if (preg_match('/getCurrency.*DropDown/s', $function)) {
+                $value = str_ireplace('</select>', '<option value="">'.$app_strings['LBL_NONE'].'</option></select>', $value);
             }
         } elseif ($fieldname == 'assigned_user_name' && empty($value)) {
             $fieldlist['assigned_user_id']['value'] = $GLOBALS['current_user']->id;
@@ -196,9 +196,9 @@ function getControl(
         }
     }
     $fieldlist[$fieldname]['value'] = $value;
-    $ss->assign("fields",$fieldlist);
-    $ss->assign("form_name",'importstep3');
-    $ss->assign("bean",$focus);
+    $ss->assign("fields", $fieldlist);
+    $ss->assign("form_name", 'importstep3');
+    $ss->assign("bean", $focus);
     
     // add in any additional strings
     $ss->assign("MOD", $mod_strings);

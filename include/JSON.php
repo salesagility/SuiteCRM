@@ -92,7 +92,7 @@ class JSON
      */
     public static function decode($string, $examineEnvelope=false, $assoc = true)
     {
-        return json_decode($string,$assoc);
+        return json_decode($string, $assoc);
     }
 
     /**

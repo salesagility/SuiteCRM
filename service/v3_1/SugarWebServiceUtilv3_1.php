@@ -40,12 +40,12 @@
 require_once('service/v3/SugarWebServiceUtilv3.php');
 class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 {
-    public function get_return_module_fields($value, $module,$fields, $translate=true)
+    public function get_return_module_fields($value, $module, $fields, $translate=true)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_return_module_fields');
         global $module_name;
         $module_name = $module;
-        $result = $this->get_field_list($value,$fields,  $translate);
+        $result = $this->get_field_list($value, $fields, $translate);
         $GLOBALS['log']->info('End: SoapHelperWebServices->get_return_module_fields');
 
         $tableName = $value->getTableName();
@@ -73,7 +73,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
             $monitor->setValue('action', $current_view);
             $monitor->setValue('item_id', $seed->id);
             $monitor->setValue('item_summary', $seed->get_summary_text());
-            $monitor->setValue('visible',true);
+            $monitor->setValue('visible', true);
             $trackerManager->saveMonitor($monitor, TRUE, TRUE);
         }
     }
@@ -137,7 +137,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         $beanName = BeanFactory::getObjectName($moduleName);
 
         $manager = new VardefManager ();
-        $manager->loadVardef($moduleName , $beanName) ;
+        $manager->loadVardef($moduleName, $beanName) ;
 
         // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
         if (file_exists('custom/modules/'.$moduleName.'/metadata/metafiles.php')) {
@@ -154,12 +154,12 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
 
         $fields = array();
         foreach ($dictionary [ $beanName ][ 'fields' ] as $field => $def) {
-            if (strpos($field,'email') !== false) {
+            if (strpos($field, 'email') !== false) {
                 $field = 'email' ;
             }
 
             //bug: 38139 - allow phone to be searched through Global Search
-            if (strpos($field,'phone') !== false) {
+            if (strpos($field, 'phone') !== false) {
                 $field = 'phone' ;
             }
 
@@ -203,7 +203,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
         return $results;
     }
 
-    public function get_field_list($value,$fields,  $translate=true)
+    public function get_field_list($value, $fields, $translate=true)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_field_list');
         $module_fields = array();
@@ -238,7 +238,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
                         $options_dom = array();
                     }
                     foreach ($options_dom as $key=>$oneOption) {
-                        $options_ret[$key] = $this->get_name_value($key,$oneOption);
+                        $options_ret[$key] = $this->get_name_value($key, $oneOption);
                     }
                 }
 
@@ -284,7 +284,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
                 $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
                 $options_ret = array();
                 foreach ($options_dom as $key=>$oneOption) {
-                    $options_ret[$key] = $this->get_name_value($key,$oneOption);
+                    $options_ret[$key] = $this->get_name_value($key, $oneOption);
                 }
 
                 $module_fields['duration_minutes']['options'] = $options_ret;
@@ -371,7 +371,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
                 if ($view == 'subpanel') {
                     $results = $this->get_subpanel_defs($module_name, $type);
                 } else {
-                    $v = new SugarView(null,array());
+                    $v = new SugarView(null, array());
                     $v->module = $module_name;
                     $v->type = $view;
                     $fullView = ucfirst($view) . 'View';
@@ -417,7 +417,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
             $params['favorites'] = true;
         }
 
-        $query = $seed->create_new_list_query($order_by, $where,array(),$params, $show_deleted,'',false,null,$singleSelect);
+        $query = $seed->create_new_list_query($order_by, $where, array(), $params, $show_deleted, '', false, null, $singleSelect);
         return $seed->process_list_query($query, $row_offset, $limit, $max, $where);
     }
 
@@ -430,7 +430,7 @@ class SugarWebServiceUtilv3_1 extends SugarWebServiceUtilv3
      * @param array $metadata The metadata for the view type and view.
      * @return unknown
      */
-    public function addFieldLevelACLs($module_name,$view_type, $view, $metadata)
+    public function addFieldLevelACLs($module_name, $view_type, $view, $metadata)
     {
         $functionName = "metdataAclParser" . ucfirst($view_type) . ucfirst($view);
         if (method_exists($this, $functionName)) {

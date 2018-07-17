@@ -108,7 +108,7 @@ class ConfiguratorViewAddFontResult extends SugarView
             );
             $this->log .= $fontManager->log;
             if ($error) {
-                $this->log .= implode("\n",$fontManager->errors);
+                $this->log .= implode("\n", $fontManager->errors);
             }
         }
         return $error;

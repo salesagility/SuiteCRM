@@ -54,7 +54,7 @@ class ViewRelationship extends SugarView
         global $mod_strings;
         
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -224,7 +224,7 @@ class ViewRelationship extends SugarView
         $this->smarty->assign ('rhspanels', $rhs_subpanels) ;
         $this->smarty->assign ('lhspanels', $lhs_subpanels) ;
         $this->smarty->assign('selected_lang', $selected_lang);
-        $this->smarty->assign('available_languages',get_languages());
+        $this->smarty->assign('available_languages', get_languages());
         
         switch ($relationship->relationship_type) {
             case MB_ONETOONE:

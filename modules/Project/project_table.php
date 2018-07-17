@@ -61,8 +61,8 @@ class ProjectTable
                 $project = new Project();
                 $project->retrieve($task->project_id);
                 //Get project resources (users & contacts)
-                $resources1 = $project->get_linked_beans('project_users_1','User');
-                $resources2 = $project->get_linked_beans('project_contacts_1','Contact');
+                $resources1 = $project->get_linked_beans('project_users_1', 'User');
+                $resources2 = $project->get_linked_beans('project_contacts_1', 'Contact');
                 //Combine resources into array of objects
                 $resource_array = array();
                 foreach ($resources1 as $user) {

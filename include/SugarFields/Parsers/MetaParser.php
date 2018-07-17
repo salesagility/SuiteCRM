@@ -616,7 +616,7 @@ class MetaParser
         $metadata = '';
         $body = var_export($panels, true);
         $metadata = $header . $body . $footer;
-        $metadata = preg_replace('/(\d+)[\s]=>[\s]?/',"",$metadata);
+        $metadata = preg_replace('/(\d+)[\s]=>[\s]?/', "", $metadata);
         return $metadata;
     }
 

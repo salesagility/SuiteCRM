@@ -142,7 +142,7 @@ $campaign_id = $focus->id;
           $opp_data1['opp_count']=0;
       } 
       //_ppd($opp_data1);     
-     $smarty->assign("OPPORTUNITIES_WON",$opp_data1['opp_count']);
+     $smarty->assign("OPPORTUNITIES_WON", $opp_data1['opp_count']);
           
             $camp_query1  = "select camp.name, count(*) click_thru_link";	           
             $camp_query1 .= " from campaign_log camp_log";
@@ -158,7 +158,7 @@ $campaign_id = $focus->id;
    } else {
        $cost_per_impression = format_number(0);
    }       
-   $smarty->assign("COST_PER_IMPRESSION",currency_format_number($cost_per_impression));
+   $smarty->assign("COST_PER_IMPRESSION", currency_format_number($cost_per_impression));
    if (empty($camp_data1['click_thru_link'])) {
        $camp_data1['click_thru_link']=0;
    }      
@@ -169,7 +169,7 @@ $campaign_id = $focus->id;
    } else {
        $cost_per_click_thru = format_number(0);
    } 
-   $smarty->assign("COST_PER_CLICK_THROUGH",currency_format_number($cost_per_click_thru));
+   $smarty->assign("COST_PER_CLICK_THROUGH", currency_format_number($cost_per_click_thru));
     
     
         $currency  = new Currency();
@@ -185,7 +185,7 @@ $campaign_id = $focus->id;
     }
     global $current_user;
     if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-        $smarty->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'", null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
+        $smarty->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT'])."</a>");
     }
     
     $detailView->processListNavigation($xtpl, "CAMPAIGN", $offset, $focus->is_AuditEnabled());
@@ -206,7 +206,7 @@ $campaign_id = $focus->id;
     $cache_file_name_roi	= $current_user->getUserPrivGuid()."_campaign_response_by_roi_".$dateFileNameSafe[0]."_".$dateFileNameSafe[1].".xml";
     $chart= new campaign_charts();
     //_ppd($roi_vals);
-    $smarty->assign("MY_CHART_ROI", $chart->campaign_response_roi($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$focus->id,true,true));    
+    $smarty->assign("MY_CHART_ROI", $chart->campaign_response_roi($app_list_strings['roi_type_dom'], $app_list_strings['roi_type_dom'], $focus->id, true, true));    
     //end chart
     //custom chart code
     require_once('include/SugarCharts/SugarChartFactory.php');

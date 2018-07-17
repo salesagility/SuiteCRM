@@ -126,11 +126,11 @@ class SugarLogger implements LoggerTemplate
         $this->logSize = $config->get('logger.file.maxSize', $this->logSize);
         $this->maxLogs = $config->get('logger.file.maxLogs', $this->maxLogs);
         $this->filesuffix = $config->get('logger.file.suffix', $this->filesuffix);
-        $log_dir = $config->get('log_dir' , $this->log_dir);
+        $log_dir = $config->get('log_dir', $this->log_dir);
         $this->log_dir = $log_dir . (empty($log_dir)?'':'/');
         unset($config);
         $this->_doInitialization();
-        LoggerManager::setLogger('default','SugarLogger');
+        LoggerManager::setLogger('default', 'SugarLogger');
     }
 
     /**
@@ -207,7 +207,7 @@ class SugarLogger implements LoggerTemplate
 
         //if we haven't opened a file pointer yet let's do that
         if (! $this->fp) {
-            $this->fp = fopen ($this->full_log_file , 'a');
+            $this->fp = fopen ($this->full_log_file, 'a');
         }
 
 
@@ -217,7 +217,7 @@ class SugarLogger implements LoggerTemplate
         }
         // change to a human-readable array output if it's any other array
         if (is_array($message)) {
-            $message = print_r($message,true);
+            $message = print_r($message, true);
         }
 
 

@@ -32,13 +32,13 @@ class AOR_ReportsViewDetail extends ViewDetail
         if (!$this->bean->id) {
             return array();
         }
-        $conditions = $this->bean->get_linked_beans('aor_conditions','AOR_Conditions', 'condition_order');
+        $conditions = $this->bean->get_linked_beans('aor_conditions', 'AOR_Conditions', 'condition_order');
         $parameters = array();
         foreach ($conditions as $condition) {
             if (!$condition->parameter) {
                 continue;
             }
-            $condition->module_path = implode(":",unserialize(base64_decode($condition->module_path)));
+            $condition->module_path = implode(":", unserialize(base64_decode($condition->module_path)));
             if ($condition->value_type == 'Date') {
                 $condition->value = unserialize(base64_decode($condition->value));
             }
@@ -69,14 +69,14 @@ class AOR_ReportsViewDetail extends ViewDetail
         $canExport = $this->bean->ACLAccess('Export');
         $this->ss->assign('can_export', $canExport);
 
-        $this->ss->assign('report_module',$this->bean->report_module);
+        $this->ss->assign('report_module', $this->bean->report_module);
 
 
 
         $this->bean->user_parameters = requestToUserParameters($this->bean);
 
         //$reportHTML = $this->bean->build_group_report(0,true);
-        $reportHTML = $this->bean->buildMultiGroupReport(0,true);
+        $reportHTML = $this->bean->buildMultiGroupReport(0, true);
 
         $chartsHTML = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
 

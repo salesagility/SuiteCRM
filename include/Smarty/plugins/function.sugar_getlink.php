@@ -83,6 +83,6 @@ function smarty_function_sugar_getlink($params, &$smarty)
         $params['img_alt'] = '';
     }
 
-    return SugarThemeRegistry::current()->getLink($params['url'], $params['title'], $params['attr'], $params['img_name'], 
+    return SugarThemeRegistry::current()->getLink($params['url'], $params['title'], $params['attr'], $params['img_name'],
 		$params['img_attr'], $params['img_width'], $params['img_height'], $params['img_alt'], $params['img_placement']);
 }

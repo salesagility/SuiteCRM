@@ -70,7 +70,7 @@ function getSystemInfo($send_usage_info=true)
             $administration = new Administration();
         }
         $administration->retrieveSettings('system');
-        $info['system_name'] = (!empty($administration->settings['system_name']))?substr($administration->settings['system_name'], 0 ,255):'';
+        $info['system_name'] = (!empty($administration->settings['system_name']))?substr($administration->settings['system_name'], 0, 255):'';
 
 
         $result=$db->getOne("select count(*) count from users where status='Active' and deleted=0 and is_admin='1'", false, 'fetching admin count');
@@ -192,7 +192,7 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
     }
 
     if ($response_data || !$sclient->getError()) {
-        $serializedResultData = sugarDecode($key,$encodedResult);
+        $serializedResultData = sugarDecode($key, $encodedResult);
         $resultData = unserialize($serializedResultData);
         if ($response_data && empty($resultData)) {
             $resultData = array();
@@ -208,16 +208,16 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
             if (!empty($resultData['msg']['admin'])) {
                 $license->saveSetting('license', 'msg_admin', base64_encode($resultData['msg']['admin']));
             } else {
-                $license->saveSetting('license', 'msg_admin','');
+                $license->saveSetting('license', 'msg_admin', '');
             }
             if (!empty($resultData['msg']['all'])) {
                 $license->saveSetting('license', 'msg_all', base64_encode($resultData['msg']['all']));
             } else {
-                $license->saveSetting('license', 'msg_all','');
+                $license->saveSetting('license', 'msg_all', '');
             }
         } else {
-            $license->saveSetting('license', 'msg_admin','');
-            $license->saveSetting('license', 'msg_all','');
+            $license->saveSetting('license', 'msg_admin', '');
+            $license->saveSetting('license', 'msg_all', '');
         }
         $license->saveSetting('license', 'last_validation', 'success');
         unset($_SESSION['COULD_NOT_CONNECT']);
@@ -236,10 +236,10 @@ function check_now($send_usage_info=true, $get_request_data=false, $response_dat
         $_SESSION['COULD_NOT_CONNECT'] =TimeDate::getInstance()->nowDb();
     }
     if (!empty($resultData['versions'])) {
-        $license->saveSetting('license', 'latest_versions',base64_encode(serialize($resultData['versions'])));
+        $license->saveSetting('license', 'latest_versions', base64_encode(serialize($resultData['versions'])));
     } else {
         $resultData['versions'] = array();
-        $license->saveSetting('license', 'latest_versions','')	;
+        $license->saveSetting('license', 'latest_versions', '')	;
     }
 
     if (sizeof($resultData) == 1 && !empty($resultData['versions'][0]['version'])
@@ -261,7 +261,7 @@ function compareVersions($ver1, $ver2)
 function set_CheckUpdates_config_setting($value)
 {
     $admin=new Administration();
-    $admin->saveSetting('Update','CheckUpdates',$value);
+    $admin->saveSetting('Update', 'CheckUpdates', $value);
 }
 /* return's value for the 'CheckUpdates' config setting
 * if the setting does not exist one gets created with a default value of automatic.
@@ -272,9 +272,9 @@ function get_CheckUpdates_config_setting()
 
 
     $admin=new Administration();
-    $admin=$admin->retrieveSettings('Update',true);
+    $admin=$admin->retrieveSettings('Update', true);
     if (empty($admin->settings) or empty($admin->settings['Update_CheckUpdates'])) {
-        $admin->saveSetting('Update','CheckUpdates','automatic');
+        $admin->saveSetting('Update', 'CheckUpdates', 'automatic');
     } else {
         $checkupdates=$admin->settings['Update_CheckUpdates'];
     }
@@ -284,7 +284,7 @@ function get_CheckUpdates_config_setting()
 function set_last_check_version_config_setting($value)
 {
     $admin=new Administration();
-    $admin->saveSetting('Update','last_check_version',$value);
+    $admin->saveSetting('Update', 'last_check_version', $value);
 }
 function get_last_check_version_config_setting()
 {
@@ -301,7 +301,7 @@ function get_last_check_version_config_setting()
 function set_last_check_date_config_setting($value)
 {
     $admin=new Administration();
-    $admin->saveSetting('Update','last_check_date',$value);
+    $admin->saveSetting('Update', 'last_check_date', $value);
 }
 function get_last_check_date_config_setting()
 {

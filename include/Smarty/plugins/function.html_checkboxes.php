@@ -40,7 +40,7 @@
  */
 function smarty_function_html_checkboxes($params, &$smarty)
 {
-    require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
+    require_once $smarty->_get_plugin_filepath('shared', 'escape_special_chars');
 
     $name = 'checkbox';
     $values = null;
@@ -116,7 +116,7 @@ function smarty_function_html_checkboxes($params, &$smarty)
     if (!empty($params['assign'])) {
         $smarty->assign($params['assign'], $_html_result);
     } else {
-        return implode("\n",$_html_result);
+        return implode("\n", $_html_result);
     }
 }
 

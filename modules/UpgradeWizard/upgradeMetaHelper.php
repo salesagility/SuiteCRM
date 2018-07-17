@@ -136,7 +136,7 @@ class UpgradeMetaHelper
         return $return_array;
     }
 
-    public function saveMatchingFilesQueries($currStep,$value)
+    public function saveMatchingFilesQueries($currStep, $value)
     {
         $upgrade_progress_dir = sugar_cached('upgrades/temp');
         if (!is_dir($upgrade_progress_dir)) {
@@ -172,7 +172,7 @@ class UpgradeMetaHelper
         $return_array = array();
         $modules = $this->loadStudioModules();
         $modulesAll = getAllModules(); //keep all modules as well
-        $allOtherModules = array_diff($modulesAll,$modules);
+        $allOtherModules = array_diff($modulesAll, $modules);
         foreach ($modules as $mod) {
             if (!is_dir('modules/'.$mod)) {
                 continue;
@@ -182,10 +182,10 @@ class UpgradeMetaHelper
             $exclude_files[]=$editView;
             $exclude_files[]=$detailView;
             $allModFiles = array();
-            $allModFiles = findAllFiles('modules/'.$mod,$allModFiles);
+            $allModFiles = findAllFiles('modules/'.$mod, $allModFiles);
             foreach ($allModFiles as $file) {
                 //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
-                if (file_exists($file) && !in_array($file,$exclude_files)) {
+                if (file_exists($file) && !in_array($file, $exclude_files)) {
                     if (isset($md5_string['./'.$file])) {
                         $fileContents = file_get_contents($file);
                         if (md5($fileContents) != $md5_string['./'.$file]) {
@@ -205,7 +205,7 @@ class UpgradeMetaHelper
                 continue;
             }
             $allModFiles = array();
-            $allModFiles = findAllFiles('modules/'.$mod,$allModFiles);
+            $allModFiles = findAllFiles('modules/'.$mod, $allModFiles);
             foreach ($allModFiles as $file) {
                 //$file_md5_ref = str_replace(clean_path(getcwd()),'',$file);
                 if (file_exists($file)) {
@@ -243,7 +243,7 @@ class UpgradeMetaHelper
             $modFiles = findAllFiles(clean_path(getcwd())."/modules/$mod", array());
             foreach ($modFiles as $file) {
                 $fileContents = file_get_contents($file);
-                $file = str_replace(clean_path(getcwd()),'',$file);
+                $file = str_replace(clean_path(getcwd()), '', $file);
                 if ($md5_string['./' . $file]) {
                     if (md5($fileContents) != $md5_string['./' . $file]) {
                         //A file has been customized in the module. Put the module into the
@@ -335,7 +335,7 @@ class UpgradeMetaHelper
                 include('modules/'.$module_name.'/vardefs.php');
                 $bean_name = $beanList[$module_name];
                 $newFile = $this->upgrade_dir.'/modules/'.$module_name.'/metadata/'.$lowerCaseView.'defs.php';
-                $evfp = fopen($newFile,'w');
+                $evfp = fopen($newFile, 'w');
 
                 $bean_name = $bean_name == 'aCase' ? 'Case' : $bean_name;
                 fwrite($evfp, $parser->parse($file,

@@ -68,17 +68,17 @@ foreach ($_REQUEST as $key=>$value) {
 			break;
 			
 		default:
-			$pssplit=explode('_',$key);
+			$pssplit=explode('_', $key);
 			if ($pssplit[0] =='PARAMT') {
 			    unset($pssplit[0]);
-			    $params1['TREE'][implode('_',$pssplit)]=$value;
+			    $params1['TREE'][implode('_', $pssplit)]=$value;
 			} else {
 			    if ($pssplit[0] =='PARAMN') {
 			        $depth=$pssplit[count($pssplit)-1];
 			        //parmeter is surrounded  by PARAMN_ and depth info.
 			        unset($pssplit[count($pssplit)-1]);
 			        unset($pssplit[0]);	
-			        $params1['NODES'][$depth][implode('_',$pssplit)]=$value;
+			        $params1['NODES'][$depth][implode('_', $pssplit)]=$value;
 			    } else {
 			        if ($key=='module') {
 			            if (!isset($params1['TREE']['module'])) {
@@ -140,7 +140,7 @@ if (!empty($modulename) && !empty($func_name) && isset($beanList[$modulename])) 
         );
         
     if (isset($TreeDataFunctions[$modulename][$func_name])) {
-        $ret=call_user_func($func_name,$params1);
+        $ret=call_user_func($func_name, $params1);
     }
 }
 

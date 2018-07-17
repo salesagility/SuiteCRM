@@ -125,6 +125,6 @@ class SugarWidget
         if (empty($column_name) || !is_string($column_name) || strlen($column_name) < 28) {
             return $column_name;
         }
-        return strtoupper(substr($column_name,0,22) . substr(md5(strtolower($column_name)), 0, 6));
+        return strtoupper(substr($column_name, 0, 22) . substr(md5(strtolower($column_name)), 0, 6));
     }
 }

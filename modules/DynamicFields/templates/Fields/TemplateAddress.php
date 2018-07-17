@@ -53,10 +53,10 @@ class TemplateAddress extends TemplateField
         $this->type = 'varchar' ;
 
         require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
-        $parser = new ParserLabel ($df->getModuleName() , $df->getPackageName()) ;
+        $parser = new ParserLabel ($df->getModuleName(), $df->getPackageName()) ;
         foreach (array ( 'City' , 'State' , 'PostalCode' , 'Country' ) as $addressFieldName) {
             $systemLabel = strtoupper("LBL_" . $this->name . '_' . $addressFieldName);
-            $parser->handleSave (array( "label_" . $systemLabel => $this->label_value . ' ' . $addressFieldName ) , $GLOBALS [ 'current_language' ]) ;
+            $parser->handleSave (array( "label_" . $systemLabel => $this->label_value . ' ' . $addressFieldName ), $GLOBALS [ 'current_language' ]) ;
             $addressField = new TemplateField () ;
             $addressField->len = ($addressFieldName == 'PostalCode') ? 20 : 100 ;
             $addressField->name = $this->name . '_' . strtolower ($addressFieldName) ;

@@ -103,12 +103,12 @@ $button .= "<input title='".$app_strings['LBL_SELECT_BUTTON_TITLE']
 $button .= "</form>\n";
 $header_text = '';
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-    $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=SubPanelView&from_module=Opportunities&record=". $_REQUEST['record']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
+    $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=SubPanelView&from_module=Opportunities&record=". $_REQUEST['record']."'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 $ListView = new ListView();
-$ListView->initNewXTemplate('modules/Opportunities/SubPanelViewProjects.html',$current_module_strings);
+$ListView->initNewXTemplate('modules/Opportunities/SubPanelViewProjects.html', $current_module_strings);
 $ListView->xTemplateAssign("RETURN_URL", "&return_module=".$currentModule."&return_action=DetailView&return_id={$_REQUEST['record']}");
-$ListView->xTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_REMOVE']));
+$ListView->xTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_REMOVE']));
 $ListView->setHeaderTitle($project_module_strings['LBL_OPPORTUNITY_SUBPANEL_TITLE']. $header_text);
 $ListView->setHeaderText($button);
 $ListView->processListView($focus_list, "main", "OPPORTUNITY");

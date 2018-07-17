@@ -163,7 +163,7 @@ if (!isset($_POST['language']) && (!isset($_SESSION['language']) && empty($_SESS
 }
 
 if (isset($_POST['language'])) {
-    $_SESSION['language'] = str_replace('-','_',$_POST['language']);
+    $_SESSION['language'] = str_replace('-', '_', $_POST['language']);
 }
 
 $current_language = isset($_SESSION['language']) ? $_SESSION['language'] : $default_lang;
@@ -498,7 +498,7 @@ EOHTML;
 
 $exclude_files = array('complete_install.php','register.php','download_modules.php');
 
-if (isset($next_step) && isset($workflow[$next_step]) && !in_array($workflow[$next_step],$exclude_files) && isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
+if (isset($next_step) && isset($workflow[$next_step]) && !in_array($workflow[$next_step], $exclude_files) && isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
     $the_file = 'installDisabled.php';
     $disabled_title = $mod_strings['LBL_DISABLED_DESCRIPTION'];
     $disabled_title_2 = $mod_strings['LBL_DISABLED_TITLE_2'];

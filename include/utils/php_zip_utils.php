@@ -111,7 +111,7 @@ function zip_dir($zip_dir, $zip_archive)
         if ($fileName == "." || $fileName == "..") {
             continue;
         }
-        $localname = str_replace("\\", "/",substr($fileinfo->getPathname(), $chop)); // ensure file
+        $localname = str_replace("\\", "/", substr($fileinfo->getPathname(), $chop)); // ensure file
         if ($fileinfo->isDir()) {
             $zip->addEmptyDir($localname."/");
         } else {

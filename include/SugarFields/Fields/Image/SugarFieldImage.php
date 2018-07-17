@@ -136,7 +136,7 @@ class SugarFieldImage extends SugarFieldFile
             return true;
         }
     }
-    private function fillInOptions(&$vardef,&$displayParams)
+    private function fillInOptions(&$vardef, &$displayParams)
     {
         if (isset($vardef['allowEapm']) && $vardef['allowEapm'] == true) {
             if (empty($vardef['docType'])) {

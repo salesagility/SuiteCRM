@@ -76,7 +76,7 @@ class SugarFieldCollection extends SugarFieldBase
         $this->ss->assign('displayParamsJSON', '{literal}'.$displayParamsJSON.'{/literal}');
         $this->ss->assign('vardefJSON', '{literal}'.$vardefJSON.'{/literal}');
 
-        $keys = $this->getAccessKey($vardef,'COLLECTION',$vardef['module']);
+        $keys = $this->getAccessKey($vardef, 'COLLECTION', $vardef['module']);
         $displayParams['accessKeySelect'] = $keys['accessKeySelect'];
         $displayParams['accessKeySelectLabel'] = $keys['accessKeySelectLabel'];
         $displayParams['accessKeySelectTitle'] = $keys['accessKeySelectTitle'];
@@ -182,7 +182,7 @@ class SugarFieldCollection extends SugarFieldBase
                         if (!isset($_POST[$field . "_allow_update"]) || ($_POST[$field . "_allow_update"] !== 'false' && $_POST[$field . "_allow_update"] !== false)) {
                             //allow to update the extra_field in the record
                             if (isset($v['extra_field'][$kk]) && $vv == true) {
-                                $extra_field_name = str_replace("_".$field."_collection_extra_".$k,"",$kk);
+                                $extra_field_name = str_replace("_".$field."_collection_extra_".$k, "", $kk);
                                 if ($obj->$extra_field_name != $v['extra_field'][$kk]) {
                                     $save = true;
                                     $obj->$extra_field_name=$v['extra_field'][$kk];

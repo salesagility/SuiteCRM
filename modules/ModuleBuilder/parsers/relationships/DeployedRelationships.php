@@ -158,7 +158,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         $mi->silent = true;
         $mi->id_name = 'custom' . $rel_name; // provide the moduleinstaller with a unique name for this relationship - normally this value is set to the package key...
         $mi->uninstall_relationship("custom/metadata/{$rel_name}MetaData.php");
-        $mi->uninstallLabels('custom/Extension/modules/relationships/language/',$rel->buildLabels());
+        $mi->uninstallLabels('custom/Extension/modules/relationships/language/', $rel->buildLabels());
         $mi->uninstallExtLabels($rel->buildLabels());
     	
         // now clear all caches so that our changes are visible
@@ -194,7 +194,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @param string $sourceModuleName  Name of the primary module
      * @return string Name of the subpanel if found; null otherwise
      */
-    private static function identifySubpanel($thisModuleName , $sourceModuleName)
+    private static function identifySubpanel($thisModuleName, $sourceModuleName)
     {
         $module = get_module_info ($thisModuleName) ;
         require_once ('include/SubPanel/SubPanelDefinitions.php') ;
@@ -223,7 +223,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @return string Name of the relate field, if found; null otherwise    
      */
     
-    private static function identifyRelateField($thisModuleName , $sourceModuleName)
+    private static function identifyRelateField($thisModuleName, $sourceModuleName)
     {
         $module = get_module_info ($thisModuleName) ;
         
@@ -296,7 +296,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         foreach ($this->relationships as $name => $relationship) {
             $relationship->setFromStudio();
             $GLOBALS [ 'mod_strings' ] = $MBModStrings ;
-            $installDefs = parent::build ($basepath, "<basepath>",  array ($name => $relationship )) ;
+            $installDefs = parent::build ($basepath, "<basepath>", array ($name => $relationship )) ;
 
             // and mark as built so that the next time we come through we'll know and won't build again
             $relationship->setReadonly () ;
@@ -359,7 +359,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * @param array $layoutAdditions  An array of module => fieldname
      * return null
      */
-    protected function saveFieldsToLayouts($basepath , $dummy , $relationshipName , $layoutAdditions)
+    protected function saveFieldsToLayouts($basepath, $dummy, $relationshipName, $layoutAdditions)
     {
         require_once 'modules/ModuleBuilder/parsers/views/GridLayoutMetaDataParser.php' ;
         

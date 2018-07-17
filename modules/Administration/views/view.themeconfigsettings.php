@@ -105,7 +105,7 @@ class AdministrationViewThemeConfigSettings extends SugarView
     {
         global $mod_strings, $app_strings;
 
-        $this->ss->assign('config',SugarThemeRegistry::getThemeConfig($_REQUEST['theme']));
+        $this->ss->assign('config', SugarThemeRegistry::getThemeConfig($_REQUEST['theme']));
         $this->ss->assign('mod', $mod_strings);
         $this->ss->assign('APP', $app_strings);
         

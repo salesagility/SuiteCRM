@@ -136,8 +136,8 @@ class Zend_Search_Lucene_Search_BooleanExpressionRecognizer extends Zend_Search_
 
 
         $this->addEntryAction(self::ST_NOT_OPERATOR, $notOperatorAction);
-        $this->addEntryAction(self::ST_OR_OPERATOR,  $orOperatorAction);
-        $this->addEntryAction(self::ST_LITERAL,      $literalAction);
+        $this->addEntryAction(self::ST_OR_OPERATOR, $orOperatorAction);
+        $this->addEntryAction(self::ST_LITERAL, $literalAction);
     }
 
 

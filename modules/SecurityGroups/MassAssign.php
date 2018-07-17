@@ -50,11 +50,11 @@ elseif (isset($_REQUEST['entire'])) {
     if (empty($order_by)) {
         $order_by = '';
     }
-    $query = $sugarbean->create_export_query($order_by,$where);
-    $result = $db->query($query,true);
+    $query = $sugarbean->create_export_query($order_by, $where);
+    $result = $db->query($query, true);
 
     $new_arr = array();
-    while ($val = $db->fetchByAssoc($result,-1,false)) {
+    while ($val = $db->fetchByAssoc($result, -1, false)) {
         array_push($new_arr, $val['id']);
     }
     $_POST['mass'] = $new_arr;
@@ -72,10 +72,10 @@ if (isset($_POST['mass']) && is_array($_POST['mass'])) {
             if ($sugarbean->module_dir == 'Users') {
                 $rel_name = "SecurityGroups";
             } elseif (empty($rel_name) || !isset($rel_name)) {
-                $rel_name = $groupFocus->getLinkName($sugarbean->module_dir,"SecurityGroups");
+                $rel_name = $groupFocus->getLinkName($sugarbean->module_dir, "SecurityGroups");
             }
             $sugarbean->load_relationship($rel_name);
-            $sugarbean->$rel_name->delete($sugarbean->id,$groupFocus->id);
+            $sugarbean->$rel_name->delete($sugarbean->id, $groupFocus->id);
                 
         //As of 6.3.0 many-to-many requires a link field set in both modules...so lets bypass that
                 //$groupFocus->removeGroupFromRecord($sugarbean->module_dir, $id, $groupFocus->id);
@@ -89,7 +89,7 @@ if (isset($_POST['mass']) && is_array($_POST['mass'])) {
             if ($sugarbean->module_dir == 'Users') {
                 $rel_name = "SecurityGroups";
             } elseif (empty($rel_name) || !isset($rel_name)) {
-                $rel_name = $groupFocus->getLinkName($sugarbean->module_dir,"SecurityGroups");
+                $rel_name = $groupFocus->getLinkName($sugarbean->module_dir, "SecurityGroups");
             }
             $GLOBALS['log']->debug("MassAssign - adding relationship relationship name: ".$rel_name);
             $sugarbean->load_relationship($rel_name);

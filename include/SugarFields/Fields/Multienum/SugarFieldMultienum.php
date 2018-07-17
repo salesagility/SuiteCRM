@@ -110,15 +110,15 @@ class SugarFieldMultienum extends SugarFieldEnum
             $enum_list = $value;
         } else {
             // If someone was using the old style multienum import technique
-            $value = str_replace("^","",$value);
+            $value = str_replace("^", "", $value);
 
             // We will need to break it apart to put test it.
-            $enum_list = explode(",",$value);
+            $enum_list = explode(",", $value);
         }
         // parse to see if all the values given are valid
         foreach ($enum_list as $key => $enum_value) {
             $enum_list[$key] = $enum_value = trim($enum_value);
-            $sanitizedValue = parent::importSanitize($enum_value,$vardef,$focus,$settings);
+            $sanitizedValue = parent::importSanitize($enum_value, $vardef, $focus, $settings);
             if ($sanitizedValue  === false) {
                 return false;
             } else {

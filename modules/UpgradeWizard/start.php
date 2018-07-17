@@ -50,7 +50,7 @@ logThis('-----------------------------------------------------------------------
 logThis('Upgrade started. At start.php');
 
 //set the upgrade progress status.
-set_upgrade_progress('start','in_progress');
+set_upgrade_progress('start', 'in_progress');
 
 unlinkUWTempFiles();
 resetUwSession();

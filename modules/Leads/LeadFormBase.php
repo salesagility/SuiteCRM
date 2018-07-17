@@ -120,8 +120,8 @@ EOQ;
         $javascript = new javascript();
         $javascript->setFormName($formname);
         $javascript->setSugarBean(new Lead());
-        $javascript->addField('email1','false',$prefix);
-        $javascript->addField('email2','false',$prefix);
+        $javascript->addField('email1', 'false', $prefix);
+        $javascript->addField('email2', 'false', $prefix);
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -167,8 +167,8 @@ EOQ;
         $javascript = new javascript();
         $javascript->setFormName($formname);
         $javascript->setSugarBean(new Lead());
-        $javascript->addField('email1','false',$prefix);
-        $javascript->addField('email2','false',$prefix);
+        $javascript->addField('email1', 'false', $prefix);
+        $javascript->addField('email2', 'false', $prefix);
         $javascript->addRequiredFields($prefix);
         $form .=$javascript->getScript();
         $mod_strings = $temp_strings;
@@ -212,7 +212,7 @@ EOQ;
     }
 
 
-    public function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $exist_lead=null)
+    public function handleSave($prefix, $redirect=true, $useRequired=false, $do_save=true, $exist_lead=null)
     {
         require_once('modules/Campaigns/utils.php');
         require_once('include/formbase.php');
@@ -350,7 +350,7 @@ EOQ;
                 //create campaing_log entry
 
                 if (isset($focus->campaign_id) && $focus->campaign_id != null) {
-                    campaign_log_lead_entry($focus->campaign_id,$prospect, $focus,'lead');
+                    campaign_log_lead_entry($focus->campaign_id, $prospect, $focus, 'lead');
                 }
             }
         }

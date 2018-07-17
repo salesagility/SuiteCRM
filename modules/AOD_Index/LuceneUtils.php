@@ -91,7 +91,7 @@ function createDocDocument($path)
 {
     $fileHandle = fopen($path, "r");
     $line = @fread($fileHandle, filesize($path));
-    $lines = explode(chr(0x0D),$line);
+    $lines = explode(chr(0x0D), $line);
     $outtext = "";
     foreach ($lines as $thisline) {
         $pos = strpos($thisline, chr(0x00));
@@ -100,7 +100,7 @@ function createDocDocument($path)
             $outtext .= $thisline." ";
         }
     }
-    $outtext = preg_replace("/[^a-zA-Z0-9\s\,\.\-\n\r\t@\/\_\(\)]/","",$outtext);
+    $outtext = preg_replace("/[^a-zA-Z0-9\s\,\.\-\n\r\t@\/\_\(\)]/", "", $outtext);
 
     $doc = new Zend_Search_Lucene_Document();
     $doc->addField(Zend_Search_Lucene_Field::Text('filename', basename($path)));

@@ -49,7 +49,7 @@ class Viewpackage extends SugarView
         global $mod_strings;
         
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }
@@ -70,7 +70,7 @@ class Viewpackage extends SugarView
 
             $ajax = new AjaxCompose();
             $ajax->addCrumb($GLOBALS['mod_strings']['LBL_MODULEBUILDER'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=package")');
-            $ajax->addCrumb($GLOBALS['mod_strings']['LBL_PACKAGE_LIST'],'');
+            $ajax->addCrumb($GLOBALS['mod_strings']['LBL_PACKAGE_LIST'], '');
             $ajax->addSection('center', $GLOBALS['mod_strings']['LBL_PACKAGE_LIST'], $smarty->fetch('modules/ModuleBuilder/tpls/wizard.tpl'));
             echo $ajax->getJavascript();
         } else {
@@ -98,7 +98,7 @@ class Viewpackage extends SugarView
             $this->loadPackageHelp($name);
             $this->package->date_modified = $GLOBALS['timedate']->to_display_date_time($this->package->date_modified);
             $smarty->assign('package', $this->package);
-            $smarty->assign('mod_strings',$mod_strings);
+            $smarty->assign('mod_strings', $mod_strings);
             $smarty->assign('package_already_deployed', 'false');
             foreach ($this->package->modules as $a_module) {
                 if (in_array($a_module->key_name, $GLOBALS['moduleList'])) {
@@ -112,7 +112,7 @@ class Viewpackage extends SugarView
             if (empty($name)) {
                 $name = $mod_strings['LBL_NEW_PACKAGE'];
             }
-            $ajax->addCrumb($name,'');
+            $ajax->addCrumb($name, '');
             $html=$smarty->fetch('modules/ModuleBuilder/tpls/MBPackage/package.tpl');
             if (!empty($_REQUEST['action']) && $_REQUEST['action']=='SavePackage') {
                 $html.="<script>ModuleBuilder.treeRefresh('ModuleBuilder')</script>";

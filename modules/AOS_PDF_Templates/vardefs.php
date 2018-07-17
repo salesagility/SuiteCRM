@@ -340,4 +340,4 @@ $dictionary['AOS_PDF_Templates'] = array(
 	'optimistic_lock'=>true,
 );
 require_once('include/SugarObjects/VardefManager.php');
-VardefManager::createVardef('AOS_PDF_Templates','AOS_PDF_Templates', array('basic','assignable','security_groups'));
+VardefManager::createVardef('AOS_PDF_Templates', 'AOS_PDF_Templates', array('basic','assignable','security_groups'));

@@ -54,7 +54,7 @@ function smarty_function_sugar_fetch($params, &$smarty)
     }
 
     if (!empty($params['assign'])) {
-        $smarty->assign($params['assign'],$theData);
+        $smarty->assign($params['assign'], $theData);
     } else {
         return $theData;
     }

@@ -78,7 +78,7 @@ class MySugar
             $displayDashlet = false;
         } elseif (ACLController::moduleSupportsACL($this->type)) {
             $bean = SugarModule::get($this->type)->loadBean();
-            if (!ACLController::checkAccess($this->type,'list',true,$bean->acltype)) {
+            if (!ACLController::checkAccess($this->type, 'list', true, $bean->acltype)) {
                 $displayDashlet = false;
             }
             $displayDashlet = true;
@@ -132,7 +132,7 @@ class MySugar
 			                             'fileLocation' => $dashletsFiles[$_REQUEST['id']]['file']);
 
 
-            if (!array_key_exists('current_tab',$_SESSION)) {
+            if (!array_key_exists('current_tab', $_SESSION)) {
                 $_SESSION["current_tab"] = '0';
             }
 
@@ -355,7 +355,7 @@ EOJS;
             $searchResult[$category] = array();
             foreach ($dashlets as $dashlet) {
                 if (stripos($dashlet['title'], $searchStr) !== false) {
-                    array_push($searchResult[$category],$dashlet);
+                    array_push($searchResult[$category], $dashlet);
                 }
             }
         }

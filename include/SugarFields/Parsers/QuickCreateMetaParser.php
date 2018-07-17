@@ -255,7 +255,7 @@ class QuickCreateMetaParser extends MetaParser
         $hiddenInputs = array();
         foreach ($formElements as $elem) {
             $type = $this->getTagAttribute("type", $elem);
-            if (preg_match('/hidden/si',$type, $matches)) {
+            if (preg_match('/hidden/si', $type, $matches)) {
                 $name = $this->getTagAttribute("name", $elem);
                 $value = $this->getTagAttribute("value", $elem);
                 $index = stripos($value, '$REQUEST');

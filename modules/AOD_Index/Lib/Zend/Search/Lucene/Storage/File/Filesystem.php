@@ -135,7 +135,7 @@ class Zend_Search_Lucene_Storage_File_Filesystem extends Zend_Search_Lucene_Stor
         $position = ftell($this->_fileHandle);
         fseek($this->_fileHandle, 0, SEEK_END);
         $size = ftell($this->_fileHandle);
-        fseek($this->_fileHandle,$position);
+        fseek($this->_fileHandle, $position);
 
         return $size;
     }

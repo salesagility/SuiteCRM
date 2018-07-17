@@ -114,7 +114,7 @@ class ContactOpportunityRelationship extends SugarBean
         global $locale;
         if (isset($this->contact_id) && $this->contact_id != "") {
             $query = "SELECT first_name, last_name from contacts where id='$this->contact_id' AND deleted=0";
-            $result =$this->db->query($query,true," Error filling in additional detail fields: ");
+            $result =$this->db->query($query, true, " Error filling in additional detail fields: ");
             // Get the id and the name.
             $row = $this->db->fetchByAssoc($result);
 
@@ -125,7 +125,7 @@ class ContactOpportunityRelationship extends SugarBean
 
         if (isset($this->opportunity_id) && $this->opportunity_id != "") {
             $query = "SELECT name from opportunities where id='$this->opportunity_id' AND deleted=0";
-            $result =$this->db->query($query,true," Error filling in additional detail fields: ");
+            $result =$this->db->query($query, true, " Error filling in additional detail fields: ");
             // Get the id and the name.
             $row = $this->db->fetchByAssoc($result);
 

@@ -101,7 +101,7 @@ function smarty_function_config_load($params, &$smarty)
         if (function_exists('var_export')) {
             $_output = '<?php $_config_vars = ' . var_export($_config_vars, true) . '; ?>';
         } else {
-            $_output = '<?php $_config_vars = unserialize(\'' . strtr(serialize($_config_vars),array('\''=>'\\\'', '\\'=>'\\\\')) . '\'); ?>';
+            $_output = '<?php $_config_vars = unserialize(\'' . strtr(serialize($_config_vars), array('\''=>'\\\'', '\\'=>'\\\\')) . '\'); ?>';
         }
         $_params = (array('compile_path' => $_compile_file, 'compiled_content' => $_output, 'resource_timestamp' => $_params['resource_timestamp']));
         require_once(SMARTY_CORE_DIR . 'core.write_compiled_resource.php');

@@ -211,8 +211,8 @@ abstract class ImportDataSource implements Iterator
      */
     public function writeError($error, $fieldName, $fieldValue)
     {
-        $fp = sugar_fopen(ImportCacheFiles::getErrorFileName(),'a');
-        fputcsv($fp,array($error,$fieldName,$fieldValue,$this->_rowsCount));
+        $fp = sugar_fopen(ImportCacheFiles::getErrorFileName(), 'a');
+        fputcsv($fp, array($error,$fieldName,$fieldValue,$this->_rowsCount));
         fclose($fp);
 
         if (!$this->_rowCountedForErrors) {
@@ -240,7 +240,7 @@ abstract class ImportDataSource implements Iterator
      */
     public function writeStatus()
     {
-        $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(),'a');
+        $fp = sugar_fopen(ImportCacheFiles::getStatusFileName(), 'a');
         $statusData = array($this->_rowsCount,$this->_errorCount,$this->_dupeCount,
                             $this->_createdCount,$this->_updatedCount,$this->_sourcename);
         fputcsv($fp, $statusData);
@@ -252,7 +252,7 @@ abstract class ImportDataSource implements Iterator
      */
     public function markRowAsDuplicate($field_names=array())
     {
-        $fp = sugar_fopen(ImportCacheFiles::getDuplicateFileName(),'a');
+        $fp = sugar_fopen(ImportCacheFiles::getDuplicateFileName(), 'a');
         fputcsv($fp, $this->_currentRow);
         fclose($fp);
 
@@ -269,7 +269,7 @@ abstract class ImportDataSource implements Iterator
                     continue;
                 }
                 $new_keys = array_keys($_REQUEST, $fv);
-                $colnums = array_merge($colnums,$new_keys);
+                $colnums = array_merge($colnums, $new_keys);
             }
 
 
@@ -277,8 +277,8 @@ abstract class ImportDataSource implements Iterator
             if (!empty($colnums)) {
                 //foreach column, strip the 'colnum_' prefix to the get the column key value
                 foreach ($colnums as $column_key) {
-                    if (strpos($column_key,'colnum_') === 0) {
-                        $colkey = substr($column_key,7);
+                    if (strpos($column_key, 'colnum_') === 0) {
+                        $colkey = substr($column_key, 7);
                     }
 
                     //if we have the column key, then lets add a span tag with styling reference to the original value
@@ -291,7 +291,7 @@ abstract class ImportDataSource implements Iterator
         }
 
         //add the row (with or without stylings) to the list view, this will get displayed to the user as a list of duplicates
-        $fdp = sugar_fopen(ImportCacheFiles::getDuplicateFileDisplayName(),'a');
+        $fdp = sugar_fopen(ImportCacheFiles::getDuplicateFileDisplayName(), 'a');
         fputcsv($fdp, $this->_currentRow);
         fclose($fdp);
 
@@ -319,8 +319,8 @@ abstract class ImportDataSource implements Iterator
     public function writeErrorRecord($errorMessage = '')
     {
         $rowData = !$this->_currentRow ? array() : $this->_currentRow;
-        $fp = sugar_fopen(ImportCacheFiles::getErrorRecordsFileName(),'a');
-        $fpNoErrors = sugar_fopen(ImportCacheFiles::getErrorRecordsWithoutErrorFileName(),'a');
+        $fp = sugar_fopen(ImportCacheFiles::getErrorRecordsFileName(), 'a');
+        $fpNoErrors = sugar_fopen(ImportCacheFiles::getErrorRecordsWithoutErrorFileName(), 'a');
 
         //Write records only for download without error message.
         fputcsv($fpNoErrors, $rowData);

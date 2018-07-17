@@ -248,9 +248,9 @@ foreach ($mailboxes as $id=>$name) {
         $from_emails.="'$id','$name','$emails[$id]'";
     }
 }
-$ss->assign("FROM_EMAILS",$from_emails);
-$ss->assign("DEFAULT_FROM_EMAIL",$default_email_address);
-$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'],$mrkt_focus->status ? $mrkt_focus->status : 'active'));
+$ss->assign("FROM_EMAILS", $from_emails);
+$ss->assign("DEFAULT_FROM_EMAIL", $default_email_address);
+$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'], $mrkt_focus->status ? $mrkt_focus->status : 'active'));
 if (empty($mrkt_focus->inbound_email_id)) {
     $defaultMailboxId = '';
     $mailboxIds = array();
@@ -285,7 +285,7 @@ $ss->assign('OUTBOUND_MAILBOXES', get_select_options_with_id($outboundEmailLabel
 $ss->assign("TIME_MERIDIEM", $timedate->AMPMMenu('', $mrkt_focus->time_start));
 $ss->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
 
-$email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name','','name');
+$email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', '', 'name');
 if ($mrkt_focus->template_id) {
     $ss->assign("TEMPLATE_ID", $mrkt_focus->template_id);
     $templateId = $mrkt_focus->template_id;
@@ -293,7 +293,7 @@ if ($mrkt_focus->template_id) {
         $templateId = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'];
     }
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $templateId));
-    $ss->assign("EDIT_TEMPLATE","visibility:inline");
+    $ss->assign("EDIT_TEMPLATE", "visibility:inline");
     $ss->assign('email_template_already_selected', $mrkt_focus->template_id);
 } else {
     $templateId = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : "";
@@ -301,29 +301,29 @@ if ($mrkt_focus->template_id) {
         $templateId = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'];
     }
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing' ? null : $templateId));
-    $ss->assign("EDIT_TEMPLATE","visibility:hidden");
+    $ss->assign("EDIT_TEMPLATE", "visibility:hidden");
 }
 
 
-$scope_options=get_message_scope_dom($campaign_focus->id,$campaign_focus->name,$mrkt_focus->db);
+$scope_options=get_message_scope_dom($campaign_focus->id, $campaign_focus->name, $mrkt_focus->db);
 $prospectlists=array();
 if (isset($mrkt_focus->all_prospect_lists) && $mrkt_focus->all_prospect_lists==1) {
-    $ss->assign("ALL_PROSPECT_LISTS_CHECKED","checked");
-    $ss->assign("MESSAGE_FOR_DISABLED","disabled");
+    $ss->assign("ALL_PROSPECT_LISTS_CHECKED", "checked");
+    $ss->assign("MESSAGE_FOR_DISABLED", "disabled");
 } else {
     //get select prospect list.
     if (!empty($mrkt_focus->id)) {
         $mrkt_focus->load_relationship('prospectlists');
         $prospectlists=$mrkt_focus->prospectlists->get();
     } else {
-        $ss->assign("ALL_PROSPECT_LISTS_CHECKED","checked");
-        $ss->assign("MESSAGE_FOR_DISABLED","disabled");
+        $ss->assign("ALL_PROSPECT_LISTS_CHECKED", "checked");
+        $ss->assign("MESSAGE_FOR_DISABLED", "disabled");
     };
 }
 
 // force to check all prospect list by default..
-$ss->assign("ALL_PROSPECT_LISTS_CHECKED","checked");
-$ss->assign("MESSAGE_FOR_DISABLED","disabled");
+$ss->assign("ALL_PROSPECT_LISTS_CHECKED", "checked");
+$ss->assign("MESSAGE_FOR_DISABLED", "disabled");
 
 if (empty($prospectlists)) {
     $prospectlists=array();
@@ -392,7 +392,7 @@ if ($pl_count==0) {
         }
     }
     //disable the send email options
-    $ss->assign("PL_DISABLED",'disabled');
+    $ss->assign("PL_DISABLED", 'disabled');
     $ss->assign("PL_DISABLED_TEST", $pl_diabled_test_too ? 'disabled' : false);
 } else {
     //show inputs and assign type to be radio
@@ -696,8 +696,8 @@ if ($has_campaign || $inboundEmail) {
         $ss->assign("TRACKER_NAME", isset($focus) ? $focus->tracker_name : null);
         $ss->assign("TRACKER_URL", isset($focus) ? $focus->tracker_url : null);
         if (!empty($focus->is_optout) && $focus->is_optout == 1) {
-            $ss->assign("IS_OPTOUT_CHECKED","checked");
-            $ss->assign("TRACKER_URL_DISABLED","disabled");
+            $ss->assign("IS_OPTOUT_CHECKED", "checked");
+            $ss->assign("TRACKER_URL_DISABLED", "disabled");
         }
     }
 }

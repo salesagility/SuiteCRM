@@ -69,7 +69,7 @@ if (isset($_REQUEST['current_post']) && $_REQUEST['current_post'] != '') {
 }
 
 
-$template = BeanFactory::getBean('AOS_PDF_Templates',$_REQUEST['templateID']);
+$template = BeanFactory::getBean('AOS_PDF_Templates', $_REQUEST['templateID']);
 
 if (!$template) {
     sugar_die("Invalid Template");

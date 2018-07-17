@@ -109,7 +109,7 @@ $xtpl->assign("MESSAGE_URL", $focus->message_url);
 $xtpl->assign("TRACKER_KEY", $focus->tracker_key);
 
 if (!empty($focus->is_optout) && $focus->is_optout == 1) {
-    $xtpl->assign("IS_OPTOUT_CHECKED","checked");
+    $xtpl->assign("IS_OPTOUT_CHECKED", "checked");
 }
 
 

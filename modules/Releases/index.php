@@ -52,7 +52,7 @@ global $app_list_strings;
 global $app_strings;
 global $current_user;
 
-if ((!is_admin($GLOBALS['current_user']) && (!is_admin_for_module($GLOBALS['current_user'],'Bugs')))) {
+if ((!is_admin($GLOBALS['current_user']) && (!is_admin_for_module($GLOBALS['current_user'], 'Bugs')))) {
     sugar_die("Unauthorized access to administration.");
 }
 
@@ -69,7 +69,7 @@ if (!empty($_REQUEST['record'])) {
 if (isset($_REQUEST['edit']) && $_REQUEST['edit']=='true') {
     $is_edit=true;
     //Only allow admins to enter this screen
-    if (!is_admin($current_user)&& !is_admin_for_module($GLOBALS['current_user'],'Bugs')) {
+    if (!is_admin($current_user)&& !is_admin_for_module($GLOBALS['current_user'], 'Bugs')) {
         $GLOBALS['log']->error("Non-admin user ($current_user->user_name) attempted to enter the Releases edit screen");
         session_destroy();
         include('modules/Users/Logout.php');
@@ -89,12 +89,11 @@ $button .= "<input title='".$app_strings['LBL_NEW_BUTTON_TITLE']."' accessyKey='
 $button .= "</form>\n";
 
 $ListView = new ListView();
-if ((is_admin($current_user)|| is_admin_for_module($GLOBALS['current_user'],'Bugs')) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-    $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=ListView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'"
-,null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
+if ((is_admin($current_user)|| is_admin_for_module($GLOBALS['current_user'], 'Bugs')) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
+    $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=ListView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
-$ListView->initNewXTemplate('modules/Releases/ListView.html',$mod_strings);
-$ListView->xTemplateAssign("DELETE_INLINE_PNG",  SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LNK_DELETE']));
+$ListView->initNewXTemplate('modules/Releases/ListView.html', $mod_strings);
+$ListView->xTemplateAssign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_DELETE']));
 $ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE'] . $header_text);
 $ListView->setHeaderText($button);
 $ListView->show_export_button = false;
@@ -116,10 +115,10 @@ if ($is_edit) {
     $edit_button .="<input type='hidden' name='return_id' value=''>\n";
     $edit_button .='<input title="'.$app_strings['LBL_SAVE_BUTTON_TITLE'].'" accessKey="'.$app_strings['LBL_SAVE_BUTTON_KEY'].'" class="button" onclick="this.form.action.value=\'Save\'; return check_form(\'EditView\');" type="submit" name="button" value="  '.$app_strings['LBL_SAVE_BUTTON_LABEL'].'  " >';
     $edit_button .=' <input title="'.$app_strings['LBL_SAVE_NEW_BUTTON_TITLE'].'" class="button" onclick="this.form.action.value=\'Save\'; this.form.isDuplicate.value=\'true\'; this.form.edit.value=\'true\'; this.form.return_action.value=\'EditView\'; return check_form(\'EditView\')" type="submit" name="button" value="  '.$app_strings['LBL_SAVE_NEW_BUTTON_LABEL'].'  " >';
-    if ((is_admin($current_user) || is_admin_for_module($GLOBALS['current_user'],'Bugs')) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-        $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&edit=true&from_action=EditView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
+    if ((is_admin($current_user) || is_admin_for_module($GLOBALS['current_user'], 'Bugs')) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
+        $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&edit=true&from_action=EditView&from_module=".$_REQUEST['module'] ."'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDITLAYOUT'])."</a>";
     }
-    echo get_form_header($mod_strings['LBL_RELEASE']." ".$focus->name . '&nbsp;' . $header_text,$edit_button , false);
+    echo get_form_header($mod_strings['LBL_RELEASE']." ".$focus->name . '&nbsp;' . $header_text, $edit_button, false);
 
 
     $GLOBALS['log']->info("Releases edit view");

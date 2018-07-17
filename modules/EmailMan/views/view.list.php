@@ -52,7 +52,7 @@ class EmailManViewList extends ViewList
     {
         global $current_user;
         
-        if (!is_admin($current_user) && !is_admin_for_module($current_user,'Campaigns')) {
+        if (!is_admin($current_user) && !is_admin_for_module($current_user, 'Campaigns')) {
             sugar_die($GLOBALS['app_strings']['ERR_NOT_ADMIN']);
         } 
  	    
@@ -69,8 +69,8 @@ class EmailManViewList extends ViewList
         global $mod_strings;
 	    
         return array(
-    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
-    	   translate('LBL_MASS_EMAIL_MANAGER_TITLE','Administration'),
+    	   "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
+    	   translate('LBL_MASS_EMAIL_MANAGER_TITLE', 'Administration'),
     	   );
     }
     

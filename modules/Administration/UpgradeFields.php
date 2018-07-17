@@ -101,10 +101,10 @@ foreach ($modules as $the_module => $fields) {
             echo "Dropping Column $col from $mod->table_name"."_cstm for module $the_module<br>";
         } else {
             if ($col != 'id_c') {
-                $db_data_type = strtolower(str_replace(' ' , '', $the_field->get_db_type()));
+                $db_data_type = strtolower(str_replace(' ', '', $the_field->get_db_type()));
 
-                $type = strtolower(str_replace(' ' , '', $type));
-                if (strcmp($db_data_type,$type) != 0) {
+                $type = strtolower(str_replace(' ', '', $type));
+                if (strcmp($db_data_type, $type) != 0) {
                     echo "Fixing Column Type for $col changing $type to ".$db_data_type."<br>";
                     if (!$simulate) {
                         $db->query($the_field->get_db_modify_alter_table($mod->table_name.'_cstm'));

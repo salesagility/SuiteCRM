@@ -48,7 +48,7 @@ class ViewHome extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
+    	   translate('LBL_MODULE_NAME', 'Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
@@ -58,21 +58,21 @@ class ViewHome extends SugarView
         global $current_user;
         global $mod_strings;
         $smarty = new Sugar_Smarty();
-        $smarty->assign('title' , $mod_strings['LBL_DEVELOPER_TOOLS']);
+        $smarty->assign('title', $mod_strings['LBL_DEVELOPER_TOOLS']);
         $smarty->assign('question', $mod_strings['LBL_QUESTION_EDITOR']);
         $smarty->assign('defaultHelp', 'mainHelp');
         $this->generateHomeButtons();
         $smarty->assign('buttons', $this->buttons);
         $assistant=array('group'=>'main', 'key'=>'welcome');
-        $smarty->assign('assistant',$assistant);
+        $smarty->assign('assistant', $assistant);
         //initialize Assistant's display property.
         $userPref = $current_user->getPreference('mb_assist', 'Assistant');
         if (!$userPref) {
             $userPref="na";
         }
-        $smarty->assign('userPref',$userPref);
+        $smarty->assign('userPref', $userPref);
         $ajax = new AjaxCompose();
-        $ajax->addSection('center', $mod_strings['LBL_HOME'],$smarty->fetch('modules/ModuleBuilder/tpls/wizard.tpl'));
+        $ajax->addSection('center', $mod_strings['LBL_HOME'], $smarty->fetch('modules/ModuleBuilder/tpls/wizard.tpl'));
         echo $ajax->getJavascript();
     }
 

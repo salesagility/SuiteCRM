@@ -20,15 +20,15 @@
  }
 
  /* Image map handling */
- define("IMAGE_MAP_STORAGE_FILE"	, 680001);
- define("IMAGE_MAP_STORAGE_SESSION"	, 680002);
+ define("IMAGE_MAP_STORAGE_FILE", 680001);
+ define("IMAGE_MAP_STORAGE_SESSION", 680002);
 
  /* Last generated chart layout */
- define("CHART_LAST_LAYOUT_REGULAR"	, 680011);
- define("CHART_LAST_LAYOUT_STACKED"	, 680012);
+ define("CHART_LAST_LAYOUT_REGULAR", 680011);
+ define("CHART_LAST_LAYOUT_STACKED", 680012);
 
  /* ImageMap string delimiter */
- define("IMAGE_MAP_DELIMITER"		, chr(1));
+ define("IMAGE_MAP_DELIMITER", chr(1));
 
  class pImage extends pDraw
  {
@@ -81,7 +81,7 @@
      public $LastChartLayout	= CHART_LAST_LAYOUT_REGULAR;	// Last layout : regular or stacked
 
      /* Class constructor */
-     public function pImage($XSize,$YSize,$DataSet=NULL,$TransparentBackground=FALSE)
+     public function pImage($XSize, $YSize, $DataSet=NULL, $TransparentBackground=FALSE)
      {
          $this->TransparentBackground = $TransparentBackground;
 
@@ -91,21 +91,21 @@
 
          $this->XSize   = $XSize;
          $this->YSize   = $YSize;
-         $this->Picture = imagecreatetruecolor($XSize,$YSize);
+         $this->Picture = imagecreatetruecolor($XSize, $YSize);
 
          if ($this->TransparentBackground) {
-             imagealphablending($this->Picture,FALSE);
-             imagefilledrectangle($this->Picture, 0,0,$XSize, $YSize, imagecolorallocatealpha($this->Picture, 255, 255, 255, 127));
-             imagealphablending($this->Picture,TRUE);
-             imagesavealpha($this->Picture,true);
+             imagealphablending($this->Picture, FALSE);
+             imagefilledrectangle($this->Picture, 0, 0, $XSize, $YSize, imagecolorallocatealpha($this->Picture, 255, 255, 255, 127));
+             imagealphablending($this->Picture, TRUE);
+             imagesavealpha($this->Picture, true);
          } else {
-             $C_White = $this->AllocateColor($this->Picture,255,255,255);
-             imagefilledrectangle($this->Picture,0,0,$XSize,$YSize,$C_White);
+             $C_White = $this->AllocateColor($this->Picture, 255, 255, 255);
+             imagefilledrectangle($this->Picture, 0, 0, $XSize, $YSize, $C_White);
          }
      }
 
      /* Enable / Disable and set shadow properties */
-     public function setShadow($Enabled=TRUE,$Format="")
+     public function setShadow($Enabled=TRUE, $Format="")
      {
          $X	    = isset($Format["X"]) ? $Format["X"] : 2;
          $Y	    = isset($Format["Y"]) ? $Format["Y"] : 2;
@@ -124,7 +124,7 @@
      }
 
      /* Set the graph area position */
-     public function setGraphArea($X1,$Y1,$X2,$Y2)
+     public function setGraphArea($X1, $Y1, $X2, $Y2)
      {
          if ($X2 < $X1 || $X1 == $X2 || $Y2 < $Y1 || $Y1 == $Y2) {
              return(-1);
@@ -156,18 +156,18 @@
      public function render($FileName)
      {
          if ($this->TransparentBackground) {
-             imagealphablending($this->Picture,false);
-             imagesavealpha($this->Picture,true);
+             imagealphablending($this->Picture, false);
+             imagesavealpha($this->Picture, true);
          }
-         imagepng($this->Picture,$FileName);
+         imagepng($this->Picture, $FileName);
      }
 
      /* Render the picture to a web browser stream */
      public function stroke($BrowserExpire=FALSE)
      {
          if ($this->TransparentBackground) {
-             imagealphablending($this->Picture,false);
-             imagesavealpha($this->Picture,true);
+             imagealphablending($this->Picture, false);
+             imagesavealpha($this->Picture, true);
          }
 
          if ($BrowserExpire) {
@@ -191,17 +191,17 @@
      }
 
      /* Return the length between two points */
-     public function getLength($X1,$Y1,$X2,$Y2)
+     public function getLength($X1, $Y1, $X2, $Y2)
      {
-         return(sqrt(pow(max($X1,$X2)-min($X1,$X2),2)+pow(max($Y1,$Y2)-min($Y1,$Y2),2)));
+         return(sqrt(pow(max($X1, $X2)-min($X1, $X2), 2)+pow(max($Y1, $Y2)-min($Y1, $Y2), 2)));
      }
 
      /* Return the orientation of a line */
-     public function getAngle($X1,$Y1,$X2,$Y2)
+     public function getAngle($X1, $Y1, $X2, $Y2)
      {
          $Opposite = $Y2 - $Y1;
          $Adjacent = $X2 - $X1;
-         $Angle = rad2deg(atan2($Opposite,$Adjacent));
+         $Angle = rad2deg(atan2($Opposite, $Adjacent));
          if ($Angle > 0) {
              return($Angle);
          } else {
@@ -210,11 +210,11 @@
      }
 
      /* Return the surrounding box of text area */
-     public function getTextBox_deprecated($X,$Y,$FontName,$FontSize,$Angle,$Text)
+     public function getTextBox_deprecated($X, $Y, $FontName, $FontSize, $Angle, $Text)
      {
-         $Size    = imagettfbbox($FontSize,$Angle,$FontName,$Text);
-         $Width   = $this->getLength($Size[0],$Size[1],$Size[2],$Size[3])+1;
-         $Height  = $this->getLength($Size[2],$Size[3],$Size[4],$Size[5])+1;
+         $Size    = imagettfbbox($FontSize, $Angle, $FontName, $Text);
+         $Width   = $this->getLength($Size[0], $Size[1], $Size[2], $Size[3])+1;
+         $Height  = $this->getLength($Size[2], $Size[3], $Size[4], $Size[5])+1;
 
          $RealPos[0]["X"] = $X;
          $RealPos[0]["Y"] = $Y;
@@ -234,7 +234,7 @@
      }
 
      /* Return the surrounding box of text area */
-     public function getTextBox($X,$Y,$FontName,$FontSize,$Angle,$Text)
+     public function getTextBox($X, $Y, $FontName, $FontSize, $Angle, $Text)
      {
          $coords = imagettfbbox($FontSize, 0, $FontName, $Text);
 
@@ -304,9 +304,9 @@
      /* Returns the 1st decimal values (used to correct AA bugs) */
      public function getFirstDecimal($Value)
      {
-         $Values = preg_split("/\./",$Value);
+         $Values = preg_split("/\./", $Value);
          if (isset($Values[1])) {
-             return(substr($Values[1],0,1));
+             return(substr($Values[1], 0, 1));
          } else {
              return(0);
          }
@@ -325,7 +325,7 @@
      }
 
      /* Initialise the image map methods */
-     public function initialiseImageMap($Name="pChart",$StorageMode=IMAGE_MAP_STORAGE_SESSION,$UniqueID="imageMap",$StorageFolder="tmp")
+     public function initialiseImageMap($Name="pChart", $StorageMode=IMAGE_MAP_STORAGE_SESSION, $UniqueID="imageMap", $StorageFolder="tmp")
      {
          $this->ImageMapIndex 		= $Name;
          $this->ImageMapStorageMode		= $StorageMode;
@@ -346,19 +346,19 @@
      }
 
      /* Add a zone to the image map */
-     public function addToImageMap($Type,$Plots,$Color=NULL,$Title=NULL,$Message=NULL,$HTMLEncode=FALSE)
+     public function addToImageMap($Type, $Plots, $Color=NULL, $Title=NULL, $Message=NULL, $HTMLEncode=FALSE)
      {
          if ($this->ImageMapStorageMode == NULL) {
              $this->initialiseImageMap();
          }
 
          /* Encode the characters in the imagemap in HTML standards */
-         $Title   = str_replace("&#8364;","\u20AC",$Title);
-         $Title   = htmlentities($Title,ENT_QUOTES,"ISO-8859-15");
+         $Title   = str_replace("&#8364;", "\u20AC", $Title);
+         $Title   = htmlentities($Title, ENT_QUOTES, "ISO-8859-15");
          if ($HTMLEncode) {
-             $Message = htmlentities($Message,ENT_QUOTES,"ISO-8859-15");
-             $Message = str_replace("&lt;","<",$Message);
-             $Message = str_replace("&gt;",">",$Message);
+             $Message = htmlentities($Message, ENT_QUOTES, "ISO-8859-15");
+             $Message = str_replace("&lt;", "<", $Message);
+             $Message = str_replace("&gt;", ">", $Message);
          }
 
          if ($this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION) {
@@ -424,7 +424,7 @@
              $Handle    = @fopen($this->ImageMapStorageFolder."/".$this->ImageMapFileName.".map", "r");
              if ($Handle) {
                  while (($Buffer = fgets($Handle, 4096)) !== false) {
-                     $Fields      = preg_split("/".IMAGE_MAP_DELIMITER."/",str_replace(array(chr(10),chr(13)),"",$Buffer));
+                     $Fields      = preg_split("/".IMAGE_MAP_DELIMITER."/", str_replace(array(chr(10),chr(13)), "", $Buffer));
                      $TempArray[] = array($Fields[0],$Fields[1],$Fields[2],$Fields[3],$Fields[4]);
                  }
                  fclose($Handle);
@@ -480,7 +480,7 @@
              $Handle    = @fopen($this->ImageMapStorageFolder."/".$this->ImageMapFileName.".map", "r");
              if ($Handle) {
                  while (($Buffer = fgets($Handle, 4096)) !== false) {
-                     $Fields      = preg_split("/".IMAGE_MAP_DELIMITER."/",str_replace(array(chr(10),chr(13)),"",$Buffer));
+                     $Fields      = preg_split("/".IMAGE_MAP_DELIMITER."/", str_replace(array(chr(10),chr(13)), "", $Buffer));
                      $TempArray[] = array($Fields[0],$Fields[1],$Fields[2],$Fields[3],$Fields[4]);
                  }
                  fclose($Handle);
@@ -504,7 +504,7 @@
      }
 
      /* Dump the image map */
-     public function dumpImageMap($Name="pChart",$StorageMode=IMAGE_MAP_STORAGE_SESSION,$UniqueID="imageMap",$StorageFolder="tmp")
+     public function dumpImageMap($Name="pChart", $StorageMode=IMAGE_MAP_STORAGE_SESSION, $UniqueID="imageMap", $StorageFolder="tmp")
      {
          $this->ImageMapIndex 		= $Name;
          $this->ImageMapStorageMode		= $StorageMode;
@@ -539,7 +539,7 @@
      }
 
      /* Return the HTML converted color from the RGB composite values */
-     public function toHTMLColor($R,$G,$B)
+     public function toHTMLColor($R, $G, $B)
      {
          $R=intval($R);
          $G=intval($G);
@@ -565,22 +565,22 @@
      }
 
      /* Mirror Effect */
-     public function drawAreaMirror($X,$Y,$Width,$Height,$Format="")
+     public function drawAreaMirror($X, $Y, $Width, $Height, $Format="")
      {
          $StartAlpha	= isset($Format["StartAlpha"]) ? $Format["StartAlpha"] : 80;
          $EndAlpha		= isset($Format["EndAlpha"]) ? $Format["EndAlpha"] : 0;
 
          $AlphaStep = ($StartAlpha-$EndAlpha)/$Height;
 
-         $Picture = imagecreatetruecolor($this->XSize,$this->YSize);
-         imagecopy($Picture,$this->Picture,0,0,0,0,$this->XSize,$this->YSize);
+         $Picture = imagecreatetruecolor($this->XSize, $this->YSize);
+         imagecopy($Picture, $this->Picture, 0, 0, 0, 0, $this->XSize, $this->YSize);
      
          for ($i=1;$i<=$Height;$i++) {
              if ($Y+($i-1) < $this->YSize && $Y-$i > 0) {
-                 imagecopymerge($Picture,$this->Picture,$X,$Y+($i-1),$X,$Y-$i,$Width,1,$StartAlpha-$AlphaStep*$i);
+                 imagecopymerge($Picture, $this->Picture, $X, $Y+($i-1), $X, $Y-$i, $Width, 1, $StartAlpha-$AlphaStep*$i);
              }
          }
 
-         imagecopy($this->Picture,$Picture,0,0,0,0,$this->XSize,$this->YSize);
+         imagecopy($this->Picture, $Picture, 0, 0, 0, 0, $this->XSize, $this->YSize);
      }
  }

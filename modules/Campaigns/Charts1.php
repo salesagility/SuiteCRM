@@ -61,7 +61,7 @@ class charts
      * @param array targets: translated list of all activity types, targeted, bounced etc..
      * @param string campaign_id: chart for this campaign.
      */
-    public function campaign_response_chart($targets,$campaign_id)
+    public function campaign_response_chart($targets, $campaign_id)
     {
         $focus = new Campaign();
         $leadSourceArr = array();
@@ -93,14 +93,14 @@ class charts
 
         //use the new template.
         $xtpl=new XTemplate ('modules/Campaigns/chart.tpl');
-        $xtpl->assign("GRAPHTITLE",'Campaign Response by Recipient Activity');
-        $xtpl->assign("Y_DEFAULT_ALT_TEXT",'Rollover a bar to view details.');
+        $xtpl->assign("GRAPHTITLE", 'Campaign Response by Recipient Activity');
+        $xtpl->assign("Y_DEFAULT_ALT_TEXT", 'Rollover a bar to view details.');
 
         //process rows
         foreach ($leadSourceArr as $key=>$values) {
             if (isset($values['bars'])) {
                 foreach ($values['bars'] as $bar_id=>$bar_value) {
-                    $xtpl->assign("Y_BAR_ID",$bar_id);
+                    $xtpl->assign("Y_BAR_ID", $bar_id);
                 }
             }
         }

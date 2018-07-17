@@ -67,7 +67,7 @@ if (!isset($_POST['dashName'])) {
 } else {
     $type = 'Home';
 
-    $existingPages = $current_user->getPreference('pages',$type);
+    $existingPages = $current_user->getPreference('pages', $type);
     $dashboardPage = array();
     $numberColumns = $_POST['numColumns'];
     $pageName = $_POST['dashName'];
@@ -103,7 +103,7 @@ if (!isset($_POST['dashName'])) {
     $dashboardPage['pageTitle'] = $pageName;
     $dashboardPage['numColumns'] = $numberColumns;
 
-    array_push($existingPages,$dashboardPage);
+    array_push($existingPages, $dashboardPage);
 
     $current_user->setPreference('pages', $existingPages, 0, $type);
 
@@ -118,8 +118,8 @@ if (!isset($_POST['dashName'])) {
     $sugar_smarty = new Sugar_Smarty();
     $sugar_smarty->assign('columns', $display);
     $sugar_smarty->assign('selectedPage', sizeof($pages) - 1);
-    $sugar_smarty->assign('mod',$home_mod_strings);
-    $sugar_smarty->assign('app',$GLOBALS['app_strings']);
+    $sugar_smarty->assign('mod', $home_mod_strings);
+    $sugar_smarty->assign('app', $GLOBALS['app_strings']);
     $sugar_smarty->assign('lblAddDashlets', $home_mod_strings['LBL_ADD_DASHLETS']);
     $sugar_smarty->assign('numCols', $dashboardPage['numColumns']);
 }

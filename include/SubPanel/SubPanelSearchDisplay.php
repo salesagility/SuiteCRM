@@ -40,7 +40,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-ini_set('display_errors',1);
+ini_set('display_errors', 1);
 
 global $beanList;
 global $beanFiles;
@@ -70,7 +70,7 @@ if (!empty($_REQUEST['layout_def_key'])) {
     $layout_def_key = $_REQUEST['layout_def_key'];
 }
 
-$subpanel_object = new SubPanel($module, $record, $subpanel,null, $layout_def_key, $collection);
+$subpanel_object = new SubPanel($module, $record, $subpanel, null, $layout_def_key, $collection);
 
 echo $subpanel_object->getSearchForm();
 

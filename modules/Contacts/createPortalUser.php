@@ -35,7 +35,7 @@ require_once('modules/Contacts/Contact.php');
 $bean = new Contact();
 $bean->retrieve($_REQUEST['record']);
 
-if (array_key_exists("aop",$sugar_config) && array_key_exists("joomla_url",$sugar_config['aop'])) {
+if (array_key_exists("aop", $sugar_config) && array_key_exists("joomla_url", $sugar_config['aop'])) {
     $portalURL = $sugar_config['aop']['joomla_url'];
     $wbsv = file_get_contents($portalURL.'/index.php?option=com_advancedopenportal&task=create&sug='.$_REQUEST['record']);
     $res = json_decode($wbsv);

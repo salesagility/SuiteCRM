@@ -81,7 +81,7 @@ class GroupedTabStructure
         $mlhUsed = array();
         //the invisible list should be merged if activities is set to be hidden
         if (in_array('Activities', $modList)) {
-            $modList = array_merge($modList,$modInvisListActivities);
+            $modList = array_merge($modList, $modInvisListActivities);
         }
         
         //Add any iFrame tabs to the 'other' group.
@@ -96,7 +96,7 @@ class GroupedTabStructure
             unset($modList['iFrames']);
         }
                 
-        $modList = array_merge($modList,$moduleExtraMenu);
+        $modList = array_merge($modList, $moduleExtraMenu);
                 
         /* Only return modules which exists in the modList */
         foreach ($tabStructure as $mainTab => $subModules) {

@@ -21,8 +21,8 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                                 prospect_lists.*,
                                 users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
                                 ON prospect_lists.assigned_user_id=users.id  WHERE  prospect_lists.deleted=0 ORDER BY prospect_lists.name";
-        $actual = $prospectList->create_export_query('','');
-        $this->assertSame($expected,$actual);
+        $actual = $prospectList->create_export_query('', '');
+        $this->assertSame($expected, $actual);
 
 
         //test with valid string params
@@ -30,8 +30,8 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
                                 prospect_lists.*,
                                 users.user_name as assigned_user_name FROM prospect_lists LEFT JOIN users
                                 ON prospect_lists.assigned_user_id=users.id  WHERE users.user_name = \"\" AND  prospect_lists.deleted=0 ORDER BY prospect_lists.id";
-        $actual = $prospectList->create_export_query('prospect_lists.id','users.user_name = ""');
-        $this->assertSame($expected,$actual);
+        $actual = $prospectList->create_export_query('prospect_lists.id', 'users.user_name = ""');
+        $this->assertSame($expected, $actual);
     }
 
     
@@ -42,15 +42,15 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with empty string params
         $expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
 					ON prospect_lists.assigned_user_id=users.id where prospect_lists.deleted=0 ORDER BY prospect_lists.name";
-        $actual = $prospectList->create_list_query('','');
-        $this->assertSame($expected,$actual);
+        $actual = $prospectList->create_list_query('', '');
+        $this->assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "SELECT users.user_name as assigned_user_name, prospect_lists.* FROM prospect_lists LEFT JOIN users
 					ON prospect_lists.assigned_user_id=users.id where users.user_name = \"\" AND prospect_lists.deleted=0 ORDER BY prospect_lists.id";
-        $actual = $prospectList->create_list_query('prospect_lists.id','users.user_name = ""');
-        $this->assertSame($expected,$actual);
+        $actual = $prospectList->create_list_query('prospect_lists.id', 'users.user_name = ""');
+        $this->assertSame($expected, $actual);
     }
 
     public function testProspectList()
@@ -59,8 +59,8 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //execute the contructor and check for the Object type and  attributes
         $prospectList = new ProspectList();
 
-        $this->assertInstanceOf('ProspectList',$prospectList);
-        $this->assertInstanceOf('SugarBean',$prospectList);
+        $this->assertInstanceOf('ProspectList', $prospectList);
+        $this->assertInstanceOf('SugarBean', $prospectList);
 
         $this->assertAttributeEquals('prospect_lists', 'table_name', $prospectList);
         $this->assertAttributeEquals('ProspectLists', 'module_dir', $prospectList);
@@ -79,11 +79,11 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $prospectList = new ProspectList();
 
         //test without setting name
-        $this->assertEquals(Null,$prospectList->get_summary_text());
+        $this->assertEquals(Null, $prospectList->get_summary_text());
 
         //test with name set
         $prospectList->name = "test";
-        $this->assertEquals('test',$prospectList->get_summary_text());
+        $this->assertEquals('test', $prospectList->get_summary_text());
         
         // clean up
     }
@@ -142,7 +142,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $prospectList->mark_deleted($prospectList->id);
         $result = $prospectList->retrieve($prospectList->id);
-        $this->assertEquals(null,$result);
+        $this->assertEquals(null, $result);
 
         // clean up
         
@@ -167,11 +167,11 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $link_ids = array('1','2');
 
         $prospectList->retrieve($id);
-        $prospectList->set_prospect_relationship($id, $link_ids ,'related');
+        $prospectList->set_prospect_relationship($id, $link_ids, 'related');
 
         $expected_count = $prospectList->get_entry_count();
 
-        $this->assertEquals(2,$expected_count);
+        $this->assertEquals(2, $expected_count);
 
 
         //test clear_prospect_relationship method with expected counts
@@ -184,11 +184,11 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $prospectList = new ProspectList();
 
         $prospectList->retrieve($id);
-        $prospectList->set_prospect_relationship_single($id, '3' ,'related');
+        $prospectList->set_prospect_relationship_single($id, '3', 'related');
 
         $expected_count = $prospectList->get_entry_count();
 
-        $this->assertEquals(1,$expected_count);
+        $this->assertEquals(1, $expected_count);
 
         $this->clear_prospect_relationship($id, '3');
     }
@@ -207,7 +207,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $prospectList->clear_prospect_relationship($id, $related_id, 'related');
 
         $expected_count = (int)$prospectList->get_entry_count();
-        $this->assertEquals($initial_count - 1 , $expected_count);
+        $this->assertEquals($initial_count - 1, $expected_count);
     }
 
 
@@ -262,7 +262,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $prospectList = new ProspectList();
 
         $prospectList->fill_in_additional_detail_fields();
-        $this->assertEquals(0,$prospectList->entry_count);
+        $this->assertEquals(0, $prospectList->entry_count);
     }
 
 
@@ -279,7 +279,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //execute the method and test if it works and does not throws an exception.
         try {
-            $prospectList->update_currency_id('','');
+            $prospectList->update_currency_id('', '');
             $this->assertTrue(true);
         } catch (Exception $e) {
             $this->fail($e->getMessage() . "\nTrace:\n" . $e->getTraceAsString());
@@ -316,13 +316,13 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with empty string params
         $expected = "prospect_lists.name like '%'";
         $actual = $prospectList->build_generic_where_clause('');
-        $this->assertSame($expected,$actual);
+        $this->assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "prospect_lists.name like '1%'";
         $actual = $prospectList->build_generic_where_clause('1');
-        $this->assertSame($expected,$actual);
+        $this->assertSame($expected, $actual);
     }
 
 

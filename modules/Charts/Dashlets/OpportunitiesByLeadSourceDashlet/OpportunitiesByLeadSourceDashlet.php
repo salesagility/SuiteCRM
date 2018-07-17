@@ -250,12 +250,12 @@ EOD;
             "FROM opportunities ";
         $query .= "WHERE opportunities.deleted=0 ";
         if (count($this->pbls_ids) > 0) {
-            $query .= "AND opportunities.assigned_user_id IN ('".implode("','",$this->pbls_ids)."') ";
+            $query .= "AND opportunities.assigned_user_id IN ('".implode("','", $this->pbls_ids)."') ";
         }
         if (count($this->pbls_lead_sources) > 0) {
-            $query .= "AND opportunities.lead_source IN ('".implode("','",$this->pbls_lead_sources)."') ";
+            $query .= "AND opportunities.lead_source IN ('".implode("','", $this->pbls_lead_sources)."') ";
         } else {
-            $query .= "AND opportunities.lead_source IN ('".implode("','",array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
+            $query .= "AND opportunities.lead_source IN ('".implode("','", array_keys($GLOBALS['app_list_strings']['lead_source_dom']))."') ";
         }
         $query .= "GROUP BY lead_source ORDER BY total DESC";
 

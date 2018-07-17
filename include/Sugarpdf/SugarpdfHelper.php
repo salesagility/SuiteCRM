@@ -43,17 +43,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
     function wrapTD($html, $options)
     {
-        return wrapTag("td",$html, $options);
+        return wrapTag("td", $html, $options);
     }
 
     function wrapTR($html, $options)
     {
-        return wrapTag("tr",$html, $options);
+        return wrapTag("tr", $html, $options);
     }
 
     function wrapTable($html, $options)
     {
-        return wrapTag("table",$html, $options);
+        return wrapTag("table", $html, $options);
     }
 
     function wrapB($html)
@@ -186,7 +186,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
         if (empty($params['human'])) {
             $amount = number_format(round($amount, $round), $decimals, $dec_sep, $num_grp_sep);
-            $amount = format_place_symbol($amount, $symbol,(empty($params['symbol_space']) ? false : true));
+            $amount = format_place_symbol($amount, $symbol, (empty($params['symbol_space']) ? false : true));
         } else {
             // If amount is more greater than a thousand(positive or negative)
             if (strpos($amount, '.') > 0) {
@@ -196,9 +196,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
             if ($checkAmount >= 1000 || $checkAmount <= -1000) {
                 $amount = round(($amount / 1000), 0);
                 $amount = $amount . 'k';
-                $amount = format_place_symbol($amount, $symbol,(empty($params['symbol_space']) ? false : true));
+                $amount = format_place_symbol($amount, $symbol, (empty($params['symbol_space']) ? false : true));
             } else {
-                $amount = format_place_symbol($amount, $symbol,(empty($params['symbol_space']) ? false : true));
+                $amount = format_place_symbol($amount, $symbol, (empty($params['symbol_space']) ? false : true));
             }
         }
 

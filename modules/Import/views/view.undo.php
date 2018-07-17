@@ -65,16 +65,16 @@ class ImportViewUndo extends ImportView
         $old_mod_strings = $mod_strings;
         $module_mod_strings = 
             return_module_language($current_language, $_REQUEST['import_module']);
-        $this->ss->assign("MODULENAME",$module_mod_strings['LBL_MODULE_NAME']);
+        $this->ss->assign("MODULENAME", $module_mod_strings['LBL_MODULE_NAME']);
         $this->ss->assign("MODULE_TITLE", $this->getModuleTitle(false), ENT_NOQUOTES);
         // reset old ones afterwards
         $mod_strings = $old_mod_strings;
         
         $last_import = new UsersLastImport();
-        $this->ss->assign('UNDO_SUCCESS',$last_import->undo($_REQUEST['import_module']));
+        $this->ss->assign('UNDO_SUCCESS', $last_import->undo($_REQUEST['import_module']));
         $this->ss->assign("JAVASCRIPT", $this->_getJS());
         $content = $this->ss->fetch('modules/Import/tpls/undo.tpl');
-        $this->ss->assign("CONTENT",$content);
+        $this->ss->assign("CONTENT", $content);
         $this->ss->display('modules/Import/tpls/wizardWrapper.tpl');
     }
     

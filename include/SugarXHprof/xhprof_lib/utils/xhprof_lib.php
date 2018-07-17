@@ -733,9 +733,9 @@ function xhprof_array_unset($arr, $k)
  * Type definitions for URL params
  */
 define('XHPROF_STRING_PARAM', 1);
-define('XHPROF_UINT_PARAM',   2);
-define('XHPROF_FLOAT_PARAM',  3);
-define('XHPROF_BOOL_PARAM',   4);
+define('XHPROF_UINT_PARAM', 2);
+define('XHPROF_FLOAT_PARAM', 3);
+define('XHPROF_BOOL_PARAM', 4);
 
 
 /**

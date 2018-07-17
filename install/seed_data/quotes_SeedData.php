@@ -78,7 +78,7 @@ if (!empty($sugar_demodata['quotes_seed_data']['quotes'])) {
         
         //Set random account and contact ids
         $sql = 'SELECT * FROM accounts WHERE deleted = 0';
-        $result = DBManagerFactory::getInstance()->limitQuery($sql,0,10,true,"Error retrieving Accounts");
+        $result = DBManagerFactory::getInstance()->limitQuery($sql, 0, 10, true, "Error retrieving Accounts");
         while ($row = DBManagerFactory::getInstance()->fetchByAssoc($result)) {
             $focus->billing_account_id = $row['id'];
             $focus->name = str_replace('[account name]', $row['name'], $focus->name);

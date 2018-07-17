@@ -64,7 +64,7 @@ class MBModule
 
     public $config_md5 = null ;
 
-    public function __construct($name , $path , $package , $package_key)
+    public function __construct($name, $path, $package, $package_key)
     {
         global $mod_strings;
         $this->config [ 'templates' ] = array ( 'basic' => 1 ) ;
@@ -181,7 +181,7 @@ class MBModule
         $this->mbvardefs->deleteField ($name) ;
     }
 
-    public function fieldExists($name = '' , $type = '')
+    public function fieldExists($name = '', $type = '')
     {
         $vardefs = $this->getVardefs();
         if (! empty ($vardefs)) {
@@ -209,7 +209,7 @@ class MBModule
         return $this->mblanguage->getModStrings ($language) ;
     }
 
-    public function setModStrings($language  , $mod_strings= array())
+    public function setModStrings($language, $mod_strings= array())
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -220,7 +220,7 @@ class MBModule
         $this->mblanguage->strings [$language] = $mod_strings;
     }
 
-    public function setLabel($language  , $key , $value= null)
+    public function setLabel($language, $key, $value= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -237,7 +237,7 @@ class MBModule
         }
     }
 
-    public function deleteLabel($language  , $key= null)
+    public function deleteLabel($language, $key= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -260,7 +260,7 @@ class MBModule
         $this->save();
     }
 
-    public function getLabel($language  , $key= null)
+    public function getLabel($language, $key= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -279,7 +279,7 @@ class MBModule
         return $this->mblanguage->getAppListStrings ($language) ;
     }
 
-    public function setAppListStrings($language  , $app_list_strings= array())
+    public function setAppListStrings($language, $app_list_strings= array())
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -289,7 +289,7 @@ class MBModule
         $this->mblanguage->appListStrings [ $language ] = $app_list_strings ;
     }
 
-    public function setDropDown($language  , $key = null, $value= null)
+    public function setDropDown($language, $key = null, $value= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -299,7 +299,7 @@ class MBModule
         $this->mblanguage->appListStrings [ $language ] [ $key ] = $value ;
     }
 
-    public function deleteDropDown($language  , $key= null)
+    public function deleteDropDown($language, $key= null)
     {
         // set $language = 'en_us' as default
         if (!$language) {
@@ -359,7 +359,7 @@ class MBModule
         }
     }
 
-    public function copyCustomFiles($from , $to)
+    public function copyCustomFiles($from, $to)
     {
         $d = dir ($from) ;
         while ($filename = $d->read ()) {
@@ -367,7 +367,7 @@ class MBModule
                 continue ;
             }
             if ($filename != 'metadata' && $filename != 'Dashlets' && $filename != 'relationships' && $filename != 'language' && $filename != 'config.php' && $filename != 'relationships.php' && $filename != 'vardefs.php') {
-                copy_recursive ("$from/$filename" , "$to/$filename") ;
+                copy_recursive ("$from/$filename", "$to/$filename") ;
             }
         }
     }
@@ -382,7 +382,7 @@ class MBModule
         }
     }
 
-    public function copyMetaRecursive($from , $to , $overwrite = false)
+    public function copyMetaRecursive($from, $to, $overwrite = false)
     {
         if (! file_exists ($from)) {
             return ;
@@ -437,7 +437,7 @@ class MBModule
         if (mkdir_recursive ($path)) {
             $this->createClasses ($path) ;
             $this->createMenu ($path);
-            $this->copyCustomFiles ($this->path , $path) ;
+            $this->copyCustomFiles ($this->path, $path) ;
             $this->copyMetaRecursive ($this->path . '/metadata/', $path . '/metadata/', true) ;
             $this->copyMetaRecursive ($this->path . '/Dashlets/' . $this->key_name . 'Dashlet/',
                                        $path . '/Dashlets/' . $this->key_name . 'Dashlet/', true) ;
@@ -623,13 +623,13 @@ class MBModule
         }
         $renamed = rename ($old, $new) ;
         if ($renamed) {
-            $this->renameMetaData ($new , $old_name) ;
+            $this->renameMetaData ($new, $old_name) ;
             $this->renameLanguageFiles ($new) ;
         }
         return $renamed ;
     }
 
-    public function renameLanguageFiles($new_dir , $duplicate = false)
+    public function renameLanguageFiles($new_dir, $duplicate = false)
     {
         $this->mblanguage->name = $this->name ;
         $this->mblanguage->path = $new_dir ;
@@ -652,7 +652,7 @@ class MBModule
         while ($e = $dir->read ()) {
             if (substr ($e, 0, 1) != '.') {
                 if (is_dir ($new_dir . '/' . $e)) {
-                    $this->renameMetaData ($new_dir . '/' . $e,  $old_name) ;
+                    $this->renameMetaData ($new_dir . '/' . $e, $old_name) ;
                 }
                 if (is_file ($new_dir . '/' . $e)) {
                     $contents = file_get_contents ($new_dir . '/' . $e) ;
@@ -686,7 +686,7 @@ class MBModule
                     
                     if ("relationships.php" == $e) {
                         //bug 39598 Relationship Name Is Not Updated If Module Name Is Changed In Module Builder
-                        $contents = str_replace  ("'{$old_name}'", "'{$this->key_name}'" , $contents) ;
+                        $contents = str_replace  ("'{$old_name}'", "'{$this->key_name}'", $contents) ;
                     }
                     
                     $fp = sugar_fopen ($new_dir . '/' . $e, 'w') ;
@@ -717,7 +717,7 @@ class MBModule
         $copied = copy_recursive ($old, $new) ;
 
         if ($copied) {
-            $this->renameMetaData ($new , $old_name) ;
+            $this->renameMetaData ($new, $old_name) ;
             $this->renameLanguageFiles ($new, true) ;
         }
         return $copied ;
@@ -757,7 +757,7 @@ class MBModule
         return array ( ) ;
     }
 
-    public function saveAvailibleSubpanelDef($panelName , $layout)
+    public function saveAvailibleSubpanelDef($panelName, $layout)
     {
         $dir = $this->getModuleDir () . "/metadata/subpanels" ;
         $filepath = "$dir/{$panelName}.php" ;
@@ -835,7 +835,7 @@ class MBModule
         $views = array ( 'editview' , 'detailview' , 'listview' , 'basic_search' , 'advanced_search' , 'dashlet' , 'popuplist');
         
         foreach ($views as $type) {
-            $parser = ParserFactory::getParser($type , $this->name , $this->package) ;
+            $parser = ParserFactory::getParser($type, $this->name, $this->package) ;
             if ($parser->removeField ($fieldName)) {
                 $parser->handleSave(false) ;
             } // don't populate from $_REQUEST, just save as is...
@@ -843,7 +843,7 @@ class MBModule
         //Remove the fields in subpanel
         $psubs = $this->getProvidedSubpanels() ; 
         foreach ($psubs as $sub) {
-            $parser = ParserFactory::getParser(MB_LISTVIEW , $this->name, $this->package ,  $sub) ;
+            $parser = ParserFactory::getParser(MB_LISTVIEW, $this->name, $this->package, $sub) ;
             if ($parser->removeField ($fieldName)) {
                 $parser->handleSave(false) ;
             }

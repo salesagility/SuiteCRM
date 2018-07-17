@@ -43,7 +43,7 @@
 /**
  * @deprecated use DBManager::convert() instead.
  */
-function db_convert($string, $type, $additional_parameters=array(),$additional_parameters_oracle_only=array())
+function db_convert($string, $type, $additional_parameters=array(), $additional_parameters_oracle_only=array())
 {
     return DBManagerFactory::getInstance()->convert($string, $type, $additional_parameters, $additional_parameters_oracle_only);
 }
@@ -96,7 +96,7 @@ function to_html($string, $encode=true)
 
     if ($encode && is_string($string)) {
         if (is_array($toHTML)) {
-            $string = str_ireplace($GLOBALS['toHTML_keys'],$GLOBALS['toHTML_values'],$string);
+            $string = str_ireplace($GLOBALS['toHTML_keys'], $GLOBALS['toHTML_values'], $string);
         } else {
             $string = htmlentities($string, ENT_HTML401|ENT_QUOTES, 'UTF-8');
         }

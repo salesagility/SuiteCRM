@@ -78,7 +78,7 @@ class ViewQuickcreate extends ViewAjax
         if (!empty($_REQUEST['source_module']) && $_REQUEST['source_module'] != 'undefined' && !empty($_REQUEST['record'])) {
             $this->bean = loadBean($_REQUEST['source_module']);
             if ($this->bean instanceOf SugarBean 
-                    && !in_array($this->bean->object_name,array('EmailMan'))) {
+                    && !in_array($this->bean->object_name, array('EmailMan'))) {
                 $this->bean->retrieve($_REQUEST['record']);
                 if (!empty($this->bean->id)) {
                     $_REQUEST['parent_id'] = $this->bean->id;

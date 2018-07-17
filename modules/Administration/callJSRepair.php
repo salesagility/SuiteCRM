@@ -54,7 +54,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
     }
     //this script can take a while, change max execution time to 10 mins
     $tmp_time = ini_get('max_execution_time');
-    ini_set('max_execution_time','600');
+    ini_set('max_execution_time', '600');
         
         //figure out which commands to call.  
         if ($_REQUEST['js_admin_repair'] == 'concat') {
@@ -67,17 +67,17 @@ if (!defined('sugarEntry') || !sugarEntry) {
         
             if ($_REQUEST['js_admin_repair'] == 'replace') {
                 //should replace compressed JS with source js
-                reverseScripts("$from/jssource/src_files","$from");
+                reverseScripts("$from/jssource/src_files", "$from");
             } elseif ($_REQUEST['js_admin_repair'] == 'mini') {
                 //should replace compressed JS with minified version of source js
-                reverseScripts("$from/jssource/src_files","$from");
-                BackUpAndCompressScriptFiles("$from","",false);
+                reverseScripts("$from/jssource/src_files", "$from");
+                BackUpAndCompressScriptFiles("$from", "", false);
                 ConcatenateFiles("$from");
             } elseif ($_REQUEST['js_admin_repair'] == 'repair') {
                 //should compress existing javascript (including changes done) without overwriting original source files
-                BackUpAndCompressScriptFiles("$from","",false);
+                BackUpAndCompressScriptFiles("$from", "", false);
                 ConcatenateFiles("$from");
             }
         }
     //set execution time back to what it was   
-    ini_set('max_execution_time',$tmp_time);
+    ini_set('max_execution_time', $tmp_time);

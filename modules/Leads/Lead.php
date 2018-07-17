@@ -178,7 +178,7 @@ class Lead extends Person implements EmailInterface
 
             //requireSingleResult has beeen deprecated.
             //$result = $this->db->requireSingleResult($query);
-            $result = $this->db->limitQuery($query,0,1,true, "Want only a single row");
+            $result = $this->db->limitQuery($query, 0, 1, true, "Want only a single row");
 
             if (!empty($result)) {
                 $row = $this->db->fetchByAssoc($result);
@@ -195,7 +195,7 @@ class Lead extends Person implements EmailInterface
 
             //requireSingleResult has beeen deprecated.
             //$result = $this->db->requireSingleResult($query);
-            $result = $this->db->limitQuery($query,0,1,true, "Want only a single row");
+            $result = $this->db->limitQuery($query, 0, 1, true, "Want only a single row");
 
             if (!empty($result)) {
                 $row = $this->db->fetchByAssoc($result);
@@ -213,7 +213,7 @@ class Lead extends Person implements EmailInterface
 
             //requireSingleResult has beeen deprecated.
             //$result = $this->db->requireSingleResult($query);
-            $result = $this->db->limitQuery($query,0,1,true, "Want only a single row");
+            $result = $this->db->limitQuery($query, 0, 1, true, "Want only a single row");
             if (!empty($result)) {
                 $row= $this->db->fetchByAssoc($result);
                 $this->contact_name = $locale->getLocaleFormattedName($row['first_name'], $row['last_name']);
@@ -258,10 +258,10 @@ class Lead extends Person implements EmailInterface
         return $query;
     }
 
-    public function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false)
+    public function create_new_list_query($order_by, $where, $filter=array(), $params=array(), $show_deleted = 0, $join_type='', $return_array = false, $parentbean=null, $singleSelect = false, $ifListForExport = false)
     {
         $ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect, $ifListForExport);
-        if (strpos($ret_array['select'],"leads.account_name") == false && strpos($ret_array['select'],"leads.*") == false) {
+        if (strpos($ret_array['select'], "leads.account_name") == false && strpos($ret_array['select'], "leads.*") == false) {
             $ret_array['select'] .= " ,leads.account_name";
         }
         if (!$return_array) {
@@ -273,10 +273,10 @@ class Lead extends Person implements EmailInterface
     public function converted_lead($leadid, $contactid, $accountid, $opportunityid)
     {
         $query = "UPDATE leads set converted='1', contact_id=$contactid, account_id=$accountid, opportunity_id=$opportunityid where  id=$leadid and deleted=0";
-        $this->db->query($query,true,"Error converting lead: ");
+        $this->db->query($query, true, "Error converting lead: ");
 
         //we must move the status out here in order to be able to capture workflow conditions
-        $leadid = str_replace("'","", $leadid);
+        $leadid = str_replace("'", "", $leadid);
         $lead = new Lead();
         $lead->retrieve($leadid);
         $lead->status='Converted';
@@ -345,7 +345,7 @@ class Lead extends Person implements EmailInterface
             foreach ($fieldDefs as $name=>$properties) {
                 if ($name == 'oldmeetings' || $name == 'oldcalls') {
                     continue;
-                } elseif (array_search('link',$properties) === 'type') {
+                } elseif (array_search('link', $properties) === 'type') {
                     $linked_fields[$name]=$properties;
                 }
             }
@@ -420,7 +420,7 @@ class Lead extends Person implements EmailInterface
             /* BEGIN - SECURITY GROUPS */
             else {
                 global $current_user;
-                $parent_bean = BeanFactory::getBean('Accounts',$this->account_id);
+                $parent_bean = BeanFactory::getBean('Accounts', $this->account_id);
                 if ($parent_bean !== false) {
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
@@ -449,7 +449,7 @@ class Lead extends Person implements EmailInterface
             /* BEGIN - SECURITY GROUPS */
             else {
                 global $current_user;
-                $parent_bean = BeanFactory::getBean('Opportunities',$this->opportunity_id);
+                $parent_bean = BeanFactory::getBean('Opportunities', $this->opportunity_id);
                 if ($parent_bean !== false) {
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }
@@ -481,7 +481,7 @@ class Lead extends Person implements EmailInterface
             //contact_name_owner not being set for whatever reason so we need to figure this out
             else {
                 global $current_user;
-                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                $parent_bean = BeanFactory::getBean('Contacts', $this->contact_id);
                 if ($parent_bean !== false) {
                     $is_owner = $current_user->id == $parent_bean->assigned_user_id;
                 }

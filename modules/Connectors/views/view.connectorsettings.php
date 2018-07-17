@@ -52,7 +52,7 @@ class ViewConnectorSettings extends SugarView
         global $mod_strings;
         
         return array(
-           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+           "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
            $mod_strings['LBL_ADMINISTRATION_MAIN']
            );
     }

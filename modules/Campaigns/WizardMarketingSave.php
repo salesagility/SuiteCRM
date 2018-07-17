@@ -107,7 +107,7 @@ if (!empty($_REQUEST['assigned_user_id']) && ($marketing->assigned_user_id != $_
     }
 
 if (!empty($_REQUEST['meridiem'])) {
-    $_REQUEST['time_start'] = $timedate->merge_time_meridiem($_REQUEST['time_start'],$timedate->get_time_format(), $_REQUEST['meridiem']);
+    $_REQUEST['time_start'] = $timedate->merge_time_meridiem($_REQUEST['time_start'], $timedate->get_time_format(), $_REQUEST['meridiem']);
 }
 
 if (empty($_REQUEST['time_start'])) {
@@ -152,7 +152,7 @@ if ($marketing->all_prospect_lists==1) {
 } else {
     if (isset($_REQUEST['message_for']) && is_array($_REQUEST['message_for'])) {
         foreach ($_REQUEST['message_for'] as $prospect_list_id) {
-            $key=array_search($prospect_list_id,$prospectlists);
+            $key=array_search($prospect_list_id, $prospectlists);
             if ($key === null or $key === false) {
                 $marketing->prospectlists->add($prospect_list_id);
             } else {
@@ -161,7 +161,7 @@ if ($marketing->all_prospect_lists==1) {
         }
         if (count($prospectlists) != 0) {
             foreach ($prospectlists as $key=>$list_id) {
-                $marketing->prospectlists->delete($marketing->id,$list_id);
+                $marketing->prospectlists->delete($marketing->id, $list_id);
             }
         }
     }

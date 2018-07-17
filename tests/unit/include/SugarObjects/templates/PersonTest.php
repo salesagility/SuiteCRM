@@ -100,7 +100,7 @@ class PersonTest extends SuiteCRM\StateCheckerUnitAbstract
         $this->tester->expectException(
             new InvalidArgumentException('invalid lawful basis source'),
             function () use ($person) {
-                $person->setLawfulBasis('','Test Invalid Sources');
+                $person->setLawfulBasis('', 'Test Invalid Sources');
             }
         );
 

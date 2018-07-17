@@ -101,7 +101,7 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
         if (isset($_REQUEST['release_id']) && $_REQUEST['release_id'] != "") {
             require_once('ModuleInstall/PackageManager.php');
             $pm = new PackageManager();
-            $tempFile = $pm->download('','',$_REQUEST['release_id']);
+            $tempFile = $pm->download('', '', $_REQUEST['release_id']);
             $perform = true;
             $base_filename = urldecode($tempFile);
         } elseif (!empty($_REQUEST['load_module_from_dir'])) {
@@ -170,11 +170,11 @@ if (isset($_REQUEST['run']) && ($_REQUEST['run'] != "")) {
                 $target_manifest = remove_file_extension($target_path) . "-manifest.php";
 
                 if (isset($manifest['icon']) && $manifest['icon'] != "") {
-                    $icon_location = extractFile($tempFile ,$manifest['icon']);
+                    $icon_location = extractFile($tempFile, $manifest['icon']);
                     copy($icon_location, remove_file_extension($target_path)."-icon.".pathinfo($icon_location, PATHINFO_EXTENSION));
                 }
 
-                if (rename($tempFile , $target_path)) {
+                if (rename($tempFile, $target_path)) {
                     copy($manifest_file, $target_manifest);
                     $GLOBALS['ML_STATUS_MESSAGE'] = $base_filename.$mod_strings['LBL_UW_UPLOAD_SUCCESS'];
                 } else {

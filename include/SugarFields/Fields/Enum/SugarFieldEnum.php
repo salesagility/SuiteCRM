@@ -110,8 +110,8 @@ class SugarFieldEnum extends SugarFieldBase
         if (isset($app_list_strings[$vardef['options']]) 
                 && !isset($app_list_strings[$vardef['options']][$value])) {
             // Bug 23485/23198 - Check to see if the value passed matches the display value
-            if (in_array($value,$app_list_strings[$vardef['options']])) {
-                $value = array_search($value,$app_list_strings[$vardef['options']]);
+            if (in_array($value, $app_list_strings[$vardef['options']])) {
+                $value = array_search($value, $app_list_strings[$vardef['options']]);
             }
             // Bug 33328 - Check for a matching key in a different case
             elseif (in_array(strtolower($value), array_keys(array_change_key_case($app_list_strings[$vardef['options']])))) {

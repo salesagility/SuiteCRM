@@ -80,7 +80,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
             $options['title'] = translate('LBL_RGraph_PIPELINE_FORM_TITLE', 'Home');
         }
 
-        parent::__construct($id,$options);
+        parent::__construct($id, $options);
     }
 
     /**
@@ -323,15 +323,15 @@ EOD;
                         count(*) AS opp_count,
                         sum(amount_usdollar/1000) AS total
                     FROM users,opportunities  ";
-        $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'",'date').
-            " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'",'date') .
+        $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'", 'date').
+            " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'", 'date') .
             " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
         $query .= " GROUP BY opportunities.sales_stage";
 
         return $query;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //return $data;
         $chart['labels']=array();
@@ -355,7 +355,7 @@ EOD;
         if (strlen($label) < $this->maxLabelSizeBeforeTotal) {
             return $label;
         } else {
-            return substr($label,0,$this->maxLabelSizeBeforeTotal).$this->labelReplacementString;
+            return substr($label, 0, $this->maxLabelSizeBeforeTotal).$this->labelReplacementString;
         }
     }
 }

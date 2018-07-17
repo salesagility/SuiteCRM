@@ -155,7 +155,7 @@ class RepairAndClear
                 ob_flush();
             }
             $sql = '';
-            if (!isset($mod_strings['LBL_ALL_MODULES']) || ($this->module_list && !in_array($mod_strings['LBL_ALL_MODULES'],$this->module_list))) {
+            if (!isset($mod_strings['LBL_ALL_MODULES']) || ($this->module_list && !in_array($mod_strings['LBL_ALL_MODULES'], $this->module_list))) {
                 $repair_related_modules = array_keys($dictionary);
                 //repair DB
                 $dm = inDeveloperMode();
@@ -294,7 +294,7 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARVADEFS']}</h3>";
         }
-        if (!empty($this->module_list) && is_array($this->module_list) && !in_array(translate('LBL_ALL_MODULES'),$this->module_list)) {
+        if (!empty($this->module_list) && is_array($this->module_list) && !in_array(translate('LBL_ALL_MODULES'), $this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), 'vardefs.php');
             }
@@ -309,7 +309,7 @@ class RepairAndClear
             echo "<h3>{$mod_strings['LBL_QR_CLEARJS']}</h3>";
         }
 
-        if (!in_array(translate('LBL_ALL_MODULES'),$this->module_list) && !empty($this->module_list)) {
+        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('modules/').$this->_getModuleNamePlural($module_name_singular), '.js');
             }
@@ -323,7 +323,7 @@ class RepairAndClear
         if ($this->show_output) {
             echo "<h3>{$mod_strings['LBL_QR_CLEARJSLANG']}</h3>";
         }
-        if (!in_array(translate('LBL_ALL_MODULES'),$this->module_list) && !empty($this->module_list)) {
+        if (!in_array(translate('LBL_ALL_MODULES'), $this->module_list) && !empty($this->module_list)) {
             foreach ($this->module_list as $module_name_singular) {
                 $this->_clearCache(sugar_cached('jsLanguage/').$this->_getModuleNamePlural($module_name_singular), '.js');
             }
@@ -435,7 +435,7 @@ class RepairAndClear
                 $focus->create_audit_table();
             } else {
                 if ($this->show_output) {
-                    $echo=str_replace('%1$',$focus->object_name,$mod_strings['LBL_REBUILD_AUDIT_SKIP']);
+                    $echo=str_replace('%1$', $focus->object_name, $mod_strings['LBL_REBUILD_AUDIT_SKIP']);
                     echo $echo;
                 }
             }

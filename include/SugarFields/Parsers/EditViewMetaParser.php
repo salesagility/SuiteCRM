@@ -99,7 +99,7 @@ class EditViewMetaParser extends MetaParser
         $hiddenInputs = array();
         foreach ($formElements as $elem) {
             $type = $this->getTagAttribute("type", $elem);
-            if (preg_match('/hidden/si',$type)) {
+            if (preg_match('/hidden/si', $type)) {
                 $name = $this->getTagAttribute("name", $elem);
                 $value = $this->getTagAttribute("value", $elem);
                 $hiddenInputs[$name] = $value;

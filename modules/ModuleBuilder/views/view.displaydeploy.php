@@ -48,7 +48,7 @@ class ViewDisplaydeploy extends SugarView
         $smarty->assign('message', $GLOBALS['mod_strings']['LBL_DEPLOY_IN_PROGRESS']);
         $ajax = new AjaxCompose();
         $ajax->addCrumb($GLOBALS['mod_strings']['LBL_MODULEBUILDER'], 'ModuleBuilder.main("mb")');
-        $ajax->addCrumb($_REQUEST['name'],'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$_REQUEST['name'].'")');
+        $ajax->addCrumb($_REQUEST['name'], 'ModuleBuilder.getContent("module=ModuleBuilder&action=package&package='.$_REQUEST['name'].'")');
         $ajax->addCrumb(translate('LBL_SECTION_DEPLOY', 'ModuleBuilder'), '');
         $ajax->addSection('center', translate('LBL_SECTION_DEPLOY', 'ModuleBuilder'), $smarty->fetch('modules/ModuleBuilder/tpls/MBPackage/deploy.tpl'));
         echo $ajax->getJavascript();
@@ -77,7 +77,7 @@ class ViewDisplaydeploy extends SugarView
         global $mod_strings;
 
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }

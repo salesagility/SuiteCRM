@@ -158,7 +158,7 @@ class ImportMapSalesforce extends ImportMapOther
     public function getIgnoredFields(
 		$module
 		) {
-        return array_merge(parent::getIgnoredFields($module),array('id'));
+        return array_merge(parent::getIgnoredFields($module), array('id'));
     }
 }
 

@@ -113,7 +113,7 @@ class MailMerge
     {
         $this->obj->Documents->Add();
 
-        $this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range,1,$this->fieldcnt);
+        $this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range, 1, $this->fieldcnt);
         foreach ($this->fieldList as $key => $value) {
             $this->obj->Selection->TypeText($key);
             $this->obj->Selection->MoveRight();
@@ -126,7 +126,7 @@ class MailMerge
     public function CreateDataSource()
     {
         $this->obj->Documents->Add();
-        $this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range,$this->rowcnt,$this->fieldcnt);
+        $this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range, $this->rowcnt, $this->fieldcnt);
 
         for ($i = 0; $i < $this->rowcnt; $i++) {
             foreach ($this->fieldList as $field => $value) {

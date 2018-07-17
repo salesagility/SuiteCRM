@@ -61,7 +61,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
     {
         $this->getSeedBean()->disable_row_level_security = false;
 
-        $campaigns = $this->getSeedBean()->get_full_list("","");
+        $campaigns = $this->getSeedBean()->get_full_list("", "");
         if ($campaigns != null) {
             foreach ($campaigns as $c) {
                 $this->_searchFields['campaign_id']['options'][$c->id] = $c->name;
@@ -81,7 +81,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
         $rawData = $this->constructQuery(
             $GLOBALS['app_list_strings']['roi_type_dom'],
             $GLOBALS['app_list_strings']['roi_type_dom'],
-            $this->campaign_id[0],null,true,true,true,$this->id);
+            $this->campaign_id[0], null, true, true, true, $this->id);
 
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
         if ($GLOBALS['current_user']->getPreference('currency')) {
@@ -96,7 +96,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
         $chartHeight    = 500;
         $autoRefresh = $this->processAutoRefresh();
 
-        $chartReadyData = $this->prepareChartData($rawData,$currency_symbol,$thousands_symbol);
+        $chartReadyData = $this->prepareChartData($rawData, $currency_symbol, $thousands_symbol);
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
         $jsonData = json_encode($chartReadyData['data']);
@@ -218,7 +218,7 @@ EOD;
         //   return $this->getTitle('<div align="center"></div>') . '<div align="center">' . $returnStr . '</div>'. $this->processAutoRefresh();
     }
 
-    protected function constructQuery($datay= array(),$targets=array(),$campaign_id = null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='')
+    protected function constructQuery($datay= array(), $targets=array(), $campaign_id = null, $cache_file_name='a_file', $refresh=false, $marketing_id='', $is_dashlet=false, $dashlet_id='')
     {
         //global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
         global $mod_strings;
@@ -235,7 +235,7 @@ EOD;
         $focus = new Campaign();
         $focus->retrieve($campaign_id);
         $opp_count=0;
-        $opp_query  = "select count(*) opp_count,sum(" . db_convert("amount_usdollar","IFNULL",array(0)).")  total_value";
+        $opp_query  = "select count(*) opp_count,sum(" . db_convert("amount_usdollar", "IFNULL", array(0)).")  total_value";
         $opp_query .= " from opportunities";
         $opp_query .= " where campaign_id='$campaign_id'";
         $opp_query .= " and sales_stage='Prospecting'";
@@ -320,7 +320,7 @@ EOD;
         return $chartData;
     }
 
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    protected function prepareChartData($data, $currency_symbol, $thousands_symbol)
     {
         //Use the  lead_source to categorise the data for the charts
         $chart['labels'] = array();

@@ -213,7 +213,7 @@ class LoggerManager
                     }
                     require_once("$location/$file");
                     $loggerClass = basename($file, ".php");
-                    if (class_exists($loggerClass) && class_implements($loggerClass,'LoggerTemplate')) {
+                    if (class_exists($loggerClass) && class_implements($loggerClass, 'LoggerTemplate')) {
                         self::$_loggers[$loggerClass] = new $loggerClass();
                     }
                 }

@@ -81,7 +81,7 @@ class SecurityGroupMessage extends Basic
         }
 
         if (is_admin($GLOBALS['current_user']) || $data['CREATED_BY'] == $GLOBALS['current_user']->id || $group_owner) {
-            $delete = SugarThemeRegistry::current()->getImage('delete_inline', 'width="12" height="12" border="0" align="absmiddle" style="vertical-align: bottom;" onclick=\'Message.deleteMessage("'. $data['ID'] . '", "{this.id}")\'',null,null,'.gif','');
+            $delete = SugarThemeRegistry::current()->getImage('delete_inline', 'width="12" height="12" border="0" align="absmiddle" style="vertical-align: bottom;" onclick=\'Message.deleteMessage("'. $data['ID'] . '", "{this.id}")\'', null, null, '.gif', '');
         }
 
         $username = "";
@@ -129,7 +129,7 @@ class SecurityGroupMessage extends Basic
         $start = array();
         preg_match('/(\d+)\-(\d+)\-(\d+) (\d+)\:(\d+)\:(\d+)/', $startDate, $start);
         $end = gmdate('Y-m-d H:i:s');
-        $start_time = gmmktime($start[4],$start[5], $start[6], $start[2], $start[3], $start[1]);
+        $start_time = gmmktime($start[4], $start[5], $start[6], $start[2], $start[3], $start[1]);
         $seconds = time()- $start_time;
         $minutes =   $seconds/60;
         $seconds = $seconds % 60;
@@ -141,42 +141,42 @@ class SecurityGroupMessage extends Basic
         $days = $days % 7;
         $result = '';
         if ($weeks == 1) {
-            $result = translate('LBL_TIME_LAST_WEEK','SugarFeed').' ';
+            $result = translate('LBL_TIME_LAST_WEEK', 'SugarFeed').' ';
             return $result;
         } elseif ($weeks > 1) {
-            $result .= $weeks . ' '.translate('LBL_TIME_WEEKS','SugarFeed').' ';
+            $result .= $weeks . ' '.translate('LBL_TIME_WEEKS', 'SugarFeed').' ';
             if ($days > 0) {
-                $result .= $days . ' '.translate('LBL_TIME_DAYS','SugarFeed').' ';
+                $result .= $days . ' '.translate('LBL_TIME_DAYS', 'SugarFeed').' ';
             }
         } else {
             if ($days == 1) {
-                $result = translate('LBL_TIME_YESTERDAY','SugarFeed').' ';
+                $result = translate('LBL_TIME_YESTERDAY', 'SugarFeed').' ';
                 return $result;
             } elseif ($days > 1) {
-                $result .= $days . ' '. translate('LBL_TIME_DAYS','SugarFeed').' ';
+                $result .= $days . ' '. translate('LBL_TIME_DAYS', 'SugarFeed').' ';
             } else {
                 if ($hours == 1) {
-                    $result .= $hours . ' '.translate('LBL_TIME_HOUR','SugarFeed').' ';
+                    $result .= $hours . ' '.translate('LBL_TIME_HOUR', 'SugarFeed').' ';
                 } else {
-                    $result .= $hours . ' '.translate('LBL_TIME_HOURS','SugarFeed').' ';
+                    $result .= $hours . ' '.translate('LBL_TIME_HOURS', 'SugarFeed').' ';
                 }
                 if ($hours < 6) {
                     if ($minutes == 1) {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTE','SugarFeed'). ' ';
+                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTE', 'SugarFeed'). ' ';
                     } else {
-                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTES','SugarFeed'). ' ';
+                        $result .= $minutes . ' ' . translate('LBL_TIME_MINUTES', 'SugarFeed'). ' ';
                     }
                 }
                 if ($hours == 0 && $minutes == 0) {
                     if ($seconds == 1) {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECOND','SugarFeed');
+                        $result = $seconds . ' ' . translate('LBL_TIME_SECOND', 'SugarFeed');
                     } else {
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS','SugarFeed');
+                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS', 'SugarFeed');
                     }
                 }
             }
         }
-        return $result . ' ' . translate('LBL_TIME_AGO','SugarFeed');
+        return $result . ' ' . translate('LBL_TIME_AGO', 'SugarFeed');
     }
 
     public function bean_implements($interface)

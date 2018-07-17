@@ -89,8 +89,8 @@ $sugar_smarty->assign('ID', $current_user->id);
 $sugar_smarty->assign('IS_ADMIN', $current_user->is_admin);
 $sugar_smarty->assign('USER_NAME', $current_user->user_name);
 $sugar_smarty->assign("INSTRUCTION", $mod_strings['LBL_CHANGE_SYSTEM_PASSWORD']);
-$sugar_smarty->assign('sugar_md',getWebPath('include/images/sugar_md_open.png'));
-$sugar_smarty->assign('OLD_PASSWORD_FIELD','<td scope="row" width="30%">'.$mod_strings['LBL_OLD_PASSWORD'].':</td><td width="70%"><input type="password" size="26" tabindex="1" id="old_password" name="old_password"  value="" /></td>');
+$sugar_smarty->assign('sugar_md', getWebPath('include/images/sugar_md_open.png'));
+$sugar_smarty->assign('OLD_PASSWORD_FIELD', '<td scope="row" width="30%">'.$mod_strings['LBL_OLD_PASSWORD'].':</td><td width="70%"><input type="password" size="26" tabindex="1" id="old_password" name="old_password"  value="" /></td>');
 $pwd_settings=$GLOBALS['sugar_config']['passwordsetting'];
 
 

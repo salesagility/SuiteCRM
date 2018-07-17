@@ -40,9 +40,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function display_conflict_between_objects($object_1, $object_2, $field_defs,$module_dir, $display_name)
+function display_conflict_between_objects($object_1, $object_2, $field_defs, $module_dir, $display_name)
 {
-    $mod_strings = return_module_language($GLOBALS['current_language'],'OptimisticLock');
+    $mod_strings = return_module_language($GLOBALS['current_language'], 'OptimisticLock');
     $title = '<tr><td >&nbsp;</td>';
     $object1_row= '<tr class="oddListRowS1"><td><b>'. $mod_strings['LBL_YOURS'] . '</b></td>';
     $object2_row= '<tr class="evenListRowS1"><td><b>' . $mod_strings['LBL_IN_DATABASE'] . '</b></td>';

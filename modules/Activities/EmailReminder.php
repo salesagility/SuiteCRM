@@ -97,7 +97,7 @@ class EmailReminder
         
         $meetings = $this->getMeetingsForRemind();
         foreach ($meetings as $id) {
-            $recipients = $this->getRecipients($id,'Meetings');
+            $recipients = $this->getRecipients($id, 'Meetings');
             $bean = new Meeting();
             $bean->retrieve($id);			
             if ($this->sendReminders($bean, $admin, $recipients)) {
@@ -108,7 +108,7 @@ class EmailReminder
         
         $calls = $this->getCallsForRemind();
         foreach ($calls as $id) {
-            $recipients = $this->getRecipients($id,'Calls');
+            $recipients = $this->getRecipients($id, 'Calls');
             $bean = new Call();
             $bean->retrieve($id);
             if ($this->sendReminders($bean, $admin, $recipients)) {
@@ -210,7 +210,7 @@ class EmailReminder
         $object = strtoupper($bean->object_name);
 
         $xtpl->assign("{$object}_SUBJECT", $bean->name);
-        $date = $GLOBALS['timedate']->fromUser($bean->date_start,$GLOBALS['current_user']);
+        $date = $GLOBALS['timedate']->fromUser($bean->date_start, $GLOBALS['current_user']);
         $xtpl->assign("{$object}_STARTDATE", $GLOBALS['timedate']->asUser($date, $user)." ".TimeDate::userTimezoneSuffix($date, $user));
         if (isset($bean->location)) {
             $xtpl->assign("{$object}_LOCATION", $bean->location);
@@ -240,7 +240,7 @@ class EmailReminder
         $re = $db->query($query);
         $meetings = array();
         while ($row = $db->fetchByAssoc($re)) {
-            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'],'datetime'))->modify("-{$row['email_reminder_time']} seconds")->ts;
+            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'], 'datetime'))->modify("-{$row['email_reminder_time']} seconds")->ts;
             $now_ts = $GLOBALS['timedate']->getNow()->ts;
             if ($now_ts >= $remind_ts) {
                 $meetings[] = $row['id'];
@@ -268,7 +268,7 @@ class EmailReminder
         $re = $db->query($query);
         $calls = array();
         while ($row = $db->fetchByAssoc($re)) {
-            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'],'datetime'))->modify("-{$row['email_reminder_time']} seconds")->ts;
+            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'], 'datetime'))->modify("-{$row['email_reminder_time']} seconds")->ts;
             $now_ts = $GLOBALS['timedate']->getNow()->ts;
             if ($now_ts >= $remind_ts) {
                 $calls[] = $row['id'];

@@ -297,12 +297,12 @@ class CsvAutoDetect
                     }
                     // check if the CSV item is part of the label or vice versa
                     elseif (isset($defs['vname']) && isset($mod_strings[$defs['vname']])) {
-                        if (stripos(trim($mod_strings[$defs['vname']],':'), $val) !== false || stripos($val, trim($mod_strings[$defs['vname']],':')) !== false) {
+                        if (stripos(trim($mod_strings[$defs['vname']], ':'), $val) !== false || stripos($val, trim($mod_strings[$defs['vname']], ':')) !== false) {
                             $match_count++;
                             break;
                         }
                     } elseif (isset($defs['vname']) && isset($GLOBALS['app_strings'][$defs['vname']])) {
-                        if (stripos(trim($GLOBALS['app_strings'][$defs['vname']],':'), $val) !== false || stripos($val, trim($GLOBALS['app_strings'][$defs['vname']],':')) !== false) {
+                        if (stripos(trim($GLOBALS['app_strings'][$defs['vname']], ':'), $val) !== false || stripos($val, trim($GLOBALS['app_strings'][$defs['vname']], ':')) !== false) {
                             $match_count++;
                             break;
                         }

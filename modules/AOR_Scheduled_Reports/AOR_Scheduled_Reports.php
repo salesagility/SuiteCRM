@@ -125,13 +125,13 @@ class AOR_Scheduled_Reports extends basic
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
                                     $security_group = new SecurityGroup();
                                     $security_group->retrieve($params['email'][$key][1]);
-                                    $users = $security_group->get_linked_beans('users','User');
+                                    $users = $security_group->get_linked_beans('users', 'User');
                                     $r_users = array();
                                     if ($params['email'][$key][2] != '') {
                                         require_once('modules/ACLRoles/ACLRole.php');
                                         $role = new ACLRole();
                                         $role->retrieve($params['email'][$key][2]);
-                                        $role_users = $role->get_linked_beans('users','User');
+                                        $role_users = $role->get_linked_beans('users', 'User');
                                         foreach ($role_users as $role_user) {
                                             $r_users[$role_user->id] = $role_user->name;
                                         }
@@ -149,7 +149,7 @@ class AOR_Scheduled_Reports extends basic
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();
                                 $role->retrieve($params['email'][$key][2]);
-                                $users = $role->get_linked_beans('users','User');
+                                $users = $role->get_linked_beans('users', 'User');
                                 break;
                             Case 'all':
                             default:

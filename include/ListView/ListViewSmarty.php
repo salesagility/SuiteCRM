@@ -161,8 +161,8 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('form', isset($this->templateMeta['form']) ? $this->templateMeta['form'] : null);
         $this->ss->assign('includes', isset($this->templateMeta['includes']) ? $this->templateMeta['includes'] : null);
 
-        $this->ss->assign('APP',$app_strings);
-        $this->ss->assign('MOD',$mod_strings);
+        $this->ss->assign('APP', $app_strings);
+        $this->ss->assign('MOD', $mod_strings);
 
         $this->ss->assign('bgHilite', $hilite_bg);
         $this->ss->assign('colCount', count((array)$this->displayColumns) + 10);
@@ -170,10 +170,10 @@ class ListViewSmarty extends ListViewDisplay
         $this->ss->assign('moduleString', $this->moduleString);
         $this->ss->assign('editLinkString', $app_strings['LBL_EDIT_BUTTON']);
         $this->ss->assign('viewLinkString', $app_strings['LBL_VIEW_BUTTON']);
-        $this->ss->assign('allLinkString',$app_strings['LBL_LINK_ALL']);
-        $this->ss->assign('noneLinkString',$app_strings['LBL_LINK_NONE']);
-        $this->ss->assign('recordsLinkString',$app_strings['LBL_LINK_RECORDS']);
-        $this->ss->assign('selectLinkString',$app_strings['LBL_LINK_SELECT']);
+        $this->ss->assign('allLinkString', $app_strings['LBL_LINK_ALL']);
+        $this->ss->assign('noneLinkString', $app_strings['LBL_LINK_NONE']);
+        $this->ss->assign('recordsLinkString', $app_strings['LBL_LINK_RECORDS']);
+        $this->ss->assign('selectLinkString', $app_strings['LBL_LINK_SELECT']);
 
         if (!isset($this->data['pageData']['offsets'])) {
             $GLOBALS['log']->warn('Incorrect pageData: offset is not set');
@@ -199,7 +199,7 @@ class ListViewSmarty extends ListViewDisplay
                 $this->ss->assign('actionDisabledLink', preg_replace("/id\s*\=(\"\w+\"|w+)/i", "", $action_menu['buttons'][0]));
             }
             $menu_location = 'bottom';
-            $this->ss->assign('actionsLinkBottom', $this->buildActionsLink('actions_link' ,$menu_location));
+            $this->ss->assign('actionsLinkBottom', $this->buildActionsLink('actions_link', $menu_location));
         }
 
         $this->ss->assign('quickViewLinks', $this->quickViewLinks);
@@ -211,8 +211,8 @@ class ListViewSmarty extends ListViewDisplay
             $this->ss->assign('multiSelectData', '<textarea style="display: none" name="uid"></textarea>');
         }
         // include button for Adding to Target List if in one of four applicable modules
-        if (isset ($_REQUEST['module']) && in_array ($_REQUEST['module'] , array ( 'Contacts','Prospects','Leads','Accounts' ))
-            && ACLController::checkAccess('ProspectLists','edit',true)) {
+        if (isset ($_REQUEST['module']) && in_array ($_REQUEST['module'], array ( 'Contacts','Prospects','Leads','Accounts' ))
+            && ACLController::checkAccess('ProspectLists', 'edit', true)) {
             $this->ss->assign('targetLink', $this->buildTargetList()) ;
         }
 
@@ -254,9 +254,9 @@ class ListViewSmarty extends ListViewDisplay
      */
     public function processArrows($ordering)
     {
-        $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif',false));
+        $pathParts = pathinfo(SugarThemeRegistry::current()->getImageURL('arrow.gif', false));
 
-        list($width,$height) = getimagesize($pathParts['dirname'].'/'.$pathParts['basename']);
+        list($width, $height) = getimagesize($pathParts['dirname'].'/'.$pathParts['basename']);
 
         $this->ss->assign('arrowExt', $pathParts['extension']);
         $this->ss->assign('arrowWidth', $width);

@@ -251,7 +251,7 @@ class ListViewData
      * @param string:'id' $id_field
      * @return array('data'=> row data, 'pageData' => page data information, 'query' => original query string)
      */
-    public function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(),$params=array(),$id_field = 'id',$singleSelect=true, $id = null)
+    public function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(), $params=array(), $id_field = 'id', $singleSelect=true, $id = null)
     {
         global $current_user;
         require_once 'include/SearchForm/SearchForm2.php';
@@ -284,8 +284,8 @@ class ListViewData
         // Bug 22740 - Tweak this check to strip off the table name off the order by parameter.
         // Samir Gandhi : Do not remove the report_cache.date_modified condition as the report list view is broken
         $orderby = $order['orderBy'];
-        if (strpos($order['orderBy'],'.') && ($order['orderBy'] != "report_cache.date_modified")) {
-            $orderby = substr($order['orderBy'],strpos($order['orderBy'],'.')+1);
+        if (strpos($order['orderBy'], '.') && ($order['orderBy'] != "report_cache.date_modified")) {
+            $orderby = substr($order['orderBy'], strpos($order['orderBy'], '.')+1);
         }
         if ($orderby != 'date_entered' && !in_array($orderby, array_keys($filter_fields))) {
             $order['orderBy'] = '';
@@ -381,7 +381,7 @@ class ListViewData
             $id_list = '('.substr($id_list, 1).')';
         }
 
-        SugarVCR::store($this->seed->module_dir,  $main_query);
+        SugarVCR::store($this->seed->module_dir, $main_query);
         if ($count != 0) {
             //NOW HANDLE SECONDARY QUERIES
             if (!empty($ret_array['secondary_select'])) {
@@ -501,7 +501,7 @@ class ListViewData
         $pageData['ordering'] = $order;
         $pageData['ordering']['sortOrder'] = $this->getReverseSortOrder($pageData['ordering']['sortOrder']);
         //get url parameters as an array
-        $pageData['queries'] = $this->generateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset,  $endOffset, $totalCounted);
+        $pageData['queries'] = $this->generateQueries($pageData['ordering']['sortOrder'], $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted);
         //join url parameters from array to a string
         $pageData['urls'] = $this->generateURLS($pageData['queries']);
         $pageData['offsets'] = array( 'current'=>$offset, 'next'=>$nextOffset, 'prev'=>$prevOffset, 'end'=>$endOffset, 'total'=>$totalCount, 'totalCounted'=>$totalCounted);

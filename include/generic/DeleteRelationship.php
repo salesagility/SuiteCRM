@@ -78,7 +78,7 @@ require_once('include/formbase.php');
          sugar_cleanup(true);
      }
  } if ($linked_field === 'aclroles') {
-     if (!ACLController::checkAccess($bean_name , 'edit', true)) {
+     if (!ACLController::checkAccess($bean_name, 'edit', true)) {
          ACLController::displayNoAccess();
          sugar_cleanup(true);
      }
@@ -94,7 +94,7 @@ if ($bean_name === 'Team') {
      if ($focus->$linked_field->_relationship->relationship_name === 'quotes_contacts_shipto') {
          unset($focus->$linked_field->_relationship->relationship_role_column);
      }
-     $focus->$linked_field->delete($record,$linked_id);
+     $focus->$linked_field->delete($record, $linked_id);
  }
  if ($bean_name === 'Campaign' and $linked_field==='prospectlists') {
      $query = "SELECT email_marketing_prospect_lists.id from email_marketing_prospect_lists ";

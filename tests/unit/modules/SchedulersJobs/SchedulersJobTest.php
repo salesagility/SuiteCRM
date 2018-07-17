@@ -345,7 +345,7 @@ class SchedulersJobTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         
 
         //test with invalid job id
-        $result = SchedulersJob::runJobId('1','');
+        $result = SchedulersJob::runJobId('1', '');
         $this->assertEquals('Job 1 not found.', $result);
 
         //test with valid job id

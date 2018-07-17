@@ -59,7 +59,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
             //sort($output);
             //sort($values);
             $values=array_merge(array($mod_strings['LBL_ALL_MODULES']), $values);
-            $output= array_merge(array($mod_strings['LBL_ALL_MODULES']),$output_local);
+            $output= array_merge(array($mod_strings['LBL_ALL_MODULES']), $output_local);
             $checkbox_values=array(
                                      'clearTpls',
                                      'clearJsFiles',

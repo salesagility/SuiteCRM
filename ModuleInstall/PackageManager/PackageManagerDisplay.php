@@ -96,7 +96,7 @@ class PackageManagerDisplay
         //if($isAlive){
         $tree = PackageManagerDisplay::buildTreeView('treeview', $isAlive);
         $tree->tree_style= 'include/ytree/TreeView/css/check/tree.css';
-        $ss->assign('TREEHEADER',$tree->generate_header());
+        $ss->assign('TREEHEADER', $tree->generate_header());
         //}
         //$form2 .= PackageManagerDisplay::buildLoginPanel($mod_strings);
         $form2 .= "<table  class='tabForm' cellpadding='0' cellspacing='0' width='100%' border='0'>";
@@ -106,7 +106,7 @@ class PackageManagerDisplay
         } else {
             $form2 .= "<input type='button' id='modifCredentialsBtn' class='button' onClick='PackageManager.showLoginDialog(true);' value='".$mod_strings['LBL_MODIFY_CREDENTIALS']."'style='display:none;'>";
         }
-        $form2 .= "</td><td align='left'><div id='workingStatusDiv' style='display:none;'>".SugarThemeRegistry::current()->getImage("sqsWait","border='0' align='bottom'",null,null,'.gif',"Loading")."</div></td><td align='right'>";
+        $form2 .= "</td><td align='left'><div id='workingStatusDiv' style='display:none;'>".SugarThemeRegistry::current()->getImage("sqsWait", "border='0' align='bottom'", null, null, '.gif', "Loading")."</div></td><td align='right'>";
 
         if ($isAlive) {
             $form2 .= "<span><a class=\"listViewTdToolsS1\" id='href_animate' onClick=\"PackageManager.toggleDiv('span_animate_server_div', 'catview');\"><span id='span_animate_server_div'><img src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."' width='8' height='8' border='0'>&nbsp;Collapse</span></a></span>";
@@ -176,7 +176,7 @@ class PackageManagerDisplay
         if ($show_login) {
             $form2 .= "<input type='button' class='button' onClick='PackageManager.showLoginDialog(true);' value='".$mod_strings['LBL_MODIFY_CREDENTIALS']."'>";
         }
-        $form2 .= "</td><td align='right'><div id='workingStatusDiv' style='display:none;'>".SugarThemeRegistry::current()->getImage("sqsWait","border='0' align='bottom'",null,null,'.gif',"Loading")."</div></td></tr><tr><td colspan='2'>";
+        $form2 .= "</td><td align='right'><div id='workingStatusDiv' style='display:none;'>".SugarThemeRegistry::current()->getImage("sqsWait", "border='0' align='bottom'", null, null, '.gif', "Loading")."</div></td></tr><tr><td colspan='2'>";
 
         $loginViewStyle = ($isAlive ? 'none' : 'block');
         $selectViewStyle = ($isAlive ? 'block' : 'none');
@@ -221,7 +221,7 @@ class PackageManagerDisplay
         }
         $tree = PackageManagerDisplay::buildTreeView('treeview', $isAlive);
         $tree->tree_style= 'include/ytree/TreeView/css/check/tree.css';
-        $ss->assign('TREEHEADER',$tree->generate_header());
+        $ss->assign('TREEHEADER', $tree->generate_header());
         $ss->assign('module_load', 'false');
         $ss->assign('MODULE_SELECTOR', PackageManagerDisplay::buildGridOutput($tree, $mod_strings, $isAlive, $show_login));
         $ss->assign('FORM_2_PLACE_HOLDER', $form2);
@@ -324,7 +324,7 @@ class PackageManagerDisplay
             $node->dynamicloadfunction = 'PackageManager.loadDataForNodeForPackage';
             $node->expanded = false;
             $node->dynamic_load = true;
-            $node->set_property('href',"javascript:PackageManager.catClick('treeview');");
+            $node->set_property('href', "javascript:PackageManager.catClick('treeview');");
             $tree->add_node($node);
             $node->set_property('description', $arr_node['description']);
         }
@@ -399,7 +399,7 @@ class PackageManagerDisplay
             $install = 0;
         }
         $ss->assign('INSTALLATION', $install);
-        $ss->assign('WAIT_IMAGE', SugarThemeRegistry::current()->getImage("loading","border='0' align='bottom'",null,null,'.gif',"Loading"));
+        $ss->assign('WAIT_IMAGE', SugarThemeRegistry::current()->getImage("loading", "border='0' align='bottom'", null, null, '.gif', "Loading"));
 
         $ss->assign('sugar_version', $sugar_version);
         $ss->assign('js_custom_version', $sugar_config['js_custom_version']);
@@ -422,7 +422,7 @@ class PackageManagerDisplay
             $ss->assign('module_load', 'true');
         }
         if (!empty($GLOBALS['ML_STATUS_MESSAGE'])) {
-            $ss->assign('ML_STATUS_MESSAGE',$GLOBALS['ML_STATUS_MESSAGE']);
+            $ss->assign('ML_STATUS_MESSAGE', $GLOBALS['ML_STATUS_MESSAGE']);
         }
 
         //Bug 24064. Checking and Defining labels since these might not be cached during Upgrade
@@ -459,8 +459,8 @@ class PackageManagerDisplay
             'Description' => $mod_strings['LBL_ML_DESCRIPTION']
         );
 
-        $ss->assign('ML_FILEGRID_COLUMN',$filegrid_column_ary);
-        $ss->assign('ML_FILEGRIDINSTALLED_COLUMN',$filegridinstalled_column_ary);
+        $ss->assign('ML_FILEGRID_COLUMN', $filegrid_column_ary);
+        $ss->assign('ML_FILEGRIDINSTALLED_COLUMN', $filegridinstalled_column_ary);
         //end
 
         $ss->assign('SHOW_IMG', SugarThemeRegistry::current()->getImage('advanced_search', 'border="0"', 8, 8, '.gif', 'Show'));

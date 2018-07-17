@@ -25,9 +25,9 @@ class AssignGroups
                 $groupFocus = new SecurityGroup();
                 $security_modules = $groupFocus->getSecurityModules();
                 //sanity check
-                if (in_array($bean->module_dir,array_keys($security_modules))) {
+                if (in_array($bean->module_dir, array_keys($security_modules))) {
                     //add each group in securitygroup_list to new record
-                    $rel_name = $groupFocus->getLinkName($bean->module_dir,"SecurityGroups");
+                    $rel_name = $groupFocus->getLinkName($bean->module_dir, "SecurityGroups");
 
                     $bean->load_relationship($rel_name);
                     foreach ($_REQUEST['securitygroup_list'] as $group_id) {
@@ -101,7 +101,7 @@ class AssignGroups
                 if ($module == 'Users') {
                     $rel_name = "SecurityGroups";
                 } else {
-                    $rel_name = $groupFocus->getLinkName($module,"SecurityGroups");
+                    $rel_name = $groupFocus->getLinkName($module, "SecurityGroups");
                 }
 
                 //this only works if on the detail view of the record actually saved...
@@ -128,15 +128,15 @@ EOQ;
         $action = strtolower($action);
         if (isset($module) && ($action == "list" || $action == "index" || $action == "listview") 
     	&& (!isset($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] != true)
-    	&& !array_key_exists($module,$no_mass_assign_list)
+    	&& !array_key_exists($module, $no_mass_assign_list)
     	) {
             global $current_user;
-            if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id,"SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
+            if (is_admin($current_user) || ACLAction::getUserAccessLevel($current_user->id, "SecurityGroups", 'access') == ACL_ALLOW_ENABLED) {
                 require_once('modules/SecurityGroups/SecurityGroup.php');
                 $groupFocus = new SecurityGroup();
                 $security_modules = $groupFocus->getSecurityModules();
                 //if(in_array($module,$security_modules)) {
-                if (in_array($module,array_keys($security_modules))) {
+                if (in_array($module, array_keys($security_modules))) {
                     global $app_strings;
 
                     global $current_language;
@@ -144,7 +144,7 @@ EOQ;
 
                     $form_header = get_form_header($current_module_strings['LBL_MASS_ASSIGN'], '', false);
 
-                    $groups = $groupFocus->get_list("name","",0,-99,-99);
+                    $groups = $groupFocus->get_list("name", "", 0, -99, -99);
                     $options = array(""=>"");
                     foreach ($groups['list'] as $group) {
                         $options[$group->id] = $group->name;

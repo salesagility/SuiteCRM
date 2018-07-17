@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 logThis('At upload.php');
 
 //set the upgrade progress status.
-set_upgrade_progress('upload','in_progress');
+set_upgrade_progress('upload', 'in_progress');
 
 
 $stop = true; // flag to show "next"
@@ -144,12 +144,12 @@ switch ($run) {
 
                 if (isset($manifest['icon']) && $manifest['icon'] != "") {
                     logThis('extracting icons.');
-                    $icon_location = extractFile($tempFile ,$manifest['icon']);
+                    $icon_location = extractFile($tempFile, $manifest['icon']);
                     $path_parts = pathinfo($icon_location);
                     copy($icon_location, remove_file_extension($target_path) . "-icon." . pathinfo($icon_location, PATHINFO_EXTENSION));
                 }
 
-                if (rename($tempFile , $target_path)) {
+                if (rename($tempFile, $target_path)) {
                     logThis('copying manifest.php to final destination.');
                     copy($manifest_file, $target_manifest);
                     $out .= "<b>{$base_filename} {$mod_strings['LBL_UW_FILE_UPLOADED']}.</b><br>\n";
@@ -177,7 +177,7 @@ switch ($run) {
         if (!empty($tempFile)) {
             upgradeUWFiles($target_path);
             //set the upgrade progress status. actually it should be set when a file is uploaded
-            set_upgrade_progress('upload','done');
+            set_upgrade_progress('upload', 'done');
         }
 
     break; // end 'upload'
@@ -206,7 +206,7 @@ switch ($run) {
 
         unlinkUWTempFiles();
         //set the upgrade progress status. actually it should be set when a file is uploaded
-        set_upgrade_progress('upload','in_progress');
+        set_upgrade_progress('upload', 'in_progress');
 
     break;
 }
@@ -228,7 +228,7 @@ if (isset($_SESSION['install_file']) && !empty($_SESSION['install_file']) && is_
     $stop = true;
 }
 if ($stop == false) {
-    set_upgrade_progress('upload','done');
+    set_upgrade_progress('upload', 'done');
 }
 $frozen = $out;
 

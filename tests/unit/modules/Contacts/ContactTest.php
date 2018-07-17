@@ -16,9 +16,9 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
 		//execute the contructor and check for the Object type and  attributes
         $contact = new Contact();
-        $this->assertInstanceOf('Contact',$contact);
-        $this->assertInstanceOf('Person',$contact);
-        $this->assertInstanceOf('SugarBean',$contact);
+        $this->assertInstanceOf('Contact', $contact);
+        $this->assertInstanceOf('Person', $contact);
+        $this->assertInstanceOf('SugarBean', $contact);
 
         $this->assertAttributeEquals('Contacts', 'module_dir', $contact);
         $this->assertAttributeEquals('Contact', 'object_name', $contact);
@@ -42,7 +42,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with empty strings
         $query = "";
         $contact->add_list_count_joins($query, '');
-        $this->assertEquals(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ",$query);
+        $this->assertEquals(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ", $query);
 
 
         //test with valid string
@@ -51,13 +51,13 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $contact->add_list_count_joins($query, 'accounts.name');
         $query = preg_replace('/\s+/', '', $query);
         $expected =preg_replace('/\s+/', '', $expected);
-        $this->assertSame($expected,$query);
+        $this->assertSame($expected, $query);
 		
         //test with valid string
         $query = "";
         $expected = "\n	            LEFT JOIN accounts_contacts\n	            ON contacts.id=accounts_contacts.contact_id\n	            LEFT JOIN accounts\n	            ON accounts_contacts.account_id=accounts.id\n	                 LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ";
         $contact->add_list_count_joins($query, 'contacts.name');
-        $this->assertSame(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ",$query);
+        $this->assertSame(" LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c ", $query);
 
 
         
@@ -78,7 +78,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $expected = array( "MAIN"=>"span", "ACCOUNT"=>"span");
         $actual = $contact->listviewACLHelper();
-        $this->assertSame($expected,$actual);
+        $this->assertSame($expected, $actual);
 
         // clean up
         
@@ -115,14 +115,14 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         //test with empty string params
         $expected = "SELECT LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'',IFNULL(contacts.last_name,'')))) name, \n				contacts.*,\n                accounts.name as account_name,\n                accounts.id as account_id,\n                accounts.assigned_user_id account_id_owner,\n                users.user_name as assigned_user_name ,contacts_cstm.*\n                FROM contacts LEFT JOIN users\n	                    ON contacts.assigned_user_id=users.id\n	                    LEFT JOIN accounts_contacts\n	                    ON contacts.id=accounts_contacts.contact_id  and accounts_contacts.deleted = 0\n	                    LEFT JOIN accounts\n	                    ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = contacts.id AND eabl.bean_module = 'Contacts' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c where  contacts.deleted=0 ";
-        $actual = $contact->address_popup_create_new_list_query('','');
-        $this->assertSame($expected,$actual);
+        $actual = $contact->address_popup_create_new_list_query('', '');
+        $this->assertSame($expected, $actual);
 
 
         //test with valid string params
         $expected = "SELECT LTRIM(RTRIM(CONCAT(IFNULL(contacts.first_name,''),'',IFNULL(contacts.last_name,'')))) name, \n				contacts.*,\n                accounts.name as account_name,\n                accounts.id as account_id,\n                accounts.assigned_user_id account_id_owner,\n                users.user_name as assigned_user_name ,contacts_cstm.*\n                FROM contacts LEFT JOIN users\n	                    ON contacts.assigned_user_id=users.id\n	                    LEFT JOIN accounts_contacts\n	                    ON contacts.id=accounts_contacts.contact_id  and accounts_contacts.deleted = 0\n	                    LEFT JOIN accounts\n	                    ON accounts_contacts.account_id=accounts.id AND accounts.deleted=0 LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = contacts.id AND eabl.bean_module = 'Contacts' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN contacts_cstm ON contacts.id = contacts_cstm.id_c where (contacts.name=\"\") AND  contacts.deleted=0 ";
-        $actual = $contact->address_popup_create_new_list_query('contacts.id','contacts.name=""');
-        $this->assertSame($expected,$actual);
+        $actual = $contact->address_popup_create_new_list_query('contacts.id', 'contacts.name=""');
+        $this->assertSame($expected, $actual);
     }
 
     public function testcreate_export_query()
@@ -143,9 +143,9 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $contact->fill_in_additional_list_fields();
 
-        $this->assertEquals("firstn lastn",$contact->full_name);
-        $this->assertEquals("firstn lastn &lt;1@test.com&gt;",$contact->email_and_name1);
-        $this->assertEquals("firstn lastn &lt;2@test.com&gt;",$contact->email_and_name2);
+        $this->assertEquals("firstn lastn", $contact->full_name);
+        $this->assertEquals("firstn lastn &lt;1@test.com&gt;", $contact->email_and_name1);
+        $this->assertEquals("firstn lastn &lt;2@test.com&gt;", $contact->email_and_name2);
     }
 
     public function testfill_in_additional_detail_fields()
@@ -157,9 +157,9 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $contact->fill_in_additional_detail_fields();
 
-        $this->assertEquals("",$contact->account_name);
-        $this->assertEquals("",$contact->account_id);
-        $this->assertEquals("",$contact->report_to_name);
+        $this->assertEquals("", $contact->account_name);
+        $this->assertEquals("", $contact->account_id);
+        $this->assertEquals("", $contact->report_to_name);
     }
 
 
@@ -239,13 +239,13 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         //test with string
         $expected = "contacts.last_name like 'test%' or contacts.first_name like 'test%' or accounts.name like 'test%' or contacts.assistant like 'test%' or ea.email_address like 'test%'";
         $actual = $contact->build_generic_where_clause('test');
-        $this->assertSame($expected,$actual);
+        $this->assertSame($expected, $actual);
 
 
         //test with number
         $expected = "contacts.last_name like '1%' or contacts.first_name like '1%' or accounts.name like '1%' or contacts.assistant like '1%' or ea.email_address like '1%' or contacts.phone_home like '%1%' or contacts.phone_mobile like '%1%' or contacts.phone_work like '%1%' or contacts.phone_other like '%1%' or contacts.phone_fax like '%1%' or contacts.assistant_phone like '%1%'";
         $actual = $contact->build_generic_where_clause(1);
-        $this->assertSame($expected,$actual);
+        $this->assertSame($expected, $actual);
     }
 
     public function testset_notification_body()
@@ -260,8 +260,8 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 
         $result = $contact->set_notification_body(new Sugar_Smarty(), $contact);
 
-        $this->assertEquals($contact->full_name ,$result->_tpl_vars['CONTACT_NAME']);
-        $this->assertEquals($contact->description ,$result->_tpl_vars['CONTACT_DESCRIPTION']);
+        $this->assertEquals($contact->full_name, $result->_tpl_vars['CONTACT_NAME']);
+        $this->assertEquals($contact->description, $result->_tpl_vars['CONTACT_DESCRIPTION']);
     }
 
     public function testget_contact_id_by_email()
@@ -269,7 +269,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $contact = new Contact();
 
         $result = $contact->get_contact_id_by_email("");
-        $this->assertEquals(null,$result);
+        $this->assertEquals(null, $result);
 
 
 		
@@ -321,7 +321,7 @@ class ContactTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
 	(select eb.email_id from emails_beans eb where eb.bean_module ='Contacts' and eb.bean_id = '')
 	) derivedemails on derivedemails.email_id = emails.id";
         $actual = $contact->get_unlinked_email_query();
-        $this->assertSame($expected,$actual);
+        $this->assertSame($expected, $actual);
     }
 
 

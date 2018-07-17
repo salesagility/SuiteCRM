@@ -88,7 +88,7 @@ class javascript
     {
         if (isset($this->sugarbean->required_fields)) {
             foreach ($this->sugarbean->required_fields as $field=>$value) {
-                $this->addField($field,'true', $prefix);
+                $this->addField($field, 'true', $prefix);
             }
         }
     }
@@ -100,7 +100,7 @@ class javascript
         }
     }
 
-    public function addField($field,$required, $prefix='', $displayField='', $translate = false)
+    public function addField($field, $required, $prefix='', $displayField='', $translate = false)
     {
         if ($field == "id") {
             return;
@@ -142,7 +142,7 @@ class javascript
                         } else {
                             $dispField = $field;
                         }
-                        $this->addFieldRange($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $min, $max);
+                        $this->addFieldRange($dispField, $this->sugarbean->field_name_map[$field]['type'], $vname, $required, $prefix, $min, $max);
                         break;
                     case 'isbefore':
                         $compareTo = $this->sugarbean->field_name_map[$field]['validation']['compareto'];
@@ -152,9 +152,9 @@ class javascript
                             $dispField = $field;
                         }
                         if (!empty($this->sugarbean->field_name_map[$field]['validation']['blank']) && $this->sugarbean->field_name_map[$field]['validation']['blank']) {
-                            $this->addFieldDateBeforeAllowBlank($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo);
+                            $this->addFieldDateBeforeAllowBlank($dispField, $this->sugarbean->field_name_map[$field]['type'], $vname, $required, $prefix, $compareTo);
                         } else {
-                            $this->addFieldDateBefore($dispField,$this->sugarbean->field_name_map[$field]['type'],$vname,$required,$prefix, $compareTo);
+                            $this->addFieldDateBefore($dispField, $this->sugarbean->field_name_map[$field]['type'], $vname, $required, $prefix, $compareTo);
                         }
                         break;
                     // Bug #47961 Adding new type of validation: through callback function
@@ -171,7 +171,7 @@ class javascript
 
                         $type = (!empty($this->sugarbean->field_name_map[$field]['custom_type']))?$this->sugarbean->field_name_map[$field]['custom_type']:$this->sugarbean->field_name_map[$field]['type'];
 
-                        $this->addFieldGeneric($dispField,$type,$vname,$required,$prefix);
+                        $this->addFieldGeneric($dispField, $type, $vname, $required, $prefix);
                         break;
                 }
             } else {
@@ -184,7 +184,7 @@ class javascript
                 if (!empty($this->sugarbean->field_name_map[$dispField]['isMultiSelect'])) {
                     $dispField .='[]';
                 }
-                $this->addFieldGeneric($dispField,$type,$vname,$required,$prefix);
+                $this->addFieldGeneric($dispField, $type, $vname, $required, $prefix);
             }
         } else {
             $GLOBALS['log']->debug('No VarDef Label For ' . $field . ' in module ' . $this->sugarbean->module_dir);
@@ -203,10 +203,10 @@ class javascript
         return $modString;
     }
 
-    public function addFieldGeneric($field, $type,$displayName, $required, $prefix='')
+    public function addFieldGeneric($field, $type, $displayName, $required, $prefix='')
     {
         $this->script .= "addToValidate('".$this->formname."', '".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
-                       . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "' );\n";
+                       . $this->stripEndColon(translate($displayName, $this->sugarbean->module_dir)) . "' );\n";
     }
 
     // Bug #47961 Generator of callback validator
@@ -222,7 +222,7 @@ class javascript
         .');'."\n";
     }
 
-    public function addFieldRange($field, $type,$displayName, $required, $prefix='',$min, $max)
+    public function addFieldRange($field, $type, $displayName, $required, $prefix='', $min, $max)
     {
         $this->script .= "addToValidateRange("
             . "'" . $this->formname . "', "
@@ -249,28 +249,28 @@ class javascript
         $this->script .= "addToValidateIsValidTime('{$this->formname}', '{$name}', '{$type}', {$req}, '{$msg}');\n";
     }
 
-    public function addFieldDateBefore($field, $type,$displayName, $required, $prefix='',$compareTo)
+    public function addFieldDateBefore($field, $type, $displayName, $required, $prefix='', $compareTo)
     {
         $this->script .= "addToValidateDateBefore('".$this->formname."', '".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
-                       . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "', '$compareTo' );\n";
+                       . $this->stripEndColon(translate($displayName, $this->sugarbean->module_dir)) . "', '$compareTo' );\n";
     }
 
     public function addFieldDateBeforeAllowBlank($field, $type, $displayName, $required, $prefix='', $compareTo, $allowBlank='true')
     {
         $this->script .= "addToValidateDateBeforeAllowBlank('".$this->formname."', '".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
-                       . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "', '$compareTo', '$allowBlank' );\n";
+                       . $this->stripEndColon(translate($displayName, $this->sugarbean->module_dir)) . "', '$compareTo', '$allowBlank' );\n";
     }
 
-    public function addToValidateBinaryDependency($field, $type, $displayName, $required, $prefix='',$compareTo)
+    public function addToValidateBinaryDependency($field, $type, $displayName, $required, $prefix='', $compareTo)
     {
         $this->script .= "addToValidateBinaryDependency('".$this->formname."', '".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
-                       . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "', '$compareTo' );\n";
+                       . $this->stripEndColon(translate($displayName, $this->sugarbean->module_dir)) . "', '$compareTo' );\n";
     }
 
-    public function addToValidateComparison($field, $type, $displayName, $required, $prefix='',$compareTo)
+    public function addToValidateComparison($field, $type, $displayName, $required, $prefix='', $compareTo)
     {
         $this->script .= "addToValidateComparison('".$this->formname."', '".$prefix.$field."', '".$type . "', {$this->getRequiredString($required)},'"
-                       . $this->stripEndColon(translate($displayName,$this->sugarbean->module_dir)) . "', '$compareTo' );\n";
+                       . $this->stripEndColon(translate($displayName, $this->sugarbean->module_dir)) . "', '$compareTo' );\n";
     }
 
     public function addFieldIsInArray($field, $type, $displayName, $required, $prefix, $arr, $operator)
@@ -279,10 +279,10 @@ class javascript
         $req = $this->getRequiredString($required);
         $json = getJSONobj();
         $arr = $json->encode($arr);
-        $this->script .= "addToValidateIsInArray('{$this->formname}', '{$name}', '{$type}', {$req}, '".$this->stripEndColon(translate($displayName,$this->sugarbean->module_dir))."', '{$arr}', '{$operator}');\n";
+        $this->script .= "addToValidateIsInArray('{$this->formname}', '{$name}', '{$type}', {$req}, '".$this->stripEndColon(translate($displayName, $this->sugarbean->module_dir))."', '{$arr}', '{$operator}');\n";
     }
 
-    public function addAllFields($prefix,$skip_fields=null, $translate = false)
+    public function addAllFields($prefix, $skip_fields=null, $translate = false)
     {
         if (!isset($skip_fields)) {
             $skip_fields = array();
@@ -294,11 +294,11 @@ class javascript
                     $this->addSpecialField($value['name'] . '_date', $value['name'], 'datetime', $isRequired);
                     if ($value['type'] != 'link'  && isset($this->sugarbean->field_name_map[$field]['validation'])) {
                         //datetime should also support the isbefore or other type of validate
-                        $this->addField($field, '', $prefix,'',$translate);
+                        $this->addField($field, '', $prefix, '', $translate);
                     }
                 } elseif (isset($value['type'])) {
                     if ($value['type'] != 'link') {
-                        $this->addField($field, '', $prefix,'',$translate);
+                        $this->addField($field, '', $prefix, '', $translate);
                     }
                 }
             }

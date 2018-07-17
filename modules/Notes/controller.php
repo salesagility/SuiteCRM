@@ -72,7 +72,7 @@
          $do_final_move = 0;
          if (isset($_FILES['uploadfile']) && $upload_file->confirm_upload()) {
              if (!empty($this->bean->id) && !empty($_REQUEST['old_filename'])) {
-                 $upload_file->unlink_file($this->bean->id,$_REQUEST['old_filename']);
+                 $upload_file->unlink_file($this->bean->id, $_REQUEST['old_filename']);
              }
 
              $this->bean->filename = $upload_file->get_stored_file_name();

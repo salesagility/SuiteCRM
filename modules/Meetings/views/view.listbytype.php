@@ -77,12 +77,12 @@ class MeetingsViewListbytype extends ViewList
         }
 
         $apiName = 'IBMSmartCloud';
-        $api = ExternalAPIFactory::loadAPI($apiName,true);
+        $api = ExternalAPIFactory::loadAPI($apiName, true);
         $api->loadEAPM($eapmBean);
 
         $quickCheck = $api->quickCheckLogin();
         if (! $quickCheck['success']) {
-            $errorMessage = string_format(translate('LBL_ERR_FAILED_QUICKCHECK','EAPM'), array('IBM SmartCloud'));
+            $errorMessage = string_format(translate('LBL_ERR_FAILED_QUICKCHECK', 'EAPM'), array('IBM SmartCloud'));
             $errorMessage .= '<form method="POST" target="_EAPM_CHECK" action="index.php">';
             $errorMessage .= '<input type="hidden" name="module" value="EAPM">';
             $errorMessage .= '<input type="hidden" name="action" value="Save">';
@@ -112,11 +112,11 @@ class MeetingsViewListbytype extends ViewList
         }
 
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
-            $this->lv->ss->assign("SEARCH",false);
+            $this->lv->ss->assign("SEARCH", false);
             if (!isset($_REQUEST['name_basic'])) {
                 $_REQUEST['name_basic'] = '';
             }
-            $this->lv->ss->assign('DCSEARCH',$_REQUEST['name_basic']);
+            $this->lv->ss->assign('DCSEARCH', $_REQUEST['name_basic']);
             $this->lv->setup($this->seed, 'include/ListView/ListViewDCMenu.tpl', $this->where, $this->params);
             $savedSearchName = empty($_REQUEST['saved_search_select_name']) ? '' : (' - ' . $_REQUEST['saved_search_select_name']);
             echo $this->lv->display();

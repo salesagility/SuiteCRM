@@ -47,7 +47,7 @@ if (class_exists("ZipArchive")) {
     return;
 } else {
     require_once('include/pclzip/pclzip.lib.php');
-    if (isset($GLOBALS['log']) && class_implements($GLOBALS['log'],'LoggerTemplate')) {
+    if (isset($GLOBALS['log']) && class_implements($GLOBALS['log'], 'LoggerTemplate')) {
         $GLOBALS['log']->deprecated('Use of PCLZip has been deprecated. Please enable the zip extension in your PHP install ( see http://www.php.net/manual/en/zip.installation.php for more details ).');
     }
     function unzip($zip_archive, $zip_dir, $forceOverwrite = false)
@@ -99,7 +99,7 @@ if (class_exists("ZipArchive")) {
             }
         } else {
             if ($archive->extract(PCLZIP_OPT_BY_NAME, $archive_file,
-                                PCLZIP_OPT_PATH,    $to_dir) == 0) {
+                                PCLZIP_OPT_PATH, $to_dir) == 0) {
                 if (!defined('SUITE_PHPUNIT_RUNNER')) {
                     die("Error: " . $archive->errorInfo(true));
                 }

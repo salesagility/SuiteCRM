@@ -85,7 +85,7 @@ class BreadCrumbStack
         $module_query = '';
         if (!empty($modules)) {
             $history_max_viewed = 10;
-            $module_query = is_array($modules) ? ' AND module_name IN (\'' . implode("','" , $modules) . '\')' :  ' AND module_name = \'' . $modules . '\'';
+            $module_query = is_array($modules) ? ' AND module_name IN (\'' . implode("','", $modules) . '\')' :  ' AND module_name = \'' . $modules . '\'';
         } else {
             $history_max_viewed = (!empty($GLOBALS['sugar_config']['history_max_viewed']))? $GLOBALS['sugar_config']['history_max_viewed'] : 50;
         }

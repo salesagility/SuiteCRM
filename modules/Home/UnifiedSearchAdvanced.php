@@ -288,7 +288,7 @@ class UnifiedSearchAdvanced
                 require_once $this->searchFormPath;
                 $searchForm = new $this->searchFormClass ($seed, $moduleName) ;
 
-                $searchForm->setup (array ( $moduleName => array() ) , $unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                $searchForm->setup (array ( $moduleName => array() ), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                 $where_clauses = $searchForm->generateSearchWhere() ;
                 //add inner joins back into the where clause
                 $params = array('custom_select' => "");
@@ -373,7 +373,7 @@ class UnifiedSearchAdvanced
 
             $beanName = BeanFactory::getObjectName($moduleName);
             $manager = new VardefManager ();
-            $manager->loadVardef($moduleName , $beanName) ;
+            $manager->loadVardef($moduleName, $beanName) ;
 
             // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
             if (file_exists('custom/modules/'.$moduleName.'/metadata/metafiles.php')) {
@@ -399,7 +399,7 @@ class UnifiedSearchAdvanced
                 continue;
             }
 
-            $isCustomModule = preg_match('/^([a-z0-9]{1,5})_([a-z0-9_]+)$/i' , $moduleName);
+            $isCustomModule = preg_match('/^([a-z0-9]{1,5})_([a-z0-9_]+)$/i', $moduleName);
 
             //If the bean supports unified search or if it's a custom module bean and unified search is not defined
             if (!empty($dictionary[$beanName]['unified_search']) || $isCustomModule) {
@@ -409,12 +409,12 @@ class UnifiedSearchAdvanced
                     // the searchFields entry for 'email' doesn't correspond to any vardef entry. Instead it contains SQL to directly perform the search.
                     // So as a proxy we allow any field in the vardefs that has a name starting with 'email...' to be tagged with the 'unified_search' parameter
 
-                    if (strpos($field,'email') !== false) {
+                    if (strpos($field, 'email') !== false) {
                         $field = 'email' ;
                     }
 
                     //bug: 38139 - allow phone to be searched through Global Search
-                    if (strpos($field,'phone') !== false) {
+                    if (strpos($field, 'phone') !== false) {
                         $field = 'phone' ;
                     }
 

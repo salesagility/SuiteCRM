@@ -124,9 +124,9 @@ class ImportFileSplitter
         if (!$this->fileExists()) {
             return false;
         }
-        $importFile = new ImportFile($this->_sourceFile,$delimiter,$enclosure,false);
+        $importFile = new ImportFile($this->_sourceFile, $delimiter, $enclosure, false);
         $filecount = 0;
-        $fw = sugar_fopen("{$this->_sourceFile}-{$filecount}","w");
+        $fw = sugar_fopen("{$this->_sourceFile}-{$filecount}", "w");
         $count = 0;
         // skip first row if we have a header row
         if ($has_header && $importFile->getNextRow()) {
@@ -140,7 +140,7 @@ class ImportFileSplitter
             if ($count >= $this->_recordThreshold) {
                 fclose($fw);
                 $filecount++;
-                $fw = sugar_fopen("{$this->_sourceFile}-{$filecount}","w");
+                $fw = sugar_fopen("{$this->_sourceFile}-{$filecount}", "w");
                 $count = 0;
             }
             // Bug 25119: Trim the enclosure string to remove any blank spaces that may have been added.

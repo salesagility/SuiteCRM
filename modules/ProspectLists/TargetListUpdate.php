@@ -68,7 +68,7 @@ if ($_REQUEST['select_entire_list'] == '1') {
         require_once('modules/SecurityGroups/SecurityGroup.php');
         global $current_user;
         $owner_where = $focus->getOwnerWhere($current_user->id);
-        $group_where = SecurityGroup::getGroupWhere($focus->table_name,$focus->module_dir,$current_user->id);
+        $group_where = SecurityGroup::getGroupWhere($focus->table_name, $focus->module_dir, $current_user->id);
         if (!empty($owner_where)) {
             if (empty($ret_array['where'])) {
                 $ret_array['where'] = " (".  $owner_where." or ".$group_where.") ";
@@ -81,9 +81,9 @@ if ($_REQUEST['select_entire_list'] == '1') {
     }
     /* END - SECURITY GROUPS */
     $query = $focus->create_export_query($order_by, $ret_array['where'], $ret_array['join']);
-    $result = DBManagerFactory::getInstance()->query($query,true);
+    $result = DBManagerFactory::getInstance()->query($query, true);
     $uids = array();
-    while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result,false)) {
+    while ($val = DBManagerFactory::getInstance()->fetchByAssoc($result, false)) {
         array_push($uids, $val['id']);
     }
 } else {
@@ -123,7 +123,7 @@ if ($relationship != '') {
     foreach ($uids as $id) {
         $focus->retrieve($id);
         if ($_REQUEST['do_contacts']) {
-            $contacts = $focus->get_linked_beans('contacts','Contacts3');
+            $contacts = $focus->get_linked_beans('contacts', 'Contacts3');
             foreach ($contacts as $contact) {
                 $contact->load_relationship('prospect_lists');
                 $contact->prospect_lists->add($_REQUEST['prospect_list']);

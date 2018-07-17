@@ -186,7 +186,7 @@ class iCal extends vCal
             $ical_array[] = array("PRIORITY", "1");
         }
         $ical_array[] = array("END", "VTODO");
-        return vCal::create_ical_string_from_array($ical_array,true);
+        return vCal::create_ical_string_from_array($ical_array, true);
     }
 
     /**
@@ -199,7 +199,7 @@ class iCal extends vCal
     * @param string $dtstamp the current timestamp
     * @return string the entries for events and todos
     */
-    protected function createSugarIcal(&$user_bean,&$start_date_time,&$end_date_time, $dtstamp)
+    protected function createSugarIcal(&$user_bean, &$start_date_time, &$end_date_time, $dtstamp)
     {
         $ical_array = array();
         global $DO_USER_TIME_OFFSET, $sugar_config, $current_user, $timedate;
@@ -343,7 +343,7 @@ class iCal extends vCal
             }
         }
 
-        $str = vCal::create_ical_string_from_array($ical_array,true);
+        $str = vCal::create_ical_string_from_array($ical_array, true);
 
         require_once('include/TimeDate.php');
         $timedate = new TimeDate();
@@ -498,7 +498,7 @@ class iCal extends vCal
 
         $ical_array[] = array("END", "VTIMEZONE");
 
-        return vCal::create_ical_string_from_array($ical_array,true);
+        return vCal::create_ical_string_from_array($ical_array, true);
     }
 
     /**
@@ -521,7 +521,7 @@ class iCal extends vCal
         $ical_array[] = array("METHOD", "PUBLISH");
         $ical_array[] = array("X-WR-CALNAME", "$cal_name (SugarCRM)");
         $ical_array[] = array("PRODID", "-//SugarCRM//SugarCRM Calendar//EN");
-        $ical_array = array_merge($ical_array,vCal::create_ical_array_from_string($this->getTimezoneString()));
+        $ical_array = array_merge($ical_array, vCal::create_ical_array_from_string($this->getTimezoneString()));
         $ical_array[] = array("CALSCALE", "GREGORIAN");
 
         $now_date_time = $timedate->getNow(true);
@@ -539,17 +539,17 @@ class iCal extends vCal
 
         $utc_now_time = $this->getUtcDateTime($now_date_time);
 
-        $str = vCal::create_ical_string_from_array($ical_array,true);
+        $str = vCal::create_ical_string_from_array($ical_array, true);
 
-        $str .= $this->createSugarIcal($user_focus,$start_date_time,$end_date_time,$utc_now_time);
+        $str .= $this->createSugarIcal($user_focus, $start_date_time, $end_date_time, $utc_now_time);
 
         $ical_array = array(
             array("DTSTAMP", $utc_now_time)
         );
         $ical_array[] = array("END", "VCALENDAR");
 
-        $str .= vCal::create_ical_string_from_array($ical_array,true);
+        $str .= vCal::create_ical_string_from_array($ical_array, true);
 
-        return htmlspecialchars_decode(preg_replace("/&#([0-9]+)\\\\;/",'&#$1;',utf8_decode($str)));
+        return htmlspecialchars_decode(preg_replace("/&#([0-9]+)\\\\;/", '&#$1;', utf8_decode($str)));
     }
 }

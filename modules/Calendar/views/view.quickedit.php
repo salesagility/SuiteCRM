@@ -84,7 +84,7 @@ class CalendarViewQuickEdit extends SugarView
         $this->ev->view = "QuickCreate";
         $this->ev->ss = new Sugar_Smarty();
         $this->ev->formName = "CalendarEditView";
-        $this->ev->setup($module,$this->bean,$source,$tpl);
+        $this->ev->setup($module, $this->bean, $source, $tpl);
         $this->ev->defs['templateMeta']['form']['headerTpl'] = "modules/Calendar/tpls/editHeader.tpl";
         $this->ev->defs['templateMeta']['form']['footerTpl'] = "modules/Calendar/tpls/empty.tpl";						
         $this->ev->process(false, "CalendarEditView");		
@@ -109,7 +109,7 @@ class CalendarViewQuickEdit extends SugarView
         );
         
         if ($repeat_arr = CalendarUtils::get_sendback_repeat_data($this->bean)) {
-            $json_arr = array_merge($json_arr,array("repeat" => $repeat_arr));
+            $json_arr = array_merge($json_arr, array("repeat" => $repeat_arr));
         }
             
         ob_clean();		

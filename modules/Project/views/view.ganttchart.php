@@ -53,8 +53,8 @@ class ProjectViewGanttChart extends ViewDetail
 
         $project->retrieve($_REQUEST["project_id"]);
         //Get project resources (users & contacts)
-        $resources1 = $project->get_linked_beans('project_users_1','User');
-        $resources2 = $project->get_linked_beans('project_contacts_1','Contact');
+        $resources1 = $project->get_linked_beans('project_users_1', 'User');
+        $resources2 = $project->get_linked_beans('project_contacts_1', 'Contact');
         //Combine resources into array of objects
         $resource_array = array();
         foreach ($resources1 as $user) {
@@ -114,7 +114,7 @@ class ProjectViewGanttChart extends ViewDetail
 							<label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE']; ?></label>
 							<?php
                             echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
-									'.get_select_options_with_id($app_list_strings['relationship_type_list'],'').'
+									'.get_select_options_with_id($app_list_strings['relationship_type_list'], '').'
 							</select>'; ?>
 							<label for="Lag"><?php echo $mod_strings['LBL_LAG']; ?></label>
 							<input type="text" name="Lag" value="0" id="Lag" class="text ui-widget-content ui-corner-all" />
@@ -145,7 +145,7 @@ class ProjectViewGanttChart extends ViewDetail
 							<input type="text" name="Duration" id="Duration" class="text ui-widget-content ui-corner-all" />
 							<select id="Duration_unit" name="Duration_unit" class="text ui-widget-content ui-corner-all" />
 							<?php
-                            echo get_select_options_with_id($app_list_strings['duration_unit_dom'],''); ?>
+                            echo get_select_options_with_id($app_list_strings['duration_unit_dom'], ''); ?>
 							</select>
 
 							<label for="Resources"><?php echo $mod_strings['LBL_ASSIGNED_USER_ID']; ?></label>

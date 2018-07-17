@@ -252,22 +252,22 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
 
 
         /** Syntax lexeme */
-        $this->addEntryAction(self::ST_SYNT_LEXEME,  $syntaxLexemeAction);
+        $this->addEntryAction(self::ST_SYNT_LEXEME, $syntaxLexemeAction);
         // Two lexemes in succession
         $this->addTransitionAction(self::ST_SYNT_LEXEME, self::ST_SYNT_LEXEME, $syntaxLexemeAction);
 
 
         /** Lexeme */
-        $this->addEntryAction(self::ST_LEXEME,                       $addLexemeCharAction);
+        $this->addEntryAction(self::ST_LEXEME, $addLexemeCharAction);
         $this->addTransitionAction(self::ST_LEXEME, self::ST_LEXEME, $addLexemeCharAction);
         // ST_ESCAPED_CHAR => ST_LEXEME transition is covered by ST_LEXEME entry action
 
-        $this->addTransitionAction(self::ST_LEXEME, self::ST_WHITE_SPACE,     $addLexemeAction);
-        $this->addTransitionAction(self::ST_LEXEME, self::ST_SYNT_LEXEME,     $addLexemeAction);
-        $this->addTransitionAction(self::ST_LEXEME, self::ST_QUOTED_LEXEME,   $addLexemeAction);
+        $this->addTransitionAction(self::ST_LEXEME, self::ST_WHITE_SPACE, $addLexemeAction);
+        $this->addTransitionAction(self::ST_LEXEME, self::ST_SYNT_LEXEME, $addLexemeAction);
+        $this->addTransitionAction(self::ST_LEXEME, self::ST_QUOTED_LEXEME, $addLexemeAction);
         $this->addTransitionAction(self::ST_LEXEME, self::ST_LEXEME_MODIFIER, $addLexemeAction);
-        $this->addTransitionAction(self::ST_LEXEME, self::ST_NUMBER,          $addLexemeAction);
-        $this->addTransitionAction(self::ST_LEXEME, self::ST_MANTISSA,        $addLexemeAction);
+        $this->addTransitionAction(self::ST_LEXEME, self::ST_NUMBER, $addLexemeAction);
+        $this->addTransitionAction(self::ST_LEXEME, self::ST_MANTISSA, $addLexemeAction);
 
 
         /** Quoted lexeme */
@@ -275,7 +275,7 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
         $this->addTransitionAction(self::ST_QUOTED_LEXEME, self::ST_QUOTED_LEXEME, $addLexemeCharAction);
         $this->addTransitionAction(self::ST_ESCAPED_QCHAR, self::ST_QUOTED_LEXEME, $addLexemeCharAction);
         // Closing quote changes state to the ST_WHITE_SPACE   other states are not used
-        $this->addTransitionAction(self::ST_QUOTED_LEXEME, self::ST_WHITE_SPACE,   $addQuotedLexemeAction);
+        $this->addTransitionAction(self::ST_QUOTED_LEXEME, self::ST_WHITE_SPACE, $addQuotedLexemeAction);
 
 
         /** Lexeme modifier */
@@ -283,17 +283,17 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
 
 
         /** Number */
-        $this->addEntryAction(self::ST_NUMBER,                           $addLexemeCharAction);
-        $this->addEntryAction(self::ST_MANTISSA,                         $addLexemeCharAction);
-        $this->addTransitionAction(self::ST_NUMBER,   self::ST_NUMBER,   $addLexemeCharAction);
+        $this->addEntryAction(self::ST_NUMBER, $addLexemeCharAction);
+        $this->addEntryAction(self::ST_MANTISSA, $addLexemeCharAction);
+        $this->addTransitionAction(self::ST_NUMBER, self::ST_NUMBER, $addLexemeCharAction);
         // ST_NUMBER => ST_MANTISSA transition is covered by ST_MANTISSA entry action
         $this->addTransitionAction(self::ST_MANTISSA, self::ST_MANTISSA, $addLexemeCharAction);
 
-        $this->addTransitionAction(self::ST_NUMBER,   self::ST_WHITE_SPACE,     $addNumberLexemeAction);
-        $this->addTransitionAction(self::ST_NUMBER,   self::ST_SYNT_LEXEME,     $addNumberLexemeAction);
-        $this->addTransitionAction(self::ST_NUMBER,   self::ST_LEXEME_MODIFIER, $addNumberLexemeAction);
-        $this->addTransitionAction(self::ST_MANTISSA, self::ST_WHITE_SPACE,     $addNumberLexemeAction);
-        $this->addTransitionAction(self::ST_MANTISSA, self::ST_SYNT_LEXEME,     $addNumberLexemeAction);
+        $this->addTransitionAction(self::ST_NUMBER, self::ST_WHITE_SPACE, $addNumberLexemeAction);
+        $this->addTransitionAction(self::ST_NUMBER, self::ST_SYNT_LEXEME, $addNumberLexemeAction);
+        $this->addTransitionAction(self::ST_NUMBER, self::ST_LEXEME_MODIFIER, $addNumberLexemeAction);
+        $this->addTransitionAction(self::ST_MANTISSA, self::ST_WHITE_SPACE, $addNumberLexemeAction);
+        $this->addTransitionAction(self::ST_MANTISSA, self::ST_SYNT_LEXEME, $addNumberLexemeAction);
         $this->addTransitionAction(self::ST_MANTISSA, self::ST_LEXEME_MODIFIER, $addNumberLexemeAction);
     }
 
@@ -308,15 +308,15 @@ class Zend_Search_Lucene_Search_QueryLexer extends Zend_Search_Lucene_FSM
      */
     private function _translateInput($char)
     {
-        if (strpos(self::QUERY_WHITE_SPACE_CHARS,    $char) !== false) {
+        if (strpos(self::QUERY_WHITE_SPACE_CHARS, $char) !== false) {
             return self::IN_WHITE_SPACE;
-        } elseif (strpos(self::QUERY_SYNT_CHARS,           $char) !== false) {
+        } elseif (strpos(self::QUERY_SYNT_CHARS, $char) !== false) {
             return self::IN_SYNT_CHAR;
-        } elseif (strpos(self::QUERY_MUTABLE_CHARS,        $char) !== false) {
+        } elseif (strpos(self::QUERY_MUTABLE_CHARS, $char) !== false) {
             return self::IN_MUTABLE_CHAR;
         } elseif (strpos(self::QUERY_LEXEMEMODIFIER_CHARS, $char) !== false) {
             return self::IN_LEXEME_MODIFIER;
-        } elseif (strpos(self::QUERY_ASCIIDIGITS_CHARS,    $char) !== false) {
+        } elseif (strpos(self::QUERY_ASCIIDIGITS_CHARS, $char) !== false) {
             return self::IN_ASCII_DIGIT;
         } elseif ($char === '"') {
             return self::IN_QUOTE;

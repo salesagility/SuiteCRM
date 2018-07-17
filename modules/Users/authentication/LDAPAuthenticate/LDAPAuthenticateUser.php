@@ -95,7 +95,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         }
 
         // MRF - Bug #18578 - punctuation was being passed as HTML entities, i.e. &amp;
-        $bind_password = html_entity_decode($password,ENT_QUOTES);
+        $bind_password = html_entity_decode($password, ENT_QUOTES);
 
         $GLOBALS['log']->info("ldapauth: Binding user " . $bind_user);
         $bind = ldap_bind($ldapconn, $bind_user, $bind_password);
@@ -408,7 +408,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser
         $GLOBALS['log']->info("ldapauth.ldap_rdn_lookup: Bind succeeded, searching for $user_attr=$user_name");
         $GLOBALS['log']->debug("ldapauth.ldap_rdn_lookup: base_dn:$base_dn , search_filter:$search_filter");
 
-        $result = @ldap_search($ldapconn, $base_dn , $search_filter, array("dn", $bind_attr));
+        $result = @ldap_search($ldapconn, $base_dn, $search_filter, array("dn", $bind_attr));
         $error = ldap_errno($ldapconn);
         if ($this->loginError($error)) {
             return false;

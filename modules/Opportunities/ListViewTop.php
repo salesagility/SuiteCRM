@@ -59,10 +59,10 @@ $seedOpportunity = new Opportunity();
 $where = "opportunities.sales_stage <> 'Closed Won' AND opportunities.sales_stage <> 'Closed Lost' AND opportunities.assigned_user_id='".$current_user->id."'";
 $header_text = '';
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-    $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=ListView&from_module=Opportunities'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDITLAYOUT'])."</a>";
+    $header_text = "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=ListView&from_module=Opportunities'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDITLAYOUT'])."</a>";
 }
 $ListView = new ListView();
-$ListView->initNewXTemplate('modules/Opportunities/ListViewTop.html',$current_module_strings);
+$ListView->initNewXTemplate('modules/Opportunities/ListViewTop.html', $current_module_strings);
 $ListView->setHeaderTitle($current_module_strings['LBL_TOP_OPPORTUNITIES']. $header_text);
 $ListView->setQuery($where, 5, "amount  DESC", "OPPORTUNITY", false);
 $ListView->processListView($seedOpportunity, "main", "OPPORTUNITY");

@@ -82,7 +82,7 @@ class CalendarGrid
 
         $this->scrollable = false;
         if (!($this->cal->isPrint() && $this->cal->view == 'day')) {
-            if (in_array($this->cal->view,array('day','week'))) {
+            if (in_array($this->cal->view, array('day','week'))) {
                 $this->scrollable = true;
                 if ($this->cal->time_step < 30) {
                     $this->scroll_height = 480;
@@ -160,7 +160,7 @@ class CalendarGrid
      * @param string $suffix suffix for id of time slot used in shared view
      * @return string
      */
-    protected function get_day_column($start,$day = 0,$suffix = "")
+    protected function get_day_column($start, $day = 0, $suffix = "")
     {
         $curr_time = $start;
         $str = "";
@@ -208,9 +208,9 @@ class CalendarGrid
                 $agenda_array[$day] = $this->mobile_sort_items($agenda_array[$day]);
 
                 if ($day == $this->today_ts) {
-                    $str .= "<div class='mobile_calendar_title today'><b>Today</b> " . date("D dS, M Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+                    $str .= "<div class='mobile_calendar_title today'><b>Today</b> " . date("D dS, M Y", $agenda_array[$day][0]['ts_start']) . "</div>";
                 } else {
-                    $str .= "<div class='mobile_calendar_title'>" . date("D dS, M Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+                    $str .= "<div class='mobile_calendar_title'>" . date("D dS, M Y", $agenda_array[$day][0]['ts_start']) . "</div>";
                 }
 
                 $i = 0;
@@ -284,7 +284,7 @@ class CalendarGrid
 
     public function mobile_get_end_time($day_item)
     {
-        $start_time = DateTime::createFromFormat("h:ia",$day_item['time_start']);
+        $start_time = DateTime::createFromFormat("h:ia", $day_item['time_start']);
         $start_time->modify('+' . $day_item['duration_minutes'] .'minutes');
         return $start_time->format("h:ia");
     }
@@ -352,7 +352,7 @@ class CalendarGrid
      * @param string $prefix prefix for id of slot used in shared view
      * @return string
      */
-    protected function get_basic_cell($start,$height = 80,$suffix = "")
+    protected function get_basic_cell($start, $height = 80, $suffix = "")
     {
         $str = "";
         $dt = $GLOBALS['timedate']->fromTimestamp($start)->get("+8 hours");
@@ -368,7 +368,7 @@ class CalendarGrid
      * @param string $prefix prefix for id of slot used in shared view
      * @return string
      */
-    protected function get_basic_row($start,$cols = 7,$suffix = "")
+    protected function get_basic_row($start, $cols = 7, $suffix = "")
     {
         $height = 20;
         $str = "";
@@ -401,7 +401,7 @@ class CalendarGrid
             for ($d = 0; $d < $cols; $d++) {
                 $curr_time = $start + $d * 86400;
                 $str .= "<div class='col'>";
-                $str .= $this->get_day_head($curr_time,$d,true);
+                $str .= $this->get_day_head($curr_time, $d, true);
                 $str .= "</div>";
             }
             $str .= "</div>";
@@ -417,7 +417,7 @@ class CalendarGrid
         $str .= "<div class='week'>";
         for ($d = 0; $d < $cols; $d++) {
             $curr_time = $start + $d*86400;
-            $str .= $this->get_basic_cell($curr_time,$height,$suffix);
+            $str .= $this->get_basic_cell($curr_time, $height, $suffix);
         }
         $str .= "</div>";
         $str .= "<div style='clear: left;'></div>";
@@ -434,7 +434,7 @@ class CalendarGrid
      * @param bulean $force force display header
      * @return string
      */
-    protected function get_day_head($start,$day = 0,$force = false)
+    protected function get_day_head($start, $day = 0, $force = false)
     {
         $str = "";
         if ($force) {
@@ -487,7 +487,7 @@ class CalendarGrid
 
         $str = "";
         $str .= "<div id='cal-grid' style='visibility: hidden;'>";
-        $str .= $this->get_basic_row($day_start_ts,1);
+        $str .= $this->get_basic_row($day_start_ts, 1);
         if (!$basic) {
             $str .= "<div id='cal-scrollable' style='height: ".$this->scroll_height."px;'>";
             $str .= $this->get_time_column($day_start_ts);
@@ -530,7 +530,7 @@ class CalendarGrid
                 $str .= "<div class='week'>";
                 for ($d = 0; $d < 7; $d++) {
                     $curr_time = $week_start_ts + $d*86400 + $w*60*60*24*7;
-                    $str .= $this->get_day_column($curr_time,$d);
+                    $str .= $this->get_day_column($curr_time, $d);
                 }
                 $str .= "</div>";
                 $str .= "<div style='clear: left;'></div>";
@@ -565,13 +565,13 @@ class CalendarGrid
             $str .= "<div class='monthCalBody'><h5 class='calSharedUser'>".$shared_user->full_name."</h5></div>";
             $str .= "<div user_id='".$member_id."' user_name='".$shared_user->user_name."'>";
 
-            $str .= $this->get_basic_row($week_start_ts,7,$user_number_str);
+            $str .= $this->get_basic_row($week_start_ts, 7, $user_number_str);
             if (!$basic) {
                 $str .= $this->get_time_column($week_start_ts);
                 $str .= "<div class='week'>";
                 for ($d = 0; $d < 7; $d++) {
                     $curr_time = $week_start_ts + $d*86400;
-                    $str .= $this->get_day_column($curr_time,$d,$user_number_str);
+                    $str .= $this->get_day_column($curr_time, $d, $user_number_str);
                 }
                 $str .= "</div>";
                 $str .= "</div>";

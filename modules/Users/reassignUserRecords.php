@@ -271,7 +271,7 @@ foreach ($moduleFilters as $modFilter => $fieldArray) {
     echo "</ul>\n";
     require_once('include/Smarty/plugins/function.sugar_help.php');
     $sugar_smarty = new Sugar_Smarty();
-    $help_img = smarty_function_sugar_help(array("text"=>$mod_strings['LBL_REASS_VERBOSE_HELP']),$sugar_smarty);
+    $help_img = smarty_function_sugar_help(array("text"=>$mod_strings['LBL_REASS_VERBOSE_HELP']), $sugar_smarty);
     echo "<BR><input type=checkbox name=verbose> {$mod_strings_users['LBL_REASS_VERBOSE_OUTPUT']}".$help_img."<BR>\n";
     
     unset($_SESSION['reassignRecords']['modules']);

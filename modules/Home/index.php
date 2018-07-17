@@ -114,7 +114,7 @@ if (!$hasUserPreferences) {
             $displayDashlet = $myDashlet->checkDashletDisplay();
             if (isset($dashletsFiles[$dashletName]) && $displayDashlet) {
                 $options = array();
-                $prefsforthisdashlet = array_keys($prefstomove,$dashletName);
+                $prefsforthisdashlet = array_keys($prefstomove, $dashletName);
                 foreach ($prefsforthisdashlet as $pref) {
                     $options[$pref] = $current_user->getPreference($pref);
                 }
@@ -161,11 +161,11 @@ if (!empty($pagesDashboard)) {
             $pages[0]['columns'][$dashboardColumnKey]['dashlets'][] = $dashletItem;
         }
     }
-    $pages = array_merge($pages,$pagesDashboard);
+    $pages = array_merge($pages, $pagesDashboard);
     $current_user->setPreference('pages', $pages, 0, 'Home');
 }
 if (!empty($dashletsDashboard)) {
-    $dashlets = array_merge($dashlets,$dashletsDashboard);
+    $dashlets = array_merge($dashlets, $dashletsDashboard);
     $current_user->setPreference('dashlets', $dashlets, 0, 'Home');
 }
 if (!empty($pagesDashboard) || !empty($dashletsDashboard)) {
@@ -225,7 +225,7 @@ foreach ($pages[$activePage]['columns'] as $colNum => $column) {
                 $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : array()));
                 // Need to add support to dynamically display/hide dashlets
                 // If it has a method 'shouldDisplay' we will call it to see if we should display it or not
-                if (method_exists($dashlet,'shouldDisplay')) {
+                if (method_exists($dashlet, 'shouldDisplay')) {
                     if (!$dashlet->shouldDisplay()) {
                         // This dashlet doesn't want us to show it, skip it.
                         continue;

@@ -49,7 +49,7 @@ class HomeController extends SugarController
     public function action_getEditFieldHTML()
     {
         if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
-            $html = getEditFieldHTML($_REQUEST['current_module'], $_REQUEST['field'], $_REQUEST['field'] , 'EditView', $_REQUEST['id']);
+            $html = getEditFieldHTML($_REQUEST['current_module'], $_REQUEST['field'], $_REQUEST['field'], 'EditView', $_REQUEST['id']);
             echo $html;
         }
     }
@@ -64,10 +64,10 @@ class HomeController extends SugarController
     public function action_getDisplayValue()
     {
         if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
-            $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
+            $bean = BeanFactory::getBean($_REQUEST['current_module'], $_REQUEST['id']);
 
             if (is_object($bean) && $bean->id != "") {
-                echo getDisplayValue($bean, $_REQUEST['field'],"close");
+                echo getDisplayValue($bean, $_REQUEST['field'], "close");
             } else {
                 echo "Could not find value.";
             }
@@ -79,7 +79,7 @@ class HomeController extends SugarController
         global $app_strings, $mod_strings;
 
         if ($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']) {
-            $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
+            $bean = BeanFactory::getBean($_REQUEST['current_module'], $_REQUEST['id']);
 
             if (is_object($bean) && $bean->id != "") {
                 $fielddef = $bean->field_defs[$_REQUEST['field']];

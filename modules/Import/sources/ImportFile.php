@@ -112,7 +112,7 @@ class ImportFile extends ImportDataSource
      * @param string $enclosure
      * @param bool   $deleteFile
      */
-    public function __construct($filename, $delimiter  = ',', $enclosure  = '',$deleteFile = true, $checkUploadPath = TRUE)
+    public function __construct($filename, $delimiter  = ',', $enclosure  = '', $deleteFile = true, $checkUploadPath = TRUE)
     {
         if (!is_file($filename) || !is_readable($filename)) {
             return false;
@@ -126,7 +126,7 @@ class ImportFile extends ImportDataSource
         // turn on auto-detection of line endings to fix bug #10770
         ini_set('auto_detect_line_endings', '1');
 
-        $this->_fp         = sugar_fopen($filename,'r');
+        $this->_fp         = sugar_fopen($filename, 'r');
         $this->_sourcename   = $filename;
         $this->_deleteFile = $deleteFile;
         $this->_delimiter  = (empty($delimiter) ? ',' : $delimiter);
@@ -151,7 +151,7 @@ class ImportFile extends ImportDataSource
 
         rewind($this->_fp);
         $bomCheck = fread($this->_fp, 3);
-        if ($bomCheck != pack("CCC",0xef,0xbb,0xbf)) {
+        if ($bomCheck != pack("CCC", 0xef, 0xbb, 0xbf)) {
             rewind($this->_fp);
         }
     }

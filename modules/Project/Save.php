@@ -60,7 +60,7 @@ if (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") 
 }
 if (isset($_REQUEST['save_type']) || isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] === "true") {
     $query = "SELECT id FROM project_task WHERE project_id = '" . $base_project_id . "' AND deleted = 0";
-    $result = $sugarbean->db->query($query,true,"Error retrieving project tasks");
+    $result = $sugarbean->db->query($query, true, "Error retrieving project tasks");
     $row = $sugarbean->db->fetchByAssoc($result);
 
     while ($row != null) {
@@ -131,5 +131,5 @@ if ($sugarbean->is_template) {
 } else {
     //customize default retrun view to make it to redirect to GanttChart view
     $_REQUEST['return_url'] = "index.php?module=Project&action=view_GanttChart&record=" . $return_id;
-    handleRedirect($return_id,'Project');
+    handleRedirect($return_id, 'Project');
 }

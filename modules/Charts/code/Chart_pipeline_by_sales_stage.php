@@ -157,7 +157,7 @@ class Chart_pipeline_by_sales_stage
         if (count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
-                array_push($datax_selected,$key);
+                array_push($datax_selected, $key);
             }
         } else {
             $datax = $app_list_strings['sales_stage_dom'];
@@ -191,7 +191,7 @@ class Chart_pipeline_by_sales_stage
         $id_hash = '1';
         if (isset($ids)) {
             sort($ids);
-            $id_hash = crc32(implode('',$ids));
+            $id_hash = crc32(implode('', $ids));
             if ($id_hash < 0) {
                 $id_hash = $id_hash * -1;
             }
@@ -203,9 +203,9 @@ class Chart_pipeline_by_sales_stage
 
         $GLOBALS['log']->debug("cache file name is: $cache_file_name");
 
-        $tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='. $action .'&pbss_refresh=true" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('refresh','border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_REFRESH']).'&nbsp;'.$current_module_strings['LBL_REFRESH'].'</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'pipeline_by_sales_stage_edit\');" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('edit','border="0" align="absmiddle"',null,null,'.gif',$mod_strings['LBL_EDIT']).'&nbsp;'. $current_module_strings['LBL_EDIT'].'</a>&nbsp;&nbsp;'.$extra_tools.'</div>';
+        $tools='<div align="right"><a href="index.php?module='.$currentModule.'&action='. $action .'&pbss_refresh=true" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('refresh', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_REFRESH']).'&nbsp;'.$current_module_strings['LBL_REFRESH'].'</a>&nbsp;&nbsp;<a href="javascript: toggleDisplay(\'pipeline_by_sales_stage_edit\');" class="tabFormAdvLink">'.SugarThemeRegistry::current()->getImage('edit', 'border="0" align="absmiddle"', null, null, '.gif', $mod_strings['LBL_EDIT']).'&nbsp;'. $current_module_strings['LBL_EDIT'].'</a>&nbsp;&nbsp;'.$extra_tools.'</div>';
 
-        echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this->order . '">' . get_form_header($current_module_strings['LBL_SALES_STAGE_FORM_TITLE'], $tools , false) . '</span>'; ?>
+        echo '<span onmouseover="this.style.cursor=\'move\'" id="chart_handle_' . $this->order . '">' . get_form_header($current_module_strings['LBL_SALES_STAGE_FORM_TITLE'], $tools, false) . '</span>'; ?>
 
 <?php
 	$cal_lang = "en";
@@ -241,11 +241,11 @@ class Chart_pipeline_by_sales_stage
 </tr>
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_SALES_STAGES']; ?></b></td>
-	<td valign='top' ><select name="pbss_sales_stages[]" multiple size='3'><?php echo get_select_options_with_id($app_list_strings['sales_stage_dom'],$datax_selected); ?></select></td>
+	<td valign='top' ><select name="pbss_sales_stages[]" multiple size='3'><?php echo get_select_options_with_id($app_list_strings['sales_stage_dom'], $datax_selected); ?></select></td>
 </tr>
 <tr>
 	<td valign='top' nowrap><b><?php echo $current_module_strings['LBL_USERS']; ?></b></td>
-	<td valign='top' ><select name="pbss_ids[]" multiple size='3'><?php echo  get_select_options_with_id(get_user_array(false),$ids); ?></select></td>
+	<td valign='top' ><select name="pbss_ids[]" multiple size='3'><?php echo  get_select_options_with_id(get_user_array(false), $ids); ?></select></td>
 </tr>
 <tr>
 <?php
@@ -267,7 +267,7 @@ Calendar.setup ({
 	<?php
 
 // draw table
-echo "<P align='center'>".$this->gen_xml($datax, $dateXml[0], $dateXml[1], $ids, $cache_file_name, $refresh,'hBarF',$current_module_strings)."</P>";
+echo "<P align='center'>".$this->gen_xml($datax, $dateXml[0], $dateXml[1], $ids, $cache_file_name, $refresh, 'hBarF', $current_module_strings)."</P>";
         echo "<P align='center'><span class='chartFootnote'>".$current_module_strings['LBL_SALES_STAGE_FORM_DESC']."</span></P>";
 
         if (file_exists($cache_file_name)) {
@@ -333,7 +333,7 @@ echo get_validate_chart_js();
                 foreach ($new_ids as $the_id=>$the_name) {
                     $id[] = "'".$the_id."'";
                 }
-                $ids = join(",",$id);
+                $ids = join(",", $id);
                 $where .= "opportunities.assigned_user_id IN ($ids) ";
             }
             //build the where clause for the query that matches $datax
@@ -343,13 +343,13 @@ echo get_validate_chart_js();
                 foreach ($datax as $key=>$value) {
                     $dataxArr[] = "'".$key."'";
                 }
-                $dataxArr = join(",",$dataxArr);
+                $dataxArr = join(",", $dataxArr);
                 $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
             }
 
             //build the where clause for the query that matches $date_start and $date_end
-            $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'",'date'). "
-						AND opportunities.date_closed <= ".db_convert("'".$date_end."'",'date') ;
+            $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'", 'date'). "
+						AND opportunities.date_closed <= ".db_convert("'".$date_end."'", 'date') ;
             $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
             //Now do the db queries
@@ -437,7 +437,7 @@ echo get_validate_chart_js();
             $i=0;
             asort($new_ids);
             foreach ($new_ids as $key=>$value) {
-                $color = generate_graphcolor($key,$i);
+                $color = generate_graphcolor($key, $i);
                 $fileContents .= '          <mapping id="'.$key.'" name="'.$value.'" color="'.$color.'"/>'."\n";
                 $i++;
             }
@@ -465,7 +465,7 @@ echo get_validate_chart_js();
             $width = "350";
             $height = "400";
         }
-        $return = create_chart($chart_size,$cache_file_name,$width,$height);
+        $return = create_chart($chart_size, $cache_file_name, $width, $height);
         return $return;
     }
 
@@ -534,7 +534,7 @@ echo get_validate_chart_js();
         if (count($tempx) > 0) {
             foreach ($tempx as $key) {
                 $datax[$key] = $app_list_strings['sales_stage_dom'][$key];
-                array_push($datax_selected,$key);
+                array_push($datax_selected, $key);
             }
         } else {
             $datax = $app_list_strings['sales_stage_dom'];
@@ -580,7 +580,7 @@ echo get_validate_chart_js();
             foreach ($new_ids as $the_id=>$the_name) {
                 $id[] = "'".$the_id."'";
             }
-            $ids = join(",",$id);
+            $ids = join(",", $id);
             $where .= "opportunities.assigned_user_id IN ($ids) ";
         }
         //build the where clause for the query that matches $datax
@@ -590,13 +590,13 @@ echo get_validate_chart_js();
             foreach ($datax as $key=>$value) {
                 $dataxArr[] = "'".$key."'";
             }
-            $dataxArr = join(",",$dataxArr);
+            $dataxArr = join(",", $dataxArr);
             $where .= "AND opportunities.sales_stage IN	($dataxArr) ";
         }
 
         //build the where clause for the query that matches $date_start and $date_end
-        $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'",'date'). "
-					AND opportunities.date_closed <= ".db_convert("'".$date_end."'",'date') ;
+        $where .= "	AND opportunities.date_closed >= ". db_convert("'".$date_start."'", 'date'). "
+					AND opportunities.date_closed <= ".db_convert("'".$date_end."'", 'date') ;
         $where .= "	AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
 
         //Now do the db queries

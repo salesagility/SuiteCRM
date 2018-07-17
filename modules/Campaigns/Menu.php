@@ -85,7 +85,7 @@ if (ACLController::checkAccess('EmailTemplates', 'list', true)) {
 		$mod_strings['LNK_EMAIL_TEMPLATE_LIST'],"View_Email_Templates", 'Emails'
 	);
 }
-if (is_admin($GLOBALS['current_user']) || is_admin_for_module($GLOBALS['current_user'],'Campaigns')) {
+if (is_admin($GLOBALS['current_user']) || is_admin_for_module($GLOBALS['current_user'], 'Campaigns')) {
     $module_menu[] = array(
 		"index.php?module=Campaigns&action=WizardEmailSetup&return_module=Campaigns&return_action=index",
 		$mod_strings['LBL_EMAIL_SETUP_WIZARD'],"Setup_Email"

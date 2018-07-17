@@ -61,7 +61,7 @@ function display_condition_lines($focus, $field, $value, $view)
                     if ($condition_name->module_path == '') {
                         $condition_name->module_path = $focus->flow_module;
                     }
-                    $html .= "flow_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->flow_module,$condition_name->module_path[0]))))."\";";
+                    $html .= "flow_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->flow_module, $condition_name->module_path[0]))))."\";";
                     if ($condition_name->value_type == 'Date') {
                         $condition_name->value = unserialize(base64_decode($condition_name->value));
                     }
@@ -92,7 +92,7 @@ function display_condition_lines($focus, $field, $value, $view)
                 if (empty($condition_name->module_path)) {
                     $condition_name->module_path[0] = $focus->flow_module;
                 }
-                $html .= "flow_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->flow_module,$condition_name->module_path[0]))))."\";";
+                $html .= "flow_fields = \"".trim(preg_replace('/\s+/', ' ', getModuleFields(getRelatedModule($focus->flow_module, $condition_name->module_path[0]))))."\";";
                 if ($condition_name->value_type == 'Date') {
                     $condition_name->value = unserialize(base64_decode($condition_name->value));
                 }

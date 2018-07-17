@@ -125,7 +125,7 @@ class Dashlet
         if ($this->isConfigurable) {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="javascript:void(0)"  aria-label="'.translate('LBL_DASHLET_EDIT', 'Home').'" onclick="SUGAR.mySugar.configureDashlet(\''
                 . $this->id . '\'); return false;">'
-                . SugarThemeRegistry::current()->getImage('dashlet-header-edit','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
+                . SugarThemeRegistry::current()->getImage('dashlet-header-edit', 'title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null, null, '.gif', translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
                 . '';
         } else {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet">';
@@ -145,7 +145,7 @@ class Dashlet
         if ($this->isRefreshable) {
             $additionalTitle .= '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_REFRESH', 'Home').'" onclick="SUGAR.mySugar.retrieveDashlet(\''
                 . $this->id . '\'); return false;">'
-                . SugarThemeRegistry::current()->getImage('dashlet-header-refresh','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_REFRESH', 'Home'))
+                . SugarThemeRegistry::current()->getImage('dashlet-header-refresh', 'border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"', null, null, '.gif', translate('LBL_DASHLET_REFRESH', 'Home'))
                 . '</a>';
         }
 
@@ -166,7 +166,7 @@ class Dashlet
         }
         $additionalTitle = '<a href="javascript:void(0)" aria-label="'.translate('LBL_DASHLET_DELETE', 'Home').'" onclick="SUGAR.mySugar.deleteDashlet(\''
             . $this->id . '\'); return false;">'
-            . SugarThemeRegistry::current()->getImage('dashlet-header-close','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_DELETE', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_DELETE', 'Home'))
+            . SugarThemeRegistry::current()->getImage('dashlet-header-close', 'border="0" align="absmiddle" title="' . translate('LBL_DASHLET_DELETE', 'Home') . '"', null, null, '.gif', translate('LBL_DASHLET_DELETE', 'Home'))
             . '</a></div></td></tr></table>';
         return $additionalTitle;
     }
@@ -239,12 +239,12 @@ class Dashlet
 //        $template->assign('show_help', $show_help);
         $template->assign('other_text', $title);
         $template->assign('form_title', $this->title);
-        $template->assign('SUGAR_CONFIG',$sugar_config);
+        $template->assign('SUGAR_CONFIG', $sugar_config);
         $template->assign('DASHLET_TITLE', $this->title);
         $template->assign('DASHLET_ID', $this->id);
         $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
-        $template->assign('DELETE_ICON',$this->setDeleteIcon());
+        $template->assign('DELETE_ICON', $this->setDeleteIcon());
         $moduleName = '';
         if (!is_object($this->seedBean)) {
             $GLOBALS['log']->warn('incorrect seed bean');
@@ -253,8 +253,8 @@ class Dashlet
         }
         $template->assign('DASHLET_MODULE', $moduleName);
         $template->assign('DASHLET_BUTTON_ARIA_EDIT', translate('LBL_DASHLET_EDIT', 'Home'));
-        $template->assign('DASHLET_BUTTON_ARIA_REFRESH',  translate('LBL_DASHLET_REFRESH', 'Home'));
-        $template->assign('DASHLET_BUTTON_ARIA_DELETE',  translate('LBL_DASHLET_DELETE', 'Home'));
+        $template->assign('DASHLET_BUTTON_ARIA_REFRESH', translate('LBL_DASHLET_REFRESH', 'Home'));
+        $template->assign('DASHLET_BUTTON_ARIA_DELETE', translate('LBL_DASHLET_DELETE', 'Home'));
 
 
         $template->assign('GET_FORM_HEADER', get_form_header($this->title, $title, false));
@@ -290,12 +290,12 @@ class Dashlet
         $template->assign('helpImageURL', $helpImageURL);
         //        $template->assign('show_help', $show_help);
         $template->assign('form_title', $this->title);
-        $template->assign('SUGAR_CONFIG',$sugar_config);
+        $template->assign('SUGAR_CONFIG', $sugar_config);
         $template->assign('DASHLET_TITLE', $this->title);
         $template->assign('DASHLET_ID', $this->id);
         $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
-        $template->assign('DELETE_ICON',$this->setDeleteIcon());
+        $template->assign('DELETE_ICON', $this->setDeleteIcon());
 
         return $template->fetch('include/Dashlets/DashletFooter.tpl');
     }
@@ -351,7 +351,7 @@ class Dashlet
         $autoRefreshSS = new Sugar_Smarty();
         $autoRefreshSS->assign('dashletOffset', $dashletOffset);
         $autoRefreshSS->assign('dashletId', $this->id);
-        $autoRefreshSS->assign('strippedDashletId', str_replace("-","",$this->id)); //javascript doesn't like "-" in function names
+        $autoRefreshSS->assign('strippedDashletId', str_replace("-", "", $this->id)); //javascript doesn't like "-" in function names
         $autoRefreshSS->assign('dashletRefreshInterval', $this->getAutoRefresh());
         $tpl = 'include/Dashlets/DashletGenericAutoRefresh.tpl';
         if ($_REQUEST['action'] == "DynamicAction") {

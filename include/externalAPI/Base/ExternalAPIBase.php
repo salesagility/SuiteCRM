@@ -100,11 +100,11 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
     public function quickCheckLogin()
     {
         if (!isset($this->eapmBean)) {
-            return array('success' => false, 'errorMessage' => translate('LBL_ERR_NO_AUTHINFO','EAPM'));
+            return array('success' => false, 'errorMessage' => translate('LBL_ERR_NO_AUTHINFO', 'EAPM'));
         }
 
         if ($this->eapmBean->validated==0) {
-            return array('success' => false, 'errorMessage' => translate('LBL_ERR_NO_AUTHINFO','EAPM'));
+            return array('success' => false, 'errorMessage' => translate('LBL_ERR_NO_AUTHINFO', 'EAPM'));
         }
 
         return array('success' => true);
@@ -163,10 +163,10 @@ abstract class ExternalAPIBase implements ExternalAPIPlugin
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
 
         $GLOBALS['log']->debug("ExternalAPIBase->postData Where: ".$url);
-        $GLOBALS['log']->debug("Headers:\n".print_r($headers,true));
+        $GLOBALS['log']->debug("Headers:\n".print_r($headers, true));
         // $GLOBALS['log']->debug("Postfields:\n".print_r($postfields,true));
         $rawResponse = curl_exec($ch);
-        $GLOBALS['log']->debug("Got:\n".print_r($rawResponse,true));
+        $GLOBALS['log']->debug("Got:\n".print_r($rawResponse, true));
 
         return $rawResponse;
     }

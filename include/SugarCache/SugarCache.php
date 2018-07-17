@@ -76,7 +76,7 @@ class SugarCache
                     }
                     require_once("$location/$file");
                     $cacheClass = basename($file, ".php");
-                    if (class_exists($cacheClass) && is_subclass_of($cacheClass,'SugarCacheAbstract')) {
+                    if (class_exists($cacheClass) && is_subclass_of($cacheClass, 'SugarCacheAbstract')) {
                         $GLOBALS['log']->debug("Found cache backend $cacheClass");
                         $cacheInstance = new $cacheClass();
                         if ($cacheInstance->useBackend()
@@ -97,7 +97,7 @@ class SugarCache
      */
     public static function instance()
     {
-        if (!is_subclass_of(self::$_cacheInstance,'SugarCacheAbstract')) {
+        if (!is_subclass_of(self::$_cacheInstance, 'SugarCacheAbstract')) {
             self::_init();
         }
 
@@ -177,7 +177,7 @@ function sugar_cache_retrieve($key)
  */
 function sugar_cache_put($key, $value, $ttl = null)
 {
-    SugarCache::instance()->set($key,$value, $ttl);
+    SugarCache::instance()->set($key, $value, $ttl);
 }
 
 /**

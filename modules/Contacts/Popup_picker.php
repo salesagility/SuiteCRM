@@ -94,7 +94,7 @@ class Popup_Picker
         $lbl_save_button_label = $app_strings['LBL_SAVE_BUTTON_LABEL'];
 
         // TODO: cleanup the construction of $addform
-        $formbody = $formBase->getFormBody('','','EmailEditView');
+        $formbody = $formBase->getFormBody('', '', 'EmailEditView');
         $addform = '<table><tr><td nowrap="nowrap" valign="top">'
             .str_replace('<br>', '</td><td nowrap="nowrap" valign="top">&nbsp;', $formbody)
             . '</td></tr></table>'
@@ -306,9 +306,9 @@ EOJS;
         $ListView->setXTemplate($form);
         $ListView->multi_select_popup=$multi_select;
         if ($multi_select) {
-            $ListView->xTemplate->assign("TAG_TYPE","SPAN");
+            $ListView->xTemplate->assign("TAG_TYPE", "SPAN");
         } else {
-            $ListView->xTemplate->assign("TAG_TYPE","A");
+            $ListView->xTemplate->assign("TAG_TYPE", "A");
         }
         $ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE']);
         $ListView->setQuery($where, '', 'contacts.last_name, contacts.first_name', 'CONTACT');
@@ -322,7 +322,7 @@ EOJS;
         $id = empty($_REQUEST['id'])?'': $_REQUEST['id'];
 
         $query = get_merge_query($seed_bean, $rel_module, $id);
-        $result = $seed_bean->db->query($query,true,"Error retrieving $seed_bean->object_name list: ");
+        $result = $seed_bean->db->query($query, true, "Error retrieving $seed_bean->object_name list: ");
 
         $list = Array();
         while (($row = $seed_bean->db->fetchByAssoc($result)) != null) {

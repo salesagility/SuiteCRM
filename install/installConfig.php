@@ -555,7 +555,7 @@ EOQ3;
             foreach ($_SESSION['installation_scenarios'] as $scenario) {
                 $key = $scenario['key'];
                 $description = $scenario['description'];
-                $scenarioModuleList =  implode($scenario['modulesScenarioDisplayName'],',');
+                $scenarioModuleList =  implode($scenario['modulesScenarioDisplayName'], ',');
                 $title = $scenario['title'];
 
                 $scenarioSelection.= "<input type='checkbox' name='scenarios[]' value='$key' checked><b>$title</b>.  $description ($scenarioModuleList).<br>";
@@ -1873,8 +1873,8 @@ if (is_file("config.php")) {
             $language_values[] = $value;
         }
 
-        $_SESSION['language_keys'] = urlencode(implode(",",$language_keys));
-        $_SESSION['language_values'] = urlencode(implode(",",$language_values));
+        $_SESSION['language_keys'] = urlencode(implode(",", $language_keys));
+        $_SESSION['language_values'] = urlencode(implode(",", $language_values));
     }
 }
 

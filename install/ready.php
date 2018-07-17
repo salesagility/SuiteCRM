@@ -218,7 +218,7 @@ if (function_exists('imagecreatetruecolor')) {
 $envString .='<p><b>'.$mod_strings['LBL_SPRITE_SUPPORT'].'</b> '.$spriteSupportStatus.'</p>';
 
 // Suhosin allow to use upload://
-if (UploadStream::getSuhosinStatus() == true || (strpos(ini_get('suhosin.perdir'), 'e') !== false && strpos($_SERVER["SERVER_SOFTWARE"],'Microsoft-IIS') === false)) {
+if (UploadStream::getSuhosinStatus() == true || (strpos(ini_get('suhosin.perdir'), 'e') !== false && strpos($_SERVER["SERVER_SOFTWARE"], 'Microsoft-IIS') === false)) {
     $suhosinStatus = "{$mod_strings['LBL_CHECKSYS_OK']}";
 } else {
     $suhosinStatus = "<span class='stop'><b>{$app_strings['ERR_SUHOSIN']}</b></span>";

@@ -97,9 +97,9 @@ $opp_query1  = "select camp.name, camp.actual_cost,camp.budget,camp.expected_rev
 
 
   $xtpl->assign("OPP_COUNT", $opp_data1['opp_count']);
-  $xtpl->assign("ACTUAL_COST",$opp_data1['actual_cost']);
-  $xtpl->assign("PLANNED_BUDGET",$opp_data1['budget']);
-  $xtpl->assign("EXPECTED_REVENUE",$opp_data1['expected_revenue']);
+  $xtpl->assign("ACTUAL_COST", $opp_data1['actual_cost']);
+  $xtpl->assign("PLANNED_BUDGET", $opp_data1['budget']);
+  $xtpl->assign("EXPECTED_REVENUE", $opp_data1['expected_revenue']);
 
 
 
@@ -118,7 +118,7 @@ if (isset($focus->currency_id) && !empty($focus->currency_id)) {
 
 global $current_user;
 if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
-    $xtpl->assign("ADMIN_EDIT","<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif',$mod_strings['LBL_EDIT_LAYOUT'])."</a>");
+    $xtpl->assign("ADMIN_EDIT", "<a href='index.php?action=index&module=DynamicLayout&from_action=".$_REQUEST['action'] ."&from_module=".$_REQUEST['module'] ."&record=".$_REQUEST['record']. "'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', $mod_strings['LBL_EDIT_LAYOUT'])."</a>");
 }
 
 //$detailView->processListNavigation($xtpl, "CAMPAIGN", $offset, $focus->is_AuditEnabled());
@@ -185,9 +185,9 @@ $chart= new campaign_charts();
         $latest_marketing_id = $selected_marketing_id;
     }
     if (empty($latest_marketing_id) ||  $latest_marketing_id === 'all') {
-        $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") . $cache_file_name_roi,true));
+        $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'], $app_list_strings['roi_type_dom'], $campaign_id, sugar_cached("xml/") . $cache_file_name_roi, true));
     } else {
-        $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'],$app_list_strings['roi_type_dom'],$campaign_id,sugar_cached("xml/") .$cache_file_name_roi,true));
+        $xtpl->assign("MY_CHART_ROI", $chart->campaign_response_roi_popup($app_list_strings['roi_type_dom'], $app_list_strings['roi_type_dom'], $campaign_id, sugar_cached("xml/") .$cache_file_name_roi, true));
     }
 
 //$output_html .= ob_get_contents();

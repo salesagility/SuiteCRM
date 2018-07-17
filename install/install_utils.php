@@ -92,11 +92,11 @@ function parseAcceptLanguage()
     $lang = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
     if (strpos($lang, ';')) {
         $exLang = explode(';', $lang);
-        return strtolower(str_replace('-','_',$exLang[0]));
+        return strtolower(str_replace('-', '_', $exLang[0]));
     } else {
         $match = array();
         if (preg_match("#\w{2}\-?\_?\w{2}#", $lang, $match)) {
-            return strtolower(str_replace('-','_',$match[0]));
+            return strtolower(str_replace('-', '_', $match[0]));
         }
     }
     return '';
@@ -1077,7 +1077,7 @@ function handleWebConfig()
 
 
     $config_array = array(
-        array('1'=> $prefix.str_replace('.','\\.',$setup_site_log_file).'\\.*' ,'2'=>'log_file_restricted.html'),
+        array('1'=> $prefix.str_replace('.', '\\.', $setup_site_log_file).'\\.*' ,'2'=>'log_file_restricted.html'),
         array('1'=> $prefix.'install.log' ,'2'=>'log_file_restricted.html'),
         array('1'=> $prefix.'upgradeWizard.log' ,'2'=>'log_file_restricted.html'),
         array('1'=> $prefix.'emailman.log' ,'2'=>'log_file_restricted.html'),
@@ -1102,7 +1102,7 @@ function handleWebConfig()
     $xmldoc->openURI('web.config');
     $xmldoc->setIndent(true);
     $xmldoc->setIndentString(' ');
-    $xmldoc->startDocument('1.0','UTF-8');
+    $xmldoc->startDocument('1.0', 'UTF-8');
     $xmldoc->startElement('configuration');
     $xmldoc->startElement('system.webServer');
     $xmldoc->startElement('rewrite');
@@ -1352,7 +1352,7 @@ function recursive_make_writable($start_file)
     if (!$ret_val) {
         $unwriteable_directory = is_dir($start_file) ? $start_file : dirname($start_file);
         if ($unwriteable_directory[0] == '.') {
-            $unwriteable_directory = substr($unwriteable_directory,1);
+            $unwriteable_directory = substr($unwriteable_directory, 1);
         }
         $_SESSION['unwriteable_module_files'][$unwriteable_directory] = $unwriteable_directory;
         $_SESSION['unwriteable_module_files']['failed'] = true;
@@ -1439,10 +1439,10 @@ function print_debug_comment()
     if (!empty($_SESSION['debug']) && ($_SESSION['debug'] == 'true')) {
         print("<!-- debug is on (to turn off, hit any page with 'debug=false' as a URL parameter.\n");
 
-        print_debug_array("Session",   $_SESSION);
-        print_debug_array("Request",   $_REQUEST);
-        print_debug_array("Post",      $_POST);
-        print_debug_array("Get",       $_GET);
+        print_debug_array("Session", $_SESSION);
+        print_debug_array("Request", $_REQUEST);
+        print_debug_array("Post", $_POST);
+        print_debug_array("Get", $_GET);
 
         print_r("-->\n");
     }
@@ -1813,9 +1813,9 @@ if (!function_exists('extractFile')) {
 }
 
 if (!function_exists('extractManifest')) {
-    function extractManifest($zip_file,$base_tmp_upgrade_dir)
+    function extractManifest($zip_file, $base_tmp_upgrade_dir)
     {
-        return(extractFile($zip_file, "manifest.php",$base_tmp_upgrade_dir));
+        return(extractFile($zip_file, "manifest.php", $base_tmp_upgrade_dir));
     }
 }
 
@@ -1878,7 +1878,7 @@ function langPackUnpack($unpack_type, $full_file)
 
         // move file from uploads to cache
         // FIXME: where should it be?
-        if (copy($full_file , $target_path.".zip")) {
+        if (copy($full_file, $target_path.".zip")) {
             copy($manifest_file, $target_manifest);
             unlink($full_file); // remove tempFile
             return "The file $base_filename has been uploaded.<br>\n";
@@ -1933,7 +1933,7 @@ if (!function_exists('getInstallType')) {
 //mysqli connector has a separate parameter for port.. We need to separate it out from the host name
 function getHostPortFromString($hostname='')
 {
-    $pos=strpos($hostname,':');
+    $pos=strpos($hostname, ':');
     if ($pos === false) {
         //no need to process as string is empty or does not contain ':' delimiter
         return '';
@@ -2005,7 +2005,7 @@ function createEmailAddress()
 
     $tld = $tlds[rand(0, count($tlds)-1)];
 
-    $len = rand(1,3);
+    $len = rand(1, 3);
 
     $ret = '';
     for ($i=0; $i<$len; $i++) {
@@ -2024,7 +2024,7 @@ function createEmailAddress()
 function add_digits($quantity, &$string, $min = 0, $max = 9)
 {
     for ($i=0; $i < $quantity; $i++) {
-        $string .= mt_rand($min,$max);
+        $string .= mt_rand($min, $max);
     }
 }
 
@@ -2040,12 +2040,12 @@ function create_phone_number()
     return $phone;
 }
 
-function create_date($year=null,$mnth=null,$day=null)
+function create_date($year=null, $mnth=null, $day=null)
 {
     global $timedate;
     $now = $timedate->getNow();
     if ($day==null) {
-        $day=$now->day+mt_rand(0,365);
+        $day=$now->day+mt_rand(0, 365);
     }
     return $timedate->asDbDate($now->get_day_begin($day, $mnth, $year));
 }
@@ -2056,15 +2056,15 @@ function create_current_date_time()
     return $timedate->nowDb();
 }
 
-function create_time($hr=null,$min=null,$sec=null)
+function create_time($hr=null, $min=null, $sec=null)
 {
     global $timedate;
     $date = TimeDate::getInstance()->fromTimestamp(0);
     if ($hr==null) {
-        $hr=mt_rand(6,19);
+        $hr=mt_rand(6, 19);
     }
     if ($min==null) {
-        $min=(mt_rand(0,3)*15);
+        $min=(mt_rand(0, 3)*15);
     }
     if ($sec==null) {
         $sec=0;
@@ -2165,18 +2165,18 @@ function addDefaultRoles($defaultRoles = array())
 function enableSugarFeeds()
 {
     $admin = new Administration();
-    $admin->saveSetting('sugarfeed','enabled','1');
+    $admin->saveSetting('sugarfeed', 'enabled', '1');
 
     foreach (SugarFeed::getAllFeedModules() as $module) {
         SugarFeed::activateModuleFeed($module);
     }
 
-    check_logic_hook_file('Users','after_login', array(1, 'SugarFeed old feed entry remover', 'modules/SugarFeed/SugarFeedFlush.php', 'SugarFeedFlush', 'flushStaleEntries'));
+    check_logic_hook_file('Users', 'after_login', array(1, 'SugarFeed old feed entry remover', 'modules/SugarFeed/SugarFeedFlush.php', 'SugarFeedFlush', 'flushStaleEntries'));
 }
 
 function create_writable_dir($dirname)
 {
-    if ((is_dir($dirname)) || @sugar_mkdir($dirname,0755)) {
+    if ((is_dir($dirname)) || @sugar_mkdir($dirname, 0755)) {
         $ok = make_writable($dirname);
     }
     if (empty($ok)) {

@@ -103,7 +103,7 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
         $confirm_msg .= "window.setTimeout('ajaxWizStatus.hideStatus()', 1500); ";
         $confirm_msg .= "window.setTimeout(\"ajaxWizStatus.showStatus('".$mess."')\",2000); ";
         $confirm_msg .= "window.setTimeout('ajaxWizStatus.hideStatus()', 5000); ";        
-        $ss->assign("MSG_SCRIPT",$confirm_msg);
+        $ss->assign("MSG_SCRIPT", $confirm_msg);
     }
     
     if (isset($_REQUEST['return_module'])) {
@@ -156,13 +156,13 @@ if (isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
 
     //Create the html to fill in the wizard steps
     if ($focus->campaign_type == 'NewsLetter') {
-        $ss->assign('NAV_ITEMS',create_wiz_menu_items('newsletter',$mrkt_string,$camp_url,$summ_url));
+        $ss->assign('NAV_ITEMS', create_wiz_menu_items('newsletter', $mrkt_string, $camp_url, $summ_url));
         $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
     } elseif ($focus->campaign_type == 'Email') {
-        $ss->assign('NAV_ITEMS',create_wiz_menu_items('email',$mrkt_string,$camp_url,$summ_url));
+        $ss->assign('NAV_ITEMS', create_wiz_menu_items('email', $mrkt_string, $camp_url, $summ_url));
         $ss->assign("CAMPAIGN_DIAGNOSTIC_LINK", diagnose());
     } else {
-        $ss->assign('NAV_ITEMS',create_wiz_menu_items('general',$mrkt_string,$camp_url,$summ_url));
+        $ss->assign('NAV_ITEMS', create_wiz_menu_items('general', $mrkt_string, $camp_url, $summ_url));
     }    
     
             
@@ -514,7 +514,7 @@ function create_tracker_summary($focus)
 }
 
 
-function create_wiz_menu_items($type,$mrkt_string,$camp_url,$summ_url)
+function create_wiz_menu_items($type, $mrkt_string, $camp_url, $summ_url)
 {
     global $mod_strings;
     

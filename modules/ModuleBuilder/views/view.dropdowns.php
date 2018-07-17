@@ -49,7 +49,7 @@ class ViewDropdowns extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
+    	   translate('LBL_MODULE_NAME', 'Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
@@ -63,7 +63,7 @@ class ViewDropdowns extends SugarView
             require_once ('modules/ModuleBuilder/Module/DropDownTree.php');
             $mbt = new DropDownTree();
             $ajax->addSection('west', $mbt->getName(), $mbt->fetchNodes());
-            $smarty->assign('refreshTree',true);
+            $smarty->assign('refreshTree', true);
         }
                 
         global $mod_strings;
@@ -72,10 +72,10 @@ class ViewDropdowns extends SugarView
         require_once('modules/ModuleBuilder/Module/DropDownBrowser.php');
         $dd = new DropDownBrowser();
         
-        $smarty->assign('LBL_BTN_ADDDROPDOWN',translate('LBL_BTN_ADDDROPDOWN'));
+        $smarty->assign('LBL_BTN_ADDDROPDOWN', translate('LBL_BTN_ADDDROPDOWN'));
         $smarty->assign('dropdowns', $dd->getNodes());
-        $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage('delete_inline', '',null,null,'.gif',$mod_strings['LBL_MB_DELETE']));
-        $smarty->assign('editImage', SugarThemeRegistry::current()->getImage('edit_inline', '',null,null,'.gif',$mod_strings['LBL_EDIT']));
+        $smarty->assign('deleteImage', SugarThemeRegistry::current()->getImage('delete_inline', '', null, null, '.gif', $mod_strings['LBL_MB_DELETE']));
+        $smarty->assign('editImage', SugarThemeRegistry::current()->getImage('edit_inline', '', null, null, '.gif', $mod_strings['LBL_EDIT']));
         $smarty->assign('action', 'savedropdown');
 		
 

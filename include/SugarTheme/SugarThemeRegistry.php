@@ -242,7 +242,7 @@ class SugarThemeRegistry
                     }
                     $themedef = array();
                     require("./{$dirPath}{$file}/themedef.php");
-                    $themedef = array_merge($themedef,$themedefDefault);
+                    $themedef = array_merge($themedef, $themedefDefault);
                     $themedef['dirName'] = $file;
                     // check for theme already existing in the registry
                     // if so, then it will override the current one
@@ -305,11 +305,11 @@ class SugarThemeRegistry
         $themelist = array();
         $disabledThemes = array();
         if (isset($GLOBALS['sugar_config']['disabled_themes'])) {
-            $disabledThemes = explode(',',$GLOBALS['sugar_config']['disabled_themes']);
+            $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
         }
 
         foreach (self::$_themes as $themename => $themeobject) {
-            if (in_array($themename,$disabledThemes)) {
+            if (in_array($themename, $disabledThemes)) {
                 continue;
             }
             $themelist[$themeobject->dirName] = $themeobject->name;
@@ -331,11 +331,11 @@ class SugarThemeRegistry
         $themelist = array();
         $disabledThemes = array();
         if (isset($GLOBALS['sugar_config']['disabled_themes'])) {
-            $disabledThemes = explode(',',$GLOBALS['sugar_config']['disabled_themes']);
+            $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
         }
 
         foreach (self::$_themes as $themename => $themeobject) {
-            if (in_array($themename,$disabledThemes)) {
+            if (in_array($themename, $disabledThemes)) {
                 $themelist[$themeobject->dirName] = $themeobject->name;
             }
         }

@@ -82,7 +82,7 @@ function &create_field_lang_pak_contents($old_contents, $key, $value, $language,
 {
     if (!empty($old_contents)) {
         $old_contents = preg_replace("'[^\[\n\r]+\[\'{$key}\'\][^\;]+;[\ \r\n]*'i", '', $old_contents);
-        $contents = str_replace("\n?>","\n\$mod_strings['{$key}'] = '$value';\n?>", $old_contents);
+        $contents = str_replace("\n?>", "\n\$mod_strings['{$key}'] = '$value';\n?>", $old_contents);
     } else {
         $contents = "<?php\n"
 			. '// Creation date: ' . date('Y-m-d H:i:s') . "\n"

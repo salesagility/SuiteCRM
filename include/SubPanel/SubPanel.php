@@ -95,8 +95,8 @@ class SubPanel
         if (empty($subpanelDef)) {
             //load the subpanel by name.
             require_once 'include/SubPanel/SubPanelDefinitions.php' ;
-            $panelsdef=new SubPanelDefinitions($result,$layout_def_key);
-            $subpanelDef=$panelsdef->load_subpanel($subpanel_id, false, false, $this->search_query,$collections);
+            $panelsdef=new SubPanelDefinitions($result, $layout_def_key);
+            $subpanelDef=$panelsdef->load_subpanel($subpanel_id, false, false, $this->search_query, $collections);
             $this->subpanel_defs=$subpanelDef;
         }
 
@@ -168,13 +168,13 @@ class SubPanel
         //		}
         $this->listview = new ListViewSubPanel();
         $ListView =& $this->listview;
-        $ListView->initNewSmartyTemplate($xTemplatePath,$this->subpanel_defs->mod_strings);
+        $ListView->initNewSmartyTemplate($xTemplatePath, $this->subpanel_defs->mod_strings);
         $ListView->smartyTemplateAssign("RETURN_URL", "&return_module=".$this->parent_module."&return_action=DetailView&return_id=".$this->parent_bean->id);
         $ListView->smartyTemplateAssign("RELATED_MODULE", $this->parent_module);  // TODO: what about unions?
         $ListView->smartyTemplateAssign("RECORD_ID", $this->parent_bean->id);
-        $ListView->smartyTemplateAssign("EDIT_INLINE_PNG", SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle"  border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
-        $ListView->smartyTemplateAssign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_DELETE_INLINE']));
-        $ListView->smartyTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_ID_FF_REMOVE']));
+        $ListView->smartyTemplateAssign("EDIT_INLINE_PNG", SugarThemeRegistry::current()->getImage('edit_inline', 'align="absmiddle"  border="0"', null, null, '.gif', $app_strings['LNK_EDIT']));
+        $ListView->smartyTemplateAssign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LBL_DELETE_INLINE']));
+        $ListView->smartyTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LBL_ID_FF_REMOVE']));
         $ListView->smartyTemplateAssign("APP", $app_strings);
         $header_text= '';
 
@@ -184,14 +184,14 @@ class SubPanel
         if ($this->search_query == '' && empty($this->collections)) {
             $display_sps = 'display:none';
         }
-        $ListView->smartyTemplateAssign("DISPLAY_SPS",$display_sps);
+        $ListView->smartyTemplateAssign("DISPLAY_SPS", $display_sps);
 
         if (is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace'])) {
             $exploded = explode('/', $xTemplatePath);
             $file_name = $exploded[count($exploded) - 1];
             $mod_name =  $exploded[count($exploded) - 2];
             $header_text= "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=$file_name&from_module=$mod_name&mod_lang="
-				.$_REQUEST['module']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif','Edit Layout')."</a>";
+				.$_REQUEST['module']."'>".SugarThemeRegistry::current()->getImage("EditLayout", "border='0' align='bottom'", null, null, '.gif', 'Edit Layout')."</a>";
         }
         $ListView->setHeaderTitle('');
         $ListView->setHeaderText('');
@@ -216,7 +216,7 @@ class SubPanel
 
         //function returns the query that was used to populate sub-panel data.
 
-        $query=$ListView->process_dynamic_listview($this->parent_module, $this->parent_bean,$this->subpanel_defs);
+        $query=$ListView->process_dynamic_listview($this->parent_module, $this->parent_bean, $this->subpanel_defs);
         $this->subpanel_query=$query;
         $ob_contents = ob_get_contents();
         ob_end_clean();
@@ -227,7 +227,7 @@ class SubPanel
     {
         $result_array = array();
 
-        $return_string = $this->ProcessSubPanelListView($this->template_file,$result_array);
+        $return_string = $this->ProcessSubPanelListView($this->template_file, $result_array);
 
         print $return_string;
     }
@@ -297,7 +297,7 @@ class SubPanel
         //end of bug# 40171
 
         mkdir_recursive($path, true);
-        write_array_to_file($name, $override,$path.'/' . $filename .'.php');
+        write_array_to_file($name, $override, $path.'/' . $filename .'.php');
 
         //save the override for the layoutdef
         //tyoung 10.12.07 pushed panel->name to lowercase to match case in subpaneldefs.php files -

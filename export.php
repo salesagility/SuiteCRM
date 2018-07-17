@@ -52,7 +52,7 @@ global $app_list_strings;
 
 $the_module = clean_string($_REQUEST['module']);
 
-if ($sugar_config['disable_export'] 	|| (!empty($sugar_config['admin_export_only']) && !(is_admin($current_user) || (ACLController::moduleSupportsACL($the_module)  && ACLAction::getUserAccessLevel($current_user->id,$the_module, 'access') == ACL_ALLOW_ENABLED &&
+if ($sugar_config['disable_export'] 	|| (!empty($sugar_config['admin_export_only']) && !(is_admin($current_user) || (ACLController::moduleSupportsACL($the_module)  && ACLAction::getUserAccessLevel($current_user->id, $the_module, 'access') == ACL_ALLOW_ENABLED &&
     (ACLAction::getUserAccessLevel($current_user->id, $the_module, 'admin') == ACL_ALLOW_ADMIN ||
      ACLAction::getUserAccessLevel($current_user->id, $the_module, 'admin') == ACL_ALLOW_ADMIN_DEV))))) {
     die($GLOBALS['app_strings']['ERR_EXPORT_DISABLED']);
@@ -74,7 +74,7 @@ if (!empty($app_list_strings['moduleList'][$_REQUEST['module']])) {
 }
 
 //strip away any blank spaces
-$filename = str_replace(' ','',$filename);
+$filename = str_replace(' ', '', $filename);
 
 $transContent = $GLOBALS['locale']->translateCharset($content, 'UTF-8', $GLOBALS['locale']->getExportCharset());
 

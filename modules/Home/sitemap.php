@@ -111,7 +111,7 @@ function sm_build_array()
     }
 
     foreach ($modListHeader as $key=>$val) {
-        if (!empty($exclusion_array) && in_array($val,$exclude)) {
+        if (!empty($exclusion_array) && in_array($val, $exclude)) {
             continue;
         } else {
             if (file_exists('modules/'.$val.'/Menu.php')) {

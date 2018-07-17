@@ -273,7 +273,7 @@ class Bug extends SugarBean
         }
 
         $query = "SELECT r1.name from releases r1, $this->table_name i1 where r1.id = i1.found_in_release and i1.id = '$this->id' and i1.deleted=0 and r1.deleted=0";
-        $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+        $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
 
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
@@ -301,7 +301,7 @@ class Bug extends SugarBean
         }
 
         $query = "SELECT r1.name from releases r1, $this->table_name i1 where r1.id = i1.fixed_in_release and i1.id = '$this->id' and i1.deleted=0 and r1.deleted=0";
-        $result = $this->db->query($query,true," Error filling in additional detail fields: ");
+        $result = $this->db->query($query, true, " Error filling in additional detail fields: ");
 
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);

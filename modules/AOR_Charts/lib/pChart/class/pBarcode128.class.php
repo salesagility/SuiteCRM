@@ -35,10 +35,10 @@
          }
 
          while (!feof($FileHandle)) {
-             $Buffer = fgets($FileHandle,4096);
-             $Buffer = str_replace(chr(10),"",$Buffer);
-             $Buffer = str_replace(chr(13),"",$Buffer);
-             $Values = preg_split("/;/",$Buffer);
+             $Buffer = fgets($FileHandle, 4096);
+             $Buffer = str_replace(chr(10), "", $Buffer);
+             $Buffer = str_replace(chr(13), "", $Buffer);
+             $Values = preg_split("/;/", $Buffer);
 
              $this->Codes[$Values[1]]["ID"]     = $Values[0];
              $this->Codes[$Values[1]]["Code"]   = $Values[2];
@@ -49,7 +49,7 @@
      }
 
      /* Return the projected size of a barcode */
-     public function getSize($TextString,$Format="")
+     public function getSize($TextString, $Format="")
      {
          $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
          $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : FALSE;
@@ -79,20 +79,20 @@
          $Y2 = $Y1 + sin(($Angle+90) * PI / 180) * ($HOffset+$Height);
 
 
-         $AreaWidth  = max(abs($X1),abs($X2));
-         $AreaHeight = max(abs($Y1),abs($Y2));
+         $AreaWidth  = max(abs($X1), abs($X2));
+         $AreaHeight = max(abs($Y1), abs($Y2));
 
          return(array("Width"=>$AreaWidth,"Height"=>$AreaHeight));
      }
 
-     public function encode128($Value,$Format="")
+     public function encode128($Value, $Format="")
      {
          $this->Result  = "11010010000";
          $this->CRC     = 104;
          $TextString    = "";
 
          for ($i=1;$i<=strlen($Value);$i++) {
-             $CharCode = ord($this->mid($Value,$i,1));
+             $CharCode = ord($this->mid($Value, $i, 1));
              if (isset($this->Codes[$CharCode])) {
                  $this->Result = $this->Result.$this->Codes[$CharCode]["Code"];
                  $this->CRC = $this->CRC + $i*$this->Codes[$CharCode]["ID"];
@@ -108,7 +108,7 @@
      }
 
      /* Create the encoded string */
-     public function draw($Object,$Value,$X,$Y,$Format="")
+     public function draw($Object, $Value, $X, $Y, $Format="")
      {
          $this->pChartObject = $Object;
 
@@ -150,18 +150,18 @@
 
              $Polygon  = array($X1,$Y1,$X2,$Y2,$X3,$Y3,$X4,$Y4);
              $Settings = array("R"=>$AreaR,"G"=>$AreaG,"B"=>$AreaB,"BorderR"=>$AreaBorderR,"BorderG"=>$AreaBorderG,"BorderB"=>$AreaBorderB);
-             $this->pChartObject->drawPolygon($Polygon,$Settings);
+             $this->pChartObject->drawPolygon($Polygon, $Settings);
          }
 
          for ($i=1;$i<=strlen($this->Result);$i++) {
-             if ($this->mid($this->Result,$i,1) == 1) {
+             if ($this->mid($this->Result, $i, 1) == 1) {
                  $X1 = $X + cos($Angle * PI / 180) * $i;
                  $Y1 = $Y + sin($Angle * PI / 180) * $i;
                  $X2 = $X1 + cos(($Angle+90) * PI / 180) * $Height;
                  $Y2 = $Y1 + sin(($Angle+90) * PI / 180) * $Height;
 
                  $Settings = array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha);
-                 $this->pChartObject->drawLine($X1,$Y1,$X2,$Y2,$Settings);
+                 $this->pChartObject->drawLine($X1, $Y1, $X2, $Y2, $Settings);
              }
          }
 
@@ -173,20 +173,20 @@
              $LegendY = $Y1 + sin(($Angle+90) * PI / 180) * ($Height+$LegendOffset);
 
              $Settings = array("R"=>$R,"G"=>$G,"B"=>$B,"Alpha"=>$Alpha,"Angle"=>-$Angle,"Align"=>TEXT_ALIGN_TOPMIDDLE);
-             $this->pChartObject->drawText($LegendX,$LegendY,$TextString,$Settings);
+             $this->pChartObject->drawText($LegendX, $LegendY, $TextString, $Settings);
          }
      }
 
-     public function left($value,$NbChar)
+     public function left($value, $NbChar)
      {
-         return substr($value,0,$NbChar);
+         return substr($value, 0, $NbChar);
      }  
-     public function right($value,$NbChar)
+     public function right($value, $NbChar)
      {
-         return substr($value,strlen($value)-$NbChar,$NbChar);
+         return substr($value, strlen($value)-$NbChar, $NbChar);
      }  
-     public function mid($value,$Depart,$NbChar)
+     public function mid($value, $Depart, $NbChar)
      {
-         return substr($value,$Depart-1,$NbChar);
+         return substr($value, $Depart-1, $NbChar);
      }
  }

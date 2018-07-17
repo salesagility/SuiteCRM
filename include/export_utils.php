@@ -126,7 +126,7 @@ function export($type, $records = null, $members = false, $sample=false)
             require_once('modules/SecurityGroups/SecurityGroup.php');
             global $current_user;
             $owner_where = $focus->getOwnerWhere($current_user->id);
-            $group_where = SecurityGroup::getGroupWhere($focus->table_name,$focus->module_dir,$current_user->id);
+            $group_where = SecurityGroup::getGroupWhere($focus->table_name, $focus->module_dir, $current_user->id);
             if (!empty($owner_where)) {
                 if (empty($where)) {
                     $where = " (".  $owner_where." or ".$group_where.")";
@@ -153,7 +153,7 @@ function export($type, $records = null, $members = false, $sample=false)
             $where = substr(trim($where), 5, strlen($where));
         }
 
-        $query = $focus->create_export_query($order_by,$where);
+        $query = $focus->create_export_query($order_by, $where);
     }
 
     $result = '';
@@ -168,7 +168,7 @@ function export($type, $records = null, $members = false, $sample=false)
     }
 
 
-    $fields_array = $db->getFieldsArray($result,true);
+    $fields_array = $db->getFieldsArray($result, true);
 
     //set up the order on the header row
     $fields_array = get_field_order_mapping($focus->module_dir, $fields_array);
@@ -190,7 +190,7 @@ function export($type, $records = null, $members = false, $sample=false)
         }
 
         //default to the db name of label does not exist
-        $field_labels[$key] = translateForExport($dbname,$focus);
+        $field_labels[$key] = translateForExport($dbname, $focus);
     }
 
     $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
@@ -209,7 +209,7 @@ function export($type, $records = null, $members = false, $sample=false)
 
     if ($populate) {
         //this is a sample request with no data, so create fake datarows
-        $content .= returnFakeDataRow($focus,$fields_array,$sampleRecordNum);
+        $content .= returnFakeDataRow($focus, $fields_array, $sampleRecordNum);
     } else {
         $records = array();
 
@@ -219,7 +219,7 @@ function export($type, $records = null, $members = false, $sample=false)
                 $focus = BeanFactory::getBean($val['related_type']);
             } else { // field order mapping is not applied for member-exports, as they include multiple modules
                 //order the values in the record array
-                $val = get_field_order_mapping($focus->module_dir,$val);
+                $val = get_field_order_mapping($focus->module_dir, $val);
             }
 
             $new_arr = array();
@@ -278,7 +278,7 @@ function export($type, $records = null, $members = false, $sample=false)
                                 }
                             }
                         }
-			$value = implode(",",$valueArray);
+			$value = implode(",", $valueArray);
 
                         break;
 
@@ -296,7 +296,7 @@ function export($type, $records = null, $members = false, $sample=false)
 
 
                 // Keep as $key => $value for post-processing
-                $new_arr[$key] = preg_replace("/\"/","\"\"", $value);
+                $new_arr[$key] = preg_replace("/\"/", "\"\"", $value);
             }
 
             // Use Bean ID as key for records
@@ -523,7 +523,7 @@ function generateSearchWhere($module, $query)
         $searchForm = new SearchForm($seed, $module);
         $searchForm->setup($searchdefs, $searchFields, 'SearchFormGeneric.tpl');
     }
-    $searchForm->populateFromArray(json_decode(html_entity_decode($query),true));
+    $searchForm->populateFromArray(json_decode(html_entity_decode($query), true));
     $where_clauses = $searchForm->generateSearchWhere(true, $module);
     if (count($where_clauses) > 0) {
         $where = '('. implode(' ) AND ( ', $where_clauses) . ')';
@@ -553,7 +553,7 @@ function generateSearchWhere($module, $query)
          return $content . "\n" . $app_strings['LBL_IMPORT_SAMPLE_FILE_TEXT'];
      }
  //this function will take in the bean and field mapping and return a proper value
- function returnFakeDataRow($focus,$field_array,$rowsToReturn = 5)
+ function returnFakeDataRow($focus, $field_array, $rowsToReturn = 5)
  {
      if (empty($focus) || empty($field_array)) {
          return ;
@@ -595,48 +595,48 @@ function generateSearchWhere($module, $query)
                      break;
                  case "int":
                      //return random number`
-                    $returnContent .= '"'.mt_rand(0,4).'",';
+                    $returnContent .= '"'.mt_rand(0, 4).'",';
                      break;
                  case "name":
                      //return first, last, user name, or random name string
                      if ($field['name'] == 'first_name') {
                          $count = count($sugar_demodata['first_name_array']) - 1;
-                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'",';
+                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'",';
                      } elseif ($field['name'] == 'last_name') {
                          $count = count($sugar_demodata['last_name_array']) - 1;
-                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'",';
+                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'",';
                      } elseif ($field['name'] == 'user_name') {
                          $count = count($sugar_demodata['first_name_array']) - 1;
-                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'_'.mt_rand(1,111).'",';
+                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'_'.mt_rand(1, 111).'",';
                      } else {
                          //return based on bean
                          if ($focus->module_dir =='Accounts') {
                              $count = count($sugar_demodata['company_name_array']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['company_name_array'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['company_name_array'][mt_rand(0, $count)].'",';
                          } elseif ($focus->module_dir =='Bugs') {
                              $count = count($sugar_demodata['bug_seed_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['bug_seed_names'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['bug_seed_names'][mt_rand(0, $count)].'",';
                          } elseif ($focus->module_dir =='Notes') {
                              $count = count($sugar_demodata['note_seed_names_and_Descriptions']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['note_seed_names_and_Descriptions'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['note_seed_names_and_Descriptions'][mt_rand(0, $count)].'",';
                          } elseif ($focus->module_dir =='Calls') {
                              $count = count($sugar_demodata['call_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['call_seed_data_names'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['call_seed_data_names'][mt_rand(0, $count)].'",';
                          } elseif ($focus->module_dir =='Tasks') {
                              $count = count($sugar_demodata['task_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['task_seed_data_names'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['task_seed_data_names'][mt_rand(0, $count)].'",';
                          } elseif ($focus->module_dir =='Meetings') {
                              $count = count($sugar_demodata['meeting_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['meeting_seed_data_names'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['meeting_seed_data_names'][mt_rand(0, $count)].'",';
                          } elseif ($focus->module_dir =='ProductCategories') {
                              $count = count($sugar_demodata['productcategory_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['productcategory_seed_data_names'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['productcategory_seed_data_names'][mt_rand(0, $count)].'",';
                          } elseif ($focus->module_dir =='ProductTypes') {
                              $count = count($sugar_demodata['producttype_seed_data_names']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['producttype_seed_data_names'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['producttype_seed_data_names'][mt_rand(0, $count)].'",';
                          } elseif ($focus->module_dir =='ProductTemplates') {
                              $count = count($sugar_demodata['producttemplate_seed_data']) - 1;
-                             $returnContent .= '"'.$sugar_demodata['producttemplate_seed_data'][mt_rand(0,$count)].'",';
+                             $returnContent .= '"'.$sugar_demodata['producttemplate_seed_data'][mt_rand(0, $count)].'",';
                          } else {
                              $returnContent .= '"Default Name for '.$focus->module_dir.'",';
                          }
@@ -648,7 +648,7 @@ function generateSearchWhere($module, $query)
                          $teams_count = count($sugar_demodata['teams']) - 1;
                          $users_count = count($sugar_demodata['users']) - 1;
 
-                         $returnContent .= '"'.$sugar_demodata['teams'][mt_rand(0,$teams_count)]['name'].','.$sugar_demodata['users'][mt_rand(0,$users_count)]['user_name'].'",';
+                         $returnContent .= '"'.$sugar_demodata['teams'][mt_rand(0, $teams_count)]['name'].','.$sugar_demodata['users'][mt_rand(0, $users_count)]['user_name'].'",';
                      } else {
                          //apply GUID
                          $returnContent .= '"'.create_guid().'",';
@@ -656,7 +656,7 @@ function generateSearchWhere($module, $query)
                      break;
                  case "bool":
                      //return 0 or 1
-                     $returnContent .= '"'.mt_rand(0,1).'",';
+                     $returnContent .= '"'.mt_rand(0, 1).'",';
                      break;
 
                  case "text":
@@ -667,7 +667,7 @@ function generateSearchWhere($module, $query)
                  case "team_list":
                      $teams_count = count($sugar_demodata['teams']) - 1;
                      //give fake team names (East,West,North,South)
-                     $returnContent .= '"'.$sugar_demodata['teams'][mt_rand(0,$teams_count)]['name'].'",';
+                     $returnContent .= '"'.$sugar_demodata['teams'][mt_rand(0, $teams_count)]['name'].'",';
                      break;
 
                  case "date":
@@ -691,35 +691,35 @@ function generateSearchWhere($module, $query)
 
                      break;
                 case "phone":
-                    $value = '('.mt_rand(300,999).') '.mt_rand(300,999).'-'.mt_rand(1000,9999);
+                    $value = '('.mt_rand(300, 999).') '.mt_rand(300, 999).'-'.mt_rand(1000, 9999);
                       $returnContent .= '"'.$value.'",';
                      break;
                  case "varchar":
                                      //process varchar for possible values
                                      if ($field['name'] == 'first_name') {
                                          $count = count($sugar_demodata['first_name_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'",';
+                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'",';
                                      } elseif ($field['name'] == 'last_name') {
                                          $count = count($sugar_demodata['last_name_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'",';
+                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'",';
                                      } elseif ($field['name'] == 'user_name') {
                                          $count = count($sugar_demodata['first_name_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0,$count)].'_'.mt_rand(1,111).'",';
+                                         $returnContent .= '"'.$sugar_demodata['last_name_array'][mt_rand(0, $count)].'_'.mt_rand(1, 111).'",';
                                      } elseif ($field['name'] == 'title') {
                                          $count = count($sugar_demodata['titles']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['titles'][mt_rand(0,$count)].'",';
-                                     } elseif (strpos($field['name'],'address_street')>0) {
+                                         $returnContent .= '"'.$sugar_demodata['titles'][mt_rand(0, $count)].'",';
+                                     } elseif (strpos($field['name'], 'address_street')>0) {
                                          $count = count($sugar_demodata['street_address_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['street_address_array'][mt_rand(0,$count)].'",';
-                                     } elseif (strpos($field['name'],'address_city')>0) {
+                                         $returnContent .= '"'.$sugar_demodata['street_address_array'][mt_rand(0, $count)].'",';
+                                     } elseif (strpos($field['name'], 'address_city')>0) {
                                          $count = count($sugar_demodata['city_array']) - 1;
-                                         $returnContent .= '"'.$sugar_demodata['city_array'][mt_rand(0,$count)].'",';
-                                     } elseif (strpos($field['name'],'address_state')>0) {
+                                         $returnContent .= '"'.$sugar_demodata['city_array'][mt_rand(0, $count)].'",';
+                                     } elseif (strpos($field['name'], 'address_state')>0) {
                                          $state_arr = array('CA','NY','CO','TX','NV');
                                          $count = count($state_arr) - 1;
-                                         $returnContent .= '"'.$state_arr[mt_rand(0,$count)].'",';
-                                     } elseif (strpos($field['name'],'address_postalcode')>0) {
-                                         $returnContent .= '"'.mt_rand(12345,99999).'",';
+                                         $returnContent .= '"'.$state_arr[mt_rand(0, $count)].'",';
+                                     } elseif (strpos($field['name'], 'address_postalcode')>0) {
+                                         $returnContent .= '"'.mt_rand(12345, 99999).'",';
                                      } else {
                                          $returnContent .= '"",';
                                      }
@@ -743,7 +743,7 @@ function generateSearchWhere($module, $query)
                             $count = count($dd_values) - 1;
 
                             //choose one at random
-                            $returnContent .= '"'.$dd_values[mt_rand(0,$count)].'",';
+                            $returnContent .= '"'.$dd_values[mt_rand(0, $count)].'",';
                         } else {
                             //name of enum options array was found but is empty, return blank
                             $returnContent .= '"",';
@@ -768,7 +768,7 @@ function generateSearchWhere($module, $query)
 
 
  //expects the field name to translate and a bean of the type being translated (to access field map and mod_strings)
- function translateForExport($field_db_name,$focus)
+ function translateForExport($field_db_name, $focus)
  {
      global $mod_strings,$app_strings;
 
@@ -819,7 +819,7 @@ function generateSearchWhere($module, $query)
 //call this function to return the desired order to display columns for export in.
 //if you pass in an array, it will reorder the array and send back to you.  It expects the array
 //to have the db names as key values, or as labels
-function get_field_order_mapping($name='',$reorderArr = '', $exclude = true)
+function get_field_order_mapping($name='', $reorderArr = '', $exclude = true)
 {
 
     //define the ordering of fields, note that the key value is what is important, and should be the db field name
@@ -902,7 +902,7 @@ function get_field_order_mapping($name='',$reorderArr = '', $exclude = true)
 
 	            //if the value exists as a key in the passed in array, add to temp array and remove from reorder array.
                 //Do not force into the temp array as we don't want to violate acl's
-                if (array_key_exists($fk,$newReorder)) {
+                if (array_key_exists($fk, $newReorder)) {
                     $temp_result_arr[$fk] = $newReorder[$fk];
                     unset($newReorder[$fk]);
                 }

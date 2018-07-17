@@ -50,7 +50,7 @@ class Viewdeletemodule extends SugarView
         global $mod_strings;
         
         return array(
-           translate('LBL_MODULE_NAME','Administration'),
+           translate('LBL_MODULE_NAME', 'Administration'),
            ModuleBuilderController::getModuleTitle(),
            );
     }

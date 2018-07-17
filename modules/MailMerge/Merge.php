@@ -89,14 +89,14 @@ if (empty($_SESSION['MAILMERGE_MODULE']) && !empty($_SESSION['mail_merge_file_lo
     $_SESSION['MAILMERGE_SKIP_REL'] = null;
     $_SESSION['MAILMERGE_CONTAINS_CONTACT_INFO'] = null;
     $item_ids = array();
-    parse_str(stripslashes(html_entity_decode($selObjs, ENT_QUOTES)),$item_ids);
+    parse_str(stripslashes(html_entity_decode($selObjs, ENT_QUOTES)), $item_ids);
 
     if ($module == 'CampaignProspects') {
         $module = 'Prospects';
         if (!empty($_SESSION['MAILMERGE_CAMPAIGN_ID'])) {
             $targets = array_keys($item_ids);
             require_once('modules/Campaigns/utils.php');
-            campaign_log_mail_merge($_SESSION['MAILMERGE_CAMPAIGN_ID'],$targets);
+            campaign_log_mail_merge($_SESSION['MAILMERGE_CAMPAIGN_ID'], $targets);
         }
     }
     $class_name = $beanList[$module];
@@ -149,7 +149,7 @@ if (empty($_SESSION['MAILMERGE_MODULE']) && !empty($_SESSION['mail_merge_file_lo
     $_SESSION['MAILMERGE_TEMP_FILE_' . $mTime] = $dataDir . $dataFileName;
     $site_url = $sugar_config['site_url'];
     //$templateFile = $site_url . '/' . UploadFile::get_upload_url($document);
-    $templateFile = $site_url . '/' . UploadFile::get_url(from_html($document->filename),$document->id);
+    $templateFile = $site_url . '/' . UploadFile::get_url(from_html($document->filename), $document->id);
     $dataFile =$dataFileName;
     $startUrl = 'index.php?action=index&module=MailMerge&reset=true';
 

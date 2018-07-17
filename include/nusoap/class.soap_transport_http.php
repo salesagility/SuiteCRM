@@ -236,7 +236,7 @@ class soap_transport_http extends nusoap_base
     * @return	boolean true if connected, false if not
     * @access   private
     */
-    public function connect($connection_timeout=0,$response_timeout=30)
+    public function connect($connection_timeout=0, $response_timeout=30)
     {
         // For PHP 4.3 with OpenSSL, change https scheme to ssl, then treat like
         // "regular" socket.
@@ -543,7 +543,7 @@ class soap_transport_http extends nusoap_base
         $this->appendDebug($this->varDump($certRequest));
         // cf. RFC 2617
         if ($authtype == 'basic') {
-            $this->setHeader('Authorization', 'Basic '.base64_encode(str_replace(':','',$username).':'.$password));
+            $this->setHeader('Authorization', 'Basic '.base64_encode(str_replace(':', '', $username).':'.$password));
         } elseif ($authtype == 'digest') {
             if (isset($digestRequest['nonce'])) {
                 $digestRequest['nc'] = isset($digestRequest['nc']) ? $digestRequest['nc']++ : 1;
@@ -718,7 +718,7 @@ class soap_transport_http extends nusoap_base
             $this->debug('no linebreak found in decodeChunked');
             return $new;
         }
-        $temp = substr($buffer,0,$chunkend);
+        $temp = substr($buffer, 0, $chunkend);
         $chunk_size = hexdec(trim($temp));
         $chunkstart = $chunkend + strlen($lb);
         // while (chunk-size > 0) {
@@ -728,7 +728,7 @@ class soap_transport_http extends nusoap_base
             
             // Just in case we got a broken connection
             if ($chunkend == FALSE) {
-                $chunk = substr($buffer,$chunkstart);
+                $chunk = substr($buffer, $chunkstart);
                 // append chunk-data to entity-body
                 $new .= $chunk;
                 $length += strlen($chunk);
@@ -736,7 +736,7 @@ class soap_transport_http extends nusoap_base
             }
             
             // read chunk-data and CRLF
-            $chunk = substr($buffer,$chunkstart,$chunkend-$chunkstart);
+            $chunk = substr($buffer, $chunkstart, $chunkend-$chunkstart);
             // append chunk-data to entity-body
             $new .= $chunk;
             // length := length + chunk-size
@@ -748,7 +748,7 @@ class soap_transport_http extends nusoap_base
             if ($chunkend == FALSE) {
                 break; //Just in case we got a broken connection
             }
-            $temp = substr($buffer,$chunkstart,$chunkend-$chunkstart);
+            $temp = substr($buffer, $chunkstart, $chunkend-$chunkstart);
             $chunk_size = hexdec(trim($temp));
             $chunkstart = $chunkend;
         }
@@ -902,17 +902,17 @@ class soap_transport_http extends nusoap_base
                 }
 
                 $data .= $tmp;
-                $pos = strpos($data,"\r\n\r\n");
+                $pos = strpos($data, "\r\n\r\n");
                 if ($pos > 1) {
                     $lb = "\r\n";
                 } else {
-                    $pos = strpos($data,"\n\n");
+                    $pos = strpos($data, "\n\n");
                     if ($pos > 1) {
                         $lb = "\n";
                     }
                 }
                 // remove 100 headers
-                if (isset($lb) && preg_match('/^HTTP\/1.1 100/',$data)) {
+                if (isset($lb) && preg_match('/^HTTP\/1.1 100/', $data)) {
                     unset($lb);
                     $data = '';
                 }//
@@ -921,12 +921,12 @@ class soap_transport_http extends nusoap_base
             $this->incoming_payload .= $data;
             $this->debug('found end of headers after length ' . strlen($data));
             // process headers
-            $header_data = trim(substr($data,0,$pos));
-            $header_array = explode($lb,$header_data);
+            $header_data = trim(substr($data, 0, $pos));
+            $header_array = explode($lb, $header_data);
             $this->incoming_headers = array();
             $this->incoming_cookies = array();
             foreach ($header_array as $header_line) {
-                $arr = explode(':',$header_line, 2);
+                $arr = explode(':', $header_line, 2);
                 if (count($arr) > 1) {
                     $header_name = strtolower(trim($arr[0]));
                     $this->incoming_headers[$header_name] = trim($arr[1]);
@@ -1067,43 +1067,43 @@ class soap_transport_http extends nusoap_base
             $savedata = $data;
             while ($this->isSkippableCurlHeader($data)) {
                 $this->debug("Found HTTP header to skip");
-                if ($pos = strpos($data,"\r\n\r\n")) {
-                    $data = ltrim(substr($data,$pos));
-                } elseif ($pos = strpos($data,"\n\n")) {
-                    $data = ltrim(substr($data,$pos));
+                if ($pos = strpos($data, "\r\n\r\n")) {
+                    $data = ltrim(substr($data, $pos));
+                } elseif ($pos = strpos($data, "\n\n")) {
+                    $data = ltrim(substr($data, $pos));
                 }
             }
 
             if ($data == '') {
                 // have nothing left; just remove 100 header(s)
                 $data = $savedata;
-                while (preg_match('/^HTTP\/1.1 100/',$data)) {
-                    if ($pos = strpos($data,"\r\n\r\n")) {
-                        $data = ltrim(substr($data,$pos));
-                    } elseif ($pos = strpos($data,"\n\n")) {
-                        $data = ltrim(substr($data,$pos));
+                while (preg_match('/^HTTP\/1.1 100/', $data)) {
+                    if ($pos = strpos($data, "\r\n\r\n")) {
+                        $data = ltrim(substr($data, $pos));
+                    } elseif ($pos = strpos($data, "\n\n")) {
+                        $data = ltrim(substr($data, $pos));
                     }
                 }
             }
         
             // separate content from HTTP headers
-            if ($pos = strpos($data,"\r\n\r\n")) {
+            if ($pos = strpos($data, "\r\n\r\n")) {
                 $lb = "\r\n";
-            } elseif ($pos = strpos($data,"\n\n")) {
+            } elseif ($pos = strpos($data, "\n\n")) {
                 $lb = "\n";
             } else {
                 $this->debug('no proper separation of headers and document');
                 $this->setError('no proper separation of headers and document');
                 return false;
             }
-            $header_data = trim(substr($data,0,$pos));
-            $header_array = explode($lb,$header_data);
-            $data = ltrim(substr($data,$pos));
+            $header_data = trim(substr($data, 0, $pos));
+            $header_array = explode($lb, $header_data);
+            $data = ltrim(substr($data, $pos));
             $this->debug('found proper separation of headers and document');
             $this->debug('cleaned data, stringlen: '.strlen($data));
             // clean headers
             foreach ($header_array as $header_line) {
-                $arr = explode(':',$header_line,2);
+                $arr = explode(':', $header_line, 2);
                 if (count($arr) > 1) {
                     $header_name = strtolower(trim($arr[0]));
                     $this->incoming_headers[$header_name] = trim($arr[1]);

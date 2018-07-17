@@ -536,7 +536,7 @@ class TemplateField
             }
         }
         $this->applyVardefRules();
-        $GLOBALS['log']->debug('populate: '.print_r($this,true));
+        $GLOBALS['log']->debug('populate: '.print_r($this, true));
     }
 
     protected function applyVardefRules()
@@ -589,7 +589,7 @@ class TemplateField
         $df->addFieldObject($this);
 
         require_once('modules/ModuleBuilder/parsers/parser.searchfields.php');
-        $searchFieldParser = new ParserSearchFields($df->getModuleName() , $df->getPackageName()) ;
+        $searchFieldParser = new ParserSearchFields($df->getModuleName(), $df->getPackageName()) ;
         //If unified_search is enabled for this field, then create the SearchFields entry
         $fieldName = $this->get_field_name($df->getModuleName(), $this->name);
         if ($this->unified_search && !isset($searchFieldParser->searchFields[$df->getModuleName()][$fieldName])) {

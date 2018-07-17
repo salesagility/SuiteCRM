@@ -147,11 +147,11 @@ class ViewBackups extends SugarView
         
             <?php 
             echo getClassicModuleTitle(
-                "Administration", 
+                "Administration",
                 array(
-                    "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME','Administration')."</a>",
+                    "<a href='index.php?module=Administration&action=index'>".translate('LBL_MODULE_NAME', 'Administration')."</a>",
                    $mod_strings['LBL_BACKUPS_TITLE'],
-                   ), 
+                   ),
                 false
                 );
             echo $mod_strings['LBL_BACKUP_INSTRUCTIONS_1']; ?>

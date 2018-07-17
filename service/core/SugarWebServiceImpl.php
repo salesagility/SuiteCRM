@@ -64,7 +64,7 @@ class SugarWebServiceImpl
     *	     'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
     * @exception 'SoapFault' -- The SOAP error, if any
     */
-    public function get_entry($session, $module_name, $id,$select_fields, $link_name_to_fields_array)
+    public function get_entry($session, $module_name, $id, $select_fields, $link_name_to_fields_array)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entry');
         return self::get_entries($session, $module_name, array($id), $select_fields, $link_name_to_fields_array);
@@ -164,7 +164,7 @@ class SugarWebServiceImpl
      *	     		 'relationship_list' -- Array - The records link field data. The example is if asked about accounts email address then return data would look like Array ( [0] => Array ( [name] => email_addresses [records] => Array ( [0] => Array ( [0] => Array ( [name] => id [value] => 3fb16797-8d90-0a94-ac12-490b63a6be67 ) [1] => Array ( [name] => email_address [value] => hr.kid.qa@example.com ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 1 ) ) [1] => Array ( [0] => Array ( [name] => id [value] => 403f8da1-214b-6a88-9cef-490b63d43566 ) [1] => Array ( [name] => email_address [value] => kid.hr@example.name ) [2] => Array ( [name] => opt_out [value] => 0 ) [3] => Array ( [name] => primary_address [value] => 0 ) ) ) ) )
     * @exception 'SoapFault' -- The SOAP error, if any
     */
-    public function get_entry_list($session, $module_name, $query, $order_by,$offset, $select_fields, $link_name_to_fields_array, $max_results, $deleted)
+    public function get_entry_list($session, $module_name, $query, $order_by, $offset, $select_fields, $link_name_to_fields_array, $max_results, $deleted)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_entry_list');
         global  $beanList, $beanFiles;
@@ -211,10 +211,10 @@ class SugarWebServiceImpl
             $offset = 0;
         } // if
         if ($using_cp) {
-            $response = $seed->retrieveTargetList($query, $select_fields, $offset,-1,-1,$deleted);
+            $response = $seed->retrieveTargetList($query, $select_fields, $offset, -1, -1, $deleted);
         } else {
             /* @var $seed SugarBean */
-            $response = $seed->get_list($order_by, $query, $offset,-1,-1,$deleted, false, $select_fields);
+            $response = $seed->get_list($order_by, $query, $offset, -1, -1, $deleted, false, $select_fields);
         } // else
         $list = $response['list'];
 
@@ -277,7 +277,7 @@ class SugarWebServiceImpl
         if (isset($delete)) {
             $deleted = $delete;
         }
-        if (self::$helperObject->new_handle_set_relationship($module_name, $module_id, $link_field_name, $related_ids,$name_value_array, $deleted)) {
+        if (self::$helperObject->new_handle_set_relationship($module_name, $module_id, $link_field_name, $related_ids, $name_value_array, $deleted)) {
             if ($deleted) {
                 $deletedCount++;
             } else {
@@ -441,7 +441,7 @@ class SugarWebServiceImpl
      * @return Array    'id' -- the ID of the bean that was written to (-1 on error)
      * @exception 'SoapFault' -- The SOAP error, if any
     */
-    public function set_entry($session,$module_name, $name_value_list)
+    public function set_entry($session, $module_name, $name_value_list)
     {
         global  $beanList, $beanFiles, $current_user;
 
@@ -501,7 +501,7 @@ class SugarWebServiceImpl
      * @return Array    'ids' -- Array of the IDs of the beans that was written to (-1 on error)
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function set_entries($session,$module_name, $name_value_lists)
+    public function set_entries($session, $module_name, $name_value_lists)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->set_entries');
         if (self::$helperObject->isLogLevelDebug()) {
@@ -786,7 +786,7 @@ class SugarWebServiceImpl
      * 											String 'related_module_name' - module name to which this note is related
      * @exception 'SoapFault' -- The SOAP error, if any
      */
-    public function get_note_attachment($session,$id)
+    public function get_note_attachment($session, $id)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->get_note_attachment');
         $error = new SoapError();
@@ -808,7 +808,7 @@ class SugarWebServiceImpl
         if (!isset($note->filename)) {
             $note->filename = '';
         }
-        $file= $ns->retrieveFile($id,$note->filename);
+        $file= $ns->retrieveFile($id, $note->filename);
         if ($file == -1) {
             $file = '';
         }
@@ -968,12 +968,12 @@ class SugarWebServiceImpl
 			    ) {
                     $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     require_once 'include/SearchForm/SearchForm2.php' ;
                     $searchForm = new SearchForm ($seed, $name) ;
 
-                    $searchForm->setup(array ($name => array()) ,$unifiedSearchFields , '' , 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
+                    $searchForm->setup(array ($name => array()), $unifiedSearchFields, '', 'saved_views' /* hack to avoid setup doing further unwanted processing */) ;
                     $where_clauses = $searchForm->generateSearchWhere() ;
                     $emailQuery = false;
 
@@ -1105,7 +1105,7 @@ LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
     *
     * @exception 'SoapFault' -- The SOAP error, if any
     */
-    public function set_campaign_merge($session,$targets, $campaign_id)
+    public function set_campaign_merge($session, $targets, $campaign_id)
     {
         $GLOBALS['log']->info('Begin: SugarWebServiceImpl->set_campaign_merge');
 
@@ -1123,7 +1123,7 @@ LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) ";
             return;
         } else {
             require_once('modules/Campaigns/utils.php');
-            campaign_log_mail_merge($campaign_id,$targets);
+            campaign_log_mail_merge($campaign_id, $targets);
         } // else
     } // fn
 /**

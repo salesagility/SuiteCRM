@@ -50,7 +50,7 @@ class AOD_IndexViewIndexData extends SugarView
 
         foreach ($beanList as $beanModule => $beanName) {
             $bean = BeanFactory::getBean($beanModule);
-            if (!$bean || !method_exists($bean,"getTableName") || !$bean->getTableName()) {
+            if (!$bean || !method_exists($bean, "getTableName") || !$bean->getTableName()) {
                 continue;
             }
             $query = "SELECT COUNT(DISTINCT b.id) FROM ".$bean->getTableName()." b WHERE b.deleted = 0";
@@ -64,11 +64,11 @@ class AOD_IndexViewIndexData extends SugarView
 
         $indexFiles = count(glob($index->location."/*.cfs"));
 
-        $this->ss->assign("revisionCount",$revisionCount);
-        $this->ss->assign("indexedCount",$indexedCount);
-        $this->ss->assign("failedCount",$failedCount);
-        $this->ss->assign("index",$index);
-        $this->ss->assign("indexFiles",$indexFiles);
+        $this->ss->assign("revisionCount", $revisionCount);
+        $this->ss->assign("indexedCount", $indexedCount);
+        $this->ss->assign("failedCount", $failedCount);
+        $this->ss->assign("index", $index);
+        $this->ss->assign("indexFiles", $indexFiles);
         echo $this->ss->fetch('modules/AOD_Index/tpls/indexdata.tpl');
 
 

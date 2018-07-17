@@ -54,7 +54,7 @@ class ViewListView extends SugarView
         global $mod_strings;
 	    
         return array(
-    	   translate('LBL_MODULE_NAME','Administration'),
+    	   translate('LBL_MODULE_NAME', 'Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
@@ -86,7 +86,7 @@ class ViewListView extends SugarView
         $packageName = (! empty ($_REQUEST [ 'view_package' ])) ? $_REQUEST [ 'view_package' ] : null ;
         $subpanelName = (! empty ($_REQUEST [ 'subpanel' ])) ? $_REQUEST [ 'subpanel' ] : null ;
         require_once 'modules/ModuleBuilder/parsers/ParserFactory.php' ;
-        $parser = ParserFactory::getParser ($this->editLayout , $this->editModule , $packageName, $subpanelName) ;
+        $parser = ParserFactory::getParser ($this->editLayout, $this->editModule, $packageName, $subpanelName) ;
         $smarty = $this->constructSmarty ($parser) ;
 
         if ($preview) {
@@ -113,7 +113,7 @@ class ViewListView extends SugarView
         			) ;
         $translatedViewType = '' ;
         if (isset ($labels [ strtolower ($this->editLayout) ])) {
-            $translatedViewType = translate ($labels [ strtolower($this->editLayout) ] , 'ModuleBuilder') ;
+            $translatedViewType = translate ($labels [ strtolower($this->editLayout) ], 'ModuleBuilder') ;
         }
         $this->translatedViewType = $translatedViewType;
 
@@ -216,7 +216,7 @@ class ViewListView extends SugarView
         $smarty->assign('from_mb', $this->fromModuleBuilder);
 
         global $image_path;
-        $imageSave = SugarThemeRegistry::current()->getImage('studio_save','',null,null,'.gif',$mod_strings['LBL_BTN_SAVE']) ;
+        $imageSave = SugarThemeRegistry::current()->getImage('studio_save', '', null, null, '.gif', $mod_strings['LBL_BTN_SAVE']) ;
 
 //        $imageHelp = SugarThemeRegistry::current()->getImage('help') ;
 
@@ -241,10 +241,10 @@ class ViewListView extends SugarView
 
         $smarty->assign ('buttons', $this->_buildImageButtons ($buttons)) ;
 
-        $editImage = SugarThemeRegistry::current()->getImage('edit_inline','',null,null,'.gif',$mod_strings['LBL_EDIT']) ;
+        $editImage = SugarThemeRegistry::current()->getImage('edit_inline', '', null, null, '.gif', $mod_strings['LBL_EDIT']) ;
 
         $smarty->assign ('editImage', $editImage) ;
-        $deleteImage = SugarThemeRegistry::current()->getImage('delete_inline','',null,null,'.gif',$mod_strings['LBL_MB_DELETE']) ;
+        $deleteImage = SugarThemeRegistry::current()->getImage('delete_inline', '', null, null, '.gif', $mod_strings['LBL_MB_DELETE']) ;
 
         $smarty->assign ('deleteImage', $deleteImage) ;
         $smarty->assign ('MOD', $GLOBALS [ 'mod_strings' ]) ;
@@ -289,7 +289,7 @@ class ViewListView extends SugarView
         return $GLOBALS [ 'mod_strings' ] [ 'LBL_LISTVIEW_EDIT' ] . ':&nbsp;' . $title ;
     }
 
-    public function _buildImageButtons($buttons , $horizontal = true)
+    public function _buildImageButtons($buttons, $horizontal = true)
     {
         $text = '<table cellspacing=2><tr>' ;
         foreach ($buttons as $button) {

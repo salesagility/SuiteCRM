@@ -233,7 +233,7 @@ class ModuleBuilderController extends SugarController
             sugar_cache_clear($cache_key);
             sugar_cache_reset();
             //clear end
-            $pm->performInstall ($_REQUEST [ 'install_file' ] , true);
+            $pm->performInstall ($_REQUEST [ 'install_file' ], true);
 
             //clear the unified_search_module.php file
             require_once('modules/Home/UnifiedSearchAdvanced.php');
@@ -322,7 +322,7 @@ class ModuleBuilderController extends SugarController
     public function action_saveLabels()
     {
         require_once 'modules/ModuleBuilder/parsers/parser.label.php' ;
-        $parser = new ParserLabel ($_REQUEST['view_module'] , isset ($_REQUEST [ 'view_package' ]) ? $_REQUEST [ 'view_package' ] : null) ;
+        $parser = new ParserLabel ($_REQUEST['view_module'], isset ($_REQUEST [ 'view_package' ]) ? $_REQUEST [ 'view_package' ] : null) ;
         $parser->handleSave ($_REQUEST, $_REQUEST [ 'selected_lang' ]) ;
         if (isset ($_REQUEST [ 'view_package' ])) { //MODULE BUILDER
             $this->view = 'modulelabels' ;
@@ -499,7 +499,7 @@ class ModuleBuilderController extends SugarController
 
         $json = getJSONobj();
         $visibility_grid = $json->decode(html_entity_decode(rawurldecode($_REQUEST [ 'visibility_grid' ]), ENT_QUOTES));
-        $parser->saveVisibility ($_REQUEST [ 'fieldname' ] , $_REQUEST [ 'trigger' ] , $visibility_grid) ;
+        $parser->saveVisibility ($_REQUEST [ 'fieldname' ], $_REQUEST [ 'trigger' ], $visibility_grid) ;
 
         echo $json->encode(array( "visibility_editor_{$_REQUEST['fieldname']}" => array("action" => "deactivate")));
     }
@@ -675,7 +675,7 @@ class ModuleBuilderController extends SugarController
         if (!empty($_REQUEST['subpanel'])) {
             $modules = $_REQUEST['subpanel'];
         }
-        $parser = new ParserLabel ($modules , isset ($_REQUEST [ 'view_package' ]) ? $_REQUEST [ 'view_package' ] : null) ;
+        $parser = new ParserLabel ($modules, isset ($_REQUEST [ 'view_package' ]) ? $_REQUEST [ 'view_package' ] : null) ;
         // if no language provided, then use the user's current language which is most likely what they intended
         $language = (isset($_REQUEST [ 'selected_lang' ])) ? $_REQUEST [ 'selected_lang' ] : $GLOBALS['current_language'] ;
         $parser->handleSave ($_REQUEST, $language) ;

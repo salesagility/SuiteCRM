@@ -57,7 +57,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                 if ($view == 'subpanel') {
                     $results = $this->get_subpanel_defs($moduleName, $type);
                 } else {
-                    $v = new SugarView(null,array());
+                    $v = new SugarView(null, array());
                     $v->module = $moduleName;
                     $v->type = $view;
                     $fullView = ucfirst($view) . 'View';
@@ -72,7 +72,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         }
 
         //Add field level acls.
-        $results = $this->addFieldLevelACLs($moduleName,$type, $view, $results);
+        $results = $this->addFieldLevelACLs($moduleName, $type, $view, $results);
 
         return $results;
     }
@@ -167,7 +167,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         return $filterFields;
     }
 
-    public function get_field_list($value,$fields,  $translate=true)
+    public function get_field_list($value, $fields, $translate=true)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->get_field_list(too large a struct, '.print_r($fields, true).", $translate");
         $module_fields = array();
@@ -202,7 +202,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                         $options_dom = array();
                     }
                     foreach ($options_dom as $key=>$oneOption) {
-                        $options_ret[$key] = $this->get_name_value($key,$oneOption);
+                        $options_ret[$key] = $this->get_name_value($key, $oneOption);
                     }
                 }
 
@@ -250,7 +250,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                 $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
                 $options_ret = array();
                 foreach ($options_dom as $key=>$oneOption) {
-                    $options_ret[$key] = $this->get_name_value($key,$oneOption);
+                    $options_ret[$key] = $this->get_name_value($key, $oneOption);
                 }
 
                 $module_fields['duration_minutes']['options'] = $options_ret;
@@ -343,8 +343,8 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                 if ($seed->field_name_map[$field_name]['type'] == 'enum') {
                     $vardef = $seed->field_name_map[$field_name];
                     if (isset($app_list_strings[$vardef['options']]) && !isset($app_list_strings[$vardef['options']][$val])) {
-                        if (in_array($val,$app_list_strings[$vardef['options']])) {
-                            $val = array_search($val,$app_list_strings[$vardef['options']]);
+                        if (in_array($val, $app_list_strings[$vardef['options']])) {
+                            $val = array_search($val, $app_list_strings[$vardef['options']]);
                         }
                     }
                 }
@@ -399,7 +399,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
                             //then we can set the id, otherwise this is a new object
                             $order_by = "";
                             $query = $seed->table_name.".outlook_id = '".$seed->outlook_id."'";
-                            $response = $seed->get_list($order_by, $query, 0,-1,-1,0);
+                            $response = $seed->get_list($order_by, $query, 0, -1, -1, 0);
                             $list = $response['list'];
                             if (count($list) > 0) {
                                 foreach ($list as $value) {

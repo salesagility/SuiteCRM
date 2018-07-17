@@ -131,14 +131,14 @@ $xtpl->assign("DATE_START", $focus->date_start);
 $xtpl->assign("TIME_START", $time_start);
 $xtpl->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
 
-$email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name',"(type IS NULL OR type='' OR type='campaign')",'name');
+$email_templates_arr = get_bean_select_array(true, 'EmailTemplate', 'name', "(type IS NULL OR type='' OR type='campaign')", 'name');
 if ($focus->template_id) {
     $xtpl->assign("TEMPLATE_ID", $focus->template_id);
     $xtpl->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $focus->template_id));
-    $xtpl->assign("EDIT_TEMPLATE","visibility:inline");
+    $xtpl->assign("EDIT_TEMPLATE", "visibility:inline");
 } else {
     $xtpl->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, ""));
-    $xtpl->assign("EDIT_TEMPLATE","visibility:hidden");
+    $xtpl->assign("EDIT_TEMPLATE", "visibility:hidden");
 }
 
 //include campaign utils..
@@ -162,11 +162,11 @@ if (empty($focus->id)) {
 }
 
 echo getClassicModuleTitle($focus->module_dir, $params, true);
-$scope_options=get_message_scope_dom($campaign_id,$campaign_name,$focus->db);
+$scope_options=get_message_scope_dom($campaign_id, $campaign_name, $focus->db);
 $prospectlists=array();
 if (isset($focus->all_prospect_lists) && $focus->all_prospect_lists==1) {
-    $xtpl->assign("ALL_PROSPECT_LISTS_CHECKED","checked");
-    $xtpl->assign("MESSAGE_FOR_DISABLED","disabled");
+    $xtpl->assign("ALL_PROSPECT_LISTS_CHECKED", "checked");
+    $xtpl->assign("MESSAGE_FOR_DISABLED", "disabled");
 } else {
     //get select prospect list.
     if (!empty($focus->id)) {
@@ -206,8 +206,8 @@ foreach ($mailboxes_with_from_name as $id=>$name) {
         $default_email_address=$emails[$id];
     }
 }
-$xtpl->assign("FROM_EMAILS",$from_emails);
-$xtpl->assign("DEFAULT_FROM_EMAIL",$default_email_address);
+$xtpl->assign("FROM_EMAILS", $from_emails);
+$xtpl->assign("DEFAULT_FROM_EMAIL", $default_email_address);
 
 if (empty($focus->inbound_email_id)) {
     $xtpl->assign("MAILBOXES", get_select_options_with_id($mailboxes, ''));

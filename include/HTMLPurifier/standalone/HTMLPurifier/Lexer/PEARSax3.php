@@ -42,7 +42,7 @@ class HTMLPurifier_Lexer_PEARSax3 extends HTMLPurifier_Lexer
 
         $parser = new XML_HTMLSax3();
         $parser->set_object($this);
-        $parser->set_element_handler('openHandler','closeHandler');
+        $parser->set_element_handler('openHandler', 'closeHandler');
         $parser->set_data_handler('dataHandler');
         $parser->set_escape_handler('escapeHandler');
 

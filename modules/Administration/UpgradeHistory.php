@@ -187,7 +187,7 @@ class UpgradeHistory extends SugarBean
         //before we even go through the list, let us try to see if we find a match.
         $history_object = $this->checkForExisting($patch_to_check);
         if ($history_object != null) {
-            if ((!empty($history_object->id_name) && !empty($patch_to_check->id_name) && strcmp($history_object->id_name,  $patch_to_check->id_name) == 0) || strcmp($history_object->name,  $patch_to_check->name) == 0) {
+            if ((!empty($history_object->id_name) && !empty($patch_to_check->id_name) && strcmp($history_object->id_name, $patch_to_check->id_name) == 0) || strcmp($history_object->name, $patch_to_check->name) == 0) {
                 //we have found a match
                 //if the patch_to_check version is greater than the found version
                 return ($this->is_right_version_greater(explode('.', $history_object->version), explode('.', $patch_to_check->version)));
@@ -305,8 +305,8 @@ class UpgradeHistory extends SugarBean
         }//rof
         return $not_found;
     }
-    public function retrieve($id = -1, $encode=true,$deleted=true)
+    public function retrieve($id = -1, $encode=true, $deleted=true)
     {
-        return parent::retrieve($id,$encode,false);  //ignore the deleted filter. the table does not have the deleted column in it.
+        return parent::retrieve($id, $encode, false);  //ignore the deleted filter. the table does not have the deleted column in it.
     }
 }

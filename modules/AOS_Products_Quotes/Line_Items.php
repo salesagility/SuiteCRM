@@ -166,23 +166,23 @@ function display_lines($focus, $field, $value, $view)
                 }
 
                 $product .= "<tr>";
-                $product_note = wordwrap($line_item->description,40,"<br />\n");
+                $product_note = wordwrap($line_item->description, 40, "<br />\n");
                 $product .= "<td class='tabDetailViewDF' style='text-align: left; padding:2px;'>".++$productCount."</td>";
-                $product .= "<td class='tabDetailViewDF' style='padding:2px;'>".stripDecimalPointsAndTrailingZeroes(format_number($line_item->product_qty),$sep[1])."</td>";
+                $product .= "<td class='tabDetailViewDF' style='padding:2px;'>".stripDecimalPointsAndTrailingZeroes(format_number($line_item->product_qty), $sep[1])."</td>";
 
                 $product .= "<td class='tabDetailViewDF' style='padding:2px;'><a href='index.php?module=AOS_Products&action=DetailView&record=".$line_item->product_id."' class='tabDetailViewDFLink'>".$line_item->name."</a><br />".$product_note."</td>";
-                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_list_price,$params)."</td>";
+                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_list_price, $params)."</td>";
 
                 $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".get_discount_string($line_item->discount, $line_item->product_discount, $params, $locale, $sep)."</td>";
 
-                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_unit_price,$params)."</td>";
+                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_unit_price, $params)."</td>";
                 if ($locale->getPrecision()) {
-                    $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".rtrim(rtrim(format_number($line_item->vat), '0'),$sep[1])."%</td>";
+                    $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".rtrim(rtrim(format_number($line_item->vat), '0'), $sep[1])."%</td>";
                 } else {
                     $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".format_number($line_item->vat)."%</td>";
                 }
-                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->vat_amt,$params)."</td>";
-                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_total_price,$params)."</td>";
+                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->vat_amt, $params)."</td>";
+                $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_total_price, $params)."</td>";
                 $product .= "</tr>";
             } else {
                 if ($serviceCount == 0) {
@@ -201,15 +201,15 @@ function display_lines($focus, $field, $value, $view)
                 $service .= "<tr>";
                 $service .= "<td class='tabDetailViewDF' style='text-align: left; padding:2px;'>".++$serviceCount."</td>";
                 $service .= "<td class='tabDetailViewDF' style='padding:2px;' colspan='2'>".$line_item->name."</td>";
-                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_list_price,$params)."</td>";
+                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_list_price, $params)."</td>";
 
                 $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".get_discount_string($line_item->discount, $line_item->product_discount, $params, $locale, $sep)."</td>";
 
 
-                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_unit_price,$params)."</td>";
+                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_unit_price, $params)."</td>";
                 $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".rtrim(rtrim(format_number($line_item->vat), '0'), $sep[1])."%</td>";
-                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->vat_amt,$params)."</td>";
-                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_total_price,$params)."</td>";
+                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->vat_amt, $params)."</td>";
+                $service .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_total_price, $params)."</td>";
                 $service .= "</tr>";
             }
         }
@@ -225,18 +225,18 @@ function display_lines($focus, $field, $value, $view)
 //field was 0.
 //The approach below will strip off the fractional part if it is only zeroes (and in this case the decimal separator
 //will also be stripped off) The custom decimal separator is passed in to the function from the locale settings
-function stripDecimalPointsAndTrailingZeroes($inputString,$decimalSeparator)
+function stripDecimalPointsAndTrailingZeroes($inputString, $decimalSeparator)
 {
-    return preg_replace('/'.preg_quote($decimalSeparator).'[0]+$/','',$inputString);
+    return preg_replace('/'.preg_quote($decimalSeparator).'[0]+$/', '', $inputString);
 }
 
 function get_discount_string($type, $amount, $params, $locale, $sep)
 {
     if ($amount != '' && $amount != '0.00') {
         if ($type == 'Amount') {
-            return currency_format_number($amount,$params)."</td>";
+            return currency_format_number($amount, $params)."</td>";
         } elseif ($locale->getPrecision()) {
-            return rtrim(rtrim(format_number($amount), '0'),$sep[1])."%";
+            return rtrim(rtrim(format_number($amount), '0'), $sep[1])."%";
         } else {
             return format_number($amount)."%";
         }

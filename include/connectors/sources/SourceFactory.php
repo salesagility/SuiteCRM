@@ -56,7 +56,7 @@ class SourceFactory
 	 */
     public static function getSource($class, $call_init = true)
     {
-        $dir = str_replace('_','/',$class);
+        $dir = str_replace('_', '/', $class);
         $parts = explode("/", $dir);
         $file = $parts[count($parts)-1];
         $pos = strrpos($file, '/');

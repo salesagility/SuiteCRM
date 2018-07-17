@@ -107,7 +107,7 @@ class UserPreference extends SugarBean
 
         // check to see if a default preference ( i.e. $sugar_config setting ) exists for this value )
         // if so, return it
-        $value = $this->getDefaultPreference($name,$category);
+        $value = $this->getDefaultPreference($name, $category);
         if (!is_null($value)) {
             return $value;
         }
@@ -385,7 +385,7 @@ class UserPreference extends SugarBean
             unset($_SESSION[$user->user_name."_PREFERENCES"][$category]);
         } else {
             if (!empty($_COOKIE['sugar_user_theme']) && !headers_sent()) {
-                setcookie('sugar_user_theme', '', time() - 3600,null,null,false,true); // expire the sugar_user_theme cookie
+                setcookie('sugar_user_theme', '', time() - 3600, null, null, false, true); // expire the sugar_user_theme cookie
             }
             unset($_SESSION[$user->user_name."_PREFERENCES"]);
             if ($user->id == $GLOBALS['current_user']->id) {
@@ -420,7 +420,7 @@ class UserPreference extends SugarBean
         }
 
         // we can skip this if we've already upgraded to the user_preferences format.
-        if (!array_key_exists('user_preferences',$db->getHelper()->get_columns('users'))) {
+        if (!array_key_exists('user_preferences', $db->getHelper()->get_columns('users'))) {
             return;
         }
 

@@ -297,7 +297,7 @@ class AbstractRelationship
      * @param string $subpanelName      Name of the subpanel provided by the sourceModule
      * @param string $titleKeyName      Name of the subpanel title , if none, we will use the module name as the subpanel title.
      */
-    protected function getSubpanelDefinition($relationshipName , $sourceModule , $subpanelName, $titleKeyName = '', $source = "")
+    protected function getSubpanelDefinition($relationshipName, $sourceModule, $subpanelName, $titleKeyName = '', $source = "")
     {
         if (empty($source)) {
             $source = $this->getValidDBName($relationshipName);
@@ -331,7 +331,7 @@ class AbstractRelationship
      * @param string $sourceModule      Name of the source module for this field
      * @param string $relationshipName  Name of the relationship
      */
-    protected function getLinkFieldDefinition($sourceModule , $relationshipName, $right_side = false, $vname = "", $id_name = false)
+    protected function getLinkFieldDefinition($sourceModule, $relationshipName, $right_side = false, $vname = "", $id_name = false)
     {
         $vardef = array ( ) ;
 
@@ -362,7 +362,7 @@ class AbstractRelationship
      * @param string $sourceModule      Name of the source module for this field
      * @param string $relationshipName  Name of the relationship
      */
-    protected function getLink2FieldDefinition($sourceModule , $relationshipName, $right_side = false,  $vname = "")
+    protected function getLink2FieldDefinition($sourceModule, $relationshipName, $right_side = false, $vname = "")
     {
         $vardef = array ( ) ;
 
@@ -390,7 +390,7 @@ class AbstractRelationship
      * @param string $relationshipName  Name of the relationship
      * @param string $moduleType        Optional - "Types" of the module - array of SugarObject types such as "file" or "basic"
      */
-    protected function getRelateFieldDefinition($sourceModule , $relationshipName , $vnameLabel='')
+    protected function getRelateFieldDefinition($sourceModule, $relationshipName, $vnameLabel='')
     {
         $vardef = array ( ) ;
         $vardef [ 'name' ] = $this->getValidDBName($relationshipName . "_name") ; // must end in _name for the QuickSearch code in TemplateHandler->createQuickSearchCode
@@ -424,10 +424,10 @@ class AbstractRelationship
         if (isset($parsedModuleName['packageName'])) {
             require_once 'modules/ModuleBuilder/MB/ModuleBuilder.php' ;
             $mb = new ModuleBuilder () ;
-            $module = $mb->getPackageModule ($parsedModuleName['packageName'] , $parsedModuleName['moduleName']) ;
-            if (in_array('file' , array_keys ($module->config [ 'templates' ]))) {
+            $module = $mb->getPackageModule ($parsedModuleName['packageName'], $parsedModuleName['moduleName']) ;
+            if (in_array('file', array_keys ($module->config [ 'templates' ]))) {
                 $vardef [ 'rname' ] = 'document_name' ;
-            } elseif (in_array ('person' , array_keys ($module->config [ 'templates' ]))) {
+            } elseif (in_array ('person', array_keys ($module->config [ 'templates' ]))) {
                 $vardef [ 'db_concat_fields' ] = array( 0 =>'first_name', 1 =>'last_name') ;
             }
         } else {
@@ -454,9 +454,9 @@ class AbstractRelationship
                     require_once ($GLOBALS ['beanFiles'] [ $object ]);
                     $bean = new $object();
                     if (isset ($GLOBALS [ 'dictionary' ] [ $object ] [ 'templates'])) {
-                        if (in_array ('file' , $GLOBALS [ 'dictionary' ] [ $object ] [ 'templates'])) {
+                        if (in_array ('file', $GLOBALS [ 'dictionary' ] [ $object ] [ 'templates'])) {
                             $vardef [ 'rname' ] = 'document_name' ;
-                        } elseif (in_array ('person' , $GLOBALS [ 'dictionary' ] [ $object ] [ 'templates'])) {
+                        } elseif (in_array ('person', $GLOBALS [ 'dictionary' ] [ $object ] [ 'templates'])) {
                             $vardef [ 'db_concat_fields' ] = array( 0 =>'first_name', 1 =>'last_name') ;
                         }
                     }
@@ -633,7 +633,7 @@ class AbstractRelationship
     public function getJoinKeyLHS()
     {
         if (!isset($this->joinKeyLHS)) {
-            $this->joinKeyLHS = $this->getValidDBName ($this->relationship_name . $this->lhs_module . "_ida"  , true) ;
+            $this->joinKeyLHS = $this->getValidDBName ($this->relationship_name . $this->lhs_module . "_ida", true) ;
         }
         
         return $this->joinKeyLHS;
@@ -642,7 +642,7 @@ class AbstractRelationship
     public function getJoinKeyRHS()
     {
         if (!isset($this->joinKeyRHS)) {
-            $this->joinKeyRHS = $this->getValidDBName ($this->relationship_name . $this->rhs_module . "_idb"  , true) ;
+            $this->joinKeyRHS = $this->getValidDBName ($this->relationship_name . $this->rhs_module . "_idb", true) ;
         }
         
         return $this->joinKeyRHS;

@@ -259,7 +259,7 @@ class Smarty_Compiler extends Smarty
         /* fetch all special blocks */
         $search = "~{$ldq}\*(.*?)\*{$rdq}|{$ldq}\s*literal\s*{$rdq}(.*?){$ldq}\s*/literal\s*{$rdq}|{$ldq}\s*php\s*{$rdq}(.*?){$ldq}\s*/php\s*{$rdq}~s";
 
-        preg_match_all($search, $source_content, $match,  PREG_SET_ORDER);
+        preg_match_all($search, $source_content, $match, PREG_SET_ORDER);
         $this->_folded_blocks = $match;
         reset($this->_folded_blocks);
 
@@ -287,7 +287,7 @@ class Smarty_Compiler extends Smarty
                 $sp_match[1] = array_unique($sp_match[1]);
                 usort($sp_match[1], '_smarty_sort_length');
                 for ($curr_sp = 0, $for_max2 = count($sp_match[1]); $curr_sp < $for_max2; $curr_sp++) {
-                    $text_blocks[$curr_tb] = str_replace($sp_match[1][$curr_sp],'%%%SMARTYSP'.$curr_sp.'%%%',$text_blocks[$curr_tb]);
+                    $text_blocks[$curr_tb] = str_replace($sp_match[1][$curr_sp], '%%%SMARTYSP'.$curr_sp.'%%%', $text_blocks[$curr_tb]);
                 }
                 /* process each one */
                 for ($curr_sp = 0, $for_max2 = count($sp_match[1]); $curr_sp < $for_max2; $curr_sp++) {
@@ -891,7 +891,7 @@ class Smarty_Compiler extends Smarty
         $postfix = '';
         $newline = '';
         if (!is_object($this->_reg_objects[$object][0])) {
-            $this->_trigger_fatal_error("registered '$object' is not an object" , $this->_current_file, $this->_current_line_no, __FILE__, __LINE__);
+            $this->_trigger_fatal_error("registered '$object' is not an object", $this->_current_file, $this->_current_line_no, __FILE__, __LINE__);
         } elseif (!empty($this->_reg_objects[$object][1]) && !in_array($obj_comp, $this->_reg_objects[$object][1])) {
             $this->_trigger_fatal_error("'$obj_comp' is not a registered component of object '$object'", $this->_current_file, $this->_current_line_no, __FILE__, __LINE__);
         } elseif (method_exists($this->_reg_objects[$object][0], $obj_comp)) {
@@ -1009,7 +1009,7 @@ class Smarty_Compiler extends Smarty
         }
 
         if ($theme_template == 'true') {
-            $include_file = '"'.SugarThemeRegistry::current()->getTemplate(str_replace(array('"',"'"),'',$include_file)).'"';
+            $include_file = '"'.SugarThemeRegistry::current()->getTemplate(str_replace(array('"',"'"), '', $include_file)).'"';
         }
 
         $output = '<?php ';
@@ -1666,8 +1666,8 @@ class Smarty_Compiler extends Smarty
             // $ variable or object
             $return = $this->_parse_var($match[1]);
             $modifiers = $match[2];
-            if (!empty($this->default_modifiers) && !preg_match('~(^|\|)smarty:nodefaults($|\|)~',$modifiers)) {
-                $_default_mod_string = implode('|',(array)$this->default_modifiers);
+            if (!empty($this->default_modifiers) && !preg_match('~(^|\|)smarty:nodefaults($|\|)~', $modifiers)) {
+                $_default_mod_string = implode('|', (array)$this->default_modifiers);
                 $modifiers = empty($modifiers) ? $_default_mod_string : $_default_mod_string . '|' . $modifiers;
             }
             $this->_parse_modifiers($return, $modifiers);
@@ -1720,7 +1720,7 @@ class Smarty_Compiler extends Smarty
             $_match = $_match[0];
             $_replace = array();
             foreach ($_match as $_var) {
-                $_replace[$_var] = '".(' . $this->_parse_var(str_replace('`','',$_var)) . ')."';
+                $_replace[$_var] = '".(' . $this->_parse_var(str_replace('`', '', $_var)) . ')."';
             }
             $var_expr = strtr($var_expr, $_replace);
             $_return = preg_replace('~\.""|(?<!\\\\)""\.~', '', $var_expr);
@@ -1728,7 +1728,7 @@ class Smarty_Compiler extends Smarty
             $_return = $var_expr;
         }
         // replace double quoted literal string with single quotes
-        $_return = preg_replace('~^"([\s\w]+)"$~',"'\\1'",$_return);
+        $_return = preg_replace('~^"([\s\w]+)"$~', "'\\1'", $_return);
         return $_return;
     }
 
@@ -1845,8 +1845,8 @@ class Smarty_Compiler extends Smarty
                     } else {
                         $_output .= "['" . substr($_index, 1) . "']";
                     }
-                } elseif (substr($_index,0,2) == '->') {
-                    if (substr($_index,2,2) == '__') {
+                } elseif (substr($_index, 0, 2) == '->') {
+                    if (substr($_index, 2, 2) == '__') {
                         $this->_syntax_error('call to internal object members is not allowed', E_USER_ERROR, __FILE__, __LINE__);
                     } elseif ($this->security && substr($_index, 2, 1) == '_') {
                         $this->_syntax_error('(secure) call to private object member is not allowed', E_USER_ERROR, __FILE__, __LINE__);
@@ -1854,7 +1854,7 @@ class Smarty_Compiler extends Smarty
                         if ($this->security) {
                             $this->_syntax_error('(secure) call to dynamic object member is not allowed', E_USER_ERROR, __FILE__, __LINE__);
                         } else {
-                            $_output .= '->{(($_var=$this->_tpl_vars[\''.substr($_index,3).'\']) && substr($_var,0,2)!=\'__\') ? $_var : $this->trigger_error("cannot access property \\"$_var\\"")}';
+                            $_output .= '->{(($_var=$this->_tpl_vars[\''.substr($_index, 3).'\']) && substr($_var,0,2)!=\'__\') ? $_var : $this->trigger_error("cannot access property \\"$_var\\"")}';
                         }
                     } else {
                         $_output .= $_index;
@@ -1879,7 +1879,7 @@ class Smarty_Compiler extends Smarty
      */
     public function _parse_parenth_args($parenth_args)
     {
-        preg_match_all('~' . $this->_param_regexp . '~',$parenth_args, $match);
+        preg_match_all('~' . $this->_param_regexp . '~', $parenth_args, $match);
         $orig_vals = $match = $match[0];
         $this->_parse_vars_props($match);
         $replace = array();
@@ -1967,7 +1967,7 @@ class Smarty_Compiler extends Smarty
                 && !$this->_get_plugin_filepath('modifier', $_modifier_name)
                 && function_exists($_modifier_name)) {
                 if ($this->security && !in_array($_modifier_name, $this->security_settings['MODIFIER_FUNCS'])) {
-                    $this->_trigger_fatal_error("[plugin] (secure mode) modifier '$_modifier_name' is not allowed" , $this->_current_file, $this->_current_line_no, __FILE__, __LINE__);
+                    $this->_trigger_fatal_error("[plugin] (secure mode) modifier '$_modifier_name' is not allowed", $this->_current_file, $this->_current_line_no, __FILE__, __LINE__);
                 } else {
                     $this->_plugins['modifier'][$_modifier_name] = array($_modifier_name,  null, null, false);
                 }

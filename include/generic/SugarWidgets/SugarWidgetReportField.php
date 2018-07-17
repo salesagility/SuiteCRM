@@ -100,7 +100,7 @@ class SugarWidgetReportField extends SugarWidgetField
         $func_name = 'display'.$context;
 
 
-        if (! empty($context) && method_exists($obj,$func_name)) {
+        if (! empty($context) && method_exists($obj, $func_name)) {
             return  $obj->$func_name($layout_def);
         } else {
             return 'display not found:'.$func_name;
@@ -115,12 +115,12 @@ class SugarWidgetReportField extends SugarWidgetField
         }
 
         if ($layout_def['name'] == 'weighted_sum') {
-            return sprintf("SUM(%s * %s * 0.01)", $this->reporter->db->convert("$alias.probability","IFNULL", array(0)),
-            $this->reporter->db->convert("$alias.amount_usdollar","IFNULL", array(0)));
+            return sprintf("SUM(%s * %s * 0.01)", $this->reporter->db->convert("$alias.probability", "IFNULL", array(0)),
+            $this->reporter->db->convert("$alias.amount_usdollar", "IFNULL", array(0)));
         }
         if ($layout_def['name'] == 'weighted_amount') {
-            return sprintf("AVG(%s * %s * 0.01)", $this->reporter->db->convert("$alias.probability","IFNULL", array(0)),
-            $this->reporter->db->convert("$alias.amount_usdollar","IFNULL", array(0)));
+            return sprintf("AVG(%s * %s * 0.01)", $this->reporter->db->convert("$alias.probability", "IFNULL", array(0)),
+            $this->reporter->db->convert("$alias.amount_usdollar", "IFNULL", array(0)));
         }
     }
 
@@ -210,7 +210,7 @@ class SugarWidgetReportField extends SugarWidgetField
         //use sugar db function convert on order by string to convert to varchar.  This is mainly for db's
         //that do not allow sorting on clob/text fields
         if ($this->reporter->db->isTextType($this->reporter->db->getFieldType($field_def))) {
-            $order_by = $this->reporter->db->convert($order_by,'text2char', array(10000)); // array(10000) is for db2 only
+            $order_by = $this->reporter->db->convert($order_by, 'text2char', array(10000)); // array(10000) is for db2 only
         }
 
         if (empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a') {
@@ -281,7 +281,7 @@ class SugarWidgetReportField extends SugarWidgetField
         $context = $this->layout_manager->getAttribute('context');
         $func_name = 'query'.$context;
 
-        if (! empty($context) && method_exists($obj,$func_name)) {
+        if (! empty($context) && method_exists($obj, $func_name)) {
             return  $obj->$func_name($layout_def);
         } else {
             return '';
@@ -303,24 +303,24 @@ class SugarWidgetReportField extends SugarWidgetField
         }
 
         if (! empty($layout_def['table_alias'])) {
-            array_push($alias_arr,$layout_def['table_alias']);
+            array_push($alias_arr, $layout_def['table_alias']);
         }
 
         if (! empty($layout_def['group_function']) && $layout_def['group_function'] != 'weighted_amount' && $layout_def['group_function'] != 'weighted_sum') {
-            array_push($alias_arr,$layout_def['group_function']);
+            array_push($alias_arr, $layout_def['group_function']);
         } elseif (! empty($layout_def['column_function'])) {
-            array_push($alias_arr,$layout_def['column_function']);
+            array_push($alias_arr, $layout_def['column_function']);
         } elseif (! empty($layout_def['qualifier'])) {
-            array_push($alias_arr,$layout_def['qualifier']);
+            array_push($alias_arr, $layout_def['qualifier']);
         }
 
         if (! empty($layout_def['name'])) {
-            array_push($alias_arr,$layout_def['name']);
+            array_push($alias_arr, $layout_def['name']);
         }
 
         global $used_aliases, $alias_map;
 
-        $alias = strtolower(implode("_",$alias_arr));
+        $alias = strtolower(implode("_", $alias_arr));
 
         $short_alias = $this->getTruncatedColumnAlias($alias);
 

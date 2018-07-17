@@ -80,7 +80,7 @@ class ModuleBuilderParser
     {
     }
 
-    public function _loadFromFile($view,$file,$moduleName)
+    public function _loadFromFile($view, $file, $moduleName)
     {
         $variables = array();
         if (! file_exists($file)) {
@@ -117,7 +117,7 @@ class ModuleBuilderParser
         return (array('viewdefs' => $defs, 'variables' => $variables));
     }
 
-    public function handleSave($file,$view,$moduleName,$defs)
+    public function handleSave($file, $view, $moduleName, $defs)
     {
     }
 
@@ -125,7 +125,7 @@ class ModuleBuilderParser
     /*
      * Save the new layout
      */
-    public function _writeToFile($file,$view,$moduleName,$defs,$variables)
+    public function _writeToFile($file, $view, $moduleName, $defs, $variables)
     {
         if (file_exists($file)) {
             unlink($file);

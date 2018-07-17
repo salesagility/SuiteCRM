@@ -101,7 +101,7 @@ class UsersViewEdit extends ViewEdit
 
         //lets set the return values
         if (isset($_REQUEST['return_module'])) {
-            $this->ss->assign('RETURN_MODULE',$_REQUEST['return_module']);
+            $this->ss->assign('RETURN_MODULE', $_REQUEST['return_module']);
         }
 
         $this->ss->assign('IS_ADMIN', $current_user->is_admin ? true : false);
@@ -118,7 +118,7 @@ class UsersViewEdit extends ViewEdit
             $this->ss->assign('RETURN_ID', $_REQUEST['record']);
             $this->bean->id = "";
             $this->bean->user_name = "";
-            $this->ss->assign('ID','');
+            $this->ss->assign('ID', '');
         } else {
             if (isset($_REQUEST['return_module'])) {
                 $this->ss->assign('RETURN_MODULE', $_REQUEST['return_module']);
@@ -146,11 +146,11 @@ class UsersViewEdit extends ViewEdit
         ///////////////////////////////////////////////////////////////////////////////
         ////	NEW USER CREATION ONLY
         if (empty($this->bean->id)) {
-            $this->ss->assign('SHOW_ADMIN_CHECKBOX','height="30"');
-            $this->ss->assign('NEW_USER','1');
+            $this->ss->assign('SHOW_ADMIN_CHECKBOX', 'height="30"');
+            $this->ss->assign('NEW_USER', '1');
         } else {
-            $this->ss->assign('NEW_USER','0');
-            $this->ss->assign('NEW_USER_TYPE','DISABLED');
+            $this->ss->assign('NEW_USER', '0');
+            $this->ss->assign('NEW_USER_TYPE', 'DISABLED');
         }
 
         ////	END NEW USER CREATION ONLY
@@ -171,7 +171,7 @@ class UsersViewEdit extends ViewEdit
         // Build viewable versions of a few fields for non-admins
         if (!empty($this->bean->id)) {
             if (!empty($this->bean->status)) {
-                $this->ss->assign('STATUS_READONLY',$app_list_strings['user_status_dom'][$this->bean->status]);
+                $this->ss->assign('STATUS_READONLY', $app_list_strings['user_status_dom'][$this->bean->status]);
             }
             if (!empty($this->bean->employee_status)) {
                 $this->ss->assign('EMPLOYEE_STATUS_READONLY', $app_list_strings['employee_status_dom'][$this->bean->employee_status]);
@@ -263,7 +263,7 @@ EOD
         echo $out;
         echo "<script>var composePackage = null;</script>";
 
-        $this->ev->process($processSpecial,$processFormName);
+        $this->ev->process($processSpecial, $processFormName);
 
         echo $this->ev->display($this->showTitle);
     }

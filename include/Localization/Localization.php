@@ -220,7 +220,7 @@ class Localization
 
                 $this->currencies[$a['id']] = $load;
             }
-            sugar_cache_put('currency_list',$this->currencies);
+            sugar_cache_put('currency_list', $this->currencies);
         } else {
             $this->currencies = $load;
         }
@@ -699,7 +699,7 @@ eoq;
             return $returnEmptyStringIfEmpty ? '' : ' ';
         }
 
-        if (strpos($formattedName,',',strlen($formattedName)-1)) { // remove trailing commas
+        if (strpos($formattedName, ',', strlen($formattedName)-1)) { // remove trailing commas
             $formattedName = substr($formattedName, 0, strlen($formattedName)-1);
         }
         return trim($formattedName);
@@ -780,7 +780,7 @@ eoq;
      */
     public function createInvalidLocaleNameFormatUpgradeNotice()
     {
-        $fh = fopen($this->invalidNameFormatUpgradeFilename,'w');
+        $fh = fopen($this->invalidNameFormatUpgradeFilename, 'w');
         fclose($fh);
     }
 
@@ -838,7 +838,7 @@ eoq;
     public function detectCharset($str, $strict=false)
     {
         if (function_exists('mb_convert_encoding')) {
-            return mb_detect_encoding($str,'ASCII,JIS,UTF-8,EUC-JP,SJIS,ISO-8859-1',$strict);
+            return mb_detect_encoding($str, 'ASCII,JIS,UTF-8,EUC-JP,SJIS,ISO-8859-1', $strict);
         }
 
         return false;

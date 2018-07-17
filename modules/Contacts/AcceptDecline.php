@@ -86,7 +86,7 @@ if ($result == null) {
     die("The focus id doesn't exist");
 }
 
-$focus->set_accept_status($current_entity,$_REQUEST['accept_status']);
+$focus->set_accept_status($current_entity, $_REQUEST['accept_status']);
 
 print $app_strings['LBL_STATUS_UPDATED']."<BR><BR>";
 print $app_strings['LBL_STATUS']. " ". $app_list_strings['dom_meeting_accept_status'][$_REQUEST['accept_status']];

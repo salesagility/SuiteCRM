@@ -282,7 +282,7 @@ class ConnectorUtils
                 //define connectors if it doesn't exist or is not an array
                 if (!isset($connectors) || !is_array($connectors)) {
                     $connectors = array();
-                    $err_str = string_format($GLOBALS['app_strings']['ERR_CONNECTOR_NOT_ARRAY'],array($src4));
+                    $err_str = string_format($GLOBALS['app_strings']['ERR_CONNECTOR_NOT_ARRAY'], array($src4));
                     $GLOBALS['log']->error($err_str);
                 }
 
@@ -482,7 +482,7 @@ class ConnectorUtils
             mkdir_recursive("custom/modules/{$module}/metadata");
         }
 
-        if (!write_array_to_file('viewdefs', $viewdefs,  "custom/modules/{$module}/metadata/detailviewdefs.php")) {
+        if (!write_array_to_file('viewdefs', $viewdefs, "custom/modules/{$module}/metadata/detailviewdefs.php")) {
             $GLOBALS['log']->fatal("Cannot update file custom/modules/{$module}/metadata/detailviewdefs.php");
             return false;
         }
@@ -582,7 +582,7 @@ class ConnectorUtils
                         mkdir_recursive("custom/modules/{$module}/metadata");
                     }
 
-                    if (!write_array_to_file('viewdefs', $viewdefs,  "custom/modules/{$module}/metadata/detailviewdefs.php")) {
+                    if (!write_array_to_file('viewdefs', $viewdefs, "custom/modules/{$module}/metadata/detailviewdefs.php")) {
                         $GLOBALS['log']->fatal("Cannot update file custom/modules/{$module}/metadata/detailviewdefs.php");
                         return false;
                     }

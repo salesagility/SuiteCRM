@@ -108,7 +108,7 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
             $field_type = $field_def['type'];
             $str .= "</a>";
             if ($field_name == 'name') {
-                $str .= "&nbsp;" .SugarThemeRegistry::current()->getImage("edit_inline","border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"$div_id\",\"$value\",\"$module\",\"$record\",\"$field_name\",\"$field_type\");'");
+                $str .= "&nbsp;" .SugarThemeRegistry::current()->getImage("edit_inline", "border='0' alt='Edit Layout' align='bottom' onClick='SUGAR.reportsInlineEdit.inlineEdit(\"$div_id\",\"$value\",\"$module\",\"$record\",\"$field_name\",\"$field_type\");'");
             }
             $str .= "</div>";
         }
@@ -232,13 +232,13 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         foreach ($layout_def['input_name0'] as $value) {
             if ($value == 'Current User') {
                 global $current_user;
-                array_push($arr,$this->reporter->db->quoted($current_user->id));
+                array_push($arr, $this->reporter->db->quoted($current_user->id));
             } else {
-                array_push($arr,$this->reporter->db->quoted($value));
+                array_push($arr, $this->reporter->db->quoted($value));
             }
         }
 
-        $str = implode(",",$arr);
+        $str = implode(",", $arr);
 
         return SugarWidgetFieldid::_get_column_select($layout_def)." IN (".$str.")\n";
     }
@@ -254,13 +254,13 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
         foreach ($layout_def['input_name0'] as $value) {
             if ($value == 'Current User') {
                 global $current_user;
-                array_push($arr,$this->reporter->db->quoted($current_user->id));
+                array_push($arr, $this->reporter->db->quoted($current_user->id));
             } else {
-                array_push($arr,$this->reporter->db->quoted($value));
+                array_push($arr, $this->reporter->db->quoted($value));
             }
         }
 
-        $str = implode(",",$arr);
+        $str = implode(",", $arr);
 
         return SugarWidgetFieldid::_get_column_select($layout_def)." NOT IN (".$str.")\n";
     }

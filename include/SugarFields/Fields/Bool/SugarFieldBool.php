@@ -71,7 +71,7 @@ class SugarFieldBool extends SugarFieldBase
         ImportFieldSanitize $settings
         ) {
         $bool_values = array(0=>'0',1=>'no',2=>'off',3=>'n',4=>'yes',5=>'y',6=>'on',7=>'1');
-        $bool_search = array_search($value,$bool_values);
+        $bool_search = array_search($value, $bool_values);
         if ($bool_search === false) {
             return false;
         } else {

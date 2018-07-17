@@ -13,8 +13,8 @@
      You can find the whole class documentation on the pChart web site.
  */
 
- define("BUBBLE_SHAPE_ROUND"		, 700001);
- define("BUBBLE_SHAPE_SQUARE"		, 700002);
+ define("BUBBLE_SHAPE_ROUND", 700001);
+ define("BUBBLE_SHAPE_SQUARE", 700002);
 
  /* pBubble class definition */
  class pBubble
@@ -23,14 +23,14 @@
      public $pDataObject;
 
      /* Class creator */
-     public function pBubble($pChartObject,$pDataObject)
+     public function pBubble($pChartObject, $pDataObject)
      {
          $this->pChartObject = $pChartObject;
          $this->pDataObject  = $pDataObject;
      }
 
      /* Prepare the scale */
-     public function bubbleScale($DataSeries,$WeightSeries)
+     public function bubbleScale($DataSeries, $WeightSeries)
      {
          if (!is_array($DataSeries)) {
              $DataSeries = array($DataSeries);
@@ -48,7 +48,7 @@
          foreach ($DataSeries as $Key => $SerieName) {
              $SerieWeightName = $WeightSeries[$Key];
 
-             $this->pDataObject->setSerieDrawable($SerieWeightName,FALSE);
+             $this->pDataObject->setSerieDrawable($SerieWeightName, FALSE);
 
              if (count($this->pDataObject->Data["Series"][$SerieName]["Data"]) > $MaxValues) {
                  $MaxValues = count($this->pDataObject->Data["Series"][$SerieName]["Data"]);
@@ -87,7 +87,7 @@
                  }
              }
 
-             $this->pDataObject->addPoints($NewPositiveSerie,"BubbleFakePositiveSerie");
+             $this->pDataObject->addPoints($NewPositiveSerie, "BubbleFakePositiveSerie");
          }
 
          /* Check for missing values and all the fake negative serie */
@@ -98,7 +98,7 @@
                  }
              }
 
-             $this->pDataObject->addPoints($NewNegativeSerie,"BubbleFakeNegativeSerie");
+             $this->pDataObject->addPoints($NewNegativeSerie, "BubbleFakeNegativeSerie");
          }
      }
 
@@ -120,7 +120,7 @@
      }
 
      /* Prepare the scale */
-     public function drawBubbleChart($DataSeries,$WeightSeries,$Format="")
+     public function drawBubbleChart($DataSeries, $WeightSeries, $Format="")
      {
          $ForceAlpha	= isset($Format["ForceAlpha"]) ? $Format["ForceAlpha"] : VOID;
          $DrawBorder	= isset($Format["DrawBorder"]) ? $Format["DrawBorder"] : TRUE;
@@ -144,15 +144,15 @@
          $Palette = $this->pDataObject->getPalette();
 
          if (isset($Data["Series"]["BubbleFakePositiveSerie"])) {
-             $this->pDataObject->setSerieDrawable("BubbleFakePositiveSerie",FALSE);
+             $this->pDataObject->setSerieDrawable("BubbleFakePositiveSerie", FALSE);
          }
          if (isset($Data["Series"]["BubbleFakeNegativeSerie"])) {
-             $this->pDataObject->setSerieDrawable("BubbleFakeNegativeSerie",FALSE);
+             $this->pDataObject->setSerieDrawable("BubbleFakeNegativeSerie", FALSE);
          }
 
          $this->resetSeriesColors();
 
-         list($XMargin,$XDivs) = $this->pChartObject->scaleGetXSettings();
+         list($XMargin, $XDivs) = $this->pChartObject->scaleGetXSettings();
 
          foreach ($DataSeries as $Key => $SerieName) {
              $AxisID	= $Data["Series"][$SerieName]["Axis"];
@@ -213,8 +213,8 @@
              foreach ($Data["Series"][$SerieName]["Data"] as $iKey => $Point) {
                  $Weight = $Point + $Data["Series"][$WeightSeries[$Key]]["Data"][$iKey];
 
-                 $PosArray    = $this->pChartObject->scaleComputeY($Point,array("AxisID"=>$AxisID));
-                 $WeightArray = $this->pChartObject->scaleComputeY($Weight,array("AxisID"=>$AxisID));
+                 $PosArray    = $this->pChartObject->scaleComputeY($Point, array("AxisID"=>$AxisID));
+                 $WeightArray = $this->pChartObject->scaleComputeY($Weight, array("AxisID"=>$AxisID));
 
                  if ($Data["Orientation"] == SCALE_POS_LEFTRIGHT) {
                      if ($XDivs == 0) {
@@ -227,25 +227,25 @@
 
                      if ($Shape == BUBBLE_SHAPE_SQUARE) {
                          if ($RecordImageMap) {
-                             $this->pChartObject->addToImageMap("RECT",floor($X-$CircleRadius).",".floor($Y-$CircleRadius).",".floor($X+$CircleRadius).",".floor($Y+$CircleRadius),$this->pChartObject->toHTMLColor($Palette[$Key]["R"],$Palette[$Key]["G"],$Palette[$Key]["B"]),$SerieDescription,$Data["Series"][$WeightSeries[$Key]]["Data"][$iKey]);
+                             $this->pChartObject->addToImageMap("RECT", floor($X-$CircleRadius).",".floor($Y-$CircleRadius).",".floor($X+$CircleRadius).",".floor($Y+$CircleRadius), $this->pChartObject->toHTMLColor($Palette[$Key]["R"], $Palette[$Key]["G"], $Palette[$Key]["B"]), $SerieDescription, $Data["Series"][$WeightSeries[$Key]]["Data"][$iKey]);
                          }
 
                          if ($BorderWidth != 1) {
-                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius-$BorderWidth,$Y-$CircleRadius-$BorderWidth,$X+$CircleRadius+$BorderWidth,$Y+$CircleRadius+$BorderWidth,$BorderColor);
-                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius,$Y-$CircleRadius,$X+$CircleRadius,$Y+$CircleRadius,$Color);
+                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius-$BorderWidth, $Y-$CircleRadius-$BorderWidth, $X+$CircleRadius+$BorderWidth, $Y+$CircleRadius+$BorderWidth, $BorderColor);
+                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius, $Y-$CircleRadius, $X+$CircleRadius, $Y+$CircleRadius, $Color);
                          } else {
-                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius,$Y-$CircleRadius,$X+$CircleRadius,$Y+$CircleRadius,$Color);
+                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius, $Y-$CircleRadius, $X+$CircleRadius, $Y+$CircleRadius, $Color);
                          }
                      } elseif ($Shape == BUBBLE_SHAPE_ROUND) {
                          if ($RecordImageMap) {
-                             $this->pChartObject->addToImageMap("CIRCLE",floor($X).",".floor($Y).",".floor($CircleRadius),$this->pChartObject->toHTMLColor($Palette[$Key]["R"],$Palette[$Key]["G"],$Palette[$Key]["B"]),$SerieDescription,$Data["Series"][$WeightSeries[$Key]]["Data"][$iKey]);
+                             $this->pChartObject->addToImageMap("CIRCLE", floor($X).",".floor($Y).",".floor($CircleRadius), $this->pChartObject->toHTMLColor($Palette[$Key]["R"], $Palette[$Key]["G"], $Palette[$Key]["B"]), $SerieDescription, $Data["Series"][$WeightSeries[$Key]]["Data"][$iKey]);
                          }
 
                          if ($BorderWidth != 1) {
-                             $this->pChartObject->drawFilledCircle($X,$Y,$CircleRadius+$BorderWidth,$BorderColor);
-                             $this->pChartObject->drawFilledCircle($X,$Y,$CircleRadius,$Color);
+                             $this->pChartObject->drawFilledCircle($X, $Y, $CircleRadius+$BorderWidth, $BorderColor);
+                             $this->pChartObject->drawFilledCircle($X, $Y, $CircleRadius, $Color);
                          } else {
-                             $this->pChartObject->drawFilledCircle($X,$Y,$CircleRadius,$Color);
+                             $this->pChartObject->drawFilledCircle($X, $Y, $CircleRadius, $Color);
                          }
                      }
 
@@ -261,25 +261,25 @@
 
                      if ($Shape == BUBBLE_SHAPE_SQUARE) {
                          if ($RecordImageMap) {
-                             $this->pChartObject->addToImageMap("RECT",floor($X-$CircleRadius).",".floor($Y-$CircleRadius).",".floor($X+$CircleRadius).",".floor($Y+$CircleRadius),$this->pChartObject->toHTMLColor($Palette[$Key]["R"],$Palette[$Key]["G"],$Palette[$Key]["B"]),$SerieDescription,$Data["Series"][$WeightSeries[$Key]]["Data"][$iKey]);
+                             $this->pChartObject->addToImageMap("RECT", floor($X-$CircleRadius).",".floor($Y-$CircleRadius).",".floor($X+$CircleRadius).",".floor($Y+$CircleRadius), $this->pChartObject->toHTMLColor($Palette[$Key]["R"], $Palette[$Key]["G"], $Palette[$Key]["B"]), $SerieDescription, $Data["Series"][$WeightSeries[$Key]]["Data"][$iKey]);
                          }
 
                          if ($BorderWidth != 1) {
-                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius-$BorderWidth,$Y-$CircleRadius-$BorderWidth,$X+$CircleRadius+$BorderWidth,$Y+$CircleRadius+$BorderWidth,$BorderColor);
-                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius,$Y-$CircleRadius,$X+$CircleRadius,$Y+$CircleRadius,$Color);
+                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius-$BorderWidth, $Y-$CircleRadius-$BorderWidth, $X+$CircleRadius+$BorderWidth, $Y+$CircleRadius+$BorderWidth, $BorderColor);
+                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius, $Y-$CircleRadius, $X+$CircleRadius, $Y+$CircleRadius, $Color);
                          } else {
-                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius,$Y-$CircleRadius,$X+$CircleRadius,$Y+$CircleRadius,$Color);
+                             $this->pChartObject->drawFilledRectangle($X-$CircleRadius, $Y-$CircleRadius, $X+$CircleRadius, $Y+$CircleRadius, $Color);
                          }
                      } elseif ($Shape == BUBBLE_SHAPE_ROUND) {
                          if ($RecordImageMap) {
-                             $this->pChartObject->addToImageMap("CIRCLE",floor($X).",".floor($Y).",".floor($CircleRadius),$this->pChartObject->toHTMLColor($Palette[$Key]["R"],$Palette[$Key]["G"],$Palette[$Key]["B"]),$SerieDescription,$Data["Series"][$WeightSeries[$Key]]["Data"][$iKey]);
+                             $this->pChartObject->addToImageMap("CIRCLE", floor($X).",".floor($Y).",".floor($CircleRadius), $this->pChartObject->toHTMLColor($Palette[$Key]["R"], $Palette[$Key]["G"], $Palette[$Key]["B"]), $SerieDescription, $Data["Series"][$WeightSeries[$Key]]["Data"][$iKey]);
                          }
 
                          if ($BorderWidth != 1) {
-                             $this->pChartObject->drawFilledCircle($X,$Y,$CircleRadius+$BorderWidth,$BorderColor);
-                             $this->pChartObject->drawFilledCircle($X,$Y,$CircleRadius,$Color);
+                             $this->pChartObject->drawFilledCircle($X, $Y, $CircleRadius+$BorderWidth, $BorderColor);
+                             $this->pChartObject->drawFilledCircle($X, $Y, $CircleRadius, $Color);
                          } else {
-                             $this->pChartObject->drawFilledCircle($X,$Y,$CircleRadius,$Color);
+                             $this->pChartObject->drawFilledCircle($X, $Y, $CircleRadius, $Color);
                          }
                      }
 
@@ -289,7 +289,7 @@
          }
      }
 
-     public function writeBubbleLabel($SerieName,$SerieWeightName,$Points,$Format="")
+     public function writeBubbleLabel($SerieName, $SerieWeightName, $Points, $Format="")
      {
          $OverrideTitle	= isset($Format["OverrideTitle"]) ? $Format["OverrideTitle"] : NULL;
          $DrawPoint		= isset($Format["DrawPoint"]) ? $Format["DrawPoint"] : LABEL_POINT_BOX;
@@ -307,7 +307,7 @@
              return(0);
          }
 
-         list($XMargin,$XDivs) = $this->pChartObject->scaleGetXSettings();
+         list($XMargin, $XDivs) = $this->pChartObject->scaleGetXSettings();
 
          $AxisID	 = $Data["Series"][$SerieName]["Axis"];
          $AxisMode	 = $Data["Axis"][$AxisID]["Display"];
@@ -322,7 +322,7 @@
 
          foreach ($Points as $Key => $Point) {
              $Value    = $Data["Series"][$SerieName]["Data"][$Point];
-             $PosArray = $this->pChartObject->scaleComputeY($Value,array("AxisID"=>$AxisID));
+             $PosArray = $this->pChartObject->scaleComputeY($Value, array("AxisID"=>$AxisID));
 
              if (isset($Data["Abscissa"]) && isset($Data["Series"][$Data["Abscissa"]]["Data"][$Point])) {
                  $Abscissa = $Data["Series"][$Data["Abscissa"]]["Data"][$Point]." : ";
@@ -330,7 +330,7 @@
                  $Abscissa = "";
              }
 
-             $Value   = $this->pChartObject->scaleFormat($Value,$AxisMode,$AxisFormat,$AxisUnit);
+             $Value   = $this->pChartObject->scaleFormat($Value, $AxisMode, $AxisFormat, $AxisUnit);
              $Weight  = $Data["Series"][$SerieWeightName]["Data"][$Point];
              $Caption = $Abscissa.$Value." / ".$Weight;
 
@@ -364,12 +364,12 @@
              }
 
              if ($DrawPoint == LABEL_POINT_CIRCLE) {
-                 $this->pChartObject->drawFilledCircle($X,$Y,3,array("R"=>255,"G"=>255,"B"=>255,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0));
+                 $this->pChartObject->drawFilledCircle($X, $Y, 3, array("R"=>255,"G"=>255,"B"=>255,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0));
              } elseif ($DrawPoint == LABEL_POINT_BOX) {
-                 $this->pChartObject->drawFilledRectangle($X-2,$Y-2,$X+2,$Y+2,array("R"=>255,"G"=>255,"B"=>255,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0));
+                 $this->pChartObject->drawFilledRectangle($X-2, $Y-2, $X+2, $Y+2, array("R"=>255,"G"=>255,"B"=>255,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0));
              }
 
-             $this->pChartObject->drawLabelBox($X,$Y-3,$Description,$Series,$Format);
+             $this->pChartObject->drawLabelBox($X, $Y-3, $Description, $Series, $Format);
          }
      }
  }

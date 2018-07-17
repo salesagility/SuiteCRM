@@ -69,7 +69,7 @@ if (count($pages) > 1) {
             'page_id' => $_POST['page_id'],
         );
 
-        $return_params = json_encode($return_params,true);
+        $return_params = json_encode($return_params, true);
 
         echo $return_params;
     }

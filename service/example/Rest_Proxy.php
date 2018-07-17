@@ -40,7 +40,7 @@
 
 ob_start();
 $fp =  fopen('proxy.log', 'a');
-define('PROXY_SERVER',  'http://localhost/service/v2/rest.php');
+define('PROXY_SERVER', 'http://localhost/service/v2/rest.php');
 $headers = (function_exists('getallheaders'))?getallheaders(): array();
 $_headers  = array();
 foreach ($headers as $k=>$v) {

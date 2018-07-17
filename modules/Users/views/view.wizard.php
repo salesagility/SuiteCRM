@@ -74,12 +74,12 @@ class ViewWizard extends SugarView
         $themeObject = SugarThemeRegistry::current();
         $css = $themeObject->getCSS();
         $this->ss->assign('SUGAR_CSS', $css);
-        $favicon = $themeObject->getImageURL('sugar_icon.ico',false);
-        $this->ss->assign('FAVICON_URL',getJSPath($favicon));
+        $favicon = $themeObject->getImageURL('sugar_icon.ico', false);
+        $this->ss->assign('FAVICON_URL', getJSPath($favicon));
         $this->ss->assign('CSS', '<link rel="stylesheet" type="text/css" href="'.SugarThemeRegistry::current()->getCSSURL('wizard.css').'" />');
-        $this->ss->assign('JAVASCRIPT',user_get_validate_record_js().user_get_chooser_js().user_get_confsettings_js());
+        $this->ss->assign('JAVASCRIPT', user_get_validate_record_js().user_get_chooser_js().user_get_confsettings_js());
         $this->ss->assign('PRINT_URL', 'index.php?'.$GLOBALS['request_string']);
-        $this->ss->assign('SKIP_WELCOME',isset($_REQUEST['skipwelcome']) && $_REQUEST['skipwelcome'] == 1);
+        $this->ss->assign('SKIP_WELCOME', isset($_REQUEST['skipwelcome']) && $_REQUEST['skipwelcome'] == 1);
         $this->ss->assign('ID', $current_user->id);
         $this->ss->assign('USER_NAME', $current_user->user_name);
         $this->ss->assign('FIRST_NAME', $current_user->first_name);
@@ -104,9 +104,9 @@ class ViewWizard extends SugarView
         $configurator = new Configurator();
         if ($configurator->config['passwordsetting']['SystemGeneratedPasswordON']
 		        || $configurator->config['passwordsetting']['forgotpasswordON']) {
-            $this->ss->assign('REQUIRED_EMAIL_ADDRESS','1');
+            $this->ss->assign('REQUIRED_EMAIL_ADDRESS', '1');
         } else {
-            $this->ss->assign('REQUIRED_EMAIL_ADDRESS','0');
+            $this->ss->assign('REQUIRED_EMAIL_ADDRESS', '0');
         }
 
         // get javascript
@@ -114,7 +114,7 @@ class ViewWizard extends SugarView
         $this->options['show_javascript'] = true;
         $this->renderJavascript();
         $this->options['show_javascript'] = false;
-        $this->ss->assign("SUGAR_JS",ob_get_contents().$themeObject->getJS());
+        $this->ss->assign("SUGAR_JS", ob_get_contents().$themeObject->getJS());
         ob_end_clean();
 
         $messenger_type = '<select tabindex="5" name="messenger_type">';
@@ -196,8 +196,8 @@ eoq;
 
         $num_grp_sep = $current_user->getPreference('num_grp_sep');
         $dec_sep = $current_user->getPreference('dec_sep');
-        $this->ss->assign("NUM_GRP_SEP",(empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep));
-        $this->ss->assign("DEC_SEP",(empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep));
+        $this->ss->assign("NUM_GRP_SEP", (empty($num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $num_grp_sep));
+        $this->ss->assign("DEC_SEP", (empty($dec_sep) ? $sugar_config['default_decimal_seperator'] : $dec_sep));
         $this->ss->assign('getNumberJs', $locale->getNumberJs());
 
         //// Name display format
@@ -245,10 +245,10 @@ eoq;
         $this->ss->assign("mail_smtpdisplay", $mail_smtpdisplay);
         $this->ss->assign("mail_smtpuser", $mail_smtpuser);
         $this->ss->assign("mail_smtppass", $mail_smtppass);
-        $this->ss->assign('mail_smtpserver',$mail_smtpserver);
+        $this->ss->assign('mail_smtpserver', $mail_smtpserver);
         $this->ss->assign("mail_smtpauth_req", $mail_smtpauth_req);
-        $this->ss->assign('MAIL_SMTPPORT',$mail_smtpport);
-        $this->ss->assign('MAIL_SMTPSSL',$mail_smtpssl);
+        $this->ss->assign('MAIL_SMTPPORT', $mail_smtpport);
+        $this->ss->assign('MAIL_SMTPSSL', $mail_smtpssl);
 
         $this->ss->assign('langHeader', get_language_header());
         $this->ss->display($this->getCustomFilePathIfExists('modules/Users/tpls/wizard.tpl'));

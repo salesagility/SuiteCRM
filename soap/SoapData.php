@@ -72,7 +72,7 @@ $server->register(
  * @param xsd:int $php_serialize
  * @return 
  */
-function sync_get_modified_relationships($session, $module_name, $related_module,$from_date,$to_date,$offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1)
+function sync_get_modified_relationships($session, $module_name, $related_module, $from_date, $to_date, $offset, $max_results, $deleted, $module_id = '', $select_fields = array(), $ids = array(), $relationship_name = '', $deletion_date = '', $php_serialize = 1)
 {
     global  $beanList, $beanFiles;
     $error = new SoapError();
@@ -128,7 +128,7 @@ function sync_get_modified_relationships($session, $module_name, $related_module
     if ($related_module == 'Meetings' || $related_module == 'Calls') {
         $query = string_format($query, array('m1'));
     }	
-    $results = retrieve_modified_relationships($module_name,  $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
+    $results = retrieve_modified_relationships($module_name, $related_module, $query, $deleted, $offset, $max_results, $select_fields, $relationship_name);
 
     $list = $results['result'];
 	
