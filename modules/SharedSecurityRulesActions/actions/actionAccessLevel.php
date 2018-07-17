@@ -45,6 +45,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 require_once('modules/AOW_Actions/actions/actionBase.php');
 
+require_once __DIR__ . '/../../AOW_WorkFlow/aow_utils.php';
+
 class actionAccessLevel extends actionBase
 {
 
@@ -68,11 +70,15 @@ class actionAccessLevel extends actionBase
     public function edit_display($line, SugarBean $bean = null, $params = array())
     {
         global $app_list_strings;
+        
+        if (!isset($bean) || null === $bean || !is_object($bean)) {
+            LoggerManager::getLogger()->warn('bean is not set or not an object for actionAccessLevel::edit_display()');
+        }
 
-        if (!in_array($bean->module_dir, getEmailableModules())) {
+        if ($bean && !in_array($bean->module_dir, getEmailableModules())) {
             unset($app_list_strings['shared_email_type_list']['Record Email']);
         }
-        $targetOptions = getRelatedEmailableFields($bean->module_dir);
+        $targetOptions = getRelatedEmailableFields($bean instanceof SugarBean ? $bean->module_dir : null);
         if (empty($targetOptions)) {
             unset($app_list_strings['shared_email_type_list']['Related Field']);
         }
