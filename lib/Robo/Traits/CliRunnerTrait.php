@@ -69,7 +69,7 @@ require_once 'include/entryPoint.php';
 trait CliRunnerTrait
 {
     /**
-     * Set ups the missing global variables to make SugarCRM work from CLI.
+     * Sets up the missing global variables to make SugarCRM work from CLI.
      */
     protected function bootstrap()
     {
@@ -79,7 +79,7 @@ trait CliRunnerTrait
         global $sugar_config;
 
         $current_language = 'en_us';
-        $app_list_strings = return_app_list_strings_language($GLOBALS['current_language']);
+        $app_list_strings = return_app_list_strings_language($current_language);
         $sugar_config['resource_management']['default_limit'] = 999999;
     }
 }
