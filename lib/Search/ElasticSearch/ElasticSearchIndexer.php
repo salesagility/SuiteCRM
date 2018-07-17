@@ -132,9 +132,9 @@ class ElasticSearchIndexer extends AbstractIndexer
     /**
      * Reads the lock file.
      *
-     * Returns a Carbon timestamp or `null` if the file could not be found.
+     * Returns a Carbon timestamp or `false` if the file could not be found.
      *
-     * @return bool|Carbon
+     * @return Carbon|false
      */
     private function readLockFile()
     {
@@ -142,6 +142,12 @@ class ElasticSearchIndexer extends AbstractIndexer
         if (file_exists(self::LOCK_FILE)) {
             $data = file_get_contents(self::LOCK_FILE);
             $data = intval($data);
+
+            if (empty($data)) {
+                $this->log('*', 'Failed to read lock file. Returning \'false\'.');
+                return false;
+            }
+
             $carbon = Carbon::createFromTimestamp($data);
 
             $this->log('@', sprintf("Last logged indexing performed on %s (%s)", $carbon->toDateTimeString(), $carbon->diffForHumans()));
@@ -408,8 +414,17 @@ class ElasticSearchIndexer extends AbstractIndexer
     /** Writes the lock file with the current timestamp to the default location */
     private function writeLockFile()
     {
-        $this->log('@', "Writing lock file to " . self::LOCK_FILE);
-        file_put_contents(self::LOCK_FILE, Carbon::now()->timestamp);
+        $this->log('@', 'Writing lock file to ' . self::LOCK_FILE);
+
+        try {
+            $result = file_put_contents(self::LOCK_FILE, Carbon::now()->timestamp);
+
+            if ($result === false) {
+                throw new \RuntimeException('Failed to write lock file!');
+            }
+        } catch (\Exception $e) {
+            $this->log('!', $e->getMessage());
+        }
     }
 
     /**
