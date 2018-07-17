@@ -91,4 +91,26 @@ class SearchQueryTest extends SearchTestAbstract
 
         self::assertEquals($expString, $query->getSearchString());
     }
+
+    public function testStripSlashes()
+    {
+        $string = "Is your name O\'reilly? :\\\\";
+        $expected = "Is your name O'reilly? :\\";
+
+        $query = SearchQuery::fromString($string);
+        $query->stripSlashes();
+
+        self::assertEquals($expected, $query->getSearchString());
+    }
+
+    public function testEscapeRegex()
+    {
+        $string = '$40 for a g3/400';
+        $expected = '\$40 for a g3\/400';
+
+        $query = SearchQuery::fromString($string);
+        $query->escapeRegex();
+
+        self::assertEquals($expected, $query->getSearchString());
+    }
 }

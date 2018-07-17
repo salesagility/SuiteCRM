@@ -110,7 +110,7 @@ class SearchQuery
      */
     public function escapeRegex()
     {
-        $this->query['query'] = preg_quote($this->query['query']);
+        $this->query['query'] = preg_quote($this->query['query'], '/');
     }
 
     /**
