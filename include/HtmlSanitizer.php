@@ -104,7 +104,7 @@ class HtmlSanitizer
 
     /**
      * Clean string from potential XSS problems
-     * @param string $dirtyHtml
+     * @param string|array|object $dirtyHtml
      * @param bool $removeHtml - remove encoded html
      * @return string clean html
      */
