@@ -111,14 +111,16 @@ class Formatter implements FormatterInterface
     {
         return [
             'white' => $this->e(97),
-            'gray-dark' => $this->e(90),
             'gray' => $this->e(37),
-            'green-light' => $this->e(92),
-            'green' => $this->e(32),
-            'yellow' => $this->e(93),
-            'yellow-dark' => $this->e(33),
+            'gray-dark' => $this->e(90),
+            'cyan' => $this->e(36),
+            'cyan-light' => $this->e(96),
             'blue' => $this->e(34),
             'blue-light' => $this->e(94),
+            'green' => $this->e(32),
+            'green-light' => $this->e(92),
+            'yellow' => $this->e(33),
+            'yellow-light' => $this->e(93),
             'purple' => $this->e(95),
             'red' => $this->e(31),
             'red-light' => $this->e(91),
@@ -189,8 +191,12 @@ class Formatter implements FormatterInterface
     {
         switch ($level) {
             case Logger::INFO:
+                $color = $this->colours['cyan'];
+                $code = '=';
+                break;
+            case Logger::NOTICE:
                 $color = $this->colours['green'];
-                $code = '#';
+                $code = '?';
                 break;
             case Logger::WARNING:
                 $color = $this->colours['yellow'];
