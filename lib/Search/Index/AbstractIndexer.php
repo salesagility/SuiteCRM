@@ -52,6 +52,7 @@ use Monolog\Logger;
 use ReflectionClass;
 use SuiteCRM\Search\Index\Documentify\AbstractDocumentifier;
 use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
+use SuiteCRM\SugarLogger\SugarLoggerMonologHandler;
 
 /**
  * This class defines common methods and fields for a search indexer.
@@ -65,8 +66,6 @@ use SuiteCRM\Search\Index\Documentify\JsonSerializerDocumentifier;
  */
 abstract class AbstractIndexer
 {
-    /** @var bool when enabled lots output is echoed in the output stream */
-    protected $echoLogsEnabled = false;
     /** @var bool when enabled only beans changed after the last indexing should be indexed */
     protected $differentialIndexingEnabled = false;
     /** @var AbstractDocumentifier determines how a bean is converted into a document */
@@ -89,12 +88,23 @@ abstract class AbstractIndexer
         $this->documentifier = new JsonSerializerDocumentifier();
         $this->logger = new Logger($this->getIndexerName());
 
-        // Set up Monolog logger
+        // Set up SugarLog handler (this will forward messages to the default logging)
+        $this->logger->pushHandler(new SugarLoggerMonologHandler());
+
+        // Set up Monolog logfile logger
         try {
             $this->logger->pushHandler(new StreamHandler($this->logFile));
         } catch (\Exception $e) {
-            $GLOBALS['log']->error('Failed to create indexer log stream handler.');
-            $GLOBALS['log']->error($e);
+            $this->logger->error('Failed to create indexer log stream handler.');
+            $this->logger->error($e);
+        }
+
+        // Set up Monolog CLI handler
+        try {
+            $this->logger->pushHandler(new CliLoggerHandler());
+        } catch (\Exception $e) {
+            $this->logger->error('Failed to create CLI logger handler.');
+            $this->logger->error($e);
         }
     }
 
@@ -122,50 +132,6 @@ abstract class AbstractIndexer
         } catch (\ReflectionException $e) {
             return get_class($obj);
         }
-    }
-
-    /**
-     * Used to log actions and errors performed by the indexer.
-     *
-     * They are displayed to the console if `echoLogsEnabled` is `true`;
-     *
-     * It will also attempt to save the output on a separate log file.
-     *
-     * @param $type string @ = debug, - = info, * = warning, ! = error
-     * @param $message string the message to log
-     * @return void
-     */
-    public function log($type, $message)
-    {
-        $level = Logger::DEBUG;
-
-        switch ($type) {
-            case '@':
-                $type = "\033[32m$type\033[0m";
-                break;
-            case '#':
-                $type = "\033[92m$type\033[0m";
-                $level = Logger::INFO;
-                break;
-            case '*':
-                $type = "\033[33m$type\033[0m";
-                $level = Logger::WARNING;
-                break;
-            case '!':
-                $type = "\033[31m$type\033[0m";
-                $level = Logger::ERROR;
-                break;
-        }
-
-        try {
-            $this->logger->log($level, $message);
-        } catch (\Exception $e) {
-            $GLOBALS['log']->error('Failed to log indexer info with Monolog.');
-            $GLOBALS['log']->error($e);
-        }
-
-        if ($this->echoLogsEnabled)
-            echo " [$type] ", $message, PHP_EOL;
     }
 
     /**
@@ -234,26 +200,6 @@ abstract class AbstractIndexer
      * @return void
      */
     abstract function removeIndex();
-
-    /**
-     * Returns whether logging should be echoed or not.
-     *
-     * @return bool
-     */
-    public function isEchoLogsEnabled()
-    {
-        return $this->echoLogsEnabled;
-    }
-
-    /**
-     * Sets whether logging should be echoed or not.
-     *
-     * @param bool $echoLogsEnabled
-     */
-    public function setEchoLogsEnabled($echoLogsEnabled)
-    {
-        $this->echoLogsEnabled = boolval($echoLogsEnabled);
-    }
 
     /**
      * Returns whether the next indexing should be performed differentially or not.
@@ -348,5 +294,15 @@ abstract class AbstractIndexer
         } else {
             throw new InvalidArgumentException("Wrong type provided to AddModulesToIndex");
         }
+    }
+
+    /**
+     * Retrieves the Monolog instance. This can be used to provide additional logging in the Indexer channel.
+     *
+     * @return Logger
+     */
+    public function getLogger()
+    {
+        return $this->logger;
     }
 }

@@ -58,7 +58,9 @@ class ElasticSearchClientBuilder
      */
     public static function getClient()
     {
-        if (empty(self::$hosts)) self::$hosts = self::loadConfig(__DIR__ . '/elasticsearch.json');
+        if (empty(self::$hosts)) {
+            self::$hosts = self::loadConfig(__DIR__ . '/elasticsearch.json');
+        }
 
         $client = ClientBuilder::create()->setHosts(self::$hosts)->build();
 
@@ -67,11 +69,15 @@ class ElasticSearchClientBuilder
 
     private static function loadConfig($file)
     {
-        if (!file_exists($file)) return self::loadDefaultConfig();
+        if (!file_exists($file)) {
+            return self::loadDefaultConfig();
+        }
 
         $results = file_get_contents($file);
 
-        if ($results === false) return self::loadDefaultConfig();
+        if ($results === false) {
+            return self::loadDefaultConfig();
+        }
 
         return json_decode($results, true);
     }

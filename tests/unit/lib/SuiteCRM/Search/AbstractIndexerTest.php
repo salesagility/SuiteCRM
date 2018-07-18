@@ -54,66 +54,38 @@ use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 
 class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 {
-    public function testLog()
-    {
-        $indexer = new TestIndexer();
-        $indexer->setEchoLogsEnabled(true);
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['@', 'test notice']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[32m@\033[0m] test notice\n");
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['*', 'test warn']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[33m*\033[0m] test warn\n");
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['!', 'test error']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[31m!\033[0m] test error\n");
-    }
-
     public function testConstruct()
     {
-        $indexer = new TestIndexer();
+        $indexer = new IndexerMock();
         self::assertInstanceOf(AbstractIndexer::class, $indexer);
     }
 
     public function testGettersAndSetters()
     {
-
-        $output = false;
         $differential = true;
         $doc = new SearchDefsDocumentifier();
         $modules = ['Module1', 'Module2'];
 
-        $i = new TestIndexer();
+        $i = new IndexerMock();
 
-        $i->setEchoLogsEnabled($output);
         $i->setDifferentialIndexingEnabled($differential);
         $i->setDocumentifier($doc);
         $i->setModulesToIndex($modules);
 
-        self::assertEquals($output, $i->isEchoLogsEnabled());
         self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
         self::assertEquals($doc, $i->getDocumentifier());
         self::assertEquals($modules, $i->getModulesToIndex());
 
-        $i = new TestIndexer();
+        $i = new IndexerMock();
 
-        $output = true;
         $differential = false;
         $doc = new JsonSerializerDocumentifier();
         $modules = ['Foo', 'Bar'];
 
-        $i->setEchoLogsEnabled($output);
         $i->setDifferentialIndexingEnabled($differential);
         $i->setDocumentifier($doc);
         $i->setModulesToIndex($modules);
 
-        self::assertEquals($output, $i->isEchoLogsEnabled());
         self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
         self::assertEquals($doc, $i->getDocumentifier());
         self::assertEquals($modules, $i->getModulesToIndex());
@@ -121,7 +93,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testAddModulesToIndex()
     {
-        $i = new TestIndexer();
+        $i = new IndexerMock();
         $i->addModulesToIndex('Foo');
 
         self::assertContains('Foo', $i->getModulesToIndex());
@@ -143,7 +115,7 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testGetDocumentifierName()
     {
-        $i = new TestIndexer();
+        $i = new IndexerMock();
         $doc1 = new JsonSerializerDocumentifier();
         $doc2 = new SearchDefsDocumentifier();
         $doc1Exp = 'JsonSerializerDocumentifier';
@@ -158,16 +130,16 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testGetIndexerName()
     {
-        $i = new TestIndexer();
+        $i = new IndexerMock();
 
-        $expected = "TestIndexer";
+        $expected = "IndexerMock";
         $actual = $i->getIndexerName();
 
         self::assertEquals($expected, $actual, "Indexer name does not match");
     }
 }
 
-class TestIndexer extends AbstractIndexer
+class IndexerMock extends AbstractIndexer
 {
     function run()
     {

@@ -40,14 +40,66 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 25/06/18
- * Time: 16:40
+ * Date: 17/07/18
+ * Time: 14:54
  */
 
-namespace SuiteCRM\Search;
+namespace SuiteCRM\SugarLogger;
 
+use LoggerManager;
+use Monolog\Handler\AbstractProcessingHandler;
 
-class MasterSearchInvalidRequestException extends \RuntimeException
+/**
+ * Integrates Monolog with the LoggerManager.
+ */
+class SugarLoggerMonologHandler extends AbstractProcessingHandler
 {
 
+    /**
+     * Writes the record down to the log of the implementing handler
+     *
+     * @param  array $record
+     * @return void
+     */
+    protected function write(array $record)
+    {
+        $logger = LoggerManager::getLogger();
+
+        $message = $record['message'];
+        $level = $record['level'];
+        $channel = $record['channel'];
+
+        $level = $this->monologLevelToSugarLoggerLevel($level);
+
+        $logger->$level("[$channel] $message");
+    }
+
+    /**
+     * Converts a Monolog logging level to the corresponding level string as specified in the LoggerManager class.
+     *
+     * @param int $level
+     * @return string
+     */
+    protected function monologLevelToSugarLoggerLevel($level)
+    {
+        $level = intval($level);
+
+        switch ($level) {
+            case 100:
+                return 'debug';
+            case 200:
+                return 'info';
+            case 300:
+                return 'warn';
+            case 400:
+                return 'error';
+            case 500:
+                return 'fatal';
+            case 600:
+            case 550:
+                return 'security';
+            default:
+                return 'debug';
+        }
+    }
 }

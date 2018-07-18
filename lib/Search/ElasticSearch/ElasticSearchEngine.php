@@ -46,7 +46,7 @@
 
 use Elasticsearch\Client;
 use SuiteCRM\Search\ElasticSearch\ElasticSearchClientBuilder;
-use SuiteCRM\Search\MasterSearchInvalidRequestException;
+use SuiteCRM\Search\Exceptions\MasterSearchInvalidRequestException;
 use SuiteCRM\Search\SearchEngine;
 use SuiteCRM\Search\SearchQuery;
 
@@ -67,10 +67,7 @@ class ElasticSearchEngine extends SearchEngine
      */
     public function __construct(Client $client = null)
     {
-        if (empty($client))
-            $this->client = ElasticSearchClientBuilder::getClient();
-        else
-            $this->client = $client;
+        $this->client = empty($client) ? ElasticSearchClientBuilder::getClient() : $client;
     }
 
     /**

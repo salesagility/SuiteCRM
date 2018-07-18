@@ -78,7 +78,6 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->searchEngine->setIndex('test');
         $this->indexer->setIndex('test');
         $this->indexer->setDifferentialIndexingEnabled(false);
-        $this->indexer->setEchoLogsEnabled(true);
         $this->indexer->removeIndex();
     }
 
@@ -255,7 +254,8 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
     public function testDifferentialIndexing()
     {
-        $GLOBALS['timedate']->allow_cache = false;
+        global $timedate;
+        $timedate->allow_cache = false;
 
         $module = 'Contacts';
         /** @var Contact $bean */
@@ -263,7 +263,6 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // Setting up the indexer
         $this->indexer->setDifferentialIndexingEnabled(true);
-        $this->indexer->setEchoLogsEnabled(true);
         $this->indexer->setModulesToIndex([$bean->module_name]);
 
         // Set up the search engine
@@ -272,8 +271,9 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // DO THE THING
         // Remove the lock file to perform a full index
-        if (file_exists(self::LOCK_FILE))
+        if (file_exists(self::LOCK_FILE)) {
             unlink(self::LOCK_FILE);
+        }
         // Perform a full search
         $this->indexer->run();
         // Make sure that just one module has been indexed

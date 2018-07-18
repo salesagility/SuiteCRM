@@ -40,6 +40,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /**
  * Log management
+ *
+ * @method LoggerManager debug(string $message)
+ * @method LoggerManager info(string $message)
+ * @method LoggerManager warn(string $message)
+ * @method LoggerManager deprecated(string $message)
+ * @method LoggerManager error(string $message)
+ * @method LoggerManager fatal(string $message)
+ * @method LoggerManager security(string $message)
+ *
  * @api
  */
 class LoggerManager

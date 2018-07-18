@@ -1,4 +1,8 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
+
+use SuiteCRM\Search\Index\CliLoggerHandler;
+
 /**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,70 +44,32 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 27/06/18
- * Time: 14:10
+ * Date: 18/07/18
+ * Time: 12:17
  */
-
-namespace SuiteCRM\Search\ElasticSearch;
-
-use LoggerManager;
-use SugarBean;
-
-class ElasticSearchHooks
+class CliLoggerTest extends \Codeception\Test\Unit
 {
-    public function beanSaved($bean, $event, $arguments)
+    /** @var Monolog\Logger */
+    private $logger;
+
+    public function testLogging()
     {
-        try {
-            $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer)) {
-                return;
-            }
-            $indexer->indexBean($bean);
-        } catch (\Exception $e) {
-            $message = 'Failed to add bean to index because: ' . $e->getMessage();
-            if (isset($indexer)) {
-                $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
-            }
-        }
+        $this->logger->debug("\n");
+        $this->logger->debug('DEBUG');
+        $this->logger->info("INFO");
+        $this->logger->notice('NOTICE');
+        $this->logger->warning('WARNING');
+        $this->logger->error('ERROR');
+        $this->logger->critical('CRITICAL');
+        $this->logger->emergency('EMERGENCY');
+
+        $this->logger->emergency(new RuntimeException("Exception!"));
     }
 
-    /**
-     * @param $bean
-     * @return ElasticSearchIndexer
-     */
-    private function getIndexer($bean)
+    protected function setUp()
     {
-        $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
-        return $indexer;
-    }
-
-    /**
-     * @param $bean SugarBean
-     * @param $indexer ElasticSearchIndexer
-     * @return bool
-     */
-    private function isBlacklisted($bean, $indexer)
-    {
-        return !in_array($bean->module_name, $indexer->getModulesToIndex());
-    }
-
-    public function beanDeleted($bean, $event, $arguments)
-    {
-        try {
-            $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer)) {
-                return;
-            }
-            $indexer->removeBean($bean);
-        } catch (\Exception $e) {
-            $message = 'Failed to remove bean from index because: ' . $e->getMessage();
-            if (isset($indexer)) {
-                $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
-            }
-        }
+        $this->logger = new Monolog\Logger("Test");
+        $this->logger->pushHandler(new CliLoggerHandler());
+        return parent::setUp();
     }
 }

@@ -40,70 +40,16 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 27/06/18
- * Time: 14:10
+ * Date: 25/06/18
+ * Time: 16:40
  */
 
-namespace SuiteCRM\Search\ElasticSearch;
+namespace SuiteCRM\Search\Exceptions;
 
-use LoggerManager;
-use SugarBean;
-
-class ElasticSearchHooks
+/**
+ * This exception is thrown when an invalid request is sent to a component of the Master Search.
+ */
+class MasterSearchInvalidRequestException extends MasterSearchException
 {
-    public function beanSaved($bean, $event, $arguments)
-    {
-        try {
-            $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer)) {
-                return;
-            }
-            $indexer->indexBean($bean);
-        } catch (\Exception $e) {
-            $message = 'Failed to add bean to index because: ' . $e->getMessage();
-            if (isset($indexer)) {
-                $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
-            }
-        }
-    }
 
-    /**
-     * @param $bean
-     * @return ElasticSearchIndexer
-     */
-    private function getIndexer($bean)
-    {
-        $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
-        return $indexer;
-    }
-
-    /**
-     * @param $bean SugarBean
-     * @param $indexer ElasticSearchIndexer
-     * @return bool
-     */
-    private function isBlacklisted($bean, $indexer)
-    {
-        return !in_array($bean->module_name, $indexer->getModulesToIndex());
-    }
-
-    public function beanDeleted($bean, $event, $arguments)
-    {
-        try {
-            $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer)) {
-                return;
-            }
-            $indexer->removeBean($bean);
-        } catch (\Exception $e) {
-            $message = 'Failed to remove bean from index because: ' . $e->getMessage();
-            if (isset($indexer)) {
-                $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
-            }
-        }
-    }
 }

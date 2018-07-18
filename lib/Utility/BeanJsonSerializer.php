@@ -78,7 +78,9 @@ class BeanJsonSerializer
     {
         $flags = JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE;
 
-        if ($pretty) $flags = $flags | JSON_PRETTY_PRINT;
+        if ($pretty) {
+            $flags = $flags | JSON_PRETTY_PRINT;
+        }
 
         return json_encode(self::toArray($bean, $hideEmptyValues), $flags);
     }
@@ -97,13 +99,16 @@ class BeanJsonSerializer
      */
     public static function toArray($bean, $hideEmptyValues = true, $loadRelationships = false)
     {
-        if ($loadRelationships) $bean->load_relationships();
+        if ($loadRelationships) {
+            $bean->load_relationships();
+        }
 
         // creates an associative array with all the raw values that might need serialisation
         if (isset($bean->fetched_row) && is_array($bean->fetched_row)) {
             $keys = array_keys($bean->fetched_row);
-            if ($bean->fetched_rel_row && is_array($bean->fetched_rel_row))
+            if ($bean->fetched_rel_row && is_array($bean->fetched_rel_row)) {
                 $keys = array_merge($keys, array_keys($bean->fetched_rel_row));
+            }
             $fields = $bean;
         } elseif (isset($bean->column_fields) && is_array($bean->column_fields)) {
             $keys = $bean->column_fields;
@@ -117,14 +122,16 @@ class BeanJsonSerializer
 
         // does a number of checks and validation to standardise the format of fields, especially adding nesting of values
         foreach ($keys as $key) {
-            if (in_array($key, self::garbage)) continue;
+            if (in_array($key, self::garbage)) {
+                continue;
+            }
 
             if (is_array($fields)) {
                 $value = $fields[$key];
             } elseif (is_object($fields)) {
-                if (isset($fields->$key))
+                if (isset($fields->$key)) {
                     $value = $fields->$key;
-                else {
+                } else {
                     $value = null;
                 }
             } else {
@@ -132,14 +139,18 @@ class BeanJsonSerializer
             }
 
             // fail safe to prevent objects to be forcefully casted into strings
-            if (is_array($value) || is_object($value) || is_resource($value)) continue;
+            if (is_array($value) || is_object($value) || is_resource($value)) {
+                continue;
+            }
 
             if (is_string($value)) {
                 $value = mb_convert_encoding($value, 'UTF-8', 'HTML-ENTITIES');
                 $value = trim($value);
             }
 
-            if ($hideEmptyValues && ($value === null || $value === '')) continue;
+            if ($hideEmptyValues && ($value === null || $value === '')) {
+                continue;
+            }
 
             //region metas
             if ($key === 'date_entered') {

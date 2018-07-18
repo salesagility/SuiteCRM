@@ -40,30 +40,16 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 22/06/18
- * Time: 09:50
+ * Date: 17/07/18
+ * Time: 09:30
  */
 
-use SuiteCRM\Search\SearchEngine;
+namespace SuiteCRM\Search\Exceptions;
 
-class TestSearchEngine extends SearchEngine
+/**
+ * A generic MasterSearch exception that should be thrown when an error internal to MasterSearch is detected.
+ */
+class MasterSearchException extends \RuntimeException
 {
 
-    public function searchAndView($query)
-    {
-        if ($query->query['searchstring'] == 'foo')
-            return 'bar';
-
-        if ($query->query['searchstring'] == 'fooz')
-            return 'barz';
-    }
-
-    public function search($query)
-    {
-    }
-
-
-    protected function validateQuery(&$query)
-    {
-    }
 }

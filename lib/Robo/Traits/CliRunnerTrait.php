@@ -40,70 +40,48 @@
 /**
  * Created by PhpStorm.
  * User: viocolano
- * Date: 27/06/18
- * Time: 14:10
+ * Date: 17/07/18
+ * Time: 11:47
  */
 
-namespace SuiteCRM\Search\ElasticSearch;
+namespace SuiteCRM\Robo\Traits;
 
-use LoggerManager;
-use SugarBean;
+if (!defined('sugarEntry')) {
+    define('sugarEntry', true);
+    define('SUITE_CLI_RUNNER', true);
+}
 
-class ElasticSearchHooks
+$root = __DIR__ . '/../../../';
+
+require $root . 'config.php';
+require $root . 'config_override.php';
+require_once $root . 'vendor/autoload.php';
+require_once $root . 'include/database/DBManagerFactory.php';
+require_once $root . 'include/utils.php';
+require_once $root . 'include/modules.php';
+require_once $root . 'include/entryPoint.php';
+
+/**
+ * This Trait creates a fully working instance of SugarCRM.
+ *
+ * This is supposed to be used from command line.
+ *
+ * To make the instance work properly, bootstrap() must be invoked first.
+ */
+trait CliRunnerTrait
 {
-    public function beanSaved($bean, $event, $arguments)
-    {
-        try {
-            $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer)) {
-                return;
-            }
-            $indexer->indexBean($bean);
-        } catch (\Exception $e) {
-            $message = 'Failed to add bean to index because: ' . $e->getMessage();
-            if (isset($indexer)) {
-                $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
-            }
-        }
-    }
-
     /**
-     * @param $bean
-     * @return ElasticSearchIndexer
+     * Sets up the missing global variables to make SugarCRM work from CLI.
      */
-    private function getIndexer($bean)
+    protected function bootstrap()
     {
-        $indexer = !isset($bean->indexer) ? new ElasticSearchIndexer() : $bean->indexer;
-        return $indexer;
-    }
+        //Oddly entry point loads app_strings but not app_list_strings, manually do this here.
+        global $current_language;
+        global $app_list_strings;
+        global $sugar_config;
 
-    /**
-     * @param $bean SugarBean
-     * @param $indexer ElasticSearchIndexer
-     * @return bool
-     */
-    private function isBlacklisted($bean, $indexer)
-    {
-        return !in_array($bean->module_name, $indexer->getModulesToIndex());
-    }
-
-    public function beanDeleted($bean, $event, $arguments)
-    {
-        try {
-            $indexer = $this->getIndexer($bean);
-            if ($this->isBlacklisted($bean, $indexer)) {
-                return;
-            }
-            $indexer->removeBean($bean);
-        } catch (\Exception $e) {
-            $message = 'Failed to remove bean from index because: ' . $e->getMessage();
-            if (isset($indexer)) {
-                $indexer->getLogger()->error($message);
-            } else {
-                LoggerManager::getLogger()->error($message);
-            }
-        }
+        $current_language = 'en_us';
+        $app_list_strings = return_app_list_strings_language($current_language);
+        $sugar_config['resource_management']['default_limit'] = 999999;
     }
 }
