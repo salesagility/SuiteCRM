@@ -203,7 +203,7 @@ class Formatter implements FormatterInterface
                 $code = '*';
                 break;
             case Logger::ERROR:
-                $color = $this->colours['red-light'];
+                $color = $this->colours['red'];
                 $code = '!';
                 break;
             case Logger::CRITICAL:
@@ -216,7 +216,7 @@ class Formatter implements FormatterInterface
                 break;
             case Logger::DEBUG:
             default:
-                $color = $this->colours['blue-light'];
+                $color = $this->colours['blue'];
                 $code = '@';
                 break;
         }
