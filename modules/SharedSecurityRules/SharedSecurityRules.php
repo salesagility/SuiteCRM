@@ -231,7 +231,15 @@ class SharedSecurityRules extends Basic
                                 }
                                 
                             } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                                $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' && securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
+                                
+                                $actionParameterEmailKey1 = null;
+                                if (!isset($action['parameters']['email'][$key]['1'])) {                                    
+                                    LoggerManager::getLogger()->warn('action parameter email [1] is not set at key: ' . $key);
+                                } else {
+                                    $actionParameterEmailKey1 = $action['parameters']['email'][$key]['1'];
+                                }
+                                
+                                $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$actionParameterEmailKey1}' && securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
                                 $sec_group_results = $module->db->query($sec_group_query);
                                 $secgroup = $module->db->fetchRow($sec_group_results);
                                 if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
@@ -627,7 +635,15 @@ class SharedSecurityRules extends Basic
                                     $actionIsUser = true;
                                 }
                             } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                                $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' AND securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
+                                
+                                $actionParameterEmailKey1 = null;
+                                if (!isset($action['parameters']['email'][$key]['1'])) {
+                                    LoggerManager::getLogger()->warn('Shared Security Rules trying to build rule where but action parameters email [1] is not set at key: ' . $key);
+                                } else {
+                                    $actionParameterEmailKey1 = $action['parameters']['email'][$key]['1'];
+                                }
+                                
+                                $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$actionParameterEmailKey1}' AND securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
                                 $sec_group_results = $module->db->query($sec_group_query);
                                 $secgroup = $module->db->fetchRow($sec_group_results);
                                 if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
