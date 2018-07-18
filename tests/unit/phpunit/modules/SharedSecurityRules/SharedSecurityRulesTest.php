@@ -100,6 +100,34 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         $state->popTable('users');
     }
     
+    public function testCheckRulesWithFilledFetchedRow() {
+        $state = new StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('users');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $usr->save();
+        $current_user = $usr;
+        
+        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        $acc = BeanFactory::getBean('Accounts');
+        $id = $acc->save();
+        $this->assertEquals($acc->id, $id);   
+        $acc->retrieve($id);
+        $ret = $ssr->checkRules($acc, 'list');
+        $this->assertEquals(null, $ret);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$usr->id]));
+        
+        $state->popGlobals();
+        $state->popTable('users');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
     public function testCheckRules() {
         $ssr = BeanFactory::getBean('SharedSecurityRules');
         $acc = BeanFactory::getBean('Accounts');
