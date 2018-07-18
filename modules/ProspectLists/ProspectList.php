@@ -400,7 +400,7 @@ FROM prospect_lists_prospects plp
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
         array_push($where_clauses, "prospect_lists.name like '$the_query_string%'");
 
@@ -416,7 +416,7 @@ FROM prospect_lists_prospects plp
         return $the_where;
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         return parent::save($check_notify);
     }

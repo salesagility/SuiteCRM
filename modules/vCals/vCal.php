@@ -64,7 +64,7 @@
         public $field_defs = array();
 
         // This is used to retrieve related fields from form posts.
-        public $additional_column_fields = Array();
+        public $additional_column_fields = array();
 
         const UTC_FORMAT = 'Ymd\THi00\Z';
         const EOL = "\r\n";

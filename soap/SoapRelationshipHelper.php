@@ -440,7 +440,7 @@ function get_module_link_field($module_1, $module_2)
 
     // check to make sure both modules exist
     if (empty($beanList[$module_1]) || empty($beanList[$module_2])) {
-        return FALSE;
+        return false;
     }
 
     $class_1 = $beanList[$module_1];
@@ -462,7 +462,7 @@ function get_module_link_field($module_1, $module_2)
         }
     }
 
-    return FALSE;
+    return false;
 }
 
 // Retrieves array of ids for records of $get_module linked to $from_module by $get_id
@@ -478,8 +478,8 @@ function get_linked_records($get_module, $from_module, $get_id)
     $from_mod->retrieve($get_id);
 
     $field = get_module_link_field($from_module, $get_module);
-    if ($field === FALSE) {
-        return FALSE;
+    if ($field === false) {
+        return false;
     }
 
     $from_mod->load_relationship($field);

@@ -100,7 +100,7 @@ if ($campaign_id && isset($campaign) && $campaign->status == 'Inactive') {
 } else {
     $focus = new EmailMarketing();
     if ($campaign_id) {
-        $where_clauses = Array();
+        $where_clauses = array();
 
         if (!empty($campaign_id)) {
             array_push($where_clauses, "campaign_id = '".DBManagerFactory::getInstance()->quote($campaign_id)."'");

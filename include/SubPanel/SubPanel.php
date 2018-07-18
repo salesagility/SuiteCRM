@@ -423,7 +423,7 @@ class SubPanel
 
         if (isset($subpanel_defs['searchdefs'])) {
             $searchdefs[$module]['layout']['basic_search'] = $subpanel_defs['searchdefs'];
-            $searchdefs[$module]['templateMeta'] = Array ('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => Array ( 'label' => 10, 'field' => 30 )) ;
+            $searchdefs[$module]['templateMeta'] = array ('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => array ( 'label' => 10, 'field' => 30 )) ;
             return $searchdefs;
         }
 

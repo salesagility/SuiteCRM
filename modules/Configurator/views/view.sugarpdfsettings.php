@@ -155,7 +155,7 @@ class ConfiguratorViewSugarpdfsettings extends SugarView
         $javascript->setFormName("ConfigureSugarpdfSettings");
         foreach ($SugarpdfSettings as $k=>$v) {
             if (isset($v["required"]) && $v["required"] == true) {
-                $javascript->addFieldGeneric($k, "varchar", $v['label'], TRUE, "");
+                $javascript->addFieldGeneric($k, "varchar", $v['label'], true, "");
             }
         }
 

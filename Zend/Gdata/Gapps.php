@@ -1278,9 +1278,9 @@ class Zend_Gdata_Gapps extends Zend_Gdata
         }
 
         if($results) {
-            return TRUE;
+            return true;
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -1392,9 +1392,9 @@ class Zend_Gdata_Gapps extends Zend_Gdata
         }
 
         if($results) {
-            return TRUE;
+            return true;
         } else {
-            return FALSE;
+            return false;
         }
     }
 

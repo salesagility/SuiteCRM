@@ -49,7 +49,7 @@ class SugarFieldInt extends SugarFieldBase
         if (!empty($vardef['disable_num_format'])) {
             return $rawField;
         }
-        if ($rawField === '' || $rawField === NULL) {
+        if ($rawField === '' || $rawField === null) {
             return '';
         }
             
@@ -58,7 +58,7 @@ class SugarFieldInt extends SugarFieldBase
 
     public function unformatField($formattedField, $vardef)
     {
-        if ($formattedField === '' || $formattedField === NULL) {
+        if ($formattedField === '' || $formattedField === null) {
             return '';
         }
         return (int)unformat_number($formattedField);

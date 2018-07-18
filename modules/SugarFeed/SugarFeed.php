@@ -275,7 +275,7 @@ class SugarFeed extends Basic
 
         if (!empty($link_url)) {
             $linkClass = SugarFeed::getLinkClass($link_type);
-            if ($linkClass !== FALSE) {
+            if ($linkClass !== false) {
                 $linkClass->handleInput($feed, $link_type, $link_url);
             }
         }
@@ -358,7 +358,7 @@ class SugarFeed extends Basic
         // Have to make sure the linkName is on the list, so they can't pass in linkName's like ../../config.php ... not that they could get anywhere if they did
         if (! isset($linkTypeList[$linkName])) {
             // No class by this name...
-            return FALSE;
+            return false;
         }
 
         if (file_exists('custom/modules/SugarFeed/linkHandlers/'.$linkName.'.php')) {
@@ -423,7 +423,7 @@ class SugarFeed extends Basic
         $data['NAME'] =  '<div style="padding:3px">' . html_entity_decode($data['NAME']);
         if (!empty($data['LINK_URL'])) {
             $linkClass = SugarFeed::getLinkClass($data['LINK_TYPE']);
-            if ($linkClass !== FALSE) {
+            if ($linkClass !== false) {
                 $data['NAME'] .= $linkClass->getDisplay($data);
             }
         }

@@ -112,7 +112,7 @@ class ProjectTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $project = new Project();
 
         //test without setting name
-        $this->assertEquals(Null, $project->get_summary_text());
+        $this->assertEquals(null, $project->get_summary_text());
 
         //test with name set
         $project->name = "test";

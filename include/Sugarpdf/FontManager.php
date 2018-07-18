@@ -206,7 +206,7 @@ class FontManager
             return false;
         }
         @include($this->fontPath.$this->filename);
-        if ((!isset($type)) OR (!isset($cw))) {
+        if ((!isset($type)) or (!isset($cw))) {
             //The font definition file has a bad format
             return false;
         }

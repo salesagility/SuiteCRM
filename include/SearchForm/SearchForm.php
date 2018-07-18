@@ -534,9 +534,9 @@ class SearchForm
             }
         }
         if (!empty($_REQUEST['assigned_user_id'])) {
-            $this->xtpl->assign("USER_FILTER", get_select_options_with_id(get_user_array(FALSE), $_REQUEST['assigned_user_id']));
+            $this->xtpl->assign("USER_FILTER", get_select_options_with_id(get_user_array(false), $_REQUEST['assigned_user_id']));
         } else {
-            $this->xtpl->assign("USER_FILTER", get_select_options_with_id(get_user_array(FALSE), ''));
+            $this->xtpl->assign("USER_FILTER", get_select_options_with_id(get_user_array(false), ''));
         }
 
         // handle my items only

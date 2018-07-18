@@ -103,7 +103,7 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
         $conn = $api->getConnector();
 
         $feed = $conn->getList(array('maxResults' => $maxResults, 'startIndex' => $this->_offset));
-        if ($feed !== FALSE) {
+        if ($feed !== false) {
             $this->_totalRecordCount = $feed['totalResults'];
             $this->_recordSet = $feed['records'];
         } else {
@@ -151,7 +151,7 @@ class ExternalSourceEAPMAdapter extends ImportDataSource
 
     public function valid()
     {
-        return (current($this->_recordSet) !== FALSE);
+        return (current($this->_recordSet) !== false);
     }
 }
 

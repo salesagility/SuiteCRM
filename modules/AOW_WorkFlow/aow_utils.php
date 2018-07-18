@@ -966,7 +966,7 @@ function fixUpFormatting($module, $field, $value)
         case 'decimal':
         case 'currency':
         case 'float':
-            if ($value === '' || $value == NULL || $value == 'NULL') {
+            if ($value === '' || $value == null || $value == 'NULL') {
                 continue;
             }
             if (is_string($value)) {
@@ -979,7 +979,7 @@ function fixUpFormatting($module, $field, $value)
         case 'short':
         case 'tinyint':
         case 'int':
-            if ($value === '' || $value == NULL || $value == 'NULL') {
+            if ($value === '' || $value == null || $value == 'NULL') {
                 continue;
             }
             if (is_string($value)) {

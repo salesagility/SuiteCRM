@@ -1,7 +1,7 @@
 <?php
 function smarty_block_minify($params, $content, &$smarty, &$repeat)
 {
-    if (!$repeat && isSet($content)) {
+    if (!$repeat && isset($content)) {
         // HTML Minifier
         $input = $content;
         if (trim($input) === "") {

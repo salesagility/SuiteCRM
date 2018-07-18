@@ -79,7 +79,7 @@ class ProspectListTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract
         $prospectList = new ProspectList();
 
         //test without setting name
-        $this->assertEquals(Null, $prospectList->get_summary_text());
+        $this->assertEquals(null, $prospectList->get_summary_text());
 
         //test with name set
         $prospectList->name = "test";

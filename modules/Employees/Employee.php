@@ -94,10 +94,10 @@ class Employee extends Person
     public $object_name = "Employee";
     public $user_preferences;
 
-    public $encodeFields = Array("first_name", "last_name", "description");
+    public $encodeFields = array("first_name", "last_name", "description");
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('reports_to_name');
+    public $additional_column_fields = array('reports_to_name');
 
 
 
@@ -171,7 +171,7 @@ class Employee extends Person
     {
         //none of the checks from the users module are valid here since the user_name and
         //is_admin_on fields are not editable.
-        return TRUE;
+        return true;
     }
 
     public function get_list_view_data()

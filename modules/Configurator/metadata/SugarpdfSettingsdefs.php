@@ -208,9 +208,9 @@ $SugarpdfSettings = array(
 // Use the OOB directory for images if there is no image in the custom directory
 $small_logo = $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'];
 $logo = $SugarpdfSettings['sugarpdf_pdf_header_logo']['path'];
-if (@getimagesize($logo) === FALSE) {
+if (@getimagesize($logo) === false) {
     $SugarpdfSettings['sugarpdf_pdf_header_logo']['path'] = K_PATH_IMAGES.$SugarpdfSettings['sugarpdf_pdf_header_logo']['value'];
 }
-if (@getimagesize($small_logo) === FALSE) {
+if (@getimagesize($small_logo) === false) {
     $SugarpdfSettings['sugarpdf_pdf_small_header_logo']['path'] = K_PATH_IMAGES.$SugarpdfSettings['sugarpdf_pdf_small_header_logo']['value'];
 }

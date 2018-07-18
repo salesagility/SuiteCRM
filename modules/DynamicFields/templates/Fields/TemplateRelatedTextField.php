@@ -248,8 +248,8 @@ class TemplateRelatedTextField extends TemplateText
     {
         if ($df instanceof DynamicField) {
             require_once 'modules/ModuleBuilder/parsers/parser.label.php';
-            foreach (array_keys($GLOBALS['sugar_config']['languages']) AS $language) {
-                foreach (ModuleBuilder::getModuleAliases($df->module) AS $module) {
+            foreach (array_keys($GLOBALS['sugar_config']['languages']) as $language) {
+                foreach (ModuleBuilder::getModuleAliases($df->module) as $module) {
                     $mod_strings = return_module_language($language, $module);
                     if (isset($mod_strings[$fieldId->vname])) {
                         ParserLabel::removeLabel($language, $fieldId->vname, $mod_strings[$fieldId->vname], $module);
@@ -257,7 +257,7 @@ class TemplateRelatedTextField extends TemplateText
                 }
             }
         } elseif ($df instanceof MBModule) {
-            foreach (array_keys($GLOBALS['sugar_config']['languages']) AS $language) {
+            foreach (array_keys($GLOBALS['sugar_config']['languages']) as $language) {
                 $df->deleteLabel($language, $fieldId->vname);
                 $df->save();
             }
@@ -322,7 +322,7 @@ class TemplateRelatedTextField extends TemplateText
             "label_{$idLabelName}" => $idLabelValue
         );
 
-        foreach (ModuleBuilder::getModuleAliases($module) AS  $moduleName) {
+        foreach (ModuleBuilder::getModuleAliases($module) as  $moduleName) {
             if ($df instanceof DynamicField) {
                 $parser = new ParserLabel($moduleName, $viewPackage);
                 $parser->handleSave($idFieldLabelArr, $GLOBALS['current_language']);

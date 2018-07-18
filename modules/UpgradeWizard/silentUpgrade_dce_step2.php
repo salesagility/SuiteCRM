@@ -640,7 +640,7 @@ if ($upgradeType == constant('DCE_INSTANCE')) {
                     continue;
                 }
 
-                if (($focus instanceOf SugarBean)) {
+                if (($focus instanceof SugarBean)) {
                     $sql = $db->repairTable($focus, true);
                     if (!empty($sql)) {
                         logThis($sql, $path);

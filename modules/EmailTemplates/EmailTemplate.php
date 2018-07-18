@@ -879,7 +879,7 @@ class EmailTemplate extends SugarBean
         return $this->storedVariables[$text[0]];
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         $this->repairMozaikClears();
         return parent::save($check_notify);

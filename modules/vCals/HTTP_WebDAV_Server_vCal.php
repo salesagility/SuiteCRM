@@ -280,7 +280,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         */
         public function http_PUT()
         {
-            $options = Array();
+            $options = array();
             $options["path"] = $this->path;
             $options["content_length"] = $_SERVER["CONTENT_LENGTH"];
 

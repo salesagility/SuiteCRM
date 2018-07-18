@@ -124,7 +124,7 @@ function markEmailAddressInvalid($email_address)
  */
 function getExistingCampaignLogEntry($identifier)
 {
-    $row = FALSE;
+    $row = false;
     $targeted = new CampaignLog();
     $where="campaign_log.activity_type='targeted' and campaign_log.target_tracker_key='{$identifier}'";
     $query=$targeted->create_new_list_query('', $where);
@@ -144,15 +144,15 @@ function checkBouncedEmailForIdentifier($email_description)
 {
     $matches = array();
     $identifiers = array();
-    $found = FALSE;
+    $found = false;
     //Check if the identifier is present in the header.
     if (preg_match('/X-CampTrackID: [a-z0-9\-]*/', $email_description, $matches)) {
         $identifiers = preg_split('/X-CampTrackID: /', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
-        $found = TRUE;
+        $found = true;
         $GLOBALS['log']->debug("Found campaign identifier in header of email");
     } elseif (preg_match('/index.php\?entryPoint=removeme&identifier=[a-z0-9\-]*/', $email_description, $matches)) {
         $identifiers = preg_split('/index.php\?entryPoint=removeme&identifier=/', $matches[0], -1, PREG_SPLIT_NO_EMPTY);
-        $found = TRUE;
+        $found = true;
         $GLOBALS['log']->debug("Found campaign identifier in body of email");
     }
     
@@ -200,25 +200,25 @@ function campaign_process_bounced_emails(&$email, &$email_header)
 
                     if (empty($row_log)) {
                         $return_id = createBouncedCampaignLogEntry($row, $email, $email_description);	
-                        return TRUE;
+                        return true;
                     } else {
                         $GLOBALS['log']->debug("Warning: campaign log entry already exists for identifier $identifier");
-                        return FALSE;
+                        return false;
                     }
                 } else {
                     $GLOBALS['log']->info("Warning: skipping bounced email with this tracker_key(identifier) in the message body: ".$identifier);
-                    return FALSE;
+                    return false;
                 }
             } else {
                 $GLOBALS['log']->info("Warning: Empty identifier for campaign log.");
-                return FALSE;
+                return false;
             }
         } else {
             $GLOBALS['log']->info("Warning: skipping bounced email because it does not have the removeme link.");	
-            return FALSE;
+            return false;
         }
     } else {
         $GLOBALS['log']->info("Warning: skipping bounced email because the sender is not MAILER-DAEMON.");
-        return FALSE;
+        return false;
     }
 }

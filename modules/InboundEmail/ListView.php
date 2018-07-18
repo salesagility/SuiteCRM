@@ -73,7 +73,7 @@ $listView->setHeaderTitle($mod_strings['LBL_MODULE_TITLE']);
 
 echo $focus->getSystemSettingsForm();
 $listView->show_export_button = false;
-$listView->ignorePopulateOnly = TRUE; //Always show all records, ignore save_query performance setting.
+$listView->ignorePopulateOnly = true; //Always show all records, ignore save_query performance setting.
 $listView->setQuery($where, $limit, $orderBy, 'InboundEmail', $allowByOverride);
 $listView->xTemplateAssign("EDIT_INLINE_IMG", SugarThemeRegistry::current()->getImage('edit_inline', 'align="absmiddle" border="0"', null, null, '.gif', $app_strings['LNK_EDIT']));
 $listView->processListView($focus, "main", "InboundEmail");

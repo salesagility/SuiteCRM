@@ -896,7 +896,7 @@ class MBModule
                 $fieldVarDefs['type'] = 'varchar';
             }
             $field = get_widget($fieldVarDefs['type']);
-            foreach ($fieldVarDefs AS $key => $opt) {
+            foreach ($fieldVarDefs as $key => $opt) {
                 $field->$key = $opt;
             }
         }

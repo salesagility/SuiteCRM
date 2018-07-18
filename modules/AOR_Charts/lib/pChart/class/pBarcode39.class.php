@@ -24,7 +24,7 @@
      public $MOD43;
 
      /* Class creator */
-     public function pBarcode39($BasePath="", $EnableMOD43=FALSE)
+     public function pBarcode39($BasePath="", $EnableMOD43=false)
      {
          $this->MOD43  = $EnableMOD43;
          $this->Codes   = "";
@@ -51,9 +51,9 @@
      public function getSize($TextString, $Format="")
      {
          $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
-         $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : FALSE;
+         $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : false;
          $LegendOffset	= isset($Format["LegendOffset"]) ? $Format["LegendOffset"] : 5;
-         $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : FALSE;
+         $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : false;
          $FontSize		= isset($Format["FontSize"]) ? $Format["FontSize"] : 12;
          $Height		= isset($Format["Height"]) ? $Format["Height"] : 30;
 
@@ -123,9 +123,9 @@
          $Alpha		= isset($Format["Alpha"]) ? $Format["Alpha"] : 100;
          $Height		= isset($Format["Height"]) ? $Format["Height"] : 30;
          $Angle		= isset($Format["Angle"]) ? $Format["Angle"] : 0;
-         $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : FALSE;
+         $ShowLegend	= isset($Format["ShowLegend"]) ? $Format["ShowLegend"] : false;
          $LegendOffset	= isset($Format["LegendOffset"]) ? $Format["LegendOffset"] : 5;
-         $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : FALSE;
+         $DrawArea		= isset($Format["DrawArea"]) ? $Format["DrawArea"] : false;
          $AreaR		= isset($Format["AreaR"]) ? $Format["AreaR"] : 255;
          $AreaG		= isset($Format["AreaG"]) ? $Format["AreaG"] : 255;
          $AreaB		= isset($Format["AreaB"]) ? $Format["AreaB"] : 255;

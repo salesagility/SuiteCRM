@@ -289,7 +289,7 @@ class SugarFeedDashlet extends DashletGeneric
                 if (count($modStringMatches) == 3 && $modStringMatches[1] == 'SugarFeed' && !empty($data['RELATED_MODULE'])) {
                     $modKey = $modStringMatches[2];
                     $modString = translate($modKey, $modStringMatches[1]);
-                    if (strpos($modString, '{0}') === FALSE || !isset($GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']])) {
+                    if (strpos($modString, '{0}') === false || !isset($GLOBALS['app_list_strings']['moduleListSingular'][$data['RELATED_MODULE']])) {
                         continue;
                     }
 
@@ -324,7 +324,7 @@ class SugarFeedDashlet extends DashletGeneric
 
         foreach ($external_modules as $apiName) {
             $api = ExternalAPIFactory::loadAPI($apiName);
-            if ($api !== FALSE) {
+            if ($api !== false) {
                 // FIXME: Actually calculate the oldest sugar feed we can see, once we get an API that supports this sort of filter.
                 $reply = $api->getLatestUpdates(0, $fetchRecordCount);
                 if ($reply['success'] && count($reply['messages']) > 0) {

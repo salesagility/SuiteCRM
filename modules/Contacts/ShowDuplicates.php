@@ -82,7 +82,7 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup'] == 'true') ||(isset($_POST[
 $contact = new Contact();
 require_once('modules/Contacts/ContactFormBase.php');
 $contactForm = new ContactFormBase();
-$GLOBALS['check_notify'] = FALSE;
+$GLOBALS['check_notify'] = false;
 
 
 $query = 'select id, first_name, last_name, title from contacts where deleted=0 ';

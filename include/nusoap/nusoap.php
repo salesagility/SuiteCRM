@@ -1181,10 +1181,10 @@ function timestamp_to_iso8601($timestamp, $utc=true)
 {
     $datestr = date('Y-m-d\TH:i:sO', $timestamp);
     $pos = strrpos($datestr, "+");
-    if ($pos === FALSE) {
+    if ($pos === false) {
         $pos = strrpos($datestr, "-");
     }
-    if ($pos !== FALSE) {
+    if ($pos !== false) {
         if (strlen($datestr) == $pos + 5) {
             $datestr = substr($datestr, 0, $pos + 3) . ':' . substr($datestr, -2);
         }
@@ -3322,7 +3322,7 @@ class soap_transport_http extends nusoap_base
     * @param boolean $use_curl Whether to try to force cURL use
     * @access public
     */
-    public function soap_transport_http($url, $curl_options = NULL, $use_curl = false)
+    public function soap_transport_http($url, $curl_options = null, $use_curl = false)
     {
         parent::nusoap_base();
         $this->debug("ctor url=$url use_curl=$use_curl curl_options:");
@@ -3690,7 +3690,7 @@ class soap_transport_http extends nusoap_base
     * @return	string data
     * @access   public
     */
-    public function send($data, $timeout=0, $response_timeout=30, $cookies=NULL)
+    public function send($data, $timeout=0, $response_timeout=30, $cookies=null)
     {
         $this->debug('entered send() with data of length: '.strlen($data));
 
@@ -3925,7 +3925,7 @@ class soap_transport_http extends nusoap_base
         // read chunk-size, chunk-extension (if any) and CRLF
         // get the position of the linebreak
         $chunkend = strpos($buffer, $lb);
-        if ($chunkend == FALSE) {
+        if ($chunkend == false) {
             $this->debug('no linebreak found in decodeChunked');
             return $new;
         }
@@ -3938,7 +3938,7 @@ class soap_transport_http extends nusoap_base
             $chunkend = strpos($buffer, $lb, $chunkstart + $chunk_size);
 
             // Just in case we got a broken connection
-            if ($chunkend == FALSE) {
+            if ($chunkend == false) {
                 $chunk = substr($buffer, $chunkstart);
                 // append chunk-data to entity-body
                 $new .= $chunk;
@@ -3956,7 +3956,7 @@ class soap_transport_http extends nusoap_base
             $chunkstart = $chunkend + strlen($lb);
 
             $chunkend = strpos($buffer, $lb, $chunkstart) + strlen($lb);
-            if ($chunkend == FALSE) {
+            if ($chunkend == false) {
                 break; //Just in case we got a broken connection
             }
             $temp = substr($buffer, $chunkstart, $chunkend-$chunkstart);
@@ -4024,7 +4024,7 @@ class soap_transport_http extends nusoap_base
     * @return	boolean	true if OK, false if problem
     * @access   private
     */
-    public function sendRequest($data, $cookies = NULL)
+    public function sendRequest($data, $cookies = null)
     {
         // build cookie string
         $cookie_str = $this->getCookiesForRequest($cookies, (($this->scheme == 'ssl') || ($this->scheme == 'https')));
@@ -4526,7 +4526,7 @@ class soap_transport_http extends nusoap_base
         }
 
         $cookie_param = ';secure;';
-        if (strpos($cookie_str, $cookie_param) !== FALSE) {
+        if (strpos($cookie_str, $cookie_param) !== false) {
             $secure = true;
         } else {
             $secure = false;
@@ -4838,7 +4838,7 @@ class nusoap_server extends nusoap_base
      * @var mixed
      * @access public
      */
-    public $requestHeader = NULL;
+    public $requestHeader = null;
     /**
      * SOAP body request portion (incomplete namespace resolution; special characters not escaped) (text)
      * @var string
@@ -8343,8 +8343,8 @@ class nusoap_parser extends nusoap_base
     public $fault_detail = '';
     public $depth_array = array();
     public $debug_flag = true;
-    public $soapresponse = NULL;	// parsed SOAP Body
-	public $soapheader = NULL;		// parsed SOAP Header
+    public $soapresponse = null;	// parsed SOAP Body
+	public $soapheader = null;		// parsed SOAP Header
 	public $responseHeaders = '';	// incoming SOAP headers (text)
 	public $body_position = 0;
     // for multiref parsing:
@@ -8376,7 +8376,7 @@ class nusoap_parser extends nusoap_base
         if (!empty($xml)) {
             // Check XML encoding
             $pos_xml = strpos($xml, '<?xml');
-            if ($pos_xml !== FALSE) {
+            if ($pos_xml !== false) {
                 $xml_decl = substr($xml, $pos_xml, strpos($xml, '?>', $pos_xml + 2) - $pos_xml + 1);
                 if (preg_match("/encoding=[\"']([^\"']*)[\"']/", $xml_decl, $res)) {
                     $xml_encoding = $res[1];
@@ -9190,7 +9190,7 @@ class nusoap_client extends nusoap_base
 	public $certRequest = array();		// Certificate for HTTP SSL authentication
 	public $requestHeaders = false;	// SOAP headers in request (text)
 	public $responseHeaders = '';		// SOAP headers from response (incomplete namespace resolution) (text)
-	public $responseHeader = NULL;		// SOAP Header from response (parsed)
+	public $responseHeader = null;		// SOAP Header from response (parsed)
 	public $document = '';				// SOAP body response portion (incomplete namespace resolution) (text)
 	public $endpoint;
     public $forceEndpoint = '';		// overrides WSDL endpoint

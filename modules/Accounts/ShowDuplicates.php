@@ -83,7 +83,7 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup'] == 'true') ||(isset($_POST[
 $account = new Account();
 require_once('modules/Accounts/AccountFormBase.php');
 $accountForm = new AccountFormBase();
-$GLOBALS['check_notify'] = FALSE;
+$GLOBALS['check_notify'] = false;
 
 $query = 'select id, name, website, billing_address_city  from accounts where deleted=0 ';
 $duplicates = $_POST['duplicate'];

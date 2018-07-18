@@ -215,19 +215,19 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
     {
         $results = array();
         $primaryEmail = $this->getPrimaryEmail();
-        if($primaryEmail !== FALSE)
+        if($primaryEmail !== false)
             $results['email1'] =  $primaryEmail;
         else
         {
             $nonPrimaryEmail = $this->getNextNonPrimaryEmail();
-            if($nonPrimaryEmail !== FALSE)
+            if($nonPrimaryEmail !== false)
                 $results['email1'] = $nonPrimaryEmail;
             else
                 return array();
         }
 
         $secondaryEmail = $this->getNextNonPrimaryEmail();
-        if($secondaryEmail !== FALSE)
+        if($secondaryEmail !== false)
             $results['email2'] = $secondaryEmail;
         
         return $results;
@@ -235,7 +235,7 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
     }
     protected function getPrimaryEmail()
     {
-        $results = FALSE;
+        $results = false;
         foreach($this->_emails as $emailEntry)
         {
             if( $emailEntry->isPrimary() )
@@ -246,7 +246,7 @@ class Zend_Gdata_Contacts_ListEntry extends Zend_Gdata_Entry
 
     protected function getNextNonPrimaryEmail()
     {
-        $results = FALSE;
+        $results = false;
         foreach($this->_emails as $k => $emailEntry)
         {
             if( !$emailEntry->isPrimary() )

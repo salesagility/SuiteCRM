@@ -229,7 +229,7 @@ class XML_HTMLSax3_StateParser
     {
         $start = $this->position;
         $this->position = strpos($this->rawtext, $string, $start);
-        if ($this->position === FALSE) {
+        if ($this->position === false) {
             $this->position = $this->length;
         }
         return substr($this->rawtext, $start, $this->position - $start);
@@ -377,7 +377,7 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
     public function scanUntilCharacters($string)
     {
         $startpos = $this->position;
-        while ($this->position < $this->length && strpos($string, $this->rawtext{$this->position}) === FALSE) {
+        while ($this->position < $this->length && strpos($string, $this->rawtext{$this->position}) === false) {
             $this->position++;
         }
         return substr($this->rawtext, $startpos, $this->position - $startpos);
@@ -391,7 +391,7 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser
     public function ignoreWhitespace()
     {
         while ($this->position < $this->length &&
-            strpos(" \n\r\t", $this->rawtext{$this->position}) !== FALSE) {
+            strpos(" \n\r\t", $this->rawtext{$this->position}) !== false) {
             $this->position++;
         }
     }

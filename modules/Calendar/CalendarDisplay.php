@@ -541,7 +541,7 @@ class CalendarDisplay
             $tabs = $this->views;
             $tabs_params = array();
             foreach ($tabs as $key => $tab) {
-                if (($key != "basicDay") AND ($key != "basicWeek")) {
+                if (($key != "basicDay") and ($key != "basicWeek")) {
                     $tabs_params[$key]['title'] = $cal_strings["LBL_" . strtoupper($key)];
                     $tabs_params[$key]['id'] = $key . "-tab";
                     $tabs_params[$key]['link'] = "window.location.href='" . ajaxLink("index.php?module=Calendar&action=index&view=" . $key . $this->cal->date_time->get_date_str()) . "'";

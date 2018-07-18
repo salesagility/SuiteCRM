@@ -147,7 +147,7 @@ class EditViewMerge
      *
      * @var FILEPOINTER
      */
-    protected $fp = NULL;
+    protected $fp = null;
 	
 	
     /**

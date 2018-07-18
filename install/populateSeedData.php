@@ -112,9 +112,9 @@ if ($large_scale_test) {
 
 $possible_duration_hours_arr = array( 0, 1, 2, 3);
 $possible_duration_minutes_arr = array('00' => '00','15' => '15', '30' => '30', '45' => '45');
-$account_ids = Array();
-$accounts = Array();
-$opportunity_ids = Array();
+$account_ids = array();
+$accounts = array();
+$opportunity_ids = array();
 
 // Determine the assigned user for all demo data.  This is the default user if set, or admin
 $assigned_user_name = "admin";

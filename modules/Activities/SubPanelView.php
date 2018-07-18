@@ -73,12 +73,12 @@ global $focus_meetings_list;
 global $focus_calls_list;
 global $focus_emails_list;
 
-$open_activity_list = Array();
-$history_list = Array();
+$open_activity_list = array();
+$history_list = array();
 
 foreach ($focus_tasks_list as $task) {
     if ($task->status != "Not Started" && $task->status != "In Progress" && $task->status != "Pending Input") {
-        $history_list[] = Array('name' => $task->name,
+        $history_list[] = array('name' => $task->name,
 									 'id' => $task->id,
 									 'type' => "Task",
 									 'direction' => '',
@@ -97,7 +97,7 @@ foreach ($focus_tasks_list as $task) {
         } else {
             $date_due = $task->date_due;
         }
-        $open_activity_list[] = Array('name' => $task->name,
+        $open_activity_list[] = array('name' => $task->name,
 									 'id' => $task->id,
 									 'type' => "Task",
 									 'direction' => '',
@@ -115,7 +115,7 @@ foreach ($focus_tasks_list as $task) {
 
 foreach ($focus_meetings_list as $meeting) {
     if ($meeting->status != "Planned") {
-        $history_list[] = Array('name' => $meeting->name,
+        $history_list[] = array('name' => $meeting->name,
 									 'id' => $meeting->id,
 									 'type' => "Meeting",
 									 'direction' => '',
@@ -129,7 +129,7 @@ foreach ($focus_meetings_list as $meeting) {
 									 'date_modified' => $meeting->date_modified
 									 );
     } else {
-        $open_activity_list[] = Array('name' => $meeting->name,
+        $open_activity_list[] = array('name' => $meeting->name,
 									 'id' => $meeting->id,
 									 'type' => "Meeting",
 									 'direction' => '',
@@ -147,7 +147,7 @@ foreach ($focus_meetings_list as $meeting) {
 
 foreach ($focus_calls_list as $call) {
     if ($call->status != "Planned") {
-        $history_list[] = Array('name' => $call->name,
+        $history_list[] = array('name' => $call->name,
 									 'id' => $call->id,
 									 'type' => "Call",
 									 'direction' => $call->direction,
@@ -161,7 +161,7 @@ foreach ($focus_calls_list as $call) {
 									 'date_modified' => $call->date_modified
 									 );
     } else {
-        $open_activity_list[] = Array('name' => $call->name,
+        $open_activity_list[] = array('name' => $call->name,
 									 'id' => $call->id,
 									 'direction' => $call->direction,
 									 'type' => "Call",
@@ -178,7 +178,7 @@ foreach ($focus_calls_list as $call) {
 }
 
 foreach ($focus_emails_list as $email) {
-    $history_list[] = Array('name' => $email->name,
+    $history_list[] = array('name' => $email->name,
 									 'id' => $email->id,
 									 'type' => "Email",
 									 'direction' => '',
@@ -194,7 +194,7 @@ foreach ($focus_emails_list as $email) {
 }
 
 foreach ($focus_notes_list as $note) {
-    $history_list[] = Array('name' => $note->name,
+    $history_list[] = array('name' => $note->name,
 									 'id' => $note->id,
 									 'type' => "Note",
 									 'direction' => '',

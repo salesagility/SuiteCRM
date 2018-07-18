@@ -118,14 +118,14 @@ class ImportViewConfirm extends ImportView
         $this->ss->assign("FILE_NAME", $uploadFileName);
 
         // Now parse the file and look for errors
-        $importFile = new ImportFile($uploadFileName, $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), FALSE);
+        $importFile = new ImportFile($uploadFileName, $_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), false);
 
         if ($this->shouldAutoDetectProperties($importSource)) {
             $GLOBALS['log']->debug("Auto detecing csv properties...");
             $autoDetectOk = $importFile->autoDetectCSVProperties();
             $importFileMap = array();
             $this->ss->assign("SOURCE", 'csv');
-            if ($autoDetectOk === FALSE) {
+            if ($autoDetectOk === false) {
                 //show error only if previous mime type check has passed
                 if ($mimeTypeOk) {
                     $this->ss->assign("AUTO_DETECT_ERROR", $mod_strings['LBL_AUTO_DETECT_ERROR']);
@@ -150,10 +150,10 @@ class ImportViewConfirm extends ImportView
         $enclosure = $importFile->getFieldEnclosure();
         $hasHeader = $importFile->hasHeaderRow();
 
-        $encodeOutput = TRUE;
+        $encodeOutput = true;
         //Handle users navigating back through the wizard.
         if (!empty($_REQUEST['previous_action']) && $_REQUEST['previous_action'] == 'Confirm') {
-            $encodeOutput = FALSE;
+            $encodeOutput = false;
             $importFileMap = $this->overloadImportFileMapFromRequest($importFileMap);
             $delimeter = !empty($_REQUEST['custom_delimiter']) ? $_REQUEST['custom_delimiter'] : $delimeter;
             $enclosure = isset($_REQUEST['custom_enclosure']) ? $_REQUEST['custom_enclosure'] : $enclosure;
@@ -179,19 +179,19 @@ class ImportViewConfirm extends ImportView
         }
 
         //Check if we will exceed the maximum number of records allowed per import.
-        $maxRecordsExceeded = FALSE;
+        $maxRecordsExceeded = false;
         $maxRecordsWarningMessg = "";
         $lineCount = $importFile->getNumberOfLinesInfile();
         $maxLineCount = isset($sugar_config['import_max_records_total_limit']) ? $sugar_config['import_max_records_total_limit'] : 5000;
         if (!empty($maxLineCount) && ($lineCount > $maxLineCount)) {
-            $maxRecordsExceeded = TRUE;
+            $maxRecordsExceeded = true;
             $maxRecordsWarningMessg = string_format($mod_strings['LBL_IMPORT_ERROR_MAX_REC_LIMIT_REACHED'], array($lineCount, $maxLineCount));
         }
 
         //Retrieve a sample set of data
         $rows = $this->getSampleSet($importFile);
         $this->ss->assign('column_count', $this->getMaxColumnsInSampleSet($rows));
-        $this->ss->assign('HAS_HEADER', $importFile->hasHeaderRow(FALSE));
+        $this->ss->assign('HAS_HEADER', $importFile->hasHeaderRow(false));
         $this->ss->assign('getNumberJs', $locale->getNumberJs());
         $this->setImportFileCharacterSet($importFile, $importFileMap);
         $this->setDateTimeProperties($importFileMap);
@@ -244,9 +244,9 @@ class ImportViewConfirm extends ImportView
     private function shouldAutoDetectProperties($importSource)
     {
         if (empty($importSource) || $importSource == 'csv') {
-            return TRUE;
+            return true;
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -415,7 +415,7 @@ eoq;
             $rows[] = $importFile->getNextRow();
         }
 
-        if (! $importFile->hasHeaderRow(FALSE)) {
+        if (! $importFile->hasHeaderRow(false)) {
             array_unshift($rows, array_fill(0, 1, ''));
         }
         

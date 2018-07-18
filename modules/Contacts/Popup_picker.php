@@ -324,7 +324,7 @@ EOJS;
         $query = get_merge_query($seed_bean, $rel_module, $id);
         $result = $seed_bean->db->query($query, true, "Error retrieving $seed_bean->object_name list: ");
 
-        $list = Array();
+        $list = array();
         while (($row = $seed_bean->db->fetchByAssoc($result)) != null) {
             $seed_bean = new Contact();
             foreach ($seed_bean->field_defs as $field=>$value) {

@@ -209,7 +209,7 @@ $GLOBALS['log']->info('----->InboundEmail now saving self');
 //When an admin is creating an IE account we do not want their private team to be added
 //or they may be included in a round robin assignment.
 $previousTeamAccessCheck = isset($GLOBALS['sugar_config']['disable_team_access_check']) ? $GLOBALS['sugar_config']['disable_team_access_check'] : null;
-$GLOBALS['sugar_config']['disable_team_access_check'] = TRUE;
+$GLOBALS['sugar_config']['disable_team_access_check'] = true;
 
 $focus->save();
 

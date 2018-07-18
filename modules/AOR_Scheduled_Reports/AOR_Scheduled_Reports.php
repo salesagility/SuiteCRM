@@ -92,7 +92,7 @@ class AOR_Scheduled_Reports extends basic
         return false;
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         if (isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])) {
             $this->email_recipients = base64_encode(serialize($_POST['email_recipients']));
@@ -120,7 +120,7 @@ class AOR_Scheduled_Reports extends basic
                     case 'Users':
                         $users = array();
                         switch ($params['email'][$key][0]) {
-                            Case 'security_group':
+                            case 'security_group':
                                 if (file_exists('modules/SecurityGroups/SecurityGroup.php')) {
                                     require_once('modules/SecurityGroups/SecurityGroup.php');
                                     $security_group = new SecurityGroup();
@@ -145,13 +145,13 @@ class AOR_Scheduled_Reports extends basic
                                 }
                             //No Security Group module found - fall through.
                             // no break
-                            Case 'role':
+                            case 'role':
                                 require_once('modules/ACLRoles/ACLRole.php');
                                 $role = new ACLRole();
                                 $role->retrieve($params['email'][$key][2]);
                                 $users = $role->get_linked_beans('users', 'User');
                                 break;
-                            Case 'all':
+                            case 'all':
                             default:
                                 $db = DBManagerFactory::getInstance();
                                 $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";

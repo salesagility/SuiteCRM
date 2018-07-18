@@ -108,7 +108,7 @@ class Prospect extends Person implements EmailInterface
 
     public $importable = true;
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('assigned_user_name');
+    public $additional_column_fields = array('assigned_user_name');
 
 
     public function __construct()
@@ -150,7 +150,7 @@ class Prospect extends Person implements EmailInterface
     */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = DBManagerFactory::getInstance()->quote($the_query_string);
 
         array_push($where_clauses, "prospects.last_name like '$the_query_string%'");

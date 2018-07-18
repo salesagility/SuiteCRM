@@ -73,7 +73,7 @@ if (isset($_POST['layoutSelectedModules'])) {
     
     $mergedModules = $_SESSION['sugarMergeRunResults'];
     $selectedModules  = explode("^,^", $_POST['layoutSelectedModules']);
-    logThis('Layout Commits, selected modules by user: ' . print_r($selectedModules, TRUE));
+    logThis('Layout Commits, selected modules by user: ' . print_r($selectedModules, true));
     $rollBackList = array();
     $actualMergedList = array();
     
@@ -86,8 +86,8 @@ if (isset($_POST['layoutSelectedModules'])) {
         }
     }
     
-    logThis('Layout Commits will rollback the following modules: ' . print_r($rollBackList, TRUE));
-    logThis('Layout Commits merged the following modules: ' . print_r($actualMergedList, TRUE));
+    logThis('Layout Commits will rollback the following modules: ' . print_r($rollBackList, true));
+    logThis('Layout Commits merged the following modules: ' . print_r($actualMergedList, true));
     
     $layoutMergeData = $actualMergedList;
     
@@ -102,7 +102,7 @@ if (isset($_POST['layoutSelectedModules'])) {
     logThis('Layout Commits completed successfully');
     $smarty->assign("CONFIRM_LAYOUT_HEADER", $mod_strings['LBL_UW_CONFIRM_LAYOUT_RESULTS']);
     $smarty->assign("CONFIRM_LAYOUT_DESC", $mod_strings['LBL_UW_CONFIRM_LAYOUT_RESULTS_DESC']);
-    $showCheckBoxes = FALSE;
+    $showCheckBoxes = false;
     $GLOBALS['top_message'] = "<b>{$mod_strings['LBL_LAYOUT_MERGE_TITLE2']}</b>";
 } else {
     //Fist visit to the commit layout page.  Display the selection table to the user.
@@ -111,7 +111,7 @@ if (isset($_POST['layoutSelectedModules'])) {
     $smarty->assign("CONFIRM_LAYOUT_DESC", $mod_strings['LBL_LAYOUT_MERGE_DESC']);
     $layoutMergeData = cleanMergeData($_SESSION['sugarMergeRunResults']);
     $stepNext = $_REQUEST['step'];
-    $showCheckBoxes = TRUE;
+    $showCheckBoxes = true;
     $GLOBALS['top_message'] = "<b>{$mod_strings['LBL_LAYOUT_MERGE_TITLE']}</b>";
 }
 
@@ -123,10 +123,10 @@ $layoutMergeData = formatLayoutMergeDataForDisplay($layoutMergeData);
 $smarty->assign("METADATA_DATA", $layoutMergeData);
 $uwMain = $smarty->fetch('modules/UpgradeWizard/tpls/layoutsMerge.tpl');
     
-$showBack = FALSE;
-$showCancel = FALSE;
-$showRecheck = FALSE;
-$showNext = TRUE;
+$showBack = false;
+$showCancel = false;
+$showRecheck = false;
+$showNext = true;
 
 set_upgrade_progress('layouts', 'done');
 
@@ -174,7 +174,7 @@ function rollBackMergedModules($data)
                         @unlink($srcFile);
                     }
                     $copyResult = @copy($srcBackupFile, $srcFile);
-                    if ($copyResult === TRUE) {
+                    if ($copyResult === true) {
                         @unlink($srcBackupFile);
                         logThis("Layout Commits, rollBackMergedModules successfully reverted file $srcFile");
                     } else {

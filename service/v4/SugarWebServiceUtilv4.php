@@ -142,7 +142,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
     {
         global $beanList, $beanFiles;
 
-        $fav = FALSE;
+        $fav = false;
         return $fav;
     }
 
@@ -260,7 +260,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
             $seedRelease = new Release();
-            $options = $seedRelease->get_releases(TRUE, "Active");
+            $options = $seedRelease->get_releases(true, "Active");
             $options_ret = array();
             foreach ($options as $name=>$value) {
                 $options_ret[] =  array('name'=> $name , 'value'=>$value);
@@ -305,7 +305,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
     }
 
 
-    public function new_handle_set_entries($module_name, $name_value_lists, $select_fields = FALSE)
+    public function new_handle_set_entries($module_name, $name_value_lists, $select_fields = false)
     {
         $GLOBALS['log']->info('Begin: SoapHelperWebServices->new_handle_set_entries');
         global $beanList, $beanFiles, $current_user, $app_list_strings;
@@ -433,7 +433,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
             }
 
             // if somebody is calling set_entries_detail() and wants fields returned...
-            if ($select_fields !== FALSE) {
+            if ($select_fields !== false) {
                 $ret_values[$count] = array();
 
                 foreach ($select_fields as $select_field) {
@@ -445,7 +445,7 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
         }
 
         // handle returns for set_entries_detail() and set_entries()
-        if ($select_fields !== FALSE) {
+        if ($select_fields !== false) {
             $GLOBALS['log']->info('End: SoapHelperWebServices->new_handle_set_entries');
             return array(
                 'name_value_lists' => $ret_values,

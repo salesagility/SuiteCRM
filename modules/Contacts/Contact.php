@@ -142,7 +142,7 @@ class Contact extends Person implements EmailInterface
     public $importable = true;
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array(
+    public $additional_column_fields = array(
         'bug_id',
         'assigned_user_name',
         'account_name',
@@ -156,7 +156,7 @@ class Contact extends Person implements EmailInterface
         'email_id'
     );
 
-    public $relationship_fields = Array(
+    public $relationship_fields = array(
         'account_id' => 'accounts',
         'bug_id' => 'bugs',
         'call_id' => 'calls',
@@ -504,7 +504,7 @@ class Contact extends Person implements EmailInterface
      */
     public function build_generic_where_clause($the_query_string)
     {
-        $where_clauses = Array();
+        $where_clauses = array();
         $the_query_string = $this->db->quote($the_query_string);
 
         array_push($where_clauses, "contacts.last_name like '$the_query_string%'");

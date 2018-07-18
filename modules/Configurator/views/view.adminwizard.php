@@ -90,7 +90,7 @@ class ViewAdminwizard extends SugarView
 
         $silentInstall = $GLOBALS['current_user']->getPreference('silentInstall');
         //If not set, show the configuration
-        if ($silentInstall === NULL) {
+        if ($silentInstall === null) {
             $silentInstall = false;
         }
 

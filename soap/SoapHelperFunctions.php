@@ -537,7 +537,7 @@ function name_value_lists_get_array($list)
 
 function array_get_return_value($array, $module)
 {
-    return Array(
+    return array(
         'id' => $array['id'],
         'module_name' => $module,
         'name_value_list' => array_get_name_value_list($array)
@@ -553,7 +553,7 @@ function get_return_value_for_fields($value, $module, $fields)
     }
     $value = clean_sensitive_data($value->field_defs, $value);
 
-    return Array(
+    return array(
         'id' => $value->id,
         'module_name' => $module,
         'name_value_list' => get_name_value_list_for_fields($value, $fields)
@@ -825,7 +825,7 @@ function get_return_value($value, $module, $returnDomValue = false)
     }
     $value = clean_sensitive_data($value->field_defs, $value);
 
-    return Array(
+    return array(
         'id' => $value->id,
         'module_name' => $module,
         'name_value_list' => get_name_value_list($value, $returnDomValue)
@@ -867,7 +867,7 @@ function new_get_return_module_fields($value, $module, $translate = true)
     $module_name = $module;
     $result = new_get_field_list($value, $translate);
 
-    return Array(
+    return array(
         'module_name' => $module,
         'module_fields' => $result['module_fields'],
         'link_fields' => $result['link_fields'],
@@ -879,7 +879,7 @@ function get_return_module_fields($value, $module, $error, $translate = true)
     global $module_name;
     $module_name = $module;
 
-    return Array(
+    return array(
         'module_name' => $module,
         'module_fields' => get_field_list($value, $translate),
         'error' => get_name_value_list($value)
@@ -888,7 +888,7 @@ function get_return_module_fields($value, $module, $error, $translate = true)
 
 function get_return_error_value($error_num, $error_name, $error_description)
 {
-    return Array(
+    return array(
         'number' => $error_num,
         'name' => $error_name,
         'description' => $error_description

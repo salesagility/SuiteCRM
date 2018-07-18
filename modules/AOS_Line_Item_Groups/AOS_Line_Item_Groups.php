@@ -101,7 +101,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
         $productQuote->save_lines($post_data, $parent, $groups, 'service_');
     }
 
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
         perform_aos_save($this);

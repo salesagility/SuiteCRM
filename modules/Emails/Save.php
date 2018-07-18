@@ -63,7 +63,7 @@ if (!$focus->ACLAccess('Save')) {
     sugar_cleanup(true);
 }
 if (!empty($_POST['assigned_user_id']) && ($focus->assigned_user_id != $_POST['assigned_user_id']) && ($_POST['assigned_user_id'] != $current_user->id)) {
-    $check_notify = TRUE;
+    $check_notify = true;
 }
 //populate the fields of this Email
 $allfields = array_merge($focus->column_fields, $focus->additional_column_fields);

@@ -95,7 +95,7 @@ abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base
      *
      * @var string|null
      */
-    protected $_etag = NULL;
+    protected $_etag = null;
 
     protected $_author = array();
     protected $_category = array();

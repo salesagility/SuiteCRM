@@ -66,7 +66,7 @@ class SugarFeedFlush
             $db->query("DELETE FROM ".$tmpSF->table_name." WHERE date_entered < '".$db->quote($flushBefore)."'");
             $admin->saveSetting('sugarfeed', 'flushdate', $currDate);
             // Flush the cache
-            $admin->retrieveSettings(FALSE, TRUE);
+            $admin->retrieveSettings(false, true);
         }
     }
 }

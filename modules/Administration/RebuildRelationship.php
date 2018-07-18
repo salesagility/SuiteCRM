@@ -62,7 +62,7 @@ foreach ($GLOBALS['beanFiles'] as $bean => $file) {
             require $file;
         }
         $focus = new $bean ();
-        if ($focus instanceOf SugarBean) {
+        if ($focus instanceof SugarBean) {
             $table_name = $focus->table_name;
             $empty = array();
             if (empty ($_REQUEST ['silent'])) {

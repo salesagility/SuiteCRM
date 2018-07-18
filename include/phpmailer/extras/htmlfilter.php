@@ -724,8 +724,8 @@ function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
                 break;
         }
     }
-    if ($bSucces == FALSE) {
-        return array(FALSE, strlen($body));
+    if ($bSucces == false) {
+        return array(false, strlen($body));
     }
 
 
@@ -883,7 +883,7 @@ function tln_sanitize(
         if ($tagname == "style" && $tagtype == 1) {
             list($free_content, $curpos) =
                 tln_fixstyle($body, $gt+1, $trans_image_path, $block_external_images);
-            if ($free_content != FALSE) {
+            if ($free_content != false) {
                 if (!empty($attary)) {
                     $attary = tln_fixatts($tagname,
                                          $attary,

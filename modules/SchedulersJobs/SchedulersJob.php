@@ -211,7 +211,7 @@ class SchedulersJob extends Basic
         }
         curl_close($ch);
 
-        if ($result !== FALSE && $cInfo['http_code'] < 400) {
+        if ($result !== false && $cInfo['http_code'] < 400) {
             $GLOBALS['log']->debug("----->Firing was successful: $job");
             $GLOBALS['log']->debug('----->WTIH RESULT: '.strip_tags($result).' AND '.strip_tags(print_r($cInfo, true)));
             return true;

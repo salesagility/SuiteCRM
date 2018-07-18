@@ -52,20 +52,20 @@
          $Precision		= isset($Format["Precision"]) ? $Format["Precision"] : 0;
          $DataGapAngle	= isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 0;
          $DataGapRadius	= isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 0;
-         $SecondPass	= isset($Format["SecondPass"]) ? $Format["SecondPass"] : TRUE;
-         $Border		= isset($Format["Border"]) ? $Format["Border"] : FALSE;
+         $SecondPass	= isset($Format["SecondPass"]) ? $Format["SecondPass"] : true;
+         $Border		= isset($Format["Border"]) ? $Format["Border"] : false;
          $BorderR		= isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
          $BorderG		= isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
          $BorderB		= isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
-         $Shadow		= isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
-         $DrawLabels	= isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
-         $LabelStacked	= isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
+         $Shadow		= isset($Format["Shadow"]) ? $Format["Shadow"] : false;
+         $DrawLabels	= isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : false;
+         $LabelStacked	= isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : false;
          $LabelColor	= isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
          $LabelR		= isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
          $LabelG		= isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
          $LabelB		= isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
          $LabelAlpha	= isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
-         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL;
+         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : null;
          $ValuePosition	= isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_OUTSIDE;
          $ValuePadding	= isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 15;
          $ValueSuffix	= isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
@@ -73,7 +73,7 @@
          $ValueG		= isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
          $ValueB		= isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
          $ValueAlpha	= isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
-         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
+         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
 
          /* Data Processing */
          $Data    = $this->pDataObject->getData();
@@ -128,10 +128,10 @@
 
          $RestoreShadow = $this->pChartObject->Shadow;
          if ($this->pChartObject->Shadow) {
-             $this->pChartObject->Shadow = FALSE;
+             $this->pChartObject->Shadow = false;
 
              $ShadowFormat = $Format;
-             $ShadowFormat["Shadow"] = TRUE;
+             $ShadowFormat["Shadow"] = true;
              $this->draw2DPie($X+$this->pChartObject->ShadowX, $Y+$this->pChartObject->ShadowY, $ShadowFormat);
          }
 
@@ -218,9 +218,9 @@
                  $Label = $Data["Series"][$Data["Abscissa"]]["Data"][$Key];
 
                  if ($LabelStacked) {
-                     $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, TRUE, $X, $Y, $Radius);
+                     $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, true, $X, $Y, $Radius);
                  } else {
-                     $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, FALSE);
+                     $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, false);
                  }
              }
 
@@ -234,7 +234,7 @@
              $Offset = 0;
              $ID = 0;
              foreach ($Values as $Key => $Value) {
-                 $FirstPoint = TRUE;
+                 $FirstPoint = true;
                  if ($Shadow) {
                      $Settings = array("R"=>$this->pChartObject->ShadowR,"G"=>$this->pChartObject->ShadowG,"B"=>$this->pChartObject->ShadowB,"Alpha"=>$this->pChartObject->Shadowa);
                  } else {
@@ -268,7 +268,7 @@
                      if ($FirstPoint) {
                          $this->pChartObject->drawLine($Xc, $Yc, $X0, $Y0, $Settings);
                      }
-                     { $FirstPoint = FALSE; }
+                     { $FirstPoint = false; }
   
                      $this->pChartObject->drawAntialiasPixel($Xc, $Yc, $Settings);
                  }
@@ -288,9 +288,9 @@
                      $Label = $Data["Series"][$Data["Abscissa"]]["Data"][$Key];
 
                      if ($LabelStacked) {
-                         $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, TRUE, $X, $Y, $Radius);
+                         $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, true, $X, $Y, $Radius);
                      } else {
-                         $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, FALSE);
+                         $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, false);
                      }
                  }
   
@@ -299,7 +299,7 @@
              }
          }
 
-         if ($WriteValues != NULL && !$Shadow) {
+         if ($WriteValues != null && !$Shadow) {
              $Step = 360 / (2 * PI * $Radius);
              $Offset = 0;
              $ID = count($Values)-1;
@@ -351,17 +351,17 @@
          $SliceHeight	= isset($Format["SliceHeight"]) ? $Format["SliceHeight"] : 20;
          $DataGapAngle	= isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 0;
          $DataGapRadius	= isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 0;
-         $SecondPass	= isset($Format["SecondPass"]) ? $Format["SecondPass"] : TRUE;
-         $Border		= isset($Format["Border"]) ? $Format["Border"] : FALSE;
-         $Shadow		= isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
-         $DrawLabels	= isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
-         $LabelStacked	= isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
+         $SecondPass	= isset($Format["SecondPass"]) ? $Format["SecondPass"] : true;
+         $Border		= isset($Format["Border"]) ? $Format["Border"] : false;
+         $Shadow		= isset($Format["Shadow"]) ? $Format["Shadow"] : false;
+         $DrawLabels	= isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : false;
+         $LabelStacked	= isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : false;
          $LabelColor	= isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
          $LabelR		= isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
          $LabelG		= isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
          $LabelB		= isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
          $LabelAlpha	= isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
-         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL; //PIE_VALUE_PERCENTAGE
+         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : null; //PIE_VALUE_PERCENTAGE
          $ValuePosition	= isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_INSIDE;
          $ValuePadding	= isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 15;
          $ValueSuffix	= isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
@@ -369,7 +369,7 @@
          $ValueG		= isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
          $ValueB		= isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
          $ValueAlpha	= isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
-         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
+         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
 
          /* Error correction for overlaying rounded corners */
          if ($SkewFactor < .5) {
@@ -429,7 +429,7 @@
 
          $RestoreShadow = $this->pChartObject->Shadow;
          if ($this->pChartObject->Shadow) {
-             $this->pChartObject->Shadow = FALSE;
+             $this->pChartObject->Shadow = false;
          }
 
          /* Draw the polygon pie elements */
@@ -459,14 +459,14 @@
              }
 
              if ($StartAngle > 180) {
-                 $Visible[$Slice]["Start"] = TRUE;
+                 $Visible[$Slice]["Start"] = true;
              } else {
-                 $Visible[$Slice]["Start"] = TRUE;
+                 $Visible[$Slice]["Start"] = true;
              }
              if ($EndAngle < 180) {
-                 $Visible[$Slice]["End"] = FALSE;
+                 $Visible[$Slice]["End"] = false;
              } else {
-                 $Visible[$Slice]["End"] = TRUE;
+                 $Visible[$Slice]["End"] = true;
              }
 
              if ($DataGapAngle == 0) {
@@ -518,7 +518,7 @@
                      $ShadowPie[] = $Plots[$i+1]+$this->pChartObject->ShadowY;
                  }
 
-                 $Settings = array("R"=>$this->pChartObject->ShadowR,"G"=>$this->pChartObject->ShadowG,"B"=>$this->pChartObject->ShadowB,"Alpha"=>$this->pChartObject->Shadowa,"NoBorder"=>TRUE);
+                 $Settings = array("R"=>$this->pChartObject->ShadowR,"G"=>$this->pChartObject->ShadowG,"B"=>$this->pChartObject->ShadowB,"Alpha"=>$this->pChartObject->Shadowa,"NoBorder"=>true);
                  $this->pChartObject->drawPolygon($ShadowPie, $Settings);
              }
 
@@ -545,7 +545,7 @@
          /* Draw the bottom pie splice */
          foreach ($Slices as $SliceID => $Plots) {
              $Settings = $SliceColors[$SliceID];
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              $this->pChartObject->drawPolygon($Plots, $Settings);
 
              if ($SecondPass) {
@@ -580,7 +580,7 @@
              $Settings["R"]+= 10;
              $Settings["G"]+= 10;
              $Settings["B"]+= 10;
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
 
              if ($Visible[$SliceID]["Start"] && isset($Plots[2])) /* Empty error handling */
         {
@@ -599,7 +599,7 @@
              $Settings["R"]+= 10;
              $Settings["G"]+= 10;
              $Settings["B"]+= 10;
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              if ($Visible[$SliceID]["End"]) {
                  $this->pChartObject->drawLine($Plots[count($Plots)-2], $Plots[count($Plots)-1], $Plots[count($Plots)-2], $Plots[count($Plots)-1]- $SliceHeight, array("R"=>$Settings["R"],"G"=>$Settings["G"],"B"=>$Settings["B"]));
 
@@ -622,7 +622,7 @@
              $Settings["R"]+= 10;
              $Settings["G"]+= 10;
              $Settings["B"]+= 10;
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
 
              for ($j=2;$j<count($Plots)-2;$j=$j+2) {
                  $Angle = $SliceAngle[$SliceID][$j/2];
@@ -705,7 +705,7 @@
              $Offset = 360;
              $ID = count($Values)-1;
              foreach ($Values as $Key => $Value) {
-                 $FirstPoint = TRUE;
+                 $FirstPoint = true;
                  if ($Shadow) {
                      $Settings = array("R"=>$this->pChartObject->ShadowR,"G"=>$this->pChartObject->ShadowG,"B"=>$this->pChartObject->ShadowB,"Alpha"=>$this->pChartObject->Shadowa);
                  } else {
@@ -739,7 +739,7 @@
                      if ($FirstPoint) {
                          $this->pChartObject->drawLine($Xc, $Yc, $X0, $Y0, $Settings);
                      }
-                     { $FirstPoint = FALSE; }
+                     { $FirstPoint = false; }
   
                      $this->pChartObject->drawAntialiasPixel($Xc, $Yc, $Settings);
                      if ($i < 270 && $i > 90) {
@@ -753,7 +753,7 @@
              }
          }
 
-         if ($WriteValues != NULL) {
+         if ($WriteValues != null) {
              $Step = 360 / (2 * PI * $Radius);
              $Offset = 360;
              $ID = count($Values)-1;
@@ -811,9 +811,9 @@
                      $Label = $Data["Series"][$Data["Abscissa"]]["Data"][$ID];
 
                      if ($LabelStacked) {
-                         $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, TRUE, $X, $Y, $Radius, TRUE);
+                         $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, true, $X, $Y, $Radius, true);
                      } else {
-                         $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, FALSE);
+                         $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, false);
                      }
                  }
 
@@ -848,11 +848,11 @@
          $BorderR		= isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
          $BorderG		= isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
          $BorderB		= isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
-         $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : NULL;
+         $Surrounding	= isset($Format["Surrounding"]) ? $Format["Surrounding"] : null;
          $Style		= isset($Format["Style"]) ? $Format["Style"] : LEGEND_ROUND;
          $Mode		= isset($Format["Mode"]) ? $Format["Mode"] : LEGEND_VERTICAL;
 
-         if ($Surrounding != NULL) {
+         if ($Surrounding != null) {
              $BorderR = $R + $Surrounding;
              $BorderG = $G + $Surrounding;
              $BorderB = $B + $Surrounding;
@@ -919,7 +919,7 @@
          }
 
          $RestoreShadow = $this->pChartObject->Shadow;
-         $this->pChartObject->Shadow = FALSE;
+         $this->pChartObject->Shadow = false;
          foreach ($Data["Series"][$Data["Abscissa"]]["Data"] as $Key => $Value) {
              $R = $Palette[$Key]["R"];
              $G = $Palette[$Key]["G"];
@@ -954,7 +954,7 @@
      }
 
      /* Internally used compute the label positions */
-     public function writePieLabel($X, $Y, $Label, $Angle, $Settings, $Stacked, $Xc=0, $Yc=0, $Radius=0, $Reversed=FALSE)
+     public function writePieLabel($X, $Y, $Label, $Angle, $Settings, $Stacked, $Xc=0, $Yc=0, $Radius=0, $Reversed=false)
      {
          $LabelOffset	= 30;
          $FontName		= $this->pChartObject->FontName;
@@ -976,24 +976,24 @@
              $YBottom = $Y2 + $Height/2 + 2;
 
              if ($this->LabelPos != "") {
-                 $Done = FALSE;
+                 $Done = false;
                  foreach ($this->LabelPos as $Key => $Settings) {
                      if (!$Done) {
                          if ($Angle <= 90 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"]))) {
                              $this->shift(0, 180, -($Height+2), $Reversed);
-                             $Done = TRUE;
+                             $Done = true;
                          }
                          if ($Angle > 90 && $Angle <= 180 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"]))) {
                              $this->shift(0, 180, -($Height+2), $Reversed);
-                             $Done = TRUE;
+                             $Done = true;
                          }
                          if ($Angle > 180 && $Angle <= 270 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"]))) {
                              $this->shift(180, 360, ($Height+2), $Reversed);
-                             $Done = TRUE;
+                             $Done = true;
                          }
                          if ($Angle > 270 && $Angle <= 360 && (($YTop >= $Settings["YTop"] && $YTop <= $Settings["YBottom"]) || ($YBottom >= $Settings["YTop"] && $YBottom <= $Settings["YBottom"]))) {
                              $this->shift(180, 360, ($Height+2), $Reversed);
-                             $Done = TRUE;
+                             $Done = true;
                          }
                      }
                  }
@@ -1057,20 +1057,20 @@
          $OuterRadius	= isset($Format["Radius"]) ? $Format["Radius"] : 60;
          $Precision		= isset($Format["Precision"]) ? $Format["Precision"] : 0;
          $InnerRadius	= isset($Format["Radius"]) ? $Format["Radius"] : 30;
-         $Border		= isset($Format["Border"]) ? $Format["Border"] : FALSE;
+         $Border		= isset($Format["Border"]) ? $Format["Border"] : false;
          $BorderR		= isset($Format["BorderR"]) ? $Format["BorderR"] : 255;
          $BorderG		= isset($Format["BorderG"]) ? $Format["BorderG"] : 255;
          $BorderB		= isset($Format["BorderB"]) ? $Format["BorderB"] : 255;
          $BorderAlpha	= isset($Format["BorderAlpha"]) ? $Format["BorderAlpha"] : 100;
-         $Shadow		= isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
-         $DrawLabels	= isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
-         $LabelStacked	= isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
+         $Shadow		= isset($Format["Shadow"]) ? $Format["Shadow"] : false;
+         $DrawLabels	= isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : false;
+         $LabelStacked	= isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : false;
          $LabelColor	= isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
          $LabelR		= isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
          $LabelG		= isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
          $LabelB		= isset($Format["LabelB"]) ? $Format["LabelB"] : 0;
          $LabelAlpha	= isset($Format["LabelAlpha"]) ? $Format["LabelAlpha"] : 100;
-         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : NULL; //PIE_VALUE_PERCENTAGE
+         $WriteValues	= isset($Format["WriteValues"]) ? $Format["WriteValues"] : null; //PIE_VALUE_PERCENTAGE
          $ValuePadding	= isset($Format["ValuePadding"]) ? $Format["ValuePadding"] : 5;
          $ValuePosition	= isset($Format["ValuePosition"]) ? $Format["ValuePosition"] : PIE_VALUE_OUTSIDE;
          $ValueSuffix	= isset($Format["ValueSuffix"]) ? $Format["ValueSuffix"] : "";
@@ -1078,7 +1078,7 @@
          $ValueG		= isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
          $ValueB		= isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
          $ValueAlpha	= isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
-         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
+         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
 
          /* Data Processing */
          $Data    = $this->pDataObject->getData();
@@ -1133,10 +1133,10 @@
 
          $RestoreShadow = $this->pChartObject->Shadow;
          if ($this->pChartObject->Shadow) {
-             $this->pChartObject->Shadow = FALSE;
+             $this->pChartObject->Shadow = false;
 
              $ShadowFormat = $Format;
-             $ShadowFormat["Shadow"] = TRUE;
+             $ShadowFormat["Shadow"] = true;
              $this->draw2DRing($X+$this->pChartObject->ShadowX, $Y+$this->pChartObject->ShadowY, $ShadowFormat);
          }
 
@@ -1255,9 +1255,9 @@
                  $Label = $Data["Series"][$Data["Abscissa"]]["Data"][$Key];
 
                  if ($LabelStacked) {
-                     $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, TRUE, $X, $Y, $OuterRadius);
+                     $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, true, $X, $Y, $OuterRadius);
                  } else {
-                     $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, FALSE);
+                     $this->writePieLabel($Xc, $Yc, $Label, $Angle, $Settings, false);
                  }
              }
 
@@ -1328,10 +1328,10 @@
          $SliceHeight	= isset($Format["SliceHeight"]) ? $Format["SliceHeight"] : 10;
          $DataGapAngle	= isset($Format["DataGapAngle"]) ? $Format["DataGapAngle"] : 10;
          $DataGapRadius	= isset($Format["DataGapRadius"]) ? $Format["DataGapRadius"] : 10;
-         $Border		= isset($Format["Border"]) ? $Format["Border"] : FALSE;
-         $Shadow		= isset($Format["Shadow"]) ? $Format["Shadow"] : FALSE;
-         $DrawLabels	= isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : FALSE;
-         $LabelStacked	= isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : FALSE;
+         $Border		= isset($Format["Border"]) ? $Format["Border"] : false;
+         $Shadow		= isset($Format["Shadow"]) ? $Format["Shadow"] : false;
+         $DrawLabels	= isset($Format["DrawLabels"]) ? $Format["DrawLabels"] : false;
+         $LabelStacked	= isset($Format["LabelStacked"]) ? $Format["LabelStacked"] : false;
          $LabelColor	= isset($Format["LabelColor"]) ? $Format["LabelColor"] : PIE_LABEL_COLOR_MANUAL;
          $LabelR		= isset($Format["LabelR"]) ? $Format["LabelR"] : 0;
          $LabelG		= isset($Format["LabelG"]) ? $Format["LabelG"] : 0;
@@ -1346,7 +1346,7 @@
          $ValueG		= isset($Format["ValueG"]) ? $Format["ValueG"] : 255;
          $ValueB		= isset($Format["ValueB"]) ? $Format["ValueB"] : 255;
          $ValueAlpha	= isset($Format["ValueAlpha"]) ? $Format["ValueAlpha"] : 100;
-         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : FALSE;
+         $RecordImageMap	= isset($Format["RecordImageMap"]) ? $Format["RecordImageMap"] : false;
 
          /* Error correction for overlaying rounded corners */
          if ($SkewFactor < .5) {
@@ -1406,7 +1406,7 @@
 
          $RestoreShadow = $this->pChartObject->Shadow;
          if ($this->pChartObject->Shadow) {
-             $this->pChartObject->Shadow = FALSE;
+             $this->pChartObject->Shadow = false;
          }
 
          /* Draw the polygon ring elements */
@@ -1435,14 +1435,14 @@
              }
 
              if ($StartAngle > 180) {
-                 $Visible[$Slice]["Start"] = TRUE;
+                 $Visible[$Slice]["Start"] = true;
              } else {
-                 $Visible[$Slice]["Start"] = TRUE;
+                 $Visible[$Slice]["Start"] = true;
              }
              if ($EndAngle < 180) {
-                 $Visible[$Slice]["End"] = FALSE;
+                 $Visible[$Slice]["End"] = false;
              } else {
-                 $Visible[$Slice]["End"] = TRUE;
+                 $Visible[$Slice]["End"] = true;
              }
 
              $Step   = (360 / (2 * PI * $OuterRadius))/2;
@@ -1549,7 +1549,7 @@
          /* Draw the bottom pie splice */
          foreach ($Slices as $SliceID => $Plots) {
              $Settings = $SliceColors[$SliceID];
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              $this->pChartObject->drawPolygon($Plots["BottomPoly"], $Settings);
 
              foreach ($Plots["AA"] as $Key => $Pos) {
@@ -1566,7 +1566,7 @@
          /* Draw the vertical edges (semi-visible) */
          foreach ($Slices as $SliceID => $Plots) {
              $Settings = $SliceColors[$SliceID];
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              $Settings["R"] = $Settings["R"]+$Cf;
              $Settings["G"] = $Settings["G"]+$Cf;
              $Settings["B"] = $Settings["B"]+$Cf;
@@ -1592,19 +1592,19 @@
          /* Draw the inner vertical slices */
          foreach ($Slices as $SliceID => $Plots) {
              $Settings = $SliceColors[$SliceID];
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              $Settings["R"] = $Settings["R"]+$Cf;
              $Settings["G"] = $Settings["G"]+$Cf;
              $Settings["B"] = $Settings["B"]+$Cf;
 
-             $Outer = TRUE;
-             $Inner = FALSE;
+             $Outer = true;
+             $Inner = false;
              $InnerPlotsA = "";
              $InnerPlotsB = "";
              foreach ($Plots["Angle"] as $ID => $Angle) {
                  if ($Angle == VOID) {
-                     $Outer = FALSE;
-                     $Inner = TRUE;
+                     $Outer = false;
+                     $Inner = true;
                  } elseif ($Inner) {
                      if (($Angle < 90 || $Angle > 270) && isset($Plots["BottomPoly"][$ID*2])) {
                          $Xo = $Plots["BottomPoly"][$ID*2];
@@ -1627,7 +1627,7 @@
          /* Draw the splice top and left poly */
          foreach ($Slices as $SliceID => $Plots) {
              $Settings = $SliceColors[$SliceID];
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              $Settings["R"] = $Settings["R"]+$Cf*1.5;
              $Settings["G"] = $Settings["G"]+$Cf*1.5;
              $Settings["B"] = $Settings["B"]+$Cf*1.5;
@@ -1672,7 +1672,7 @@
          /* Draw the vertical edges (visible) */
          foreach ($Slices as $SliceID => $Plots) {
              $Settings = $SliceColors[$SliceID];
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              $Settings["R"] = $Settings["R"]+$Cf;
              $Settings["G"] = $Settings["G"]+$Cf;
              $Settings["B"] = $Settings["B"]+$Cf;
@@ -1696,21 +1696,21 @@
          /* Draw the outer vertical slices */
          foreach ($Slices as $SliceID => $Plots) {
              $Settings = $SliceColors[$SliceID];
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              $Settings["R"] = $Settings["R"]+$Cf;
              $Settings["G"] = $Settings["G"]+$Cf;
              $Settings["B"] = $Settings["B"]+$Cf;
 
-             $Outer = TRUE;
-             $Inner = FALSE;
+             $Outer = true;
+             $Inner = false;
              $OuterPlotsA = "";
              $OuterPlotsB = "";
              $InnerPlotsA = "";
              $InnerPlotsB = "";
              foreach ($Plots["Angle"] as $ID => $Angle) {
                  if ($Angle == VOID) {
-                     $Outer = FALSE;
-                     $Inner = TRUE;
+                     $Outer = false;
+                     $Inner = true;
                  } elseif ($Outer) {
                      if (($Angle > 90 && $Angle < 270) && isset($Plots["BottomPoly"][$ID*2])) {
                          $Xo = $Plots["BottomPoly"][$ID*2];
@@ -1736,7 +1736,7 @@
          /* Draw the top pie splice */
          foreach ($Slices as $SliceID => $Plots) {
              $Settings = $SliceColors[$SliceID];
-             $Settings["NoBorder"] = TRUE;
+             $Settings["NoBorder"] = true;
              $Settings["R"] = $Settings["R"]+$Cf*2;
              $Settings["G"] = $Settings["G"]+$Cf*2;
              $Settings["B"] = $Settings["B"]+$Cf*2;
@@ -1783,9 +1783,9 @@
                  }
 
                  if ($LabelStacked) {
-                     $this->writePieLabel($Xc, $Yc-$SliceHeight, $Label, $Angle, $Settings, TRUE, $X, $Y, $OuterRadius);
+                     $this->writePieLabel($Xc, $Yc-$SliceHeight, $Label, $Angle, $Settings, true, $X, $Y, $OuterRadius);
                  } else {
-                     $this->writePieLabel($Xc, $Yc-$SliceHeight, $Label, $Angle, $Settings, FALSE);
+                     $this->writePieLabel($Xc, $Yc-$SliceHeight, $Label, $Angle, $Settings, false);
                  }
 
                  $Offset = $EndAngle - $DataGapAngle;

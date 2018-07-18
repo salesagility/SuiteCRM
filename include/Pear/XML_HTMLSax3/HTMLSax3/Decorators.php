@@ -131,7 +131,7 @@ class XML_HTMLSax3_CaseFolding
     * @param array tag attributes
     * @access protected
     */
-    public function foldOpen(&$parser, $tag, $attrs=array(), $empty = FALSE)
+    public function foldOpen(&$parser, $tag, $attrs=array(), $empty = false)
     {
         $this->orig_obj->{$this->orig_open_method}($parser, strtoupper($tag), $attrs, $empty);
     }
@@ -141,7 +141,7 @@ class XML_HTMLSax3_CaseFolding
     * @param string tag name
     * @access protected
     */
-    public function foldClose(&$parser, $tag, $empty = FALSE)
+    public function foldClose(&$parser, $tag, $empty = false)
     {
         $this->orig_obj->{$this->orig_close_method}($parser, strtoupper($tag), $empty);
     }

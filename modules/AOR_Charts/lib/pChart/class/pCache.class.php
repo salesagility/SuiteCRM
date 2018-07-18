@@ -107,7 +107,7 @@
      /* Remove with specified criterias */
      public function dbRemoval($Settings)
      {
-         $ID     = isset($Settings["Name"]) ? $Settings["Name"] : NULL;
+         $ID     = isset($Settings["Name"]) ? $Settings["Name"] : null;
          $Expiry = isset($Settings["Expiry"]) ? $Settings["Expiry"] : -(24*60*60);
          $TS     = time()-$Expiry;
 
@@ -118,9 +118,9 @@
          $IndexTemp    = $this->CacheFolder."/".$this->CacheIndex.".tmp";
 
          /* Single file removal */
-         if ($ID != NULL) {
+         if ($ID != null) {
              /* Retrieve object informations */
-             $Object = $this->isInCache($ID, TRUE);
+             $Object = $this->isInCache($ID, true);
 
              /* If it's not in the cache DB, go away */
              if (!$Object) {
@@ -182,7 +182,7 @@
          rename($IndexTemp, $Index);
      }
 
-     public function isInCache($ID, $Verbose=FALSE, $UpdateHitsCount=FALSE)
+     public function isInCache($ID, $Verbose=false, $UpdateHitsCount=false)
      {
          /* Compute the paths */
          $Index = $this->CacheFolder."/".$this->CacheIndex;
@@ -218,7 +218,7 @@
                      if ($Verbose) {
                          return(array("DBPos"=>$DBPos,"PicSize"=>$PicSize,"GeneratedTS"=>$GeneratedTS,"Hits"=>$Hits));
                      } else {
-                         return(TRUE);
+                         return(true);
                      }
                  }
              }
@@ -226,7 +226,7 @@
          fclose($Handle);
 
          /* Picture isn't in the cache */
-         return(FALSE);
+         return(false);
      }
 
      /* Automatic output method based on the calling interface */
@@ -245,14 +245,14 @@
          $Picture = $this->getFromCache($ID);
 
          /* Do we have a hit? */
-         if ($Picture == NULL) {
-             return(FALSE);
+         if ($Picture == null) {
+             return(false);
          }
 
          header('Content-type: image/png');
          echo $Picture;
 
-         return(TRUE);
+         return(true);
      }
 
      public function saveFromCache($ID, $Destination)
@@ -261,8 +261,8 @@
          $Picture = $this->getFromCache($ID);
 
          /* Do we have a hit? */
-         if ($Picture == NULL) {
-             return(FALSE);
+         if ($Picture == null) {
+             return(false);
          }
 
          /* Flush the picture to a file */
@@ -271,7 +271,7 @@
          fclose($Handle);
 
          /* All went fine */
-         return(TRUE);
+         return(true);
      }
 
      public function getFromCache($ID)
@@ -280,11 +280,11 @@
          $Database = $this->CacheFolder."/".$this->CacheDB;
 
          /* Lookup for the picture in the cache */
-         $CacheInfo = $this->isInCache($ID, TRUE, TRUE);
+         $CacheInfo = $this->isInCache($ID, true, true);
 
          /* Not in the cache */
          if (!$CacheInfo) {
-             return(NULL);
+             return(null);
          }
 
          /* Get the database extended information */     

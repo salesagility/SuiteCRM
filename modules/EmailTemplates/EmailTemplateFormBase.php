@@ -229,7 +229,7 @@ EOQ;
 		if (isset($GLOBALS['check_notify'])) {
 		    $check_notify = $GLOBALS['check_notify'];
 		} else {
-		    $check_notify = FALSE;
+		    $check_notify = false;
 		}
         if ($preProcessedImages) {
             $focus->body_html = $emailTemplateBodyHtml;
@@ -279,7 +279,7 @@ EOQ;
             if (isset($preProcessedImages[$file['name']])) {
                 $oldId = $preProcessedImages[$file['name']];
                 $note->id = $oldId;
-                $note->new_with_id = TRUE;
+                $note->new_with_id = true;
                 $GLOBALS['log']->debug("Image {$file['name']} has already been processed.");
             }
 
@@ -303,7 +303,7 @@ EOQ;
 
         $focus->saved_attachments = array();
         foreach ($focus->attachments as $note) {
-            if (!empty($note->id) && $note->new_with_id === FALSE) {
+            if (!empty($note->id) && $note->new_with_id === false) {
                 if (empty($_REQUEST['old_id'])) {
                     array_push($focus->saved_attachments, $note);
                 } // to support duplication of email templates
@@ -340,7 +340,7 @@ EOQ;
             array_push($focus->saved_attachments, $note);
             $note->id = $note_id;
 
-            if ($note->new_with_id === FALSE) {
+            if ($note->new_with_id === false) {
                 $note->file->final_move($note->id);
             } else {
                 $GLOBALS['log']->debug("Not performing final move for note id {$note->id} as it has already been processed");

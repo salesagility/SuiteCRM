@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Release'] = array ('column_fields' => Array("id"
+$fields_array['Release'] = array ('column_fields' => array("id"
 		,"name"
 		,"list_order"
 		,"date_entered"
@@ -56,6 +56,6 @@ $fields_array['Release'] = array ('column_fields' => Array("id"
 		,"modified_user_id"
 		, "created_by"
 		),
-        'list_fields' =>  Array('id', 'name', 'list_order', 'status'),
+        'list_fields' =>  array('id', 'name', 'list_order', 'status'),
     'required_fields' =>  array("name"=>1,'list_order'=>1,'status'=>1),
 );

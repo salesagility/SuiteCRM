@@ -93,13 +93,13 @@ class DocumentRevision extends SugarBean
     	,"file_ext"
     	);
 */
-    public $encodeFields = Array();
+    public $encodeFields = array();
 
     // This is used to retrieve related fields from form posts.
-    public $additional_column_fields = Array('');
+    public $additional_column_fields = array('');
 
     // This is the list of fields that are in the lists.
-    public $list_fields = Array("id"
+    public $list_fields = array("id"
         ,"document_id"
         ,"date_entered"
         ,"created_by"
@@ -112,7 +112,7 @@ class DocumentRevision extends SugarBean
         ,"created_by_name"
         );
 
-    public $required_fields = Array("revision");
+    public $required_fields = array("revision");
 
     public $authenticated = null;
 
@@ -318,7 +318,7 @@ class DocumentRevision extends SugarBean
     //static function.
     public function get_document_revisions($doc_id)
     {
-        $return_array= Array();
+        $return_array= array();
         if (empty($doc_id)) {
             return $return_array;
         }

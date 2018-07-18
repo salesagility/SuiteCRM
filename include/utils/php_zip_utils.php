@@ -63,7 +63,7 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
 
     $res = $zip->open(UploadFile::realpath($zip_archive)); // we need realpath here for PHP streams support
 
-    if ($res !== TRUE) {
+    if ($res !== true) {
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
             $GLOBALS['log']->fatal(sprintf("ZIP Error(%d): Status(%s): Arhive(%s): Directory(%s)", $res, $zip->status, $zip_archive, $zip_dir));
             return false;
@@ -78,7 +78,7 @@ function unzip_file($zip_archive, $archive_file, $zip_dir)
         $res = $zip->extractTo(UploadFile::realpath($zip_dir));
     }
     
-    if ($res !== TRUE) {
+    if ($res !== true) {
         if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL')) {
             $GLOBALS['log']->fatal(sprintf("ZIP Error(%d): Status(%s): Arhive(%s): Directory(%s)", $res, $zip->status, $zip_archive, $zip_dir));
             return false;
@@ -131,9 +131,9 @@ function zip_files_list($zip_file, $file_list, $prefix = '')
 {
     $archive    = new ZipArchive();
     $res = $archive->open(UploadFile::realpath($zip_file), ZipArchive::CREATE|ZipArchive::OVERWRITE); // we need realpath here for PHP streams support
-    if ($res !== TRUE) {
+    if ($res !== true) {
         $GLOBALS['log']->fatal("Unable to open zip file, check directory permissions: $zip_file");
-        return FALSE;
+        return false;
     }
     foreach ($file_list as $file) {
         if (!empty($prefix) && preg_match($prefix, $file, $matches) > 0) {
@@ -143,5 +143,5 @@ function zip_files_list($zip_file, $file_list, $prefix = '')
         }
         $archive->addFile($file, $zipname);
     }
-    return TRUE;
+    return true;
 }

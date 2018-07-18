@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Relationship'] = array ('column_fields' => Array(
+$fields_array['Relationship'] = array ('column_fields' => array(
         'id',
         'relationship_name',
         'lhs_module',
@@ -64,7 +64,7 @@ $fields_array['Relationship'] = array ('column_fields' => Array(
         'relationship_role_column_value',
         'reverse',
     ),
-        'list_fields' =>  Array(
+        'list_fields' =>  array(
         'id',
         'relationship_name',
         'lhs_module',

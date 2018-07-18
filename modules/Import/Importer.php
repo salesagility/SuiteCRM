@@ -242,7 +242,7 @@ class Importer
                 if (!$returnValue && !empty($defaultRowValue)) {
                     $returnValue = $this->ifs->email($defaultRowValue, $fieldDef);
                 }
-                if ($returnValue === FALSE) {
+                if ($returnValue === false) {
                     $do_save=0;
                     $this->importSource->writeError($mod_strings['LBL_ERROR_INVALID_EMAIL'], $fieldTranslated, $rowValue);
                 } else {
@@ -277,7 +277,7 @@ class Importer
                 if ($field == "email_addresses_non_primary" && is_array($rowValue)) {
                     foreach ($rowValue as $tempRow) {
                         $tempRow = $this->sanitizeFieldValueByType($tempRow, $fieldDef, $defaultRowValue, $focus, $fieldTranslated);
-                        if ($tempRow === FALSE) {
+                        if ($tempRow === false) {
                             $rowValue = false;
                             $do_save = false;
                             break;
@@ -372,13 +372,13 @@ class Importer
                     }
 
                     $clonedBean = $this->cloneExistingBean($focus);
-                    if ($clonedBean === FALSE) {
+                    if ($clonedBean === false) {
                         $this->importSource->writeError($mod_strings['LBL_RECORD_CANNOT_BE_UPDATED'], 'ID', $focus->id);
                         $this->_undoCreatedBeans(ImportFieldSanitize::$createdBeans);
                         return;
                     } else {
                         $focus = $clonedBean;
-                        $newRecord = FALSE;
+                        $newRecord = false;
                     }
                 }
             } else {
@@ -452,7 +452,7 @@ class Importer
                 }
                 if (!$returnValue) {
                     $this->importSource->writeError($mod_strings['LBL_ERROR_INVALID_'.strtoupper($fieldtype)], $fieldTranslated, $rowValue, $focus);
-                    return FALSE;
+                    return false;
                 }
                 return $returnValue;
         }
@@ -461,8 +461,8 @@ class Importer
     protected function cloneExistingBean($focus)
     {
         $existing_focus = clone $this->bean;
-        if (!($existing_focus->retrieve($focus->id) instanceOf SugarBean)) {
-            return FALSE;
+        if (!($existing_focus->retrieve($focus->id) instanceof SugarBean)) {
+            return false;
         } else {
             $newData = $focus->toArray();
             foreach ($newData as $focus_key => $focus_value) {

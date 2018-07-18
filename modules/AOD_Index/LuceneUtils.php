@@ -95,7 +95,7 @@ function createDocDocument($path)
     $outtext = "";
     foreach ($lines as $thisline) {
         $pos = strpos($thisline, chr(0x00));
-        if (($pos !== FALSE)||(strlen($thisline)==0)) {
+        if (($pos !== false)||(strlen($thisline)==0)) {
         } else {
             $outtext .= $thisline." ";
         }

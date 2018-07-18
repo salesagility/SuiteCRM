@@ -88,8 +88,8 @@ class nusoap_parser extends nusoap_base
     public $fault_detail = '';
     public $depth_array = array();
     public $debug_flag = true;
-    public $soapresponse = NULL;	// parsed SOAP Body
-	public $soapheader = NULL;		// parsed SOAP Header
+    public $soapresponse = null;	// parsed SOAP Body
+	public $soapheader = null;		// parsed SOAP Header
 	public $responseHeaders = '';	// incoming SOAP headers (text)
 	public $body_position = 0;
     // for multiref parsing:
@@ -121,7 +121,7 @@ class nusoap_parser extends nusoap_base
         if (!empty($xml)) {
             // Check XML encoding
             $pos_xml = strpos($xml, '<?xml');
-            if ($pos_xml !== FALSE) {
+            if ($pos_xml !== false) {
                 $xml_decl = substr($xml, $pos_xml, strpos($xml, '?>', $pos_xml + 2) - $pos_xml + 1);
                 if (preg_match("/encoding=[\"']([^\"']*)[\"']/", $xml_decl, $res)) {
                     $xml_encoding = $res[1];

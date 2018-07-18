@@ -742,7 +742,7 @@ class TCPDFBarcode
         $k = 0;
         for ($i = 0; $i < $len; ++$i) {
             $w += 1;
-            if (($i == ($len - 1)) OR (($i < ($len - 1)) AND ($seq{$i} != $seq{($i+1)}))) {
+            if (($i == ($len - 1)) or (($i < ($len - 1)) and ($seq{$i} != $seq{($i+1)}))) {
                 if ($seq{$i} == '1') {
                     $t = true; // bar
                 } else {
@@ -797,7 +797,7 @@ class TCPDFBarcode
         for ($i = 0; $i < $clen; $i = ($i + 2)) {
             $char_bar = $code{$i};
             $char_space = $code{$i+1};
-            if ((!isset($chr[$char_bar])) OR (!isset($chr[$char_space]))) {
+            if ((!isset($chr[$char_bar])) or (!isset($chr[$char_space]))) {
                 // invalid character
                 return false;
             }
@@ -994,10 +994,10 @@ class TCPDFBarcode
         $len = strlen($code);
         for ($i = 0; $i < $len; ++$i) {
             $ck = strpos($keys, $code{$i});
-            if (($i == 0) OR ($i > ($len-4))) {
+            if (($i == 0) or ($i > ($len-4))) {
                 $char_num = ord($code{$i});
                 $seq = $chr[$char_num];
-            } elseif (($ck >= 0) AND isset($chr[$ck])) {
+            } elseif (($ck >= 0) and isset($chr[$ck])) {
                 $seq = $chr[$ck];
             } else {
                 // invalid character
@@ -1073,7 +1073,7 @@ class TCPDFBarcode
         if ($upce) {
             // convert UPC-A to UPC-E
             $tmp = substr($code, 4, 3);
-            if (($tmp == '000') OR ($tmp == '100') OR ($tmp == '200')) {
+            if (($tmp == '000') or ($tmp == '100') or ($tmp == '200')) {
                 // manufacturer code ends in 000, 100, or 200
                 $upce_code = substr($code, 2, 2).substr($code, 9, 3).substr($code, 4, 1);
             } else {
@@ -1198,7 +1198,7 @@ class TCPDFBarcode
         $w = 0;
         for ($i = 0; $i < $clen; ++$i) {
             $w += 1;
-            if (($i == ($clen - 1)) OR (($i < ($clen - 1)) AND ($seq{$i} != $seq{($i+1)}))) {
+            if (($i == ($clen - 1)) or (($i < ($clen - 1)) and ($seq{$i} != $seq{($i+1)}))) {
                 if ($seq{$i} == '1') {
                     $t = true; // bar
                 } else {
@@ -1302,30 +1302,30 @@ class TCPDFBarcode
     {
         // bar lenght
         if ($planet) {
-            $barlen = Array(
-				0 => Array(1,1,2,2,2),
-				1 => Array(2,2,2,1,1),
-				2 => Array(2,2,1,2,1),
-				3 => Array(2,2,1,1,2),
-				4 => Array(2,1,2,2,1),
-				5 => Array(2,1,2,1,2),
-				6 => Array(2,1,1,2,2),
-				7 => Array(1,2,2,2,1),
-				8 => Array(1,2,2,1,2),
-				9 => Array(1,2,1,2,2)
+            $barlen = array(
+				0 => array(1,1,2,2,2),
+				1 => array(2,2,2,1,1),
+				2 => array(2,2,1,2,1),
+				3 => array(2,2,1,1,2),
+				4 => array(2,1,2,2,1),
+				5 => array(2,1,2,1,2),
+				6 => array(2,1,1,2,2),
+				7 => array(1,2,2,2,1),
+				8 => array(1,2,2,1,2),
+				9 => array(1,2,1,2,2)
 			);
         } else {
-            $barlen = Array(
-				0 => Array(2,2,1,1,1),
-				1 => Array(1,1,1,2,2),
-				2 => Array(1,1,2,1,2),
-				3 => Array(1,1,2,2,1),
-				4 => Array(1,2,1,1,2),
-				5 => Array(1,2,1,2,1),
-				6 => Array(1,2,2,1,1),
-				7 => Array(2,1,1,1,2),
-				8 => Array(2,1,1,2,1),
-				9 => Array(2,1,2,1,1)
+            $barlen = array(
+				0 => array(2,2,1,1,1),
+				1 => array(1,1,1,2,2),
+				2 => array(1,1,2,1,2),
+				3 => array(1,1,2,2,1),
+				4 => array(1,2,1,1,2),
+				5 => array(1,2,1,2,1),
+				6 => array(1,2,2,1,1),
+				7 => array(2,1,1,1,2),
+				8 => array(2,1,1,2,1),
+				9 => array(2,1,2,1,1)
 			);
         }
         $bararray = array('code' => $code, 'maxw' => 0, 'maxh' => 2, 'bcode' => array());
@@ -1858,7 +1858,7 @@ class TCPDFBarcode
         for ($i = 0; $i < 65; ++$i) {
             $asc = (($characters[$asc_chr[$i]] & pow(2, $asc_pos[$i])) > 0);
             $dsc = (($characters[$dsc_chr[$i]] & pow(2, $dsc_pos[$i])) > 0);
-            if ($asc AND $dsc) {
+            if ($asc and $dsc) {
                 // full bar (F)
                 $p = 0;
                 $h = 3;

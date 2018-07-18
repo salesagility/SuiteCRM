@@ -54,7 +54,7 @@ function display_conflict_between_objects($object_1, $object_2, $field_defs, $mo
         if (!is_scalar($value) || $name == 'team_name') {
             continue;
         }
-        if ($value != $object_2->$name && !($object_2->$name instanceOf Link)) {
+        if ($value != $object_2->$name && !($object_2->$name instanceof Link)) {
             $title .= '<td ><b>&nbsp;' . translate($field_defs[$name]['vname'], $module_dir). '</b></td>';
             $object1_row .= '<td>&nbsp;' . $value. '</td>';
             $object2_row .= '<td>&nbsp;' . $object_2->$name . '</td>';

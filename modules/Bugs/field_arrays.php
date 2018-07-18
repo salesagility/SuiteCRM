@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Bug'] = array ('column_fields' => Array("id"
+$fields_array['Bug'] = array ('column_fields' => array("id"
 		, "name"
 		, "bug_number"
 		, "date_entered"
@@ -66,7 +66,7 @@ $fields_array['Bug'] = array ('column_fields' => Array("id"
 		, "source"
 		, "product_category"
 		),
-        'list_fields' => Array('id', 'priority', 'status', 'name', 'bug_number', 'assigned_user_name', 'assigned_user_id', 'release', 'found_in_release', 'resolution', 'type'
+        'list_fields' => array('id', 'priority', 'status', 'name', 'bug_number', 'assigned_user_name', 'assigned_user_id', 'release', 'found_in_release', 'resolution', 'type'
 		),
         'required_fields' => array('name'=>1),
 );

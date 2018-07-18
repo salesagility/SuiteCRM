@@ -457,7 +457,7 @@ function portal_get_entry_list_limited($session, $module_name, $where, $order_by
         return array('result_count'=>-1, 'entry_list'=>array(), 'error'=>$error->get_soap_array());
     }
 
-    $output_list = Array();
+    $output_list = array();
     $field_list = array();
     foreach ($list as $value) {
 

@@ -295,7 +295,7 @@ class Zend_Http_Client_Adapter_Curl implements Zend_Http_Client_Adapter_Interfac
                 if (isset($this->_config['curloptions'][CURLOPT_INFILE])) {
                     // Now we will probably already have Content-Length set, so that we have to delete it
                     // from $headers at this point:
-                    foreach ($headers AS $k => $header) {
+                    foreach ($headers as $k => $header) {
                         if (preg_match('/Content-Length:\s*(\d+)/i', $header, $m)) {
                             if(is_resource($body)) {
                                 $this->_config['curloptions'][CURLOPT_INFILESIZE] = (int)$m[1];

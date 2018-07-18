@@ -71,7 +71,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         self::assertSame(DBManagerFactory::getInstance(), $bean->custom_fields->db);
         self::assertSame($bean, $bean->custom_fields->bean);
         self::assertEquals('AM_ProjectTemplates', $bean->custom_fields->module);
-        self::assertEquals(Array(
+        self::assertEquals(array(
             0 => 'id',
             1 => 'name',
             2 => 'date_entered',
@@ -97,7 +97,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         ), $bean->column_fields);
 
         $keys = array_keys($bean->field_name_map);
-        self::assertEquals(Array(
+        self::assertEquals(array(
             0 => 'id',
             1 => 'name',
             2 => 'date_entered',
@@ -1374,7 +1374,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
         $bean = new Contact();
         $results = $bean->getAuditEnabledFieldDefinitions();
         self::assertEquals(array(
-            'assigned_user_id' => Array(
+            'assigned_user_id' => array(
                 'name' => 'assigned_user_id',
                 'rname' => 'user_name',
                 'id_name' => 'assigned_user_id',
@@ -1390,7 +1390,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                 'comment' => 'User ID assigned to record',
                 'duplicate_merge' => 'disabled',
             ),
-            'do_not_call' => Array(
+            'do_not_call' => array(
                 'name' => 'do_not_call',
                 'vname' => 'LBL_DO_NOT_CALL',
                 'type' => 'bool',
@@ -1398,7 +1398,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                 'audited' => true,
                 'comment' => 'An indicator of whether contact can be called',
             ),
-            'phone_work' => Array(
+            'phone_work' => array(
                 'name' => 'phone_work',
                 'vname' => 'LBL_OFFICE_PHONE',
                 'type' => 'phone',
@@ -1406,7 +1406,7 @@ class SugarBeanTest extends SuitePHPUnit_Framework_TestCase
                 'len' => 100,
                 'audited' => true,
                 'unified_search' => true,
-                'full_text_search' => Array(
+                'full_text_search' => array(
                     'boost' => 1
                 ),
                 'comment' => 'Work phone number of the contact',

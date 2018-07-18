@@ -129,7 +129,7 @@ class ImportController extends SugarController
         }
         
         echo json_encode($results);
-        sugar_cleanup(TRUE);
+        sugar_cleanup(true);
     }
     public function action_RefreshMapping()
     {
@@ -144,9 +144,9 @@ class ImportController extends SugarController
         }
         $enclosure = $_REQUEST['qualif'];
         $enclosure = html_entity_decode($enclosure, ENT_QUOTES);
-        $hasHeader = isset($_REQUEST['header']) && !empty($_REQUEST['header']) ? TRUE : FALSE;
+        $hasHeader = isset($_REQUEST['header']) && !empty($_REQUEST['header']) ? true : false;
 
-        $importFile = new ImportFile($fileName, $delim, $enclosure, FALSE);
+        $importFile = new ImportFile($fileName, $delim, $enclosure, false);
         $importFile->setHeaderRow($hasHeader);
         $rows = $v->getSampleSet($importFile);
 
@@ -156,31 +156,31 @@ class ImportController extends SugarController
         $ss->assign("column_count", $v->getMaxColumnsInSampleSet($rows));
         $ss->assign("MOD", $mod_strings);
         $ss->display('modules/Import/tpls/confirm_table.tpl');
-        sugar_cleanup(TRUE);
+        sugar_cleanup(true);
     }
 
     public function action_RefreshTable()
     {
         $offset = isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         $tableID = isset($_REQUEST['tableID']) ? $_REQUEST['tableID'] : 'errors';
-        $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
+        $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
         if ($tableID == 'dup') {
             $tableFilename = ImportCacheFiles::getDuplicateFileName();
         } else {
             $tableFilename = ImportCacheFiles::getErrorRecordsFileName();
         }
 
-        $if = new ImportFile($tableFilename, ",", '"', FALSE, FALSE);
+        $if = new ImportFile($tableFilename, ",", '"', false, false);
         $if->setHeaderRow($has_header);
         $lv = new ImportListView($if, array('offset'=> $offset), $tableID);
-        $lv->display(FALSE);
+        $lv->display(false);
         
-        sugar_cleanup(TRUE);
+        sugar_cleanup(true);
     }
     
     public function action_Step1()
     {
-        $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : FALSE;
+        $fromAdminView = isset($_REQUEST['from_admin_wizard']) ? $_REQUEST['from_admin_wizard'] : false;
         if ($this->importModule == 'Administration' || $fromAdminView
         ) {
             $this->view = 'step1';

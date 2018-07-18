@@ -50,8 +50,8 @@ if (!defined('sugarEntry') || !sugarEntry) {
 
 global $mod_strings, $app_strings;
 if (ACLController::checkAccess('ProspectLists', 'edit', true)) {
-    $module_menu[]=	Array("index.php?module=ProspectLists&action=EditView&return_module=ProspectLists&return_action=DetailView", $mod_strings['LNK_NEW_PROSPECT_LIST'],"Create");
+    $module_menu[]=	array("index.php?module=ProspectLists&action=EditView&return_module=ProspectLists&return_action=DetailView", $mod_strings['LNK_NEW_PROSPECT_LIST'],"Create");
 }
 if (ACLController::checkAccess('ProspectLists', 'list', true)) {
-    $module_menu[]=	Array("index.php?module=ProspectLists&action=index&return_module=ProspectLists&return_action=index", $mod_strings['LNK_PROSPECT_LIST_LIST'],"List");
+    $module_menu[]=	array("index.php?module=ProspectLists&action=index&return_module=ProspectLists&return_action=index", $mod_strings['LNK_PROSPECT_LIST_LIST'],"List");
 }

@@ -123,7 +123,7 @@ class ImportView extends SugarView
      * @param bool $encode
      * @return void
      */
-    protected function sendJsonOutput($html = "", $submitContent = "", $script = "", $encode = FALSE)
+    protected function sendJsonOutput($html = "", $submitContent = "", $script = "", $encode = false)
     {
         $title = $this->getModuleTitle(false);
         $out = array(

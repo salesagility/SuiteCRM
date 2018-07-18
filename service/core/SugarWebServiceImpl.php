@@ -127,7 +127,7 @@ class SugarWebServiceImpl
                 $list = array();
                 $list[] = array('name'=>'warning', 'value'=>'Access to this object is denied since it has been deleted or does not exist');
                 $list[] = array('name'=>'deleted', 'value'=>'1');
-                $output_list[] = Array('id'=>$id,
+                $output_list[] = array('id'=>$id,
 									'module_name'=> $module_name,
 									'name_value_list'=>$list,
 									);
@@ -514,7 +514,7 @@ class SugarWebServiceImpl
         } // if
 
         $GLOBALS['log']->info('End: SugarWebServiceImpl->set_entries');
-        return self::$helperObject->new_handle_set_entries($module_name, $name_value_lists, FALSE);
+        return self::$helperObject->new_handle_set_entries($module_name, $name_value_lists, false);
     }
 
     /**

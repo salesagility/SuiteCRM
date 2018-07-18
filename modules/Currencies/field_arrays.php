@@ -47,7 +47,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-$fields_array['Currency'] = array ('column_fields' => Array("id"
+$fields_array['Currency'] = array ('column_fields' => array("id"
 		,"name"
 		,"conversion_rate"
 		,"iso4217"

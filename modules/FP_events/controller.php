@@ -581,7 +581,7 @@ class FP_eventsController extends SugarController
             $emailObj->description_html = $mail->Body;
             $emailObj->from_addr = $mail->From;
             isValidEmailAddress($emailObj->from_addr);
-            if ($relatedBean instanceOf SugarBean && !empty($relatedBean->id)) {
+            if ($relatedBean instanceof SugarBean && !empty($relatedBean->id)) {
                 $emailObj->parent_type = $relatedBean->module_dir;
                 $emailObj->parent_id = $relatedBean->id;
             }

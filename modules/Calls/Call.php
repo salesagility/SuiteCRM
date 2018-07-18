@@ -612,7 +612,7 @@ class Call extends SugarBean
         $query = "SELECT calls_users.required, calls_users.accept_status, calls_users.user_id from calls_users where calls_users.call_id='$this->id' AND calls_users.deleted=0";
         $GLOBALS['log']->debug("Finding linked records $this->object_name: ".$query);
         $result = $this->db->query($query, true);
-        $list = Array();
+        $list = array();
 
         while ($row = $this->db->fetchByAssoc($result)) {
             $template = new User(); // PHP 5 will retrieve by reference, always over-writing the "old" one
@@ -640,7 +640,7 @@ class Call extends SugarBean
         $result = $this->db->query($query, true);
 
 
-        $list = Array();
+        $list = array();
 
 
         while ($row = $this->db->fetchByAssoc($result)) {

@@ -197,10 +197,10 @@ if (!empty($focus->stored_options)) {
 // return action
 if (isset($focus->id)) {
     $return_action = 'DetailView';
-    $validatePass = FALSE;
+    $validatePass = false;
 } else {
     $return_action = 'ListView';
-    $validatePass = TRUE;
+    $validatePass = true;
 }
 
 // javascript

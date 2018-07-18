@@ -176,7 +176,7 @@ class ImportMap extends SugarBean
     {
         $returnVal = parent::retrieve($id, $encode, $deleted);
 
-        if (!($returnVal instanceOf $this)) {
+        if (!($returnVal instanceof $this)) {
             return $returnVal;
         }
 
@@ -199,7 +199,7 @@ class ImportMap extends SugarBean
      * @param  string $enclosure
      * @return bool
      */
-    public function save($check_notify = FALSE)
+    public function save($check_notify = false)
     {
         $args = func_get_args();
         return call_user_func_array(array($this, '_save'), $args);
@@ -242,7 +242,7 @@ class ImportMap extends SugarBean
         parent::save();
 
         // Bug 29365 - The enclosure character isn't saved correctly if it's a tab using MssqlManager, so resave it
-        if ($enclosure == '\\t' && $this->db instanceOf MssqlManager) {
+        if ($enclosure == '\\t' && $this->db instanceof MssqlManager) {
             $this->enclosure = $enclosure;
             parent::save();
         }
@@ -343,7 +343,7 @@ class ImportMap extends SugarBean
         $result = $this->db->query($query, true, " Error: ");
         $obj_arr = array();
 
-        while ($row = $this->db->fetchByAssoc($result, FALSE)) {
+        while ($row = $this->db->fetchByAssoc($result, false)) {
             $focus = new ImportMap();
 
             foreach ($this->column_fields as $field) {

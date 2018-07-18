@@ -56,7 +56,7 @@ class LoggerManager
     /**
      * @var null|LoggerManager
      */
-    private static $_instance = NULL;
+    private static $_instance = null;
 
     //these are the mappings for levels to different log types
     private static $_logMapping = array(

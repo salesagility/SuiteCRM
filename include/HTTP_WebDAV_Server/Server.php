@@ -456,7 +456,7 @@ class HTTP_WebDAV_Server
      */
     public function http_PROPFIND()
     {
-        $options = Array();
+        $options = array();
         $options["path"] = $this->path;
 
         // search depth from header (default is "infinity)
@@ -730,7 +730,7 @@ class HTTP_WebDAV_Server
     public function http_PROPPATCH()
     {
         if ($this->_check_lock_status($this->path)) {
-            $options = Array();
+            $options = array();
             $options["path"] = $this->path;
 
             $propinfo = new _parse_proppatch("php://input");
@@ -786,7 +786,7 @@ class HTTP_WebDAV_Server
      */
     public function http_MKCOL()
     {
-        $options = Array();
+        $options = array();
         $options["path"] = $this->path;
 
         $stat = $this->mkcol($options);
@@ -808,7 +808,7 @@ class HTTP_WebDAV_Server
     public function http_GET()
     {
         // TODO check for invalid stream
-        $options = Array();
+        $options = array();
         $options["path"] = $this->path;
 
         $this->_get_ranges($options);
@@ -1000,7 +1000,7 @@ class HTTP_WebDAV_Server
     public function http_HEAD()
     {
         $status = false;
-        $options = Array();
+        $options = array();
         $options["path"] = $this->path;
 
         if (method_exists($this, "HEAD")) {
@@ -1034,7 +1034,7 @@ class HTTP_WebDAV_Server
     public function http_PUT()
     {
         if ($this->_check_lock_status($this->path)) {
-            $options = Array();
+            $options = array();
             $options["path"] = $this->path;
             $options["content_length"] = $_SERVER["CONTENT_LENGTH"];
 
@@ -1166,7 +1166,7 @@ class HTTP_WebDAV_Server
         // check lock status
         if ($this->_check_lock_status($this->path)) {
             // ok, proceed
-            $options = Array();
+            $options = array();
             $options["path"] = $this->path;
 
             $stat = $this->delete($options);
@@ -1228,7 +1228,7 @@ class HTTP_WebDAV_Server
      */
     public function http_LOCK()
     {
-        $options = Array();
+        $options = array();
         $options["path"] = $this->path;
 
         if (isset($_SERVER['HTTP_DEPTH'])) {
@@ -1326,7 +1326,7 @@ class HTTP_WebDAV_Server
      */
     public function http_UNLOCK()
     {
-        $options = Array();
+        $options = array();
         $options["path"] = $this->path;
 
         if (isset($_SERVER['HTTP_DEPTH'])) {
@@ -1352,7 +1352,7 @@ class HTTP_WebDAV_Server
 
     public function _copymove($what)
     {
-        $options = Array();
+        $options = array();
         $options["path"] = $this->path;
 
         if (isset($_SERVER["HTTP_DEPTH"])) {

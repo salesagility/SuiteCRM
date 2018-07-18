@@ -434,7 +434,7 @@ class UnifiedSearchAdvanced
 
                 if (count($fields) > 0) {
                     $supported_modules [$moduleName] ['fields'] = $fields;
-                    if (isset($dictionary[$beanName]['unified_search_default_enabled']) && $dictionary[$beanName]['unified_search_default_enabled'] === TRUE) {
+                    if (isset($dictionary[$beanName]['unified_search_default_enabled']) && $dictionary[$beanName]['unified_search_default_enabled'] === true) {
                         $supported_modules [$moduleName]['default'] = true;
                     } else {
                         $supported_modules [$moduleName]['default'] = false;

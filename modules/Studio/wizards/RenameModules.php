@@ -351,7 +351,7 @@ class RenameModules
      *
      * @return void
      */
-    public function save($redirect = TRUE)
+    public function save($redirect = true)
     {
         $this->selectedLanguage = (!empty($_REQUEST['dropdown_lang'])? $_REQUEST['dropdown_lang']:$_SESSION['authenticated_user_language']);
 
@@ -618,7 +618,7 @@ class RenameModules
                 $dashletTitle = $dashletMeta[$dashletName]['title'];
                 $currentModuleStrings = return_module_language($this->selectedLanguage, $moduleName);
                 $modStringKey = array_search($dashletTitle, $currentModuleStrings);
-                if ($modStringKey !== FALSE) {
+                if ($modStringKey !== false) {
                     $replacedString = str_replace(html_entity_decode_utf8($replacementLabels['prev_plural'], ENT_QUOTES), $replacementLabels['plural'], $dashletTitle);
                     if ($replacedString == $dashletTitle) {
                         $replacedString = str_replace(html_entity_decode_utf8($replacementLabels['prev_singular'], ENT_QUOTES), $replacementLabels['singular'], $replacedString);
@@ -888,7 +888,7 @@ class RenameModules
             if (isset($current_app_list_string['moduleList'][$key])) {
                 $allModuleEntries[$key] = array('s' => $svalue, 'p' => $value);
             } else {
-                $_REQUEST['delete_' . $count] = TRUE;
+                $_REQUEST['delete_' . $count] = true;
             }
 
 

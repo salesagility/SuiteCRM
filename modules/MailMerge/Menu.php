@@ -49,7 +49,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 global $mod_strings;
-$module_menu = Array(
-    Array("index.php?module=MailMerge&action=index&reset=true", $mod_strings['LNK_NEW_MAILMERGE'],"Create"),
-    Array("index.php?module=Documents&action=EditView&return_module=MailMerge&return_action=EditView", $mod_strings['LNK_UPLOAD_TEMPLATE'],"List"),
+$module_menu = array(
+    array("index.php?module=MailMerge&action=index&reset=true", $mod_strings['LNK_NEW_MAILMERGE'],"Create"),
+    array("index.php?module=Documents&action=EditView&return_module=MailMerge&return_action=EditView", $mod_strings['LNK_UPLOAD_TEMPLATE'],"List"),
     );

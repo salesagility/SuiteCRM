@@ -66,7 +66,7 @@ class ImportViewDupcheck extends ImportView
         global $mod_strings, $app_strings, $current_user;
         global $sugar_config;
 
-        $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
+        $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
 
         $this->instruction = 'LBL_SELECT_DUPLICATE_INSTRUCTION';
         $this->ss->assign('INSTRUCTION', $this->getInstruction());
@@ -103,7 +103,7 @@ class ImportViewDupcheck extends ImportView
     {
         global $mod_strings, $sugar_config;
 
-        $has_header = $_REQUEST['has_header'] == 'on' ? TRUE : FALSE;
+        $has_header = $_REQUEST['has_header'] == 'on' ? true : false;
         $uploadFileName = "upload://".basename($_REQUEST['tmp_file']);
         $splitter = new ImportFileSplitter($uploadFileName, $sugar_config['import_max_records_per_file']);
         $splitter->splitSourceFile($_REQUEST['custom_delimiter'], html_entity_decode($_REQUEST['custom_enclosure'], ENT_QUOTES), $has_header);

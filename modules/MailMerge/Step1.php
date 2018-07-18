@@ -234,7 +234,7 @@ AND is_template = 1 AND template_type = 'mailmerge' AND documents.deleted = 0 OR
 
     $result = $document->db->query($query, true, "Error retrieving $document->object_name list: ");
 
-    $list = Array();
+    $list = array();
     $list['None'] = 'None';
     while (($row = $document->db->fetchByAssoc($result)) != null) {
         $revision = null;

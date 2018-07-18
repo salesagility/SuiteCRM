@@ -139,7 +139,7 @@ class AOR_Chart extends Basic
             $PieChart->setSliceColor($x, $this->getColour($row[$xName], true));
             $x++;
         }
-        $PieChart->draw2DPie($imageWidth/3, $imageHeight/2, array("Border"=>TRUE,'Radius'=>200,''=>true,"RecordImageMap"=>$recordImageMap));
+        $PieChart->draw2DPie($imageWidth/3, $imageHeight/2, array("Border"=>true,'Radius'=>200,''=>true,"RecordImageMap"=>$recordImageMap));
         $PieChart->drawPieLegend($imageWidth*0.7, $imageHeight/3, array('FontSize'=>10,"FontName"=>"modules/AOR_Charts/lib/pChart/fonts/verdana.ttf",'BoxSize'=>14));
     }
 
@@ -180,7 +180,7 @@ class AOR_Chart extends Basic
         $yName = str_replace(' ', '_', $y->label) . $this->y_field;
 
         $chartData = new pData();
-        $chartData->loadPalette("modules/AOR_Charts/lib/pChart/palettes/navy.color", TRUE);
+        $chartData->loadPalette("modules/AOR_Charts/lib/pChart/palettes/navy.color", true);
         $labels = array();
         foreach ($reportData as $row) {
             $chartData->addPoints($row[$yName], 'data');
@@ -200,7 +200,7 @@ class AOR_Chart extends Basic
             $chartPicture->initialiseImageMap($generateImageMapId, IMAGE_MAP_STORAGE_FILE, $generateImageMapId, $imageMapDir);
         }
 
-        $chartPicture->Antialias = True;
+        $chartPicture->Antialias = true;
 
         $chartPicture->drawFilledRectangle(0, 0, $imageWidth-1, $imageHeight-1, array("R"=>240,"G"=>240,"B"=>240,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0,));
 

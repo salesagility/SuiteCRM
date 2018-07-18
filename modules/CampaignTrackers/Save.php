@@ -57,7 +57,7 @@ if (!$focus->ACLAccess('Save')) {
     sugar_cleanup(true);
 }
 
-$check_notify = FALSE;
+$check_notify = false;
 foreach ($focus->column_fields as $field) {
     if (isset($_POST[$field])) {
         $value = $_POST[$field];

@@ -211,7 +211,7 @@ function object_to_array_recursive($obj)
 function array_merge_values($arr1, $arr2)
 {
     if (count($arr1) != count($arr2)) {
-        return FALSE;
+        return false;
     }
 
     for ($i = 0; $i < count($arr1); $i++) {
@@ -230,13 +230,13 @@ function array_merge_values($arr1, $arr2)
 function array_search_insensitive($key, $haystack)
 {
     if (!is_array($haystack)) {
-        return FALSE;
+        return false;
     }
 
-    $found = FALSE;
+    $found = false;
     foreach ($haystack as $k => $v) {
         if (strtolower($v) == strtolower($key)) {
-            $found = TRUE;
+            $found = true;
             break;
         }
     }

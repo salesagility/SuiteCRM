@@ -173,7 +173,7 @@ abstract class SugarCacheAbstract
             $this->_localStore[$key] = $value;
         }
 
-        if ($ttl === NULL) {
+        if ($ttl === null) {
             $this->_setExternal($this->_keyPrefix.$key, $value);
         } elseif ($ttl > 0) {
             //For BC reasons the setExternal signature will remain the same.

@@ -90,7 +90,7 @@ echo '<form onsubmit="return check_form(\'MassUpdate\');" id="MassUpdate" name="
 $focus->populate_search_params($_REQUEST);
 echo $focus->get_inputs_for_search_params($_REQUEST);
 
-$where_clauses = Array();
+$where_clauses = array();
 $where_clauses = $focus->create_where_statement();
 $where = $focus->generate_where_statement($where_clauses);
 

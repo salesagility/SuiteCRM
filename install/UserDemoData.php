@@ -145,7 +145,7 @@ class UserDemoData
      */
     public function _seed_data_get_user_list()
     {
-        $users = Array();
+        $users = array();
         //bug 28138 todo
         $users[] = "north";
         $users[] = "south";

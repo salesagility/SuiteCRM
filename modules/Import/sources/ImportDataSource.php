@@ -91,7 +91,7 @@ abstract class ImportDataSource implements Iterator
     /**
      * Array of the values in the current array we are in
      */
-    protected $_currentRow = FALSE;
+    protected $_currentRow = false;
 
     /**
      * Holds any locale settings needed for import.  These can be provided by the user

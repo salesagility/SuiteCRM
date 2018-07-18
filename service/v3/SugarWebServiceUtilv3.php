@@ -204,7 +204,7 @@ class SugarWebServiceUtilv3 extends SoapHelperWebServices
 		if ($value->module_dir == 'Bugs') {
 		    require_once('modules/Releases/Release.php');
 		    $seedRelease = new Release();
-		    $options = $seedRelease->get_releases(TRUE, "Active");
+		    $options = $seedRelease->get_releases(true, "Active");
 		    $options_ret = array();
 		    foreach ($options as $name=>$value) {
 		        $options_ret[] =  array('name'=> $name , 'value'=>$value);

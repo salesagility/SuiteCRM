@@ -90,7 +90,7 @@ class nusoap_server extends nusoap_base
      * @var mixed
      * @access public
      */
-    public $requestHeader = NULL;
+    public $requestHeader = null;
     /**
      * SOAP body request portion (incomplete namespace resolution; special characters not escaped) (text)
      * @var string

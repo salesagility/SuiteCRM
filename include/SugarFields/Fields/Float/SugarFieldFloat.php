@@ -51,7 +51,7 @@ class SugarFieldFloat extends SugarFieldInt
             $precision = $vardef['precision'];
         }
         
-        if ($rawField === '' || $rawField === NULL) {
+        if ($rawField === '' || $rawField === null) {
             return '';
         }
 
@@ -60,7 +60,7 @@ class SugarFieldFloat extends SugarFieldInt
     
     public function unformatField($formattedField, $vardef)
     {
-        if ($formattedField === '' || $formattedField === NULL) {
+        if ($formattedField === '' || $formattedField === null) {
             return '';
         }
         return (float)unformat_number($formattedField);

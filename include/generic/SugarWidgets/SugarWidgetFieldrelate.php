@@ -82,7 +82,7 @@ class SugarWidgetFieldRelate extends SugarWidgetReportField
     private function displayInputQuery($layout_def)
     {
         $title = $layout_def['rname'];
-        $bean = isset($layout_def['module']) ? BeanFactory::getBean($layout_def['module']) : NULL;
+        $bean = isset($layout_def['module']) ? BeanFactory::getBean($layout_def['module']) : null;
         $table = empty($bean) ? $layout_def['table'] : $bean->table_name;
         $concat_fields = isset($layout_def['db_concat_fields']) ? $layout_def['db_concat_fields'] : '';
 
