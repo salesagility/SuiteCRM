@@ -585,7 +585,11 @@ function getModuleField(
             if($fieldlist[$fieldname]['type'] == 'date') $convert_format = "Y-m-d";
             $fieldlist[$fieldname]['value'] = $timedate->to_display($value, $convert_format, $params['date_format']);
         }else{
-            $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+            if($fieldlist[$fieldname]['type'] == 'date') {
+                $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value, true, true);
+            } else {
+                $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+            }
         }
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
