@@ -146,7 +146,7 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         $ssraid = $ssra->save();
         $this->assertEquals($ssra->id, $ssraid);
         
-        $ret = $ssr->checkRules($acc, 'test_key');
+        $ret = $ssr->checkRules($acc, 'test_value');
         $this->assertEquals(null, $ret);
         
         $this->assertTrue(isset($_SESSION['ACL'][$uid]));

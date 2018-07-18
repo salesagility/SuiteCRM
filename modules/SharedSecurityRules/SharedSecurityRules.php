@@ -233,7 +233,7 @@ class SharedSecurityRules extends Basic
                             } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
                                 $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' && securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
                                 $sec_group_results = $module->db->query($sec_group_query);
-                                $secgroup = mysqli_fetch_row($sec_group_results);
+                                $secgroup = $module->db->fetchRow($sec_group_results);
                                 if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
                                     $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                                     $users_roles_results = $module->db->query($users_roles_query);
@@ -622,18 +622,18 @@ class SharedSecurityRules extends Basic
                             if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
                                 $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                                 $users_roles_results = $module->db->query($users_roles_query);
-                                $user_id = mysqli_fetch_row($users_roles_results);
+                                $user_id = $module->db->fetchRow($users_roles_results);
                                 if ($user_id[0] == $current_user->id) {
                                     $actionIsUser = true;
                                 }
                             } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
                                 $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' AND securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
                                 $sec_group_results = $module->db->query($sec_group_query);
-                                $secgroup = mysqli_fetch_row($sec_group_results);
+                                $secgroup = $module->db->fetchRow($sec_group_results);
                                 if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
                                     $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                                     $users_roles_results = $module->db->query($users_roles_query);
-                                    $user_id = mysqli_fetch_row($users_roles_results);
+                                    $user_id = $module->db->fetchRow($users_roles_results);
                                     if ($user_id[0] == $current_user->id) {
                                         $actionIsUser = true;
                                     }
