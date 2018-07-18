@@ -113,7 +113,7 @@ class SharedSecurityRulesConditions extends Basic
     
     /**
      *
-     * @var string 
+     * @var string|array 
      */
     public $module_path;
     
@@ -239,4 +239,12 @@ class SharedSecurityRulesConditions extends Basic
         
         return $lastParenthesisStartConditionIdArray;
     }
+    
+    public function save($check_notify = false) {
+        if (is_array($this->module_path)) {
+            $this->module_path = implode(':', $this->module_path);
+        }
+        return parent::save($check_notify);
+    }
+    
 }

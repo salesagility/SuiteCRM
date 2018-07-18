@@ -80,7 +80,7 @@ class SharedSecurityRulesViewDetailTest extends SuiteCRM\StateCheckerPHPUnitTest
         $ssrc = BeanFactory::getBean('SharedSecurityRulesConditions');
         $this->assertTrue((bool)$ssrc);
         $ssrc->sa_shared_sec_rules_id = $ssrvd->bean->id;
-        $ssrc->module_path = ['Module', 'Path', 'Test'];
+        $ssrc->module_path = ['Accounts', 'email1', 'Test'];
         $ssrc->value_type = 'Date';
         $ssrc->field = 'test';
         $id = $ssrc->save();

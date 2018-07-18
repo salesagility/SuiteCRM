@@ -134,7 +134,7 @@ class SharedSecurityRulesViewDetail extends ViewDetail
         } else {
             $modulePathDisplay[] = $currentBean->module_name;
             if (is_array($modulePath)) {
-                $split = $modulePath;
+                throw new InvalidArgumentException('module path can not be an array');
             } else {
                 $split = explode(':', $modulePath);
             }

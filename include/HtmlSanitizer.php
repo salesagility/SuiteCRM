@@ -117,7 +117,7 @@ class HtmlSanitizer
         if (is_array($dirtyHtml) || is_object($dirtyHtml)) {
             
             foreach ($dirtyHtml as $key => $value) {
-                $dirtyHtml[$key] = self::cleanHtml($value);
+                $dirtyHtml[$key] = self::cleanHtml($value, $removeHtml);
             }
             $ret = $dirtyHtml;
             
@@ -140,8 +140,11 @@ class HtmlSanitizer
 
             $ret = $clean_html;
         } else {
-            \LoggerManager::getLogger()->warn('cleanHtml given an unaccepted type: ' . gettype($dirtyHtml));            
+            // it should throw an InvalidArgumentException
+            \LoggerManager::getLogger()->error('cleanHtml given an unaccepted type: ' . gettype($dirtyHtml));            
         }
+        
+        return $ret;
     }
 
     /**

@@ -2469,7 +2469,13 @@ class SugarBean
                     (strpos($type, 'char') !== false || strpos($type, 'text') !== false || $type == 'enum') &&
                     !empty($this->$key)
                 ) {
-                    $this->$key = htmlentities(SugarCleaner::cleanHtml($this->$key, true));
+                    $cleanHtml = SugarCleaner::cleanHtml($this->$key, true);
+                    if (!is_string($cleanHtml)) {
+                        LoggerManager::getLogger()->warn('Html should be a string. Given type was: ' . gettype($cleanHtml));
+                        $this->$key = $cleanHtml;
+                    } else {
+                        $this->$key = htmlentities($cleanHtml);
+                    }
                 }
             }
         }
