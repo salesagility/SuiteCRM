@@ -47,6 +47,21 @@ include_once __DIR__ . '/../../../../../../modules/SharedSecurityRules/views/vie
  */
 class SharedSecurityRulesViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
     
+    public function testPreDisplayWithNoBeanId() {
+        $ssrve = new SharedSecurityRulesViewEdit();
+        $ssrve->bean = BeanFactory::getBean('Accounts');
+        ob_start();
+        try {
+            $ssrve->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals('<script>var conditionLines = []</script>', $contents);
+    }
+    
     public function testPreDisplay() {
         $ssrve = new SharedSecurityRulesViewEdit();
         ob_start();
