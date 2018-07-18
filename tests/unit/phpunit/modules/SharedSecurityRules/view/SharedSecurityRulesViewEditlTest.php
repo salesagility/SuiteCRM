@@ -46,6 +46,341 @@ include_once __DIR__ . '/../../../../../../modules/SharedSecurityRules/views/vie
  * @author gyula
  */
 class SharedSecurityRulesViewEditTest extends SuiteCRM\StateCheckerPHPUnitTestCaseAbstract {
+              
+    public function testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueTypeWithCurrentBeanWithModulePathArray() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('sharedsecurityrulesconditions');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('email_addresses');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $this->assertTrue((bool)$usr);
+        $_REQUEST['page'] = 'EditView';
+        $_REQUEST['module'] = 'Users';
+        $_REQUEST['action'] = 'Save';
+        $_REQUEST['Users1emailAddress1'] = 'test@email.com';
+        $_REQUEST['Users1emailAddressId1'] = 'test_email_id';
+        $query = "INSERT INTO email_addresses (`id`, deleted) VALUES ('test_email_id', 0);";
+        $ret = DBManagerFactory::getInstance()->query($query);        
+        $uid = $usr->save();
+        $this->assertEquals($uid, $usr->id);
+        $current_user = $usr;
+        
+        $ssrve = new SharedSecurityRulesViewEdit();
+        $ssrve->bean = BeanFactory::getBean('Accounts');
+        $ssrve->bean->flow_module = 'Accounts';
+        $id = $ssrve->bean->save();
+        $this->assertEquals($ssrve->bean->id, $id);
+        
+        $ssrc = BeanFactory::getBean('SharedSecurityRulesConditions');
+        $this->assertTrue((bool)$ssrc);
+        $ssrc->sa_shared_sec_rules_id = $ssrve->bean->id;
+        $ssrc->module_path = ['Accounts', 'email1', 'Test'];
+        $ssrc->value_type = 'Date';
+        $ssrc->field = 'test';
+        $id = $ssrc->save();
+        $this->assertEquals($ssrc->id, $id);
+        
+        ob_start();
+        try {
+            $ssrve->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();        
+        $this->assertContains($ssrve->bean->id, $contents);
+        $this->assertContains($ssrc->id, $contents);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('email_addresses');
+        $state->popTable('aod_indexevent');
+        $state->popTable('sharedsecurityrulesconditions');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+        $state->popTable('users');
+    } 
+    
+              
+    public function testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueTypeWithCurrentBeanWithModulePath() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('sharedsecurityrulesconditions');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('email_addresses');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $this->assertTrue((bool)$usr);
+        $_REQUEST['page'] = 'EditView';
+        $_REQUEST['module'] = 'Users';
+        $_REQUEST['action'] = 'Save';
+        $_REQUEST['Users1emailAddress1'] = 'test@email.com';
+        $_REQUEST['Users1emailAddressId1'] = 'test_email_id';
+        $query = "INSERT INTO email_addresses (`id`, deleted) VALUES ('test_email_id', 0);";
+        $ret = DBManagerFactory::getInstance()->query($query);        
+        $uid = $usr->save();
+        $this->assertEquals($uid, $usr->id);
+        $current_user = $usr;
+        
+        $ssrve = new SharedSecurityRulesViewEdit();
+        $ssrve->bean = BeanFactory::getBean('Accounts');
+        $ssrve->bean->flow_module = 'Accounts';
+        $id = $ssrve->bean->save();
+        $this->assertEquals($ssrve->bean->id, $id);
+        
+        $ssrc = BeanFactory::getBean('SharedSecurityRulesConditions');
+        $this->assertTrue((bool)$ssrc);
+        $ssrc->sa_shared_sec_rules_id = $ssrve->bean->id;
+        $ssrc->module_path = 'Module::Path::Test';
+        $ssrc->value_type = 'Date';
+        $ssrc->field = 'test';
+        $id = $ssrc->save();
+        $this->assertEquals($ssrc->id, $id);
+        
+        ob_start();
+        try {
+            $ssrve->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();        
+        $this->assertContains($ssrve->bean->id, $contents);
+        $this->assertContains($ssrc->id, $contents);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('email_addresses');
+        $state->popTable('aod_indexevent');
+        $state->popTable('sharedsecurityrulesconditions');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+        $state->popTable('users');
+    } 
+          
+    public function testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueTypeWithCurrentBean() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('sharedsecurityrulesconditions');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('email_addresses');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $this->assertTrue((bool)$usr);
+        $_REQUEST['page'] = 'EditView';
+        $_REQUEST['module'] = 'Users';
+        $_REQUEST['action'] = 'Save';
+        $_REQUEST['Users1emailAddress1'] = 'test@email.com';
+        $_REQUEST['Users1emailAddressId1'] = 'test_email_id';
+        $query = "INSERT INTO email_addresses (`id`, deleted) VALUES ('test_email_id', 0);";
+        $ret = DBManagerFactory::getInstance()->query($query);        
+        $uid = $usr->save();
+        $this->assertEquals($uid, $usr->id);
+        $current_user = $usr;
+        
+        $ssrve = new SharedSecurityRulesViewEdit();
+        $ssrve->bean = BeanFactory::getBean('Accounts');
+        $ssrve->bean->flow_module = 'Accounts';
+        $id = $ssrve->bean->save();
+        $this->assertEquals($ssrve->bean->id, $id);
+        
+        $ssrc = BeanFactory::getBean('SharedSecurityRulesConditions');
+        $this->assertTrue((bool)$ssrc);
+        $ssrc->sa_shared_sec_rules_id = $ssrve->bean->id;
+        $ssrc->value_type = 'Date';
+        $ssrc->field = 'test';
+        $id = $ssrc->save();
+        $this->assertEquals($ssrc->id, $id);
+        
+        ob_start();
+        try {
+            $ssrve->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();        
+        $this->assertContains($ssrve->bean->id, $contents);
+        $this->assertContains($ssrc->id, $contents);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('email_addresses');
+        $state->popTable('aod_indexevent');
+        $state->popTable('sharedsecurityrulesconditions');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+        $state->popTable('users');
+    } 
+          
+    public function testPreDisplayWithBeanIdAndSharedSecurityRoleConditionWidthDateValueType() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('sharedsecurityrulesconditions');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('email_addresses');
+        $state->pushTable('aod_index');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $this->assertTrue((bool)$usr);
+        $_REQUEST['page'] = 'EditView';
+        $_REQUEST['module'] = 'Users';
+        $_REQUEST['action'] = 'Save';
+        $_REQUEST['Users1emailAddress1'] = 'test@email.com';
+        $_REQUEST['Users1emailAddressId1'] = 'test_email_id';
+        $query = "INSERT INTO email_addresses (`id`, deleted) VALUES ('test_email_id', 0);";
+        $ret = DBManagerFactory::getInstance()->query($query);        
+        $uid = $usr->save();
+        $this->assertEquals($uid, $usr->id);
+        $current_user = $usr;
+        
+        $ssrve = new SharedSecurityRulesViewEdit();
+        $ssrve->bean = BeanFactory::getBean('Accounts');
+        $id = $ssrve->bean->save();
+        $this->assertEquals($ssrve->bean->id, $id);
+        
+        $ssrc = BeanFactory::getBean('SharedSecurityRulesConditions');
+        $this->assertTrue((bool)$ssrc);
+        $ssrc->sa_shared_sec_rules_id = $ssrve->bean->id;
+        $ssrc->value_type = 'Date';
+        $id = $ssrc->save();
+        $this->assertEquals($ssrc->id, $id);
+        
+        ob_start();
+        try {
+            $ssrve->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();        
+        $this->assertContains($ssrve->bean->id, $contents);
+        $this->assertContains($ssrc->id, $contents);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('aod_index');
+        $state->popTable('email_addresses');
+        $state->popTable('aod_indexevent');
+        $state->popTable('sharedsecurityrulesconditions');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+        $state->popTable('users');
+    } 
+              
+    public function testPreDisplayWithBeanIdAndSharedSecurityRoleCondition() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('users');
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('sharedsecurityrulesconditions');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('email_addresses');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $this->assertTrue((bool)$usr);
+        $_REQUEST['page'] = 'EditView';
+        $_REQUEST['module'] = 'Users';
+        $_REQUEST['action'] = 'Save';
+        $_REQUEST['Users1emailAddress1'] = 'test@email.com';
+        $_REQUEST['Users1emailAddressId1'] = 'test_email_id';
+        $query = "INSERT INTO email_addresses (`id`, deleted) VALUES ('test_email_id', 0);";
+        $ret = DBManagerFactory::getInstance()->query($query);        
+        $uid = $usr->save();
+        $this->assertEquals($uid, $usr->id);
+        $current_user = $usr;
+        
+        $ssrve = new SharedSecurityRulesViewEdit();
+        $ssrve->bean = BeanFactory::getBean('Accounts');
+        $id = $ssrve->bean->save();
+        $this->assertEquals($ssrve->bean->id, $id);
+        
+        $ssrc = BeanFactory::getBean('SharedSecurityRulesConditions');
+        $this->assertTrue((bool)$ssrc);
+        $ssrc->sa_shared_sec_rules_id = $ssrve->bean->id;
+        $id = $ssrc->save();
+        $this->assertEquals($ssrc->id, $id);
+        
+        ob_start();
+        try {
+            $ssrve->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();        
+        $this->assertContains($ssrve->bean->id, $contents);
+        $this->assertContains($ssrc->id, $contents);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('email_addresses');
+        $state->popTable('aod_indexevent');
+        $state->popTable('sharedsecurityrulesconditions');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+        $state->popTable('users');
+    } 
+    
+    public function testPreDisplayWithBeanId() {
+        $state = new \SuiteCRM\StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('aod_indexevent');
+        $state->pushTable('email_addresses');
+        $state->pushGlobals();
+        
+        $ssrve = new SharedSecurityRulesViewEdit();
+        $ssrve->bean = BeanFactory::getBean('Accounts');
+        $id = $ssrve->bean->save();
+        $this->assertEquals($ssrve->bean->id, $id);        
+        ob_start();
+        try {
+            $ssrve->preDisplay();
+            $this->assertTrue(false, 'It should throwing a SuiteException with code FILE_NOT_FOUND');
+        } catch (SuiteException $e) {
+            $this->assertEquals(SuiteException::FILE_NOT_FOUND, $e->getCode());
+        }
+        $contents = ob_get_contents();
+        ob_end_clean();
+        $this->assertEquals('<script>var conditionLines = []</script>', $contents);
+        
+        $state->popGlobals();
+        $state->popTable('email_addresses');
+        $state->popTable('aod_indexevent');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
     
     public function testPreDisplayWithNoBeanId() {
         $ssrve = new SharedSecurityRulesViewEdit();

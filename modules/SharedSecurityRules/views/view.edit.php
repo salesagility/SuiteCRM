@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -37,7 +38,6 @@
  * reasonably feasible for technical reasons, the Appropriate Legal Notices must
  * display the words "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
@@ -47,9 +47,9 @@ require_once("modules/SharedSecurityRules/SharedSecurityRules.php");
 
 class SharedSecurityRulesViewEdit extends ViewEdit
 {
-    
+
     /**
-     * 
+     *
      * @return array
      */
     private function getConditionLines()
@@ -74,7 +74,14 @@ class SharedSecurityRulesViewEdit extends ViewEdit
             $condition_item = $condition_name->toArray();
 
             if (!$condition_name->parenthesis) {
-                $display = $this->getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->flow_module);
+                $beanFlowModule = null;
+                if (isset($this->bean->flow_module)) {
+                    $beanFlowModule = $this->bean->flow_module;
+                } else {
+                    LoggerManager::getLogger()->warn('SharedSecurityRulesViewDetail::getConditionLines() bean did not has flow module');
+                }
+
+                $display = $this->getDisplayForField($condition_name->module_path, $condition_name->field, $beanFlowModule);
                 $condition_item['module_path_display'] = $display['module'];
                 $condition_item['field_label'] = $display['field'];
             }
@@ -88,7 +95,7 @@ class SharedSecurityRulesViewEdit extends ViewEdit
     }
 
     /**
-     * 
+     *
      */
     public function preDisplay()
     {
@@ -99,7 +106,7 @@ class SharedSecurityRulesViewEdit extends ViewEdit
     }
 
     /**
-     * 
+     *
      * @global array $app_list_strings
      * @param string $modulePath
      * @param string $field
@@ -109,40 +116,61 @@ class SharedSecurityRulesViewEdit extends ViewEdit
     private function getDisplayForField($modulePath, $field, $reportModule)
     {
         global $app_list_strings;
+        $fieldDisplay = null;
         $modulePathDisplay = array();
         $currentBean = BeanFactory::getBean($reportModule);
-        $modulePathDisplay[] = $currentBean->module_name;
-        if (is_array($modulePath)) {
-            $split = $modulePath;
+        if (!$currentBean) {
+            LoggerManager::getLogger()->warn('SharedSecurityRulesViewEdit::getDisplayForField() did not get module parameter');
         } else {
-            $split = explode(':', $modulePath);
-        }
-        if ($split && $split[0] == $currentBean->module_dir) {
-            array_shift($split);
-        }
-        foreach ($split as $relName) {
-            if (empty($relName)) {
-                continue;
-            }
-            if (!empty($currentBean->field_name_map[$relName]['vname'])) {
-                $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir), ':');
-            }
-            $thisModule = getRelatedModule($currentBean->module_dir, $relName);
-            $currentBean = BeanFactory::getBean($thisModule);
-
-            if (!empty($moduleLabel)) {
-                $modulePathDisplay[] = $moduleLabel;
+            $modulePathDisplay[] = $currentBean->module_name;
+            if (is_array($modulePath)) {
+                $split = $modulePath;
             } else {
-                $modulePathDisplay[] = $currentBean->module_name;
+                $split = explode(':', $modulePath);
             }
-        }
-        $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
-        $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
-        $fieldDisplay = trim($fieldDisplay, ':');
-        foreach ($modulePathDisplay as &$module) {
-            $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
-                    isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
-                    );
+            if ($split && $split[0] == $currentBean->module_dir) {
+                array_shift($split);
+            }
+            foreach ($split as $relName) {
+                if (empty($relName)) {
+                    continue;
+                }
+                if (!empty($currentBean->field_name_map[$relName]['vname'])) {
+                    $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'], $currentBean->module_dir), ':');
+                }
+                $thisModule = getRelatedModule($currentBean->module_dir, $relName);
+                $currentBean = BeanFactory::getBean($thisModule);
+
+                if (!empty($moduleLabel)) {
+                    $modulePathDisplay[] = $moduleLabel;
+                } else {
+                    $modulePathDisplay[] = $currentBean->module_name;
+                }
+            }
+
+            $currentBeanFieldNamMapVName = null;
+            if (!isset($currentBean->field_name_map[$field]['vname'])) {
+                if (!isset($currentBean->field_name_map[$field])) {
+                    if (!isset($field)) {
+                        LoggerManager::getLogger()->warn('editview: current bean field map index is not set');
+                    } else {
+                        LoggerManager::getLogger()->warn('editview: current bean field map is not set at index: ' . $field);
+                    }
+                } else {
+                    LoggerManager::getLogger()->warn('editview: current bean field map index error');
+                }
+            } else {
+                $currentBeanFieldNamMapVName = $currentBean->field_name_map[$field]['vname'];
+            }
+
+            $fieldDisplay = $currentBeanFieldNamMapVName;
+            $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
+            $fieldDisplay = trim($fieldDisplay, ':');
+            foreach ($modulePathDisplay as &$module) {
+                $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
+                        isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
+                        );
+            }
         }
         return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
     }

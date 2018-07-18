@@ -162,12 +162,12 @@ class SharedSecurityRulesViewDetail extends ViewDetail
             if (!isset($currentBean->field_name_map[$field]['vname'])) {
                 if (!isset($currentBean->field_name_map[$field])) {
                     if (!isset($field)) {
-                        LoggerManager::getLogger()->warn('current bean field map index is not set');
+                        LoggerManager::getLogger()->warn('detailview: current bean field map index is not set');
                     } else {
-                        LoggerManager::getLogger()->warn('current bean field map is not set at index: ' . $field);
+                        LoggerManager::getLogger()->warn('detailview: current bean field map is not set at index: ' . $field);
                     }
                 } else {
-                    LoggerManager::getLogger()->warn('current bean field map index error');
+                    LoggerManager::getLogger()->warn('detailview: current bean field map index error');
                 }
             } else {
                 $currentBeanFieldNamMapVName = $currentBean->field_name_map[$field]['vname'];
