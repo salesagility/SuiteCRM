@@ -237,8 +237,8 @@ class SharedSecurityRules extends Basic
                                 if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
                                     $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                                     $users_roles_results = $module->db->query($users_roles_query);
-                                    $user_id = mysqli_fetch_row($users_roles_results);
-                                    if ($user_id[0] == $current_user->id) {
+                                    $usertRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
+                                    if ($usertRoleResultsAssoc['user_id'] == $current_user->id) {
                                         $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
 
                                         if ($conditionResult) {
