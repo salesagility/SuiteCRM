@@ -8,7 +8,7 @@ if (i::isEnabled())
 function runElasticSearchIndexerScheduler()
 {
     $i = new i();
-    $i->log('@', 'Starting scheduled job');
+    $i->getLogger()->debug('Starting scheduled job');
 
     try {
         $i->setDifferentialIndexingEnabled(true);
