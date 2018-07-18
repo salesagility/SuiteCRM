@@ -100,6 +100,51 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         $state->popTable('users');
     }
     
+    public function testCheckRulesWithFilledFetchedRowWithQueryResults() {
+        $state = new StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('users');
+        $state->pushTable('sharedsecurityrules');
+        $state->pushTable('sharedsecurityrulesactions');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $usr->save();
+        $this->assertTrue(isValidId($usr->id));
+        $uid = $usr->id;
+        $current_user = $usr;
+        
+        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        $acc = BeanFactory::getBean('Accounts');
+        $acc->assigned_user_id = $uid;
+        $acc->create_by = $uid;
+        $id = $acc->save();
+        $this->assertEquals($acc->id, $id);   
+        $acc->retrieve($id);
+        $ssr->status = 'Complete';
+        $ssr->flow_module = 'Accounts';
+        $ssrid = $ssr->save();
+        $this->assertEquals($ssr->id, $ssrid);
+        $ssra = BeanFactory::getBean('SharedSecurityRulesActions');
+        $ssra->sa_shared_security_rules_id = $ssrid;
+        $ssraid = $ssra->save();
+        $this->assertEquals($ssra->id, $ssraid);
+        
+        $ret = $ssr->checkRules($acc, 'list');
+        $this->assertEquals(null, $ret);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('sharedsecurityrulesactions');
+        $state->popTable('sharedsecurityrules');
+        $state->popTable('users');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
     public function testCheckRulesWithFilledFetchedRow() {
         $state = new StateSaver();
         $state->pushTable('accounts');
