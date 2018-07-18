@@ -100,6 +100,211 @@ class SharedSecurityRulesTest extends StateCheckerPHPUnitTestCaseAbstract {
         $state->popTable('users');
     }
     
+    public function testCheckRulesWithFilledFetchedRowWithQueryResultsAndActionResultsWithBase64EncodedSerializedActionParametersWithEmailTargetTypeWithCorrectAccessLevelAndCorrectEmail() {
+        $state = new StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('users');
+        $state->pushTable('sharedsecurityrules');
+        $state->pushTable('sharedsecurityrulesactions');
+        $state->pushTable('acl_roles');
+        $state->pushTable('acl_roles_users');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $usr->save();
+        $this->assertTrue(isValidId($usr->id));
+        $uid = $usr->id;
+        $current_user = $usr;
+        
+        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        $acc = BeanFactory::getBean('Accounts');
+        $acc->assigned_user_id = $uid;
+        $acc->create_by = $uid;
+        $id = $acc->save();
+        $this->assertEquals($acc->id, $id);   
+        $acc->retrieve($id);
+        $ssr->status = 'Complete';
+        $ssr->flow_module = 'Accounts';
+        $ssrid = $ssr->save();
+        $this->assertEquals($ssr->id, $ssrid);
+        $ssra = BeanFactory::getBean('SharedSecurityRulesActions');
+        $ssra->sa_shared_security_rules_id = $ssrid;
+        $role = BeanFactory::getBean('ACLRoles');
+        $role->role_id = 'a_role_id';
+        $role->user_id = $uid;        
+        $rid = $role->save();
+        $this->assertEquals($role->id, $rid);
+        $ssra->parameters = base64_encode(serialize([
+            'test', 
+            'foo' => 'bar', 
+            'email_target_type' => ['test_key' => 'Users'], 
+            'accesslevel' => ['test_al_key' => 'test_al_value'],
+            'email' => ['test_key' => [0 => 'role', 2 => $rid]],
+        ]));
+        $ssraid = $ssra->save();
+        $this->assertEquals($ssra->id, $ssraid);
+        
+        $ret = $ssr->checkRules($acc, 'list');
+        $this->assertEquals(null, $ret);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('acl_roles_users');
+        $state->popTable('acl_roles');
+        $state->popTable('sharedsecurityrulesactions');
+        $state->popTable('sharedsecurityrules');
+        $state->popTable('users');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
+    public function testCheckRulesWithFilledFetchedRowWithQueryResultsAndActionResultsWithBase64EncodedSerializedActionParametersWithEmailTargetTypeWithCorrectAccessLevelButIncorrectEmail() {
+        $state = new StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('users');
+        $state->pushTable('sharedsecurityrules');
+        $state->pushTable('sharedsecurityrulesactions');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $usr->save();
+        $this->assertTrue(isValidId($usr->id));
+        $uid = $usr->id;
+        $current_user = $usr;
+        
+        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        $acc = BeanFactory::getBean('Accounts');
+        $acc->assigned_user_id = $uid;
+        $acc->create_by = $uid;
+        $id = $acc->save();
+        $this->assertEquals($acc->id, $id);   
+        $acc->retrieve($id);
+        $ssr->status = 'Complete';
+        $ssr->flow_module = 'Accounts';
+        $ssrid = $ssr->save();
+        $this->assertEquals($ssr->id, $ssrid);
+        $ssra = BeanFactory::getBean('SharedSecurityRulesActions');
+        $ssra->sa_shared_security_rules_id = $ssrid;
+        $ssra->parameters = base64_encode(serialize([
+            'test', 
+            'foo' => 'bar', 
+            'email_target_type' => ['test_key' => 'Users'], 
+            'accesslevel' => ['test_al_key' => 'test_al_value'],
+            'email' => ['test_key' => [0 => 'role']],
+        ]));
+        $ssraid = $ssra->save();
+        $this->assertEquals($ssra->id, $ssraid);
+        
+        $ret = $ssr->checkRules($acc, 'list');
+        $this->assertEquals(null, $ret);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('sharedsecurityrulesactions');
+        $state->popTable('sharedsecurityrules');
+        $state->popTable('users');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
+    public function testCheckRulesWithFilledFetchedRowWithQueryResultsAndActionResultsWithBase64EncodedSerializedActionParametersWithEmailTargetTypeWithIncorrectAccessLevel() {
+        $state = new StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('users');
+        $state->pushTable('sharedsecurityrules');
+        $state->pushTable('sharedsecurityrulesactions');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $usr->save();
+        $this->assertTrue(isValidId($usr->id));
+        $uid = $usr->id;
+        $current_user = $usr;
+        
+        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        $acc = BeanFactory::getBean('Accounts');
+        $acc->assigned_user_id = $uid;
+        $acc->create_by = $uid;
+        $id = $acc->save();
+        $this->assertEquals($acc->id, $id);   
+        $acc->retrieve($id);
+        $ssr->status = 'Complete';
+        $ssr->flow_module = 'Accounts';
+        $ssrid = $ssr->save();
+        $this->assertEquals($ssr->id, $ssrid);
+        $ssra = BeanFactory::getBean('SharedSecurityRulesActions');
+        $ssra->sa_shared_security_rules_id = $ssrid;
+        $ssra->parameters = base64_encode(serialize(['test', 'foo' => 'bar', 'email_target_type' => ['test_key' => 'test_value'], 'accesslevel' => 'it_is_incorrect']));
+        $ssraid = $ssra->save();
+        $this->assertEquals($ssra->id, $ssraid);
+        
+        $ret = $ssr->checkRules($acc, 'list');
+        $this->assertEquals(null, $ret);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('sharedsecurityrulesactions');
+        $state->popTable('sharedsecurityrules');
+        $state->popTable('users');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
+    public function testCheckRulesWithFilledFetchedRowWithQueryResultsAndActionResultsWithBase64EncodedSerializedActionParametersWithEmailTargetTypeWithNoAccessLevel() {
+        $state = new StateSaver();
+        $state->pushTable('accounts');
+        $state->pushTable('accounts_cstm');
+        $state->pushTable('users');
+        $state->pushTable('sharedsecurityrules');
+        $state->pushTable('sharedsecurityrulesactions');
+        $state->pushGlobals();
+        
+        global $current_user;
+        $usr = BeanFactory::getBean('Users');
+        $usr->save();
+        $this->assertTrue(isValidId($usr->id));
+        $uid = $usr->id;
+        $current_user = $usr;
+        
+        $ssr = BeanFactory::getBean('SharedSecurityRules');
+        $acc = BeanFactory::getBean('Accounts');
+        $acc->assigned_user_id = $uid;
+        $acc->create_by = $uid;
+        $id = $acc->save();
+        $this->assertEquals($acc->id, $id);   
+        $acc->retrieve($id);
+        $ssr->status = 'Complete';
+        $ssr->flow_module = 'Accounts';
+        $ssrid = $ssr->save();
+        $this->assertEquals($ssr->id, $ssrid);
+        $ssra = BeanFactory::getBean('SharedSecurityRulesActions');
+        $ssra->sa_shared_security_rules_id = $ssrid;
+        $ssra->parameters = base64_encode(serialize(['test', 'foo' => 'bar', 'email_target_type' => ['test_key' => 'test_value']]));
+        $ssraid = $ssra->save();
+        $this->assertEquals($ssra->id, $ssraid);
+        
+        $ret = $ssr->checkRules($acc, 'list');
+        $this->assertEquals(null, $ret);
+        
+        $this->assertTrue(isset($_SESSION['ACL'][$uid]));
+        
+        $state->popGlobals();
+        $state->popTable('sharedsecurityrulesactions');
+        $state->popTable('sharedsecurityrules');
+        $state->popTable('users');
+        $state->popTable('accounts_cstm');
+        $state->popTable('accounts');
+    }
+    
     public function testCheckRulesWithFilledFetchedRowWithQueryResultsAndActionResultsWithBase64EncodedSerializedActionParameters() {
         $state = new StateSaver();
         $state->pushTable('accounts');

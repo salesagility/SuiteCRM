@@ -196,11 +196,75 @@ class SharedSecurityRules extends Basic
                     LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
                 } else {
                     foreach ($action['parameters']['email_target_type'] as $key => $targetType) {
-                        if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
-                            $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
-                            $users_roles_results = $module->db->query($users_roles_query);
-                            $user_id = mysqli_fetch_row($users_roles_results);
-                            if ($user_id[0] == $current_user->id) {
+                        
+                        if (!isset($action['parameters']['email'][$key]['0'])) {
+                            LoggerManager::getLogger()->warn('action parameter email is not set at key: ' . $key);
+                        } else {                         
+                            if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
+                                
+                                if (!isset($action['parameters']['email'][$key]['2'])) {
+                                    LoggerManager::getLogger()->warn('action parameter email [2] is not set at key: ' . $key);
+                                } else {
+                                
+                                    $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
+                                    $users_roles_results = $module->db->query($users_roles_query);
+                                    $usertRoleResultsAssoc = $module->db->fetchByAssoc($users_roles_results);
+                                    if ($usertRoleResultsAssoc['user_id'] == $current_user->id) {
+                                        $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
+
+                                        if ($conditionResult) {
+                                            
+                                            if (!isset($action['parameters']['accesslevel'][$key])) {
+                                                LoggerManager::getLogger()->warn('Incorrect action parameter access level at key: ' . $key);
+                                            } else {
+                                            
+                                                if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
+                                                    $result = false;
+                                                } else {
+                                                    $result = true;
+                                                }
+                                            
+                                            }
+                                        }
+                                    }
+                                
+                                }
+                                
+                            } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
+                                $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' && securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
+                                $sec_group_results = $module->db->query($sec_group_query);
+                                $secgroup = mysqli_fetch_row($sec_group_results);
+                                if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
+                                    $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
+                                    $users_roles_results = $module->db->query($users_roles_query);
+                                    $user_id = mysqli_fetch_row($users_roles_results);
+                                    if ($user_id[0] == $current_user->id) {
+                                        $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
+
+                                        if ($conditionResult) {
+                                            if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
+                                                $result = false;
+                                            } else {
+                                                $result = true;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if ($secgroup[0] == $current_user->id) {
+                                        $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
+
+                                        if ($conditionResult) {
+                                            if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
+                                                $result = false;
+                                            } else {
+                                                $result = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            } elseif (($targetType == "Specify User" && $current_user->id == $action['parameters']['email'][$key]) ||
+                                    ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
+                                //we have found a possible record to check against.
                                 $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
 
                                 if ($conditionResult) {
@@ -209,50 +273,6 @@ class SharedSecurityRules extends Basic
                                     } else {
                                         $result = true;
                                     }
-                                }
-                            }
-                        } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                            $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' && securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
-                            $sec_group_results = $module->db->query($sec_group_query);
-                            $secgroup = mysqli_fetch_row($sec_group_results);
-                            if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
-                                $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
-                                $users_roles_results = $module->db->query($users_roles_query);
-                                $user_id = mysqli_fetch_row($users_roles_results);
-                                if ($user_id[0] == $current_user->id) {
-                                    $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
-
-                                    if ($conditionResult) {
-                                        if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
-                                            $result = false;
-                                        } else {
-                                            $result = true;
-                                        }
-                                    }
-                                }
-                            } else {
-                                if ($secgroup[0] == $current_user->id) {
-                                    $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
-
-                                    if ($conditionResult) {
-                                        if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
-                                            $result = false;
-                                        } else {
-                                            $result = true;
-                                        }
-                                    }
-                                }
-                            }
-                        } elseif (($targetType == "Specify User" && $current_user->id == $action['parameters']['email'][$key]) ||
-                                ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
-                            //we have found a possible record to check against.
-                            $conditionResult = $this->checkConditions($rule, $moduleBean, $view, $action, $key);
-
-                            if ($conditionResult) {
-                                if (!$this->findAccess($view, $action['parameters']['accesslevel'][$key])) {
-                                    $result = false;
-                                } else {
-                                    $result = true;
                                 }
                             }
                         }
@@ -584,38 +604,48 @@ class SharedSecurityRules extends Basic
                 if ($unserialized != false) {
                     $action['parameters'] = $unserialized;
                 }
-                if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || !is_object($action['parameters']['email_target_type']))) {
+                if (!isset($action['parameters']['email_target_type']) || !(is_array($action['parameters']['email_target_type']) || is_object($action['parameters']['email_target_type']))) {
                     LoggerManager::getLogger()->warn('Incorrect action parameter: email_target_type');
                 } else {
-                    foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
-                        $targetType = $action['parameters']['email_target_type'][$key];
-
-                        if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
-                            $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
-                            $users_roles_results = $module->db->query($users_roles_query);
-                            $user_id = mysqli_fetch_row($users_roles_results);
-                            if ($user_id[0] == $current_user->id) {
-                                $actionIsUser = true;
+                    if (!isset($action['parameters']['accesslevel']) || !(is_array($action['parameters']['accesslevel']) || is_object($action['parameters']['accesslevel']))) {
+                        LoggerManager::getLogger()->warn('Incorrect action parameter: accesslevel');
+                    } else {
+                        foreach ($action['parameters']['accesslevel'] as $key => $accessLevel) {
+                            
+                            if (!isset($action['parameters']['email_target_type'][$key])) {
+                                LoggerManager::getLogger()->warn('action parameter email_target_type si not set at key: ' . $key);
+                                $targetType = null;
+                            } else {
+                                $targetType = $action['parameters']['email_target_type'][$key];
                             }
-                        } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
-                            $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' AND securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
-                            $sec_group_results = $module->db->query($sec_group_query);
-                            $secgroup = mysqli_fetch_row($sec_group_results);
-                            if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
+
+                            if ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "role") {
                                 $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
                                 $users_roles_results = $module->db->query($users_roles_query);
                                 $user_id = mysqli_fetch_row($users_roles_results);
                                 if ($user_id[0] == $current_user->id) {
                                     $actionIsUser = true;
                                 }
-                            } else {
-                                if ($secgroup[0] == $current_user->id) {
-                                    $actionIsUser = true;
+                            } elseif ($targetType == "Users" && $action['parameters']['email'][$key]['0'] == "security_group") {
+                                $sec_group_query = "SELECT securitygroups_users.user_id FROM securitygroups_users WHERE securitygroups_users.securitygroup_id = '{$action['parameters']['email'][$key]['1']}' AND securitygroups_users.user_id = '{$current_user->id}' AND securitygroups_users.deleted = '0'";
+                                $sec_group_results = $module->db->query($sec_group_query);
+                                $secgroup = mysqli_fetch_row($sec_group_results);
+                                if (!empty($action['parameters']['email'][$key]['2']) && $secgroup[0] == $current_user->id) {
+                                    $users_roles_query = "SELECT acl_roles_users.user_id FROM acl_roles_users WHERE acl_roles_users.role_id = '{$action['parameters']['email'][$key]['2']}' AND acl_roles_users.user_id = '{$current_user->id}' AND acl_roles_users.deleted = '0'";
+                                    $users_roles_results = $module->db->query($users_roles_query);
+                                    $user_id = mysqli_fetch_row($users_roles_results);
+                                    if ($user_id[0] == $current_user->id) {
+                                        $actionIsUser = true;
+                                    }
+                                } else {
+                                    if ($secgroup[0] == $current_user->id) {
+                                        $actionIsUser = true;
+                                    }
                                 }
+                            } elseif (($targetType == "Specify User" && $current_user->id == $action['parameters']['email'][$key]) ||
+                                    ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
+                                $actionIsUser = true;
                             }
-                        } elseif (($targetType == "Specify User" && $current_user->id == $action['parameters']['email'][$key]) ||
-                                ($targetType == "Users" && in_array("all", $action['parameters']['email'][$key]))) {
-                            $actionIsUser = true;
                         }
                     }
                 }
