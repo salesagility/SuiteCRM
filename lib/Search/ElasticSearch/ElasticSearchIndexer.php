@@ -119,13 +119,9 @@ class ElasticSearchIndexer extends AbstractIndexer
             try {
                 $this->indexModule($module);
             } catch (\Exception $e) {
-                $message = sprintf(
-                    "Failed to index module %s! Exception details follow.\r\n%s - Trace:\r\n%s",
-                    $module,
-                    $e->getMessage(),
-                    $e->getTraceAsString()
-                );
+                $message = "Failed to index module $module! Exception details follow";
                 $this->logger->error($message);
+                $this->logger->error($e);
             }
         }
 
@@ -296,7 +292,8 @@ class ElasticSearchIndexer extends AbstractIndexer
             $beanTime = Carbon::now()->toDateTimeString();
             $beans = $seed->get_full_list("", $where, false, $showDeleted);
         } catch (RuntimeException $e) {
-            $this->logger->error("Failed to index module $module because of $e");
+            $this->logger->error("Failed to index module $module");
+            $this->logger->error($e);
             return;
         }
 
@@ -434,7 +431,8 @@ class ElasticSearchIndexer extends AbstractIndexer
                 throw new \RuntimeException('Failed to write lock file!');
             }
         } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
+            $this->logger->error('Error while writing lock file');
+            $this->logger->error($e);
         }
     }
 

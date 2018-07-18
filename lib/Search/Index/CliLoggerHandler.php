@@ -126,7 +126,8 @@ class Formatter implements FormatterInterface
             'red-light' => $this->e(91),
             'bg-red' => $this->e(41),
             'bg-red-light' => $this->e(101),
-            'bold' => $this->e(1),
+            'bold' => $this->e(1), // this will also make colours lighter
+            'reverse' => $this->e(7),
             'reset' => $this->e(0),
         ];
     }
