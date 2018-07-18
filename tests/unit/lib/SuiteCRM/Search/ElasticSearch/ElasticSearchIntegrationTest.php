@@ -78,7 +78,6 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
         $this->searchEngine->setIndex('test');
         $this->indexer->setIndex('test');
         $this->indexer->setDifferentialIndexingEnabled(false);
-        $this->indexer->setEchoLogsEnabled(true);
         $this->indexer->removeIndex();
     }
 
@@ -264,7 +263,6 @@ class ElasticSearchIntegrationTest extends SuiteCRM\Search\SearchTestAbstract
 
         // Setting up the indexer
         $this->indexer->setDifferentialIndexingEnabled(true);
-        $this->indexer->setEchoLogsEnabled(true);
         $this->indexer->setModulesToIndex([$bean->module_name]);
 
         // Set up the search engine

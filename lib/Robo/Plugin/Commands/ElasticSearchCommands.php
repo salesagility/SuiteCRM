@@ -143,7 +143,6 @@ class ElasticSearchCommands extends \Robo\Tasks
     public function elasticIndex($differential = 1, $searchdefs = 0)
     {
         $indexer = new ElasticSearchIndexer();
-        $indexer->setEchoLogsEnabled(true);
         $indexer->setDifferentialIndexingEnabled($differential);
         if ($searchdefs) {
             $indexer->setDocumentifier(new SearchDefsDocumentifier());

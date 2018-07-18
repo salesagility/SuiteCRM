@@ -54,27 +54,6 @@ use SuiteCRM\Search\Index\Documentify\SearchDefsDocumentifier;
 
 class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 {
-    public function testLog()
-    {
-        $indexer = new IndexerMock();
-        $indexer->setEchoLogsEnabled(true);
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['@', 'test notice']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[32m@\033[0m] test notice\n");
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['*', 'test warn']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[33m*\033[0m] test warn\n");
-
-        ob_start();
-        self::invokeMethod($indexer, 'log', ['!', 'test error']);
-        $content = ob_get_flush();
-        self::assertEquals($content, " [\033[31m!\033[0m] test error\n");
-    }
-
     public function testConstruct()
     {
         $indexer = new IndexerMock();
@@ -83,37 +62,30 @@ class AbstractIndexerTest extends \SuiteCRM\Search\SearchTestAbstract
 
     public function testGettersAndSetters()
     {
-
-        $output = false;
         $differential = true;
         $doc = new SearchDefsDocumentifier();
         $modules = ['Module1', 'Module2'];
 
         $i = new IndexerMock();
 
-        $i->setEchoLogsEnabled($output);
         $i->setDifferentialIndexingEnabled($differential);
         $i->setDocumentifier($doc);
         $i->setModulesToIndex($modules);
 
-        self::assertEquals($output, $i->isEchoLogsEnabled());
         self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
         self::assertEquals($doc, $i->getDocumentifier());
         self::assertEquals($modules, $i->getModulesToIndex());
 
         $i = new IndexerMock();
 
-        $output = true;
         $differential = false;
         $doc = new JsonSerializerDocumentifier();
         $modules = ['Foo', 'Bar'];
 
-        $i->setEchoLogsEnabled($output);
         $i->setDifferentialIndexingEnabled($differential);
         $i->setDocumentifier($doc);
         $i->setModulesToIndex($modules);
 
-        self::assertEquals($output, $i->isEchoLogsEnabled());
         self::assertEquals($differential, $i->isDifferentialIndexingEnabled());
         self::assertEquals($doc, $i->getDocumentifier());
         self::assertEquals($modules, $i->getModulesToIndex());
